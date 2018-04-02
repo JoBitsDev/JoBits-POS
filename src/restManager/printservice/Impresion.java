@@ -69,7 +69,8 @@ public class Impresion {
     private String 
             RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
             RESUMEN_VENTAS_COCINA = "Resumen de ventas por área ",
-            TOTAL_VENTAS = "Total Vendido: "
+            TOTAL_VENTAS = "Total Vendido: ",
+            RESUMEN_CONSUMO_CASA = "Resumen del consumo de la casa "
             ;        
     
     private String 
@@ -604,6 +605,65 @@ public class Impresion {
         }
         
         return ret;
+    }
+
+    public void printResumenCasa(List<ProductovOrden> resumenVentasCasa,Date fecha) {
+         Ticket t = new Ticket();
+        t.resetAll();
+        t.initialize();
+//p.feedBack((byte)2);
+        t.alignCenter();
+        t.setText(CABECERA);
+        t.newLine();
+        t.setText(this.nombreRest);
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+        t.setText(RESUMEN_CONSUMO_CASA);
+        t.newLine();
+        t.newLine();
+        t.alignLeft();
+        t.setText(FECHA + this.Format.format(fecha));
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+        
+        float total = 0;
+        for (ProductovOrden x : resumenVentasCasa) {
+                t.alignLeft();
+                t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
+                t.newLine();
+                t.alignRight();
+                t.setText(x.getCantidad()*x.getProductoVenta().getPrecioVenta()+ MONEDA);
+                t.newLine();
+                total+=x.getCantidad()*x.getProductoVenta().getPrecioVenta();
+            } 
+        
+        
+        t.addLineSeperator();
+        t.alignRight();
+        t.setText(TOTAL_VENTAS + total + MONEDA);
+        t.newLine();
+        
+        if(monedaCUC){
+        t.setText(TOTAL_VENTAS + total*cambio + MN); 
+        }
+        else{
+        t.setText(TOTAL_VENTAS + Math.rint((total/cambio)*100)/100 + CUC);
+        }
+        
+        t.newLine();
+        t.newLine();
+        
+        t.feed((byte)3);
+        t.finit();
+        
+     
+        try {
+            feedPrinter(t.finalCommandSet().getBytes());
+        } catch (PrintException ex) {
+            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     

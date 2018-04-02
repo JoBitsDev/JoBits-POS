@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import javax.persistence.EntityManager;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import org.jdesktop.swingx.decorator.ColorHighlighter;
 import restManager.persistencia.Cocina;
 
 import restManager.persistencia.Control.VentaDAO;
@@ -61,7 +63,7 @@ public class VentaMain extends javax.swing.JDialog {
         UpdateDialog(v);
 
         setVisible(true);
-
+        
     }
 
     private VentaMain(java.awt.Frame owner, boolean modal) {
@@ -147,7 +149,7 @@ public class VentaMain extends javax.swing.JDialog {
      */
     private void UpdateTableOrdenes(Venta ventas) {
 
-        ArrayList[] rowData = new ArrayList[3];
+        ArrayList[] rowData = new ArrayList[4];
         comun.initArray(rowData);
 
         for (Orden o : ventas.getOrdenList()) {
@@ -158,6 +160,7 @@ public class VentaMain extends javax.swing.JDialog {
             }
             rowData[2].add(total);
             rowData[1].add(o.getMesacodMesa().getCodMesa());
+            rowData[3].add(o.getHoraTerminada()!=null);
         }
 
         try {
@@ -226,6 +229,7 @@ public class VentaMain extends javax.swing.JDialog {
         for (Cocina x : staticContent.cocinaJPA.findCocinaEntities()) {
             VentaDAO.getResumenVentasCocinaOnTable(jXTableResumenCocina, v, x);
         }
+       
     }
 
     /**
@@ -328,6 +332,7 @@ public class VentaMain extends javax.swing.JDialog {
         buttonImprimirCamarero = new org.edisoncor.gui.button.ButtonTextDown();
         buttonImprimirTodoCamarero = new org.edisoncor.gui.button.ButtonTextDown();
         buttonImprimirTodoCocina = new org.edisoncor.gui.button.ButtonTextDown();
+        buttonImprimirConsumoCasa = new org.edisoncor.gui.button.ButtonTextDown();
         panelGastoPorProducto = new org.edisoncor.gui.panel.PanelRect();
         jScrollPane3 = new javax.swing.JScrollPane();
         jXTableGastosPorProductos = new org.jdesktop.swingx.JXTable();
@@ -436,14 +441,14 @@ public class VentaMain extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Orden No", "Mesa", "Valor Total"
+                "Orden No", "Mesa", "Valor Total", "Cerrada"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -455,6 +460,9 @@ public class VentaMain extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(jXTableOrdenes);
+        if (jXTableOrdenes.getColumnModel().getColumnCount() > 0) {
+            jXTableOrdenes.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jXTableResumenVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -561,7 +569,7 @@ public class VentaMain extends javax.swing.JDialog {
             .addGroup(panelVentasLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                     .addComponent(jXLabelOrden1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelRect3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(62, 62, 62)
@@ -684,6 +692,13 @@ public class VentaMain extends javax.swing.JDialog {
             }
         });
 
+        buttonImprimirConsumoCasa.setText("Imprimir Consumo Casa");
+        buttonImprimirConsumoCasa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonImprimirConsumoCasaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelResumenesLayout = new javax.swing.GroupLayout(panelResumenes);
         panelResumenes.setLayout(panelResumenesLayout);
         panelResumenesLayout.setHorizontalGroup(
@@ -709,6 +724,9 @@ public class VentaMain extends javax.swing.JDialog {
             .addGroup(panelResumenesLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(panelResumenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelResumenesLayout.createSequentialGroup()
+                        .addComponent(buttonImprimirConsumoCasa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelResumenesLayout.createSequentialGroup()
                         .addComponent(buttonImprimirTodoCocina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(242, 242, 242)
@@ -737,7 +755,9 @@ public class VentaMain extends javax.swing.JDialog {
                 .addGroup(panelResumenesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonImprimirCocina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonImprimirTodoCocina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(70, 70, 70))
+                .addGap(18, 18, 18)
+                .addComponent(buttonImprimirConsumoCasa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
 
         tabbedPaneMain.addTab("Resumenes Ventas", panelResumenes);
@@ -947,6 +967,10 @@ public class VentaMain extends javax.swing.JDialog {
         imprimirTodoCocina();
     }//GEN-LAST:event_buttonImprimirTodoCocinaActionPerformed
 
+    private void buttonImprimirConsumoCasaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImprimirConsumoCasaActionPerformed
+        imprimirConsumoCasa();
+    }//GEN-LAST:event_buttonImprimirConsumoCasaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonTextDown buttonAddOrden;
     private org.edisoncor.gui.button.ButtonTextDown buttonDelOrden;
@@ -954,6 +978,7 @@ public class VentaMain extends javax.swing.JDialog {
     private org.edisoncor.gui.button.ButtonTextDown buttonImprimir;
     private org.edisoncor.gui.button.ButtonTextDown buttonImprimirCamarero;
     private org.edisoncor.gui.button.ButtonTextDown buttonImprimirCocina;
+    private org.edisoncor.gui.button.ButtonTextDown buttonImprimirConsumoCasa;
     private org.edisoncor.gui.button.ButtonTextDown buttonImprimirTodoCamarero;
     private org.edisoncor.gui.button.ButtonTextDown buttonImprimirTodoCocina;
     private org.edisoncor.gui.button.ButtonTextDown buttonTerminarVentas;
@@ -1148,6 +1173,11 @@ public class VentaMain extends javax.swing.JDialog {
             imp.printCocinaResumen(aux, c, v.getFecha());
 
         } 
+    }
+
+    private void imprimirConsumoCasa() {
+    imp.printResumenCasa(VentaDAO.getResumenVentasCasa(v),v.getFecha());
+    
     }
 
 }

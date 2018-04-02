@@ -245,6 +245,22 @@ public class VentaDAO {
 
         return ret;
     }
+    
+    public static List<ProductovOrden> getResumenVentasCasa(Venta v){
+          //inicializando los datos
+        ArrayList<ProductovOrden> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            if(o.getDeLaCasa()){
+            joinListsProductovOrden(ret,
+                    new ArrayList<>(o.getProductovOrdenList()));}
+
+        }//nˆ3
+
+        return ret;
+    }
 
     //
     //Métodos referentes a los resumenes del consumo de insumos
