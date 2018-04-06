@@ -983,7 +983,7 @@
         <Component class="org.edisoncor.gui.button.ButtonTransluceIcon" name="buttonTransluceIcon1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/restManager/resources/images/Icon64 28-10-17 23-54-04.png"/>
+              <Image iconType="3" name="/restManager/resources/images/refresh.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="buttonTransluceIcon1"/>
           </Properties>

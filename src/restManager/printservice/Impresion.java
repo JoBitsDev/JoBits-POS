@@ -28,6 +28,7 @@ import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductovOrden;
+import restManager.persistencia.jpa.ProductovOrdenJpaController;
 import restManager.persistencia.jpa.staticContent;
 
 /**
@@ -333,6 +334,11 @@ public class Impresion {
             p.newLine();
             p.alignLeft();
             x.setEnviadosacocina(x.getCantidad());
+                try {
+                    staticContent.productovOrdenJpa.edit(x);
+                } catch (Exception ex) {
+                    Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+                }
             ordenSinPlatos = false;
             }
         }
@@ -350,7 +356,7 @@ public class Impresion {
             }
             else{
                 System.out.println("No existen platos de la cocina "
-                        +c.getNombreCocina()+" de la orden"+ o.getCodOrden()+" para imprimir");
+                        +c.getNombreCocina()+" de la orden "+ o.getCodOrden()+" para imprimir");
                 p.resetAll();
             }
     

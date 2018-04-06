@@ -861,7 +861,7 @@ public class VentaMain extends javax.swing.JDialog {
             }
         });
 
-        buttonTransluceIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/Icon64 28-10-17 23-54-04.png"))); // NOI18N
+        buttonTransluceIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
         buttonTransluceIcon1.setText("buttonTransluceIcon1");
         buttonTransluceIcon1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
