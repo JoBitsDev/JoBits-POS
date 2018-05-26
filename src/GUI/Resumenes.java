@@ -414,27 +414,10 @@ public class Resumenes extends javax.swing.JPanel{
             DefaultTableModel model = (DefaultTableModel) jTableVenta.getModel();
 
             if (jCheckBoxConsumoCasa.isSelected()) {
-                if (((String) jTableVenta.getValueAt(jTableVenta.getRowCount() - 2, 0)).equals("Porciento")) {
-                    model.removeRow(jTableVenta.getRowCount() - 1);
-                }
-                /*while (!((String)jTable2.getValueAt(jTable2.getRowCount()-1, 0)).equals("Porciento") ) {
-                    model.removeRow(jTable2.getRowCount()-1);
-                }*/
-                Object[] row2 = {"Gastos de la casa", null, null, null};
-                model.addRow(row2);
-               // fillGastosDeLaCasa();//TODO: cambiar esto
-                Object[] row = {"TotalRecaudado", null, null, jTextFieldTotalRecaudado.getText()};
-                model.addRow(row);
+              
             } else {
-                String parada = "";
-                do {
-                    parada = ((String) jTableVenta.getValueAt(jTableVenta.getRowCount() - 1, 0));
-                    model.removeRow(jTableVenta.getRowCount() - 1);
-                } while (!parada.equals("Gastos de la casa"));
-                Object[] row = {"TotalRecaudado", null, null, jTextFieldTotalRecaudado.getText()};
-                model.addRow(row);
-
-            }
+                
+               }
         } else {
             JOptionPane.showMessageDialog(null, "Esta funcion no esta disponible con la tabla vacia");
         }
@@ -502,6 +485,6 @@ public class Resumenes extends javax.swing.JPanel{
         
     }
 
-
-
+    
+    
 }
