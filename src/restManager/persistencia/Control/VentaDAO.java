@@ -142,7 +142,13 @@ public class VentaDAO {
             }
         }
     }
-
+    
+    /**
+     * crea un resumen del total que ha vendido cda cocina
+     * @param tabla
+     * @param v
+     * @param c 
+     */
     public static void getResumenVentasCocinaOnTable(JTable tabla, Venta v, Cocina c) {
         //inicializando los datos
         ArrayList[] rowData = comun.initArray(new ArrayList[3]);
@@ -338,6 +344,88 @@ public class VentaDAO {
                                     getProductoInsumoList()), p.getCantidad());
                 }
             }
+        }
+
+        //convirtiendo a rowData
+        float total = 0;
+        for (ProductoInsumo x : ret) {
+
+            rowData[0].add(x.getInsumo().getCodInsumo());
+            rowData[1].add(x.getInsumo().getNombre());
+            rowData[2].add(x.getInsumo().getUm());
+            rowData[3].add(x.getCantidad());
+            rowData[4].add(x.getCosto());
+            total += x.getCosto();
+        }
+
+        //llenando la tabla
+        try {
+            comun.AddToTable(rowData, tabla);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+    }
+
+    
+    public static void getResumenGastosDeLaCasaOnTable(JTable tabla,Venta v){
+        
+        //inicializando los datos
+        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList<ProductoInsumo> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            if(o.getDeLaCasa()){
+            for (ProductovOrden p : o.getProductovOrdenList()) {
+                joinListsProductoInsumos(ret,
+                        new ArrayList<>(p.getProductoVenta().
+                                getProductoInsumoList()), p.getCantidad());
+            }}
+        }
+
+        //convirtiendo a rowData
+        float total = 0;
+        for (ProductoInsumo x : ret) {
+
+            rowData[0].add(x.getInsumo().getCodInsumo());
+            rowData[1].add(x.getInsumo().getNombre());
+            rowData[2].add(x.getInsumo().getUm());
+            rowData[3].add(x.getCantidad());
+            rowData[4].add(x.getCosto());
+            total += x.getCosto();
+        }
+
+        //llenando la tabla
+        try {
+            comun.AddToTable(rowData, tabla);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+   
+    public static void getResumenGastosDeLaCasaCocinaOnTable(JTable tabla, Venta v, Cocina c) {
+
+        //inicializando los datos
+        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList<ProductoInsumo> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            if(o.getDeLaCasa()){
+            for (ProductovOrden p : o.getProductovOrdenList()) {
+                if (p.getProductoVenta().getCocinacodCocina().equals(c)) {
+                    joinListsProductoInsumos(ret,
+                            new ArrayList<>(p.getProductoVenta().
+                                    getProductoInsumoList()), p.getCantidad());
+                }
+            }}
         }
 
         //convirtiendo a rowData
