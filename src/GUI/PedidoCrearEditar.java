@@ -695,12 +695,14 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 }
             }
             try {
+                
                 o.setHoraTerminada(new Date());
-                Mesa m = o.getMesacodMesa();
+                Mesa m = staticContent.mesasJPA.findMesa(o.getMesacodMesa().getCodMesa());
                 m.setEstado("vacia");
                 staticContent.ordenJPA.edit(o);
                 staticContent.mesasJPA.edit(m);
-                //TODO:chequear que todos los platos fueron enviados a cocina....etc
+                staticContent.mesasJPA.getEntityManager().flush();
+                
             } catch (Exception ex) {
                 Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
             }
