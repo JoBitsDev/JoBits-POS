@@ -28,9 +28,9 @@ public class Resumenes extends javax.swing.JPanel{
     private Venta dia;
    // private VentaDAO vDAO;
     private Cocina cocina = null;
-    private Date end;
-    private MessageFormat headerVentas,headerGastos;
-    private List<Cocina> cocinas = staticContent.cocinaJPA.findCocinaEntities();
+    private final Date end;
+    private final MessageFormat headerVentas,headerGastos;
+    private final List<Cocina> cocinas = staticContent.cocinaJPA.findCocinaEntities();
     private List<Float> listaVentas = new LinkedList<>();
     private List<Float> listaGastos = new LinkedList<>();
 
@@ -414,8 +414,24 @@ public class Resumenes extends javax.swing.JPanel{
             DefaultTableModel model = (DefaultTableModel) jTableVenta.getModel();
 
             if (jCheckBoxConsumoCasa.isSelected()) {
+                Object[] row = {"Gastos de la casa",null,null,null,null};
+                model.addRow(row);
+                if(cocina == null){
+                VentaDAO.getResumenVentasDeLaCasaOnTable(jTableVenta, dia);}
+                else{
+                VentaDAO.getResumenGastosDeLaCasaCocinaOnTable(jTableVenta, dia, cocina);
+                }
+                Object [] row2 = {"TotalRecaudado", null, null, null,jTextFieldTotalRecaudado.getText()};
+                model.addRow(row2);
               
             } else {
+                String parada = "";
+                do {
+                    parada = ((String) jTableVenta.getValueAt(jTableVenta.getRowCount() - 1, 0));
+                    model.removeRow(jTableVenta.getRowCount() - 1);
+                } while (!parada.equals("Gastos de la casa"));
+                Object[] row = {"TotalRecaudado", null, null, jTextFieldTotalRecaudado.getText()};
+                model.addRow(row);
                 
                }
         } else {
