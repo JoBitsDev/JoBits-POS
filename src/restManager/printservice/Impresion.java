@@ -30,6 +30,7 @@ import restManager.persistencia.Personal;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.jpa.ProductovOrdenJpaController;
 import restManager.persistencia.jpa.staticContent;
+import restManager.util.comun;
 
 /**
  *
@@ -194,19 +195,21 @@ public class Impresion {
             total+=x.getCantidad()*x.getProductoVenta().getPrecioVenta();
         }
         
+        String totalPrint = comun.redondeoDeMonedaMN_CUC((int) (total*100));
+        
         p.alignRight();
         p.newLine();
-        p.setText(SUBTOTAL + total + MONEDA);
+        p.setText(SUBTOTAL + totalPrint + MONEDA);
         p.newLine();
         p.addLineSeperator();
-        p.setText(TOTAL + total + MONEDA);
+        p.setText(TOTAL + totalPrint + MONEDA);
         p.newLine();
         
         if(monedaCUC){
-        p.setText(TOTAL + total*cambio + MN); 
+        p.setText(TOTAL + comun.redondeoDeMonedaMN_CUC((int) (total*cambio*100)) + MN); 
         }
         else{
-        p.setText(TOTAL + Math.rint((total/cambio)*100)/100 + CUC);
+        p.setText(TOTAL + comun.redondeoDeMonedaMN_CUC((int) (100*total/cambio)) + CUC);
         }
         
         p.newLine();
