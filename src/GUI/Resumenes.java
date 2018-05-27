@@ -413,16 +413,19 @@ public class Resumenes extends javax.swing.JPanel{
         if (jTableVenta.getRowCount() > 0) {
             DefaultTableModel model = (DefaultTableModel) jTableVenta.getModel();
 
+            String totalRecaudado = jTextFieldTotalRecaudado.getText();
+            totalRecaudado = totalRecaudado.substring(0, totalRecaudado.length()-3);
             if (jCheckBoxConsumoCasa.isSelected()) {
                 Object[] row = {"Gastos de la casa",null,null,null,null};
                 model.addRow(row);
                 if(cocina == null){
                 VentaDAO.getResumenVentasDeLaCasaOnTable(jTableVenta, dia);}
                 else{
-                VentaDAO.getResumenGastosDeLaCasaCocinaOnTable(jTableVenta, dia, cocina);
+                VentaDAO.getResumenVentasDeLaCasaXCocinaOnTable(jTableVenta, dia, cocina);
                 }
-                Object [] row2 = {"TotalRecaudado", null, null, null,jTextFieldTotalRecaudado.getText()};
+                Object [] row2 = {"TotalRecaudado", null, null, null,Float.parseFloat(totalRecaudado)};
                 model.addRow(row2);
+               
               
             } else {
                 String parada = "";
@@ -430,7 +433,7 @@ public class Resumenes extends javax.swing.JPanel{
                     parada = ((String) jTableVenta.getValueAt(jTableVenta.getRowCount() - 1, 0));
                     model.removeRow(jTableVenta.getRowCount() - 1);
                 } while (!parada.equals("Gastos de la casa"));
-                Object[] row = {"TotalRecaudado", null, null, jTextFieldTotalRecaudado.getText()};
+                Object[] row = {"TotalRecaudado", null, null,null, Float.parseFloat(totalRecaudado)};
                 model.addRow(row);
                 
                }
