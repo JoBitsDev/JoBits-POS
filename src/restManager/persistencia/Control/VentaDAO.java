@@ -106,6 +106,41 @@ public class VentaDAO {
         }
 
     }
+    
+    public static void getResumenVentasDeLaCasaXCocinaOnTable(JTable tabla, Venta v, Cocina c){
+          //inicializando los datos
+        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList<ProductovOrden> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            if(o.getDeLaCasa()){
+            joinListsProductovOrdenByCocina(ret,
+                    new ArrayList(o.getProductovOrdenList()), c);}
+
+        }//nˆ3
+
+        //convirtiendo a rowData
+        float total = 0;
+        for (ProductovOrden x : ret) {
+            ProductoVenta pv = x.getProductoVenta();
+            rowData[0].add(pv.getPCod());
+            rowData[1].add(pv.getNombre());
+            rowData[2].add(pv.getPrecioVenta());
+            rowData[3].add(x.getCantidad());
+            rowData[4].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
+            total += pv.getPrecioVenta() * x.getCantidad();
+        }
+
+        //llenando la tabla
+        try {
+            comun.AddToTable(rowData, tabla);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     public static void getResumenVentasCamareroOnTable(JTable tabla, Venta v, Personal p) {
 
