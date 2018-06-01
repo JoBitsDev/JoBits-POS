@@ -100,7 +100,7 @@ public class Impresion {
      * @param m una instancia de una carta especifica
      */
     public Impresion(Carta m) {
-        this.nombreRest = m.getNombreCarta();
+        this(m, false, 24);
         
     }
 
