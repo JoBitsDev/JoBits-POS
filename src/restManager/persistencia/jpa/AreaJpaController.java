@@ -11,13 +11,12 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import restManager.persistencia.Carta;
+import restManager.persistencia.Mesa;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import restManager.persistencia.Area;
-import restManager.persistencia.Mesa;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.exceptions.PreexistingEntityException;
 
@@ -38,9 +37,6 @@ public class AreaJpaController implements Serializable {
     }
 
     public void create(Area area) throws PreexistingEntityException, Exception {
-        if (area.getCartaList() == null) {
-            area.setCartaList(new ArrayList<Carta>());
-        }
         if (area.getMesaList() == null) {
             area.setMesaList(new ArrayList<Mesa>());
         }
@@ -48,12 +44,6 @@ public class AreaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Carta> attachedCartaList = new ArrayList<Carta>();
-            for (Carta cartaListCartaToAttach : area.getCartaList()) {
-                cartaListCartaToAttach = em.getReference(cartaListCartaToAttach.getClass(), cartaListCartaToAttach.getCodCarta());
-                attachedCartaList.add(cartaListCartaToAttach);
-            }
-            area.setCartaList(attachedCartaList);
             List<Mesa> attachedMesaList = new ArrayList<Mesa>();
             for (Mesa mesaListMesaToAttach : area.getMesaList()) {
                 mesaListMesaToAttach = em.getReference(mesaListMesaToAttach.getClass(), mesaListMesaToAttach.getCodMesa());
@@ -61,10 +51,6 @@ public class AreaJpaController implements Serializable {
             }
             area.setMesaList(attachedMesaList);
             em.persist(area);
-            for (Carta cartaListCarta : area.getCartaList()) {
-                cartaListCarta.getAreaList().add(area);
-                cartaListCarta = em.merge(cartaListCarta);
-            }
             for (Mesa mesaListMesa : area.getMesaList()) {
                 Area oldAreacodAreaOfMesaListMesa = mesaListMesa.getAreacodArea();
                 mesaListMesa.setAreacodArea(area);
@@ -93,17 +79,8 @@ public class AreaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Area persistentArea = em.find(Area.class, area.getCodArea());
-            List<Carta> cartaListOld = persistentArea.getCartaList();
-            List<Carta> cartaListNew = area.getCartaList();
             List<Mesa> mesaListOld = persistentArea.getMesaList();
             List<Mesa> mesaListNew = area.getMesaList();
-            List<Carta> attachedCartaListNew = new ArrayList<Carta>();
-            for (Carta cartaListNewCartaToAttach : cartaListNew) {
-                cartaListNewCartaToAttach = em.getReference(cartaListNewCartaToAttach.getClass(), cartaListNewCartaToAttach.getCodCarta());
-                attachedCartaListNew.add(cartaListNewCartaToAttach);
-            }
-            cartaListNew = attachedCartaListNew;
-            area.setCartaList(cartaListNew);
             List<Mesa> attachedMesaListNew = new ArrayList<Mesa>();
             for (Mesa mesaListNewMesaToAttach : mesaListNew) {
                 mesaListNewMesaToAttach = em.getReference(mesaListNewMesaToAttach.getClass(), mesaListNewMesaToAttach.getCodMesa());
@@ -112,18 +89,6 @@ public class AreaJpaController implements Serializable {
             mesaListNew = attachedMesaListNew;
             area.setMesaList(mesaListNew);
             area = em.merge(area);
-            for (Carta cartaListOldCarta : cartaListOld) {
-                if (!cartaListNew.contains(cartaListOldCarta)) {
-                    cartaListOldCarta.getAreaList().remove(area);
-                    cartaListOldCarta = em.merge(cartaListOldCarta);
-                }
-            }
-            for (Carta cartaListNewCarta : cartaListNew) {
-                if (!cartaListOld.contains(cartaListNewCarta)) {
-                    cartaListNewCarta.getAreaList().add(area);
-                    cartaListNewCarta = em.merge(cartaListNewCarta);
-                }
-            }
             for (Mesa mesaListOldMesa : mesaListOld) {
                 if (!mesaListNew.contains(mesaListOldMesa)) {
                     mesaListOldMesa.setAreacodArea(null);
@@ -169,11 +134,6 @@ public class AreaJpaController implements Serializable {
                 area.getCodArea();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The area with id " + id + " no longer exists.", enfe);
-            }
-            List<Carta> cartaList = area.getCartaList();
-            for (Carta cartaListCarta : cartaList) {
-                cartaListCarta.getAreaList().remove(area);
-                cartaListCarta = em.merge(cartaListCarta);
             }
             List<Mesa> mesaList = area.getMesaList();
             for (Mesa mesaListMesa : mesaList) {

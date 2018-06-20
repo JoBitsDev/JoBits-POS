@@ -24,7 +24,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "ipv_registro ")
+@Table(name = "ipv_registro")
 @NamedQueries({
     @NamedQuery(name = "IpvRegistro.findAll", query = "SELECT i FROM IpvRegistro i")
     , @NamedQuery(name = "IpvRegistro.findByIpvinsumocodInsumo", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvinsumocodInsumo = :ipvinsumocodInsumo")

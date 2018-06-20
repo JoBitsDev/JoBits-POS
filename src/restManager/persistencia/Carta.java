@@ -7,14 +7,10 @@
 package restManager.persistencia;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -43,11 +39,6 @@ public class Carta implements Serializable {
     private String nombreCarta;
     @Column(name = "moneda_principal")
     private String monedaPrincipal;
-    @JoinTable(name = "carta_area", joinColumns = {
-        @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")}, inverseJoinColumns = {
-        @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")})
-    @ManyToMany
-    private List<Area> areaList;
 
     public Carta() {
     }
@@ -83,14 +74,6 @@ public class Carta implements Serializable {
 
     public void setMonedaPrincipal(String monedaPrincipal) {
         this.monedaPrincipal = monedaPrincipal;
-    }
-
-    public List<Area> getAreaList() {
-        return areaList;
-    }
-
-    public void setAreaList(List<Area> areaList) {
-        this.areaList = areaList;
     }
 
     @Override
