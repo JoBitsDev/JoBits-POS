@@ -27,13 +27,13 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name = "venta")
+@Table(name = "venta_archivada")
 @NamedQueries({
-    @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v")
-    , @NamedQuery(name = "Venta.findByFecha", query = "SELECT v FROM Venta v WHERE v.fecha = :fecha")
-    , @NamedQuery(name = "Venta.findByVentaTotal", query = "SELECT v FROM Venta v WHERE v.ventaTotal = :ventaTotal")
-    , @NamedQuery(name = "Venta.findByVentagastosEninsumos", query = "SELECT v FROM Venta v WHERE v.ventagastosEninsumos = :ventagastosEninsumos")})
-public class Venta implements Serializable {
+    @NamedQuery(name = "VentaArchivada.findAll", query = "SELECT v FROM VentaArchivada v")
+    , @NamedQuery(name = "VentaArchivada.findByFecha", query = "SELECT v FROM VentaArchivada v WHERE v.fecha = :fecha")
+    , @NamedQuery(name = "VentaArchivada.findByVentaTotal", query = "SELECT v FROM VentaArchivada v WHERE v.ventaTotal = :ventaTotal")
+    , @NamedQuery(name = "VentaArchivada.findByVentagastosEninsumos", query = "SELECT v FROM VentaArchivada v WHERE v.ventagastosEninsumos = :ventagastosEninsumos")})
+public class VentaArchivada implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,12 +47,12 @@ public class Venta implements Serializable {
     @Column(name = "ventagastos_eninsumos")
     private Double ventagastosEninsumos;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventafecha")
-    private List<Orden> ordenList;
+    private List<OrdenArchivada> ordenArchivadaList;
 
-    public Venta() {
+    public VentaArchivada() {
     }
 
-    public Venta(Date fecha) {
+    public VentaArchivada(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -80,12 +80,12 @@ public class Venta implements Serializable {
         this.ventagastosEninsumos = ventagastosEninsumos;
     }
 
-    public List<Orden> getOrdenList() {
-        return ordenList;
+    public List<OrdenArchivada> getOrdenArchivadaList() {
+        return ordenArchivadaList;
     }
 
-    public void setOrdenList(List<Orden> ordenList) {
-        this.ordenList = ordenList;
+    public void setOrdenArchivadaList(List<OrdenArchivada> ordenArchivadaList) {
+        this.ordenArchivadaList = ordenArchivadaList;
     }
 
     @Override
@@ -98,10 +98,10 @@ public class Venta implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Venta)) {
+        if (!(object instanceof VentaArchivada)) {
             return false;
         }
-        Venta other = (Venta) object;
+        VentaArchivada other = (VentaArchivada) object;
         if ((this.fecha == null && other.fecha != null) || (this.fecha != null && !this.fecha.equals(other.fecha))) {
             return false;
         }
@@ -110,7 +110,7 @@ public class Venta implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Venta[ fecha=" + fecha + " ]";
+        return "restManager.persistencia.VentaArchivada[ fecha=" + fecha + " ]";
     }
 
 }

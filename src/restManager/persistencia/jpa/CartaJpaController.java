@@ -7,13 +7,15 @@
 package restManager.persistencia.jpa;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import restManager.persistencia.Area;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import restManager.persistencia.Carta;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.exceptions.PreexistingEntityException;
@@ -35,11 +37,24 @@ public class CartaJpaController implements Serializable {
     }
 
     public void create(Carta carta) throws PreexistingEntityException, Exception {
+        if (carta.getAreaList() == null) {
+            carta.setAreaList(new ArrayList<Area>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Area> attachedAreaList = new ArrayList<Area>();
+            for (Area areaListAreaToAttach : carta.getAreaList()) {
+                areaListAreaToAttach = em.getReference(areaListAreaToAttach.getClass(), areaListAreaToAttach.getCodArea());
+                attachedAreaList.add(areaListAreaToAttach);
+            }
+            carta.setAreaList(attachedAreaList);
             em.persist(carta);
+            for (Area areaListArea : carta.getAreaList()) {
+                areaListArea.getCartaList().add(carta);
+                areaListArea = em.merge(areaListArea);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (findCarta(carta.getCodCarta()) != null) {
@@ -58,7 +73,29 @@ public class CartaJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Carta persistentCarta = em.find(Carta.class, carta.getCodCarta());
+            List<Area> areaListOld = persistentCarta.getAreaList();
+            List<Area> areaListNew = carta.getAreaList();
+            List<Area> attachedAreaListNew = new ArrayList<Area>();
+            for (Area areaListNewAreaToAttach : areaListNew) {
+                areaListNewAreaToAttach = em.getReference(areaListNewAreaToAttach.getClass(), areaListNewAreaToAttach.getCodArea());
+                attachedAreaListNew.add(areaListNewAreaToAttach);
+            }
+            areaListNew = attachedAreaListNew;
+            carta.setAreaList(areaListNew);
             carta = em.merge(carta);
+            for (Area areaListOldArea : areaListOld) {
+                if (!areaListNew.contains(areaListOldArea)) {
+                    areaListOldArea.getCartaList().remove(carta);
+                    areaListOldArea = em.merge(areaListOldArea);
+                }
+            }
+            for (Area areaListNewArea : areaListNew) {
+                if (!areaListOld.contains(areaListNewArea)) {
+                    areaListNewArea.getCartaList().add(carta);
+                    areaListNewArea = em.merge(areaListNewArea);
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -87,6 +124,11 @@ public class CartaJpaController implements Serializable {
                 carta.getCodCarta();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The carta with id " + id + " no longer exists.", enfe);
+            }
+            List<Area> areaList = carta.getAreaList();
+            for (Area areaListArea : areaList) {
+                areaListArea.getCartaList().remove(carta);
+                areaListArea = em.merge(areaListArea);
             }
             em.remove(carta);
             em.getTransaction().commit();

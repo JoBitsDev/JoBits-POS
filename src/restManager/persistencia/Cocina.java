@@ -43,6 +43,8 @@ public class Cocina implements Serializable {
     private List<ProductoVenta> productoVentaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocina")
     private List<Ipv> ipvList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocinacodCocina")
+    private List<Impresora> impresoraList;
 
     public Cocina() {
     }
@@ -86,6 +88,14 @@ public class Cocina implements Serializable {
 
     public void setIpvList(List<Ipv> ipvList) {
         this.ipvList = ipvList;
+    }
+
+    public List<Impresora> getImpresoraList() {
+        return impresoraList;
+    }
+
+    public void setImpresoraList(List<Impresora> impresoraList) {
+        this.impresoraList = impresoraList;
     }
 
     @Override

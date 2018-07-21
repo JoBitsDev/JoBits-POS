@@ -45,7 +45,7 @@ public class VentaMain extends javax.swing.JDialog {
     //private List<Orden> ordenes = new ArrayList<>();
     private Venta v;
     private List<Personal> camarerosTrabajando = staticContent.personalJPA.findPersonalEntities();
-    private Impresion imp = new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"), false, 24);
+    private Impresion imp = new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"));
     private IPVEstado estadoIPVBarra;
 
     /**
@@ -154,11 +154,7 @@ public class VentaMain extends javax.swing.JDialog {
 
         for (Orden o : ventas.getOrdenList()) {
             rowData[0].add(o.getCodOrden());
-            float total = 0;
-            for (ProductovOrden x : o.getProductovOrdenList()) {
-                total += x.getProductoVenta().getPrecioVenta() * x.getCantidad();
-            }
-            rowData[2].add(total);
+            rowData[2].add(o.getOrdenvalorMonetario());
             rowData[1].add(o.getMesacodMesa().getCodMesa());
             rowData[3].add(o.getHoraTerminada()!=null);
         }
@@ -181,10 +177,11 @@ public class VentaMain extends javax.swing.JDialog {
 
         comun.limpiarTabla(jXTableResumenVentas);
         VentaDAO.getResumenVentasOnTable(jXTableResumenVentas, v);
+        VentaDAO.getValorTotalVentas(v);
 
         //actualizando el label de valor
         jXLabelValorTotalRecaudado.setText(
-                comun.calcularSumaTabla(jXTableResumenVentas, 4) + Main.moneda);
+                VentaDAO.getValorTotalVentas(v) + Main.moneda);
 
         jXLabelVALORVENTAS.setText(jXLabelValorTotalRecaudado.getText());
 
@@ -321,6 +318,8 @@ public class VentaMain extends javax.swing.JDialog {
         buttonEditOrden = new org.edisoncor.gui.button.ButtonTextDown();
         buttonDelOrden = new org.edisoncor.gui.button.ButtonTextDown();
         buttonAddOrden = new org.edisoncor.gui.button.ButtonTextDown();
+        buttonCalcularCambio = new org.edisoncor.gui.button.ButtonTextDown();
+        buttonImprimirZ = new org.edisoncor.gui.button.ButtonTextDown();
         panelResumenes = new org.edisoncor.gui.panel.PanelRect();
         jXLabelCamareros = new org.jdesktop.swingx.JXLabel();
         jXLabelCocinas = new org.jdesktop.swingx.JXLabel();
@@ -459,6 +458,11 @@ public class VentaMain extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        jXTableOrdenes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jXTableOrdenesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jXTableOrdenes);
         if (jXTableOrdenes.getColumnModel().getColumnCount() > 0) {
             jXTableOrdenes.getColumnModel().getColumn(3).setResizable(false);
@@ -533,6 +537,14 @@ public class VentaMain extends javax.swing.JDialog {
             }
         });
 
+        buttonCalcularCambio.setText("Calcular Cambio");
+        buttonCalcularCambio.setEnabled(Main.NIVEL_2);
+        buttonCalcularCambio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCalcularCambioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelRect3Layout = new javax.swing.GroupLayout(panelRect3);
         panelRect3.setLayout(panelRect3Layout);
         panelRect3Layout.setHorizontalGroup(
@@ -543,10 +555,12 @@ public class VentaMain extends javax.swing.JDialog {
                     .addGroup(panelRect3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(buttonEditOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonCalcularCambio, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRect3Layout.createSequentialGroup()
                         .addComponent(buttonAddOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                         .addComponent(buttonDelOrden, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -558,9 +572,19 @@ public class VentaMain extends javax.swing.JDialog {
                     .addComponent(buttonDelOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonAddOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
-                .addComponent(buttonEditOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelRect3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonEditOrden, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonCalcularCambio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        buttonImprimirZ.setText("Imprimir Z");
+        buttonImprimirZ.setEnabled(Main.NIVEL_3);
+        buttonImprimirZ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonImprimirZActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelVentasLayout = new javax.swing.GroupLayout(panelVentas);
         panelVentas.setLayout(panelVentasLayout);
@@ -572,14 +596,19 @@ public class VentaMain extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                     .addComponent(jXLabelOrden1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelRect3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(62, 62, 62)
-                .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelVentasLayout.createSequentialGroup()
-                        .addComponent(jXLabelTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelVentasLayout.createSequentialGroup()
+                                .addComponent(jXLabelTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jXLabelValorTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jXLabelResumenVentas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)))
+                    .addGroup(panelVentasLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jXLabelValorTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jXLabelResumenVentas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(buttonImprimirZ, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19))
         );
         panelVentasLayout.setVerticalGroup(
@@ -595,9 +624,12 @@ public class VentaMain extends javax.swing.JDialog {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jXLabelValorTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jXLabelTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelVentasLayout.createSequentialGroup()
+                        .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jXLabelValorTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jXLabelTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonImprimirZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelRect3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
         );
@@ -882,19 +914,16 @@ public class VentaMain extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addComponent(buttonTransluceIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonTerminarVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRect1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelRect1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRect1Layout.createSequentialGroup()
-                        .addComponent(tabbedPaneMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRect1Layout.createSequentialGroup()
-                        .addComponent(buttonImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonTerminarVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))))
+                .addContainerGap()
+                .addComponent(tabbedPaneMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panelRect1Layout.setVerticalGroup(
             panelRect1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -905,14 +934,13 @@ public class VentaMain extends javax.swing.JDialog {
                         .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelRect1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(buttonTransluceIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelRect1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonTransluceIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonTerminarVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedPaneMain, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(panelRect1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonTerminarVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addComponent(tabbedPaneMain, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+                .addGap(97, 97, 97))
         );
 
         getContentPane().add(panelRect1, java.awt.BorderLayout.CENTER);
@@ -943,7 +971,7 @@ public class VentaMain extends javax.swing.JDialog {
 
     private void buttonTerminarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTerminarVentasActionPerformed
         terminarDia();
-        dispose();
+        
     }//GEN-LAST:event_buttonTerminarVentasActionPerformed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
@@ -971,8 +999,23 @@ public class VentaMain extends javax.swing.JDialog {
         imprimirConsumoCasa();
     }//GEN-LAST:event_buttonImprimirConsumoCasaActionPerformed
 
+    private void jXTableOrdenesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jXTableOrdenesMouseClicked
+        if(evt.getClickCount() == 2){
+            PedidoCrearEditar c = PedidoCrearEditar.getInstance(this, true, getSelectedOrden());
+        }
+    }//GEN-LAST:event_jXTableOrdenesMouseClicked
+
+    private void buttonImprimirZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImprimirZActionPerformed
+        imprimirZ();
+    }//GEN-LAST:event_buttonImprimirZActionPerformed
+
+    private void buttonCalcularCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCalcularCambioActionPerformed
+        CalcularCambio cc = new CalcularCambio(this, true, getSelectedOrden());
+    }//GEN-LAST:event_buttonCalcularCambioActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonTextDown buttonAddOrden;
+    private org.edisoncor.gui.button.ButtonTextDown buttonCalcularCambio;
     private org.edisoncor.gui.button.ButtonTextDown buttonDelOrden;
     private org.edisoncor.gui.button.ButtonTextDown buttonEditOrden;
     private org.edisoncor.gui.button.ButtonTextDown buttonImprimir;
@@ -981,6 +1024,7 @@ public class VentaMain extends javax.swing.JDialog {
     private org.edisoncor.gui.button.ButtonTextDown buttonImprimirConsumoCasa;
     private org.edisoncor.gui.button.ButtonTextDown buttonImprimirTodoCamarero;
     private org.edisoncor.gui.button.ButtonTextDown buttonImprimirTodoCocina;
+    private org.edisoncor.gui.button.ButtonTextDown buttonImprimirZ;
     private org.edisoncor.gui.button.ButtonTextDown buttonTerminarVentas;
     private org.edisoncor.gui.button.ButtonTransluceIcon buttonTransluceIcon1;
     private javax.swing.JCheckBox jCheckBoxRedondearValores;
@@ -1078,25 +1122,23 @@ public class VentaMain extends javax.swing.JDialog {
             em.getTransaction().begin();
             for (Orden x : v.getOrdenList()) {
                 if (x.getHoraTerminada() == null) {
-                    x.setHoraTerminada(new Date());
+                    JOptionPane.showMessageDialog(this, 
+                            "Existen tickets sin cerrar. Cierre los tickets antes de terminar la venta");
+                    return;
+                    
                 }
-
-                float valorMonetaio = 0;
-                float gastosPorInsumos = 0;
-                for (ProductovOrden po : x.getProductovOrdenList()) {
-                    valorMonetaio += po.getProductoVenta().getPrecioVenta() * po.getCantidad();
-                    gastosPorInsumos += po.getProductoVenta().getGasto() * po.getCantidad();
+                if(!x.getDeLaCasa()){
+                ventaTotal += x.getOrdenvalorMonetario();
                 }
-                x.setOrdenvalorMonetario(valorMonetaio);
-                x.setOrdengastoEninsumos(gastosPorInsumos);
-                ventaTotal += valorMonetaio;
-                ventasGastosEnInsumos += gastosPorInsumos;
-                em.merge(x);
+                
+                ventasGastosEnInsumos += x.getOrdengastoEninsumos();
+                
             }
             v.setVentaTotal((double) ventaTotal);
             v.setVentagastosEninsumos((double) ventasGastosEnInsumos);
             em.merge(v);
             em.getTransaction().commit();
+            dispose();
 
         }
     }
@@ -1114,9 +1156,12 @@ public class VentaMain extends javax.swing.JDialog {
 
         if (!Main.NIVEL_3) {
             tabbedPaneMain.remove(0);
-            tabbedPaneMain.remove(2);
+            tabbedPaneMain.remove(1);
+            tabbedPaneMain.remove(1);
 
         }
+        jXLabelValorTotalRecaudado.setVisible(Main.NIVEL_3);
+        jXLabelTotalRecaudado.setVisible(Main.NIVEL_3);
     }
 
     private void UpdateTablaIPVBarra(Venta ventas) {
@@ -1178,6 +1223,10 @@ public class VentaMain extends javax.swing.JDialog {
     private void imprimirConsumoCasa() {
     imp.printResumenCasa(VentaDAO.getResumenVentasCasa(v),v.getFecha());
     
+    }
+
+    private void imprimirZ() {
+        imp.printZ(v);
     }
 
 }

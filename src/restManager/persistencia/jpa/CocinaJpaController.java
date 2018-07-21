@@ -17,7 +17,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import restManager.persistencia.Cocina;
-import restManager.persistencia.Ipv;
+import restManager.persistencia.Impresora;
 import restManager.persistencia.jpa.exceptions.IllegalOrphanException;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.exceptions.PreexistingEntityException;
@@ -42,8 +42,8 @@ public class CocinaJpaController implements Serializable {
         if (cocina.getProductoVentaList() == null) {
             cocina.setProductoVentaList(new ArrayList<ProductoVenta>());
         }
-        if (cocina.getIpvList() == null) {
-            cocina.setIpvList(new ArrayList<Ipv>());
+        if (cocina.getImpresoraList() == null) {
+            cocina.setImpresoraList(new ArrayList<Impresora>());
         }
         EntityManager em = null;
         try {
@@ -55,12 +55,12 @@ public class CocinaJpaController implements Serializable {
                 attachedProductoVentaList.add(productoVentaListProductoVentaToAttach);
             }
             cocina.setProductoVentaList(attachedProductoVentaList);
-            List<Ipv> attachedIpvList = new ArrayList<Ipv>();
-            for (Ipv ipvListIpvToAttach : cocina.getIpvList()) {
-                ipvListIpvToAttach = em.getReference(ipvListIpvToAttach.getClass(), ipvListIpvToAttach.getIpvPK());
-                attachedIpvList.add(ipvListIpvToAttach);
+            List<Impresora> attachedImpresoraList = new ArrayList<Impresora>();
+            for (Impresora impresoraListImpresoraToAttach : cocina.getImpresoraList()) {
+                impresoraListImpresoraToAttach = em.getReference(impresoraListImpresoraToAttach.getClass(), impresoraListImpresoraToAttach.getCodImpresora());
+                attachedImpresoraList.add(impresoraListImpresoraToAttach);
             }
-            cocina.setIpvList(attachedIpvList);
+            cocina.setImpresoraList(attachedImpresoraList);
             em.persist(cocina);
             for (ProductoVenta productoVentaListProductoVenta : cocina.getProductoVentaList()) {
                 Cocina oldCocinacodCocinaOfProductoVentaListProductoVenta = productoVentaListProductoVenta.getCocinacodCocina();
@@ -71,13 +71,13 @@ public class CocinaJpaController implements Serializable {
                     oldCocinacodCocinaOfProductoVentaListProductoVenta = em.merge(oldCocinacodCocinaOfProductoVentaListProductoVenta);
                 }
             }
-            for (Ipv ipvListIpv : cocina.getIpvList()) {
-                Cocina oldCocinaOfIpvListIpv = ipvListIpv.getCocina();
-                ipvListIpv.setCocina(cocina);
-                ipvListIpv = em.merge(ipvListIpv);
-                if (oldCocinaOfIpvListIpv != null) {
-                    oldCocinaOfIpvListIpv.getIpvList().remove(ipvListIpv);
-                    oldCocinaOfIpvListIpv = em.merge(oldCocinaOfIpvListIpv);
+            for (Impresora impresoraListImpresora : cocina.getImpresoraList()) {
+                Cocina oldCocinacodCocinaOfImpresoraListImpresora = impresoraListImpresora.getCocinacodCocina();
+                impresoraListImpresora.setCocinacodCocina(cocina);
+                impresoraListImpresora = em.merge(impresoraListImpresora);
+                if (oldCocinacodCocinaOfImpresoraListImpresora != null) {
+                    oldCocinacodCocinaOfImpresoraListImpresora.getImpresoraList().remove(impresoraListImpresora);
+                    oldCocinacodCocinaOfImpresoraListImpresora = em.merge(oldCocinacodCocinaOfImpresoraListImpresora);
                 }
             }
             em.getTransaction().commit();
@@ -101,15 +101,15 @@ public class CocinaJpaController implements Serializable {
             Cocina persistentCocina = em.find(Cocina.class, cocina.getCodCocina());
             List<ProductoVenta> productoVentaListOld = persistentCocina.getProductoVentaList();
             List<ProductoVenta> productoVentaListNew = cocina.getProductoVentaList();
-            List<Ipv> ipvListOld = persistentCocina.getIpvList();
-            List<Ipv> ipvListNew = cocina.getIpvList();
+            List<Impresora> impresoraListOld = persistentCocina.getImpresoraList();
+            List<Impresora> impresoraListNew = cocina.getImpresoraList();
             List<String> illegalOrphanMessages = null;
-            for (Ipv ipvListOldIpv : ipvListOld) {
-                if (!ipvListNew.contains(ipvListOldIpv)) {
+            for (Impresora impresoraListOldImpresora : impresoraListOld) {
+                if (!impresoraListNew.contains(impresoraListOldImpresora)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Ipv " + ipvListOldIpv + " since its cocina field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Impresora " + impresoraListOldImpresora + " since its cocinacodCocina field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -122,13 +122,13 @@ public class CocinaJpaController implements Serializable {
             }
             productoVentaListNew = attachedProductoVentaListNew;
             cocina.setProductoVentaList(productoVentaListNew);
-            List<Ipv> attachedIpvListNew = new ArrayList<Ipv>();
-            for (Ipv ipvListNewIpvToAttach : ipvListNew) {
-                ipvListNewIpvToAttach = em.getReference(ipvListNewIpvToAttach.getClass(), ipvListNewIpvToAttach.getIpvPK());
-                attachedIpvListNew.add(ipvListNewIpvToAttach);
+            List<Impresora> attachedImpresoraListNew = new ArrayList<Impresora>();
+            for (Impresora impresoraListNewImpresoraToAttach : impresoraListNew) {
+                impresoraListNewImpresoraToAttach = em.getReference(impresoraListNewImpresoraToAttach.getClass(), impresoraListNewImpresoraToAttach.getCodImpresora());
+                attachedImpresoraListNew.add(impresoraListNewImpresoraToAttach);
             }
-            ipvListNew = attachedIpvListNew;
-            cocina.setIpvList(ipvListNew);
+            impresoraListNew = attachedImpresoraListNew;
+            cocina.setImpresoraList(impresoraListNew);
             cocina = em.merge(cocina);
             for (ProductoVenta productoVentaListOldProductoVenta : productoVentaListOld) {
                 if (!productoVentaListNew.contains(productoVentaListOldProductoVenta)) {
@@ -147,14 +147,14 @@ public class CocinaJpaController implements Serializable {
                     }
                 }
             }
-            for (Ipv ipvListNewIpv : ipvListNew) {
-                if (!ipvListOld.contains(ipvListNewIpv)) {
-                    Cocina oldCocinaOfIpvListNewIpv = ipvListNewIpv.getCocina();
-                    ipvListNewIpv.setCocina(cocina);
-                    ipvListNewIpv = em.merge(ipvListNewIpv);
-                    if (oldCocinaOfIpvListNewIpv != null && !oldCocinaOfIpvListNewIpv.equals(cocina)) {
-                        oldCocinaOfIpvListNewIpv.getIpvList().remove(ipvListNewIpv);
-                        oldCocinaOfIpvListNewIpv = em.merge(oldCocinaOfIpvListNewIpv);
+            for (Impresora impresoraListNewImpresora : impresoraListNew) {
+                if (!impresoraListOld.contains(impresoraListNewImpresora)) {
+                    Cocina oldCocinacodCocinaOfImpresoraListNewImpresora = impresoraListNewImpresora.getCocinacodCocina();
+                    impresoraListNewImpresora.setCocinacodCocina(cocina);
+                    impresoraListNewImpresora = em.merge(impresoraListNewImpresora);
+                    if (oldCocinacodCocinaOfImpresoraListNewImpresora != null && !oldCocinacodCocinaOfImpresoraListNewImpresora.equals(cocina)) {
+                        oldCocinacodCocinaOfImpresoraListNewImpresora.getImpresoraList().remove(impresoraListNewImpresora);
+                        oldCocinacodCocinaOfImpresoraListNewImpresora = em.merge(oldCocinacodCocinaOfImpresoraListNewImpresora);
                     }
                 }
             }
@@ -188,12 +188,12 @@ public class CocinaJpaController implements Serializable {
                 throw new NonexistentEntityException("The cocina with id " + id + " no longer exists.", enfe);
             }
             List<String> illegalOrphanMessages = null;
-            List<Ipv> ipvListOrphanCheck = cocina.getIpvList();
-            for (Ipv ipvListOrphanCheckIpv : ipvListOrphanCheck) {
+            List<Impresora> impresoraListOrphanCheck = cocina.getImpresoraList();
+            for (Impresora impresoraListOrphanCheckImpresora : impresoraListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Cocina (" + cocina + ") cannot be destroyed since the Ipv " + ipvListOrphanCheckIpv + " in its ipvList field has a non-nullable cocina field.");
+                illegalOrphanMessages.add("This Cocina (" + cocina + ") cannot be destroyed since the Impresora " + impresoraListOrphanCheckImpresora + " in its impresoraList field has a non-nullable cocinacodCocina field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

@@ -8,10 +8,12 @@ package GUI;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import restManager.persistencia.Carta;
+import restManager.persistencia.Configuracion;
 import restManager.persistencia.DatosPersonales;
 import restManager.persistencia.Personal;
 import restManager.persistencia.PuestoTrabajo;
@@ -31,16 +33,19 @@ public class FirstTimeDialog extends javax.swing.JDialog {
     public FirstTimeDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        primerDialogo();
+       
+        this.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelContrato = new org.edisoncor.gui.panel.PanelTranslucidoComplete();
+        panelContrato = new org.edisoncor.gui.panel.PanelRect();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        panelFormulario = new org.edisoncor.gui.panel.PanelTranslucidoComplete();
+        panelFormulario = new org.edisoncor.gui.panel.PanelRect();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
@@ -54,11 +59,13 @@ public class FirstTimeDialog extends javax.swing.JDialog {
         panelRect1 = new org.edisoncor.gui.panel.PanelRect();
         panelCurves1 = new org.edisoncor.gui.panel.PanelCurves();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonSiguiente = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        panelaux = new org.edisoncor.gui.panel.PanelTranslucidoComplete();
+        panelaux = new org.edisoncor.gui.panel.PanelRect();
 
         panelContrato.setMinimumSize(new java.awt.Dimension(730, 442));
+        panelContrato.setName(""); // NOI18N
+        panelContrato.setPreferredSize(new java.awt.Dimension(730, 442));
 
         jTextArea1.setEditable(false);
         jTextArea1.setBackground(new java.awt.Color(240, 240, 240));
@@ -82,6 +89,7 @@ public class FirstTimeDialog extends javax.swing.JDialog {
         );
 
         panelFormulario.setMinimumSize(new java.awt.Dimension(730, 442));
+        panelFormulario.setPreferredSize(new java.awt.Dimension(730, 442));
 
         jTextArea3.setEditable(false);
         jTextArea3.setBackground(new java.awt.Color(240, 240, 240));
@@ -94,15 +102,19 @@ public class FirstTimeDialog extends javax.swing.JDialog {
         jScrollPane3.setViewportView(jTextArea3);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre del Local: ");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nombre del superusuario: ");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Contraseña: ");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Confirmación Contraseña: ");
 
         javax.swing.GroupLayout panelFormularioLayout = new javax.swing.GroupLayout(panelFormulario);
@@ -152,6 +164,11 @@ public class FirstTimeDialog extends javax.swing.JDialog {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         panelRect1.setLayout(new java.awt.BorderLayout());
 
@@ -160,10 +177,10 @@ public class FirstTimeDialog extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Bienvenido");
 
-        jButton1.setText("Siguiente");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSiguiente.setText("Siguiente");
+        jButtonSiguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonSiguienteActionPerformed(evt);
             }
         });
 
@@ -174,16 +191,9 @@ public class FirstTimeDialog extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout panelauxLayout = new javax.swing.GroupLayout(panelaux);
-        panelaux.setLayout(panelauxLayout);
-        panelauxLayout.setHorizontalGroup(
-            panelauxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        panelauxLayout.setVerticalGroup(
-            panelauxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 442, Short.MAX_VALUE)
-        );
+        panelaux.setMinimumSize(new java.awt.Dimension(730, 442));
+        panelaux.setPreferredSize(new java.awt.Dimension(730, 442));
+        panelaux.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout panelCurves1Layout = new javax.swing.GroupLayout(panelCurves1);
         panelCurves1.setLayout(panelCurves1Layout);
@@ -195,8 +205,8 @@ public class FirstTimeDialog extends javax.swing.JDialog {
                     .addComponent(panelaux, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelCurves1Layout.createSequentialGroup()
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 530, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonSiguiente))
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(40, 40, 40))
         );
@@ -209,7 +219,7 @@ public class FirstTimeDialog extends javax.swing.JDialog {
                 .addComponent(panelaux, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panelCurves1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jButtonSiguiente)
                     .addComponent(jButton2))
                 .addGap(42, 42, 42))
         );
@@ -222,22 +232,34 @@ public class FirstTimeDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSiguienteActionPerformed
       if( segundoDialogo ){
           segundoDialogo(); 
       }
       else{
-          primerDialogo();
+          initSegundoDialogo();
+          segundoDialogo = true;
       }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonSiguienteActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        dispose();
+       if( segundoDialogo ){
+          primerDialogo();
+          segundoDialogo = false;
+      }
+      else{
+           System.exit(0);
+      }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        System.exit(0);
+    }//GEN-LAST:event_formWindowClosed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonSiguiente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -251,11 +273,11 @@ public class FirstTimeDialog extends javax.swing.JDialog {
     private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private org.edisoncor.gui.panel.PanelTranslucidoComplete panelContrato;
+    private org.edisoncor.gui.panel.PanelRect panelContrato;
     private org.edisoncor.gui.panel.PanelCurves panelCurves1;
-    private org.edisoncor.gui.panel.PanelTranslucidoComplete panelFormulario;
+    private org.edisoncor.gui.panel.PanelRect panelFormulario;
     private org.edisoncor.gui.panel.PanelRect panelRect1;
-    private org.edisoncor.gui.panel.PanelTranslucidoComplete panelaux;
+    private org.edisoncor.gui.panel.PanelRect panelaux;
     // End of variables declaration//GEN-END:variables
 
     private void segundoDialogo() {
@@ -269,27 +291,54 @@ public class FirstTimeDialog extends javax.swing.JDialog {
             jPasswordField2.setText("");
         } else {
             try {
+                ArrayList <PuestoTrabajo> listaTrabajos = new ArrayList<>();
+                
                 PuestoTrabajo administrador = new PuestoTrabajo("Administrador");
+                administrador.setNivelAcceso(5);
+                administrador.setPuestosDisponibles(1);
+                administrador.setRequiereAutenticar(true);
+                
+                listaTrabajos.add(administrador);
+                
                 Personal adminUser = new Personal(Nombre_Jefe, String.valueOf(pass1), false);
+                
                 DatosPersonales datosUser = new DatosPersonales(adminUser.getUsuario(), "First", "Dream");
+                
+                adminUser.setPuestoTrabajoList(listaTrabajos);
+                
+                Configuracion c = new Configuracion("O"),n = new Configuracion("N");
+                n.setValor(1);
+                c.setValor(1);
 
                 staticContent.puestosJPA.create(administrador);
                 staticContent.personalJPA.create(adminUser);
                 staticContent.datosPJPA.create(datosUser);
+                staticContent.configJPA.create(c);
+                
                 staticContent.cartaJPA.create(new Carta("Mnu-1", Nombre_Local));
+                
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al inicializar el software");
+                return;
             }
 
             JOptionPane.showMessageDialog(null, "Se a creado la cuenta exitosamente.");
-            new LogInDialog(new JFrame(), true);
             dispose();
+            new LogInDialog(new JFrame(), true);
+           
         }
     }
 
     private void primerDialogo() {
         panelaux.removeAll();
-        panelaux.add(panelFormulario);
+        panelaux.add(panelContrato);
         panelaux.repaint();
     }
+
+    private void initSegundoDialogo() {
+        panelaux.removeAll();
+        panelaux.add(panelFormulario);
+        repaint();
+    }
+    
 }

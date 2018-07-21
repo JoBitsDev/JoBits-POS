@@ -309,6 +309,7 @@ public class VentaLista extends javax.swing.JDialog {
         }
 
         return ret;
+        
     }
 
     private void refreshDialog() {
@@ -320,6 +321,7 @@ public class VentaLista extends javax.swing.JDialog {
             tabla[0].add(false);
             tabla[1].add(staticValues.Format.format(v.getFecha()));
             tabla[2].add(v.getVentaTotal());
+            
         }
 
         try {

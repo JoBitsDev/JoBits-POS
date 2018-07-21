@@ -34,14 +34,14 @@ public class Ipv implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected IpvPK ipvPK;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ipv")
+    private List<IpvRegistro> ipvRegistroList;
     @JoinColumn(name = "cocinacod_cocina", referencedColumnName = "cod_cocina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Cocina cocina;
     @JoinColumn(name = "insumocod_insumo", referencedColumnName = "cod_insumo", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Insumo insumo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ipv")
-    private List<IpvRegistro> ipvRegistroList;
 
     public Ipv() {
     }
@@ -62,6 +62,14 @@ public class Ipv implements Serializable {
         this.ipvPK = ipvPK;
     }
 
+    public List<IpvRegistro> getIpvRegistroList() {
+        return ipvRegistroList;
+    }
+
+    public void setIpvRegistroList(List<IpvRegistro> ipvRegistroList) {
+        this.ipvRegistroList = ipvRegistroList;
+    }
+
     public Cocina getCocina() {
         return cocina;
     }
@@ -76,14 +84,6 @@ public class Ipv implements Serializable {
 
     public void setInsumo(Insumo insumo) {
         this.insumo = insumo;
-    }
-
-    public List<IpvRegistro> getIpvRegistroList() {
-        return ipvRegistroList;
-    }
-
-    public void setIpvRegistroList(List<IpvRegistro> ipvRegistroList) {
-        this.ipvRegistroList = ipvRegistroList;
     }
 
     @Override

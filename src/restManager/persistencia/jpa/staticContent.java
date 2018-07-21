@@ -75,6 +75,8 @@ public class staticContent {
     public static IpvRegistroJpaController ipvregJPA = 
             new IpvRegistroJpaController(EMF);
     
+    public static NotaJpaController notaJPA = new NotaJpaController(EMF);
+    
     
     /**
      * refresca el cache de la conexion haciendo posible la actualizacion en

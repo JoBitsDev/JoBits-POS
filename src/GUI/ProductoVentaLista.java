@@ -404,7 +404,7 @@ public class ProductoVentaLista extends javax.swing.JDialog {
         }
 
         buttonADDPROD.setText("Agregar Producto");
-        buttonADDPROD.setEnabled(Main.NIVEL_4);
+        buttonADDPROD.setEnabled(Main.NIVEL_2);
         buttonADDPROD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonADDPRODActionPerformed(evt);

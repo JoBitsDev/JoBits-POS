@@ -6,8 +6,11 @@
 package GUI;
 
 import java.util.Date;
+import java.util.List;
 import restManager.persistencia.Personal;
 import restManager.persistencia.PuestoTrabajo;
+import restManager.persistencia.Venta;
+import restManager.persistencia.jpa.CartaJpaController;
 import restManager.persistencia.jpa.staticContent;
 
 /**
@@ -20,7 +23,7 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main2
      */
     static Personal logUser;
-    public static String moneda = " MN";
+    public static String moneda = " CUC";
 
     /**
      * nivel mas bajo para los clientes
@@ -55,6 +58,7 @@ public class Main extends javax.swing.JFrame {
         logUser = p;
         grantPermission(p);
         initComponents();
+        labelMetricNOMBRE.setText(staticContent.cartaJPA.findCarta("Mnu-1").getNombreCarta()); //quitar esto
         setVisible(true);
 
     }
@@ -417,7 +421,7 @@ public class Main extends javax.swing.JFrame {
 
     private void buttonCOMENZARDIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCOMENZARDIAActionPerformed
 
-        VentaMain.getInstance(this, true, staticContent.ventaJPA.findVenta(new Date()));
+        VentaMain.getInstance(this, true, getDiaDeVenta());
 
     }//GEN-LAST:event_buttonCOMENZARDIAActionPerformed
 
@@ -537,6 +541,18 @@ public class Main extends javax.swing.JFrame {
 
         }
 
+    }
+
+    private Venta getDiaDeVenta() {
+        List<Venta> ventas = staticContent.ventaJPA.findVentaEntities();
+        for (int i = ventas.size()-1 ; i >= 0; i--) {
+            if(ventas.get(i).getVentaTotal() == null){
+                return ventas.get(i);
+            }
+            
+        }
+        
+        return staticContent.ventaJPA.findVenta(new Date());
     }
 
 }

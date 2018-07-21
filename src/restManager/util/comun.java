@@ -24,7 +24,8 @@ public class comun {
     }
 
     /**
-     * Busca en una tabla y borra los valores que no contienen la secuencia pasada por parametro
+     * Busca en una tabla y borra los valores que no contienen la secuencia
+     * pasada por parametro
      *
      * @param tabla la tabla en la que se va a buscar
      * @param SearchSubSecuence la secuencia de texto que se quiere buscar
@@ -39,7 +40,7 @@ public class comun {
                     found = true;
                 }
             }
-            if(!found){
+            if (!found) {
                 model.removeRow(i);
             }
         }
@@ -101,14 +102,15 @@ public class comun {
         }
 
     }
-    
+
     /**
-     * añade a la tabla seleccionada la informacion pasada por parametro sin 
+     * añade a la tabla seleccionada la informacion pasada por parametro sin
      * borrar la informacion que esta ya contiene
      *
      * @param rowData los datos pasados en un array de arrays
      * @param table la tabla que se va a llenar con la info
-     * @throws java.lang.Exception si los datos contienen mas columnas que la tabla
+     * @throws java.lang.Exception si los datos contienen mas columnas que la
+     * tabla
      */
     public static void AddToTable(ArrayList[] rowData, JTable table) throws Exception {
 
@@ -119,8 +121,8 @@ public class comun {
         Object[] row = new Object[rowData.length];
         for (int i = 0; i < rowData[0].size(); i++) {
             for (int j = 0; j < rowData.length; j++) {
-               row[j] = rowData[j].get(i);
-                
+                row[j] = rowData[j].get(i);
+
             }
             model.addRow(row);
         }
@@ -130,18 +132,18 @@ public class comun {
     public static float calcularSumaTabla(JTable table, int column) {
         float total = 0;
         for (int i = 0; i < table.getRowCount(); i++) {
-            total += (float)table.getValueAt(i, column);
+            total += (float) table.getValueAt(i, column);
         }
         return total;
-        
-        
+
     }
 
     /**
      * inicializa un arrays de arrays
+     *
      * @param array el array a inicializar
      * @return el array inicializado
-     * 
+     *
      */
     public static ArrayList[] initArray(ArrayList[] array) {
         for (int i = 0; i < array.length; i++) {
@@ -149,9 +151,6 @@ public class comun {
         }
         return array;
     }
-    
-    
-    
 
     public static void addToTable(JTable table, Object[] row) throws Exception {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
@@ -166,44 +165,66 @@ public class comun {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.removeRow(row);
     }
-    
+
     /**
-     * borra de un string seleccionado la secuencia de caracteres y devuelve l string
+     * borra de un string seleccionado la secuencia de caracteres y devuelve l
+     * string
+     *
      * @param charsecuence
-     * @return 
+     * @return
      */
-    public static String removeFromString (String charsecuence){
+    public static String removeFromString(String charsecuence) {
         return null;
     }
-    
-    
-      
+
     /**
      * redondea por exceso las cuentas en moneda nacional a CUC
-     * @param valorARedondear el valor a redondear en entero (multiplicando el float por 100)
+     *
+     * @param valorARedondear el valor a redondear en entero (multiplicando el
+     * float por 100)
      * @return un string con el valor a imprimir o usar
      */
-    public static String redondeoDeMonedaMN_CUC (int valorARedondear){
-        int ref = valorARedondear%5;
-        
-        if(ref != 0){
-            valorARedondear+= 5-ref ;
+    public static String redondeoDeMonedaMN_CUC(int valorARedondear) {
+        int ref = valorARedondear % 5;
+
+        if (ref != 0) {
+            valorARedondear += 5 - ref;
         }
-        float valorConvertido = (float)valorARedondear/100;
+        float valorConvertido = (float) valorARedondear / 100;
         String ret = String.valueOf(valorConvertido);
-        
+
         int decimales = 0;
-        for (int i = 0; decimales == 0 ; i++) {
-        if(ret.charAt(i) == 46){
-            decimales = ret.length()-1-i;
-        }    
+        for (int i = 0; decimales == 0; i++) {
+            if (ret.charAt(i) == 46) {
+                decimales = ret.length() - 1 - i;
+            }
         }
-        if(decimales != 2){
+        if (decimales != 2) {
             ret += "0";
         }
         return ret;
     }
 
-   
+    public static String setDosLugaresDecimales(int valorARedondear) {
+        
+
+        
+        int decimales = 0;
+        
+        float valorConvertido = (float) valorARedondear / 100;
+        String ret = String.valueOf(valorConvertido);
+        
+        for (int i = 0; decimales == 0 && i < ret.length(); i++) {
+            if (ret.charAt(i) == 46) {
+                decimales = ret.length() - 1 - i;
+            }
+        }
+
+        while (decimales != 2) {
+            ret += "0";
+            decimales++;
+        }
+        return ret;
+    }
 
 }

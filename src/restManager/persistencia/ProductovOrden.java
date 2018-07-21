@@ -8,6 +8,7 @@ package restManager.persistencia;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -29,7 +31,8 @@ import javax.persistence.Table;
     , @NamedQuery(name = "ProductovOrden.findByProductoVentapCod", query = "SELECT p FROM ProductovOrden p WHERE p.productovOrdenPK.productoVentapCod = :productoVentapCod")
     , @NamedQuery(name = "ProductovOrden.findByOrdencodOrden", query = "SELECT p FROM ProductovOrden p WHERE p.productovOrdenPK.ordencodOrden = :ordencodOrden")
     , @NamedQuery(name = "ProductovOrden.findByCantidad", query = "SELECT p FROM ProductovOrden p WHERE p.cantidad = :cantidad")
-    , @NamedQuery(name = "ProductovOrden.findByEnviadosacocina", query = "SELECT p FROM ProductovOrden p WHERE p.enviadosacocina = :enviadosacocina")})
+    , @NamedQuery(name = "ProductovOrden.findByEnviadosacocina", query = "SELECT p FROM ProductovOrden p WHERE p.enviadosacocina = :enviadosacocina")
+    , @NamedQuery(name = "ProductovOrden.findByNumeroComensal", query = "SELECT p FROM ProductovOrden p WHERE p.numeroComensal = :numeroComensal")})
 public class ProductovOrden implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,6 +43,10 @@ public class ProductovOrden implements Serializable {
     private int cantidad;
     @Column(name = "enviadosacocina")
     private Integer enviadosacocina;
+    @Column(name = "numero_comensal")
+    private Integer numeroComensal;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "productovOrden")
+    private Nota nota;
     @JoinColumn(name = "ordencod_orden", referencedColumnName = "cod_orden", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Orden orden;
@@ -85,6 +92,22 @@ public class ProductovOrden implements Serializable {
 
     public void setEnviadosacocina(Integer enviadosacocina) {
         this.enviadosacocina = enviadosacocina;
+    }
+
+    public Integer getNumeroComensal() {
+        return numeroComensal;
+    }
+
+    public void setNumeroComensal(Integer numeroComensal) {
+        this.numeroComensal = numeroComensal;
+    }
+
+    public Nota getNota() {
+        return nota;
+    }
+
+    public void setNota(Nota nota) {
+        this.nota = nota;
     }
 
     public Orden getOrden() {

@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 
 import javax.print.PrintException;
 
@@ -24,9 +25,12 @@ import javax.swing.text.NumberFormatter;
 
 import restManager.persistencia.Configuracion;
 import restManager.persistencia.Mesa;
+import restManager.persistencia.Nota;
+import restManager.persistencia.NotaPK;
 import restManager.persistencia.Orden;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
+import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.staticContent;
 import restManager.printservice.Impresion;
@@ -52,27 +56,30 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         initComponents();
         updateDialog(o);
         setVisible(true);
-        
+
     }
 
     private void updateDialog(Orden or) {
         if (or == null) {
             try {
-            staticContent.EMF.getCache().evict(Configuracion.class);
-            Configuracion c = staticContent.configJPA.findConfiguracion("O");
-            o = new Orden("O-" + (c.getValor()));
-            c.setValor(c.getValor()+1);
-            staticContent.configJPA.edit(c);
-            o.setHoraComenzada(new Date());
-            o.setPersonalusuario(Main.logUser);
-            o.setVentafecha(staticContent.ventaJPA.findVenta(new Date()));
-            Mesa m = staticContent.mesasJPA.findMesa("M-0");
-            o.setMesacodMesa(m);
-            m.setEstado("ocupada");
-            staticContent.mesasJPA.edit(m);
-            o.setDeLaCasa(false);
-            o.setProductovOrdenList(new ArrayList<>());
-            staticContent.ordenJPA.create(o);
+                staticContent.EMF.getCache().evict(Configuracion.class);
+                Configuracion c = staticContent.configJPA.findConfiguracion("O");
+                o = new Orden("O-" + (c.getValor()));
+                c.setValor(c.getValor() + 1);
+                staticContent.configJPA.edit(c);
+                o.setHoraComenzada(new Date());
+                o.setPorciento(Float.valueOf("10"));
+                o.setOrdenvalorMonetario(Float.parseFloat("0"));
+                o.setPersonalusuario(Main.logUser);
+                o.setVentafecha(findVentaFecha());
+                
+                Mesa m = staticContent.mesasJPA.findMesa("M-0");
+                o.setMesacodMesa(m);
+                m.setEstado("ocupada");
+                staticContent.mesasJPA.edit(m);
+                o.setDeLaCasa(false);
+                o.setProductovOrdenList(new ArrayList<>());
+                staticContent.ordenJPA.create(o);
             } catch (Exception ex) {
                 Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -113,7 +120,6 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         jLabelVALORFecha = new javax.swing.JLabel();
         jLabelVALORNOORDEN = new javax.swing.JLabel();
         buttonEliminar = new org.edisoncor.gui.button.ButtonTextDown();
-        buttonLimpiar = new org.edisoncor.gui.button.ButtonTextDown();
         jLabel2 = new javax.swing.JLabel();
         jLabelVALORTotal = new javax.swing.JLabel();
         buttonDespachar = new org.edisoncor.gui.button.ButtonTextDown();
@@ -125,6 +131,8 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         buttonEnviarACocina = new org.edisoncor.gui.button.ButtonTextDown();
         jCheckBoxPorciento = new javax.swing.JCheckBox();
         textFieldVALORPorciento = new org.edisoncor.gui.textField.TextFieldRoundBackground();
+        buttonAddNota = new org.edisoncor.gui.button.ButtonTextDown();
+        buttonAddNota1 = new org.edisoncor.gui.button.ButtonTextDown();
 
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0' %'"))));
 
@@ -318,13 +326,6 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
             }
         });
 
-        buttonLimpiar.setText("Limpiar");
-        buttonLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonLimpiarActionPerformed(evt);
-            }
-        });
-
         jLabel2.setBackground(new java.awt.Color(153, 255, 255));
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Total: ");
@@ -335,7 +336,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         jLabelVALORTotal.setText("0.00 CUC");
         jLabelVALORTotal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        buttonDespachar.setText("Despachar");
+        buttonDespachar.setText("Cerrar Mesa");
         buttonDespachar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonDespacharActionPerformed(evt);
@@ -375,8 +376,8 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         });
 
         jCheckBoxPorciento.setBackground(new java.awt.Color(255, 255, 153));
+        jCheckBoxPorciento.setSelected(true);
         jCheckBoxPorciento.setText("Añadir Porciento");
-        jCheckBoxPorciento.setEnabled(false);
         jCheckBoxPorciento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxPorcientoActionPerformed(evt);
@@ -385,8 +386,21 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
 
         textFieldVALORPorciento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         textFieldVALORPorciento.setText("10");
-        textFieldVALORPorciento.setEnabled(false);
         textFieldVALORPorciento.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+
+        buttonAddNota.setText("Agregar Nota");
+        buttonAddNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddNotaActionPerformed(evt);
+            }
+        });
+
+        buttonAddNota1.setText("Imprimir Cuenta");
+        buttonAddNota1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddNota1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelLlamada1Layout = new javax.swing.GroupLayout(panelLlamada1);
         panelLlamada1.setLayout(panelLlamada1Layout);
@@ -416,12 +430,6 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                         .addComponent(jLabelVALORNOORDEN)
                         .addGap(54, 54, 54))))
             .addGroup(panelLlamada1Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(buttonEnviarACocina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonDespachar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70))
-            .addGroup(panelLlamada1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(panelLlamada1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLlamada1Layout.createSequentialGroup()
@@ -430,18 +438,25 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                         .addComponent(textFieldVALORPorciento, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCheckBoxDELACASA))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(panelLlamada1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(67, 67, 67)
                         .addComponent(jLabelVALORTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelLlamada1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
                         .addComponent(buttonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)))
+                        .addGap(38, 38, 38)
+                        .addComponent(buttonAddNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(9, 9, 9))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLlamada1Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(buttonEnviarACocina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelLlamada1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonAddNota1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonDespachar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11))
         );
         panelLlamada1Layout.setVerticalGroup(
             panelLlamada1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -461,7 +476,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                     .addComponent(jLabelVALORMesa)
                     .addComponent(jLabelVALORNOORDEN))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLlamada1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBoxDELACASA)
@@ -473,12 +488,13 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addGroup(panelLlamada1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonAddNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonAddNota1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(panelLlamada1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonEnviarACocina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonDespachar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelLlamada1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonDespachar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonEnviarACocina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16))
         );
 
@@ -524,23 +540,6 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         retirarProducto();
     }//GEN-LAST:event_buttonEliminarActionPerformed
 
-    private void buttonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLimpiarActionPerformed
-        try {
-            for (ProductovOrden x : o.getProductovOrdenList()) {
-                staticContent.productovOrdenJpa.destroy(x.getProductovOrdenPK());
-            }
-            o.setProductovOrdenList(new ArrayList<>());
-            comun.limpiarTabla(jTablePedido);
-            staticContent.ordenJPA.edit(o);
-            jLabelVALORTotal.setText("0.00" + Main.moneda);
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_buttonLimpiarActionPerformed
-
     private void jCheckBoxDELACASAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDELACASAActionPerformed
         o.setDeLaCasa(jCheckBoxDELACASA.isSelected());
     }//GEN-LAST:event_jCheckBoxDELACASAActionPerformed
@@ -558,7 +557,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     }//GEN-LAST:event_buttonAnnadirActionPerformed
 
     private void jTablePedidoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTablePedidoPropertyChange
-       if (evt.getPropertyName().matches("tableCellEditor")) {
+        if (evt.getPropertyName().matches("tableCellEditor")) {
             if (jTablePedido.getEditingRow() != -1) {
                 updateTablePedidos();
             }
@@ -566,25 +565,34 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     }//GEN-LAST:event_jTablePedidoPropertyChange
 
     private void jTableListaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListaProductosMouseClicked
-      
-       if (evt.getClickCount() == 2) {
-           if(jTableListaProductos.getSelectedRow()!=-1)
+
+        if (evt.getClickCount() == 2) {
+            if (jTableListaProductos.getSelectedRow() != -1) {
                 añadir();
+            }
         }
 
     }//GEN-LAST:event_jTableListaProductosMouseClicked
 
     private void jCheckBoxPorcientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPorcientoActionPerformed
-        this.textFieldVALORPorciento.setEnabled(jCheckBoxPorciento.isSelected());
         addPorcientoToOrden(jCheckBoxPorciento.isSelected());
     }//GEN-LAST:event_jCheckBoxPorcientoActionPerformed
 
+    private void buttonAddNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddNotaActionPerformed
+        agregarNota();
+    }//GEN-LAST:event_buttonAddNotaActionPerformed
+
+    private void buttonAddNota1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddNota1ActionPerformed
+        imprimir_pre_ticket();
+    }//GEN-LAST:event_buttonAddNota1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private org.edisoncor.gui.button.ButtonTextDown buttonAddNota;
+    private org.edisoncor.gui.button.ButtonTextDown buttonAddNota1;
     private org.edisoncor.gui.button.ButtonTextDown buttonAnnadir;
     private org.edisoncor.gui.button.ButtonTextDown buttonDespachar;
     private org.edisoncor.gui.button.ButtonTextDown buttonEliminar;
     private org.edisoncor.gui.button.ButtonTextDown buttonEnviarACocina;
-    private org.edisoncor.gui.button.ButtonTextDown buttonLimpiar;
     private javax.swing.JCheckBox jCheckBoxDELACASA;
     private javax.swing.JCheckBox jCheckBoxPorciento;
     private javax.swing.JFormattedTextField jFormattedTextField1;
@@ -682,34 +690,55 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         }
     }
 
+    
     private void despachar() {
         int respuesta = JOptionPane.showConfirmDialog(this, "Desea cerrar la orden " + o.getCodOrden());
         if (respuesta == JOptionPane.YES_OPTION) {
-            int imprimirTIcket = JOptionPane.showConfirmDialog(this, "Desea imprimir un ticket de la orden");
-            if (imprimirTIcket == JOptionPane.YES_OPTION) {
-                Impresion i = new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"));
-                try {
-                    i.print(o);
-                } catch (PrintException ex) {
-                    Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+            boolean enviar = true;
+            for (ProductovOrden x : o.getProductovOrdenList()) {
+                if (x.getCantidad() > x.getEnviadosacocina()) {
+                    enviar = false;
                 }
             }
-            try {
-                
-                o.setHoraTerminada(new Date());
-                Mesa m = staticContent.mesasJPA.findMesa(o.getMesacodMesa().getCodMesa());
-                m.setEstado("vacia");
-                staticContent.ordenJPA.edit(o);
-                staticContent.mesasJPA.edit(m);
-                staticContent.mesasJPA.getEntityManager().flush();
-                
-            } catch (Exception ex) {
-                Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+            if (!enviar) {
+                JOptionPane.showMessageDialog(this,
+                        "Existen productos que no han sido enviados a cocina. Envie a cocina antes de cerrar la orden");
+                return;
+            } else {
+                int imprimirTIcket = JOptionPane.showConfirmDialog(this, "Desea imprimir un ticket de la orden");
+                if (imprimirTIcket == JOptionPane.YES_OPTION) {
+                    Impresion i = new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"));
+                    try {
+                        i.print(o, false);
+                    } catch (PrintException ex) {
+                        Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                try {
+
+                    o.setHoraTerminada(new Date());
+                    o.setOrdenvalorMonetario(getValorT());
+                    o.setOrdengastoEninsumos(getGastosInsumos(o));
+
+                    Mesa m = staticContent.mesasJPA.findMesa(o.getMesacodMesa().getCodMesa());
+                    m.setEstado("vacia");
+                    o.setMesacodMesa(m);
+                    staticContent.ordenJPA.edit(o);
+                    staticContent.mesasJPA.edit(m);
+                                     
+
+                    dispose();
+                    return;
+                } catch (Exception ex) {
+                    Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Operacion cancelada");
+            return;
         }
-        dispose();
+
     }
 
     private void añadir() {
@@ -726,23 +755,40 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     }
 
     public void ActValorT() {
+        jLabelVALORTotal.setText(String.valueOf(getValorT()) + Main.moneda);
+    }
+
+    private float getValorT() {
         float valor = 0;
         for (int i = 0; i < jTablePedido.getRowCount(); i++) {
             valor += (float) (jTablePedido.getValueAt(i, 3));
         }
-        jLabelVALORTotal.setText(String.valueOf(valor) + Main.moneda);
-
+        if (o.getPorciento() != 0) {
+            if(!o.getDeLaCasa()){
+            valor += (o.getPorciento() / 100) * valor;
+            }
+        }
+        
+        o.setOrdenvalorMonetario(valor);
+        try {
+            staticContent.ordenJPA.edit(o);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return valor;
     }
 
     private void retirarProducto() {
         int row = jTablePedido.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "No Hay ninguna fila seleccionada");
-        }else{
-        String cod = (String) jTablePedido.getValueAt(row, 0);
-        ProductoVenta p = staticContent.productoJPA.findProductoVenta(cod);
-        retirarDeTabla(p);
-            
+        } else {
+            String cod = (String) jTablePedido.getValueAt(row, 0);
+            ProductoVenta p = staticContent.productoJPA.findProductoVenta(cod);
+            retirarDeTabla(p);
+
         }
     }
 
@@ -777,12 +823,14 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
             } catch (Exception ex) {
                 Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             ProductovOrden po = new ProductovOrden(p.getPCod(), o.getCodOrden());
             po.setOrden(o);
             po.setProductoVenta(p);
             po.setCantidad(1);
             po.setEnviadosacocina(0);
+            po.setNumeroComensal(0);
+
             o.getProductovOrdenList().add(po);
             try {
                 staticContent.productovOrdenJpa.create(po);
@@ -790,8 +838,6 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
             } catch (Exception ex) {
                 Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
 
         }
         ActValorT();
@@ -812,21 +858,21 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                     jTablePedido.setValueAt(precio, i, 3);
                     o.getProductovOrdenList().get(i).setCantidad(cant);
                     try {
-                    staticContent.productovOrdenJpa.edit(o.getProductovOrdenList().get(i));
-                    staticContent.ordenJPA.edit(o);
-                } catch (Exception ex) {
-                    Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                        staticContent.productovOrdenJpa.edit(o.getProductovOrdenList().get(i));
+                        staticContent.ordenJPA.edit(o);
+                    } catch (Exception ex) {
+                        Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 } else {
                     comun.removeFromTable(jTablePedido, i);
-                    
+
                     try {
-                    staticContent.productovOrdenJpa.destroy(o.getProductovOrdenList().get(i).getProductovOrdenPK());
-                    o.getProductovOrdenList().remove(i);
-                    staticContent.ordenJPA.edit(o);
-                } catch (NonexistentEntityException ex) {
-                    Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
-                }   catch (Exception ex) {
+                        staticContent.productovOrdenJpa.destroy(o.getProductovOrdenList().get(i).getProductovOrdenPK());
+                        o.getProductovOrdenList().remove(i);
+                        staticContent.ordenJPA.edit(o);
+                    } catch (NonexistentEntityException ex) {
+                        Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (Exception ex) {
                         Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -838,47 +884,118 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     }
 
     private void updateTablePedidos() {
-    int row = jTablePedido.getSelectedRow();
-    int cant = (int) jTablePedido.getValueAt(row, 2);
-    String cod = (String) jTablePedido.getValueAt(row, 0);
+        int row = jTablePedido.getSelectedRow();
+        int cant = (int) jTablePedido.getValueAt(row, 2);
+        String cod = (String) jTablePedido.getValueAt(row, 0);
         for (ProductovOrden x : o.getProductovOrdenList()) {
-           if(x.getProductoVenta().getPCod().equals(cod)){
-            x.setCantidad(cant);
-            jTablePedido.setValueAt(cant*x.getProductoVenta().getPrecioVenta(), row, 3);
-               try {
-                   staticContent.productovOrdenJpa.edit(x);
-               } catch (Exception ex) {
-                   Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
-               }
-            break;
-        }
-    
-    }
-     ActValorT();
+            if (x.getProductoVenta().getPCod().equals(cod)) {
+                x.setCantidad(cant);
+                jTablePedido.setValueAt(cant * x.getProductoVenta().getPrecioVenta(), row, 3);
+                try {
+                    staticContent.productovOrdenJpa.edit(x);
+                } catch (Exception ex) {
+                    Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;
+            }
 
-}
+        }
+        ActValorT();
+
+    }
 
     private void addPorcientoToOrden(boolean selected) {
-    
-        
-        NumberFormatter nf = new NumberFormatter();
-        nf.setMinimum(0);
-        nf.setFormat(new Format() {
-            @Override
-            public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
+        if (selected) {
+            try {
+                float porciento = Float.parseFloat(textFieldVALORPorciento.getText());
+                o.setPorciento(porciento);
 
-            @Override
-            public Object parseObject(String source, ParsePosition pos) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            } catch (Exception e) {
+
+                JOptionPane.showMessageDialog(this, "Valor de porciento incorrecto");
             }
-        });
+        }
+
+    }
+
+    private void agregarNota() {
+        int selected = jTablePedido.getSelectedRow();
+        String pCod = (String) jTablePedido.getValueAt(selected, 0);
+        if (selected == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una fila del pedido para crear una nota");
+            return;
+        }
+        String notaAntigua = null;
+
+        try {
+            for (int i = 0; i < o.getProductovOrdenList().size(); i++) {
+                if (o.getProductovOrdenList().get(i).getProductoVenta().getPCod().equals(pCod)) {
+                    Nota nota = o.getProductovOrdenList().get(i).getNota();
+                    if (nota == null) {
+                        String nuevanota = JOptionPane.showInputDialog("Introduzca la nota a adjuntar");
+                        Configuracion c = staticContent.configJPA.findConfiguracion("N");
+
+                        NotaPK pk = new NotaPK(
+                                o.getProductovOrdenList().get(i).getProductovOrdenPK().getProductoVentapCod(),
+                                o.getProductovOrdenList().get(i).getProductovOrdenPK().getOrdencodOrden());
+                        Nota n = new Nota(pk);
+                        n.setDescripcion(nuevanota);
+                        n.setProductovOrden(o.getProductovOrdenList().get(i));
+
+                        o.getProductovOrdenList().get(i).setNota(n);
+                        //c.setValor(c.getValor()+1);
+                        //staticContent.configJPA.edit(c);
+                        staticContent.notaJPA.create(n);
+                        staticContent.productovOrdenJpa.edit(o.getProductovOrdenList().get(i));
+                    } else {
+                        notaAntigua = nota.getDescripcion();
+                        String nuevaNota = JOptionPane.showInputDialog("Edite la nota anterior", notaAntigua);
+                        nota.setDescripcion(nuevaNota);
+                        staticContent.notaJPA.edit(nota);
+                    }
+
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void imprimir_pre_ticket() {
+        Impresion i = new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"));
+        try {
+            i.print(o, true);
+        } catch (PrintException ex) {
+            Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private Float getGastosInsumos(Orden o) {
+        float ret = 0;
+        for (ProductovOrden x : o.getProductovOrdenList()) {
+           ret += x.getProductoVenta().getGasto()*x.getCantidad();
+        }
+
+        return ret;
+    }
+
+    private Venta findVentaFecha() {
+        Venta ret = staticContent.ventaJPA.findVenta(new Date());
+        
+        if(ret == null){
+            for (Venta v : staticContent.ventaJPA.findVentaEntities()) {
+               if(v.getVentaTotal() == null){
+                   return v;
+               }
+            }
+        }
+        
+        return ret;
         
     }
-    
-    
 
+    
 
 }
-

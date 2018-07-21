@@ -7,6 +7,7 @@ package restManager.persistencia.Control;
 
 import GUI.Main;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -33,6 +34,24 @@ public class VentaDAO {
     //
     //Métodos referentes a resumenes de las ventas
     //
+    public static ArrayList<ProductovOrden> getResumenVentas(Venta v) {
+        ArrayList<ProductovOrden> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            if (!o.getDeLaCasa()) {
+                joinListsProductovOrden(ret,
+                        new ArrayList(o.getProductovOrdenList()));
+            }
+        }//nˆ3
+        
+        Collections.sort(ret,(o1, o2) -> {
+            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());});
+        
+        return ret;
+    }
+
     public static void getResumenVentasOnTable(JTable tabla, Venta v) {
 
         //inicializando los datos
@@ -106,18 +125,19 @@ public class VentaDAO {
         }
 
     }
-    
-    public static void getResumenVentasDeLaCasaXCocinaOnTable(JTable tabla, Venta v, Cocina c){
-          //inicializando los datos
+
+    public static void getResumenVentasDeLaCasaXCocinaOnTable(JTable tabla, Venta v, Cocina c) {
+        //inicializando los datos
         ArrayList[] rowData = comun.initArray(new ArrayList[5]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         //llenando l array
         for (Orden o : aux) {
-            if(o.getDeLaCasa()){
-            joinListsProductovOrdenByCocina(ret,
-                    new ArrayList(o.getProductovOrdenList()), c);}
+            if (o.getDeLaCasa()) {
+                joinListsProductovOrdenByCocina(ret,
+                        new ArrayList(o.getProductovOrdenList()), c);
+            }
 
         }//nˆ3
 
@@ -177,12 +197,13 @@ public class VentaDAO {
             }
         }
     }
-    
+
     /**
      * crea un resumen del total que ha vendido cda cocina
+     *
      * @param tabla
      * @param v
-     * @param c 
+     * @param c
      */
     public static void getResumenVentasCocinaOnTable(JTable tabla, Venta v, Cocina c) {
         //inicializando los datos
@@ -286,17 +307,18 @@ public class VentaDAO {
 
         return ret;
     }
-    
-    public static List<ProductovOrden> getResumenVentasCasa(Venta v){
-          //inicializando los datos
+
+    public static List<ProductovOrden> getResumenVentasCasa(Venta v) {
+        //inicializando los datos
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         //llenando l array
         for (Orden o : aux) {
-            if(o.getDeLaCasa()){
-            joinListsProductovOrden(ret,
-                    new ArrayList<>(o.getProductovOrdenList()));}
+            if (o.getDeLaCasa()) {
+                joinListsProductovOrden(ret,
+                        new ArrayList<>(o.getProductovOrdenList()));
+            }
 
         }//nˆ3
 
@@ -404,9 +426,8 @@ public class VentaDAO {
 
     }
 
-    
-    public static void getResumenGastosDeLaCasaOnTable(JTable tabla,Venta v){
-        
+    public static void getResumenGastosDeLaCasaOnTable(JTable tabla, Venta v) {
+
         //inicializando los datos
         ArrayList[] rowData = comun.initArray(new ArrayList[5]);
         ArrayList<ProductoInsumo> ret = new ArrayList<>();
@@ -414,12 +435,13 @@ public class VentaDAO {
 
         //llenando l array
         for (Orden o : aux) {
-            if(o.getDeLaCasa()){
-            for (ProductovOrden p : o.getProductovOrdenList()) {
-                joinListsProductoInsumos(ret,
-                        new ArrayList<>(p.getProductoVenta().
-                                getProductoInsumoList()), p.getCantidad());
-            }}
+            if (o.getDeLaCasa()) {
+                for (ProductovOrden p : o.getProductovOrdenList()) {
+                    joinListsProductoInsumos(ret,
+                            new ArrayList<>(p.getProductoVenta().
+                                    getProductoInsumoList()), p.getCantidad());
+                }
+            }
         }
 
         //convirtiendo a rowData
@@ -443,7 +465,7 @@ public class VentaDAO {
 
         }
     }
-   
+
     public static void getResumenGastosDeLaCasaCocinaOnTable(JTable tabla, Venta v, Cocina c) {
 
         //inicializando los datos
@@ -453,14 +475,15 @@ public class VentaDAO {
 
         //llenando l array
         for (Orden o : aux) {
-            if(o.getDeLaCasa()){
-            for (ProductovOrden p : o.getProductovOrdenList()) {
-                if (p.getProductoVenta().getCocinacodCocina().equals(c)) {
-                    joinListsProductoInsumos(ret,
-                            new ArrayList<>(p.getProductoVenta().
-                                    getProductoInsumoList()), p.getCantidad());
+            if (o.getDeLaCasa()) {
+                for (ProductovOrden p : o.getProductovOrdenList()) {
+                    if (p.getProductoVenta().getCocinacodCocina().equals(c)) {
+                        joinListsProductoInsumos(ret,
+                                new ArrayList<>(p.getProductoVenta().
+                                        getProductoInsumoList()), p.getCantidad());
+                    }
                 }
-            }}
+            }
         }
 
         //convirtiendo a rowData
@@ -489,7 +512,6 @@ public class VentaDAO {
     //
     //Métodos privados para el funcionamiento de la clase
     //
-    
     /**
      * agrega a un arreglo de ProductosvOrdenes una nueva orden
      *
@@ -583,6 +605,15 @@ public class VentaDAO {
             }
         }
 
+    }
+
+    public static float getValorTotalVentas(Venta v) {
+        float total = 0;
+        for (Orden x : v.getOrdenList()) {
+            if(!x.getDeLaCasa()){
+            total += x.getOrdenvalorMonetario();}
+        }
+        return total;
     }
 
 }

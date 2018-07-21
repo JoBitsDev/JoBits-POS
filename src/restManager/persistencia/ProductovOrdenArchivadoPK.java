@@ -17,21 +17,21 @@ import javax.persistence.Embeddable;
  * 
  */
 @Embeddable
-public class ProductoInsumoPK implements Serializable {
+public class ProductovOrdenArchivadoPK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "producto_ventap_cod")
     private String productoVentapCod;
     @Basic(optional = false)
-    @Column(name = "insumocod_insumo")
-    private String insumocodInsumo;
+    @Column(name = "ordencod_orden")
+    private String ordencodOrden;
 
-    public ProductoInsumoPK() {
+    public ProductovOrdenArchivadoPK() {
     }
 
-    public ProductoInsumoPK(String productoVentapCod, String insumocodInsumo) {
+    public ProductovOrdenArchivadoPK(String productoVentapCod, String ordencodOrden) {
         this.productoVentapCod = productoVentapCod;
-        this.insumocodInsumo = insumocodInsumo;
+        this.ordencodOrden = ordencodOrden;
     }
 
     public String getProductoVentapCod() {
@@ -42,33 +42,33 @@ public class ProductoInsumoPK implements Serializable {
         this.productoVentapCod = productoVentapCod;
     }
 
-    public String getInsumocodInsumo() {
-        return insumocodInsumo;
+    public String getOrdencodOrden() {
+        return ordencodOrden;
     }
 
-    public void setInsumocodInsumo(String insumocodInsumo) {
-        this.insumocodInsumo = insumocodInsumo;
+    public void setOrdencodOrden(String ordencodOrden) {
+        this.ordencodOrden = ordencodOrden;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (productoVentapCod != null ? productoVentapCod.hashCode() : 0);
-        hash += (insumocodInsumo != null ? insumocodInsumo.hashCode() : 0);
+        hash += (ordencodOrden != null ? ordencodOrden.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ProductoInsumoPK)) {
+        if (!(object instanceof ProductovOrdenArchivadoPK)) {
             return false;
         }
-        ProductoInsumoPK other = (ProductoInsumoPK) object;
+        ProductovOrdenArchivadoPK other = (ProductovOrdenArchivadoPK) object;
         if ((this.productoVentapCod == null && other.productoVentapCod != null) || (this.productoVentapCod != null && !this.productoVentapCod.equals(other.productoVentapCod))) {
             return false;
         }
-        if ((this.insumocodInsumo == null && other.insumocodInsumo != null) || (this.insumocodInsumo != null && !this.insumocodInsumo.equals(other.insumocodInsumo))) {
+        if ((this.ordencodOrden == null && other.ordencodOrden != null) || (this.ordencodOrden != null && !this.ordencodOrden.equals(other.ordencodOrden))) {
             return false;
         }
         return true;
@@ -76,7 +76,7 @@ public class ProductoInsumoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.ProductoInsumoPK[ productoVentapCod=" + productoVentapCod + ", insumocodInsumo=" + insumocodInsumo + " ]";
+        return "restManager.persistencia.ProductovOrdenArchivadoPK[ productoVentapCod=" + productoVentapCod + ", ordencodOrden=" + ordencodOrden + " ]";
     }
 
 }

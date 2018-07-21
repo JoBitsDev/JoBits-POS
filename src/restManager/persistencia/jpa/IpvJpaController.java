@@ -11,8 +11,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import restManager.persistencia.Cocina;
-import restManager.persistencia.Insumo;
 import restManager.persistencia.IpvRegistro;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,22 +45,10 @@ public class IpvJpaController implements Serializable {
         if (ipv.getIpvRegistroList() == null) {
             ipv.setIpvRegistroList(new ArrayList<IpvRegistro>());
         }
-        ipv.getIpvPK().setCocinacodCocina(ipv.getCocina().getCodCocina());
-        ipv.getIpvPK().setInsumocodInsumo(ipv.getInsumo().getCodInsumo());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Cocina cocina = ipv.getCocina();
-            if (cocina != null) {
-                cocina = em.getReference(cocina.getClass(), cocina.getCodCocina());
-                ipv.setCocina(cocina);
-            }
-            Insumo insumo = ipv.getInsumo();
-            if (insumo != null) {
-                insumo = em.getReference(insumo.getClass(), insumo.getCodInsumo());
-                ipv.setInsumo(insumo);
-            }
             List<IpvRegistro> attachedIpvRegistroList = new ArrayList<IpvRegistro>();
             for (IpvRegistro ipvRegistroListIpvRegistroToAttach : ipv.getIpvRegistroList()) {
                 ipvRegistroListIpvRegistroToAttach = em.getReference(ipvRegistroListIpvRegistroToAttach.getClass(), ipvRegistroListIpvRegistroToAttach.getIpvRegistroPK());
@@ -70,14 +56,6 @@ public class IpvJpaController implements Serializable {
             }
             ipv.setIpvRegistroList(attachedIpvRegistroList);
             em.persist(ipv);
-            if (cocina != null) {
-                cocina.getIpvList().add(ipv);
-                cocina = em.merge(cocina);
-            }
-            if (insumo != null) {
-                insumo.getIpvList().add(ipv);
-                insumo = em.merge(insumo);
-            }
             for (IpvRegistro ipvRegistroListIpvRegistro : ipv.getIpvRegistroList()) {
                 Ipv oldIpvOfIpvRegistroListIpvRegistro = ipvRegistroListIpvRegistro.getIpv();
                 ipvRegistroListIpvRegistro.setIpv(ipv);
@@ -101,17 +79,11 @@ public class IpvJpaController implements Serializable {
     }
 
     public void edit(Ipv ipv) throws IllegalOrphanException, NonexistentEntityException, Exception {
-        ipv.getIpvPK().setCocinacodCocina(ipv.getCocina().getCodCocina());
-        ipv.getIpvPK().setInsumocodInsumo(ipv.getInsumo().getCodInsumo());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Ipv persistentIpv = em.find(Ipv.class, ipv.getIpvPK());
-            Cocina cocinaOld = persistentIpv.getCocina();
-            Cocina cocinaNew = ipv.getCocina();
-            Insumo insumoOld = persistentIpv.getInsumo();
-            Insumo insumoNew = ipv.getInsumo();
             List<IpvRegistro> ipvRegistroListOld = persistentIpv.getIpvRegistroList();
             List<IpvRegistro> ipvRegistroListNew = ipv.getIpvRegistroList();
             List<String> illegalOrphanMessages = null;
@@ -126,14 +98,6 @@ public class IpvJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (cocinaNew != null) {
-                cocinaNew = em.getReference(cocinaNew.getClass(), cocinaNew.getCodCocina());
-                ipv.setCocina(cocinaNew);
-            }
-            if (insumoNew != null) {
-                insumoNew = em.getReference(insumoNew.getClass(), insumoNew.getCodInsumo());
-                ipv.setInsumo(insumoNew);
-            }
             List<IpvRegistro> attachedIpvRegistroListNew = new ArrayList<IpvRegistro>();
             for (IpvRegistro ipvRegistroListNewIpvRegistroToAttach : ipvRegistroListNew) {
                 ipvRegistroListNewIpvRegistroToAttach = em.getReference(ipvRegistroListNewIpvRegistroToAttach.getClass(), ipvRegistroListNewIpvRegistroToAttach.getIpvRegistroPK());
@@ -142,22 +106,6 @@ public class IpvJpaController implements Serializable {
             ipvRegistroListNew = attachedIpvRegistroListNew;
             ipv.setIpvRegistroList(ipvRegistroListNew);
             ipv = em.merge(ipv);
-            if (cocinaOld != null && !cocinaOld.equals(cocinaNew)) {
-                cocinaOld.getIpvList().remove(ipv);
-                cocinaOld = em.merge(cocinaOld);
-            }
-            if (cocinaNew != null && !cocinaNew.equals(cocinaOld)) {
-                cocinaNew.getIpvList().add(ipv);
-                cocinaNew = em.merge(cocinaNew);
-            }
-            if (insumoOld != null && !insumoOld.equals(insumoNew)) {
-                insumoOld.getIpvList().remove(ipv);
-                insumoOld = em.merge(insumoOld);
-            }
-            if (insumoNew != null && !insumoNew.equals(insumoOld)) {
-                insumoNew.getIpvList().add(ipv);
-                insumoNew = em.merge(insumoNew);
-            }
             for (IpvRegistro ipvRegistroListNewIpvRegistro : ipvRegistroListNew) {
                 if (!ipvRegistroListOld.contains(ipvRegistroListNewIpvRegistro)) {
                     Ipv oldIpvOfIpvRegistroListNewIpvRegistro = ipvRegistroListNewIpvRegistro.getIpv();
@@ -198,11 +146,17 @@ public class IpvJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The ipv with id " + id + " no longer exists.", enfe);
             }
-            List<IpvRegistro> reg = ipv.getIpvRegistroList();
-            for (IpvRegistro r : reg) {
-               staticContent.ipvregJPA.destroy(r.getIpvRegistroPK());
+            List<String> illegalOrphanMessages = null;
+            List<IpvRegistro> ipvRegistroListOrphanCheck = ipv.getIpvRegistroList();
+            for (IpvRegistro ipvRegistroListOrphanCheckIpvRegistro : ipvRegistroListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Ipv (" + ipv + ") cannot be destroyed since the IpvRegistro " + ipvRegistroListOrphanCheckIpvRegistro + " in its ipvRegistroList field has a non-nullable ipv field.");
             }
-            
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             em.remove(ipv);
             em.getTransaction().commit();
         } finally {

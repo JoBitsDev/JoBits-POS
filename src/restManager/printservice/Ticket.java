@@ -198,8 +198,8 @@ public class Ticket {
 
         String s = new String(FeedAndCut);
 
-        //final byte[] DrawerKick={27,70,0,60,120};   
-        //s += new String(DrawerKick);
+        final byte[] DrawerKick={27,70,0,60,120};   
+        s += new String(DrawerKick);
 
         commandSet+=s;
         return s;
