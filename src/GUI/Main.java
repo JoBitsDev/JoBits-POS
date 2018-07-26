@@ -91,6 +91,7 @@ public class Main extends javax.swing.JFrame {
         buttonCREARTRAB = new org.edisoncor.gui.button.ButtonTextDown();
         buttonCREARPUESTO = new org.edisoncor.gui.button.ButtonTextDown();
         buttonEsquemaSalon = new org.edisoncor.gui.button.ButtonTextDown();
+        buttonCopiaSeguridad = new org.edisoncor.gui.button.ButtonTextDown();
         panelRect1 = new org.edisoncor.gui.panel.PanelRect();
         panelCurves2 = new org.edisoncor.gui.panel.PanelCurves();
         labelMetricNOMBRE = new org.edisoncor.gui.label.LabelMetric();
@@ -221,6 +222,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        buttonCopiaSeguridad.setText("Lista Productos");
+        buttonCopiaSeguridad.setFont(new java.awt.Font("BlairMdITC TT", 1, 24)); // NOI18N
+        buttonCopiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCopiaSeguridadActionPerformed(evt);
+            }
+        });
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(927, 625));
@@ -307,6 +316,11 @@ public class Main extends javax.swing.JFrame {
         buttonTextDownCONF.setActionCommand("Configuración");
         buttonTextDownCONF.setEnabled(NIVEL_5);
         buttonTextDownCONF.setFont(new java.awt.Font("BlairMdITC TT", 1, 24)); // NOI18N
+        buttonTextDownCONF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonTextDownCONFActionPerformed(evt);
+            }
+        });
         panelRectPRINC.add(buttonTextDownCONF);
 
         jScrollPanePRINC.setViewportView(panelRectPRINC);
@@ -461,6 +475,15 @@ public class Main extends javax.swing.JFrame {
        new IPVsLista(this, true);
     }//GEN-LAST:event_buttonABRIRIPVActionPerformed
 
+    private void buttonCopiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCopiaSeguridadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonCopiaSeguridadActionPerformed
+
+    private void buttonTextDownCONFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTextDownCONFActionPerformed
+        cleanAuxPanel();
+        panelRectAUX.add(buttonCopiaSeguridad);
+    }//GEN-LAST:event_buttonTextDownCONFActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonTextDown buttonABRIRALMACEN;
@@ -470,6 +493,7 @@ public class Main extends javax.swing.JFrame {
     private org.edisoncor.gui.button.ButtonTextDown buttonCOMENZARDIA;
     private org.edisoncor.gui.button.ButtonTextDown buttonCREARPUESTO;
     private org.edisoncor.gui.button.ButtonTextDown buttonCREARTRAB;
+    private org.edisoncor.gui.button.ButtonTextDown buttonCopiaSeguridad;
     private org.edisoncor.gui.button.ButtonTextDown buttonDIASSINARCHIVAR;
     private org.edisoncor.gui.button.ButtonTextDown buttonEsquemaSalon;
     private org.edisoncor.gui.button.ButtonTextDown buttonPRESUPUESTO;

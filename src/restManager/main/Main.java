@@ -8,7 +8,6 @@ package restManager.main;
 import GUI.FirstTimeDialog;
 import GUI.LogInDialog;
 import restManager.backup.BackUp;
-import restManager.persistencia.Cocina;
 import restManager.persistencia.jpa.staticContent;
 
 /**
@@ -20,7 +19,7 @@ import restManager.persistencia.jpa.staticContent;
 public class Main {
 
     public static void main(String[] args) {
-
+        
         //back_up();
         boolean newDatabase = checkIfDatabaseIsNew();
 

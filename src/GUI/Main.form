@@ -175,6 +175,17 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEsquemaSalonActionPerformed"/>
       </Events>
     </Component>
+    <Component class="org.edisoncor.gui.button.ButtonTextDown" name="buttonCopiaSeguridad">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Lista Productos"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="BlairMdITC TT" size="24" style="1"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCopiaSeguridadActionPerformed"/>
+      </Events>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -456,6 +467,9 @@
                           <Font name="BlairMdITC TT" size="24" style="1"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonTextDownCONFActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

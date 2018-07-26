@@ -5,13 +5,16 @@
  */
 package restManager.backup;
 
+import java.sql.DriverManager;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Mesa;
+import restManager.persistencia.Orden;
 import restManager.persistencia.ProductoVenta;
+import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Seccion;
 import restManager.persistencia.jpa.staticContent;
 
@@ -26,8 +29,10 @@ public class BackUp {
 
     private EntityManagerFactory emf;
     private EntityManager em;
+    
 
     public BackUp() {
+        
         emf = Persistence.createEntityManagerFactory("Restaurant_Manager_1.01PU_ext");
         em = emf.createEntityManager();
     }
@@ -71,6 +76,17 @@ public class BackUp {
         for (Seccion s : seccion) {
             em.persist(s);
         }
+        return true;
+    }
+    
+    public boolean BackUpOrdenes(List<Orden> ords){
+        for (Orden o : ords) {
+            for (ProductovOrden po : o.getProductovOrdenList()) {
+            em.persist(po);
+            }
+            em.persist(o);
+        }
+        
         return true;
     }
 

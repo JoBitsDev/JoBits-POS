@@ -42,13 +42,17 @@ public class PuestoTrabajoCrear extends javax.swing.JDialog {
             this.p.setNivelAcceso(0);
             this.p.setPuestosDisponibles(0);
             this.p.setSalarioFijo(0);
+            this.p.setAPartirDe(0);
+            this.p.setSalarioPorcientoDeArea(Float.parseFloat("0"));
+            this.p.setSalarioPorcientoVentaTotal(Float.parseFloat("0"));
+            this.p.setAreaPago("");
 
         } else {
             this.p = p;
 
         }
         setUndecorated(true);
-        setShape(new RoundRectangle2D.Double(10, 10, 335, 240, 61, 61));
+        setShape(new RoundRectangle2D.Double(10, 10, 335, 383, 61, 61));
         initComponents();
 //        jFormattedTextFieldSalarioFijo.setFormatterFactory(
 //                new javax.swing.text.DefaultFormatterFactory(
@@ -81,7 +85,15 @@ public class PuestoTrabajoCrear extends javax.swing.JDialog {
         jSpinnerPuestosDisponibles = new javax.swing.JSpinner();
         buttonCrear = new org.edisoncor.gui.button.ButtonAction();
         buttonCancelar = new org.edisoncor.gui.button.ButtonAction();
-        jTextFieldSalarioFijo = new javax.swing.JTextField();
+        jLabelSalarioFijo1 = new org.jdesktop.swingx.JXLabel();
+        jLabelSalarioFijo2 = new org.jdesktop.swingx.JXLabel();
+        jLabelSalarioFijo3 = new org.jdesktop.swingx.JXLabel();
+        jLabelSalarioFijo4 = new org.jdesktop.swingx.JXLabel();
+        comboBoxAreaPago = new org.edisoncor.gui.comboBox.ComboBoxRound();
+        jSpinnerSalarioFijo = new javax.swing.JSpinner();
+        jSpinnerPorcientoArea = new javax.swing.JSpinner();
+        jSpinnerAPartir = new javax.swing.JSpinner();
+        jSpinnerPorcientoVenta = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -104,6 +116,8 @@ public class PuestoTrabajoCrear extends javax.swing.JDialog {
         jLabelPuestosDisponibles.setForeground(new java.awt.Color(255, 255, 255));
         jLabelPuestosDisponibles.setText("Puestos disponibles");
 
+        jSpinnerPuestosDisponibles.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+
         buttonCrear.setText("Crear");
         buttonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,6 +132,28 @@ public class PuestoTrabajoCrear extends javax.swing.JDialog {
             }
         });
 
+        jLabelSalarioFijo1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSalarioFijo1.setText("% de la venta");
+
+        jLabelSalarioFijo2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSalarioFijo2.setText("% de area");
+
+        jLabelSalarioFijo3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSalarioFijo3.setText("Area de Pago");
+
+        jLabelSalarioFijo4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelSalarioFijo4.setText("A partir de");
+
+        comboBoxAreaPago.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ninguna" }));
+
+        jSpinnerSalarioFijo.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+
+        jSpinnerPorcientoArea.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
+
+        jSpinnerAPartir.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        jSpinnerPorcientoVenta.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
+
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
@@ -125,31 +161,45 @@ public class PuestoTrabajoCrear extends javax.swing.JDialog {
             .addGroup(panelRound1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelPuestosDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelRound1Layout.createSequentialGroup()
                         .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelSalarioFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(49, 49, 49)
-                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRound1Layout.createSequentialGroup()
-                        .addComponent(buttonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRound1Layout.createSequentialGroup()
-                        .addComponent(jLabelNivelDeAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelRound1Layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(comboBoxNivelAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                                    .addComponent(jSpinnerPuestosDisponibles, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)))
+                                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelSalarioFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(49, 49, 49)
+                                .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelRound1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldSalarioFijo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(buttonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelRound1Layout.createSequentialGroup()
+                                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(panelRound1Layout.createSequentialGroup()
+                                        .addGap(139, 139, 139)
+                                        .addComponent(jSpinnerPuestosDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
+                                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabelNivelDeAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabelSalarioFijo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabelSalarioFijo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabelSalarioFijo4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(comboBoxNivelAcceso, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+                                            .addComponent(jSpinnerAPartir)
+                                            .addComponent(jSpinnerPorcientoArea)
+                                            .addComponent(jSpinnerSalarioFijo)
+                                            .addComponent(comboBoxAreaPago, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jSpinnerPorcientoVenta))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 30, Short.MAX_VALUE))
+                                .addComponent(jLabelMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 30, Short.MAX_VALUE))
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelSalarioFijo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelPuestosDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,16 +212,32 @@ public class PuestoTrabajoCrear extends javax.swing.JDialog {
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelSalarioFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldSalarioFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jSpinnerSalarioFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSalarioFijo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerPorcientoVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jSpinnerPorcientoArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelSalarioFijo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSalarioFijo4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerAPartir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSalarioFijo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxAreaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNivelDeAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(comboBoxNivelAcceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelPuestosDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerPuestosDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -196,24 +262,35 @@ public class PuestoTrabajoCrear extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonAction buttonCancelar;
     private org.edisoncor.gui.button.ButtonAction buttonCrear;
+    private org.edisoncor.gui.comboBox.ComboBoxRound comboBoxAreaPago;
     private org.edisoncor.gui.comboBox.ComboBoxRound comboBoxNivelAcceso;
     private org.jdesktop.swingx.JXLabel jLabelMoneda;
     private org.jdesktop.swingx.JXLabel jLabelNivelDeAcceso;
     private org.jdesktop.swingx.JXLabel jLabelNombre;
     private org.jdesktop.swingx.JXLabel jLabelPuestosDisponibles;
     private org.jdesktop.swingx.JXLabel jLabelSalarioFijo;
+    private org.jdesktop.swingx.JXLabel jLabelSalarioFijo1;
+    private org.jdesktop.swingx.JXLabel jLabelSalarioFijo2;
+    private org.jdesktop.swingx.JXLabel jLabelSalarioFijo3;
+    private org.jdesktop.swingx.JXLabel jLabelSalarioFijo4;
+    private javax.swing.JSpinner jSpinnerAPartir;
+    private javax.swing.JSpinner jSpinnerPorcientoArea;
+    private javax.swing.JSpinner jSpinnerPorcientoVenta;
     private javax.swing.JSpinner jSpinnerPuestosDisponibles;
+    private javax.swing.JSpinner jSpinnerSalarioFijo;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldSalarioFijo;
     private org.edisoncor.gui.panel.PanelRound panelRound1;
     // End of variables declaration//GEN-END:variables
 
     private void updateDialog(PuestoTrabajo p) {
 
         jTextFieldNombre.setText(p.getNombrePuesto());
-        jTextFieldSalarioFijo.setText(p.getSalarioFijo().toString());
+        jSpinnerSalarioFijo.setValue(p.getSalarioFijo());
         comboBoxNivelAcceso.setSelectedIndex(p.getNivelAcceso());
         jSpinnerPuestosDisponibles.setValue(p.getPuestosDisponibles());
+        jSpinnerAPartir.setValue(p.getAPartirDe());
+        jSpinnerPorcientoArea.setValue(p.getSalarioPorcientoDeArea());
+        jSpinnerPorcientoVenta.setValue(p.getSalarioPorcientoVentaTotal());
 
     }
 
@@ -225,10 +302,15 @@ public class PuestoTrabajoCrear extends javax.swing.JDialog {
         String nombreOld = p.getNombrePuesto();
         p.setNombrePuesto(jTextFieldNombre.getText());
         p.setNombrePuesto(jTextFieldNombre.getText());
-        p.setSalarioFijo(Integer.parseInt(jTextFieldSalarioFijo.getText()));
+        p.setSalarioFijo((Integer) jSpinnerSalarioFijo.getValue());
+        p.setAPartirDe((Integer) jSpinnerAPartir.getValue());
+        p.setAreaPago((String) comboBoxAreaPago.getSelectedItem());
+        p.setSalarioPorcientoDeArea((Float) jSpinnerPorcientoVenta.getValue());
+        p.setSalarioPorcientoDeArea((Float) jSpinnerPorcientoArea.getValue());
         p.setNivelAcceso(comboBoxNivelAcceso.getSelectedIndex());
        
         p.setPuestosDisponibles((Integer) this.jSpinnerPuestosDisponibles.getValue());
+        
         
         if(!nombreOld.isEmpty()){
         staticContent.puestosJPA.destroy(nombreOld);
