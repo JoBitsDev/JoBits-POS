@@ -23,7 +23,7 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main2
      */
     static Personal logUser;
-    public static String moneda = " CUC";
+    public static String moneda = " " +staticContent.cartaJPA.findCartaEntities().get(0).getMonedaPrincipal();
 
     /**
      * nivel mas bajo para los clientes
