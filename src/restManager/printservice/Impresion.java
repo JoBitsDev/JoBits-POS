@@ -196,13 +196,13 @@ public class Impresion {
             p.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
             p.newLine();
             p.alignRight();
-            p.setText(comun.redondeoDeMonedaMN_CUC((int)(x.getCantidad() * x.getProductoVenta().getPrecioVenta() * 100)) + MONEDA);
+            p.setText(comun.redondeoPorExceso((int)(x.getCantidad() * x.getProductoVenta().getPrecioVenta() * 100)) + MONEDA);
             p.newLine();
             total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
         }
 
-        String subTotalPrint = comun.redondeoDeMonedaMN_CUC((int) (total * 100));
-        String sumaPorciento = comun.redondeoDeMonedaMN_CUC((int) ((Float.valueOf(subTotalPrint) / 10) * 100));
+        String subTotalPrint = comun.redondeoPorExceso((int) (total * 100));
+        String sumaPorciento = comun.redondeoPorExceso((int) ((Float.valueOf(subTotalPrint) / 10) * 100));
         String totalPrint = subTotalPrint;
         p.alignRight();
         p.newLine();
@@ -210,7 +210,7 @@ public class Impresion {
         if (o.getPorciento() != 0) {
             p.newLine();
             p.setText("+ " + o.getPorciento() + "% : " + sumaPorciento + MONEDA);
-            totalPrint = comun.setDosLugaresDecimales((int) ((Float.valueOf(subTotalPrint) +  Float.valueOf(sumaPorciento))*100));
+            totalPrint = comun.redondeoPorExceso((int) ((Float.valueOf(subTotalPrint) +  Float.valueOf(sumaPorciento))*100));
 
         }
         p.newLine();
@@ -219,9 +219,9 @@ public class Impresion {
         p.newLine();
 
         if (monedaCUC) {
-            p.setText(TOTAL + comun.redondeoDeMonedaMN_CUC((int) (Float.valueOf(totalPrint) * cambio * 100)) + MN);
+            p.setText(TOTAL + comun.redondeoPorExceso((int) (Float.valueOf(totalPrint) * cambio * 100)) + MN);
         } else {
-            p.setText(TOTAL + comun.redondeoDeMonedaMN_CUC((int) (100 * Float.valueOf(totalPrint) / cambio)) + CUC);
+            p.setText(TOTAL + comun.redondeoPorExceso((int) (100 * Float.valueOf(totalPrint) / cambio)) + CUC);
         }
 
         p.newLine();
