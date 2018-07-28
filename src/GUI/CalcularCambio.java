@@ -12,6 +12,7 @@ import restManager.persistencia.Orden;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.jpa.staticContent;
 import restManager.util.ComponentMover;
+import restManager.util.comun;
 
 /**
  *
@@ -44,7 +45,8 @@ public class CalcularCambio extends javax.swing.JDialog {
         setUndecorated(true);
         setShape(new RoundRectangle2D.Double(10, 10, 335, 240, 61, 61));
         initComponents();
-         jLabelValorMontoAPagar.setText(""+o.getOrdenvalorMonetario());
+        
+         jLabelValorMontoAPagar.setText(comun.redondeoPorExceso((int) (o.getOrdenvalorMonetario()*100)));
         jLabelValorMontoADevolver.setText("");
 //        jFormattedTextFieldSalarioFijo.setFormatterFactory(
 //                new javax.swing.text.DefaultFormatterFactory(
@@ -287,7 +289,7 @@ public class CalcularCambio extends javax.swing.JDialog {
         a/=25;
         montoADevolver -= a;}
         
-        jLabelValorMontoADevolver.setText("" + montoADevolver);
+        jLabelValorMontoADevolver.setText(comun.redondeoPorDefecto((int) (montoADevolver * 100)));
 
     }
     
