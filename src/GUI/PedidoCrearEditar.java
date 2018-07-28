@@ -130,9 +130,9 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         jLabelVALORHora = new javax.swing.JLabel();
         buttonEnviarACocina = new org.edisoncor.gui.button.ButtonTextDown();
         jCheckBoxPorciento = new javax.swing.JCheckBox();
-        textFieldVALORPorciento = new org.edisoncor.gui.textField.TextFieldRoundBackground();
         buttonAddNota = new org.edisoncor.gui.button.ButtonTextDown();
         buttonAddNota1 = new org.edisoncor.gui.button.ButtonTextDown();
+        jSpinner1 = new javax.swing.JSpinner();
 
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0' %'"))));
 
@@ -384,10 +384,6 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
             }
         });
 
-        textFieldVALORPorciento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        textFieldVALORPorciento.setText("10");
-        textFieldVALORPorciento.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-
         buttonAddNota.setText("Agregar Nota");
         buttonAddNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -399,6 +395,13 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         buttonAddNota1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonAddNota1ActionPerformed(evt);
+            }
+        });
+
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(-100.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
+        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinner1StateChanged(evt);
             }
         });
 
@@ -434,8 +437,8 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 .addGroup(panelLlamada1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLlamada1Layout.createSequentialGroup()
                         .addComponent(jCheckBoxPorciento)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textFieldVALORPorciento, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCheckBoxDELACASA))
                     .addComponent(jScrollPane1)
@@ -476,12 +479,12 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                     .addComponent(jLabelVALORMesa)
                     .addComponent(jLabelVALORNOORDEN))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLlamada1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBoxDELACASA)
                     .addComponent(jCheckBoxPorciento)
-                    .addComponent(textFieldVALORPorciento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelLlamada1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelVALORTotal)
@@ -586,6 +589,10 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         imprimir_pre_ticket();
     }//GEN-LAST:event_buttonAddNota1ActionPerformed
 
+    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
+        addPorcientoToOrden(true);
+    }//GEN-LAST:event_jSpinner1StateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonTextDown buttonAddNota;
     private org.edisoncor.gui.button.ButtonTextDown buttonAddNota1;
@@ -608,6 +615,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelVALORUsuario;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable jTableListaProductos;
     private javax.swing.JTable jTablePedido;
     private org.edisoncor.gui.label.LabelMetric jlabelCANTPROD;
@@ -615,7 +623,6 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     private org.edisoncor.gui.panel.PanelNice panelNice1;
     private org.edisoncor.gui.panel.PanelRoundTranslucido panelRoundTranslucido1;
     private org.edisoncor.gui.textField.TextFieldRectIcon textFieldBUSCAR;
-    private org.edisoncor.gui.textField.TextFieldRoundBackground textFieldVALORPorciento;
     // End of variables declaration//GEN-END:variables
 
     /**
@@ -907,13 +914,18 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     private void addPorcientoToOrden(boolean selected) {
         if (selected) {
             try {
-                float porciento = Float.parseFloat(textFieldVALORPorciento.getText());
+                float porciento = (float) jSpinner1.getValue();
                 o.setPorciento(porciento);
+                ActValorT();
 
             } catch (Exception e) {
 
                 JOptionPane.showMessageDialog(this, "Valor de porciento incorrecto");
             }
+        }
+        else{
+            o.setPorciento(Float.valueOf("0"));
+            ActValorT();
         }
 
     }
