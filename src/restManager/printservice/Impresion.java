@@ -534,65 +534,65 @@ public class Impresion {
      * @param registros
      */
     public void printResumenIPVDePuntoElaboracion(List<IpvRegistro> registros) {
-//        //throw new UnsupportedOperationException("Operacion en desarrollo");
-//        Cocina c = registros.get(0).getIpv().getCocina();
-//        Date fecha = registros.get(0).getIpvRegistroPK().getFecha();
-//        Collections.sort(registros,
-//                (o1,o2) -> {return o1.getIpv().getInsumo().getNombre().
-//                         compareTo(o2.getIpv().getInsumo().getNombre());
-//        });
-//         
-//        Ticket t = new Ticket();
-//        t.resetAll();
-//        t.initialize();
-////p.feedBack((byte)2);
-//        t.alignCenter();
-//        t.setText(CABECERA);
-//        t.newLine();
-//        t.setText(this.nombreRest);
-//        t.newLine();
-//        t.addLineSeperator();
-//        t.newLine();
-//        t.setText(IPV_HEADER);
-//        t.newLine();
-//        t.alignLeft();
-//        t.setText(IPV_PUNTO_ELAB);
-//        t.newLine();
-//        t.alignRight();
-//        t.setText(c.getNombreCocina());
-//        t.newLine();
-//        t.alignLeft();
-//        t.setText(FECHA + this.Format.format(fecha));
-//        t.newLine();
-//        t.addLineSeperator();
-//        t.alignCenter();
-//        t.newLine();
-//        t.setText(IPV_TABLE_HEADER);
-//        t.newLine();
-//        t.addLineSeperator();
-//        t.newLine();
-//       
-//     
-//        for (IpvRegistro x : registros) {
-//        t.setText(x.getIpv().getInsumo().getNombre());
-//        t.newLine();
-//        t.setText(createTableLineForIPVReg(x));
-//        t.newLine();
-//        t.newLine();
-//        } 
-//        
-//        t.newLine();
-//        
-//        t.feed((byte)3);
-//        t.finit();
-//        
-//     
-//        try {
-//            feedPrinter(t.finalCommandSet().getBytes());
-//        } catch (PrintException ex) {
-//            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
+        //throw new UnsupportedOperationException("Operacion en desarrollo");
+        Cocina c = registros.get(0).getIpv().getCocina();
+        Date fecha = registros.get(0).getIpvRegistroPK().getFecha();
+        Collections.sort(registros,
+                (o1,o2) -> {return o1.getIpv().getInsumo().getNombre().
+                         compareTo(o2.getIpv().getInsumo().getNombre());
+        });
+         
+        Ticket t = new Ticket();
+        t.resetAll();
+        t.initialize();
+//p.feedBack((byte)2);
+        t.alignCenter();
+        t.setText(CABECERA);
+        t.newLine();
+        t.setText(this.nombreRest);
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+        t.setText(IPV_HEADER);
+        t.newLine();
+        t.alignLeft();
+        t.setText(IPV_PUNTO_ELAB);
+        t.newLine();
+        t.alignRight();
+        t.setText(c.getNombreCocina());
+        t.newLine();
+        t.alignLeft();
+        t.setText(FECHA + this.Format.format(fecha));
+        t.newLine();
+        t.addLineSeperator();
+        t.alignCenter();
+        t.newLine();
+        t.setText(IPV_TABLE_HEADER);
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+       
+     
+        for (IpvRegistro x : registros) {
+        t.setText(x.getIpv().getInsumo().getNombre());
+        t.newLine();
+        t.setText(createTableLineForIPVReg(x));
+        t.newLine();
+        t.newLine();
+        } 
+        
+        t.newLine();
+        
+        t.feed((byte)3);
+        t.finit();
+        
+     
+        try {
+            feedPrinter(t.finalCommandSet().getBytes());
+        } catch (PrintException ex) {
+            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
