@@ -89,6 +89,7 @@ public class ProductoVentaLista extends javax.swing.JDialog {
         }
         try {
             comun.UpdateTable(rowData, jTableMAIN);
+            buscarEnTabla();
         } catch (Exception ex) {
             Logger.getLogger(ProductoVentaLista.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -498,26 +499,11 @@ public class ProductoVentaLista extends javax.swing.JDialog {
     private void textFieldBUSCARFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFieldBUSCARFocusGained
         textFieldBUSCAR.setText("");
         textFieldBUSCAR.setCaretPosition(0);
+        buscarEnTabla();
     }//GEN-LAST:event_textFieldBUSCARFocusGained
 
     private void textFieldBUSCARKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textFieldBUSCARKeyTyped
-        String aux = textFieldBUSCAR.getText();
-        DefaultTableModel model = (DefaultTableModel) jTableMAIN.getModel();
-        comun.limpiarTabla(jTableMAIN);
-        listaProducto.forEach((ProductoVenta p) -> {
-            Object[] row = {
-                false,
-                p.getPCod(),
-                p.getNombre(),
-                p.getPrecioVenta(),
-                p.getSeccionnombreSeccion().getNombreSeccion(),
-                p.getCocinacodCocina().getNombreCocina(),
-                p.getVisible()
-            };
-            if (p.getNombre().toLowerCase().contains(aux.toLowerCase())) {
-                model.addRow(row);
-            }
-        });
+        buscarEnTabla();  
     }//GEN-LAST:event_textFieldBUSCARKeyTyped
 
     private void jCheckBoxSELECTALLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSELECTALLActionPerformed
@@ -608,8 +594,7 @@ public class ProductoVentaLista extends javax.swing.JDialog {
     }//GEN-LAST:event_jTableMAINMouseClicked
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-       staticContent.clearConnCache();
-       loading();
+      update();
     }//GEN-LAST:event_formWindowGainedFocus
 
 
@@ -662,7 +647,7 @@ public class ProductoVentaLista extends javax.swing.JDialog {
             else {
             cantVisibles--;}
         }
-
+        
     }
 
     private void eliminarPlatos(JTable jTableMAIN) {
@@ -734,5 +719,30 @@ public class ProductoVentaLista extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "No hay elementos seleccionados para editar");
         }
  }
+
+    private void buscarEnTabla() {
+       String aux = textFieldBUSCAR.getText();
+        DefaultTableModel model = (DefaultTableModel) jTableMAIN.getModel();
+        comun.limpiarTabla(jTableMAIN);
+        listaProducto.forEach((ProductoVenta p) -> {
+            Object[] row = {
+                false,
+                p.getPCod(),
+                p.getNombre(),
+                p.getPrecioVenta(),
+                p.getSeccionnombreSeccion().getNombreSeccion(),
+                p.getCocinacodCocina().getNombreCocina(),
+                p.getVisible()
+            };
+            if (p.getNombre().toLowerCase().contains(aux.toLowerCase())) {
+                model.addRow(row);
+            }
+        });
+    }
+    
+    private void update(){
+        staticContent.clearConnCache();
+        loading();
+    }
 
 }

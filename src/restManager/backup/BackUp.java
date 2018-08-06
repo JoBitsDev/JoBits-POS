@@ -36,6 +36,13 @@ public class BackUp {
         emf = Persistence.createEntityManagerFactory("Restaurant_Manager_1.01PU_ext");
         em = emf.createEntityManager();
     }
+
+    public BackUp(EntityManagerFactory emf) {
+        this.emf = emf;
+        em = emf.createEntityManager();
+    }
+    
+    
     
     public boolean startBackup(){
         em.getTransaction().begin();

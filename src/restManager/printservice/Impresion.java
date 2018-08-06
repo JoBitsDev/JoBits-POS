@@ -18,6 +18,7 @@ import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
 import javax.print.PrintException;
+import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 
@@ -81,21 +82,18 @@ public class Impresion {
     private String IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
             IPV_HEADER = "Resumen de gasto de insumos",
             IPV_PUNTO_ELAB = "Punto de elaboracion";
+    
+    private final String NOMBRE_COCINA_PRINCIPAL = "Cocina";
+    private final String DEFAULT_PRINT_LOCATION = null;
+    private int cantidadCopias = 1;
 
     SimpleDateFormat Format = new SimpleDateFormat("dd'/'MM'/'yy ' ' ");
     SimpleDateFormat TimaFormat = new SimpleDateFormat(" hh ':' mm ' ' a ");
     
-    ArrayList<byte []> RAM = new ArrayList<>();
+    ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
-    private static void feedPrinter(byte[] b) throws PrintException {
-        //DocPrintJob job = PrintServiceLookup.lookupPrintServices(null, attrSet)[0].createPrintJob();       
-        DocPrintJob job = PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
-        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-        Doc doc = new SimpleDoc(b, flavor, null);
-
-        job.print(doc, null);
-    }
-
+ 
+    
     /**
      * Constructor por defecto
      *
@@ -113,13 +111,7 @@ public class Impresion {
      * @param cambio
      */
     public Impresion(Carta m, boolean monedaCUC, float cambio) {
-        nombreRest = m.getNombreCarta();
-        this.cambio = cambio;
-        if (this.monedaCUC = monedaCUC) {
-            MONEDA = CUC;
-        } else {
-            MONEDA = MN;
-        }
+       this(m,null,monedaCUC,cambio,1);
 
     }
 
@@ -133,10 +125,13 @@ public class Impresion {
         PIE = footer;
     }
 
-    public Impresion(Carta m, String footer, boolean monedaCUC, float cambio) {
+    public Impresion(Carta m, String footer, boolean monedaCUC, float cambio,int cantidadCopias) {
         this.nombreRest = m.getNombreCarta();
         this.cambio = cambio;
-        PIE = footer;
+        this.cantidadCopias = cantidadCopias;
+        if(footer != null){
+            PIE = footer;            
+        }
         if (this.monedaCUC = monedaCUC) {
             MONEDA = CUC;
         } else {
@@ -149,6 +144,26 @@ public class Impresion {
 
     }
 
+
+    private static void feedPrinter(byte[] b,String printerName) throws PrintException {
+
+        
+        PrintService [] prints = PrintServiceLookup.lookupPrintServices(null, null);
+        DocPrintJob job = PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
+
+        for (int i = 0; i < prints.length; i++) {
+            if(prints[i].getName().equals(printerName)){
+            job = prints[i].createPrintJob();
+        }
+        }
+        
+        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+        Doc doc = new SimpleDoc(b, flavor, null);
+
+        job.print(doc, null);
+
+    }
+    
     public void print(Orden o, boolean preview) throws PrintException {
 
         float total = 0;
@@ -233,7 +248,7 @@ public class Impresion {
         p.feed((byte) 3);
         p.finit();
 
-        feedPrinter(p.finalCommandSet().getBytes());
+        feedPrinter(p.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -372,8 +387,11 @@ public class Impresion {
         p.finit();
 
         if (!ordenSinPlatos) {
-            RAM.add(p.finalCommandSet().getBytes());
-            feedPrinter(p.finalCommandSet().getBytes());
+            for (int i = 0; i < cantidadCopias; i++) {
+               RAM.add(new CopiaTicket(c.getNombreCocina(), p.finalCommandSet().getBytes())); 
+            }
+            
+            feedPrinter(p.finalCommandSet().getBytes(),c.getNombreCocina());
             
         } else {
             System.out.println("No existen platos de la cocina "
@@ -448,7 +466,7 @@ public class Impresion {
         t.finit();
 
         try {
-            feedPrinter(t.finalCommandSet().getBytes());
+            feedPrinter(t.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -520,7 +538,7 @@ public class Impresion {
         t.finit();
 
         try {
-            feedPrinter(t.finalCommandSet().getBytes());
+            feedPrinter(t.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -588,7 +606,7 @@ public class Impresion {
         
      
         try {
-            feedPrinter(t.finalCommandSet().getBytes());
+            feedPrinter(t.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -649,7 +667,7 @@ public class Impresion {
         t.finit();
 
         try {
-            feedPrinter(t.finalCommandSet().getBytes());
+            feedPrinter(t.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -734,7 +752,7 @@ public class Impresion {
         t.finit();
 
         try {
-            feedPrinter(t.finalCommandSet().getBytes());
+            feedPrinter(t.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -743,11 +761,30 @@ public class Impresion {
      private void cleanAndPrintRAM() {
         while(!RAM.isEmpty()){
             try {
-                feedPrinter(RAM.get(0));
+                feedPrinter(RAM.get(0).getImpresionData(),RAM.get(0).getNombreImpresora());
                 RAM.remove(0);
             } catch (PrintException ex) {
                 Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+     
+     private class CopiaTicket {
+         private final String nombreImpresora;
+         private final byte [] impresionData;
+
+        public CopiaTicket(String nombreImpresora, byte[] impresionData) {
+            this.nombreImpresora = nombreImpresora;
+            this.impresionData = impresionData;
+        }
+
+        public String getNombreImpresora() {
+            return nombreImpresora;
+        }
+
+        public byte[] getImpresionData() {
+            return impresionData;
+        }
+        
+     }
 }

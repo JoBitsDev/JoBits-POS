@@ -151,6 +151,13 @@ public class ProductoVentaCrearEditar extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Producto Venta");
         setMinimumSize(new java.awt.Dimension(605, 696));
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         labelPCod.setText(codProductoVenta);
 
@@ -444,6 +451,10 @@ public class ProductoVentaCrearEditar extends javax.swing.JDialog {
         new InsumoLista(this).mostrarDialogParaAddInsumo();
     }//GEN-LAST:event_buttonADDIngredienteActionPerformed
 
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        
+    }//GEN-LAST:event_formWindowGainedFocus
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane TablaDeIngredientes;
@@ -528,6 +539,7 @@ public class ProductoVentaCrearEditar extends javax.swing.JDialog {
 
         //llenando la tabla
         try {
+            //comun.limpiarTabla(jTableListaIngredientes);
             comun.AddToTable(rowData, jTableListaIngredientes);
             comun.AddToTable(rowDataElaborado, jTableIngredientesElab);
         } catch (Exception ex) {

@@ -75,7 +75,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 
                 Mesa m = staticContent.mesasJPA.findMesa("M-0");
                 o.setMesacodMesa(m);
-                m.setEstado("ocupada");
+                m.setEstado(o.getCodOrden() + " " + o.getPersonalusuario().getUsuario() );
                 staticContent.mesasJPA.edit(m);
                 o.setDeLaCasa(false);
                 o.setProductovOrdenList(new ArrayList<>());
@@ -398,7 +398,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
             }
         });
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(-100.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(10.0f), Float.valueOf(-100.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
         jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinner1StateChanged(evt);
@@ -666,6 +666,9 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         jLabelVALORNOORDEN.setText("No : " + or.getCodOrden());
         jLabelVALORUsuario.setText(or.getPersonalusuario().getUsuario());
         jCheckBoxDELACASA.setSelected(or.getDeLaCasa());
+        jCheckBoxPorciento.setSelected(or.getPorciento() != 0);
+        jSpinner1.setValue(or.getPorciento());
+        
         ArrayList[] rowdata = comun.initArray(new ArrayList[4]);
         for (ProductovOrden x : or.getProductovOrdenList()) {
             rowdata[0].add(x.getProductoVenta().getPCod());
@@ -919,8 +922,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 ActValorT();
 
             } catch (Exception e) {
-
-                JOptionPane.showMessageDialog(this, "Valor de porciento incorrecto");
+                    JOptionPane.showMessageDialog(this, "Valor de porciento incorrecto");
             }
         }
         else{

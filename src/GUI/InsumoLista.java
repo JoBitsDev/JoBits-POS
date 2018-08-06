@@ -302,6 +302,7 @@ public class InsumoLista extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Operación realizada exitosamente");
                 jDialog1.setVisible(false);
                 jTextFieldNombre.setText("Nuevo insumo");
+                
             }
         } catch (Exception ex) {
             Logger.getLogger(CocinaLista.class.getName()).log(Level.SEVERE, null, ex);
