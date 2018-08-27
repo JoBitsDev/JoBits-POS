@@ -20,7 +20,7 @@ public class Main {
 
     public static void main(String[] args) {
         
-        //back_up();
+       // back_up();
         boolean newDatabase = checkIfDatabaseIsNew();
 
         if (newDatabase) {
@@ -49,18 +49,21 @@ public class Main {
 
     private static void back_up() {
         BackUp bu = new BackUp();
-        bu.startBackup();
+        bu.startBackupTransaction();
 
         // backup cocinas
         bu.backUPCocina(staticContent.cocinaJPA.findCocinaEntities());
         // backup secciones
-        bu.backUPSecciones(staticContent.seccionJPA.findSeccionEntities());
+        bu.BackUPSecciones(staticContent.seccionJPA.findSeccionEntities());
         // backup ingredientes
+        bu.BackUpInsumos(staticContent.insumoJPA.findInsumoEntities());
         // backup platos
-        bu.backUpProd(staticContent.productoJPA.findProductoVentaEntities());
+        bu.BackUpProd(staticContent.productoJPA.findProductoVentaEntities());
         // backup mesas
         bu.backUPMesa(staticContent.mesasJPA.findMesaEntities());
-        bu.commitBackup();
+        //backup ventas
+        bu.BackUpVentas(staticContent.ventaJPA.findVentaEntities());
+        bu.commitBackupTransaction();
 
     }
 }
