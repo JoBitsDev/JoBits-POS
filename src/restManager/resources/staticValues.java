@@ -8,6 +8,7 @@ package restManager.resources;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 /**
  * FirstDream
@@ -16,8 +17,10 @@ import java.util.Date;
  */
 public class staticValues {
     
-    public static final Date today = new Date();
+    public static final Date TODAYS_DATE = new Date();
     
-    public static SimpleDateFormat Format = new SimpleDateFormat("dd'/'MM'/'yy");
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
+    
+    public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("/Strings");
 
 }
