@@ -30,7 +30,7 @@ public class LoadingWindow {
     /**
      * constructor de la clase privado ya que esta se construye una sola vez
      */
-    public LoadingWindow(){
+    private LoadingWindow(){
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | IllegalAccessException
