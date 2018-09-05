@@ -9,6 +9,7 @@ import GUI.FirstTimeDialog;
 import GUI.LogInDialog;
 import restManager.backup.BackUp;
 import restManager.persistencia.jpa.staticContent;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -20,7 +21,9 @@ public class Main {
 
     public static void main(String[] args) {
         
-       // back_up();
+        
+        staticContent.init(R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota"));
+        //back_up();
         boolean newDatabase = checkIfDatabaseIsNew();
 
         if (newDatabase) {
@@ -44,26 +47,16 @@ public class Main {
     }
 
     private static boolean checkIfDatabaseIsNew() {
+        if(staticContent.isCONECTADO()){
         return staticContent.personalJPA.findPersonalEntities().isEmpty();
+    }else{
+            return false;
+        }
     }
 
-    private static void back_up() {
-        BackUp bu = new BackUp();
-        bu.startBackupTransaction();
-
-        // backup cocinas
-        bu.backUPCocina(staticContent.cocinaJPA.findCocinaEntities());
-        // backup secciones
-        bu.BackUPSecciones(staticContent.seccionJPA.findSeccionEntities());
-        // backup ingredientes
-        bu.BackUpInsumos(staticContent.insumoJPA.findInsumoEntities());
-        // backup platos
-        bu.BackUpProd(staticContent.productoJPA.findProductoVentaEntities());
-        // backup mesas
-        bu.backUPMesa(staticContent.mesasJPA.findMesaEntities());
-        //backup ventas
-        bu.BackUpVentas(staticContent.ventaJPA.findVentaEntities());
-        bu.commitBackupTransaction();
-
-    }
+//    private static void back_up() {
+//       BackUp bu = new BackUp();
+//       bu.EjecutarBackUpAll();
+//
+//    }
 }

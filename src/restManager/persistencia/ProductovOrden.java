@@ -45,14 +45,14 @@ public class ProductovOrden implements Serializable {
     private Integer enviadosacocina;
     @Column(name = "numero_comensal")
     private Integer numeroComensal;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "productovOrden")
-    private Nota nota;
     @JoinColumn(name = "ordencod_orden", referencedColumnName = "cod_orden", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Orden orden;
     @JoinColumn(name = "producto_ventap_cod", referencedColumnName = "p_cod", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private ProductoVenta productoVenta;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "productovOrden")
+    private Nota nota;
 
     public ProductovOrden() {
     }
@@ -102,14 +102,6 @@ public class ProductovOrden implements Serializable {
         this.numeroComensal = numeroComensal;
     }
 
-    public Nota getNota() {
-        return nota;
-    }
-
-    public void setNota(Nota nota) {
-        this.nota = nota;
-    }
-
     public Orden getOrden() {
         return orden;
     }
@@ -124,6 +116,14 @@ public class ProductovOrden implements Serializable {
 
     public void setProductoVenta(ProductoVenta productoVenta) {
         this.productoVenta = productoVenta;
+    }
+
+    public Nota getNota() {
+        return nota;
+    }
+
+    public void setNota(Nota nota) {
+        this.nota = nota;
     }
 
     @Override

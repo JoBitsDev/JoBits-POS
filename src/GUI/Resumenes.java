@@ -20,7 +20,7 @@ import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
-import restManager.resources.staticValues;
+import restManager.resources.R;
 import restManager.util.comun;
 
 public class Resumenes extends javax.swing.JPanel{
@@ -239,7 +239,7 @@ public class Resumenes extends javax.swing.JPanel{
 
         jTextFieldFechaInit.setEditable(false);
         jTextFieldFechaInit.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jTextFieldFechaInit.setText(staticValues.Format.format(dia.getFecha()));
+        jTextFieldFechaInit.setText(R.DATE_FORMAT.format(dia.getFecha()));
         jTextFieldFechaInit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldFechaInitActionPerformed(evt);
@@ -469,10 +469,10 @@ public class Resumenes extends javax.swing.JPanel{
     // End of variables declaration//GEN-END:variables
 
     private void updateDialog(Venta dia,Cocina c) {
-        jTextFieldFechaInit.setText(restManager.resources.staticValues.
-                Format.format(dia.getFecha()));
-        jTextFieldFechaFin.setText(restManager.resources.staticValues.
-                Format.format(end));
+        jTextFieldFechaInit.setText(restManager.resources.R.
+                DATE_FORMAT.format(dia.getFecha()));
+        jTextFieldFechaFin.setText(restManager.resources.R.
+                DATE_FORMAT.format(end));
         fillTablaVentas(c);
         fillTablaGastos(c);
     

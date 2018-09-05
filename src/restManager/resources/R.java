@@ -15,12 +15,12 @@ import java.util.ResourceBundle;
  * @author Jorge
  * 
  */
-public class staticValues {
+public class R {
     
     public static final Date TODAYS_DATE = new Date();
     
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
     
-    public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("/Strings");
+    public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("Strings");
 
 }

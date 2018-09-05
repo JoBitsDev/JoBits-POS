@@ -5,9 +5,6 @@
  */
 package GUI;
 
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
@@ -15,13 +12,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManager;
 
 import javax.print.PrintException;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.NumberFormatter;
 
 import restManager.persistencia.Configuracion;
 import restManager.persistencia.Mesa;
@@ -62,7 +57,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     private void updateDialog(Orden or) {
         if (or == null) {
             try {
-                staticContent.EMF.getCache().evict(Configuracion.class);
+                staticContent.clearCache(Configuracion.class);
                 Configuracion c = staticContent.configJPA.findConfiguracion("O");
                 o = new Orden("O-" + (c.getValor()));
                 c.setValor(c.getValor() + 1);
@@ -376,7 +371,6 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         });
 
         jCheckBoxPorciento.setBackground(new java.awt.Color(255, 255, 153));
-        jCheckBoxPorciento.setSelected(true);
         jCheckBoxPorciento.setText("Añadir Porciento");
         jCheckBoxPorciento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -922,7 +916,8 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 ActValorT();
 
             } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Valor de porciento incorrecto");
+                System.out.println(e.getMessage());
+                JOptionPane.showMessageDialog(this, "Valor de porciento incorrecto");
             }
         }
         else{

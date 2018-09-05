@@ -1029,7 +1029,9 @@
         <Component class="org.edisoncor.gui.button.ButtonTextDown" name="buttonImprimir">
           <Properties>
             <Property name="text" type="java.lang.String" value="Imprimir Resumen"/>
-            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="Main.NIVEL_4" type="code"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="restManager.resources.values.Fonts.BUTTON" type="code"/>
             </Property>
@@ -1037,6 +1039,9 @@
               <Connection code="restManager.resources.strings.Strings.IMPRIMIR_LABEL" type="code"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonImprimirActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

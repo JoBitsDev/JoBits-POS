@@ -5,20 +5,21 @@
  */
 package GUI;
 
-import java.awt.Color;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.print.PrintException;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import org.jdesktop.swingx.decorator.ColorHighlighter;
+import restManager.algoritmo.VentaB;
 import restManager.persistencia.Cocina;
 
 import restManager.persistencia.Control.VentaDAO;
@@ -33,6 +34,7 @@ import restManager.persistencia.jpa.exceptions.IllegalOrphanException;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.staticContent;
 import restManager.printservice.Impresion;
+import restManager.util.LoadingWindow;
 import restManager.util.comun;
 
 /**
@@ -159,6 +161,7 @@ public class VentaMain extends javax.swing.JDialog {
             rowData[3].add(o.getHoraTerminada()!=null);
         }
 
+        
         try {
             comun.UpdateTable(rowData, jXTableOrdenes);
         } catch (Exception ex) {
@@ -271,9 +274,9 @@ public class VentaMain extends javax.swing.JDialog {
      * tiempo real
      */
     private void clearConnCache() {
-        staticContent.EMF.getCache().evict(Venta.class);
-        staticContent.EMF.getCache().evict(Orden.class);
-        staticContent.EMF.getCache().evict(ProductovOrden.class);
+        staticContent.clearCache(Venta.class);
+        staticContent.clearCache(Orden.class);
+        staticContent.clearCache(ProductovOrden.class);
     }
 
     /**
@@ -902,9 +905,14 @@ public class VentaMain extends javax.swing.JDialog {
         });
 
         buttonImprimir.setText("Imprimir Resumen");
-        buttonImprimir.setEnabled(false);
+        buttonImprimir.setEnabled(Main.NIVEL_4);
         buttonImprimir.setFont(restManager.resources.values.Fonts.BUTTON);
         buttonImprimir.setLabel(restManager.resources.strings.Strings.IMPRIMIR_LABEL);
+        buttonImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonImprimirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRect1Layout = new javax.swing.GroupLayout(panelRect1);
         panelRect1.setLayout(panelRect1Layout);
@@ -1013,6 +1021,20 @@ public class VentaMain extends javax.swing.JDialog {
         CalcularCambio cc = new CalcularCambio(this, true, getSelectedOrden());
     }//GEN-LAST:event_buttonCalcularCambioActionPerformed
 
+    private void buttonImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImprimirActionPerformed
+        try {
+            VentaB f = new VentaB(v);
+            LoadingWindow.show(this);
+            f.execute();
+            List<Orden> ords = f.get();
+            for (Orden x : ords) {
+                imp.print(x, false);
+            }
+        } catch (InterruptedException | ExecutionException | PrintException ex) {
+            Logger.getLogger(VentaMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonImprimirActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonTextDown buttonAddOrden;
     private org.edisoncor.gui.button.ButtonTextDown buttonCalcularCambio;
@@ -1118,7 +1140,7 @@ public class VentaMain extends javax.swing.JDialog {
         if (resp == JOptionPane.YES_OPTION) {
             float ventaTotal = 0,
                     ventasGastosEnInsumos = 0;
-            EntityManager em = staticContent.EMF.createEntityManager();
+            EntityManager em = staticContent.getEMF().createEntityManager();
             em.getTransaction().begin();
             for (Orden x : v.getOrdenList()) {
                 if (x.getHoraTerminada() == null) {

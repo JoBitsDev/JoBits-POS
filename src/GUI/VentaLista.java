@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
-import restManager.resources.staticValues;
+import restManager.resources.R;
 import restManager.util.comun;
 
 /**
@@ -187,7 +187,7 @@ public class VentaLista extends javax.swing.JDialog {
     private void jTableListaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListaMouseClicked
         if (evt.getClickCount() == 2) {
             try {
-                Date f = restManager.resources.staticValues.Format.parse(
+                Date f = restManager.resources.R.DATE_FORMAT.parse(
                         (String) jTableLista.getValueAt(jTableLista.getSelectedRow(), 1));
                 VentaMain.getInstance(this.getParent(), true, staticContent.ventaJPA.findVenta(f));
             } catch (ParseException ex) {
@@ -232,7 +232,7 @@ public class VentaLista extends javax.swing.JDialog {
     private void jButtonCierreVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCierreVentasActionPerformed
         ArrayList<Venta> v;
         Date fechafin = new Date(100, 1, 1);
-        Date fechainicio = staticValues.today;
+        Date fechainicio = R.TODAYS_DATE;
         try {
             v = new ArrayList<>(getSeleccionadosDelaTabla());
 
@@ -303,8 +303,7 @@ public class VentaLista extends javax.swing.JDialog {
 
         for (int i = 0; i < jTableLista.getRowCount(); i++) {
             if ((boolean) jTableLista.getValueAt(i, 0)) {
-                ret.add(staticContent.ventaJPA.findVenta(
-                        staticValues.Format.parse((String) jTableLista.getValueAt(i, 1))));
+                ret.add(staticContent.ventaJPA.findVenta(R.DATE_FORMAT.parse((String) jTableLista.getValueAt(i, 1))));
             }
         }
 
@@ -319,7 +318,7 @@ public class VentaLista extends javax.swing.JDialog {
 
         for (Venta v : ventas) {
             tabla[0].add(false);
-            tabla[1].add(staticValues.Format.format(v.getFecha()));
+            tabla[1].add(R.DATE_FORMAT.format(v.getFecha()));
             tabla[2].add(v.getVentaTotal());
             
         }

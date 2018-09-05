@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -64,8 +63,6 @@ public class Cliente implements Serializable {
     private String observacionesCliente;
     @OneToMany(mappedBy = "clientecodCliente")
     private List<Orden> ordenList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientecodCliente")
-    private List<OrdenArchivada> ordenArchivadaList;
 
     public Cliente() {
     }
@@ -150,14 +147,6 @@ public class Cliente implements Serializable {
 
     public void setOrdenList(List<Orden> ordenList) {
         this.ordenList = ordenList;
-    }
-
-    public List<OrdenArchivada> getOrdenArchivadaList() {
-        return ordenArchivadaList;
-    }
-
-    public void setOrdenArchivadaList(List<OrdenArchivada> ordenArchivadaList) {
-        this.ordenArchivadaList = ordenArchivadaList;
     }
 
     @Override

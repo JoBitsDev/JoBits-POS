@@ -8,7 +8,7 @@ import javax.swing.JDialog;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
-import restManager.resources.staticValues;
+import restManager.resources.R;
 
 public class Resumen extends javax.swing.JDialog{
 
@@ -35,15 +35,15 @@ public class Resumen extends javax.swing.JDialog{
         
          if (dia.getFecha().getDate() == fechaFinal.getDate() &&
                  dia.getFecha().getMonth() == fechaFinal.getMonth()) {
-               cDate = staticValues.Format.format(dia.getFecha()) 
+               cDate = R.DATE_FORMAT.format(dia.getFecha()) 
                        + "(" + nombreMenu + ")";
                hVentas = ("Ventas del dia " + cDate);
                hGastos = ("Gastos por productos del dia " + cDate);
                
 
             } else {
-                cDate = staticValues.Format.format(dia.getFecha()) +
-                        " al " + staticValues.Format.format(fechaFinal) + "(" + nombreMenu + ")";
+                cDate = R.DATE_FORMAT.format(dia.getFecha()) +
+                        " al " + R.DATE_FORMAT.format(fechaFinal) + "(" + nombreMenu + ")";
                 hVentas = ("Resumen de ventas del " + cDate);
                 hGastos = ("Resumen de gastos del " + cDate);
             }

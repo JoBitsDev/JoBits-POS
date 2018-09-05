@@ -45,6 +45,7 @@ public class TrabajadorLista extends javax.swing.JDialog {
         }
 
         for (Personal x : trabajadores) {
+            System.out.println(x.getUsuario());
             Object[] row = {
                 x.getUsuario(),
                 x.getDatosPersonales().getNombre(),

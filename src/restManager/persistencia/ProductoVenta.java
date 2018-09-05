@@ -68,8 +68,6 @@ public class ProductoVenta implements Serializable {
     private Seccion seccionnombreSeccion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoVenta")
     private List<ProductovOrden> productovOrdenList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoVenta")
-    private List<ProductovOrdenArchivado> productovOrdenArchivadoList;
 
     public ProductoVenta() {
     }
@@ -170,14 +168,6 @@ public class ProductoVenta implements Serializable {
 
     public void setProductovOrdenList(List<ProductovOrden> productovOrdenList) {
         this.productovOrdenList = productovOrdenList;
-    }
-
-    public List<ProductovOrdenArchivado> getProductovOrdenArchivadoList() {
-        return productovOrdenArchivadoList;
-    }
-
-    public void setProductovOrdenArchivadoList(List<ProductovOrdenArchivado> productovOrdenArchivadoList) {
-        this.productovOrdenArchivadoList = productovOrdenArchivadoList;
     }
 
     @Override

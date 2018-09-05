@@ -222,7 +222,8 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        buttonCopiaSeguridad.setText("Lista Productos");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        buttonCopiaSeguridad.setText(bundle.getString("label_copia_seguridad")); // NOI18N
         buttonCopiaSeguridad.setFont(new java.awt.Font("BlairMdITC TT", 1, 24)); // NOI18N
         buttonCopiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -314,7 +315,7 @@ public class Main extends javax.swing.JFrame {
 
         buttonTextDownCONF.setText("Configuracion");
         buttonTextDownCONF.setActionCommand("Configuración");
-        buttonTextDownCONF.setEnabled(NIVEL_5);
+        buttonTextDownCONF.setEnabled(NIVEL_4);
         buttonTextDownCONF.setFont(new java.awt.Font("BlairMdITC TT", 1, 24)); // NOI18N
         buttonTextDownCONF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -476,7 +477,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonABRIRIPVActionPerformed
 
     private void buttonCopiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCopiaSeguridadActionPerformed
-        // TODO add your handling code here:
+        new copiaSegView(this, true);
     }//GEN-LAST:event_buttonCopiaSeguridadActionPerformed
 
     private void buttonTextDownCONFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTextDownCONFActionPerformed

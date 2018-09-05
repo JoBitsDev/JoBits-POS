@@ -83,7 +83,7 @@ public class VentaB extends SwingWorker<List<Orden>, Integer> {
         int limite = cantidadOrdenes;
 
         //monto_A_Ajustar =(float) (calcularMontoTotal()*porciento_a_ajustar/100);
-        monto_A_Ajustar = 48;
+        monto_A_Ajustar = 40;
         while (monto_A_Ajustar > montoRecaudado) {
 
             montoRecaudado += agregarOrden(horarioAlmuerzo.get(punteroAlmuerzo % horarioAlmuerzo.size()), punteroAlmuerzo);
@@ -107,7 +107,7 @@ public class VentaB extends SwingWorker<List<Orden>, Integer> {
             limite--;
             if (limite == 0) {
                 if (VALOR_MAXIMO_MONETARIO < 100) {
-                    VALOR_MAXIMO_MONETARIO += 10;
+                    VALOR_MAXIMO_MONETARIO += 5;
 
                 } else if (VALOR_MIN_MONETARIO > 0) {
                     VALOR_MIN_MONETARIO -= 1;
@@ -128,6 +128,7 @@ public class VentaB extends SwingWorker<List<Orden>, Integer> {
             noOrdenDelDia++;
         }
 
+        
         return ordEncontradas;
     }
 

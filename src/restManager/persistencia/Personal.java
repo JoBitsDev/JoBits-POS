@@ -61,12 +61,10 @@ public class Personal implements Serializable {
     private byte[] foto;
     @ManyToMany(mappedBy = "personalList")
     private List<PuestoTrabajo> puestoTrabajoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalusuario")
-    private List<Orden> ordenList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personal")
     private DatosPersonales datosPersonales;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalusuario")
-    private List<OrdenArchivada> ordenArchivadaList;
+    private List<Orden> ordenList;
 
     public Personal() {
     }
@@ -137,14 +135,6 @@ public class Personal implements Serializable {
         this.puestoTrabajoList = puestoTrabajoList;
     }
 
-    public List<Orden> getOrdenList() {
-        return ordenList;
-    }
-
-    public void setOrdenList(List<Orden> ordenList) {
-        this.ordenList = ordenList;
-    }
-
     public DatosPersonales getDatosPersonales() {
         return datosPersonales;
     }
@@ -153,12 +143,12 @@ public class Personal implements Serializable {
         this.datosPersonales = datosPersonales;
     }
 
-    public List<OrdenArchivada> getOrdenArchivadaList() {
-        return ordenArchivadaList;
+    public List<Orden> getOrdenList() {
+        return ordenList;
     }
 
-    public void setOrdenArchivadaList(List<OrdenArchivada> ordenArchivadaList) {
-        this.ordenArchivadaList = ordenArchivadaList;
+    public void setOrdenList(List<Orden> ordenList) {
+        this.ordenList = ordenList;
     }
 
     @Override

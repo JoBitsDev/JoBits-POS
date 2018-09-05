@@ -56,11 +56,11 @@ public class Insumo implements Serializable {
     private Double cantidadExistente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<ProductoInsumo> productoInsumoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
+    private List<Ipv> ipvList;
     @JoinColumn(name = "almacencod_almacen", referencedColumnName = "cod_almacen")
     @ManyToOne
     private Almacen almacencodAlmacen;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
-    private List<Ipv> ipvList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<InsumoElaborado> insumoElaboradoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo1")
@@ -134,20 +134,20 @@ public class Insumo implements Serializable {
         this.productoInsumoList = productoInsumoList;
     }
 
-    public Almacen getAlmacencodAlmacen() {
-        return almacencodAlmacen;
-    }
-
-    public void setAlmacencodAlmacen(Almacen almacencodAlmacen) {
-        this.almacencodAlmacen = almacencodAlmacen;
-    }
-
     public List<Ipv> getIpvList() {
         return ipvList;
     }
 
     public void setIpvList(List<Ipv> ipvList) {
         this.ipvList = ipvList;
+    }
+
+    public Almacen getAlmacencodAlmacen() {
+        return almacencodAlmacen;
+    }
+
+    public void setAlmacencodAlmacen(Almacen almacencodAlmacen) {
+        this.almacencodAlmacen = almacencodAlmacen;
     }
 
     public List<InsumoElaborado> getInsumoElaboradoList() {

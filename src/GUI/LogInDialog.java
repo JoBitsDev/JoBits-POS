@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.geom.RoundRectangle2D;
 
@@ -13,6 +14,7 @@ import javax.swing.SwingWorker;
 
 import restManager.persistencia.Personal;
 import restManager.persistencia.jpa.staticContent;
+import restManager.resources.R;
 import restManager.util.ComponentMover;
 import restManager.util.LoadingWindow;
 /**
@@ -25,19 +27,20 @@ public class LogInDialog extends javax.swing.JDialog {
      * Creates new form LogInDialog
      */
     private String estadoConexion;
+    private Color colorLabel;
     
     
     public LogInDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         setUndecorated(true);
-        setShape(new RoundRectangle2D.Double(0, 0, 388, 237, 30, 30));
-        if (comprobarConexion()) {
-            estadoConexion = "Conectado";
-        } else {
-            estadoConexion = "No hay conexión";
-        }
+        setShape(new RoundRectangle2D.Double(0, 0, 388, 266, 30, 30));
+       comprobarConexion();
         initComponents();
         ComponentMover cr = new ComponentMover(this, panelNice1);
+
+        buttonGroup1.add(jRadioButtonLocal);
+        buttonGroup1.add(jRadioButtonRemoto);
+        
 
         setVisible(true);
     }
@@ -49,6 +52,7 @@ public class LogInDialog extends javax.swing.JDialog {
         panelRect1 = new org.edisoncor.gui.panel.PanelRect();
         jXLabel1 = new org.jdesktop.swingx.JXLabel();
         jXLabel2 = new org.jdesktop.swingx.JXLabel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         panelNice1 = new org.edisoncor.gui.panel.PanelNice();
         passwordField = new org.edisoncor.gui.passwordField.PasswordFieldRound();
         jXLabelPass = new org.jdesktop.swingx.JXLabel();
@@ -58,7 +62,9 @@ public class LogInDialog extends javax.swing.JDialog {
         buttonSalir = new org.edisoncor.gui.button.ButtonColoredAction();
         buttonAuth = new org.edisoncor.gui.button.ButtonColoredAction();
         jXLabelUser1 = new org.jdesktop.swingx.JXLabel();
-        jXLabelUser2 = new org.jdesktop.swingx.JXLabel();
+        jXLabelConnected = new org.jdesktop.swingx.JXLabel();
+        jRadioButtonLocal = new javax.swing.JRadioButton();
+        jRadioButtonRemoto = new javax.swing.JRadioButton();
 
         panelRect1.setAnchoDeBorde(0.0F);
         panelRect1.setAnchoDeSegundoBorde(0.0F);
@@ -145,10 +151,30 @@ public class LogInDialog extends javax.swing.JDialog {
         jXLabelUser1.setText("Restaurant Manager V1.01\n");
         jXLabelUser1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
 
-        jXLabelUser2.setForeground(new java.awt.Color(0, 204, 0));
-        jXLabelUser2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jXLabelUser2.setText(estadoConexion);
-        jXLabelUser2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jXLabelConnected.setForeground(colorLabel);
+        jXLabelConnected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jXLabelConnected.setText(estadoConexion);
+        jXLabelConnected.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+
+        jRadioButtonLocal.setBackground(new java.awt.Color(30, 30, 30));
+        jRadioButtonLocal.setForeground(new java.awt.Color(255, 255, 0));
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jRadioButtonLocal.setText(bundle.getString("label_servidor_local")); // NOI18N
+        jRadioButtonLocal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonLocalActionPerformed(evt);
+            }
+        });
+
+        jRadioButtonRemoto.setBackground(new java.awt.Color(30, 30, 30));
+        jRadioButtonRemoto.setForeground(new java.awt.Color(255, 255, 0));
+        jRadioButtonRemoto.setSelected(true);
+        jRadioButtonRemoto.setText(bundle.getString("label_servidor_remoto")); // NOI18N
+        jRadioButtonRemoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonRemotoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelNice1Layout = new javax.swing.GroupLayout(panelNice1);
         panelNice1.setLayout(panelNice1Layout);
@@ -171,15 +197,17 @@ public class LogInDialog extends javax.swing.JDialog {
                                     .addGroup(panelNice1Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addComponent(jXLabelUser, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jXLabelPass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jXLabelPass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jRadioButtonLocal, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(96, 96, 96)
                                 .addGroup(panelNice1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(textFieldUser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jRadioButtonRemoto))))
                         .addGap(0, 5, Short.MAX_VALUE))
                     .addComponent(jXLabelUser1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelNice1Layout.createSequentialGroup()
-                        .addComponent(jXLabelUser2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jXLabelConnected, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -196,9 +224,13 @@ public class LogInDialog extends javax.swing.JDialog {
                 .addGroup(panelNice1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jXLabelPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jXLabelUser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(panelNice1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButtonLocal)
+                    .addComponent(jRadioButtonRemoto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jXLabelConnected, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelNice1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonAuth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -231,17 +263,28 @@ public class LogInDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_passwordFieldKeyPressed
 
+    private void jRadioButtonLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLocalActionPerformed
+        conectarServidorLocal();
+    }//GEN-LAST:event_jRadioButtonLocalActionPerformed
+
+    private void jRadioButtonRemotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonRemotoActionPerformed
+        conectarServidorRemoto();
+    }//GEN-LAST:event_jRadioButtonRemotoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonColoredAction buttonAuth;
     private org.edisoncor.gui.button.ButtonColoredAction buttonConfig;
+    private javax.swing.ButtonGroup buttonGroup1;
     private org.edisoncor.gui.button.ButtonColoredAction buttonSalir;
+    private javax.swing.JRadioButton jRadioButtonLocal;
+    private javax.swing.JRadioButton jRadioButtonRemoto;
     private org.jdesktop.swingx.JXLabel jXLabel1;
     private org.jdesktop.swingx.JXLabel jXLabel2;
+    private org.jdesktop.swingx.JXLabel jXLabelConnected;
     private org.jdesktop.swingx.JXLabel jXLabelPass;
     private org.jdesktop.swingx.JXLabel jXLabelUser;
     private org.jdesktop.swingx.JXLabel jXLabelUser1;
-    private org.jdesktop.swingx.JXLabel jXLabelUser2;
     private org.edisoncor.gui.panel.PanelNice panelNice1;
     private org.edisoncor.gui.panel.PanelRect panelRect1;
     private org.edisoncor.gui.passwordField.PasswordFieldRound passwordField;
@@ -249,10 +292,31 @@ public class LogInDialog extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private boolean comprobarConexion() {
-        return true;//TODO: no esta comprobando la conexion
+       boolean conn =  staticContent.isCONECTADO();
+       if (conn) {
+            estadoConexion = "Conectado";
+            colorLabel = Color.green;
+        } else {
+            estadoConexion = "No hay conexión";
+            colorLabel = Color.red;
+           
+        }
+       if(jXLabelConnected != null){
+            jXLabelConnected.setText(estadoConexion);
+            jXLabelConnected.setForeground(colorLabel);
+       }
+       
+       return conn;
     }
 
     private void autenticar() {
+        
+        if(!comprobarConexion()){
+            JOptionPane.showMessageDialog(this,R.RESOURCE_BUNDLE.getString("Error_Sin_Conexion"),
+                    R.RESOURCE_BUNDLE.getString("label_error"),JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         LoadingWindow.show(this);
         
         
@@ -308,6 +372,17 @@ public class LogInDialog extends javax.swing.JDialog {
         };
         worker.execute();
 
+    }
+
+    private void conectarServidorLocal() {
+       staticContent.init(R.RESOURCE_BUNDLE.getString("unidad_persistencia_local"));
+        comprobarConexion();
+    }
+
+    private void conectarServidorRemoto() {
+        staticContent.init(R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota"));
+        comprobarConexion();
+    
     }
 
 }

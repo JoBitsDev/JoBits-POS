@@ -65,6 +65,8 @@ public class Orden implements Serializable {
     private Float ordenvalorMonetario;
     @Column(name = "ordengasto_eninsumos")
     private Float ordengastoEninsumos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orden")
+    private List<ProductovOrden> productovOrdenList;
     @JoinColumn(name = "clientecod_cliente", referencedColumnName = "cod_cliente")
     @ManyToOne
     private Cliente clientecodCliente;
@@ -77,8 +79,6 @@ public class Orden implements Serializable {
     @JoinColumn(name = "ventafecha", referencedColumnName = "fecha")
     @ManyToOne(optional = false)
     private Venta ventafecha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orden")
-    private List<ProductovOrden> productovOrdenList;
 
     public Orden() {
     }
@@ -156,6 +156,14 @@ public class Orden implements Serializable {
         this.ordengastoEninsumos = ordengastoEninsumos;
     }
 
+    public List<ProductovOrden> getProductovOrdenList() {
+        return productovOrdenList;
+    }
+
+    public void setProductovOrdenList(List<ProductovOrden> productovOrdenList) {
+        this.productovOrdenList = productovOrdenList;
+    }
+
     public Cliente getClientecodCliente() {
         return clientecodCliente;
     }
@@ -186,14 +194,6 @@ public class Orden implements Serializable {
 
     public void setVentafecha(Venta ventafecha) {
         this.ventafecha = ventafecha;
-    }
-
-    public List<ProductovOrden> getProductovOrdenList() {
-        return productovOrdenList;
-    }
-
-    public void setProductovOrdenList(List<ProductovOrden> productovOrdenList) {
-        this.productovOrdenList = productovOrdenList;
     }
 
     @Override

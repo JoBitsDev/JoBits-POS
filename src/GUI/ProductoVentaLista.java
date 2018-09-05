@@ -48,7 +48,7 @@ public class ProductoVentaLista extends javax.swing.JDialog {
     }
 
     private void updateFrame() {
-        staticContent.EMF.getCache().evict(ProductoVenta.class);
+        staticContent.clearCache(ProductoVenta.class);
         listaProducto = new ArrayList<>(staticContent.productoJPA.findProductoVentaEntities());
         labelCANTPROD.setText(listaProducto.size() + " Platos");
         Collections.sort(listaProducto, (o1, o2) -> {
@@ -405,7 +405,7 @@ public class ProductoVentaLista extends javax.swing.JDialog {
         }
 
         buttonADDPROD.setText("Agregar Producto");
-        buttonADDPROD.setEnabled(Main.NIVEL_2);
+        buttonADDPROD.setEnabled(Main.NIVEL_4);
         buttonADDPROD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonADDPRODActionPerformed(evt);
