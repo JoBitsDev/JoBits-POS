@@ -7,10 +7,11 @@ package GUI;
 
 import java.util.Date;
 import java.util.List;
+import javax.swing.JFrame;
 import restManager.persistencia.Personal;
+import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.Venta;
-import restManager.persistencia.jpa.CartaJpaController;
 import restManager.persistencia.jpa.staticContent;
 
 /**
@@ -235,6 +236,11 @@ public class Main extends javax.swing.JFrame {
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(927, 625));
         setName("MainMenu"); // NOI18N
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         panelRect1.setLayout(new java.awt.BorderLayout());
 
@@ -484,6 +490,10 @@ public class Main extends javax.swing.JFrame {
         cleanAuxPanel();
         panelRectAUX.add(buttonCopiaSeguridad);
     }//GEN-LAST:event_buttonTextDownCONFActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        new LogInDialog(new JFrame(), true);        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
