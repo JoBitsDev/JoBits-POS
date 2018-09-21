@@ -7,7 +7,6 @@ package restManager.main;
 
 import GUI.FirstTimeDialog;
 import GUI.LogInDialog;
-import restManager.backup.BackUp;
 import restManager.persistencia.jpa.staticContent;
 import restManager.resources.R;
 
@@ -22,8 +21,7 @@ public class Main {
     public static void main(String[] args) {
         
         
-        staticContent.init(R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota"));
-        //back_up();
+        staticContent.init(R.RESOURCE_BUNDLE.getString("unidad_persistencia_local"));
         boolean newDatabase = checkIfDatabaseIsNew();
 
         if (newDatabase) {
@@ -54,9 +52,4 @@ public class Main {
         }
     }
 
-//    private static void back_up() {
-//       BackUp bu = new BackUp();
-//       bu.EjecutarBackUpAll();
-//
-//    }
 }
