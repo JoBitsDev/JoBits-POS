@@ -67,10 +67,10 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 o.setOrdenvalorMonetario(Float.parseFloat("0"));
                 o.setPersonalusuario(Main.logUser);
                 o.setVentafecha(findVentaFecha());
-                
+
                 Mesa m = staticContent.mesasJPA.findMesa("M-0");
                 o.setMesacodMesa(m);
-                m.setEstado(o.getCodOrden() + " " + o.getPersonalusuario().getUsuario() );
+                m.setEstado(o.getCodOrden() + " " + o.getPersonalusuario().getUsuario());
                 staticContent.mesasJPA.edit(m);
                 o.setDeLaCasa(false);
                 o.setProductovOrdenList(new ArrayList<>());
@@ -538,7 +538,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     }//GEN-LAST:event_buttonEliminarActionPerformed
 
     private void jCheckBoxDELACASAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDELACASAActionPerformed
-        o.setDeLaCasa(jCheckBoxDELACASA.isSelected());
+        setdelacasa();
     }//GEN-LAST:event_jCheckBoxDELACASAActionPerformed
 
     private void buttonEnviarACocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnviarACocinaActionPerformed
@@ -662,7 +662,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         jCheckBoxDELACASA.setSelected(or.getDeLaCasa());
         jCheckBoxPorciento.setSelected(or.getPorciento() != 0);
         jSpinner1.setValue(or.getPorciento());
-        
+
         ArrayList[] rowdata = comun.initArray(new ArrayList[4]);
         for (ProductovOrden x : or.getProductovOrdenList()) {
             rowdata[0].add(x.getProductoVenta().getPCod());
@@ -694,7 +694,6 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         }
     }
 
-    
     private void despachar() {
         int respuesta = JOptionPane.showConfirmDialog(this, "Desea cerrar la orden " + o.getCodOrden());
         if (respuesta == JOptionPane.YES_OPTION) {
@@ -729,7 +728,6 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                     o.setMesacodMesa(m);
                     staticContent.ordenJPA.edit(o);
                     staticContent.mesasJPA.edit(m);
-                                     
 
                     dispose();
                     return;
@@ -768,11 +766,11 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
             valor += (float) (jTablePedido.getValueAt(i, 3));
         }
         if (o.getPorciento() != 0) {
-            if(!o.getDeLaCasa()){
-            valor += (o.getPorciento() / 100) * valor;
+            if (!o.getDeLaCasa()) {
+                valor += (o.getPorciento() / 100) * valor;
             }
         }
-        
+
         o.setOrdenvalorMonetario(valor);
         try {
             staticContent.ordenJPA.edit(o);
@@ -919,8 +917,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 System.out.println(e.getMessage());
                 JOptionPane.showMessageDialog(this, "Valor de porciento incorrecto");
             }
-        }
-        else{
+        } else {
             o.setPorciento(Float.valueOf("0"));
             ActValorT();
         }
@@ -984,7 +981,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     private Float getGastosInsumos(Orden o) {
         float ret = 0;
         for (ProductovOrden x : o.getProductovOrdenList()) {
-           ret += x.getProductoVenta().getGasto()*x.getCantidad();
+            ret += x.getProductoVenta().getGasto() * x.getCantidad();
         }
 
         return ret;
@@ -992,19 +989,28 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
 
     private Venta findVentaFecha() {
         Venta ret = staticContent.ventaJPA.findVenta(new Date());
-        
-        if(ret == null){
+
+        if (ret == null) {
             for (Venta v : staticContent.ventaJPA.findVentaEntities()) {
-               if(v.getVentaTotal() == null){
-                   return v;
-               }
+                if (v.getVentaTotal() == null) {
+                    return v;
+                }
             }
         }
-        
+
         return ret;
-        
+
     }
 
-    
+    private void setdelacasa() {
+        try {
+            o.setDeLaCasa(jCheckBoxDELACASA.isSelected());
+            staticContent.ordenJPA.edit(o);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }
