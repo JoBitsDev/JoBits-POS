@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
         
         
-        staticContent.init(R.RESOURCE_BUNDLE.getString("unidad_persistencia_local"));
+        staticContent.init(R.RESOURCE_BUNDLE.getString("unidad_persistencia_remoto"));
         boolean newDatabase = checkIfDatabaseIsNew();
 
         if (newDatabase) {
