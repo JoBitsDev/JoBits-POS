@@ -30,6 +30,11 @@ import javax.persistence.Table;
     , @NamedQuery(name = "Almacen.findByNombre", query = "SELECT a FROM Almacen a WHERE a.nombre = :nombre")})
 public class Almacen implements Serializable {
 
+    @Column(name = "cantidad_insumos")
+    private Integer cantidadInsumos;
+    @OneToMany(mappedBy = "almacencodAlmacen")
+    private List<Ficha> fichaList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -94,6 +99,22 @@ public class Almacen implements Serializable {
     @Override
     public String toString() {
         return "restManager.persistencia.Almacen[ codAlmacen=" + codAlmacen + " ]";
+    }
+
+    public Integer getCantidadInsumos() {
+        return cantidadInsumos;
+    }
+
+    public void setCantidadInsumos(Integer cantidadInsumos) {
+        this.cantidadInsumos = cantidadInsumos;
+    }
+
+    public List<Ficha> getFichaList() {
+        return fichaList;
+    }
+
+    public void setFichaList(List<Ficha> fichaList) {
+        this.fichaList = fichaList;
     }
 
 }

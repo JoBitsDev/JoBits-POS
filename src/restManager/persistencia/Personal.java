@@ -40,6 +40,10 @@ import javax.persistence.TemporalType;
     , @NamedQuery(name = "Personal.findByUltimodiaTrabajo", query = "SELECT p FROM Personal p WHERE p.ultimodiaTrabajo = :ultimodiaTrabajo")})
 public class Personal implements Serializable {
 
+    @Lob
+    @Column(name = "foto")
+    private byte[] foto;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -56,9 +60,6 @@ public class Personal implements Serializable {
     @Column(name = "ultimodia_trabajo")
     @Temporal(TemporalType.DATE)
     private Date ultimodiaTrabajo;
-    @Lob
-    @Column(name = "foto")
-    private byte[] foto;
     @ManyToMany(mappedBy = "personalList")
     private List<PuestoTrabajo> puestoTrabajoList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personal")
@@ -119,13 +120,6 @@ public class Personal implements Serializable {
         this.ultimodiaTrabajo = ultimodiaTrabajo;
     }
 
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
 
     public List<PuestoTrabajo> getPuestoTrabajoList() {
         return puestoTrabajoList;
@@ -174,6 +168,14 @@ public class Personal implements Serializable {
     @Override
     public String toString() {
         return "restManager.persistencia.Personal[ usuario=" + usuario + " ]";
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
 }

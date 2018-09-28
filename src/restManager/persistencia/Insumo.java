@@ -37,6 +37,11 @@ import javax.persistence.Table;
     , @NamedQuery(name = "Insumo.findByCantidadExistente", query = "SELECT i FROM Insumo i WHERE i.cantidadExistente = :cantidadExistente")})
 public class Insumo implements Serializable {
 
+    @Column(name = "stock_estimation")
+    private Double stockEstimation;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
+    private List<InsumoFicha> insumoFichaList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -189,6 +194,22 @@ public class Insumo implements Serializable {
     @Override
     public String toString() {
         return "restManager.persistencia.Insumo[ codInsumo=" + codInsumo + " ]";
+    }
+
+    public Double getStockEstimation() {
+        return stockEstimation;
+    }
+
+    public void setStockEstimation(Double stockEstimation) {
+        this.stockEstimation = stockEstimation;
+    }
+
+    public List<InsumoFicha> getInsumoFichaList() {
+        return insumoFichaList;
+    }
+
+    public void setInsumoFichaList(List<InsumoFicha> insumoFichaList) {
+        this.insumoFichaList = insumoFichaList;
     }
 
 }

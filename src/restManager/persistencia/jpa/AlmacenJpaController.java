@@ -17,6 +17,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import restManager.persistencia.Almacen;
+import restManager.persistencia.Ficha;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.exceptions.PreexistingEntityException;
 
@@ -40,6 +41,9 @@ public class AlmacenJpaController implements Serializable {
         if (almacen.getInsumoList() == null) {
             almacen.setInsumoList(new ArrayList<Insumo>());
         }
+        if (almacen.getFichaList() == null) {
+            almacen.setFichaList(new ArrayList<Ficha>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -50,6 +54,12 @@ public class AlmacenJpaController implements Serializable {
                 attachedInsumoList.add(insumoListInsumoToAttach);
             }
             almacen.setInsumoList(attachedInsumoList);
+            List<Ficha> attachedFichaList = new ArrayList<Ficha>();
+            for (Ficha fichaListFichaToAttach : almacen.getFichaList()) {
+                fichaListFichaToAttach = em.getReference(fichaListFichaToAttach.getClass(), fichaListFichaToAttach.getIdFicha());
+                attachedFichaList.add(fichaListFichaToAttach);
+            }
+            almacen.setFichaList(attachedFichaList);
             em.persist(almacen);
             for (Insumo insumoListInsumo : almacen.getInsumoList()) {
                 Almacen oldAlmacencodAlmacenOfInsumoListInsumo = insumoListInsumo.getAlmacencodAlmacen();
@@ -58,6 +68,15 @@ public class AlmacenJpaController implements Serializable {
                 if (oldAlmacencodAlmacenOfInsumoListInsumo != null) {
                     oldAlmacencodAlmacenOfInsumoListInsumo.getInsumoList().remove(insumoListInsumo);
                     oldAlmacencodAlmacenOfInsumoListInsumo = em.merge(oldAlmacencodAlmacenOfInsumoListInsumo);
+                }
+            }
+            for (Ficha fichaListFicha : almacen.getFichaList()) {
+                Almacen oldAlmacencodAlmacenOfFichaListFicha = fichaListFicha.getAlmacencodAlmacen();
+                fichaListFicha.setAlmacencodAlmacen(almacen);
+                fichaListFicha = em.merge(fichaListFicha);
+                if (oldAlmacencodAlmacenOfFichaListFicha != null) {
+                    oldAlmacencodAlmacenOfFichaListFicha.getFichaList().remove(fichaListFicha);
+                    oldAlmacencodAlmacenOfFichaListFicha = em.merge(oldAlmacencodAlmacenOfFichaListFicha);
                 }
             }
             em.getTransaction().commit();
@@ -81,6 +100,8 @@ public class AlmacenJpaController implements Serializable {
             Almacen persistentAlmacen = em.find(Almacen.class, almacen.getCodAlmacen());
             List<Insumo> insumoListOld = persistentAlmacen.getInsumoList();
             List<Insumo> insumoListNew = almacen.getInsumoList();
+            List<Ficha> fichaListOld = persistentAlmacen.getFichaList();
+            List<Ficha> fichaListNew = almacen.getFichaList();
             List<Insumo> attachedInsumoListNew = new ArrayList<Insumo>();
             for (Insumo insumoListNewInsumoToAttach : insumoListNew) {
                 insumoListNewInsumoToAttach = em.getReference(insumoListNewInsumoToAttach.getClass(), insumoListNewInsumoToAttach.getCodInsumo());
@@ -88,6 +109,13 @@ public class AlmacenJpaController implements Serializable {
             }
             insumoListNew = attachedInsumoListNew;
             almacen.setInsumoList(insumoListNew);
+            List<Ficha> attachedFichaListNew = new ArrayList<Ficha>();
+            for (Ficha fichaListNewFichaToAttach : fichaListNew) {
+                fichaListNewFichaToAttach = em.getReference(fichaListNewFichaToAttach.getClass(), fichaListNewFichaToAttach.getIdFicha());
+                attachedFichaListNew.add(fichaListNewFichaToAttach);
+            }
+            fichaListNew = attachedFichaListNew;
+            almacen.setFichaList(fichaListNew);
             almacen = em.merge(almacen);
             for (Insumo insumoListOldInsumo : insumoListOld) {
                 if (!insumoListNew.contains(insumoListOldInsumo)) {
@@ -103,6 +131,23 @@ public class AlmacenJpaController implements Serializable {
                     if (oldAlmacencodAlmacenOfInsumoListNewInsumo != null && !oldAlmacencodAlmacenOfInsumoListNewInsumo.equals(almacen)) {
                         oldAlmacencodAlmacenOfInsumoListNewInsumo.getInsumoList().remove(insumoListNewInsumo);
                         oldAlmacencodAlmacenOfInsumoListNewInsumo = em.merge(oldAlmacencodAlmacenOfInsumoListNewInsumo);
+                    }
+                }
+            }
+            for (Ficha fichaListOldFicha : fichaListOld) {
+                if (!fichaListNew.contains(fichaListOldFicha)) {
+                    fichaListOldFicha.setAlmacencodAlmacen(null);
+                    fichaListOldFicha = em.merge(fichaListOldFicha);
+                }
+            }
+            for (Ficha fichaListNewFicha : fichaListNew) {
+                if (!fichaListOld.contains(fichaListNewFicha)) {
+                    Almacen oldAlmacencodAlmacenOfFichaListNewFicha = fichaListNewFicha.getAlmacencodAlmacen();
+                    fichaListNewFicha.setAlmacencodAlmacen(almacen);
+                    fichaListNewFicha = em.merge(fichaListNewFicha);
+                    if (oldAlmacencodAlmacenOfFichaListNewFicha != null && !oldAlmacencodAlmacenOfFichaListNewFicha.equals(almacen)) {
+                        oldAlmacencodAlmacenOfFichaListNewFicha.getFichaList().remove(fichaListNewFicha);
+                        oldAlmacencodAlmacenOfFichaListNewFicha = em.merge(oldAlmacencodAlmacenOfFichaListNewFicha);
                     }
                 }
             }
@@ -139,6 +184,11 @@ public class AlmacenJpaController implements Serializable {
             for (Insumo insumoListInsumo : insumoList) {
                 insumoListInsumo.setAlmacencodAlmacen(null);
                 insumoListInsumo = em.merge(insumoListInsumo);
+            }
+            List<Ficha> fichaList = almacen.getFichaList();
+            for (Ficha fichaListFicha : fichaList) {
+                fichaListFicha.setAlmacencodAlmacen(null);
+                fichaListFicha = em.merge(fichaListFicha);
             }
             em.remove(almacen);
             em.getTransaction().commit();
