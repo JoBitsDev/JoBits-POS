@@ -264,11 +264,13 @@ public class LogInDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_passwordFieldKeyPressed
 
     private void jRadioButtonLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLocalActionPerformed
-        conectarServidorLocal();
+         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
+        conectarServidor();
     }//GEN-LAST:event_jRadioButtonLocalActionPerformed
 
     private void jRadioButtonRemotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonRemotoActionPerformed
-        conectarServidorRemoto();
+         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
+        conectarServidor();
     }//GEN-LAST:event_jRadioButtonRemotoActionPerformed
 
 
@@ -374,15 +376,10 @@ public class LogInDialog extends javax.swing.JDialog {
 
     }
 
-    private void conectarServidorLocal() {
-       staticContent.init(R.RESOURCE_BUNDLE.getString("unidad_persistencia_local"));
+    private void conectarServidor() {
+       
+       staticContent.init(R.PERIRSTENCE_UNIT_NAME);
         comprobarConexion();
-    }
-
-    private void conectarServidorRemoto() {
-        staticContent.init(R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota"));
-        comprobarConexion();
-    
     }
 
 }
