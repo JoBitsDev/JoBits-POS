@@ -9,6 +9,8 @@ package restManager.resources;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
+import javax.swing.UnsupportedLookAndFeelException;
+import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
 
 /**
  * FirstDream
@@ -22,5 +24,15 @@ public class R {
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
     
     public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("Strings");
-
+    
+    public static  String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
+    
+    public static void setLookAndFeels(){
+        try {
+                    javax.swing.UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
+            } catch (UnsupportedLookAndFeelException ex) {
+                System.out.println(ex.getMessage());
+        }
+    }
+    
 }
