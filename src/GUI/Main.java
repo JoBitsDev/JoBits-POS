@@ -5,14 +5,17 @@
  */
 package GUI;
 
+import GUI.Views.Almacen.AlmacenEditView;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
+import restManager.controller.AlmacenListController;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
+import restManager.resources.R;
 
 /**
  *
@@ -146,8 +149,13 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        buttonABRIRALMACEN.setText("Abrir Almacén");
+        buttonABRIRALMACEN.setText("Listar Almacenes");
         buttonABRIRALMACEN.setFont(new java.awt.Font("BlairMdITC TT", 1, 24)); // NOI18N
+        buttonABRIRALMACEN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonABRIRALMACENActionPerformed(evt);
+            }
+        });
 
         buttonABRIRIPV.setText("Abrir IPVs");
         buttonABRIRIPV.setFont(new java.awt.Font("BlairMdITC TT", 1, 24)); // NOI18N
@@ -232,11 +240,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(927, 625));
         setName("MainMenu"); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
@@ -459,19 +470,19 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonDIASSINARCHIVARActionPerformed
 
     private void buttonCREARPUESTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCREARPUESTOActionPerformed
-      new PuestoTrabajoCrear(this, true, null);
+        new PuestoTrabajoCrear(this, true, null);
     }//GEN-LAST:event_buttonCREARPUESTOActionPerformed
 
     private void buttonVERPUESTOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERPUESTOSActionPerformed
-      new PuestoTrabajoLista(this, true);
+        new PuestoTrabajoLista(this, true);
     }//GEN-LAST:event_buttonVERPUESTOSActionPerformed
 
     private void buttonVERCOCINASActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERCOCINASActionPerformed
-      new CocinaLista(this, true);
+        new CocinaLista(this, true);
     }//GEN-LAST:event_buttonVERCOCINASActionPerformed
 
     private void buttonVERINSUMOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERINSUMOSActionPerformed
-       new InsumoLista(this, true);
+        new InsumoLista(this, true);
     }//GEN-LAST:event_buttonVERINSUMOSActionPerformed
 
     private void buttonVERSECCIONESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERSECCIONESActionPerformed
@@ -479,7 +490,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonVERSECCIONESActionPerformed
 
     private void buttonABRIRIPVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonABRIRIPVActionPerformed
-       new IPVsLista(this, true);
+        new IPVsLista(this, true);
     }//GEN-LAST:event_buttonABRIRIPVActionPerformed
 
     private void buttonCopiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCopiaSeguridadActionPerformed
@@ -492,8 +503,17 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTextDownCONFActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        new LogInDialog(new JFrame(), true);        // TODO add your handling code here:
+         new LogInDialog(new JFrame(), true);       // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
+
+    private void buttonABRIRALMACENActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonABRIRALMACENActionPerformed
+        R.setLookAndFeels();
+        new AlmacenListController(this);
+    }//GEN-LAST:event_buttonABRIRALMACENActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -580,13 +600,13 @@ public class Main extends javax.swing.JFrame {
 
     private Venta getDiaDeVenta() {
         List<Venta> ventas = staticContent.ventaJPA.findVentaEntities();
-        for (int i = ventas.size()-1 ; i >= 0; i--) {
-            if(ventas.get(i).getVentaTotal() == null){
+        for (int i = ventas.size() - 1; i >= 0; i--) {
+            if (ventas.get(i).getVentaTotal() == null) {
                 return ventas.get(i);
             }
-            
+
         }
-        
+
         return staticContent.ventaJPA.findVenta(new Date());
     }
 
