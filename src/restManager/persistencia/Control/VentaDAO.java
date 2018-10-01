@@ -6,8 +6,10 @@
 package restManager.persistencia.Control;
 
 import GUI.Main;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -15,12 +17,14 @@ import javax.swing.JTable;
 import org.jdesktop.swingx.JXTable;
 
 import restManager.persistencia.Cocina;
+import restManager.persistencia.Mesa;
 import restManager.persistencia.Venta;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
+import restManager.persistencia.jpa.staticContent;
 import restManager.util.comun;
 
 /**
@@ -45,10 +49,11 @@ public class VentaDAO {
                         new ArrayList(o.getProductovOrdenList()));
             }
         }//nˆ3
-        
-        Collections.sort(ret,(o1, o2) -> {
-            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());});
-        
+
+        Collections.sort(ret, (o1, o2) -> {
+            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
+        });
+
         return ret;
     }
 
@@ -610,10 +615,38 @@ public class VentaDAO {
     public static float getValorTotalVentas(Venta v) {
         float total = 0;
         for (Orden x : v.getOrdenList()) {
-            if(!x.getDeLaCasa()){
-            total += x.getOrdenvalorMonetario();}
+            if (!x.getDeLaCasa()) {
+                total += x.getOrdenvalorMonetario();
+            }
         }
         return total;
+    }
+
+    public static List<Orden> getOrdenesActivas(Venta ventas) {
+
+        Collections.sort(ventas.getOrdenList(), (Orden o1, Orden o2) -> {
+            int idO1, idO2;
+            idO1 = Integer.parseInt(o1.getCodOrden().substring(2));
+            idO2 = Integer.parseInt(o2.getCodOrden().substring(2));
+            return Integer.compare(idO1, idO2);
+        });
+
+        List<Orden> retOrd = new ArrayList<>();
+        List<String> existingMesasName = new ArrayList<>();
+
+        for (Orden o : ventas.getOrdenList()) {
+            if (o.getHoraTerminada() == null) {
+                retOrd.add(o);
+
+            } else {
+                String codMesa = o.getMesacodMesa().getCodMesa();
+                if (!existingMesasName.contains(codMesa)) {
+                    existingMesasName.add(codMesa);
+                    retOrd.add(o);
+                }
+            }
+        }
+        return retOrd;
     }
 
 }
