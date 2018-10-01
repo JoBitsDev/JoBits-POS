@@ -154,7 +154,14 @@ public class VentaMain extends javax.swing.JDialog {
         ArrayList[] rowData = new ArrayList[4];
         comun.initArray(rowData);
 
-        for (Orden o : ventas.getOrdenList()) {
+        List<Orden> ords;
+        if (Main.logUser.getPuestoTrabajoList().get(0).getNivelAcceso() > 2) {
+            ords = ventas.getOrdenList();
+        } else {
+        ords = VentaDAO.getOrdenesActivas(ventas);
+        }
+        
+        for (Orden o : ords) {
             rowData[0].add(o.getCodOrden());
             rowData[2].add(o.getOrdenvalorMonetario());
             rowData[1].add(o.getMesacodMesa().getCodMesa());
@@ -1129,7 +1136,7 @@ public class VentaMain extends javax.swing.JDialog {
             List<ProductovOrden> aux = VentaDAO.getResumenVentasCocina(v, c);
              Collections.sort(aux,(o1, o2) -> {
             return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());});
-            imp.printCocinaResumen(aux, c, v.getFecha());
+            imp.printResumenPuntoElab(aux, c, v.getFecha());
 
         }
 
@@ -1237,7 +1244,7 @@ public class VentaMain extends javax.swing.JDialog {
             List<ProductovOrden> aux = VentaDAO.getResumenVentasCocina(v, c);
             Collections.sort(aux,(o1, o2) -> {
             return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());});
-            imp.printCocinaResumen(aux, c, v.getFecha());
+            imp.printResumenPuntoElab(aux, c, v.getFecha());
 
         } 
     }
