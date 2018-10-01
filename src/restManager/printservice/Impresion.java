@@ -21,6 +21,9 @@ import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
+import javax.print.event.PrintJobEvent;
+import javax.print.event.PrintJobListener;
+import javax.swing.JOptionPane;
 
 import restManager.persistencia.Carta;
 import restManager.persistencia.Cocina;
@@ -30,7 +33,6 @@ import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
-import restManager.persistencia.jpa.ProductovOrdenJpaController;
 import restManager.persistencia.jpa.staticContent;
 import restManager.util.comun;
 
@@ -43,10 +45,14 @@ public class Impresion {
     /**
      * @param args the command line arguments
      */
-    private String nombreRest = null;
-    private boolean monedaCUC = false;
+    private String nombreRest;
+    private boolean monedaCUC;
     private float cambio = 24;
-    private int porciento = 0;
+    private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
+    private final SimpleDateFormat Format = new SimpleDateFormat("dd'/'MM'/'yy ' ' ");
+    private final SimpleDateFormat TimaFormat = new SimpleDateFormat(" hh ':' mm ' ' a ");
+
+    ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
     /**
      * String referentes a la impresion de ordenes
@@ -66,34 +72,28 @@ public class Impresion {
             MN = " MN",
             SYNC = "Sale con: ",
             PREVIEW = "(Cierre parcial de cuenta)",
-            PORCIENTO = "Porciento : ",
+            PORCIENTO = "% : ",
             Z = "Impresión de Z";
-    
-    
 
     /**
      * Strings referentes a la impresion de resumenes de ventas
      */
-    private String RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
+    private final String RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
             RESUMEN_VENTAS_COCINA = "Resumen de ventas por área ",
             TOTAL_VENTAS = "Total Vendido: ",
             RESUMEN_CONSUMO_CASA = "Resumen del consumo de la casa ";
 
-    private String IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
+    private final String IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
             IPV_HEADER = "Resumen de gasto de insumos",
             IPV_PUNTO_ELAB = "Punto de elaboracion";
-    
-    private final String NOMBRE_COCINA_PRINCIPAL = "Cocina";
+
+    private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     private final String DEFAULT_PRINT_LOCATION = null;
     private int cantidadCopias = 1;
 
-    SimpleDateFormat Format = new SimpleDateFormat("dd'/'MM'/'yy ' ' ");
-    SimpleDateFormat TimaFormat = new SimpleDateFormat(" hh ':' mm ' ' a ");
-    
-    ArrayList<CopiaTicket> RAM = new ArrayList<>();
-
- 
-    
+    //
+    //Constructors
+    //
     /**
      * Constructor por defecto
      *
@@ -111,7 +111,7 @@ public class Impresion {
      * @param cambio
      */
     public Impresion(Carta m, boolean monedaCUC, float cambio) {
-       this(m,null,monedaCUC,cambio,1);
+        this(m, null, monedaCUC, cambio, 1);
 
     }
 
@@ -125,12 +125,12 @@ public class Impresion {
         PIE = footer;
     }
 
-    public Impresion(Carta m, String footer, boolean monedaCUC, float cambio,int cantidadCopias) {
+    public Impresion(Carta m, String footer, boolean monedaCUC, float cambio, int cantidadCopias) {
         this.nombreRest = m.getNombreCarta();
         this.cambio = cambio;
         this.cantidadCopias = cantidadCopias;
-        if(footer != null){
-            PIE = footer;            
+        if (footer != null) {
+            PIE = footer;
         }
         if (this.monedaCUC = monedaCUC) {
             MONEDA = CUC;
@@ -141,29 +141,11 @@ public class Impresion {
 
     public static Impresion getDefaultInstance() {
         return new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"));
-
     }
 
-
-    private static void feedPrinter(byte[] b,String printerName) throws PrintException {
-
-        
-        PrintService [] prints = PrintServiceLookup.lookupPrintServices(null, null);
-        DocPrintJob job = PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
-
-        for (int i = 0; i < prints.length; i++) {
-            if(prints[i].getName().equals(printerName)){
-            job = prints[i].createPrintJob();
-        }
-        }
-        
-        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-        Doc doc = new SimpleDoc(b, flavor, null);
-
-        job.print(doc, null);
-
-    }
-    
+    //
+    //Metodos Publicos
+    //
     public void print(Orden o, boolean preview) throws PrintException {
 
         float total = 0;
@@ -206,12 +188,12 @@ public class Impresion {
         p.addLineSeperator();
         p.newLine();
 
-       for (ProductovOrden x : o.getProductovOrdenList()) {
+        for (ProductovOrden x : o.getProductovOrdenList()) {
             p.alignLeft();
             p.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
             p.newLine();
             p.alignRight();
-            p.setText(comun.redondeoPorExceso((int)(x.getCantidad() * x.getProductoVenta().getPrecioVenta() * 100)) + MONEDA);
+            p.setText(comun.redondeoPorExceso((int) (x.getCantidad() * x.getProductoVenta().getPrecioVenta() * 100)) + MONEDA);
             p.newLine();
             total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
         }
@@ -224,8 +206,8 @@ public class Impresion {
         p.setText(SUBTOTAL + subTotalPrint + MONEDA);
         if (o.getPorciento() != 0) {
             p.newLine();
-            p.setText("+ " + o.getPorciento() + "% : " + sumaPorciento + MONEDA);
-            totalPrint = comun.redondeoPorExceso((int) ((Float.valueOf(subTotalPrint) +  Float.valueOf(sumaPorciento))*100));
+            p.setText("+ " + o.getPorciento() + PORCIENTO + sumaPorciento + MONEDA);
+            totalPrint = comun.redondeoPorExceso((int) ((Float.valueOf(subTotalPrint) + Float.valueOf(sumaPorciento)) * 100));
 
         }
         p.newLine();
@@ -248,7 +230,7 @@ public class Impresion {
         p.feed((byte) 3);
         p.finit();
 
-        feedPrinter(p.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
+        feedPrinter(p.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -307,7 +289,7 @@ public class Impresion {
         }
 
         cleanAndPrintRAM();
-        
+
         return o;
     }
 
@@ -388,11 +370,11 @@ public class Impresion {
 
         if (!ordenSinPlatos) {
             for (int i = 0; i < cantidadCopias; i++) {
-               RAM.add(new CopiaTicket(c.getNombreCocina(), p.finalCommandSet().getBytes())); 
+                RAM.add(new CopiaTicket(c.getNombreCocina(), p.finalCommandSet().getBytes()));
             }
-            
-            feedPrinter(p.finalCommandSet().getBytes(),c.getNombreCocina());
-            
+
+            feedPrinter(p.finalCommandSet().getBytes(), c.getNombreCocina());
+
         } else {
             System.out.println("No existen platos de la cocina "
                     + c.getNombreCocina() + " de la orden " + o.getCodOrden() + " para imprimir");
@@ -466,7 +448,7 @@ public class Impresion {
         t.finit();
 
         try {
-            feedPrinter(t.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -538,7 +520,7 @@ public class Impresion {
         t.finit();
 
         try {
-            feedPrinter(t.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -556,14 +538,15 @@ public class Impresion {
         Cocina c = registros.get(0).getIpv().getCocina();
         Date fecha = registros.get(0).getIpvRegistroPK().getFecha();
         Collections.sort(registros,
-                (o1,o2) -> {return o1.getIpv().getInsumo().getNombre().
-                         compareTo(o2.getIpv().getInsumo().getNombre());
-        });
-         
+                (o1, o2) -> {
+                    return o1.getIpv().getInsumo().getNombre().
+                            compareTo(o2.getIpv().getInsumo().getNombre());
+                });
+
         Ticket t = new Ticket();
         t.resetAll();
         t.initialize();
-//p.feedBack((byte)2);
+        //p.feedBack((byte)2);
         t.alignCenter();
         t.setText(CABECERA);
         t.newLine();
@@ -589,28 +572,26 @@ public class Impresion {
         t.newLine();
         t.addLineSeperator();
         t.newLine();
-       
-     
+
         for (IpvRegistro x : registros) {
-        t.setText(x.getIpv().getInsumo().getNombre());
+            t.setText(x.getIpv().getInsumo().getNombre());
+            t.newLine();
+            t.setText(createTableLineForIPVReg(x));
+            t.newLine();
+            t.newLine();
+        }
+
         t.newLine();
-        t.setText(createTableLineForIPVReg(x));
-        t.newLine();
-        t.newLine();
-        } 
-        
-        t.newLine();
-        
-        t.feed((byte)3);
+
+        t.feed((byte) 3);
         t.finit();
-        
-     
+
         try {
-            feedPrinter(t.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
@@ -623,7 +604,7 @@ public class Impresion {
         Ticket t = new Ticket();
         t.resetAll();
         t.initialize();
-//p.feedBack((byte)2);
+        //p.feedBack((byte)2);
         t.alignCenter();
         t.setText(CABECERA);
         t.newLine();
@@ -667,14 +648,54 @@ public class Impresion {
         t.finit();
 
         try {
-            feedPrinter(t.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    //Metodos privados para el funcionameiento de la clase
+    //
+    //Getters And Setters
+    //
+
+    public static EstadoImpresion getEstadoImpresion() {
+        return estadoImpresion;
+    }
+    
+    //
+    //Private Methods
+    //
+    private static void feedPrinter(byte[] b, String printerName) throws PrintException {
+
+        PrintService[] prints = PrintServiceLookup.lookupPrintServices(null, null);
+        DocPrintJob job = PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
+        job.addPrintJobListener(new JobListener());
+        
+        for (int i = 0; i < prints.length; i++) {
+            if (prints[i].getName().equals(printerName)) {
+                job = prints[i].createPrintJob();
+            }
+        }
+
+        
+        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+        Doc doc = new SimpleDoc(b, flavor, null);
+
+        job.print(doc, null);
+
+    }
+
+    private boolean existPrinter(String printerName) {
+        PrintService[] prints = PrintServiceLookup.lookupPrintServices(null, null);
+        for (PrintService print : prints) {
+            if (print.getName().equals(printerName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private String createTableLineForIPVReg(IpvRegistro x) {
         //"Ini. |Ent. |Disp.|Cons.|Final."
 
@@ -752,26 +773,97 @@ public class Impresion {
         t.finit();
 
         try {
-            feedPrinter(t.finalCommandSet().getBytes(),DEFAULT_PRINT_LOCATION);
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-     private void cleanAndPrintRAM() {
-        while(!RAM.isEmpty()){
+    private void cleanAndPrintRAM() {
+        while (!RAM.isEmpty()) {
             try {
-                feedPrinter(RAM.get(0).getImpresionData(),RAM.get(0).getNombreImpresora());
+                feedPrinter(RAM.get(0).getImpresionData(), RAM.get(0).getNombreImpresora());
                 RAM.remove(0);
             } catch (PrintException ex) {
                 Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-     
-     private class CopiaTicket {
-         private final String nombreImpresora;
-         private final byte [] impresionData;
+
+    private static class JobListener implements PrintJobListener {
+
+        private JOptionPane progressDialog;
+
+        public JobListener() {
+        }
+
+        public EstadoImpresion getStatus() {
+            return estadoImpresion;
+        }
+
+        @Override
+        public void printDataTransferCompleted(PrintJobEvent pje) {
+            estadoImpresion = EstadoImpresion.SEND;
+        }
+
+        @Override
+        public void printJobCompleted(PrintJobEvent pje) {
+            estadoImpresion = EstadoImpresion.COMPLETED;
+        }
+
+        @Override
+        public void printJobFailed(PrintJobEvent pje) {
+            estadoImpresion = EstadoImpresion.FAILED;
+        }
+
+        @Override
+        public void printJobCanceled(PrintJobEvent pje) {
+            estadoImpresion = EstadoImpresion.CANCELED;
+        }
+
+        @Override
+        public void printJobNoMoreEvents(PrintJobEvent pje) {
+            estadoImpresion = EstadoImpresion.NO_MORE_EVENTS;
+        }
+
+        @Override
+        public void printJobRequiresAttention(PrintJobEvent pje) {
+            estadoImpresion = EstadoImpresion.REQUIERE_ATTENTION;
+        }
+    }
+
+    private enum EstadoImpresion {
+
+        START("ENVIANDO"),
+        SEND("ENVIADO"),
+        COMPLETED("COMPLETADO"),
+        FAILED("FALLIDO"),
+        CANCELED("CANCELADO"),
+        NO_MORE_EVENTS("NO MAS EVENTOS"),
+        REQUIERE_ATTENTION("REQUIERE ATENCION"),
+        UKNOWN("Desconocido");
+
+        private final String Messagge;
+
+        private EstadoImpresion(String Msg) {
+            Messagge = Msg;
+        }
+
+        public String getMessagge() {
+            return Messagge;
+        }
+
+        @Override
+        public String toString() {
+            return "Estado: " + Messagge + "...";
+        }
+
+    }
+
+    private class CopiaTicket {
+
+        private final String nombreImpresora;
+        private final byte[] impresionData;
 
         public CopiaTicket(String nombreImpresora, byte[] impresionData) {
             this.nombreImpresora = nombreImpresora;
@@ -785,6 +877,6 @@ public class Impresion {
         public byte[] getImpresionData() {
             return impresionData;
         }
-        
-     }
+
+    }
 }
