@@ -49,15 +49,16 @@ public class Impresion {
     private boolean monedaCUC;
     private float cambio = 24;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
+    private boolean showPrices = true;
     private final SimpleDateFormat Format = new SimpleDateFormat("dd'/'MM'/'yy ' ' ");
-    private final SimpleDateFormat TimaFormat = new SimpleDateFormat(" hh ':' mm ' ' a ");
+    private final SimpleDateFormat TimeFormat = new SimpleDateFormat(" hh ':' mm ' ' a ");
 
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
     /**
      * String referentes a la impresion de ordenes
      */
-    private String CABECERA = "Restaurante",
+    private final String CABECERA = "Restaurante",
             COCINA = "Cocina: ",
             DELACASA = "(Pedido por la casa)",
             ORDEN = "Orden No: ",
@@ -66,14 +67,15 @@ public class Impresion {
             CAMARERO = "Camarero(a): ",
             SUBTOTAL = "SubTotal: ",
             TOTAL = "Total: ",
-            PIE = "Vuelva Pronto",
-            MONEDA = "",
             CUC = " CUC",
             MN = " MN",
             SYNC = "Sale con: ",
             PREVIEW = "(Cierre parcial de cuenta)",
             PORCIENTO = "% : ",
             Z = "Impresión de Z";
+
+    private String PIE = "Vuelva Pronto",
+            MONEDA = "";
 
     /**
      * Strings referentes a la impresion de resumenes de ventas
@@ -150,87 +152,59 @@ public class Impresion {
 
         float total = 0;
 
-        Ticket p = new Ticket();
-        p.resetAll();
-        p.initialize();
-//p.feedBack((byte)2);
-        p.alignCenter();
-        p.setText(CABECERA);
-        p.newLine();
-        p.setText(this.nombreRest);
-        p.newLine();
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
         if (preview) {
-            p.setText(PREVIEW);
-            p.newLine();
+            t.setText(PREVIEW);
+            t.newLine();
         }
         if (o.getDeLaCasa()) {
-            p.doubleStrik(true);
-            p.setText(DELACASA);
-            p.doubleStrik(false);
-            p.newLine();
+            t.doubleStrik(true);
+            t.setText(DELACASA);
+            t.doubleStrik(false);
+            t.newLine();
         }
-        p.addLineSeperator();
-        p.newLine();
-        p.alignRight();
-        p.setText(FECHA + this.Format.format(o.getVentafecha().getFecha()) + TimaFormat.format(o.getHoraComenzada()));
-        p.newLine();
-        p.setText(ORDEN + o.getCodOrden());
-        p.newLine();
-        p.setText(MESA + o.getMesacodMesa().getCodMesa());
-        p.newLine();
-        p.alignLeft();
-        p.setText(CAMARERO);
-        p.newLine();
-        p.alignRight();
-        p.setText(o.getPersonalusuario().getDatosPersonales().getNombre());
 
-        p.newLine();
-        p.addLineSeperator();
-        p.newLine();
+        addMetaData(t, o, o.getHoraComenzada());
 
-        for (ProductovOrden x : o.getProductovOrdenList()) {
-            p.alignLeft();
-            p.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
-            p.newLine();
-            p.alignRight();
-            p.setText(comun.redondeoPorExceso((int) (x.getCantidad() * x.getProductoVenta().getPrecioVenta() * 100)) + MONEDA);
-            p.newLine();
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
-        }
+        total = addPvOrden(t, o.getProductovOrdenList());
 
         String subTotalPrint = comun.redondeoPorExceso((int) (total * 100));
         String sumaPorciento = comun.redondeoPorExceso((int) ((Float.valueOf(subTotalPrint) / 10) * 100));
         String totalPrint = subTotalPrint;
-        p.alignRight();
-        p.newLine();
-        p.setText(SUBTOTAL + subTotalPrint + MONEDA);
+        t.alignRight();
+        t.newLine();
+        t.setText(SUBTOTAL + subTotalPrint + MONEDA);
         if (o.getPorciento() != 0) {
-            p.newLine();
-            p.setText("+ " + o.getPorciento() + PORCIENTO + sumaPorciento + MONEDA);
+            t.newLine();
+            t.setText("+ " + o.getPorciento() + PORCIENTO + sumaPorciento + MONEDA);
             totalPrint = comun.redondeoPorExceso((int) ((Float.valueOf(subTotalPrint) + Float.valueOf(sumaPorciento)) * 100));
 
         }
-        p.newLine();
-        p.addLineSeperator();
-        p.setText(TOTAL + totalPrint + MONEDA);
-        p.newLine();
+        t.newLine();
+
+        t.addLineSeperator();
+        t.setText(TOTAL + totalPrint + MONEDA);
+        t.newLine();
 
         if (monedaCUC) {
-            p.setText(TOTAL + comun.redondeoPorExceso((int) (Float.valueOf(totalPrint) * cambio * 100)) + MN);
+            t.setText(TOTAL + comun.redondeoPorExceso((int) (Float.valueOf(totalPrint) * cambio * 100)) + MN);
         } else {
-            p.setText(TOTAL + comun.redondeoPorExceso((int) (100 * Float.valueOf(totalPrint) / cambio)) + CUC);
+            t.setText(TOTAL + comun.redondeoPorExceso((int) (100 * Float.valueOf(totalPrint) / cambio)) + CUC);
         }
 
-        p.newLine();
-        p.newLine();
+        t.newLine();
+        t.newLine();
 
-        p.alignCenter();
-        p.setText(this.PIE);
-        p.newLine();
-        p.feed((byte) 3);
-        p.finit();
+        t.alignCenter();
+        t.setText(this.PIE);
+        t.newLine();
+        t.feed((byte) 3);
+        t.finit();
 
-        feedPrinter(p.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -244,25 +218,11 @@ public class Impresion {
      */
     public Orden printKitchen(Orden o) throws PrintException {
 
-        Ticket p = new Ticket();
-        p.resetAll();
-        p.initialize();
-//p.feedBack((byte)2);
-        p.alignCenter();
-        p.setText(this.nombreRest);
-        p.newLine();
-        p.addLineSeperator();
-        p.newLine();
-        p.alignRight();
-        p.setText(FECHA + this.Format.format(o.getVentafecha().getFecha()) + TimaFormat.format(new Date()));
-        p.newLine();
-        p.setText(ORDEN + o.getCodOrden());
-        p.newLine();
-        p.setText(MESA + o.getMesacodMesa().getCodMesa());
-        p.newLine();
-        p.addLineSeperator();
-        p.newLine();
-        p.alignLeft();
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        addMetaData(t, o, new Date());
 
         List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
         for (ProductovOrden x : o.getProductovOrdenList()) {
@@ -283,7 +243,7 @@ public class Impresion {
             }
         } else {
             if (cocinasExistentesEnLaOrden.size() > 0) {
-                printKitchen(o, cocinasExistentesEnLaOrden.get(0), p.newLine());
+                printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
             }
 
         }
@@ -307,48 +267,36 @@ public class Impresion {
     public Orden printKitchen(Orden o, Cocina c, String sync) throws PrintException {
         boolean ordenSinPlatos = true;
 
-        Ticket p = new Ticket();
-        p.resetAll();
-        p.initialize();
-        //p.feedBack((byte)2);
-        p.alignCenter();
-        p.setText(this.nombreRest);
-        p.newLine();
-        p.emphasized(true);
-        p.setText(COCINA + c.getNombreCocina());
-        p.emphasized(false);
-        p.newLine();
-        p.addLineSeperator();
-        p.newLine();
-        p.alignRight();
-        p.setText(FECHA + this.Format.format(o.getVentafecha().getFecha())
-                + TimaFormat.format(new Date()));
-        p.newLine();
-        p.setText(ORDEN + o.getCodOrden());
-        p.newLine();
-        p.setText(MESA + o.getMesacodMesa().getCodMesa());
-        p.newLine();
-        p.addLineSeperator();
-        p.newLine();
-        p.alignLeft();
+        Ticket t = new Ticket();
+
+        addHeader(t);
+        t.emphasized(true);
+        t.setText(COCINA + c.getNombreCocina());
+        t.emphasized(false);
+        t.newLine();
+
+        addMetaData(t, o, new Date());
+
+        t.alignLeft();
+
         for (ProductovOrden x : o.getProductovOrdenList()) {
             if (x.getEnviadosacocina() < x.getCantidad()
                     && x.getProductoVenta().getCocinacodCocina().equals(c)) {
                 if (x.getNota() != null) {
-                    p.alignCenter();
-                    p.emphasized(true);
-                    p.setText(x.getNota().getDescripcion().replace('%', ' '));
-                    p.newLine();
-                    p.alignLeft();
-                    p.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getProductoVenta().getNombre());
+                    t.alignCenter();
+                    t.emphasized(true);
+                    t.setText(x.getNota().getDescripcion().replace('%', ' '));
+                    t.newLine();
+                    t.alignLeft();
+                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getProductoVenta().getNombre());
                 } else {
-                    p.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
+                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
                 }
-                p.newLine();
-                p.alignRight();
-                p.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
-                p.newLine();
-                p.alignLeft();
+                t.newLine();
+                t.alignRight();
+                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
+                t.newLine();
+                t.alignLeft();
                 x.setEnviadosacocina(x.getCantidad());
                 try {
                     staticContent.productovOrdenJpa.edit(x);
@@ -359,26 +307,26 @@ public class Impresion {
             }
         }
 
-        p.addLineSeperator();
-        p.alignCenter();
-        p.newLine();
-        p.emphasized(true);
-        p.setText(sync);
-        p.newLine();
-        p.feed((byte) 3);
-        p.finit();
+        t.addLineSeperator();
+        t.alignCenter();
+        t.newLine();
+        t.emphasized(true);
+        t.setText(sync);
+        t.newLine();
+        t.feed((byte) 3);
+        t.finit();
 
         if (!ordenSinPlatos) {
             for (int i = 0; i < cantidadCopias; i++) {
-                RAM.add(new CopiaTicket(c.getNombreCocina(), p.finalCommandSet().getBytes()));
+                RAM.add(new CopiaTicket(c.getNombreCocina(), t.finalCommandSet().getBytes()));
             }
 
-            feedPrinter(p.finalCommandSet().getBytes(), c.getNombreCocina());
+            feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina());
 
         } else {
             System.out.println("No existen platos de la cocina "
                     + c.getNombreCocina() + " de la orden " + o.getCodOrden() + " para imprimir");
-            p.resetAll();
+            t.resetAll();
         }
 
         return o;
@@ -396,14 +344,9 @@ public class Impresion {
     public void printPersonalResumen(List<ProductovOrden> po, Personal p, Date fecha) {
 
         Ticket t = new Ticket();
-        t.resetAll();
-        t.initialize();
-//p.feedBack((byte)2);
-        t.alignCenter();
-        t.setText(CABECERA);
-        t.newLine();
-        t.setText(this.nombreRest);
-        t.newLine();
+
+        addHeader(t);
+
         t.addLineSeperator();
         t.newLine();
         t.setText(RESUMEN_VENTAS_CAMAREROS);
@@ -420,32 +363,9 @@ public class Impresion {
         t.addLineSeperator();
         t.newLine();
 
-        float total = 0;
-        for (ProductovOrden x : po) {
-            t.alignLeft();
-            t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
-            t.newLine();
-            t.alignRight();
-            t.setText(x.getCantidad() * x.getProductoVenta().getPrecioVenta() + MONEDA);
-            t.newLine();
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
-        }
+        float total = addPvOrden(t, po);
 
-        t.alignRight();
-        t.setText(TOTAL_VENTAS + total + MONEDA);
-        t.newLine();
-
-        if (monedaCUC) {
-            t.setText(TOTAL_VENTAS + total * cambio + MN);
-        } else {
-            t.setText(TOTAL_VENTAS + Math.rint((total / cambio) * 100) / 100 + CUC);
-        }
-
-        t.newLine();
-        t.newLine();
-
-        t.feed((byte) 3);
-        t.finit();
+        addTotalAndFinal(t, total);
 
         try {
             feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
@@ -464,17 +384,12 @@ public class Impresion {
      * @param c la cocina por la que se lleva a cabo el resumen
      * @param fecha la fecha del resumen
      */
-    public void printCocinaResumen(List<ProductovOrden> po, Cocina c, Date fecha) {
+    public void printResumenPuntoElab(List<ProductovOrden> po, Cocina c, Date fecha) {
 
         Ticket t = new Ticket();
-        t.resetAll();
-        t.initialize();
-//p.feedBack((byte)2);
-        t.alignCenter();
-        t.setText(CABECERA);
-        t.newLine();
-        t.setText(this.nombreRest);
-        t.newLine();
+
+        addHeader(t);
+
         t.addLineSeperator();
         t.newLine();
         t.setText(RESUMEN_VENTAS_COCINA);
@@ -491,33 +406,9 @@ public class Impresion {
         t.addLineSeperator();
         t.newLine();
 
-        float total = 0;
-        for (ProductovOrden x : po) {
-            t.alignLeft();
-            t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
-            t.newLine();
-            t.alignRight();
-            t.setText(x.getCantidad() * x.getProductoVenta().getPrecioVenta() + MONEDA);
-            t.newLine();
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
-        }
+        float total = addPvOrden(t, po);
 
-        t.addLineSeperator();
-        t.alignRight();
-        t.setText(TOTAL_VENTAS + total + MONEDA);
-        t.newLine();
-
-        if (monedaCUC) {
-            t.setText(TOTAL_VENTAS + total * cambio + MN);
-        } else {
-            t.setText(TOTAL_VENTAS + Math.rint((total / cambio) * 100) / 100 + CUC);
-        }
-
-        t.newLine();
-        t.newLine();
-
-        t.feed((byte) 3);
-        t.finit();
+        addTotalAndFinal(t, total);
 
         try {
             feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
@@ -544,14 +435,9 @@ public class Impresion {
                 });
 
         Ticket t = new Ticket();
-        t.resetAll();
-        t.initialize();
-        //p.feedBack((byte)2);
-        t.alignCenter();
-        t.setText(CABECERA);
-        t.newLine();
-        t.setText(this.nombreRest);
-        t.newLine();
+
+        addHeader(t);
+
         t.addLineSeperator();
         t.newLine();
         t.setText(IPV_HEADER);
@@ -582,7 +468,6 @@ public class Impresion {
         }
 
         t.newLine();
-
         t.feed((byte) 3);
         t.finit();
 
@@ -602,14 +487,9 @@ public class Impresion {
     public void printZ(Venta v) {
 
         Ticket t = new Ticket();
-        t.resetAll();
-        t.initialize();
-        //p.feedBack((byte)2);
-        t.alignCenter();
-        t.setText(CABECERA);
-        t.newLine();
-        t.setText(this.nombreRest);
-        t.newLine();
+
+        addHeader(t);
+
         t.addLineSeperator();
         t.newLine();
         t.setText(Z);
@@ -620,32 +500,9 @@ public class Impresion {
         t.addLineSeperator();
         t.newLine();
 
-        float total = 0;
-        for (ProductovOrden x : VentaDAO.getResumenVentas(v)) {
-            t.alignLeft();
-            t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
-            t.newLine();
-            t.alignRight();
-            t.setText(x.getCantidad() * x.getProductoVenta().getPrecioVenta() + MONEDA);
-            t.newLine();
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
-        }
+        float total = addPvOrden(t, VentaDAO.getResumenVentas(v));
 
-        t.alignRight();
-        t.setText(TOTAL_VENTAS + total + MONEDA);
-        t.newLine();
-
-        if (monedaCUC) {
-            t.setText(TOTAL_VENTAS + total * cambio + MN);
-        } else {
-            t.setText(TOTAL_VENTAS + Math.rint((total / cambio) * 100) / 100 + CUC);
-        }
-
-        t.newLine();
-        t.newLine();
-
-        t.feed((byte) 3);
-        t.finit();
+        addTotalAndFinal(t, total);
 
         try {
             feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
@@ -658,27 +515,97 @@ public class Impresion {
     //
     //Getters And Setters
     //
-
     public static EstadoImpresion getEstadoImpresion() {
         return estadoImpresion;
     }
-    
+
+    //
+    // Private printing format methods
+    //
+    private void addTotalAndFinal(Ticket t, float total) {
+
+        t.addLineSeperator();
+        if (showPrices) {
+            t.alignRight();
+            t.setText(TOTAL_VENTAS + total + MONEDA);
+            t.newLine();
+
+            if (monedaCUC) {
+                t.setText(TOTAL_VENTAS + total * cambio + MN);
+            } else {
+                t.setText(TOTAL_VENTAS + Math.rint((total / cambio) * 100) / 100 + CUC);
+            }
+
+        }
+        t.newLine();
+        t.newLine();
+        t.feed((byte) 3);
+        t.finit();
+
+    }
+
+    private void addHeader(Ticket t) {
+        t.resetAll();
+        t.initialize();
+        //p.feedBack((byte)2);
+        t.alignCenter();
+        t.setText(CABECERA);
+        t.newLine();
+        t.setText(this.nombreRest);
+        t.newLine();
+    }
+
+    private void addMetaData(Ticket t, Orden o, Date date) {
+        t.addLineSeperator();
+        t.newLine();
+        t.alignRight();
+        t.setText(FECHA + this.Format.format(o.getVentafecha().getFecha()) + TimeFormat.format(date));
+        t.newLine();
+        t.setText(ORDEN + o.getCodOrden());
+        t.newLine();
+        t.setText(MESA + o.getMesacodMesa().getCodMesa());
+        t.newLine();
+        t.alignLeft();
+        t.setText(CAMARERO);
+        t.newLine();
+        t.alignRight();
+        t.setText(o.getPersonalusuario().getDatosPersonales().getNombre());
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+
+    }
+
+    private float addPvOrden(Ticket t, List<ProductovOrden> prods) {
+        float total = 0;
+        for (ProductovOrden x : prods) {
+            t.alignLeft();
+            t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
+            t.newLine();
+            t.alignRight();
+            t.setText(comun.redondeoPorExceso((int) (x.getCantidad() * x.getProductoVenta().getPrecioVenta() * 100)) + MONEDA);
+            t.newLine();
+            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+        }
+
+        return total;
+    }
+
     //
     //Private Methods
     //
-    private static void feedPrinter(byte[] b, String printerName) throws PrintException {
+    private void feedPrinter(byte[] b, String printerName) throws PrintException {
 
         PrintService[] prints = PrintServiceLookup.lookupPrintServices(null, null);
         DocPrintJob job = PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
         job.addPrintJobListener(new JobListener());
-        
+
         for (int i = 0; i < prints.length; i++) {
             if (prints[i].getName().equals(printerName)) {
                 job = prints[i].createPrintJob();
             }
         }
 
-        
         DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
         Doc doc = new SimpleDoc(b, flavor, null);
 
@@ -790,7 +717,10 @@ public class Impresion {
         }
     }
 
-    private static class JobListener implements PrintJobListener {
+    //
+    //Inner Classes
+    //
+    private class JobListener implements PrintJobListener {
 
         private JOptionPane progressDialog;
 
@@ -809,6 +739,7 @@ public class Impresion {
         @Override
         public void printJobCompleted(PrintJobEvent pje) {
             estadoImpresion = EstadoImpresion.COMPLETED;
+            System.out.println("Completed");
         }
 
         @Override
