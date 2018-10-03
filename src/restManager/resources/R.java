@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
+import restManager.persistencia.Personal;
 
 /**
  * FirstDream
@@ -18,6 +19,8 @@ import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
  * 
  */
 public class R {
+    
+   public static Personal loggerUser = null;
     
     public static final Date TODAYS_DATE = new Date();
     
@@ -33,6 +36,32 @@ public class R {
             } catch (UnsupportedLookAndFeelException ex) {
                 System.out.println(ex.getMessage());
         }
+    }
+    
+     public static enum UM {
+        U("U"),
+        Gr("Gr"),
+        Kg("Kg"),
+        Lbs("Lbs"),
+        Lts("Lts");
+        
+        private String valor;
+
+        private UM(String valor) {
+            this.valor = valor;
+        }
+
+        public String getValor() {
+            return valor;
+        }
+
+        @Override
+        public String toString() {
+            return valor;
+        }
+        
+        
+        
     }
     
 }
