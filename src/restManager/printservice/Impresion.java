@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package restManager.printservice;
 
 import java.text.SimpleDateFormat;
@@ -23,6 +18,7 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
+
 import javax.swing.JOptionPane;
 
 import restManager.persistencia.Carta;
@@ -96,6 +92,7 @@ public class Impresion {
     //
     //Constructors
     //
+    
     /**
      * Constructor por defecto
      *
@@ -148,6 +145,7 @@ public class Impresion {
     //
     //Metodos Publicos
     //
+    
     public void print(Orden o, boolean preview) throws PrintException {
 
         float total = 0;
@@ -515,6 +513,7 @@ public class Impresion {
     //
     //Getters And Setters
     //
+    
     public static EstadoImpresion getEstadoImpresion() {
         return estadoImpresion;
     }
@@ -594,6 +593,7 @@ public class Impresion {
     //
     //Private Methods
     //
+    
     private void feedPrinter(byte[] b, String printerName) throws PrintException {
 
         PrintService[] prints = PrintServiceLookup.lookupPrintServices(null, null);
@@ -734,32 +734,37 @@ public class Impresion {
         @Override
         public void printDataTransferCompleted(PrintJobEvent pje) {
             estadoImpresion = EstadoImpresion.SEND;
+            System.out.println(getStatus());
         }
 
         @Override
         public void printJobCompleted(PrintJobEvent pje) {
             estadoImpresion = EstadoImpresion.COMPLETED;
-            System.out.println("Completed");
+            System.out.println(getStatus());
         }
 
         @Override
         public void printJobFailed(PrintJobEvent pje) {
             estadoImpresion = EstadoImpresion.FAILED;
+            System.out.println(getStatus());
         }
 
         @Override
         public void printJobCanceled(PrintJobEvent pje) {
             estadoImpresion = EstadoImpresion.CANCELED;
+            System.out.println(getStatus());
         }
 
         @Override
         public void printJobNoMoreEvents(PrintJobEvent pje) {
             estadoImpresion = EstadoImpresion.NO_MORE_EVENTS;
+            System.out.println(getStatus());
         }
 
         @Override
         public void printJobRequiresAttention(PrintJobEvent pje) {
             estadoImpresion = EstadoImpresion.REQUIERE_ATTENTION;
+            System.out.println(getStatus());
         }
     }
 
