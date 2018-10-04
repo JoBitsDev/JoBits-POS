@@ -45,7 +45,7 @@ public class Resumenes extends javax.swing.JPanel{
         initComponents();
         updateDialog(dia,null);  
         
-        
+       
         
 
     

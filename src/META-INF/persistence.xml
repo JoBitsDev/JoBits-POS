@@ -1,82 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="Servidor_Remoto" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>restManager.persistencia.Configuracion</class>
-    <class>restManager.persistencia.DatosPersonales</class>
-    <class>restManager.persistencia.Carta</class>
-    <class>restManager.persistencia.Ipv</class>
-    <class>restManager.persistencia.Mesa</class>
-    <class>restManager.persistencia.PuestoTrabajo</class>
-    <class>restManager.persistencia.Almacen</class>
-    <class>restManager.persistencia.Personal</class>
-    <class>restManager.persistencia.InsumoElaborado</class>
-    <class>restManager.persistencia.IpvRegistro</class>
-    <class>restManager.persistencia.Orden</class>
-    <class>restManager.persistencia.ProductovOrden</class>
-    <class>restManager.persistencia.Insumo</class>
-    <class>restManager.persistencia.ProductoVenta</class>
-    <class>restManager.persistencia.ProductoInsumo</class>
-    <class>restManager.persistencia.Cocina</class>
-    <class>restManager.persistencia.Seccion</class>
-    <class>restManager.persistencia.Area</class>
-    <class>restManager.persistencia.Venta</class>
-    <class>restManager.persistencia.Cliente</class>
-    <class>restManager.persistencia.VentaArchivada</class>
-    <class>restManager.persistencia.OrdenArchivada</class>
-    <class>restManager.persistencia.ProductovOrdenArchivado</class>
-    <class>restManager.persistencia.Log</class>
-    <class>restManager.persistencia.Impresora</class>
-    <class>restManager.persistencia.NotaArchivada</class>
-    <class>restManager.persistencia.Sector</class>
-    <class>restManager.persistencia.Agrego</class>
-    <class>restManager.persistencia.MenuEspecial</class>
-    <class>restManager.persistencia.Nota</class>
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.173.1:5432/Restaurant_Manager_DB"/>
-      <property name="javax.persistence.jdbc.user" value="Rest_Admin"/>
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="admin"/>
-    </properties>
-  </persistence-unit>
+    <persistence-unit name="Servidor_Remoto" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>restManager.persistencia.Configuracion</class>
+        <class>restManager.persistencia.DatosPersonales</class>
+        <class>restManager.persistencia.Ficha</class>
+        <class>restManager.persistencia.InsumoFicha</class>
+        <class>restManager.persistencia.Carta</class>
+        <class>restManager.persistencia.Ipv</class>
+        <class>restManager.persistencia.Mesa</class>
+        <class>restManager.persistencia.PuestoTrabajo</class>
+        <class>restManager.persistencia.Almacen</class>
+        <class>restManager.persistencia.Personal</class>
+        <class>restManager.persistencia.InsumoElaborado</class>
+        <class>restManager.persistencia.IpvRegistro</class>
+        <class>restManager.persistencia.Orden</class>
+        <class>restManager.persistencia.ProductovOrden</class>
+        <class>restManager.persistencia.Insumo</class>
+        <class>restManager.persistencia.ProductoVenta</class>
+        <class>restManager.persistencia.ProductoInsumo</class>
+        <class>restManager.persistencia.Cocina</class>
+        <class>restManager.persistencia.Seccion</class>
+        <class>restManager.persistencia.Area</class>
+        <class>restManager.persistencia.Venta</class>
+        <class>restManager.persistencia.Cliente</class>
+        <class>restManager.persistencia.VentaArchivada</class>
+        <class>restManager.persistencia.OrdenArchivada</class>
+        <class>restManager.persistencia.ProductovOrdenArchivado</class>
+        <class>restManager.persistencia.Log</class>
+        <class>restManager.persistencia.Impresora</class>
+        <class>restManager.persistencia.NotaArchivada</class>
+        <class>restManager.persistencia.Sector</class>
+        <class>restManager.persistencia.Agrego</class>
+        <class>restManager.persistencia.MenuEspecial</class>
+        <class>restManager.persistencia.Nota</class>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.173.1:5432/Restaurant_Manager_DB"/>
+            <property name="javax.persistence.jdbc.user" value="Rest_Admin"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.password" value="admin"/>
+        </properties>
+    </persistence-unit>
   
-<persistence-unit name="Servidor_Local" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>restManager.persistencia.Configuracion</class>
-    <class>restManager.persistencia.DatosPersonales</class>
-    <class>restManager.persistencia.Carta</class>
-    <class>restManager.persistencia.Ipv</class>
-    <class>restManager.persistencia.Mesa</class>
-    <class>restManager.persistencia.PuestoTrabajo</class>
-    <class>restManager.persistencia.Almacen</class>
-    <class>restManager.persistencia.Personal</class>
-    <class>restManager.persistencia.InsumoElaborado</class>
-    <class>restManager.persistencia.IpvRegistro</class>
-    <class>restManager.persistencia.Orden</class>
-    <class>restManager.persistencia.ProductovOrden</class>
-    <class>restManager.persistencia.Insumo</class>
-    <class>restManager.persistencia.ProductoVenta</class>
-    <class>restManager.persistencia.ProductoInsumo</class>
-    <class>restManager.persistencia.Cocina</class>
-    <class>restManager.persistencia.Seccion</class>
-    <class>restManager.persistencia.Area</class>
-    <class>restManager.persistencia.Venta</class>
-    <class>restManager.persistencia.Cliente</class>
-    <class>restManager.persistencia.VentaArchivada</class>
-    <class>restManager.persistencia.OrdenArchivada</class>
-    <class>restManager.persistencia.ProductovOrdenArchivado</class>
-    <class>restManager.persistencia.Log</class>
-    <class>restManager.persistencia.Impresora</class>
-    <class>restManager.persistencia.NotaArchivada</class>
-    <class>restManager.persistencia.Sector</class>
-    <class>restManager.persistencia.Agrego</class>
-    <class>restManager.persistencia.MenuEspecial</class>
-    <class>restManager.persistencia.Nota</class>
-    <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Restaurant_Manager_DB"/>
-      <property name="javax.persistence.jdbc.user" value="Rest_Admin"/>
-      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="admin"/>
-    </properties>
-  </persistence-unit>
+    <persistence-unit name="Servidor_Local" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>restManager.persistencia.Configuracion</class>
+        <class>restManager.persistencia.DatosPersonales</class>
+        <class>restManager.persistencia.Ficha</class>
+        <class>restManager.persistencia.InsumoFicha</class>
+        <class>restManager.persistencia.Carta</class>
+        <class>restManager.persistencia.Ipv</class>
+        <class>restManager.persistencia.Mesa</class>
+        <class>restManager.persistencia.PuestoTrabajo</class>
+        <class>restManager.persistencia.Almacen</class>
+        <class>restManager.persistencia.Personal</class>
+        <class>restManager.persistencia.InsumoElaborado</class>
+        <class>restManager.persistencia.IpvRegistro</class>
+        <class>restManager.persistencia.Orden</class>
+        <class>restManager.persistencia.ProductovOrden</class>
+        <class>restManager.persistencia.Insumo</class>
+        <class>restManager.persistencia.ProductoVenta</class>
+        <class>restManager.persistencia.ProductoInsumo</class>
+        <class>restManager.persistencia.Cocina</class>
+        <class>restManager.persistencia.Seccion</class>
+        <class>restManager.persistencia.Area</class>
+        <class>restManager.persistencia.Venta</class>
+        <class>restManager.persistencia.Cliente</class>
+        <class>restManager.persistencia.VentaArchivada</class>
+        <class>restManager.persistencia.OrdenArchivada</class>
+        <class>restManager.persistencia.ProductovOrdenArchivado</class>
+        <class>restManager.persistencia.Log</class>
+        <class>restManager.persistencia.Impresora</class>
+        <class>restManager.persistencia.NotaArchivada</class>
+        <class>restManager.persistencia.Sector</class>
+        <class>restManager.persistencia.Agrego</class>
+        <class>restManager.persistencia.MenuEspecial</class>
+        <class>restManager.persistencia.Nota</class>
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Restaurant_Manager_DB"/>
+            <property name="javax.persistence.jdbc.user" value="Rest_Admin"/>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.password" value="admin"/>
+        </properties>
+    </persistence-unit>
 </persistence>

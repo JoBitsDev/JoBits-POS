@@ -37,8 +37,14 @@ import javax.persistence.Table;
     , @NamedQuery(name = "Insumo.findByCantidadExistente", query = "SELECT i FROM Insumo i WHERE i.cantidadExistente = :cantidadExistente")})
 public class Insumo implements Serializable {
 
+    @Column(name = "cantidad_creada")
+    private Float cantidadCreada;
+    
+    
+    @Column(name = "cantidad_existente")
+    private Float cantidadExistente;
     @Column(name = "stock_estimation")
-    private Double stockEstimation;
+    private Float stockEstimation;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<InsumoFicha> insumoFichaList;
 
@@ -57,8 +63,6 @@ public class Insumo implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "costo_por_unidad")
     private Float costoPorUnidad;
-    @Column(name = "cantidad_existente")
-    private Double cantidadExistente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<ProductoInsumo> productoInsumoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
@@ -123,11 +127,11 @@ public class Insumo implements Serializable {
         this.costoPorUnidad = costoPorUnidad;
     }
 
-    public Double getCantidadExistente() {
+    public Float getCantidadExistente() {
         return cantidadExistente;
     }
 
-    public void setCantidadExistente(Double cantidadExistente) {
+    public void setCantidadExistente(Float cantidadExistente) {
         this.cantidadExistente = cantidadExistente;
     }
 
@@ -196,11 +200,11 @@ public class Insumo implements Serializable {
         return "restManager.persistencia.Insumo[ codInsumo=" + codInsumo + " ]";
     }
 
-    public Double getStockEstimation() {
+    public Float getStockEstimation() {
         return stockEstimation;
     }
 
-    public void setStockEstimation(Double stockEstimation) {
+    public void setStockEstimation(Float stockEstimation) {
         this.stockEstimation = stockEstimation;
     }
 
@@ -211,5 +215,15 @@ public class Insumo implements Serializable {
     public void setInsumoFichaList(List<InsumoFicha> insumoFichaList) {
         this.insumoFichaList = insumoFichaList;
     }
+
+    public Float getCantidadCreada() {
+        return cantidadCreada;
+    }
+
+    public void setCantidadCreada(Float cantidadCreada) {
+        this.cantidadCreada = cantidadCreada;
+    }
+    
+    
 
 }

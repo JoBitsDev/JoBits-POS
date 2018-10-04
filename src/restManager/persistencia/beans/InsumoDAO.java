@@ -4,16 +4,19 @@
  * and open the template in the editor.
  */
 
-package restManager.persistencia.Control;
+package restManager.persistencia.beans;
+
+import restManager.persistencia.Insumo;
 
 /**
  * FirstDream
  * @author Jorge
  * 
  */
-public class PersonalDAO {
-    
-    
-    
+public class InsumoDAO extends AbstractFacade<Insumo>{
+
+    public InsumoDAO() {
+        super(Insumo.class);
+    }
 
 }

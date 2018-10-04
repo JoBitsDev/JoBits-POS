@@ -56,11 +56,11 @@ public class InsumoListController extends AbstractController<Insumo> {
     public void createInsumo(Insumo insumo) {
         int resp = JOptionPane.showConfirmDialog(newInsumoView, R.RESOURCE_BUNDLE.getString("insumo_nuevo") + " " + insumo.getNombre());
         if (resp == JOptionPane.YES_OPTION) {
-            selected = insumo;
             super.getFacade().startTransaction();
             create();
             super.getFacade().commitTransaction();
             JOptionPane.showMessageDialog(newInsumoView, R.RESOURCE_BUNDLE.getString("insumo_creado_correctamente"));
+            selected = null;
             newInsumoView.dispose();
             newInsumoView = null;
             view.updateView(getItems());
@@ -80,6 +80,7 @@ public class InsumoListController extends AbstractController<Insumo> {
                 destroy();
                 super.getFacade().commitTransaction();
                 JOptionPane.showMessageDialog(view, R.RESOURCE_BUNDLE.getString("insumo_borrado_correctamente"));
+                selected = null;
                 view.updateView(getItems());
             }
         }
@@ -87,6 +88,25 @@ public class InsumoListController extends AbstractController<Insumo> {
 
     public void editInsumo() {
         popupDialog();
+    }
+
+    public void updateInsumo(Insumo insumo) {
+          int resp = JOptionPane.showConfirmDialog(newInsumoView, R.RESOURCE_BUNDLE.getString("insumo_act") + " " + insumo.getNombre());
+        if (resp == JOptionPane.YES_OPTION) {
+            super.getFacade().startTransaction();
+            selected = getFacade().find(selected.getCodInsumo());
+            destroy();
+            super.getFacade().commitTransaction();
+            super.getFacade().startTransaction();
+            selected = insumo;
+            create();
+            super.getFacade().commitTransaction();
+            JOptionPane.showMessageDialog(newInsumoView, R.RESOURCE_BUNDLE.getString("insumo_actualizado_correctamente"));
+            selected = null;
+            newInsumoView.dispose();
+            newInsumoView = null;
+            view.updateView(getItems());
+        }
     }
 
 }

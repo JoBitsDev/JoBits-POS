@@ -130,4 +130,4 @@ public class InsumoElaborado implements Serializable {
         return "restManager.persistencia.InsumoElaborado[ insumoElaboradoPK=" + insumoElaboradoPK + " ]";
     }
 
-}
+    }

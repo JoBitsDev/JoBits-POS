@@ -6,25 +6,20 @@
 package restManager.persistencia.Control;
 
 import GUI.Main;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import org.jdesktop.swingx.JXTable;
 
 import restManager.persistencia.Cocina;
-import restManager.persistencia.Mesa;
 import restManager.persistencia.Venta;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
-import restManager.persistencia.jpa.staticContent;
 import restManager.util.comun;
 
 /**

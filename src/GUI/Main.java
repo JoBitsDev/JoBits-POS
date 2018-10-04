@@ -5,11 +5,13 @@
  */
 package GUI;
 
+import GUI.Views.Insumo.InsumoListView;
 import GUI.Views.Almacen.AlmacenEditView;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
-import restManager.controller.AlmacenListController;
+import restManager.controller.almacen.AlmacenListController;
+import restManager.controller.insumo.InsumoListController;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.PuestoTrabajo;
@@ -482,7 +484,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonVERCOCINASActionPerformed
 
     private void buttonVERINSUMOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERINSUMOSActionPerformed
-        new InsumoLista(this, true);
+        R.setLookAndFeels();
+        new InsumoListController(this);
     }//GEN-LAST:event_buttonVERINSUMOSActionPerformed
 
     private void buttonVERSECCIONESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERSECCIONESActionPerformed

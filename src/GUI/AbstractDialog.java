@@ -127,13 +127,10 @@ public abstract class AbstractDialog extends JDialog {
     //
     // Getters n Setters
     //
-
     public AbstractController getController() {
         return controller;
     }
-    
-    
-    
+
     //
     // Override Methods
     //
@@ -149,6 +146,8 @@ public abstract class AbstractDialog extends JDialog {
                 return new Dimension(800, 600);
             case LIST:
                 return new Dimension(400, 600);
+            case INPUT_LARGE:
+                return new Dimension(590, 600);
             case INPUT:
                 return new Dimension(WIDTH, HEIGHT);
             default:
@@ -167,7 +166,7 @@ public abstract class AbstractDialog extends JDialog {
     }
 
     public enum DialogType {
-        LIST, NORMAL, INPUT
+        LIST, NORMAL, INPUT, INPUT_LARGE
     }
 
 }

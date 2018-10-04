@@ -1,14 +1,9 @@
 package restManager.util;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import restManager.persistencia.Cocina;
-
-import restManager.persistencia.ProductoInsumo;
-import restManager.persistencia.ProductovOrden;
 
 /**
  *
@@ -254,5 +249,5 @@ public class comun {
         }
         return ret;
     }
-
-}
+    
+    }

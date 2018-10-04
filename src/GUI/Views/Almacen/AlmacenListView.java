@@ -9,7 +9,7 @@ import GUI.AbstractDialog;
 import java.awt.Frame;
 import java.util.List;
 import restManager.controller.AbstractController;
-import restManager.controller.AlmacenListController;
+import restManager.controller.almacen.AlmacenListController;
 import restManager.persistencia.Almacen;
 import restManager.util.JListModel;
 
@@ -21,18 +21,19 @@ public class AlmacenListView extends AbstractDialog {
 
     /**
      * Creates new form AlmacenListView
+     *
      * @param controller
      * @param owner
      * @param modal
      */
-    public AlmacenListView(AbstractController controller, Frame owner, boolean modal) { 
+    public AlmacenListView(AbstractController controller, Frame owner, boolean modal) {
 
         super(DialogType.LIST, controller, owner, modal);
         initComponents();
-        
+
     }
-    
-    public void updateView(List<Almacen> items){
+
+    public void updateView(List<Almacen> items) {
         JListModel<Almacen> model = new JListModel(items);
         jList1.setModel(model);
     }
@@ -133,22 +134,22 @@ public class AlmacenListView extends AbstractDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void substanceTitleButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_substanceTitleButtonAddActionPerformed
-        ((AlmacenListController)getController()).createNewStorage();
+        ((AlmacenListController) getController()).createNewStorage();
     }//GEN-LAST:event_substanceTitleButtonAddActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-       getController().setSelected(jList1.getSelectedValue());
+        getController().setSelected(jList1.getSelectedValue());
     }//GEN-LAST:event_jList1ValueChanged
 
     private void substanceTitleButtonDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_substanceTitleButtonDelActionPerformed
-       ((AlmacenListController)getController()).deleteSelectedStorage();
+        ((AlmacenListController) getController()).deleteSelectedStorage();
     }//GEN-LAST:event_substanceTitleButtonDelActionPerformed
 
     private void substanceTitleButtonOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_substanceTitleButtonOpenActionPerformed
-         ((AlmacenListController)getController()).openSelectedStorage();
+        ((AlmacenListController) getController()).openSelectedStorage();
     }//GEN-LAST:event_substanceTitleButtonOpenActionPerformed
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<Almacen> jList1;
     private javax.swing.JScrollPane jScrollPane2;

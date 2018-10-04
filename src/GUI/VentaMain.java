@@ -506,7 +506,7 @@ public class VentaMain extends javax.swing.JDialog {
 
         jXLabelOrden1.setForeground(new java.awt.Color(255, 255, 255));
         jXLabelOrden1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jXLabelOrden1.setText("Ordenes");
+        jXLabelOrden1.setText("Ordenes Activas");
         jXLabelOrden1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
 
         jXLabelTotalRecaudado.setForeground(new java.awt.Color(255, 255, 255));

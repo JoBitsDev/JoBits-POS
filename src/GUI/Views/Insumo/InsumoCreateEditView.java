@@ -30,6 +30,7 @@ import restManager.resources.R;
  */
 public class InsumoCreateEditView extends AbstractDialog {
 
+    private State state;
     private Insumo insumo;
     private MyTableModel model = new MyTableModel(new ArrayList<>());
 
@@ -46,8 +47,8 @@ public class InsumoCreateEditView extends AbstractDialog {
 
     public void updateView(List<Insumo> items, Insumo editingItem, List<Almacen> almacenes) {
         updateTable(items);
-        updatePanelInputs(editingItem);
         updateComboBoxes(almacenes);
+        updatePanelInputs(editingItem);
 
     }
 
@@ -61,13 +62,22 @@ public class InsumoCreateEditView extends AbstractDialog {
     private void updatePanelInputs(Insumo ins) {
         this.insumo = ins;
         if (insumo != null) {
+            if (insumo.getNombre().isEmpty()) {
+                state = State.CREATING;
+            } else {
+                state = State.UPDATING;
+                jButtonAdd.setText(R.RESOURCE_BUNDLE.getString("label_editar"));
+            }
             jTextFieldNombre.setText(insumo.getNombre());
             jSpinnerCosto.setValue(insumo.getCostoPorUnidad());
             jSpinnerCantidadExistente.setValue(insumo.getCantidadExistente());
             jSpinnerEstimacionStock.setValue(insumo.getStockEstimation());
+            jComboBoxUM.setSelectedItem(R.UM.valueOf(insumo.getUm()));
+            jComboBoxAlmacen.setSelectedItem(insumo.getAlmacencodAlmacen());
             if (insumo.getElaborado()) {
-                jCheckBoxElaborado.setEnabled(true);
-                model.fillInsumoElabData(insumo.getInsumoElaboradoList1());
+                jCheckBoxElaborado.setSelected(true);
+                jXTable1.setEnabled(true);
+                model.fillInsumoElabData(insumo.getInsumoElaboradoList());
                 jSpinnerCantidadCreada.setValue(insumo.getCantidadCreada());
             }
         }
@@ -89,7 +99,8 @@ public class InsumoCreateEditView extends AbstractDialog {
         insumo.setUm(jComboBoxUM.getSelectedItem().toString());
         insumo.setAlmacencodAlmacen((Almacen) jComboBoxAlmacen.getSelectedItem());
         if (insumo.getElaborado()) {
-            insumo.setInsumoElaboradoList1(((MyTableModel) jXTable1.getModel()).getinsumosSelected());
+            insumo.setInsumoElaboradoList(((MyTableModel) jXTable1.getModel()).getinsumosSelected());
+            insumo.setCantidadCreada((Float) jSpinnerCantidadCreada.getValue());
 
         }
     }
@@ -137,14 +148,14 @@ public class InsumoCreateEditView extends AbstractDialog {
 
             },
             new String [] {
-                "Seleccionado", "Codigo", "Nombre", "UM", "Cantidad", "Costo"
+                "Codigo", "Nombre", "UM", "Cantidad", "Costo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, true, false
+                false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -339,7 +350,11 @@ public class InsumoCreateEditView extends AbstractDialog {
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         validateInsumo();
-        ((InsumoListController) getController()).createInsumo(insumo);
+        if (state == State.CREATING) {
+            ((InsumoListController) getController()).createInsumo(insumo);
+        } else {
+            ((InsumoListController) getController()).updateInsumo(insumo);
+        }
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jCheckBoxElaboradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxElaboradoActionPerformed
@@ -386,15 +401,27 @@ public class InsumoCreateEditView extends AbstractDialog {
     private class MyTableModel extends AbstractTableModel {
 
         private final List<Insumo> items;
-        private final Boolean[] itemsBooleans;
         private final float[] itemsAmount;
         private final float[] itemsCosts;
 
         public MyTableModel(List<Insumo> items) {
             this.items = items;
-            itemsBooleans = new Boolean[items.size()];
             itemsAmount = new float[items.size()];
             itemsCosts = new float[items.size()];
+
+        }
+
+        @Override
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+                case 3:
+                    itemsAmount[rowIndex] = (float) aValue;
+                    break;
+                case 4:
+                    itemsCosts[rowIndex] = (float) aValue;
+                    break;
+            }
+            fireTableCellUpdated(rowIndex, columnIndex);
 
         }
 
@@ -405,23 +432,21 @@ public class InsumoCreateEditView extends AbstractDialog {
 
         @Override
         public int getColumnCount() {
-            return 6;
+            return 5;
         }
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return itemsBooleans[rowIndex];
-                case 1:
                     return items.get(rowIndex).getCodInsumo();
-                case 2:
+                case 1:
                     return items.get(rowIndex).getNombre();
-                case 3:
+                case 2:
                     return items.get(rowIndex).getUm();
-                case 4:
+                case 3:
                     return itemsAmount[rowIndex];
-                case 5:
+                case 4:
                     return itemsCosts[rowIndex];
                 default:
                     return null;
@@ -433,16 +458,14 @@ public class InsumoCreateEditView extends AbstractDialog {
         public String getColumnName(int column) {
             switch (column) {
                 case 0:
-                    return "Seleccionar";
-                case 1:
                     return "Codigo";
-                case 2:
+                case 1:
                     return "Nombre";
-                case 3:
+                case 2:
                     return "UM";
-                case 4:
+                case 3:
                     return "Cantidad";
-                case 5:
+                case 4:
                     return "Costo";
                 default:
                     return null;
@@ -453,22 +476,29 @@ public class InsumoCreateEditView extends AbstractDialog {
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
                 case 0:
-                    return Boolean.class;
+                    return String.class;
+                case 1:
+                    return String.class;
+                case 2:
+                    return String.class;
+                case 3:
+                    return Float.class;
+                case 4:
+                    return Float.class;
                 default:
-                    return super.getColumnClass(columnIndex);
+                    return null;
             }
         }
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return columnIndex == 1 || columnIndex == 4 || columnIndex == 5;
+            return columnIndex == 3 || columnIndex == 4;
         }
 
         public void fillInsumoElabData(List<InsumoElaborado> itemsToFill) {
             for (InsumoElaborado x : itemsToFill) {
                 int index = items.indexOf(x.getInsumo1());
                 if (index != -1) {
-                    itemsBooleans[index] = true;
                     itemsAmount[index] = x.getCantidad();
                     itemsCosts[index] = x.getCosto();
                 }
@@ -478,13 +508,15 @@ public class InsumoCreateEditView extends AbstractDialog {
 
         public List<InsumoElaborado> getinsumosSelected() {
             ArrayList<InsumoElaborado> ret = new ArrayList<>();
-            for (int i = 0; i < itemsBooleans.length; i++) {
-                if (itemsBooleans[i]) {
+            for (int i = 0; i < itemsAmount.length; i++) {
+                if (itemsAmount[i] > 0) {
                     InsumoElaboradoPK pk = new InsumoElaboradoPK(insumo.getCodInsumo(), items.get(i).getCodInsumo());
                     InsumoElaborado elab = new InsumoElaborado(pk);
                     elab.setCantidad(itemsAmount[i]);
-                    elab.setCosto(itemsAmount[i]);
-
+                    elab.setCosto(itemsCosts[i]);
+                    elab.setInsumo1(items.get(i));
+                    elab.setInsumo(insumo);
+                    ret.add(elab);
                 }
             }
             return ret;
@@ -492,10 +524,6 @@ public class InsumoCreateEditView extends AbstractDialog {
 
         public List<Insumo> getItems() {
             return items;
-        }
-
-        public Boolean[] getItemsBooleans() {
-            return itemsBooleans;
         }
 
         public float[] getItemsAmount() {
@@ -528,6 +556,10 @@ public class InsumoCreateEditView extends AbstractDialog {
             return !invalid;
         }
 
+    }
+
+    private enum State {
+        CREATING, UPDATING
     }
 
 }

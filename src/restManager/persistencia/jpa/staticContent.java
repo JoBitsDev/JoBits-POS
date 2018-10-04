@@ -18,7 +18,7 @@ public class staticContent {
 
     private static boolean CONECTADO;
 
-    private final String persistenceUnitName;
+    private static  String persistenceUnitName;
 
     private static EntityManagerFactory EMF;
 
@@ -59,7 +59,7 @@ public class staticContent {
     public static NotaJpaController notaJPA;
 
     private staticContent(String persistenceUnitName) {
-        this.persistenceUnitName = persistenceUnitName;
+        staticContent.persistenceUnitName = persistenceUnitName;
         EMF = Persistence.createEntityManagerFactory(persistenceUnitName);
         if (EMF != null) {
             initJPAConnections();
@@ -152,5 +152,12 @@ public class staticContent {
     public static staticContent init(String persistenceUnitName){
         return new staticContent(persistenceUnitName);
     }
+
+    public static String getPersistenceUnitName() {
+        return persistenceUnitName;
+    }
+    
+    
+    
     
 }

@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import GUI.Views.Insumo.InsumoListView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -448,7 +449,7 @@ public class ProductoVentaCrearEditar extends javax.swing.JDialog {
     }//GEN-LAST:event_buttonCrearActionPerformed
 
     private void buttonADDIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonADDIngredienteActionPerformed
-        new InsumoLista(this).mostrarDialogParaAddInsumo();
+//        new InsumoListView(this,true).mostrarDialogParaAddInsumo();
     }//GEN-LAST:event_buttonADDIngredienteActionPerformed
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus

@@ -98,7 +98,7 @@ public class Almacen implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Almacen[ codAlmacen=" + codAlmacen + " ]";
+        return codAlmacen +" : "+nombre ;
     }
 
     public Integer getCantidadInsumos() {
