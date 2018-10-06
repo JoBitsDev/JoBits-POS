@@ -9,6 +9,7 @@ package restManager.printservice;
 public class Ticket {
     String commandSet = "";
     final static int PAPER_LENGHT = 32; 
+    final static char LINE_CHAR= '*';
 
     public Ticket() {
     }
@@ -206,7 +207,10 @@ public class Ticket {
     }
 
     public String addLineSeperator() {
-        String lineSpace = "********************************";
+        String lineSpace = "";
+        while(lineSpace.length()<PAPER_LENGHT){
+            lineSpace += LINE_CHAR;
+        }
         commandSet += lineSpace;
         return lineSpace;
     }
