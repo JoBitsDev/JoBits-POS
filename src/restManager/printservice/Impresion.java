@@ -92,7 +92,10 @@ public class Impresion {
     //
     //Constructors
     //
-    
+
+    public Impresion() {
+    this(staticContent.cartaJPA.findCarta("Mnu-1"));
+    }
     /**
      * Constructor por defecto
      *
