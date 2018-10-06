@@ -20,10 +20,12 @@ import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
+import restManager.persistencia.Almacen;
 
 import restManager.persistencia.Carta;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO;
+import restManager.persistencia.Insumo;
 import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
@@ -46,8 +48,11 @@ public class Impresion {
     private float cambio = 24;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
     private boolean showPrices = true;
-    private final SimpleDateFormat Format = new SimpleDateFormat("dd'/'MM'/'yy ' ' ");
-    private final SimpleDateFormat TimeFormat = new SimpleDateFormat(" hh ':' mm ' ' a ");
+    private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy ' ' ");
+    private final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat(" hh ':' mm ' ' a ");
+    private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
+    private final String DEFAULT_PRINT_LOCATION = null;
+    private int cantidadCopias = 1;
 
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
@@ -76,26 +81,31 @@ public class Impresion {
     /**
      * Strings referentes a la impresion de resumenes de ventas
      */
-    private final String RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
+    private final String 
+            RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
             RESUMEN_VENTAS_COCINA = "Resumen de ventas por área ",
             TOTAL_VENTAS = "Total Vendido: ",
             RESUMEN_CONSUMO_CASA = "Resumen del consumo de la casa ";
 
-    private final String IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
+    private final String 
+            IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
             IPV_HEADER = "Resumen de gasto de insumos",
             IPV_PUNTO_ELAB = "Punto de elaboracion";
 
-    private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
-    private final String DEFAULT_PRINT_LOCATION = null;
-    private int cantidadCopias = 1;
+    /**
+     * String referentes al almacen
+     */
+    private final String 
+            STOCK_BALANCE = "Balance de stock en almacen",
+            STOCK_FORMAT = "En Almacen | Diferencia ";
 
     //
     //Constructors
     //
-
     public Impresion() {
-    this(staticContent.cartaJPA.findCarta("Mnu-1"));
+        this(staticContent.cartaJPA.findCarta("Mnu-1"));
     }
+
     /**
      * Constructor por defecto
      *
@@ -148,10 +158,9 @@ public class Impresion {
     //
     //Metodos Publicos
     //
-    
     public void print(Orden o, boolean preview) throws PrintException {
 
-        float total = 0;
+        float total;
 
         Ticket t = new Ticket();
 
@@ -186,24 +195,14 @@ public class Impresion {
         }
         t.newLine();
 
-        t.addLineSeperator();
-        t.setText(TOTAL + totalPrint + MONEDA);
-        t.newLine();
-
-        if (monedaCUC) {
-            t.setText(TOTAL + comun.redondeoPorExceso((int) (Float.valueOf(totalPrint) * cambio * 100)) + MN);
-        } else {
-            t.setText(TOTAL + comun.redondeoPorExceso((int) (100 * Float.valueOf(totalPrint) / cambio)) + CUC);
-        }
+        addTotal(t, total);
 
         t.newLine();
         t.newLine();
-
         t.alignCenter();
         t.setText(this.PIE);
-        t.newLine();
-        t.feed((byte) 3);
-        t.finit();
+
+        addFinal(t);
 
         feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
@@ -271,6 +270,7 @@ public class Impresion {
         Ticket t = new Ticket();
 
         addHeader(t);
+
         t.emphasized(true);
         t.setText(COCINA + c.getNombreCocina());
         t.emphasized(false);
@@ -359,7 +359,7 @@ public class Impresion {
         t.setText(p.getDatosPersonales().getNombre());
         t.newLine();
         t.alignLeft();
-        t.setText(FECHA + this.Format.format(fecha));
+        t.setText(FECHA + this.DATE_FORMAT.format(fecha));
         t.newLine();
         t.addLineSeperator();
         t.newLine();
@@ -402,7 +402,7 @@ public class Impresion {
         t.setText(c.getNombreCocina());
         t.newLine();
         t.alignLeft();
-        t.setText(FECHA + this.Format.format(fecha));
+        t.setText(FECHA + this.DATE_FORMAT.format(fecha));
         t.newLine();
         t.addLineSeperator();
         t.newLine();
@@ -426,7 +426,6 @@ public class Impresion {
      * @param registros
      */
     public void printResumenIPVDePuntoElaboracion(List<IpvRegistro> registros) {
-        //throw new UnsupportedOperationException("Operacion en desarrollo");
         Cocina c = registros.get(0).getIpv().getCocina();
         Date fecha = registros.get(0).getIpvRegistroPK().getFecha();
         Collections.sort(registros,
@@ -450,7 +449,7 @@ public class Impresion {
         t.setText(c.getNombreCocina());
         t.newLine();
         t.alignLeft();
-        t.setText(FECHA + this.Format.format(fecha));
+        t.setText(FECHA + this.DATE_FORMAT.format(fecha));
         t.newLine();
         t.addLineSeperator();
         t.alignCenter();
@@ -468,9 +467,7 @@ public class Impresion {
             t.newLine();
         }
 
-        t.newLine();
-        t.feed((byte) 3);
-        t.finit();
+        addFinal(t);
 
         try {
             feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
@@ -491,15 +488,7 @@ public class Impresion {
 
         addHeader(t);
 
-        t.addLineSeperator();
-        t.newLine();
-        t.setText(Z);
-        t.newLine();
-        t.alignLeft();
-        t.setText(FECHA + this.Format.format(v.getFecha()));
-        t.newLine();
-        t.addLineSeperator();
-        t.newLine();
+        addCustomMetaData(t, Z, v.getFecha());
 
         float total = addPvOrden(t, VentaDAO.getResumenVentas(v));
 
@@ -513,10 +502,48 @@ public class Impresion {
 
     }
 
+    public void printResumenCasa(List<ProductovOrden> resumenVentasCasa, Date fecha) {
+        Ticket t = new Ticket();
+        addHeader(t);
+
+        addCustomMetaData(t, RESUMEN_CONSUMO_CASA, fecha);
+
+        float total = addPvOrden(t, resumenVentasCasa);
+
+        addTotalAndFinal(t, total);
+
+        try {
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        } catch (PrintException ex) {
+            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void printStockBalance(List<Insumo> items, boolean printOverStoraged) {
+        Ticket t = new Ticket();
+        addHeader(t);
+        addCustomMetaData(t, STOCK_BALANCE, new Date());
+        
+        t.alignCenter();
+        t.setText(STOCK_FORMAT);
+        t.newLine();
+        t.newLine();
+        
+        for (Insumo in : items) {
+            t.alignLeft();
+            t.setText(in.getNombre() +"("+in.getUm()+")");
+            t.newLine();
+            t.alignRight();
+            t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente()-in.getStockEstimation()));
+        }
+        
+        addFinal(t);
+
+    }
+
     //
     //Getters And Setters
     //
-    
     public static EstadoImpresion getEstadoImpresion() {
         return estadoImpresion;
     }
@@ -525,7 +552,11 @@ public class Impresion {
     // Private printing format methods
     //
     private void addTotalAndFinal(Ticket t, float total) {
+        addTotal(t, total);
+        addFinal(t);
+    }
 
+    private void addTotal(Ticket t, float total) {
         t.addLineSeperator();
         if (showPrices) {
             t.alignRight();
@@ -539,11 +570,13 @@ public class Impresion {
             }
 
         }
+    }
+
+    private void addFinal(Ticket t) {
         t.newLine();
         t.newLine();
         t.feed((byte) 3);
         t.finit();
-
     }
 
     private void addHeader(Ticket t) {
@@ -557,11 +590,26 @@ public class Impresion {
         t.newLine();
     }
 
+    private void addCustomMetaData(Ticket t, String customHeader, Date fecha) {
+
+        t.addLineSeperator();
+        t.newLine();
+        t.setText(customHeader);
+        t.newLine();
+        t.alignLeft();
+        t.setText(FECHA + this.DATE_FORMAT.format(fecha));
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+        
+
+    }
+
     private void addMetaData(Ticket t, Orden o, Date date) {
         t.addLineSeperator();
         t.newLine();
         t.alignRight();
-        t.setText(FECHA + this.Format.format(o.getVentafecha().getFecha()) + TimeFormat.format(date));
+        t.setText(FECHA + this.DATE_FORMAT.format(o.getVentafecha().getFecha()) + TIME_FORMAT.format(date));
         t.newLine();
         t.setText(ORDEN + o.getCodOrden());
         t.newLine();
@@ -596,7 +644,6 @@ public class Impresion {
     //
     //Private Methods
     //
-    
     private void feedPrinter(byte[] b, String printerName) throws PrintException {
 
         PrintService[] prints = PrintServiceLookup.lookupPrintServices(null, null);
@@ -644,69 +691,10 @@ public class Impresion {
 
     private String fillSpace(Object number, int finalLenght) {
         String ret = String.format(" %.0f", number);
-        // ret = ret.split(".")[0];
-        boolean pivotBack = true;
         while (ret.length() < finalLenght) {
             ret += " ";
         }
-
         return ret;
-    }
-
-    public void printResumenCasa(List<ProductovOrden> resumenVentasCasa, Date fecha) {
-        Ticket t = new Ticket();
-        t.resetAll();
-        t.initialize();
-//p.feedBack((byte)2);
-        t.alignCenter();
-        t.setText(CABECERA);
-        t.newLine();
-        t.setText(this.nombreRest);
-        t.newLine();
-        t.addLineSeperator();
-        t.newLine();
-        t.setText(RESUMEN_CONSUMO_CASA);
-        t.newLine();
-        t.newLine();
-        t.alignLeft();
-        t.setText(FECHA + this.Format.format(fecha));
-        t.newLine();
-        t.addLineSeperator();
-        t.newLine();
-
-        float total = 0;
-        for (ProductovOrden x : resumenVentasCasa) {
-            t.alignLeft();
-            t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
-            t.newLine();
-            t.alignRight();
-            t.setText(x.getCantidad() * x.getProductoVenta().getPrecioVenta() + MONEDA);
-            t.newLine();
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
-        }
-
-        t.addLineSeperator();
-        t.alignRight();
-        t.setText(TOTAL_VENTAS + total + MONEDA);
-        t.newLine();
-
-        if (monedaCUC) {
-            t.setText(TOTAL_VENTAS + total * cambio + MN);
-        } else {
-            t.setText(TOTAL_VENTAS + Math.rint((total / cambio) * 100) / 100 + CUC);
-        }
-
-        t.newLine();
-        t.newLine();
-
-        t.feed((byte) 3);
-        t.finit();
-
-        try {
-            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
-        } catch (PrintException ex) {
-            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private void cleanAndPrintRAM() {
