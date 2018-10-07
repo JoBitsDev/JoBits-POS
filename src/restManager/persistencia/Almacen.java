@@ -30,15 +30,16 @@ import javax.persistence.Table;
     , @NamedQuery(name = "Almacen.findByNombre", query = "SELECT a FROM Almacen a WHERE a.nombre = :nombre")})
 public class Almacen implements Serializable {
 
+    @OneToMany(mappedBy = "almacencodAlmacen")
+    private List<Transaccion> transaccionList;
+
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "valor_monetario")
     private Float valorMonetario;
 
     @Column(name = "cantidad_insumos")
     private Integer cantidadInsumos;
-    @OneToMany(mappedBy = "almacencodAlmacen")
-    private List<Ficha> fichaList;
-
+  
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -112,21 +113,21 @@ public class Almacen implements Serializable {
     public void setCantidadInsumos(Integer cantidadInsumos) {
         this.cantidadInsumos = cantidadInsumos;
     }
-
-    public List<Ficha> getFichaList() {
-        return fichaList;
-    }
-
-    public void setFichaList(List<Ficha> fichaList) {
-        this.fichaList = fichaList;
-    }
-
+    
     public Float getValorMonetario() {
         return valorMonetario;
     }
 
     public void setValorMonetario(Float valorMonetario) {
         this.valorMonetario = valorMonetario;
+    }
+
+    public List<Transaccion> getTransaccionList() {
+        return transaccionList;
+    }
+
+    public void setTransaccionList(List<Transaccion> transaccionList) {
+        this.transaccionList = transaccionList;
     }
 
 }

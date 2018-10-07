@@ -4,8 +4,8 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>restManager.persistencia.Configuracion</class>
         <class>restManager.persistencia.DatosPersonales</class>
-        <class>restManager.persistencia.Ficha</class>
-        <class>restManager.persistencia.InsumoFicha</class>
+        <class>restManager.persistencia.Transaccion</class>
+        <class>restManager.persistencia.InsumoTransaccion</class>
         <class>restManager.persistencia.Carta</class>
         <class>restManager.persistencia.Ipv</class>
         <class>restManager.persistencia.Mesa</class>
@@ -46,8 +46,8 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>restManager.persistencia.Configuracion</class>
         <class>restManager.persistencia.DatosPersonales</class>
-        <class>restManager.persistencia.Ficha</class>
-        <class>restManager.persistencia.InsumoFicha</class>
+        <class>restManager.persistencia.Transaccion</class>
+        <class>restManager.persistencia.InsumoTransaccion</class>
         <class>restManager.persistencia.Carta</class>
         <class>restManager.persistencia.Ipv</class>
         <class>restManager.persistencia.Mesa</class>

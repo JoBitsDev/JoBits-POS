@@ -204,7 +204,7 @@ public class AlmacenEditView extends AbstractView {
     }//GEN-LAST:event_jButtonModificarStockActionPerformed
 
     private void jButtonVerFichasEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerFichasEntradaActionPerformed
-       ((AlmacenManageController) getController()).verFichasArchivadas();
+       ((AlmacenManageController) getController()).verTransaccionsArchivadas();
     }//GEN-LAST:event_jButtonVerFichasEntradaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

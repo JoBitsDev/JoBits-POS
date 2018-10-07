@@ -72,8 +72,8 @@ public class AlmacenManageController extends AbstractController<Almacen> {
         view.updateView(a);
     }
     
-    public void verFichasArchivadas(){
-        AlmacenFichaListController fichasController = new AlmacenFichaListController(view);
+    public void verTransaccionsArchivadas(){
+        AlmacenTransaccionListController fichasController = new AlmacenTransaccionListController(view);
     }
     //
     // Metodos Privados

@@ -20,7 +20,7 @@ import javax.persistence.EntityManagerFactory;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.Ipv;
 import restManager.persistencia.InsumoElaborado;
-import restManager.persistencia.InsumoFicha;
+import restManager.persistencia.InsumoTransaccion;
 import restManager.persistencia.jpa.exceptions.IllegalOrphanException;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.exceptions.PreexistingEntityException;
@@ -54,8 +54,8 @@ public class InsumoJpaController implements Serializable {
         if (insumo.getInsumoElaboradoList1() == null) {
             insumo.setInsumoElaboradoList1(new ArrayList<InsumoElaborado>());
         }
-        if (insumo.getInsumoFichaList() == null) {
-            insumo.setInsumoFichaList(new ArrayList<InsumoFicha>());
+        if (insumo.getInsumoTransaccionList() == null) {
+            insumo.setInsumoTransaccionList(new ArrayList<InsumoTransaccion>());
         }
         EntityManager em = null;
         try {
@@ -90,12 +90,12 @@ public class InsumoJpaController implements Serializable {
                 attachedInsumoElaboradoList1.add(insumoElaboradoList1InsumoElaboradoToAttach);
             }
             insumo.setInsumoElaboradoList1(attachedInsumoElaboradoList1);
-            List<InsumoFicha> attachedInsumoFichaList = new ArrayList<InsumoFicha>();
-            for (InsumoFicha insumoFichaListInsumoFichaToAttach : insumo.getInsumoFichaList()) {
-                insumoFichaListInsumoFichaToAttach = em.getReference(insumoFichaListInsumoFichaToAttach.getClass(), insumoFichaListInsumoFichaToAttach.getInsumoFichaPK());
-                attachedInsumoFichaList.add(insumoFichaListInsumoFichaToAttach);
+            List<InsumoTransaccion> attachedInsumoTransaccionList = new ArrayList<InsumoTransaccion>();
+            for (InsumoTransaccion insumoTransaccionListInsumoTransaccionToAttach : insumo.getInsumoTransaccionList()) {
+                insumoTransaccionListInsumoTransaccionToAttach = em.getReference(insumoTransaccionListInsumoTransaccionToAttach.getClass(), insumoTransaccionListInsumoTransaccionToAttach.getInsumoTransaccionPK());
+                attachedInsumoTransaccionList.add(insumoTransaccionListInsumoTransaccionToAttach);
             }
-            insumo.setInsumoFichaList(attachedInsumoFichaList);
+            insumo.setInsumoTransaccionList(attachedInsumoTransaccionList);
             em.persist(insumo);
             if (almacencodAlmacen != null) {
                 almacencodAlmacen.getInsumoList().add(insumo);
@@ -137,13 +137,13 @@ public class InsumoJpaController implements Serializable {
                     oldInsumo1OfInsumoElaboradoList1InsumoElaborado = em.merge(oldInsumo1OfInsumoElaboradoList1InsumoElaborado);
                 }
             }
-            for (InsumoFicha insumoFichaListInsumoFicha : insumo.getInsumoFichaList()) {
-                Insumo oldInsumoOfInsumoFichaListInsumoFicha = insumoFichaListInsumoFicha.getInsumo();
-                insumoFichaListInsumoFicha.setInsumo(insumo);
-                insumoFichaListInsumoFicha = em.merge(insumoFichaListInsumoFicha);
-                if (oldInsumoOfInsumoFichaListInsumoFicha != null) {
-                    oldInsumoOfInsumoFichaListInsumoFicha.getInsumoFichaList().remove(insumoFichaListInsumoFicha);
-                    oldInsumoOfInsumoFichaListInsumoFicha = em.merge(oldInsumoOfInsumoFichaListInsumoFicha);
+            for (InsumoTransaccion insumoTransaccionListInsumoTransaccion : insumo.getInsumoTransaccionList()) {
+                Insumo oldInsumoOfInsumoTransaccionListInsumoTransaccion = insumoTransaccionListInsumoTransaccion.getInsumo();
+                insumoTransaccionListInsumoTransaccion.setInsumo(insumo);
+                insumoTransaccionListInsumoTransaccion = em.merge(insumoTransaccionListInsumoTransaccion);
+                if (oldInsumoOfInsumoTransaccionListInsumoTransaccion != null) {
+                    oldInsumoOfInsumoTransaccionListInsumoTransaccion.getInsumoTransaccionList().remove(insumoTransaccionListInsumoTransaccion);
+                    oldInsumoOfInsumoTransaccionListInsumoTransaccion = em.merge(oldInsumoOfInsumoTransaccionListInsumoTransaccion);
                 }
             }
             em.getTransaction().commit();
@@ -175,8 +175,8 @@ public class InsumoJpaController implements Serializable {
             List<InsumoElaborado> insumoElaboradoListNew = insumo.getInsumoElaboradoList();
             List<InsumoElaborado> insumoElaboradoList1Old = persistentInsumo.getInsumoElaboradoList1();
             List<InsumoElaborado> insumoElaboradoList1New = insumo.getInsumoElaboradoList1();
-            List<InsumoFicha> insumoFichaListOld = persistentInsumo.getInsumoFichaList();
-            List<InsumoFicha> insumoFichaListNew = insumo.getInsumoFichaList();
+            List<InsumoTransaccion> insumoTransaccionListOld = persistentInsumo.getInsumoTransaccionList();
+            List<InsumoTransaccion> insumoTransaccionListNew = insumo.getInsumoTransaccionList();
             List<String> illegalOrphanMessages = null;
             for (ProductoInsumo productoInsumoListOldProductoInsumo : productoInsumoListOld) {
                 if (!productoInsumoListNew.contains(productoInsumoListOldProductoInsumo)) {
@@ -210,12 +210,12 @@ public class InsumoJpaController implements Serializable {
                     illegalOrphanMessages.add("You must retain InsumoElaborado " + insumoElaboradoList1OldInsumoElaborado + " since its insumo1 field is not nullable.");
                 }
             }
-            for (InsumoFicha insumoFichaListOldInsumoFicha : insumoFichaListOld) {
-                if (!insumoFichaListNew.contains(insumoFichaListOldInsumoFicha)) {
+            for (InsumoTransaccion insumoTransaccionListOldInsumoTransaccion : insumoTransaccionListOld) {
+                if (!insumoTransaccionListNew.contains(insumoTransaccionListOldInsumoTransaccion)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain InsumoFicha " + insumoFichaListOldInsumoFicha + " since its insumo field is not nullable.");
+                    illegalOrphanMessages.add("You must retain InsumoTransaccion " + insumoTransaccionListOldInsumoTransaccion + " since its insumo field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -253,13 +253,13 @@ public class InsumoJpaController implements Serializable {
             }
             insumoElaboradoList1New = attachedInsumoElaboradoList1New;
             insumo.setInsumoElaboradoList1(insumoElaboradoList1New);
-            List<InsumoFicha> attachedInsumoFichaListNew = new ArrayList<InsumoFicha>();
-            for (InsumoFicha insumoFichaListNewInsumoFichaToAttach : insumoFichaListNew) {
-                insumoFichaListNewInsumoFichaToAttach = em.getReference(insumoFichaListNewInsumoFichaToAttach.getClass(), insumoFichaListNewInsumoFichaToAttach.getInsumoFichaPK());
-                attachedInsumoFichaListNew.add(insumoFichaListNewInsumoFichaToAttach);
+            List<InsumoTransaccion> attachedInsumoTransaccionListNew = new ArrayList<InsumoTransaccion>();
+            for (InsumoTransaccion insumoTransaccionListNewInsumoTransaccionToAttach : insumoTransaccionListNew) {
+                insumoTransaccionListNewInsumoTransaccionToAttach = em.getReference(insumoTransaccionListNewInsumoTransaccionToAttach.getClass(), insumoTransaccionListNewInsumoTransaccionToAttach.getInsumoTransaccionPK());
+                attachedInsumoTransaccionListNew.add(insumoTransaccionListNewInsumoTransaccionToAttach);
             }
-            insumoFichaListNew = attachedInsumoFichaListNew;
-            insumo.setInsumoFichaList(insumoFichaListNew);
+            insumoTransaccionListNew = attachedInsumoTransaccionListNew;
+            insumo.setInsumoTransaccionList(insumoTransaccionListNew);
             insumo = em.merge(insumo);
             if (almacencodAlmacenOld != null && !almacencodAlmacenOld.equals(almacencodAlmacenNew)) {
                 almacencodAlmacenOld.getInsumoList().remove(insumo);
@@ -313,14 +313,14 @@ public class InsumoJpaController implements Serializable {
                     }
                 }
             }
-            for (InsumoFicha insumoFichaListNewInsumoFicha : insumoFichaListNew) {
-                if (!insumoFichaListOld.contains(insumoFichaListNewInsumoFicha)) {
-                    Insumo oldInsumoOfInsumoFichaListNewInsumoFicha = insumoFichaListNewInsumoFicha.getInsumo();
-                    insumoFichaListNewInsumoFicha.setInsumo(insumo);
-                    insumoFichaListNewInsumoFicha = em.merge(insumoFichaListNewInsumoFicha);
-                    if (oldInsumoOfInsumoFichaListNewInsumoFicha != null && !oldInsumoOfInsumoFichaListNewInsumoFicha.equals(insumo)) {
-                        oldInsumoOfInsumoFichaListNewInsumoFicha.getInsumoFichaList().remove(insumoFichaListNewInsumoFicha);
-                        oldInsumoOfInsumoFichaListNewInsumoFicha = em.merge(oldInsumoOfInsumoFichaListNewInsumoFicha);
+            for (InsumoTransaccion insumoTransaccionListNewInsumoTransaccion : insumoTransaccionListNew) {
+                if (!insumoTransaccionListOld.contains(insumoTransaccionListNewInsumoTransaccion)) {
+                    Insumo oldInsumoOfInsumoTransaccionListNewInsumoTransaccion = insumoTransaccionListNewInsumoTransaccion.getInsumo();
+                    insumoTransaccionListNewInsumoTransaccion.setInsumo(insumo);
+                    insumoTransaccionListNewInsumoTransaccion = em.merge(insumoTransaccionListNewInsumoTransaccion);
+                    if (oldInsumoOfInsumoTransaccionListNewInsumoTransaccion != null && !oldInsumoOfInsumoTransaccionListNewInsumoTransaccion.equals(insumo)) {
+                        oldInsumoOfInsumoTransaccionListNewInsumoTransaccion.getInsumoTransaccionList().remove(insumoTransaccionListNewInsumoTransaccion);
+                        oldInsumoOfInsumoTransaccionListNewInsumoTransaccion = em.merge(oldInsumoOfInsumoTransaccionListNewInsumoTransaccion);
                     }
                 }
             }
@@ -382,12 +382,12 @@ public class InsumoJpaController implements Serializable {
                 }
                 illegalOrphanMessages.add("This Insumo (" + insumo + ") cannot be destroyed since the InsumoElaborado " + insumoElaboradoList1OrphanCheckInsumoElaborado + " in its insumoElaboradoList1 field has a non-nullable insumo1 field.");
             }
-            List<InsumoFicha> insumoFichaListOrphanCheck = insumo.getInsumoFichaList();
-            for (InsumoFicha insumoFichaListOrphanCheckInsumoFicha : insumoFichaListOrphanCheck) {
+            List<InsumoTransaccion> insumoTransaccionListOrphanCheck = insumo.getInsumoTransaccionList();
+            for (InsumoTransaccion insumoTransaccionListOrphanCheckInsumoTransaccion : insumoTransaccionListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Insumo (" + insumo + ") cannot be destroyed since the InsumoFicha " + insumoFichaListOrphanCheckInsumoFicha + " in its insumoFichaList field has a non-nullable insumo field.");
+                illegalOrphanMessages.add("This Insumo (" + insumo + ") cannot be destroyed since the InsumoTransaccion " + insumoTransaccionListOrphanCheckInsumoTransaccion + " in its insumoTransaccionList field has a non-nullable insumo field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

@@ -7,9 +7,12 @@
 package restManager.persistencia;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * FirstDream
@@ -17,21 +20,22 @@ import javax.persistence.Embeddable;
  * 
  */
 @Embeddable
-public class InsumoFichaPK implements Serializable {
+public class InsumoTransaccionPK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "insumocod_insumo")
     private String insumocodInsumo;
     @Basic(optional = false)
-    @Column(name = "fichaid_ficha")
-    private int fichaidFicha;
+    @Column(name = "transaccionfecha_transaccion")
+    @Temporal(TemporalType.DATE)
+    private Date transaccionfechaTransaccion;
 
-    public InsumoFichaPK() {
+    public InsumoTransaccionPK() {
     }
 
-    public InsumoFichaPK(String insumocodInsumo, int fichaidFicha) {
+    public InsumoTransaccionPK(String insumocodInsumo, Date transaccionfechaTransaccion) {
         this.insumocodInsumo = insumocodInsumo;
-        this.fichaidFicha = fichaidFicha;
+        this.transaccionfechaTransaccion = transaccionfechaTransaccion;
     }
 
     public String getInsumocodInsumo() {
@@ -42,33 +46,33 @@ public class InsumoFichaPK implements Serializable {
         this.insumocodInsumo = insumocodInsumo;
     }
 
-    public int getFichaidFicha() {
-        return fichaidFicha;
+    public Date getTransaccionfechaTransaccion() {
+        return transaccionfechaTransaccion;
     }
 
-    public void setFichaidFicha(int fichaidFicha) {
-        this.fichaidFicha = fichaidFicha;
+    public void setTransaccionfechaTransaccion(Date transaccionfechaTransaccion) {
+        this.transaccionfechaTransaccion = transaccionfechaTransaccion;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (insumocodInsumo != null ? insumocodInsumo.hashCode() : 0);
-        hash += (int) fichaidFicha;
+        hash += (transaccionfechaTransaccion != null ? transaccionfechaTransaccion.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof InsumoFichaPK)) {
+        if (!(object instanceof InsumoTransaccionPK)) {
             return false;
         }
-        InsumoFichaPK other = (InsumoFichaPK) object;
+        InsumoTransaccionPK other = (InsumoTransaccionPK) object;
         if ((this.insumocodInsumo == null && other.insumocodInsumo != null) || (this.insumocodInsumo != null && !this.insumocodInsumo.equals(other.insumocodInsumo))) {
             return false;
         }
-        if (this.fichaidFicha != other.fichaidFicha) {
+        if ((this.transaccionfechaTransaccion == null && other.transaccionfechaTransaccion != null) || (this.transaccionfechaTransaccion != null && !this.transaccionfechaTransaccion.equals(other.transaccionfechaTransaccion))) {
             return false;
         }
         return true;
@@ -76,7 +80,7 @@ public class InsumoFichaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.InsumoFichaPK[ insumocodInsumo=" + insumocodInsumo + ", fichaidFicha=" + fichaidFicha + " ]";
+        return "restManager.persistencia.InsumoTransaccionPK[ insumocodInsumo=" + insumocodInsumo + ", transaccionfechaTransaccion=" + transaccionfechaTransaccion + " ]";
     }
 
 }

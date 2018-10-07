@@ -37,6 +37,9 @@ import javax.persistence.Table;
     , @NamedQuery(name = "Insumo.findByCantidadExistente", query = "SELECT i FROM Insumo i WHERE i.cantidadExistente = :cantidadExistente")})
 public class Insumo implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
+    private List<InsumoTransaccion> insumoTransaccionList;
+
     @Column(name = "cantidad_creada")
     private Float cantidadCreada;
     
@@ -45,8 +48,6 @@ public class Insumo implements Serializable {
     private Float cantidadExistente;
     @Column(name = "stock_estimation")
     private Float stockEstimation;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
-    private List<InsumoFicha> insumoFichaList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -208,20 +209,20 @@ public class Insumo implements Serializable {
         this.stockEstimation = stockEstimation;
     }
 
-    public List<InsumoFicha> getInsumoFichaList() {
-        return insumoFichaList;
-    }
-
-    public void setInsumoFichaList(List<InsumoFicha> insumoFichaList) {
-        this.insumoFichaList = insumoFichaList;
-    }
-
     public Float getCantidadCreada() {
         return cantidadCreada;
     }
 
     public void setCantidadCreada(Float cantidadCreada) {
         this.cantidadCreada = cantidadCreada;
+    }
+
+    public List<InsumoTransaccion> getInsumoTransaccionList() {
+        return insumoTransaccionList;
+    }
+
+    public void setInsumoTransaccionList(List<InsumoTransaccion> insumoTransaccionList) {
+        this.insumoTransaccionList = insumoTransaccionList;
     }
     
     

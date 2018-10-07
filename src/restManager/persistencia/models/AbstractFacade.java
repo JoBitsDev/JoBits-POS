@@ -100,5 +100,9 @@ public abstract class AbstractFacade<T> {
 
         return prefix + "" + cont;
     }
+    
+    public int generate(String idName){
+        return new ConfigDAO().generateNewId(idName);
+    }
 
 }

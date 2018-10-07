@@ -6,17 +6,21 @@
 
 package restManager.persistencia.models;
 
-import restManager.persistencia.Ficha;
+import restManager.persistencia.Transaccion;
 
 /**
  * FirstDream
  * @author Jorge
  * 
  */
-public class FichaDAO  extends AbstractFacade<Ficha>{
+public class TransaccionDAO  extends AbstractFacade<Transaccion>{
 
-    public FichaDAO() {
-        super(Ficha.class);
+    public TransaccionDAO() {
+        super(Transaccion.class);
+    }
+    
+    public enum TIpoModelo {
+        ENTRADA,SALIDA,MERMA
     }
 
 }
