@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.resources;
 
 import java.text.SimpleDateFormat;
@@ -15,36 +14,39 @@ import restManager.persistencia.Personal;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
 public class R {
-    
-   public static Personal loggerUser = null;
-    
+
+    public static String coinSuffix ;
+
+    public static Personal loggerUser = null;
+
     public static final Date TODAYS_DATE = new Date();
-    
+
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
-    
+
     public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("Strings");
-    
-    public static  String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
-    
-    public static void setLookAndFeels(){
+
+    public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
+
+    public static void setLookAndFeels() {
         try {
-                    javax.swing.UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
-            } catch (UnsupportedLookAndFeelException ex) {
-                System.out.println(ex.getMessage());
+            javax.swing.UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
+        } catch (UnsupportedLookAndFeelException ex) {
+            System.out.println(ex.getMessage());
         }
     }
-    
-     public static enum UM {
+
+    public static enum UM {
         U("U"),
         Gr("Gr"),
         Kg("Kg"),
         Lbs("Lbs"),
         Lts("Lts");
-        
+
         private String valor;
 
         private UM(String valor) {
@@ -59,9 +61,7 @@ public class R {
         public String toString() {
             return valor;
         }
-        
-        
-        
+
     }
-    
+
 }

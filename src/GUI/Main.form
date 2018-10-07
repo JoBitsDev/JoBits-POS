@@ -191,6 +191,48 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCopiaSeguridadActionPerformed"/>
       </Events>
     </Component>
+    <Component class="org.edisoncor.gui.button.ButtonTextDown" name="buttonALMACENNUEVAFICHA">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nueva Ficha"/>
+        <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Main.NIVEL_3" type="code"/>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="BlairMdITC TT" size="24" style="1"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonALMACENNUEVAFICHAActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="org.edisoncor.gui.button.ButtonTextDown" name="buttonALMACENVERFICHAS">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver fichas"/>
+        <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Main.NIVEL_3" type="code"/>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="BlairMdITC TT" size="24" style="1"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonALMACENVERFICHASActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="org.edisoncor.gui.button.ButtonTextDown" name="buttonALMACENSTOCK">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Stock"/>
+        <Property name="enabled" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Main.NIVEL_3" type="code"/>
+        </Property>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="BlairMdITC TT" size="24" style="1"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonALMACENSTOCKActionPerformed"/>
+      </Events>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>

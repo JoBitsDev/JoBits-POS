@@ -5,7 +5,7 @@
  */
 package GUI.Views.Insumo;
 
-import GUI.AbstractDialog;
+import GUI.AbstractView;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -23,12 +23,13 @@ import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoElaborado;
 import restManager.persistencia.InsumoElaboradoPK;
 import restManager.resources.R;
+import restManager.resources.RegularExpressions;
 
 /**
  *
  * @author Jorge
  */
-public class InsumoCreateEditView extends AbstractDialog {
+public class InsumoCreateEditView extends AbstractView {
 
     private State state;
     private Insumo insumo;
@@ -544,7 +545,7 @@ public class InsumoCreateEditView extends AbstractDialog {
             boolean invalid;
             String validName = in.getText();
 
-            invalid = !validName.matches("[A-Z][[a-zA-Z]* X*[\\s]]*") || validName.length() > 60;
+            invalid = !validName.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES) || validName.length() > 60;
 
             if (invalid) {
                 in.setBorder(new LineBorder(Color.red));

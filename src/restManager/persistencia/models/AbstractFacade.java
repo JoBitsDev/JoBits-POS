@@ -1,4 +1,4 @@
-package restManager.persistencia.beans;
+package restManager.persistencia.models;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -38,15 +38,11 @@ public abstract class AbstractFacade<T> {
     }
 
     public void startTransaction() {
-        if (!getEntityManager().getTransaction().isActive()) {
             getEntityManager().getTransaction().begin();
-        }
     }
 
     public void commitTransaction() {
-        if (getEntityManager().getTransaction().isActive()) {
             getEntityManager().getTransaction().commit();
-        }
     }
 
     public void create(T entity) {

@@ -20,7 +20,6 @@ import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
-import restManager.persistencia.Almacen;
 
 import restManager.persistencia.Carta;
 import restManager.persistencia.Cocina;
@@ -535,9 +534,20 @@ public class Impresion {
             t.newLine();
             t.alignRight();
             t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente()-in.getStockEstimation()));
+            t.newLine();
         }
         
+        t.newLine();
+        t.addLineSeperator();
+        
         addFinal(t);
+        
+        try {
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        } catch (PrintException ex) {
+            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
     }
 
@@ -575,7 +585,7 @@ public class Impresion {
     private void addFinal(Ticket t) {
         t.newLine();
         t.newLine();
-        t.feed((byte) 3);
+        t.feed((byte) 5);
         t.finit();
     }
 

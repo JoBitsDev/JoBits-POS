@@ -98,6 +98,9 @@ public class Main extends javax.swing.JFrame {
         buttonCREARPUESTO = new org.edisoncor.gui.button.ButtonTextDown();
         buttonEsquemaSalon = new org.edisoncor.gui.button.ButtonTextDown();
         buttonCopiaSeguridad = new org.edisoncor.gui.button.ButtonTextDown();
+        buttonALMACENNUEVAFICHA = new org.edisoncor.gui.button.ButtonTextDown();
+        buttonALMACENVERFICHAS = new org.edisoncor.gui.button.ButtonTextDown();
+        buttonALMACENSTOCK = new org.edisoncor.gui.button.ButtonTextDown();
         panelRect1 = new org.edisoncor.gui.panel.PanelRect();
         panelCurves2 = new org.edisoncor.gui.panel.PanelCurves();
         labelMetricNOMBRE = new org.edisoncor.gui.label.LabelMetric();
@@ -239,6 +242,33 @@ public class Main extends javax.swing.JFrame {
         buttonCopiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonCopiaSeguridadActionPerformed(evt);
+            }
+        });
+
+        buttonALMACENNUEVAFICHA.setText("Nueva Ficha");
+        buttonALMACENNUEVAFICHA.setEnabled(Main.NIVEL_3);
+        buttonALMACENNUEVAFICHA.setFont(new java.awt.Font("BlairMdITC TT", 1, 24)); // NOI18N
+        buttonALMACENNUEVAFICHA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonALMACENNUEVAFICHAActionPerformed(evt);
+            }
+        });
+
+        buttonALMACENVERFICHAS.setText("Ver fichas");
+        buttonALMACENVERFICHAS.setEnabled(Main.NIVEL_3);
+        buttonALMACENVERFICHAS.setFont(new java.awt.Font("BlairMdITC TT", 1, 24)); // NOI18N
+        buttonALMACENVERFICHAS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonALMACENVERFICHASActionPerformed(evt);
+            }
+        });
+
+        buttonALMACENSTOCK.setText("Ver Stock");
+        buttonALMACENSTOCK.setEnabled(Main.NIVEL_3);
+        buttonALMACENSTOCK.setFont(new java.awt.Font("BlairMdITC TT", 1, 24)); // NOI18N
+        buttonALMACENSTOCK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonALMACENSTOCKActionPerformed(evt);
             }
         });
 
@@ -431,9 +461,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTextDownPDVActionPerformed
 
     private void buttonTextDownALMANCENActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTextDownALMANCENActionPerformed
-        cleanAuxPanel();
+        cleanAuxPanel();        
         panelRectAUX.add(buttonABRIRALMACEN);
         panelRectAUX.add(buttonABRIRIPV);
+        panelRectAUX.add(buttonALMACENNUEVAFICHA);
+        panelRectAUX.add(buttonALMACENVERFICHAS);
+        panelRectAUX.add(buttonALMACENSTOCK);
     }//GEN-LAST:event_buttonTextDownALMANCENActionPerformed
 
     private void buttonABRIRMENUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonABRIRMENUActionPerformed
@@ -454,9 +487,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonVERTRABActionPerformed
 
     private void buttonCOMENZARDIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCOMENZARDIAActionPerformed
-
         VentaMain.getInstance(this, true, getDiaDeVenta());
-
     }//GEN-LAST:event_buttonCOMENZARDIAActionPerformed
 
     private void buttonEsquemaSalonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEsquemaSalonActionPerformed
@@ -515,14 +546,29 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonABRIRALMACENActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_formWindowClosing
+
+    private void buttonALMACENNUEVAFICHAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonALMACENNUEVAFICHAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonALMACENNUEVAFICHAActionPerformed
+
+    private void buttonALMACENVERFICHASActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonALMACENVERFICHASActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonALMACENVERFICHASActionPerformed
+
+    private void buttonALMACENSTOCKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonALMACENSTOCKActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonALMACENSTOCKActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonTextDown buttonABRIRALMACEN;
     private org.edisoncor.gui.button.ButtonTextDown buttonABRIRIPV;
     private org.edisoncor.gui.button.ButtonTextDown buttonABRIRMENU;
+    private org.edisoncor.gui.button.ButtonTextDown buttonALMACENNUEVAFICHA;
+    private org.edisoncor.gui.button.ButtonTextDown buttonALMACENSTOCK;
+    private org.edisoncor.gui.button.ButtonTextDown buttonALMACENVERFICHAS;
     private org.edisoncor.gui.button.ButtonTextDown buttonCALENDARIO;
     private org.edisoncor.gui.button.ButtonTextDown buttonCOMENZARDIA;
     private org.edisoncor.gui.button.ButtonTextDown buttonCREARPUESTO;

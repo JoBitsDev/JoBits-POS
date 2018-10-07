@@ -4,19 +4,19 @@
  * and open the template in the editor.
  */
 
-package restManager.persistencia.beans;
+package restManager.persistencia.models;
 
-import restManager.persistencia.Almacen;
+import restManager.persistencia.Ficha;
 
 /**
  * FirstDream
  * @author Jorge
  * 
  */
-public class AlmacenDAO extends AbstractFacade<Almacen>{
+public class FichaDAO  extends AbstractFacade<Ficha>{
 
-    public AlmacenDAO() {
-        super(Almacen.class);
+    public FichaDAO() {
+        super(Ficha.class);
     }
-    
+
 }

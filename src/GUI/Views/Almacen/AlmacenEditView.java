@@ -5,24 +5,44 @@
  */
 package GUI.Views.Almacen;
 
-import GUI.AbstractDialog;
+import GUI.AbstractView;
+import java.awt.Dialog;
+import java.util.List;
+import javax.swing.table.AbstractTableModel;
 import restManager.controller.AbstractController;
+import restManager.controller.almacen.AlmacenManageController;
+import restManager.persistencia.Almacen;
+import restManager.persistencia.Insumo;
+import restManager.resources.R;
 
 /**
  *
  * @author Jorge
  */
-public class AlmacenEditView extends AbstractDialog {
+public class AlmacenEditView extends AbstractView {
 
     /**
      * Creates new form AlmacenMain
+     *
      * @param parent
      * @param modal
      */
-    public AlmacenEditView(AbstractController controller,java.awt.Frame parent, boolean modal) {
-        super(DialogType.NORMAL,controller,parent, modal);
+    Almacen a;
+    MyTableModel model;
+
+    public AlmacenEditView(AbstractController controller, Dialog owner, boolean modal) {
+        super(DialogType.NORMAL, controller, owner, modal);
         initComponents();
-        setVisible(true);
+
+    }
+
+    public void updateView(Almacen a) {
+        this.a = a;
+        model = new MyTableModel(a);
+        jXTable1.setModel(model);
+        setTitle(a.getNombre());
+        jXLabelValorTotal.setText(String.format("%.2f", a.getValorMonetario()) + " " + R.coinSuffix);
+
     }
 
     /**
@@ -89,10 +109,25 @@ public class AlmacenEditView extends AbstractDialog {
         jXLabelValorTotal.setFont(new java.awt.Font("Apple Braille", 0, 24)); // NOI18N
 
         jButtonDarReporte.setText(bundle.getString("label_reporte")); // NOI18N
+        jButtonDarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDarReporteActionPerformed(evt);
+            }
+        });
 
         jButtonModificarStock.setText(bundle.getString("label_mod_stock")); // NOI18N
+        jButtonModificarStock.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarStockActionPerformed(evt);
+            }
+        });
 
         jButtonVerFichasEntrada.setText(bundle.getString("label_ver_fichas")); // NOI18N
+        jButtonVerFichasEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVerFichasEntradaActionPerformed(evt);
+            }
+        });
 
         jButtonNuevaFicha.setText(bundle.getString("label_nueva_ficha")); // NOI18N
 
@@ -160,6 +195,18 @@ public class AlmacenEditView extends AbstractDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonDarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDarReporteActionPerformed
+        ((AlmacenManageController) getController()).imprimirReporteParaCompras(a);
+    }//GEN-LAST:event_jButtonDarReporteActionPerformed
+
+    private void jButtonModificarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarStockActionPerformed
+        ((AlmacenManageController) getController()).modificarStock(model.getInsumoAtSelectedRow());
+    }//GEN-LAST:event_jButtonModificarStockActionPerformed
+
+    private void jButtonVerFichasEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerFichasEntradaActionPerformed
+       ((AlmacenManageController) getController()).verFichasArchivadas();
+    }//GEN-LAST:event_jButtonVerFichasEntradaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonModificarStock;
@@ -172,4 +219,105 @@ public class AlmacenEditView extends AbstractDialog {
     private org.jdesktop.swingx.JXPanel jXPanelTabla;
     private org.jdesktop.swingx.JXTable jXTable1;
     // End of variables declaration//GEN-END:variables
+
+    private class MyTableModel extends AbstractTableModel {
+
+        private final List<Insumo> items;
+
+        public MyTableModel(Almacen a) {
+            this.items = a.getInsumoList();
+        }
+
+        @Override
+        public int getRowCount() {
+            return items.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 5;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+                case 0:
+                    return items.get(rowIndex).getCodInsumo();
+                case 2:
+                    return items.get(rowIndex).getNombre();
+                case 1:
+                    return items.get(rowIndex).getUm();
+                case 3:
+                    return items.get(rowIndex).getCantidadExistente();
+                case 4:
+                    return items.get(rowIndex).getCostoPorUnidad();
+                case 5:
+                    return items.get(rowIndex).getCantidadExistente() * items.get(rowIndex).getCostoPorUnidad();
+                default:
+                    return null;
+
+            }
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            switch (column) {
+                case 0:
+                    return "Codigo";
+                case 2:
+                    return "Nombre";
+                case 1:
+                    return "UM";
+                case 3:
+                    return "En Almacen";
+                case 4:
+                    return "Costo Unitario (Prom)";
+                case 5:
+                    return "Valor Total";
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public Class<?> getColumnClass(int columnIndex) {
+            switch (columnIndex) {
+                case 0:
+                    return String.class;
+                case 1:
+                    return String.class;
+                case 2:
+                    return String.class;
+                case 3:
+                    return Float.class;
+                case 4:
+                    return Float.class;
+                case 5:
+                    return Float.class;
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+
+        public List<Insumo> getItems() {
+            return items;
+        }
+
+        public Insumo getInsumoAt(int rowIndex) {
+            return items.get(rowIndex);
+
+        }
+
+        public Insumo getInsumoAtSelectedRow() {
+            return items.get(jXTable1.convertRowIndexToModel(jXTable1.getSelectedRow()));
+
+        }
+
+    }
+
 }

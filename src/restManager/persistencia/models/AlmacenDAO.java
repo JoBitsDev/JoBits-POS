@@ -4,19 +4,19 @@
  * and open the template in the editor.
  */
 
-package restManager.persistencia.beans;
+package restManager.persistencia.models;
 
-import restManager.persistencia.InsumoElaborado;
+import restManager.persistencia.Almacen;
 
 /**
  * FirstDream
  * @author Jorge
  * 
  */
-public class InsumoElaboradoDAO extends AbstractFacade<InsumoElaborado>{
+public class AlmacenDAO extends AbstractFacade<Almacen>{
 
-    public InsumoElaboradoDAO() {
-        super(InsumoElaborado.class);
+    public AlmacenDAO() {
+        super(Almacen.class);
     }
-
+    
 }
