@@ -3,7 +3,9 @@ package restManager.printservice;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -44,14 +46,14 @@ public class Impresion {
      */
     private String nombreRest;
     private boolean monedaCUC;
-    private float cambio = 24;
+    private static float cambio = 25;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
     private boolean showPrices = true;
     private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy ' ' ");
     private final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat(" hh ':' mm ' ' a ");
     private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     private final String DEFAULT_PRINT_LOCATION = null;
-    private int cantidadCopias = 1;
+    private static int cantidadCopias = 0;
 
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
@@ -80,22 +82,19 @@ public class Impresion {
     /**
      * Strings referentes a la impresion de resumenes de ventas
      */
-    private final String 
-            RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
+    private final String RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
             RESUMEN_VENTAS_COCINA = "Resumen de ventas por área ",
             TOTAL_VENTAS = "Total Vendido: ",
             RESUMEN_CONSUMO_CASA = "Resumen del consumo de la casa ";
 
-    private final String 
-            IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
+    private final String IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
             IPV_HEADER = "Resumen de gasto de insumos",
             IPV_PUNTO_ELAB = "Punto de elaboracion";
 
     /**
      * String referentes al almacen
      */
-    private final String 
-            STOCK_BALANCE = "Balance de stock en almacen",
+    private final String STOCK_BALANCE = "Balance de stock en almacen",
             STOCK_FORMAT = "En Almacen | Diferencia ";
 
     //
@@ -111,7 +110,7 @@ public class Impresion {
      * @param m una instancia de una carta especifica
      */
     public Impresion(Carta m) {
-        this(m, m.getMonedaPrincipal().equals("CUC"), 25);
+        this(m, m.getMonedaPrincipal().equals("CUC"), cambio);
 
     }
 
@@ -122,7 +121,7 @@ public class Impresion {
      * @param cambio
      */
     public Impresion(Carta m, boolean monedaCUC, float cambio) {
-        this(m, null, monedaCUC, cambio, 1);
+        this(m, null, monedaCUC, cambio, cantidadCopias);
 
     }
 
@@ -132,13 +131,13 @@ public class Impresion {
      * @param footer
      */
     public Impresion(Carta m, String footer) {
-        this(m, m.getMonedaPrincipal().equals("CUC"), 25);
+        this(m, m.getMonedaPrincipal().equals("CUC"), cambio);
         PIE = footer;
     }
 
     public Impresion(Carta m, String footer, boolean monedaCUC, float cambio, int cantidadCopias) {
         this.nombreRest = m.getNombreCarta();
-        this.cambio = cambio;
+        Impresion.cambio = cambio;
         this.cantidadCopias = cantidadCopias;
         if (footer != null) {
             PIE = footer;
@@ -194,7 +193,7 @@ public class Impresion {
         }
         t.newLine();
 
-        addTotal(t, total);
+        addTotal(t, Float.valueOf(totalPrint));
 
         t.newLine();
         t.newLine();
@@ -228,24 +227,112 @@ public class Impresion {
             if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
                 cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
             }
-        }
+            }
         if (cocinasExistentesEnLaOrden.size() > 1) {
             for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
                 String sync = SYNC;
                 for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
                     if (i == j) {
                         continue;
-                    }
-                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
-                }
-                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
             }
-        } else {
+                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
+            }
+                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+                }
+                } else {
             if (cocinasExistentesEnLaOrden.size() > 0) {
                 printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
-            }
+                }
 
+                }
+
+        cleanAndPrintRAM();
+
+        return o;
+    }
+    
+     public Orden printKitchenForced(Orden o) throws PrintException {
+
+        Ticket t = new Ticket();
+        boolean ordenSinPlatos = true;
+
+        addHeader(t);
+
+        addMetaData(t, o, new Date());
+
+         ArrayList<String> entrantes = new ArrayList<>();
+                entrantes.add("Entrantes Calientes");
+                entrantes.add("Entrantes Frios");
+        
+        ArrayList<ProductovOrden> items = new ArrayList<>(o.getProductovOrdenList());
+        items.sort((ProductovOrden o1, ProductovOrden o2) -> {
+            ArrayList<String> entrantes1 = new ArrayList<>();
+            entrantes1.add("Entrantes Calientes");
+            entrantes1.add("Entrantes Frios");
+            if (entrantes1.contains(o1.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion())) {
+                return -1;
+            }
+            if (entrantes1.contains(o2.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion())) {
+                return 1;
+            }
+            if (o1.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().matches("Postres")) {
+                return 1;
+            }
+            if (o2.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().matches("Postres")) {
+                return -1;
+            }
+            return 0;
+        });
+
+        t.alignLeft();
+
+        boolean entrante = false;
+        boolean postre = false;
+        
+        for (ProductovOrden x : items) {
+            if (x.getEnviadosacocina() < x.getCantidad()) {
+                if(!entrantes.contains(x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion()) && !entrante){
+                t.addLineSeperator();
+                t.newLine();
+                entrante = true;
+                }
+                 if(x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().equals("Postres") && !postre){
+                t.addLineSeperator();
+                t.newLine();
+                postre = true;
+                }
+                if (x.getNota() != null) {
+                    t.alignCenter();
+                    t.emphasized(true);
+                    t.setText(x.getNota().getDescripcion().replace('%', ' '));
+                    t.newLine();
+                    t.alignLeft();
+                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getProductoVenta().getNombre());
+                } else {
+                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
+                }
+                t.newLine();
+                t.alignRight();
+                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
+                t.newLine();
+                t.alignLeft();
+                x.setEnviadosacocina(x.getCantidad());
+                try {
+                    staticContent.productovOrdenJpa.edit(x);
+                } catch (Exception ex) {
+                    Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                ordenSinPlatos = false;
+            }
         }
+
+        t.addLineSeperator();
+        t.alignCenter();
+        t.newLine();
+        t.feed((byte) 3);
+        t.finit();
+
+        feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_KITCHEN_PRINTER_LOCATION);
 
         cleanAndPrintRAM();
 
@@ -522,12 +609,12 @@ public class Impresion {
         Ticket t = new Ticket();
         addHeader(t);
         addCustomMetaData(t, STOCK_BALANCE, new Date());
-        
+
         t.alignCenter();
         t.setText(STOCK_FORMAT);
         t.newLine();
         t.newLine();
-        
+
         for (Insumo in : items) {
             t.alignLeft();
             t.setText(in.getNombre() +"("+in.getUm()+")");
@@ -536,18 +623,17 @@ public class Impresion {
             t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente()-in.getStockEstimation()));
             t.newLine();
         }
-        
+
         t.newLine();
         t.addLineSeperator();
-        
+
         addFinal(t);
-        
+
         try {
             feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
-
 
     }
 
@@ -611,7 +697,6 @@ public class Impresion {
         t.newLine();
         t.addLineSeperator();
         t.newLine();
-        
 
     }
 
