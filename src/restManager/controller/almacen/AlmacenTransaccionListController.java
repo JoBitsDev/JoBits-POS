@@ -46,7 +46,7 @@ public class AlmacenTransaccionListController extends AbstractController<Transac
         f.setValorMerma(Float.parseFloat("0"));
         f.setAlmacencodAlmacen(a);
         f.setInsumoTransaccionList(new ArrayList<>());
-        
+
         AlmacenTransaccionManageController newTransaccion = new AlmacenTransaccionManageController(view, f);
         newTransaccion = null;
         items = null;
@@ -54,13 +54,11 @@ public class AlmacenTransaccionListController extends AbstractController<Transac
     }
 
     @Override
-    public void deleteInstance(Transaccion selected) {
-        throw new DevelopingOperationException();
-    }
-
-    @Override
     public void editInstance(Transaccion selected) {
-        throw new DevelopingOperationException();
+        AlmacenTransaccionManageController newTransaccion = new AlmacenTransaccionManageController(view, selected);
+        newTransaccion = null;
+        items = null;
+        view.updateView(getItems());
     }
 
     @Override
