@@ -27,28 +27,70 @@ public abstract class AbstractController<T> {
 
     public AbstractController(AbstractFacade dataAccess) {
         this.model = dataAccess;
-        
+
     }
 
-    public void createInstance(){
-        
+    /**
+     * this method should be overwritten in case of using a list view and it's
+     * function is to create a new item on the list
+     */
+    public void createInstance() {
+        throw new restManager.exceptions.DevelopingOperationException();
     }
-    
-    public void deleteInstance(T selected){
-        
+
+    /**
+     *
+     * @param selected
+     */
+    public void createInstance(T selected) {
+        if (showConfirmDialog(null)) {
+            this.selected = selected;
+            create();
+            this.selected = null;
+            showSuccessDialog(null);
+        }
     }
-    
-    public void editInstance(T selected){
-        
+
+    /**
+     *
+     * @param selected
+     */
+    public void deleteInstance(T selected) {
+        if (showConfirmDialog(null)) {
+            this.selected = selected;
+            destroy();
+            this.selected = null;
+            showSuccessDialog(null);
+        }
     }
-    //
-    //Protected Methods
-    //
+
+    /**
+     *
+     * @param selected
+     */
+    public void editInstance(T selected) {
+        if (showConfirmDialog(null)) {
+            this.selected = selected;
+            update();
+            this.selected = null;
+            showSuccessDialog(null);
+        }
+    }
+
+//
+//Protected Methods
+//
     public abstract void constructView(Window parent);
 
     protected void showSuccessDialog(Container view) {
         JOptionPane.showMessageDialog(view, R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"),
                 R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    protected boolean showConfirmDialog(Container view) {
+        return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
+                R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.QUESTION_MESSAGE)
+                == JOptionPane.YES_OPTION;
     }
 
     //
