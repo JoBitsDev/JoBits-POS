@@ -6,13 +6,18 @@
 
 package restManager.controller.almacen;
 
-import GUI.Views.Almacen.AlmacenTransaccionEditDialog;
+import GUI.Views.Almacen.AlmacenTransaccionEditView;
 import java.awt.Frame;
 import java.awt.Window;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import javax.swing.JDialog;
 import restManager.controller.AbstractController;
 import restManager.persistencia.Almacen;
+import restManager.persistencia.Insumo;
 import restManager.persistencia.Transaccion;
+import restManager.persistencia.models.InsumoDAO;
 import restManager.persistencia.models.TransaccionDAO;
 
 /**
@@ -20,9 +25,9 @@ import restManager.persistencia.models.TransaccionDAO;
  * @author Jorge
  * 
  */
-class AlmacenTransaccionManageController extends AbstractController<Almacen>{
+class AlmacenTransaccionManageController extends AbstractController<Transaccion>{
 
-    private AlmacenTransaccionEditDialog view;
+    private AlmacenTransaccionEditView view;
     private  Transaccion f;
     
     public AlmacenTransaccionManageController(Transaccion f) {
@@ -37,15 +42,26 @@ class AlmacenTransaccionManageController extends AbstractController<Almacen>{
     
     @Override
     public void constructView(Window parent) {
+        ArrayList<Insumo> insumoList = new ArrayList<>(new InsumoDAO().findAll());
+        insumoList.sort((Insumo o1, Insumo o2) -> o1.getNombre().compareTo(o2.getNombre()));
+        
         if(parent instanceof JDialog){
-             view = new AlmacenTransaccionEditDialog(this,(JDialog) parent, true, f);
+             view = new AlmacenTransaccionEditView(f,insumoList,this,(JDialog) parent, true);
         }else{
-            view = new AlmacenTransaccionEditDialog(this, (Frame) parent, true, f);
+            view = new AlmacenTransaccionEditView(f,insumoList,this, (Frame) parent, true);
         }
         view.updateView(f);
         view.setVisible(true);
     }
 
+    @Override
+    public void createInstance(Transaccion selected) {
+        super.createInstance(selected); //To change body of generated methods, choose Tools | Templates.
+        view.dispose();
+        view = null;
+    }
+
+    
    
     
 
