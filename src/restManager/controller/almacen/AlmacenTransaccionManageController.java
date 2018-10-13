@@ -19,6 +19,7 @@ import restManager.persistencia.Insumo;
 import restManager.persistencia.Transaccion;
 import restManager.persistencia.models.InsumoDAO;
 import restManager.persistencia.models.TransaccionDAO;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -56,11 +57,28 @@ class AlmacenTransaccionManageController extends AbstractController<Transaccion>
 
     @Override
     public void createInstance(Transaccion selected) {
+        if(validateData(selected)){
         super.createInstance(selected); //To change body of generated methods, choose Tools | Templates.
         view.dispose();
         view = null;
+        }
     }
 
+    
+     private boolean validateData(Transaccion trans) {
+        for (int i = 0; i < trans.getInsumoTransaccionList().size() - 1; i++) {
+            String transType = trans.getInsumoTransaccionList().get(i).getTipoTransaccion();
+            String nombre = trans.getInsumoTransaccionList().get(i).getInsumo().getNombre();
+            for (int j = i + 1; j < trans.getInsumoTransaccionList().size(); j++) {
+                if (transType.equals(trans.getInsumoTransaccionList().get(j).getTipoTransaccion())
+                        && nombre.equals(trans.getInsumoTransaccionList().get(j).getInsumo().getNombre())) {
+                    showErrorDialog(view, R.RESOURCE_BUNDLE.getString("error_duplicacion")+"("+nombre +")");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     
    
     
