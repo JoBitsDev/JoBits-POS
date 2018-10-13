@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
@@ -23,6 +24,7 @@ import restManager.persistencia.InsumoTransaccion;
 import restManager.persistencia.InsumoTransaccionPK;
 import restManager.persistencia.Transaccion;
 import restManager.persistencia.models.TransaccionDAO;
+import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerListModel;
 
@@ -58,8 +60,8 @@ public class AlmacenTransaccionEditView extends AbstractView {
 
     public void updateView(Transaccion f) {
         this.jXDatePicker.setDate(f.getFechaTransaccion());
-        jXLabelVALORTRANS.setText(String.format("+%.2f", f.getValorTotalTransacciones()));
-        jXLabelVALORMERMA.setText(String.format("-%.2f", f.getValorMerma()));
+        jXLabelVALORTRANS.setText(String.format("+%.2f", f.getValorTotalTransacciones()) + R.coinSuffix);
+        jXLabelVALORMERMA.setText(String.format("-%.2f", f.getValorMerma()) + R.coinSuffix);
 
     }
 
@@ -385,7 +387,7 @@ public class AlmacenTransaccionEditView extends AbstractView {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonConfirmarTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarTransActionPerformed
-        getController().createInstance(trans);
+            getController().createInstance(trans);
     }//GEN-LAST:event_jButtonConfirmarTransActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
