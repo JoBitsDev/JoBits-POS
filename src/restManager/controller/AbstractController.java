@@ -89,8 +89,13 @@ public abstract class AbstractController<T> {
 
     protected boolean showConfirmDialog(Container view) {
         return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
-                R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.QUESTION_MESSAGE)
+                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.QUESTION_MESSAGE)
                 == JOptionPane.YES_OPTION;
+    }
+
+    protected void showErrorDialog(Container view, String errorText) {
+        JOptionPane.showConfirmDialog(view, errorText,
+                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
     }
 
     //
