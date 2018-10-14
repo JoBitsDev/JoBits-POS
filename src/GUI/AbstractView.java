@@ -13,6 +13,7 @@ import java.awt.GraphicsConfiguration;
 import java.awt.Window;
 import javax.swing.JDialog;
 import restManager.controller.AbstractController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.resources.values.Fonts;
 
 /**
@@ -32,96 +33,112 @@ public abstract class AbstractView extends JDialog {
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller) {
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Frame owner) {
         super(owner);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Frame owner, boolean modal) {
         super(owner, modal);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Frame owner, String title) {
         super(owner, title);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Frame owner, String title, boolean modal) {
         super(owner, title, modal);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Frame owner, String title, boolean modal, GraphicsConfiguration gc) {
         super(owner, title, modal, gc);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Dialog owner) {
         super(owner);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Dialog owner, boolean modal) {
         super(owner, modal);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Dialog owner, String title) {
         super(owner, title);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Dialog owner, String title, boolean modal) {
         super(owner, title, modal);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Dialog owner, String title, boolean modal, GraphicsConfiguration gc) {
         super(owner, title, modal, gc);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Window owner) {
         super(owner);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Window owner, ModalityType modalityType) {
         super(owner, modalityType);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Window owner, String title) {
         super(owner, title);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Window owner, String title, ModalityType modalityType) {
         super(owner, title, modalityType);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractController controller, Window owner, String title, ModalityType modalityType, GraphicsConfiguration gc) {
         super(owner, title, modalityType, gc);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
+        initDefaults();
     }
 
     //
@@ -163,6 +180,17 @@ public abstract class AbstractView extends JDialog {
     @Override
     public Font getFont() {
         return Fonts.BODY;
+    }
+
+    //
+    //Private Methods
+    //
+    
+    private void initDefaults() {
+        setMaximumSize(getMaximumSize());
+        setMinimumSize(getMinimumSize());
+        setPreferredSize(getPreferredSize());
+        setFont(getFont());
     }
 
     public enum DialogType {
