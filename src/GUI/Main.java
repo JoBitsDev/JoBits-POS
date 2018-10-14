@@ -65,7 +65,9 @@ public class Main extends javax.swing.JFrame {
         grantPermission(p);
         initComponents();
         labelMetricNOMBRE.setText(staticContent.cartaJPA.findCarta("Mnu-1").getNombreCarta()); //quitar esto
+        R.coinSuffix = moneda;
         setVisible(true);
+        
 
     }
 
