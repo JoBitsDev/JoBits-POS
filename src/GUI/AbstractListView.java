@@ -8,7 +8,9 @@ package GUI;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
+import javax.swing.RowFilter;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 import restManager.controller.AbstractController;
 import restManager.exceptions.NoSelectedException;
 
@@ -24,6 +26,7 @@ public abstract class AbstractListView<T> extends AbstractView {
     public AbstractListView(AbstractController controller, Frame owner, boolean modal) {
         super(DialogType.LIST, controller, owner, modal);
         initComponents();
+
     }
 
     public AbstractListView(AbstractController controller, Dialog owner, boolean modal) {
@@ -40,7 +43,10 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jXPanelLista = new org.jdesktop.swingx.JXPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableListaInsumos = new javax.swing.JTable();
+        jTableList = new javax.swing.JTable();
+        jXPanel1 = new org.jdesktop.swingx.JXPanel();
+        jXLabel1 = new org.jdesktop.swingx.JXLabel();
+        jTextFieldBusqueda = new javax.swing.JTextField();
         jXPanelControles = new org.jdesktop.swingx.JXPanel();
         jButtonAdd = new javax.swing.JButton();
         jButtonEdit = new javax.swing.JButton();
@@ -58,10 +64,10 @@ public abstract class AbstractListView<T> extends AbstractView {
             }
         });
 
-        jXPanelLista.setLayout(new java.awt.BorderLayout());
+        jXPanelLista.setLayout(new java.awt.BorderLayout(0, 10));
 
-        jTableListaInsumos.setAutoCreateRowSorter(true);
-        jTableListaInsumos.setModel(new javax.swing.table.DefaultTableModel(
+        jTableList.setAutoCreateRowSorter(true);
+        jTableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -84,19 +90,37 @@ public abstract class AbstractListView<T> extends AbstractView {
                 return canEdit [columnIndex];
             }
         });
-        jTableListaInsumos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-        jTableListaInsumos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTableListaInsumos.setShowGrid(false);
-        jTableListaInsumos.getTableHeader().setReorderingAllowed(false);
-        jTableListaInsumos.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableList.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        jTableList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableList.setShowGrid(false);
+        jTableList.getTableHeader().setReorderingAllowed(false);
+        jTableList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableListaInsumosMouseClicked(evt);
+                jTableListMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableListaInsumos);
-        jTableListaInsumos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jScrollPane1.setViewportView(jTableList);
+        jTableList.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         jXPanelLista.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jXPanel1.setLayout(new java.awt.BorderLayout());
+
+        jXLabel1.setText(bundle.getString("label_buscar")); // NOI18N
+        jXPanel1.add(jXLabel1, java.awt.BorderLayout.WEST);
+
+        jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(300, 26));
+        jTextFieldBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldBusquedaKeyTyped(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldBusquedaKeyReleased(evt);
+            }
+        });
+        jXPanel1.add(jTextFieldBusqueda, java.awt.BorderLayout.EAST);
+
+        jXPanelLista.add(jXPanel1, java.awt.BorderLayout.PAGE_START);
 
         jButtonAdd.setText(bundle.getString("label_agregar")); // NOI18N
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +153,7 @@ public abstract class AbstractListView<T> extends AbstractView {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jXPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                    .addComponent(jXPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jXPanelControles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -147,9 +171,9 @@ public abstract class AbstractListView<T> extends AbstractView {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTableListaInsumosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListaInsumosMouseClicked
+    private void jTableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListMouseClicked
 
-    }//GEN-LAST:event_jTableListaInsumosMouseClicked
+    }//GEN-LAST:event_jTableListMouseClicked
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
     }//GEN-LAST:event_formWindowGainedFocus
@@ -168,19 +192,32 @@ public abstract class AbstractListView<T> extends AbstractView {
         super.getController().editInstance(getController().getSelected());
     }//GEN-LAST:event_jButtonEditActionPerformed
 
+    private void jTextFieldBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBusquedaKeyTyped
+
+    }//GEN-LAST:event_jTextFieldBusquedaKeyTyped
+
+    private void jTextFieldBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBusquedaKeyReleased
+        model.filterByString(jTextFieldBusqueda.getText());
+    }//GEN-LAST:event_jTextFieldBusquedaKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonEdit;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableListaInsumos;
+    private javax.swing.JTable jTableList;
+    private javax.swing.JTextField jTextFieldBusqueda;
+    private org.jdesktop.swingx.JXLabel jXLabel1;
+    private org.jdesktop.swingx.JXPanel jXPanel1;
     private org.jdesktop.swingx.JXPanel jXPanelControles;
     private org.jdesktop.swingx.JXPanel jXPanelLista;
     // End of variables declaration//GEN-END:variables
 
     public void updateView(List<T> items) {
         model = generateTableModel(items);
-        jTableListaInsumos.setModel(model);
+        jTableList.setModel(model);
+        jTableList.setRowSorter(model.getSorter());
+
     }
 
     public abstract MyJTableModel<T> generateTableModel(List<T> items);
@@ -188,11 +225,45 @@ public abstract class AbstractListView<T> extends AbstractView {
     public abstract class MyJTableModel<T> extends AbstractTableModel {
 
         private final List<T> items;
+        private MyTableRowFilter filter;
+        private TableRowSorter<MyJTableModel<T>> sorter;
 
         public MyJTableModel(List<T> items) {
             this.items = items;
+            initFilterAndSorter();
         }
 
+        private void initFilterAndSorter() {
+            sorter = new TableRowSorter<>(this);
+            filter = new MyTableRowFilter();
+            sorter.setRowFilter(filter);
+        }
+
+        /**
+         * Shows the rows that contains the string passed by parameter this
+         * method is case sensitive
+         *
+         * @param s the string to search in the table
+         */
+        public void filterByString(String s) {
+            filter.setSearchParam(s);
+            sort();
+
+        }
+
+        /**
+         * Sorts and filters the rows in the view based on the sort keys of the
+         * columns currently being sorted and the filter, if any, associated
+         * with this sorter. An empty sortKeys list indicates that the view
+         * should unsorted, the same as the model.
+         */
+        public void sort() {
+            sorter.sort();
+        }
+
+        //
+        //Metodos sobreescritos
+        //
         @Override
         public int getRowCount() {
             return items.size();
@@ -216,11 +287,43 @@ public abstract class AbstractListView<T> extends AbstractView {
             return items.get(rowIndex);
         }
 
+        public TableRowSorter<MyJTableModel<T>> getSorter() {
+            return sorter;
+        }
+
         public T getObjectAtSelectedRow() {
-            if (jTableListaInsumos.getSelectedRow() == -1) {
+            if (jTableList.getSelectedRow() == -1) {
                 throw new NoSelectedException();
             }
-                return items.get(jTableListaInsumos.convertRowIndexToModel(jTableListaInsumos.getSelectedRow()));
+            return items.get(jTableList.convertRowIndexToModel(jTableList.getSelectedRow()));
+        }
+
+        public class MyTableRowFilter extends RowFilter<MyJTableModel, Integer> {
+
+            private String searchParam;
+
+            public MyTableRowFilter() {
+                searchParam = "";
+            }
+
+            public void setSearchParam(String searchParam) {
+                this.searchParam = searchParam;
+            }
+
+            @Override
+            public boolean include(RowFilter.Entry<? extends MyJTableModel, ? extends Integer> entry) {
+                if (searchParam.isEmpty()) {
+                    return true;
+                }
+                for (int i = entry.getValueCount() - 1; i >= 0; i--) {
+                    if (entry.getStringValue(i).toLowerCase().contains(searchParam.toLowerCase())) {
+                        return true;
+
+                    }
+                }
+                return false;
+            }
+
         }
 
     }
