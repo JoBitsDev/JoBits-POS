@@ -29,6 +29,7 @@ import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.staticContent;
 import restManager.printservice.Impresion;
+import restManager.resources.R;
 
 import restManager.util.comun;
 
@@ -40,6 +41,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
 
     SimpleDateFormat FormatDate = new SimpleDateFormat("MM'/'dd'/'yy");
     SimpleDateFormat FormatTime = new SimpleDateFormat(" hh ':' mm ' ' a ");
+    private Date dat;
     private Orden o;
     private List<ProductoVenta> listaProducto;
 
@@ -47,8 +49,13 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
      * Creates new form CrearEditarPedido
      */
     private PedidoCrearEditar(java.awt.Dialog parent, boolean modal, Orden o) {
+        this(parent, modal, o, new Date());
+    }
+
+    private PedidoCrearEditar(java.awt.Dialog parent, boolean modal, Orden o, Date date) {
         super(parent, modal);
         initComponents();
+        this.dat = date;
         updateDialog(o);
         setVisible(true);
 
@@ -62,8 +69,8 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 o = new Orden("O-" + (c.getValor()));
                 c.setValor(c.getValor() + 1);
                 staticContent.configJPA.edit(c);
-                o.setHoraComenzada(new Date());
-                o.setPorciento(Float.valueOf("10"));
+                o.setHoraComenzada(dat);
+                o.setPorciento(R.PERCENTAGE);
                 o.setOrdenvalorMonetario(Float.parseFloat("0"));
                 o.setPersonalusuario(Main.logUser);
                 o.setVentafecha(findVentaFecha());
@@ -86,8 +93,8 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         updateMenu();
     }
 
-    public static PedidoCrearEditar getInstance(java.awt.Dialog parent, boolean modal, Orden o) {
-        return new PedidoCrearEditar(parent, modal, o);
+    public static PedidoCrearEditar getInstance(java.awt.Dialog parent, boolean modal, Orden o, Date date) {
+        return new PedidoCrearEditar(parent, modal, null, date);
     }
 
     /**
