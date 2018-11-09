@@ -20,16 +20,16 @@ import restManager.persistencia.Personal;
  */
 public class R {
 
-    public static String coinSuffix ;
+    public static String coinSuffix;
 
     public static Personal loggerUser = null;
 
     public static final Date TODAYS_DATE = new Date();
 
     public static final float PERCENTAGE = 0;
-    
+
     public static final int COINCHANGE = 24;
-    
+
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
 
     public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("Strings");
@@ -66,6 +66,24 @@ public class R {
             return valor;
         }
 
+    }
+
+    public enum NivelAcceso {
+        DEPENDIENTE(0),
+        CAJERO(1),
+        ALMACENERO(2),
+        ECONOMICO(3),
+        ADMINISTRADOR(4);
+
+        private final int nivel;
+
+        private NivelAcceso(int nivel) {
+            this.nivel = nivel;
+        }
+
+        public int getNivel() {
+            return nivel;
+        }
     }
 
 }
