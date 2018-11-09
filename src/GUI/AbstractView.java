@@ -15,6 +15,7 @@ import javax.swing.JDialog;
 import restManager.controller.AbstractController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.resources.values.Fonts;
+import restManager.util.ComponentMover;
 
 /**
  * FirstDream
@@ -142,6 +143,15 @@ public abstract class AbstractView extends JDialog {
     }
 
     //
+    //Protected Methods
+    //
+    
+    public void fetchComponentData(){
+        
+    }
+    
+    
+    //
     // Getters n Setters
     //
     public AbstractController getController() {
@@ -191,10 +201,11 @@ public abstract class AbstractView extends JDialog {
         setMinimumSize(getMinimumSize());
         setPreferredSize(getPreferredSize());
         setFont(getFont());
+        ComponentMover cr = new ComponentMover(this, this);
     }
 
     public enum DialogType {
-        LIST, NORMAL, INPUT, INPUT_LARGE
+        LIST, NORMAL, INPUT, INPUT_LARGE,DEFINED
     }
 
 }
