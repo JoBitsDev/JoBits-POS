@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.RowFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
+import org.pushingpixels.substance.internal.ui.SubstanceTableUI;
 import restManager.controller.AbstractController;
 import restManager.exceptions.NoSelectedException;
 
@@ -66,30 +67,18 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jXPanelLista.setLayout(new java.awt.BorderLayout(0, 10));
 
+        jScrollPane1.setBorder(new org.pushingpixels.substance.internal.utils.border.SubstanceBorder());
+
         jTableList.setAutoCreateRowSorter(true);
+        jTableList.setBackground(getBackground());
         jTableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Codigo", "Nombre", "UM", "En Almacen", "Elaborado"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jTableList.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
         jTableList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableList.setShowGrid(false);
@@ -121,6 +110,9 @@ public abstract class AbstractListView<T> extends AbstractView {
         jXPanel1.add(jTextFieldBusqueda, java.awt.BorderLayout.EAST);
 
         jXPanelLista.add(jXPanel1, java.awt.BorderLayout.PAGE_START);
+
+        jXPanelControles.setBackground(new java.awt.Color(204, 204, 204));
+        jXPanelControles.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
 
         jButtonAdd.setText(bundle.getString("label_agregar")); // NOI18N
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -161,7 +153,7 @@ public abstract class AbstractListView<T> extends AbstractView {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jXPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                .addComponent(jXPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jXPanelControles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -172,7 +164,9 @@ public abstract class AbstractListView<T> extends AbstractView {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableListMouseClicked
-
+        if (evt.getClickCount() == 2) {
+            editSelected();
+        }
     }//GEN-LAST:event_jTableListMouseClicked
 
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
@@ -188,8 +182,7 @@ public abstract class AbstractListView<T> extends AbstractView {
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
-        getController().setSelected(model.getObjectAtSelectedRow());
-        super.getController().editInstance(getController().getSelected());
+        editSelected();
     }//GEN-LAST:event_jButtonEditActionPerformed
 
     private void jTextFieldBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBusquedaKeyTyped
@@ -221,6 +214,11 @@ public abstract class AbstractListView<T> extends AbstractView {
     }
 
     public abstract MyJTableModel<T> generateTableModel(List<T> items);
+
+    private void editSelected() {
+        getController().setSelected(model.getObjectAtSelectedRow());
+        super.getController().editInstance(getController().getSelected()); //To change body of generated methods, choose Tools | Templates.
+    }
 
     public abstract class MyJTableModel<T> extends AbstractTableModel {
 
