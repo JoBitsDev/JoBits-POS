@@ -47,6 +47,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
 
     /**
      * Creates new form CrearEditarPedido
+     * @deprecated not used right now
      */
     private PedidoCrearEditar(java.awt.Dialog parent, boolean modal, Orden o) {
         this(parent, modal, o, new Date());
@@ -94,7 +95,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     }
 
     public static PedidoCrearEditar getInstance(java.awt.Dialog parent, boolean modal, Orden o, Date date) {
-        return new PedidoCrearEditar(parent, modal, null, date);
+        return new PedidoCrearEditar(parent, modal, o, date);
     }
 
     /**
@@ -764,7 +765,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     }
 
     public void ActValorT() {
-        jLabelVALORTotal.setText(String.valueOf(getValorT()) + Main.moneda);
+        jLabelVALORTotal.setText(String.valueOf(getValorT()) + R.coinSuffix);
     }
 
     private float getValorT() {
@@ -995,7 +996,12 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     }
 
     private Venta findVentaFecha() {
-        Venta ret = staticContent.ventaJPA.findVenta(new Date());
+       Venta ret = null;
+        if(this.dat == null){
+        ret = staticContent.ventaJPA.findVenta(new Date());}
+        else{
+        ret = staticContent.ventaJPA.findVenta(dat);
+        }
 
         if (ret == null) {
             for (Venta v : staticContent.ventaJPA.findVentaEntities()) {
