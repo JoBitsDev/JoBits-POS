@@ -3,6 +3,7 @@ package restManager.persistencia.Control;
 import GUI.Main;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import restManager.persistencia.Personal;
 import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
+import restManager.resources.R;
 import restManager.util.comun;
 
 /**
@@ -51,16 +53,9 @@ public class VentaDAO {
 
         //inicializando los datos
         ArrayList[] rowData = comun.initArray(new ArrayList[5]);
-        ArrayList<ProductovOrden> ret = new ArrayList<>();
-        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+        ArrayList<ProductovOrden> ret = getResumenVentas(v);
 
-        //llenando l array
-        for (Orden o : aux) {
-            if (!o.getDeLaCasa()) {
-                joinListsProductovOrden(ret,
-                        new ArrayList(o.getProductovOrdenList()));
-            }
-        }//nˆ3
+
 
         //convirtiendo a rowData
         float total = 0;
@@ -181,7 +176,7 @@ public class VentaDAO {
         if (total != 0) {
             rowData[0].add(p.getUsuario());
             rowData[1].add(p.getDatosPersonales().getNombre());
-            rowData[2].add(total + Main.moneda);
+            rowData[2].add(total + R.coinSuffix);
 
             //llenando la tabla
             try {
@@ -222,7 +217,7 @@ public class VentaDAO {
         if (total != 0) {
             rowData[0].add(c.getCodCocina());
             rowData[1].add(c.getNombreCocina());
-            rowData[2].add(total + Main.moneda);
+            rowData[2].add(total + R.coinSuffix);
 
             //llenando la tabla
             try {
@@ -358,6 +353,10 @@ public class VentaDAO {
             }
         }
 
+        //ordeneando los datos alfabeticamente 
+        Collections.sort(ret, (ProductoInsumo o1, ProductoInsumo o2)
+                -> o1.getInsumo().getNombre().compareTo(o2.getInsumo().getNombre()));
+
         //convirtiendo a rowData
         float total = 0;
         for (ProductoInsumo x : ret) {
@@ -397,6 +396,10 @@ public class VentaDAO {
                 }
             }
         }
+
+        //ordeneando los datos alfabeticamente 
+        Collections.sort(ret, (ProductoInsumo o1, ProductoInsumo o2)
+                -> o1.getInsumo().getNombre().compareTo(o2.getInsumo().getNombre()));
 
         //convirtiendo a rowData
         float total = 0;
@@ -605,7 +608,7 @@ public class VentaDAO {
     public static float getValorTotalVentas(Venta v) {
         float total = 0;
         for (Orden x : v.getOrdenList()) {
-            if (!x.getDeLaCasa()) {
+            if (!x.getDeLaCasa() && x.getHoraTerminada() != null) {
                 total += x.getOrdenvalorMonetario();
             }
         }
@@ -614,28 +617,33 @@ public class VentaDAO {
 
     public static List<Orden> getOrdenesActivas(Venta ventas) {
 
-        Collections.sort(ventas.getOrdenList(), (Orden o1, Orden o2) -> {
+        ArrayList<Orden> ordenes = new ArrayList<>(ventas.getOrdenList());
+
+        Collections.sort(ordenes, (Orden o1, Orden o2) -> {
             int idO1, idO2;
             idO1 = Integer.parseInt(o1.getCodOrden().substring(2));
             idO2 = Integer.parseInt(o2.getCodOrden().substring(2));
-            return Integer.compare(idO1, idO2);
+            return -1 * Integer.compare(idO1, idO2);
         });
 
         List<Orden> retOrd = new ArrayList<>();
         List<String> existingMesasName = new ArrayList<>();
 
-        for (Orden o : ventas.getOrdenList()) {
+        ordenes.forEach((o) -> {
+            String codMesa = o.getMesacodMesa().getCodMesa();
+
             if (o.getHoraTerminada() == null) {
                 retOrd.add(o);
+                existingMesasName.add(codMesa);
 
             } else {
-                String codMesa = o.getMesacodMesa().getCodMesa();
                 if (!existingMesasName.contains(codMesa)) {
-                    existingMesasName.add(codMesa);
+                    //if(o.getHoraTerminada().)
                     retOrd.add(o);
+                    existingMesasName.add(codMesa);
                 }
             }
-        }
+        });
         return retOrd;
     }
 
