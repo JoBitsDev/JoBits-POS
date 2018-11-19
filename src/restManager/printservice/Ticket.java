@@ -207,11 +207,15 @@ public class Ticket {
 
     public String finit() {
         final byte[] FeedAndCut = {29, 'V', 66, 0};
-
         String s = new String(FeedAndCut);
+        commandSet += s;
+        return s;
+    }
+
+    public String drawerKick() {
 
         final byte[] DrawerKick = {27, 70, 0, 60, 120};
-        s += new String(DrawerKick);
+       String s = new String(DrawerKick);
 
         commandSet += s;
         return s;
