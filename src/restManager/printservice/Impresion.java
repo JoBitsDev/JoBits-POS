@@ -33,6 +33,7 @@ import restManager.persistencia.Personal;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
+import restManager.resources.R;
 import restManager.util.comun;
 
 /**
@@ -46,7 +47,7 @@ public class Impresion {
      */
     private String nombreRest;
     private boolean monedaCUC;
-    private static float cambio = 25;
+    private static float cambio = R.COINCHANGE;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
     private boolean showPrices = true;
     private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy ' ' ");
@@ -180,7 +181,7 @@ public class Impresion {
         total = addPvOrden(t, o.getProductovOrdenList());
 
         String subTotalPrint = comun.redondeoPorExceso((int) (total * 100));
-        String sumaPorciento = comun.redondeoPorExceso((int) ((Float.valueOf(subTotalPrint) / 10) * 100));
+        String sumaPorciento = comun.redondeoPorExceso((int) ((Float.valueOf(subTotalPrint) / o.getPorciento()) * 100));
         String totalPrint = subTotalPrint;
         t.alignRight();
         t.newLine();
@@ -216,6 +217,7 @@ public class Impresion {
      */
     public Orden printKitchen(Orden o) throws PrintException {
 
+//        return printKitchenForced(printKitchen(o, staticContent.cocinaJPA.findCocina("C-2"), ""));
         Ticket t = new Ticket();
 
         addHeader(t);
@@ -227,31 +229,31 @@ public class Impresion {
             if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
                 cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
             }
-            }
+        }
         if (cocinasExistentesEnLaOrden.size() > 1) {
             for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
                 String sync = SYNC;
                 for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
                     if (i == j) {
                         continue;
-            }
+                    }
                     sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
-            }
-                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
                 }
-                } else {
+                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+            }
+        } else {
             if (cocinasExistentesEnLaOrden.size() > 0) {
                 printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
-                }
+            }
 
-                }
+        }
 
         cleanAndPrintRAM();
 
         return o;
     }
-    
-     public Orden printKitchenForced(Orden o) throws PrintException {
+
+    public Orden printKitchenForced(Orden o) throws PrintException {
 
         Ticket t = new Ticket();
         boolean ordenSinPlatos = true;
@@ -260,10 +262,10 @@ public class Impresion {
 
         addMetaData(t, o, new Date());
 
-         ArrayList<String> entrantes = new ArrayList<>();
-                entrantes.add("Entrantes Calientes");
-                entrantes.add("Entrantes Frios");
-        
+        ArrayList<String> entrantes = new ArrayList<>();
+        entrantes.add("Entrantes Calientes");
+        entrantes.add("Entrantes Frios");
+
         ArrayList<ProductovOrden> items = new ArrayList<>(o.getProductovOrdenList());
         items.sort((ProductovOrden o1, ProductovOrden o2) -> {
             ArrayList<String> entrantes1 = new ArrayList<>();
@@ -288,18 +290,18 @@ public class Impresion {
 
         boolean entrante = false;
         boolean postre = false;
-        
+
         for (ProductovOrden x : items) {
             if (x.getEnviadosacocina() < x.getCantidad()) {
-                if(!entrantes.contains(x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion()) && !entrante){
-                t.addLineSeperator();
-                t.newLine();
-                entrante = true;
+                if (!entrantes.contains(x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion()) && !entrante) {
+                    t.addLineSeperator();
+                    t.newLine();
+                    entrante = true;
                 }
-                 if(x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().equals("Postres") && !postre){
-                t.addLineSeperator();
-                t.newLine();
-                postre = true;
+                if (x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().equals("Postres") && !postre) {
+                    t.addLineSeperator();
+                    t.newLine();
+                    postre = true;
                 }
                 if (x.getNota() != null) {
                     t.alignCenter();
@@ -332,8 +334,9 @@ public class Impresion {
         t.feed((byte) 3);
         t.finit();
 
-        feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_KITCHEN_PRINTER_LOCATION);
-
+        if (!ordenSinPlatos) {
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_KITCHEN_PRINTER_LOCATION);
+        }
         cleanAndPrintRAM();
 
         return o;
@@ -454,11 +457,7 @@ public class Impresion {
 
         addTotalAndFinal(t, total);
 
-        try {
-            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
-        } catch (PrintException ex) {
-            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -497,11 +496,7 @@ public class Impresion {
 
         addTotalAndFinal(t, total);
 
-        try {
-            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
-        } catch (PrintException ex) {
-            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -555,11 +550,7 @@ public class Impresion {
 
         addFinal(t);
 
-        try {
-            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
-        } catch (PrintException ex) {
-            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -580,11 +571,7 @@ public class Impresion {
 
         addTotalAndFinal(t, total);
 
-        try {
-            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
-        } catch (PrintException ex) {
-            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -598,11 +585,7 @@ public class Impresion {
 
         addTotalAndFinal(t, total);
 
-        try {
-            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
-        } catch (PrintException ex) {
-            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
     public void printStockBalance(List<Insumo> items, boolean printOverStoraged) {
@@ -617,10 +600,10 @@ public class Impresion {
 
         for (Insumo in : items) {
             t.alignLeft();
-            t.setText(in.getNombre() +"("+in.getUm()+")");
+            t.setText(in.getNombre() + "(" + in.getUm() + ")");
             t.newLine();
             t.alignRight();
-            t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente()-in.getStockEstimation()));
+            t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente() - in.getStockEstimation()));
             t.newLine();
         }
 
@@ -629,11 +612,7 @@ public class Impresion {
 
         addFinal(t);
 
-        try {
-            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
-        } catch (PrintException ex) {
-            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -654,15 +633,17 @@ public class Impresion {
 
     private void addTotal(Ticket t, float total) {
         t.addLineSeperator();
+        t.newLine();
         if (showPrices) {
             t.alignRight();
-            t.setText(TOTAL_VENTAS + total + MONEDA);
+            t.setText(String.format(TOTAL_VENTAS + "%.2f" + MONEDA, total));
             t.newLine();
 
             if (monedaCUC) {
-                t.setText(TOTAL_VENTAS + total * cambio + MN);
+
+                t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total * cambio));
             } else {
-                t.setText(TOTAL_VENTAS + Math.rint((total / cambio) * 100) / 100 + CUC);
+                t.setText(TOTAL_VENTAS + comun.redondeoPorExceso((int) ((total / cambio) * 100)) + CUC);
             }
 
         }
@@ -671,8 +652,29 @@ public class Impresion {
     private void addFinal(Ticket t) {
         t.newLine();
         t.newLine();
-        t.feed((byte) 5);
+        t.feed((byte) 3);
         t.finit();
+    }
+
+    public void forceDrawerKick() {
+        Ticket t = new Ticket();
+        t.resetAll();
+        t.initialize();
+        t.drawerKick();
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+
+    }
+
+    private void sendToPrinter(byte[] byteData, String printLocation) {
+        try {
+            feedPrinter(byteData, printLocation);
+        } catch (PrintException ex) {
+            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void addDrawerKick(Ticket t) {
+        t.drawerKick();
     }
 
     private void addHeader(Ticket t) {
@@ -794,12 +796,8 @@ public class Impresion {
 
     private void cleanAndPrintRAM() {
         while (!RAM.isEmpty()) {
-            try {
-                feedPrinter(RAM.get(0).getImpresionData(), RAM.get(0).getNombreImpresora());
-                RAM.remove(0);
-            } catch (PrintException ex) {
-                Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            sendToPrinter(RAM.get(0).getImpresionData(), RAM.get(0).getNombreImpresora());
+            RAM.remove(0);
         }
     }
 
