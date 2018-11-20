@@ -270,7 +270,6 @@ public class InsumoCreateEditView extends AbstractView {
 
         jSpinnerCantidadCreada.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
 
-        jLayeredPane1.setMinimumSize(new java.awt.Dimension(0, 0));
         jLayeredPane1.setPreferredSize(new java.awt.Dimension(454, 404));
         jLayeredPane1.setLayout(new javax.swing.OverlayLayout(jLayeredPane1));
 

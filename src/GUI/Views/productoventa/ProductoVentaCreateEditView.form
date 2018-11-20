@@ -7,7 +7,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -92,6 +92,9 @@
                       <Dimension value="[150, 26]"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTextField()"/>
+                  </AuxValues>
                 </Component>
                 <Component class="org.jdesktop.swingx.JXLabel" name="jXLabelPrecio">
                   <Properties>
@@ -189,18 +192,16 @@
                 <Property name="horizontalGap" type="int" value="15"/>
               </Layout>
               <SubComponents>
-                <Component class="org.jdesktop.swingx.JXLabel" name="jXLabelSeccion1">
+                <Component class="org.jdesktop.swingx.JXLabel" name="jXLabelCosto">
                   <Properties>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="Strings.properties" key="label_costo" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="org.jdesktop.swingx.JXLabel" name="jXLabelSeccion2">
+                <Component class="org.jdesktop.swingx.JXLabel" name="jXLabelGasto">
                   <Properties>
-                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="Strings.properties" key="label_seccion" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                    </Property>
+                    <Property name="text" type="java.lang.String" value="0.00" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="org.jdesktop.swingx.JXLabel" name="jXLabelMoneda1">
@@ -215,85 +216,43 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="org.edisoncor.gui.tabbedPane.TabbedPaneRound" name="tabbedPaneRound1">
+            <Container class="javax.swing.JScrollPane" name="TablaDeIngredientes">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Insumos"/>
+                  </Border>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
 
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Container class="javax.swing.JScrollPane" name="TablaDeIngredientes">
-                  <AuxValues>
-                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-                  </AuxValues>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Insumos">
-                        <Property name="tabTitle" type="java.lang.String" value="Insumos"/>
-                      </JTabbedPaneConstraints>
-                    </Constraint>
-                  </Constraints>
-
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                  <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTableListaIngredientes">
-                      <Properties>
-                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="6" rowCount="0">
-                            <Column editable="true" title="Seleccionar" type="java.lang.Boolean"/>
-                            <Column editable="false" title="Codigo" type="java.lang.String"/>
-                            <Column editable="false" title="Nombre" type="java.lang.String"/>
-                            <Column editable="false" title="U/M" type="java.lang.String"/>
-                            <Column editable="true" title="Cantidad" type="java.lang.Float"/>
-                            <Column editable="true" title="Costo" type="java.lang.Float"/>
-                          </Table>
-                        </Property>
-                        <Property name="columnSelectionAllowed" type="boolean" value="true"/>
-                        <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                          <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTableListaIngredientesFocusLost"/>
-                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jTableListaIngredientesPropertyChange"/>
-                      </Events>
-                    </Component>
-                  </SubComponents>
-                </Container>
-                <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-                  <AuxValues>
-                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-                  </AuxValues>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Insumos Elaborados">
-                        <Property name="tabTitle" type="java.lang.String" value="Insumos Elaborados"/>
-                      </JTabbedPaneConstraints>
-                    </Constraint>
-                  </Constraints>
-
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                  <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTableIngredientesElab">
-                      <Properties>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="6" rowCount="0">
-                            <Column editable="true" title="Seleccionar" type="java.lang.Boolean"/>
-                            <Column editable="false" title="Codigo" type="java.lang.String"/>
-                            <Column editable="false" title="Nombre" type="java.lang.String"/>
-                            <Column editable="false" title="U/M" type="java.lang.String"/>
-                            <Column editable="true" title="Cantidad" type="java.lang.Float"/>
-                            <Column editable="true" title="Costo" type="java.lang.Float"/>
-                          </Table>
-                        </Property>
-                        <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                          <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jTableIngredientesElabPropertyChange"/>
-                      </Events>
-                    </Component>
-                  </SubComponents>
-                </Container>
+                <Component class="javax.swing.JTable" name="jTableListaIngredientes">
+                  <Properties>
+                    <Property name="autoCreateRowSorter" type="boolean" value="true"/>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="6" rowCount="0">
+                        <Column editable="true" title="Seleccionar" type="java.lang.Boolean"/>
+                        <Column editable="false" title="Codigo" type="java.lang.String"/>
+                        <Column editable="false" title="Nombre" type="java.lang.String"/>
+                        <Column editable="false" title="U/M" type="java.lang.String"/>
+                        <Column editable="true" title="Cantidad" type="java.lang.Float"/>
+                        <Column editable="true" title="Costo" type="java.lang.Float"/>
+                      </Table>
+                    </Property>
+                    <Property name="columnSelectionAllowed" type="boolean" value="true"/>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTableListaIngredientesFocusLost"/>
+                    <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jTableListaIngredientesPropertyChange"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>

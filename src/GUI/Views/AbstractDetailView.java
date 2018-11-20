@@ -115,6 +115,11 @@ public abstract class AbstractDetailView <T>  extends AbstractView{
     
     public abstract void setCreatingMode();
     
+    /**
+     * Cheks that the data inputted by the user matches the constrains defined in the database
+     * this method also writes the instance field as the validation occur
+     * @return true if the data is valid otherwise false
+     */
     public abstract boolean validateData();
     
    

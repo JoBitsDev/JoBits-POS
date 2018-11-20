@@ -5,15 +5,21 @@
  */
 package GUI;
 
-import GUI.Views.Insumo.InsumoListView;
-import GUI.Views.Almacen.AlmacenEditView;
+import GUI.Views.trabajadores.TrabajadorCrear;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import restManager.controller.almacen.AlmacenListController;
+import restManager.controller.cocina.CocinaListController;
 import restManager.controller.insumo.InsumoListController;
+import restManager.controller.productoventa.ProductoVentaListController;
+import restManager.controller.seccion.SeccionListController;
+import restManager.controller.trabajadores.PersonalListController;
+import restManager.controller.trabajadores.PuestoTrabajoCreateEditController;
+import restManager.controller.trabajadores.PuestoTrabajoListController;
 import restManager.persistencia.Personal;
-import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
@@ -29,7 +35,6 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main2
      */
     static Personal logUser;
-    public static String moneda = " " +staticContent.cartaJPA.findCartaEntities().get(0).getMonedaPrincipal();
 
     /**
      * nivel mas bajo para los clientes
@@ -65,9 +70,8 @@ public class Main extends javax.swing.JFrame {
         grantPermission(p);
         initComponents();
         labelMetricNOMBRE.setText(staticContent.cartaJPA.findCarta("Mnu-1").getNombreCarta()); //quitar esto
-        R.coinSuffix = moneda;
+        R.coinSuffix = " " + staticContent.cartaJPA.findCartaEntities().get(0).getMonedaPrincipal();
         setVisible(true);
-        
 
     }
 
@@ -463,7 +467,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTextDownPDVActionPerformed
 
     private void buttonTextDownALMANCENActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTextDownALMANCENActionPerformed
-        cleanAuxPanel();        
+        cleanAuxPanel();
         panelRectAUX.add(buttonABRIRALMACEN);
         panelRectAUX.add(buttonABRIRIPV);
         panelRectAUX.add(buttonALMACENNUEVAFICHA);
@@ -472,7 +476,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTextDownALMANCENActionPerformed
 
     private void buttonABRIRMENUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonABRIRMENUActionPerformed
-        new ProductoVentaLista(this, true);
+        ProductoVentaListController controller = new ProductoVentaListController(this);
     }//GEN-LAST:event_buttonABRIRMENUActionPerformed
 
     private void buttonTextDownTRABActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTextDownTRABActionPerformed
@@ -485,11 +489,29 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTextDownTRABActionPerformed
 
     private void buttonVERTRABActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERTRABActionPerformed
-        new TrabajadorLista(this, true);
+        PersonalListController personalList = new PersonalListController(this);
     }//GEN-LAST:event_buttonVERTRABActionPerformed
 
     private void buttonCOMENZARDIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCOMENZARDIAActionPerformed
-        VentaMain.getInstance(this, true, getDiaDeVenta());
+        if (Main.NIVEL_4) {
+            String date = JOptionPane.showInputDialog("Introduzca el dia a trabajar en el formato dd/mm/aa \n "
+                    + "o deje la casilla en blanco para comenzar en el dia actual ");
+            if (date == null) {
+                VentaMain.getInstance(this, true, getDiaDeVenta());
+            } else {
+                try {
+                    Date fecha = R.DATE_FORMAT.parse(date);
+                    VentaMain.getInstance(this, true, fecha);
+                } catch (ParseException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
+
+            }
+        } else {
+            VentaMain.getInstance(this, true, getDiaDeVenta());
+        }
+
+
     }//GEN-LAST:event_buttonCOMENZARDIAActionPerformed
 
     private void buttonEsquemaSalonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEsquemaSalonActionPerformed
@@ -505,15 +527,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonDIASSINARCHIVARActionPerformed
 
     private void buttonCREARPUESTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCREARPUESTOActionPerformed
-        new PuestoTrabajoCrear(this, true, null);
+        new PuestoTrabajoCreateEditController(this);
     }//GEN-LAST:event_buttonCREARPUESTOActionPerformed
 
     private void buttonVERPUESTOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERPUESTOSActionPerformed
-        new PuestoTrabajoLista(this, true);
+        PuestoTrabajoListController controller = new PuestoTrabajoListController(this);
     }//GEN-LAST:event_buttonVERPUESTOSActionPerformed
 
     private void buttonVERCOCINASActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERCOCINASActionPerformed
-        new CocinaLista(this, true);
+        CocinaListController controller = new CocinaListController(this);
     }//GEN-LAST:event_buttonVERCOCINASActionPerformed
 
     private void buttonVERINSUMOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERINSUMOSActionPerformed
@@ -522,7 +544,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonVERINSUMOSActionPerformed
 
     private void buttonVERSECCIONESActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVERSECCIONESActionPerformed
-        new SeccionLista(this, true);
+        SeccionListController controller = new SeccionListController(this);
     }//GEN-LAST:event_buttonVERSECCIONESActionPerformed
 
     private void buttonABRIRIPVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonABRIRIPVActionPerformed
@@ -539,7 +561,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTextDownCONFActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-         new LogInDialog(new JFrame(), true);       // TODO add your handling code here:
+        new LogInDialog(new JFrame(), true);       // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
     private void buttonABRIRALMACENActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonABRIRALMACENActionPerformed
@@ -552,7 +574,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void buttonALMACENNUEVAFICHAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonALMACENNUEVAFICHAActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_buttonALMACENNUEVAFICHAActionPerformed
 
     private void buttonALMACENVERFICHASActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonALMACENVERFICHASActionPerformed

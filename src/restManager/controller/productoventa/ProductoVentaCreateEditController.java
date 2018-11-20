@@ -27,27 +27,27 @@ import restManager.persistencia.models.SeccionDAO;
  */
 public class ProductoVentaCreateEditController extends AbstractDetailController<ProductoVenta>{
 
-    public ProductoVentaCreateEditController(AbstractModel<ProductoVenta> dataAccess) {
-        super(dataAccess);
+    public ProductoVentaCreateEditController() {
+        super(new ProductoVentaDAO());
     }
 
-    public ProductoVentaCreateEditController(ProductoVenta instance, AbstractModel<ProductoVenta> model) {
-        super(instance, model);
+    public ProductoVentaCreateEditController(ProductoVenta instance) {
+        super(instance, new ProductoVentaDAO());
     }
 
-    public ProductoVentaCreateEditController(Window parent, AbstractModel<ProductoVenta> dataAccess) {
-        super(parent, dataAccess);
+    public ProductoVentaCreateEditController(Window parent) {
+        super(parent, new ProductoVentaDAO());
     }
 
-    public ProductoVentaCreateEditController(ProductoVenta instance, Window parent, AbstractModel<ProductoVenta> dataAccess) {
-        super(instance, parent, dataAccess);
+    public ProductoVentaCreateEditController(ProductoVenta instance, Window parent) {
+        super(instance, parent, new ProductoVentaDAO());
     }
 
     
     
     @Override
     public ProductoVenta createNewInstance() {
-        ProductoVenta p = new ProductoVenta(new ProductoVentaDAO().generateStringCode("P-"));
+        ProductoVenta p = new ProductoVenta(new ProductoVentaDAO().generateStringCode("Pl-"));
         p.setProductoInsumoList(new ArrayList<>());
         p.setProductovOrdenList(new ArrayList<>());
         return p;

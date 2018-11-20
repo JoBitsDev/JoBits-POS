@@ -11,17 +11,22 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import restManager.controller.insumo.InsumoListControllerTest;
+import restManager.controller.productoventa.ProductoVentaListControllerTest;
+import restManager.resources.R;
 
 /**
  *
  * @author Jorge
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({})
-public class NewTestSuite {
+@Suite.SuiteClasses({ProductoVentaListControllerTest.class})
+public class TestSuiteInit {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
+        R.coinSuffix = " CUC";
     }
 
     @AfterClass

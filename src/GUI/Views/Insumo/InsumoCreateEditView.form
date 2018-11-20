@@ -329,9 +329,6 @@
         </Component>
         <Container class="javax.swing.JLayeredPane" name="jLayeredPane1">
           <Properties>
-            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[0, 0]"/>
-            </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[454, 404]"/>
             </Property>

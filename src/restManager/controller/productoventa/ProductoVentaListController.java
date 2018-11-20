@@ -35,12 +35,12 @@ public class ProductoVentaListController extends AbstractListController<Producto
 
     @Override
     public AbstractDetailController<ProductoVenta> getDetailControllerForNew() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return new ProductoVentaCreateEditController(getView());
     }
 
     @Override
     public AbstractDetailController<ProductoVenta> getDetailControllerForEdit(ProductoVenta selected) {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return new ProductoVentaCreateEditController(selected, getView());
     }
 
     @Override

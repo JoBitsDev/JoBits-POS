@@ -12,11 +12,12 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import restManager.controller.AbstractController;
 import restManager.controller.productoventa.ProductoVentaCreateEditController;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Cocina;
+import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.Seccion;
 import restManager.resources.R;
+import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
 
 /**
@@ -28,13 +29,12 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     public ProductoVentaCreateEditView(ProductoVenta instance, AbstractController controller, Frame owner, boolean modal) {
         super(instance, DialogType.INPUT_LARGE, controller, owner, modal);
         initComponents();
-        updateView();
+        fetchComponentData();
     }
 
     public ProductoVentaCreateEditView(ProductoVenta instance, AbstractController controller, Dialog owner, boolean modal) {
-        super(instance, DialogType.INPUT, controller, owner, modal);
+        super(instance, DialogType.INPUT_LARGE, controller, owner, modal);
         initComponents();
-        updateView();
         fetchComponentData();
 
     }
@@ -49,7 +49,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jXLabelPCod = new org.jdesktop.swingx.JXLabel();
         jPanel7 = new javax.swing.JPanel();
         jXLabelNombre = new org.jdesktop.swingx.JXLabel();
-        jTextFieldNombre = new javax.swing.JTextField();
+        jTextFieldNombre = new JTextField();
         jXLabelPrecio = new org.jdesktop.swingx.JXLabel();
         jSpinnerPrecio = new JSpinner();
         jXLabelMoneda = new org.jdesktop.swingx.JXLabel();
@@ -60,14 +60,11 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jComboBoxSECCION = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jXLabelSeccion1 = new org.jdesktop.swingx.JXLabel();
-        jXLabelSeccion2 = new org.jdesktop.swingx.JXLabel();
+        jXLabelCosto = new org.jdesktop.swingx.JXLabel();
+        jXLabelGasto = new org.jdesktop.swingx.JXLabel();
         jXLabelMoneda1 = new org.jdesktop.swingx.JXLabel();
-        tabbedPaneRound1 = new org.edisoncor.gui.tabbedPane.TabbedPaneRound();
         TablaDeIngredientes = new javax.swing.JScrollPane();
         jTableListaIngredientes = new javax.swing.JTable();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableIngredientesElab = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jButtonIngrediente = new javax.swing.JButton();
         jButtonCocina = new javax.swing.JButton();
@@ -138,17 +135,19 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 15, 5));
 
-        jXLabelSeccion1.setText(bundle.getString("label_costo")); // NOI18N
-        jPanel6.add(jXLabelSeccion1);
+        jXLabelCosto.setText(bundle.getString("label_costo")); // NOI18N
+        jPanel6.add(jXLabelCosto);
 
-        jXLabelSeccion2.setText(bundle.getString("label_seccion")); // NOI18N
-        jPanel6.add(jXLabelSeccion2);
+        jXLabelGasto.setText("0.00"); // NOI18N
+        jPanel6.add(jXLabelGasto);
 
         jXLabelMoneda1.setText(R.coinSuffix);
         jXLabelMoneda1.setPreferredSize(new java.awt.Dimension(50, 16));
         jPanel6.add(jXLabelMoneda1);
 
         jPanel4.add(jPanel6);
+
+        TablaDeIngredientes.setBorder(javax.swing.BorderFactory.createTitledBorder("Insumos"));
 
         jTableListaIngredientes.setAutoCreateRowSorter(true);
         jTableListaIngredientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -188,41 +187,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         });
         TablaDeIngredientes.setViewportView(jTableListaIngredientes);
 
-        tabbedPaneRound1.addTab("Insumos", TablaDeIngredientes);
-
-        jTableIngredientesElab.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Seleccionar", "Codigo", "Nombre", "U/M", "Cantidad", "Costo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false, false, false, true, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableIngredientesElab.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jTableIngredientesElabPropertyChange(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableIngredientesElab);
-
-        tabbedPaneRound1.addTab("Insumos Elaborados", jScrollPane1);
-
-        jPanel4.add(tabbedPaneRound1);
+        jPanel4.add(TablaDeIngredientes);
 
         jXPanel1.add(jPanel4);
 
@@ -264,6 +229,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         getContentPane().add(jXPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableListaIngredientesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableListaIngredientesFocusLost
@@ -282,15 +248,6 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
             }
         }
     }//GEN-LAST:event_jTableListaIngredientesPropertyChange
-
-    private void jTableIngredientesElabPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTableIngredientesElabPropertyChange
-        if (evt.getPropertyName().matches("tableCellEditor")) {
-            if (jTableIngredientesElab.getEditingColumn() == 5 && evt.getNewValue() == null) {
-                //ActCostoIngElab();
-                // ActCosto();
-            }
-        }
-    }//GEN-LAST:event_jTableIngredientesElabPropertyChange
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         getController().createUpdateInstance();
@@ -312,13 +269,14 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
     @Override
     public boolean validateData() {
-        
-        
-        
-        
-        
-        
-        return true;
+        instance.setNombre(jTextFieldNombre.getText());
+        instance.setPrecioVenta((float) jSpinnerPrecio.getValue());
+        instance.setCocinacodCocina((Cocina) jComboBoxCOCINA.getSelectedItem());
+        instance.setSeccionnombreSeccion((Seccion) jComboBoxSECCION.getSelectedItem());
+        instance.setGasto(Float.parseFloat(jXLabelGasto.getText()));
+        instance.setVisible(false);
+        instance.setGanancia(instance.getPrecioVenta() - instance.getGasto());
+        return (jComboBoxCOCINA.getSelectedItem() != null && jComboBoxSECCION.getSelectedItem() != null);
     }
 
     @Override
@@ -326,6 +284,11 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         this.jXLabelPCod.setText(instance.getPCod());
         this.jTextFieldNombre.setText(instance.getNombre());
         jSpinnerPrecio.setValue(instance.getPrecioVenta());
+        if (instance.getGasto() == null) {
+            jXLabelGasto.setText(String.valueOf(0.00));
+        } else {
+            jXLabelGasto.setText(String.format("%.2f ", instance.getGasto()));
+        }
         jComboBoxCOCINA.setSelectedItem(instance.getCocinacodCocina());
         jComboBoxSECCION.setSelectedItem(instance.getSeccionnombreSeccion());
     }
@@ -334,6 +297,74 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     public void fetchComponentData() {
         jComboBoxCOCINA.setModel(new RestManagerComboBoxModel<>(((ProductoVentaCreateEditController) getController()).getCocinaList()));
         jComboBoxSECCION.setModel(new RestManagerComboBoxModel<>(((ProductoVentaCreateEditController) getController()).getSeccionList()));
+        jTableListaIngredientes.setModel(new RestManagerAbstractTableModel<ProductoInsumo>(instance.getProductoInsumoList(), jTableListaIngredientes) {
+            @Override
+            public int getColumnCount() {
+                return 5;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return items.get(rowIndex).getInsumo().getCodInsumo();
+                    case 1:
+                        return items.get(rowIndex).getInsumo().getNombre();
+                    case 2:
+                        return items.get(rowIndex).getInsumo().getUm();
+                    case 3:
+                        return items.get(rowIndex).getCantidad();
+                    case 4:
+                        return items.get(rowIndex).getCosto();
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0:
+                        return "Código";
+                    case 1:
+                        return "Nombre";
+                    case 2:
+                        return "U/M";
+                    case 3:
+                        return "Cantidad";
+                    case 4:
+                        return "Costo";
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return columnIndex == 3;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 3) {
+                    return Float.class;
+                }
+                return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 3:
+                        items.get(rowIndex).setCantidad((float) aValue);
+                        items.get(rowIndex).setCosto(items.get(rowIndex).getInsumo().getCostoPorUnidad() * (float) aValue);
+                        fireTableRowsUpdated(rowIndex, rowIndex);
+                        break;
+
+                }
+            }
+        });
+
     }
 
 
@@ -354,21 +385,18 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinnerPrecio;
-    private javax.swing.JTable jTableIngredientesElab;
     private javax.swing.JTable jTableListaIngredientes;
     private javax.swing.JTextField jTextFieldNombre;
     private org.jdesktop.swingx.JXLabel jXLabelCocina;
+    private org.jdesktop.swingx.JXLabel jXLabelCosto;
+    private org.jdesktop.swingx.JXLabel jXLabelGasto;
     private org.jdesktop.swingx.JXLabel jXLabelMoneda;
     private org.jdesktop.swingx.JXLabel jXLabelMoneda1;
     private org.jdesktop.swingx.JXLabel jXLabelNombre;
     private org.jdesktop.swingx.JXLabel jXLabelPCod;
     private org.jdesktop.swingx.JXLabel jXLabelPrecio;
     private org.jdesktop.swingx.JXLabel jXLabelSeccion;
-    private org.jdesktop.swingx.JXLabel jXLabelSeccion1;
-    private org.jdesktop.swingx.JXLabel jXLabelSeccion2;
     private org.jdesktop.swingx.JXPanel jXPanel1;
-    private org.edisoncor.gui.tabbedPane.TabbedPaneRound tabbedPaneRound1;
     // End of variables declaration//GEN-END:variables
 }

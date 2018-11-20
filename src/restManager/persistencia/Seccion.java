@@ -102,10 +102,7 @@ public class Seccion implements Serializable {
             return false;
         }
         Seccion other = (Seccion) object;
-        if ((this.nombreSeccion == null && other.nombreSeccion != null) || (this.nombreSeccion != null && !this.nombreSeccion.equals(other.nombreSeccion))) {
-            return false;
-        }
-        return true;
+        return !((this.nombreSeccion == null && other.nombreSeccion != null) || (this.nombreSeccion != null && !this.nombreSeccion.equals(other.nombreSeccion)));
     }
 
     @Override

@@ -34,6 +34,7 @@ import restManager.persistencia.jpa.exceptions.IllegalOrphanException;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.staticContent;
 import restManager.printservice.Impresion;
+import restManager.resources.R;
 import restManager.util.LoadingWindow;
 import restManager.util.comun;
 
@@ -144,7 +145,7 @@ public class VentaMain extends javax.swing.JDialog {
 
         float ganancia = Float.parseFloat(jXLabelVALORVENTAS.getText().split(" ")[0])
                 - Float.parseFloat(jXLabelVALORGASTOS.getText().split(" ")[0]);
-        jXLabelValorGANANCIA.setText("" + String.format("%.2f", ganancia) + Main.moneda);
+        jXLabelValorGANANCIA.setText("" + String.format("%.2f", ganancia) + R.coinSuffix);
 
     }
 
@@ -194,7 +195,7 @@ public class VentaMain extends javax.swing.JDialog {
 
         //actualizando el label de valor
         jXLabelValorTotalRecaudado.setText(
-                VentaDAO.getValorTotalVentas(v) + Main.moneda);
+                VentaDAO.getValorTotalVentas(v) + R.coinSuffix);
 
         jXLabelVALORVENTAS.setText(jXLabelValorTotalRecaudado.getText());
 
@@ -212,7 +213,7 @@ public class VentaMain extends javax.swing.JDialog {
 
         //actualizando el label de gastos
         jXLabelValorGastosPorInsumo.setText(
-                comun.calcularSumaTabla(jXTableGastosPorProductos, 4) + Main.moneda);
+                comun.calcularSumaTabla(jXTableGastosPorProductos, 4) + R.coinSuffix);
         jXLabelVALORGASTOS.setText(jXLabelValorGastosPorInsumo.getText());
 
     }
