@@ -236,7 +236,7 @@ public class Ticket {
     }
 
     public void setText(String s) {
-        int sLenght = s.length();
+        int sLenght ;
         do {
             sLenght = s.length();
             if (sLenght > PAPER_LENGHT) {
