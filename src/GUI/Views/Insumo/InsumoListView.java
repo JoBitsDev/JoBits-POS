@@ -5,11 +5,18 @@
  */
 package GUI.Views.Insumo;
 
-import GUI.AbstractListView;
+import GUI.Views.AbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.MenuItem;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.JMenuItem;
 import restManager.controller.AbstractController;
+import restManager.controller.AbstractListController;
+import restManager.controller.insumo.InsumoListController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Insumo;
 
 /**
@@ -20,14 +27,25 @@ import restManager.persistencia.Insumo;
  */
 public class InsumoListView extends AbstractListView<Insumo> {
 
-    public InsumoListView(AbstractController controller, Frame owner, boolean modal) {
+    public InsumoListView(AbstractListController<Insumo> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);
     }
 
-    public InsumoListView(AbstractController controller, Dialog owner, boolean modal) {
+    public InsumoListView(AbstractListController<Insumo> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
     }
 
+    @Override
+    protected void createPopUpMenu() {
+        JMenuItem verUsos = new JMenuItem("Ver Usos En Productos");
+        verUsos.addActionListener((ActionEvent e) -> {
+           ((InsumoListController)getController()).crossReferenceInsumo(model.getObjectAtSelectedRow());
+        });
+        jPopupMenuClickDerecho.add(verUsos);
+    }
+
+    
+    
     @Override
     public MyJTableModel<Insumo> generateTableModel(List<Insumo> items) {
         return new MyJTableModel<Insumo>(items) {
