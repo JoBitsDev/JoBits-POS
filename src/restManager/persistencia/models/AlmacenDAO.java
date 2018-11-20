@@ -13,7 +13,7 @@ import restManager.persistencia.Almacen;
  * @author Jorge
  * 
  */
-public class AlmacenDAO extends AbstractFacade<Almacen>{
+public class AlmacenDAO extends AbstractModel<Almacen>{
 
     public AlmacenDAO() {
         super(Almacen.class);

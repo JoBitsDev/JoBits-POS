@@ -13,7 +13,7 @@ import restManager.persistencia.Insumo;
  * @author Jorge
  *
  */
-public class InsumoDAO extends AbstractFacade<Insumo> {
+public class InsumoDAO extends AbstractModel<Insumo> {
 
     public InsumoDAO() {
         super(Insumo.class);
@@ -33,7 +33,11 @@ public class InsumoDAO extends AbstractFacade<Insumo> {
         entity.getInsumoElaboradoList().forEach((x) -> {
             getEntityManager().persist(x);
         });
+        
+         super.edit(entity);
         commitTransaction();
+        
+       
     }
 
 }

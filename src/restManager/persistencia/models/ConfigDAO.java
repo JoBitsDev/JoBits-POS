@@ -14,7 +14,7 @@ import restManager.persistencia.Configuracion;
  * @author Jorge
  * 
  */
-public class ConfigDAO extends AbstractFacade<Configuracion>{
+public class ConfigDAO extends AbstractModel<Configuracion>{
     
     public ConfigDAO( ) {
         super(Configuracion.class);

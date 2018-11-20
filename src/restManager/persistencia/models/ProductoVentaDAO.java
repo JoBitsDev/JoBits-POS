@@ -6,17 +6,17 @@
 
 package restManager.persistencia.models;
 
-import restManager.persistencia.InsumoElaborado;
+import restManager.persistencia.ProductoVenta;
 
 /**
  * FirstDream
  * @author Jorge
  * 
  */
-public class InsumoElaboradoDAO extends AbstractModel<InsumoElaborado>{
+public class ProductoVentaDAO extends AbstractModel<ProductoVenta>{
 
-    public InsumoElaboradoDAO() {
-        super(InsumoElaborado.class);
+    public ProductoVentaDAO() {
+        super(ProductoVenta.class);
     }
 
 }

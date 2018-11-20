@@ -1,11 +1,14 @@
 package restManager.persistencia.models;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import restManager.controller.AbstractController;
 import restManager.resources.R;
 
 /**
@@ -15,14 +18,16 @@ import restManager.resources.R;
  * @param <T>
  *
  */
-public abstract class AbstractFacade<T> {
+public abstract class AbstractModel<T> {
 
     private final Class<T> entityClass;
     private static EntityManagerFactory EMF;
     private static EntityManager currentConnection;
+    protected PropertyChangeSupport propertyChangeSupport;
 
-    public AbstractFacade(Class<T> entityClass) {
+    public AbstractModel(Class<T> entityClass) {
         this.entityClass = entityClass;
+        propertyChangeSupport = new PropertyChangeSupport(this);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(R.PERIRSTENCE_UNIT_NAME);
         if (!emf.equals(EMF)) {
             EMF = emf;
@@ -38,23 +43,31 @@ public abstract class AbstractFacade<T> {
     }
 
     public void startTransaction() {
+        if (!getEntityManager().getTransaction().isActive()) {
             getEntityManager().getTransaction().begin();
+        }
     }
 
     public void commitTransaction() {
+        if (getEntityManager().getTransaction().isActive()) {
             getEntityManager().getTransaction().commit();
+            
+        }
     }
 
     public void create(T entity) {
         getEntityManager().persist(entity);
+        firePropertyChange(PropertyName.CREATE.toString(), null, entity);
     }
 
     public void edit(T entity) {
         getEntityManager().merge(entity);
+        firePropertyChange(PropertyName.UPDATE.toString(), entity, entity);
     }
 
     public void remove(T entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
+        firePropertyChange(PropertyName.DELETE.toString(), entity, null);
     }
 
     public T find(Object id) {
@@ -87,7 +100,7 @@ public abstract class AbstractFacade<T> {
     /**
      * Tu generate IDs for the relational model of the application
      *
-     * @param prefix
+     * @param prefix includign the '-' char ej: "P-"
      * @return
      */
     public String generateStringCode(String prefix) {
@@ -100,9 +113,21 @@ public abstract class AbstractFacade<T> {
 
         return prefix + "" + cont;
     }
-    
-    public int generate(String idName){
+
+    public int generate(String idName) {
         return new ConfigDAO().generateNewId(idName);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
 }

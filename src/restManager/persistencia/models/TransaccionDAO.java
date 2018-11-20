@@ -13,14 +13,29 @@ import restManager.persistencia.Transaccion;
  * @author Jorge
  * 
  */
-public class TransaccionDAO  extends AbstractFacade<Transaccion>{
+public class TransaccionDAO  extends AbstractModel<Transaccion>{
 
     public TransaccionDAO() {
         super(Transaccion.class);
     }
     
     public enum TIpoModelo {
-        ENTRADA,SALIDA,MERMA
+        ENTRADA("Entrada"),
+        SALIDA("Salida"),
+        MERMA("Merma");
+        
+        private final String valor;
+
+        private TIpoModelo(String valor) {
+            this.valor = valor;
+        }
+
+        public String getValor() {
+            return valor;
+        }
+   
+        
+        
     }
 
 }

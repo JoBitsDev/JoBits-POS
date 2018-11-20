@@ -3,20 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia.models;
-
-import restManager.persistencia.InsumoElaborado;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-public class InsumoElaboradoDAO extends AbstractModel<InsumoElaborado>{
+public enum PropertyName {
 
-    public InsumoElaboradoDAO() {
-        super(InsumoElaborado.class);
-    }
-
+    CREATE, UPDATE, DELETE, VIEW_CREATE, VIEW_UPDATE, VIEW_DELETE
 }
