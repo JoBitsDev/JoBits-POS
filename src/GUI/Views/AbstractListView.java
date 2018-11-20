@@ -24,15 +24,15 @@ public abstract class AbstractListView<T> extends AbstractView {
 
     protected MyJTableModel<T> model;
 
-    public AbstractListView(AbstractListController<T> controller, Frame owner, boolean modal) {
-        super(DialogType.LIST, controller, owner, modal);
+    public AbstractListView(AbstractListController<T> controller, Frame parent, boolean modal) {
+        super(DialogType.LIST, controller, parent, modal);
         initComponents();
         createPopUpMenu();
 
     }
 
-    public AbstractListView(AbstractListController<T> controller, Dialog owner, boolean modal) {
-        super(DialogType.LIST, controller, owner, modal);
+    public AbstractListView(AbstractListController<T> controller, Dialog parent, boolean modal) {
+        super(DialogType.LIST, controller, parent, modal);
         initComponents();
         createPopUpMenu();
     }
