@@ -198,7 +198,7 @@ public class Insumo implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Insumo[ codInsumo=" + codInsumo + " ]";
+        return   nombre+"("+codInsumo+")";
     }
 
     public Float getStockEstimation() {

@@ -8,6 +8,7 @@ package restManager.persistencia;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * FirstDream
@@ -32,7 +35,8 @@ import javax.persistence.Table;
     , @NamedQuery(name = "InsumoTransaccion.findByValorTotalMonetario", query = "SELECT i FROM InsumoTransaccion i WHERE i.valorTotalMonetario = :valorTotalMonetario")
     , @NamedQuery(name = "InsumoTransaccion.findByTipoTransaccion", query = "SELECT i FROM InsumoTransaccion i WHERE i.tipoTransaccion = :tipoTransaccion")
     , @NamedQuery(name = "InsumoTransaccion.findByDescripcionTransaccion", query = "SELECT i FROM InsumoTransaccion i WHERE i.descripcionTransaccion = :descripcionTransaccion")
-    , @NamedQuery(name = "InsumoTransaccion.findByDestino", query = "SELECT i FROM InsumoTransaccion i WHERE i.destino = :destino")})
+    , @NamedQuery(name = "InsumoTransaccion.findByDestino", query = "SELECT i FROM InsumoTransaccion i WHERE i.destino = :destino")
+    , @NamedQuery(name = "InsumoTransaccion.findByHoraTransaccion", query = "SELECT i FROM InsumoTransaccion i WHERE i.horaTransaccion = :horaTransaccion")})
 public class InsumoTransaccion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,6 +53,10 @@ public class InsumoTransaccion implements Serializable {
     private String descripcionTransaccion;
     @Column(name = "destino")
     private String destino;
+    @Basic(optional = false)
+    @Column(name = "hora_transaccion")
+    @Temporal(TemporalType.TIME)
+    private Date horaTransaccion;
     @JoinColumn(name = "insumocod_insumo", referencedColumnName = "cod_insumo", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Insumo insumo;
@@ -61,6 +69,11 @@ public class InsumoTransaccion implements Serializable {
 
     public InsumoTransaccion(InsumoTransaccionPK insumoTransaccionPK) {
         this.insumoTransaccionPK = insumoTransaccionPK;
+    }
+
+    public InsumoTransaccion(InsumoTransaccionPK insumoTransaccionPK, Date horaTransaccion) {
+        this.insumoTransaccionPK = insumoTransaccionPK;
+        this.horaTransaccion = horaTransaccion;
     }
 
     public InsumoTransaccion(String insumocodInsumo, Date transaccionfechaTransaccion) {
@@ -113,6 +126,14 @@ public class InsumoTransaccion implements Serializable {
 
     public void setDestino(String destino) {
         this.destino = destino;
+    }
+
+    public Date getHoraTransaccion() {
+        return horaTransaccion;
+    }
+
+    public void setHoraTransaccion(Date horaTransaccion) {
+        this.horaTransaccion = horaTransaccion;
     }
 
     public Insumo getInsumo() {

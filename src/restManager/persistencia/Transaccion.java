@@ -37,6 +37,9 @@ import javax.persistence.TemporalType;
     , @NamedQuery(name = "Transaccion.findByValorMerma", query = "SELECT t FROM Transaccion t WHERE t.valorMerma = :valorMerma")})
 public class Transaccion implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "transaccion")
+    private List<InsumoTransaccion> insumoTransaccionList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -51,8 +54,6 @@ public class Transaccion implements Serializable {
     @JoinColumn(name = "almacencod_almacen", referencedColumnName = "cod_almacen")
     @ManyToOne
     private Almacen almacencodAlmacen;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "transaccion")
-    private List<InsumoTransaccion> insumoTransaccionList;
 
     public Transaccion() {
     }
@@ -93,14 +94,6 @@ public class Transaccion implements Serializable {
         this.almacencodAlmacen = almacencodAlmacen;
     }
 
-    public List<InsumoTransaccion> getInsumoTransaccionList() {
-        return insumoTransaccionList;
-    }
-
-    public void setInsumoTransaccionList(List<InsumoTransaccion> insumoTransaccionList) {
-        this.insumoTransaccionList = insumoTransaccionList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -124,6 +117,14 @@ public class Transaccion implements Serializable {
     @Override
     public String toString() {
         return "restManager.persistencia.Transaccion[ fechaTransaccion=" + fechaTransaccion + " ]";
+    }
+
+    public List<InsumoTransaccion> getInsumoTransaccionList() {
+        return insumoTransaccionList;
+    }
+
+    public void setInsumoTransaccionList(List<InsumoTransaccion> insumoTransaccionList) {
+        this.insumoTransaccionList = insumoTransaccionList;
     }
 
 }

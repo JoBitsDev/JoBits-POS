@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -176,7 +177,7 @@ public class PuestoTrabajo implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.PuestoTrabajo[ nombrePuesto=" + nombrePuesto + " ]";
+        return nombrePuesto ;
     }
 
 }
