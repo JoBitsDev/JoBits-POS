@@ -110,7 +110,7 @@ public class Seccion implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Seccion[ nombreSeccion=" + nombreSeccion + " ]";
+        return  nombreSeccion ;
     }
 
 }
