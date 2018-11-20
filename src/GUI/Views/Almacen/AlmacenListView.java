@@ -6,11 +6,12 @@
 
 package GUI.Views.Almacen;
 
-import GUI.AbstractListView;
+import GUI.Views.AbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
 import restManager.controller.AbstractController;
+import restManager.controller.AbstractListController;
 import restManager.persistencia.Almacen;
 
 /**
@@ -20,11 +21,11 @@ import restManager.persistencia.Almacen;
  */
 public class AlmacenListView extends AbstractListView<Almacen>{
 
-    public AlmacenListView(AbstractController controller, Frame owner, boolean modal) {
+    public AlmacenListView(AbstractListController<Almacen> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);
     }
 
-    public AlmacenListView(AbstractController controller, Dialog owner, boolean modal) {
+    public AlmacenListView(AbstractListController<Almacen> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
     }
 

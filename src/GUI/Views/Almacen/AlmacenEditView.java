@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI.Views.Almacen;
+package  GUI.Views.Almacen;
+        
 
-import GUI.AbstractView;
+import GUI.Views.AbstractView;
 import java.awt.Dialog;
 import java.util.List;
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import restManager.controller.AbstractController;
 import restManager.controller.almacen.AlmacenManageController;
@@ -36,9 +38,9 @@ public class AlmacenEditView extends AbstractView {
 
     }
 
-    public void updateView(Almacen a) {
-        this.a = a;
-        model = new MyTableModel(a);
+    @Override
+    public void updateView() {
+        model = new MyTableModel(a.getInsumoList(), jXTable1);
         jXTable1.setModel(model);
         setTitle(a.getNombre());
         jXLabelValorTotal.setText(String.format("%.2f", a.getValorMonetario()) + " " + R.coinSuffix);
@@ -67,9 +69,7 @@ public class AlmacenEditView extends AbstractView {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(getFont());
-        setMaximumSize(getMaximumSize());
         setMinimumSize(getMinimumSize());
-        setPreferredSize(getPreferredSize());
 
         jXPanelTabla.setLayout(new java.awt.BorderLayout());
 
@@ -200,11 +200,11 @@ public class AlmacenEditView extends AbstractView {
     }//GEN-LAST:event_jButtonDarReporteActionPerformed
 
     private void jButtonModificarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarStockActionPerformed
-        ((AlmacenManageController) getController()).modificarStock(model.getInsumoAtSelectedRow());
+        ((AlmacenManageController) getController()).modificarStock(model.getObjectAtSelectedRow());
     }//GEN-LAST:event_jButtonModificarStockActionPerformed
 
     private void jButtonVerFichasEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerFichasEntradaActionPerformed
-       ((AlmacenManageController) getController()).verTransaccionsArchivadas();
+        ((AlmacenManageController) getController()).verTransaccionsArchivadas();
     }//GEN-LAST:event_jButtonVerFichasEntradaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -220,17 +220,10 @@ public class AlmacenEditView extends AbstractView {
     private org.jdesktop.swingx.JXTable jXTable1;
     // End of variables declaration//GEN-END:variables
 
-    private class MyTableModel extends AbstractTableModel {
+    private class MyTableModel extends restManager.util.RestManagerAbstractTableModel<Insumo> {
 
-        private final List<Insumo> items;
-
-        public MyTableModel(Almacen a) {
-            this.items = a.getInsumoList();
-        }
-
-        @Override
-        public int getRowCount() {
-            return items.size();
+        public MyTableModel(List<Insumo> items, JTable table) {
+            super(items, table);
         }
 
         @Override
@@ -302,20 +295,6 @@ public class AlmacenEditView extends AbstractView {
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return false;
-        }
-
-        public List<Insumo> getItems() {
-            return items;
-        }
-
-        public Insumo getInsumoAt(int rowIndex) {
-            return items.get(rowIndex);
-
-        }
-
-        public Insumo getInsumoAtSelectedRow() {
-            return items.get(jXTable1.convertRowIndexToModel(jXTable1.getSelectedRow()));
-
         }
 
     }

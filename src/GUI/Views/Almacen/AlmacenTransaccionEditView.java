@@ -5,7 +5,7 @@
  */
 package GUI.Views.Almacen;
 
-import GUI.AbstractView;
+import GUI.Views.AbstractView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.Date;
@@ -34,13 +34,13 @@ import restManager.util.RestManagerListModel;
  */
 public class AlmacenTransaccionEditView extends AbstractView {
 
-    Transaccion trans;
+    Transaccion f;
     List<Insumo> items;
     RestManagerAbstractTableModel<InsumoTransaccion> model;
 
     public AlmacenTransaccionEditView(Transaccion f, List<Insumo> items, AbstractController controller, Frame owner, boolean modal) {
         super(DialogType.NORMAL, controller, owner, modal);
-        this.trans = f;
+        this.f = f;
         this.items = items;
         initComponents();
         initTableModel();
@@ -50,7 +50,7 @@ public class AlmacenTransaccionEditView extends AbstractView {
 
     public AlmacenTransaccionEditView(Transaccion f, List<Insumo> items, AbstractController controller, Dialog owner, boolean modal) {
         super(DialogType.NORMAL, controller, owner, modal);
-        this.trans = f;
+        this.f = f;
         this.items = items;
         initComponents();
         initTableModel();
@@ -58,7 +58,8 @@ public class AlmacenTransaccionEditView extends AbstractView {
 
     }
 
-    public void updateView(Transaccion f) {
+    @Override
+    public void updateView() {
         this.jXDatePicker.setDate(f.getFechaTransaccion());
         jXLabelVALORTRANS.setText(String.format("+%.2f", f.getValorTotalTransacciones()) + R.coinSuffix);
         jXLabelVALORMERMA.setText(String.format("-%.2f", f.getValorMerma()) + R.coinSuffix);
@@ -79,14 +80,14 @@ public class AlmacenTransaccionEditView extends AbstractView {
                     break;
             }
         }
-        trans.setValorMerma(merma);
-        trans.setValorTotalTransacciones(total);
-        updateView(trans);
+        f.setValorMerma(merma);
+        f.setValorTotalTransacciones(total);
+        updateView();
     }
 
     public void initTableModel() {
         JComboBox<TransaccionDAO.TIpoModelo> tipoTrans = new JComboBox<>(TransaccionDAO.TIpoModelo.values());
-        model = new RestManagerAbstractTableModel<InsumoTransaccion>(trans.getInsumoTransaccionList(), jXTable1) {
+        model = new RestManagerAbstractTableModel<InsumoTransaccion>(f.getInsumoTransaccionList(), jXTable1) {
 
             @Override
             public int getColumnCount() {
@@ -97,29 +98,28 @@ public class AlmacenTransaccionEditView extends AbstractView {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return trans.getInsumoTransaccionList().get(rowIndex).getInsumo().getNombre();
+                        return f.getInsumoTransaccionList().get(rowIndex).getInsumo().getNombre();
                     case 1:
-                        return TransaccionDAO.TIpoModelo.valueOf(trans.getInsumoTransaccionList().get(rowIndex).getTipoTransaccion());
+                        return TransaccionDAO.TIpoModelo.valueOf(f.getInsumoTransaccionList().get(rowIndex).getTipoTransaccion());
                     case 2:
-                        return trans.getInsumoTransaccionList().get(rowIndex).getCantidadTransferida();
+                        return f.getInsumoTransaccionList().get(rowIndex).getCantidadTransferida();
                     case 3:
-                        switch (trans.getInsumoTransaccionList().get(rowIndex).getTipoTransaccion()) {
+                        switch (f.getInsumoTransaccionList().get(rowIndex).getTipoTransaccion()) {
                             case "MERMA":
                             case "SALIDA":
-                                trans.getInsumoTransaccionList().get(rowIndex).setValorTotalMonetario(
-                                        trans.getInsumoTransaccionList().get(rowIndex).getCantidadTransferida()
-                                        * trans.getInsumoTransaccionList().get(rowIndex).getInsumo().getCostoPorUnidad());
+                                f.getInsumoTransaccionList().get(rowIndex).setValorTotalMonetario(f.getInsumoTransaccionList().get(rowIndex).getCantidadTransferida()
+                                        * f.getInsumoTransaccionList().get(rowIndex).getInsumo().getCostoPorUnidad());
                             case "ENTRADA":
                                 updateTransValue();
-                                return trans.getInsumoTransaccionList().get(rowIndex).getValorTotalMonetario();
+                                return f.getInsumoTransaccionList().get(rowIndex).getValorTotalMonetario();
                             default:
                                 return 0;
                         }
 
                     case 4:
-                        return trans.getInsumoTransaccionList().get(rowIndex).getDescripcionTransaccion();
+                        return f.getInsumoTransaccionList().get(rowIndex).getDescripcionTransaccion();
                     case 5:
-                        return trans.getInsumoTransaccionList().get(rowIndex).getDestino();
+                        return f.getInsumoTransaccionList().get(rowIndex).getDestino();
                     default:
                         return null;
                 }
@@ -161,19 +161,19 @@ public class AlmacenTransaccionEditView extends AbstractView {
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 1:
-                        trans.getInsumoTransaccionList().get(rowIndex).setTipoTransaccion(aValue.toString());
+                        f.getInsumoTransaccionList().get(rowIndex).setTipoTransaccion(aValue.toString());
                         break;
                     case 2:
-                        trans.getInsumoTransaccionList().get(rowIndex).setCantidadTransferida((Float.parseFloat((String) aValue)));
+                        f.getInsumoTransaccionList().get(rowIndex).setCantidadTransferida((Float.parseFloat((String) aValue)));
                         break;
                     case 3:
-                        trans.getInsumoTransaccionList().get(rowIndex).setValorTotalMonetario((Float.parseFloat((String) aValue)));
+                        f.getInsumoTransaccionList().get(rowIndex).setValorTotalMonetario((Float.parseFloat((String) aValue)));
                         break;
                     case 4:
-                        trans.getInsumoTransaccionList().get(rowIndex).setDescripcionTransaccion((String) aValue);
+                        f.getInsumoTransaccionList().get(rowIndex).setDescripcionTransaccion((String) aValue);
                         break;
                     case 5:
-                        trans.getInsumoTransaccionList().get(rowIndex).setDestino((String) aValue);
+                        f.getInsumoTransaccionList().get(rowIndex).setDestino((String) aValue);
                         break;
                 }
                 fireTableRowsUpdated(rowIndex, rowIndex);
@@ -387,7 +387,7 @@ public class AlmacenTransaccionEditView extends AbstractView {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonConfirmarTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarTransActionPerformed
-            getController().createInstance(trans);
+            getController().create(f);
     }//GEN-LAST:event_jButtonConfirmarTransActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -420,14 +420,14 @@ public class AlmacenTransaccionEditView extends AbstractView {
         if (i == null) {
             throw new NoSelectedException();
         }
-        InsumoTransaccionPK insumoPK = new InsumoTransaccionPK(i.getCodInsumo(), trans.getFechaTransaccion());
+        InsumoTransaccionPK insumoPK = new InsumoTransaccionPK(i.getCodInsumo(), f.getFechaTransaccion());
 
         InsumoTransaccion insumoT = new InsumoTransaccion(insumoPK);
         insumoT.setCantidadTransferida((float) 0);
         insumoT.setValorTotalMonetario((float) 0);
         insumoT.setDescripcionTransaccion("");
         insumoT.setInsumo(i);
-        insumoT.setTransaccion(trans);
+        insumoT.setTransaccion(f);
         insumoT.setTipoTransaccion(TransaccionDAO.TIpoModelo.ENTRADA.toString());
         insumoT.setHoraTransaccion(insumoPK.getTransaccionfechaTransaccion());
 

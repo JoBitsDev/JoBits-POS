@@ -6,12 +6,15 @@
 
 package GUI.Views.Almacen;
 
-import GUI.AbstractListView;
+import GUI.Views.AbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import restManager.controller.AbstractController;
+import restManager.controller.AbstractListController;
 import restManager.persistencia.Transaccion;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -19,12 +22,12 @@ import restManager.persistencia.Transaccion;
  * 
  */
 public class AlmacenTransaccionsListView extends AbstractListView<Transaccion>{
-
-    public AlmacenTransaccionsListView(AbstractController controller, Frame owner, boolean modal) {
+    
+    public AlmacenTransaccionsListView(AbstractListController<Transaccion> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);
     }
 
-    public AlmacenTransaccionsListView(AbstractController controller, Dialog owner, boolean modal) {
+    public AlmacenTransaccionsListView(AbstractListController<Transaccion> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
     }
 
@@ -39,7 +42,7 @@ public class AlmacenTransaccionsListView extends AbstractListView<Transaccion>{
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             switch(columnIndex){
-                case 0: return items.get(rowIndex).getFechaTransaccion();
+                case 0: return R.DATE_FORMAT.format(items.get(rowIndex).getFechaTransaccion());
                 case 1: return items.get(rowIndex).getValorTotalTransacciones();
                 case 2: return items.get(rowIndex).getValorMerma();
                 default: return null;
