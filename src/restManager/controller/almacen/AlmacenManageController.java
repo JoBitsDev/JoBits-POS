@@ -5,7 +5,9 @@
  */
 package restManager.controller.almacen;
 
+import GUI.Views.AbstractView;
 import GUI.Views.Almacen.AlmacenEditView;
+import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -26,7 +28,6 @@ import restManager.resources.R;
  */
 public class AlmacenManageController extends AbstractController<Almacen> {
 
-    AlmacenEditView view;
     Almacen a;
 
     public AlmacenManageController(Almacen a) {
@@ -41,14 +42,14 @@ public class AlmacenManageController extends AbstractController<Almacen> {
 
     @Override
     public void constructView(Window parent) {
-        view = new AlmacenEditView(this, (Dialog) parent, true);
-        view.updateView(a);
-        view.setVisible(true);
+        setView(new AlmacenEditView(this, (Dialog) parent, true));
+        getView().updateView();
+        getView().setVisible(true);
     }
 
     public void imprimirReporteParaCompras(Almacen a) {
         String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
-        int selection = JOptionPane.showOptionDialog(view,
+        int selection = JOptionPane.showOptionDialog(getView(),
                 R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
                 R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
@@ -69,11 +70,11 @@ public class AlmacenManageController extends AbstractController<Almacen> {
         InsumoListController insumoController = new InsumoListController();
         insumoController.setSelected(i);
         insumoController.editInsumo();
-        view.updateView(a);
+        getView().updateView();
     }
     
     public void verTransaccionsArchivadas(){
-        AlmacenTransaccionListController fichasController = new AlmacenTransaccionListController(view);
+        AlmacenTransaccionListController fichasController = new AlmacenTransaccionListController(getView(),a);
     }
     //
     // Metodos Privados
@@ -91,8 +92,12 @@ public class AlmacenManageController extends AbstractController<Almacen> {
     }
 
     private boolean printOverStockedInsumos() {
-        return JOptionPane.showConfirmDialog(view,
+        return JOptionPane.showConfirmDialog(getView(),
                 R.RESOURCE_BUNDLE.getString("dialog_imprimir_insumos_sobrantes")) == JOptionPane.YES_OPTION;
     }
 
+        @Override
+    public AbstractView getView() {
+       return getView();
+    }
 }

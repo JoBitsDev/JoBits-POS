@@ -9,7 +9,9 @@ import GUI.Views.Almacen.AlmacenListView;
 import java.awt.Frame;
 import java.awt.Window;
 import javax.swing.JOptionPane;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDetailController;
+import restManager.controller.AbstractListController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.models.AlmacenDAO;
@@ -22,9 +24,9 @@ import restManager.resources.RegularExpressions;
  * @author Jorge
  *
  */
-public class AlmacenListController extends AbstractController<Almacen> {
+public class AlmacenListController extends AbstractListController<Almacen> {
 
-    private AlmacenListView view;
+
     private final String PREFIX_FOR_ID = "A-";
 
     public AlmacenListController() {
@@ -42,42 +44,43 @@ public class AlmacenListController extends AbstractController<Almacen> {
     }
 
     @Override
-    public void deleteInstance(Almacen selected) {
+    public void destroy(Almacen selected) {
         setSelected(selected);
         deleteSelectedStorage();
     }
 
     @Override
-    public void editInstance(Almacen selected) {
+    public void update(Almacen selected) {
         setSelected(selected);
         openSelectedStorage();
     }
-    
+
     @Override
     public void constructView(Window parent) {
-        view = new AlmacenListView(this, (Frame) parent, true);
-        view.updateView(super.getItems());
-        view.setVisible(true);
+        setView(new AlmacenListView(this, (Frame) parent, true));
+        getView().updateView();
+        getView().setVisible(true);
     }
 
     public void createNewStorage() {
 
         String storageName = JOptionPane.showInputDialog(R.RESOURCE_BUNDLE.getString("dialogo_agregar_almacen"));
+        if (storageName != null) {
+            if (storageName.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
+                selected = new Almacen();
+                selected.setTransaccionList(null);
+                selected.setCantidadInsumos(0);
+                selected.setValorMonetario(Float.parseFloat("0"));
+                selected.setCodAlmacen(super.getModel().generateStringCode(PREFIX_FOR_ID));
+                selected.setNombre(storageName);
+                selected.setInsumoList(null);
 
-        if (storageName.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
-            selected = new Almacen();
-            selected.setTransaccionList(null);
-            selected.setCantidadInsumos(0);
-            selected.setValorMonetario(Float.parseFloat("0"));
-            selected.setCodAlmacen(super.getModel().generateStringCode(PREFIX_FOR_ID));
-            selected.setNombre(storageName);
-            selected.setInsumoList(null);
-
-            create();
-            showSuccessDialog(view);
-            view.updateView(getItems());
-        } else {
-            //TODO: implementar exepciones
+                create();
+                showSuccessDialog(getView());
+                getView().updateView();
+            } else {
+                //TODO: implementar exepciones
+            }
         }
     }
 
@@ -85,11 +88,11 @@ public class AlmacenListController extends AbstractController<Almacen> {
         if (selected == null) {
             throw new NoSelectedException();
         } else {
-            int resp = JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("dialogo_borrar_almacen") + " " + selected.getNombre());
+            int resp = JOptionPane.showConfirmDialog(getView(), R.RESOURCE_BUNDLE.getString("dialogo_borrar_almacen") + " " + selected.getNombre());
             if (resp == JOptionPane.YES_OPTION) {
                 destroy();
-                showSuccessDialog(view);
-                view.updateView(getItems());
+                showSuccessDialog(getView());
+                getView().updateView();
             }
         }
     }
@@ -98,9 +101,19 @@ public class AlmacenListController extends AbstractController<Almacen> {
         if (selected == null) {
             throw new NoSelectedException();
         } else {
-            AlmacenManageController manageController = new AlmacenManageController(view, selected);
+            AlmacenManageController manageController = new AlmacenManageController(getView(), selected);
         }
 
+    }
+
+    @Override
+    public AbstractDetailController<Almacen> getDetailControllerForNew() {
+        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AbstractDetailController<Almacen> getDetailControllerForEdit(Almacen selected) {
+        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

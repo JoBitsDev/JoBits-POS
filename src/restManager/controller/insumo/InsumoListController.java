@@ -5,12 +5,20 @@
  */
 package restManager.controller.insumo;
 
+import GUI.Views.AbstractView;
 import GUI.Views.Insumo.InsumoCreateEditView;
 import GUI.Views.Insumo.InsumoListView;
+import GUI.Views.View;
+import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Window;
+import java.util.List;
 import javax.swing.JOptionPane;
 import restManager.controller.AbstractController;
+import restManager.controller.AbstractDetailController;
+import restManager.controller.AbstractListController;
+import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.models.AlmacenDAO;
 import restManager.persistencia.models.InsumoDAO;
@@ -22,9 +30,8 @@ import restManager.resources.R;
  * @author Jorge
  *
  */
-public class InsumoListController extends AbstractController<Insumo> {
+public class InsumoListController extends AbstractListController<Insumo> {
 
-    private InsumoListView view;
     private final String PREFIX_FOR_ID = "In-";
     private InsumoCreateEditView newInsumoView;
 
@@ -32,7 +39,7 @@ public class InsumoListController extends AbstractController<Insumo> {
         super(new InsumoDAO());
     }
 
-    public InsumoListController(Frame frame) {
+    public InsumoListController(Window frame) {
         this();
         constructView(frame);
     }
@@ -43,20 +50,20 @@ public class InsumoListController extends AbstractController<Insumo> {
     }
 
     @Override
-    public void editInstance(Insumo selected) {
+    public void update(Insumo selected) {
         editInsumo();
     }
 
     @Override
-    public void deleteInstance(Insumo selected) {
+    public void destroy(Insumo selected) {
         deleteInsumo();
     }
 
     @Override
     public void constructView(Window parent) {
-        view = new InsumoListView(this, (Frame) parent, true);
-        view.updateView(super.getItems());
-        view.setVisible(true);
+        setView(new InsumoListView(this, (Frame) parent, true));
+        getView().updateView();
+        getView().setVisible(true);
     }
 
     public void popupInsumoNewView() {
@@ -72,9 +79,9 @@ public class InsumoListController extends AbstractController<Insumo> {
     }
 
     private void popupDialog() {
-        newInsumoView = new InsumoCreateEditView(this, view, true);
+        newInsumoView = new InsumoCreateEditView(this, getView(), true,getSelected());
         AlmacenDAO almacenConn = new AlmacenDAO();
-        newInsumoView.updateView(super.getItems(), selected, almacenConn.findAll());
+        newInsumoView.updateView();
         newInsumoView.setVisible(true);
         newInsumoView = null;
     }
@@ -88,24 +95,26 @@ public class InsumoListController extends AbstractController<Insumo> {
                     R.RESOURCE_BUNDLE.getString("insumo_creado_correctamente"));
             newInsumoView.dispose();
             newInsumoView = null;
-            view.updateView(getItems());
+            getView().updateView();
         }
     }
 
     public void disposeNewEditView() {
         newInsumoView.dispose();
         newInsumoView = null;
+        items = null;
+        getView().updateView();
     }
 
     public void deleteInsumo() {
         if (selected != null) {
-            int resp = JOptionPane.showConfirmDialog(view,
+            int resp = JOptionPane.showConfirmDialog(getView(),
                     R.RESOURCE_BUNDLE.getString("insumo_borrar") + " " + selected.getNombre());
             if (resp == JOptionPane.YES_OPTION) {
                 destroy();
-                JOptionPane.showMessageDialog(view,
+                JOptionPane.showMessageDialog(getView(),
                         R.RESOURCE_BUNDLE.getString("insumo_borrado_correctamente"));
-                view.updateView(getItems());
+                getView().updateView();
             }
         }
     }
@@ -123,10 +132,30 @@ public class InsumoListController extends AbstractController<Insumo> {
                     R.RESOURCE_BUNDLE.getString("insumo_actualizado_correctamente"));
             newInsumoView.dispose();
             newInsumoView = null;
-            if(view != null){
-            view.updateView(getItems());
+            if(getView() != null){
+            getView().updateView();
             }
         }
+    }
+    
+
+
+    public List<Almacen> getAlmacenList() {
+        return new AlmacenDAO().findAll();
+    }
+
+    public void crossReferenceInsumo(Insumo objectAtSelectedRow) {
+        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public AbstractDetailController<Insumo> getDetailControllerForNew() {
+throw new DevelopingOperationException();
+    }
+
+    @Override
+    public AbstractDetailController<Insumo> getDetailControllerForEdit(Insumo selected) {
+        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
