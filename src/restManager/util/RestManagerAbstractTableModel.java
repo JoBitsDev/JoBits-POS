@@ -19,7 +19,7 @@ import restManager.exceptions.NoSelectedException;
  */
 public abstract class RestManagerAbstractTableModel<T>  extends AbstractTableModel{
 
-      private final List<T> items;
+      protected final List<T> items;
       private final JTable table;
 
     public RestManagerAbstractTableModel(List<T> items, JTable table) {
