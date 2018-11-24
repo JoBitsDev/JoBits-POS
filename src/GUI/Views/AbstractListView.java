@@ -244,6 +244,9 @@ public abstract class AbstractListView<T> extends AbstractView {
         model = generateTableModel(getController().getItems());
         jTableList.setModel(model);
         jTableList.setRowSorter(model.getSorter());
+        if(!jTextFieldBusqueda.getText().isEmpty()){
+             model.filterByString(jTextFieldBusqueda.getText());
+        }
 
     }
 
