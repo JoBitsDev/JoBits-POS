@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.util;
 
 import java.util.List;
@@ -13,71 +12,77 @@ import restManager.exceptions.NoSelectedException;
 
 /**
  * FirstDream
+ *
  * @author Jorge
  * @param <T>
- * 
+ *
  */
-public abstract class RestManagerAbstractTableModel<T>  extends AbstractTableModel{
+public abstract class RestManagerAbstractTableModel<T> extends AbstractTableModel {
 
-      protected final List<T> items;
-      private final JTable table;
+    protected List<T> items;
+    private final JTable table;
 
     public RestManagerAbstractTableModel(List<T> items, JTable table) {
         this.items = items;
         this.table = table;
     }
-      
-        @Override
-        public int getRowCount() {
-            return items.size();
-        }
-        
-        @Override
-        public abstract int getColumnCount();
 
-        @Override
-        public abstract Object getValueAt(int rowIndex, int columnIndex);
+    @Override
+    public int getRowCount() {
+        return items.size();
+    }
 
-        @Override
-        public abstract String getColumnName(int column);
+    @Override
+    public abstract int getColumnCount();
 
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            return super.getColumnClass(columnIndex);
-        }
+    @Override
+    public abstract Object getValueAt(int rowIndex, int columnIndex);
 
-        public T getObjectAt(int rowIndex) {
-            return items.get(rowIndex);
-        }
+    @Override
+    public abstract String getColumnName(int column);
 
-        public T getObjectAtSelectedRow() {
-            if (table.getSelectedRow() == -1) {
-                throw new NoSelectedException();
-            }
-                return items.get(table.convertRowIndexToModel(table.getSelectedRow()));
-        }
-        
-        public boolean removeObjectAtSelectedRow(){
-            if (table.getSelectedRow() == -1) {
-                throw new NoSelectedException();
-            }
-                return items.remove(table.convertRowIndexToModel(table.getSelectedRow())) != null;
-        }
-        
-        public void addObject(T object){
-            items.add(object);
-            fireTableRowsInserted(items.size(), items.size());
-        }
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return super.getColumnClass(columnIndex);
+    }
 
-        public void removeObject(T object){
-            items.remove(object);
-            fireTableDataChanged();
+    public T getObjectAt(int rowIndex) {
+        return items.get(rowIndex);
+    }
+
+    public T getObjectAtSelectedRow() {
+        if (table.getSelectedRow() == -1) {
+            throw new NoSelectedException();
         }
-        
+        return items.get(table.convertRowIndexToModel(table.getSelectedRow()));
+    }
+
+    public void removeObjectAtSelectedRow() {
+        if (table.getSelectedRow() == -1) {
+            throw new NoSelectedException();
+        }
+        int itemToDelete = table.convertRowIndexToModel(table.getSelectedRow());
+        T deleted = items.remove(itemToDelete);
+        fireTableRowsDeleted(itemToDelete, itemToDelete);
+    }
+
+    public void addObject(T object) {
+        items.add(object);
+        fireTableRowsInserted(items.size(), items.size());
+    }
+
+    public void removeObject(T object) {
+        items.remove(object);
+        fireTableDataChanged();
+    }
+
     public List<T> getItems() {
         return items;
     }
-        
-        
-    
+
+    public void setItems(List<T> items) {
+        this.items = items;
+        fireTableDataChanged();
+    }
+
 }
