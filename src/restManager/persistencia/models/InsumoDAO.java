@@ -6,6 +6,7 @@
 package restManager.persistencia.models;
 
 import restManager.persistencia.Insumo;
+import restManager.persistencia.InsumoElaborado;
 
 /**
  * FirstDream
@@ -15,29 +16,39 @@ import restManager.persistencia.Insumo;
  */
 public class InsumoDAO extends AbstractModel<Insumo> {
 
-    public InsumoDAO() {
+    private static InsumoDAO INSTANCE = null;
+
+    private InsumoDAO() {
         super(Insumo.class);
+    }
+
+    public static InsumoDAO getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new InsumoDAO();
+            return INSTANCE;
+        } else {
+            return INSTANCE;
+        }
     }
 
     @Override
     public void edit(Insumo entity) {
         Insumo oldInsumo = find(entity.getCodInsumo());
         startTransaction();
-        oldInsumo.getInsumoElaboradoList().forEach((x) -> {
+        for (InsumoElaborado x : oldInsumo.getInsumoElaboradoList()) {
             getEntityManager().remove(x);
-        });
+        }
         commitTransaction();
 
         startTransaction();
 
-        entity.getInsumoElaboradoList().forEach((x) -> {
+        for (InsumoElaborado x : entity.getInsumoElaboradoList()) {
             getEntityManager().persist(x);
-        });
-        
-         super.edit(entity);
+        }
+
+        super.edit(entity);
         commitTransaction();
-        
-       
+
     }
 
 }
