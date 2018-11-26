@@ -244,18 +244,17 @@ public abstract class AbstractListView<T> extends AbstractView {
         model = generateTableModel(getController().getItems());
         jTableList.setModel(model);
         jTableList.setRowSorter(model.getSorter());
-        if(!jTextFieldBusqueda.getText().isEmpty()){
-             model.filterByString(jTextFieldBusqueda.getText());
+        if (!jTextFieldBusqueda.getText().isEmpty()) {
+            model.filterByString(jTextFieldBusqueda.getText());
         }
 
     }
 
     @Override
     public AbstractListController<T> getController() {
-        return (AbstractListController<T>) super.getController(); 
+        return (AbstractListController<T>) super.getController();
     }
 
-    
     public abstract MyJTableModel<T> generateTableModel(List<T> items);
 
     //
@@ -269,10 +268,17 @@ public abstract class AbstractListView<T> extends AbstractView {
     //
     //Protected Methods
     //
-    
     protected void createPopUpMenu() {
     }
+ 
+    //
+    // Getters n Setters
+    //
 
+    public MyJTableModel<T> getModel() {
+        return model;
+    }
+    
     //
     // Inner Class
     //
@@ -321,6 +327,17 @@ public abstract class AbstractListView<T> extends AbstractView {
         @Override
         public int getRowCount() {
             return items.size();
+        }
+
+        public void addrow(T newObject) {
+            items.add(newObject);
+            fireTableRowsInserted(items.size() - 1, items.size() - 1);
+        }
+
+        public void deleteRow(T objectDeleted) {
+            int removedRow = items.indexOf(objectDeleted);
+            items.remove(objectDeleted);
+            fireTableRowsDeleted(removedRow, removedRow);
         }
 
         @Override
