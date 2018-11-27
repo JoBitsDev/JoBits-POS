@@ -173,7 +173,7 @@ public class comun {
     }
 
     /**
-     * redondea por exceso las cuentas 
+     * redondea por exceso las cuentas
      *
      * @param valorARedondear el valor a redondear en entero (multiplicando el
      * float por 100)
@@ -199,19 +199,19 @@ public class comun {
         }
         return ret;
     }
-    
+
     /**
-     * redondea por defecto las cuentas 
+     * redondea por defecto las cuentas
      *
      * @param valorARedondear el valor a redondear en entero (multiplicando el
      * float por 100)
      * @return un string con el valor a imprimir o usar
      */
-        public static String redondeoPorDefecto(int valorARedondear) {
+    public static String redondeoPorDefecto(int valorARedondear) {
         int ref = valorARedondear % 5;
 
         if (ref != 0) {
-            valorARedondear -=  ref;
+            valorARedondear -= ref;
         }
         float valorConvertido = (float) valorARedondear / 100;
         String ret = String.valueOf(valorConvertido);
@@ -229,14 +229,12 @@ public class comun {
     }
 
     public static String setDosLugaresDecimales(int valorARedondear) {
-        
 
-        
         int decimales = 0;
-        
+
         float valorConvertido = (float) valorARedondear / 100;
         String ret = String.valueOf(valorConvertido);
-        
+
         for (int i = 0; decimales == 0 && i < ret.length(); i++) {
             if (ret.charAt(i) == 46) {
                 decimales = ret.length() - 1 - i;
@@ -249,5 +247,8 @@ public class comun {
         }
         return ret;
     }
-    
+
+    public static int cantidadARedondearPorExceso(int valorARedondear) {
+        return 5 - (valorARedondear % 5);
     }
+}
