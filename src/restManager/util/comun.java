@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import restManager.persistencia.Seccion;
+import restManager.resources.R;
 
 /**
  *
@@ -179,27 +181,15 @@ public class comun {
      * float por 100)
      * @return un string con el valor a imprimir o usar
      */
-    public static String redondeoPorExceso(int valorARedondear) {
-        int ref = valorARedondear % 5;
-
+    public static String redondeoPorExceso(float valorARedondear) {
+       int valorConvertidoEntero =  (int) Math.ceil(valorARedondear*100);
+       int ref = valorConvertidoEntero % 5;
         if (ref != 0) {
-            valorARedondear += 5 - ref;
+            valorConvertidoEntero += 5 - ref;
         }
-        float valorConvertido = (float) valorARedondear / 100;
-        String ret = String.valueOf(valorConvertido);
-
-        int decimales = 0;
-        for (int i = 0; decimales == 0; i++) {
-            if (ret.charAt(i) == 46) {
-                decimales = ret.length() - 1 - i;
-            }
-        }
-        if (decimales != 2) {
-            ret += "0";
-        }
-        return ret;
+        return  R.formatoMoneda.format((float)valorConvertidoEntero/100) + R.coinSuffix;
     }
-
+ 
     /**
      * redondea por defecto las cuentas
      *
@@ -207,48 +197,24 @@ public class comun {
      * float por 100)
      * @return un string con el valor a imprimir o usar
      */
-    public static String redondeoPorDefecto(int valorARedondear) {
-        int ref = valorARedondear % 5;
-
+    public static String redondeoPorDefecto(float valorARedondear) {
+              int valorConvertidoEntero =  (int) Math.floor(valorARedondear*100);
+       int ref = valorConvertidoEntero % 5;
         if (ref != 0) {
-            valorARedondear -= ref;
+            valorConvertidoEntero += 5 - ref;
         }
-        float valorConvertido = (float) valorARedondear / 100;
-        String ret = String.valueOf(valorConvertido);
-
-        int decimales = 0;
-        for (int i = 0; decimales == 0; i++) {
-            if (ret.charAt(i) == 46) {
-                decimales = ret.length() - 1 - i;
-            }
-        }
-        if (decimales != 2) {
-            ret += "0";
-        }
-        return ret;
+        return  R.formatoMoneda.format((float)valorConvertidoEntero/100) + R.coinSuffix;
     }
 
-    public static String setDosLugaresDecimales(int valorARedondear) {
-
-        int decimales = 0;
-
-        float valorConvertido = (float) valorARedondear / 100;
-        String ret = String.valueOf(valorConvertido);
-
-        for (int i = 0; decimales == 0 && i < ret.length(); i++) {
-            if (ret.charAt(i) == 46) {
-                decimales = ret.length() - 1 - i;
-            }
-        }
-
-        while (decimales != 2) {
-            ret += "0";
-            decimales++;
-        }
-        return ret;
+    public static String setDosLugaresDecimales(float valorARedondear) {
+         return Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2) + R.coinSuffix;
     }
 
+    public static float setDosLugaresDeimalesFloat(float valorARedondear){
+         return (float) (Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2));
+    }
+    
     public static int cantidadARedondearPorExceso(int valorARedondear) {
-        return 5 - (valorARedondear % 5);
+        return valorARedondear%5 != 0 ? 5 - (valorARedondear % 5) : 0;
     }
 }

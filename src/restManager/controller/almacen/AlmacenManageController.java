@@ -13,6 +13,7 @@ import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import restManager.controller.AbstractController;
+import restManager.controller.insumo.InsumoCreateEditController;
 import restManager.controller.insumo.InsumoListController;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
@@ -67,9 +68,7 @@ public class AlmacenManageController extends AbstractController<Almacen> {
     }
 
     public void modificarStock(Insumo i) {
-        InsumoListController insumoController = new InsumoListController();
-        insumoController.setSelected(i);
-        insumoController.editInsumo();
+        InsumoCreateEditController insumoController = new InsumoCreateEditController(i, getView());     
         getView().updateView();
     }
     

@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package GUI.Views.venta;
 
+import GUI.CalcularCambio;
+import GUI.IPVEstado;
+import GUI.Main;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -145,7 +148,7 @@ public class VentaMain extends javax.swing.JDialog {
 
         float ganancia = Float.parseFloat(jXLabelVALORVENTAS.getText().split(" ")[0])
                 - Float.parseFloat(jXLabelVALORGASTOS.getText().split(" ")[0]);
-        jXLabelValorGANANCIA.setText("" + String.format("%.2f", ganancia) + R.coinSuffix);
+        jXLabelValorGANANCIA.setText(comun.setDosLugaresDecimales(ganancia));
 
     }
 
@@ -160,7 +163,7 @@ public class VentaMain extends javax.swing.JDialog {
         comun.initArray(rowData);
 
         List<Orden> ords;
-        if (Main.logUser.getPuestoTrabajoList().get(0).getNivelAcceso() > 2) {
+        if (R.loggedUser.getPuestoTrabajoList().get(0).getNivelAcceso() > 2) {
             ords = ventas.getOrdenList();
         } else {
             ords = VentaDAO.getOrdenesActivas(ventas);
@@ -195,7 +198,8 @@ public class VentaMain extends javax.swing.JDialog {
 
         //actualizando el label de valor
         jXLabelValorTotalRecaudado.setText(
-                VentaDAO.getValorTotalVentas(v) + R.coinSuffix);
+                comun.setDosLugaresDecimales(VentaDAO.getValorTotalVentas(v)));
+        jXLabelValorTotalAFavor.setText(comun.setDosLugaresDecimales(VentaDAO.getValorTotalRedondeoAFavorDeLaCasa(v)));
 
         jXLabelVALORVENTAS.setText(jXLabelValorTotalRecaudado.getText());
 
@@ -213,7 +217,7 @@ public class VentaMain extends javax.swing.JDialog {
 
         //actualizando el label de gastos
         jXLabelValorGastosPorInsumo.setText(
-                comun.calcularSumaTabla(jXTableGastosPorProductos, 4) + R.coinSuffix);
+                comun.setDosLugaresDecimales(comun.calcularSumaTabla(jXTableGastosPorProductos, 4)));
         jXLabelVALORGASTOS.setText(jXLabelValorGastosPorInsumo.getText());
 
     }
@@ -334,6 +338,8 @@ public class VentaMain extends javax.swing.JDialog {
         buttonAddOrden = new org.edisoncor.gui.button.ButtonTextDown();
         buttonCalcularCambio = new org.edisoncor.gui.button.ButtonTextDown();
         buttonImprimirZ = new org.edisoncor.gui.button.ButtonTextDown();
+        jXLabelTotalAFavor = new org.jdesktop.swingx.JXLabel();
+        jXLabelValorTotalAFavor = new org.jdesktop.swingx.JXLabel();
         panelResumenes = new org.edisoncor.gui.panel.PanelRect();
         jXLabelCamareros = new org.jdesktop.swingx.JXLabel();
         jXLabelCocinas = new org.jdesktop.swingx.JXLabel();
@@ -606,6 +612,15 @@ public class VentaMain extends javax.swing.JDialog {
             }
         });
 
+        jXLabelTotalAFavor.setForeground(new java.awt.Color(255, 255, 255));
+        jXLabelTotalAFavor.setText("Redondeo a favor de la casa");
+        jXLabelTotalAFavor.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+
+        jXLabelValorTotalAFavor.setForeground(new java.awt.Color(255, 255, 255));
+        jXLabelValorTotalAFavor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jXLabelValorTotalAFavor.setText("+0.00 CUC");
+        jXLabelValorTotalAFavor.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout panelVentasLayout = new javax.swing.GroupLayout(panelVentas);
         panelVentas.setLayout(panelVentasLayout);
         panelVentasLayout.setHorizontalGroup(
@@ -616,19 +631,22 @@ public class VentaMain extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                     .addComponent(jXLabelOrden1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelRect3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(62, 62, 62)
                 .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelVentasLayout.createSequentialGroup()
-                        .addGap(62, 62, 62)
-                        .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panelVentasLayout.createSequentialGroup()
-                                .addComponent(jXLabelTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jXLabelValorTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jXLabelResumenVentas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)))
-                    .addGroup(panelVentasLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonImprimirZ, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVentasLayout.createSequentialGroup()
+                        .addComponent(jXLabelTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonImprimirZ, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jXLabelValorTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jXLabelResumenVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
+                    .addGroup(panelVentasLayout.createSequentialGroup()
+                        .addComponent(jXLabelTotalAFavor, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jXLabelValorTotalAFavor, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(19, 19, 19))
         );
         panelVentasLayout.setVerticalGroup(
@@ -640,15 +658,19 @@ public class VentaMain extends javax.swing.JDialog {
                     .addComponent(jXLabelResumenVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelVentasLayout.createSequentialGroup()
                         .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jXLabelValorTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jXLabelTotalRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelVentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jXLabelTotalAFavor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jXLabelValorTotalAFavor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonImprimirZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelRect3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
@@ -986,12 +1008,12 @@ public class VentaMain extends javax.swing.JDialog {
 
     private void buttonAddOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddOrdenActionPerformed
 
-        PedidoCrearEditar c = PedidoCrearEditar.getInstance(this, true, null,v.getFecha());
+        PedidoCrearEditar c = PedidoCrearEditar.getInstance(this, true, null, v.getFecha());
 
     }//GEN-LAST:event_buttonAddOrdenActionPerformed
 
     private void buttonEditOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditOrdenActionPerformed
-      Orden o = getSelectedOrden();
+        Orden o = getSelectedOrden();
         PedidoCrearEditar c = PedidoCrearEditar.getInstance(this, true, o, o.getVentafecha().getFecha());
     }//GEN-LAST:event_buttonEditOrdenActionPerformed
 
@@ -1028,7 +1050,7 @@ public class VentaMain extends javax.swing.JDialog {
     private void jXTableOrdenesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jXTableOrdenesMouseClicked
         if (evt.getClickCount() == 2) {
             Orden o = getSelectedOrden();
-            PedidoCrearEditar c = PedidoCrearEditar.getInstance(this, true, o,o.getVentafecha().getFecha());
+            PedidoCrearEditar c = PedidoCrearEditar.getInstance(this, true, o, o.getVentafecha().getFecha());
         }
     }//GEN-LAST:event_jXTableOrdenesMouseClicked
 
@@ -1088,11 +1110,13 @@ public class VentaMain extends javax.swing.JDialog {
     private org.jdesktop.swingx.JXLabel jXLabelINFOTOTALVENTAS;
     private org.jdesktop.swingx.JXLabel jXLabelOrden1;
     private org.jdesktop.swingx.JXLabel jXLabelResumenVentas;
+    private org.jdesktop.swingx.JXLabel jXLabelTotalAFavor;
     private org.jdesktop.swingx.JXLabel jXLabelTotalRecaudado;
     private org.jdesktop.swingx.JXLabel jXLabelVALORGASTOS;
     private org.jdesktop.swingx.JXLabel jXLabelVALORVENTAS;
     private org.jdesktop.swingx.JXLabel jXLabelValorGANANCIA;
     private org.jdesktop.swingx.JXLabel jXLabelValorGastosPorInsumo;
+    private org.jdesktop.swingx.JXLabel jXLabelValorTotalAFavor;
     private org.jdesktop.swingx.JXLabel jXLabelValorTotalRecaudado;
     private org.jdesktop.swingx.JXLabel jXLabelValorTrab;
     private org.jdesktop.swingx.JXTable jXTableGastosPorProductos;
@@ -1209,6 +1233,8 @@ public class VentaMain extends javax.swing.JDialog {
         }
         jXLabelValorTotalRecaudado.setVisible(Main.NIVEL_3);
         jXLabelTotalRecaudado.setVisible(Main.NIVEL_3);
+        jXLabelTotalAFavor.setVisible(Main.NIVEL_3);
+        jXLabelValorTotalAFavor.setVisible(Main.NIVEL_3);
     }
 
     private void UpdateTablaIPVBarra(Venta ventas) {

@@ -192,7 +192,7 @@ public class ProductoVenta implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.ProductoVenta[ pCod=" + pCod + " ]";
+        return  nombre + " ("+ pCod + " )";
     }
 
 }

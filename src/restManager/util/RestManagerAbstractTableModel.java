@@ -5,6 +5,7 @@
  */
 package restManager.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -24,6 +25,9 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
 
     public RestManagerAbstractTableModel(List<T> items, JTable table) {
         this.items = items;
+        if(this.items == null){
+           this.items = new ArrayList<>();
+        }
         this.table = table;
     }
 
@@ -52,14 +56,14 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
 
     public T getObjectAtSelectedRow() {
         if (table.getSelectedRow() == -1) {
-            throw new NoSelectedException();
+            throw new NoSelectedException(table.getParent());
         }
         return items.get(table.convertRowIndexToModel(table.getSelectedRow()));
     }
 
     public void removeObjectAtSelectedRow() {
         if (table.getSelectedRow() == -1) {
-            throw new NoSelectedException();
+            throw new NoSelectedException(table.getParent());
         }
         int itemToDelete = table.convertRowIndexToModel(table.getSelectedRow());
         T deleted = items.remove(itemToDelete);

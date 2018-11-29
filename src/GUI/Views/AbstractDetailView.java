@@ -121,6 +121,12 @@ public abstract class AbstractDetailView <T>  extends AbstractView{
      * @return true if the data is valid otherwise false
      */
     public abstract boolean validateData();
+
+    public T getInstance() {
+        return instance;
+    }
+    
+    
     
    
 

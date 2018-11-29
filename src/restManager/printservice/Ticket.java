@@ -23,7 +23,9 @@ public class Ticket {
     public String initialize() {
         final byte[] Init = {27, 64};
         commandSet += new String(Init);
-        return new String(Init);
+        final byte[] setCodePageLatin = {27, 116, 54};
+        commandSet += new String(setCodePageLatin);
+        return commandSet;
     }
 
     public String chooseFont(int Options) {
@@ -215,10 +217,18 @@ public class Ticket {
     public String drawerKick() {
 
         final byte[] DrawerKick = {27, 70, 0, 60, 120};
-       String s = new String(DrawerKick);
+        String s = new String(DrawerKick);
 
         commandSet += s;
         return s;
+    }
+
+    public String soundBuzzer() {
+        final byte[] buzzer = {27, (int) '(', (int) 'A', 4, 0, 48, 55, 3, 15};
+        String s = new String(buzzer);
+        commandSet += s;
+        return s;
+
     }
 
     public String addLineSeperator() {
@@ -235,8 +245,16 @@ public class Ticket {
         commandSet = "";
     }
 
+    public String setCodePageTable(byte codePage) {
+        final byte[] setuserDefinedCodePage = {27,37,1};
+        commandSet += new String(setuserDefinedCodePage);
+        final byte[] setCodePageLatin = {27, 116, codePage};
+        commandSet += new String(setCodePageLatin);
+        return commandSet;
+    }
+
     public void setText(String s) {
-        int sLenght ;
+        int sLenght;
         do {
             sLenght = s.length();
             if (sLenght > PAPER_LENGHT) {

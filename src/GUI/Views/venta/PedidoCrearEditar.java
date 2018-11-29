@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package GUI.Views.venta;
 
 import java.text.SimpleDateFormat;
 
@@ -73,7 +73,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 o.setHoraComenzada(dat);
                 o.setPorciento(R.PERCENTAGE);
                 o.setOrdenvalorMonetario(Float.parseFloat("0"));
-                o.setPersonalusuario(Main.logUser);
+                o.setPersonalusuario(R.loggedUser);
                 o.setVentafecha(findVentaFecha());
 
                 Mesa m = staticContent.mesasJPA.findMesa("M-0");
@@ -787,7 +787,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return valor;
+        return comun.setDosLugaresDeimalesFloat(valor);
     }
 
     private void retirarProducto() {

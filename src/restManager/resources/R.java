@@ -5,6 +5,7 @@
  */
 package restManager.resources;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -20,9 +21,9 @@ import restManager.persistencia.Personal;
  */
 public class R {
 
-    public static String coinSuffix;
+    public static String coinSuffix ;
 
-    public static Personal loggerUser = null;
+    public static Personal loggedUser = null;
 
     public static final Date TODAYS_DATE = new Date();
 
@@ -31,6 +32,8 @@ public class R {
     public static final int COINCHANGE = 24;
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
+
+    public static DecimalFormat formatoMoneda = new DecimalFormat("0.00");
 
     public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("Strings");
 

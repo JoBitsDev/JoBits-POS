@@ -5,51 +5,64 @@
  */
 package GUI.Views.Insumo;
 
-import GUI.Views.AbstractView;
 import GUI.Components.JSpinner;
+import GUI.Views.AbstractDetailView;
+import GUI.Views.util.TableWithComboBoxAutoComplete;
+import com.jidesoft.dialog.JideOptionPane;
+
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.AbstractTableModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteComboBoxEditor;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
+
 import restManager.controller.AbstractController;
-import restManager.controller.insumo.InsumoListController;
+import restManager.controller.insumo.InsumoCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.NoSelectedException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoElaborado;
 import restManager.persistencia.InsumoElaboradoPK;
 import restManager.persistencia.ProductoInsumo;
+import restManager.persistencia.ProductoInsumoPK;
+import restManager.persistencia.ProductoVenta;
 import restManager.resources.R;
 import restManager.resources.RegularExpressions;
 import restManager.util.RestManagerAbstractTableModel;
+import restManager.util.RestManagerComboBoxListener;
+import restManager.util.RestManagerComboBoxModel;
 
 /**
  *
  * @author Jorge
  */
-public class InsumoCreateEditView extends AbstractView {
+public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
 
-    private State state;
-    private Insumo ins;
-    private MyTableModel model = new MyTableModel(new ArrayList<>());
+    TableWithComboBoxAutoComplete<Insumo, InsumoElaborado> tableIngElab;
 
     public InsumoCreateEditView(AbstractController controller, Frame owner, boolean modal, Insumo ins) {
-        super(DialogType.DEFINED, controller, owner, modal);
+        super(ins, DialogType.DEFINED, controller, owner, modal);
         initComponents();
-        this.ins = ins;
+        hideCrossReferenceDialog();
+        setElaboradoTable();
 
     }
 
     public InsumoCreateEditView(AbstractController controller, Dialog owner, boolean modal, Insumo ins) {
-        super(DialogType.DEFINED, controller, owner, modal);
+        super(ins, DialogType.DEFINED, controller, owner, modal);
         initComponents();
-        this.ins = ins;
+        hideCrossReferenceDialog();
+        setElaboradoTable();
     }
 
     /**
@@ -57,41 +70,206 @@ public class InsumoCreateEditView extends AbstractView {
      */
     @Override
     public void updateView() {
-        updateTable(getController().getItems());
-        updateComboBoxes(((InsumoListController) getController()).getAlmacenList());
-        updatePanelInputs(ins);
+        updateTable(getInstance().getInsumoElaboradoList());
+        updateComboBoxes(getController().getAlmacenList());
+        updatePanelInputs();
 
     }
 
-    private void updateTable(List<Insumo> items) {
-        if (model.getItems().isEmpty()) {
-            model = new MyTableModel(items);
-            jTableInsElab.setModel(model);
-        }
+    @Override
+    public InsumoCreateEditController getController() {
+        return (InsumoCreateEditController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void updatePanelInputs(Insumo ins) {
-        this.ins = ins;
-        if (ins != null) {
-            if (ins.getNombre().isEmpty()) {
-                state = State.CREATING;
-            } else {
-                state = State.UPDATING;
-                jButtonAdd.setText(R.RESOURCE_BUNDLE.getString("label_editar"));
+    private void updateTable(List<InsumoElaborado> items) {
+        tableIngElab = new TableWithComboBoxAutoComplete<Insumo, InsumoElaborado>(jTableInsElab,
+                jButtonAgregarIns, jButtonDeleteIns,
+                jComboBoxAutoCompleteIns,
+                new RestManagerAbstractTableModel<InsumoElaborado>(items, jTableInsElab) {
+
+            @Override
+            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 3:
+                        items.get(rowIndex).setCantidad((float) aValue);
+                        break;
+                    case 4:
+                        items.get(rowIndex).setCosto((float) aValue);
+                        updateLabelCost();
+                        break;
+                }
+                fireTableCellUpdated(rowIndex, columnIndex);
+
             }
-            jTextFieldNombre.setText(ins.getNombre());
-            jSpinnerCosto.setValue(ins.getCostoPorUnidad());
-            jSpinnerCantidadExistente.setValue(ins.getCantidadExistente());
-            jSpinnerEstimacionStock.setValue(ins.getStockEstimation());
-            jComboBoxUM.setSelectedItem(R.UM.valueOf(ins.getUm()));
-            jComboBoxAlmacen.setSelectedItem(ins.getAlmacencodAlmacen());
-            if (ins.getElaborado()) {
-                jCheckBoxElaborado.setSelected(true);
-                jTableInsElab.setEnabled(true);
-                model.fillInsumoElabData(ins.getInsumoElaboradoList());
-                jSpinnerCantidadCreada.setValue(ins.getCantidadCreada());
+
+            @Override
+            public int getColumnCount() {
+                return 5;
             }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return items.get(rowIndex).getInsumo1().getCodInsumo();
+                    case 1:
+                        return items.get(rowIndex).getInsumo1().getNombre();
+                    case 2:
+                        return items.get(rowIndex).getInsumo1().getUm();
+                    case 3:
+                        return items.get(rowIndex).getCantidad();
+                    case 4:
+                        return items.get(rowIndex).getCosto();
+                    default:
+                        return null;
+
+                }
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0:
+                        return "Codigo";
+                    case 1:
+                        return "Nombre";
+                    case 2:
+                        return "UM";
+                    case 3:
+                        return "Cantidad";
+                    case 4:
+                        return "Costo";
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return String.class;
+                    case 1:
+                        return String.class;
+                    case 2:
+                        return String.class;
+                    case 3:
+                        return Float.class;
+                    case 4:
+                        return Float.class;
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return columnIndex == 3 || columnIndex == 4;
+            }
+
+        },
+                new RestManagerComboBoxModel<Insumo>(getController().getItems())) {
+            @Override
+            public InsumoElaborado transformK_to_T(Insumo selected) {
+                InsumoElaborado newInsumo = new InsumoElaborado();
+                InsumoElaboradoPK pk = new InsumoElaboradoPK(instance.getCodInsumo(), selected.getCodInsumo());
+                newInsumo.setInsumoElaboradoPK(pk);
+                newInsumo.setInsumo(instance);
+                newInsumo.setInsumo1(selected);
+                newInsumo.setCantidad(0);
+                newInsumo.setCosto(0);
+                return newInsumo;
+            }
+
+        };
+
+        new TableWithComboBoxAutoComplete<ProductoVenta, ProductoInsumo>(jTableCrossReference, jButtonAgregarProd,
+                jButtonDeleteProd, jComboBoxAutoComplete,
+                new RestManagerAbstractTableModel<ProductoInsumo>(instance.getProductoInsumoList(), jTableCrossReference) {
+            @Override
+            public int getColumnCount() {
+                return 4;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return items.get(rowIndex).getProductoVenta().getPCod();
+                    case 1:
+                        return items.get(rowIndex).getProductoVenta().getNombre();
+                    case 2:
+                        return items.get(rowIndex).getInsumo().getUm();
+                    case 3:
+                        return items.get(rowIndex).getCantidad();
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0:
+                        return "Código";
+                    case 1:
+                        return "Nombre";
+                    case 2:
+                        return "U/M";
+                    case 3:
+                        return "Cantidad";
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return columnIndex == 3;
+            }
+
+            @Override
+            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 3:
+                        items.get(rowIndex).setCantidad(Float.parseFloat((String) aValue));
+                        fireTableCellUpdated(rowIndex, columnIndex);
+                        break;
+
+                }
+
+            }
+        },
+                new RestManagerComboBoxModel<ProductoVenta>(getController().getProductoList())) {
+            @Override
+            public ProductoInsumo transformK_to_T(ProductoVenta selected) {
+                ProductoInsumo ret = new ProductoInsumo();
+                ProductoInsumoPK pInsPK = new ProductoInsumoPK(selected.getPCod(), instance.getCodInsumo());
+                ret.setProductoInsumoPK(pInsPK);
+                ret.setProductoVenta(selected);
+                ret.setInsumo(instance);
+                ret.setCantidad(1);
+                ret.setCosto(0);
+                return ret;
+            }
+        };
+
+    }
+
+    private void updatePanelInputs() {
+
+        jTextFieldNombre.setText(instance.getNombre());
+        jSpinnerCosto.setValue(instance.getCostoPorUnidad());
+        jSpinnerCantidadExistente.setValue(instance.getCantidadExistente());
+        jSpinnerEstimacionStock.setValue(instance.getStockEstimation());
+        jComboBoxUM.setSelectedItem(R.UM.valueOf(instance.getUm()));
+        jComboBoxAlmacen.setSelectedItem(instance.getAlmacencodAlmacen());
+        if (instance.getElaborado()) {
+            jCheckBoxElaborado.setSelected(true);
+            jTableInsElab.setEnabled(true);
+            jSpinnerCantidadCreada.setValue(instance.getCantidadCreada());
         }
+
     }
 
     private void updateComboBoxes(List<Almacen> items) {
@@ -100,19 +278,6 @@ public class InsumoCreateEditView extends AbstractView {
         });
         for (R.UM x : R.UM.values()) {
             jComboBoxUM.addItem(x);
-        }
-    }
-
-    private void validateInsumo() {
-        ins.setCostoPorUnidad((Float) jSpinnerCosto.getValue());
-        ins.setCantidadExistente((Float) jSpinnerCantidadExistente.getValue());
-        ins.setStockEstimation((Float) jSpinnerEstimacionStock.getValue());
-        ins.setUm(jComboBoxUM.getSelectedItem().toString());
-        ins.setAlmacencodAlmacen((Almacen) jComboBoxAlmacen.getSelectedItem());
-        if (ins.getElaborado()) {
-            ins.setInsumoElaboradoList(((MyTableModel) jTableInsElab.getModel()).getinsumosSelected());
-            ins.setCantidadCreada((Float) jSpinnerCantidadCreada.getValue());
-
         }
     }
 
@@ -127,7 +292,7 @@ public class InsumoCreateEditView extends AbstractView {
 
         jXPanelInputs = new org.jdesktop.swingx.JXPanel();
         jXLabelNombre = new org.jdesktop.swingx.JXLabel();
-        jTextFieldNombre = new javax.swing.JTextField();
+        jTextFieldNombre = new GUI.Components.JTextField();
         jXLabelUM = new org.jdesktop.swingx.JXLabel();
         jComboBoxUM = new javax.swing.JComboBox<>();
         jXLabelNombreAlmacen = new org.jdesktop.swingx.JXLabel();
@@ -139,20 +304,29 @@ public class InsumoCreateEditView extends AbstractView {
         jXLabelCostoU = new org.jdesktop.swingx.JXLabel();
         jSpinnerCosto = new JSpinner();
         jXPanelTabla = new org.jdesktop.swingx.JXPanel();
-        jXLabelNombreCosto = new org.jdesktop.swingx.JXLabel();
-        jXLabelNombreValorCosto = new org.jdesktop.swingx.JXLabel();
+        jPanel1 = new javax.swing.JPanel();
         jCheckBoxElaborado = new javax.swing.JCheckBox();
         jXLabelNombreCantCreada = new org.jdesktop.swingx.JXLabel();
         jSpinnerCantidadCreada = new JSpinner();
+        jXLabelNombreCosto = new org.jdesktop.swingx.JXLabel();
+        jXLabelNombreValorCosto = new org.jdesktop.swingx.JXLabel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        jScrollPaneInsElab = new javax.swing.JScrollPane();
-        jTableInsElab = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelCrossReference = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBoxAutoComplete = new com.jidesoft.swing.AutoCompletionComboBox();
+        jButtonAgregarProd = new javax.swing.JButton();
         jScrollPaneCrossReference = new javax.swing.JScrollPane();
         jTableCrossReference = new javax.swing.JTable();
-        jPanelCrossReference = new javax.swing.JPanel();
-        jButtonAgregarProd = new javax.swing.JButton();
         jButtonDeleteProd = new javax.swing.JButton();
+        jPanelIngElab = new javax.swing.JPanel();
+        jScrollPaneInsElab = new javax.swing.JScrollPane();
+        jTableInsElab = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxAutoCompleteIns = new com.jidesoft.swing.AutoCompletionComboBox();
+        jButtonAgregarIns = new javax.swing.JButton();
+        jButtonDeleteIns = new javax.swing.JButton();
         jXPanelControles = new org.jdesktop.swingx.JXPanel();
         jButtonAdd = new javax.swing.JButton();
         jToggleButtonCrossReference = new javax.swing.JToggleButton();
@@ -172,7 +346,6 @@ public class InsumoCreateEditView extends AbstractView {
         jXLabelNombre.setText(bundle.getString("label_nombre")); // NOI18N
 
         jTextFieldNombre.setBorder(null);
-        jTextFieldNombre.setInputVerifier(new Verifier());
         jTextFieldNombre.setMaximumSize(new java.awt.Dimension(120, 16));
         jTextFieldNombre.setMinimumSize(new java.awt.Dimension(120, 16));
 
@@ -249,10 +422,10 @@ public class InsumoCreateEditView extends AbstractView {
 
         getContentPane().add(jXPanelInputs, java.awt.BorderLayout.PAGE_START);
 
-        jXLabelNombreCosto.setText(bundle.getString("label_costo")); // NOI18N
+        jXPanelTabla.setLayout(new java.awt.BorderLayout());
 
-        jXLabelNombreValorCosto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jXLabelNombreValorCosto.setText(bundle.getString("label_lista_ingredientes")); // NOI18N
+        jPanel1.setMinimumSize(new java.awt.Dimension(454, 0));
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
 
         jCheckBoxElaborado.setText(bundle.getString("label_elaborado")); // NOI18N
         jCheckBoxElaborado.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -265,30 +438,47 @@ public class InsumoCreateEditView extends AbstractView {
                 jCheckBoxElaboradoActionPerformed(evt);
             }
         });
+        jPanel1.add(jCheckBoxElaborado);
 
         jXLabelNombreCantCreada.setText(bundle.getString("label_cantidad_creada")); // NOI18N
+        jPanel1.add(jXLabelNombreCantCreada);
 
         jSpinnerCantidadCreada.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
+        jSpinnerCantidadCreada.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanel1.add(jSpinnerCantidadCreada);
+
+        jXLabelNombreCosto.setText(bundle.getString("label_costo")); // NOI18N
+        jPanel1.add(jXLabelNombreCosto);
+
+        jXLabelNombreValorCosto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jXLabelNombreValorCosto.setText(bundle.getString("label_lista_ingredientes")); // NOI18N
+        jPanel1.add(jXLabelNombreValorCosto);
+
+        jXPanelTabla.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         jLayeredPane1.setPreferredSize(new java.awt.Dimension(454, 404));
         jLayeredPane1.setLayout(new javax.swing.OverlayLayout(jLayeredPane1));
 
-        jTableInsElab.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jPanelCrossReference.setMinimumSize(new java.awt.Dimension(454, 0));
+        jPanelCrossReference.setPreferredSize(new java.awt.Dimension(454, 40));
+        jPanelCrossReference.setLayout(new java.awt.BorderLayout());
 
-            },
-            new String [] {
+        jLabel1.setText(bundle.getString("label_producto_venta")); // NOI18N
+        jPanel2.add(jLabel1);
 
+        jComboBoxAutoComplete.setMaximumRowCount(5);
+        jComboBoxAutoComplete.setPreferredSize(new java.awt.Dimension(250, 26));
+        jPanel2.add(jComboBoxAutoComplete);
+
+        jButtonAgregarProd.setText(bundle.getString("label_agregar")); // NOI18N
+        jButtonAgregarProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarProdActionPerformed(evt);
             }
-        ));
-        jTableInsElab.setEnabled(false);
-        jScrollPaneInsElab.setViewportView(jTableInsElab);
+        });
+        jPanel2.add(jButtonAgregarProd);
 
-        jLayeredPane1.add(jScrollPaneInsElab);
-
-        jPanel1.setMinimumSize(new java.awt.Dimension(454, 0));
-        jPanel1.setPreferredSize(new java.awt.Dimension(454, 404));
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanelCrossReference.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         jScrollPaneCrossReference.setMinimumSize(new java.awt.Dimension(454, 0));
 
@@ -302,67 +492,65 @@ public class InsumoCreateEditView extends AbstractView {
         ));
         jScrollPaneCrossReference.setViewportView(jTableCrossReference);
 
-        jPanel1.add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
-
-        jPanelCrossReference.setMinimumSize(new java.awt.Dimension(454, 0));
-        jPanelCrossReference.setPreferredSize(new java.awt.Dimension(454, 40));
-
-        jButtonAgregarProd.setText(bundle.getString("label_agregar")); // NOI18N
-        jButtonAgregarProd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAgregarProdActionPerformed(evt);
-            }
-        });
-        jPanelCrossReference.add(jButtonAgregarProd);
+        jPanelCrossReference.add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
 
         jButtonDeleteProd.setText(bundle.getString("label_eliminar")); // NOI18N
-        jPanelCrossReference.add(jButtonDeleteProd);
+        jButtonDeleteProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteProdActionPerformed(evt);
+            }
+        });
+        jPanelCrossReference.add(jButtonDeleteProd, java.awt.BorderLayout.PAGE_END);
 
-        jPanel1.add(jPanelCrossReference, java.awt.BorderLayout.PAGE_END);
+        jLayeredPane1.add(jPanelCrossReference);
 
-        jLayeredPane1.add(jPanel1);
+        jPanelIngElab.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jXPanelTablaLayout = new javax.swing.GroupLayout(jXPanelTabla);
-        jXPanelTabla.setLayout(jXPanelTablaLayout);
-        jXPanelTablaLayout.setHorizontalGroup(
-            jXPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jXPanelTablaLayout.createSequentialGroup()
-                .addComponent(jCheckBoxElaborado)
-                .addGap(67, 67, 67)
-                .addComponent(jXLabelNombreCantCreada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSpinnerCantidadCreada, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
-                .addComponent(jXLabelNombreCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jXLabelNombreValorCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jXPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jXPanelTablaLayout.createSequentialGroup()
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jXPanelTablaLayout.setVerticalGroup(
-            jXPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jXPanelTablaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jXPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jXLabelNombreCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jXLabelNombreValorCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBoxElaborado)
-                    .addComponent(jXLabelNombreCantCreada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinnerCantidadCreada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(422, Short.MAX_VALUE))
-            .addGroup(jXPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jXPanelTablaLayout.createSequentialGroup()
-                    .addGap(40, 40, 40)
-                    .addComponent(jLayeredPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-                    .addGap(20, 20, 20)))
-        );
+        jTableInsElab.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTableInsElab.setColumnSelectionAllowed(true);
+        jScrollPaneInsElab.setViewportView(jTableInsElab);
+
+        jPanelIngElab.add(jScrollPaneInsElab, java.awt.BorderLayout.CENTER);
+
+        jLabel2.setText(bundle.getString("label_insumo")); // NOI18N
+        jPanel4.add(jLabel2);
+
+        jComboBoxAutoCompleteIns.setMaximumRowCount(5);
+        jComboBoxAutoCompleteIns.setPreferredSize(new java.awt.Dimension(250, 26));
+        jPanel4.add(jComboBoxAutoCompleteIns);
+
+        jButtonAgregarIns.setText(bundle.getString("label_agregar")); // NOI18N
+        jButtonAgregarIns.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarInsActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButtonAgregarIns);
+
+        jPanelIngElab.add(jPanel4, java.awt.BorderLayout.PAGE_START);
+
+        jButtonDeleteIns.setText(bundle.getString("label_eliminar")); // NOI18N
+        jButtonDeleteIns.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteInsActionPerformed(evt);
+            }
+        });
+        jPanelIngElab.add(jButtonDeleteIns, java.awt.BorderLayout.PAGE_END);
+
+        jLayeredPane1.add(jPanelIngElab);
+
+        jXPanelTabla.add(jLayeredPane1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jXPanelTabla, java.awt.BorderLayout.CENTER);
 
-        jButtonAdd.setText(bundle.getString("label_agregar")); // NOI18N
+        jButtonAdd.setText(bundle.getString("label_crear")); // NOI18N
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddActionPerformed(evt);
@@ -398,12 +586,7 @@ public class InsumoCreateEditView extends AbstractView {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        validateInsumo();
-        if (state == State.CREATING) {
-            ((InsumoListController) getController()).createInsumo(ins);
-        } else {
-            ((InsumoListController) getController()).updateInsumo(ins);
-        }
+        getController().createUpdateInstance();
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jCheckBoxElaboradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxElaboradoActionPerformed
@@ -411,11 +594,12 @@ public class InsumoCreateEditView extends AbstractView {
     }//GEN-LAST:event_jCheckBoxElaboradoActionPerformed
 
     private void jCheckBoxElaboradoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxElaboradoStateChanged
+        instance.setElaborado(jCheckBoxElaborado.isSelected());
         setElaboradoTable();
     }//GEN-LAST:event_jCheckBoxElaboradoStateChanged
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        ((InsumoListController) getController()).disposeNewEditView();
+        dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jToggleButtonCrossReferenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonCrossReferenceActionPerformed
@@ -424,28 +608,47 @@ public class InsumoCreateEditView extends AbstractView {
 
     private void jToggleButtonCrossReferenceStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButtonCrossReferenceStateChanged
         if (jToggleButtonCrossReference.isSelected()) {
-            showCrossReferenceDialog(ins.getProductoInsumoList());
+            showCrossReferenceDialog(instance.getProductoInsumoList());
         } else {
             hideCrossReferenceDialog();
         }
     }//GEN-LAST:event_jToggleButtonCrossReferenceStateChanged
 
     private void jButtonAgregarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarProdActionPerformed
-     
     }//GEN-LAST:event_jButtonAgregarProdActionPerformed
+
+    private void jButtonDeleteProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteProdActionPerformed
+    }//GEN-LAST:event_jButtonDeleteProdActionPerformed
+
+    private void jButtonAgregarInsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarInsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAgregarInsActionPerformed
+
+    private void jButtonDeleteInsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteInsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonDeleteInsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonAgregarIns;
     private javax.swing.JButton jButtonAgregarProd;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonDeleteIns;
     private javax.swing.JButton jButtonDeleteProd;
     private javax.swing.JCheckBox jCheckBoxElaborado;
     private javax.swing.JComboBox<Almacen> jComboBoxAlmacen;
+    private com.jidesoft.swing.AutoCompletionComboBox jComboBoxAutoComplete;
+    private com.jidesoft.swing.AutoCompletionComboBox jComboBoxAutoCompleteIns;
     private javax.swing.JComboBox<R.UM> jComboBoxUM;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelCrossReference;
+    private javax.swing.JPanel jPanelIngElab;
     private javax.swing.JScrollPane jScrollPaneCrossReference;
     private javax.swing.JScrollPane jScrollPaneInsElab;
     private javax.swing.JSpinner jSpinnerCantidadCreada;
@@ -471,67 +674,13 @@ public class InsumoCreateEditView extends AbstractView {
     // End of variables declaration//GEN-END:variables
 
     public void showCrossReferenceDialog(List<ProductoInsumo> insList) {
-        jTableCrossReference.setModel(new RestManagerAbstractTableModel<ProductoInsumo>(insList, jTableCrossReference) {
-            @Override
-            public int getColumnCount() {
-                return 3;
-            }
-
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-                switch (columnIndex) {
-                    case 0:
-                        return items.get(rowIndex).getProductoVenta().getPCod();
-                    case 1:
-                        return items.get(rowIndex).getProductoVenta().getNombre();
-                    case 2:
-                        return items.get(rowIndex).getCantidad();
-                    default:
-                        return null;
-                }
-            }
-
-            @Override
-            public String getColumnName(int column) {
-                switch (column) {
-                    case 0:
-                        return "Código";
-                    case 1:
-                        return "Nombre";
-                    case 2:
-                        return "Cantidad";
-                    default:
-                        return null;
-                }
-            }
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 2;
-            }
-
-            @Override
-            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                switch (columnIndex) {
-                    case 2:
-                        items.get(rowIndex).setCantidad(Float.parseFloat((String) aValue));
-                        fireTableCellUpdated(rowIndex, columnIndex);
-                        break;
-
-                }
-
-            }
-
-        });
         jPanelCrossReference.setVisible(true);
-        jScrollPaneInsElab.setVisible(false);
         jLayeredPane1.moveToFront(jPanelCrossReference);
         setSize(getWidth(), 610);
     }
 
     public void hideCrossReferenceDialog() {
         jPanelCrossReference.setVisible(false);
-        jScrollPaneInsElab.setVisible(true);
         jLayeredPane1.moveToBack(jPanelCrossReference);
         if (!jCheckBoxElaborado.isSelected()) {
             setSize(getMinimumSize());
@@ -540,183 +689,65 @@ public class InsumoCreateEditView extends AbstractView {
     }
 
     public void setElaboradoTable() {
-        ins.setElaborado(jCheckBoxElaborado.isSelected());
-        jTableInsElab.setVisible(jCheckBoxElaborado.isSelected());
+        if (instance.getElaborado()) {
+            jCheckBoxElaborado.setSelected(true);
+        }
+
+        jPanelIngElab.setVisible(jCheckBoxElaborado.isSelected());
         if (jCheckBoxElaborado.isSelected()) {
             setSize(getWidth(), 610);
-            jLayeredPane1.moveToFront(jScrollPaneInsElab);
+            jLayeredPane1.moveToFront(jPanelIngElab);
         } else {
             if (!jToggleButtonCrossReference.isSelected()) {
                 setSize(getMinimumSize());
             }
-            jLayeredPane1.moveToBack(jScrollPaneInsElab);
+            jLayeredPane1.moveToBack(jPanelIngElab);
         }
         jSpinnerCosto.setEnabled(!jCheckBoxElaborado.isSelected());
 
     }
 
-    private class MyTableModel extends AbstractTableModel {
-
-        private final List<Insumo> items;
-        private final float[] itemsAmount;
-        private final float[] itemsCosts;
-
-        public MyTableModel(List<Insumo> items) {
-            this.items = items;
-            itemsAmount = new float[items.size()];
-            itemsCosts = new float[items.size()];
-
-        }
-
-        @Override
-        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-            switch (columnIndex) {
-                case 3:
-                    itemsAmount[rowIndex] = (float) aValue;
-                    break;
-                case 4:
-                    itemsCosts[rowIndex] = (float) aValue;
-                    break;
-            }
-            fireTableCellUpdated(rowIndex, columnIndex);
-
-        }
-
-        @Override
-        public int getRowCount() {
-            return items.size();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return 5;
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            switch (columnIndex) {
-                case 0:
-                    return items.get(rowIndex).getCodInsumo();
-                case 1:
-                    return items.get(rowIndex).getNombre();
-                case 2:
-                    return items.get(rowIndex).getUm();
-                case 3:
-                    return itemsAmount[rowIndex];
-                case 4:
-                    return itemsCosts[rowIndex];
-                default:
-                    return null;
-
-            }
-        }
-
-        @Override
-        public String getColumnName(int column) {
-            switch (column) {
-                case 0:
-                    return "Codigo";
-                case 1:
-                    return "Nombre";
-                case 2:
-                    return "UM";
-                case 3:
-                    return "Cantidad";
-                case 4:
-                    return "Costo";
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            switch (columnIndex) {
-                case 0:
-                    return String.class;
-                case 1:
-                    return String.class;
-                case 2:
-                    return String.class;
-                case 3:
-                    return Float.class;
-                case 4:
-                    return Float.class;
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return columnIndex == 3 || columnIndex == 4;
-        }
-
-        public void fillInsumoElabData(List<InsumoElaborado> itemsToFill) {
-            for (InsumoElaborado x : itemsToFill) {
-                int index = items.indexOf(x.getInsumo1());
-                if (index != -1) {
-                    itemsAmount[index] = x.getCantidad();
-                    itemsCosts[index] = x.getCosto();
-                }
-            }
-            fireTableDataChanged();
-        }
-
-        public List<InsumoElaborado> getinsumosSelected() {
-            ArrayList<InsumoElaborado> ret = new ArrayList<>();
-            for (int i = 0; i < itemsAmount.length; i++) {
-                if (itemsAmount[i] > 0) {
-                    InsumoElaboradoPK pk = new InsumoElaboradoPK(ins.getCodInsumo(), items.get(i).getCodInsumo());
-                    InsumoElaborado elab = new InsumoElaborado(pk);
-                    elab.setCantidad(itemsAmount[i]);
-                    elab.setCosto(itemsCosts[i]);
-                    elab.setInsumo1(items.get(i));
-                    elab.setInsumo(ins);
-                    ret.add(elab);
-                }
-            }
-            return ret;
-        }
-
-        public List<Insumo> getItems() {
-            return items;
-        }
-
-        public float[] getItemsAmount() {
-            return itemsAmount;
-        }
-
-        public float[] getItemsCosts() {
-            return itemsCosts;
-        }
-
+    @Override
+    public void setEditingMode() {
+        jButtonAdd.setText(R.RESOURCE_BUNDLE.getString("label_editar"));
     }
 
-    private class Verifier extends InputVerifier {
+    @Override
+    public void setCreatingMode() {
+        jButtonAdd.setText(R.RESOURCE_BUNDLE.getString("label_crear"));
+    }
 
-        @Override
-        public boolean verify(JComponent input) {
-            JTextField in = (JTextField) input;
-            boolean invalid;
-            String validName = in.getText();
-
-            invalid = !validName.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES) || validName.length() > 60;
-
-            if (invalid) {
-                in.setBorder(new LineBorder(Color.red));
-            } else {
-                in.setBorder(null);
-                ins.setNombre(validName);
-            }
-
-            return !invalid;
+    @Override
+    public boolean validateData() {
+        if(jComboBoxAlmacen.getSelectedIndex() == -1 || !jTextFieldNombre.getInputVerifier().verify(jTextFieldNombre)){
+            return false;
         }
-
+        instance.setAlmacencodAlmacen((Almacen) jComboBoxAlmacen.getSelectedItem());
+        instance.setCantidadCreada((Float) jSpinnerCantidadCreada.getValue());
+        instance.setCantidadExistente((Float) jSpinnerCantidadExistente.getValue());
+        instance.setCostoPorUnidad((Float) jSpinnerCosto.getValue());
+        instance.setElaborado(jCheckBoxElaborado.isSelected());
+        instance.setNombre(jTextFieldNombre.getText());
+        instance.setUm(jComboBoxUM.getSelectedItem().toString());
+        instance.setProductoInsumoList(((RestManagerAbstractTableModel<ProductoInsumo>) jTableCrossReference.getModel()).getItems());
+        instance.setInsumoElaboradoList1(instance.getInsumoElaboradoList1());
+        instance.setInsumoTransaccionList(instance.getInsumoTransaccionList());
+        instance.setIpvList(instance.getIpvList());
+        instance.setStockEstimation((Float) jSpinnerEstimacionStock.getValue());
+        
+        if (instance.getElaborado()) {
+            instance.setInsumoElaboradoList(((RestManagerAbstractTableModel<InsumoElaborado>) jTableInsElab.getModel()).getItems());
+        } else {
+            instance.setInsumoElaboradoList(new ArrayList<>());
+        }
+        return true;
     }
 
-    private enum State {
-        CREATING, UPDATING
+    public void updateLabelCost() {
+        float total = 0;
+        for (int i = 0; i < jTableInsElab.getRowCount(); i++) {
+            total += (float) jTableInsElab.getValueAt(i, 4);
+        }
+        jXLabelNombreValorCosto.setText(String.format("%.2f" + " " + R.coinSuffix, total));
     }
-
 }

@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Views.venta;
 
 import java.text.ParseException;
 

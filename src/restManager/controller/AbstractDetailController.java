@@ -6,6 +6,7 @@
 package restManager.controller;
 
 import GUI.Views.AbstractDetailView;
+import GUI.Views.AbstractView;
 import java.awt.Window;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.models.AbstractModel;
@@ -46,6 +47,8 @@ public abstract class AbstractDetailController<T> extends AbstractController<T> 
         instance = createNewInstance();
         state = State.CREATING;
         constructView(parent);
+       // getView().setCreatingMode();
+        //getView().setVisible(true);
 
     }
 
@@ -55,11 +58,12 @@ public abstract class AbstractDetailController<T> extends AbstractController<T> 
         this.parent = parent;
         state = State.EDITING;
         constructView(parent);
+        //getView().setEditingMode();
+       // getView().setVisible(true);
     }
 
     public void createUpdateInstance() {
         if (getView().validateData()) {
-            setSelected(instance);
             switch (state) {
                 case CREATING:
                     create(instance);
@@ -87,12 +91,16 @@ public abstract class AbstractDetailController<T> extends AbstractController<T> 
         return parent;
     }
 
+    public void setParent(Window parent) {
+        this.parent = parent;
+    }
+   
     @Override
     public AbstractDetailView<T> getView() {
         return (AbstractDetailView<T>)super.getView();
     }
 
-    protected enum State {
+    public enum State {
         CREATING, EDITING
     }
 

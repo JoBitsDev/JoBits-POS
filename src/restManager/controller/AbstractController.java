@@ -6,18 +6,14 @@
 package restManager.controller;
 
 import GUI.Views.AbstractView;
-import GUI.Views.View;
 import java.awt.Container;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import restManager.persistencia.models.AbstractModel;
-import restManager.persistencia.models.PropertyName;
 import restManager.resources.R;
 
 /**
@@ -29,10 +25,11 @@ import restManager.resources.R;
  */
 public abstract class AbstractController<T> implements PropertyChangeListener {
 
-    private final AbstractModel<T> model;
+    private AbstractModel<T> model;
     protected List<T> items = null;
     protected T selected;
     private AbstractView view;
+    private boolean dismissOnAction = true;
 
     public AbstractController(AbstractModel<T> dataAccess) {
         model = dataAccess;
@@ -50,15 +47,14 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
 
     public void setView(AbstractView view) {
         this.view = view;
-     
+
     }
 
     //
     //Property Change Methods
     //
-
-    public void setPropertyChangeMethods(){
-        if(model != null){
+    public void setPropertyChangeMethods() {
+        if (model != null) {
             model.addPropertyChangeListener(this);
         }
     }
@@ -69,15 +65,13 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
         System.out.println(evt.getPropagationId());
         System.out.println(evt.getPropertyName());
         System.out.println(evt.getSource());
-        
-        switch(evt.getPropertyName()){
-            //case "VIEW_CREATE" : create(selected);break;
-            //case "VIEW_UPDATE" : update(selected);break;
-            //case "VIEW_DELETE" : destroy(selected);break;
-            default : view.updateView();
+        System.out.println(getClass().toString());
+        if (view != null) {
+            System.out.println(view.getClass().toString());
+            items = null;
+            view.updateView();
         }
-      
-      
+
     }
 
     /**
@@ -107,7 +101,8 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
     //
     protected void showSuccessDialog(Container view) {
         JOptionPane.showMessageDialog(view, R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"),
-                R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE);
+                R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
     }
 
     protected boolean showConfirmDialog(Container view) {
@@ -117,14 +112,22 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
     }
 
     protected boolean showEditingDialog(Container view, Object obj) {
-        return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_editar_datos" + obj.toString()),
+        return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_editar_datos") + obj.toString(),
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                 == JOptionPane.YES_OPTION;
     }
 
     protected void showErrorDialog(Container view, String errorText) {
         JOptionPane.showMessageDialog(view, errorText,
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
+                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/alerta.png")));
+    }
+
+    protected boolean showDeleteDialog(Container view, Object obj) {
+        return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_borrar_datos") + obj.toString(),
+                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/eliminar.png")))
+                == JOptionPane.YES_OPTION;
     }
 
     //
@@ -150,8 +153,7 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
         if (showConfirmDialog(getView())) {
             this.selected = selected;
             this.create();
-            this.selected = null;
-            showSuccessDialog(getView());
+            showSuccesDialogAndDismiss();
         }
     }
 
@@ -167,8 +169,7 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
         if (showEditingDialog(getView(), selected)) {
             this.selected = selected;
             this.update();
-            this.selected = null;
-            showSuccessDialog(getView());
+            showSuccesDialogAndDismiss();
         }
     }
 
@@ -182,11 +183,11 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
      * @param selected
      */
     public void destroy(T selected) {
-        if (showConfirmDialog(getView())) {
+        if (showDeleteDialog(getView(), selected)) {
             this.selected = selected;
             this.destroy();
             this.selected = null;
-            showSuccessDialog(getView());
+            showSuccesDialogAndDismiss();
         }
     }
 
@@ -212,6 +213,21 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
         return model;
     }
 
+    public void setModel(AbstractModel<T> model) {
+        this.model = model;
+        model.addPropertyChangeListener(this);
+    }
+
+    public boolean isDismissOnAction() {
+        return dismissOnAction;
+    }
+
+    public void setDismissOnAction(boolean dismissOnAction) {
+        this.dismissOnAction = dismissOnAction;
+    }
+
+    
+    
     //
     // Private Methods
     //
@@ -224,15 +240,20 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
                     break;
                 case DELETE:
                     getModel().remove(selected);
+                    selected = null;
                     break;
                 case UPDATE:
                     getModel().edit(selected);
                     break;
             }
             getModel().commitTransaction();
-            selected = null;
-            items = null;
+        }
+    }
 
+    private void showSuccesDialogAndDismiss() {
+        showSuccessDialog(getView());
+        if (getView() != null && dismissOnAction) {
+            getView().dispose();
         }
     }
 

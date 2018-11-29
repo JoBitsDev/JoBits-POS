@@ -20,7 +20,7 @@ import restManager.resources.R;
  * @author Jorge
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ProductoVentaListControllerTest.class})
+@Suite.SuiteClasses({InsumoListControllerTest.class})
 public class TestSuiteInit {
 
     @BeforeClass

@@ -1,6 +1,7 @@
 package GUI;
 
 
+import GUI.Views.venta.Resumen;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.io.*;

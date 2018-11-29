@@ -25,9 +25,7 @@ public class Main {
         boolean newDatabase = checkIfDatabaseIsNew();
 
         if (newDatabase) {
-
             new FirstTimeDialog(new javax.swing.JFrame(), true);
-
         } else {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {

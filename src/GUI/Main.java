@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import GUI.Views.venta.VentaMain;
+import GUI.Views.venta.VentaLista;
 import GUI.Views.trabajadores.TrabajadorCrear;
 import java.text.ParseException;
 import java.util.Date;
@@ -30,11 +32,6 @@ import restManager.resources.R;
  * @author Jorge
  */
 public class Main extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Main2
-     */
-    static Personal logUser;
 
     /**
      * nivel mas bajo para los clientes
@@ -66,7 +63,7 @@ public class Main extends javax.swing.JFrame {
     public static boolean NIVEL_5 = false;
 
     public Main(Personal p) {
-        logUser = p;
+        R.loggedUser = p;
         grantPermission(p);
         initComponents();
         labelMetricNOMBRE.setText(staticContent.cartaJPA.findCarta("Mnu-1").getNombreCarta()); //quitar esto

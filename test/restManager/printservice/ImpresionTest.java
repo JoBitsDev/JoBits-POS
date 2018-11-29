@@ -7,6 +7,9 @@ package restManager.printservice;
 
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.print.PrintException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -60,12 +63,23 @@ public class ImpresionTest {
     @Test
     public void testPrint() throws Exception {
         System.out.println("print");
-        Orden o = new OrdenDAO().find("O-2795");
+        Orden o = new OrdenDAO().find("O-2529");
         boolean preview = true;
-        instance.print(o, preview);
+        //instance.forceBell();
+      instance.print(o, preview);
+       // print();
         // TODO review the generated test code and remove the default call to fail.
        
     }
+
+    private void print() {
+        Ticket t = new Ticket();
+        Impresion i = new Impresion();
+        
+      
+        
+    }
+    
     
     
 

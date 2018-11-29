@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 import restManager.controller.AbstractController;
 import restManager.resources.R;
@@ -24,7 +25,7 @@ public abstract class AbstractModel<T> {
     private static EntityManagerFactory EMF;
     private static EntityManager currentConnection;
     protected PropertyChangeSupport propertyChangeSupport;
-
+    
     public AbstractModel(Class<T> entityClass) {
         this.entityClass = entityClass;
         propertyChangeSupport = new PropertyChangeSupport(this);
@@ -38,6 +39,7 @@ public abstract class AbstractModel<T> {
         }
     }
 
+    
     public EntityManager getEntityManager() {
         return currentConnection;
     }
@@ -50,6 +52,7 @@ public abstract class AbstractModel<T> {
 
     public void commitTransaction() {
         if (getEntityManager().getTransaction().isActive()) {
+            getEntityManager().flush();
             getEntityManager().getTransaction().commit();
             
         }

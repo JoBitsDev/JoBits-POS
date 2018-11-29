@@ -1,4 +1,4 @@
-package GUI;
+package GUI.Views.venta;
 
 import java.awt.print.PrinterException;
 
@@ -239,7 +239,7 @@ public class Resumenes extends javax.swing.JPanel{
 
         jTextFieldFechaInit.setEditable(false);
         jTextFieldFechaInit.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jTextFieldFechaInit.setText(R.DATE_FORMAT.format(dia.getFecha()));
+        jTextFieldFechaInit.setText(restManager.resources.R.DATE_FORMAT.format(dia.getFecha()));
         jTextFieldFechaInit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldFechaInitActionPerformed(evt);

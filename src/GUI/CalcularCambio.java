@@ -46,7 +46,7 @@ public class CalcularCambio extends javax.swing.JDialog {
         setShape(new RoundRectangle2D.Double(10, 10, 335, 240, 61, 61));
         initComponents();
         
-         jLabelValorMontoAPagar.setText(comun.redondeoPorExceso((int) (o.getOrdenvalorMonetario()*100)));
+         jLabelValorMontoAPagar.setText(comun.redondeoPorExceso(o.getOrdenvalorMonetario()));
         jLabelValorMontoADevolver.setText("");
 //        jFormattedTextFieldSalarioFijo.setFormatterFactory(
 //                new javax.swing.text.DefaultFormatterFactory(
@@ -289,7 +289,7 @@ public class CalcularCambio extends javax.swing.JDialog {
         a/=25;
         montoADevolver -= a;}
         
-        jLabelValorMontoADevolver.setText(comun.redondeoPorDefecto((int) (montoADevolver * 100)));
+        jLabelValorMontoADevolver.setText(comun.redondeoPorDefecto((float) (montoADevolver * 100)));
 
     }
     

@@ -44,8 +44,6 @@ public class InsumoListView extends AbstractListView<Insumo> {
         jPopupMenuClickDerecho.add(verUsos);
     }
 
-    
-    
     @Override
     public MyJTableModel<Insumo> generateTableModel(List<Insumo> items) {
         return new MyJTableModel<Insumo>(items) {

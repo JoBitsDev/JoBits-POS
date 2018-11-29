@@ -180,8 +180,8 @@ public class Impresion {
 
         total = addPvOrden(t, o.getProductovOrdenList());
 
-        String subTotalPrint = comun.redondeoPorExceso((int) (total * 100));
-        String sumaPorciento = comun.redondeoPorExceso((int) ((Float.valueOf(subTotalPrint) / o.getPorciento()) * 100));
+        String subTotalPrint = comun.redondeoPorExceso(total);
+        String sumaPorciento = comun.redondeoPorExceso(Float.valueOf(subTotalPrint) / o.getPorciento());
         String totalPrint = subTotalPrint;
         t.alignRight();
         t.newLine();
@@ -189,7 +189,7 @@ public class Impresion {
         if (o.getPorciento() != 0) {
             t.newLine();
             t.setText("+ " + o.getPorciento() + PORCIENTO + sumaPorciento + MONEDA);
-            totalPrint = comun.redondeoPorExceso((int) ((Float.valueOf(subTotalPrint) + Float.valueOf(sumaPorciento)) * 100));
+            totalPrint = comun.redondeoPorExceso((Float.valueOf(subTotalPrint) + Float.valueOf(sumaPorciento)));
 
         }
         t.newLine();
@@ -643,16 +643,14 @@ public class Impresion {
 
                 t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total * cambio));
             } else {
-                t.setText(TOTAL_VENTAS + comun.redondeoPorExceso((int) ((total / cambio) * 100)) + CUC);
+                t.setText(TOTAL_VENTAS + comun.redondeoPorExceso(total / cambio));
             }
 
         }
     }
 
     private void addFinal(Ticket t) {
-        t.newLine();
-        t.newLine();
-        t.feed((byte) 3);
+        t.feed((byte) 5);
         t.finit();
     }
 
@@ -661,6 +659,15 @@ public class Impresion {
         t.resetAll();
         t.initialize();
         t.drawerKick();
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+
+    }
+
+    public void forceBell() {
+        Ticket t = new Ticket();
+        t.resetAll();
+        t.initialize();
+        t.soundBuzzer();
         sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
@@ -730,7 +737,7 @@ public class Impresion {
             t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
             t.newLine();
             t.alignRight();
-            t.setText(comun.redondeoPorExceso((int) (x.getCantidad() * x.getProductoVenta().getPrecioVenta() * 100)) + MONEDA);
+            t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
             t.newLine();
             total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
         }
@@ -741,7 +748,7 @@ public class Impresion {
     //
     //Private Methods
     //
-    private void feedPrinter(byte[] b, String printerName) throws PrintException {
+    public void feedPrinter(byte[] b, String printerName) throws PrintException {
 
         PrintService[] prints = PrintServiceLookup.lookupPrintServices(null, null);
         DocPrintJob job = PrintServiceLookup.lookupDefaultPrintService().createPrintJob();

@@ -8,10 +8,7 @@ package restManager.util;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractListModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.MutableComboBoxModel;
-import javax.swing.event.ListDataListener;
-import restManager.exceptions.DevelopingOperationException;
 
 /**
  * FirstDream
@@ -100,4 +97,7 @@ public class RestManagerComboBoxModel<T> extends AbstractListModel<T> implements
         }
     }
 
+    public List<T> getObjects() {
+        return objects;
+    }
 }

@@ -6,6 +6,9 @@
 package restManager.controller.insumo;
 
 import GUI.Views.AbstractView;
+import com.jidesoft.dialog.JideOptionPane;
+import com.jidesoft.swing.JideSwingUtilities;
+import com.jidesoft.utils.LoggerUtils;
 import java.awt.Window;
 import java.util.List;
 import org.junit.After;
@@ -33,6 +36,7 @@ public class InsumoListControllerTest {
     @Test
     public void testCreateInstance() {
         System.out.println("createInstance");
+        //JideOptionPane.showMessageDialog(null, "Prueba");
         InsumoListController instance = new InsumoListController(null);
         
       

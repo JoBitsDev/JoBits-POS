@@ -1,7 +1,6 @@
-package GUI;
 
 
-import GUI.*;
+
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
@@ -221,45 +220,12 @@ public class listaSecion  extends javax.swing.JDialog{
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jTableMainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMainMouseClicked
-        String nombre, aux;
-        int index;
-        int q = 0;
-        if (evt.getClickCount() == 2) {
-            nombre = (String) jTableMain.getValueAt(jTableMain.getSelectedRow(), 0);
-            index = getSecIndex(nombre);
-            aux = JOptionPane.showInputDialog(null, "Cambiar nombre de " + nombre + " a: ", "Modificacion", JOptionPane.OK_CANCEL_OPTION);
-            if (aux != null && !nombre.equals(aux) && !aux.matches("")) {
-                secciones.set(index, new Seccion(aux));
-                jTableMain.setValueAt(aux, jTableMain.getSelectedRow(), 0);
 
-                for (int i = 0; i < platos.size(); i++) {
-                    if (platos.get(i).getNombreDeSeccion().matches(nombre)) {
-                        platos.get(i).setNombreDeSeccion(aux);
-                        q++;
-                    }
-
-                }
-                String Z = "Se le han cambiado la seccion a " + q + " platos.";
-                JOptionPane.showMessageDialog(null, Z);
-
-            }
-
-            RE.Guardar_Secciones();
-            RE.Guardar_Platos();
-        }
 
     }//GEN-LAST:event_jTableMainMouseClicked
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-        String index = jTextField1.getText();
-        DefaultTableModel model = (DefaultTableModel) jTableMain.getModel();
-        LimpiarTabla();
-        for (int i = 0; i < secciones.size(); i++) {
-            Object[] row = {secciones.get(i).getNombre()};
-            if ((secciones.get(i)).getNombre().contains(true, 0, index, 0, index.length() - 1)) {
-                model.addRow(row);
-            }
-        }
+    
 
     }//GEN-LAST:event_jTextField1KeyTyped
 
@@ -273,8 +239,7 @@ public class listaSecion  extends javax.swing.JDialog{
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        RE.Guardar_Secciones();
-        RE.Guardar_Platos();
+
     }//GEN-LAST:event_formWindowClosing
 
     private void jButtonModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModActionPerformed

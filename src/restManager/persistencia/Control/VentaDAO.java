@@ -55,8 +55,6 @@ public class VentaDAO {
         ArrayList[] rowData = comun.initArray(new ArrayList[5]);
         ArrayList<ProductovOrden> ret = getResumenVentas(v);
 
-
-
         //convirtiendo a rowData
         float total = 0;
         for (ProductovOrden x : ret) {
@@ -613,6 +611,16 @@ public class VentaDAO {
             }
         }
         return total;
+    }
+
+    public static float getValorTotalRedondeoAFavorDeLaCasa(Venta v) {
+        int total = 0;
+        for (Orden x : v.getOrdenList()) {
+            System.out.println(x.getCodOrden());
+            System.out.println( comun.cantidadARedondearPorExceso((int) Math.ceil(x.getOrdenvalorMonetario() * 100)));
+            total += comun.cantidadARedondearPorExceso((int) Math.ceil(x.getOrdenvalorMonetario() * 100));
+        }
+        return ((float) total) / 100;
     }
 
     public static List<Orden> getOrdenesActivas(Venta ventas) {

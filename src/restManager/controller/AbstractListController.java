@@ -6,6 +6,8 @@
 
 package restManager.controller;
 
+import GUI.Views.AbstractListView;
+import java.beans.PropertyChangeEvent;
 import restManager.persistencia.models.AbstractModel;
 
 /**
@@ -20,20 +22,31 @@ public abstract class AbstractListController<T> extends AbstractController<T>{
 
     public AbstractListController(AbstractModel<T> dataAccess) {
         super(dataAccess);
+        setDismissOnAction(false);
     }
 
     @Override
     public void createInstance() {
         detailController = getDetailControllerForNew();
-        items = getItems();
-        items.add(detailController.getInstance());
-        getView().updateView();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        switch(evt.getPropertyName()){
+            case "CREATE" : getView().getModel().addrow((T)evt.getNewValue());break;
+            case "DELETE" : getView().getModel().deleteRow((T) evt.getOldValue());break;
+        }
     }
 
     @Override
     public void update(T selected) {
         detailController = getDetailControllerForEdit(selected);
         getView().updateView();
+    }
+
+    @Override
+    public AbstractListView<T> getView() {
+        return (AbstractListView<T>) super.getView(); //To change body of generated methods, choose Tools | Templates.
     }
     
     public abstract AbstractDetailController<T> getDetailControllerForNew();
