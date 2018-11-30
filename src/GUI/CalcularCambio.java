@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import restManager.persistencia.Orden;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.jpa.staticContent;
+import restManager.resources.R;
 import restManager.util.ComponentMover;
 import restManager.util.comun;
 
@@ -40,19 +41,13 @@ public class CalcularCambio extends javax.swing.JDialog {
     }
 
     public void init(Orden o) {
-       
-        
+
         setUndecorated(true);
-        setShape(new RoundRectangle2D.Double(10, 10, 335, 240, 61, 61));
+        setShape(new RoundRectangle2D.Double(10, 10, 335, 225, 61, 61));
         initComponents();
-        
-         jLabelValorMontoAPagar.setText(comun.redondeoPorExceso(o.getOrdenvalorMonetario()));
+
+        jLabelValorMontoAPagar.setText(comun.redondeoPorExceso(o.getOrdenvalorMonetario()));
         jLabelValorMontoADevolver.setText("");
-//        jFormattedTextFieldSalarioFijo.setFormatterFactory(
-//                new javax.swing.text.DefaultFormatterFactory(
-//                        new javax.swing.text.NumberFormatter(
-//                                new java.text.DecimalFormat("#,##0.00"+ Main.moneda))));
-//        
         ComponentMover cr = new ComponentMover(this, panelRound1);
         this.setVisible(true);
 
@@ -79,8 +74,6 @@ public class CalcularCambio extends javax.swing.JDialog {
         jLabelNombre3 = new org.jdesktop.swingx.JXLabel();
         jTextFieldMontoBilletesMN = new javax.swing.JTextField();
         jLabelNombre4 = new org.jdesktop.swingx.JXLabel();
-        jLabelValorMontoAPagar1 = new org.jdesktop.swingx.JXLabel();
-        jLabelValorMontoAPagar2 = new org.jdesktop.swingx.JXLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -141,55 +134,44 @@ public class CalcularCambio extends javax.swing.JDialog {
         jLabelNombre4.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNombre4.setText("MN");
 
-        jLabelValorMontoAPagar1.setForeground(new java.awt.Color(0, 153, 0));
-        jLabelValorMontoAPagar1.setText("CUC");
-
-        jLabelValorMontoAPagar2.setForeground(new java.awt.Color(204, 0, 0));
-        jLabelValorMontoAPagar2.setText("CUC");
-
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
+                .addGap(75, 75, 75)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelRound1Layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelRound1Layout.createSequentialGroup()
-                                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(panelRound1Layout.createSequentialGroup()
-                                        .addComponent(jLabelSalarioFijo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(36, 36, 36)
-                                        .addComponent(jLabelValorMontoADevolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
-                                        .addGap(92, 92, 92)
-                                        .addComponent(jLabelNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldMontoMonedasCUC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelNombre4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabelNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelValorMontoAPagar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelRound1Layout.createSequentialGroup()
-                                .addComponent(jLabelNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(58, 58, 58)
-                                .addComponent(jLabelValorMontoAPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelValorMontoAPagar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
-                            .addGap(141, 141, 141)
-                            .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(panelRound1Layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jTextFieldMontoBilletesMN, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldMontoBilletesCUC, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(43, 43, 43))))
-                .addGap(0, 63, Short.MAX_VALUE))
+                            .addComponent(jLabelSalarioFijo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(36, 36, 36)
+                            .addComponent(jLabelValorMontoADevolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
+                            .addGap(92, 92, 92)
+                            .addComponent(jLabelNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTextFieldMontoMonedasCUC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabelNombre4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addComponent(jLabelNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
+                        .addComponent(jLabelValorMontoAPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(33, 96, Short.MAX_VALUE))
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldMontoBilletesMN, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldMontoBilletesCUC, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)))
+                .addGap(0, 147, Short.MAX_VALUE))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,8 +179,7 @@ public class CalcularCambio extends javax.swing.JDialog {
                 .addGap(25, 25, 25)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelValorMontoAPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelValorMontoAPagar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelValorMontoAPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldMontoBilletesCUC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,8 +193,7 @@ public class CalcularCambio extends javax.swing.JDialog {
                 .addGap(24, 24, 24)
                 .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelSalarioFijo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelValorMontoADevolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelValorMontoAPagar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelValorMontoADevolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -236,7 +216,7 @@ public class CalcularCambio extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldMontoMonedasCUCKeyPressed
 
     private void jTextFieldMontoBilletesMNKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoBilletesMNKeyPressed
-       
+
     }//GEN-LAST:event_jTextFieldMontoBilletesMNKeyPressed
 
     private void jTextFieldMontoBilletesCUCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoBilletesCUCKeyReleased
@@ -261,8 +241,6 @@ public class CalcularCambio extends javax.swing.JDialog {
     private org.jdesktop.swingx.JXLabel jLabelSalarioFijo1;
     private org.jdesktop.swingx.JXLabel jLabelValorMontoADevolver;
     private org.jdesktop.swingx.JXLabel jLabelValorMontoAPagar;
-    private org.jdesktop.swingx.JXLabel jLabelValorMontoAPagar1;
-    private org.jdesktop.swingx.JXLabel jLabelValorMontoAPagar2;
     private javax.swing.JTextField jTextFieldMontoBilletesCUC;
     private javax.swing.JTextField jTextFieldMontoBilletesMN;
     private javax.swing.JTextField jTextFieldMontoMonedasCUC;
@@ -273,33 +251,37 @@ public class CalcularCambio extends javax.swing.JDialog {
         String billetesCUC = jTextFieldMontoBilletesCUC.getText(),
                 monedasCUC = jTextFieldMontoMonedasCUC.getText(),
                 billetesMN = jTextFieldMontoBilletesMN.getText();
-        
-        float montoADevolver = o.getOrdenvalorMonetario();
-        
-        if(!isEmptyNull(billetesCUC)){
-        float a = Float.parseFloat(jTextFieldMontoBilletesCUC.getText());
-        montoADevolver -= a;}
-        if(!isEmptyNull(monedasCUC)){
-        float a = Float.parseFloat(jTextFieldMontoMonedasCUC.getText());
-        a/=100;
-        
-        montoADevolver -= a;}
-        if(!isEmptyNull(billetesMN)){
-        float a = Float.parseFloat(jTextFieldMontoBilletesMN.getText());
-        a/=25;
-        montoADevolver -= a;}
-        
-        jLabelValorMontoADevolver.setText(comun.redondeoPorDefecto((float) (montoADevolver * 100)));
+
+        float montoADevolver = comun.redondeoPorExcesoFloat(o.getOrdenvalorMonetario());
+
+        if (!isEmptyNull(billetesCUC)) {
+            float a = Float.parseFloat(jTextFieldMontoBilletesCUC.getText());
+            montoADevolver -= a;
+        }
+        if (!isEmptyNull(monedasCUC)) {
+            float a = Float.parseFloat(jTextFieldMontoMonedasCUC.getText());
+            a /= 100;
+            montoADevolver -= a;
+        }
+        if (!isEmptyNull(billetesMN)) {
+            float a = Float.parseFloat(jTextFieldMontoBilletesMN.getText());
+            a /= R.COINCHANGE;
+            montoADevolver -= a;
+        }
+
+        if (montoADevolver > 0) {
+            jLabelValorMontoADevolver.setText("Falta Dinero");
+        } else {
+            jLabelValorMontoADevolver.setText(comun.setDosLugaresDecimales(montoADevolver));
+
+        }
 
     }
-    
-    private boolean isEmptyNull(String s){
-        if(s == null){
+
+    private boolean isEmptyNull(String s) {
+        if (s == null) {
             return true;
         }
-        if(s.isEmpty()){
-            return true;
-        }
-        return false;
+        return s.isEmpty();
     }
 }
