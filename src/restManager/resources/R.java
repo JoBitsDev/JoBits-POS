@@ -21,6 +21,8 @@ import restManager.persistencia.Personal;
  */
 public class R {
 
+    public static String logFilePath = "logs/";
+    
     public static String coinSuffix ;
 
     public static Personal loggedUser = null;
@@ -32,6 +34,8 @@ public class R {
     public static final int COINCHANGE = 24;
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
+    
+    public static final SimpleDateFormat DATE_FORMAT_FOR_LOGS= new SimpleDateFormat("yyyy'_'MM'_'dd");
 
     public static DecimalFormat formatoMoneda = new DecimalFormat("0.00");
 
