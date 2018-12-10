@@ -8,8 +8,12 @@ package GUI.Views.util;
 import com.jidesoft.swing.AutoCompletionComboBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
 import restManager.persistencia.ProductoVenta;
 import restManager.util.RestManagerAbstractTableModel;
@@ -49,6 +53,9 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
         });
         this.table.setModel(this.tableModel);
         this.jComboBox.setModel(this.comboModel);
+        this.jComboBox.getEditor().addActionListener((e) -> {
+            addFromComboBox();
+        });
     }
 
     public T addFromComboBox() {
@@ -65,6 +72,11 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
         tableModel.removeObjectAtSelectedRow();
     }
 
+    /**
+     * Transform de data obtained in the combo box model to the table model;
+     * @param selected the selected combo box data
+     * @return the data to put in the table
+     */
     public abstract T transformK_to_T(K selected);
 
     //
