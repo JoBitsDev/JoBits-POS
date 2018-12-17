@@ -21,6 +21,8 @@ import restManager.persistencia.Personal;
  */
 public class R {
 
+    public static final String SEPARADOR = "_";
+    
     public static String logFilePath = "logs/";
     
     public static String coinSuffix ;

@@ -16,7 +16,7 @@ import restManager.persistencia.models.AbstractModel;
  * @param <T>
  * 
  */
-public abstract class AbstractListController<T> extends AbstractController<T>{
+public abstract class AbstractListController<T> extends AbstractDialogController<T>{
 
     protected AbstractDetailController<T> detailController;
 
@@ -41,7 +41,6 @@ public abstract class AbstractListController<T> extends AbstractController<T>{
     @Override
     public void update(T selected) {
         detailController = getDetailControllerForEdit(selected);
-        getView().updateView();
     }
 
     @Override

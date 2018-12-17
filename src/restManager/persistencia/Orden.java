@@ -218,7 +218,7 @@ public class Orden implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Orden[ codOrden=" + codOrden + " ]";
+        return  codOrden ;
     }
 
 }

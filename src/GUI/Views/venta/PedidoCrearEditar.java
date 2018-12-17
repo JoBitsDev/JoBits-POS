@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javax.print.PrintException;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import restManager.logs.RestManagerHandler;
 
 import restManager.persistencia.Configuracion;
 import restManager.persistencia.Mesa;
@@ -39,14 +41,16 @@ import restManager.util.comun;
  */
 public class PedidoCrearEditar extends javax.swing.JDialog {
 
-    SimpleDateFormat FormatDate = new SimpleDateFormat("MM'/'dd'/'yy");
-    SimpleDateFormat FormatTime = new SimpleDateFormat(" hh ':' mm ' ' a ");
+    private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
+    public SimpleDateFormat FormatDate = new SimpleDateFormat("MM'/'dd'/'yy");
+    public SimpleDateFormat FormatTime = new SimpleDateFormat(" hh ':' mm ' ' a ");
     private Date dat;
     private Orden o;
     private List<ProductoVenta> listaProducto;
 
     /**
      * Creates new form CrearEditarPedido
+     *
      * @deprecated not used right now
      */
     private PedidoCrearEditar(java.awt.Dialog parent, boolean modal, Orden o) {
@@ -692,11 +696,8 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         Impresion i = new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"));
         try {
             o = i.printKitchen(o);
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINEST, o);
             staticContent.ordenJPA.edit(o);
-        } catch (PrintException ex) {
-            Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -707,7 +708,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         if (respuesta == JOptionPane.YES_OPTION) {
             boolean enviar = true;
             for (ProductovOrden x : o.getProductovOrdenList()) {
-                if (x.getCantidad() > x.getEnviadosacocina()) {
+                if (x.getCantidad() != x.getEnviadosacocina()) {
                     enviar = false;
                 }
             }
@@ -719,18 +720,16 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 int imprimirTIcket = JOptionPane.showConfirmDialog(this, "Desea imprimir un ticket de la orden");
                 if (imprimirTIcket == JOptionPane.YES_OPTION) {
                     Impresion i = new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"));
-                    try {
                         i.print(o, false);
-                    } catch (PrintException ex) {
-                        Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIRTICKET, Level.FINE, o);
+
                 }
                 try {
 
                     o.setHoraTerminada(new Date());
                     o.setOrdenvalorMonetario(getValorT());
                     o.setOrdengastoEninsumos(getGastosInsumos(o));
-
+                    RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.CERRAR, Level.FINE, o);
                     Mesa m = staticContent.mesasJPA.findMesa(o.getMesacodMesa().getCodMesa());
                     m.setEstado("vacia");
                     o.setMesacodMesa(m);
@@ -779,7 +778,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
             }
         }
 
-        o.setOrdenvalorMonetario(valor);
+        o.setOrdenvalorMonetario(comun.setDosLugaresDecimalesFloat(valor));
         try {
             staticContent.ordenJPA.edit(o);
         } catch (NonexistentEntityException ex) {
@@ -787,7 +786,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return comun.setDosLugaresDeimalesFloat(valor);
+        return comun.setDosLugaresDecimalesFloat(valor);
     }
 
     private void retirarProducto() {
@@ -858,24 +857,13 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         boolean found = false;
         for (int i = 0; i < jTablePedido.getRowCount() && !found; i++) {
             if (jTablePedido.getValueAt(i, 0).equals(p.getPCod())) {
-                if ((int) jTablePedido.getValueAt(i, 2) > 1) {
+                int cant = (int) jTablePedido.getValueAt(i, 2);
+                if (cant > 1) {
                     found = true;
-                    int cant = (int) jTablePedido.getValueAt(i, 2);
-                    float precio = (float) jTablePedido.getValueAt(i, 3);
                     cant--;
-                    precio -= p.getPrecioVenta();
                     jTablePedido.setValueAt(cant, i, 2);
-                    jTablePedido.setValueAt(precio, i, 3);
-                    o.getProductovOrdenList().get(i).setCantidad(cant);
-                    try {
-                        staticContent.productovOrdenJpa.edit(o.getProductovOrdenList().get(i));
-                        staticContent.ordenJPA.edit(o);
-                    } catch (Exception ex) {
-                        Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                 } else {
                     comun.removeFromTable(jTablePedido, i);
-
                     try {
                         staticContent.productovOrdenJpa.destroy(o.getProductovOrdenList().get(i).getProductovOrdenPK());
                         o.getProductovOrdenList().remove(i);
@@ -900,7 +888,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         for (ProductovOrden x : o.getProductovOrdenList()) {
             if (x.getProductoVenta().getPCod().equals(cod)) {
                 x.setCantidad(cant);
-                jTablePedido.setValueAt(cant * x.getProductoVenta().getPrecioVenta(), row, 3);
+                jTablePedido.setValueAt(comun.setDosLugaresDecimalesFloat(cant * x.getProductoVenta().getPrecioVenta()), row, 3);
                 try {
                     staticContent.productovOrdenJpa.edit(x);
                 } catch (Exception ex) {
@@ -978,11 +966,9 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
 
     private void imprimir_pre_ticket() {
         Impresion i = new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"));
-        try {
             i.print(o, true);
-        } catch (PrintException ex) {
-            Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIR_TICKET_PARCIAL, Level.FINER, o);
+    
 
     }
 
@@ -996,11 +982,11 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
     }
 
     private Venta findVentaFecha() {
-       Venta ret = null;
-        if(this.dat == null){
-        ret = staticContent.ventaJPA.findVenta(new Date());}
-        else{
-        ret = staticContent.ventaJPA.findVenta(dat);
+        Venta ret = null;
+        if (this.dat == null) {
+            ret = staticContent.ventaJPA.findVenta(new Date());
+        } else {
+            ret = staticContent.ventaJPA.findVenta(dat);
         }
 
         if (ret == null) {
@@ -1019,6 +1005,7 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
         try {
             o.setDeLaCasa(jCheckBoxDELACASA.isSelected());
             staticContent.ordenJPA.edit(o);
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_CASA, Level.FINEST, o);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(PedidoCrearEditar.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {

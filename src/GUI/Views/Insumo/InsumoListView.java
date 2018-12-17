@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JMenuItem;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractListController;
 import restManager.controller.insumo.InsumoListController;
 import restManager.exceptions.DevelopingOperationException;

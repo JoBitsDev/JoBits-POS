@@ -11,7 +11,8 @@ import java.util.List;
 import javax.swing.RowFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
-import restManager.controller.AbstractController;
+import org.jdesktop.swingx.JXPanel;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractListController;
 import restManager.exceptions.NoSelectedException;
 
@@ -47,6 +48,14 @@ public abstract class AbstractListView<T> extends AbstractView {
 
             }
         }
+    }
+
+    public JXPanel getjXPanelControles() {
+        return jXPanelControles;
+    }
+
+    public JXPanel getjXPanelLista() {
+        return jXPanelLista;
     }
 
     /**
@@ -262,7 +271,7 @@ public abstract class AbstractListView<T> extends AbstractView {
     //
     private void editSelected() {
         getController().setSelected(model.getObjectAtSelectedRow());
-        super.getController().update(getController().getSelected()); //To change body of generated methods, choose Tools | Templates.
+        getController().update(getController().getSelected()); //To change body of generated methods, choose Tools | Templates.
     }
 
     //
@@ -270,15 +279,14 @@ public abstract class AbstractListView<T> extends AbstractView {
     //
     protected void createPopUpMenu() {
     }
- 
+
     //
     // Getters n Setters
     //
-
     public MyJTableModel<T> getModel() {
         return model;
     }
-    
+
     //
     // Inner Class
     //

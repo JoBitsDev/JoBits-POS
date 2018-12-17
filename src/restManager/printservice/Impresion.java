@@ -22,10 +22,11 @@ import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
+import restManager.logs.RestManagerHandler;
 
 import restManager.persistencia.Carta;
 import restManager.persistencia.Cocina;
-import restManager.persistencia.Control.VentaDAO;
+import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.Orden;
@@ -33,6 +34,7 @@ import restManager.persistencia.Personal;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.MenuDAO;
 import restManager.resources.R;
 import restManager.util.comun;
 
@@ -45,6 +47,7 @@ public class Impresion {
     /**
      * @param args the command line arguments
      */
+    private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
     private String nombreRest;
     private boolean monedaCUC;
     private static float cambio = R.COINCHANGE;
@@ -102,7 +105,7 @@ public class Impresion {
     //Constructors
     //
     public Impresion() {
-        this(staticContent.cartaJPA.findCarta("Mnu-1"));
+        this(MenuDAO.getInstance().find("Mnu-1"));
     }
 
     /**
@@ -157,7 +160,7 @@ public class Impresion {
     //
     //Metodos Publicos
     //
-    public void print(Orden o, boolean preview) throws PrintException {
+    public void print(Orden o, boolean preview)  {
 
         float total;
 
@@ -180,21 +183,21 @@ public class Impresion {
 
         total = addPvOrden(t, o.getProductovOrdenList());
 
-        String subTotalPrint = comun.redondeoPorExceso(total);
-        String sumaPorciento = comun.redondeoPorExceso(Float.valueOf(subTotalPrint) / o.getPorciento());
-        String totalPrint = subTotalPrint;
+        float subTotalPrint = comun.redondeoPorExcesoFloat(total);
+        float sumaPorciento = comun.redondeoPorExcesoFloat(subTotalPrint / o.getPorciento());
+        float totalPrint = subTotalPrint;
         t.alignRight();
         t.newLine();
         t.setText(SUBTOTAL + subTotalPrint + MONEDA);
         if (o.getPorciento() != 0) {
             t.newLine();
             t.setText("+ " + o.getPorciento() + PORCIENTO + sumaPorciento + MONEDA);
-            totalPrint = comun.redondeoPorExceso((Float.valueOf(subTotalPrint) + Float.valueOf(sumaPorciento)));
+            totalPrint = comun.redondeoPorExcesoFloat(subTotalPrint + sumaPorciento);
 
         }
         t.newLine();
 
-        addTotal(t, Float.valueOf(totalPrint));
+        addTotal(t, totalPrint);
 
         t.newLine();
         t.newLine();
@@ -212,10 +215,9 @@ public class Impresion {
      *
      * @param o
      * @return
-     * @throws PrintException
      * @deprecated usar <code>printKitchen(Orden o,Cocina c,String sync)</code>
      */
-    public Orden printKitchen(Orden o) throws PrintException {
+    public Orden printKitchen(Orden o)  {
 
 //        return printKitchenForced(printKitchen(o, staticContent.cocinaJPA.findCocina("C-2"), ""));
         Ticket t = new Ticket();
@@ -353,7 +355,7 @@ public class Impresion {
      * @return la orden actualizada con los productos ya enviados a la cocina
      * @throws PrintException
      */
-    public Orden printKitchen(Orden o, Cocina c, String sync) throws PrintException {
+    public Orden printKitchen(Orden o, Cocina c, String sync) {
         boolean ordenSinPlatos = true;
 
         Ticket t = new Ticket();
@@ -370,6 +372,19 @@ public class Impresion {
         t.alignLeft();
 
         for (ProductovOrden x : o.getProductovOrdenList()) {
+
+            if (x.getEnviadosacocina() > x.getCantidad()) {
+                RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.BORRAR,
+                        x.getEnviadosacocina() > 0 && o.getHoraTerminada() != null ? Level.SEVERE : Level.WARNING,
+                        o, x.getProductoVenta(),
+                        x.getEnviadosacocina() - x.getCantidad());
+            } else {
+                if (x.getEnviadosacocina() < x.getCantidad()) {
+                    RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR,
+                            Level.FINER, o.getCodOrden(), x.getProductoVenta(), x.getCantidad() - x.getEnviadosacocina());
+
+                }
+            }
             if (x.getEnviadosacocina() < x.getCantidad()
                     && x.getProductoVenta().getCocinacodCocina().equals(c)) {
                 if (x.getNota() != null) {
@@ -387,8 +402,10 @@ public class Impresion {
                 t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
                 t.newLine();
                 t.alignLeft();
+
                 x.setEnviadosacocina(x.getCantidad());
                 try {
+
                     staticContent.productovOrdenJpa.edit(x);
                 } catch (Exception ex) {
                     Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
@@ -567,7 +584,7 @@ public class Impresion {
 
         addCustomMetaData(t, Z, v.getFecha());
 
-        float total = addPvOrden(t, VentaDAO.getResumenVentas(v));
+        float total = addPvOrden(t, VentaDAO1.getResumenVentas(v));
 
         addTotalAndFinal(t, total);
 
@@ -673,11 +690,7 @@ public class Impresion {
     }
 
     private void sendToPrinter(byte[] byteData, String printLocation) {
-        try {
             feedPrinter(byteData, printLocation);
-        } catch (PrintException ex) {
-            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private void addDrawerKick(Ticket t) {
@@ -748,12 +761,11 @@ public class Impresion {
     //
     //Private Methods
     //
-    public void feedPrinter(byte[] b, String printerName) throws PrintException {
+    public void feedPrinter(byte[] b, String printerName) {
 
         PrintService[] prints = PrintServiceLookup.lookupPrintServices(null, null);
         DocPrintJob job = PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
         job.addPrintJobListener(new JobListener());
-
         for (int i = 0; i < prints.length; i++) {
             if (prints[i].getName().equals(printerName)) {
                 job = prints[i].createPrintJob();
@@ -763,7 +775,11 @@ public class Impresion {
         DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
         Doc doc = new SimpleDoc(b, flavor, null);
 
-        job.print(doc, null);
+        try {
+            job.print(doc, null);
+        } catch (PrintException ex) {
+            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 

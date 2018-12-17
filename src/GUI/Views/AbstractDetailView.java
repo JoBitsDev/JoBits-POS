@@ -11,7 +11,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.Window;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractDetailController;
 
 /**
@@ -24,88 +24,90 @@ public abstract class AbstractDetailView <T>  extends AbstractView{
 
     protected T instance;
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller) {
         super(DIALOG_TYPE, controller);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Frame owner) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner) {
         super(DIALOG_TYPE, controller, owner);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Frame owner, boolean modal) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, boolean modal) {
         super(DIALOG_TYPE, controller, owner, modal);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Frame owner, String title) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, String title) {
         super(DIALOG_TYPE, controller, owner, title);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Frame owner, String title, boolean modal) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, String title, boolean modal) {
         super(DIALOG_TYPE, controller, owner, title, modal);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Frame owner, String title, boolean modal, GraphicsConfiguration gc) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, String title, boolean modal, GraphicsConfiguration gc) {
         super(DIALOG_TYPE, controller, owner, title, modal, gc);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Dialog owner) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner) {
         super(DIALOG_TYPE, controller, owner);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Dialog owner, boolean modal) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, boolean modal) {
         super(DIALOG_TYPE, controller, owner, modal);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Dialog owner, String title) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, String title) {
         super(DIALOG_TYPE, controller, owner, title);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Dialog owner, String title, boolean modal) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, String title, boolean modal) {
         super(DIALOG_TYPE, controller, owner, title, modal);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Dialog owner, String title, boolean modal, GraphicsConfiguration gc) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, String title, boolean modal, GraphicsConfiguration gc) {
         super(DIALOG_TYPE, controller, owner, title, modal, gc);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Window owner) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner) {
         super(DIALOG_TYPE, controller, owner);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Window owner, ModalityType modalityType) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, ModalityType modalityType) {
         super(DIALOG_TYPE, controller, owner, modalityType);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Window owner, String title) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, String title) {
         super(DIALOG_TYPE, controller, owner, title);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Window owner, String title, ModalityType modalityType) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, String title, ModalityType modalityType) {
         super(DIALOG_TYPE, controller, owner, title, modalityType);
         this.instance = instance;
     }
 
-    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractController controller, Window owner, String title, ModalityType modalityType, GraphicsConfiguration gc) {
+    public AbstractDetailView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, String title, ModalityType modalityType, GraphicsConfiguration gc) {
         super(DIALOG_TYPE, controller, owner, title, modalityType, gc);
         this.instance = instance;
     }
 
-  
-
+    /**
+     *
+     * @return
+     */
     @Override
     public AbstractDetailController<T> getController() {
         return (AbstractDetailController<T>) controller;

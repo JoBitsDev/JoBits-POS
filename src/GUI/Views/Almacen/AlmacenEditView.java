@@ -11,7 +11,7 @@ import java.awt.Dialog;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.almacen.AlmacenManageController;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
@@ -32,7 +32,7 @@ public class AlmacenEditView extends AbstractView {
     Almacen a;
     MyTableModel model;
 
-    public AlmacenEditView(AbstractController controller, Dialog owner, boolean modal) {
+    public AlmacenEditView(AbstractDialogController controller, Dialog owner, boolean modal) {
         super(DialogType.NORMAL, controller, owner, modal);
         initComponents();
 

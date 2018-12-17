@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.resources.R;
 
 /**
@@ -19,7 +19,7 @@ import restManager.resources.R;
  * @param <T>
  *
  */
-public abstract class AbstractModel<T> {
+public abstract class AbstractModel<T> implements Model{
 
     private final Class<T> entityClass;
     private static EntityManagerFactory EMF;
@@ -39,7 +39,6 @@ public abstract class AbstractModel<T> {
         }
     }
 
-    
     public EntityManager getEntityManager() {
         return currentConnection;
     }

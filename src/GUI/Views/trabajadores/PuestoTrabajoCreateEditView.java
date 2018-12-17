@@ -14,7 +14,7 @@ import java.awt.Frame;
 import java.util.ArrayList;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.trabajadores.PuestoTrabajoCreateEditController;
 import restManager.exceptions.DevelopingOperationException;

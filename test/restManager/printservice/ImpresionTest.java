@@ -63,7 +63,7 @@ public class ImpresionTest {
     @Test
     public void testPrint() throws Exception {
         System.out.println("print");
-        Orden o = new OrdenDAO().find("O-2529");
+        Orden o = OrdenDAO.getInstance().find("O-2529");
         boolean preview = true;
         //instance.forceBell();
       instance.print(o, preview);

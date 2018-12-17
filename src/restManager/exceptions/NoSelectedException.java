@@ -18,19 +18,21 @@ import restManager.resources.R;
 public class NoSelectedException extends RuntimeException {
 
     public NoSelectedException() {
-        JOptionPane.showMessageDialog(null, R.RESOURCE_BUNDLE.getString("exception_no_selected"),
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
+        showMessage(null, R.RESOURCE_BUNDLE.getString("exception_no_selected"));
     }
 
     public NoSelectedException(String message) {
         super(message);
-        JOptionPane.showMessageDialog(null, message,
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
+        showMessage(null, message);
     }
 
     public NoSelectedException(Component parent) {
-        JOptionPane.showMessageDialog(parent, R.RESOURCE_BUNDLE.getString("exception_no_selected"),
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
+        showMessage(parent,R.RESOURCE_BUNDLE.getString("exception_no_selected"));
     }
 
+    private void showMessage(Component parent, String message){
+           JOptionPane.showMessageDialog(parent, message,
+                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/alerta.png")));
+    }
 }

@@ -25,7 +25,7 @@ import javax.swing.table.AbstractTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteComboBoxEditor;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.insumo.InsumoCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
@@ -50,7 +50,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
 
     TableWithComboBoxAutoComplete<Insumo, InsumoElaborado> tableIngElab;
 
-    public InsumoCreateEditView(AbstractController controller, Frame owner, boolean modal, Insumo ins) {
+    public InsumoCreateEditView(AbstractDialogController controller, Frame owner, boolean modal, Insumo ins) {
         super(ins, DialogType.DEFINED, controller, owner, modal);
         initComponents();
         hideCrossReferenceDialog();
@@ -58,7 +58,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
 
     }
 
-    public InsumoCreateEditView(AbstractController controller, Dialog owner, boolean modal, Insumo ins) {
+    public InsumoCreateEditView(AbstractDialogController controller, Dialog owner, boolean modal, Insumo ins) {
         super(ins, DialogType.DEFINED, controller, owner, modal);
         initComponents();
         hideCrossReferenceDialog();
@@ -615,6 +615,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     }//GEN-LAST:event_jToggleButtonCrossReferenceStateChanged
 
     private void jButtonAgregarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarProdActionPerformed
+
     }//GEN-LAST:event_jButtonAgregarProdActionPerformed
 
     private void jButtonDeleteProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteProdActionPerformed
@@ -719,7 +720,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
 
     @Override
     public boolean validateData() {
-        if(jComboBoxAlmacen.getSelectedIndex() == -1 || !jTextFieldNombre.getInputVerifier().verify(jTextFieldNombre)){
+        if (jComboBoxAlmacen.getSelectedIndex() == -1 || !jTextFieldNombre.getInputVerifier().verify(jTextFieldNombre)) {
             return false;
         }
         instance.setAlmacencodAlmacen((Almacen) jComboBoxAlmacen.getSelectedItem());
@@ -734,7 +735,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         instance.setInsumoTransaccionList(instance.getInsumoTransaccionList());
         instance.setIpvList(instance.getIpvList());
         instance.setStockEstimation((Float) jSpinnerEstimacionStock.getValue());
-        
+
         if (instance.getElaborado()) {
             instance.setInsumoElaboradoList(((RestManagerAbstractTableModel<InsumoElaborado>) jTableInsElab.getModel()).getItems());
         } else {

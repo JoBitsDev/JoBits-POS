@@ -10,7 +10,7 @@ import GUI.Views.trabajadores.PuestoTrabajoListView;
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Window;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
 import restManager.exceptions.DevelopingOperationException;

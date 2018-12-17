@@ -10,7 +10,7 @@ import GUI.Views.AbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractListController;
 import restManager.persistencia.Almacen;
 

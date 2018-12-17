@@ -10,7 +10,7 @@ import GUI.Views.trabajadores.PersonalListView;
 import java.awt.Frame;
 import java.awt.Window;
 import java.util.AbstractList;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
 import restManager.persistencia.Personal;

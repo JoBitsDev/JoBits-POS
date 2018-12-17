@@ -7,15 +7,24 @@ package GUI.Views.productoventa;
 
 import GUI.Components.JSpinner;
 import GUI.Components.JTextField;
+import GUI.Views.AbstractCrossReferenePanel;
 import GUI.Views.AbstractDetailView;
 import java.awt.Dialog;
 import java.awt.Frame;
-import restManager.controller.AbstractController;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import org.jdesktop.swingx.JXPanel;
+import restManager.controller.AbstractDialogController;
+import restManager.controller.AbstractDetailController;
 import restManager.controller.productoventa.ProductoVentaCreateEditController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Cocina;
+import restManager.persistencia.Insumo;
 import restManager.persistencia.ProductoInsumo;
+import restManager.persistencia.ProductoInsumoPK;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.Seccion;
+import restManager.printservice.ComponentPrinter;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
@@ -26,25 +35,34 @@ import restManager.util.RestManagerComboBoxModel;
  */
 public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVenta> {
 
-    public ProductoVentaCreateEditView(ProductoVenta instance, AbstractController controller, Frame owner, boolean modal) {
+    public ProductoVentaCreateEditView(ProductoVenta instance, AbstractDialogController controller, Frame owner, boolean modal) {
         super(instance, DialogType.INPUT_LARGE, controller, owner, modal);
         initComponents();
         fetchComponentData();
     }
 
-    public ProductoVentaCreateEditView(ProductoVenta instance, AbstractController controller, Dialog owner, boolean modal) {
+    public ProductoVentaCreateEditView(ProductoVenta instance, AbstractDialogController controller, Dialog owner, boolean modal) {
         super(instance, DialogType.INPUT_LARGE, controller, owner, modal);
         initComponents();
         fetchComponentData();
 
+    }
+
+    public JXPanel getjXPanelRoot() {
+        return jXPanelRoot;
+    }
+    
+    @Override
+    public ProductoVentaCreateEditController getController() {
+        return (ProductoVentaCreateEditController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jXPanel1 = new org.jdesktop.swingx.JXPanel();
-        jPanel5 = new javax.swing.JPanel();
+        jXPanelRoot = new org.jdesktop.swingx.JXPanel();
+        jPanelInputs = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jXLabelPCod = new org.jdesktop.swingx.JXLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -58,18 +76,18 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jComboBoxCOCINA = new javax.swing.JComboBox<>();
         jXLabelSeccion = new org.jdesktop.swingx.JXLabel();
         jComboBoxSECCION = new javax.swing.JComboBox<>();
-        jPanel4 = new javax.swing.JPanel();
+        jPanelTable = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
+        jideButton1 = new com.jidesoft.swing.JideButton();
         jXLabelCosto = new org.jdesktop.swingx.JXLabel();
         jXLabelGasto = new org.jdesktop.swingx.JXLabel();
         jXLabelMoneda1 = new org.jdesktop.swingx.JXLabel();
-        TablaDeIngredientes = new javax.swing.JScrollPane();
-        jTableListaIngredientes = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelCrossRef = new javax.swing.JPanel();
+        jPanelOptions = new javax.swing.JPanel();
         jButtonIngrediente = new javax.swing.JButton();
         jButtonCocina = new javax.swing.JButton();
         jButtonSeccion = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelActions = new javax.swing.JPanel();
         jButtonCrear = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
 
@@ -77,18 +95,18 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         setUndecorated(true);
         getContentPane().setLayout(new java.awt.BorderLayout(10, 10));
 
-        jXPanel1.setBackground(new java.awt.Color(0, 102, 102));
-        jXPanel1.setLayout(new javax.swing.BoxLayout(jXPanel1, javax.swing.BoxLayout.PAGE_AXIS));
+        jXPanelRoot.setBackground(new java.awt.Color(0, 102, 102));
+        jXPanelRoot.setLayout(new javax.swing.BoxLayout(jXPanelRoot, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Información Básica"));
-        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelInputs.setBorder(javax.swing.BorderFactory.createTitledBorder("Información Básica"));
+        jPanelInputs.setLayout(new javax.swing.BoxLayout(jPanelInputs, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jXLabelPCod.setText("P-Cod");
         jPanel8.add(jXLabelPCod);
 
-        jPanel5.add(jPanel8);
+        jPanelInputs.add(jPanel8);
 
         jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
 
@@ -111,7 +129,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jXLabelMoneda.setPreferredSize(new java.awt.Dimension(50, 16));
         jPanel7.add(jXLabelMoneda);
 
-        jPanel5.add(jPanel7);
+        jPanelInputs.add(jPanel7);
 
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
 
@@ -127,13 +145,22 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jComboBoxSECCION.setPreferredSize(new java.awt.Dimension(150, 27));
         jPanel2.add(jComboBoxSECCION);
 
-        jPanel5.add(jPanel2);
+        jPanelInputs.add(jPanel2);
 
-        jXPanel1.add(jPanel5);
+        jXPanelRoot.add(jPanelInputs);
 
-        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelTable.setLayout(new javax.swing.BoxLayout(jPanelTable, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 15, 5));
+
+        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/imp.png"))); // NOI18N
+        jideButton1.setToolTipText("Imprimir");
+        jideButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jideButton1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jideButton1);
 
         jXLabelCosto.setText(bundle.getString("label_costo")); // NOI18N
         jPanel6.add(jXLabelCosto);
@@ -145,68 +172,31 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jXLabelMoneda1.setPreferredSize(new java.awt.Dimension(50, 16));
         jPanel6.add(jXLabelMoneda1);
 
-        jPanel4.add(jPanel6);
+        jPanelTable.add(jPanel6);
 
-        TablaDeIngredientes.setBorder(javax.swing.BorderFactory.createTitledBorder("Insumos"));
+        jPanelCrossRef.setBorder(javax.swing.BorderFactory.createTitledBorder("Insumos"));
+        jPanelCrossRef.setPreferredSize(new java.awt.Dimension(529, 300));
+        jPanelCrossRef.setLayout(new java.awt.BorderLayout());
+        jPanelTable.add(jPanelCrossRef);
 
-        jTableListaIngredientes.setAutoCreateRowSorter(true);
-        jTableListaIngredientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jXPanelRoot.add(jPanelTable);
 
-            },
-            new String [] {
-                "Seleccionar", "Codigo", "Nombre", "U/M", "Cantidad", "Costo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false, false, false, true, true
-            };
+        jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableListaIngredientes.setColumnSelectionAllowed(true);
-        jTableListaIngredientes.getTableHeader().setReorderingAllowed(false);
-        jTableListaIngredientes.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTableListaIngredientesFocusLost(evt);
-            }
-        });
-        jTableListaIngredientes.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jTableListaIngredientesPropertyChange(evt);
-            }
-        });
-        TablaDeIngredientes.setViewportView(jTableListaIngredientes);
-
-        jPanel4.add(TablaDeIngredientes);
-
-        jXPanel1.add(jPanel4);
-
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
-
-        jButtonIngrediente.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
-        jPanel3.add(jButtonIngrediente);
+        jButtonIngrediente.setText(bundle.getString("label_nuevo_ingrediente")); // NOI18N
+        jPanelOptions.add(jButtonIngrediente);
 
         jButtonCocina.setText(bundle.getString("label_agregar_cocina")); // NOI18N
-        jPanel3.add(jButtonCocina);
+        jPanelOptions.add(jButtonCocina);
 
         jButtonSeccion.setText(bundle.getString("label_agregar_seccion")); // NOI18N
-        jPanel3.add(jButtonSeccion);
+        jPanelOptions.add(jButtonSeccion);
 
-        jXPanel1.add(jPanel3);
+        jXPanelRoot.add(jPanelOptions);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 100, 5));
+        jPanelActions.setBackground(new java.awt.Color(204, 204, 204));
+        jPanelActions.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
+        jPanelActions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 100, 5));
 
         jButtonCrear.setText(bundle.getString("label_crear")); // NOI18N
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -214,7 +204,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
                 jButtonCrearActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonCrear);
+        jPanelActions.add(jButtonCrear);
 
         jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -222,32 +212,15 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
                 jButtonCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonCancelar);
+        jPanelActions.add(jButtonCancelar);
 
-        jXPanel1.add(jPanel1);
+        jXPanelRoot.add(jPanelActions);
 
-        getContentPane().add(jXPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jXPanelRoot, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTableListaIngredientesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableListaIngredientesFocusLost
-        //        TableCellEditor tce = jTableListaIngredientes.getCellEditor();
-        //        if (jTableListaIngredientes.getSelectedColumn() != 2) {
-        //            if (tce != null) {
-        //                tce.stopCellEditing();
-        //            }
-        //        }
-    }//GEN-LAST:event_jTableListaIngredientesFocusLost
-
-    private void jTableListaIngredientesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTableListaIngredientesPropertyChange
-        if (evt.getPropertyName().matches("tableCellEditor")) {
-            if (jTableListaIngredientes.getEditingColumn() == 5 && evt.getNewValue() == null) {
-                // ActCosto();
-            }
-        }
-    }//GEN-LAST:event_jTableListaIngredientesPropertyChange
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         getController().createUpdateInstance();
@@ -256,6 +229,10 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jideButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton1ActionPerformed
+    ComponentPrinter.printComponent(jXPanelRoot,instance.toString(),false);
+    }//GEN-LAST:event_jideButton1ActionPerformed
 
     @Override
     public void setEditingMode() {
@@ -295,81 +272,101 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
     @Override
     public void fetchComponentData() {
-        jComboBoxCOCINA.setModel(new RestManagerComboBoxModel<>(((ProductoVentaCreateEditController) getController()).getCocinaList()));
-        jComboBoxSECCION.setModel(new RestManagerComboBoxModel<>(((ProductoVentaCreateEditController) getController()).getSeccionList()));
-        jTableListaIngredientes.setModel(new RestManagerAbstractTableModel<ProductoInsumo>(instance.getProductoInsumoList(), jTableListaIngredientes) {
+        jComboBoxCOCINA.setModel(new RestManagerComboBoxModel<>(getController().getCocinaList()));
+        jComboBoxSECCION.setModel(new RestManagerComboBoxModel<>(getController().getSeccionList()));
+        AbstractCrossReferenePanel<ProductoInsumo, Insumo> crossReferencePanel
+                = new AbstractCrossReferenePanel<ProductoInsumo, Insumo>("Insumos", getController().getInsumoList()) {
             @Override
-            public int getColumnCount() {
-                return 5;
+            public RestManagerAbstractTableModel getTableModel() {
+                return new RestManagerAbstractTableModel<ProductoInsumo>(instance.getProductoInsumoList(), getjTableCrossReference()) {
+                    @Override
+                    public int getColumnCount() {
+                        return 5;
+                    }
+
+                    @Override
+                    public Object getValueAt(int rowIndex, int columnIndex) {
+                        switch (columnIndex) {
+                            case 0:
+                                return items.get(rowIndex).getInsumo().getCodInsumo();
+                            case 1:
+                                return items.get(rowIndex).getInsumo().getNombre();
+                            case 2:
+                                return items.get(rowIndex).getInsumo().getUm();
+                            case 3:
+                                return items.get(rowIndex).getCantidad();
+                            case 4:
+                                return items.get(rowIndex).getCosto();
+                            default:
+                                return null;
+                        }
+                    }
+
+                    @Override
+                    public String getColumnName(int column) {
+                        switch (column) {
+                            case 0:
+                                return "Código";
+                            case 1:
+                                return "Nombre";
+                            case 2:
+                                return "U/M";
+                            case 3:
+                                return "Cantidad";
+                            case 4:
+                                return "Costo";
+                            default:
+                                return null;
+                        }
+                    }
+
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return columnIndex == 3;
+                    }
+
+                    @Override
+                    public Class<?> getColumnClass(int columnIndex) {
+                        if (columnIndex == 3) {
+                            return Float.class;
+                        }
+                        return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                        switch (columnIndex) {
+                            case 3:
+                                items.get(rowIndex).setCantidad((float) aValue);
+                                items.get(rowIndex).setCosto(items.get(rowIndex).getInsumo().getCostoPorUnidad() * (float) aValue);
+                                fireTableRowsUpdated(rowIndex, rowIndex);
+                                break;
+
+                        }
+                    }
+                };
             }
 
             @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-                switch (columnIndex) {
-                    case 0:
-                        return items.get(rowIndex).getInsumo().getCodInsumo();
-                    case 1:
-                        return items.get(rowIndex).getInsumo().getNombre();
-                    case 2:
-                        return items.get(rowIndex).getInsumo().getUm();
-                    case 3:
-                        return items.get(rowIndex).getCantidad();
-                    case 4:
-                        return items.get(rowIndex).getCosto();
-                    default:
-                        return null;
-                }
+            public ProductoInsumo transformK_T(Insumo selected) {
+                ProductoInsumo ret = new ProductoInsumo();
+                ProductoInsumoPK pk = new ProductoInsumoPK(getController().getInstance().getPCod(), selected.getCodInsumo());
+                ret.setProductoInsumoPK(pk);
+                ret.setInsumo(selected);
+                ret.setProductoVenta(getController().getInstance());
+                ret.setCantidad(1);
+                ret.setCosto(selected.getCostoPorUnidad());
+                return ret;
             }
-
-            @Override
-            public String getColumnName(int column) {
-                switch (column) {
-                    case 0:
-                        return "Código";
-                    case 1:
-                        return "Nombre";
-                    case 2:
-                        return "U/M";
-                    case 3:
-                        return "Cantidad";
-                    case 4:
-                        return "Costo";
-                    default:
-                        return null;
-                }
-            }
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 3;
-            }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 3) {
-                    return Float.class;
-                }
-                return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                switch (columnIndex) {
-                    case 3:
-                        items.get(rowIndex).setCantidad((float) aValue);
-                        items.get(rowIndex).setCosto(items.get(rowIndex).getInsumo().getCostoPorUnidad() * (float) aValue);
-                        fireTableRowsUpdated(rowIndex, rowIndex);
-                        break;
-
-                }
-            }
-        });
-
+        };
+        jPanelCrossRef.add(crossReferencePanel);
+        
+        
+        
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane TablaDeIngredientes;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCocina;
     private javax.swing.JButton jButtonCrear;
@@ -377,16 +374,16 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     private javax.swing.JButton jButtonSeccion;
     private javax.swing.JComboBox<Cocina> jComboBoxCOCINA;
     private javax.swing.JComboBox<Seccion> jComboBoxSECCION;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanelActions;
+    private javax.swing.JPanel jPanelCrossRef;
+    private javax.swing.JPanel jPanelInputs;
+    private javax.swing.JPanel jPanelOptions;
+    private javax.swing.JPanel jPanelTable;
     private javax.swing.JSpinner jSpinnerPrecio;
-    private javax.swing.JTable jTableListaIngredientes;
     private javax.swing.JTextField jTextFieldNombre;
     private org.jdesktop.swingx.JXLabel jXLabelCocina;
     private org.jdesktop.swingx.JXLabel jXLabelCosto;
@@ -397,6 +394,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     private org.jdesktop.swingx.JXLabel jXLabelPCod;
     private org.jdesktop.swingx.JXLabel jXLabelPrecio;
     private org.jdesktop.swingx.JXLabel jXLabelSeccion;
-    private org.jdesktop.swingx.JXPanel jXPanel1;
+    private org.jdesktop.swingx.JXPanel jXPanelRoot;
+    private com.jidesoft.swing.JideButton jideButton1;
     // End of variables declaration//GEN-END:variables
 }

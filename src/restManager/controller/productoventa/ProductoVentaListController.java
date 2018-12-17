@@ -5,7 +5,9 @@
  */
 package restManager.controller.productoventa;
 
+import GUI.Views.productoventa.ProductoVentaCreateEditView;
 import GUI.Views.productoventa.ProductoVentaListView;
+import GUI.Views.productoventa.ProductoVentaReadOnlyView;
 import GUI.Views.trabajadores.PersonalListView;
 import java.awt.Frame;
 import java.awt.Window;
@@ -15,6 +17,7 @@ import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.ProductoVentaDAO;
+import restManager.printservice.ComponentPrinter;
 
 /**
  * FirstDream
@@ -25,7 +28,7 @@ import restManager.persistencia.models.ProductoVentaDAO;
 public class ProductoVentaListController extends AbstractListController<ProductoVenta> {
 
     public ProductoVentaListController() {
-        super(new ProductoVentaDAO());
+        super(ProductoVentaDAO.getInstance());
     }
 
     public ProductoVentaListController(Frame parent) {
@@ -49,6 +52,19 @@ public class ProductoVentaListController extends AbstractListController<Producto
         getView().updateView();
         getView().setVisible(true);
 
+    }
+
+    public void printProductoVenta(ProductoVenta objectAtSelectedRow) {
+        ProductoVentaReadOnlyView printView = new ProductoVentaReadOnlyView(objectAtSelectedRow, this, getView(), true);
+        printView.updateView();
+        printView.pack();
+        ComponentPrinter.printComponent(printView.getjXPanelRoot(),objectAtSelectedRow.toString(), false);
+    }
+    
+    public void printAllProductoVenta(){
+        items.forEach((x) -> {
+            printProductoVenta(x);
+        });
     }
     
    

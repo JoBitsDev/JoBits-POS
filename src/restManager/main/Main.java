@@ -7,6 +7,7 @@ package restManager.main;
 
 import GUI.FirstTimeDialog;
 import GUI.LogInDialog;
+import java.util.Arrays;
 import restManager.persistencia.jpa.staticContent;
 import restManager.resources.R;
 
@@ -19,7 +20,7 @@ import restManager.resources.R;
 public class Main {
 
     public static void main(String[] args) {
-        
+        Arrays.asList(args);
         
         staticContent.init(R.PERIRSTENCE_UNIT_NAME);
         boolean newDatabase = checkIfDatabaseIsNew();

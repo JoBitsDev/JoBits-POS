@@ -18,7 +18,7 @@ import restManager.persistencia.models.AbstractModel;
  * @param <T>
  *
  */
-public abstract class AbstractDetailController<T> extends AbstractController<T> {
+public abstract class AbstractDetailController<T> extends AbstractDialogController<T> {
 
     protected T instance;
     protected State state;
@@ -63,7 +63,7 @@ public abstract class AbstractDetailController<T> extends AbstractController<T> 
     }
 
     public void createUpdateInstance() {
-        if (getView().validateData()) {
+        if (((AbstractDetailView<T>)getView()).validateData()) {
             switch (state) {
                 case CREATING:
                     create(instance);
@@ -95,10 +95,10 @@ public abstract class AbstractDetailController<T> extends AbstractController<T> 
         this.parent = parent;
     }
    
-    @Override
-    public AbstractDetailView<T> getView() {
-        return (AbstractDetailView<T>)super.getView();
-    }
+//    @Override
+//    public AbstractDetailView<T> getView() {
+//        return (AbstractDetailView<T>)super.getView();
+//    }
 
     public enum State {
         CREATING, EDITING

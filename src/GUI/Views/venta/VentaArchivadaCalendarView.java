@@ -6,9 +6,10 @@
 package GUI.Views.venta;
 
 import GUI.Views.AbstractView;
+import com.jidesoft.utils.DateUtils;
 import java.awt.Color;
 import java.awt.Frame;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.exceptions.DevelopingOperationException;
 
 /**
@@ -17,8 +18,9 @@ import restManager.exceptions.DevelopingOperationException;
  */
 public class VentaArchivadaCalendarView extends AbstractView {
 
-    public VentaArchivadaCalendarView(AbstractController controller, Frame owner, boolean modal) {
+    public VentaArchivadaCalendarView(AbstractDialogController controller, Frame owner, boolean modal) {
         super(DialogType.NORMAL, controller, owner, modal);
+        
     }
 
     /**
@@ -31,11 +33,12 @@ public class VentaArchivadaCalendarView extends AbstractView {
     private void initComponents() {
 
         substanceDatePickerUI1 = new org.pushingpixels.substance.swingx.SubstanceDatePickerUI();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelRoot = new javax.swing.JPanel();
+        paintPanel1 = new com.jidesoft.swing.PaintPanel();
         jCalendar1 = new com.toedter.calendar.JCalendar();
         jPanel2 = new javax.swing.JPanel();
         jXLabel1 = new org.jdesktop.swingx.JXLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelOptions = new javax.swing.JPanel();
         jButtonArchivarDias = new javax.swing.JButton();
         jButtonCierreVentas = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
@@ -43,26 +46,33 @@ public class VentaArchivadaCalendarView extends AbstractView {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.BorderLayout());
-        jPanel1.add(jCalendar1, java.awt.BorderLayout.CENTER);
+        jPanelRoot.setLayout(new java.awt.BorderLayout());
+
+        com.jidesoft.swing.JideBorderLayout jideBorderLayout1 = new com.jidesoft.swing.JideBorderLayout();
+        jideBorderLayout1.setVgap(10);
+        jideBorderLayout1.setHgap(10);
+        paintPanel1.setLayout(jideBorderLayout1);
+        paintPanel1.add(jCalendar1);
+
+        jPanelRoot.add(paintPanel1, java.awt.BorderLayout.CENTER);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jXLabel1.setText(bundle.getString("label_dias_archivados")); // NOI18N
         jXLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jPanel2.add(jXLabel1);
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_START);
+        jPanelRoot.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
-        jPanel3.setLayout(new java.awt.GridLayout(2, 2, 20, 20));
+        jPanelOptions.setLayout(new java.awt.GridLayout(2, 2, 20, 20));
 
         jButtonArchivarDias.setText(bundle.getString("label_archivar_dias")); // NOI18N
-        jPanel3.add(jButtonArchivarDias);
+        jPanelOptions.add(jButtonArchivarDias);
 
         jButtonCierreVentas.setText(bundle.getString("label_cierre_ventas")); // NOI18N
-        jPanel3.add(jButtonCierreVentas);
+        jPanelOptions.add(jButtonCierreVentas);
 
         jButtonEliminar.setText(bundle.getString("label_eliminar")); // NOI18N
-        jPanel3.add(jButtonEliminar);
+        jPanelOptions.add(jButtonEliminar);
 
         jButtonSalir.setText(bundle.getString("label_salir")); // NOI18N
         jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -70,11 +80,11 @@ public class VentaArchivadaCalendarView extends AbstractView {
                 jButtonSalirActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonSalir);
+        jPanelOptions.add(jButtonSalir);
 
-        jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+        jPanelRoot.add(jPanelOptions, java.awt.BorderLayout.PAGE_END);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanelRoot, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -94,10 +104,11 @@ public class VentaArchivadaCalendarView extends AbstractView {
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonSalir;
     private com.toedter.calendar.JCalendar jCalendar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelOptions;
+    private javax.swing.JPanel jPanelRoot;
     private org.jdesktop.swingx.JXLabel jXLabel1;
+    private com.jidesoft.swing.PaintPanel paintPanel1;
     private org.pushingpixels.substance.swingx.SubstanceDatePickerUI substanceDatePickerUI1;
     // End of variables declaration//GEN-END:variables
 }

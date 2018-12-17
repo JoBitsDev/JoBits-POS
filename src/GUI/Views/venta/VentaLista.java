@@ -9,10 +9,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
+import restManager.controller.venta.VentaDetailController;
 
 import restManager.persistencia.Orden;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.VentaDAO;
 import restManager.resources.R;
 import restManager.util.comun;
 
@@ -189,7 +191,8 @@ public class VentaLista extends javax.swing.JDialog {
             try {
                 Date f = restManager.resources.R.DATE_FORMAT.parse(
                         (String) jTableLista.getValueAt(jTableLista.getSelectedRow(), 1));
-                VentaMain.getInstance(this.getParent(), true, staticContent.ventaJPA.findVenta(f));
+                //VentaMain.getInstance(this.getParent(), true, staticContent.ventaJPA.findVenta(f));
+                VentaDetailController controller = new VentaDetailController(VentaDAO.getInstance().find(f), this);
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Error al abrir el dia seleccionado");
             }

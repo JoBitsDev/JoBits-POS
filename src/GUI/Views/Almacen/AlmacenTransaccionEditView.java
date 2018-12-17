@@ -16,7 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumn;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
+import restManager.controller.Controller;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
 import restManager.persistencia.Insumo;
@@ -38,7 +39,7 @@ public class AlmacenTransaccionEditView extends AbstractView {
     List<Insumo> items;
     RestManagerAbstractTableModel<InsumoTransaccion> model;
 
-    public AlmacenTransaccionEditView(Transaccion f, List<Insumo> items, AbstractController controller, Frame owner, boolean modal) {
+    public AlmacenTransaccionEditView(Transaccion f, List<Insumo> items, AbstractDialogController controller, Frame owner, boolean modal) {
         super(DialogType.NORMAL, controller, owner, modal);
         this.f = f;
         this.items = items;
@@ -48,7 +49,7 @@ public class AlmacenTransaccionEditView extends AbstractView {
 
     }
 
-    public AlmacenTransaccionEditView(Transaccion f, List<Insumo> items, AbstractController controller, Dialog owner, boolean modal) {
+    public AlmacenTransaccionEditView(Transaccion f, List<Insumo> items, AbstractDialogController controller, Dialog owner, boolean modal) {
         super(DialogType.NORMAL, controller, owner, modal);
         this.f = f;
         this.items = items;
@@ -434,6 +435,13 @@ public class AlmacenTransaccionEditView extends AbstractView {
         model.addObject(insumoT);
     }
 
+    @Override
+    public AbstractDialogController getController() {
+        return (AbstractDialogController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
     private void deleteFromTable() {
         model.removeObject(model.getObjectAtSelectedRow());
 

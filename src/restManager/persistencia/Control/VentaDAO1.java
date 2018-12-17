@@ -25,7 +25,7 @@ import restManager.util.comun;
  * @author Jorge
  *
  */
-public class VentaDAO {
+public class VentaDAO1 {
 
     //
     //Métodos referentes a resumenes de las ventas
@@ -616,8 +616,6 @@ public class VentaDAO {
     public static float getValorTotalRedondeoAFavorDeLaCasa(Venta v) {
         int total = 0;
         for (Orden x : v.getOrdenList()) {
-            System.out.println(x.getCodOrden());
-            System.out.println( comun.cantidadARedondearPorExceso((int) Math.ceil(x.getOrdenvalorMonetario() * 100)));
             total += comun.cantidadARedondearPorExceso((int) Math.ceil(x.getOrdenvalorMonetario() * 100));
         }
         return ((float) total) / 100;

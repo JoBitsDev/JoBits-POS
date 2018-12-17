@@ -6,6 +6,8 @@
 package GUI.Views;
 
 import java.beans.PropertyChangeEvent;
+import restManager.controller.AbstractDialogController;
+import restManager.controller.Controller;
 
 /**
  *
@@ -21,23 +23,27 @@ public interface View {
 
     public void fetchComponentData();
 
+    public Controller getController();
+
+    public void dispose();
+
     public enum DialogType {
-       /**
-        * 400 * 600
-        */
-        LIST, 
+        /**
+         * 400 * 600
+         */
+        LIST,
         /**
          * 800*600
          */
-        NORMAL, 
+        NORMAL,
         /**
          * 400*600
          */
-        INPUT, 
+        INPUT,
         /**
          * 590 * 700
          */
-        INPUT_LARGE, 
+        INPUT_LARGE,
         /**
          * Defined by the user
          */

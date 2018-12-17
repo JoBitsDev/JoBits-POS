@@ -46,6 +46,7 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
     public InsumoCreateEditController(Insumo instance, Window parent) {
         super(instance, parent, InsumoDAO.getInstance());
     }
+    
     @Override
     public Insumo createNewInstance() {
         Insumo ret = new Insumo(super.getModel().generateStringCode(PREFIX_FOR_ID));
@@ -71,7 +72,7 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
     }
 
     public List<ProductoVenta> getProductoList() {
-        List <ProductoVenta> ret = new ProductoVentaDAO().findAll();
+        List <ProductoVenta> ret = ProductoVentaDAO.getInstance().findAll();
         Collections.sort(ret, (ProductoVenta o1, ProductoVenta o2) -> o1.getNombre().compareTo(o2.getNombre()));
         return ret;
     }

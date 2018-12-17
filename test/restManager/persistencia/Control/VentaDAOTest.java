@@ -45,33 +45,33 @@ public class VentaDAOTest {
     }
 
     /**
-     * Test of getResumenVentasOnTable method, of class VentaDAO.
+     * Test of getResumenVentasOnTable method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenVentasOnTable() {
         System.out.println("getResumenVentasOnTable");
         JTable tabla = null;
         Venta v = null;
-        VentaDAO.getResumenVentasOnTable(tabla, v);
+        VentaDAO1.getResumenVentasOnTable(tabla, v);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getResumenVentasDeLaCasaOnTable method, of class VentaDAO.
+     * Test of getResumenVentasDeLaCasaOnTable method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenVentasDeLaCasaOnTable() {
         System.out.println("getResumenVentasDeLaCasaOnTable");
         JTable tabla = null;
         Venta v = null;
-        VentaDAO.getResumenVentasDeLaCasaOnTable(tabla, v);
+        VentaDAO1.getResumenVentasDeLaCasaOnTable(tabla, v);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getResumenVentasCamareroOnTable method, of class VentaDAO.
+     * Test of getResumenVentasCamareroOnTable method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenVentasCamareroOnTable() {
@@ -79,13 +79,13 @@ public class VentaDAOTest {
         JTable tabla = null;
         Venta v = null;
         Personal p = null;
-        VentaDAO.getResumenVentasCamareroOnTable(tabla, v, p);
+        VentaDAO1.getResumenVentasCamareroOnTable(tabla, v, p);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getResumenVentasCocinaOnTable method, of class VentaDAO.
+     * Test of getResumenVentasCocinaOnTable method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenVentasCocinaOnTable() {
@@ -93,13 +93,13 @@ public class VentaDAOTest {
         JTable tabla = null;
         Venta v = null;
         Cocina c = null;
-        VentaDAO.getResumenVentasCocinaOnTable(tabla, v, c);
+        VentaDAO1.getResumenVentasCocinaOnTable(tabla, v, c);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getResumenDetalladoVentasCocinaOnTable method, of class VentaDAO.
+     * Test of getResumenDetalladoVentasCocinaOnTable method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenDetalladoVentasCocinaOnTable() {
@@ -107,13 +107,13 @@ public class VentaDAOTest {
         JTable tabla = null;
         Venta v = null;
         Cocina c = null;
-        VentaDAO.getResumenDetalladoVentasCocinaOnTable(tabla, v, c);
+        VentaDAO1.getResumenDetalladoVentasCocinaOnTable(tabla, v, c);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getResumenVentasCamarero method, of class VentaDAO.
+     * Test of getResumenVentasCamarero method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenVentasCamarero() {
@@ -121,14 +121,14 @@ public class VentaDAOTest {
         Venta v = null;
         Personal p = null;
         List<ProductovOrden> expResult = null;
-        List<ProductovOrden> result = VentaDAO.getResumenVentasCamarero(v, p);
+        List<ProductovOrden> result = VentaDAO1.getResumenVentasCamarero(v, p);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getResumenVentasCocina method, of class VentaDAO.
+     * Test of getResumenVentasCocina method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenVentasCocina() {
@@ -136,14 +136,14 @@ public class VentaDAOTest {
         Venta v = null;
         Cocina c = null;
         List<ProductovOrden> expResult = null;
-        List<ProductovOrden> result = VentaDAO.getResumenVentasCocina(v, c);
+        List<ProductovOrden> result = VentaDAO1.getResumenVentasCocina(v, c);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getResumenGastosCocina method, of class VentaDAO.
+     * Test of getResumenGastosCocina method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenGastosCocina() {
@@ -151,27 +151,27 @@ public class VentaDAOTest {
         Cocina c = null;
         Venta v = null;
         List<ProductoInsumo> expResult = null;
-        List<ProductoInsumo> result = VentaDAO.getResumenGastosCocina(c, v);
+        List<ProductoInsumo> result = VentaDAO1.getResumenGastosCocina(c, v);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getResumenGastosOnTable method, of class VentaDAO.
+     * Test of getResumenGastosOnTable method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenGastosOnTable() {
         System.out.println("getResumenGastosOnTable");
         JTable tabla = null;
         Venta v = null;
-        VentaDAO.getResumenGastosOnTable(tabla, v);
+        VentaDAO1.getResumenGastosOnTable(tabla, v);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getResumenGastosCocinaOnTable method, of class VentaDAO.
+     * Test of getResumenGastosCocinaOnTable method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenGastosCocinaOnTable() {
@@ -179,7 +179,7 @@ public class VentaDAOTest {
         JTable tabla = null;
         Venta v = null;
         Cocina c = null;
-        VentaDAO.getResumenGastosCocinaOnTable(tabla, v, c);
+        VentaDAO1.getResumenGastosCocinaOnTable(tabla, v, c);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

@@ -15,8 +15,20 @@ import restManager.persistencia.Orden;
  */
 public class OrdenDAO extends AbstractModel<Orden>{
 
-    public OrdenDAO() {
+    private static OrdenDAO INSTANCE = null;
+    
+    private OrdenDAO() {
         super(Orden.class);
     }
+    
+    public static OrdenDAO getInstance(){
+        if(INSTANCE == null){
+            INSTANCE = new OrdenDAO();
+            return INSTANCE;
+        }else{
+            return INSTANCE;
+        }
+    }
+    
 
 }

@@ -6,12 +6,17 @@
 package GUI.Views.productoventa;
 
 import GUI.Views.AbstractListView;
+import com.jidesoft.swing.JideButton;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import restManager.controller.AbstractListController;
+import restManager.controller.productoventa.ProductoVentaListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.ProductoVenta;
+import restManager.printservice.ComponentPrinter;
 import restManager.resources.R;
 
 /**
@@ -24,6 +29,15 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
 
     public ProductoVentaListView(AbstractListController<ProductoVenta> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);
+
+        JideButton jideButton1 = new com.jidesoft.swing.JideButton();
+        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/imp.png"))); // NOI18N
+        jideButton1.setToolTipText("Imprimir");
+        jideButton1.addActionListener((ActionEvent e) -> {
+            getController().printProductoVenta(model.getObjectAtSelectedRow());
+        });
+        super.getjXPanelControles().add(jideButton1);
+
     }
 
     @Override
@@ -100,10 +114,16 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
         };
     }
 
-    
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(700, 600);
     }
+
+    @Override
+    public ProductoVentaListController getController() {
+        return (ProductoVentaListController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
 }

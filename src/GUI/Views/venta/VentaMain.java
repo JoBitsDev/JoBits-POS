@@ -23,9 +23,10 @@ import javax.print.PrintException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import restManager.algoritmo.VentaB;
+import restManager.logs.RestManagerHandler;
 import restManager.persistencia.Cocina;
 
-import restManager.persistencia.Control.VentaDAO;
+import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.Mesa;
 import restManager.persistencia.Orden;
@@ -49,6 +50,7 @@ import restManager.util.comun;
 public class VentaMain extends javax.swing.JDialog {
 
     //private List<Orden> ordenes = new ArrayList<>();
+    private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
     private Venta v;
     private List<Personal> camarerosTrabajando = staticContent.personalJPA.findPersonalEntities();
     private Impresion imp = new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"));
@@ -67,7 +69,8 @@ public class VentaMain extends javax.swing.JDialog {
         v = ventas;
         initDialog();
         UpdateDialog(v);
-
+        LOGGER.addHandler(new RestManagerHandler(Venta.class));
+        LOGGER.setLevel(Level.FINEST);
         setVisible(true);
 
     }
@@ -89,7 +92,8 @@ public class VentaMain extends javax.swing.JDialog {
         } catch (Exception ex) {
             Logger.getLogger(VentaMain.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        LOGGER.addHandler(new RestManagerHandler(Venta.class));
+        LOGGER.setLevel(Level.ALL);
         setVisible(true);
 
     }
@@ -166,7 +170,7 @@ public class VentaMain extends javax.swing.JDialog {
         if (R.loggedUser.getPuestoTrabajoList().get(0).getNivelAcceso() > 2) {
             ords = ventas.getOrdenList();
         } else {
-            ords = VentaDAO.getOrdenesActivas(ventas);
+            ords = VentaDAO1.getOrdenesActivas(ventas);
         }
 
         for (Orden o : ords) {
@@ -193,13 +197,12 @@ public class VentaMain extends javax.swing.JDialog {
     private void UpdateTableResumenVentas(Venta ventas) {
 
         comun.limpiarTabla(jXTableResumenVentas);
-        VentaDAO.getResumenVentasOnTable(jXTableResumenVentas, v);
-        VentaDAO.getValorTotalVentas(v);
+        VentaDAO1.getResumenVentasOnTable(jXTableResumenVentas, v);
+        VentaDAO1.getValorTotalVentas(v);
 
         //actualizando el label de valor
-        jXLabelValorTotalRecaudado.setText(
-                comun.setDosLugaresDecimales(VentaDAO.getValorTotalVentas(v)));
-        jXLabelValorTotalAFavor.setText(comun.setDosLugaresDecimales(VentaDAO.getValorTotalRedondeoAFavorDeLaCasa(v)));
+        jXLabelValorTotalRecaudado.setText(comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentas(v)));
+        jXLabelValorTotalAFavor.setText(comun.setDosLugaresDecimales(VentaDAO1.getValorTotalRedondeoAFavorDeLaCasa(v)));
 
         jXLabelVALORVENTAS.setText(jXLabelValorTotalRecaudado.getText());
 
@@ -213,7 +216,7 @@ public class VentaMain extends javax.swing.JDialog {
     private void UpdateTableResumenGastos(Venta ventas) {
 
         comun.limpiarTabla(jXTableGastosPorProductos);
-        VentaDAO.getResumenGastosOnTable(jXTableGastosPorProductos, v);
+        VentaDAO1.getResumenGastosOnTable(jXTableGastosPorProductos, v);
 
         //actualizando el label de gastos
         jXLabelValorGastosPorInsumo.setText(
@@ -230,7 +233,7 @@ public class VentaMain extends javax.swing.JDialog {
     private void UpdateTableResumenVentasCamareros(Venta ventas) {
         comun.limpiarTabla(jXTableResumenCamareros);
         for (Personal x : camarerosTrabajando) {
-            VentaDAO.getResumenVentasCamareroOnTable(jXTableResumenCamareros, v, x);
+            VentaDAO1.getResumenVentasCamareroOnTable(jXTableResumenCamareros, v, x);
         }
     }
 
@@ -242,7 +245,7 @@ public class VentaMain extends javax.swing.JDialog {
     private void UpdateTableResumenVentasCocinas(Venta ventas) {
         comun.limpiarTabla(jXTableResumenCocina);
         for (Cocina x : staticContent.cocinaJPA.findCocinaEntities()) {
-            VentaDAO.getResumenVentasCocinaOnTable(jXTableResumenCocina, v, x);
+            VentaDAO1.getResumenVentasCocinaOnTable(jXTableResumenCocina, v, x);
         }
 
     }
@@ -273,6 +276,7 @@ public class VentaMain extends javax.swing.JDialog {
                     staticContent.productovOrdenJpa.destroy(x.getProductovOrdenPK());
                 }
                 staticContent.ordenJPA.destroy(value.toString());
+                RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.BORRAR, Level.WARNING, value.toString());
                 JOptionPane.showMessageDialog(null, "Item eliminado exisosamente");
                 refresh();
                 return;
@@ -1014,6 +1018,7 @@ public class VentaMain extends javax.swing.JDialog {
 
     private void buttonEditOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditOrdenActionPerformed
         Orden o = getSelectedOrden();
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.EDITAR, Level.FINE, o);
         PedidoCrearEditar c = PedidoCrearEditar.getInstance(this, true, o, o.getVentafecha().getFecha());
     }//GEN-LAST:event_buttonEditOrdenActionPerformed
 
@@ -1050,7 +1055,10 @@ public class VentaMain extends javax.swing.JDialog {
     private void jXTableOrdenesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jXTableOrdenesMouseClicked
         if (evt.getClickCount() == 2) {
             Orden o = getSelectedOrden();
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.EDITAR,
+                    o.getHoraTerminada() == null ? Level.FINE : Level.WARNING, o);
             PedidoCrearEditar c = PedidoCrearEditar.getInstance(this, true, o, o.getVentafecha().getFecha());
+
         }
     }//GEN-LAST:event_jXTableOrdenesMouseClicked
 
@@ -1068,10 +1076,10 @@ public class VentaMain extends javax.swing.JDialog {
             LoadingWindow.show(this);
             f.execute();
             List<Orden> ords = f.get();
-            for (Orden x : ords) {
+            ords.forEach((x) -> {
                 imp.print(x, false);
-            }
-        } catch (InterruptedException | ExecutionException | PrintException ex) {
+            });
+        } catch (InterruptedException | ExecutionException ex) {
             Logger.getLogger(VentaMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonImprimirActionPerformed
@@ -1158,7 +1166,7 @@ public class VentaMain extends javax.swing.JDialog {
         } else {
             String cod = (String) jXTableResumenCamareros.getValueAt(row, 0);
             Personal p = staticContent.personalJPA.findPersonal(cod);
-            List<ProductovOrden> aux = VentaDAO.getResumenVentasCamarero(v, p);
+            List<ProductovOrden> aux = VentaDAO1.getResumenVentasCamarero(v, p);
             Collections.sort(aux, (o1, o2) -> {
                 return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
             });
@@ -1174,7 +1182,7 @@ public class VentaMain extends javax.swing.JDialog {
         } else {
             String cod = (String) jXTableResumenCocina.getValueAt(row, 0);
             Cocina c = staticContent.cocinaJPA.findCocina(cod);
-            List<ProductovOrden> aux = VentaDAO.getResumenVentasCocina(v, c);
+            List<ProductovOrden> aux = VentaDAO1.getResumenVentasCocina(v, c);
             Collections.sort(aux, (o1, o2) -> {
                 return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
             });
@@ -1241,7 +1249,7 @@ public class VentaMain extends javax.swing.JDialog {
         List<IpvRegistro> registros = estadoIPVBarra.getRegistros();
 
         List<ProductoInsumo> resumenGastos
-                = VentaDAO.getResumenGastosCocina(estadoIPVBarra.getC(), v);
+                = VentaDAO1.getResumenGastosCocina(estadoIPVBarra.getC(), v);
 
         for (IpvRegistro r : registros) {
             for (ProductoInsumo x : resumenGastos) {
@@ -1273,7 +1281,7 @@ public class VentaMain extends javax.swing.JDialog {
         for (int i = 0; i < jXTableResumenCamareros.getRowCount(); i++) {
             String cod = (String) jXTableResumenCamareros.getValueAt(i, 0);
             Personal p = staticContent.personalJPA.findPersonal(cod);
-            List<ProductovOrden> aux = VentaDAO.getResumenVentasCamarero(v, p);
+            List<ProductovOrden> aux = VentaDAO1.getResumenVentasCamarero(v, p);
             Collections.sort(aux, (o1, o2) -> {
                 return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
             });
@@ -1286,7 +1294,7 @@ public class VentaMain extends javax.swing.JDialog {
         for (int i = 0; i < jXTableResumenCocina.getRowCount(); i++) {
             String cod = (String) jXTableResumenCocina.getValueAt(i, 0);
             Cocina c = staticContent.cocinaJPA.findCocina(cod);
-            List<ProductovOrden> aux = VentaDAO.getResumenVentasCocina(v, c);
+            List<ProductovOrden> aux = VentaDAO1.getResumenVentasCocina(v, c);
             Collections.sort(aux, (o1, o2) -> {
                 return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
             });
@@ -1296,7 +1304,7 @@ public class VentaMain extends javax.swing.JDialog {
     }
 
     private void imprimirConsumoCasa() {
-        imp.printResumenCasa(VentaDAO.getResumenVentasCasa(v), v.getFecha());
+        imp.printResumenCasa(VentaDAO1.getResumenVentasCasa(v), v.getFecha());
 
     }
 

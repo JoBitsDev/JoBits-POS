@@ -13,7 +13,7 @@ import java.awt.Window;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractDetailController;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.PuestoTrabajo;

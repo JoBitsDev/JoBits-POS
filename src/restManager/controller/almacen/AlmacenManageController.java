@@ -12,7 +12,7 @@ import java.awt.Dialog;
 import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import restManager.controller.AbstractController;
+import restManager.controller.AbstractDialogController;
 import restManager.controller.insumo.InsumoCreateEditController;
 import restManager.controller.insumo.InsumoListController;
 import restManager.persistencia.Almacen;
@@ -27,7 +27,7 @@ import restManager.resources.R;
  * @author Jorge
  *
  */
-public class AlmacenManageController extends AbstractController<Almacen> {
+public class AlmacenManageController extends AbstractDialogController<Almacen> {
 
     Almacen a;
 

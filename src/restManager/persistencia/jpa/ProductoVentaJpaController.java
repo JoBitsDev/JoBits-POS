@@ -163,9 +163,9 @@ public class ProductoVentaJpaController implements Serializable {
             productoInsumoListNew = attachedProductoInsumoListNew;
             productoVenta.setProductoInsumoList(productoInsumoListNew);
             List<ProductovOrden> attachedProductovOrdenListNew = new ArrayList<ProductovOrden>();
-            for (ProductovOrden productovOrdenListNewProductovOrdenToAttach : productovOrdenListNew) {
-                productovOrdenListNewProductovOrdenToAttach = em.getReference(productovOrdenListNewProductovOrdenToAttach.getClass(), productovOrdenListNewProductovOrdenToAttach.getProductovOrdenPK());
-                attachedProductovOrdenListNew.add(productovOrdenListNewProductovOrdenToAttach);
+            for (ProductovOrden x : productovOrdenListNew) {
+                x = em.getReference(x.getClass(), x.getProductovOrdenPK());
+                attachedProductovOrdenListNew.add(x);
             }
             productovOrdenListNew = attachedProductovOrdenListNew;
             productoVenta.setProductovOrdenList(productovOrdenListNew);

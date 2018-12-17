@@ -17,7 +17,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import restManager.persistencia.Cocina;
-import restManager.persistencia.Control.VentaDAO;
+import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
 import restManager.resources.R;
@@ -26,7 +26,7 @@ import restManager.util.comun;
 public class Resumenes extends javax.swing.JPanel{
 
     private Venta dia;
-   // private VentaDAO vDAO;
+   // private VentaDAO1 vDAO;
     private Cocina cocina = null;
     private final Date end;
     private final MessageFormat headerVentas,headerGastos;
@@ -419,9 +419,9 @@ public class Resumenes extends javax.swing.JPanel{
                 Object[] row = {"Gastos de la casa",null,null,null,null};
                 model.addRow(row);
                 if(cocina == null){
-                VentaDAO.getResumenVentasDeLaCasaOnTable(jTableVenta, dia);}
+                VentaDAO1.getResumenVentasDeLaCasaOnTable(jTableVenta, dia);}
                 else{
-                VentaDAO.getResumenVentasDeLaCasaXCocinaOnTable(jTableVenta, dia, cocina);
+                VentaDAO1.getResumenVentasDeLaCasaXCocinaOnTable(jTableVenta, dia, cocina);
                 }
                 Object [] row2 = {"TotalRecaudado", null, null, null,Float.parseFloat(totalRecaudado)};
                 model.addRow(row2);
@@ -481,10 +481,10 @@ public class Resumenes extends javax.swing.JPanel{
     private void fillTablaVentas(Cocina c) {
          comun.limpiarTabla(jTableVenta);
         if(c == null){
-       VentaDAO.getResumenVentasOnTable(jTableVenta, dia);
+       VentaDAO1.getResumenVentasOnTable(jTableVenta, dia);
        jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.coinSuffix);}
         else{
-       VentaDAO.getResumenDetalladoVentasCocinaOnTable(jTableVenta, dia, c);
+       VentaDAO1.getResumenDetalladoVentasCocinaOnTable(jTableVenta, dia, c);
        jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.coinSuffix);
             
         }
@@ -494,11 +494,11 @@ public class Resumenes extends javax.swing.JPanel{
     private void fillTablaGastos(Cocina c) {
         comun.limpiarTabla(jTableGastos);
         if(c == null){
-        VentaDAO.getResumenGastosOnTable(jTableGastos, dia);
+        VentaDAO1.getResumenGastosOnTable(jTableGastos, dia);
         jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.coinSuffix);
         }
         else{
-          VentaDAO.getResumenGastosCocinaOnTable(jTableGastos, dia, c);
+          VentaDAO1.getResumenGastosCocinaOnTable(jTableGastos, dia, c);
           jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.coinSuffix);
         }
         

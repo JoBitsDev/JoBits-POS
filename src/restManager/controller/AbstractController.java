@@ -6,12 +6,11 @@
 package restManager.controller;
 
 import GUI.Views.AbstractView;
+import GUI.Views.View;
 import java.awt.Container;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import restManager.persistencia.models.AbstractModel;
 import restManager.resources.R;
@@ -28,7 +27,7 @@ public abstract class AbstractController<T> implements Controller {
     private AbstractModel<T> model;
     protected List<T> items = null;
     protected T selected;
-    private AbstractView view;
+    private View view;
     private boolean dismissOnAction = true;
     private boolean autoShowDialogs = true;
 
@@ -42,11 +41,13 @@ public abstract class AbstractController<T> implements Controller {
     //
     public abstract void constructView(Window parent);
 
-    public AbstractView getView() {
+    @Override
+    public View getView() {
         return view;
     }
 
-    public void setView(AbstractView view) {
+
+    public void setView(View view) {
         this.view = view;
 
     }
@@ -106,8 +107,21 @@ public abstract class AbstractController<T> implements Controller {
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
     }
 
+    protected void showSuccessDialog(Container view, String text) {
+        JOptionPane.showMessageDialog(view, text,
+                R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
+    }
+
     protected boolean showConfirmDialog(Container view) {
         return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
+                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
+                == JOptionPane.YES_OPTION;
+    }
+
+    protected boolean showConfirmDialog(Container view, String text) {
+        return JOptionPane.showConfirmDialog(view, text,
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION;
@@ -133,16 +147,19 @@ public abstract class AbstractController<T> implements Controller {
                 == JOptionPane.YES_OPTION;
     }
 
+    protected String showInputDialog(Container view, String text) {
+        String ret = JOptionPane.showInputDialog(view, text);
+        return ret != null ? ret : "";
+    }
+
+    protected String showInputDialog(Container view, String text, Object defaultValue) {
+        String ret = JOptionPane.showInputDialog(view, text, defaultValue);
+        return ret != null ? ret : "";
+    }
+
     //
     // Persist Action
     //
-    /**
-     * this method should be overwritten in case of using a list view and it's
-     * function is to create a new item on the list
-     */
-    public void createInstance() {
-        throw new restManager.exceptions.DevelopingOperationException();
-    }
 
     protected void create() {
         persist(PersistAction.CREATE);
@@ -153,7 +170,7 @@ public abstract class AbstractController<T> implements Controller {
      * @param selected
      */
     public void create(T selected) {
-        if (showConfirmDialog(getView())) {
+        if (showConfirmDialog((Container) getView())) {
             this.selected = selected;
             this.create();
             showSuccesDialogAndDismiss();
@@ -169,7 +186,7 @@ public abstract class AbstractController<T> implements Controller {
      * @param selected
      */
     public void update(T selected) {
-        if (showEditingDialog(getView(), selected)) {
+        if (showEditingDialog((Container) getView(), selected)) {
             this.selected = selected;
             this.update();
             showSuccesDialogAndDismiss();
@@ -186,7 +203,7 @@ public abstract class AbstractController<T> implements Controller {
      * @param selected
      */
     public void destroy(T selected) {
-        if (showDeleteDialog(getView(), selected)) {
+        if (showDeleteDialog((Container) getView(), selected)) {
             this.selected = selected;
             this.destroy();
             this.selected = null;
@@ -262,7 +279,7 @@ public abstract class AbstractController<T> implements Controller {
 
     private void showSuccesDialogAndDismiss() {
         if (autoShowDialogs) {
-            showSuccessDialog(getView());
+            showSuccessDialog((Container) getView());
             if (getView() != null && dismissOnAction) {
                 getView().dispose();
             }

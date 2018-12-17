@@ -175,46 +175,68 @@ public class comun {
     }
 
     /**
-     * redondea por exceso las cuentas
+     * redondea al centavo mas arriba las cuenta. si la cuentaes 2.71 redondea a
+     * 2.75
      *
      * @param valorARedondear el valor a redondear en entero (multiplicando el
      * float por 100)
-     * @return un string con el valor a imprimir o usar
+     * @return un string con el valor a imprimir o usarel valor tiene incluida
+     * la moneda separada con un espacio
      */
     public static String redondeoPorExceso(float valorARedondear) {
-       int valorConvertidoEntero =  (int) Math.ceil(valorARedondear*100);
-       int ref = valorConvertidoEntero % 5;
+        int valorConvertidoEntero = (int) Math.ceil(valorARedondear * 100);
+        int ref = valorConvertidoEntero % 5;
         if (ref != 0) {
             valorConvertidoEntero += 5 - ref;
         }
-        return  R.formatoMoneda.format((float)valorConvertidoEntero/100) + R.coinSuffix;
+        return R.formatoMoneda.format((float) valorConvertidoEntero / 100) + R.coinSuffix;
     }
- 
+
     /**
-     * redondea por defecto las cuentas
+     * redondea al centavo mas bajo las cuentas. si la cuenta es 2.79 redondea a
+     * 2.75
      *
      * @param valorARedondear el valor a redondear en entero (multiplicando el
      * float por 100)
      * @return un string con el valor a imprimir o usar
      */
     public static String redondeoPorDefecto(float valorARedondear) {
-              int valorConvertidoEntero =  (int) Math.floor(valorARedondear*100);
-       int ref = valorConvertidoEntero % 5;
+        int valorConvertidoEntero = (int) Math.floor(valorARedondear * 100);
+        int ref = valorConvertidoEntero % 5;
         if (ref != 0) {
             valorConvertidoEntero += 5 - ref;
         }
-        return  R.formatoMoneda.format((float)valorConvertidoEntero/100) + R.coinSuffix;
+        return R.formatoMoneda.format((float) valorConvertidoEntero / 100) + R.coinSuffix;
     }
 
+    /**
+     *
+     * @param valorARedondear
+     * @return
+     */
     public static String setDosLugaresDecimales(float valorARedondear) {
-         return Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2) + R.coinSuffix;
+        return Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2) + R.coinSuffix;
     }
 
-    public static float setDosLugaresDeimalesFloat(float valorARedondear){
-         return (float) (Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2));
+    /**
+     *
+     * @param valorARedondear
+     * @return
+     */
+    public static float setDosLugaresDecimalesFloat(float valorARedondear) {
+        return (float) (Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2));
     }
-    
+
     public static int cantidadARedondearPorExceso(int valorARedondear) {
-        return valorARedondear%5 != 0 ? 5 - (valorARedondear % 5) : 0;
+        return valorARedondear % 5 != 0 ? 5 - (valorARedondear % 5) : 0;
+    }
+
+    public static float redondeoPorExcesoFloat(Float valorARedondear) {
+        int valorConvertidoEntero = (int) Math.ceil(valorARedondear * 100);
+        int ref = valorConvertidoEntero % 5;
+        if (ref != 0) {
+            valorConvertidoEntero += 5 - ref;
+        }
+        return ((float) valorConvertidoEntero / 100) ;
     }
 }

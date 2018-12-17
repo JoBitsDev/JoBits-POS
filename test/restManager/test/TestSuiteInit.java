@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import restManager.controller.insumo.InsumoListControllerTest;
 import restManager.controller.productoventa.ProductoVentaListControllerTest;
+import restManager.controller.venta.OrdenControllerTest;
 import restManager.resources.R;
 
 /**
@@ -20,7 +21,7 @@ import restManager.resources.R;
  * @author Jorge
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({InsumoListControllerTest.class})
+@Suite.SuiteClasses({OrdenControllerTest.class})
 public class TestSuiteInit {
 
     @BeforeClass
