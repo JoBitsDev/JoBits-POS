@@ -23,13 +23,14 @@ import restManager.resources.R;
  * @param <T>
  *
  */
-public abstract class AbstractController<T> implements PropertyChangeListener {
+public abstract class AbstractController<T> implements Controller {
 
     private AbstractModel<T> model;
     protected List<T> items = null;
     protected T selected;
     private AbstractView view;
     private boolean dismissOnAction = true;
+    private boolean autoShowDialogs = true;
 
     public AbstractController(AbstractModel<T> dataAccess) {
         model = dataAccess;
@@ -107,13 +108,15 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
 
     protected boolean showConfirmDialog(Container view) {
         return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
-                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION;
     }
 
     protected boolean showEditingDialog(Container view, Object obj) {
         return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_editar_datos") + obj.toString(),
-                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION;
     }
 
@@ -209,6 +212,7 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
         this.selected = selected;
     }
 
+    @Override
     public AbstractModel<T> getModel() {
         return model;
     }
@@ -216,6 +220,14 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
     public void setModel(AbstractModel<T> model) {
         this.model = model;
         model.addPropertyChangeListener(this);
+    }
+
+    public boolean isAutoShowDialogs() {
+        return autoShowDialogs;
+    }
+
+    public void setAutoShowDialogs(boolean autoShowDialogs) {
+        this.autoShowDialogs = autoShowDialogs;
     }
 
     public boolean isDismissOnAction() {
@@ -226,8 +238,6 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
         this.dismissOnAction = dismissOnAction;
     }
 
-    
-    
     //
     // Private Methods
     //
@@ -251,9 +261,11 @@ public abstract class AbstractController<T> implements PropertyChangeListener {
     }
 
     private void showSuccesDialogAndDismiss() {
-        showSuccessDialog(getView());
-        if (getView() != null && dismissOnAction) {
-            getView().dispose();
+        if (autoShowDialogs) {
+            showSuccessDialog(getView());
+            if (getView() != null && dismissOnAction) {
+                getView().dispose();
+            }
         }
     }
 
