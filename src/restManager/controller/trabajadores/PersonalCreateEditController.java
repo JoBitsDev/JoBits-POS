@@ -41,9 +41,12 @@ public class PersonalCreateEditController extends AbstractDetailController<Perso
         super(instance, parent, new PersonalDAO());
     }
 
-    
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         setView( new PersonalCreateEditView(instance, this, (Dialog) parent, true));
         getView().setVisible(true);
     }

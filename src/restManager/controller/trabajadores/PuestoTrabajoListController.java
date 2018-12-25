@@ -37,8 +37,12 @@ public class PuestoTrabajoListController extends AbstractListController<PuestoTr
         constructView(frame);
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         setView(new PuestoTrabajoListView(this, (Frame) parent, true));
         getView().updateView();
         getView().setVisible(true);

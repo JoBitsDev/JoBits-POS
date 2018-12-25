@@ -59,8 +59,12 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
         return ret;
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         setView(new InsumoCreateEditView(this, (Dialog) parent, true, getInstance()));
         getView().updateView();
         getView().setVisible(true);

@@ -72,12 +72,13 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
 
     public void addObject(T object) {
         items.add(object);
-        fireTableRowsInserted(items.size(), items.size());
+        fireTableRowsInserted(items.indexOf(object), items.indexOf(object));
     }
 
     public void removeObject(T object) {
+       int index = items.indexOf(object);
         items.remove(object);
-        fireTableDataChanged();
+        fireTableRowsDeleted(index, index);
     }
 
     public List<T> getItems() {

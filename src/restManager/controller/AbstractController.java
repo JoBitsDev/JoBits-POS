@@ -39,13 +39,16 @@ public abstract class AbstractController<T> implements Controller {
     //
     //Public Methods
     //
-    public abstract void constructView(Window parent);
+    /**
+     *
+     * @param parent the value of parent
+     */
+    public abstract void constructView(java.awt.Container parent);
 
     @Override
     public View getView() {
         return view;
     }
-
 
     public void setView(View view) {
         this.view = view;
@@ -114,24 +117,24 @@ public abstract class AbstractController<T> implements Controller {
     }
 
     protected boolean showConfirmDialog(Container view) {
-        return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
+        return autoShowDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
-                == JOptionPane.YES_OPTION;
+                == JOptionPane.YES_OPTION : true;
     }
 
     protected boolean showConfirmDialog(Container view, String text) {
-        return JOptionPane.showConfirmDialog(view, text,
+        return autoShowDialogs ? JOptionPane.showConfirmDialog(view, text,
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
-                == JOptionPane.YES_OPTION;
+                == JOptionPane.YES_OPTION : true;
     }
 
     protected boolean showEditingDialog(Container view, Object obj) {
-        return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_editar_datos") + obj.toString(),
+        return autoShowDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_editar_datos") + obj.toString(),
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
-                == JOptionPane.YES_OPTION;
+                == JOptionPane.YES_OPTION : true;
     }
 
     protected void showErrorDialog(Container view, String errorText) {
@@ -141,10 +144,10 @@ public abstract class AbstractController<T> implements Controller {
     }
 
     protected boolean showDeleteDialog(Container view, Object obj) {
-        return JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_borrar_datos") + obj.toString(),
+        return autoShowDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_borrar_datos") + obj.toString(),
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/eliminar.png")))
-                == JOptionPane.YES_OPTION;
+                == JOptionPane.YES_OPTION : true;
     }
 
     protected String showInputDialog(Container view, String text) {
@@ -160,7 +163,6 @@ public abstract class AbstractController<T> implements Controller {
     //
     // Persist Action
     //
-
     protected void create() {
         persist(PersistAction.CREATE);
     }
@@ -280,7 +282,7 @@ public abstract class AbstractController<T> implements Controller {
     private void showSuccesDialogAndDismiss() {
         if (autoShowDialogs) {
             showSuccessDialog((Container) getView());
-            if (getView() != null && dismissOnAction) {
+            if (getView() != null && dismissOnAction && autoShowDialogs) {
                 getView().dispose();
             }
         }

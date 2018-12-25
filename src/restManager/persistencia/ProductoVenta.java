@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -192,7 +193,7 @@ public class ProductoVenta implements Serializable {
 
     @Override
     public String toString() {
-        return  nombre + " ("+ pCod + " )";
+        return  nombre + " ("+ precioVenta + " " +R.coinSuffix +  ")";
     }
 
 }

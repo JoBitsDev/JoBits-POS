@@ -10,7 +10,6 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 import restManager.persistencia.Orden;
 import restManager.persistencia.PuestoTrabajo;
-import restManager.persistencia.jpa.staticContent;
 import restManager.resources.R;
 import restManager.util.ComponentMover;
 import restManager.util.comun;

@@ -5,14 +5,12 @@
  */
 package restManager.controller.venta;
 
-import GUI.Views.venta.OrdenDetailFragmentView;
-import java.awt.event.ActionEvent;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import org.junit.Before;
+
+import java.util.Date;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import restManager.persistencia.Orden;
-import restManager.persistencia.models.OrdenDAO;
+import restManager.persistencia.models.VentaDAO;
+import restManager.resources.R;
 
 /**
  *
@@ -23,32 +21,15 @@ public class OrdenControllerTest {
     public OrdenControllerTest() {
     }
 
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
+        R.coinSuffix = " CUC";
     }
 
-    /**
-     * Test of createNewInstance method, of class OrdenController.
-     */
     @Test
     public void test() {
-        System.out.println("testing");
-        Orden o = OrdenDAO.getInstance().find("O-2762");
-        OrdenController instance = new OrdenController(o);
-        OrdenDetailFragmentView view = new OrdenDetailFragmentView(instance, o);
-        JDialog dialog = new JDialog();
-        dialog.add(view);
-        JButton boton = new JButton("hola");
-        boton.addActionListener((ActionEvent e) -> {
-            dialog.dispose();
-        });
-        dialog.add(boton);
-        dialog.pack();
-
-        java.awt.EventQueue.invokeLater(() -> {
-            dialog.setVisible(true);
-        });
-
+        VentaDetailController controller = new VentaDetailController(VentaDAO.getInstance().find(new Date(118, 12, 3)), null);
     }
 
 }

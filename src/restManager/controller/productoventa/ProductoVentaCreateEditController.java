@@ -56,8 +56,12 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
         return p;
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         setView(new ProductoVentaCreateEditView(instance, this, (JDialog) parent, true));
         getView().updateView();
         getView().setVisible(true);

@@ -5,17 +5,12 @@
  */
 package restManager.controller.productoventa;
 
-import GUI.Views.productoventa.ProductoVentaCreateEditView;
 import GUI.Views.productoventa.ProductoVentaListView;
 import GUI.Views.productoventa.ProductoVentaReadOnlyView;
-import GUI.Views.trabajadores.PersonalListView;
 import java.awt.Frame;
-import java.awt.Window;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.ProductoVenta;
-import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.ProductoVentaDAO;
 import restManager.printservice.ComponentPrinter;
 
@@ -46,8 +41,12 @@ public class ProductoVentaListController extends AbstractListController<Producto
         return new ProductoVentaCreateEditController(selected, getView());
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         setView(new ProductoVentaListView(this, (Frame) parent, true));
         getView().updateView();
         getView().setVisible(true);

@@ -11,8 +11,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import restManager.controller.insumo.InsumoListControllerTest;
-import restManager.controller.productoventa.ProductoVentaListControllerTest;
 import restManager.controller.venta.OrdenControllerTest;
 import restManager.resources.R;
 

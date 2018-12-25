@@ -321,7 +321,6 @@ public class LogInDialog extends javax.swing.JDialog {
         
         LoadingWindow.show(this);
         
-        
 
         SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
 

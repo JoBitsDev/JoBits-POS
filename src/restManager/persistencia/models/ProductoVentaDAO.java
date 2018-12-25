@@ -5,6 +5,9 @@
  */
 package restManager.persistencia.models;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import restManager.persistencia.ProductoVenta;
 
 /**
@@ -45,6 +48,17 @@ public class ProductoVentaDAO extends AbstractModel<ProductoVenta> {
         super.edit(entity); //To change body of generated methods, choose Tools | Templates.
 
         commitTransaction();
+    }
+
+    public List<ProductoVenta> findAllVisible() {
+        List<ProductoVenta> ret = new ArrayList<>();
+        findAll().stream().filter((x) -> (x.getVisible())).forEachOrdered((x) -> {
+            ret.add(x);
+        });
+        Collections.sort(ret,(o1, o2) -> {
+            return o1.getNombre().compareTo(o2.getNombre());
+        });
+        return ret;
     }
 
 }

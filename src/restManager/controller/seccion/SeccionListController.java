@@ -64,8 +64,12 @@ public class SeccionListController extends AbstractListController<Seccion>{
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         setView(new SeccionListView(this, (Frame) parent, true));
         getView().updateView();
         getView().setVisible(true);

@@ -46,8 +46,12 @@ public class PuestoTrabajoCreateEditController extends AbstractDetailController<
         super(instance, parent, new PuestoTrabajoDAO());
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         if (parent instanceof JDialog) {
             setView(new PuestoTrabajoCreateEditView(this, (JDialog) parent, true, instance));
 

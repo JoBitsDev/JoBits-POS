@@ -10,6 +10,7 @@ import java.awt.Frame;
 import java.util.List;
 import javax.swing.RowFilter;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import org.jdesktop.swingx.JXPanel;
 import restManager.controller.AbstractDialogController;
@@ -339,7 +340,8 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         public void addrow(T newObject) {
             items.add(newObject);
-            fireTableRowsInserted(items.size() - 1, items.size() - 1);
+            fireTableRowsInserted(items.indexOf(newObject)  , items.indexOf(newObject) );
+            DefaultTableModel m;
         }
 
         public void deleteRow(T objectDeleted) {

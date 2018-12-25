@@ -66,7 +66,7 @@ public abstract class AbstractFragmentView<T> extends JPanel implements View {
 
     @Override
     public Controller getController() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return controller;
     }
 
     @Override

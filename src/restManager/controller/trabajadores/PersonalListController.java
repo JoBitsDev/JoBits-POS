@@ -33,8 +33,12 @@ public class PersonalListController extends AbstractListController<Personal> {
         constructView(frame);
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         setView(new PersonalListView(this, (Frame) parent, true));
         getView().updateView();
         getView().setVisible(true);

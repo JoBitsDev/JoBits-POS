@@ -36,8 +36,12 @@ public class VentaSinArchivarListController extends AbstractListController<Venta
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
 
     }
 }

@@ -37,6 +37,8 @@ public class R {
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
     
+    public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat(" hh ':' mm ' ' a ");
+    
     public static final SimpleDateFormat DATE_FORMAT_FOR_LOGS= new SimpleDateFormat("yyyy'_'MM'_'dd");
 
     public static DecimalFormat formatoMoneda = new DecimalFormat("0.00");

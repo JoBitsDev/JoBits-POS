@@ -6,6 +6,8 @@
 package GUI.Views.venta;
 
 import GUI.Views.AbstractDetailView;
+import GUI.Views.util.StateCellRender;
+import GUI.Views.util.TableColumnAdjuster;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -14,24 +16,29 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import org.jdesktop.swingx.JXLabel;
+import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.venta.OrdenController;
+import restManager.controller.venta.VentaDetailController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Venta;
+import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 
 /**
  *
  * @author Jorge
  */
-public class VentasCreateEditView extends AbstractDetailView<Venta> {
+public class VentasCreateEditView extends AbstractDetailView<Venta>{
 
     RestManagerAbstractTableModel<Orden> modelOrd;
-    
+
     public VentasCreateEditView(Venta instance, AbstractDialogController controller) {
         super(instance, DialogType.NORMAL, controller);
         initComponents();
@@ -55,9 +62,6 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         this.jPanelDetailOrdenes = jPanelDetailOrdenes;
     }
 
-    
-    
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -76,13 +80,12 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelDetailOrdenes = new javax.swing.JPanel();
         jPanelOrdenesActivas = new javax.swing.JPanel();
         jideLabel1 = new com.jidesoft.swing.JideLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jXTableOrdActivas = new org.jdesktop.swingx.JXTable();
         jXPanelOrdenControl = new org.jdesktop.swingx.JXPanel();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jXTableOrdActivas = new org.jdesktop.swingx.JXTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         com.jidesoft.swing.JideBorderLayout jideBorderLayout1 = new com.jidesoft.swing.JideBorderLayout();
@@ -90,13 +93,14 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jideBorderLayout1.setVgap(10);
         getContentPane().setLayout(jideBorderLayout1);
 
+        jPanelRoot.setPreferredSize(new java.awt.Dimension(800, 600));
         jPanelRoot.setLayout(new java.awt.BorderLayout());
 
-        jPanelOptions.setLayout(new java.awt.BorderLayout(10, 10));
+        jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
         jideButton1.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanelOptions.add(jideButton1, java.awt.BorderLayout.WEST);
+        jPanelOptions.add(jideButton1);
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
@@ -108,7 +112,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanel1.add(jButton2);
         jPanel1.add(jDateChooser1);
 
-        jPanelOptions.add(jPanel1, java.awt.BorderLayout.EAST);
+        jPanelOptions.add(jPanel1);
 
         jPanelRoot.add(jPanelOptions, java.awt.BorderLayout.NORTH);
 
@@ -120,13 +124,35 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelDetailOrdenes.setLayout(new java.awt.BorderLayout());
         jPanelVentas.add(jPanelDetailOrdenes, java.awt.BorderLayout.CENTER);
 
+        jPanelOrdenesActivas.setPreferredSize(new java.awt.Dimension(400, 438));
         jPanelOrdenesActivas.setLayout(new java.awt.BorderLayout());
 
         jideLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jideLabel1.setText(bundle.getString("label_ordenes_activas")); // NOI18N
         jPanelOrdenesActivas.add(jideLabel1, java.awt.BorderLayout.PAGE_START);
 
-        jScrollPane1.setColumnHeaderView(null);
+        jXPanelOrdenControl.setLayout(new java.awt.GridLayout(2, 0));
+
+        jButton4.setText(bundle.getString("label_agregar")); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        jXPanelOrdenControl.add(jButton4);
+
+        jButton5.setText(bundle.getString("label_eliminar")); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jXPanelOrdenControl.add(jButton5);
+
+        jButton6.setText(bundle.getString("label_calcular_cambio")); // NOI18N
+        jXPanelOrdenControl.add(jButton6);
+
+        jPanelOrdenesActivas.add(jXPanelOrdenControl, java.awt.BorderLayout.PAGE_END);
 
         jXTableOrdActivas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -139,30 +165,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jXTableOrdActivas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jXTableOrdActivasMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jXTableOrdActivas);
+        jXTableOrdActivas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jScrollPane2.setViewportView(jXTableOrdActivas);
 
-        jPanelOrdenesActivas.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        jXPanelOrdenControl.setLayout(new java.awt.GridLayout(2, 0));
-
-        jButton4.setText(bundle.getString("label_agregar")); // NOI18N
-        jXPanelOrdenControl.add(jButton4);
-
-        jButton5.setText(bundle.getString("label_eliminar")); // NOI18N
-        jXPanelOrdenControl.add(jButton5);
-
-        jButton6.setText(bundle.getString("label_calcular_cambio")); // NOI18N
-        jXPanelOrdenControl.add(jButton6);
-
-        jButton7.setText(bundle.getString("label_cerrar_orden")); // NOI18N
-        jXPanelOrdenControl.add(jButton7);
-
-        jPanelOrdenesActivas.add(jXPanelOrdenControl, java.awt.BorderLayout.PAGE_END);
+        jPanelOrdenesActivas.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         jPanelVentas.add(jPanelOrdenesActivas, java.awt.BorderLayout.WEST);
 
@@ -177,10 +183,16 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jXTableOrdActivasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jXTableOrdActivasMouseClicked
-      
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        getController().createNewOrden();
         
-    }//GEN-LAST:event_jXTableOrdActivasMouseClicked
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        getController().removeOrden(modelOrd.getObjectAtSelectedRow());
+        modelOrd.fireTableDataChanged();
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     @Override
     public void setEditingMode() {
@@ -200,7 +212,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     @Override
     public void updateView() {
         jDateChooser1.setDate(instance.getFecha());
-        modelOrd = new RestManagerAbstractTableModel<Orden>(instance.getOrdenList(), jXTableOrdActivas) {
+        modelOrd = new RestManagerAbstractTableModel<Orden>(getController().getOrdenesActivas(), jXTableOrdActivas) {
             @Override
             public int getColumnCount() {
                 return 4;
@@ -214,9 +226,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
                     case 1:
                         return items.get(rowIndex).getMesacodMesa().getCodMesa();
                     case 2:
-                        return items.get(rowIndex).getOrdenvalorMonetario();
+                        return items.get(rowIndex).getOrdenvalorMonetario() + R.coinSuffix;
                     case 3:
-                        return new JPanelCellEditor(items.get(rowIndex));
+                        return items.get(rowIndex);
                     default:
                         return null;
                 }
@@ -240,7 +252,22 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
             }
         };
         jXTableOrdActivas.setModel(modelOrd);
+        TableColumnAdjuster adj = new TableColumnAdjuster(jXTableOrdActivas);
+        adj.setDynamicAdjustment(true);
+        jXTableOrdActivas.getColumn(3).setCellRenderer(new StateCellRender());
+        jXTableOrdActivas.setRowHeight(40);
+        jXTableOrdActivas.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if (!e.getValueIsAdjusting()) {
+                getController().updateOrdenDialog(modelOrd.getObjectAtSelectedRow());
+            }
+        });
     }
+
+    @Override
+    public VentaDetailController getController() {
+        return (VentaDetailController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -248,7 +275,6 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelData;
@@ -257,7 +283,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JPanel jPanelOrdenesActivas;
     private javax.swing.JPanel jPanelRoot;
     private javax.swing.JPanel jPanelVentas;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPaneData;
     private org.jdesktop.swingx.JXPanel jXPanelOrdenControl;
     private org.jdesktop.swingx.JXTable jXTableOrdActivas;
@@ -265,29 +291,5 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private com.jidesoft.swing.JideLabel jideLabel1;
     private org.pushingpixels.substance.swingx.SubstanceDatePickerUI substanceDatePickerUI1;
     // End of variables declaration//GEN-END:variables
-
-    public class JPanelCellEditor extends AbstractCellEditor implements TableCellEditor {
-
-        private JPanel panel;
-
-        public JPanelCellEditor(Orden o) {
-            panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-            if (o.getDeLaCasa()) {
-                panel.add(new JXLabel(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png"))));
-            }
-
-        }
-
-        @Override
-        public Object getCellEditorValue() {
-            return panel;
-        }
-
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            return panel;
-        }
-    }
 
 }

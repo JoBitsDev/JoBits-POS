@@ -55,8 +55,12 @@ public class AlmacenListController extends AbstractListController<Almacen> {
         openSelectedStorage();
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         setView(new AlmacenListView(this, (Frame) parent, true));
         getView().updateView();
         getView().setVisible(true);

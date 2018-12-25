@@ -45,8 +45,12 @@ public class CocinaListController extends AbstractListController<Cocina>{
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         setView(new CocinaListView(this,(JFrame) parent, true));
         getView().updateView();
         getView().setVisible(true);

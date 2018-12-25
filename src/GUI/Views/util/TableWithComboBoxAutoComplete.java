@@ -5,14 +5,19 @@
  */
 package GUI.Views.util;
 
+import com.jidesoft.hints.ListDataIntelliHints;
 import com.jidesoft.swing.AutoCompletionComboBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
 import restManager.persistencia.ProductoVenta;
@@ -32,39 +37,37 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
     private final JTable table;
     private final JButton addButton;
     private final JButton removeButton;
-    private final AutoCompletionComboBox jComboBox;
+    private final JTextField jTextField;
     private final RestManagerAbstractTableModel<T> tableModel;
-    private final RestManagerComboBoxModel<K> comboModel;
+    private final RestaurantManagerListIntelliHint<K> items;
 
     public TableWithComboBoxAutoComplete(JTable table, JButton addButton, JButton removeButton,
-            AutoCompletionComboBox autoCompleteComboBox,
-            RestManagerAbstractTableModel<T> tableModel, RestManagerComboBoxModel<K> comboModel) {
+            JTextField autoCompleteTextField,
+            RestManagerAbstractTableModel<T> tableModel, List<K> itemsList) {
         this.table = table;
         this.addButton = addButton;
         this.removeButton = removeButton;
-        this.jComboBox = autoCompleteComboBox;
+        this.jTextField = autoCompleteTextField;
         this.tableModel = tableModel;
-        this.comboModel = comboModel;
+        this.items = new RestaurantManagerListIntelliHint<>(jTextField, itemsList);
         this.addButton.addActionListener((ActionEvent e) -> {
-            addFromComboBox();
+            addFromAutoComplete();
         });
         this.removeButton.addActionListener((ActionEvent e) -> {
             removeObjectAtSelectedRow();
         });
         this.table.setModel(this.tableModel);
-        this.jComboBox.setModel(this.comboModel);
-        this.jComboBox.getEditor().addActionListener((e) -> {
-            addFromComboBox();
-        });
     }
 
-    public T addFromComboBox() {
-        K selected = (K) jComboBox.getSelectedItem();
+    public T addFromAutoComplete() {
+        K selected = items.getSelectedHint();
         if (selected == null) {
             throw new NoSelectedException(table);
         }
         T transformedInstance = transformK_to_T(selected);
-        tableModel.addObject(transformedInstance);
+        if (transformedInstance != null) {
+            tableModel.addObject(transformedInstance);
+        }
         return transformedInstance;
     }
 
@@ -74,6 +77,7 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
 
     /**
      * Transform de data obtained in the combo box model to the table model;
+     *
      * @param selected the selected combo box data
      * @return the data to put in the table
      */
@@ -82,7 +86,6 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
     //
     //Getters
     //
-
     public JTable getTable() {
         return table;
     }
@@ -95,18 +98,40 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
         return removeButton;
     }
 
-    public AutoCompletionComboBox getjComboBox() {
-        return jComboBox;
-    }
-
     public RestManagerAbstractTableModel<T> getTableModel() {
         return tableModel;
     }
 
-    public RestManagerComboBoxModel<K> getComboModel() {
-        return comboModel;
+    public JTextField getjTextField() {
+        return jTextField;
     }
-    
-    
-    
+
+    public RestaurantManagerListIntelliHint<K> getItems() {
+        return items;
+    }
+
+    private class RestaurantManagerListIntelliHint<K> extends ListDataIntelliHints<K> {
+
+        public RestaurantManagerListIntelliHint(JTextComponent comp, List<K> completionList) {
+            super(comp, completionList);
+        }
+
+        @Override
+        public boolean updateHints(Object context) {
+            ArrayList<K> ret = new ArrayList<>();
+            for (K x : getCompletionList()) {
+                if(x.toString().toLowerCase().contains(context.toString().toLowerCase())){
+                    ret.add(x);
+                }
+            }
+            setListData(ret.toArray());
+            return true;
+        }
+           
+        @Override
+        public K getSelectedHint() {
+            return (K) super.getSelectedHint(); //To change body of generated methods, choose Tools | Templates.
+        }
+
+    }
 }

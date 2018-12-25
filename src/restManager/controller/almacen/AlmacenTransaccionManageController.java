@@ -42,8 +42,12 @@ class AlmacenTransaccionManageController extends AbstractDetailController<Transa
         super(instance, parent, new TransaccionDAO());
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         ArrayList<Insumo> insumoList = new ArrayList<>(InsumoDAO.getInstance().findAll());
         insumoList.sort((Insumo o1, Insumo o2) -> o1.getNombre().compareTo(o2.getNombre()));
 

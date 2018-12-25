@@ -7,7 +7,7 @@ package GUI.Views.productoventa;
 
 import GUI.Components.JSpinner;
 import GUI.Components.JTextField;
-import GUI.Views.AbstractCrossReferenePanel;
+import GUI.Views.util.AbstractCrossReferenePanel;
 import GUI.Views.AbstractDetailView;
 import GUI.Views.AbstractReadOnlyView;
 import GUI.Views.AbstractView;

@@ -6,7 +6,9 @@
 package GUI.Views.venta;
 
 import GUI.Views.AbstractFragmentView;
+import GUI.Views.util.AbstractCrossReferenePanel;
 import java.awt.Container;
+import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
@@ -17,9 +19,11 @@ import restManager.controller.Controller;
 import restManager.controller.venta.OrdenController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Orden;
+import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
+import restManager.util.comun;
 
 /**
  *
@@ -27,7 +31,7 @@ import restManager.util.RestManagerAbstractTableModel;
  */
 public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
-    private RestManagerAbstractTableModel<ProductovOrden> model;
+    private AbstractCrossReferenePanel<ProductovOrden, ProductoVenta> crossReferencePanel;
     private Orden instance;
 
     public OrdenDetailFragmentView(Controller controller, Orden instance) {
@@ -39,15 +43,8 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     public OrdenDetailFragmentView(Orden instance, Controller controller, Container parentComponent) {
         super(controller, parentComponent);
         this.instance = instance;
-        initComponents();      
+        initComponents();
     }
-
-    @Override
-    public void dispose() {
-       dispose();
-    }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,22 +68,19 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jLabelVALORMesa = new javax.swing.JLabel();
         jLabelVALORNOORDEN = new javax.swing.JLabel();
         jPanelDetalles = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTablePedido = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jCheckBoxPorciento = new javax.swing.JCheckBox();
         jSpinner1 = new javax.swing.JSpinner();
         jCheckBoxDELACASA = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jLabelVALORTotal = new javax.swing.JLabel();
+        jPanelCrossReference = new javax.swing.JPanel();
         jXPanelBotones = new org.jdesktop.swingx.JXPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButtonEnviarCocina = new javax.swing.JButton();
-        jButtonCerrarMesa = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jButtonRetirarProducto = new javax.swing.JButton();
-        jButtonAddNota = new javax.swing.JButton();
-        jButtonImprimirCuenta = new javax.swing.JButton();
+        jideButtonAgregarNota = new com.jidesoft.swing.JideButton();
+        jideButtonImpimirTicket = new com.jidesoft.swing.JideButton();
+        jideButtonEnviarCocina = new com.jidesoft.swing.JideButton();
+        jideButtonCerrarMesa = new com.jidesoft.swing.JideButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -164,42 +158,6 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
         jPanelDetalles.setLayout(new java.awt.BorderLayout());
 
-        jTablePedido.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Código", "Producto", "Cantidad", "Precio"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, true, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTablePedido.setPreferredSize(new java.awt.Dimension(200, 64));
-        jTablePedido.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jTablePedidoPropertyChange(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTablePedido);
-
-        jPanelDetalles.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 5));
 
@@ -244,6 +202,9 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
         jPanelDetalles.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
+        jPanelCrossReference.setLayout(new java.awt.BorderLayout());
+        jPanelDetalles.add(jPanelCrossReference, java.awt.BorderLayout.CENTER);
+
         jPanelroot.add(jPanelDetalles, java.awt.BorderLayout.CENTER);
 
         jXPanelBotones.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_controles"))); // NOI18N
@@ -251,57 +212,45 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jXPanelBotones.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
 
-        jButtonEnviarCocina.setText(bundle.getString("label_enviarcocina")); // NOI18N
-        jButtonEnviarCocina.setToolTipText(bundle.getString("label_enviarcocina")); // NOI18N
-        jButtonEnviarCocina.addActionListener(new java.awt.event.ActionListener() {
+        jideButtonAgregarNota.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/adjuntar.png"))); // NOI18N
+        jideButtonAgregarNota.setToolTipText(bundle.getString("label_agregarnota")); // NOI18N
+        jideButtonAgregarNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEnviarCocinaActionPerformed(evt);
+                jideButtonAgregarNotaActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonEnviarCocina);
+        jPanel1.add(jideButtonAgregarNota);
 
-        jButtonCerrarMesa.setText(bundle.getString("label_cerrar_orden")); // NOI18N
-        jButtonCerrarMesa.setToolTipText(bundle.getString("label_cerrar_orden")); // NOI18N
-        jButtonCerrarMesa.addActionListener(new java.awt.event.ActionListener() {
+        jideButtonImpimirTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/imprimir.png"))); // NOI18N
+        jideButtonImpimirTicket.setToolTipText(bundle.getString("label_imprimircuenta")); // NOI18N
+        jideButtonImpimirTicket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCerrarMesaActionPerformed(evt);
+                jideButtonImpimirTicketActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonCerrarMesa);
+        jPanel1.add(jideButtonImpimirTicket);
+
+        jideButtonEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png"))); // NOI18N
+        jideButtonEnviarCocina.setToolTipText(bundle.getString("label_enviarcocina")); // NOI18N
+        jideButtonEnviarCocina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jideButtonEnviarCocinaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jideButtonEnviarCocina);
+
+        jideButtonCerrarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/cobrar.png"))); // NOI18N
+        jideButtonCerrarMesa.setToolTipText(bundle.getString("label_cerrar_orden")); // NOI18N
+        jideButtonCerrarMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jideButtonCerrarMesaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jideButtonCerrarMesa);
 
         jXPanelBotones.add(jPanel1, java.awt.BorderLayout.SOUTH);
-
-        jPanel3.setOpaque(false);
-
-        jButtonRetirarProducto.setText(bundle.getString("label_retirarproducto")); // NOI18N
-        jButtonRetirarProducto.setToolTipText(bundle.getString("label_retirarproducto")); // NOI18N
-        jButtonRetirarProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRetirarProductoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButtonRetirarProducto);
-
-        jButtonAddNota.setText(bundle.getString("label_agregarnota")); // NOI18N
-        jButtonAddNota.setToolTipText(bundle.getString("label_agregarnota")); // NOI18N
-        jButtonAddNota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddNotaActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButtonAddNota);
-
-        jButtonImprimirCuenta.setText(bundle.getString("label_imprimircuenta")); // NOI18N
-        jButtonImprimirCuenta.setToolTipText(bundle.getString("label_imprimircuenta")); // NOI18N
-        jButtonImprimirCuenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImprimirCuentaActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButtonImprimirCuenta);
-
-        jXPanelBotones.add(jPanel3, java.awt.BorderLayout.NORTH);
 
         jPanelroot.add(jXPanelBotones, java.awt.BorderLayout.SOUTH);
 
@@ -313,10 +262,6 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         getController().update(instance);
     }//GEN-LAST:event_jCheckBoxDELACASAActionPerformed
 
-    private void jTablePedidoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTablePedidoPropertyChange
-
-    }//GEN-LAST:event_jTablePedidoPropertyChange
-
     private void jCheckBoxPorcientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPorcientoActionPerformed
         //   addPorcientoToOrden(jCheckBoxPorciento.isSelected());
     }//GEN-LAST:event_jCheckBoxPorcientoActionPerformed
@@ -325,33 +270,24 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         getController().updatePorciento((float) jSpinner1.getValue());
     }//GEN-LAST:event_jSpinner1StateChanged
 
-    private void jButtonRetirarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRetirarProductoActionPerformed
-        getController().removeProduct(model.getObjectAtSelectedRow());
-    }//GEN-LAST:event_jButtonRetirarProductoActionPerformed
-
-    private void jButtonAddNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddNotaActionPerformed
-        getController().addNota(model.getObjectAtSelectedRow());
-    }//GEN-LAST:event_jButtonAddNotaActionPerformed
-
-    private void jButtonImprimirCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirCuentaActionPerformed
-        getController().imprimirPreTicket();
-    }//GEN-LAST:event_jButtonImprimirCuentaActionPerformed
-
-    private void jButtonEnviarCocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCocinaActionPerformed
+    private void jideButtonEnviarCocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonEnviarCocinaActionPerformed
         getController().enviarACocina();
-    }//GEN-LAST:event_jButtonEnviarCocinaActionPerformed
+    }//GEN-LAST:event_jideButtonEnviarCocinaActionPerformed
 
-    private void jButtonCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarMesaActionPerformed
+    private void jideButtonAgregarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonAgregarNotaActionPerformed
+        getController().addNota(getModel().getObjectAtSelectedRow());
+    }//GEN-LAST:event_jideButtonAgregarNotaActionPerformed
+
+    private void jideButtonImpimirTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonImpimirTicketActionPerformed
+        getController().imprimirPreTicket();
+    }//GEN-LAST:event_jideButtonImpimirTicketActionPerformed
+
+    private void jideButtonCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonCerrarMesaActionPerformed
         getController().despachar();
-    }//GEN-LAST:event_jButtonCerrarMesaActionPerformed
+    }//GEN-LAST:event_jideButtonCerrarMesaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAddNota;
-    private javax.swing.JButton jButtonCerrarMesa;
-    private javax.swing.JButton jButtonEnviarCocina;
-    private javax.swing.JButton jButtonImprimirCuenta;
-    private javax.swing.JButton jButtonRetirarProducto;
     private javax.swing.JCheckBox jCheckBoxDELACASA;
     private javax.swing.JCheckBox jCheckBoxPorciento;
     private javax.swing.JLabel jLabel2;
@@ -367,122 +303,154 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     private javax.swing.JLabel jLabelVALORUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanelCrossReference;
     private javax.swing.JPanel jPanelDetalles;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelroot;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTablePedido;
     private org.jdesktop.swingx.JXPanel jXPanelBotones;
+    private com.jidesoft.swing.JideButton jideButtonAgregarNota;
+    private com.jidesoft.swing.JideButton jideButtonCerrarMesa;
+    private com.jidesoft.swing.JideButton jideButtonEnviarCocina;
+    private com.jidesoft.swing.JideButton jideButtonImpimirTicket;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void updateView() {
+        if (crossReferencePanel != null) {
+            jPanelCrossReference.remove(crossReferencePanel);
+        }
+        initDefaults();
         jLabelVALORFecha.setText(R.DATE_FORMAT.format(getInstance().getVentafecha().getFecha()));
-        jLabelVALORHora.setText(R.DATE_FORMAT.format(getInstance().getHoraComenzada()));
+        jLabelVALORHora.setText(R.TIME_FORMAT.format(getInstance().getHoraComenzada()));
         jLabelVALORUsuario.setText(getInstance().getPersonalusuario().getUsuario());
         jLabelVALORMesa.setText(getInstance().getMesacodMesa().getCodMesa());
         jLabelVALORNOORDEN.setText(getInstance().getCodOrden());
         jCheckBoxDELACASA.setSelected(getInstance().getDeLaCasa());
         jSpinner1.setValue(getInstance().getPorciento());
-        jLabelVALORTotal.setText(R.formatoMoneda.format(getInstance().getOrdenvalorMonetario()));
-        initDefaults();
+        updateValorTotal();
+
     }
 
     public RestManagerAbstractTableModel<ProductovOrden> getModel() {
-        return model;
+        return crossReferencePanel.getHandler().getTableModel();
     }
 
     @Override
     public void initDefaults() {
-        model = new RestManagerAbstractTableModel<ProductovOrden>(getInstance().getProductovOrdenList(), jTablePedido) {
+        crossReferencePanel = new AbstractCrossReferenePanel<ProductovOrden, ProductoVenta>("Productos de venta", getController().getPDVList()) {
             @Override
-            public int getColumnCount() {
-                return 3;
+            public RestManagerAbstractTableModel<ProductovOrden> getTableModel() {
+                return new RestManagerAbstractTableModel<ProductovOrden>(getInstance().getProductovOrdenList(), getjTableCrossReference()) {
+
+                    @Override
+                    public int getColumnCount() {
+                        return 3;
+                    }
+
+                    @Override
+                    public int getRowCount() {
+                        return items.size();
+                    }
+
+                    @Override
+                    public Object getValueAt(int rowIndex, int columnIndex) {
+                        switch (columnIndex) {
+                            case 0:
+                                return items.get(rowIndex).getProductoVenta().getNombre();
+                            case 1:
+                                return items.get(rowIndex).getCantidad();
+                            case 2:
+                                return comun.redondeoPorExceso(items.get(rowIndex).getCantidad() 
+                                        * items.get(rowIndex).getProductoVenta().getPrecioVenta());
+                            default:
+                                return null;
+                        }
+                    }
+
+                    @Override
+                    public String getColumnName(int column) {
+                        switch (column) {
+                            case 0:
+                                return "Nombre Producto";
+                            case 1:
+                                return "Cantidad";
+                            case 2:
+                                return "Precio Final";
+                            default:
+                                return null;
+                        }
+                    }
+
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return columnIndex == 1;
+                    }
+
+                    @Override
+                    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                        switch (columnIndex) {
+                            case 1:
+                                items.get(rowIndex).setCantidad((int) aValue);
+                                fireTableRowsUpdated(rowIndex, rowIndex);
+                                updateValorTotal();
+                                break;
+                            default:
+                                super.setValueAt(aValue, rowIndex, columnIndex);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public Class<?> getColumnClass(int columnIndex) {
+                        if (columnIndex == 1) {
+                            return Integer.class;
+                        } else {
+                            return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
+                        }
+                    }
+
+                };
             }
 
             @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-                switch (columnIndex) {
-                    case 0:
-                        return items.get(rowIndex).getProductoVenta().getNombre();
-                    case 1:
-                        return items.get(rowIndex).getCantidad();
-                    case 2:
-                        return items.get(rowIndex).getCantidad() * items.get(rowIndex).getProductoVenta().getPrecioVenta();
-                    default:
-                        return null;
-                }
+            public ProductovOrden transformK_T(ProductoVenta selected) {
+                getController().addProduct(selected);
+                getModel().fireTableDataChanged();
+                getjTableCrossReference().repaint();
+                return null;
             }
 
             @Override
-            public String getColumnName(int column) {
-                switch (column) {
-                    case 0:
-                        return "Nombre Producto";
-                    case 1:
-                        return "Cantidad";
-                    case 2:
-                        return "Precio Final";
-                    default:
-                        return null;
-                }
-
+            public void removeObjectSelected() {
+                ProductovOrden po = getModel().getObjectAtSelectedRow();
+                getController().removeProduct(po);
+                getModel().fireTableDataChanged();
+                repaint();
             }
-
-            @Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 1;
-            }
-
-            @Override
-            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                switch (columnIndex) {
-                    case 1:
-                        items.get(rowIndex).setCantidad((int) aValue);
-                        fireTableRowsUpdated(rowIndex, rowIndex);
-                        updateValorTotal();
-                        break;
-                    default:
-                        super.setValueAt(aValue, rowIndex, columnIndex);
-                        break;
-                }
-            }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 1) {
-                    return Integer.class;
-                } else {
-                    return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
-                }
-            }
-
         };
-        jTablePedido.setModel(model);
+        jPanelCrossReference.add(crossReferencePanel);
     }
 
     @Override
     public OrdenController getController() {
         return (OrdenController) super.getController();
+
     }
 
     public Orden getInstance() {
         return instance;
+
     }
 
     public void setInstance(Orden instance) {
         this.instance = instance;
+        updateView();
+
     }
 
-    public void updateValorTotal(){
-        float total = 0;
-        for (int i = 0; i < model.getItems().size(); i++) {
-          total +=  (float)model.getValueAt(i, 2);
-        }
-        jLabelVALORTotal.setText(R.formatoMoneda.format(total));
-        getController().setValorTotal(total);
+    public void updateValorTotal() {
+        jLabelVALORTotal.setText(comun.setDosLugaresDecimales(getController().getValorTotal()));
     }
 }

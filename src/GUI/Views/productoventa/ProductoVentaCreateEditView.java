@@ -7,7 +7,7 @@ package GUI.Views.productoventa;
 
 import GUI.Components.JSpinner;
 import GUI.Components.JTextField;
-import GUI.Views.AbstractCrossReferenePanel;
+import GUI.Views.util.AbstractCrossReferenePanel;
 import GUI.Views.AbstractDetailView;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -61,6 +61,10 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelOptions = new javax.swing.JPanel();
+        jButtonIngrediente = new javax.swing.JButton();
+        jButtonCocina = new javax.swing.JButton();
+        jButtonSeccion = new javax.swing.JButton();
         jXPanelRoot = new org.jdesktop.swingx.JXPanel();
         jPanelInputs = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -83,13 +87,26 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jXLabelGasto = new org.jdesktop.swingx.JXLabel();
         jXLabelMoneda1 = new org.jdesktop.swingx.JXLabel();
         jPanelCrossRef = new javax.swing.JPanel();
-        jPanelOptions = new javax.swing.JPanel();
-        jButtonIngrediente = new javax.swing.JButton();
-        jButtonCocina = new javax.swing.JButton();
-        jButtonSeccion = new javax.swing.JButton();
         jPanelActions = new javax.swing.JPanel();
         jButtonCrear = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
+
+        jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButtonIngrediente.setText(bundle.getString("label_nuevo_ingrediente")); // NOI18N
+        jButtonIngrediente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonIngredienteActionPerformed(evt);
+            }
+        });
+        jPanelOptions.add(jButtonIngrediente);
+
+        jButtonCocina.setText(bundle.getString("label_agregar_cocina")); // NOI18N
+        jPanelOptions.add(jButtonCocina);
+
+        jButtonSeccion.setText(bundle.getString("label_agregar_seccion")); // NOI18N
+        jPanelOptions.add(jButtonSeccion);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -110,7 +127,6 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
         jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jXLabelNombre.setText(bundle.getString("label_nombre")); // NOI18N
         jPanel7.add(jXLabelNombre);
 
@@ -181,19 +197,6 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
         jXPanelRoot.add(jPanelTable);
 
-        jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
-
-        jButtonIngrediente.setText(bundle.getString("label_nuevo_ingrediente")); // NOI18N
-        jPanelOptions.add(jButtonIngrediente);
-
-        jButtonCocina.setText(bundle.getString("label_agregar_cocina")); // NOI18N
-        jPanelOptions.add(jButtonCocina);
-
-        jButtonSeccion.setText(bundle.getString("label_agregar_seccion")); // NOI18N
-        jPanelOptions.add(jButtonSeccion);
-
-        jXPanelRoot.add(jPanelOptions);
-
         jPanelActions.setBackground(new java.awt.Color(204, 204, 204));
         jPanelActions.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
         jPanelActions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 100, 5));
@@ -233,6 +236,10 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     private void jideButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton1ActionPerformed
     ComponentPrinter.printComponent(jXPanelRoot,instance.toString(),false);
     }//GEN-LAST:event_jideButton1ActionPerformed
+
+    private void jButtonIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngredienteActionPerformed
+
+    }//GEN-LAST:event_jButtonIngredienteActionPerformed
 
     @Override
     public void setEditingMode() {

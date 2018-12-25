@@ -41,8 +41,12 @@ public class AlmacenManageController extends AbstractDialogController<Almacen> {
         constructView(parent);
     }
 
+    /**
+     *
+     * @param parent the value of parent
+     */
     @Override
-    public void constructView(Window parent) {
+    public void constructView(java.awt.Container parent) {
         setView(new AlmacenEditView(this, (Dialog) parent, true));
         getView().updateView();
         getView().setVisible(true);

@@ -28,7 +28,6 @@ public abstract class AbstractDialogController<T> extends AbstractController<T> 
         super(dataAccess);
     }
 
-
     @Override
     public AbstractView getView() {
         return (AbstractView) super.getView();
