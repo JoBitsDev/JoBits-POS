@@ -8,6 +8,7 @@ package GUI.Views;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.RowFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -288,6 +289,32 @@ public abstract class AbstractListView<T> extends AbstractView {
         return model;
     }
 
+    public JButton getjButtonAdd() {
+        return jButtonAdd;
+    }
+
+    public void setjButtonAdd(JButton jButtonAdd) {
+        this.jButtonAdd = jButtonAdd;
+    }
+
+    public JButton getjButtonDelete() {
+        return jButtonDelete;
+    }
+
+    public void setjButtonDelete(JButton jButtonDelete) {
+        this.jButtonDelete = jButtonDelete;
+    }
+
+    public JButton getjButtonEdit() {
+        return jButtonEdit;
+    }
+
+    public void setjButtonEdit(JButton jButtonEdit) {
+        this.jButtonEdit = jButtonEdit;
+    }
+
+    
+    
     //
     // Inner Class
     //
