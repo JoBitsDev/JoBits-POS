@@ -8,28 +8,16 @@ package GUI.Views.Insumo;
 import GUI.Components.JSpinner;
 import GUI.Views.AbstractDetailView;
 import GUI.Views.util.AbstractCrossReferenePanel;
-import GUI.Views.util.TableWithComboBoxAutoComplete;
-import com.jidesoft.dialog.JideOptionPane;
 
-import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.InputVerifier;
-import javax.swing.JComponent;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-import javax.swing.table.AbstractTableModel;
-import org.jdesktop.swingx.autocomplete.AutoCompleteComboBoxEditor;
-import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
+
 
 import restManager.controller.AbstractDialogController;
 import restManager.controller.insumo.InsumoCreateEditController;
-import restManager.exceptions.DevelopingOperationException;
-import restManager.exceptions.NoSelectedException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoElaborado;
@@ -38,11 +26,7 @@ import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoInsumoPK;
 import restManager.persistencia.ProductoVenta;
 import restManager.resources.R;
-import restManager.resources.RegularExpressions;
 import restManager.util.RestManagerAbstractTableModel;
-import restManager.util.RestManagerComboBoxListener;
-import restManager.util.RestManagerComboBoxModel;
-import restManager.util.comun;
 
 /**
  *

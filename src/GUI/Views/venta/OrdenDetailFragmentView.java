@@ -417,7 +417,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
             @Override
             public ProductovOrden transformK_T(ProductoVenta selected) {
                 getController().addProduct(selected);
-                getModel().fireTableDataChanged();
+                getModel().setItems(getInstance().getProductovOrdenList());
                 getjTableCrossReference().repaint();
                 return null;
             }
@@ -426,7 +426,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
             public void removeObjectSelected() {
                 ProductovOrden po = getModel().getObjectAtSelectedRow();
                 getController().removeProduct(po);
-                getModel().fireTableDataChanged();
+                getModel().setItems(getInstance().getProductovOrdenList());
                 repaint();
             }
         };

@@ -9,6 +9,7 @@ import GUI.Views.AbstractDetailView;
 import GUI.Views.util.StateCellRender;
 import GUI.Views.util.TableColumnAdjuster;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Frame;
 import javax.swing.AbstractCellEditor;
@@ -35,23 +36,26 @@ import restManager.util.RestManagerAbstractTableModel;
  *
  * @author Jorge
  */
-public class VentasCreateEditView extends AbstractDetailView<Venta>{
+public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     RestManagerAbstractTableModel<Orden> modelOrd;
 
     public VentasCreateEditView(Venta instance, AbstractDialogController controller) {
         super(instance, DialogType.NORMAL, controller);
         initComponents();
+        init();
     }
 
     public VentasCreateEditView(Venta instance, AbstractDialogController controller, Frame owner) {
         super(instance, DialogType.NORMAL, controller, owner);
         initComponents();
+        init();
     }
 
     public VentasCreateEditView(Venta instance, AbstractDialogController controller, Dialog owner) {
         super(instance, DialogType.NORMAL, controller, owner);
         initComponents();
+        init();
     }
 
     public JPanel getjPanelDetailOrdenes() {
@@ -99,17 +103,29 @@ public class VentasCreateEditView extends AbstractDetailView<Venta>{
         jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
-        jideButton1.setPreferredSize(new java.awt.Dimension(50, 50));
+        jideButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jideButton1ActionPerformed(evt);
+            }
+        });
         jPanelOptions.add(jideButton1);
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButton1.setText(bundle.getString("label_imprimir_resumen")); // NOI18N
+        jButton1.setEnabled(false);
         jPanel1.add(jButton1);
 
         jButton2.setText(bundle.getString("label_terminar_ventas")); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
+
+        jDateChooser1.setEnabled(false);
         jPanel1.add(jDateChooser1);
 
         jPanelOptions.add(jPanel1);
@@ -150,6 +166,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta>{
         jXPanelOrdenControl.add(jButton5);
 
         jButton6.setText(bundle.getString("label_calcular_cambio")); // NOI18N
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jXPanelOrdenControl.add(jButton6);
 
         jPanelOrdenesActivas.add(jXPanelOrdenControl, java.awt.BorderLayout.PAGE_END);
@@ -181,11 +202,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta>{
         getContentPane().add(jPanelRoot);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         getController().createNewOrden();
-        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -193,6 +214,18 @@ public class VentasCreateEditView extends AbstractDetailView<Venta>{
         modelOrd.fireTableDataChanged();
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jideButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton1ActionPerformed
+        getController().fetchNewDataFromServer();
+    }//GEN-LAST:event_jideButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        getController().terminarVentas();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        getController().calcularCambio(getModelOrd().getObjectAtSelectedRow());
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     @Override
     public void setEditingMode() {
@@ -252,20 +285,31 @@ public class VentasCreateEditView extends AbstractDetailView<Venta>{
             }
         };
         jXTableOrdActivas.setModel(modelOrd);
-        TableColumnAdjuster adj = new TableColumnAdjuster(jXTableOrdActivas);
-        adj.setDynamicAdjustment(true);
-        jXTableOrdActivas.getColumn(3).setCellRenderer(new StateCellRender());
-        jXTableOrdActivas.setRowHeight(40);
-        jXTableOrdActivas.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            if (!e.getValueIsAdjusting()) {
-                getController().updateOrdenDialog(modelOrd.getObjectAtSelectedRow());
+        jXTableOrdActivas.getColumn(3).setCellRenderer(new StateCellRender<Orden>() {
+            @Override
+            public void processData(Orden object, Container root) {
+                if (object.getDeLaCasa()) {
+                    root.add(getjState1());
+                }
+                if (object.getHoraTerminada() != null) {
+                    root.add(getjState2());
+                }
+                if (object.getPorciento() != 0) {
+                    root.add(getJstate3());
+                }
             }
         });
+        jXTableOrdActivas.setRowHeight(40);
+
     }
 
     @Override
     public VentaDetailController getController() {
         return (VentaDetailController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public RestManagerAbstractTableModel<Orden> getModelOrd() {
+        return modelOrd;
     }
 
 
@@ -291,5 +335,16 @@ public class VentasCreateEditView extends AbstractDetailView<Venta>{
     private com.jidesoft.swing.JideLabel jideLabel1;
     private org.pushingpixels.substance.swingx.SubstanceDatePickerUI substanceDatePickerUI1;
     // End of variables declaration//GEN-END:variables
+
+    private void init() {
+        TableColumnAdjuster adj = new TableColumnAdjuster(jXTableOrdActivas);
+        adj.setDynamicAdjustment(true);
+        jXTableOrdActivas.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if (!e.getValueIsAdjusting() && jXTableOrdActivas.getSelectedRow() != -1) {
+                getController().updateOrdenDialog(modelOrd.getObjectAtSelectedRow());
+            }
+        });
+        adj.adjustColumns();
+    }
 
 }

@@ -47,21 +47,22 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         super(OrdenDAO.getInstance());
         this.fechaOrden = fecha;
         setDismissOnAction(false);
-        setAutoShowDialogs(false);
+        setShowDialogs(false);
         instance = createNewInstance();
     }
 
     public OrdenController(Orden instance) {
         super(instance, OrdenDAO.getInstance());
+        fechaOrden = instance.getVentafecha();
         setDismissOnAction(false);
-        setAutoShowDialogs(false);
+        setShowDialogs(false);
     }
 
     public OrdenController(Container parent, Venta fecha) {
         super(parent, OrdenDAO.getInstance());
         this.fechaOrden = fecha;
         setDismissOnAction(false);
-        setAutoShowDialogs(false);
+        setShowDialogs(false);
         instance = createNewInstance();
         view = new OrdenDetailFragmentView(instance, this, parent);
         constructView(parent);
@@ -69,9 +70,10 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public OrdenController(Orden instance, Container parent) {
         super(instance, parent, OrdenDAO.getInstance());
+        fechaOrden = instance.getVentafecha();
         setDismissOnAction(false);
-        setAutoShowDialogs(false);
-        view = new OrdenDetailFragmentView(instance, this, parent);
+        setShowDialogs(false);
+        view = new OrdenDetailFragmentView(getInstance(), this, parent);
         constructView(parent);
     }
 
@@ -140,9 +142,9 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public void despachar() {
-        setAutoShowDialogs(true);
+        setShowDialogs(true);
         if (showConfirmDialog(getView(), "Desea cerrar la orden " + instance.getCodOrden())) {
-            setAutoShowDialogs(false);
+            setShowDialogs(false);
             boolean enviar = true;
             for (ProductovOrden x : instance.getProductovOrdenList()) {
                 if (x.getCantidad() != x.getEnviadosacocina()) {
@@ -164,12 +166,12 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 instance.setMesacodMesa(m);
                 MesaDAO.getInstance().edit(m);
                 setDismissOnAction(true);
-                setAutoShowDialogs(false);
+                setShowDialogs(false);
                 update(instance);
                 setDismissOnAction(false);
             }
         }
-        setAutoShowDialogs(false);
+        setShowDialogs(false);
     }
 
     public void updatePorciento(float f) {
@@ -205,16 +207,34 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
 
         }
-
         instance.setOrdenvalorMonetario(comun.redondeoPorExcesoFloat(total * (1 + instance.getPorciento() / 100)));
-        update(instance);
+        update(instance, true);
         return instance.getOrdenvalorMonetario();
     }
 
     @Override
     public void setInstance(Orden instance) {
-        this.instance = instance;
-        view.setInstance(instance);
+        if (instance == null) {
+            this.instance = createNewInstance();
+        } else {
+            this.instance = instance;
+
+        }
+        view.setInstance(this.instance);
+    }
+
+    @Override
+    public void setParent(Container parent) {
+        super.setParent(parent); //To change body of generated methods, choose Tools | Templates.
+        constructView(parent);
+    }
+
+    @Override
+    public Orden getInstance() {
+        if (instance == null) {
+            instance = createNewInstance();
+        }
+        return instance;
     }
 
     public List<ProductoVenta> getPDVList() {
@@ -243,10 +263,11 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             founded.setEnviadosacocina(0);
             founded.setNumeroComensal(0);
             ProductovOrdenDAO.getInstance().create(founded);
-            instance.getProductovOrdenList().add(founded);
+            getInstance().getProductovOrdenList().add(founded);
         }
         update(instance);
         view.updateValorTotal();
+
     }
 
 }

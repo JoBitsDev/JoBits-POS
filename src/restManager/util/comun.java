@@ -211,6 +211,7 @@ public class comun {
 
     /**
      *
+     * reduce los decimales de un float a 2 y ademas agrega la moneda d sufijo
      * @param valorARedondear
      * @return
      */
@@ -232,7 +233,7 @@ public class comun {
     }
 
     public static float redondeoPorExcesoFloat(Float valorARedondear) {
-        int valorConvertidoEntero = (int) Math.ceil(valorARedondear * 100);
+        int valorConvertidoEntero = (int) Math.ceil((int)(valorARedondear * 100));
         int ref = valorConvertidoEntero % 5;
         if (ref != 0) {
             valorConvertidoEntero += 5 - ref;

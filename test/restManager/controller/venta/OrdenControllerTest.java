@@ -29,7 +29,8 @@ public class OrdenControllerTest {
 
     @Test
     public void test() {
-        VentaDetailController controller = new VentaDetailController(VentaDAO.getInstance().find(new Date(118, 12, 3)), null);
+        VentaDetailController controller = new VentaDetailController(VentaDAO.getInstance().findAll().get(0),null);
+        controller.getView().setVisible(true);
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package restManager.test;
 
+import GUI.Views.venta.VentaListaTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -12,6 +13,8 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import restManager.controller.venta.OrdenControllerTest;
+import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.PersonalDAO;
 import restManager.resources.R;
 
 /**
@@ -19,13 +22,15 @@ import restManager.resources.R;
  * @author Jorge
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({OrdenControllerTest.class})
+@Suite.SuiteClasses({VentaListaTest.class})
 public class TestSuiteInit {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
         R.coinSuffix = " CUC";
+        R.loggedUser = new PersonalDAO().find("admin");
+        staticContent.init(R.PERIRSTENCE_UNIT_NAME);
     }
 
     @AfterClass

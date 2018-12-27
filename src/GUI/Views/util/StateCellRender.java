@@ -5,16 +5,21 @@
  */
 package GUI.Views.util;
 
+import com.jidesoft.swing.JideLabel;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 /**
  *
  * @author Jorge
+ * @param <T>
  */
-public class StateCellRender extends javax.swing.JPanel implements TableCellRenderer {
+public abstract class StateCellRender<T> extends javax.swing.JPanel implements TableCellRenderer {
 
     /**
      * Creates new form StateCellRender
@@ -32,35 +37,69 @@ public class StateCellRender extends javax.swing.JPanel implements TableCellRend
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jideLabel1 = new com.jidesoft.swing.JideLabel();
-        jideLabel2 = new com.jidesoft.swing.JideLabel();
+        jState1 = new javax.swing.JLabel();
+        jState2 = new com.jidesoft.swing.JideLabel();
+        jstate3 = new com.jidesoft.swing.JideLabel();
 
-        setOpaque(false);
-        setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/de_la_casa.png"))); // NOI18N
+        jState1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/de_la_casa.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jLabel1.setToolTipText(bundle.getString("label_dela_casa")); // NOI18N
-        add(jLabel1);
+        jState1.setToolTipText(bundle.getString("label_dela_casa")); // NOI18N
 
-        jideLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso_cell.png"))); // NOI18N
-        add(jideLabel1);
+        jState2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso_cell.png"))); // NOI18N
 
-        jideLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/porciento_cell.png"))); // NOI18N
-        add(jideLabel2);
+        jstate3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/porciento_cell.png"))); // NOI18N
+
+        setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private com.jidesoft.swing.JideLabel jideLabel1;
-    private com.jidesoft.swing.JideLabel jideLabel2;
+    private javax.swing.JLabel jState1;
+    private com.jidesoft.swing.JideLabel jState2;
+    private com.jidesoft.swing.JideLabel jstate3;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
-        return this;
+        JPanel ret = new JPanel();
+        ret.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        ret.setOpaque(true);
+        processData((T) value,ret);
+        if (isSelected) {
+            ret.setBackground(table.getSelectionBackground());
+        } else {
+            ret.setBackground(table.getBackground());
+        }
+        return ret;
     }
+
+    public abstract void processData(T object,Container root);
+
+    public JLabel getjState1() {
+        return jState1;
+    }
+
+    public void setjState1(JLabel jState1) {
+        this.jState1 = jState1;
+    }
+
+    public JideLabel getjState2() {
+        return jState2;
+    }
+
+    public void setjState2(JideLabel jState2) {
+        this.jState2 = jState2;
+    }
+
+    public JideLabel getJstate3() {
+        return jstate3;
+    }
+
+    public void setJstate3(JideLabel jstate3) {
+        this.jstate3 = jstate3;
+    }
+
+    
+    
 }

@@ -10,6 +10,7 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 import restManager.persistencia.Orden;
 import restManager.persistencia.PuestoTrabajo;
+import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.util.ComponentMover;
 import restManager.util.comun;
@@ -42,12 +43,12 @@ public class CalcularCambio extends javax.swing.JDialog {
     public void init(Orden o) {
 
         setUndecorated(true);
-        setShape(new RoundRectangle2D.Double(10, 10, 335, 225, 61, 61));
         initComponents();
 
-        jLabelValorMontoAPagar.setText(comun.redondeoPorExceso(o.getOrdenvalorMonetario()));
+        jLabelValorMontoAPagar.setText(comun.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
         jLabelValorMontoADevolver.setText("");
-        ComponentMover cr = new ComponentMover(this, panelRound1);
+        ComponentMover cr = new ComponentMover(this, jPanel1);
+        new Impresion().forceDrawerKick();
         this.setVisible(true);
 
     }
@@ -61,213 +62,125 @@ public class CalcularCambio extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelRound1 = new org.edisoncor.gui.panel.PanelRound();
-        jTextFieldMontoBilletesCUC = new javax.swing.JTextField();
-        buttonCancelar = new org.edisoncor.gui.button.ButtonAction();
-        jTextFieldMontoMonedasCUC = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jLabelNombre1 = new org.jdesktop.swingx.JXLabel();
         jLabelValorMontoAPagar = new org.jdesktop.swingx.JXLabel();
+        jLabelNombre2 = new org.jdesktop.swingx.JXLabel();
+        jSpinnerCUC = new javax.swing.JSpinner();
+        jLabelNombre4 = new org.jdesktop.swingx.JXLabel();
+        jSpinnerMN = new javax.swing.JSpinner();
         jLabelSalarioFijo1 = new org.jdesktop.swingx.JXLabel();
         jLabelValorMontoADevolver = new org.jdesktop.swingx.JXLabel();
-        jLabelNombre2 = new org.jdesktop.swingx.JXLabel();
-        jLabelNombre3 = new org.jdesktop.swingx.JXLabel();
-        jTextFieldMontoBilletesMN = new javax.swing.JTextField();
-        jLabelNombre4 = new org.jdesktop.swingx.JXLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(153, 153, 153));
+        setMaximumSize(new java.awt.Dimension(287, 188));
+        setMinimumSize(new java.awt.Dimension(287, 188));
+        setType(java.awt.Window.Type.POPUP);
 
-        panelRound1.setAnchoDeBorde(0.0F);
-
-        jTextFieldMontoBilletesCUC.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextFieldMontoBilletesCUCKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldMontoBilletesCUCKeyReleased(evt);
-            }
-        });
-
-        buttonCancelar.setText("Cerrar");
-        buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButton1.setText(bundle.getString("label_salir")); // NOI18N
+        jButton1.setOpaque(true);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCancelarActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, java.awt.BorderLayout.SOUTH);
 
-        jTextFieldMontoMonedasCUC.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextFieldMontoMonedasCUCKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldMontoMonedasCUCKeyReleased(evt);
-            }
-        });
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.setLayout(new java.awt.GridLayout(4, 1));
 
-        jLabelNombre1.setForeground(new java.awt.Color(255, 255, 255));
         jLabelNombre1.setText("Total a pagar:");
+        jPanel1.add(jLabelNombre1);
 
         jLabelValorMontoAPagar.setForeground(new java.awt.Color(0, 153, 0));
         jLabelValorMontoAPagar.setText("XX.XX");
+        jPanel1.add(jLabelValorMontoAPagar);
 
-        jLabelSalarioFijo1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNombre2.setText("CUC");
+        jPanel1.add(jLabelNombre2);
+
+        jSpinnerCUC.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
+        jSpinnerCUC.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerCUCStateChanged(evt);
+            }
+        });
+        jSpinnerCUC.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jSpinnerCUCFocusGained(evt);
+            }
+        });
+        jPanel1.add(jSpinnerCUC);
+
+        jLabelNombre4.setText("MN");
+        jPanel1.add(jLabelNombre4);
+
+        jSpinnerMN.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 10));
+        jSpinnerMN.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinnerMNStateChanged(evt);
+            }
+        });
+        jPanel1.add(jSpinnerMN);
+
         jLabelSalarioFijo1.setText("Monto a devolver:");
+        jPanel1.add(jLabelSalarioFijo1);
 
         jLabelValorMontoADevolver.setForeground(new java.awt.Color(204, 0, 0));
         jLabelValorMontoADevolver.setText("XX.XX");
+        jPanel1.add(jLabelValorMontoADevolver);
 
-        jLabelNombre2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre2.setText("CUC");
-
-        jLabelNombre3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre3.setText(".");
-
-        jTextFieldMontoBilletesMN.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextFieldMontoBilletesMNKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldMontoBilletesMNKeyReleased(evt);
-            }
-        });
-
-        jLabelNombre4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelNombre4.setText("MN");
-
-        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
-        panelRound1.setLayout(panelRound1Layout);
-        panelRound1Layout.setHorizontalGroup(
-            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(panelRound1Layout.createSequentialGroup()
-                            .addComponent(jLabelSalarioFijo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(36, 36, 36)
-                            .addComponent(jLabelValorMontoADevolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
-                            .addGap(92, 92, 92)
-                            .addComponent(jLabelNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextFieldMontoMonedasCUC, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabelNombre4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(panelRound1Layout.createSequentialGroup()
-                        .addComponent(jLabelNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabelValorMontoAPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(33, 96, Short.MAX_VALUE))
-            .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
-                        .addGap(141, 141, 141)
-                        .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRound1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextFieldMontoBilletesMN, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldMontoBilletesCUC, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(43, 43, 43)))
-                .addGap(0, 147, Short.MAX_VALUE))
-        );
-        panelRound1Layout.setVerticalGroup(
-            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelValorMontoAPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldMontoBilletesCUC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMontoMonedasCUC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNombre3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldMontoBilletesMN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNombre4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelSalarioFijo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelValorMontoADevolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(buttonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(panelRound1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
-        dispose();
-    }//GEN-LAST:event_buttonCancelarActionPerformed
+    private void jSpinnerCUCStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerCUCStateChanged
+       actualizarVuelto();
+    }//GEN-LAST:event_jSpinnerCUCStateChanged
 
-    private void jTextFieldMontoBilletesCUCKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoBilletesCUCKeyPressed
-    }//GEN-LAST:event_jTextFieldMontoBilletesCUCKeyPressed
+    private void jSpinnerMNStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerMNStateChanged
+       actualizarVuelto();
+    }//GEN-LAST:event_jSpinnerMNStateChanged
 
-    private void jTextFieldMontoMonedasCUCKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoMonedasCUCKeyPressed
-    }//GEN-LAST:event_jTextFieldMontoMonedasCUCKeyPressed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextFieldMontoBilletesMNKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoBilletesMNKeyPressed
-
-    }//GEN-LAST:event_jTextFieldMontoBilletesMNKeyPressed
-
-    private void jTextFieldMontoBilletesCUCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoBilletesCUCKeyReleased
-        actualizarVuelto();
-    }//GEN-LAST:event_jTextFieldMontoBilletesCUCKeyReleased
-
-    private void jTextFieldMontoMonedasCUCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoMonedasCUCKeyReleased
-        actualizarVuelto();
-    }//GEN-LAST:event_jTextFieldMontoMonedasCUCKeyReleased
-
-    private void jTextFieldMontoBilletesMNKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoBilletesMNKeyReleased
-        actualizarVuelto();
-    }//GEN-LAST:event_jTextFieldMontoBilletesMNKeyReleased
+    private void jSpinnerCUCFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSpinnerCUCFocusGained
+    //   jSpinnerCUC.getEditor().set
+    }//GEN-LAST:event_jSpinnerCUCFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.edisoncor.gui.button.ButtonAction buttonCancelar;
+    private javax.swing.JButton jButton1;
     private org.jdesktop.swingx.JXLabel jLabelNombre1;
     private org.jdesktop.swingx.JXLabel jLabelNombre2;
-    private org.jdesktop.swingx.JXLabel jLabelNombre3;
     private org.jdesktop.swingx.JXLabel jLabelNombre4;
     private org.jdesktop.swingx.JXLabel jLabelSalarioFijo1;
     private org.jdesktop.swingx.JXLabel jLabelValorMontoADevolver;
     private org.jdesktop.swingx.JXLabel jLabelValorMontoAPagar;
-    private javax.swing.JTextField jTextFieldMontoBilletesCUC;
-    private javax.swing.JTextField jTextFieldMontoBilletesMN;
-    private javax.swing.JTextField jTextFieldMontoMonedasCUC;
-    private org.edisoncor.gui.panel.PanelRound panelRound1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JSpinner jSpinnerCUC;
+    private javax.swing.JSpinner jSpinnerMN;
     // End of variables declaration//GEN-END:variables
 
     private void actualizarVuelto() {
-        String billetesCUC = jTextFieldMontoBilletesCUC.getText(),
-                monedasCUC = jTextFieldMontoMonedasCUC.getText(),
-                billetesMN = jTextFieldMontoBilletesMN.getText();
 
-        float montoADevolver = comun.redondeoPorExcesoFloat(o.getOrdenvalorMonetario());
+        float montoADevolver = o.getOrdenvalorMonetario();
 
-        if (!isEmptyNull(billetesCUC)) {
-            float a = Float.parseFloat(jTextFieldMontoBilletesCUC.getText());
-            montoADevolver -= a;
-        }
-        if (!isEmptyNull(monedasCUC)) {
-            float a = Float.parseFloat(jTextFieldMontoMonedasCUC.getText());
-            a /= 100;
-            montoADevolver -= a;
-        }
-        if (!isEmptyNull(billetesMN)) {
-            float a = Float.parseFloat(jTextFieldMontoBilletesMN.getText());
-            a /= R.COINCHANGE;
-            montoADevolver -= a;
-        }
+        
+            float cuc = (float) jSpinnerCUC.getValue();
+            montoADevolver -= cuc;
 
+            float mn = (int) jSpinnerMN.getValue();
+            mn /= R.COINCHANGE;
+            montoADevolver -= mn;
+   
         if (montoADevolver > 0) {
             jLabelValorMontoADevolver.setText("Falta Dinero");
         } else {
@@ -277,10 +190,4 @@ public class CalcularCambio extends javax.swing.JDialog {
 
     }
 
-    private boolean isEmptyNull(String s) {
-        if (s == null) {
-            return true;
-        }
-        return s.isEmpty();
-    }
 }

@@ -9,8 +9,10 @@ import GUI.Views.AbstractFragmentView;
 import GUI.Views.View;
 import java.awt.Container;
 import java.awt.Window;
+import java.beans.PropertyChangeEvent;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.models.AbstractModel;
+import restManager.persistencia.models.PropertyName;
 
 /**
  * FirstDream
@@ -56,8 +58,26 @@ public abstract class AbstractFragmentController<T> extends AbstractController<T
         return parent;
     }
 
-    
-    
+    public void setParent(Container parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println(evt.getPropagationId());
+        System.out.println(evt.getPropertyName());
+        System.out.println(evt.getSource());
+        System.out.println(getClass().toString());
+        if (getView() != null) {
+            System.out.println(getView().getClass().toString());
+            items = null;
+            switch (PropertyName.valueOf(evt.getPropertyName())) {
+                case DELETE:break;
+                default:getView().updateView();
+            }
+        }
+    }
+
     public abstract T createNewInstance();
 
     @Override

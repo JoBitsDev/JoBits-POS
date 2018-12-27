@@ -29,7 +29,7 @@ public abstract class AbstractController<T> implements Controller {
     protected T selected;
     private View view;
     private boolean dismissOnAction = true;
-    private boolean autoShowDialogs = true;
+    private boolean showDialogs = true;
 
     public AbstractController(AbstractModel<T> dataAccess) {
         model = dataAccess;
@@ -117,21 +117,21 @@ public abstract class AbstractController<T> implements Controller {
     }
 
     protected boolean showConfirmDialog(Container view) {
-        return autoShowDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
+        return showDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION : true;
     }
 
     protected boolean showConfirmDialog(Container view, String text) {
-        return autoShowDialogs ? JOptionPane.showConfirmDialog(view, text,
+        return showDialogs ? JOptionPane.showConfirmDialog(view, text,
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION : true;
     }
 
     protected boolean showEditingDialog(Container view, Object obj) {
-        return autoShowDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_editar_datos") + obj.toString(),
+        return showDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_editar_datos") + obj.toString(),
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION : true;
@@ -144,7 +144,7 @@ public abstract class AbstractController<T> implements Controller {
     }
 
     protected boolean showDeleteDialog(Container view, Object obj) {
-        return autoShowDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_borrar_datos") + obj.toString(),
+        return showDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_borrar_datos") + obj.toString(),
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/eliminar.png")))
                 == JOptionPane.YES_OPTION : true;
@@ -179,6 +179,13 @@ public abstract class AbstractController<T> implements Controller {
         }
     }
 
+    public void create(T selected, boolean quietMode) {
+        boolean previousValue = this.showDialogs;
+        setShowDialogs(false);
+        create(selected);
+        setShowDialogs(previousValue);
+    }
+
     public void update() {
         persist(PersistAction.UPDATE);
     }
@@ -193,6 +200,13 @@ public abstract class AbstractController<T> implements Controller {
             this.update();
             showSuccesDialogAndDismiss();
         }
+    }
+
+    public void update(T selected, boolean quietMode) {
+        boolean previousValue = this.showDialogs;
+        setShowDialogs(false);
+        update(selected);
+        setShowDialogs(previousValue);
     }
 
     protected void destroy() {
@@ -211,6 +225,13 @@ public abstract class AbstractController<T> implements Controller {
             this.selected = null;
             showSuccesDialogAndDismiss();
         }
+    }
+
+    public void destroy(T selected, boolean quietMode) {
+        boolean previousValue = this.showDialogs;
+        setShowDialogs(false);
+        destroy(selected);
+        setShowDialogs(previousValue);
     }
 
     //
@@ -241,12 +262,12 @@ public abstract class AbstractController<T> implements Controller {
         model.addPropertyChangeListener(this);
     }
 
-    public boolean isAutoShowDialogs() {
-        return autoShowDialogs;
+    public boolean isShowDialogs() {
+        return showDialogs;
     }
 
-    public void setAutoShowDialogs(boolean autoShowDialogs) {
-        this.autoShowDialogs = autoShowDialogs;
+    public void setShowDialogs(boolean showDialogs) {
+        this.showDialogs = showDialogs;
     }
 
     public boolean isDismissOnAction() {
@@ -280,9 +301,9 @@ public abstract class AbstractController<T> implements Controller {
     }
 
     private void showSuccesDialogAndDismiss() {
-        if (autoShowDialogs) {
+        if (showDialogs) {
             showSuccessDialog((Container) getView());
-            if (getView() != null && dismissOnAction && autoShowDialogs) {
+            if (getView() != null && dismissOnAction && showDialogs) {
                 getView().dispose();
             }
         }

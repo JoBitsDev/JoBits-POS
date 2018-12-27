@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
+import org.postgresql.util.PSQLException;
 import restManager.controller.AbstractDialogController;
 import restManager.resources.R;
 
@@ -19,23 +20,26 @@ import restManager.resources.R;
  * @param <T>
  *
  */
-public abstract class AbstractModel<T> implements Model{
+public abstract class AbstractModel<T> implements Model {
 
     private final Class<T> entityClass;
     private static EntityManagerFactory EMF;
     private static EntityManager currentConnection;
     protected PropertyChangeSupport propertyChangeSupport;
-    
+    private static String persistenceUnitName = null;
+
     public AbstractModel(Class<T> entityClass) {
         this.entityClass = entityClass;
         propertyChangeSupport = new PropertyChangeSupport(this);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(R.PERIRSTENCE_UNIT_NAME);
-        if (!emf.equals(EMF)) {
+       
+        if (!R.PERIRSTENCE_UNIT_NAME.equals(persistenceUnitName)) {
             EMF = emf;
             currentConnection = EMF.createEntityManager();
+            persistenceUnitName = R.PERIRSTENCE_UNIT_NAME;
         } else {
             Logger l = Logger.getLogger(getClass().getName());
-            l.log(Level.WARNING, R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_Found"));
+            l.log(Level.WARNING, R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_found") +""+ getClass().getName());
         }
     }
 
@@ -53,7 +57,7 @@ public abstract class AbstractModel<T> implements Model{
         if (getEntityManager().getTransaction().isActive()) {
             getEntityManager().flush();
             getEntityManager().getTransaction().commit();
-            
+
         }
     }
 
@@ -77,9 +81,14 @@ public abstract class AbstractModel<T> implements Model{
     }
 
     public List<T> findAll() {
+        try{
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
+        }catch(Exception e){
+            getEntityManager().getTransaction().rollback();
+            return findAll();
+        }
     }
 
     public List<T> findRange(int[] range) {
