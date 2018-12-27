@@ -37,6 +37,10 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
             getController().printProductoVenta(model.getObjectAtSelectedRow());
         });
         super.getjXPanelControles().add(jideButton1);
+        
+        if (R.loggedUser.getPuestoTrabajoList().get(0).getNivelAcceso() < 3) {//TODO: esto va en el controlador
+            super.remove(getjXPanelControles());
+        }
 
     }
 
@@ -123,7 +127,5 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
     public ProductoVentaListController getController() {
         return (ProductoVentaListController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
 
 }
