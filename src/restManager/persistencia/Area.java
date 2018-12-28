@@ -16,7 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -24,12 +23,11 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "area")
 @NamedQueries({
-    @NamedQuery(name = "Area.findAll", query = "SELECT a FROM Area a")
-    , @NamedQuery(name = "Area.findByCodArea", query = "SELECT a FROM Area a WHERE a.codArea = :codArea")
-    , @NamedQuery(name = "Area.findByCapacidad", query = "SELECT a FROM Area a WHERE a.capacidad = :capacidad")
-    , @NamedQuery(name = "Area.findByNombre", query = "SELECT a FROM Area a WHERE a.nombre = :nombre")})
+    @NamedQuery(name = "Area.findAll", query = "SELECT a FROM Area a"),
+    @NamedQuery(name = "Area.findByCodArea", query = "SELECT a FROM Area a WHERE a.codArea = :codArea"),
+    @NamedQuery(name = "Area.findByCapacidad", query = "SELECT a FROM Area a WHERE a.capacidad = :capacidad"),
+    @NamedQuery(name = "Area.findByNombre", query = "SELECT a FROM Area a WHERE a.nombre = :nombre")})
 public class Area implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,9 +35,7 @@ public class Area implements Serializable {
     @Basic(optional = false)
     @Column(name = "cod_area")
     private String codArea;
-    @Column(name = "capacidad")
     private Integer capacidad;
-    @Column(name = "nombre")
     private String nombre;
     @ManyToMany(mappedBy = "areaList")
     private List<Carta> cartaList;

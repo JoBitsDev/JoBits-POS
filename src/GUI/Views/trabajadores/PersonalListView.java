@@ -46,11 +46,7 @@ public class PersonalListView extends AbstractListView<Personal> {
                     case 1:
                         return items.get(rowIndex).getDatosPersonales().getNombre();
                     case 2:
-                        if (items.get(rowIndex).getPuestoTrabajoList() == null
-                                || items.get(rowIndex).getPuestoTrabajoList().isEmpty()) {
-                            return null;
-                        }
-                        return items.get(rowIndex).getPuestoTrabajoList().get(0);
+                        return items.get(rowIndex).getPuestoTrabajonombrePuesto();
                     default:
                         return null;
                 }

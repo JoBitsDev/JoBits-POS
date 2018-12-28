@@ -208,6 +208,10 @@ public abstract class AbstractView extends JDialog implements  View{
         return Fonts.BODY;
     }
 
+    void getOptionPanelBackground(){
+    
+    }
+    
     //
     //Private Methods
     //

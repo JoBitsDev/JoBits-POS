@@ -17,7 +17,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -25,12 +24,11 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "carta")
 @NamedQueries({
-    @NamedQuery(name = "Carta.findAll", query = "SELECT c FROM Carta c")
-    , @NamedQuery(name = "Carta.findByCodCarta", query = "SELECT c FROM Carta c WHERE c.codCarta = :codCarta")
-    , @NamedQuery(name = "Carta.findByNombreCarta", query = "SELECT c FROM Carta c WHERE c.nombreCarta = :nombreCarta")
-    , @NamedQuery(name = "Carta.findByMonedaPrincipal", query = "SELECT c FROM Carta c WHERE c.monedaPrincipal = :monedaPrincipal")})
+    @NamedQuery(name = "Carta.findAll", query = "SELECT c FROM Carta c"),
+    @NamedQuery(name = "Carta.findByCodCarta", query = "SELECT c FROM Carta c WHERE c.codCarta = :codCarta"),
+    @NamedQuery(name = "Carta.findByNombreCarta", query = "SELECT c FROM Carta c WHERE c.nombreCarta = :nombreCarta"),
+    @NamedQuery(name = "Carta.findByMonedaPrincipal", query = "SELECT c FROM Carta c WHERE c.monedaPrincipal = :monedaPrincipal")})
 public class Carta implements Serializable {
 
     private static final long serialVersionUID = 1L;

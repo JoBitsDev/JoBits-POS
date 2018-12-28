@@ -84,7 +84,8 @@ public class R {
         CAJERO(1),
         ALMACENERO(2),
         ECONOMICO(3),
-        ADMINISTRADOR(4);
+        ADMINISTRADOR(4),
+        DESARROLLADOR(5);
 
         private final int nivel;
 

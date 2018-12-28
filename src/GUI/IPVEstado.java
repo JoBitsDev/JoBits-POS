@@ -18,6 +18,7 @@ import restManager.persistencia.IpvPK;
 import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.IpvRegistroPK;
 import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.InsumoDAO;
 import restManager.printservice.Impresion;
 import restManager.util.comun;
 
@@ -180,7 +181,7 @@ public class IPVEstado extends javax.swing.JPanel {
         try {
             for (IpvRegistro x : registros) {
                 rowData[0].add(x.getIpvRegistroPK().getIpvinsumocodInsumo());
-                rowData[1].add(staticContent.insumoJPA.findInsumo(
+                rowData[1].add(InsumoDAO.getInstance().find(
                         x.getIpvRegistroPK().getIpvinsumocodInsumo()).getNombre());
                 rowData[2].add(x.getInicio());
                 rowData[3].add(x.getEntrada());

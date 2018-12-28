@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.insumo.InsumoCreateEditController;
 import restManager.controller.insumo.InsumoListController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.models.AlmacenDAO;
@@ -76,9 +77,6 @@ public class AlmacenManageController extends AbstractDialogController<Almacen> {
         getView().updateView();
     }
     
-    public void verTransaccionsArchivadas(){
-        AlmacenTransaccionListController fichasController = new AlmacenTransaccionListController(getView(),a);
-    }
     //
     // Metodos Privados
     //
@@ -88,10 +86,11 @@ public class AlmacenManageController extends AbstractDialogController<Almacen> {
     }
 
     private void contructTicketAndPrint(Almacen a) {
-        Impresion i = new Impresion();
-        ArrayList<Insumo> list = new ArrayList<>(a.getInsumoList());
-        list.sort((Insumo o1, Insumo o2) -> o1.getNombre().compareTo(o2.getNombre()));
-        i.printStockBalance(list, printOverStockedInsumos());
+      throw new DevelopingOperationException();
+//        Impresion i = new Impresion();
+//        ArrayList<Insumo> list = new ArrayList<>(a.getInsumoList());
+//        list.sort((Insumo o1, Insumo o2) -> o1.getNombre().compareTo(o2.getNombre()));
+//        i.printStockBalance(list, printOverStockedInsumos());
     }
 
     private boolean printOverStockedInsumos() {

@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -25,14 +24,13 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "mesa")
 @NamedQueries({
-    @NamedQuery(name = "Mesa.findAll", query = "SELECT m FROM Mesa m")
-    , @NamedQuery(name = "Mesa.findByCodMesa", query = "SELECT m FROM Mesa m WHERE m.codMesa = :codMesa")
-    , @NamedQuery(name = "Mesa.findByEstado", query = "SELECT m FROM Mesa m WHERE m.estado = :estado")
-    , @NamedQuery(name = "Mesa.findByEstallena", query = "SELECT m FROM Mesa m WHERE m.estallena = :estallena")
-    , @NamedQuery(name = "Mesa.findByCapacidadMax", query = "SELECT m FROM Mesa m WHERE m.capacidadMax = :capacidadMax")
-    , @NamedQuery(name = "Mesa.findByUbicacion", query = "SELECT m FROM Mesa m WHERE m.ubicacion = :ubicacion")})
+    @NamedQuery(name = "Mesa.findAll", query = "SELECT m FROM Mesa m"),
+    @NamedQuery(name = "Mesa.findByCodMesa", query = "SELECT m FROM Mesa m WHERE m.codMesa = :codMesa"),
+    @NamedQuery(name = "Mesa.findByEstado", query = "SELECT m FROM Mesa m WHERE m.estado = :estado"),
+    @NamedQuery(name = "Mesa.findByEstallena", query = "SELECT m FROM Mesa m WHERE m.estallena = :estallena"),
+    @NamedQuery(name = "Mesa.findByCapacidadMax", query = "SELECT m FROM Mesa m WHERE m.capacidadMax = :capacidadMax"),
+    @NamedQuery(name = "Mesa.findByUbicacion", query = "SELECT m FROM Mesa m WHERE m.ubicacion = :ubicacion")})
 public class Mesa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,14 +39,11 @@ public class Mesa implements Serializable {
     @Column(name = "cod_mesa")
     private String codMesa;
     @Basic(optional = false)
-    @Column(name = "estado")
     private String estado;
-    @Column(name = "estallena")
     private Boolean estallena;
     @Column(name = "capacidad_max")
     private Integer capacidadMax;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "ubicacion")
     private Double ubicacion;
     @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")
     @ManyToOne

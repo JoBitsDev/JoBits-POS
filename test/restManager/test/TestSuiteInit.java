@@ -5,6 +5,7 @@
  */
 package restManager.test;
 
+import GUI.Views.cocina.CocinaListViewTest;
 import GUI.Views.venta.VentaListaTest;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,6 +13,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import restManager.controller.trabajadores.PersonalListControllerTest;
+import restManager.controller.trabajadores.PuestoTrabajoListControllerTest;
 import restManager.controller.venta.OrdenControllerTest;
 import restManager.persistencia.jpa.staticContent;
 import restManager.persistencia.models.PersonalDAO;
@@ -22,7 +25,7 @@ import restManager.resources.R;
  * @author Jorge
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({VentaListaTest.class})
+@Suite.SuiteClasses({PuestoTrabajoListControllerTest.class})
 public class TestSuiteInit {
 
     @BeforeClass

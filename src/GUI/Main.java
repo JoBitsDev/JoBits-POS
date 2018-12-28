@@ -5,9 +5,9 @@
  */
 package GUI;
 
+import GUI.Views.login.LogInDialog;
 import GUI.Views.venta.VentaMain;
 import GUI.Views.venta.VentaLista;
-import GUI.Views.trabajadores.TrabajadorCrear;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +21,7 @@ import restManager.controller.seccion.SeccionListController;
 import restManager.controller.trabajadores.PersonalListController;
 import restManager.controller.trabajadores.PuestoTrabajoCreateEditController;
 import restManager.controller.trabajadores.PuestoTrabajoListController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Personal;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.Venta;
@@ -516,7 +517,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonEsquemaSalonActionPerformed
 
     private void buttonCREARTRABActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCREARTRABActionPerformed
-        new TrabajadorCrear(this, true, null);
+        throw new DevelopingOperationException();
+// new TrabajadorCrear(this, true, null);
     }//GEN-LAST:event_buttonCREARTRABActionPerformed
 
     private void buttonDIASSINARCHIVARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDIASSINARCHIVARActionPerformed

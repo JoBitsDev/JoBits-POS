@@ -8,7 +8,6 @@ package restManager.persistencia;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -25,21 +24,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "insumo_elaborado")
 @NamedQueries({
-    @NamedQuery(name = "InsumoElaborado.findAll", query = "SELECT i FROM InsumoElaborado i")
-    , @NamedQuery(name = "InsumoElaborado.findByInsumocodNombre", query = "SELECT i FROM InsumoElaborado i WHERE i.insumoElaboradoPK.insumocodNombre = :insumocodNombre")
-    , @NamedQuery(name = "InsumoElaborado.findByInsumocodInsumo", query = "SELECT i FROM InsumoElaborado i WHERE i.insumoElaboradoPK.insumocodInsumo = :insumocodInsumo")
-    , @NamedQuery(name = "InsumoElaborado.findByCantidad", query = "SELECT i FROM InsumoElaborado i WHERE i.cantidad = :cantidad")
-    , @NamedQuery(name = "InsumoElaborado.findByCosto", query = "SELECT i FROM InsumoElaborado i WHERE i.costo = :costo")})
+    @NamedQuery(name = "InsumoElaborado.findAll", query = "SELECT i FROM InsumoElaborado i"),
+    @NamedQuery(name = "InsumoElaborado.findByInsumocodNombre", query = "SELECT i FROM InsumoElaborado i WHERE i.insumoElaboradoPK.insumocodNombre = :insumocodNombre"),
+    @NamedQuery(name = "InsumoElaborado.findByInsumocodInsumo", query = "SELECT i FROM InsumoElaborado i WHERE i.insumoElaboradoPK.insumocodInsumo = :insumocodInsumo"),
+    @NamedQuery(name = "InsumoElaborado.findByCantidad", query = "SELECT i FROM InsumoElaborado i WHERE i.cantidad = :cantidad"),
+    @NamedQuery(name = "InsumoElaborado.findByCosto", query = "SELECT i FROM InsumoElaborado i WHERE i.costo = :costo")})
 public class InsumoElaborado implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected InsumoElaboradoPK insumoElaboradoPK;
     @Basic(optional = false)
-    @Column(name = "cantidad")
     private float cantidad;
     @Basic(optional = false)
-    @Column(name = "costo")
     private float costo;
     @JoinColumn(name = "insumocod_nombre", referencedColumnName = "cod_insumo", insertable = false, updatable = false)
     @ManyToOne(optional = false)
@@ -130,4 +127,4 @@ public class InsumoElaborado implements Serializable {
         return "restManager.persistencia.InsumoElaborado[ insumoElaboradoPK=" + insumoElaboradoPK + " ]";
     }
 
-    }
+}

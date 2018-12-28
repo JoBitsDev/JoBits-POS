@@ -712,7 +712,7 @@ public class Impresion {
             t.setText(in.getNombre() + "(" + in.getUm() + ")");
             t.newLine();
             t.alignRight();
-            t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente() - in.getStockEstimation()));
+//            t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente() - in.getStockEstimation()));
             t.newLine();
         }
 

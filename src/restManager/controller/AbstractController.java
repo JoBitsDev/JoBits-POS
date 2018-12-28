@@ -7,11 +7,14 @@ package restManager.controller;
 
 import GUI.Views.AbstractView;
 import GUI.Views.View;
+import com.jidesoft.dialog.JideOptionPane;
 import java.awt.Container;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.ValidatingException;
 import restManager.persistencia.models.AbstractModel;
 import restManager.resources.R;
 
@@ -151,13 +154,21 @@ public abstract class AbstractController<T> implements Controller {
     }
 
     protected String showInputDialog(Container view, String text) {
-        String ret = JOptionPane.showInputDialog(view, text);
-        return ret != null ? ret : "";
+        String ret = JOptionPane.showInputDialog(view, text, "Entrada", JOptionPane.QUESTION_MESSAGE);
+        if (ret != null) {
+            return ret;
+        } else {
+            throw new ValidatingException(view);
+        }
     }
 
     protected String showInputDialog(Container view, String text, Object defaultValue) {
         String ret = JOptionPane.showInputDialog(view, text, defaultValue);
-        return ret != null ? ret : "";
+        if (ret != null) {
+            return ret;
+        } else {
+            throw new ValidatingException(view);
+        }
     }
 
     //

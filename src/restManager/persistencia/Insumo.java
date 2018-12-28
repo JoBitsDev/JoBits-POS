@@ -13,12 +13,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -26,28 +23,16 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "insumo")
 @NamedQueries({
-    @NamedQuery(name = "Insumo.findAll", query = "SELECT i FROM Insumo i")
-    , @NamedQuery(name = "Insumo.findByCodInsumo", query = "SELECT i FROM Insumo i WHERE i.codInsumo = :codInsumo")
-    , @NamedQuery(name = "Insumo.findByNombre", query = "SELECT i FROM Insumo i WHERE i.nombre = :nombre")
-    , @NamedQuery(name = "Insumo.findByUm", query = "SELECT i FROM Insumo i WHERE i.um = :um")
-    , @NamedQuery(name = "Insumo.findByElaborado", query = "SELECT i FROM Insumo i WHERE i.elaborado = :elaborado")
-    , @NamedQuery(name = "Insumo.findByCostoPorUnidad", query = "SELECT i FROM Insumo i WHERE i.costoPorUnidad = :costoPorUnidad")
-    , @NamedQuery(name = "Insumo.findByCantidadExistente", query = "SELECT i FROM Insumo i WHERE i.cantidadExistente = :cantidadExistente")})
+    @NamedQuery(name = "Insumo.findAll", query = "SELECT i FROM Insumo i"),
+    @NamedQuery(name = "Insumo.findByCodInsumo", query = "SELECT i FROM Insumo i WHERE i.codInsumo = :codInsumo"),
+    @NamedQuery(name = "Insumo.findByNombre", query = "SELECT i FROM Insumo i WHERE i.nombre = :nombre"),
+    @NamedQuery(name = "Insumo.findByUm", query = "SELECT i FROM Insumo i WHERE i.um = :um"),
+    @NamedQuery(name = "Insumo.findByElaborado", query = "SELECT i FROM Insumo i WHERE i.elaborado = :elaborado"),
+    @NamedQuery(name = "Insumo.findByCostoPorUnidad", query = "SELECT i FROM Insumo i WHERE i.costoPorUnidad = :costoPorUnidad"),
+    @NamedQuery(name = "Insumo.findByStockEstimation", query = "SELECT i FROM Insumo i WHERE i.stockEstimation = :stockEstimation"),
+    @NamedQuery(name = "Insumo.findByCantidadCreada", query = "SELECT i FROM Insumo i WHERE i.cantidadCreada = :cantidadCreada")})
 public class Insumo implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
-    private List<InsumoTransaccion> insumoTransaccionList;
-
-    @Column(name = "cantidad_creada")
-    private Float cantidadCreada;
-    
-    
-    @Column(name = "cantidad_existente")
-    private Float cantidadExistente;
-    @Column(name = "stock_estimation")
-    private Float stockEstimation;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,22 +40,22 @@ public class Insumo implements Serializable {
     @Column(name = "cod_insumo")
     private String codInsumo;
     @Basic(optional = false)
-    @Column(name = "nombre")
     private String nombre;
-    @Column(name = "um")
     private String um;
-    @Column(name = "elaborado")
     private Boolean elaborado;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "costo_por_unidad")
     private Float costoPorUnidad;
+    @Column(name = "stock_estimation")
+    private Float stockEstimation;
+    @Column(name = "cantidad_creada")
+    private Float cantidadCreada;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<ProductoInsumo> productoInsumoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
+    private List<InsumoAlmacen> insumoAlmacenList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<Ipv> ipvList;
-    @JoinColumn(name = "almacencod_almacen", referencedColumnName = "cod_almacen")
-    @ManyToOne
-    private Almacen almacencodAlmacen;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<InsumoElaborado> insumoElaboradoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo1")
@@ -128,12 +113,20 @@ public class Insumo implements Serializable {
         this.costoPorUnidad = costoPorUnidad;
     }
 
-    public Float getCantidadExistente() {
-        return cantidadExistente;
+    public Float getStockEstimation() {
+        return stockEstimation;
     }
 
-    public void setCantidadExistente(Float cantidadExistente) {
-        this.cantidadExistente = cantidadExistente;
+    public void setStockEstimation(Float stockEstimation) {
+        this.stockEstimation = stockEstimation;
+    }
+
+    public Float getCantidadCreada() {
+        return cantidadCreada;
+    }
+
+    public void setCantidadCreada(Float cantidadCreada) {
+        this.cantidadCreada = cantidadCreada;
     }
 
     public List<ProductoInsumo> getProductoInsumoList() {
@@ -144,20 +137,20 @@ public class Insumo implements Serializable {
         this.productoInsumoList = productoInsumoList;
     }
 
+    public List<InsumoAlmacen> getInsumoAlmacenList() {
+        return insumoAlmacenList;
+    }
+
+    public void setInsumoAlmacenList(List<InsumoAlmacen> insumoAlmacenList) {
+        this.insumoAlmacenList = insumoAlmacenList;
+    }
+
     public List<Ipv> getIpvList() {
         return ipvList;
     }
 
     public void setIpvList(List<Ipv> ipvList) {
         this.ipvList = ipvList;
-    }
-
-    public Almacen getAlmacencodAlmacen() {
-        return almacencodAlmacen;
-    }
-
-    public void setAlmacencodAlmacen(Almacen almacencodAlmacen) {
-        this.almacencodAlmacen = almacencodAlmacen;
     }
 
     public List<InsumoElaborado> getInsumoElaboradoList() {
@@ -200,31 +193,5 @@ public class Insumo implements Serializable {
     public String toString() {
         return   nombre+"("+codInsumo+")";
     }
-
-    public Float getStockEstimation() {
-        return stockEstimation;
-    }
-
-    public void setStockEstimation(Float stockEstimation) {
-        this.stockEstimation = stockEstimation;
-    }
-
-    public Float getCantidadCreada() {
-        return cantidadCreada;
-    }
-
-    public void setCantidadCreada(Float cantidadCreada) {
-        this.cantidadCreada = cantidadCreada;
-    }
-
-    public List<InsumoTransaccion> getInsumoTransaccionList() {
-        return insumoTransaccionList;
-    }
-
-    public void setInsumoTransaccionList(List<InsumoTransaccion> insumoTransaccionList) {
-        this.insumoTransaccionList = insumoTransaccionList;
-    }
-    
-    
 
 }

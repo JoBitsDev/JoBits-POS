@@ -5,7 +5,7 @@
  */
 package restManager.algoritmo;
 
-import GUI.LogInDialog;
+import GUI.Views.login.LogInDialog;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;

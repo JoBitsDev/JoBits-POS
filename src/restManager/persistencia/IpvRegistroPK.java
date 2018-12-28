@@ -29,7 +29,6 @@ public class IpvRegistroPK implements Serializable {
     @Column(name = "ipvcocinacod_cocina")
     private String ipvcocinacodCocina;
     @Basic(optional = false)
-    @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
 

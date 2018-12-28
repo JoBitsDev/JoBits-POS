@@ -9,13 +9,13 @@ package restManager.persistencia;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -23,32 +23,27 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "almacen")
 @NamedQueries({
-    @NamedQuery(name = "Almacen.findAll", query = "SELECT a FROM Almacen a")
-    , @NamedQuery(name = "Almacen.findByCodAlmacen", query = "SELECT a FROM Almacen a WHERE a.codAlmacen = :codAlmacen")
-    , @NamedQuery(name = "Almacen.findByNombre", query = "SELECT a FROM Almacen a WHERE a.nombre = :nombre")})
+    @NamedQuery(name = "Almacen.findAll", query = "SELECT a FROM Almacen a"),
+    @NamedQuery(name = "Almacen.findByCodAlmacen", query = "SELECT a FROM Almacen a WHERE a.codAlmacen = :codAlmacen"),
+    @NamedQuery(name = "Almacen.findByNombre", query = "SELECT a FROM Almacen a WHERE a.nombre = :nombre"),
+    @NamedQuery(name = "Almacen.findByCantidadInsumos", query = "SELECT a FROM Almacen a WHERE a.cantidadInsumos = :cantidadInsumos"),
+    @NamedQuery(name = "Almacen.findByValorMonetario", query = "SELECT a FROM Almacen a WHERE a.valorMonetario = :valorMonetario")})
 public class Almacen implements Serializable {
 
-    @OneToMany(mappedBy = "almacencodAlmacen")
-    private List<Transaccion> transaccionList;
-
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "valor_monetario")
-    private Float valorMonetario;
-
-    @Column(name = "cantidad_insumos")
-    private Integer cantidadInsumos;
-  
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "cod_almacen")
     private String codAlmacen;
-    @Column(name = "nombre")
     private String nombre;
-    @OneToMany(mappedBy = "almacencodAlmacen")
-    private List<Insumo> insumoList;
+    @Column(name = "cantidad_insumos")
+    private Integer cantidadInsumos;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "valor_monetario")
+    private Float valorMonetario;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacen")
+    private List<InsumoAlmacen> insumoAlmacenList;
 
     public Almacen() {
     }
@@ -73,12 +68,28 @@ public class Almacen implements Serializable {
         this.nombre = nombre;
     }
 
-    public List<Insumo> getInsumoList() {
-        return insumoList;
+    public Integer getCantidadInsumos() {
+        return cantidadInsumos;
     }
 
-    public void setInsumoList(List<Insumo> insumoList) {
-        this.insumoList = insumoList;
+    public void setCantidadInsumos(Integer cantidadInsumos) {
+        this.cantidadInsumos = cantidadInsumos;
+    }
+
+    public Float getValorMonetario() {
+        return valorMonetario;
+    }
+
+    public void setValorMonetario(Float valorMonetario) {
+        this.valorMonetario = valorMonetario;
+    }
+
+    public List<InsumoAlmacen> getInsumoAlmacenList() {
+        return insumoAlmacenList;
+    }
+
+    public void setInsumoAlmacenList(List<InsumoAlmacen> insumoAlmacenList) {
+        this.insumoAlmacenList = insumoAlmacenList;
     }
 
     @Override
@@ -104,30 +115,6 @@ public class Almacen implements Serializable {
     @Override
     public String toString() {
         return codAlmacen +" : "+nombre ;
-    }
-
-    public Integer getCantidadInsumos() {
-        return cantidadInsumos;
-    }
-
-    public void setCantidadInsumos(Integer cantidadInsumos) {
-        this.cantidadInsumos = cantidadInsumos;
-    }
-    
-    public Float getValorMonetario() {
-        return valorMonetario;
-    }
-
-    public void setValorMonetario(Float valorMonetario) {
-        this.valorMonetario = valorMonetario;
-    }
-
-    public List<Transaccion> getTransaccionList() {
-        return transaccionList;
-    }
-
-    public void setTransaccionList(List<Transaccion> transaccionList) {
-        this.transaccionList = transaccionList;
     }
 
 }

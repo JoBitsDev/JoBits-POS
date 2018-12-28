@@ -5,6 +5,7 @@
  */
 package restManager.exceptions;
 
+import java.awt.Component;
 import javax.swing.JOptionPane;
 import restManager.resources.R;
 
@@ -21,6 +22,11 @@ public class ValidatingException extends RuntimeException {
                 R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
     }
 
+     public ValidatingException(Component container) {
+        JOptionPane.showMessageDialog(container, R.RESOURCE_BUNDLE.getString("exception_validating"),
+                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
+    }
+    
     public ValidatingException(String message) {
         super(message);
         JOptionPane.showMessageDialog(null, message,

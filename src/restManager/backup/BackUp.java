@@ -33,6 +33,7 @@ import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.exceptions.IllegalOrphanException;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.InsumoDAO;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
 
@@ -267,7 +268,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
 
     private boolean BackUpInsumos(List<Insumo> ins) {
         for (Insumo in : ins) {
-            in.setAlmacencodAlmacen(null);
+            //in.setAlmacencodAlmacen(null);
             if (EntityExist(in, in.getCodInsumo())) {
                 em.merge(in);
 
@@ -392,7 +393,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         // backup secciones
         BackUPSecciones(staticContent.seccionJPA.findSeccionEntities());
         // backup ingredientes
-        BackUpInsumos(staticContent.insumoJPA.findInsumoEntities());
+        BackUpInsumos(InsumoDAO.getInstance().findAll());
         // backup platos
         BackUpProd(staticContent.productoJPA.findProductoVentaEntities());
         // backup mesas

@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,17 +25,16 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name = "cliente")
 @NamedQueries({
-    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")
-    , @NamedQuery(name = "Cliente.findByCodCliente", query = "SELECT c FROM Cliente c WHERE c.codCliente = :codCliente")
-    , @NamedQuery(name = "Cliente.findByNombreCliente", query = "SELECT c FROM Cliente c WHERE c.nombreCliente = :nombreCliente")
-    , @NamedQuery(name = "Cliente.findByApellidosCliente", query = "SELECT c FROM Cliente c WHERE c.apellidosCliente = :apellidosCliente")
-    , @NamedQuery(name = "Cliente.findByDireccionCliente", query = "SELECT c FROM Cliente c WHERE c.direccionCliente = :direccionCliente")
-    , @NamedQuery(name = "Cliente.findByTelefonoCliente", query = "SELECT c FROM Cliente c WHERE c.telefonoCliente = :telefonoCliente")
-    , @NamedQuery(name = "Cliente.findByTipoCliente", query = "SELECT c FROM Cliente c WHERE c.tipoCliente = :tipoCliente")
-    , @NamedQuery(name = "Cliente.findByFechanacCliente", query = "SELECT c FROM Cliente c WHERE c.fechanacCliente = :fechanacCliente")
-    , @NamedQuery(name = "Cliente.findByObservacionesCliente", query = "SELECT c FROM Cliente c WHERE c.observacionesCliente = :observacionesCliente")})
+    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
+    @NamedQuery(name = "Cliente.findByCodCliente", query = "SELECT c FROM Cliente c WHERE c.codCliente = :codCliente"),
+    @NamedQuery(name = "Cliente.findByNombreCliente", query = "SELECT c FROM Cliente c WHERE c.nombreCliente = :nombreCliente"),
+    @NamedQuery(name = "Cliente.findByApellidosCliente", query = "SELECT c FROM Cliente c WHERE c.apellidosCliente = :apellidosCliente"),
+    @NamedQuery(name = "Cliente.findByDireccionCliente", query = "SELECT c FROM Cliente c WHERE c.direccionCliente = :direccionCliente"),
+    @NamedQuery(name = "Cliente.findByTelefonoCliente", query = "SELECT c FROM Cliente c WHERE c.telefonoCliente = :telefonoCliente"),
+    @NamedQuery(name = "Cliente.findByTipoCliente", query = "SELECT c FROM Cliente c WHERE c.tipoCliente = :tipoCliente"),
+    @NamedQuery(name = "Cliente.findByFechanacCliente", query = "SELECT c FROM Cliente c WHERE c.fechanacCliente = :fechanacCliente"),
+    @NamedQuery(name = "Cliente.findByObservacionesCliente", query = "SELECT c FROM Cliente c WHERE c.observacionesCliente = :observacionesCliente")})
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +45,6 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre_cliente")
     private String nombreCliente;
-    @Basic(optional = false)
     @Column(name = "apellidos_cliente")
     private String apellidosCliente;
     @Column(name = "direccion_cliente")
@@ -71,10 +68,9 @@ public class Cliente implements Serializable {
         this.codCliente = codCliente;
     }
 
-    public Cliente(String codCliente, String nombreCliente, String apellidosCliente) {
+    public Cliente(String codCliente, String nombreCliente) {
         this.codCliente = codCliente;
         this.nombreCliente = nombreCliente;
-        this.apellidosCliente = apellidosCliente;
     }
 
     public String getCodCliente() {

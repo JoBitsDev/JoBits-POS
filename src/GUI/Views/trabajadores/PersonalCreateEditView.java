@@ -7,14 +7,19 @@ package GUI.Views.trabajadores;
 
 import GUI.Views.AbstractDetailView;
 import GUI.Components.JTextField;
+import GUI.Views.util.RestManagerInputVerifier;
+import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.util.Arrays;
+import javax.swing.border.LineBorder;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.trabajadores.PersonalCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Personal;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.resources.R;
+import restManager.resources.RegularExpressions;
 import restManager.util.RestManagerComboBoxModel;
 
 /**
@@ -23,16 +28,15 @@ import restManager.util.RestManagerComboBoxModel;
  */
 public class PersonalCreateEditView extends AbstractDetailView<Personal> {
 
-
     public PersonalCreateEditView(Personal instance, AbstractDetailController controller, Frame owner, boolean modal) {
-        super(instance,DialogType.LIST, controller,owner, modal);
+        super(instance, DialogType.LIST, controller, owner, modal);
         initComponents();
         fetchComponentData();
         updateView();
     }
 
     public PersonalCreateEditView(Personal instance, AbstractDetailController controller, Dialog owner, boolean modal) {
-        super(instance,DialogType.LIST,controller, owner, modal);
+        super(instance, DialogType.LIST, controller, owner, modal);
         initComponents();
         fetchComponentData();
         updateView();
@@ -60,30 +64,24 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
         jLabelUsuario = new javax.swing.JLabel();
         jTextFieldUsuario = new JTextField();
         jLabelpassword = new javax.swing.JLabel();
-        jPasswordFieldPass = new javax.swing.JPasswordField();
+        jPasswordFieldPassAntigua = new javax.swing.JPasswordField();
         jLabelpassword1 = new javax.swing.JLabel();
-        jPasswordFieldPass1 = new javax.swing.JPasswordField();
+        jPasswordFieldPassNueva = new javax.swing.JPasswordField();
+        jLabelpassword2 = new javax.swing.JLabel();
+        jPasswordFieldPassRepetir = new javax.swing.JPasswordField();
         jPanel6 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBoxSexo = new javax.swing.JComboBox();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jTextFieldCI = new JTextField();
+        jPanel14 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jPanel13 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextFieldTelMovil = new JTextField();
+        jFormattedTextFieldMovil = new javax.swing.JFormattedTextField();
         jPanel9 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jTextFieldTelFijo = new JTextField();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextFieldDireccion = new JTextField();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        jFormattedTextFieldFijo = new javax.swing.JFormattedTextField();
         jPanel12 = new javax.swing.JPanel();
         jButtonCrear = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
@@ -142,7 +140,7 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
 
         jPanel1.setBackground(getBackground());
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Seguridad"));
-        jPanel1.setLayout(new java.awt.GridLayout(3, 1));
+        jPanel1.setLayout(new java.awt.GridLayout(4, 1));
 
         jLabelUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -154,15 +152,21 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
 
         jLabelpassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelpassword.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelpassword.setText("Contraseña*");
+        jLabelpassword.setText("Contraseña Antigua");
         jPanel1.add(jLabelpassword);
-        jPanel1.add(jPasswordFieldPass);
+        jPanel1.add(jPasswordFieldPassAntigua);
 
         jLabelpassword1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelpassword1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelpassword1.setText("Repetir Contraseña");
+        jLabelpassword1.setText("Contraseña Nueva");
         jPanel1.add(jLabelpassword1);
-        jPanel1.add(jPasswordFieldPass1);
+        jPanel1.add(jPasswordFieldPassNueva);
+
+        jLabelpassword2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelpassword2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelpassword2.setText("Repetir contraseña nueva");
+        jPanel1.add(jLabelpassword2);
+        jPanel1.add(jPasswordFieldPassRepetir);
 
         getContentPane().add(jPanel1);
 
@@ -182,22 +186,15 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
 
         jPanel6.add(jPanel4);
 
-        jPanel5.setBackground(jPanel6.getBackground());
-        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanel14.setBackground(jPanel6.getBackground());
+        jPanel14.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("No. Carnet");
-        jPanel5.add(jLabel3);
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("Fecha Nacimiento");
+        jPanel14.add(jLabel8);
+        jPanel14.add(jDateChooser1);
 
-        jTextFieldCI.setPreferredSize(new java.awt.Dimension(150, 26));
-        jTextFieldCI.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldCIKeyTyped(evt);
-            }
-        });
-        jPanel5.add(jTextFieldCI);
-
-        jPanel6.add(jPanel5);
+        jPanel6.add(jPanel14);
 
         jPanel13.setBackground(jPanel6.getBackground());
         jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -206,8 +203,13 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
         jLabel6.setText("Telefono Móvil");
         jPanel13.add(jLabel6);
 
-        jTextFieldTelMovil.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel13.add(jTextFieldTelMovil);
+        try {
+            jFormattedTextFieldMovil.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextFieldMovil.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanel13.add(jFormattedTextFieldMovil);
 
         jPanel6.add(jPanel13);
 
@@ -218,43 +220,17 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
         jLabel7.setText("Telefono Fijo");
         jPanel9.add(jLabel7);
 
-        jTextFieldTelFijo.setMinimumSize(new java.awt.Dimension(150, 26));
-        jTextFieldTelFijo.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel9.add(jTextFieldTelFijo);
+        try {
+            jFormattedTextFieldFijo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextFieldFijo.setText("");
+        jFormattedTextFieldFijo.setToolTipText("");
+        jFormattedTextFieldFijo.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanel9.add(jFormattedTextFieldFijo);
 
         jPanel6.add(jPanel9);
-
-        jPanel7.setBackground(jPanel6.getBackground());
-        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Direccion");
-        jPanel7.add(jLabel5);
-
-        jTextFieldDireccion.setPreferredSize(new java.awt.Dimension(300, 26));
-        jPanel7.add(jTextFieldDireccion);
-
-        jPanel6.add(jPanel7);
-
-        jPanel11.setBackground(jPanel6.getBackground());
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel12.setText("Edad:");
-        jPanel11.add(jLabel12);
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel11.setPreferredSize(new java.awt.Dimension(100, 26));
-        jPanel11.add(jLabel11);
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel10.setText("Fecha Nac:");
-        jPanel11.add(jLabel10);
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel14.setPreferredSize(new java.awt.Dimension(100, 26));
-        jPanel11.add(jLabel14);
-
-        jPanel6.add(jPanel11);
 
         getContentPane().add(jPanel6);
 
@@ -283,10 +259,6 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldCIKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCIKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldCIKeyTyped
-
     private void jComboBoxPuestoTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPuestoTrabajoActionPerformed
         System.out.println(evt.getActionCommand());
     }//GEN-LAST:event_jComboBoxPuestoTrabajoActionPerformed
@@ -305,69 +277,62 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JComboBox<PuestoTrabajo> jComboBoxPuestoTrabajo;
     private javax.swing.JComboBox jComboBoxSexo;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel3;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JFormattedTextField jFormattedTextFieldFijo;
+    private javax.swing.JFormattedTextField jFormattedTextFieldMovil;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelApellidos;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JLabel jLabelpassword;
     private javax.swing.JLabel jLabelpassword1;
+    private javax.swing.JLabel jLabelpassword2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPasswordField jPasswordFieldPass;
-    private javax.swing.JPasswordField jPasswordFieldPass1;
+    private javax.swing.JPasswordField jPasswordFieldPassAntigua;
+    private javax.swing.JPasswordField jPasswordFieldPassNueva;
+    private javax.swing.JPasswordField jPasswordFieldPassRepetir;
     private javax.swing.JTextField jTextFieldApellidos;
-    private javax.swing.JTextField jTextFieldCI;
-    private javax.swing.JTextField jTextFieldDireccion;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldTelFijo;
-    private javax.swing.JTextField jTextFieldTelMovil;
     private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void updateView() {
-       if(instance.getDatosPersonales() != null){
-        jTextFieldNombre.setText(instance.getDatosPersonales().getNombre());
-        jTextFieldApellidos.setText(instance.getDatosPersonales().getApellidos());
-        jTextFieldCI.setText(instance.getDatosPersonales().getCarnet());
-        jTextFieldDireccion.setText(instance.getDatosPersonales().getDireccion());
-        jTextFieldTelMovil.setText("" + instance.getDatosPersonales().getTelefonoMovil());
-        jTextFieldTelFijo.setText("" + instance.getDatosPersonales().getTelefonoFijo());
-        jTextFieldUsuario.setText(instance.getUsuario());
-        jPasswordFieldPass.setText(instance.getContrasenna());
-        if (instance.getDatosPersonales().getSexo() != null) {
-            if (instance.getDatosPersonales().getSexo() == 'M') {
-                jComboBoxSexo.setSelectedIndex(0);
-            } else {
-                jComboBoxSexo.setSelectedIndex(1);
+        if (instance.getDatosPersonales() != null) {
+            jTextFieldNombre.setText(instance.getDatosPersonales().getNombre());
+            jTextFieldApellidos.setText(instance.getDatosPersonales().getApellidos());
+            jDateChooser1.setDate(instance.getDatosPersonales().getFechaNacimineto());
+            jFormattedTextFieldMovil.setText("" + instance.getDatosPersonales().getTelefonoMovil());
+            jFormattedTextFieldFijo.setText("" + instance.getDatosPersonales().getTelefonoFijo());
+            jTextFieldUsuario.setText(instance.getUsuario());
+            jPasswordFieldPassAntigua.setText(instance.getContrasenna());
+            if (instance.getDatosPersonales().getSexo() != null) {
+                if (instance.getDatosPersonales().getSexo() == 'M') {
+                    jComboBoxSexo.setSelectedIndex(0);
+                } else {
+                    jComboBoxSexo.setSelectedIndex(1);
+                }
             }
+            jComboBoxPuestoTrabajo.setSelectedItem(instance.getPuestoTrabajonombrePuesto());
         }
-        
-        jComboBoxPuestoTrabajo.setSelectedItem(instance.getPuestoTrabajoList().get(0));
-       }
     }
 
     @Override
     public void fetchComponentData() {
-        jComboBoxPuestoTrabajo.setModel(new RestManagerComboBoxModel<>(((PersonalCreateEditController)getController()).getPuestoTrabajoList()));
+        jComboBoxPuestoTrabajo.setModel(new RestManagerComboBoxModel<>(((PersonalCreateEditController) getController()).getPuestoTrabajoList()));
+        jTextFieldUsuario.setInputVerifier(new RestManagerInputVerifier(RegularExpressions.USER_NAME));
 
     }
 
@@ -378,12 +343,44 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
 
     @Override
     public void setCreatingMode() {
-    jButtonCrear.setText(R.RESOURCE_BUNDLE.getString("label_crear"));
+        jButtonCrear.setText(R.RESOURCE_BUNDLE.getString("label_crear"));
     }
 
     @Override
     public boolean validateData() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        if (jPasswordFieldPassNueva.getPassword().length > 0) {
+            if (!Arrays.equals(jPasswordFieldPassNueva.getPassword(), (jPasswordFieldPassRepetir.getPassword()))) {
+               jPasswordFieldPassRepetir.setBorder(new LineBorder(Color.red));
+                return false;
+            } else {
+                 jPasswordFieldPassRepetir.setBorder(null);
+                instance.setContrasenna(jPasswordFieldPassNueva.getText());
+            }
+
+        }
+        instance.getDatosPersonales().setNombre(jTextFieldNombre.getText());
+        instance.getDatosPersonales().setApellidos(jTextFieldApellidos.getText());
+        instance.getDatosPersonales().setFechaNacimineto(jDateChooser1.getDate());
+        if ( jFormattedTextFieldMovil.getValue() == null) {
+            instance.getDatosPersonales().setTelefonoMovil(null);
+        } else {
+            instance.getDatosPersonales().setTelefonoMovil(Integer.parseInt((String) jFormattedTextFieldMovil.getValue()));
+        }
+        if ( jFormattedTextFieldFijo.getValue() == null) {
+            instance.getDatosPersonales().setTelefonoFijo(null);
+        } else {
+            instance.getDatosPersonales().setTelefonoFijo(Integer.parseInt((String) jFormattedTextFieldFijo.getValue()));
+
+        }
+        instance.setUsuario(jTextFieldUsuario.getText());
+        if (jComboBoxSexo.getSelectedIndex() == 0) {
+            instance.getDatosPersonales().setSexo('M');
+        } else {
+            instance.getDatosPersonales().setSexo('F');
+        }
+        instance.setPuestoTrabajonombrePuesto((PuestoTrabajo) jComboBoxPuestoTrabajo.getSelectedItem());
+
+        return true;
     }
 
 }

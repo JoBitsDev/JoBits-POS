@@ -8,7 +8,6 @@ package restManager.persistencia;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -25,21 +24,19 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "producto_insumo")
 @NamedQueries({
-    @NamedQuery(name = "ProductoInsumo.findAll", query = "SELECT p FROM ProductoInsumo p")
-    , @NamedQuery(name = "ProductoInsumo.findByProductoVentapCod", query = "SELECT p FROM ProductoInsumo p WHERE p.productoInsumoPK.productoVentapCod = :productoVentapCod")
-    , @NamedQuery(name = "ProductoInsumo.findByInsumocodInsumo", query = "SELECT p FROM ProductoInsumo p WHERE p.productoInsumoPK.insumocodInsumo = :insumocodInsumo")
-    , @NamedQuery(name = "ProductoInsumo.findByCantidad", query = "SELECT p FROM ProductoInsumo p WHERE p.cantidad = :cantidad")
-    , @NamedQuery(name = "ProductoInsumo.findByCosto", query = "SELECT p FROM ProductoInsumo p WHERE p.costo = :costo")})
+    @NamedQuery(name = "ProductoInsumo.findAll", query = "SELECT p FROM ProductoInsumo p"),
+    @NamedQuery(name = "ProductoInsumo.findByProductoVentapCod", query = "SELECT p FROM ProductoInsumo p WHERE p.productoInsumoPK.productoVentapCod = :productoVentapCod"),
+    @NamedQuery(name = "ProductoInsumo.findByInsumocodInsumo", query = "SELECT p FROM ProductoInsumo p WHERE p.productoInsumoPK.insumocodInsumo = :insumocodInsumo"),
+    @NamedQuery(name = "ProductoInsumo.findByCantidad", query = "SELECT p FROM ProductoInsumo p WHERE p.cantidad = :cantidad"),
+    @NamedQuery(name = "ProductoInsumo.findByCosto", query = "SELECT p FROM ProductoInsumo p WHERE p.costo = :costo")})
 public class ProductoInsumo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ProductoInsumoPK productoInsumoPK;
     @Basic(optional = false)
-    @Column(name = "cantidad")
     private float cantidad;
     @Basic(optional = false)
-    @Column(name = "costo")
     private float costo;
     @JoinColumn(name = "insumocod_insumo", referencedColumnName = "cod_insumo", insertable = false, updatable = false)
     @ManyToOne(optional = false)

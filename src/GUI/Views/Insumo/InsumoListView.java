@@ -49,7 +49,7 @@ public class InsumoListView extends AbstractListView<Insumo> {
         return new MyJTableModel<Insumo>(items) {
             @Override
             public int getColumnCount() {
-                return 5;
+                return 4;
             }
 
             @Override
@@ -62,8 +62,6 @@ public class InsumoListView extends AbstractListView<Insumo> {
                     case 2:
                         return items.get(rowIndex).getUm();
                     case 3:
-                        return items.get(rowIndex).getCantidadExistente();
-                    case 4:
                         return items.get(rowIndex).getElaborado();
                     default:
                         return null;
@@ -81,8 +79,6 @@ public class InsumoListView extends AbstractListView<Insumo> {
                     case 2:
                         return "UM";
                     case 3:
-                        return "En Almacen";
-                    case 4:
                         return "Elaborado";
                     default:
                         return null;
@@ -93,7 +89,7 @@ public class InsumoListView extends AbstractListView<Insumo> {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
-                    case 4:
+                    case 3:
                         return Boolean.class;
                     default:
                         return super.getColumnClass(columnIndex);

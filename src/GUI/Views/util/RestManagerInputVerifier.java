@@ -41,7 +41,7 @@ public class RestManagerInputVerifier extends InputVerifier{
                 in.setBorder(null);
             }
 
-            return invalid;
+            return !invalid;
         }
 
     

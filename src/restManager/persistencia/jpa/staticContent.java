@@ -48,8 +48,6 @@ public class staticContent {
 
     public static ConfiguracionJpaController configJPA;
 
-    public static InsumoJpaController insumoJPA;
-
     public static ProductoInsumoJpaController productoInsumo;
 
     public static IpvJpaController ipvJPA;
@@ -129,8 +127,6 @@ public class staticContent {
             productovOrdenJpa = new ProductovOrdenJpaController(EMF);
 
             configJPA = new ConfiguracionJpaController(EMF);
-
-            insumoJPA = new InsumoJpaController(EMF);
 
             productoInsumo = new ProductoInsumoJpaController(EMF);
 

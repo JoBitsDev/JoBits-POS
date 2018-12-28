@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.controller.seccion;
 
 import GUI.Views.seccion.SeccionListView;
@@ -20,10 +19,11 @@ import restManager.persistencia.models.SeccionDAO;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-public class SeccionListController extends AbstractListController<Seccion>{
+public class SeccionListController extends AbstractListController<Seccion> {
 
     public SeccionListController() {
         super(new SeccionDAO());
@@ -36,22 +36,34 @@ public class SeccionListController extends AbstractListController<Seccion>{
 
     @Override
     public void createInstance() {
-       String nombre =  JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la sección a crear", 
+        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la sección a crear",
                 "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
-       Seccion newSeccion = new Seccion();
-       newSeccion.setDescripcion("");
-       newSeccion.setNombreSeccion(nombre);
-       newSeccion.setProductoVentaList(new ArrayList<>());
-       
-       if(nombre != null && !nombre.isEmpty()){
-          if (validate(newSeccion)){
-              create(newSeccion);
-              items.add(newSeccion);
-              getView().updateView();
-          }else{
-              showErrorDialog(getView(),"La sección a crear ya existe");
-          }
-       }
+        Seccion newSeccion = new Seccion();
+        newSeccion.setDescripcion("");
+        newSeccion.setNombreSeccion(nombre);
+        newSeccion.setProductoVentaList(new ArrayList<>());
+
+        if (nombre != null && !nombre.isEmpty()) {
+            if (validate(newSeccion)) {
+                create(newSeccion);
+            } else {
+                showErrorDialog(getView(), "La sección a crear ya existe");
+            }
+        }
+    }
+
+    @Override
+    public void update(Seccion selected) {
+         String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nuevo nombre de la sección",
+                "Editar Sección", JOptionPane.QUESTION_MESSAGE);
+         selected.setNombreSeccion(nombre);
+        if (nombre != null && !nombre.isEmpty()) {
+            if (validate(selected)) {
+                update(selected);
+            } else {
+                showErrorDialog(getView(), "La sección a crear ya existe");
+            }
+        }
     }
     
     @Override
@@ -76,7 +88,8 @@ public class SeccionListController extends AbstractListController<Seccion>{
     }
 
     private boolean validate(Seccion newSeccion) {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return getItems().stream().noneMatch((x)
+                -> (x.getNombreSeccion().toLowerCase().equals(newSeccion.getNombreSeccion().toLowerCase())));
     }
 
 }

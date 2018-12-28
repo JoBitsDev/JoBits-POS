@@ -16,6 +16,7 @@ import restManager.persistencia.Insumo;
 import restManager.persistencia.Ipv;
 import restManager.persistencia.IpvPK;
 import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.InsumoDAO;
 
 import restManager.util.comun;
 
@@ -127,7 +128,7 @@ public class IPVVista extends javax.swing.JPanel {
 
         ArrayList[] rowData = comun.initArray(new ArrayList[3]);
 
-        List<Insumo> insumos = staticContent.insumoJPA.findInsumoEntities();
+        List<Insumo> insumos = InsumoDAO.getInstance().findAll();
         for (Insumo i : insumos) {
             rowData[0].add(i.getCodInsumo());
             rowData[1].add(i.getNombre());
@@ -156,7 +157,7 @@ public class IPVVista extends javax.swing.JPanel {
         int row = TablaVistaIPV.getEditingRow();
         String cod = (String) TablaVistaIPV.getValueAt(row, 0);
         boolean value = (boolean) TablaVistaIPV.getValueAt(row, column);
-        Insumo i = staticContent.insumoJPA.findInsumo(cod);
+        Insumo i = InsumoDAO.getInstance().find(cod);
         IpvPK pk = new IpvPK(cod, c.getCodCocina());
         try {
             if (value) {

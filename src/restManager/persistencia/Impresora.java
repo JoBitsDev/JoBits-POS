@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -23,13 +22,12 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "impresora")
 @NamedQueries({
-    @NamedQuery(name = "Impresora.findAll", query = "SELECT i FROM Impresora i")
-    , @NamedQuery(name = "Impresora.findByCodImpresora", query = "SELECT i FROM Impresora i WHERE i.codImpresora = :codImpresora")
-    , @NamedQuery(name = "Impresora.findByIpImpresora", query = "SELECT i FROM Impresora i WHERE i.ipImpresora = :ipImpresora")
-    , @NamedQuery(name = "Impresora.findByEstaactiva", query = "SELECT i FROM Impresora i WHERE i.estaactiva = :estaactiva")
-    , @NamedQuery(name = "Impresora.findByNombreImpresora", query = "SELECT i FROM Impresora i WHERE i.nombreImpresora = :nombreImpresora")})
+    @NamedQuery(name = "Impresora.findAll", query = "SELECT i FROM Impresora i"),
+    @NamedQuery(name = "Impresora.findByCodImpresora", query = "SELECT i FROM Impresora i WHERE i.codImpresora = :codImpresora"),
+    @NamedQuery(name = "Impresora.findByIpImpresora", query = "SELECT i FROM Impresora i WHERE i.ipImpresora = :ipImpresora"),
+    @NamedQuery(name = "Impresora.findByEstaactiva", query = "SELECT i FROM Impresora i WHERE i.estaactiva = :estaactiva"),
+    @NamedQuery(name = "Impresora.findByNombreImpresora", query = "SELECT i FROM Impresora i WHERE i.nombreImpresora = :nombreImpresora")})
 public class Impresora implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +38,6 @@ public class Impresora implements Serializable {
     @Basic(optional = false)
     @Column(name = "ip_impresora")
     private String ipImpresora;
-    @Column(name = "estaactiva")
     private Boolean estaactiva;
     @Column(name = "nombre_impresora")
     private String nombreImpresora;

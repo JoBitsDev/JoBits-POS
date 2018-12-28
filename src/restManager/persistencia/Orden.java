@@ -19,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -29,17 +28,16 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name = "orden")
 @NamedQueries({
-    @NamedQuery(name = "Orden.findAll", query = "SELECT o FROM Orden o")
-    , @NamedQuery(name = "Orden.findByCodOrden", query = "SELECT o FROM Orden o WHERE o.codOrden = :codOrden")
-    , @NamedQuery(name = "Orden.findByHoraComenzada", query = "SELECT o FROM Orden o WHERE o.horaComenzada = :horaComenzada")
-    , @NamedQuery(name = "Orden.findByHoraTerminada", query = "SELECT o FROM Orden o WHERE o.horaTerminada = :horaTerminada")
-    , @NamedQuery(name = "Orden.findByDeLaCasa", query = "SELECT o FROM Orden o WHERE o.deLaCasa = :deLaCasa")
-    , @NamedQuery(name = "Orden.findByPorciento", query = "SELECT o FROM Orden o WHERE o.porciento = :porciento")
-    , @NamedQuery(name = "Orden.findByGananciaXporciento", query = "SELECT o FROM Orden o WHERE o.gananciaXporciento = :gananciaXporciento")
-    , @NamedQuery(name = "Orden.findByOrdenvalorMonetario", query = "SELECT o FROM Orden o WHERE o.ordenvalorMonetario = :ordenvalorMonetario")
-    , @NamedQuery(name = "Orden.findByOrdengastoEninsumos", query = "SELECT o FROM Orden o WHERE o.ordengastoEninsumos = :ordengastoEninsumos")})
+    @NamedQuery(name = "Orden.findAll", query = "SELECT o FROM Orden o"),
+    @NamedQuery(name = "Orden.findByCodOrden", query = "SELECT o FROM Orden o WHERE o.codOrden = :codOrden"),
+    @NamedQuery(name = "Orden.findByHoraComenzada", query = "SELECT o FROM Orden o WHERE o.horaComenzada = :horaComenzada"),
+    @NamedQuery(name = "Orden.findByHoraTerminada", query = "SELECT o FROM Orden o WHERE o.horaTerminada = :horaTerminada"),
+    @NamedQuery(name = "Orden.findByDeLaCasa", query = "SELECT o FROM Orden o WHERE o.deLaCasa = :deLaCasa"),
+    @NamedQuery(name = "Orden.findByPorciento", query = "SELECT o FROM Orden o WHERE o.porciento = :porciento"),
+    @NamedQuery(name = "Orden.findByGananciaXporciento", query = "SELECT o FROM Orden o WHERE o.gananciaXporciento = :gananciaXporciento"),
+    @NamedQuery(name = "Orden.findByOrdenvalorMonetario", query = "SELECT o FROM Orden o WHERE o.ordenvalorMonetario = :ordenvalorMonetario"),
+    @NamedQuery(name = "Orden.findByOrdengastoEninsumos", query = "SELECT o FROM Orden o WHERE o.ordengastoEninsumos = :ordengastoEninsumos")})
 public class Orden implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,7 +55,6 @@ public class Orden implements Serializable {
     @Column(name = "de_la_casa")
     private boolean deLaCasa;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "porciento")
     private Float porciento;
     @Column(name = "ganancia_xporciento")
     private Float gananciaXporciento;
@@ -65,8 +62,6 @@ public class Orden implements Serializable {
     private Float ordenvalorMonetario;
     @Column(name = "ordengasto_eninsumos")
     private Float ordengastoEninsumos;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orden")
-    private List<ProductovOrden> productovOrdenList;
     @JoinColumn(name = "clientecod_cliente", referencedColumnName = "cod_cliente")
     @ManyToOne
     private Cliente clientecodCliente;
@@ -74,11 +69,13 @@ public class Orden implements Serializable {
     @ManyToOne
     private Mesa mesacodMesa;
     @JoinColumn(name = "personalusuario", referencedColumnName = "usuario")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Personal personalusuario;
     @JoinColumn(name = "ventafecha", referencedColumnName = "fecha")
     @ManyToOne(optional = false)
     private Venta ventafecha;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orden")
+    private List<ProductovOrden> productovOrdenList;
 
     public Orden() {
     }
@@ -156,14 +153,6 @@ public class Orden implements Serializable {
         this.ordengastoEninsumos = ordengastoEninsumos;
     }
 
-    public List<ProductovOrden> getProductovOrdenList() {
-        return productovOrdenList;
-    }
-
-    public void setProductovOrdenList(List<ProductovOrden> productovOrdenList) {
-        this.productovOrdenList = productovOrdenList;
-    }
-
     public Cliente getClientecodCliente() {
         return clientecodCliente;
     }
@@ -194,6 +183,14 @@ public class Orden implements Serializable {
 
     public void setVentafecha(Venta ventafecha) {
         this.ventafecha = ventafecha;
+    }
+
+    public List<ProductovOrden> getProductovOrdenList() {
+        return productovOrdenList;
+    }
+
+    public void setProductovOrdenList(List<ProductovOrden> productovOrdenList) {
+        this.productovOrdenList = productovOrdenList;
     }
 
     @Override

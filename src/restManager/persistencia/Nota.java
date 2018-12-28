@@ -7,7 +7,6 @@
 package restManager.persistencia;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -15,7 +14,6 @@ import javax.persistence.JoinColumns;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -23,22 +21,20 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "nota")
 @NamedQueries({
-    @NamedQuery(name = "Nota.findAll", query = "SELECT n FROM Nota n")
-    , @NamedQuery(name = "Nota.findByProductovOrdenproductoVentapCod", query = "SELECT n FROM Nota n WHERE n.notaPK.productovOrdenproductoVentapCod = :productovOrdenproductoVentapCod")
-    , @NamedQuery(name = "Nota.findByProductovOrdenordencodOrden", query = "SELECT n FROM Nota n WHERE n.notaPK.productovOrdenordencodOrden = :productovOrdenordencodOrden")
-    , @NamedQuery(name = "Nota.findByDescripcion", query = "SELECT n FROM Nota n WHERE n.descripcion = :descripcion")})
+    @NamedQuery(name = "Nota.findAll", query = "SELECT n FROM Nota n"),
+    @NamedQuery(name = "Nota.findByProductovOrdenproductoVentapCod", query = "SELECT n FROM Nota n WHERE n.notaPK.productovOrdenproductoVentapCod = :productovOrdenproductoVentapCod"),
+    @NamedQuery(name = "Nota.findByProductovOrdenordencodOrden", query = "SELECT n FROM Nota n WHERE n.notaPK.productovOrdenordencodOrden = :productovOrdenordencodOrden"),
+    @NamedQuery(name = "Nota.findByDescripcion", query = "SELECT n FROM Nota n WHERE n.descripcion = :descripcion")})
 public class Nota implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected NotaPK notaPK;
-    @Column(name = "descripcion")
     private String descripcion;
     @JoinColumns({
-        @JoinColumn(name = "productov_ordenproducto_ventap_cod", referencedColumnName = "producto_ventap_cod", insertable = false, updatable = false)
-        , @JoinColumn(name = "productov_ordenordencod_orden", referencedColumnName = "ordencod_orden", insertable = false, updatable = false)})
+        @JoinColumn(name = "productov_ordenproducto_ventap_cod", referencedColumnName = "producto_ventap_cod", insertable = false, updatable = false),
+        @JoinColumn(name = "productov_ordenordencod_orden", referencedColumnName = "ordencod_orden", insertable = false, updatable = false)})
     @OneToOne(optional = false)
     private ProductovOrden productovOrden;
 

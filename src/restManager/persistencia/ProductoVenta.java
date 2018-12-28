@@ -19,7 +19,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import restManager.resources.R;
 
 /**
  * FirstDream
@@ -29,14 +28,14 @@ import restManager.resources.R;
 @Entity
 @Table(name = "producto_venta")
 @NamedQueries({
-    @NamedQuery(name = "ProductoVenta.findAll", query = "SELECT p FROM ProductoVenta p")
-    , @NamedQuery(name = "ProductoVenta.findByPCod", query = "SELECT p FROM ProductoVenta p WHERE p.pCod = :pCod")
-    , @NamedQuery(name = "ProductoVenta.findByNombre", query = "SELECT p FROM ProductoVenta p WHERE p.nombre = :nombre")
-    , @NamedQuery(name = "ProductoVenta.findByPrecioVenta", query = "SELECT p FROM ProductoVenta p WHERE p.precioVenta = :precioVenta")
-    , @NamedQuery(name = "ProductoVenta.findByGanancia", query = "SELECT p FROM ProductoVenta p WHERE p.ganancia = :ganancia")
-    , @NamedQuery(name = "ProductoVenta.findByGasto", query = "SELECT p FROM ProductoVenta p WHERE p.gasto = :gasto")
-    , @NamedQuery(name = "ProductoVenta.findByDescripcion", query = "SELECT p FROM ProductoVenta p WHERE p.descripcion = :descripcion")
-    , @NamedQuery(name = "ProductoVenta.findByVisible", query = "SELECT p FROM ProductoVenta p WHERE p.visible = :visible")})
+    @NamedQuery(name = "ProductoVenta.findAll", query = "SELECT p FROM ProductoVenta p"),
+    @NamedQuery(name = "ProductoVenta.findByPCod", query = "SELECT p FROM ProductoVenta p WHERE p.pCod = :pCod"),
+    @NamedQuery(name = "ProductoVenta.findByNombre", query = "SELECT p FROM ProductoVenta p WHERE p.nombre = :nombre"),
+    @NamedQuery(name = "ProductoVenta.findByPrecioVenta", query = "SELECT p FROM ProductoVenta p WHERE p.precioVenta = :precioVenta"),
+    @NamedQuery(name = "ProductoVenta.findByGanancia", query = "SELECT p FROM ProductoVenta p WHERE p.ganancia = :ganancia"),
+    @NamedQuery(name = "ProductoVenta.findByGasto", query = "SELECT p FROM ProductoVenta p WHERE p.gasto = :gasto"),
+    @NamedQuery(name = "ProductoVenta.findByDescripcion", query = "SELECT p FROM ProductoVenta p WHERE p.descripcion = :descripcion"),
+    @NamedQuery(name = "ProductoVenta.findByVisible", query = "SELECT p FROM ProductoVenta p WHERE p.visible = :visible")})
 public class ProductoVenta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,19 +44,14 @@ public class ProductoVenta implements Serializable {
     @Column(name = "p_cod")
     private String pCod;
     @Basic(optional = false)
-    @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
     @Column(name = "precio_venta")
     private float precioVenta;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "ganancia")
     private Float ganancia;
-    @Column(name = "gasto")
     private Float gasto;
-    @Column(name = "descripcion")
     private String descripcion;
-    @Column(name = "visible")
     private Boolean visible;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoVenta")
     private List<ProductoInsumo> productoInsumoList;
@@ -193,7 +187,7 @@ public class ProductoVenta implements Serializable {
 
     @Override
     public String toString() {
-        return  nombre + " ("+ precioVenta + " " +R.coinSuffix +  ")";
+        return "restManager.persistencia.ProductoVenta[ pCod=" + pCod + " ]";
     }
 
 }

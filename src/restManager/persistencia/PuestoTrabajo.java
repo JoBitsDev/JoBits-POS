@@ -11,13 +11,13 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -28,16 +28,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "puesto_trabajo")
 @NamedQueries({
-    @NamedQuery(name = "PuestoTrabajo.findAll", query = "SELECT p FROM PuestoTrabajo p")
-    , @NamedQuery(name = "PuestoTrabajo.findByNombrePuesto", query = "SELECT p FROM PuestoTrabajo p WHERE p.nombrePuesto = :nombrePuesto")
-    , @NamedQuery(name = "PuestoTrabajo.findBySalarioFijo", query = "SELECT p FROM PuestoTrabajo p WHERE p.salarioFijo = :salarioFijo")
-    , @NamedQuery(name = "PuestoTrabajo.findByAreaPago", query = "SELECT p FROM PuestoTrabajo p WHERE p.areaPago = :areaPago")
-    , @NamedQuery(name = "PuestoTrabajo.findByNivelAcceso", query = "SELECT p FROM PuestoTrabajo p WHERE p.nivelAcceso = :nivelAcceso")
-    , @NamedQuery(name = "PuestoTrabajo.findByRequiereAutenticar", query = "SELECT p FROM PuestoTrabajo p WHERE p.requiereAutenticar = :requiereAutenticar")
-    , @NamedQuery(name = "PuestoTrabajo.findByPuestosDisponibles", query = "SELECT p FROM PuestoTrabajo p WHERE p.puestosDisponibles = :puestosDisponibles")
-    , @NamedQuery(name = "PuestoTrabajo.findBySalarioPorcientoVentaTotal", query = "SELECT p FROM PuestoTrabajo p WHERE p.salarioPorcientoVentaTotal = :salarioPorcientoVentaTotal")
-    , @NamedQuery(name = "PuestoTrabajo.findBySalarioPorcientoDeArea", query = "SELECT p FROM PuestoTrabajo p WHERE p.salarioPorcientoDeArea = :salarioPorcientoDeArea")
-    , @NamedQuery(name = "PuestoTrabajo.findByAPartirDe", query = "SELECT p FROM PuestoTrabajo p WHERE p.aPartirDe = :aPartirDe")})
+    @NamedQuery(name = "PuestoTrabajo.findAll", query = "SELECT p FROM PuestoTrabajo p"),
+    @NamedQuery(name = "PuestoTrabajo.findByNombrePuesto", query = "SELECT p FROM PuestoTrabajo p WHERE p.nombrePuesto = :nombrePuesto"),
+    @NamedQuery(name = "PuestoTrabajo.findBySalarioFijo", query = "SELECT p FROM PuestoTrabajo p WHERE p.salarioFijo = :salarioFijo"),
+    @NamedQuery(name = "PuestoTrabajo.findByAreaPago", query = "SELECT p FROM PuestoTrabajo p WHERE p.areaPago = :areaPago"),
+    @NamedQuery(name = "PuestoTrabajo.findByNivelAcceso", query = "SELECT p FROM PuestoTrabajo p WHERE p.nivelAcceso = :nivelAcceso"),
+    @NamedQuery(name = "PuestoTrabajo.findByRequiereAutenticar", query = "SELECT p FROM PuestoTrabajo p WHERE p.requiereAutenticar = :requiereAutenticar"),
+    @NamedQuery(name = "PuestoTrabajo.findByPuestosDisponibles", query = "SELECT p FROM PuestoTrabajo p WHERE p.puestosDisponibles = :puestosDisponibles"),
+    @NamedQuery(name = "PuestoTrabajo.findBySalarioPorcientoVentaTotal", query = "SELECT p FROM PuestoTrabajo p WHERE p.salarioPorcientoVentaTotal = :salarioPorcientoVentaTotal"),
+    @NamedQuery(name = "PuestoTrabajo.findBySalarioPorcientoDeArea", query = "SELECT p FROM PuestoTrabajo p WHERE p.salarioPorcientoDeArea = :salarioPorcientoDeArea"),
+    @NamedQuery(name = "PuestoTrabajo.findByAPartirDe", query = "SELECT p FROM PuestoTrabajo p WHERE p.aPartirDe = :aPartirDe"),
+    @NamedQuery(name = "PuestoTrabajo.findByIdPuesto", query = "SELECT p FROM PuestoTrabajo p WHERE p.idPuesto = :idPuesto")})
 public class PuestoTrabajo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,11 +63,15 @@ public class PuestoTrabajo implements Serializable {
     private Float salarioPorcientoDeArea;
     @Column(name = "a_partir_de")
     private Integer aPartirDe;
+    @Column(name = "id_puesto")
+    private String idPuesto;
     @JoinTable(name = "puesto_trabajo_personal", joinColumns = {
         @JoinColumn(name = "puesto_trabajonombre_puesto", referencedColumnName = "nombre_puesto")}, inverseJoinColumns = {
         @JoinColumn(name = "personalusuario", referencedColumnName = "usuario")})
     @ManyToMany
     private List<Personal> personalList;
+    @OneToMany(mappedBy = "puestoTrabajonombrePuesto")
+    private List<Personal> personalList1;
 
     public PuestoTrabajo() {
     }
@@ -147,12 +152,28 @@ public class PuestoTrabajo implements Serializable {
         this.aPartirDe = aPartirDe;
     }
 
+    public String getIdPuesto() {
+        return idPuesto;
+    }
+
+    public void setIdPuesto(String idPuesto) {
+        this.idPuesto = idPuesto;
+    }
+
     public List<Personal> getPersonalList() {
         return personalList;
     }
 
     public void setPersonalList(List<Personal> personalList) {
         this.personalList = personalList;
+    }
+
+    public List<Personal> getPersonalList1() {
+        return personalList1;
+    }
+
+    public void setPersonalList1(List<Personal> personalList1) {
+        this.personalList1 = personalList1;
     }
 
     @Override

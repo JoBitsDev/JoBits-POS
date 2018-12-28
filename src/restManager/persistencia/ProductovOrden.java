@@ -27,32 +27,30 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "productov_orden")
 @NamedQueries({
-    @NamedQuery(name = "ProductovOrden.findAll", query = "SELECT p FROM ProductovOrden p")
-    , @NamedQuery(name = "ProductovOrden.findByProductoVentapCod", query = "SELECT p FROM ProductovOrden p WHERE p.productovOrdenPK.productoVentapCod = :productoVentapCod")
-    , @NamedQuery(name = "ProductovOrden.findByOrdencodOrden", query = "SELECT p FROM ProductovOrden p WHERE p.productovOrdenPK.ordencodOrden = :ordencodOrden")
-    , @NamedQuery(name = "ProductovOrden.findByCantidad", query = "SELECT p FROM ProductovOrden p WHERE p.cantidad = :cantidad")
-    , @NamedQuery(name = "ProductovOrden.findByEnviadosacocina", query = "SELECT p FROM ProductovOrden p WHERE p.enviadosacocina = :enviadosacocina")
-    , @NamedQuery(name = "ProductovOrden.findByNumeroComensal", query = "SELECT p FROM ProductovOrden p WHERE p.numeroComensal = :numeroComensal")})
+    @NamedQuery(name = "ProductovOrden.findAll", query = "SELECT p FROM ProductovOrden p"),
+    @NamedQuery(name = "ProductovOrden.findByProductoVentapCod", query = "SELECT p FROM ProductovOrden p WHERE p.productovOrdenPK.productoVentapCod = :productoVentapCod"),
+    @NamedQuery(name = "ProductovOrden.findByOrdencodOrden", query = "SELECT p FROM ProductovOrden p WHERE p.productovOrdenPK.ordencodOrden = :ordencodOrden"),
+    @NamedQuery(name = "ProductovOrden.findByCantidad", query = "SELECT p FROM ProductovOrden p WHERE p.cantidad = :cantidad"),
+    @NamedQuery(name = "ProductovOrden.findByEnviadosacocina", query = "SELECT p FROM ProductovOrden p WHERE p.enviadosacocina = :enviadosacocina"),
+    @NamedQuery(name = "ProductovOrden.findByNumeroComensal", query = "SELECT p FROM ProductovOrden p WHERE p.numeroComensal = :numeroComensal")})
 public class ProductovOrden implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ProductovOrdenPK productovOrdenPK;
     @Basic(optional = false)
-    @Column(name = "cantidad")
     private int cantidad;
-    @Column(name = "enviadosacocina")
     private Integer enviadosacocina;
     @Column(name = "numero_comensal")
     private Integer numeroComensal;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "productovOrden")
+    private Nota nota;
     @JoinColumn(name = "ordencod_orden", referencedColumnName = "cod_orden", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Orden orden;
     @JoinColumn(name = "producto_ventap_cod", referencedColumnName = "p_cod", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private ProductoVenta productoVenta;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "productovOrden")
-    private Nota nota;
 
     public ProductovOrden() {
     }
@@ -102,6 +100,14 @@ public class ProductovOrden implements Serializable {
         this.numeroComensal = numeroComensal;
     }
 
+    public Nota getNota() {
+        return nota;
+    }
+
+    public void setNota(Nota nota) {
+        this.nota = nota;
+    }
+
     public Orden getOrden() {
         return orden;
     }
@@ -116,14 +122,6 @@ public class ProductovOrden implements Serializable {
 
     public void setProductoVenta(ProductoVenta productoVenta) {
         this.productoVenta = productoVenta;
-    }
-
-    public Nota getNota() {
-        return nota;
-    }
-
-    public void setNota(Nota nota) {
-        this.nota = nota;
     }
 
     @Override

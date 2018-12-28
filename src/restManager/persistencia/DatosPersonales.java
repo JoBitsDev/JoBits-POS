@@ -28,47 +28,33 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "datos_personales")
 @NamedQueries({
-    @NamedQuery(name = "DatosPersonales.findAll", query = "SELECT d FROM DatosPersonales d")
-    , @NamedQuery(name = "DatosPersonales.findByPersonalusuario", query = "SELECT d FROM DatosPersonales d WHERE d.personalusuario = :personalusuario")
-    , @NamedQuery(name = "DatosPersonales.findByNombre", query = "SELECT d FROM DatosPersonales d WHERE d.nombre = :nombre")
-    , @NamedQuery(name = "DatosPersonales.findByApellidos", query = "SELECT d FROM DatosPersonales d WHERE d.apellidos = :apellidos")
-    , @NamedQuery(name = "DatosPersonales.findByCarnet", query = "SELECT d FROM DatosPersonales d WHERE d.carnet = :carnet")
-    , @NamedQuery(name = "DatosPersonales.findByTelefonoMovil", query = "SELECT d FROM DatosPersonales d WHERE d.telefonoMovil = :telefonoMovil")
-    , @NamedQuery(name = "DatosPersonales.findByTelefonoFijo", query = "SELECT d FROM DatosPersonales d WHERE d.telefonoFijo = :telefonoFijo")
-    , @NamedQuery(name = "DatosPersonales.findByDireccion", query = "SELECT d FROM DatosPersonales d WHERE d.direccion = :direccion")
-    , @NamedQuery(name = "DatosPersonales.findByDescripcion", query = "SELECT d FROM DatosPersonales d WHERE d.descripcion = :descripcion")
-    , @NamedQuery(name = "DatosPersonales.findByFechaNacimineto", query = "SELECT d FROM DatosPersonales d WHERE d.fechaNacimineto = :fechaNacimineto")
-    , @NamedQuery(name = "DatosPersonales.findByEdad", query = "SELECT d FROM DatosPersonales d WHERE d.edad = :edad")
-    , @NamedQuery(name = "DatosPersonales.findBySexo", query = "SELECT d FROM DatosPersonales d WHERE d.sexo = :sexo")})
+    @NamedQuery(name = "DatosPersonales.findAll", query = "SELECT d FROM DatosPersonales d"),
+    @NamedQuery(name = "DatosPersonales.findByPersonalusuario", query = "SELECT d FROM DatosPersonales d WHERE d.personalusuario = :personalusuario"),
+    @NamedQuery(name = "DatosPersonales.findByNombre", query = "SELECT d FROM DatosPersonales d WHERE d.nombre = :nombre"),
+    @NamedQuery(name = "DatosPersonales.findByApellidos", query = "SELECT d FROM DatosPersonales d WHERE d.apellidos = :apellidos"),
+    @NamedQuery(name = "DatosPersonales.findByTelefonoMovil", query = "SELECT d FROM DatosPersonales d WHERE d.telefonoMovil = :telefonoMovil"),
+    @NamedQuery(name = "DatosPersonales.findByTelefonoFijo", query = "SELECT d FROM DatosPersonales d WHERE d.telefonoFijo = :telefonoFijo"),
+    @NamedQuery(name = "DatosPersonales.findByFechaNacimineto", query = "SELECT d FROM DatosPersonales d WHERE d.fechaNacimineto = :fechaNacimineto"),
+    @NamedQuery(name = "DatosPersonales.findByEdad", query = "SELECT d FROM DatosPersonales d WHERE d.edad = :edad"),
+    @NamedQuery(name = "DatosPersonales.findBySexo", query = "SELECT d FROM DatosPersonales d WHERE d.sexo = :sexo")})
 public class DatosPersonales implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "personalusuario")
     private String personalusuario;
     @Basic(optional = false)
-    @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
-    @Column(name = "apellidos")
     private String apellidos;
-    @Column(name = "carnet")
-    private String carnet;
     @Column(name = "telefono_movil")
     private Integer telefonoMovil;
     @Column(name = "telefono_fijo")
     private Integer telefonoFijo;
-    @Column(name = "direccion")
-    private String direccion;
-    @Column(name = "descripcion")
-    private String descripcion;
     @Column(name = "fecha_nacimineto")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimineto;
-    @Column(name = "edad")
     private Integer edad;
-    @Column(name = "sexo")
     private Character sexo;
     @JoinColumn(name = "personalusuario", referencedColumnName = "usuario", insertable = false, updatable = false)
     @OneToOne(optional = false)
@@ -111,14 +97,6 @@ public class DatosPersonales implements Serializable {
         this.apellidos = apellidos;
     }
 
-    public String getCarnet() {
-        return carnet;
-    }
-
-    public void setCarnet(String carnet) {
-        this.carnet = carnet;
-    }
-
     public Integer getTelefonoMovil() {
         return telefonoMovil;
     }
@@ -133,22 +111,6 @@ public class DatosPersonales implements Serializable {
 
     public void setTelefonoFijo(Integer telefonoFijo) {
         this.telefonoFijo = telefonoFijo;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public Date getFechaNacimineto() {

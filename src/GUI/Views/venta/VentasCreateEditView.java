@@ -21,6 +21,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
+import javax.swing.text.html.CSS;
 import org.jdesktop.swingx.JXLabel;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractDialogController;
@@ -100,6 +101,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelRoot.setPreferredSize(new java.awt.Dimension(800, 600));
         jPanelRoot.setLayout(new java.awt.BorderLayout());
 
+        jPanelOptions.setBackground(new java.awt.Color(204, 204, 204));
+        jPanelOptions.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
         jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
@@ -110,6 +113,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         });
         jPanelOptions.add(jideButton1);
 
+        jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
@@ -147,6 +151,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jideLabel1.setText(bundle.getString("label_ordenes_activas")); // NOI18N
         jPanelOrdenesActivas.add(jideLabel1, java.awt.BorderLayout.PAGE_START);
 
+        jXPanelOrdenControl.setBackground(new java.awt.Color(204, 204, 204));
+        jXPanelOrdenControl.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
         jXPanelOrdenControl.setLayout(new java.awt.GridLayout(2, 0));
 
         jButton4.setText(bundle.getString("label_agregar")); // NOI18N

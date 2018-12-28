@@ -7,12 +7,9 @@
 package restManager.persistencia;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * FirstDream
@@ -20,22 +17,21 @@ import javax.persistence.TemporalType;
  * 
  */
 @Embeddable
-public class InsumoTransaccionPK implements Serializable {
+public class InsumoAlmacenPK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "insumocod_insumo")
     private String insumocodInsumo;
     @Basic(optional = false)
-    @Column(name = "transaccionfecha_transaccion")
-    @Temporal(TemporalType.DATE)
-    private Date transaccionfechaTransaccion;
+    @Column(name = "almacencod_almacen")
+    private String almacencodAlmacen;
 
-    public InsumoTransaccionPK() {
+    public InsumoAlmacenPK() {
     }
 
-    public InsumoTransaccionPK(String insumocodInsumo, Date transaccionfechaTransaccion) {
+    public InsumoAlmacenPK(String insumocodInsumo, String almacencodAlmacen) {
         this.insumocodInsumo = insumocodInsumo;
-        this.transaccionfechaTransaccion = transaccionfechaTransaccion;
+        this.almacencodAlmacen = almacencodAlmacen;
     }
 
     public String getInsumocodInsumo() {
@@ -46,33 +42,33 @@ public class InsumoTransaccionPK implements Serializable {
         this.insumocodInsumo = insumocodInsumo;
     }
 
-    public Date getTransaccionfechaTransaccion() {
-        return transaccionfechaTransaccion;
+    public String getAlmacencodAlmacen() {
+        return almacencodAlmacen;
     }
 
-    public void setTransaccionfechaTransaccion(Date transaccionfechaTransaccion) {
-        this.transaccionfechaTransaccion = transaccionfechaTransaccion;
+    public void setAlmacencodAlmacen(String almacencodAlmacen) {
+        this.almacencodAlmacen = almacencodAlmacen;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (insumocodInsumo != null ? insumocodInsumo.hashCode() : 0);
-        hash += (transaccionfechaTransaccion != null ? transaccionfechaTransaccion.hashCode() : 0);
+        hash += (almacencodAlmacen != null ? almacencodAlmacen.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof InsumoTransaccionPK)) {
+        if (!(object instanceof InsumoAlmacenPK)) {
             return false;
         }
-        InsumoTransaccionPK other = (InsumoTransaccionPK) object;
+        InsumoAlmacenPK other = (InsumoAlmacenPK) object;
         if ((this.insumocodInsumo == null && other.insumocodInsumo != null) || (this.insumocodInsumo != null && !this.insumocodInsumo.equals(other.insumocodInsumo))) {
             return false;
         }
-        if ((this.transaccionfechaTransaccion == null && other.transaccionfechaTransaccion != null) || (this.transaccionfechaTransaccion != null && !this.transaccionfechaTransaccion.equals(other.transaccionfechaTransaccion))) {
+        if ((this.almacencodAlmacen == null && other.almacencodAlmacen != null) || (this.almacencodAlmacen != null && !this.almacencodAlmacen.equals(other.almacencodAlmacen))) {
             return false;
         }
         return true;
@@ -80,7 +76,7 @@ public class InsumoTransaccionPK implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.InsumoTransaccionPK[ insumocodInsumo=" + insumocodInsumo + ", transaccionfechaTransaccion=" + transaccionfechaTransaccion + " ]";
+        return "restManager.persistencia.InsumoAlmacenPK[ insumocodInsumo=" + insumocodInsumo + ", almacencodAlmacen=" + almacencodAlmacen + " ]";
     }
 
 }

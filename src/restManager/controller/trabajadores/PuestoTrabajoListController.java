@@ -17,6 +17,7 @@ import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.PuestoTrabajoDAO;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -27,7 +28,6 @@ import restManager.persistencia.models.PuestoTrabajoDAO;
 public class PuestoTrabajoListController extends AbstractListController<PuestoTrabajo> {
 
     //PuestoTrabajoListView getView();
-
     public PuestoTrabajoListController() {
         super(new PuestoTrabajoDAO());
     }

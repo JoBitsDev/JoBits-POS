@@ -26,30 +26,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ipv_registro")
 @NamedQueries({
-    @NamedQuery(name = "IpvRegistro.findAll", query = "SELECT i FROM IpvRegistro i")
-    , @NamedQuery(name = "IpvRegistro.findByIpvinsumocodInsumo", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvinsumocodInsumo = :ipvinsumocodInsumo")
-    , @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocina", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina")
-    , @NamedQuery(name = "IpvRegistro.findByFecha", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.fecha = :fecha")
-    , @NamedQuery(name = "IpvRegistro.findByInicio", query = "SELECT i FROM IpvRegistro i WHERE i.inicio = :inicio")
-    , @NamedQuery(name = "IpvRegistro.findByEntrada", query = "SELECT i FROM IpvRegistro i WHERE i.entrada = :entrada")
-    , @NamedQuery(name = "IpvRegistro.findByDisponible", query = "SELECT i FROM IpvRegistro i WHERE i.disponible = :disponible")
-    , @NamedQuery(name = "IpvRegistro.findByConsumo", query = "SELECT i FROM IpvRegistro i WHERE i.consumo = :consumo")
-    , @NamedQuery(name = "IpvRegistro.findByConsumoReal", query = "SELECT i FROM IpvRegistro i WHERE i.consumoReal = :consumoReal")
-    , @NamedQuery(name = "IpvRegistro.findByFinal1", query = "SELECT i FROM IpvRegistro i WHERE i.final1 = :final1")
-    , @NamedQuery(name = "IpvRegistro.findByFinalReal", query = "SELECT i FROM IpvRegistro i WHERE i.finalReal = :finalReal")})
+    @NamedQuery(name = "IpvRegistro.findAll", query = "SELECT i FROM IpvRegistro i"),
+    @NamedQuery(name = "IpvRegistro.findByIpvinsumocodInsumo", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvinsumocodInsumo = :ipvinsumocodInsumo"),
+    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocina", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina"),
+    @NamedQuery(name = "IpvRegistro.findByFecha", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.fecha = :fecha"),
+    @NamedQuery(name = "IpvRegistro.findByInicio", query = "SELECT i FROM IpvRegistro i WHERE i.inicio = :inicio"),
+    @NamedQuery(name = "IpvRegistro.findByEntrada", query = "SELECT i FROM IpvRegistro i WHERE i.entrada = :entrada"),
+    @NamedQuery(name = "IpvRegistro.findByDisponible", query = "SELECT i FROM IpvRegistro i WHERE i.disponible = :disponible"),
+    @NamedQuery(name = "IpvRegistro.findByConsumo", query = "SELECT i FROM IpvRegistro i WHERE i.consumo = :consumo"),
+    @NamedQuery(name = "IpvRegistro.findByConsumoReal", query = "SELECT i FROM IpvRegistro i WHERE i.consumoReal = :consumoReal"),
+    @NamedQuery(name = "IpvRegistro.findByFinal1", query = "SELECT i FROM IpvRegistro i WHERE i.final1 = :final1"),
+    @NamedQuery(name = "IpvRegistro.findByFinalReal", query = "SELECT i FROM IpvRegistro i WHERE i.finalReal = :finalReal")})
 public class IpvRegistro implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected IpvRegistroPK ipvRegistroPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "inicio")
     private Float inicio;
-    @Column(name = "entrada")
     private Float entrada;
-    @Column(name = "disponible")
     private Float disponible;
-    @Column(name = "consumo")
     private Float consumo;
     @Column(name = "consumo_real")
     private Float consumoReal;
@@ -58,8 +54,8 @@ public class IpvRegistro implements Serializable {
     @Column(name = "final_real")
     private Float finalReal;
     @JoinColumns({
-        @JoinColumn(name = "ipvinsumocod_insumo", referencedColumnName = "insumocod_insumo", insertable = false, updatable = false)
-        , @JoinColumn(name = "ipvcocinacod_cocina", referencedColumnName = "cocinacod_cocina", insertable = false, updatable = false)})
+        @JoinColumn(name = "ipvinsumocod_insumo", referencedColumnName = "insumocod_insumo", insertable = false, updatable = false),
+        @JoinColumn(name = "ipvcocinacod_cocina", referencedColumnName = "cocinacod_cocina", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private Ipv ipv;
 

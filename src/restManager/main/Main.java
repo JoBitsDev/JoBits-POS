@@ -6,10 +6,11 @@
 package restManager.main;
 
 import GUI.FirstTimeDialog;
-import GUI.LogInDialog;
+import GUI.Views.login.LogInDialog;
 import java.util.Arrays;
 import restManager.persistencia.jpa.staticContent;
 import restManager.resources.R;
+import restManager.util.LoadingWindow;
 
 /**
  * FirstDream
@@ -20,8 +21,7 @@ import restManager.resources.R;
 public class Main {
 
     public static void main(String[] args) {
-        Arrays.asList(args);
-        
+        LoadingWindow.show(null);
         staticContent.init(R.PERIRSTENCE_UNIT_NAME);
         boolean newDatabase = checkIfDatabaseIsNew();
 
@@ -30,7 +30,7 @@ public class Main {
         } else {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-                    LogInDialog dialog = new LogInDialog(new javax.swing.JFrame(), true);
+                    LogInDialog dialog = new LogInDialog( null);
                     dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                         @Override
                         public void windowClosing(java.awt.event.WindowEvent e) {

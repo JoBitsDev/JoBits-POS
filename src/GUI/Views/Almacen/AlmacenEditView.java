@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package  GUI.Views.Almacen;
-        
+package GUI.Views.Almacen;
 
 import GUI.Views.AbstractView;
 import java.awt.Dialog;
@@ -13,9 +12,13 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.almacen.AlmacenManageController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
+import restManager.persistencia.InsumoAlmacen;
 import restManager.resources.R;
+import restManager.util.RestManagerAbstractTableModel;
+import restManager.util.comun;
 
 /**
  *
@@ -30,7 +33,7 @@ public class AlmacenEditView extends AbstractView {
      * @param modal
      */
     Almacen a;
-    MyTableModel model;
+    RestManagerAbstractTableModel<InsumoAlmacen> model;
 
     public AlmacenEditView(AbstractDialogController controller, Dialog owner, boolean modal) {
         super(DialogType.NORMAL, controller, owner, modal);
@@ -40,10 +43,77 @@ public class AlmacenEditView extends AbstractView {
 
     @Override
     public void updateView() {
-        model = new MyTableModel(a.getInsumoList(), jXTable1);
+        model = new RestManagerAbstractTableModel<InsumoAlmacen>(a.getInsumoAlmacenList(), jXTable1) {
+            @Override
+            public int getColumnCount() {
+                return 5;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return items.get(rowIndex).getInsumo().getCodInsumo();
+                    case 2:
+                        return items.get(rowIndex).getInsumo().getNombre();
+                    case 1:
+                        return items.get(rowIndex).getInsumo().getUm();
+                    case 3:
+                        return items.get(rowIndex).getCantidad();
+                    case 4:
+                        return items.get(rowIndex).getInsumo().getCostoPorUnidad();
+                    case 5:
+                        return items.get(rowIndex).getCantidad() * items.get(rowIndex).getInsumo().getCostoPorUnidad();
+                    default:
+                        return null;
+
+                }
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0:
+                        return "Codigo";
+                    case 2:
+                        return "Nombre";
+                    case 1:
+                        return "UM";
+                    case 3:
+                        return "En Almacen";
+                    case 4:
+                        return "Costo Unitario (Prom)";
+                    case 5:
+                        return "Valor Total";
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return String.class;
+                    case 1:
+                        return String.class;
+                    case 2:
+                        return String.class;
+                    case 3:
+                        return Float.class;
+                    case 4:
+                        return Float.class;
+                    case 5:
+                        return Float.class;
+                    default:
+                        return null;
+                }
+            }
+
+        };
         jXTable1.setModel(model);
         setTitle(a.getNombre());
-        jXLabelValorTotal.setText(String.format("%.2f", a.getValorMonetario()) + " " + R.coinSuffix);
+        jXLabelValorTotal.setText(comun.setDosLugaresDecimales(a.getValorMonetario()));
 
     }
 
@@ -200,11 +270,12 @@ public class AlmacenEditView extends AbstractView {
     }//GEN-LAST:event_jButtonDarReporteActionPerformed
 
     private void jButtonModificarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarStockActionPerformed
-        ((AlmacenManageController) getController()).modificarStock(model.getObjectAtSelectedRow());
+       throw new DevelopingOperationException();
+        //((AlmacenManageController) getController()).modificarStock(model.getObjectAtSelectedRow());
     }//GEN-LAST:event_jButtonModificarStockActionPerformed
 
     private void jButtonVerFichasEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerFichasEntradaActionPerformed
-        ((AlmacenManageController) getController()).verTransaccionsArchivadas();
+       throw new DevelopingOperationException();// ((AlmacenManageController) getController()).verTransaccionsArchivadas();
     }//GEN-LAST:event_jButtonVerFichasEntradaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -219,84 +290,5 @@ public class AlmacenEditView extends AbstractView {
     private org.jdesktop.swingx.JXPanel jXPanelTabla;
     private org.jdesktop.swingx.JXTable jXTable1;
     // End of variables declaration//GEN-END:variables
-
-    private class MyTableModel extends restManager.util.RestManagerAbstractTableModel<Insumo> {
-
-        public MyTableModel(List<Insumo> items, JTable table) {
-            super(items, table);
-        }
-
-        @Override
-        public int getColumnCount() {
-            return 5;
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            switch (columnIndex) {
-                case 0:
-                    return items.get(rowIndex).getCodInsumo();
-                case 2:
-                    return items.get(rowIndex).getNombre();
-                case 1:
-                    return items.get(rowIndex).getUm();
-                case 3:
-                    return items.get(rowIndex).getCantidadExistente();
-                case 4:
-                    return items.get(rowIndex).getCostoPorUnidad();
-                case 5:
-                    return items.get(rowIndex).getCantidadExistente() * items.get(rowIndex).getCostoPorUnidad();
-                default:
-                    return null;
-
-            }
-        }
-
-        @Override
-        public String getColumnName(int column) {
-            switch (column) {
-                case 0:
-                    return "Codigo";
-                case 2:
-                    return "Nombre";
-                case 1:
-                    return "UM";
-                case 3:
-                    return "En Almacen";
-                case 4:
-                    return "Costo Unitario (Prom)";
-                case 5:
-                    return "Valor Total";
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public Class<?> getColumnClass(int columnIndex) {
-            switch (columnIndex) {
-                case 0:
-                    return String.class;
-                case 1:
-                    return String.class;
-                case 2:
-                    return String.class;
-                case 3:
-                    return Float.class;
-                case 4:
-                    return Float.class;
-                case 5:
-                    return Float.class;
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return false;
-        }
-
-    }
 
 }

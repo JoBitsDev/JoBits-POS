@@ -8,6 +8,7 @@ package restManager.controller.almacen;
 import GUI.Views.Almacen.AlmacenListView;
 import java.awt.Frame;
 import java.awt.Window;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
@@ -25,7 +26,6 @@ import restManager.resources.RegularExpressions;
  *
  */
 public class AlmacenListController extends AbstractListController<Almacen> {
-
 
     private final String PREFIX_FOR_ID = "A-";
 
@@ -72,12 +72,11 @@ public class AlmacenListController extends AbstractListController<Almacen> {
         if (storageName != null) {
             if (storageName.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
                 selected = new Almacen();
-                selected.setTransaccionList(null);
+                selected.setInsumoAlmacenList(new ArrayList<>());
                 selected.setCantidadInsumos(0);
                 selected.setValorMonetario(Float.parseFloat("0"));
                 selected.setCodAlmacen(super.getModel().generateStringCode(PREFIX_FOR_ID));
                 selected.setNombre(storageName);
-                selected.setInsumoList(null);
 
                 create();
                 showSuccessDialog(getView());

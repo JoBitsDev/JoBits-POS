@@ -5,9 +5,7 @@
  */
 package GUI;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import GUI.Views.login.LogInDialog;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JFrame;
@@ -300,7 +298,7 @@ public class FirstTimeDialog extends javax.swing.JDialog {
                 
                 listaTrabajos.add(administrador);
                 
-                Personal adminUser = new Personal(Nombre_Jefe, String.valueOf(pass1), false);
+                Personal adminUser = new Personal(Nombre_Jefe, String.valueOf(pass1));
                 
                 DatosPersonales datosUser = new DatosPersonales(adminUser.getUsuario(), "First", "Dream");
                 

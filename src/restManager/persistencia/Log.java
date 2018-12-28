@@ -8,12 +8,10 @@ package restManager.persistencia;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -21,24 +19,20 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "log")
 @NamedQueries({
-    @NamedQuery(name = "Log.findAll", query = "SELECT l FROM Log l")
-    , @NamedQuery(name = "Log.findById", query = "SELECT l FROM Log l WHERE l.id = :id")
-    , @NamedQuery(name = "Log.findByTipo", query = "SELECT l FROM Log l WHERE l.tipo = :tipo")
-    , @NamedQuery(name = "Log.findByDescripcion", query = "SELECT l FROM Log l WHERE l.descripcion = :descripcion")})
+    @NamedQuery(name = "Log.findAll", query = "SELECT l FROM Log l"),
+    @NamedQuery(name = "Log.findById", query = "SELECT l FROM Log l WHERE l.id = :id"),
+    @NamedQuery(name = "Log.findByTipo", query = "SELECT l FROM Log l WHERE l.tipo = :tipo"),
+    @NamedQuery(name = "Log.findByDescripcion", query = "SELECT l FROM Log l WHERE l.descripcion = :descripcion")})
 public class Log implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "tipo")
     private String tipo;
     @Basic(optional = false)
-    @Column(name = "descripcion")
     private String descripcion;
 
     public Log() {

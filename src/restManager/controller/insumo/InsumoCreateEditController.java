@@ -52,7 +52,6 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
         Insumo ret = new Insumo(super.getModel().generateStringCode(PREFIX_FOR_ID));
         ret.setNombre("");
         ret.setElaborado(false);
-        ret.setCantidadExistente(Float.valueOf("0"));
         ret.setCostoPorUnidad(Float.valueOf("0"));
         ret.setStockEstimation(Float.valueOf("0"));
         ret.setUm(R.UM.U.toString());
