@@ -560,7 +560,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTextDownCONFActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        new LogInDialog(new JFrame(), true);       // TODO add your handling code here:
+        new LogInDialog(null);       // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosed
 
     private void buttonABRIRALMACENActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonABRIRALMACENActionPerformed

@@ -56,8 +56,10 @@ public class LogInDialog extends AbstractView {
         jXLabelUser1 = new org.jdesktop.swingx.JXLabel();
         jPanelCenter = new javax.swing.JPanel();
         jPanelUser = new javax.swing.JPanel();
+        jideLabel1 = new com.jidesoft.swing.JideLabel();
         overlayTextField1 = new com.jidesoft.swing.OverlayTextField();
         jPanelPass = new javax.swing.JPanel();
+        jideLabel2 = new com.jidesoft.swing.JideLabel();
         jPasswordField = new com.jidesoft.swing.OverlayPasswordField();
         jPanel1 = new javax.swing.JPanel();
         jXLabelConnected = new org.jdesktop.swingx.JXLabel();
@@ -75,11 +77,12 @@ public class LogInDialog extends AbstractView {
         setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(452, 239));
         setResizable(false);
+        getContentPane().setLayout(new java.awt.BorderLayout(20, 0));
 
         jXLabelUser1.setBackground(new java.awt.Color(153, 153, 153));
         jXLabelUser1.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
         jXLabelUser1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jXLabelUser1.setText("Restaurant Manager V1.01\n");
+        jXLabelUser1.setText("Bienvenido a\nRestaurant Manager\n");
         jXLabelUser1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         getContentPane().add(jXLabelUser1, java.awt.BorderLayout.NORTH);
 
@@ -89,6 +92,9 @@ public class LogInDialog extends AbstractView {
 
         jPanelUser.setOpaque(false);
 
+        jideLabel1.setText("jideLabel1");
+        jPanelUser.add(jideLabel1);
+
         overlayTextField1.setMinimumSize(new java.awt.Dimension(200, 26));
         overlayTextField1.setPreferredSize(new java.awt.Dimension(257, 22));
         jPanelUser.add(overlayTextField1);
@@ -96,6 +102,9 @@ public class LogInDialog extends AbstractView {
         jPanelCenter.add(jPanelUser);
 
         jPanelPass.setOpaque(false);
+
+        jideLabel2.setText("jideLabel2");
+        jPanelPass.add(jideLabel2);
 
         jPasswordField.setToolTipText("Contraseña");
         jPasswordField.setMaximumSize(new java.awt.Dimension(2147483647, 22));
@@ -188,6 +197,8 @@ public class LogInDialog extends AbstractView {
     private org.jdesktop.swingx.JXLabel jXLabelConnected;
     private org.jdesktop.swingx.JXLabel jXLabelUser1;
     private com.jidesoft.swing.JideButton jideButtonConfig;
+    private com.jidesoft.swing.JideLabel jideLabel1;
+    private com.jidesoft.swing.JideLabel jideLabel2;
     private com.jidesoft.swing.OverlayTextField overlayTextField1;
     // End of variables declaration//GEN-END:variables
 

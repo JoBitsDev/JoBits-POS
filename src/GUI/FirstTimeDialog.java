@@ -322,7 +322,7 @@ public class FirstTimeDialog extends javax.swing.JDialog {
 
             JOptionPane.showMessageDialog(null, "Se a creado la cuenta exitosamente.");
             dispose();
-            new LogInDialog(new JFrame(), true);
+            new LogInDialog(null);
            
         }
     }
