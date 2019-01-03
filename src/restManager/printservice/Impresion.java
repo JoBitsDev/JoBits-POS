@@ -502,6 +502,7 @@ public class Impresion {
                 t.alignLeft();
 
                 ordenSinPlatos = false;
+                x.setEnviadosacocina(x.getCantidad());
             }
             try {
                 staticContent.productovOrdenJpa.edit(x);
@@ -510,7 +511,7 @@ public class Impresion {
             }
         }
 
-        addFocusedMessage(t, CANCELACION);
+        addFocusedMessage(t,"");
 
         t.feed((byte) 3);
         t.finit();
@@ -579,6 +580,7 @@ public class Impresion {
                 t.alignLeft();
 
                 ordenSinPlatos = false;
+                x.setEnviadosacocina(x.getCantidad());
             }
             try {
 
@@ -686,6 +688,7 @@ public class Impresion {
                     Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 ordenSinPlatos = false;
+                x.setEnviadosacocina(x.getCantidad());
             } 
         }
 
@@ -1178,10 +1181,11 @@ public class Impresion {
                     Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 ordenSinPlatos = false;
+                x.setEnviadosacocina(x.getCantidad());
             }
         }
 
-        addFocusedMessage(t, CANCELACION);
+        addFocusedMessage(t,"");
         t.addLineSeperator();
         t.alignCenter();
         t.newLine();
@@ -1198,15 +1202,14 @@ public class Impresion {
 
     private void addFocusedMessage(Ticket t, String sms) {
         t.addLineSeperator();
+        t.newLine();
         t.addLineSeperator();
-        t.addLineSeperator();
+        t.newLine();
         t.alignCenter();
-        t.underLine(2);
         t.setText(sms);
-        t.underLine(0);
+        t.newLine();
         t.addLineSeperator();
-        t.addLineSeperator();
-        t.addLineSeperator();
+        t.newLine();
     }
 
     //
