@@ -865,6 +865,8 @@ public class PedidoCrearEditar extends javax.swing.JDialog {
                 } else {
                     comun.removeFromTable(jTablePedido, i);
                     try {
+                        o.getProductovOrdenList().get(i).setCantidad(0);
+                        new Impresion().printCancelationTicket(o);
                         staticContent.productovOrdenJpa.destroy(o.getProductovOrdenList().get(i).getProductovOrdenPK());
                         o.getProductovOrdenList().remove(i);
                         staticContent.ordenJPA.edit(o);
