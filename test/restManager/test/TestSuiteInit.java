@@ -25,7 +25,7 @@ import restManager.resources.R;
  * @author Jorge
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({PuestoTrabajoListControllerTest.class})
+@Suite.SuiteClasses({VentaListaTest.class})
 public class TestSuiteInit {
 
     @BeforeClass
