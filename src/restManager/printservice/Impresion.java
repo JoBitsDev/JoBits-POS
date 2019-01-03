@@ -78,7 +78,8 @@ public class Impresion {
             SYNC = "Sale con: ",
             PREVIEW = "(Cierre parcial de cuenta)",
             PORCIENTO = "% : ",
-            Z = "Impresión de Z";
+            Z = "Impresión de Z",
+            CANCELACION = "CANCELACION";
 
     private String PIE = "Vuelva Pronto",
             MONEDA = "";
@@ -160,7 +161,7 @@ public class Impresion {
     //
     //Metodos Publicos
     //
-    public void print(Orden o, boolean preview)  {
+    public void print(Orden o, boolean preview) {
 
         float total;
 
@@ -188,7 +189,7 @@ public class Impresion {
         float totalPrint = subTotalPrint;
         t.alignRight();
         t.newLine();
-       // t.setText(SUBTOTAL + subTotalPrint + MONEDA);
+        // t.setText(SUBTOTAL + subTotalPrint + MONEDA);
         if (o.getPorciento() != 0) {
             t.newLine();
             t.setText("+ " + o.getPorciento() + PORCIENTO + sumaPorciento + MONEDA);
@@ -217,9 +218,8 @@ public class Impresion {
      * @return
      * @deprecated usar <code>printKitchen(Orden o,Cocina c,String sync)</code>
      */
-    public Orden printKitchen(Orden o)  {
-
-       return printKitchenForced(printKitchen(o, staticContent.cocinaJPA.findCocina("C-2"), ""));
+    public Orden printKitchen(Orden o) {
+        return printKitchenForced(printKitchen(printCancelationTicket(o), staticContent.cocinaJPA.findCocina("C-2"), ""));
 //        Ticket t = new Ticket();
 //
 //        addHeader(t);
@@ -344,6 +344,193 @@ public class Impresion {
 //        return o;
     }
 
+    public Orden printCancelationTicket(Orden o) {
+
+        return printCancelationKitchenForced(printCancelationKitchen(o, staticContent.cocinaJPA.findCocina("C-2")));
+//        Ticket t = new Ticket();
+//
+//        addHeader(t);
+//
+//        addMetaData(t, o, new Date());
+//
+//        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
+//        for (ProductovOrden x : o.getProductovOrdenList()) {
+//            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
+//                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
+//            }
+//        }
+//        if (cocinasExistentesEnLaOrden.size() > 1) {
+//            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
+//                String sync = SYNC;
+//                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
+//                    if (i == j) {
+//                        continue;
+//                    }
+//                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
+//                }
+//                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+//            }
+//        } else {
+//            if (cocinasExistentesEnLaOrden.size() > 0) {
+//                printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+//            }
+//
+//        }
+//
+//        cleanAndPrintRAM();
+//
+//        return o;
+//    }
+//
+//    public Orden printKitchenForced(Orden o) throws PrintException {
+//
+//        Ticket t = new Ticket();
+//        boolean ordenSinPlatos = true;
+//
+//        addHeader(t);
+//
+//        addMetaData(t, o, new Date());
+//
+//        ArrayList<String> entrantes = new ArrayList<>();
+//        entrantes.add("Entrantes Calientes");
+//        entrantes.add("Entrantes Frios");
+//
+//        ArrayList<ProductovOrden> items = new ArrayList<>(o.getProductovOrdenList());
+//        items.sort((ProductovOrden o1, ProductovOrden o2) -> {
+//            ArrayList<String> entrantes1 = new ArrayList<>();
+//            entrantes1.add("Entrantes Calientes");
+//            entrantes1.add("Entrantes Frios");
+//            if (entrantes1.contains(o1.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion())) {
+//                return -1;
+//            }
+//            if (entrantes1.contains(o2.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion())) {
+//                return 1;
+//            }
+//            if (o1.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().matches("Postres")) {
+//                return 1;
+//            }
+//            if (o2.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().matches("Postres")) {
+//                return -1;
+//            }
+//            return 0;
+//        });
+//
+//        t.alignLeft();
+//
+//        boolean entrante = false;
+//        boolean postre = false;
+//
+//        for (ProductovOrden x : items) {
+//            if (x.getEnviadosacocina() < x.getCantidad()) {
+//                if (!entrantes.contains(x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion()) && !entrante) {
+//                    t.addLineSeperator();
+//                    t.newLine();
+//                    entrante = true;
+//                }
+//                if (x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().equals("Postres") && !postre) {
+//                    t.addLineSeperator();
+//                    t.newLine();
+//                    postre = true;
+//                }
+//                if (x.getNota() != null) {
+//                    t.alignCenter();
+//                    t.emphasized(true);
+//                    t.setText(x.getNota().getDescripcion().replace('%', ' '));
+//                    t.newLine();
+//                    t.alignLeft();
+//                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getProductoVenta().getNombre());
+//                } else {
+//                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
+//                }
+//                t.newLine();
+//                t.alignRight();
+//                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
+//                t.newLine();
+//                t.alignLeft();
+//                x.setEnviadosacocina(x.getCantidad());
+//                try {
+//                    staticContent.productovOrdenJpa.edit(x);
+//                } catch (Exception ex) {
+//                    Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                ordenSinPlatos = false;
+//            }
+//        }
+//
+//        t.addLineSeperator();
+//        t.alignCenter();
+//        t.newLine();
+//        t.feed((byte) 3);
+//        t.finit();
+//
+//        if (!ordenSinPlatos) {
+//            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_KITCHEN_PRINTER_LOCATION);
+//        }
+//        cleanAndPrintRAM();
+//
+//        return o;
+    }
+
+    public Orden printCancelationKitchen(Orden o, Cocina c) {
+        boolean ordenSinPlatos = true;
+
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        t.emphasized(true);
+        t.setText(COCINA + c.getNombreCocina());
+        t.emphasized(false);
+        t.newLine();
+
+        addMetaData(t, o, new Date());
+
+        addFocusedMessage(t, CANCELACION);
+
+        t.alignLeft();
+
+        for (ProductovOrden x : o.getProductovOrdenList()) {
+            log(o, x);
+
+            if (x.getEnviadosacocina() > x.getCantidad()
+                    && x.getProductoVenta().getCocinacodCocina().equals(c)) {
+                t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
+                t.newLine();
+                t.alignRight();
+                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
+                t.newLine();
+                t.alignLeft();
+
+                ordenSinPlatos = false;
+            }
+            try {
+                staticContent.productovOrdenJpa.edit(x);
+            } catch (Exception ex) {
+                Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        addFocusedMessage(t, CANCELACION);
+
+        t.feed((byte) 3);
+        t.finit();
+
+        if (!ordenSinPlatos) {
+            for (int i = 0; i < cantidadCopias; i++) {
+                RAM.add(new CopiaTicket(c.getNombreCocina(), t.finalCommandSet().getBytes()));
+            }
+
+            feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina());
+
+        } else {
+            System.out.println("No existen platos de la cocina "
+                    + c.getNombreCocina() + " de la orden " + o.getCodOrden() + " para cancelar");
+            t.resetAll();
+        }
+
+        return o;
+    }
+
     /**
      * imprime una orden por la impresora predeterminada hacia la cocina pasada
      * por parametro
@@ -371,19 +558,8 @@ public class Impresion {
         t.alignLeft();
 
         for (ProductovOrden x : o.getProductovOrdenList()) {
+            log(o, x);
 
-            if (x.getEnviadosacocina() > x.getCantidad()) {
-                RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.BORRAR,
-                        x.getEnviadosacocina() > 0 && o.getHoraTerminada() != null ? Level.SEVERE : Level.WARNING,
-                        o, x.getProductoVenta(),
-                        x.getEnviadosacocina() - x.getCantidad());
-            } else {
-                if (x.getEnviadosacocina() < x.getCantidad()) {
-                    RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR,
-                            Level.FINER, o.getCodOrden(), x.getProductoVenta(), x.getCantidad() - x.getEnviadosacocina());
-
-                }
-            }
             if (x.getEnviadosacocina() < x.getCantidad()
                     && x.getProductoVenta().getCocinacodCocina().equals(c)) {
                 if (x.getNota() != null) {
@@ -402,18 +578,14 @@ public class Impresion {
                 t.newLine();
                 t.alignLeft();
 
-             
                 ordenSinPlatos = false;
             }
-            //TODO: falta hacer el ticket d cancelar ordenes
-            
-               x.setEnviadosacocina(x.getCantidad());
-                try {
+            try {
 
-                    staticContent.productovOrdenJpa.edit(x);
-                } catch (Exception ex) {
-                    Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                staticContent.productovOrdenJpa.edit(x);
+            } catch (Exception ex) {
+                Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         t.addLineSeperator();
@@ -441,9 +613,7 @@ public class Impresion {
         return o;
     }
 
-    
-    public Orden printKitchenForced(Orden o)  {
-
+    public Orden printKitchenForced(Orden o) {
         Ticket t = new Ticket();
         boolean ordenSinPlatos = true;
 
@@ -481,7 +651,9 @@ public class Impresion {
         boolean postre = false;
 
         for (ProductovOrden x : items) {
-            if (x.getEnviadosacocina() < x.getCantidad()) {
+            log(o, x);
+
+            if (x.getCantidad() > x.getEnviadosacocina()) {
                 if (!entrantes.contains(x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion()) && !entrante) {
                     t.addLineSeperator();
                     t.newLine();
@@ -514,7 +686,7 @@ public class Impresion {
                     Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 ordenSinPlatos = false;
-            }
+            } 
         }
 
         t.addLineSeperator();
@@ -530,7 +702,7 @@ public class Impresion {
 
         return o;
     }
-   
+
     /**
      * Imprime en un ticket con un resumen de las ventas que un camarero(a) ha
      * realizado en una(s) fecha determinadas. Pre-Condiciones:
@@ -782,7 +954,7 @@ public class Impresion {
     }
 
     private void sendToPrinter(byte[] byteData, String printLocation) {
-            feedPrinter(byteData, printLocation);
+        feedPrinter(byteData, printLocation);
     }
 
     private void addDrawerKick(Ticket t) {
@@ -914,6 +1086,127 @@ public class Impresion {
             sendToPrinter(RAM.get(0).getImpresionData(), RAM.get(0).getNombreImpresora());
             RAM.remove(0);
         }
+    }
+
+    private void log(Orden o, ProductovOrden x) {
+        if (x.getEnviadosacocina() > x.getCantidad()) {
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.BORRAR,
+                    x.getEnviadosacocina() > 0 && o.getHoraTerminada() != null ? Level.SEVERE : Level.WARNING,
+                    o, x.getProductoVenta(),
+                    x.getEnviadosacocina() - x.getCantidad());
+        } else {
+            if (x.getEnviadosacocina() < x.getCantidad()) {
+                RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR,
+                        Level.FINER, o.getCodOrden(), x.getProductoVenta(), x.getCantidad() - x.getEnviadosacocina());
+            }
+        }
+    }
+
+    private Orden printCancelationKitchenForced(Orden o) {
+
+        ArrayList<String> entrantes = new ArrayList<>();
+        entrantes.add("Entrantes Calientes");
+        entrantes.add("Entrantes Frios");
+
+        ArrayList<ProductovOrden> items = new ArrayList<>(o.getProductovOrdenList());
+        items.sort((ProductovOrden o1, ProductovOrden o2) -> {
+            ArrayList<String> entrantes1 = new ArrayList<>();
+            entrantes1.add("Entrantes Calientes");
+            entrantes1.add("Entrantes Frios");
+            if (entrantes1.contains(o1.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion())) {
+                return -1;
+            }
+            if (entrantes1.contains(o2.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion())) {
+                return 1;
+            }
+            if (o1.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().matches("Postres")) {
+                return 1;
+            }
+            if (o2.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().matches("Postres")) {
+                return -1;
+            }
+            return 0;
+        });
+
+        Ticket t = new Ticket();
+        boolean ordenSinPlatos = true;
+
+        addHeader(t);
+
+        addMetaData(t, o, new Date());
+
+        addFocusedMessage(t, CANCELACION);
+
+        t.alignLeft();
+
+        boolean entrante = false;
+        boolean postre = false;
+
+        for (ProductovOrden x : items) {
+            log(o, x);
+
+            if (x.getCantidad() < x.getEnviadosacocina()) {
+                if (!entrantes.contains(x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion()) && !entrante) {
+                    t.addLineSeperator();
+                    t.newLine();
+                    entrante = true;
+                }
+                if (x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().equals("Postres") && !postre) {
+                    t.addLineSeperator();
+                    t.newLine();
+                    postre = true;
+                }
+                if (x.getNota() != null) {
+                    t.alignCenter();
+                    t.emphasized(true);
+                    t.setText(x.getNota().getDescripcion().replace('%', ' '));
+                    t.newLine();
+                    t.alignLeft();
+                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getProductoVenta().getNombre());
+                } else {
+                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
+                }
+                t.newLine();
+                t.alignRight();
+                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
+                t.newLine();
+                t.alignLeft();
+                x.setEnviadosacocina(x.getCantidad());
+                try {
+                    staticContent.productovOrdenJpa.edit(x);
+                } catch (Exception ex) {
+                    Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                ordenSinPlatos = false;
+            }
+        }
+
+        addFocusedMessage(t, CANCELACION);
+        t.addLineSeperator();
+        t.alignCenter();
+        t.newLine();
+        t.feed((byte) 3);
+        t.finit();
+
+        if (!ordenSinPlatos) {
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_KITCHEN_PRINTER_LOCATION);
+        }
+        cleanAndPrintRAM();
+
+        return o;
+    }
+
+    private void addFocusedMessage(Ticket t, String sms) {
+        t.addLineSeperator();
+        t.addLineSeperator();
+        t.addLineSeperator();
+        t.alignCenter();
+        t.underLine(2);
+        t.setText(sms);
+        t.underLine(0);
+        t.addLineSeperator();
+        t.addLineSeperator();
+        t.addLineSeperator();
     }
 
     //
