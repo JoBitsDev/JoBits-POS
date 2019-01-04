@@ -32,7 +32,7 @@ public class TestSuiteInit {
     public static void setUpClass() throws Exception {
         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
         R.coinSuffix = " CUC";
-        R.loggedUser = new PersonalDAO().find("admin");
+        R.loggedUser = PersonalDAO.getInstance().find("admin");
         staticContent.init(R.PERIRSTENCE_UNIT_NAME);
     }
 

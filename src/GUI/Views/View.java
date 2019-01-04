@@ -45,6 +45,10 @@ public interface View {
          */
         INPUT_LARGE,
         /**
+         * Full screen size
+         */
+        FULL_SCREEN,
+        /**
          * Defined by the user
          */
         DEFINED

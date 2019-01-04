@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import GUI.Views.login.LogInDialog;
+import GUI.Views.login.LogInDialogView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JFrame;
@@ -322,7 +322,7 @@ public class FirstTimeDialog extends javax.swing.JDialog {
 
             JOptionPane.showMessageDialog(null, "Se a creado la cuenta exitosamente.");
             dispose();
-            new LogInDialog(null);
+            new LogInDialogView(null);
            
         }
     }

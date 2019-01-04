@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JDialog;
@@ -193,6 +194,8 @@ public abstract class AbstractView extends JDialog implements  View{
                 return new Dimension(590, 700);
             case INPUT:
                 return new Dimension(WIDTH, HEIGHT);
+            case FULL_SCREEN:
+                return new Dimension(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize());
             default:
                 return super.getMinimumSize();
         }
