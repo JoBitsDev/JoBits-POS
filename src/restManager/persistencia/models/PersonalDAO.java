@@ -3,21 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia.models;
 
-import restManager.persistencia.Personal;
 
+import restManager.persistencia.Personal;
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-public class PersonalDAO extends AbstractModel<Personal>{
+public class PersonalDAO extends AbstractModel<Personal> {
 
-    public PersonalDAO() {
+    private static PersonalDAO INSTANCE = null;
+
+    private PersonalDAO() {
         super(Personal.class);
     }
 
+    public static PersonalDAO getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new PersonalDAO();
+            return INSTANCE;
+        } else {
+            return INSTANCE;
+        }
+    }
+
+   
     
 }
