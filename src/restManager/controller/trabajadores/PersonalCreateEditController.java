@@ -26,19 +26,19 @@ import restManager.persistencia.models.PuestoTrabajoDAO;
 public class PersonalCreateEditController extends AbstractDetailController<Personal>{
 
     public PersonalCreateEditController() {
-        super(new PersonalDAO());
+        super(PersonalDAO.getInstance());
     }
 
     public PersonalCreateEditController(Personal instance) {
-        super(instance, new PersonalDAO());
+        super(instance, PersonalDAO.getInstance());
     }
 
     public PersonalCreateEditController(Window parent) {
-        super(parent, new PersonalDAO());
+        super(parent, PersonalDAO.getInstance());
     }
 
     public PersonalCreateEditController(Personal instance, Window parent) {
-        super(instance, parent, new PersonalDAO());
+        super(instance, parent, PersonalDAO.getInstance());
     }
 
     /**

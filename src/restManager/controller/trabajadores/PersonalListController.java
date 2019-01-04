@@ -25,7 +25,7 @@ import restManager.persistencia.models.PersonalDAO;
 public class PersonalListController extends AbstractListController<Personal> {
 
     public PersonalListController() {
-        super(new PersonalDAO());
+        super(PersonalDAO.getInstance());
     }
 
     public PersonalListController(Frame frame) {
