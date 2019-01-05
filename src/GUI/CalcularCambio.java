@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import GUI.Main;
+import GUI.Views.login.Main;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JOptionPane;
 import restManager.persistencia.Orden;

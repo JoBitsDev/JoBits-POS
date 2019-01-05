@@ -7,6 +7,7 @@ package GUI.Views.productoventa;
 
 import GUI.Views.AbstractListView;
 import com.jidesoft.swing.JideButton;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -27,21 +28,16 @@ import restManager.resources.R;
  */
 public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
 
-    public ProductoVentaListView(AbstractListController<ProductoVenta> controller, Frame owner, boolean modal) {
+    public ProductoVentaListView(AbstractListController<ProductoVenta> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
 
         JideButton jideButton1 = new com.jidesoft.swing.JideButton();
-        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/imp.png"))); // NOI18N
+        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jideButton1.setToolTipText("Imprimir");
         jideButton1.addActionListener((ActionEvent e) -> {
             getController().printProductoVenta(model.getObjectAtSelectedRow());
         });
         super.getjXPanelControles().add(jideButton1);
-        
-        if (R.loggedUser.getPuestoTrabajoList().get(0).getNivelAcceso() < 3) {//TODO: esto va en el controlador
-            super.remove(getjXPanelControles());
-        }
-
     }
 
     @Override

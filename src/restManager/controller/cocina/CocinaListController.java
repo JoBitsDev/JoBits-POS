@@ -7,6 +7,7 @@
 package restManager.controller.cocina;
 
 import GUI.Views.cocina.CocinaListView;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class CocinaListController extends AbstractListController<Cocina>{
         super(new CocinaDAO());
     }
 
-    public CocinaListController(Frame parent) {
+    public CocinaListController(Window parent) {
         super(new CocinaDAO());
         constructView(parent);
     }
@@ -84,7 +85,7 @@ public class CocinaListController extends AbstractListController<Cocina>{
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new CocinaListView(this,(JFrame) parent, true));
+        setView(new CocinaListView(this,(Dialog) parent, true));
         getView().updateView();
         getView().setVisible(true);
     }

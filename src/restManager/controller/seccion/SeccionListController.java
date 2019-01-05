@@ -6,6 +6,7 @@
 package restManager.controller.seccion;
 
 import GUI.Views.seccion.SeccionListView;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class SeccionListController extends AbstractListController<Seccion> {
         super(new SeccionDAO());
     }
 
-    public SeccionListController(Frame parent) {
+    public SeccionListController(Window parent) {
         super(new SeccionDAO());
         constructView(parent);
     }
@@ -82,7 +83,7 @@ public class SeccionListController extends AbstractListController<Seccion> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new SeccionListView(this, (Frame) parent, true));
+        setView(new SeccionListView(this, (Dialog) parent, true));
         getView().updateView();
         getView().setVisible(true);
     }

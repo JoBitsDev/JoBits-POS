@@ -7,7 +7,7 @@ package GUI.Views.venta;
 
 import GUI.CalcularCambio;
 import GUI.IPVEstado;
-import GUI.Main;
+import GUI.Views.login.Main;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Collections;

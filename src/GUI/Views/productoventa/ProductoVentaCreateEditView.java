@@ -169,7 +169,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 15, 5));
 
-        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/imp.png"))); // NOI18N
+        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jideButton1.setToolTipText("Imprimir");
         jideButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

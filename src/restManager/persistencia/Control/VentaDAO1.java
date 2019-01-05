@@ -1,6 +1,6 @@
 package restManager.persistencia.Control;
 
-import GUI.Main;
+import GUI.Views.login.Main;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

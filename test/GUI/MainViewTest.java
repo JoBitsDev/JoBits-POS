@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import GUI.Views.login.MainView;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

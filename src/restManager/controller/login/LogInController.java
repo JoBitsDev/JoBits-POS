@@ -6,8 +6,8 @@
 package restManager.controller.login;
 
 import GUI.EsquemaSalon;
-import GUI.Main;
-import GUI.MainView;
+import GUI.Views.login.Main;
+import GUI.Views.login.MainView;
 import GUI.Views.login.LogInDialogView;
 import java.awt.Container;
 import java.util.Arrays;
@@ -15,9 +15,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Personal;
 import restManager.persistencia.jpa.staticContent;
 import restManager.persistencia.models.AbstractModel;
@@ -55,14 +57,30 @@ public class LogInController extends AbstractDialogController<Personal> {
 
     private boolean connect() {
         LoadingWindow.show(getView());
-        staticContent.init(R.PERIRSTENCE_UNIT_NAME);
-        LoadingWindow.hide();
+        SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
+            @Override
+            protected String doInBackground() throws Exception {
+                getView().setEnabled(false);
+                staticContent.init(R.PERIRSTENCE_UNIT_NAME);
+                return "gg";
+            }
+
+            @Override
+            protected void done() {
+                
+                    getView().updateView();
+                    getView().setEnabled(true);
+                    LoadingWindow.hide();
+          
+            }
+        };
+        worker.execute();
         return staticContent.isCONECTADO();
     }
 
     public void autenticar(String user, char[] password) {
         LoadingWindow.show(getView());
-        
+
         SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
             Personal p;
 
@@ -91,8 +109,8 @@ public class LogInController extends AbstractDialogController<Personal> {
                     status = get();
                     LoadingWindow.hide();
                     if (status.equals("Autenticación correcta")) {
-                        showSuccessDialog(getView(),"Bienvenido");
-                        new MainView(null).setVisible(true);
+                        showSuccessDialog(getView(), "Bienvenido");
+                        MainController controller = new MainController(p, getView());
                     } else {
                         showErrorDialog(getView(), status);
                     }
@@ -103,8 +121,12 @@ public class LogInController extends AbstractDialogController<Personal> {
                 }
             }
         };
-       
+
         worker.execute();
+    }
+
+    public boolean isConnected() {
+        return staticContent.isCONECTADO();
     }
 
 }

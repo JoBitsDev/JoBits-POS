@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia;
 
 import java.io.Serializable;
@@ -19,11 +18,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import restManager.resources.R;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "producto_venta")
@@ -187,7 +188,7 @@ public class ProductoVenta implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.ProductoVenta[ pCod=" + pCod + " ]";
+        return nombre + " (" + precioVenta + R.coinSuffix + " )";
     }
 
 }

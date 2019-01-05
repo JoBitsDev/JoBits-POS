@@ -61,6 +61,7 @@ public class LoadingWindow {
 
     /**
      * show the current window
+     * @param parent
      */
     public static void show(Component parent) {
         LOADING_WINDOW.setLocationRelativeTo(parent);

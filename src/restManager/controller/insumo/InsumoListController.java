@@ -6,6 +6,7 @@
 package restManager.controller.insumo;
 
 import GUI.Views.Insumo.InsumoListView;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
 import restManager.controller.AbstractDetailController;
@@ -38,7 +39,7 @@ public class InsumoListController extends AbstractListController<Insumo> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new InsumoListView(this, (Frame) parent, true));
+        setView(new InsumoListView(this, (Dialog) parent, true));
         getView().updateView();
         getView().setVisible(true);
     }

@@ -5,6 +5,7 @@
  */
 package restManager.exceptions;
 
+import java.awt.Component;
 import restManager.resources.R;
 
 /**
@@ -15,14 +16,23 @@ import restManager.resources.R;
  */
 public class DevelopingOperationException extends RestManagerRuntimeException {
 
+    private final String EXCEPTION_MESSAGE = R.RESOURCE_BUNDLE.getString("exception_developing");
+    
     public DevelopingOperationException() {
         super();
-        showMessage(R.RESOURCE_BUNDLE.getString("exception_developing"));
+        showMessage(EXCEPTION_MESSAGE);
     }
 
     public DevelopingOperationException(String message) {
         super(message);
         showMessage(message);
     }
+
+    public DevelopingOperationException(Component throwedFrom) {
+        super(throwedFrom);
+        showMessage(EXCEPTION_MESSAGE);
+    }
+    
+    
 
 }

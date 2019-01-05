@@ -1,29 +1,11 @@
 package GUI.Views.login;
 
-import GUI.EsquemaSalon;
-import GUI.Main;
+
 import GUI.Views.AbstractView;
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.geom.RoundRectangle2D;
-
-import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
 import restManager.controller.AbstractDialogController;
-import restManager.controller.Controller;
 import restManager.controller.login.LogInController;
-import restManager.exceptions.DevelopingOperationException;
-
-import restManager.persistencia.Personal;
-import restManager.persistencia.jpa.staticContent;
-import restManager.resources.R;
 import restManager.util.ComponentMover;
-import restManager.util.LoadingWindow;
 
 /**
  *
@@ -44,7 +26,6 @@ public class LogInDialogView extends AbstractView {
         actualizarLabelConexion(getController().connectRemote());
         buttonGroup1.add(jRadioButtonLocal);
         buttonGroup1.add(jRadioButtonRemoto);
-        LoadingWindow.hide();
 
     }
 
@@ -105,8 +86,8 @@ public class LogInDialogView extends AbstractView {
         jPanelCenter.setLayout(new javax.swing.BoxLayout(jPanelCenter, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelUser.setOpaque(false);
-        jPanelUser.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
+        jideLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/usuario.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jideLabel1.setText(bundle.getString("label_usuario")); // NOI18N
         jPanelUser.add(jideLabel1);
@@ -118,8 +99,8 @@ public class LogInDialogView extends AbstractView {
         jPanelCenter.add(jPanelUser);
 
         jPanelPass.setOpaque(false);
-        jPanelPass.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
+        jideLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/contraseña.png"))); // NOI18N
         jideLabel2.setText(bundle.getString("label_contrasena")); // NOI18N
         jPanelPass.add(jideLabel2);
 
@@ -178,7 +159,7 @@ public class LogInDialogView extends AbstractView {
         jPanelOptions.setMaximumSize(new java.awt.Dimension(272, 44));
         jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
 
-        jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
+        jButtonCancelar.setText(bundle.getString("label_salir")); // NOI18N
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarActionPerformed(evt);
@@ -220,6 +201,7 @@ public class LogInDialogView extends AbstractView {
     private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed
         if(jButtonAutenticar.isEnabled()){
             getController().autenticar(overlayTextField1.getText(), jPasswordField.getPassword());
+            jPasswordField.setText("");
         }
     }//GEN-LAST:event_jPasswordFieldActionPerformed
 
@@ -263,7 +245,7 @@ public class LogInDialogView extends AbstractView {
 
     @Override
     public void updateView() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        actualizarLabelConexion(getController().isConnected());
     }
 
 }

@@ -36,6 +36,11 @@ public class RestManagerRuntimeException extends RuntimeException {
         this.throwedFrom = throwedFrom;
     }
 
+    public RestManagerRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
+
+    
     protected void showMessage(String message) {
         JOptionPane.showMessageDialog(throwedFrom, message,
                 R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE,

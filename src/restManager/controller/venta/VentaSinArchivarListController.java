@@ -22,7 +22,7 @@ import restManager.persistencia.models.VentaDAO;
  */
 public class VentaSinArchivarListController extends AbstractListController<Venta>{
 
-    public VentaSinArchivarListController(Frame owner) {
+    public VentaSinArchivarListController(Window owner) {
         super(VentaDAO.getInstance());
     }
 

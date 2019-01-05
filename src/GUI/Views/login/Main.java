@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package GUI.Views.login;
 
+import GUI.EsquemaSalon;
+import GUI.IPVsLista;
 import GUI.Views.login.LogInDialogView;
 import GUI.Views.venta.VentaMain;
 import GUI.Views.venta.VentaLista;
+import GUI.copiaSegView;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -111,7 +114,7 @@ public class Main extends javax.swing.JFrame {
         labelMetricPANELPRINC = new org.edisoncor.gui.label.LabelMetric();
         labelMetricNOMBRE2 = new org.edisoncor.gui.label.LabelMetric();
         labelMetricPANELCSEC = new org.edisoncor.gui.label.LabelMetric();
-        clockDigital1 = new org.edisoncor.gui.varios.ClockDigital();
+        clockDigital1 = new org.netbeans.modules.form.InvalidComponent();
         jScrollPaneAUX = new javax.swing.JScrollPane();
         panelRectAUX = new org.edisoncor.gui.panel.PanelRect();
         jScrollPanePRINC = new javax.swing.JScrollPane();
@@ -314,9 +317,6 @@ public class Main extends javax.swing.JFrame {
         labelMetricPANELCSEC.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         labelMetricPANELCSEC.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        clockDigital1.setForeground(new java.awt.Color(255, 255, 0));
-        clockDigital1.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 24)); // NOI18N
-
         jScrollPaneAUX.setAutoscrolls(true);
 
         panelRectAUX.setLayout(new java.awt.GridLayout(0, 1, 0, 20));
@@ -474,7 +474,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonTextDownALMANCENActionPerformed
 
     private void buttonABRIRMENUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonABRIRMENUActionPerformed
-        ProductoVentaListController controller = new ProductoVentaListController(this);
+        ProductoVentaListController controller = new ProductoVentaListController(null);
     }//GEN-LAST:event_buttonABRIRMENUActionPerformed
 
     private void buttonTextDownTRABActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTextDownTRABActionPerformed
@@ -610,7 +610,7 @@ public class Main extends javax.swing.JFrame {
     private org.edisoncor.gui.button.ButtonTextDown buttonVERPUESTOS;
     private org.edisoncor.gui.button.ButtonTextDown buttonVERSECCIONES;
     private org.edisoncor.gui.button.ButtonTextDown buttonVERTRAB;
-    private org.edisoncor.gui.varios.ClockDigital clockDigital1;
+    private org.netbeans.modules.form.InvalidComponent clockDigital1;
     private javax.swing.JScrollPane jScrollPaneAUX;
     private javax.swing.JScrollPane jScrollPanePRINC;
     private org.jdesktop.swingx.JXLabel jXLabel1;
@@ -676,9 +676,7 @@ public class Main extends javax.swing.JFrame {
             if (ventas.get(i).getVentaTotal() == null) {
                 return ventas.get(i);
             }
-
         }
-
         return staticContent.ventaJPA.findVenta(new Date());
     }
 

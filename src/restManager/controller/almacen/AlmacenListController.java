@@ -6,6 +6,7 @@
 package restManager.controller.almacen;
 
 import GUI.Views.Almacen.AlmacenListView;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class AlmacenListController extends AbstractListController<Almacen> {
         super(new AlmacenDAO());
     }
 
-    public AlmacenListController(Frame parent) {
+    public AlmacenListController(Window parent) {
         this();
         constructView(parent);
     }
@@ -61,7 +62,7 @@ public class AlmacenListController extends AbstractListController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new AlmacenListView(this, (Frame) parent, true));
+        setView(new AlmacenListView(this, (Dialog) parent, true));
         getView().updateView();
         getView().setVisible(true);
     }

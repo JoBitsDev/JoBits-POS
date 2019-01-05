@@ -229,7 +229,7 @@
                 <Component class="com.jidesoft.swing.JideButton" name="jideButton1">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/restManager/resources/images/imp.png"/>
+                      <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Imprimir"/>
                   </Properties>

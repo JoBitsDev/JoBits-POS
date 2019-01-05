@@ -8,6 +8,7 @@ package restManager.controller.trabajadores;
 import GUI.Views.AbstractView;
 import GUI.Views.trabajadores.PuestoTrabajoListView;
 import java.awt.Container;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
 import restManager.controller.AbstractDialogController;
@@ -32,7 +33,7 @@ public class PuestoTrabajoListController extends AbstractListController<PuestoTr
         super(new PuestoTrabajoDAO());
     }
 
-    public PuestoTrabajoListController(Frame frame) {
+    public PuestoTrabajoListController(Window frame) {
         this();
         constructView(frame);
     }
@@ -43,7 +44,7 @@ public class PuestoTrabajoListController extends AbstractListController<PuestoTr
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new PuestoTrabajoListView(this, (Frame) parent, true));
+        setView(new PuestoTrabajoListView(this, (Dialog) parent, true));
         getView().updateView();
         getView().setVisible(true);
 

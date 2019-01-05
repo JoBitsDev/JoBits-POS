@@ -7,6 +7,7 @@ package restManager.controller.trabajadores;
 
 
 import GUI.Views.trabajadores.PersonalListView;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
 import java.util.AbstractList;
@@ -28,7 +29,7 @@ public class PersonalListController extends AbstractListController<Personal> {
         super(PersonalDAO.getInstance());
     }
 
-    public PersonalListController(Frame frame) {
+    public PersonalListController(Window frame) {
         this();
         constructView(frame);
     }
@@ -39,7 +40,7 @@ public class PersonalListController extends AbstractListController<Personal> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new PersonalListView(this, (Frame) parent, true));
+        setView(new PersonalListView(this, (Dialog) parent, true));
         getView().updateView();
         getView().setVisible(true);
 

@@ -164,6 +164,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jCheckBoxPorciento.setBackground(new java.awt.Color(255, 255, 153));
         jCheckBoxPorciento.setSelected(true);
         jCheckBoxPorciento.setText("Añadir Porciento");
+        jCheckBoxPorciento.setEnabled(false);
         jCheckBoxPorciento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxPorcientoActionPerformed(evt);
@@ -212,7 +213,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jXPanelBotones.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
+        jPanel1.setLayout(new java.awt.GridLayout());
 
         jideButtonAgregarNota.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/adjuntar.png"))); // NOI18N
         jideButtonAgregarNota.setToolTipText(bundle.getString("label_agregarnota")); // NOI18N

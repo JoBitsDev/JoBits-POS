@@ -15,9 +15,11 @@ import java.util.List;
 import javax.swing.JDialog;
 import restManager.controller.AbstractDetailController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Venta;
+import restManager.persistencia.jpa.staticContent;
 import restManager.persistencia.models.OrdenDAO;
 import restManager.persistencia.models.VentaDAO;
 import restManager.resources.R;
@@ -55,12 +57,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     @Override
     public Venta createNewInstance() {
-        Venta ret = new Venta();
-        ret.setFecha(new Date());
-        ret.setVentaTotal(0.0);
-        ret.setVentagastosEninsumos(0.0);
-        ret.setOrdenList(new ArrayList<>());
-        return ret;
+        return getDiaDeVenta();
     }
 
     /**
@@ -108,10 +105,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public void removeOrden(Orden objectAtSelectedRow) {
-        ordController.setShowDialogs(true);
-        ordController.destroy(objectAtSelectedRow);
-        ordController.setShowDialogs(false);
-        getInstance().getOrdenList().remove(objectAtSelectedRow);
+        if(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3){
+            throw new UnauthorizedAccessException(getView());
+        }
+        ordController.destroy(objectAtSelectedRow,false);
+        fetchNewDataFromServer();
 
     }
 
@@ -138,12 +136,29 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             getInstance().setVentaTotal((double) ventaTotal);
             getInstance().setVentagastosEninsumos((double) ventasGastosEnInsumos);
             update(getInstance());
-            
+
         }
     }
 
     public void calcularCambio(Orden objectAtSelectedRow) {
         CalcularCambio cc = new CalcularCambio(getView(), true, objectAtSelectedRow);
+    }
+
+    private Venta getDiaDeVenta() {
+        List<Venta> ventas = getItems();
+        for (int i = ventas.size() - 1; i >= 0; i--) {
+            if (ventas.get(i).getVentaTotal() == null) {
+                return ventas.get(i);
+            }
+
+        }
+        Venta ret = new Venta();
+        ret.setFecha(new Date());
+        ret.setVentaTotal(0.0);
+        ret.setVentagastosEninsumos(0.0);
+        ret.setOrdenList(new ArrayList<>());
+
+        return ret;
     }
 
 }

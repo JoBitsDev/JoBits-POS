@@ -8,7 +8,9 @@ package restManager.main;
 import GUI.FirstTimeDialog;
 import GUI.Views.login.LogInDialogView;
 import java.util.Arrays;
+import javax.swing.SwingWorker;
 import restManager.controller.login.LogInController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.jpa.staticContent;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
@@ -23,15 +25,11 @@ public class Main {
 
     public static void main(String[] args) {
         LoadingWindow.show(null);
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    LogInController loginController = new LogInController();
-                    loginController.constructView(null);
-                   
-                }
-            });
-        }
-
+     
+        java.awt.EventQueue.invokeLater(() -> {
+            LogInController loginController = new LogInController();
+            loginController.constructView(null);
+        });
     }
 
-
+}

@@ -529,7 +529,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         instance.setProductoInsumoList(tableCrossReference.getTableModel().getItems());
         instance.setInsumoElaboradoList1(instance.getInsumoElaboradoList1());
         instance.setIpvList(instance.getIpvList());
-        instance.setStockEstimation((Float) jSpinnerEstimacionStock.getValue());
+        instance.setStockEstimation(Float.parseFloat(jSpinnerEstimacionStock.getValue().toString()));
 
         if (instance.getElaborado()) {
             instance.setInsumoElaboradoList(tableIngElab.getTableModel().getItems());

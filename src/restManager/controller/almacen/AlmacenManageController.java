@@ -97,9 +97,4 @@ public class AlmacenManageController extends AbstractDialogController<Almacen> {
         return JOptionPane.showConfirmDialog(getView(),
                 R.RESOURCE_BUNDLE.getString("dialog_imprimir_insumos_sobrantes")) == JOptionPane.YES_OPTION;
     }
-
-        @Override
-    public AbstractView getView() {
-       return getView();
-    }
 }

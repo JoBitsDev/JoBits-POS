@@ -17,6 +17,7 @@ import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.models.AbstractModel;
 import restManager.resources.R;
+import restManager.util.LoadingWindow;
 
 /**
  * FirstDream
@@ -192,7 +193,7 @@ public abstract class AbstractController<T> implements Controller {
 
     public void create(T selected, boolean quietMode) {
         boolean previousValue = this.showDialogs;
-        setShowDialogs(false);
+        setShowDialogs(!quietMode);
         create(selected);
         setShowDialogs(previousValue);
     }
@@ -215,7 +216,7 @@ public abstract class AbstractController<T> implements Controller {
 
     public void update(T selected, boolean quietMode) {
         boolean previousValue = this.showDialogs;
-        setShowDialogs(false);
+        setShowDialogs(!quietMode);
         update(selected);
         setShowDialogs(previousValue);
     }
@@ -240,7 +241,7 @@ public abstract class AbstractController<T> implements Controller {
 
     public void destroy(T selected, boolean quietMode) {
         boolean previousValue = this.showDialogs;
-        setShowDialogs(false);
+        setShowDialogs(!quietMode);
         destroy(selected);
         setShowDialogs(previousValue);
     }

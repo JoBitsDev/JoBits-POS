@@ -7,12 +7,15 @@ package restManager.controller.productoventa;
 
 import GUI.Views.productoventa.ProductoVentaListView;
 import GUI.Views.productoventa.ProductoVentaReadOnlyView;
+import java.awt.Dialog;
 import java.awt.Frame;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
+import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.models.ProductoVentaDAO;
 import restManager.printservice.ComponentPrinter;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -26,19 +29,27 @@ public class ProductoVentaListController extends AbstractListController<Producto
         super(ProductoVentaDAO.getInstance());
     }
 
-    public ProductoVentaListController(Frame parent) {
+    public ProductoVentaListController(Dialog parent) {
         this();
         constructView(parent);
     }
 
     @Override
     public AbstractDetailController<ProductoVenta> getDetailControllerForNew() {
+        validate();
         return new ProductoVentaCreateEditController(getView());
     }
 
     @Override
     public AbstractDetailController<ProductoVenta> getDetailControllerForEdit(ProductoVenta selected) {
+        validate();
         return new ProductoVentaCreateEditController(selected, getView());
+    }
+
+    @Override
+    public void destroy(ProductoVenta selected) {
+        validate();
+        super.destroy(selected);
     }
 
     /**
@@ -47,25 +58,30 @@ public class ProductoVentaListController extends AbstractListController<Producto
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new ProductoVentaListView(this, (Frame) parent, true));
+        setView(new ProductoVentaListView(this, (Dialog) parent, true));
         getView().updateView();
         getView().setVisible(true);
 
     }
 
     public void printProductoVenta(ProductoVenta objectAtSelectedRow) {
+        validate();
         ProductoVentaReadOnlyView printView = new ProductoVentaReadOnlyView(objectAtSelectedRow, this, getView(), true);
         printView.updateView();
         printView.pack();
-        ComponentPrinter.printComponent(printView.getjXPanelRoot(),objectAtSelectedRow.toString(), false);
+        ComponentPrinter.printComponent(printView.getjXPanelRoot(), objectAtSelectedRow.toString(), false);
     }
-    
-    public void printAllProductoVenta(){
+
+    public void printAllProductoVenta() {
         items.forEach((x) -> {
             printProductoVenta(x);
         });
     }
-    
-   
+
+    private void validate() {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3) {
+            throw new UnauthorizedAccessException(getView());
+        }
+    }
 
 }

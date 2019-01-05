@@ -137,7 +137,6 @@ public class staticContent {
             notaJPA = new NotaJpaController(EMF);
 
             CONECTADO = true;
-
         } catch (Exception e) {
             CONECTADO = false;
             System.out.println(e.getMessage());

@@ -42,19 +42,19 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     RestManagerAbstractTableModel<Orden> modelOrd;
 
     public VentasCreateEditView(Venta instance, AbstractDialogController controller) {
-        super(instance, DialogType.NORMAL, controller);
+        super(instance, DialogType.FULL_SCREEN, controller);
         initComponents();
         init();
     }
 
     public VentasCreateEditView(Venta instance, AbstractDialogController controller, Frame owner) {
-        super(instance, DialogType.NORMAL, controller, owner);
+        super(instance, DialogType.FULL_SCREEN, controller, owner);
         initComponents();
         init();
     }
 
     public VentasCreateEditView(Venta instance, AbstractDialogController controller, Dialog owner) {
-        super(instance, DialogType.NORMAL, controller, owner);
+        super(instance, DialogType.FULL_SCREEN, controller, owner);
         initComponents();
         init();
     }
