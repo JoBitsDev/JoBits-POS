@@ -23,6 +23,8 @@ public class R {
 
     public static final String SEPARADOR = "_";
     
+    public static String restName = null;
+    
     public static String logFilePath = "logs/";
     
     public static String coinSuffix ;
@@ -47,6 +49,8 @@ public class R {
 
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
+    public static String RELEASE_VERSION = "Version 2.0";
+    
     public static void setLookAndFeels() {
         try {
             javax.swing.UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
