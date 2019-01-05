@@ -51,6 +51,8 @@ public class R {
 
     public static String RELEASE_VERSION = "Version 2.0";
     
+    public static int BUILD_VERSION = 1;
+    
     public static void setLookAndFeels() {
         try {
             javax.swing.UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
