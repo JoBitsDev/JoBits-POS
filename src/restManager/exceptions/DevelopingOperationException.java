@@ -5,7 +5,6 @@
  */
 package restManager.exceptions;
 
-import javax.swing.JOptionPane;
 import restManager.resources.R;
 
 /**
@@ -14,17 +13,16 @@ import restManager.resources.R;
  * @author Jorge
  *
  */
-public class DevelopingOperationException extends RuntimeException {
+public class DevelopingOperationException extends RestManagerRuntimeException {
 
     public DevelopingOperationException() {
-        JOptionPane.showMessageDialog(null, R.RESOURCE_BUNDLE.getString("exception_developing"),
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
+        super();
+        showMessage(R.RESOURCE_BUNDLE.getString("exception_developing"));
     }
 
     public DevelopingOperationException(String message) {
         super(message);
-        JOptionPane.showMessageDialog(null, message,
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
+        showMessage(message);
     }
 
 }

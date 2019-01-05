@@ -15,22 +15,23 @@ import restManager.resources.R;
  * @author Jorge
  *
  */
-public class ValidatingException extends RuntimeException {
+public class ValidatingException extends RestManagerRuntimeException {
 
-    public ValidatingException() {
-        JOptionPane.showMessageDialog(null, R.RESOURCE_BUNDLE.getString("exception_validating"),
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
-    }
-
-     public ValidatingException(Component container) {
-        JOptionPane.showMessageDialog(container, R.RESOURCE_BUNDLE.getString("exception_validating"),
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
-    }
+    private final String EXCEPTION_MESSAGE = R.RESOURCE_BUNDLE.getString("exception_validating");
     
+    public ValidatingException() {
+        super();
+        showMessage(EXCEPTION_MESSAGE);
+    }
+
+    public ValidatingException(Component container) {
+       super(container);
+        showMessage(EXCEPTION_MESSAGE);
+    }
+
     public ValidatingException(String message) {
         super(message);
-        JOptionPane.showMessageDialog(null, message,
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE);
+        showMessage(message);
     }
 
 }
