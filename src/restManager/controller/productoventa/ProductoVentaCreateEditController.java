@@ -69,7 +69,7 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
     }
 
     public List<Cocina> getCocinaList() {
-        return new CocinaDAO().findAll();
+        return  CocinaDAO.getInstance().findAll();
     }
 
     public List<Seccion> getSeccionList() {

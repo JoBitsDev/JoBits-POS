@@ -3,21 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia.models;
 
-import restManager.persistencia.Cocina;
 
+import restManager.persistencia.Cocina;
+import restManager.persistencia.Personal;
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-public class CocinaDAO extends AbstractModel<Cocina>{
+public class CocinaDAO extends AbstractModel<Cocina> {
 
-    public CocinaDAO() {
+    private static CocinaDAO INSTANCE = null;
+
+    private CocinaDAO() {
         super(Cocina.class);
     }
 
+    public static CocinaDAO getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new CocinaDAO();
+            return INSTANCE;
+        } else {
+            return INSTANCE;
+        }
+    }
+
+   
     
 }

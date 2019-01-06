@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import restManager.exceptions.DevelopingOperationException;
 
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Venta;
@@ -153,28 +154,21 @@ public class VentaDAO1 {
     public static void getResumenVentasCamareroOnTable(JTable tabla, Venta v, Personal p) {
 
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[3]);
-        ArrayList<ProductovOrden> ret = new ArrayList<>();
+        ArrayList[] rowData = comun.initArray(new ArrayList[2]);
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
+        float total = 0;
         //llenando l array
         for (Orden o : aux) {
-            if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p)) {
-                joinListsProductovOrden(ret,
-                        new ArrayList(o.getProductovOrdenList()));
+            if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p) && o.getHoraTerminada() != null) {
+                total += o.getOrdenvalorMonetario();
             }
-        }//nˆ3
+        }//n
 
         //convirtiendo a rowData
-        float total = 0;
-        for (ProductovOrden x : ret) {
-            ProductoVenta pv = x.getProductoVenta();
-            total += pv.getPrecioVenta() * x.getCantidad();
-        }
         if (total != 0) {
             rowData[0].add(p.getUsuario());
-            rowData[1].add(p.getDatosPersonales().getNombre());
-            rowData[2].add(total + R.coinSuffix);
+            rowData[1].add(comun.setDosLugaresDecimales(total));
 
             //llenando la tabla
             try {
@@ -215,7 +209,7 @@ public class VentaDAO1 {
         if (total != 0) {
             rowData[0].add(c.getCodCocina());
             rowData[1].add(c.getNombreCocina());
-            rowData[2].add(total + R.coinSuffix);
+            rowData[2].add(comun.setDosLugaresDecimales(total));
 
             //llenando la tabla
             try {
@@ -651,6 +645,16 @@ public class VentaDAO1 {
             }
         });
         return retOrd;
+    }
+
+    public static float getValorTotalGastos(Venta instance) {
+         float total = 0;
+        for (Orden x : instance.getOrdenList()) {
+            if (!x.getDeLaCasa() && x.getHoraTerminada() != null) {
+                total += x.getOrdengastoEninsumos();
+            }
+        }
+        return total;
     }
 
 }

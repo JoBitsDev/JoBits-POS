@@ -11,6 +11,7 @@ import java.awt.Container;
 import java.awt.Dialog;
 import java.text.ParseException;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.almacen.AlmacenListController;
@@ -26,8 +27,10 @@ import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.Carta;
 import restManager.persistencia.Personal;
+import restManager.persistencia.Venta;
 import restManager.persistencia.models.CartaDAO;
 import restManager.persistencia.models.PersonalDAO;
+import restManager.persistencia.models.VentaDAO;
 import restManager.resources.R;
 
 /**
@@ -88,15 +91,14 @@ public class MainController extends AbstractDialogController<Personal> {
                 break;
             case COMENZAR_DIA:
                 if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 3) {
-
-                    String date = showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
-                            + "o deje la casilla en blanco para comenzar en el dia actual ");
+                     String date = JOptionPane.showInputDialog(getView(),  "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
+                            + "o deje la casilla en blanco para comenzar en el dia actual ", "Entrada", JOptionPane.QUESTION_MESSAGE);                    
                     if (date == null) {
                         controller = new VentaDetailController(getView());
                     } else {
                         try {
-                            Date fecha = R.DATE_FORMAT.parse(date);
-                            //controller = new VentaDetailController(instance, parent);
+                            Venta v = VentaDAO.getInstance().find(R.DATE_FORMAT.parse(date));
+                            controller = new VentaDetailController(v, getView());
                         } catch (ParseException ex) {
                             showErrorDialog(getView(), ex.getMessage());
                         }

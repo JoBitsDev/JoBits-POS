@@ -177,7 +177,7 @@ public class Personal implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Personal[ usuario=" + usuario + " ]";
+        return usuario ;
     }
 
 }

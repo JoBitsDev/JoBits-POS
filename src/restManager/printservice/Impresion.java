@@ -34,6 +34,7 @@ import restManager.persistencia.Personal;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.CartaDAO;
 import restManager.persistencia.models.MenuDAO;
 import restManager.resources.R;
 import restManager.util.comun;
@@ -143,7 +144,7 @@ public class Impresion {
     public Impresion(Carta m, String footer, boolean monedaCUC, float cambio, int cantidadCopias) {
         this.nombreRest = m.getNombreCarta();
         Impresion.cambio = cambio;
-        this.cantidadCopias = cantidadCopias;
+        Impresion.cantidadCopias = cantidadCopias;
         if (footer != null) {
             PIE = footer;
         }
@@ -155,7 +156,7 @@ public class Impresion {
     }
 
     public static Impresion getDefaultInstance() {
-        return new Impresion(staticContent.cartaJPA.findCarta("Mnu-1"));
+        return new Impresion(new CartaDAO().find("Mnu-1"));
     }
 
     //

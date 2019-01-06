@@ -407,7 +407,7 @@ public class MainView extends AbstractView {
 
     @Override
     public void updateView() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override

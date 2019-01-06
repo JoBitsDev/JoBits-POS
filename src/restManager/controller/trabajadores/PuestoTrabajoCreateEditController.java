@@ -68,7 +68,7 @@ public class PuestoTrabajoCreateEditController extends AbstractDetailController<
     }
 
     public List<Cocina> getAreasPago() {
-        return new CocinaDAO().findAll();
+        return  CocinaDAO.getInstance().findAll();
 
     }
 

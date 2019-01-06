@@ -12,6 +12,7 @@ import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 import restManager.controller.AbstractDetailController;
+import restManager.persistencia.DatosPersonales;
 import restManager.persistencia.Personal;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.models.AbstractModel;
@@ -56,6 +57,7 @@ public class PersonalCreateEditController extends AbstractDetailController<Perso
         Personal ret = new Personal();
         ret.setPuestoTrabajoList(new ArrayList<>());
         ret.setOrdenList(new ArrayList<>());
+        ret.setDatosPersonales(new DatosPersonales());
         return ret;
     }
 

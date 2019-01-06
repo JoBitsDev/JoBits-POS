@@ -10,19 +10,27 @@ import GUI.Views.venta.VentasCreateEditView;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JDialog;
 import restManager.controller.AbstractDetailController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
+import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Orden;
+import restManager.persistencia.Personal;
+import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.OrdenDAO;
+import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.VentaDAO;
+import restManager.printservice.Impresion;
 import restManager.resources.R;
+import restManager.util.comun;
 
 /**
  * FirstDream
@@ -97,7 +105,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public List<Orden> getOrdenesActivas() {
-        if (R.loggedUser.getPuestoTrabajoList().get(0).getNivelAcceso() <= 2) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() <= 2) {
             return VentaDAO1.getOrdenesActivas(getInstance());
         } else {
             return getInstance().getOrdenList();
@@ -105,10 +113,10 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public void removeOrden(Orden objectAtSelectedRow) {
-        if(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3){
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3) {
             throw new UnauthorizedAccessException(getView());
         }
-        ordController.destroy(objectAtSelectedRow,false);
+        ordController.destroy(objectAtSelectedRow, false);
         fetchNewDataFromServer();
 
     }
@@ -159,6 +167,36 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         ret.setOrdenList(new ArrayList<>());
 
         return ret;
+    }
+
+    public String getTotalVendido() {
+        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentas(getInstance()));
+    }
+
+    public String getTotalGastado() {
+        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalGastos(getInstance()));
+    }
+
+    public List<Personal> getPersonalList() {
+        return PersonalDAO.getInstance().findAll();
+    }
+
+    public List<Cocina> getCocinaList() {
+        return CocinaDAO.getInstance().findAll();
+    }
+
+    public void printSelectedRow(String user) {
+        Personal p = PersonalDAO.getInstance().find(user);
+        List<ProductovOrden> aux = VentaDAO1.getResumenVentasCamarero(getInstance(), p);
+        Collections.sort(aux, (o1, o2) -> {
+            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
+        });
+        Impresion.getDefaultInstance().printPersonalResumen(aux, p, getInstance().getFecha());
+
+    }
+
+    public void printZ() {
+        Impresion.getDefaultInstance().printZ(getInstance());
     }
 
 }

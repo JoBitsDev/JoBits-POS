@@ -28,11 +28,11 @@ import restManager.persistencia.models.CocinaDAO;
 public class CocinaListController extends AbstractListController<Cocina>{
 
     public CocinaListController() {
-        super(new CocinaDAO());
+        super( CocinaDAO.getInstance());
     }
 
     public CocinaListController(Window parent) {
-        super(new CocinaDAO());
+        super(CocinaDAO.getInstance());
         constructView(parent);
     }
 

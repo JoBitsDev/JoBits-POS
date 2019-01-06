@@ -350,10 +350,10 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
     public boolean validateData() {
         if (jPasswordFieldPassNueva.getPassword().length > 0) {
             if (!Arrays.equals(jPasswordFieldPassNueva.getPassword(), (jPasswordFieldPassRepetir.getPassword()))) {
-               jPasswordFieldPassRepetir.setBorder(new LineBorder(Color.red));
+                jPasswordFieldPassRepetir.setBorder(new LineBorder(Color.red));
                 return false;
             } else {
-                 jPasswordFieldPassRepetir.setBorder(null);
+                jPasswordFieldPassRepetir.setBorder(null);
                 instance.setContrasenna(jPasswordFieldPassNueva.getText());
             }
 
@@ -361,18 +361,19 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
         instance.getDatosPersonales().setNombre(jTextFieldNombre.getText());
         instance.getDatosPersonales().setApellidos(jTextFieldApellidos.getText());
         instance.getDatosPersonales().setFechaNacimineto(jDateChooser1.getDate());
-        if ( jFormattedTextFieldMovil.getValue() == null) {
+        if (jFormattedTextFieldMovil.getValue() == null) {
             instance.getDatosPersonales().setTelefonoMovil(null);
         } else {
             instance.getDatosPersonales().setTelefonoMovil(Integer.parseInt((String) jFormattedTextFieldMovil.getValue()));
         }
-        if ( jFormattedTextFieldFijo.getValue() == null) {
+        if (jFormattedTextFieldFijo.getValue() == null) {
             instance.getDatosPersonales().setTelefonoFijo(null);
         } else {
             instance.getDatosPersonales().setTelefonoFijo(Integer.parseInt((String) jFormattedTextFieldFijo.getValue()));
 
         }
         instance.setUsuario(jTextFieldUsuario.getText());
+        instance.getDatosPersonales().setPersonalusuario(instance.getUsuario());
         if (jComboBoxSexo.getSelectedIndex() == 0) {
             instance.getDatosPersonales().setSexo('M');
         } else {
