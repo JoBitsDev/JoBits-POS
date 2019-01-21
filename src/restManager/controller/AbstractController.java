@@ -171,6 +171,19 @@ public abstract class AbstractController<T> implements Controller {
             throw new ValidatingException(view);
         }
     }
+    
+    protected Object showInputDialog(Container view,String msg,String title,Object[] selections,Object initialValue ){
+         Object ret = JOptionPane.showInputDialog(view, msg,title,
+                 JOptionPane.QUESTION_MESSAGE, 
+                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")),
+                         selections, initialValue);
+        if (ret != null) {
+            return ret;
+        } else {
+            throw new ValidatingException(view);
+        }
+    }
+    
 
     //
     // Persist Action
