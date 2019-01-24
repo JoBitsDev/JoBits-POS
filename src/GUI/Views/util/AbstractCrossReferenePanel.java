@@ -30,7 +30,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         initComponents();
         jLabel1.setText(jTextFieldDataName);
         ListDataIntelliHints<K> intellihints = new ListDataIntelliHints(jTextFieldAutoComplete,autoCompletitionData);
-      
+        
 
         handler = new TableWithComboBoxAutoComplete<K, T>(
                 jTableCrossReference, jButtonAgregarProd,

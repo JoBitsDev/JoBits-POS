@@ -363,7 +363,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                             case 1:
                                 return items.get(rowIndex).getCantidad();
                             case 2:
-                                return comun.redondeoPorExceso(items.get(rowIndex).getCantidad() 
+                                return comun.redondeoPorExceso(items.get(rowIndex).getCantidad()
                                         * items.get(rowIndex).getProductoVenta().getPrecioVenta());
                             default:
                                 return null;
@@ -393,6 +393,18 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                         switch (columnIndex) {
                             case 1:
+                                int cant_anterior = items.get(rowIndex).getCantidad();
+                                int dif = (int) aValue - cant_anterior;
+                                OrdenController.UpdateIpvAction action;
+                                if (dif > 0) {
+                                    action = OrdenController.UpdateIpvAction.AGREGAR;
+                                } else {
+                                    action = OrdenController.UpdateIpvAction.REMOVER;
+                                }
+                                dif = Math.abs(dif);
+                                for (int i = 0; i < dif; i++) {
+                                    getController().updateIPVs(items.get(rowIndex), action);
+                                }
                                 items.get(rowIndex).setCantidad((int) aValue);
                                 fireTableRowsUpdated(rowIndex, rowIndex);
                                 updateValorTotal();

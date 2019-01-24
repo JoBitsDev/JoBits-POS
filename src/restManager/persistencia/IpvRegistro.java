@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -28,7 +29,10 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "IpvRegistro.findAll", query = "SELECT i FROM IpvRegistro i"),
     @NamedQuery(name = "IpvRegistro.findByIpvinsumocodInsumo", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvinsumocodInsumo = :ipvinsumocodInsumo"),
-    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocina", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina"),
+    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocina", 
+            query = "SELECT DISTINCT i.ipvRegistroPK.fecha FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina  ORDER BY i.ipvRegistroPK.fecha DESC"),
+    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndFecha", 
+            query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina AND i.ipvRegistroPK.fecha = :fecha"),
     @NamedQuery(name = "IpvRegistro.findByFecha", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.fecha = :fecha"),
     @NamedQuery(name = "IpvRegistro.findByInicio", query = "SELECT i FROM IpvRegistro i WHERE i.inicio = :inicio"),
     @NamedQuery(name = "IpvRegistro.findByEntrada", query = "SELECT i FROM IpvRegistro i WHERE i.entrada = :entrada"),
@@ -43,9 +47,13 @@ public class IpvRegistro implements Serializable {
     @EmbeddedId
     protected IpvRegistroPK ipvRegistroPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "inicio")
     private Float inicio;
+    @Column(name = "entrada")
     private Float entrada;
+    @Column(name = "disponible")
     private Float disponible;
+    @Column(name = "consumo")
     private Float consumo;
     @Column(name = "consumo_real")
     private Float consumoReal;
@@ -164,7 +172,7 @@ public class IpvRegistro implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.IpvRegistro[ ipvRegistroPK=" + ipvRegistroPK + " ]";
+        return R.DATE_FORMAT.format(getIpvRegistroPK().getFecha());
     }
 
 }

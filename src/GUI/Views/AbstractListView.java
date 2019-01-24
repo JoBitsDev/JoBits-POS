@@ -9,6 +9,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
@@ -50,14 +51,6 @@ public abstract class AbstractListView<T> extends AbstractView {
 
             }
         }
-    }
-
-    public JXPanel getjXPanelControles() {
-        return jXPanelControles;
-    }
-
-    public JXPanel getjXPanelLista() {
-        return jXPanelLista;
     }
 
     /**
@@ -129,8 +122,11 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jXPanel1.setLayout(new java.awt.BorderLayout());
 
+        jXLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jXLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/buscar.png"))); // NOI18N
         jXLabel1.setText(bundle.getString("label_buscar")); // NOI18N
-        jXPanel1.add(jXLabel1, java.awt.BorderLayout.WEST);
+        jXLabel1.setToolTipText("Buscar");
+        jXPanel1.add(jXLabel1, java.awt.BorderLayout.CENTER);
 
         jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(300, 26));
         jTextFieldBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -313,8 +309,19 @@ public abstract class AbstractListView<T> extends AbstractView {
         this.jButtonEdit = jButtonEdit;
     }
 
+    public JXPanel getjXPanelControles() {
+        return jXPanelControles;
+    }
+
+    public JXPanel getjXPanelLista() {
+        return jXPanelLista;
+    }
+
+    public JTable getjTableList() {
+        return jTableList;
+    }
     
-    
+
     //
     // Inner Class
     //
@@ -367,7 +374,7 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         public void addrow(T newObject) {
             items.add(newObject);
-            fireTableRowsInserted(items.indexOf(newObject)  , items.indexOf(newObject) );
+            fireTableRowsInserted(items.indexOf(newObject), items.indexOf(newObject));
             DefaultTableModel m;
         }
 

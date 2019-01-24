@@ -17,6 +17,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -24,11 +26,13 @@ import javax.persistence.NamedQuery;
  * 
  */
 @Entity
+@Table(name = "carta")
 @NamedQueries({
     @NamedQuery(name = "Carta.findAll", query = "SELECT c FROM Carta c"),
     @NamedQuery(name = "Carta.findByCodCarta", query = "SELECT c FROM Carta c WHERE c.codCarta = :codCarta"),
     @NamedQuery(name = "Carta.findByNombreCarta", query = "SELECT c FROM Carta c WHERE c.nombreCarta = :nombreCarta"),
-    @NamedQuery(name = "Carta.findByMonedaPrincipal", query = "SELECT c FROM Carta c WHERE c.monedaPrincipal = :monedaPrincipal")})
+    @NamedQuery(name = "Carta.findByMonedaPrincipal", query = "SELECT c FROM Carta c WHERE c.monedaPrincipal = :monedaPrincipal"),
+    @NamedQuery(name = "Carta.findByPorcientoPorServicio", query = "SELECT c FROM Carta c WHERE c.porcientoPorServicio = :porcientoPorServicio")})
 public class Carta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,11 +45,15 @@ public class Carta implements Serializable {
     private String nombreCarta;
     @Column(name = "moneda_principal")
     private String monedaPrincipal;
+    @Column(name = "porciento_por_servicio")
+    private Integer porcientoPorServicio;
     @JoinTable(name = "carta_area", joinColumns = {
         @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")}, inverseJoinColumns = {
         @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")})
     @ManyToMany
     private List<Area> areaList;
+    @OneToMany(mappedBy = "cartacodCarta")
+    private List<Seccion> seccionList;
 
     public Carta() {
     }
@@ -83,12 +91,28 @@ public class Carta implements Serializable {
         this.monedaPrincipal = monedaPrincipal;
     }
 
+    public Integer getPorcientoPorServicio() {
+        return porcientoPorServicio;
+    }
+
+    public void setPorcientoPorServicio(Integer porcientoPorServicio) {
+        this.porcientoPorServicio = porcientoPorServicio;
+    }
+
     public List<Area> getAreaList() {
         return areaList;
     }
 
     public void setAreaList(List<Area> areaList) {
         this.areaList = areaList;
+    }
+
+    public List<Seccion> getSeccionList() {
+        return seccionList;
+    }
+
+    public void setSeccionList(List<Seccion> seccionList) {
+        this.seccionList = seccionList;
     }
 
     @Override

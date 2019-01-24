@@ -6,13 +6,13 @@
 
 package restManager.controller.venta;
 
-import java.awt.Frame;
-import java.awt.Window;
-import restManager.controller.AbstractDetailController;
-import restManager.controller.AbstractListController;
+import GUI.Views.AbstractView;
+import GUI.Views.venta.VentaCalendarView;
+import java.awt.Container;
+import java.util.List;
+import restManager.controller.AbstractDialogController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Venta;
-import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.VentaDAO;
 
 /**
@@ -20,28 +20,33 @@ import restManager.persistencia.models.VentaDAO;
  * @author Jorge
  * 
  */
-public class VentaSinArchivarListController extends AbstractListController<Venta>{
+public class VentaListController  extends AbstractDialogController<Venta>{
 
-    public VentaSinArchivarListController(Window owner) {
+    public VentaListController() {
         super(VentaDAO.getInstance());
     }
 
-    @Override
-    public AbstractDetailController<Venta> getDetailControllerForNew() {
+    public VentaListController(AbstractView parentView) {
+        super(VentaDAO.getInstance());
+        constructView(parentView);
+    }
+    
+    public Venta createNewInstance() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public AbstractDetailController<Venta> getDetailControllerForEdit(Venta selected) {
+    public void constructView(Container parent) {
+        setView(new VentaCalendarView(this, (AbstractView) parent));
+        getView().setVisible(true);
+    }
+
+    public void createDetailResumenView(List<Venta> selectedVentas) {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
-     *
-     * @param parent the value of parent
-     */
-    @Override
-    public void constructView(java.awt.Container parent) {
 
-    }
+ 
+
+    
 }

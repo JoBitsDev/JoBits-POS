@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -23,6 +24,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
+@Table(name = "cocina")
 @NamedQueries({
     @NamedQuery(name = "Cocina.findAll", query = "SELECT c FROM Cocina c"),
     @NamedQuery(name = "Cocina.findByCodCocina", query = "SELECT c FROM Cocina c WHERE c.codCocina = :codCocina"),
@@ -39,6 +41,8 @@ public class Cocina implements Serializable {
     private String nombreCocina;
     @OneToMany(mappedBy = "cocinacodCocina")
     private List<ProductoVenta> productoVentaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocina")
+    private List<NotificacionEnvioCocina> notificacionEnvioCocinaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocina")
     private List<Ipv> ipvList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocinacodCocina")
@@ -78,6 +82,14 @@ public class Cocina implements Serializable {
 
     public void setProductoVentaList(List<ProductoVenta> productoVentaList) {
         this.productoVentaList = productoVentaList;
+    }
+
+    public List<NotificacionEnvioCocina> getNotificacionEnvioCocinaList() {
+        return notificacionEnvioCocinaList;
+    }
+
+    public void setNotificacionEnvioCocinaList(List<NotificacionEnvioCocina> notificacionEnvioCocinaList) {
+        this.notificacionEnvioCocinaList = notificacionEnvioCocinaList;
     }
 
     public List<Ipv> getIpvList() {

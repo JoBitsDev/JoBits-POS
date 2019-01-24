@@ -6,7 +6,6 @@
 package restManager.controller.login;
 
 import GUI.EsquemaSalon;
-import GUI.Views.login.Main;
 import GUI.Views.login.MainView;
 import GUI.Views.login.LogInDialogView;
 import java.awt.Container;
@@ -67,7 +66,6 @@ public class LogInController extends AbstractDialogController<Personal> {
 
             @Override
             protected void done() {
-                
                     getView().updateView();
                     getView().setEnabled(true);
                     LoadingWindow.hide();

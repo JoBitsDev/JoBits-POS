@@ -4,7 +4,6 @@ import java.awt.print.PrinterException;
 
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -19,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Venta;
-import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.CocinaDAO;
 import restManager.resources.R;
 import restManager.util.comun;
 
@@ -30,7 +29,7 @@ public class Resumenes extends javax.swing.JPanel{
     private Cocina cocina = null;
     private final Date end;
     private final MessageFormat headerVentas,headerGastos;
-    private final List<Cocina> cocinas = staticContent.cocinaJPA.findCocinaEntities();
+    private final List<Cocina> cocinas = CocinaDAO.getInstance().findAll();
     private List<Float> listaVentas = new LinkedList<>();
     private List<Float> listaGastos = new LinkedList<>();
 

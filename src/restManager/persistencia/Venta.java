@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -26,6 +27,7 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
+@Table(name = "venta")
 @NamedQueries({
     @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v"),
     @NamedQuery(name = "Venta.findByFecha", query = "SELECT v FROM Venta v WHERE v.fecha = :fecha"),
@@ -36,6 +38,7 @@ public class Venta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

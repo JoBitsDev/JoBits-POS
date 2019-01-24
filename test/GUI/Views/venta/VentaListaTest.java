@@ -5,9 +5,10 @@
  */
 package GUI.Views.venta;
 
+import javax.swing.JDialog;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import restManager.controller.venta.VentaListController;
 
 /**
  *
@@ -24,7 +25,7 @@ public class VentaListaTest {
 
     @Test
     public void testSomeMethod() {
-        new VentaLista(null, true);
+      // new VentaListController(new JDialog());
     }
     
 }

@@ -20,19 +20,17 @@ import restManager.util.ComponentMover;
  */
 public class MainView extends AbstractView {
 
-    public MainView( AbstractDialogController controller) {
+    public MainView(AbstractDialogController controller) {
         super(DialogType.FULL_SCREEN, controller);
         initComponents();
         ComponentMover cr = new ComponentMover(this, getRootPane());
     }
 
-    public MainView( AbstractDialogController controller, Dialog owner, boolean modal) {
+    public MainView(AbstractDialogController controller, Dialog owner, boolean modal) {
         super(DialogType.FULL_SCREEN, controller, owner, modal);
         initComponents();
         ComponentMover cr = new ComponentMover(this, styledLabelRestName);
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -161,6 +159,7 @@ public class MainView extends AbstractView {
         jButtonSalon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botosalon.png"))); // NOI18N
         jButtonSalon.setText(bundle.getString("label_ver_esquema_salon")); // NOI18N
         jButtonSalon.setBorderPainted(false);
+        jButtonSalon.setEnabled(false);
         jButtonSalon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonSalon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonSalon.addActionListener(new java.awt.event.ActionListener() {
@@ -190,6 +189,7 @@ public class MainView extends AbstractView {
         jButtonStocking.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoninventario.png"))); // NOI18N
         jButtonStocking.setText(bundle.getString("label_inventario")); // NOI18N
         jButtonStocking.setBorderPainted(false);
+        jButtonStocking.setEnabled(false);
         jButtonStocking.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonStocking.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonStocking.addActionListener(new java.awt.event.ActionListener() {
@@ -244,6 +244,7 @@ public class MainView extends AbstractView {
         jButtonArchivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonarchivos.png"))); // NOI18N
         jButtonArchivos.setText(bundle.getString("label_archivos")); // NOI18N
         jButtonArchivos.setBorderPainted(false);
+        jButtonArchivos.setEnabled(false);
         jButtonArchivos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonArchivos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonArchivos.addActionListener(new java.awt.event.ActionListener() {
@@ -256,6 +257,7 @@ public class MainView extends AbstractView {
         jButtonPresupuesto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonpresupuesto.png"))); // NOI18N
         jButtonPresupuesto.setText(bundle.getString("label_presupuesto")); // NOI18N
         jButtonPresupuesto.setBorderPainted(false);
+        jButtonPresupuesto.setEnabled(false);
         jButtonPresupuesto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonPresupuesto.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonPresupuesto.addActionListener(new java.awt.event.ActionListener() {
@@ -303,6 +305,7 @@ public class MainView extends AbstractView {
         jButtonCopiaSeguridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoncopiaseg.png"))); // NOI18N
         jButtonCopiaSeguridad.setText(bundle.getString("label_copia_seguridad")); // NOI18N
         jButtonCopiaSeguridad.setBorderPainted(false);
+        jButtonCopiaSeguridad.setEnabled(false);
         jButtonCopiaSeguridad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonCopiaSeguridad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonCopiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
@@ -414,8 +417,7 @@ public class MainView extends AbstractView {
     public MainController getController() {
         return (MainController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonCocina;

@@ -9,12 +9,13 @@ import GUI.Views.AbstractView;
 import GUI.Views.login.MainView;
 import java.awt.Container;
 import java.awt.Dialog;
+import java.awt.HeadlessException;
 import java.text.ParseException;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.almacen.AlmacenListController;
+import restManager.controller.almacen.IPVController;
 import restManager.controller.cocina.CocinaListController;
 import restManager.controller.insumo.InsumoListController;
 import restManager.controller.productoventa.ProductoVentaListController;
@@ -22,7 +23,7 @@ import restManager.controller.seccion.SeccionListController;
 import restManager.controller.trabajadores.PersonalListController;
 import restManager.controller.trabajadores.PuestoTrabajoListController;
 import restManager.controller.venta.VentaDetailController;
-import restManager.controller.venta.VentaSinArchivarListController;
+import restManager.controller.venta.VentaListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.Carta;
@@ -62,55 +63,69 @@ public class MainController extends AbstractDialogController<Personal> {
 
     public void actionButton(MenuButtons menuButtons) {
         AbstractController controller;
-        validate(R.loggedUser, menuButtons);
-        //LoadingWindow.show(getView());
-        switch (menuButtons) {
-            case MENU:
-                controller = new ProductoVentaListController(getView());
-                break;
-            case INSUMO:
-                controller = new InsumoListController(getView());
-                break;
-            case COCINA:
-                controller = new CocinaListController(getView());
-                break;
-            case SECCION:
-                controller = new SeccionListController(getView());
-                break;
-            case ALMACEN:
-                controller = new AlmacenListController(getView());
-                break;
-            case ARCHIVOS:
-                controller = new VentaSinArchivarListController(getView());
-                break;
-            case TRABAJADORES:
-                controller = new PersonalListController(getView());
-                break;
-            case PUESTOS_TRABAJO:
-                controller = new PuestoTrabajoListController(getView());
-                break;
-            case COMENZAR_DIA:
-                if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 3) {
-                     String date = JOptionPane.showInputDialog(getView(),  "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
-                            + "o deje la casilla en blanco para comenzar en el dia actual ", "Entrada", JOptionPane.QUESTION_MESSAGE);                    
-                    if (date == null) {
-                        controller = new VentaDetailController(getView());
-                    } else {
-                        try {
-                            Venta v = VentaDAO.getInstance().find(R.DATE_FORMAT.parse(date));
-                            controller = new VentaDetailController(v, getView());
-                        } catch (ParseException ex) {
-                            showErrorDialog(getView(), ex.getMessage());
+        getView().setEnabled(false);
+        try {
+            validate(R.loggedUser, menuButtons);
+            //LoadingWindow.show(getView());
+            switch (menuButtons) {
+                case MENU:
+                    controller = new ProductoVentaListController(getView());
+                    break;
+                case INSUMO:
+                    controller = new InsumoListController(getView());
+                    break;
+                case COCINA:
+                    controller = new CocinaListController(getView());
+                    break;
+                case SECCION:
+                    controller = new SeccionListController(getView());
+                    break;
+                case ALMACEN:
+                    controller = new AlmacenListController(getView());
+                    break;
+                case VENTAS:
+                    controller = new VentaListController(getView());
+                    break;
+                case TRABAJADORES:
+                    controller = new PersonalListController(getView());
+                    break;
+                case PUESTOS_TRABAJO:
+                    controller = new PuestoTrabajoListController(getView());
+                    break;
+                case IPV:
+                    controller = new IPVController(getView());
+                    break;
+                case COMENZAR_DIA:
+                    if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 3) {
+                        String date = JOptionPane.showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
+                                + "o deje la casilla en blanco para comenzar en el ultimo dia sin cerrar ", "Entrada", JOptionPane.QUESTION_MESSAGE);
+                        if (date == null) {
+                                controller = new VentaDetailController(getView());
+                        } else {
+                            try {
+                                Venta v = VentaDAO.getInstance().find(R.DATE_FORMAT.parse(date));
+                                if (v == null) {
+                                    controller = new VentaDetailController(getView(),R.DATE_FORMAT.parse(date));
+                                } else {
+                                    controller = new VentaDetailController(v, getView());
+                                }
+                            } catch (ParseException ex) {
+                                showErrorDialog(getView(), ex.getMessage());
+                            }
                         }
+                    } else {
+                        controller = new VentaDetailController(getView());
                     }
-                } else {
-                    controller = new VentaDetailController(getView());
-                }
-                break;
-            default:
-                throw new DevelopingOperationException(getView());
+                    break;
+                default:
+                    getView().setEnabled(true);
+                    throw new DevelopingOperationException(getView());
 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        getView().setEnabled(true);
     }
 
     private void validate(Personal loggedUser, MenuButtons menuButtons) {

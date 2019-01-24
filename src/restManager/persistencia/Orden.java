@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -28,6 +29,7 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
+@Table(name = "orden")
 @NamedQueries({
     @NamedQuery(name = "Orden.findAll", query = "SELECT o FROM Orden o"),
     @NamedQuery(name = "Orden.findByCodOrden", query = "SELECT o FROM Orden o WHERE o.codOrden = :codOrden"),
@@ -55,6 +57,7 @@ public class Orden implements Serializable {
     @Column(name = "de_la_casa")
     private boolean deLaCasa;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "porciento")
     private Float porciento;
     @Column(name = "ganancia_xporciento")
     private Float gananciaXporciento;

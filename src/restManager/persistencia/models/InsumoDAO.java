@@ -5,10 +5,8 @@
  */
 package restManager.persistencia.models;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import restManager.persistencia.Insumo;
-import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.InsumoElaborado;
 /**
  * FirstDream
@@ -67,9 +65,7 @@ public class InsumoDAO extends AbstractModel<Insumo> {
         if (insumo.getInsumoElaboradoList1() == null) {
             insumo.setInsumoElaboradoList1(new ArrayList<>());
         }
-        if (insumo.getInsumoAlmacenList() == null) {
-            insumo.setInsumoAlmacenList(new ArrayList<>());
-        }
+
         
         getEntityManager().persist(insumo);
     }

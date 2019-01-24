@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -23,18 +24,16 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
+@Table(name = "ipv")
 @NamedQueries({
     @NamedQuery(name = "Ipv.findAll", query = "SELECT i FROM Ipv i"),
     @NamedQuery(name = "Ipv.findByInsumocodInsumo", query = "SELECT i FROM Ipv i WHERE i.ipvPK.insumocodInsumo = :insumocodInsumo"),
-    @NamedQuery(name = "Ipv.findByCocinacodCocina", query = "SELECT i FROM Ipv i WHERE i.ipvPK.cocinacodCocina = :cocinacodCocina"),
-    @NamedQuery(name = "Ipv.findByCantidad", query = "SELECT i FROM Ipv i WHERE i.cantidad = :cantidad")})
+    @NamedQuery(name = "Ipv.findByCocinacodCocina", query = "SELECT i FROM Ipv i WHERE i.ipvPK.cocinacodCocina = :cocinacodCocina")})
 public class Ipv implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected IpvPK ipvPK;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    private Float cantidad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ipv")
     private List<IpvRegistro> ipvRegistroList;
     @JoinColumn(name = "cocinacod_cocina", referencedColumnName = "cod_cocina", insertable = false, updatable = false)
@@ -61,14 +60,6 @@ public class Ipv implements Serializable {
 
     public void setIpvPK(IpvPK ipvPK) {
         this.ipvPK = ipvPK;
-    }
-
-    public Float getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Float cantidad) {
-        this.cantidad = cantidad;
     }
 
     public List<IpvRegistro> getIpvRegistroList() {

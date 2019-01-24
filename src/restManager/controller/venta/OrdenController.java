@@ -11,15 +11,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import restManager.controller.AbstractFragmentController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
+import restManager.persistencia.IpvRegistro;
+import restManager.persistencia.IpvRegistroPK;
 
 import restManager.persistencia.Mesa;
 import restManager.persistencia.Nota;
 import restManager.persistencia.NotaPK;
 import restManager.persistencia.Orden;
+import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
+import restManager.persistencia.models.IpvRegistroDAO;
 import restManager.persistencia.models.MesaDAO;
 import restManager.persistencia.models.NotaDAO;
 import restManager.persistencia.models.OrdenDAO;
@@ -166,9 +171,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 instance.setMesacodMesa(m);
                 MesaDAO.getInstance().edit(m);
                 setDismissOnAction(true);
-                setShowDialogs(false);
-                update(instance);
-                setDismissOnAction(false);
+                update(instance, true);
             }
         }
         setShowDialogs(false);
@@ -188,7 +191,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
             instance.getProductovOrdenList().remove(objectAtSelectedRow);
         }
-
+        updateIPVs(objectAtSelectedRow, UpdateIpvAction.REMOVER);
         update(instance);
         view.updateValorTotal();
     }
@@ -265,9 +268,34 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             ProductovOrdenDAO.getInstance().create(founded);
             getInstance().getProductovOrdenList().add(founded);
         }
+        updateIPVs(founded, UpdateIpvAction.AGREGAR);
         update(instance);
         view.updateValorTotal();
 
     }
 
+    public void updateIPVs(ProductovOrden founded, UpdateIpvAction action) {
+        String cocina_cod = founded.getProductoVenta().getCocinacodCocina().getCodCocina();
+        for (ProductoInsumo prodIns : founded.getProductoVenta().getProductoInsumoList()) {
+            IpvRegistroPK pk = new IpvRegistroPK(prodIns.getInsumo().getCodInsumo(), cocina_cod, instance.getVentafecha().getFecha());
+            IpvRegistro reg = IpvRegistroDAO.getInstance().find(pk);
+            if (reg != null) {
+                switch (action) {
+                    case AGREGAR:
+                        reg.setConsumo(reg.getConsumo() + prodIns.getCantidad());
+                        break;
+                    case REMOVER:
+                        reg.setConsumo(reg.getConsumo() - prodIns.getCantidad());
+                        break;
+                }
+                IpvRegistroDAO.getInstance().startTransaction();
+                IpvRegistroDAO.getInstance().edit(reg);
+                IpvRegistroDAO.getInstance().commitTransaction();
+            }
+        }
+    }
+
+    public enum UpdateIpvAction {
+        AGREGAR, REMOVER
+    }
 }

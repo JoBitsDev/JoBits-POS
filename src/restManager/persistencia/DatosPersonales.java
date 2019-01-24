@@ -36,16 +36,22 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "DatosPersonales.findByTelefonoFijo", query = "SELECT d FROM DatosPersonales d WHERE d.telefonoFijo = :telefonoFijo"),
     @NamedQuery(name = "DatosPersonales.findByFechaNacimineto", query = "SELECT d FROM DatosPersonales d WHERE d.fechaNacimineto = :fechaNacimineto"),
     @NamedQuery(name = "DatosPersonales.findByEdad", query = "SELECT d FROM DatosPersonales d WHERE d.edad = :edad"),
-    @NamedQuery(name = "DatosPersonales.findBySexo", query = "SELECT d FROM DatosPersonales d WHERE d.sexo = :sexo")})
+    @NamedQuery(name = "DatosPersonales.findBySexo", query = "SELECT d FROM DatosPersonales d WHERE d.sexo = :sexo"),
+    @NamedQuery(name = "DatosPersonales.findByCarnet", query = "SELECT d FROM DatosPersonales d WHERE d.carnet = :carnet"),
+    @NamedQuery(name = "DatosPersonales.findByDireccion", query = "SELECT d FROM DatosPersonales d WHERE d.direccion = :direccion"),
+    @NamedQuery(name = "DatosPersonales.findByDescripcion", query = "SELECT d FROM DatosPersonales d WHERE d.descripcion = :descripcion")})
 public class DatosPersonales implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @Column(name = "personalusuario")
     private String personalusuario;
     @Basic(optional = false)
+    @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
+    @Column(name = "apellidos")
     private String apellidos;
     @Column(name = "telefono_movil")
     private Integer telefonoMovil;
@@ -54,8 +60,16 @@ public class DatosPersonales implements Serializable {
     @Column(name = "fecha_nacimineto")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimineto;
+    @Column(name = "edad")
     private Integer edad;
+    @Column(name = "sexo")
     private Character sexo;
+    @Column(name = "carnet")
+    private String carnet;
+    @Column(name = "direccion")
+    private String direccion;
+    @Column(name = "descripcion")
+    private String descripcion;
     @JoinColumn(name = "personalusuario", referencedColumnName = "usuario", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Personal personal;
@@ -135,6 +149,30 @@ public class DatosPersonales implements Serializable {
 
     public void setSexo(Character sexo) {
         this.sexo = sexo;
+    }
+
+    public String getCarnet() {
+        return carnet;
+    }
+
+    public void setCarnet(String carnet) {
+        this.carnet = carnet;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Personal getPersonal() {

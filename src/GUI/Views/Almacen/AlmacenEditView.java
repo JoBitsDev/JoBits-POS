@@ -15,7 +15,6 @@ import restManager.controller.almacen.AlmacenManageController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
-import restManager.persistencia.InsumoAlmacen;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.comun;
@@ -33,7 +32,7 @@ public class AlmacenEditView extends AbstractView {
      * @param modal
      */
     Almacen a;
-    RestManagerAbstractTableModel<InsumoAlmacen> model;
+    //RestManagerAbstractTableModel<InsumoAlmacen> model;
 
     public AlmacenEditView(AbstractDialogController controller, Dialog owner, boolean modal) {
         super(DialogType.NORMAL, controller, owner, modal);
@@ -43,75 +42,75 @@ public class AlmacenEditView extends AbstractView {
 
     @Override
     public void updateView() {
-        model = new RestManagerAbstractTableModel<InsumoAlmacen>(a.getInsumoAlmacenList(), jXTable1) {
-            @Override
-            public int getColumnCount() {
-                return 5;
-            }
-
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-                switch (columnIndex) {
-                    case 0:
-                        return items.get(rowIndex).getInsumo().getCodInsumo();
-                    case 2:
-                        return items.get(rowIndex).getInsumo().getNombre();
-                    case 1:
-                        return items.get(rowIndex).getInsumo().getUm();
-                    case 3:
-                        return items.get(rowIndex).getCantidad();
-                    case 4:
-                        return items.get(rowIndex).getInsumo().getCostoPorUnidad();
-                    case 5:
-                        return items.get(rowIndex).getCantidad() * items.get(rowIndex).getInsumo().getCostoPorUnidad();
-                    default:
-                        return null;
-
-                }
-            }
-
-            @Override
-            public String getColumnName(int column) {
-                switch (column) {
-                    case 0:
-                        return "Codigo";
-                    case 2:
-                        return "Nombre";
-                    case 1:
-                        return "UM";
-                    case 3:
-                        return "En Almacen";
-                    case 4:
-                        return "Costo Unitario (Prom)";
-                    case 5:
-                        return "Valor Total";
-                    default:
-                        return null;
-                }
-            }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                switch (columnIndex) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return String.class;
-                    case 3:
-                        return Float.class;
-                    case 4:
-                        return Float.class;
-                    case 5:
-                        return Float.class;
-                    default:
-                        return null;
-                }
-            }
-
-        };
-        jXTable1.setModel(model);
+//        model = new RestManagerAbstractTableModel<Insumo>(a.getInsumoList(), jXTable1) {
+//            @Override
+//            public int getColumnCount() {
+//                return 5;
+//            }
+//
+//            @Override
+//            public Object getValueAt(int rowIndex, int columnIndex) {
+//                switch (columnIndex) {
+//                    case 0:
+//                        return items.get(rowIndex).getCodInsumo();
+//                    case 2:
+//                        return items.get(rowIndex).getNombre();
+//                    case 1:
+//                        return items.get(rowIndex).getUm();
+//                    case 3:
+//                        return items;
+//                    case 4:
+//                        return items.get(rowIndex).getInsumo().getCostoPorUnidad();
+//                    case 5:
+//                        return items.get(rowIndex).getCantidad() * items.get(rowIndex).getInsumo().getCostoPorUnidad();
+//                    default:
+//                        return null;
+//
+//                }
+//            }
+//
+//            @Override
+//            public String getColumnName(int column) {
+//                switch (column) {
+//                    case 0:
+//                        return "Codigo";
+//                    case 2:
+//                        return "Nombre";
+//                    case 1:
+//                        return "UM";
+//                    case 3:
+//                        return "En Almacen";
+//                    case 4:
+//                        return "Costo Unitario (Prom)";
+//                    case 5:
+//                        return "Valor Total";
+//                    default:
+//                        return null;
+//                }
+//            }
+//
+//            @Override
+//            public Class<?> getColumnClass(int columnIndex) {
+//                switch (columnIndex) {
+//                    case 0:
+//                        return String.class;
+//                    case 1:
+//                        return String.class;
+//                    case 2:
+//                        return String.class;
+//                    case 3:
+//                        return Float.class;
+//                    case 4:
+//                        return Float.class;
+//                    case 5:
+//                        return Float.class;
+//                    default:
+//                        return null;
+//                }
+//            }
+//
+//        };
+      //  jXTable1.setModel(model);
         setTitle(a.getNombre());
         jXLabelValorTotal.setText(comun.setDosLugaresDecimales(a.getValorMonetario()));
 

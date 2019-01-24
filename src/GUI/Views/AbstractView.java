@@ -19,6 +19,7 @@ import restManager.controller.Controller;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.resources.values.Fonts;
 import restManager.util.ComponentMover;
+import restManager.util.LoadingWindow;
 
 /**
  * FirstDream
@@ -182,7 +183,7 @@ public abstract class AbstractView extends JDialog implements  View{
     public Dimension getMaximumSize() {
         return super.getMaximumSize(); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public Dimension getMinimumSize() {
         switch (DIALOG_TYPE) {
@@ -211,10 +212,6 @@ public abstract class AbstractView extends JDialog implements  View{
         return Fonts.BODY;
     }
 
-    void getOptionPanelBackground(){
-    
-    }
-    
     //
     //Private Methods
     //
@@ -225,6 +222,7 @@ public abstract class AbstractView extends JDialog implements  View{
         setMinimumSize(getMinimumSize());
         setPreferredSize(getPreferredSize());
         setFont(getFont());
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         ComponentMover cr = new ComponentMover(this, this);
     }
 

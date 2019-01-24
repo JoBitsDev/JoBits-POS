@@ -12,9 +12,12 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -22,11 +25,11 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
+@Table(name = "seccion")
 @NamedQueries({
     @NamedQuery(name = "Seccion.findAll", query = "SELECT s FROM Seccion s"),
     @NamedQuery(name = "Seccion.findByNombreSeccion", query = "SELECT s FROM Seccion s WHERE s.nombreSeccion = :nombreSeccion"),
-    @NamedQuery(name = "Seccion.findByDescripcion", query = "SELECT s FROM Seccion s WHERE s.descripcion = :descripcion"),
-    @NamedQuery(name = "Seccion.findByCartacodCarta", query = "SELECT s FROM Seccion s WHERE s.cartacodCarta = :cartacodCarta")})
+    @NamedQuery(name = "Seccion.findByDescripcion", query = "SELECT s FROM Seccion s WHERE s.descripcion = :descripcion")})
 public class Seccion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,23 +37,19 @@ public class Seccion implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre_seccion")
     private String nombreSeccion;
+    @Column(name = "descripcion")
     private String descripcion;
-    @Basic(optional = false)
-    @Column(name = "cartacod_carta")
-    private String cartacodCarta;
     @OneToMany(mappedBy = "seccionnombreSeccion")
     private List<ProductoVenta> productoVentaList;
+    @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")
+    @ManyToOne
+    private Carta cartacodCarta;
 
     public Seccion() {
     }
 
     public Seccion(String nombreSeccion) {
         this.nombreSeccion = nombreSeccion;
-    }
-
-    public Seccion(String nombreSeccion, String cartacodCarta) {
-        this.nombreSeccion = nombreSeccion;
-        this.cartacodCarta = cartacodCarta;
     }
 
     public String getNombreSeccion() {
@@ -69,20 +68,20 @@ public class Seccion implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public String getCartacodCarta() {
-        return cartacodCarta;
-    }
-
-    public void setCartacodCarta(String cartacodCarta) {
-        this.cartacodCarta = cartacodCarta;
-    }
-
     public List<ProductoVenta> getProductoVentaList() {
         return productoVentaList;
     }
 
     public void setProductoVentaList(List<ProductoVenta> productoVentaList) {
         this.productoVentaList = productoVentaList;
+    }
+
+    public Carta getCartacodCarta() {
+        return cartacodCarta;
+    }
+
+    public void setCartacodCarta(Carta cartacodCarta) {
+        this.cartacodCarta = cartacodCarta;
     }
 
     @Override

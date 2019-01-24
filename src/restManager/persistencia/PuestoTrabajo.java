@@ -9,6 +9,7 @@ package restManager.persistencia;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -70,7 +71,7 @@ public class PuestoTrabajo implements Serializable {
         @JoinColumn(name = "personalusuario", referencedColumnName = "usuario")})
     @ManyToMany
     private List<Personal> personalList;
-    @OneToMany(mappedBy = "puestoTrabajonombrePuesto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "puestoTrabajonombrePuesto")
     private List<Personal> personalList1;
 
     public PuestoTrabajo() {

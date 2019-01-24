@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package restManager.persistencia;
 
 import java.io.Serializable;
@@ -22,9 +23,8 @@ import restManager.resources.R;
 
 /**
  * FirstDream
- *
  * @author Jorge
- *
+ * 
  */
 @Entity
 @Table(name = "producto_venta")
@@ -45,14 +45,19 @@ public class ProductoVenta implements Serializable {
     @Column(name = "p_cod")
     private String pCod;
     @Basic(optional = false)
+    @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
     @Column(name = "precio_venta")
     private float precioVenta;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "ganancia")
     private Float ganancia;
+    @Column(name = "gasto")
     private Float gasto;
+    @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "visible")
     private Boolean visible;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoVenta")
     private List<ProductoInsumo> productoInsumoList;

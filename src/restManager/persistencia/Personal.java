@@ -22,6 +22,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -31,6 +32,7 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
+@Table(name = "personal")
 @NamedQueries({
     @NamedQuery(name = "Personal.findAll", query = "SELECT p FROM Personal p"),
     @NamedQuery(name = "Personal.findByUsuario", query = "SELECT p FROM Personal p WHERE p.usuario = :usuario"),
@@ -43,15 +45,20 @@ public class Personal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @Column(name = "usuario")
     private String usuario;
     @Basic(optional = false)
+    @Column(name = "contrasenna")
     private String contrasenna;
+    @Column(name = "online")
     private Boolean online;
+    @Column(name = "frecuencia")
     private Short frecuencia;
     @Column(name = "ultimodia_trabajo")
     @Temporal(TemporalType.DATE)
     private Date ultimodiaTrabajo;
     @Lob
+    @Column(name = "foto")
     private byte[] foto;
     @ManyToMany(mappedBy = "personalList")
     private List<PuestoTrabajo> puestoTrabajoList;
@@ -60,7 +67,7 @@ public class Personal implements Serializable {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personal")
     private DatosPersonales datosPersonales;
     @JoinColumn(name = "puesto_trabajonombre_puesto", referencedColumnName = "nombre_puesto")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private PuestoTrabajo puestoTrabajonombrePuesto;
 
     public Personal() {

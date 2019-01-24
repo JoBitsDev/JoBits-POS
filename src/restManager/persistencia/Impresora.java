@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -22,6 +23,7 @@ import javax.persistence.NamedQuery;
  * 
  */
 @Entity
+@Table(name = "impresora")
 @NamedQueries({
     @NamedQuery(name = "Impresora.findAll", query = "SELECT i FROM Impresora i"),
     @NamedQuery(name = "Impresora.findByCodImpresora", query = "SELECT i FROM Impresora i WHERE i.codImpresora = :codImpresora"),
@@ -38,6 +40,7 @@ public class Impresora implements Serializable {
     @Basic(optional = false)
     @Column(name = "ip_impresora")
     private String ipImpresora;
+    @Column(name = "estaactiva")
     private Boolean estaactiva;
     @Column(name = "nombre_impresora")
     private String nombreImpresora;

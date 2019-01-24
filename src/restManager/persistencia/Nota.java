@@ -7,6 +7,7 @@
 package restManager.persistencia;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,6 +15,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -21,6 +23,7 @@ import javax.persistence.OneToOne;
  * 
  */
 @Entity
+@Table(name = "nota")
 @NamedQueries({
     @NamedQuery(name = "Nota.findAll", query = "SELECT n FROM Nota n"),
     @NamedQuery(name = "Nota.findByProductovOrdenproductoVentapCod", query = "SELECT n FROM Nota n WHERE n.notaPK.productovOrdenproductoVentapCod = :productovOrdenproductoVentapCod"),
@@ -31,6 +34,7 @@ public class Nota implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected NotaPK notaPK;
+    @Column(name = "descripcion")
     private String descripcion;
     @JoinColumns({
         @JoinColumn(name = "productov_ordenproducto_ventap_cod", referencedColumnName = "producto_ventap_cod", insertable = false, updatable = false),

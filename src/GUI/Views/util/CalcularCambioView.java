@@ -3,13 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package GUI;
+package GUI.Views.util;
 
-import GUI.Views.login.Main;
-import java.awt.geom.RoundRectangle2D;
-import javax.swing.JOptionPane;
 import restManager.persistencia.Orden;
-import restManager.persistencia.PuestoTrabajo;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.util.ComponentMover;
@@ -19,21 +15,21 @@ import restManager.util.comun;
  *
  * @author Jorge
  */
-public class CalcularCambio extends javax.swing.JDialog {
+public class CalcularCambioView extends javax.swing.JDialog {
 
     /**
      * Creates new form PuestoTrabajoCrear
      */
     private Orden o;
 
-    public CalcularCambio(java.awt.Frame parent, boolean modal, Orden o) {
+    public CalcularCambioView(java.awt.Frame parent, boolean modal, Orden o) {
         super(parent, modal);
         this.o = o;
         init(o);
 
     }
 
-    public CalcularCambio(java.awt.Dialog parent, boolean modal, Orden o) {
+    public CalcularCambioView(java.awt.Dialog parent, boolean modal, Orden o) {
         super(parent, modal);
         this.o = o;
         init(o);
@@ -75,7 +71,6 @@ public class CalcularCambio extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
-        setMaximumSize(new java.awt.Dimension(287, 188));
         setMinimumSize(new java.awt.Dimension(287, 188));
         setType(java.awt.Window.Type.POPUP);
 

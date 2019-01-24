@@ -191,7 +191,7 @@ public class VentaLista extends javax.swing.JDialog {
             try {
                 Date f = restManager.resources.R.DATE_FORMAT.parse(
                         (String) jTableLista.getValueAt(jTableLista.getSelectedRow(), 1));
-                VentaMain.getInstance(this.getParent(), true, staticContent.ventaJPA.findVenta(f));
+//                VentaMain.getInstance(this.getParent(), true, staticContent.ventaJPA.findVenta(f));
                //VentaDetailController controller = new VentaDetailController(VentaDAO.getInstance().find(f), this);
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(null, "Error al abrir el dia seleccionado");
@@ -253,7 +253,7 @@ public class VentaLista extends javax.swing.JDialog {
 
             }
             ret.setFecha(fechainicio);
-            new Resumen(this, true, ret, fechafin);
+            //new Resumen(this, true, ret, fechafin);
         } catch (NullPointerException | ParseException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

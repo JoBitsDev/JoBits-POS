@@ -13,9 +13,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -23,6 +26,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
+@Table(name = "insumo")
 @NamedQueries({
     @NamedQuery(name = "Insumo.findAll", query = "SELECT i FROM Insumo i"),
     @NamedQuery(name = "Insumo.findByCodInsumo", query = "SELECT i FROM Insumo i WHERE i.codInsumo = :codInsumo"),
@@ -31,7 +35,8 @@ import javax.persistence.OneToMany;
     @NamedQuery(name = "Insumo.findByElaborado", query = "SELECT i FROM Insumo i WHERE i.elaborado = :elaborado"),
     @NamedQuery(name = "Insumo.findByCostoPorUnidad", query = "SELECT i FROM Insumo i WHERE i.costoPorUnidad = :costoPorUnidad"),
     @NamedQuery(name = "Insumo.findByStockEstimation", query = "SELECT i FROM Insumo i WHERE i.stockEstimation = :stockEstimation"),
-    @NamedQuery(name = "Insumo.findByCantidadCreada", query = "SELECT i FROM Insumo i WHERE i.cantidadCreada = :cantidadCreada")})
+    @NamedQuery(name = "Insumo.findByCantidadCreada", query = "SELECT i FROM Insumo i WHERE i.cantidadCreada = :cantidadCreada"),
+    @NamedQuery(name = "Insumo.findByCantidadExistente", query = "SELECT i FROM Insumo i WHERE i.cantidadExistente = :cantidadExistente")})
 public class Insumo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,8 +45,11 @@ public class Insumo implements Serializable {
     @Column(name = "cod_insumo")
     private String codInsumo;
     @Basic(optional = false)
+    @Column(name = "nombre")
     private String nombre;
+    @Column(name = "um")
     private String um;
+    @Column(name = "elaborado")
     private Boolean elaborado;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "costo_por_unidad")
@@ -50,10 +58,15 @@ public class Insumo implements Serializable {
     private Float stockEstimation;
     @Column(name = "cantidad_creada")
     private Float cantidadCreada;
+    @Column(name = "cantidad_existente")
+    private Float cantidadExistente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<ProductoInsumo> productoInsumoList;
+    @JoinColumn(name = "almacencod_almacen", referencedColumnName = "cod_almacen")
+    @ManyToOne
+    private Almacen almacencodAlmacen;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
-    private List<InsumoAlmacen> insumoAlmacenList;
+    private List<InsumoTransaccion> insumoTransaccionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<Ipv> ipvList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
@@ -129,6 +142,14 @@ public class Insumo implements Serializable {
         this.cantidadCreada = cantidadCreada;
     }
 
+    public Float getCantidadExistente() {
+        return cantidadExistente;
+    }
+
+    public void setCantidadExistente(Float cantidadExistente) {
+        this.cantidadExistente = cantidadExistente;
+    }
+
     public List<ProductoInsumo> getProductoInsumoList() {
         return productoInsumoList;
     }
@@ -137,12 +158,20 @@ public class Insumo implements Serializable {
         this.productoInsumoList = productoInsumoList;
     }
 
-    public List<InsumoAlmacen> getInsumoAlmacenList() {
-        return insumoAlmacenList;
+    public Almacen getAlmacencodAlmacen() {
+        return almacencodAlmacen;
     }
 
-    public void setInsumoAlmacenList(List<InsumoAlmacen> insumoAlmacenList) {
-        this.insumoAlmacenList = insumoAlmacenList;
+    public void setAlmacencodAlmacen(Almacen almacencodAlmacen) {
+        this.almacencodAlmacen = almacencodAlmacen;
+    }
+
+    public List<InsumoTransaccion> getInsumoTransaccionList() {
+        return insumoTransaccionList;
+    }
+
+    public void setInsumoTransaccionList(List<InsumoTransaccion> insumoTransaccionList) {
+        this.insumoTransaccionList = insumoTransaccionList;
     }
 
     public List<Ipv> getIpvList() {

@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -25,6 +26,7 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
+@Table(name = "cliente")
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
     @NamedQuery(name = "Cliente.findByCodCliente", query = "SELECT c FROM Cliente c WHERE c.codCliente = :codCliente"),
@@ -45,6 +47,7 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre_cliente")
     private String nombreCliente;
+    @Basic(optional = false)
     @Column(name = "apellidos_cliente")
     private String apellidosCliente;
     @Column(name = "direccion_cliente")
@@ -68,9 +71,10 @@ public class Cliente implements Serializable {
         this.codCliente = codCliente;
     }
 
-    public Cliente(String codCliente, String nombreCliente) {
+    public Cliente(String codCliente, String nombreCliente, String apellidosCliente) {
         this.codCliente = codCliente;
         this.nombreCliente = nombreCliente;
+        this.apellidosCliente = apellidosCliente;
     }
 
     public String getCodCliente() {

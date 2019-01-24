@@ -5,6 +5,11 @@
  */
 package restManager.persistencia.Control;
 
+import restManager.persistencia.ProductovOrden;
+import restManager.persistencia.Venta;
+import restManager.persistencia.Cocina;
+import restManager.persistencia.ProductoInsumo;
+import restManager.persistencia.Personal;
 import java.util.List;
 import javax.swing.JTable;
 import org.junit.After;
@@ -13,11 +18,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import restManager.persistencia.Cocina;
-import restManager.persistencia.Personal;
-import restManager.persistencia.ProductoInsumo;
-import restManager.persistencia.ProductovOrden;
-import restManager.persistencia.Venta;
 
 /**
  *

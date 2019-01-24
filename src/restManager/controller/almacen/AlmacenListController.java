@@ -73,7 +73,8 @@ public class AlmacenListController extends AbstractListController<Almacen> {
         if (storageName != null) {
             if (storageName.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
                 selected = new Almacen();
-                selected.setInsumoAlmacenList(new ArrayList<>());
+                selected.setInsumoList(new ArrayList<>());
+                selected.setTransaccionList(new ArrayList<>());
                 selected.setCantidadInsumos(0);
                 selected.setValorMonetario(Float.parseFloat("0"));
                 selected.setCodAlmacen(super.getModel().generateStringCode(PREFIX_FOR_ID));

@@ -182,6 +182,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelData.setLayout(new java.awt.BorderLayout());
 
+        jTabbedPaneData.setToolTipText("");
+
         jPanelResumen.setLayout(new javax.swing.BoxLayout(jPanelResumen, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelResumenVentas.setBackground(new java.awt.Color(153, 255, 153));
@@ -276,6 +278,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jButton8.setText(bundle.getString("label_imprimir")); // NOI18N
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
         jPanelVentasCocinas.add(jButton8, java.awt.BorderLayout.PAGE_END);
 
         jPanelResumenVentas.add(jPanelVentasCocinas);
@@ -398,16 +405,25 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private void jButtonImprimirDptesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirDptesActionPerformed
         int row = jTableVentasDependientes.getSelectedRow();
         if (row == -1) {
-           throw new NoSelectedException(jTableVentasDependientes);
+            throw new NoSelectedException(jTableVentasDependientes);
         }
-        getController().printSelectedRow((String)jTableVentasDependientes.getValueAt(row, 0));        // TODO add your handling code here:
+        getController().printPersonalResumenRow((String) jTableVentasDependientes.getValueAt(row, 0));        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonImprimirDptesActionPerformed
 
     private void jButtonImprimirZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirZActionPerformed
-getController().printZ();        // TODO add your handling code here:
+        getController().printZ();        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonImprimirZActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        int row = jTableVentasDependientes.getSelectedRow();
+        if (row == -1) {
+            throw new NoSelectedException(jTableVentasDependientes);
+        }
+        getController().printCocinaResumen((String)jTableVentasPorCocina.getValueAt(row, 0));      
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     @Override
+
     public void setEditingMode() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -549,7 +565,7 @@ getController().printZ();        // TODO add your handling code here:
             }
         });
         adj.adjustColumns();
-        if(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 4){
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 4) {
             jTabbedPaneData.remove(0);
         }
     }
@@ -568,7 +584,7 @@ getController().printZ();        // TODO add your handling code here:
         c.forEach((x) -> {
             VentaDAO1.getResumenVentasCocinaOnTable(jTableVentasPorCocina, getInstance(), x);
         });
-        
+
     }
 
 }

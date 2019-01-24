@@ -8,6 +8,7 @@ package restManager.persistencia;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -35,8 +36,10 @@ public class InsumoElaborado implements Serializable {
     @EmbeddedId
     protected InsumoElaboradoPK insumoElaboradoPK;
     @Basic(optional = false)
+    @Column(name = "cantidad")
     private float cantidad;
     @Basic(optional = false)
+    @Column(name = "costo")
     private float costo;
     @JoinColumn(name = "insumocod_nombre", referencedColumnName = "cod_insumo", insertable = false, updatable = false)
     @ManyToOne(optional = false)

@@ -9,13 +9,13 @@ package restManager.persistencia;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * FirstDream
@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
+@Table(name = "almacen")
 @NamedQueries({
     @NamedQuery(name = "Almacen.findAll", query = "SELECT a FROM Almacen a"),
     @NamedQuery(name = "Almacen.findByCodAlmacen", query = "SELECT a FROM Almacen a WHERE a.codAlmacen = :codAlmacen"),
@@ -36,14 +37,17 @@ public class Almacen implements Serializable {
     @Basic(optional = false)
     @Column(name = "cod_almacen")
     private String codAlmacen;
+    @Column(name = "nombre")
     private String nombre;
     @Column(name = "cantidad_insumos")
     private Integer cantidadInsumos;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "valor_monetario")
     private Float valorMonetario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacen")
-    private List<InsumoAlmacen> insumoAlmacenList;
+    @OneToMany(mappedBy = "almacencodAlmacen")
+    private List<Transaccion> transaccionList;
+    @OneToMany(mappedBy = "almacencodAlmacen")
+    private List<Insumo> insumoList;
 
     public Almacen() {
     }
@@ -84,12 +88,20 @@ public class Almacen implements Serializable {
         this.valorMonetario = valorMonetario;
     }
 
-    public List<InsumoAlmacen> getInsumoAlmacenList() {
-        return insumoAlmacenList;
+    public List<Transaccion> getTransaccionList() {
+        return transaccionList;
     }
 
-    public void setInsumoAlmacenList(List<InsumoAlmacen> insumoAlmacenList) {
-        this.insumoAlmacenList = insumoAlmacenList;
+    public void setTransaccionList(List<Transaccion> transaccionList) {
+        this.transaccionList = transaccionList;
+    }
+
+    public List<Insumo> getInsumoList() {
+        return insumoList;
+    }
+
+    public void setInsumoList(List<Insumo> insumoList) {
+        this.insumoList = insumoList;
     }
 
     @Override
