@@ -13,8 +13,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -35,8 +33,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Insumo.findByElaborado", query = "SELECT i FROM Insumo i WHERE i.elaborado = :elaborado"),
     @NamedQuery(name = "Insumo.findByCostoPorUnidad", query = "SELECT i FROM Insumo i WHERE i.costoPorUnidad = :costoPorUnidad"),
     @NamedQuery(name = "Insumo.findByStockEstimation", query = "SELECT i FROM Insumo i WHERE i.stockEstimation = :stockEstimation"),
-    @NamedQuery(name = "Insumo.findByCantidadCreada", query = "SELECT i FROM Insumo i WHERE i.cantidadCreada = :cantidadCreada"),
-    @NamedQuery(name = "Insumo.findByCantidadExistente", query = "SELECT i FROM Insumo i WHERE i.cantidadExistente = :cantidadExistente")})
+    @NamedQuery(name = "Insumo.findByCantidadCreada", query = "SELECT i FROM Insumo i WHERE i.cantidadCreada = :cantidadCreada")})
 public class Insumo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,15 +55,12 @@ public class Insumo implements Serializable {
     private Float stockEstimation;
     @Column(name = "cantidad_creada")
     private Float cantidadCreada;
-    @Column(name = "cantidad_existente")
-    private Float cantidadExistente;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<ProductoInsumo> productoInsumoList;
-    @JoinColumn(name = "almacencod_almacen", referencedColumnName = "cod_almacen")
-    @ManyToOne
-    private Almacen almacencodAlmacen;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
-    private List<InsumoTransaccion> insumoTransaccionList;
+    private List<Transaccion> transaccionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
+    private List<InsumoAlmacen> insumoAlmacenList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<Ipv> ipvList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
@@ -142,14 +136,6 @@ public class Insumo implements Serializable {
         this.cantidadCreada = cantidadCreada;
     }
 
-    public Float getCantidadExistente() {
-        return cantidadExistente;
-    }
-
-    public void setCantidadExistente(Float cantidadExistente) {
-        this.cantidadExistente = cantidadExistente;
-    }
-
     public List<ProductoInsumo> getProductoInsumoList() {
         return productoInsumoList;
     }
@@ -158,20 +144,20 @@ public class Insumo implements Serializable {
         this.productoInsumoList = productoInsumoList;
     }
 
-    public Almacen getAlmacencodAlmacen() {
-        return almacencodAlmacen;
+    public List<Transaccion> getTransaccionList() {
+        return transaccionList;
     }
 
-    public void setAlmacencodAlmacen(Almacen almacencodAlmacen) {
-        this.almacencodAlmacen = almacencodAlmacen;
+    public void setTransaccionList(List<Transaccion> transaccionList) {
+        this.transaccionList = transaccionList;
     }
 
-    public List<InsumoTransaccion> getInsumoTransaccionList() {
-        return insumoTransaccionList;
+    public List<InsumoAlmacen> getInsumoAlmacenList() {
+        return insumoAlmacenList;
     }
 
-    public void setInsumoTransaccionList(List<InsumoTransaccion> insumoTransaccionList) {
-        this.insumoTransaccionList = insumoTransaccionList;
+    public void setInsumoAlmacenList(List<InsumoAlmacen> insumoAlmacenList) {
+        this.insumoAlmacenList = insumoAlmacenList;
     }
 
     public List<Ipv> getIpvList() {

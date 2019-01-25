@@ -8,6 +8,8 @@ package restManager.persistencia;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import restManager.resources.R;
 
@@ -61,6 +64,8 @@ public class IpvRegistro implements Serializable {
     private Float final1;
     @Column(name = "final_real")
     private Float finalReal;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ipvRegistro")
+    private List<TransaccionSalida> transaccionSalidaList;
     @JoinColumns({
         @JoinColumn(name = "ipvinsumocod_insumo", referencedColumnName = "insumocod_insumo", insertable = false, updatable = false),
         @JoinColumn(name = "ipvcocinacod_cocina", referencedColumnName = "cocinacod_cocina", insertable = false, updatable = false)})
@@ -140,6 +145,14 @@ public class IpvRegistro implements Serializable {
 
     public void setFinalReal(Float finalReal) {
         this.finalReal = finalReal;
+    }
+
+    public List<TransaccionSalida> getTransaccionSalidaList() {
+        return transaccionSalidaList;
+    }
+
+    public void setTransaccionSalidaList(List<TransaccionSalida> transaccionSalidaList) {
+        this.transaccionSalidaList = transaccionSalidaList;
     }
 
     public Ipv getIpv() {
