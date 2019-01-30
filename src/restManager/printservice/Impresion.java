@@ -58,20 +58,21 @@ public class Impresion {
     private final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat(" hh ':' mm ' ' a ");
     private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     private final String DEFAULT_PRINT_LOCATION = null;
-    private static int cantidadCopias = 0;
+    private final boolean IMPRIMIR_TICKET_COCINA = false;
+    private static int cantidadCopias = 1;
 
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
     /**
      * String referentes a la impresion de ordenes
      */
-    private final String CABECERA = "Restaurante",
+    private final String CABECERA = "Carniceria",
             COCINA = "Cocina: ",
             DELACASA = "(Pedido por la casa)",
             ORDEN = "Orden No: ",
             MESA = "Mesa: ",
             FECHA = "Fecha: ",
-            CAMARERO = "Camarero(a): ",
+            CAMARERO = "Cajero(a): ",
             SUBTOTAL = "SubTotal: ",
             TOTAL = "Total: ",
             CUC = " CUC",
@@ -208,8 +209,12 @@ public class Impresion {
 
         addFinal(t);
 
+        for (int i = 0; i < cantidadCopias; i++) {
+            RAM.add(new CopiaTicket(DEFAULT_PRINT_LOCATION, t.finalCommandSet().getBytes()));
+        }
         feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
+        cleanAndPrintRAM();
     }
 
     /**
@@ -220,40 +225,40 @@ public class Impresion {
      * @deprecated usar <code>printKitchen(Orden o,Cocina c,String sync)</code>
      */
     public Orden printKitchen(Orden o) {
-        return printKitchenForced(printKitchen(printCancelationTicket(o), staticContent.cocinaJPA.findCocina("C-2"), ""));
-//        Ticket t = new Ticket();
-//
-//        addHeader(t);
-//
-//        addMetaData(t, o, new Date());
-//
-//        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
-//        for (ProductovOrden x : o.getProductovOrdenList()) {
-//            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
-//                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
-//            }
-//        }
-//        if (cocinasExistentesEnLaOrden.size() > 1) {
-//            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
-//                String sync = SYNC;
-//                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
-//                    if (i == j) {
-//                        continue;
-//                    }
-//                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
-//                }
-//                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
-//            }
-//        } else {
-//            if (cocinasExistentesEnLaOrden.size() > 0) {
-//                printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
-//            }
-//
-//        }
-//
-//        cleanAndPrintRAM();
-//
-//        return o;
+        //return printKitchenForced(printKitchen(printCancelationTicket(o), staticContent.cocinaJPA.findCocina("C-2"), ""));
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        addMetaData(t, o, new Date());
+
+        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
+        for (ProductovOrden x : o.getProductovOrdenList()) {
+            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
+                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
+            }
+        }
+        if (cocinasExistentesEnLaOrden.size() > 1) {
+            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
+                String sync = SYNC;
+                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
+                    if (i == j) {
+                        continue;
+                    }
+                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
+                }
+                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+            }
+        } else {
+            if (cocinasExistentesEnLaOrden.size() > 0) {
+                printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+            }
+
+        }
+
+        cleanAndPrintRAM();
+
+        return o;
 //    }
 //
 //    public Orden printKitchenForced(Orden o) throws PrintException {
@@ -347,40 +352,40 @@ public class Impresion {
 
     public Orden printCancelationTicket(Orden o) {
 
-        return printCancelationKitchenForced(printCancelationKitchen(o, staticContent.cocinaJPA.findCocina("C-2")));
-//        Ticket t = new Ticket();
-//
-//        addHeader(t);
-//
-//        addMetaData(t, o, new Date());
-//
-//        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
-//        for (ProductovOrden x : o.getProductovOrdenList()) {
-//            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
-//                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
-//            }
-//        }
-//        if (cocinasExistentesEnLaOrden.size() > 1) {
-//            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
-//                String sync = SYNC;
-//                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
-//                    if (i == j) {
-//                        continue;
-//                    }
-//                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
-//                }
-//                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
-//            }
-//        } else {
-//            if (cocinasExistentesEnLaOrden.size() > 0) {
-//                printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
-//            }
-//
-//        }
-//
-//        cleanAndPrintRAM();
-//
-//        return o;
+        // return printCancelationKitchenForced(printCancelationKitchen(o, staticContent.cocinaJPA.findCocina("C-2")));
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        addMetaData(t, o, new Date());
+
+        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
+        for (ProductovOrden x : o.getProductovOrdenList()) {
+            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
+                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
+            }
+        }
+        if (cocinasExistentesEnLaOrden.size() > 1) {
+            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
+                String sync = SYNC;
+                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
+                    if (i == j) {
+                        continue;
+                    }
+                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
+                }
+                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+            }
+        } else {
+            if (cocinasExistentesEnLaOrden.size() > 0) {
+                printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+            }
+
+        }
+
+        cleanAndPrintRAM();
+
+        return o;
 //    }
 //
 //    public Orden printKitchenForced(Orden o) throws PrintException {
@@ -512,14 +517,14 @@ public class Impresion {
             }
         }
 
-        addFocusedMessage(t,"");
+        addFocusedMessage(t, "");
 
         t.feed((byte) 3);
         t.finit();
 
         if (!ordenSinPlatos) {
             for (int i = 0; i < cantidadCopias; i++) {
-                RAM.add(new CopiaTicket(c.getNombreCocina(), t.finalCommandSet().getBytes()));
+                //RAM.add(new CopiaTicket(c.getNombreCocina(), t.finalCommandSet().getBytes()));
             }
 
             feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina());
@@ -602,7 +607,7 @@ public class Impresion {
 
         if (!ordenSinPlatos) {
             for (int i = 0; i < cantidadCopias; i++) {
-                RAM.add(new CopiaTicket(c.getNombreCocina(), t.finalCommandSet().getBytes()));
+                // RAM.add(new CopiaTicket(c.getNombreCocina(), t.finalCommandSet().getBytes()));
             }
 
             feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina());
@@ -690,7 +695,7 @@ public class Impresion {
                 }
                 ordenSinPlatos = false;
                 x.setEnviadosacocina(x.getCantidad());
-            } 
+            }
         }
 
         t.addLineSeperator();
@@ -928,7 +933,7 @@ public class Impresion {
 
                 t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total * cambio));
             } else {
-                t.setText(TOTAL_VENTAS + comun.redondeoPorExceso(total / cambio));
+                t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, total / cambio));
             }
 
         }
@@ -959,10 +964,6 @@ public class Impresion {
 
     private void sendToPrinter(byte[] byteData, String printLocation) {
         feedPrinter(byteData, printLocation);
-    }
-
-    private void addDrawerKick(Ticket t) {
-        t.drawerKick();
     }
 
     private void addHeader(Ticket t) {
@@ -1044,7 +1045,14 @@ public class Impresion {
         Doc doc = new SimpleDoc(b, flavor, null);
 
         try {
-            job.print(doc, null);
+            if (printerName != null) {
+                if(IMPRIMIR_TICKET_COCINA){
+                job.print(doc, null);
+            }
+            } else {
+                job.print(doc, null);
+
+            }
         } catch (PrintException ex) {
             Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1186,7 +1194,7 @@ public class Impresion {
             }
         }
 
-        addFocusedMessage(t,"");
+        addFocusedMessage(t, "");
         t.addLineSeperator();
         t.alignCenter();
         t.newLine();

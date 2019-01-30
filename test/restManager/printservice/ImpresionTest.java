@@ -62,13 +62,14 @@ public class ImpresionTest {
      */
     @Test
     public void testPrint() throws Exception {
-        System.out.println("print");
-        Orden o = OrdenDAO.getInstance().find("O-4581");
-        boolean preview = true;
-        //instance.forceBell();
-      instance.printKitchen(o);
-       // print();
-        // TODO review the generated test code and remove the default call to fail.
+       new Impresion().forceDrawerKick();
+//        System.out.println("print");
+//        Orden o = OrdenDAO.getInstance().find("O-4581");
+//        boolean preview = true;
+//        //instance.forceBell();
+//      instance.printKitchen(o);
+//       // print();
+//        // TODO review the generated test code and remove the default call to fail.
        
     }
 

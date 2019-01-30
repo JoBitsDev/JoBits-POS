@@ -2,7 +2,6 @@ package GUI.Views.venta;
 
 import java.awt.print.PrinterException;
 
-
 import java.text.MessageFormat;
 
 import java.util.Date;
@@ -22,51 +21,46 @@ import restManager.persistencia.models.CocinaDAO;
 import restManager.resources.R;
 import restManager.util.comun;
 
-public class Resumenes extends javax.swing.JPanel{
+public class Resumenes extends javax.swing.JPanel {
 
     private Venta dia;
-   // private VentaDAO1 vDAO;
+    // private VentaDAO1 vDAO;
     private Cocina cocina = null;
     private final Date end;
-    private final MessageFormat headerVentas,headerGastos;
+    private final MessageFormat headerVentas, headerGastos;
     private final List<Cocina> cocinas = CocinaDAO.getInstance().findAll();
     private List<Float> listaVentas = new LinkedList<>();
     private List<Float> listaGastos = new LinkedList<>();
 
-    public Resumenes(Venta dia, Date end,String headerVentas,String headerGastos) {
+    public Resumenes(Venta dia, Date end, String headerVentas, String headerGastos) {
         this.dia = dia;
         this.dia = dia;
         this.end = end;
-        
+
         this.headerVentas = new MessageFormat(headerVentas);
         this.headerGastos = new MessageFormat(headerGastos);
 
         initComponents();
-        updateDialog(dia,null);  
-        
-       
-        
+        updateDialog(dia, null);
 
-    
     }
 
-    public Resumenes(Venta dia, Cocina cocina,Date end,
-            String headerVentas,String headerGastos) {//***************obsoleto???********************
-        this.dia = dia ;
+    public Resumenes(Venta dia, Cocina cocina, Date end,
+            String headerVentas, String headerGastos) {//***************obsoleto???********************
+        this.dia = dia;
         this.end = end;
         this.cocina = cocina;
         this.headerVentas = new MessageFormat(headerVentas);
         this.headerGastos = new MessageFormat(headerGastos);
-        
+
         initComponents();
-        updateDialog(dia,cocina); 
-      
+        updateDialog(dia, cocina);
+
     }
 
     public void Imprimir() {
 
         try {
-           
 
             MessageFormat footer = new MessageFormat("-Pag {0}-");
 
@@ -366,8 +360,8 @@ public class Resumenes extends javax.swing.JPanel{
 
         if (jCheckBoxRedondearValores.isSelected()) {
             for (int i = 0; i < jTableGastos.getRowCount(); i++) {
-                if (jTableGastos.getValueAt(i, 3) != null && 
-                        (float) jTableGastos.getValueAt(i, 3) >= 1) {
+                if (jTableGastos.getValueAt(i, 3) != null
+                        && (float) jTableGastos.getValueAt(i, 3) >= 1) {
                     listaVentas.add((float) jTableGastos.getValueAt(i, 3));
                     jTableGastos.setValueAt((float) Math.
                             round((float) jTableGastos.getValueAt(i, 3)), i, 3);
@@ -375,8 +369,8 @@ public class Resumenes extends javax.swing.JPanel{
 
             }
             for (int i = 0; i < jTableGastos.getRowCount(); i++) {
-                if (jTableGastos.getValueAt(i, 4) != null && 
-                        (float) jTableGastos.getValueAt(i, 4) >= 1) {
+                if (jTableGastos.getValueAt(i, 4) != null
+                        && (float) jTableGastos.getValueAt(i, 4) >= 1) {
                     listaGastos.add((float) jTableGastos.getValueAt(i, 4));
                     jTableGastos.setValueAt((float) Math.
                             round((float) jTableGastos.getValueAt(i, 4)), i, 4);
@@ -386,18 +380,18 @@ public class Resumenes extends javax.swing.JPanel{
 
         } else {
             for (int i = 0; i < jTableGastos.getRowCount(); i++) {
-                if (jTableGastos.getValueAt(i, 3) != null && 
-                        (float) jTableGastos.getValueAt(i, 3) >= 1) {
+                if (jTableGastos.getValueAt(i, 3) != null
+                        && (float) jTableGastos.getValueAt(i, 3) >= 1) {
                     jTableGastos.setValueAt(listaVentas.remove(0), i, 3);
-                
+
                 }
 
             }
             for (int i = 0; i < jTableGastos.getRowCount(); i++) {
-                if (jTableGastos.getValueAt(i, 4) != null && 
-                        (float) jTableGastos.getValueAt(i, 4) >= 1) {
+                if (jTableGastos.getValueAt(i, 4) != null
+                        && (float) jTableGastos.getValueAt(i, 4) >= 1) {
                     jTableGastos.setValueAt(listaGastos.remove(0), i, 4);
-                    
+
                 }
 
             }
@@ -413,35 +407,33 @@ public class Resumenes extends javax.swing.JPanel{
             DefaultTableModel model = (DefaultTableModel) jTableVenta.getModel();
 
             String totalRecaudado = jTextFieldTotalRecaudado.getText();
-            totalRecaudado = totalRecaudado.substring(0, totalRecaudado.length()-3);
+            totalRecaudado = totalRecaudado.substring(0, totalRecaudado.length() - 3);
             if (jCheckBoxConsumoCasa.isSelected()) {
-                Object[] row = {"Gastos de la casa",null,null,null,null};
+                Object[] row = {"Gastos de la casa", null, null, null, null};
                 model.addRow(row);
-                if(cocina == null){
-                VentaDAO1.getResumenVentasDeLaCasaOnTable(jTableVenta, dia);}
-                else{
-                VentaDAO1.getResumenVentasDeLaCasaXCocinaOnTable(jTableVenta, dia, cocina);
+                if (cocina == null) {
+                    VentaDAO1.getResumenVentasDeLaCasaOnTable(jTableVenta, dia);
+                } else {
+                    VentaDAO1.getResumenVentasDeLaCasaXCocinaOnTable(jTableVenta, dia, cocina);
                 }
-                Object [] row2 = {"TotalRecaudado", null, null, null,Float.parseFloat(totalRecaudado)};
+                Object[] row2 = {"TotalRecaudado", null, null, null, Float.parseFloat(totalRecaudado)};
                 model.addRow(row2);
-               
-              
+
             } else {
                 String parada = "";
                 do {
                     parada = ((String) jTableVenta.getValueAt(jTableVenta.getRowCount() - 1, 0));
                     model.removeRow(jTableVenta.getRowCount() - 1);
                 } while (!parada.equals("Gastos de la casa"));
-                Object[] row = {"TotalRecaudado", null, null,null, Float.parseFloat(totalRecaudado)};
+                Object[] row = {"TotalRecaudado", null, null, null, Float.parseFloat(totalRecaudado)};
                 model.addRow(row);
-                
-               }
+
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Esta funcion no esta disponible con la tabla vacia");
         }
     }//GEN-LAST:event_jCheckBoxConsumoCasaActionPerformed
 
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonImprimir;
@@ -467,42 +459,39 @@ public class Resumenes extends javax.swing.JPanel{
     private org.edisoncor.gui.panel.PanelRect panelRect1;
     // End of variables declaration//GEN-END:variables
 
-    private void updateDialog(Venta dia,Cocina c) {
-        jTextFieldFechaInit.setText(restManager.resources.R.
-                DATE_FORMAT.format(dia.getFecha()));
-        jTextFieldFechaFin.setText(restManager.resources.R.
-                DATE_FORMAT.format(end));
+    private void updateDialog(Venta dia, Cocina c) {
+        jTextFieldFechaInit.setText(restManager.resources.R.DATE_FORMAT.format(dia.getFecha()));
+        jTextFieldFechaFin.setText(restManager.resources.R.DATE_FORMAT.format(end));
         fillTablaVentas(c);
         fillTablaGastos(c);
-    
+
     }
 
     private void fillTablaVentas(Cocina c) {
-         comun.limpiarTabla(jTableVenta);
-        if(c == null){
-       VentaDAO1.getResumenVentasOnTable(jTableVenta, dia);
-       jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.coinSuffix);}
-        else{
-       VentaDAO1.getResumenDetalladoVentasCocinaOnTable(jTableVenta, dia, c);
-       jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.coinSuffix);
-            
+        comun.limpiarTabla(jTableVenta);
+        if (c == null) {
+            VentaDAO1.getResumenVentasOnTable(jTableVenta, dia);
+            jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.coinSuffix);
+        } else {
+            VentaDAO1.getResumenDetalladoVentasCocinaOnTable(jTableVenta, dia, c);
+            jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.coinSuffix);
+
         }
-       
+
     }
 
     private void fillTablaGastos(Cocina c) {
         comun.limpiarTabla(jTableGastos);
-        if(c == null){
-        VentaDAO1.getResumenGastosOnTable(jTableGastos, dia);
-        jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.coinSuffix);
+        if (c == null) {
+            VentaDAO1.getResumenGastosOnTable(jTableGastos, dia);
+            jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.coinSuffix);
+        } else {
+            VentaDAO1.getResumenGastosCocinaOnTable(jTableGastos, dia, c);
+            jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.coinSuffix);
         }
-        else{
-          VentaDAO1.getResumenGastosCocinaOnTable(jTableGastos, dia, c);
-          jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.coinSuffix);
-        }
-        
+
+        jTextFieldGanancia.setText(" " + (Float.parseFloat(jTextFieldTotalRecaudado.getText().split(" ")[0]) - Float.parseFloat(jTextFieldInversion.getText().split(" ")[0])) + R.coinSuffix);
+
     }
 
-    
-    
 }

@@ -234,7 +234,7 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
 
         getContentPane().add(jPanel6);
 
-        jPanel12.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel12.setBackground(new java.awt.Color(204, 204, 204));
         jPanel12.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
 
         jButtonCrear.setText("Crear");

@@ -5,21 +5,20 @@
  */
 package restManager.controller.almacen;
 
-import GUI.Views.AbstractView;
 import GUI.Views.Almacen.AlmacenEditView;
-import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Window;
-import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.insumo.InsumoCreateEditController;
-import restManager.controller.insumo.InsumoListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
+import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.models.AlmacenDAO;
-import restManager.printservice.Impresion;
+import restManager.persistencia.models.InsumoAlmacenDAO;
+import restManager.persistencia.models.InsumoDAO;
 import restManager.resources.R;
 
 /**
@@ -48,8 +47,9 @@ public class AlmacenManageController extends AbstractDialogController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new AlmacenEditView(this, (Dialog) parent, true));
+        setView(new AlmacenEditView(this, (Dialog) parent, true,a));
         getView().updateView();
+        getView().fetchComponentData();
         getView().setVisible(true);
     }
 
@@ -73,22 +73,21 @@ public class AlmacenManageController extends AbstractDialogController<Almacen> {
     }
 
     public void modificarStock(Insumo i) {
-        InsumoCreateEditController insumoController = new InsumoCreateEditController(i, getView());     
+        InsumoCreateEditController insumoController = new InsumoCreateEditController(i, getView());
         getView().updateView();
     }
-    
+
     //
     // Metodos Privados
     //
-
     private void contructTableForPrintingAndPrint(Almacen a) {
         throw new restManager.exceptions.DevelopingOperationException();
     }
 
     private void contructTicketAndPrint(Almacen a) {
-      throw new DevelopingOperationException();
+        throw new DevelopingOperationException();
 //        Impresion i = new Impresion();
-//        ArrayList<Insumo> list = new ArrayList<>(a.getInsumoList());
+//        ArrayList<Insumo> list = new ArrayList<>(a.getInsumoAlmacenList());
 //        list.sort((Insumo o1, Insumo o2) -> o1.getNombre().compareTo(o2.getNombre()));
 //        i.printStockBalance(list, printOverStockedInsumos());
     }
@@ -96,5 +95,17 @@ public class AlmacenManageController extends AbstractDialogController<Almacen> {
     private boolean printOverStockedInsumos() {
         return JOptionPane.showConfirmDialog(getView(),
                 R.RESOURCE_BUNDLE.getString("dialog_imprimir_insumos_sobrantes")) == JOptionPane.YES_OPTION;
+    }
+
+    public List<InsumoAlmacen> getInsumoAlmacenList(Almacen a) {
+        return InsumoAlmacenDAO.getInstance().getInsumoAlmacenList(a);
+    }
+
+    public List<Insumo> getInsumoList() {
+        return InsumoDAO.getInstance().findAll();
+    }
+
+    public void verTransacciones(Almacen a) {
+        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 }

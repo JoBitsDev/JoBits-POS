@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import restManager.exceptions.DevelopingOperationException;
@@ -39,7 +40,7 @@ public class LoadingWindow {
                 | InstantiationException | UnsupportedLookAndFeelException ex) {
             ex.addSuppressed(ex);
         }
-
+     //   Timer t;
         LOADING_WINDOW = new JWindow();
         URL image = this.getClass().getResource("/restManager/resources/images/loader.gif");
         LOADING_WINDOW.setAlwaysOnTop(true);

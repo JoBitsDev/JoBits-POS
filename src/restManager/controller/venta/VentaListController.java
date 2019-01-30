@@ -3,24 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.controller.venta;
 
 import GUI.Views.AbstractView;
 import GUI.Views.venta.VentaCalendarView;
 import java.awt.Container;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import restManager.controller.AbstractDialogController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.VentaDAO;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-public class VentaListController  extends AbstractDialogController<Venta>{
+public class VentaListController extends AbstractDialogController<Venta> {
 
     public VentaListController() {
         super(VentaDAO.getInstance());
@@ -30,7 +33,7 @@ public class VentaListController  extends AbstractDialogController<Venta>{
         super(VentaDAO.getInstance());
         constructView(parentView);
     }
-    
+
     public Venta createNewInstance() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -41,12 +44,40 @@ public class VentaListController  extends AbstractDialogController<Venta>{
         getView().setVisible(true);
     }
 
-    public void createDetailResumenView(List<Venta> selectedVentas) {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    public void createDetailResumenView(Date del, Date al) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, del.getYear());
+        c.set(Calendar.MONTH, del.getMonth());
+        c.set(Calendar.DAY_OF_MONTH, del.getDate());
+        Venta v = new Venta();
+        boolean initDateNotSet = true;
+//        v.setFecha(selectedVentas.get(0).getFecha());
+        v.setVentaTotal(0.0);
+        v.setOrdenList(new ArrayList<>());
+        v.setVentagastosEninsumos(0.0);
+        Date current;
+
+        while ((current = new Date(c.get(Calendar.YEAR),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH))).
+                compareTo(al) <= 0) {
+            Venta ve = getModel().find(current);
+            if (ve != null) {
+                v.getOrdenList().addAll(ve.getOrdenList());
+                v.setVentaTotal(v.getVentaTotal() + ve.getVentaTotal());
+                v.setVentagastosEninsumos(v.getVentagastosEninsumos() + ve.getVentagastosEninsumos());
+                if (initDateNotSet) {
+                    v.setFecha(current);
+                    initDateNotSet = false;
+                }
+            }
+            c.roll(Calendar.DAY_OF_MONTH, true);
+        }
+        if (initDateNotSet) {
+            throw new ValidatingException(getView());
+        }
+        ResumenVentaController controller = new ResumenVentaController(v, getView(), al);
+
     }
 
-
- 
-
-    
 }

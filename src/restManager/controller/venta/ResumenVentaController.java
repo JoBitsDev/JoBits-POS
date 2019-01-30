@@ -40,8 +40,11 @@ public class ResumenVentaController extends AbstractDetailController<Venta>{
     }
 
     public ResumenVentaController(Venta instance, Window parent,Date fechaFinal) {
-        super(instance, parent, VentaDAO.getInstance());
+        super(instance, VentaDAO.getInstance());
         this.fechaFinal = fechaFinal;
+        setParent(parent);
+        this.instance = instance;
+        constructView(parent);
     }
 
     

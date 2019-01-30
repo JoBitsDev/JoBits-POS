@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableCellRenderer;
 import restManager.persistencia.Venta;
+import restManager.util.RestManagerAbstractTableCellModel;
 import restManager.util.comun;
 
 /**
@@ -30,11 +31,12 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     }
 
     private VentaCellRender(Venta v) {
-        if(v != null){
+        if (v != null) {
             this.v = v;
-        initComponents();
+            initComponents();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -87,11 +89,18 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         VentaCellRender ret = new VentaCellRender((Venta) value);
-        
+
         if (isSelected && ret.getV() != null) {
             ret.setBackground(table.getSelectionBackground());
+//            ((RestManagerAbstractTableCellModel<Venta>) table.getModel()).getSelectedItems().add(ret.getV());
+
         } else {
             ret.setBackground(table.getBackground());
+//            try{
+////            ((RestManagerAbstractTableCellModel<Venta>) table.getModel()).getSelectedItems().remove(ret.getV());}
+//            catch(NullPointerException e){
+//                System.out.println("error"); 
+//            }
         }
         return ret;
     }
@@ -100,6 +109,4 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         return v;
     }
 
-    
-    
 }

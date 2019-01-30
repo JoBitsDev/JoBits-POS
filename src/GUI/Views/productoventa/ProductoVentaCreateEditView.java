@@ -11,29 +11,31 @@ import GUI.Views.util.AbstractCrossReferenePanel;
 import GUI.Views.AbstractDetailView;
 import java.awt.Dialog;
 import java.awt.Frame;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import org.jdesktop.swingx.JXPanel;
 import restManager.controller.AbstractDialogController;
-import restManager.controller.AbstractDetailController;
 import restManager.controller.productoventa.ProductoVentaCreateEditController;
-import restManager.exceptions.DevelopingOperationException;
+import restManager.controller.venta.OrdenController;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
+import restManager.persistencia.Orden;
 import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoInsumoPK;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.Seccion;
+import restManager.persistencia.models.OrdenDAO;
 import restManager.printservice.ComponentPrinter;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
+import restManager.util.comun;
 
 /**
  *
  * @author Jorge
  */
 public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVenta> {
+
+    private AbstractCrossReferenePanel<ProductoInsumo, Insumo> crossReferencePanel;
 
     public ProductoVentaCreateEditView(ProductoVenta instance, AbstractDialogController controller, Frame owner, boolean modal) {
         super(instance, DialogType.INPUT_LARGE, controller, owner, modal);
@@ -51,7 +53,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     public JXPanel getjXPanelRoot() {
         return jXPanelRoot;
     }
-    
+
     @Override
     public ProductoVentaCreateEditController getController() {
         return (ProductoVentaCreateEditController) super.getController(); //To change body of generated methods, choose Tools | Templates.
@@ -85,10 +87,10 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jideButton1 = new com.jidesoft.swing.JideButton();
         jXLabelCosto = new org.jdesktop.swingx.JXLabel();
         jXLabelGasto = new org.jdesktop.swingx.JXLabel();
-        jXLabelMoneda1 = new org.jdesktop.swingx.JXLabel();
         jPanelCrossRef = new javax.swing.JPanel();
         jPanelActions = new javax.swing.JPanel();
         jButtonCrear = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
 
         jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
@@ -115,9 +117,11 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jXPanelRoot.setBackground(new java.awt.Color(0, 102, 102));
         jXPanelRoot.setLayout(new javax.swing.BoxLayout(jXPanelRoot, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanelInputs.setBorder(javax.swing.BorderFactory.createTitledBorder("Información Básica"));
+        jPanelInputs.setBackground(new java.awt.Color(204, 204, 204));
+        jPanelInputs.setBorder(javax.swing.BorderFactory.createCompoundBorder(new org.jdesktop.swingx.border.DropShadowBorder(), javax.swing.BorderFactory.createTitledBorder("Información Básica")));
         jPanelInputs.setLayout(new javax.swing.BoxLayout(jPanelInputs, javax.swing.BoxLayout.PAGE_AXIS));
 
+        jPanel8.setOpaque(false);
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jXLabelPCod.setText("P-Cod");
@@ -125,6 +129,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
         jPanelInputs.add(jPanel8);
 
+        jPanel7.setOpaque(false);
         jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
 
         jXLabelNombre.setText(bundle.getString("label_nombre")); // NOI18N
@@ -147,6 +152,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
         jPanelInputs.add(jPanel7);
 
+        jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
 
         jXLabelCocina.setText(bundle.getString("label_cocina")); // NOI18N
@@ -184,10 +190,6 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jXLabelGasto.setText("0.00"); // NOI18N
         jPanel6.add(jXLabelGasto);
 
-        jXLabelMoneda1.setText(R.coinSuffix);
-        jXLabelMoneda1.setPreferredSize(new java.awt.Dimension(50, 16));
-        jPanel6.add(jXLabelMoneda1);
-
         jPanelTable.add(jPanel6);
 
         jPanelCrossRef.setBorder(javax.swing.BorderFactory.createTitledBorder("Insumos"));
@@ -199,15 +201,23 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
         jPanelActions.setBackground(new java.awt.Color(204, 204, 204));
         jPanelActions.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
-        jPanelActions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 100, 5));
+        jPanelActions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 5));
 
-        jButtonCrear.setText(bundle.getString("label_crear")); // NOI18N
+        jButtonCrear.setText(bundle.getString("label_crear_producto")); // NOI18N
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCrearActionPerformed(evt);
             }
         });
         jPanelActions.add(jButtonCrear);
+
+        jButton1.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanelActions.add(jButton1);
 
         jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -234,12 +244,17 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jideButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton1ActionPerformed
-    ComponentPrinter.printComponent(jXPanelRoot,instance.toString(),false);
+        ComponentPrinter.printComponent(jXPanelRoot, instance.toString(), false);
     }//GEN-LAST:event_jideButton1ActionPerformed
 
     private void jButtonIngredienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIngredienteActionPerformed
 
     }//GEN-LAST:event_jButtonIngredienteActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        getController().agregarIngrediente();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     @Override
     public void setEditingMode() {
@@ -257,7 +272,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         instance.setPrecioVenta((float) jSpinnerPrecio.getValue());
         instance.setCocinacodCocina((Cocina) jComboBoxCOCINA.getSelectedItem());
         instance.setSeccionnombreSeccion((Seccion) jComboBoxSECCION.getSelectedItem());
-        instance.setGasto(Float.parseFloat(jXLabelGasto.getText()));
+        instance.setGasto(Float.parseFloat(jXLabelGasto.getText().split(" ")[0]));
         instance.setVisible(false);
         instance.setGanancia(instance.getPrecioVenta() - instance.getGasto());
         return (jComboBoxCOCINA.getSelectedItem() != null && jComboBoxSECCION.getSelectedItem() != null);
@@ -281,8 +296,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     public void fetchComponentData() {
         jComboBoxCOCINA.setModel(new RestManagerComboBoxModel<>(getController().getCocinaList()));
         jComboBoxSECCION.setModel(new RestManagerComboBoxModel<>(getController().getSeccionList()));
-        AbstractCrossReferenePanel<ProductoInsumo, Insumo> crossReferencePanel
-                = new AbstractCrossReferenePanel<ProductoInsumo, Insumo>("Insumos", getController().getInsumoList()) {
+        crossReferencePanel = new AbstractCrossReferenePanel<ProductoInsumo, Insumo>("Insumos", getController().getInsumoList()) {
             @Override
             public RestManagerAbstractTableModel getTableModel() {
                 return new RestManagerAbstractTableModel<ProductoInsumo>(instance.getProductoInsumoList(), getjTableCrossReference()) {
@@ -346,9 +360,10 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
                             case 3:
                                 items.get(rowIndex).setCantidad((float) aValue);
                                 items.get(rowIndex).setCosto(items.get(rowIndex).getInsumo().getCostoPorUnidad() * (float) aValue);
+                                getController().updateCosto();
+                                jXLabelGasto.setText(comun.setDosLugaresDecimales(getInstance().getGasto()));
                                 fireTableRowsUpdated(rowIndex, rowIndex);
                                 break;
-
                         }
                     }
                 };
@@ -367,13 +382,15 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
             }
         };
         jPanelCrossRef.add(crossReferencePanel);
-        
-        
-        
+
     }
 
+    public AbstractCrossReferenePanel<ProductoInsumo, Insumo> getCrossReferencePanel() {
+        return crossReferencePanel;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCocina;
     private javax.swing.JButton jButtonCrear;
@@ -396,7 +413,6 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     private org.jdesktop.swingx.JXLabel jXLabelCosto;
     private org.jdesktop.swingx.JXLabel jXLabelGasto;
     private org.jdesktop.swingx.JXLabel jXLabelMoneda;
-    private org.jdesktop.swingx.JXLabel jXLabelMoneda1;
     private org.jdesktop.swingx.JXLabel jXLabelNombre;
     private org.jdesktop.swingx.JXLabel jXLabelPCod;
     private org.jdesktop.swingx.JXLabel jXLabelPrecio;

@@ -131,7 +131,7 @@ public class LogInDialogView extends AbstractView {
         jPanelConn.setOpaque(false);
         jPanelConn.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 0));
 
-        jRadioButtonLocal.setBackground(new java.awt.Color(30, 30, 30));
+        jRadioButtonLocal.setBackground(new java.awt.Color(0, 102, 102));
         jRadioButtonLocal.setText(bundle.getString("label_servidor_local")); // NOI18N
         jRadioButtonLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,7 +140,7 @@ public class LogInDialogView extends AbstractView {
         });
         jPanelConn.add(jRadioButtonLocal);
 
-        jRadioButtonRemoto.setBackground(new java.awt.Color(30, 30, 30));
+        jRadioButtonRemoto.setBackground(new java.awt.Color(0, 102, 102));
         jRadioButtonRemoto.setSelected(true);
         jRadioButtonRemoto.setText(bundle.getString("label_servidor_remoto")); // NOI18N
         jRadioButtonRemoto.addActionListener(new java.awt.event.ActionListener() {

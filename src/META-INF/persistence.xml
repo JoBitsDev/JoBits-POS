@@ -12,8 +12,8 @@
     <class>restManager.persistencia.Extraccion</class>
     <class>restManager.persistencia.Impresora</class>
     <class>restManager.persistencia.Insumo</class>
+    <class>restManager.persistencia.InsumoAlmacen</class>
     <class>restManager.persistencia.InsumoElaborado</class>
-    <class>restManager.persistencia.InsumoTransaccion</class>
     <class>restManager.persistencia.Ipv</class>
     <class>restManager.persistencia.IpvRegistro</class>
     <class>restManager.persistencia.Log</class>
@@ -29,9 +29,12 @@
     <class>restManager.persistencia.PuestoTrabajo</class>
     <class>restManager.persistencia.Seccion</class>
     <class>restManager.persistencia.Transaccion</class>
+    <class>restManager.persistencia.TransaccionEntrada</class>
+    <class>restManager.persistencia.TransaccionMerma</class>
+    <class>restManager.persistencia.TransaccionSalida</class>
     <class>restManager.persistencia.Venta</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.173.1:5432/Restaurant_Manager_DB"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.60.50:5432/Restaurant_Manager_DB"/>
       <property name="javax.persistence.jdbc.user" value="Rest_Admin"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.password" value="admin"/>
@@ -49,8 +52,8 @@
     <class>restManager.persistencia.Extraccion</class>
     <class>restManager.persistencia.Impresora</class>
     <class>restManager.persistencia.Insumo</class>
+    <class>restManager.persistencia.InsumoAlmacen</class>
     <class>restManager.persistencia.InsumoElaborado</class>
-    <class>restManager.persistencia.InsumoTransaccion</class>
     <class>restManager.persistencia.Ipv</class>
     <class>restManager.persistencia.IpvRegistro</class>
     <class>restManager.persistencia.Log</class>
@@ -66,6 +69,9 @@
     <class>restManager.persistencia.PuestoTrabajo</class>
     <class>restManager.persistencia.Seccion</class>
     <class>restManager.persistencia.Transaccion</class>
+    <class>restManager.persistencia.TransaccionEntrada</class>
+    <class>restManager.persistencia.TransaccionMerma</class>
+    <class>restManager.persistencia.TransaccionSalida</class>
     <class>restManager.persistencia.Venta</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Restaurant_Manager_DB"/>

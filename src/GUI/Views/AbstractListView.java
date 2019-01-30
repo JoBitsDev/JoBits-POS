@@ -120,6 +120,8 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jXPanelLista.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jXPanel1.setBackground(new java.awt.Color(204, 204, 204));
+        jXPanel1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jXPanel1.setLayout(new java.awt.BorderLayout());
 
         jXLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);

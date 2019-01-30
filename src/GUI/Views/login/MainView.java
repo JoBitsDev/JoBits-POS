@@ -77,6 +77,7 @@ public class MainView extends AbstractView {
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         styledLabelRestName.setForeground(new java.awt.Color(255, 255, 255));
@@ -133,7 +134,7 @@ public class MainView extends AbstractView {
         jPanelPDV.add(BotonInsumo);
 
         BotonCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoncocina.png"))); // NOI18N
-        BotonCocina.setText(bundle.getString("label_ver_cocina")); // NOI18N
+        BotonCocina.setText(bundle.getString("label_ver_punto_elaboracion")); // NOI18N
         BotonCocina.setBorderPainted(false);
         BotonCocina.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BotonCocina.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -322,6 +323,7 @@ public class MainView extends AbstractView {
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel2.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jideLabel3.setForeground(new java.awt.Color(255, 255, 255));

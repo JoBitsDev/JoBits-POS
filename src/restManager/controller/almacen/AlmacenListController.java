@@ -7,7 +7,6 @@ package restManager.controller.almacen;
 
 import GUI.Views.Almacen.AlmacenListView;
 import java.awt.Dialog;
-import java.awt.Frame;
 import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -73,8 +72,9 @@ public class AlmacenListController extends AbstractListController<Almacen> {
         if (storageName != null) {
             if (storageName.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
                 selected = new Almacen();
-                selected.setInsumoList(new ArrayList<>());
-                selected.setTransaccionList(new ArrayList<>());
+                selected.setInsumoAlmacenList(new ArrayList<>());
+                selected.setTransaccionEntradaList(new ArrayList<>());
+                selected.setTransaccionSalidaList(new ArrayList<>());
                 selected.setCantidadInsumos(0);
                 selected.setValorMonetario(Float.parseFloat("0"));
                 selected.setCodAlmacen(super.getModel().generateStringCode(PREFIX_FOR_ID));

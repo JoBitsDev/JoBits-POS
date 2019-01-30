@@ -40,6 +40,7 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
     private final JTextField jTextField;
     private final RestManagerAbstractTableModel<T> tableModel;
     private final RestaurantManagerListIntelliHint<K> items;
+    private final List<K> itemList;
 
     public TableWithComboBoxAutoComplete(JTable table, JButton addButton, JButton removeButton,
             JTextField autoCompleteTextField,
@@ -49,6 +50,7 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
         this.removeButton = removeButton;
         this.jTextField = autoCompleteTextField;
         this.tableModel = tableModel;
+        this.itemList = itemsList;
         this.items = new RestaurantManagerListIntelliHint<>(jTextField, itemsList);
         this.addButton.addActionListener((ActionEvent e) -> {
             addFromAutoComplete();
@@ -60,7 +62,8 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
     }
 
     public T addFromAutoComplete() {
-        K selected = items.getSelectedHint();
+       jTextField.setText(jTextField.getText().trim());
+        K selected = findSelected(jTextField.getText());
         if (selected == null) {
             throw new NoSelectedException(table);
         }
@@ -108,6 +111,15 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
 
     public RestaurantManagerListIntelliHint<K> getItems() {
         return items;
+    }
+
+    private K findSelected(String text) {
+        for (K k : itemList) {
+            if(k.toString().equals(text)){
+                return k;
+            }
+        }
+        return null;
     }
 
     private class RestaurantManagerListIntelliHint<K> extends ListDataIntelliHints<K> {

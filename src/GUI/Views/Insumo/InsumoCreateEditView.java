@@ -216,6 +216,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
                         switch (columnIndex) {
                             case 3:
                                 items.get(rowIndex).setCantidad(Float.parseFloat((String) aValue));
+                                
                                 fireTableCellUpdated(rowIndex, columnIndex);
                                 break;
 
@@ -233,7 +234,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
                 ret.setProductoVenta(selected);
                 ret.setInsumo(instance);
                 ret.setCantidad(1);
-                ret.setCosto(0);
+                ret.setCosto(instance.getCostoPorUnidad());
                 return ret;
             }
         };
@@ -299,10 +300,11 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         setMinimumSize(new java.awt.Dimension(590, 242));
         setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(590, 242));
+        getContentPane().setLayout(new java.awt.BorderLayout(0, 5));
 
-        jXPanelInputs.setBackground(new java.awt.Color(204, 204, 0));
-        jXPanelInputs.setBorder(new org.pushingpixels.substance.internal.utils.border.SubstanceBorder());
-        jXPanelInputs.setForeground(new java.awt.Color(204, 204, 0));
+        jXPanelInputs.setBackground(new java.awt.Color(204, 204, 204));
+        jXPanelInputs.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        jXPanelInputs.setForeground(new java.awt.Color(204, 255, 255));
         jXPanelInputs.setLayout(new java.awt.GridLayout(4, 2, 5, 5));
 
         jXLabelNombre.setText(bundle.getString("label_nombre")); // NOI18N
@@ -380,6 +382,9 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         jXPanelTabla.add(jLayeredPane1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jXPanelTabla, java.awt.BorderLayout.CENTER);
+
+        jXPanelControles.setBackground(new java.awt.Color(204, 204, 204));
+        jXPanelControles.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
 
         jButtonAdd.setText(bundle.getString("label_crear")); // NOI18N
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {

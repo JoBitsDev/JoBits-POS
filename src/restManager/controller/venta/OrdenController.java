@@ -146,7 +146,9 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     }
 
+    
     public void despachar() {
+        Impresion i = new Impresion();
         setShowDialogs(true);
         if (showConfirmDialog(getView(), "Desea cerrar la orden " + instance.getCodOrden())) {
             setShowDialogs(false);
@@ -159,7 +161,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             }
             if (enviar) {
                 if (showConfirmDialog(getView(), "Desea imprimir un ticket de la orden")) {
-                    Impresion i = new Impresion();
+                    
                     i.print(instance, false);
                     RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIRTICKET, Level.FINE, instance);
                 }
@@ -184,22 +186,19 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public void removeProduct(ProductovOrden objectAtSelectedRow) {
-        if (objectAtSelectedRow.getCantidad() > 1) {
-            objectAtSelectedRow.setCantidad(objectAtSelectedRow.getCantidad() - 1);
-            ProductovOrdenDAO.getInstance().edit(objectAtSelectedRow);
-        } else {
-            ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
-            instance.getProductovOrdenList().remove(objectAtSelectedRow);
-        }
+
+        ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
+        instance.getProductovOrdenList().remove(objectAtSelectedRow);
+
         updateIPVs(objectAtSelectedRow, UpdateIpvAction.REMOVER);
         update(instance);
         view.updateValorTotal();
     }
 
-    private float getGastosInsumos(Orden instance) {
+    public float getGastosInsumos(Orden instance) {
         float ret = 0;
         for (ProductovOrden x : instance.getProductovOrdenList()) {
-            ret += x.getProductoVenta().getGasto();
+            ret += x.getProductoVenta().getGasto() * x.getCantidad();
         }
         return ret;
     }
@@ -247,7 +246,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     public void addProduct(ProductoVenta selected) {
         boolean found = false;
         ProductovOrden founded = null;
-        for (ProductovOrden x : new ArrayList<ProductovOrden>(getInstance().getProductovOrdenList())) {
+        for (ProductovOrden x : new ArrayList<>(getInstance().getProductovOrdenList())) {
             if (x.getProductoVenta().getPCod().equals(selected.getPCod())) {
                 founded = x;
                 found = true;
@@ -262,7 +261,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             founded = new ProductovOrden(selected.getPCod(), getInstance().getCodOrden());
             founded.setOrden(getInstance());
             founded.setProductoVenta(selected);
-            founded.setCantidad(1);
+            founded.setCantidad(Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad")));
             founded.setEnviadosacocina(0);
             founded.setNumeroComensal(0);
             ProductovOrdenDAO.getInstance().create(founded);

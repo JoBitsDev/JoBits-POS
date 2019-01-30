@@ -10,13 +10,14 @@ import java.awt.Graphics;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import javax.swing.JDialog;
 import restManager.controller.AbstractDetailController;
+import restManager.controller.insumo.InsumoCreateEditController;
 
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
+import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.Seccion;
 import restManager.persistencia.models.CocinaDAO;
@@ -69,7 +70,7 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
     }
 
     public List<Cocina> getCocinaList() {
-        return  CocinaDAO.getInstance().findAll();
+        return CocinaDAO.getInstance().findAll();
     }
 
     public List<Seccion> getSeccionList() {
@@ -77,13 +78,34 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
     }
 
     public List<Insumo> getInsumoList() {
-        ArrayList<Insumo>  ret = new ArrayList<>(InsumoDAO.getInstance().findAll());
+        ArrayList<Insumo> ret = new ArrayList<>(InsumoDAO.getInstance().findAll());
         Collections.sort(ret, (Insumo o1, Insumo o2) -> o1.getNombre().compareTo(o2.getNombre()));
         return ret;
     }
 
     public void print(Graphics g) {
         getView().print(g);
+    }
+
+    public float getCosto(ProductoVenta v) {
+        float ret = 0;
+        for (ProductoInsumo productoInsumo : getInstance().getProductoInsumoList()) {
+            ret += productoInsumo.getCosto();
+        }
+
+        return ret;
+
+    }
+
+    public void updateCosto() {
+        getInstance().setGasto(getCosto(getInstance()));
+    }
+
+    public void agregarIngrediente() {
+        InsumoCreateEditController controller = new InsumoCreateEditController(getView());
+
+       ((ProductoVentaCreateEditView) getView()).getCrossReferencePanel().addItemToComboBox(controller.getInstance());
+        
     }
 
 }

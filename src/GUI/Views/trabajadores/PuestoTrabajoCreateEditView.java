@@ -235,6 +235,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
 
         getContentPane().add(jPanel11);
 
+        jPanel13.setBackground(new java.awt.Color(204, 204, 204));
         jPanel13.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
 
         jButtonCrear.setText(bundle.getString("label_aceptar")); // NOI18N

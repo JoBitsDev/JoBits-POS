@@ -37,14 +37,13 @@ public abstract class RestManagerAbstractTableCellModel<T> extends AbstractTable
             this.items = new ArrayList<>();
         }
         this.table = table;
-
-        this.table.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                executeLogic(e);
-
-            }
-        });
+//        this.table.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                executeLogic(e);
+//
+//            }
+//        });
         selectionChange = new PropertyChangeSupport(this);
     }
 
@@ -125,6 +124,7 @@ public abstract class RestManagerAbstractTableCellModel<T> extends AbstractTable
         int index = selectedItems.indexOf(selectedObject);
         if (index != -1) {
             selectedItems.remove(selectedObject);
+            
             selectionChange.firePropertyChange(PropertyName.DELETE.toString(), selectedObject, null);
         } else {
             selectedItems.add(selectedObject);
@@ -138,7 +138,15 @@ public abstract class RestManagerAbstractTableCellModel<T> extends AbstractTable
     }
 
     public List<T> getSelectedItems() {
-        return selectedItems;
+      ArrayList<T> ret = new ArrayList<>();
+        for (int i = 0; i < table.getRowCount(); i++) {
+            for (int j = 0; j < table.getColumnCount(); j++) {
+                if(table.isCellSelected(i, j)){
+                    ret.add(getValueAt(i, j));
+                }
+            }
+        }
+        return ret;     
     }
 
 }

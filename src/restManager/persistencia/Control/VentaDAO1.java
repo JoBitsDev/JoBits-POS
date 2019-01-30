@@ -570,7 +570,7 @@ public class VentaDAO1 {
      */
     private static void joinListsProductoInsumos(
             ArrayList<ProductoInsumo> pivot,
-            ArrayList<ProductoInsumo> b, int cant) {
+            ArrayList<ProductoInsumo> b, float cant) {
 
         for (ProductoInsumo x : b) {
             boolean founded = false;

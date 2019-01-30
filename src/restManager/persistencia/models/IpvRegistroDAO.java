@@ -5,14 +5,19 @@
  */
 package restManager.persistencia.models;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.persistence.EntityManager;
 import restManager.persistencia.Carta;
+import restManager.persistencia.Cocina;
 import restManager.persistencia.Ipv;
 import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.IpvRegistroPK;
 import restManager.persistencia.Mesa;
 import restManager.persistencia.Nota;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -37,6 +42,19 @@ public class IpvRegistroDAO extends AbstractModel<IpvRegistro> {
         }
     }
 
+    public List<Date> getIpvRegistroList(Cocina cocina) {
+        return getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocina")
+                .setParameter("ipvcocinacodCocina", cocina.getCodCocina())
+                .getResultList();
+    }
+
+    public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha) {
+        return getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFecha")
+                .setParameter("ipvcocinacodCocina", cocina.getCodCocina())
+                .setParameter("fecha", fecha)
+                .getResultList();
+
+    }
 //    @Override
 //    public void edit(IpvRegistro entity) {
 // entity.getIpvRegistroPK().setIpvinsumocodInsumo(entity.getIpv().getIpvPK().getInsumocodInsumo());

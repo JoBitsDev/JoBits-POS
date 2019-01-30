@@ -43,9 +43,9 @@ public class ProductovOrden implements Serializable {
     protected ProductovOrdenPK productovOrdenPK;
     @Basic(optional = false)
     @Column(name = "cantidad")
-    private int cantidad;
+    private float cantidad;
     @Column(name = "enviadosacocina")
-    private Integer enviadosacocina;
+    private float enviadosacocina;
     @Column(name = "numero_comensal")
     private Integer numeroComensal;
     @Column(name = "listo_para_recoger")
@@ -85,19 +85,19 @@ public class ProductovOrden implements Serializable {
         this.productovOrdenPK = productovOrdenPK;
     }
 
-    public int getCantidad() {
+    public float getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(float cantidad) {
         this.cantidad = cantidad;
     }
 
-    public Integer getEnviadosacocina() {
+    public float getEnviadosacocina() {
         return enviadosacocina;
     }
 
-    public void setEnviadosacocina(Integer enviadosacocina) {
+    public void setEnviadosacocina(float enviadosacocina) {
         this.enviadosacocina = enviadosacocina;
     }
 

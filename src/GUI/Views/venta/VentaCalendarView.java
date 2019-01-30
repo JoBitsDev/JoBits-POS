@@ -10,11 +10,14 @@ import GUI.Views.util.VentaCellRender;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.controller.venta.VentaListController;
+import restManager.exceptions.NoSelectedException;
+import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Venta;
 import restManager.util.RestManagerAbstractTableCellModel;
 import restManager.util.comun;
@@ -72,7 +75,6 @@ public class VentaCalendarView extends AbstractView {
         jPanelControles = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jPanelSeleccion = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
@@ -83,6 +85,14 @@ public class VentaCalendarView extends AbstractView {
         jLabelTotalVendido = new javax.swing.JLabel();
         jLabelPromedioVendido = new javax.swing.JLabel();
         jPanelGastos = new javax.swing.JPanel();
+        jPanelResumen = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jDateChooserDel = new com.toedter.calendar.JDateChooser();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jDateChooserAl = new com.toedter.calendar.JDateChooser();
+        jButton3 = new javax.swing.JButton();
 
         jScrollPane2.setViewportView(jTree1);
 
@@ -192,17 +202,6 @@ public class VentaCalendarView extends AbstractView {
         });
         jPanelControles.add(jButton2);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/detalles.png"))); // NOI18N
-        jButton3.setToolTipText("Vista Detallada");
-        jButton3.setBorderPainted(false);
-        jButton3.setEnabled(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanelControles.add(jButton3);
-
         getContentPane().add(jPanelControles, java.awt.BorderLayout.PAGE_END);
 
         jPanelSeleccion.setBackground(new java.awt.Color(204, 204, 204));
@@ -237,7 +236,7 @@ public class VentaCalendarView extends AbstractView {
         getContentPane().add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
 
         jPanelEstadisticas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadisticas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 18))); // NOI18N
-        jPanelEstadisticas.setLayout(new java.awt.GridLayout(2, 0));
+        jPanelEstadisticas.setLayout(new java.awt.GridLayout(3, 0));
 
         jPanelVentas.setBorder(javax.swing.BorderFactory.createTitledBorder("Ventas"));
         jPanelVentas.setLayout(new java.awt.GridLayout(2, 0));
@@ -254,19 +253,42 @@ public class VentaCalendarView extends AbstractView {
         jPanelEstadisticas.add(jPanelVentas);
 
         jPanelGastos.setBorder(javax.swing.BorderFactory.createTitledBorder("Gastos"));
-
-        javax.swing.GroupLayout jPanelGastosLayout = new javax.swing.GroupLayout(jPanelGastos);
-        jPanelGastos.setLayout(jPanelGastosLayout);
-        jPanelGastosLayout.setHorizontalGroup(
-            jPanelGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 145, Short.MAX_VALUE)
-        );
-        jPanelGastosLayout.setVerticalGroup(
-            jPanelGastosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 169, Short.MAX_VALUE)
-        );
-
         jPanelEstadisticas.add(jPanelGastos);
+
+        jPanelResumen.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen Detallado"));
+        jPanelResumen.setLayout(new javax.swing.BoxLayout(jPanelResumen, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jLabel10.setText("Del");
+        jLabel10.setToolTipText("");
+        jPanel1.add(jLabel10);
+
+        jDateChooserDel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooserDelPropertyChange(evt);
+            }
+        });
+        jPanel1.add(jDateChooserDel);
+
+        jPanelResumen.add(jPanel1);
+
+        jLabel11.setText("Al");
+        jLabel11.setToolTipText("");
+        jPanel2.add(jLabel11);
+        jPanel2.add(jDateChooserAl);
+
+        jPanelResumen.add(jPanel2);
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/detalles.png"))); // NOI18N
+        jButton3.setToolTipText("Vista Detallada");
+        jButton3.setBorderPainted(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanelResumen.add(jButton3);
+
+        jPanelEstadisticas.add(jPanelResumen);
 
         getContentPane().add(jPanelEstadisticas, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
@@ -288,10 +310,11 @@ public class VentaCalendarView extends AbstractView {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        getController().createDetailResumenView(getSelectedVentas());
+        createDetailResumenView();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTableCalendarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableCalendarFocusLost
+
     }//GEN-LAST:event_jTableCalendarFocusLost
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -305,11 +328,22 @@ public class VentaCalendarView extends AbstractView {
 
     }//GEN-LAST:event_jTableCalendarMouseClicked
 
+    private void jDateChooserDelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserDelPropertyChange
+        if (evt.getPropertyName().equals("date")) {
+            jDateChooserAl.setDate((Date) evt.getNewValue());
+        }
+//        jDateChooserAl.setDate((Date) evt.getNewValue());
+    }//GEN-LAST:event_jDateChooserDelPropertyChange
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private com.toedter.calendar.JDateChooser jDateChooserAl;
+    private com.toedter.calendar.JDateChooser jDateChooserDel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -321,12 +355,15 @@ public class VentaCalendarView extends AbstractView {
     private javax.swing.JLabel jLabelPromedioVendido;
     private javax.swing.JLabel jLabelTotalVendido;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCalendario;
     private javax.swing.JPanel jPanelControles;
     private javax.swing.JPanel jPanelDetalles;
     private javax.swing.JPanel jPanelEstadisticas;
     private javax.swing.JPanel jPanelGastos;
     private javax.swing.JPanel jPanelHeader;
+    private javax.swing.JPanel jPanelResumen;
     private javax.swing.JPanel jPanelSeleccion;
     private javax.swing.JPanel jPanelVentas;
     private javax.swing.JScrollPane jScrollPane1;
@@ -345,13 +382,9 @@ public class VentaCalendarView extends AbstractView {
 //            rootNode.insert(x);
 //        }
 //        jTree1 = new JTree(rootNode);
-        
+
     }
 
-
-
-    
-    
     public void init() {
         updateCalendar();
         jScrollPane1.getViewport().setOpaque(false);
@@ -374,7 +407,7 @@ public class VentaCalendarView extends AbstractView {
             @Override
             public Venta getValueAt(int rowIndex, int columnIndex) {
                 int linearPos = rowIndex * getColumnCount() + columnIndex;
-                if (linearPos >= monthOffset ) {
+                if (linearPos >= monthOffset) {
                     for (Venta x : getItems()) {
                         if ((x.getFecha().getDate() - 1) == (linearPos - monthOffset)) {
                             return x;
@@ -386,7 +419,7 @@ public class VentaCalendarView extends AbstractView {
 
             @Override
             public int getRowCount() {
-                return 5;
+                return 6;
             }
 
             @Override
@@ -442,7 +475,7 @@ public class VentaCalendarView extends AbstractView {
         cal.set(Calendar.DAY_OF_MONTH, 1);
         cal.set(Calendar.YEAR, jYearChooser1.getYear());
         cal.set(Calendar.MONTH, jMonthChooser1.getMonth());
-        monthOffset = cal.get(Calendar.DAY_OF_WEEK)-2;
+        monthOffset = cal.get(Calendar.DAY_OF_WEEK) - 2;
     }
 
     public List<Venta> getSelectedVentas() {
@@ -466,6 +499,16 @@ public class VentaCalendarView extends AbstractView {
 
     private void editSelected() {
         VentaDetailController controller = new VentaDetailController(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), this);
+    }
+
+    private void createDetailResumenView() {
+        if (jDateChooserAl.getDate() == null || jDateChooserDel.getDate() == null) {
+            throw new NoSelectedException(jPanelResumen);
+        }
+        if (jDateChooserAl.getDate().compareTo(jDateChooserDel.getDate()) < 0) {
+            throw new ValidatingException(jPanelResumen);
+        }
+        getController().createDetailResumenView(jDateChooserDel.getDate(), jDateChooserAl.getDate());
     }
 
 }

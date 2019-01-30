@@ -95,6 +95,7 @@ public class IpvGestionView extends AbstractView {
 
         jPanelRegistros.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -104,6 +105,8 @@ public class IpvGestionView extends AbstractView {
         jButton4.setBorderPainted(false);
         jButton4.setEnabled(false);
         jPanel1.add(jButton4, java.awt.BorderLayout.WEST);
+
+        jPanel2.setOpaque(false);
 
         jSpinnerAjustarinsumo.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
         jSpinnerAjustarinsumo.setPreferredSize(new java.awt.Dimension(80, 26));
@@ -121,6 +124,8 @@ public class IpvGestionView extends AbstractView {
         jPanel2.add(jButton3);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanel3.setOpaque(false);
 
         jSpinnerAjustarinsumo1.setModel(new javax.swing.SpinnerNumberModel(0.0f, null, null, 5.0f));
         jSpinnerAjustarinsumo1.setPreferredSize(new java.awt.Dimension(80, 26));
@@ -188,6 +193,7 @@ public class IpvGestionView extends AbstractView {
         });
         jPanelOptions.add(jButton1, java.awt.BorderLayout.LINE_START);
 
+        jLabel1.setBackground(new java.awt.Color(204, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText(bundle.getString("label_cocina")); // NOI18N
         jPanelOptions.add(jLabel1, java.awt.BorderLayout.CENTER);

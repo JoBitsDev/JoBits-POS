@@ -69,6 +69,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jLabelVALORNOORDEN = new javax.swing.JLabel();
         jPanelDetalles = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jideButtonImpimirTicket = new com.jidesoft.swing.JideButton();
         jCheckBoxPorciento = new javax.swing.JCheckBox();
         jSpinner1 = new javax.swing.JSpinner();
         jCheckBoxDELACASA = new javax.swing.JCheckBox();
@@ -78,10 +79,10 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jXPanelBotones = new org.jdesktop.swingx.JXPanel();
         jPanel1 = new javax.swing.JPanel();
         jideButtonAgregarNota = new com.jidesoft.swing.JideButton();
-        jideButtonImpimirTicket = new com.jidesoft.swing.JideButton();
         jideButtonEnviarCocina = new com.jidesoft.swing.JideButton();
         jideButtonCerrarMesa = new com.jidesoft.swing.JideButton();
 
+        setBackground(new java.awt.Color(204, 204, 204));
         setLayout(new java.awt.BorderLayout());
 
         jPanelroot.setBackground(new java.awt.Color(0, 204, 204));
@@ -90,8 +91,8 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jPanelroot.setPreferredSize(new java.awt.Dimension(531, 570));
         jPanelroot.setLayout(new java.awt.BorderLayout());
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jPanelInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_informacion"))); // NOI18N
+        jPanelInfo.setBackground(new java.awt.Color(204, 204, 204));
+        jPanelInfo.setBorder(javax.swing.BorderFactory.createCompoundBorder(new org.jdesktop.swingx.border.DropShadowBorder(), javax.swing.BorderFactory.createTitledBorder("Información")));
         jPanelInfo.setOpaque(false);
         jPanelInfo.setLayout(new java.awt.BorderLayout());
 
@@ -101,6 +102,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jLabel3.setBackground(new java.awt.Color(153, 255, 255));
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jLabel3.setText(bundle.getString("label_fecha")); // NOI18N
         jLabel3.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanel4.add(jLabel3);
@@ -156,14 +158,24 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
         jPanelroot.add(jPanelInfo, java.awt.BorderLayout.NORTH);
 
+        jPanelDetalles.setBackground(new java.awt.Color(255, 255, 255));
         jPanelDetalles.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 5));
 
+        jideButtonImpimirTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jideButtonImpimirTicket.setToolTipText(bundle.getString("label_imprimircuenta")); // NOI18N
+        jideButtonImpimirTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jideButtonImpimirTicketActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jideButtonImpimirTicket);
+
         jCheckBoxPorciento.setBackground(new java.awt.Color(255, 255, 153));
         jCheckBoxPorciento.setSelected(true);
-        jCheckBoxPorciento.setText("Añadir Porciento");
+        jCheckBoxPorciento.setText("%");
         jCheckBoxPorciento.setEnabled(false);
         jCheckBoxPorciento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,14 +220,15 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
         jPanelroot.add(jPanelDetalles, java.awt.BorderLayout.CENTER);
 
-        jXPanelBotones.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_controles"))); // NOI18N
+        jXPanelBotones.setBorder(javax.swing.BorderFactory.createCompoundBorder(new org.jdesktop.swingx.border.DropShadowBorder(), javax.swing.BorderFactory.createTitledBorder("Controles")));
         jXPanelBotones.setOpaque(false);
         jXPanelBotones.setLayout(new java.awt.BorderLayout());
 
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
-        jideButtonAgregarNota.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/adjuntar.png"))); // NOI18N
+        jideButtonAgregarNota.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/nota.png"))); // NOI18N
         jideButtonAgregarNota.setToolTipText(bundle.getString("label_agregarnota")); // NOI18N
         jideButtonAgregarNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,16 +237,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         });
         jPanel1.add(jideButtonAgregarNota);
 
-        jideButtonImpimirTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/imprimir.png"))); // NOI18N
-        jideButtonImpimirTicket.setToolTipText(bundle.getString("label_imprimircuenta")); // NOI18N
-        jideButtonImpimirTicket.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jideButtonImpimirTicketActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jideButtonImpimirTicket);
-
-        jideButtonEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png"))); // NOI18N
+        jideButtonEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/campana.png"))); // NOI18N
         jideButtonEnviarCocina.setToolTipText(bundle.getString("label_enviarcocina")); // NOI18N
         jideButtonEnviarCocina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,8 +397,8 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                         switch (columnIndex) {
                             case 1:
-                                int cant_anterior = items.get(rowIndex).getCantidad();
-                                int dif = (int) aValue - cant_anterior;
+                                float cant_anterior = items.get(rowIndex).getCantidad();
+                                float dif = (float) aValue - cant_anterior;
                                 OrdenController.UpdateIpvAction action;
                                 if (dif > 0) {
                                     action = OrdenController.UpdateIpvAction.AGREGAR;
@@ -405,7 +409,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                                 for (int i = 0; i < dif; i++) {
                                     getController().updateIPVs(items.get(rowIndex), action);
                                 }
-                                items.get(rowIndex).setCantidad((int) aValue);
+                                items.get(rowIndex).setCantidad((float) aValue);
                                 fireTableRowsUpdated(rowIndex, rowIndex);
                                 updateValorTotal();
                                 break;
@@ -418,7 +422,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                     @Override
                     public Class<?> getColumnClass(int columnIndex) {
                         if (columnIndex == 1) {
-                            return Integer.class;
+                            return Float.class;
                         } else {
                             return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
                         }

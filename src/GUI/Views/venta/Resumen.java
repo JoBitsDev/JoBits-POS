@@ -24,6 +24,7 @@ public class Resumen extends AbstractView{
         initComponents();
         CrearFrame();
         pack();
+        
 
     }
 

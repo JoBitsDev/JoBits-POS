@@ -38,6 +38,10 @@
               <Dimension value="[250, 26]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldAutoCompleteFocusGained"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldAutoCompleteKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonAgregarProd">
           <Properties>
@@ -45,6 +49,9 @@
               <ResourceString bundle="Strings.properties" key="label_agregar" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAgregarProdActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
