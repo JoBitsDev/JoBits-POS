@@ -5,12 +5,15 @@
  */
 package GUI.Views.Almacen;
 
+import GUI.Views.AbstractDetailView;
 import GUI.Views.AbstractView;
 import GUI.Views.util.AbstractCrossReferenePanel;
+import java.awt.Container;
 import java.awt.Dialog;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Controller;
 import restManager.controller.almacen.AlmacenManageController;
@@ -28,7 +31,7 @@ import restManager.util.comun;
  *
  * @author Jorge
  */
-public class AlmacenEditView extends AbstractView {
+public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
     /**
      * Creates new form AlmacenMain
@@ -36,13 +39,12 @@ public class AlmacenEditView extends AbstractView {
      * @param parent
      * @param modal
      */
-    Almacen a;
+   
 
     AbstractCrossReferenePanel<InsumoAlmacen, Insumo> model;
 
-    public AlmacenEditView(AbstractDialogController controller, Dialog owner, boolean modal, Almacen a) {
-        super(DialogType.FULL_SCREEN, controller, owner, modal);
-        this.a = a;
+    public AlmacenEditView(AbstractDetailController<Almacen> controller, AbstractView owner,Almacen instance) {
+        super(instance,DialogType.FULL_SCREEN, controller, owner);
         initComponents();
 
     }
@@ -52,7 +54,7 @@ public class AlmacenEditView extends AbstractView {
         model = new AbstractCrossReferenePanel<InsumoAlmacen, Insumo>("Insumos", getController().getInsumoList()) {
             @Override
             public RestManagerAbstractTableModel<InsumoAlmacen> getTableModel() {
-                return new RestManagerAbstractTableModel<InsumoAlmacen>(getController().getInsumoAlmacenList(a), getjTableCrossReference()) {
+                return new RestManagerAbstractTableModel<InsumoAlmacen>(getController().getInsumoAlmacenList(getInstance()), getjTableCrossReference()) {
                     @Override
                     public int getColumnCount() {
                         return 5;
@@ -103,9 +105,9 @@ public class AlmacenEditView extends AbstractView {
 
             @Override
             public InsumoAlmacen transformK_T(Insumo selected) {
-                InsumoAlmacenPK newInsumoPK = new InsumoAlmacenPK(selected.getCodInsumo(), a.getCodAlmacen());
+                InsumoAlmacenPK newInsumoPK = new InsumoAlmacenPK(selected.getCodInsumo(), getInstance().getCodAlmacen());
                 InsumoAlmacen newInsumo = new InsumoAlmacen(newInsumoPK);
-                newInsumo.setAlmacen(a);
+                newInsumo.setAlmacen(getInstance());
                 newInsumo.setCantidad((float) 0);
                 newInsumo.setInsumo(selected);
                 newInsumo.setValorMonetario((float) 0);
@@ -114,14 +116,8 @@ public class AlmacenEditView extends AbstractView {
             }
         };
 
-        setTitle(a.getNombre());
-        jXLabelValorTotal.setText(comun.setDosLugaresDecimales(a.getValorMonetario()));
-
-    }
-
-    @Override
-    public AlmacenManageController getController() {
-        return (AlmacenManageController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+        jXLabelValorTotal.setText(comun.setDosLugaresDecimales(getInstance().getValorMonetario()));
+        jLabelNombreAlmacen.setText(getInstance().getNombre());
     }
 
     @Override
@@ -129,8 +125,13 @@ public class AlmacenEditView extends AbstractView {
         jXPanelTabla.add(model);
     }
 
+    @Override
+    public AlmacenManageController getController() {
+        return (AlmacenManageController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
-    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,11 +153,11 @@ public class AlmacenEditView extends AbstractView {
         jButtonDarReporte = new javax.swing.JButton();
         jButtonModificarStock = new javax.swing.JButton();
         jButtonVerFichasEntrada = new javax.swing.JButton();
-        jButtonNuevaFicha = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(getFont());
         setMinimumSize(getMinimumSize());
+        setUndecorated(true);
         getContentPane().setLayout(new java.awt.BorderLayout(0, 5));
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
@@ -201,7 +202,7 @@ public class AlmacenEditView extends AbstractView {
         jXPanelControles.add(jPanel1);
 
         jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.GridLayout(2, 2));
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
 
         jButtonDarReporte.setText(bundle.getString("label_reporte")); // NOI18N
         jButtonDarReporte.addActionListener(new java.awt.event.ActionListener() {
@@ -219,16 +220,13 @@ public class AlmacenEditView extends AbstractView {
         });
         jPanel2.add(jButtonModificarStock);
 
-        jButtonVerFichasEntrada.setText(bundle.getString("label_ver_transacciones")); // NOI18N
+        jButtonVerFichasEntrada.setText(bundle.getString("label_transacciones")); // NOI18N
         jButtonVerFichasEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVerFichasEntradaActionPerformed(evt);
             }
         });
         jPanel2.add(jButtonVerFichasEntrada);
-
-        jButtonNuevaFicha.setText(bundle.getString("label_nueva_transaccion")); // NOI18N
-        jPanel2.add(jButtonNuevaFicha);
 
         jXPanelControles.add(jPanel2);
 
@@ -239,7 +237,7 @@ public class AlmacenEditView extends AbstractView {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonDarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDarReporteActionPerformed
-        getController().imprimirReporteParaCompras(a);
+        getController().imprimirReporteParaCompras(getInstance());
     }//GEN-LAST:event_jButtonDarReporteActionPerformed
 
     private void jButtonModificarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarStockActionPerformed
@@ -247,7 +245,7 @@ public class AlmacenEditView extends AbstractView {
     }//GEN-LAST:event_jButtonModificarStockActionPerformed
 
     private void jButtonVerFichasEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerFichasEntradaActionPerformed
-        getController().verTransacciones(a);
+        getController().verTransacciones(getInstance());
     }//GEN-LAST:event_jButtonVerFichasEntradaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -258,7 +256,6 @@ public class AlmacenEditView extends AbstractView {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonModificarStock;
-    private javax.swing.JButton jButtonNuevaFicha;
     private javax.swing.JButton jButtonVerFichasEntrada;
     private javax.swing.JLabel jLabelNombreAlmacen;
     private javax.swing.JPanel jPanel1;
@@ -269,5 +266,20 @@ public class AlmacenEditView extends AbstractView {
     private org.jdesktop.swingx.JXPanel jXPanelControles;
     private org.jdesktop.swingx.JXPanel jXPanelTabla;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setEditingMode() {
+        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setCreatingMode() {
+        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean validateData() {
+        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

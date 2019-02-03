@@ -26,6 +26,9 @@ public class TransaccionMermaPK implements Serializable {
     @Column(name = "transaccioninsumocod_insumo")
     private String transaccioninsumocodInsumo;
     @Basic(optional = false)
+    @Column(name = "transaccionalmacencod_almacen")
+    private String transaccionalmacencodAlmacen;
+    @Basic(optional = false)
     @Column(name = "transaccionfecha")
     @Temporal(TemporalType.DATE)
     private Date transaccionfecha;
@@ -37,8 +40,9 @@ public class TransaccionMermaPK implements Serializable {
     public TransaccionMermaPK() {
     }
 
-    public TransaccionMermaPK(String transaccioninsumocodInsumo, Date transaccionfecha, Date transaccionhora) {
+    public TransaccionMermaPK(String transaccioninsumocodInsumo, String transaccionalmacencodAlmacen, Date transaccionfecha, Date transaccionhora) {
         this.transaccioninsumocodInsumo = transaccioninsumocodInsumo;
+        this.transaccionalmacencodAlmacen = transaccionalmacencodAlmacen;
         this.transaccionfecha = transaccionfecha;
         this.transaccionhora = transaccionhora;
     }
@@ -49,6 +53,14 @@ public class TransaccionMermaPK implements Serializable {
 
     public void setTransaccioninsumocodInsumo(String transaccioninsumocodInsumo) {
         this.transaccioninsumocodInsumo = transaccioninsumocodInsumo;
+    }
+
+    public String getTransaccionalmacencodAlmacen() {
+        return transaccionalmacencodAlmacen;
+    }
+
+    public void setTransaccionalmacencodAlmacen(String transaccionalmacencodAlmacen) {
+        this.transaccionalmacencodAlmacen = transaccionalmacencodAlmacen;
     }
 
     public Date getTransaccionfecha() {
@@ -71,6 +83,7 @@ public class TransaccionMermaPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (transaccioninsumocodInsumo != null ? transaccioninsumocodInsumo.hashCode() : 0);
+        hash += (transaccionalmacencodAlmacen != null ? transaccionalmacencodAlmacen.hashCode() : 0);
         hash += (transaccionfecha != null ? transaccionfecha.hashCode() : 0);
         hash += (transaccionhora != null ? transaccionhora.hashCode() : 0);
         return hash;
@@ -86,6 +99,9 @@ public class TransaccionMermaPK implements Serializable {
         if ((this.transaccioninsumocodInsumo == null && other.transaccioninsumocodInsumo != null) || (this.transaccioninsumocodInsumo != null && !this.transaccioninsumocodInsumo.equals(other.transaccioninsumocodInsumo))) {
             return false;
         }
+        if ((this.transaccionalmacencodAlmacen == null && other.transaccionalmacencodAlmacen != null) || (this.transaccionalmacencodAlmacen != null && !this.transaccionalmacencodAlmacen.equals(other.transaccionalmacencodAlmacen))) {
+            return false;
+        }
         if ((this.transaccionfecha == null && other.transaccionfecha != null) || (this.transaccionfecha != null && !this.transaccionfecha.equals(other.transaccionfecha))) {
             return false;
         }
@@ -97,7 +113,7 @@ public class TransaccionMermaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.TransaccionMermaPK[ transaccioninsumocodInsumo=" + transaccioninsumocodInsumo + ", transaccionfecha=" + transaccionfecha + ", transaccionhora=" + transaccionhora + " ]";
+        return "restManager.persistencia.TransaccionMermaPK[ transaccioninsumocodInsumo=" + transaccioninsumocodInsumo + ", transaccionalmacencodAlmacen=" + transaccionalmacencodAlmacen + ", transaccionfecha=" + transaccionfecha + ", transaccionhora=" + transaccionhora + " ]";
     }
 
 }

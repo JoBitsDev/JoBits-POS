@@ -69,7 +69,7 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
     }
 
     public List<Almacen> getAlmacenList() {
-        return new AlmacenDAO().findAll();
+        return AlmacenDAO.getInstance().findAll();
     }
 
     public List<ProductoVenta> getProductoList() {

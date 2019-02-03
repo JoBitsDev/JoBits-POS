@@ -26,6 +26,9 @@ public class TransaccionPK implements Serializable {
     @Column(name = "insumocod_insumo")
     private String insumocodInsumo;
     @Basic(optional = false)
+    @Column(name = "almacencod_almacen")
+    private String almacencodAlmacen;
+    @Basic(optional = false)
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
@@ -37,8 +40,9 @@ public class TransaccionPK implements Serializable {
     public TransaccionPK() {
     }
 
-    public TransaccionPK(String insumocodInsumo, Date fecha, Date hora) {
+    public TransaccionPK(String insumocodInsumo, String almacencodAlmacen, Date fecha, Date hora) {
         this.insumocodInsumo = insumocodInsumo;
+        this.almacencodAlmacen = almacencodAlmacen;
         this.fecha = fecha;
         this.hora = hora;
     }
@@ -49,6 +53,14 @@ public class TransaccionPK implements Serializable {
 
     public void setInsumocodInsumo(String insumocodInsumo) {
         this.insumocodInsumo = insumocodInsumo;
+    }
+
+    public String getAlmacencodAlmacen() {
+        return almacencodAlmacen;
+    }
+
+    public void setAlmacencodAlmacen(String almacencodAlmacen) {
+        this.almacencodAlmacen = almacencodAlmacen;
     }
 
     public Date getFecha() {
@@ -71,6 +83,7 @@ public class TransaccionPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (insumocodInsumo != null ? insumocodInsumo.hashCode() : 0);
+        hash += (almacencodAlmacen != null ? almacencodAlmacen.hashCode() : 0);
         hash += (fecha != null ? fecha.hashCode() : 0);
         hash += (hora != null ? hora.hashCode() : 0);
         return hash;
@@ -86,6 +99,9 @@ public class TransaccionPK implements Serializable {
         if ((this.insumocodInsumo == null && other.insumocodInsumo != null) || (this.insumocodInsumo != null && !this.insumocodInsumo.equals(other.insumocodInsumo))) {
             return false;
         }
+        if ((this.almacencodAlmacen == null && other.almacencodAlmacen != null) || (this.almacencodAlmacen != null && !this.almacencodAlmacen.equals(other.almacencodAlmacen))) {
+            return false;
+        }
         if ((this.fecha == null && other.fecha != null) || (this.fecha != null && !this.fecha.equals(other.fecha))) {
             return false;
         }
@@ -97,7 +113,7 @@ public class TransaccionPK implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.TransaccionPK[ insumocodInsumo=" + insumocodInsumo + ", fecha=" + fecha + ", hora=" + hora + " ]";
+        return "restManager.persistencia.TransaccionPK[ insumocodInsumo=" + insumocodInsumo + ", almacencodAlmacen=" + almacencodAlmacen + ", fecha=" + fecha + ", hora=" + hora + " ]";
     }
 
 }

@@ -28,6 +28,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "TransaccionMerma.findAll", query = "SELECT t FROM TransaccionMerma t"),
     @NamedQuery(name = "TransaccionMerma.findByTransaccioninsumocodInsumo", query = "SELECT t FROM TransaccionMerma t WHERE t.transaccionMermaPK.transaccioninsumocodInsumo = :transaccioninsumocodInsumo"),
+    @NamedQuery(name = "TransaccionMerma.findByTransaccionalmacencodAlmacen", query = "SELECT t FROM TransaccionMerma t WHERE t.transaccionMermaPK.transaccionalmacencodAlmacen = :transaccionalmacencodAlmacen"),
     @NamedQuery(name = "TransaccionMerma.findByTransaccionfecha", query = "SELECT t FROM TransaccionMerma t WHERE t.transaccionMermaPK.transaccionfecha = :transaccionfecha"),
     @NamedQuery(name = "TransaccionMerma.findByTransaccionhora", query = "SELECT t FROM TransaccionMerma t WHERE t.transaccionMermaPK.transaccionhora = :transaccionhora"),
     @NamedQuery(name = "TransaccionMerma.findByRazon", query = "SELECT t FROM TransaccionMerma t WHERE t.razon = :razon")})
@@ -40,6 +41,7 @@ public class TransaccionMerma implements Serializable {
     private String razon;
     @JoinColumns({
         @JoinColumn(name = "transaccioninsumocod_insumo", referencedColumnName = "insumocod_insumo", insertable = false, updatable = false),
+        @JoinColumn(name = "transaccionalmacencod_almacen", referencedColumnName = "almacencod_almacen", insertable = false, updatable = false),
         @JoinColumn(name = "transaccionfecha", referencedColumnName = "fecha", insertable = false, updatable = false),
         @JoinColumn(name = "transaccionhora", referencedColumnName = "hora", insertable = false, updatable = false)})
     @OneToOne(optional = false)
@@ -52,8 +54,8 @@ public class TransaccionMerma implements Serializable {
         this.transaccionMermaPK = transaccionMermaPK;
     }
 
-    public TransaccionMerma(String transaccioninsumocodInsumo, Date transaccionfecha, Date transaccionhora) {
-        this.transaccionMermaPK = new TransaccionMermaPK(transaccioninsumocodInsumo, transaccionfecha, transaccionhora);
+    public TransaccionMerma(String transaccioninsumocodInsumo, String transaccionalmacencodAlmacen, Date transaccionfecha, Date transaccionhora) {
+        this.transaccionMermaPK = new TransaccionMermaPK(transaccioninsumocodInsumo, transaccionalmacencodAlmacen, transaccionfecha, transaccionhora);
     }
 
     public TransaccionMermaPK getTransaccionMermaPK() {

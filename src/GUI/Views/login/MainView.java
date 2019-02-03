@@ -58,6 +58,7 @@ public class MainView extends AbstractView {
         jButtonStocking = new javax.swing.JButton();
         jButtonIPVs = new javax.swing.JButton();
         jPanelContabilidad = new javax.swing.JPanel();
+        jButtonVentaRapida = new javax.swing.JButton();
         jButtonVender = new javax.swing.JButton();
         jButtonVentas = new javax.swing.JButton();
         jButtonArchivos = new javax.swing.JButton();
@@ -217,6 +218,18 @@ public class MainView extends AbstractView {
         jPanelContabilidad.setBackground(new java.awt.Color(204, 204, 204));
         jPanelContabilidad.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createTitledBorder(null, "Contabilidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
         jPanelContabilidad.setLayout(new java.awt.GridLayout(1, 0));
+
+        jButtonVentaRapida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/venta-rapida2.png"))); // NOI18N
+        jButtonVentaRapida.setText(bundle.getString("label_venta_rapida")); // NOI18N
+        jButtonVentaRapida.setBorderPainted(false);
+        jButtonVentaRapida.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonVentaRapida.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonVentaRapida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVentaRapidaActionPerformed(evt);
+            }
+        });
+        jPanelContabilidad.add(jButtonVentaRapida);
 
         jButtonVender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/caja-registradora.png"))); // NOI18N
         jButtonVender.setText(bundle.getString("label_comenzar_dia")); // NOI18N
@@ -383,7 +396,7 @@ public class MainView extends AbstractView {
     }//GEN-LAST:event_jButtonIPVsActionPerformed
 
     private void jButtonVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVenderActionPerformed
-        action(MainController.MenuButtons.COMENZAR_DIA);        // TODO add your handling code here:
+        action(MainController.MenuButtons.COMENZAR_VENTAS);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVenderActionPerformed
 
     private void jButtonVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVentasActionPerformed
@@ -409,6 +422,10 @@ public class MainView extends AbstractView {
     private void jButtonCopiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCopiaSeguridadActionPerformed
         action(MainController.MenuButtons.COPIA_SEG);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCopiaSeguridadActionPerformed
+
+    private void jButtonVentaRapidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVentaRapidaActionPerformed
+        action(MainController.MenuButtons.VENTA_RAPIDA);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonVentaRapidaActionPerformed
 
     @Override
     public void updateView() {
@@ -438,6 +455,7 @@ public class MainView extends AbstractView {
     private javax.swing.JButton jButtonStocking;
     private javax.swing.JButton jButtonTrabajadores;
     private javax.swing.JButton jButtonVender;
+    private javax.swing.JButton jButtonVentaRapida;
     private javax.swing.JButton jButtonVentas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

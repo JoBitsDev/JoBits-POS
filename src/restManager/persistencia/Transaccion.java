@@ -14,10 +14,11 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -31,6 +32,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "Transaccion.findAll", query = "SELECT t FROM Transaccion t"),
     @NamedQuery(name = "Transaccion.findByInsumocodInsumo", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.insumocodInsumo = :insumocodInsumo"),
+    @NamedQuery(name = "Transaccion.findByAlmacencodAlmacen", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.almacencodAlmacen = :almacencodAlmacen"),
     @NamedQuery(name = "Transaccion.findByFecha", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.fecha = :fecha"),
     @NamedQuery(name = "Transaccion.findByHora", query = "SELECT t FROM Transaccion t WHERE t.transaccionPK.hora = :hora"),
     @NamedQuery(name = "Transaccion.findByCantidad", query = "SELECT t FROM Transaccion t WHERE t.cantidad = :cantidad"),
@@ -45,10 +47,19 @@ public class Transaccion implements Serializable {
     private Float cantidad;
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "transaccion")
-    private List<TransaccionSalida> transaccionSalidaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "transaccion")
-    private List<TransaccionEntrada> transaccionEntradaList;
+    @JoinTable(name = "transaccion_salida", joinColumns = {
+        @JoinColumn(name = "transaccioninsumocod_insumo", referencedColumnName = "insumocod_insumo"),
+        @JoinColumn(name = "transaccionalmacencod_almacen", referencedColumnName = "almacencod_almacen"),
+        @JoinColumn(name = "transaccionfecha", referencedColumnName = "fecha"),
+        @JoinColumn(name = "transaccionhora", referencedColumnName = "hora")}, inverseJoinColumns = {
+        @JoinColumn(name = "cocinacod_cocina", referencedColumnName = "cod_cocina")})
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Cocina> cocinaList;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "transaccion")
+    private TransaccionEntrada transaccionEntrada;
+    @JoinColumn(name = "almacencod_almacen", referencedColumnName = "cod_almacen", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Almacen almacen;
     @JoinColumn(name = "insumocod_insumo", referencedColumnName = "cod_insumo", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Insumo insumo;
@@ -62,8 +73,8 @@ public class Transaccion implements Serializable {
         this.transaccionPK = transaccionPK;
     }
 
-    public Transaccion(String insumocodInsumo, Date fecha, Date hora) {
-        this.transaccionPK = new TransaccionPK(insumocodInsumo, fecha, hora);
+    public Transaccion(String insumocodInsumo, String almacencodAlmacen, Date fecha, Date hora) {
+        this.transaccionPK = new TransaccionPK(insumocodInsumo, almacencodAlmacen, fecha, hora);
     }
 
     public TransaccionPK getTransaccionPK() {
@@ -90,20 +101,28 @@ public class Transaccion implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<TransaccionSalida> getTransaccionSalidaList() {
-        return transaccionSalidaList;
+    public List<Cocina> getCocinaList() {
+        return cocinaList;
     }
 
-    public void setTransaccionSalidaList(List<TransaccionSalida> transaccionSalidaList) {
-        this.transaccionSalidaList = transaccionSalidaList;
+    public void setCocinaList(List<Cocina> cocinaList) {
+        this.cocinaList = cocinaList;
     }
 
-    public List<TransaccionEntrada> getTransaccionEntradaList() {
-        return transaccionEntradaList;
+    public TransaccionEntrada getTransaccionEntrada() {
+        return transaccionEntrada;
     }
 
-    public void setTransaccionEntradaList(List<TransaccionEntrada> transaccionEntradaList) {
-        this.transaccionEntradaList = transaccionEntradaList;
+    public void setTransaccionEntrada(TransaccionEntrada transaccionEntrada) {
+        this.transaccionEntrada = transaccionEntrada;
+    }
+
+    public Almacen getAlmacen() {
+        return almacen;
+    }
+
+    public void setAlmacen(Almacen almacen) {
+        this.almacen = almacen;
     }
 
     public Insumo getInsumo() {

@@ -9,6 +9,7 @@
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
       <Connection component="Form" name="minimumSize" type="property"/>
     </Property>
+    <Property name="undecorated" type="boolean" value="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -150,9 +151,8 @@
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
 
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="2"/>
-            <Property name="rows" type="int" value="2"/>
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+            <Property name="horizontalGap" type="int" value="20"/>
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JButton" name="jButtonDarReporte">
@@ -178,19 +178,12 @@
             <Component class="javax.swing.JButton" name="jButtonVerFichasEntrada">
               <Properties>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="Strings.properties" key="label_ver_transacciones" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="Strings.properties" key="label_transacciones" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonVerFichasEntradaActionPerformed"/>
               </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButtonNuevaFicha">
-              <Properties>
-                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="Strings.properties" key="label_nueva_transaccion" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                </Property>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>

@@ -108,14 +108,14 @@ public class IPVController extends AbstractDialogController<Ipv> {
         IpvRegistroDAO.getInstance().commitTransaction();
     }
 
-    public void inicializarIpvs(Date fecha) {
+    public List<IpvRegistro> inicializarIpvs(Date fecha) {
+       ArrayList<IpvRegistro> ret = new ArrayList<>();
         getItems().forEach((x) -> {
             IpvRegistroPK pk = new IpvRegistroPK(x.getInsumo().getCodInsumo(), x.getCocina().getCodCocina(), fecha);
             IpvRegistro reg = IpvRegistroDAO.getInstance().find(pk);
             if (reg == null) {
                 reg = new IpvRegistro(pk);
                 reg.setIpv(x);
-                reg.setTransaccionSalidaList(new ArrayList<>());
                 IpvRegistroDAO.getInstance().startTransaction();
                 IpvRegistroDAO.getInstance().create(reg);
                 IpvRegistroDAO.getInstance().commitTransaction();
@@ -125,8 +125,10 @@ public class IPVController extends AbstractDialogController<Ipv> {
                 reg.setConsumoReal((float) 0);
                 updateInstance(reg);
             }
+            ret.add(reg);
         });
 
+        return ret;
     }
 
     private float getEntradaDiaAnterior(IpvRegistro reg) {

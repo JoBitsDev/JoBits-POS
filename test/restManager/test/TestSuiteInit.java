@@ -5,6 +5,7 @@
  */
 package restManager.test;
 
+import GUI.Views.Almacen.TransaccionListViewTest;
 import GUI.Views.cocina.CocinaListViewTest;
 import GUI.Views.venta.VentaListaTest;
 import org.junit.After;
@@ -25,7 +26,7 @@ import restManager.resources.R;
  * @author Jorge
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({VentaListaTest.class})
+@Suite.SuiteClasses({TransaccionListViewTest.class})
 public class TestSuiteInit {
 
     @BeforeClass

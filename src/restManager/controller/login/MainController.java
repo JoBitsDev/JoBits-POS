@@ -95,17 +95,17 @@ public class MainController extends AbstractDialogController<Personal> {
                 case IPV:
                     controller = new IPVController(getView());
                     break;
-                case COMENZAR_DIA:
+                case COMENZAR_VENTAS:
                     if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 3) {
                         String date = JOptionPane.showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
                                 + "o deje la casilla en blanco para comenzar en el ultimo dia sin cerrar ", "Entrada", JOptionPane.QUESTION_MESSAGE);
                         if (date == null) {
-                                controller = new VentaDetailController(getView());
+                            controller = new VentaDetailController(getView());
                         } else {
                             try {
                                 Venta v = VentaDAO.getInstance().find(R.DATE_FORMAT.parse(date));
                                 if (v == null) {
-                                    controller = new VentaDetailController(getView(),R.DATE_FORMAT.parse(date));
+                                    controller = new VentaDetailController(getView(), R.DATE_FORMAT.parse(date));
                                 } else {
                                     controller = new VentaDetailController(v, getView());
                                 }
@@ -115,6 +115,24 @@ public class MainController extends AbstractDialogController<Personal> {
                         }
                     } else {
                         controller = new VentaDetailController(getView());
+                    }
+                    break;
+                case VENTA_RAPIDA:
+                    String date = JOptionPane.showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
+                            + "o deje la casilla en blanco para comenzar en el ultimo dia sin cerrar ", "Entrada", JOptionPane.QUESTION_MESSAGE);
+                    if (date == null) {
+                        controller = new VentaDetailController(getView(),true);
+                    } else {
+                        try {
+                            Venta v = VentaDAO.getInstance().find(R.DATE_FORMAT.parse(date));
+                            if (v == null) {
+                                controller = new VentaDetailController(getView(), R.DATE_FORMAT.parse(date),true);
+                            } else {
+                               throw new restManager.exceptions.ValidatingException(getView());
+                            }
+                        } catch (ParseException ex) {
+                            showErrorDialog(getView(), ex.getMessage());
+                        }
                     }
                     break;
                 default:
@@ -153,10 +171,11 @@ public class MainController extends AbstractDialogController<Personal> {
         //
         //Contabilidad
         //
+        VENTA_RAPIDA(4),
         VENTAS(4),
         ARCHIVOS(4),
         PRESUPUESTO(4),
-        COMENZAR_DIA(2),
+        COMENZAR_VENTAS(2),
         //
         //TRABAJADORES
         //

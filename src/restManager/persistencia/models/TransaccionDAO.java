@@ -6,26 +6,24 @@
 package restManager.persistencia.models;
 
 
-import restManager.persistencia.Almacen;
-import restManager.persistencia.Cocina;
-import restManager.persistencia.Personal;
+import restManager.persistencia.Transaccion;
 /**
  * FirstDream
  *
  * @author Jorge
  *
  */
-public class AlmacenDAO extends AbstractModel<Almacen> {
+public class TransaccionDAO extends AbstractModel<Transaccion> {
 
-    private static AlmacenDAO INSTANCE = null;
+    private static TransaccionDAO INSTANCE = null;
 
-    private AlmacenDAO() {
-        super(Almacen.class);
+    private TransaccionDAO() {
+        super(Transaccion.class);
     }
 
-    public static AlmacenDAO getInstance() {
+    public static TransaccionDAO getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new AlmacenDAO();
+            INSTANCE = new TransaccionDAO();
             return INSTANCE;
         } else {
             return INSTANCE;

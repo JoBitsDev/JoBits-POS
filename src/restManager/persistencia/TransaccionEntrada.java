@@ -8,14 +8,15 @@ package restManager.persistencia;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -30,7 +31,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "TransaccionEntrada.findByTransaccioninsumocodInsumo", query = "SELECT t FROM TransaccionEntrada t WHERE t.transaccionEntradaPK.transaccioninsumocodInsumo = :transaccioninsumocodInsumo"),
     @NamedQuery(name = "TransaccionEntrada.findByTransaccionfecha", query = "SELECT t FROM TransaccionEntrada t WHERE t.transaccionEntradaPK.transaccionfecha = :transaccionfecha"),
     @NamedQuery(name = "TransaccionEntrada.findByTransaccionhora", query = "SELECT t FROM TransaccionEntrada t WHERE t.transaccionEntradaPK.transaccionhora = :transaccionhora"),
-    @NamedQuery(name = "TransaccionEntrada.findByAlmacencodAlmacen", query = "SELECT t FROM TransaccionEntrada t WHERE t.transaccionEntradaPK.almacencodAlmacen = :almacencodAlmacen"),
+    @NamedQuery(name = "TransaccionEntrada.findByTransaccionalmacencodAlmacen", query = "SELECT t FROM TransaccionEntrada t WHERE t.transaccionEntradaPK.transaccionalmacencodAlmacen = :transaccionalmacencodAlmacen"),
     @NamedQuery(name = "TransaccionEntrada.findByConsumido", query = "SELECT t FROM TransaccionEntrada t WHERE t.consumido = :consumido"),
     @NamedQuery(name = "TransaccionEntrada.findByPrecioPorUnidad", query = "SELECT t FROM TransaccionEntrada t WHERE t.precioPorUnidad = :precioPorUnidad"),
     @NamedQuery(name = "TransaccionEntrada.findByValorTotal", query = "SELECT t FROM TransaccionEntrada t WHERE t.valorTotal = :valorTotal")})
@@ -46,14 +47,12 @@ public class TransaccionEntrada implements Serializable {
     private Float precioPorUnidad;
     @Column(name = "valor_total")
     private Float valorTotal;
-    @JoinColumn(name = "almacencod_almacen", referencedColumnName = "cod_almacen", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Almacen almacen;
     @JoinColumns({
         @JoinColumn(name = "transaccioninsumocod_insumo", referencedColumnName = "insumocod_insumo", insertable = false, updatable = false),
+        @JoinColumn(name = "transaccionalmacencod_almacen", referencedColumnName = "almacencod_almacen", insertable = false, updatable = false),
         @JoinColumn(name = "transaccionfecha", referencedColumnName = "fecha", insertable = false, updatable = false),
         @JoinColumn(name = "transaccionhora", referencedColumnName = "hora", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
+    @OneToOne(optional = false,cascade = {CascadeType.ALL})
     private Transaccion transaccion;
 
     public TransaccionEntrada() {
@@ -63,8 +62,8 @@ public class TransaccionEntrada implements Serializable {
         this.transaccionEntradaPK = transaccionEntradaPK;
     }
 
-    public TransaccionEntrada(String transaccioninsumocodInsumo, Date transaccionfecha, Date transaccionhora, String almacencodAlmacen) {
-        this.transaccionEntradaPK = new TransaccionEntradaPK(transaccioninsumocodInsumo, transaccionfecha, transaccionhora, almacencodAlmacen);
+    public TransaccionEntrada(String transaccioninsumocodInsumo, Date transaccionfecha, Date transaccionhora, String transaccionalmacencodAlmacen) {
+        this.transaccionEntradaPK = new TransaccionEntradaPK(transaccioninsumocodInsumo, transaccionfecha, transaccionhora, transaccionalmacencodAlmacen);
     }
 
     public TransaccionEntradaPK getTransaccionEntradaPK() {
@@ -97,14 +96,6 @@ public class TransaccionEntrada implements Serializable {
 
     public void setValorTotal(Float valorTotal) {
         this.valorTotal = valorTotal;
-    }
-
-    public Almacen getAlmacen() {
-        return almacen;
-    }
-
-    public void setAlmacen(Almacen almacen) {
-        this.almacen = almacen;
     }
 
     public Transaccion getTransaccion() {

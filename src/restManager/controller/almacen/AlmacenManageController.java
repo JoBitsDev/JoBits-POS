@@ -5,12 +5,13 @@
  */
 package restManager.controller.almacen;
 
+import GUI.Views.AbstractView;
 import GUI.Views.Almacen.AlmacenEditView;
-import java.awt.Dialog;
 import java.awt.Window;
 import java.util.List;
 import javax.swing.JOptionPane;
-import restManager.controller.AbstractDialogController;
+
+import restManager.controller.AbstractDetailController;
 import restManager.controller.insumo.InsumoCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Almacen;
@@ -27,17 +28,15 @@ import restManager.resources.R;
  * @author Jorge
  *
  */
-public class AlmacenManageController extends AbstractDialogController<Almacen> {
+public class AlmacenManageController extends AbstractDetailController<Almacen> {
 
-    Almacen a;
 
     public AlmacenManageController(Almacen a) {
-        super(new AlmacenDAO());
-        this.a = a;
+        super(AlmacenDAO.getInstance());
     }
 
     public AlmacenManageController(Window parent, Almacen a) {
-        this(a);
+        super(a, parent, AlmacenDAO.getInstance());
         constructView(parent);
     }
 
@@ -47,7 +46,7 @@ public class AlmacenManageController extends AbstractDialogController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new AlmacenEditView(this, (Dialog) parent, true,a));
+        setView(new AlmacenEditView(this, (AbstractView) parent,getInstance()));
         getView().updateView();
         getView().fetchComponentData();
         getView().setVisible(true);
@@ -106,6 +105,11 @@ public class AlmacenManageController extends AbstractDialogController<Almacen> {
     }
 
     public void verTransacciones(Almacen a) {
+       TransaccionesListController controller = new TransaccionesListController(getView(),a);
+    }
+
+    @Override
+    public Almacen createNewInstance() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 }

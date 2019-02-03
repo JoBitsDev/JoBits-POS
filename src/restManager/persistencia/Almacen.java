@@ -45,10 +45,8 @@ public class Almacen implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "valor_monetario")
     private Float valorMonetario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacencodAlmacendesde")
-    private List<TransaccionSalida> transaccionSalidaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacen")
-    private List<TransaccionEntrada> transaccionEntradaList;
+    private List<Transaccion> transaccionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacen")
     private List<InsumoAlmacen> insumoAlmacenList;
 
@@ -91,20 +89,12 @@ public class Almacen implements Serializable {
         this.valorMonetario = valorMonetario;
     }
 
-    public List<TransaccionSalida> getTransaccionSalidaList() {
-        return transaccionSalidaList;
+    public List<Transaccion> getTransaccionList() {
+        return transaccionList;
     }
 
-    public void setTransaccionSalidaList(List<TransaccionSalida> transaccionSalidaList) {
-        this.transaccionSalidaList = transaccionSalidaList;
-    }
-
-    public List<TransaccionEntrada> getTransaccionEntradaList() {
-        return transaccionEntradaList;
-    }
-
-    public void setTransaccionEntradaList(List<TransaccionEntrada> transaccionEntradaList) {
-        this.transaccionEntradaList = transaccionEntradaList;
+    public void setTransaccionList(List<Transaccion> transaccionList) {
+        this.transaccionList = transaccionList;
     }
 
     public List<InsumoAlmacen> getInsumoAlmacenList() {

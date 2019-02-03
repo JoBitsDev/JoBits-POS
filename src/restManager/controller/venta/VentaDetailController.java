@@ -5,6 +5,7 @@
  */
 package restManager.controller.venta;
 
+import GUI.Views.AbstractView;
 import GUI.Views.util.CalcularCambioView;
 import GUI.Views.venta.VentasCreateEditView;
 import java.awt.Window;
@@ -71,6 +72,24 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public VentaDetailController(Venta instance, Window parent) {
         super(instance, parent, VentaDAO.getInstance());
         OrdenDAO.getInstance().addPropertyChangeListener(this);
+    }
+
+    public VentaDetailController(AbstractView parent, Date diaVentas, boolean b) {
+        super(VentaDAO.getInstance());
+        this.parent = parent;
+        OrdenDAO.getInstance().addPropertyChangeListener(this);
+        instance = getDiaDeVenta(diaVentas);
+        state = State.CREATING;
+        constructFastView(parent);
+    }
+
+    public VentaDetailController(AbstractView parent, boolean b) {
+        super(VentaDAO.getInstance());
+        this.parent = parent;
+        OrdenDAO.getInstance().addPropertyChangeListener(this);
+        instance = getDiaDeVenta(null);
+        state = State.CREATING;
+        constructFastView(parent);
     }
 
     @Override
@@ -178,7 +197,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             if (ret != null) {
                 return ret;
             }
-            
+
             // crear el dia nuevo
             ret = new Venta();
             ret.setVentagastosEninsumos(0.0);
@@ -241,6 +260,10 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
         });
         Impresion.getDefaultInstance().printResumenPuntoElab(aux, c, getInstance().getFecha());
+    }
+
+    private void constructFastView(AbstractView parent) {
+        
     }
 
 }

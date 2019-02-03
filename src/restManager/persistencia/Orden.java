@@ -72,7 +72,7 @@ public class Orden implements Serializable {
     @ManyToOne
     private Mesa mesacodMesa;
     @JoinColumn(name = "personalusuario", referencedColumnName = "usuario")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Personal personalusuario;
     @JoinColumn(name = "ventafecha", referencedColumnName = "fecha")
     @ManyToOne(optional = false)
