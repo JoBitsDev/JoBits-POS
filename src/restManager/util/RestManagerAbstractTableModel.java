@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import restManager.exceptions.DuplicatedException;
 import restManager.exceptions.NoSelectedException;
 
 /**
@@ -71,6 +72,9 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
     }
 
     public void addObject(T object) {
+        if(items.indexOf(object) != -1){
+            throw new DuplicatedException(table.getParent());
+        }
         items.add(object);
         fireTableRowsInserted(items.indexOf(object), items.indexOf(object));
     }
