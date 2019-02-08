@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import restManager.controller.AbstractFragmentController;
+import restManager.controller.almacen.IPVController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
 import restManager.persistencia.IpvRegistro;
@@ -146,7 +147,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     }
 
-    
     public void despachar() {
         Impresion i = new Impresion();
         setShowDialogs(true);
@@ -161,7 +161,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             }
             if (enviar) {
                 if (showConfirmDialog(getView(), "Desea imprimir un ticket de la orden")) {
-                    
+
                     i.print(instance, false);
                     RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIRTICKET, Level.FINE, instance);
                 }
@@ -190,7 +190,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
         instance.getProductovOrdenList().remove(objectAtSelectedRow);
 
-        updateIPVs(objectAtSelectedRow, UpdateIpvAction.REMOVER);
+        updateIPVs(objectAtSelectedRow, objectAtSelectedRow.getCantidad(), UpdateIpvAction.REMOVER);
         update(instance);
         view.updateValorTotal();
     }
@@ -246,6 +246,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     public void addProduct(ProductoVenta selected) {
         boolean found = false;
         ProductovOrden founded = null;
+        float cantidadAgregada = 1;
         for (ProductovOrden x : new ArrayList<>(getInstance().getProductovOrdenList())) {
             if (x.getProductoVenta().getPCod().equals(selected.getPCod())) {
                 founded = x;
@@ -267,29 +268,27 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             ProductovOrdenDAO.getInstance().create(founded);
             getInstance().getProductovOrdenList().add(founded);
         }
-        updateIPVs(founded, UpdateIpvAction.AGREGAR);
+        cantidadAgregada = founded.getCantidad();
+        updateIPVs(founded, cantidadAgregada, UpdateIpvAction.AGREGAR);
         update(instance);
         view.updateValorTotal();
 
     }
 
-    public void updateIPVs(ProductovOrden founded, UpdateIpvAction action) {
-        String cocina_cod = founded.getProductoVenta().getCocinacodCocina().getCodCocina();
+    public void updateIPVs(ProductovOrden founded, float cantidad, UpdateIpvAction action) {
         for (ProductoInsumo prodIns : founded.getProductoVenta().getProductoInsumoList()) {
-            IpvRegistroPK pk = new IpvRegistroPK(prodIns.getInsumo().getCodInsumo(), cocina_cod, instance.getVentafecha().getFecha());
-            IpvRegistro reg = IpvRegistroDAO.getInstance().find(pk);
+            IpvRegistro reg = IpvRegistroDAO.getInstance().getIpvRegistro(founded.getProductoVenta().getCocinacodCocina(), instance.getVentafecha().getFecha(), prodIns.getInsumo());
+            IPVController controller = new IPVController();
             if (reg != null) {
                 switch (action) {
                     case AGREGAR:
-                        reg.setConsumo(reg.getConsumo() + prodIns.getCantidad());
+                        reg.setConsumo(reg.getConsumo() + prodIns.getCantidad() * cantidad);
                         break;
                     case REMOVER:
-                        reg.setConsumo(reg.getConsumo() - prodIns.getCantidad());
+                        reg.setConsumo(reg.getConsumo() - prodIns.getCantidad() * cantidad);
                         break;
                 }
-                IpvRegistroDAO.getInstance().startTransaction();
-                IpvRegistroDAO.getInstance().edit(reg);
-                IpvRegistroDAO.getInstance().commitTransaction();
+                controller.updateInstance(reg);
             }
         }
     }

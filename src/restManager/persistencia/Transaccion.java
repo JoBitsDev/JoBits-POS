@@ -53,8 +53,8 @@ public class Transaccion implements Serializable {
         @JoinColumn(name = "transaccionfecha", referencedColumnName = "fecha"),
         @JoinColumn(name = "transaccionhora", referencedColumnName = "hora")}, inverseJoinColumns = {
         @JoinColumn(name = "cocinacod_cocina", referencedColumnName = "cod_cocina")})
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Cocina> cocinaList;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cocina cocina;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "transaccion")
     private TransaccionEntrada transaccionEntrada;
     @JoinColumn(name = "almacencod_almacen", referencedColumnName = "cod_almacen", insertable = false, updatable = false)
@@ -101,12 +101,12 @@ public class Transaccion implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public List<Cocina> getCocinaList() {
-        return cocinaList;
+    public Cocina getCocina() {
+        return cocina;
     }
 
-    public void setCocinaList(List<Cocina> cocinaList) {
-        this.cocinaList = cocinaList;
+    public void setCocina(Cocina cocinaList) {
+        this.cocina = cocinaList;
     }
 
     public TransaccionEntrada getTransaccionEntrada() {
@@ -163,7 +163,7 @@ public class Transaccion implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Transaccion[ transaccionPK=" + transaccionPK + " ]";
+        return getTransaccionPK().getInsumocodInsumo() +" "+ getTransaccionPK().getAlmacencodAlmacen();
     }
 
 }

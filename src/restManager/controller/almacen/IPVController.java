@@ -7,6 +7,7 @@ package restManager.controller.almacen;
 
 import GUI.Views.AbstractView;
 import GUI.Views.Almacen.IpvGestionView;
+import com.sun.webkit.Timer;
 
 import java.awt.Container;
 
@@ -16,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import restManager.controller.AbstractDialogController;
+import restManager.exceptions.DevelopingOperationException;
 
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
@@ -95,7 +97,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
 
     }
 
-    private void updateInstance(IpvRegistro instance) {
+    public void updateInstance(IpvRegistro instance) {
         instance.setDisponible(instance.getEntrada() + instance.getInicio());
         instance.setFinal1(instance.getDisponible() - instance.getConsumo());
         if (instance.getConsumoReal() != null) {
@@ -109,7 +111,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public List<IpvRegistro> inicializarIpvs(Date fecha) {
-       ArrayList<IpvRegistro> ret = new ArrayList<>();
+        ArrayList<IpvRegistro> ret = new ArrayList<>();
         getItems().forEach((x) -> {
             IpvRegistroPK pk = new IpvRegistroPK(x.getInsumo().getCodInsumo(), x.getCocina().getCodCocina(), fecha);
             IpvRegistro reg = IpvRegistroDAO.getInstance().find(pk);
@@ -146,5 +148,13 @@ public class IPVController extends AbstractDialogController<Ipv> {
 
         return founded != null ? founded.getFinal1() : 0;
 
+    }
+
+    public void darEntrada(Insumo insumo, Cocina cocina, Date fecha, Float cantidad) {
+        IpvRegistro reg = IpvRegistroDAO.getInstance().getIpvRegistro(cocina, fecha, insumo);
+        if (reg != null) {
+            reg.setEntrada(reg.getEntrada() + cantidad);
+            updateInstance(reg);
+        }
     }
 }

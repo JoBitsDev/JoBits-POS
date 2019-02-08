@@ -5,19 +5,11 @@
  */
 package restManager.persistencia.models;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
-import restManager.persistencia.Carta;
 import restManager.persistencia.Cocina;
-import restManager.persistencia.Ipv;
+import restManager.persistencia.Insumo;
 import restManager.persistencia.IpvRegistro;
-import restManager.persistencia.IpvRegistroPK;
-import restManager.persistencia.Mesa;
-import restManager.persistencia.Nota;
-import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
-import restManager.resources.R;
 
 /**
  * FirstDream
@@ -55,6 +47,15 @@ public class IpvRegistroDAO extends AbstractModel<IpvRegistro> {
                 .getResultList();
 
     }
+
+    public IpvRegistro getIpvRegistro(Cocina c, Date fecha, Insumo i) {
+        return (IpvRegistro) getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFechaAndInsumo")
+                .setParameter("ipvcocinacodCocina", c.getCodCocina())
+                .setParameter("fecha", fecha)
+                .setParameter("codinsumo", i.getCodInsumo())
+                .getSingleResult();
+
+    }
 //    @Override
 //    public void edit(IpvRegistro entity) {
 // entity.getIpvRegistroPK().setIpvinsumocodInsumo(entity.getIpv().getIpvPK().getInsumocodInsumo());
@@ -72,11 +73,11 @@ public class IpvRegistroDAO extends AbstractModel<IpvRegistro> {
 //            }
 //            entity = em.merge(entity);
 //            if (ipvOld != null && !ipvOld.equals(ipvNew)) {
-//                ipvOld.getIpvRegistroList().remove(entity);
+//                ipvOld.getIpvRegistro().remove(entity);
 //                ipvOld = em.merge(ipvOld);
 //            }
 //            if (ipvNew != null && !ipvNew.equals(ipvOld)) {
-//                ipvNew.getIpvRegistroList().add(entity);
+//                ipvNew.getIpvRegistro().add(entity);
 //                ipvNew = em.merge(ipvNew);
 //            }
 //            em.getTransaction().commit();

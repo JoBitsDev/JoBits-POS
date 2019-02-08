@@ -7,8 +7,7 @@ package restManager.persistencia.models;
 
 
 import restManager.persistencia.Almacen;
-import restManager.persistencia.Cocina;
-import restManager.persistencia.Personal;
+import restManager.persistencia.InsumoAlmacen;
 /**
  * FirstDream
  *
@@ -30,6 +29,10 @@ public class AlmacenDAO extends AbstractModel<Almacen> {
         } else {
             return INSTANCE;
         }
+    }
+
+    public InsumoAlmacen findInsumo(String codAlmacen, String codInsumo) {
+        return InsumoAlmacenDAO.getInstance().getInsumoAlmacen(codInsumo, codAlmacen);
     }
 
    

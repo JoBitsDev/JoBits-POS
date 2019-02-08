@@ -8,6 +8,7 @@ package restManager.persistencia.models;
 import java.util.List;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Almacen;
+import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoAlmacen;
 
 /**
@@ -41,9 +42,16 @@ public class InsumoAlmacenDAO extends AbstractModel<InsumoAlmacen> {
     }
 
     public List<InsumoAlmacen> getInsumoAlmacenList(Almacen a) {
-                return getEntityManager().createNamedQuery("InsumoAlmacen.findByAlmacencodAlmacen")
+        return getEntityManager().createNamedQuery("InsumoAlmacen.findByAlmacencodAlmacen")
                 .setParameter("almacencodAlmacen", a.getCodAlmacen())
                 .getResultList();
+    }
+
+    public InsumoAlmacen getInsumoAlmacen(String i, String a) {
+        return (InsumoAlmacen) getEntityManager().createNamedQuery("InsumoAlmacen.findByAlmacenInsumo")
+                .setParameter("almacencodAlmacen", a)
+                .setParameter("insumo", i)
+                .getSingleResult();
     }
 
 }

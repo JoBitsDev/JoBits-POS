@@ -406,9 +406,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                                     action = OrdenController.UpdateIpvAction.REMOVER;
                                 }
                                 dif = Math.abs(dif);
-                                for (int i = 0; i < dif; i++) {
-                                    getController().updateIPVs(items.get(rowIndex), action);
-                                }
+                                getController().updateIPVs(items.get(rowIndex), dif, action);
                                 items.get(rowIndex).setCantidad((float) aValue);
                                 fireTableRowsUpdated(rowIndex, rowIndex);
                                 updateValorTotal();

@@ -33,6 +33,10 @@ import restManager.resources.R;
             query = "SELECT DISTINCT i.ipvRegistroPK.fecha FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina  ORDER BY i.ipvRegistroPK.fecha DESC"),
     @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndFecha", 
             query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina AND i.ipvRegistroPK.fecha = :fecha"),
+    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndFechaAndInsumo", 
+            query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina AND "
+                    + "i.ipvRegistroPK.fecha = :fecha AND i.ipvRegistroPK.ipvinsumocodInsumo = :codinsumo"),
+    
     @NamedQuery(name = "IpvRegistro.findByFecha", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.fecha = :fecha"),
     @NamedQuery(name = "IpvRegistro.findByInicio", query = "SELECT i FROM IpvRegistro i WHERE i.inicio = :inicio"),
     @NamedQuery(name = "IpvRegistro.findByEntrada", query = "SELECT i FROM IpvRegistro i WHERE i.entrada = :entrada"),

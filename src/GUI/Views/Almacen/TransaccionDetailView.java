@@ -17,7 +17,9 @@ import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.almacen.TransaccionDetailController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.UnExpectedErrorException;
 import restManager.persistencia.Almacen;
+import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.Transaccion;
 import restManager.persistencia.TransaccionEntrada;
@@ -25,6 +27,8 @@ import restManager.persistencia.TransaccionEntradaPK;
 import restManager.persistencia.TransaccionPK;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
+import restManager.util.RestManagerComboBoxModel;
+import restManager.util.comun;
 
 /**
  *
@@ -34,15 +38,14 @@ public class TransaccionDetailView extends AbstractDetailView<Transaccion> {
 
     private AbstractCrossReferenePanel panel;
     private Almacen a;
-    private ArrayList<TransaccionEntrada> transacciones = new ArrayList<>();
-    
+    private ArrayList transacciones = new ArrayList();
+
     public TransaccionDetailView(Almacen a, AbstractDialogController controller, Dialog owner) {
         super(null, DialogType.FULL_SCREEN, controller, owner);
         this.a = a;
         initComponents();
-        jPanel1.setVisible(false);
-        jFormattedTextFieldFecha.setText(R.DATE_FORMAT.format(new Date()));
-        jFormattedTextFieldHora.setText(R.TIME_FORMAT.format(new Date()));
+        fetchComponentData();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -60,7 +63,7 @@ public class TransaccionDetailView extends AbstractDetailView<Transaccion> {
         jLabel4 = new javax.swing.JLabel();
         jComboBoxDestino = new javax.swing.JComboBox<>();
         jPanelControles = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jButtonCrear = new javax.swing.JButton();
         jPanelDetalles = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -103,7 +106,7 @@ public class TransaccionDetailView extends AbstractDetailView<Transaccion> {
         jLabel4.setText(bundle.getString("label_destino")); // NOI18N
         jPanel1.add(jLabel4);
 
-        jComboBoxDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Salida" }));
+        jComboBoxDestino.setPreferredSize(new java.awt.Dimension(100, 27));
         jPanel1.add(jComboBoxDestino);
 
         jPanelInfo.add(jPanel1);
@@ -113,13 +116,13 @@ public class TransaccionDetailView extends AbstractDetailView<Transaccion> {
         jPanelControles.setBackground(new java.awt.Color(153, 153, 153));
         jPanelControles.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
 
-        jButton1.setText(bundle.getString("label_crear")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCrear.setText(bundle.getString("label_crear")); // NOI18N
+        jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonCrearActionPerformed(evt);
             }
         });
-        jPanelControles.add(jButton1);
+        jPanelControles.add(jButtonCrear);
 
         getContentPane().add(jPanelControles, java.awt.BorderLayout.PAGE_END);
 
@@ -134,17 +137,18 @@ public class TransaccionDetailView extends AbstractDetailView<Transaccion> {
         updateView();
     }//GEN-LAST:event_jComboBoxTipoItemStateChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(jComboBoxTipo.getSelectedIndex() == 0){
-            getController().createNewTransaccionEntrada(transacciones);
-        }else{
-            
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+        if (jComboBoxTipo.getSelectedIndex() == 0) {
+        //    getController().createNewTransaccionEntrada(transacciones);
+        } else {
+           // getController().createNewTransaccionSalida(transacciones);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCrearActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBoxDestino;
+    private javax.swing.JButton jButtonCrear;
+    private javax.swing.JComboBox<Cocina> jComboBoxDestino;
     private javax.swing.JComboBox<String> jComboBoxTipo;
     private javax.swing.JFormattedTextField jFormattedTextFieldFecha;
     private javax.swing.JFormattedTextField jFormattedTextFieldHora;
@@ -174,7 +178,19 @@ public class TransaccionDetailView extends AbstractDetailView<Transaccion> {
     }
 
     @Override
+    public void fetchComponentData() {
+        jComboBoxDestino.setModel(new RestManagerComboBoxModel<>(getController().getCocinaList()));
+        jPanel1.setVisible(false);
+        jFormattedTextFieldFecha.setText(R.DATE_FORMAT.format(new Date()));
+        jFormattedTextFieldHora.setText(R.TIME_FORMAT.format(new Date()));
+    }
+
+    @Override
     public void updateView() {
+        transacciones = new ArrayList();
+        if (panel != null) {
+            jPanelDetalles.remove(panel);
+        }
         if (jComboBoxTipo.getSelectedIndex() == 0) {
             panel = new AbstractCrossReferenePanel<TransaccionEntrada, Insumo>("Insumos", getController().getInsumoList()) {
                 @Override
@@ -223,18 +239,67 @@ public class TransaccionDetailView extends AbstractDetailView<Transaccion> {
                                 R.TIME_FORMAT.parse(jFormattedTextFieldHora.getText()),
                                 a);
                     } catch (ParseException ex) {
-                        return null;
+                        throw new UnExpectedErrorException(this, ex.getMessage());
                     }
                 }
             };
         } else {
+            panel = new AbstractCrossReferenePanel<Transaccion, Insumo>("Insumos", getController().getInsumoList()) {
+                @Override
+                public RestManagerAbstractTableModel<Transaccion> getTableModel() {
+                    return new RestManagerAbstractTableModel<Transaccion>(transacciones, getjTableCrossReference()) {
+                        @Override
+                        public int getColumnCount() {
+                            return 3;
+                        }
+
+                        @Override
+                        public Object getValueAt(int rowIndex, int columnIndex) {
+                            switch (columnIndex) {
+                                case 0:
+                                    return items.get(rowIndex).getInsumo();
+                                case 1:
+                                    return items.get(rowIndex).getCantidad();
+                                case 2:
+                                    return comun.setDosLugaresDecimales(items.get(rowIndex).getInsumo().getCostoPorUnidad() * items.get(rowIndex).getCantidad());
+                                default:
+                                    return null;
+                            }
+                        }
+
+                        @Override
+                        public String getColumnName(int column) {
+                            switch (column) {
+                                case 0:
+                                    return "Insumo";
+                                case 1:
+                                    return "Cantidad";
+                                case 2:
+                                    return "Valor Total";
+                                default:
+                                    return null;
+                            }
+                        }
+                    };
+                }
+
+                @Override
+                public Transaccion transformK_T(Insumo selected) {
+                    try {
+                        return getController().addTransaccionSalida(selected,
+                                R.DATE_FORMAT.parse(jFormattedTextFieldFecha.getText()),
+                                R.TIME_FORMAT.parse(jFormattedTextFieldHora.getText()),
+                                a, (Cocina) jComboBoxDestino.getSelectedItem());
+                    } catch (ParseException ex) {
+                        throw new UnExpectedErrorException(this, ex.getMessage());
+                    }
+                }
+            };
 
         }
-
-        
-        jPanelDetalles.remove(panel);
         jPanelDetalles.add(panel);
         jPanelDetalles.revalidate();
+
     }
 
     @Override

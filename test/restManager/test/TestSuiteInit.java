@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import restManager.controller.almacen.AlmacenListControllerTest;
 import restManager.controller.trabajadores.PersonalListControllerTest;
 import restManager.controller.trabajadores.PuestoTrabajoListControllerTest;
 import restManager.controller.venta.OrdenControllerTest;
@@ -26,7 +27,7 @@ import restManager.resources.R;
  * @author Jorge
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({TransaccionListViewTest.class})
+@Suite.SuiteClasses({AlmacenListControllerTest.class})
 public class TestSuiteInit {
 
     @BeforeClass

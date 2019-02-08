@@ -73,7 +73,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jXLabelPCod = new org.jdesktop.swingx.JXLabel();
         jPanel7 = new javax.swing.JPanel();
         jXLabelNombre = new org.jdesktop.swingx.JXLabel();
-        jTextFieldNombre = new JTextField();
+        jTextFieldNombre = new javax.swing.JTextField();
         jXLabelPrecio = new org.jdesktop.swingx.JXLabel();
         jSpinnerPrecio = new JSpinner();
         jXLabelMoneda = new org.jdesktop.swingx.JXLabel();

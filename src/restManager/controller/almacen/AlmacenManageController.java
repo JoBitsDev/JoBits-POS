@@ -15,9 +15,12 @@ import restManager.controller.AbstractDetailController;
 import restManager.controller.insumo.InsumoCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Almacen;
+import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoAlmacen;
+import restManager.persistencia.Transaccion;
 import restManager.persistencia.models.AlmacenDAO;
+import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.InsumoAlmacenDAO;
 import restManager.persistencia.models.InsumoDAO;
 import restManager.resources.R;
@@ -30,14 +33,13 @@ import restManager.resources.R;
  */
 public class AlmacenManageController extends AbstractDetailController<Almacen> {
 
-
     public AlmacenManageController(Almacen a) {
-        super(AlmacenDAO.getInstance());
+        super(a, AlmacenDAO.getInstance());
     }
 
     public AlmacenManageController(Window parent, Almacen a) {
         super(a, parent, AlmacenDAO.getInstance());
-        constructView(parent);
+        // constructView(parent);
     }
 
     /**
@@ -46,7 +48,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new AlmacenEditView(this, (AbstractView) parent,getInstance()));
+        setView(new AlmacenEditView(this, (AbstractView) parent, getInstance()));
         getView().updateView();
         getView().fetchComponentData();
         getView().setVisible(true);
@@ -105,11 +107,76 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
     }
 
     public void verTransacciones(Almacen a) {
-       TransaccionesListController controller = new TransaccionesListController(getView(),a);
+        TransaccionesListController controller = new TransaccionesListController(getView(), a);
     }
 
     @Override
     public Almacen createNewInstance() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
+
+    void darEntradaAInsumo(Insumo insumo, Float cantidad, Float valorTotal) {
+        InsumoAlmacen ins = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), insumo.getCodInsumo());
+        ins.setCantidad(ins.getCantidad() + cantidad);
+        ins.setValorMonetario(ins.getValorMonetario() + valorTotal);
+        updateInsumo(ins);
+    }
+
+    private void updateInsumo(InsumoAlmacen ins) {
+        InsumoAlmacenDAO.getInstance().startTransaction();
+        InsumoAlmacenDAO.getInstance().edit(ins);
+        InsumoAlmacenDAO.getInstance().commitTransaction();
+    }
+
+    void darSalidaAInsumo(Transaccion x) {
+        IPVController controller = new IPVController();
+        InsumoAlmacen insumoADarSalida = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getInsumo().getCodInsumo());
+
+        if (insumoADarSalida.getCantidad() < x.getCantidad()) {
+            throw new restManager.exceptions.ValidatingException(getView(),"No hay suficiente cantidad de " + x.getInsumo() + " para dar salida al punto de elaboración");
+        }
+        insumoADarSalida.setCantidad(insumoADarSalida.getCantidad() - x.getCantidad());
+        InsumoAlmacenDAO.getInstance().edit(insumoADarSalida);
+        controller.darEntrada(x.getInsumo(), x.getCocina(), x.getTransaccionPK().getFecha(), x.getCantidad());
+
+    }
+
+    public List<Cocina> getCocinaList() {
+        return CocinaDAO.getInstance().findAll();
+    }
+
+    /**
+     *
+     * @param ins
+     * @param tipo 0-entrada, 1- salida, 2-merma
+     * @param destino sino es de tipo destino este parametro es nulo
+     */
+    public void crearTransaccion(InsumoAlmacen ins, int tipo, Cocina destino) {
+        TransaccionDetailController controller = new TransaccionDetailController();
+        controller.setView(getView());
+        switch (tipo) {
+            case 0:
+                controller.addTransaccionEntrada(ins.getInsumo(), R.TODAYS_DATE, R.TODAYS_DATE, getInstance());
+                break;
+            case 1:
+                controller.addTransaccionSalida(ins.getInsumo(), R.TODAYS_DATE, R.TODAYS_DATE, getInstance(), destino);
+                break;
+            case 2:
+                throw new DevelopingOperationException();
+
+        }
+        updateValorTotalAlmacen(getInstance());
+        
+
+    }
+
+    private void updateValorTotalAlmacen(Almacen instance) {
+        float total = 0;
+        for (InsumoAlmacen x : instance.getInsumoAlmacenList()) {
+            total += x.getValorMonetario();
+        }
+        instance.setValorMonetario(total);
+        update(instance, true);
+    }
+
 }

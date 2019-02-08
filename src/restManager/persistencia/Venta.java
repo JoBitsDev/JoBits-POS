@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -110,7 +111,7 @@ public class Venta implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Venta[ fecha=" + fecha + " ]";
+        return "Venta del dia " + R.DATE_FORMAT.format(fecha);
     }
 
 }

@@ -50,6 +50,7 @@ public class TransaccionesListController extends AbstractListController<Transacc
     @Override
     public void constructView(Container parent) {
         setView(new TransaccionListView(this, (AbstractView) parent, true));
+        getView().getjXPanelControles().setVisible(false);
         getView().updateView();
         getView().setVisible(true);
     }

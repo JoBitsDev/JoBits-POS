@@ -27,6 +27,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "InsumoAlmacen.findAll", query = "SELECT i FROM InsumoAlmacen i"),
     @NamedQuery(name = "InsumoAlmacen.findByInsumocodInsumo", query = "SELECT i FROM InsumoAlmacen i WHERE i.insumoAlmacenPK.insumocodInsumo = :insumocodInsumo"),
     @NamedQuery(name = "InsumoAlmacen.findByAlmacencodAlmacen", query = "SELECT i FROM InsumoAlmacen i WHERE i.insumoAlmacenPK.almacencodAlmacen = :almacencodAlmacen"),
+    @NamedQuery(name = "InsumoAlmacen.findByAlmacenInsumo", query = "SELECT i FROM InsumoAlmacen i "
+            + "WHERE i.insumoAlmacenPK.almacencodAlmacen = :almacencodAlmacen AND i.insumoAlmacenPK.insumocodInsumo = :insumo"),
     @NamedQuery(name = "InsumoAlmacen.findByCantidad", query = "SELECT i FROM InsumoAlmacen i WHERE i.cantidad = :cantidad"),
     @NamedQuery(name = "InsumoAlmacen.findByValorMonetario", query = "SELECT i FROM InsumoAlmacen i WHERE i.valorMonetario = :valorMonetario")})
 public class InsumoAlmacen implements Serializable {

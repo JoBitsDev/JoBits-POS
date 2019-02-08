@@ -5,6 +5,8 @@
  */
 package restManager.controller.almacen;
 
+import java.awt.Frame;
+import javax.swing.JDialog;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,33 +46,8 @@ public class AlmacenListControllerTest {
     public void testCreateNewStorage() {
         System.out.println("createNewStorage");
         AlmacenListController instance = null;
-        instance.createNewStorage();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of deleteSelectedStorage method, of class AlmacenListController.
-     */
-    @Test
-    public void testDeleteSelectedStorage() {
-        System.out.println("deleteSelectedStorage");
-        AlmacenListController instance = null;
-        instance.deleteSelectedStorage();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of openSelectedStorage method, of class AlmacenListController.
-     */
-    @Test
-    public void testOpenSelectedStorage() {
-        System.out.println("openSelectedStorage");
-        AlmacenListController instance = null;
-        instance.openSelectedStorage();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        JDialog parent  = new JDialog();
+        instance = new AlmacenListController(parent);
     }
     
 }

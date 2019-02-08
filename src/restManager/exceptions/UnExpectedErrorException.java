@@ -15,28 +15,28 @@ import restManager.resources.R;
  * @author Jorge
  *
  */
-public class ValidatingException extends RestManagerRuntimeException {
+public class UnExpectedErrorException extends RestManagerRuntimeException {
 
-    private final String EXCEPTION_MESSAGE = R.RESOURCE_BUNDLE.getString("exception_validating");
-
-    public ValidatingException() {
+    public UnExpectedErrorException() {
         super();
-        showMessage(EXCEPTION_MESSAGE);
+        showMessage(R.RESOURCE_BUNDLE.getString("exception_unexpected"));
     }
 
-    public ValidatingException(Component container) {
-        super(container);
-        showMessage(EXCEPTION_MESSAGE);
-    }
-
-    public ValidatingException(String message) {
+    public UnExpectedErrorException(String message) {
         super(message);
         showMessage(message);
     }
 
-    public ValidatingException(Component throwedFrom, String message) {
+    public UnExpectedErrorException(Component parent) {
+        super(parent);
+        showMessage(R.RESOURCE_BUNDLE.getString("exception_unexpected"));
+    }
+
+    public UnExpectedErrorException(Component throwedFrom, String message) {
         super(throwedFrom, message);
         showMessage(message);
     }
+    
+    
 
 }

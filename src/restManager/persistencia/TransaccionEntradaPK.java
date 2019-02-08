@@ -113,7 +113,7 @@ public class TransaccionEntradaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.TransaccionEntradaPK[ transaccioninsumocodInsumo=" + transaccioninsumocodInsumo + ", transaccionfecha=" + transaccionfecha + ", transaccionhora=" + transaccionhora + ", transaccionalmacencodAlmacen=" + transaccionalmacencodAlmacen + " ]";
+        return "Entrada" ;
     }
 
 }

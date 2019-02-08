@@ -128,7 +128,7 @@ public class TransaccionEntrada implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.TransaccionEntrada[ transaccionEntradaPK=" + transaccionEntradaPK + " ]";
+        return transaccionEntradaPK.toString();
     }
 
 }

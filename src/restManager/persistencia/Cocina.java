@@ -40,8 +40,6 @@ public class Cocina implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre_cocina")
     private String nombreCocina;
-    @ManyToMany(mappedBy = "cocinaList")
-    private List<Transaccion> transaccionList;
     @OneToMany(mappedBy = "cocinacodCocina")
     private List<ProductoVenta> productoVentaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocina")
@@ -77,14 +75,6 @@ public class Cocina implements Serializable {
 
     public void setNombreCocina(String nombreCocina) {
         this.nombreCocina = nombreCocina;
-    }
-
-    public List<Transaccion> getTransaccionList() {
-        return transaccionList;
-    }
-
-    public void setTransaccionList(List<Transaccion> transaccionList) {
-        this.transaccionList = transaccionList;
     }
 
     public List<ProductoVenta> getProductoVentaList() {

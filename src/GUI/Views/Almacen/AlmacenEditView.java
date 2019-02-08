@@ -12,19 +12,23 @@ import java.awt.Container;
 import java.awt.Dialog;
 import java.util.List;
 import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.AbstractTableModel;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Controller;
 import restManager.controller.almacen.AlmacenManageController;
+import restManager.controller.almacen.TransaccionDetailController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Almacen;
+import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.InsumoAlmacenPK;
 import restManager.persistencia.models.InsumoAlmacenDAO;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
+import restManager.util.RestManagerComboBoxModel;
 import restManager.util.comun;
 
 /**
@@ -39,13 +43,16 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
      * @param parent
      * @param modal
      */
-   
-
     AbstractCrossReferenePanel<InsumoAlmacen, Insumo> model;
 
-    public AlmacenEditView(AbstractDetailController<Almacen> controller, AbstractView owner,Almacen instance) {
-        super(instance,DialogType.FULL_SCREEN, controller, owner);
+    public AlmacenEditView(AbstractDetailController<Almacen> controller, AbstractView owner, Almacen instance) {
+        super(instance, DialogType.FULL_SCREEN, controller, owner);
         initComponents();
+        buttonGroup1.add(jRadioButtonSalida);
+        buttonGroup1.add(jRadioButtonEntrada);
+        jPaneldestino.setVisible(false);
+        jComboBoxPuntoElab.setModel(new RestManagerComboBoxModel<>(getController().getCocinaList()));
+        jComboBoxPuntoElab.setSelectedIndex(0);
 
     }
 
@@ -130,8 +137,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         return (AlmacenManageController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,6 +146,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jLabelNombreAlmacen = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -153,6 +159,13 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jButtonDarReporte = new javax.swing.JButton();
         jButtonModificarStock = new javax.swing.JButton();
         jButtonVerFichasEntrada = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jRadioButtonEntrada = new javax.swing.JRadioButton();
+        jRadioButtonSalida = new javax.swing.JRadioButton();
+        jPaneldestino = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBoxPuntoElab = new javax.swing.JComboBox<>();
+        jButtonConfirmar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(getFont());
@@ -228,6 +241,46 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         });
         jPanel2.add(jButtonVerFichasEntrada);
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Transaccion"));
+        jPanel4.setOpaque(false);
+
+        jRadioButtonEntrada.setSelected(true);
+        jRadioButtonEntrada.setText(bundle.getString("label_entrada")); // NOI18N
+        jRadioButtonEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonEntradaActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jRadioButtonEntrada);
+
+        jRadioButtonSalida.setText(bundle.getString("label_salida")); // NOI18N
+        jRadioButtonSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonSalidaActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jRadioButtonSalida);
+
+        jLabel1.setText(bundle.getString("label_destino")); // NOI18N
+        jPaneldestino.add(jLabel1);
+
+        jComboBoxPuntoElab.setPreferredSize(new java.awt.Dimension(100, 27));
+        jPaneldestino.add(jComboBoxPuntoElab);
+
+        jPanel4.add(jPaneldestino);
+
+        jButtonConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/confirmar.png"))); // NOI18N
+        jButtonConfirmar.setToolTipText(bundle.getString("label_confirmar")); // NOI18N
+        jButtonConfirmar.setBorderPainted(false);
+        jButtonConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButtonConfirmar);
+
+        jPanel2.add(jPanel4);
+
         jXPanelControles.add(jPanel2);
 
         getContentPane().add(jXPanelControles, java.awt.BorderLayout.PAGE_END);
@@ -252,15 +305,35 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jRadioButtonEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonEntradaActionPerformed
+        jPaneldestino.setVisible(false);
+    }//GEN-LAST:event_jRadioButtonEntradaActionPerformed
+
+    private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
+        ejecutarTransaccion();
+    }//GEN-LAST:event_jButtonConfirmarActionPerformed
+
+    private void jRadioButtonSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSalidaActionPerformed
+        jPaneldestino.setVisible(true);
+    }//GEN-LAST:event_jRadioButtonSalidaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonConfirmar;
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonModificarStock;
     private javax.swing.JButton jButtonVerFichasEntrada;
+    private javax.swing.JComboBox<Cocina> jComboBoxPuntoElab;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelNombreAlmacen;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPaneldestino;
+    private javax.swing.JRadioButton jRadioButtonEntrada;
+    private javax.swing.JRadioButton jRadioButtonSalida;
     private org.jdesktop.swingx.JXLabel jXLabelTotalAlmacen;
     private org.jdesktop.swingx.JXLabel jXLabelValorTotal;
     private org.jdesktop.swingx.JXPanel jXPanelControles;
@@ -280,6 +353,15 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     @Override
     public boolean validateData() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void ejecutarTransaccion() {
+        InsumoAlmacen ins = model.getTableModel().getObjectAtSelectedRow();
+        if (jRadioButtonEntrada.isSelected()) {
+            getController().crearTransaccion(ins,0,null);
+        }else{
+            getController().crearTransaccion(ins, 1, (Cocina) jComboBoxPuntoElab.getSelectedItem());
+        }
     }
 
 }
