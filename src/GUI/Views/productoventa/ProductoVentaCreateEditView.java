@@ -73,7 +73,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jXLabelPCod = new org.jdesktop.swingx.JXLabel();
         jPanel7 = new javax.swing.JPanel();
         jXLabelNombre = new org.jdesktop.swingx.JXLabel();
-        jTextFieldNombre = new javax.swing.JTextField();
+        jTextFieldNombre = new JTextField();
         jXLabelPrecio = new org.jdesktop.swingx.JXLabel();
         jSpinnerPrecio = new JSpinner();
         jXLabelMoneda = new org.jdesktop.swingx.JXLabel();
@@ -284,9 +284,9 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         this.jTextFieldNombre.setText(instance.getNombre());
         jSpinnerPrecio.setValue(instance.getPrecioVenta());
         if (instance.getGasto() == null) {
-            jXLabelGasto.setText(String.valueOf(0.00));
+            jXLabelGasto.setText(comun.setDosLugaresDecimales(0));
         } else {
-            jXLabelGasto.setText(String.format("%.2f ", instance.getGasto()));
+            jXLabelGasto.setText(comun.setDosLugaresDecimales(instance.getGasto()));
         }
         jComboBoxCOCINA.setSelectedItem(instance.getCocinacodCocina());
         jComboBoxSECCION.setSelectedItem(instance.getSeccionnombreSeccion());
