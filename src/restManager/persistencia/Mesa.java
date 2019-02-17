@@ -146,7 +146,7 @@ public class Mesa implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Mesa[ codMesa=" + codMesa + " ]";
+        return "Mesa: " + codMesa + " [ " + capacidadMax+" pax ]";
     }
 
 }

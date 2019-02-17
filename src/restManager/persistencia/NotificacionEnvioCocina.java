@@ -58,6 +58,9 @@ public class NotificacionEnvioCocina implements Serializable {
     @ManyToOne(optional = false)
     private ProductovOrden productovOrden;
 
+    @Column(name = "ip_dependiente")
+    private String ip_dependiente;
+    
     public NotificacionEnvioCocina() {
     }
 
@@ -122,6 +125,16 @@ public class NotificacionEnvioCocina implements Serializable {
         this.productovOrden = productovOrden;
     }
 
+    public String getIp_dependiente() {
+        return ip_dependiente;
+    }
+
+    public void setIp_dependiente(String ip_dependiente) {
+        this.ip_dependiente = ip_dependiente;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

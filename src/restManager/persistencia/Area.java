@@ -115,7 +115,7 @@ public class Area implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Area[ codArea=" + codArea + " ]";
+        return nombre +" [ "+ codArea + " ]";
     }
 
 }
