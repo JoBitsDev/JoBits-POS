@@ -2,6 +2,7 @@ package restManager.persistencia.models;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,7 +88,7 @@ public abstract class AbstractModel<T> implements Model {
         return getEntityManager().createQuery(cq).getResultList();
         }catch(Exception e){
             getEntityManager().getTransaction().rollback();
-            return findAll();
+            return new ArrayList<>(findAll());
         }
     }
 
