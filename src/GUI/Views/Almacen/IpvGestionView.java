@@ -8,11 +8,14 @@ package GUI.Views.Almacen;
 import GUI.Views.AbstractView;
 import GUI.Views.util.AbstractCrossReferenePanel;
 import java.awt.event.ItemEvent;
+import java.awt.print.PrinterException;
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.almacen.IPVController;
 import restManager.exceptions.DevelopingOperationException;
@@ -21,6 +24,7 @@ import restManager.persistencia.Insumo;
 import restManager.persistencia.Ipv;
 import restManager.persistencia.IpvPK;
 import restManager.persistencia.IpvRegistro;
+import restManager.printservice.ComponentPrinter;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
@@ -88,7 +92,7 @@ public class IpvGestionView extends AbstractView {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
+
             }
         ));
         jScrollPane2.setViewportView(jTableRegistro);
@@ -103,7 +107,11 @@ public class IpvGestionView extends AbstractView {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButton4.setText(bundle.getString("label_imprimir")); // NOI18N
         jButton4.setBorderPainted(false);
-        jButton4.setEnabled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton4, java.awt.BorderLayout.WEST);
 
         jPanel2.setOpaque(false);
@@ -113,7 +121,7 @@ public class IpvGestionView extends AbstractView {
         jPanel2.add(jSpinnerAjustarinsumo);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/analitica.png"))); // NOI18N
-        jButton3.setText(" ");
+        jButton3.setText("null");
         jButton3.setToolTipText(bundle.getString("label_ajustar_consumo")); // NOI18N
         jButton3.setBorderPainted(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -132,7 +140,7 @@ public class IpvGestionView extends AbstractView {
         jPanel3.add(jSpinnerAjustarinsumo1);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/agregar_circular.png"))); // NOI18N
-        jButton2.setText(" ");
+        jButton2.setText("null");
         jButton2.setToolTipText(bundle.getString("label_dar_entada")); // NOI18N
         jButton2.setBorderPainted(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -246,6 +254,10 @@ public class IpvGestionView extends AbstractView {
         ocultar_insumos(jCheckBox1.isSelected());
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        imprimirTabla();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     @Override
     public void updateView() {
         if (currentSelectedKitchen != null && panelIPVAsign != null) {
@@ -289,6 +301,7 @@ public class IpvGestionView extends AbstractView {
                 ret.setInsumo(selected);
                 ret.setIpvPK(retPK);
                 ret.setIpvRegistroList(new ArrayList<>());
+
                 getController().create(ret, true);
                 return ret;
             }
@@ -353,8 +366,10 @@ public class IpvGestionView extends AbstractView {
     private void updateTableRegistroIpv() {
         try {
             jCheckBox1.setSelected(false);
-            jTableRegistro.setModel(new RestManagerAbstractTableModel<IpvRegistro>(getController()
-                    .getIpvRegistroList(currentSelectedKitchen, R.DATE_FORMAT.parse(jListRegistro.getSelectedValue())),
+            ArrayList<IpvRegistro> listaRegistros = new ArrayList<>(getController()
+                    .getIpvRegistroList(currentSelectedKitchen, R.DATE_FORMAT.parse(jListRegistro.getSelectedValue())));
+            listaRegistros = getController().calculate_IPV_to_Currenr(listaRegistros);
+            jTableRegistro.setModel(new RestManagerAbstractTableModel<IpvRegistro>(listaRegistros,
                     jTableRegistro) {
                 @Override
                 public int getColumnCount() {
@@ -378,6 +393,8 @@ public class IpvGestionView extends AbstractView {
                             return items.get(rowIndex).getConsumoReal();
                         case 6:
                             return items.get(rowIndex).getFinal1();
+//                        case 7:
+//                            return;
                         default:
                             return null;
                     }
@@ -400,6 +417,8 @@ public class IpvGestionView extends AbstractView {
                             return "Consumo Real";
                         case 6:
                             return "Final";
+//                        case 7 :
+//                            return "Importe";
                         default:
                             return null;
                     }
@@ -425,4 +444,19 @@ public class IpvGestionView extends AbstractView {
             model.setItems(registroList);
         }
     }
+
+    private void imprimirTabla() {
+        
+            MessageFormat footer = new MessageFormat("-Pag {0}-");
+            MessageFormat header = new MessageFormat("IPV " +jComboBox1.getSelectedItem().toString() +" Dia " + jListRegistro.getSelectedValue());
+            
+
+        try {
+            ComponentPrinter.printComponent(jScrollPane2,
+                    "IPV " +jComboBox1.getSelectedItem().toString() +" Dia " + jListRegistro.getSelectedValue(), true);
+            jTableRegistro.print(JTable.PrintMode.FIT_WIDTH, header , footer);
+        } catch (PrinterException ex) {
+            Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
 }

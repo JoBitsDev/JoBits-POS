@@ -380,7 +380,7 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
             instance.getDatosPersonales().setSexo('F');
         }
         instance.setPuestoTrabajonombrePuesto((PuestoTrabajo) jComboBoxPuestoTrabajo.getSelectedItem());
-
+        instance.setOnline(false);
         return true;
     }
 

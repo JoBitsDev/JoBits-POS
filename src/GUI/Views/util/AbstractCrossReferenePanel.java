@@ -99,9 +99,9 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         jLabel1 = new javax.swing.JLabel();
         jTextFieldAutoComplete = new javax.swing.JTextField();
         jButtonAgregarProd = new javax.swing.JButton();
+        jButtonDeleteProd = new javax.swing.JButton();
         jScrollPaneCrossReference = new javax.swing.JScrollPane();
         jTableCrossReference = new javax.swing.JTable();
-        jButtonDeleteProd = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -123,31 +123,17 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         jPanel2.add(jTextFieldAutoComplete);
 
         jButtonAgregarProd.setText(bundle.getString("label_agregar")); // NOI18N
-        jButtonAgregarProd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAgregarProdActionPerformed(evt);
-            }
-        });
         jPanel2.add(jButtonAgregarProd);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
-        jScrollPaneCrossReference.setMinimumSize(new java.awt.Dimension(454, 0));
+        jButtonDeleteProd.setText(bundle.getString("label_eliminar")); // NOI18N
+        add(jButtonDeleteProd, java.awt.BorderLayout.PAGE_END);
 
-        jTableCrossReference.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        jTableCrossReference.setAutoCreateRowSorter(true);
         jScrollPaneCrossReference.setViewportView(jTableCrossReference);
 
         add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
-
-        jButtonDeleteProd.setText(bundle.getString("label_eliminar")); // NOI18N
-        add(jButtonDeleteProd, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldAutoCompleteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldAutoCompleteFocusGained
@@ -157,10 +143,6 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
     private void jTextFieldAutoCompleteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAutoCompleteKeyPressed
 
     }//GEN-LAST:event_jTextFieldAutoCompleteKeyPressed
-
-    private void jButtonAgregarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarProdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAgregarProdActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

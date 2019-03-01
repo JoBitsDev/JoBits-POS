@@ -7,9 +7,12 @@ package GUI.Views.Almacen;
 
 import GUI.Views.AbstractListView;
 import GUI.Views.AbstractView;
+import com.jidesoft.swing.JideButton;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
 import java.util.List;
 import restManager.controller.AbstractListController;
+import restManager.controller.almacen.TransaccionesListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Transaccion;
 import restManager.resources.R;
@@ -24,6 +27,13 @@ public class TransaccionListView extends AbstractListView<Transaccion> {
 
     public TransaccionListView(AbstractListController<Transaccion> controller, AbstractView parent, boolean modal) {
         super(controller, parent, modal);
+        JideButton jideButton1 = new com.jidesoft.swing.JideButton();
+        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jideButton1.setToolTipText("Imprimir Recibo");
+        jideButton1.addActionListener((ActionEvent e) -> {
+            getController().imprimirTransaccionesSeleccionadas(model.getSelectedsObjects());
+        });
+        getjXPanelControles().add(jideButton1);
     }
 
     @Override
@@ -31,7 +41,7 @@ public class TransaccionListView extends AbstractListView<Transaccion> {
         return new MyJTableModel<Transaccion>(items) {
             @Override
             public int getColumnCount() {
-                return 4;
+                return 5;
             }
 
             @Override
@@ -45,6 +55,14 @@ public class TransaccionListView extends AbstractListView<Transaccion> {
                         return R.TIME_FORMAT.format(items.get(rowIndex).getTransaccionPK().getHora());
                     case 3:
                         return items.get(rowIndex).getCantidad();
+                    case 4:
+                        if (items.get(rowIndex).getTransaccionEntrada() != null) {
+                          return   "ENTRADA";
+                        } else if (items.get(rowIndex).getTransaccionMerma() != null) {
+                            return items.get(rowIndex).getTransaccionMerma().getRazon().toUpperCase();
+                        } else {
+                            return "SALIDA: "+ items.get(rowIndex).getCocina();
+                        }
                     default:
                         return null;
                 }
@@ -61,6 +79,8 @@ public class TransaccionListView extends AbstractListView<Transaccion> {
                         return "Hora";
                     case 3:
                         return "Cantidad";
+                    case 4:
+                        return "Tipo";
                     default:
                         return null;
                 }
@@ -72,6 +92,11 @@ public class TransaccionListView extends AbstractListView<Transaccion> {
     public void updateView() {
         super.updateView(); //To change body of generated methods, choose Tools | Templates.
         getjTableList().getRowSorter().toggleSortOrder(1);
+    }
+
+    @Override
+    public TransaccionesListController getController() {
+        return (TransaccionesListController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

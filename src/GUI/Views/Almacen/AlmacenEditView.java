@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.AbstractTableModel;
+import javax.xml.ws.handler.MessageContext;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Controller;
@@ -50,6 +51,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         initComponents();
         buttonGroup1.add(jRadioButtonSalida);
         buttonGroup1.add(jRadioButtonEntrada);
+        buttonGroup1.add(jRadioButtonRebaja);
         jPaneldestino.setVisible(false);
         jComboBoxPuntoElab.setModel(new RestManagerComboBoxModel<>(getController().getCocinaList()));
         jComboBoxPuntoElab.setSelectedIndex(0);
@@ -58,30 +60,35 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
     @Override
     public void updateView() {
-        model = new AbstractCrossReferenePanel<InsumoAlmacen, Insumo>("Insumos", getController().getInsumoList()) {
+        if (model != null) {
+            model.getHandler().getTableModel().setItems(getController().getInsumoAlmacenList(getInstance()));
+        }
+        else{
+            model = new AbstractCrossReferenePanel<InsumoAlmacen, Insumo>("Insumos", getController().getInsumoList()) {
             @Override
             public RestManagerAbstractTableModel<InsumoAlmacen> getTableModel() {
                 return new RestManagerAbstractTableModel<InsumoAlmacen>(getController().getInsumoAlmacenList(getInstance()), getjTableCrossReference()) {
                     @Override
                     public int getColumnCount() {
-                        return 5;
+                        return 6;
                     }
 
                     @Override
                     public Object getValueAt(int rowIndex, int columnIndex) {
                         switch (columnIndex) {
                             case 0:
-                                return items.get(rowIndex).getInsumo().getCodInsumo();
+                                return this.items.get(rowIndex).getInsumo().getCodInsumo();
                             case 2:
-                                return items.get(rowIndex).getInsumo().getNombre();
+                                return this.items.get(rowIndex).getInsumo().getNombre();
                             case 1:
-                                return items.get(rowIndex).getInsumo().getUm();
+                                return this.items.get(rowIndex).getInsumo().getUm();
                             case 3:
-                                return items.get(rowIndex).getCantidad();
+                                return this.items.get(rowIndex).getCantidad();
                             case 4:
-                                return items.get(rowIndex).getValorMonetario() / items.get(rowIndex).getCantidad();
+                                return this.items.get(rowIndex).getCantidad() != 0
+                                        ? comun.setDosLugaresDecimales(this.items.get(rowIndex).getValorMonetario() / this.items.get(rowIndex).getCantidad()) : 0;
                             case 5:
-                                return items.get(rowIndex).getValorMonetario();
+                                return comun.setDosLugaresDecimales(this.items.get(rowIndex).getValorMonetario());
                             default:
                                 return null;
 
@@ -121,15 +128,24 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
                 InsumoAlmacenDAO.getInstance().create(newInsumo);
                 return newInsumo;
             }
-        };
 
-        jXLabelValorTotal.setText(comun.setDosLugaresDecimales(getInstance().getValorMonetario()));
-        jLabelNombreAlmacen.setText(getInstance().getNombre());
+            @Override
+            public void removeObjectSelected() {
+                getController().removeInsumoFromStorage(getHandler().getTableModel().getObjectAtSelectedRow());
+            }
+
+        };
+ 
+        }
+       
+        jXLabelValorTotal.setText(comun.setDosLugaresDecimales(getController().getInstance().getValorMonetario()));
+
     }
 
     @Override
     public void fetchComponentData() {
         jXPanelTabla.add(model);
+        jLabelNombreAlmacen.setText(getInstance().getNombre());
     }
 
     @Override
@@ -165,7 +181,9 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPaneldestino = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jComboBoxPuntoElab = new javax.swing.JComboBox<>();
+        jRadioButtonRebaja = new javax.swing.JRadioButton();
         jButtonConfirmar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setFont(getFont());
@@ -269,6 +287,14 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
         jPanel4.add(jPaneldestino);
 
+        jRadioButtonRebaja.setText(bundle.getString("label_rebaja")); // NOI18N
+        jRadioButtonRebaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonRebajaActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jRadioButtonRebaja);
+
         jButtonConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/confirmar.png"))); // NOI18N
         jButtonConfirmar.setToolTipText(bundle.getString("label_confirmar")); // NOI18N
         jButtonConfirmar.setBorderPainted(false);
@@ -280,6 +306,15 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanel4.add(jButtonConfirmar);
 
         jPanel2.add(jPanel4);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButton2.setText("Imprimir Resumen");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2);
 
         jXPanelControles.add(jPanel2);
 
@@ -317,9 +352,18 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPaneldestino.setVisible(true);
     }//GEN-LAST:event_jRadioButtonSalidaActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        getController().imprimirResumenAlmacen(getInstance());        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jRadioButtonRebajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonRebajaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonRebajaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonConfirmar;
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonModificarStock;
@@ -333,6 +377,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPaneldestino;
     private javax.swing.JRadioButton jRadioButtonEntrada;
+    private javax.swing.JRadioButton jRadioButtonRebaja;
     private javax.swing.JRadioButton jRadioButtonSalida;
     private org.jdesktop.swingx.JXLabel jXLabelTotalAlmacen;
     private org.jdesktop.swingx.JXLabel jXLabelValorTotal;
@@ -356,12 +401,18 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     }
 
     private void ejecutarTransaccion() {
-        InsumoAlmacen ins = model.getTableModel().getObjectAtSelectedRow();
+        InsumoAlmacen ins = model.getHandler().getTableModel().getObjectAtSelectedRow();
         if (jRadioButtonEntrada.isSelected()) {
-            getController().crearTransaccion(ins,0,null);
-        }else{
+            getController().crearTransaccion(ins, 0, null);
+        }
+        if (jRadioButtonSalida.isSelected()) {
             getController().crearTransaccion(ins, 1, (Cocina) jComboBoxPuntoElab.getSelectedItem());
         }
+        if (jRadioButtonRebaja.isSelected()) {
+            getController().crearTransaccion(ins, 2, null);
+        }
+
+//        model.getHandler().getTableModel().fireTableDataChanged();
     }
 
 }

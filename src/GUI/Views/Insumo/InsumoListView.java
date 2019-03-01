@@ -36,15 +36,6 @@ public class InsumoListView extends AbstractListView<Insumo> {
     }
 
     @Override
-    protected void createPopUpMenu() {
-        JMenuItem verUsos = new JMenuItem("Ver Usos En Productos");
-        verUsos.addActionListener((ActionEvent e) -> {
-           ((InsumoListController)getController()).crossReferenceInsumo(model.getObjectAtSelectedRow());
-        });
-        jPopupMenuClickDerecho.add(verUsos);
-    }
-
-    @Override
     public MyJTableModel<Insumo> generateTableModel(List<Insumo> items) {
         return new MyJTableModel<Insumo>(items) {
             @Override

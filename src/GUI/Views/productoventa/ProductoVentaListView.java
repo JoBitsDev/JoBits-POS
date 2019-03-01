@@ -17,9 +17,11 @@ import restManager.controller.AbstractListController;
 import restManager.controller.productoventa.ProductoVentaListController;
 import restManager.controller.venta.OrdenController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.Insumo;
 import restManager.persistencia.Orden;
 import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
+import restManager.persistencia.models.InsumoDAO;
 import restManager.persistencia.models.OrdenDAO;
 import restManager.persistencia.models.ProductoInsumoDAO;
 import restManager.persistencia.models.ProductoVentaDAO;
@@ -36,7 +38,7 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
 
     public ProductoVentaListView(AbstractListController<ProductoVenta> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
-        
+
 ////        for (ProductoInsumo pi : ProductoInsumoDAO.getInstance().findAll()) {
 ////            pi.setCosto(pi.getCantidad() * pi.getInsumo().getCostoPorUnidad());
 ////            ProductoInsumoDAO.getInstance().startTransaction();
