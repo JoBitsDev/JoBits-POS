@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,6 +7,7 @@ package GUI.Views;
 
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -28,12 +29,18 @@ public abstract class AbstractListView<T> extends AbstractView {
 
     protected MyJTableModel<T> model;
 
+    public AbstractListView(DialogType type, AbstractListController<T> controller, AbstractView parent) {
+        super(type, controller, parent);
+
+    }
+
     public AbstractListView(AbstractListController<T> controller, AbstractView parent, boolean modal) {
         super(DialogType.LIST, controller, parent, modal);
         initComponents();
         createPopUpMenu();
 
     }
+
     public AbstractListView(AbstractListController<T> controller, Frame parent, boolean modal) {
         super(DialogType.LIST, controller, parent, modal);
         initComponents();
@@ -107,7 +114,7 @@ public abstract class AbstractListView<T> extends AbstractView {
             }
         ));
         jTableList.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-        jTableList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jTableList.setShowGrid(false);
         jTableList.getTableHeader().setReorderingAllowed(false);
         jTableList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -328,7 +335,6 @@ public abstract class AbstractListView<T> extends AbstractView {
     public JTable getjTableList() {
         return jTableList;
     }
-    
 
     //
     // Inner Class
@@ -383,13 +389,12 @@ public abstract class AbstractListView<T> extends AbstractView {
         public void addrow(T newObject) {
             items.add(newObject);
             fireTableRowsInserted(items.indexOf(newObject), items.indexOf(newObject));
-            DefaultTableModel m;
         }
 
         public void deleteRow(T objectDeleted) {
-            int removedRow = items.indexOf(objectDeleted);
-            items.remove(objectDeleted);
-            fireTableRowsDeleted(removedRow, removedRow);
+            int itemToDelete = jTableList.convertRowIndexToModel(jTableList.getSelectedRow());
+            items.remove(itemToDelete);
+            fireTableRowsDeleted(itemToDelete, itemToDelete);
         }
 
         @Override
@@ -420,7 +425,15 @@ public abstract class AbstractListView<T> extends AbstractView {
             }
             return items.get(jTableList.convertRowIndexToModel(jTableList.getSelectedRow()));
         }
-
+        
+        public List<T> getSelectedsObjects(){
+            ArrayList <T> ret = new  ArrayList<>();
+            for (int x : jTableList.getSelectedRows()) {
+                ret.add(items.get(jTableList.convertRowIndexToModel(x)));
+            }
+            return ret;
+        }
+        
         public class MyTableRowFilter extends RowFilter<MyJTableModel, Integer> {
 
             private String searchParam;
