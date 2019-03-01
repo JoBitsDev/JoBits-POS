@@ -7,6 +7,7 @@
 package restManager.persistencia.models;
 
 import restManager.persistencia.Orden;
+import restManager.persistencia.ProductovOrden;
 
 /**
  * FirstDream
@@ -29,6 +30,19 @@ public class OrdenDAO extends AbstractModel<Orden>{
             return INSTANCE;
         }
     }
+
+    @Override
+    public void remove(Orden entity) {
+//        startTransaction();
+//        for (ProductovOrden o : entity.getProductovOrdenList()) {
+//            ProductovOrdenDAO.getInstance().remove(o);
+//        }
+//        commitTransaction();
+        super.remove(entity);
+        
+    }
+    
+    
     
 
 }

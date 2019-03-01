@@ -48,7 +48,7 @@ public class IpvRegistroDAO extends AbstractModel<IpvRegistro> {
 
     }
 
-    public IpvRegistro getIpvRegistro(Cocina c, Date fecha, Insumo i) {
+    public IpvRegistro getIpvRegistro(Cocina c, Date fecha, Insumo i) throws Exception{
         return (IpvRegistro) getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFechaAndInsumo")
                 .setParameter("ipvcocinacodCocina", c.getCodCocina())
                 .setParameter("fecha", fecha)

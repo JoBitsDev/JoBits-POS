@@ -22,20 +22,25 @@ import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
+import restManager.persistencia.Almacen;
 
 import restManager.persistencia.Carta;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Insumo;
+import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductovOrden;
+import restManager.persistencia.Transaccion;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
 import restManager.persistencia.models.CartaDAO;
 import restManager.persistencia.models.MenuDAO;
+import restManager.persistencia.models.NegocioDAO;
 import restManager.resources.R;
 import restManager.util.comun;
 
@@ -59,7 +64,7 @@ public class Impresion {
     private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     private final String DEFAULT_PRINT_LOCATION = null;
     private final boolean IMPRIMIR_TICKET_COCINA = false;
-    private static int cantidadCopias = 1;
+    private static int cantidadCopias = 0;
 
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
@@ -90,7 +95,7 @@ public class Impresion {
      * Strings referentes a la impresion de resumenes de ventas
      */
     private final String RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
-            RESUMEN_VENTAS_COCINA = "Resumen de ventas por área ",
+            RESUMEN_VENTAS_COCINA = "Resumen de ventas por area ",
             TOTAL_VENTAS = "Total Vendido: ",
             RESUMEN_CONSUMO_CASA = "Resumen del consumo de la casa ";
 
@@ -102,7 +107,8 @@ public class Impresion {
      * String referentes al almacen
      */
     private final String STOCK_BALANCE = "Balance de stock en almacen",
-            STOCK_FORMAT = "En Almacen | Diferencia ";
+            STOCK_FORMAT = "En Almacen | Diferencia ",
+            COMPROBANTE_TRANSACCION = "Comprbante de Transaccion";
 
     //
     //Constructors
@@ -143,7 +149,7 @@ public class Impresion {
     }
 
     public Impresion(Carta m, String footer, boolean monedaCUC, float cambio, int cantidadCopias) {
-        this.nombreRest = m.getNombreCarta();
+        this.nombreRest = NegocioDAO.getInstance().find(1).getNombre();
         Impresion.cambio = cambio;
         Impresion.cantidadCopias = cantidadCopias;
         if (footer != null) {
@@ -157,7 +163,7 @@ public class Impresion {
     }
 
     public static Impresion getDefaultInstance() {
-        return new Impresion(new CartaDAO().find("Mnu-1"));
+        return new Impresion(CartaDAO.getInstance().find("Mnu-1"));
     }
 
     //
@@ -1019,9 +1025,17 @@ public class Impresion {
             t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
             t.newLine();
             t.alignRight();
-            t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+            if (!x.getOrden().getDeLaCasa()) {
+                t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+            } else {
+                t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getGasto()));
+            }
             t.newLine();
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            if (x.getOrden().getDeLaCasa()) {
+                total += x.getCantidad() * x.getProductoVenta().getGasto();
+            } else {
+                total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            }
         }
 
         return total;
@@ -1046,9 +1060,9 @@ public class Impresion {
 
         try {
             if (printerName != null) {
-                if(IMPRIMIR_TICKET_COCINA){
-                job.print(doc, null);
-            }
+                if (IMPRIMIR_TICKET_COCINA) {
+                    job.print(doc, null);
+                }
             } else {
                 job.print(doc, null);
 
@@ -1219,6 +1233,79 @@ public class Impresion {
         t.newLine();
         t.addLineSeperator();
         t.newLine();
+    }
+
+    public void printResumenAlmacen(Almacen a) {
+        ArrayList<InsumoAlmacen> ret = new ArrayList<>(a.getInsumoAlmacenList());
+        Collections.sort(ret, (InsumoAlmacen o1, InsumoAlmacen o2) -> o1.getInsumo().getNombre().compareTo(o2.getInsumo().getNombre()));
+        Ticket t = new Ticket();
+        addHeader(t);
+        addCustomMetaData(t, STOCK_BALANCE, new Date());
+
+        t.alignCenter();
+        t.setText(STOCK_FORMAT);
+        t.newLine();
+        t.newLine();
+
+        for (InsumoAlmacen in : ret) {
+            t.alignLeft();
+            t.setText(in.getInsumo().toString() + "{" + in.getInsumo().getUm() + "}");
+            t.newLine();
+            t.alignRight();
+            t.setText("" + in.getCantidad());
+//            t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente() - in.getStockEstimation()));
+            t.newLine();
+        }
+
+        t.newLine();
+        t.addLineSeperator();
+
+        addFinal(t);
+
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+    }
+
+    public void printComprobanteTransaccion(List<Transaccion> selectedsObjects) {
+        Collections.sort(selectedsObjects, (o1, o2) -> {
+            return o1.getInsumo().getNombre().compareTo(o2.getInsumo().getNombre());
+        });
+        Ticket t = new Ticket();
+        addHeader(t);
+        addCustomMetaData(t, COMPROBANTE_TRANSACCION, new Date());
+
+        t.alignCenter();
+        t.alignCenter();
+        Transaccion tr = selectedsObjects.get(0);
+        String tipoTrans = "Tipo Transaccion: ";
+        if (tr.getTransaccionEntrada() != null) {
+            tipoTrans += "ENTRADA";
+        } else if (tr.getTransaccionMerma() != null) {
+            tipoTrans += tr.getTransaccionMerma().getRazon().toUpperCase();
+        } else {
+            tipoTrans += "SALIDA: "+ tr.getCocina();
+        }
+
+        t.setText(tipoTrans);
+        t.newLine();
+        t.newLine();
+
+        for (Transaccion in : selectedsObjects) {
+            t.alignLeft();
+            
+            t.setText(in.getInsumo().toString() + "{" + in.getInsumo().getUm() + "}");
+            t.newLine();
+            t.alignRight();
+            t.setText("" + in.getCantidad());
+//            t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente() - in.getStockEstimation()));
+            t.newLine();
+        }
+
+        t.newLine();
+        t.addLineSeperator();
+
+        addFinal(t);
+
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
     //

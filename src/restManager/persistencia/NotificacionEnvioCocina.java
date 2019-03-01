@@ -34,8 +34,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "NotificacionEnvioCocina.findByProductovOrdenproductoVentapCod", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.notificacionEnvioCocinaPK.productovOrdenproductoVentapCod = :productovOrdenproductoVentapCod"),
     @NamedQuery(name = "NotificacionEnvioCocina.findByProductovOrdenordencodOrden", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.notificacionEnvioCocinaPK.productovOrdenordencodOrden = :productovOrdenordencodOrden"),
     @NamedQuery(name = "NotificacionEnvioCocina.findByCantidad", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.cantidad = :cantidad"),
-    @NamedQuery(name = "NotificacionEnvioCocina.findByHoraNotificacion", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.horaNotificacion = :horaNotificacion"),
-    @NamedQuery(name = "NotificacionEnvioCocina.findByProductovOrdenordenpersonalusuario", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.productovOrdenordenpersonalusuario = :productovOrdenordenpersonalusuario")})
+    @NamedQuery(name = "NotificacionEnvioCocina.findByHoraNotificacion", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.horaNotificacion = :horaNotificacion")})
 public class NotificacionEnvioCocina implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,9 +45,6 @@ public class NotificacionEnvioCocina implements Serializable {
     @Column(name = "hora_notificacion")
     @Temporal(TemporalType.TIME)
     private Date horaNotificacion;
-    @Basic(optional = false)
-    @Column(name = "productov_ordenordenpersonalusuario")
-    private String productovOrdenordenpersonalusuario;
     @JoinColumn(name = "cocinacod_cocina", referencedColumnName = "cod_cocina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Cocina cocina;
@@ -66,11 +62,6 @@ public class NotificacionEnvioCocina implements Serializable {
 
     public NotificacionEnvioCocina(NotificacionEnvioCocinaPK notificacionEnvioCocinaPK) {
         this.notificacionEnvioCocinaPK = notificacionEnvioCocinaPK;
-    }
-
-    public NotificacionEnvioCocina(NotificacionEnvioCocinaPK notificacionEnvioCocinaPK, String productovOrdenordenpersonalusuario) {
-        this.notificacionEnvioCocinaPK = notificacionEnvioCocinaPK;
-        this.productovOrdenordenpersonalusuario = productovOrdenordenpersonalusuario;
     }
 
     public NotificacionEnvioCocina(String cocinacodCocina, String productovOrdenproductoVentapCod, String productovOrdenordencodOrden) {
@@ -99,14 +90,6 @@ public class NotificacionEnvioCocina implements Serializable {
 
     public void setHoraNotificacion(Date horaNotificacion) {
         this.horaNotificacion = horaNotificacion;
-    }
-
-    public String getProductovOrdenordenpersonalusuario() {
-        return productovOrdenordenpersonalusuario;
-    }
-
-    public void setProductovOrdenordenpersonalusuario(String productovOrdenordenpersonalusuario) {
-        this.productovOrdenordenpersonalusuario = productovOrdenordenpersonalusuario;
     }
 
     public Cocina getCocina() {

@@ -14,7 +14,6 @@ public class Ticket {
      */
     final static int PAPER_LENGHT = 32;
     final static char LINE_CHAR = '*';
-
     private AlignmentState posState = AlignmentState.LEFT;
 
     public Ticket() {

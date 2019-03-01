@@ -6,12 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
+import javax.swing.JOptionPane;
 import org.postgresql.util.PSQLException;
+import restManager.controller.AbstractController.PersistAction;
 import restManager.controller.AbstractDialogController;
+import restManager.exceptions.ExceptionHandler;
 import restManager.resources.R;
 
 /**
@@ -33,14 +38,14 @@ public abstract class AbstractModel<T> implements Model {
         this.entityClass = entityClass;
         propertyChangeSupport = new PropertyChangeSupport(this);
         EntityManagerFactory emf = Persistence.createEntityManagerFactory(R.PERIRSTENCE_UNIT_NAME);
-       
+
         if (!R.PERIRSTENCE_UNIT_NAME.equals(persistenceUnitName)) {
             EMF = emf;
             currentConnection = EMF.createEntityManager();
             persistenceUnitName = R.PERIRSTENCE_UNIT_NAME;
         } else {
             Logger l = Logger.getLogger(getClass().getName());
-            l.log(Level.WARNING, R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_found") +""+ getClass().getName());
+            l.log(Level.WARNING, R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_found") + "" + getClass().getName());
         }
     }
 
@@ -56,25 +61,26 @@ public abstract class AbstractModel<T> implements Model {
 
     public void commitTransaction() {
         if (getEntityManager().getTransaction().isActive()) {
-            getEntityManager().flush();
-            getEntityManager().getTransaction().commit();
-
+            try {
+                getEntityManager().flush();
+                getEntityManager().getTransaction().commit();
+            } catch (PersistenceException e) {
+                getEntityManager().getTransaction().rollback();
+                JOptionPane.showConfirmDialog(null, e.getMessage(),"Error",JOptionPane.OK_OPTION);
+            }
         }
     }
 
-    public void create(T entity) {
-        getEntityManager().persist(entity);
-        firePropertyChange(PropertyName.CREATE.toString(), null, entity);
+    public void create(T entity) throws EntityExistsException {
+        persist(PersistAction.CREATE, entity);
     }
 
     public void edit(T entity) {
-        getEntityManager().merge(entity);
-        firePropertyChange(PropertyName.UPDATE.toString(), entity, entity);
+        persist(PersistAction.UPDATE, entity);
     }
 
     public void remove(T entity) {
-        getEntityManager().remove(getEntityManager().merge(entity));
-        firePropertyChange(PropertyName.DELETE.toString(), entity, null);
+        persist(PersistAction.DELETE, entity);
     }
 
     public T find(Object id) {
@@ -82,11 +88,11 @@ public abstract class AbstractModel<T> implements Model {
     }
 
     public List<T> findAll() {
-        try{
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
-        return getEntityManager().createQuery(cq).getResultList();
-        }catch(Exception e){
+        try {
+            javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+            cq.select(cq.from(entityClass));
+            return getEntityManager().createQuery(cq).getResultList();
+        } catch (Exception e) {
             getEntityManager().getTransaction().rollback();
             return new ArrayList<>(findAll());
         }
@@ -122,7 +128,7 @@ public abstract class AbstractModel<T> implements Model {
             cont++;
             a = find(prefix + "" + cont);
         }
-        
+
         return prefix + "" + cont;
     }
 
@@ -140,6 +146,73 @@ public abstract class AbstractModel<T> implements Model {
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    public static EntityManagerFactory getEMF() {
+        return EMF;
+    }
+
+    public static void setEMF(EntityManagerFactory EMF) {
+        AbstractModel.EMF = EMF;
+    }
+
+    public static EntityManager getCurrentConnection() {
+        return currentConnection;
+    }
+
+    public static void setCurrentConnection(EntityManager currentConnection) {
+        AbstractModel.currentConnection = currentConnection;
+    }
+
+    public PropertyChangeSupport getPropertyChangeSupport() {
+        return propertyChangeSupport;
+    }
+
+    public void setPropertyChangeSupport(PropertyChangeSupport propertyChangeSupport) {
+        this.propertyChangeSupport = propertyChangeSupport;
+    }
+
+    public static String getPersistenceUnitName() {
+        return persistenceUnitName;
+    }
+
+    public static void setPersistenceUnitName(String persistenceUnitName) {
+        AbstractModel.persistenceUnitName = persistenceUnitName;
+    }
+
+    public Class<T> getEntityClass() {
+        return entityClass;
+    }
+
+    //
+    // Private Methods
+    //
+    private void persist(PersistAction persistAction, T entity) {
+
+        try {
+            switch (persistAction) {
+                case CREATE:
+                    getEntityManager().persist(entity);
+                    firePropertyChange(PropertyName.CREATE.toString(), null, entity);
+                    break;
+                case DELETE:
+                    getEntityManager().remove(getEntityManager().merge(entity));
+                    firePropertyChange(PropertyName.DELETE.toString(), entity, null);
+                    break;
+                case UPDATE:
+                    getEntityManager().merge(entity);
+                    firePropertyChange(PropertyName.UPDATE.toString(), entity, entity);
+                    break;
+            }
+            getEntityManager().getEntityManagerFactory().getCache().evict(getClass());
+        } catch (Exception e) {
+            ExceptionHandler.showExceptionToUser(e, "Error en base de datos");
+            try {
+                getEntityManager().getTransaction().setRollbackOnly();
+            } catch (PersistenceException p) {
+                //TODO: not implemented exception
+            }
+        }
     }
 
 }

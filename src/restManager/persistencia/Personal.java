@@ -62,7 +62,7 @@ public class Personal implements Serializable {
     private byte[] foto;
     @ManyToMany(mappedBy = "personalList")
     private List<PuestoTrabajo> puestoTrabajoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personalusuario")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "personalusuario")
     private List<Orden> ordenList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personal")
     private DatosPersonales datosPersonales;

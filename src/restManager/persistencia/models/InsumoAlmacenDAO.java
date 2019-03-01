@@ -37,7 +37,7 @@ public class InsumoAlmacenDAO extends AbstractModel<InsumoAlmacen> {
     @Override
     public void create(InsumoAlmacen entity) {
         startTransaction();
-        super.create(entity); //To change body of generated methods, choose Tools | Templates.
+        getEntityManager().persist(entity);
         commitTransaction();
     }
 

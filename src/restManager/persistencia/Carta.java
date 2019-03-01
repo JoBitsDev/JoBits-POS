@@ -9,6 +9,7 @@ package restManager.persistencia;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -52,7 +53,7 @@ public class Carta implements Serializable {
         @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")})
     @ManyToMany
     private List<Area> areaList;
-    @OneToMany(mappedBy = "cartacodCarta")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "cartacodCarta")
     private List<Seccion> seccionList;
 
     public Carta() {
@@ -137,7 +138,7 @@ public class Carta implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Carta[ codCarta=" + codCarta + " ]";
+        return "("+getMonedaPrincipal()+")-" + getNombreCarta() + "["+getCodCarta()+"]";
     }
 
 }

@@ -3,20 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia.models;
 
-import restManager.persistencia.PuestoTrabajo;
 
+import restManager.persistencia.PuestoTrabajo;
+import restManager.persistencia.Seccion;
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-public class PuestoTrabajoDAO extends AbstractModel<PuestoTrabajo>{
+public class PuestoTrabajoDAO extends AbstractModel<PuestoTrabajo> {
 
-    public PuestoTrabajoDAO() {
+    private static PuestoTrabajoDAO INSTANCE = null;
+
+    private PuestoTrabajoDAO() {
         super(PuestoTrabajo.class);
     }
 
+    public static PuestoTrabajoDAO getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new PuestoTrabajoDAO();
+            return INSTANCE;
+        } else {
+            return INSTANCE;
+        }
+    }
+       
 }

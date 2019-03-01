@@ -9,6 +9,7 @@ package restManager.persistencia;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -41,9 +42,9 @@ public class Area implements Serializable {
     private Integer capacidad;
     @Column(name = "nombre")
     private String nombre;
-    @ManyToMany(mappedBy = "areaList")
+    @ManyToMany(mappedBy = "areaList",cascade = {CascadeType.ALL})
     private List<Carta> cartaList;
-    @OneToMany(mappedBy = "areacodArea")
+    @OneToMany(mappedBy = "areacodArea",cascade = {CascadeType.ALL})
     private List<Mesa> mesaList;
 
     public Area() {

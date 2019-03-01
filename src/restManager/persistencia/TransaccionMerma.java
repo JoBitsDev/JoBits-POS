@@ -8,6 +8,7 @@ package restManager.persistencia;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -44,7 +45,7 @@ public class TransaccionMerma implements Serializable {
         @JoinColumn(name = "transaccionalmacencod_almacen", referencedColumnName = "almacencod_almacen", insertable = false, updatable = false),
         @JoinColumn(name = "transaccionfecha", referencedColumnName = "fecha", insertable = false, updatable = false),
         @JoinColumn(name = "transaccionhora", referencedColumnName = "hora", insertable = false, updatable = false)})
-    @OneToOne(optional = false)
+    @OneToOne(cascade = CascadeType.ALL,optional = false)
     private Transaccion transaccion;
 
     public TransaccionMerma() {
