@@ -62,7 +62,7 @@ public class PersonalCreateEditController extends AbstractDetailController<Perso
     }
 
   public List<PuestoTrabajo> getPuestoTrabajoList(){
-      return new PuestoTrabajoDAO().findAll();
+      return PuestoTrabajoDAO.getInstance().findAll();
   }
 
 

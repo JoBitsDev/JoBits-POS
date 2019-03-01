@@ -7,6 +7,7 @@ package restManager.controller.login;
 
 import GUI.Views.AbstractView;
 import GUI.Views.login.MainView;
+import GUI.Views.seccion.CartaSeccionView;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.HeadlessException;
@@ -16,9 +17,11 @@ import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.almacen.AlmacenListController;
 import restManager.controller.almacen.IPVController;
-import restManager.controller.cocina.CocinaListController;
+import restManager.controller.areaventa.AreaVentaController;
+import restManager.controller.puntoelaboracion.PuntoElaboracionListController;
 import restManager.controller.insumo.InsumoListController;
 import restManager.controller.productoventa.ProductoVentaListController;
+import restManager.controller.seccion.CartaListController;
 import restManager.controller.seccion.SeccionListController;
 import restManager.controller.trabajadores.PersonalListController;
 import restManager.controller.trabajadores.PuestoTrabajoListController;
@@ -27,9 +30,11 @@ import restManager.controller.venta.VentaListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.Carta;
+import restManager.persistencia.Negocio;
 import restManager.persistencia.Personal;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.CartaDAO;
+import restManager.persistencia.models.NegocioDAO;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.VentaDAO;
 import restManager.resources.R;
@@ -45,8 +50,8 @@ public class MainController extends AbstractDialogController<Personal> {
     public MainController(Personal loggedUser) {
         super(PersonalDAO.getInstance());
         R.loggedUser = loggedUser;
-        Carta model = new CartaDAO().find("Mnu-1");
-        R.restName = model.getNombreCarta();
+        Negocio model = NegocioDAO.getInstance().find(1);
+        R.restName = model.getNombre();
         R.coinSuffix = " " + model.getMonedaPrincipal();
     }
 
@@ -75,10 +80,13 @@ public class MainController extends AbstractDialogController<Personal> {
                     controller = new InsumoListController(getView());
                     break;
                 case COCINA:
-                    controller = new CocinaListController(getView());
+                    controller = new PuntoElaboracionListController(getView());
                     break;
                 case SECCION:
-                    controller = new SeccionListController(getView());
+                    controller = new CartaListController(getView());
+                    break;
+                case SALON:
+                    controller = new AreaVentaController(getView());
                     break;
                 case ALMACEN:
                     controller = new AlmacenListController(getView());
@@ -147,7 +155,7 @@ public class MainController extends AbstractDialogController<Personal> {
     }
 
     private void validate(Personal loggedUser, MenuButtons menuButtons) {
-        if (loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < menuButtons.getNivelMinimoAcceso()) {
+        if (! (loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= menuButtons.getNivelMinimoAcceso())){
             throw new UnauthorizedAccessException(getView());
         }
     }
@@ -175,7 +183,7 @@ public class MainController extends AbstractDialogController<Personal> {
         VENTAS(4),
         ARCHIVOS(4),
         PRESUPUESTO(4),
-        COMENZAR_VENTAS(2),
+        COMENZAR_VENTAS(1),
         //
         //TRABAJADORES
         //

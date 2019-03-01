@@ -5,6 +5,7 @@
  */
 package restManager.controller.seccion;
 
+import GUI.Views.AbstractView;
 import GUI.Views.seccion.SeccionListView;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -14,6 +15,8 @@ import javax.swing.JOptionPane;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.Area;
+import restManager.persistencia.Carta;
 import restManager.persistencia.Seccion;
 import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.SeccionDAO;
@@ -26,12 +29,19 @@ import restManager.persistencia.models.SeccionDAO;
  */
 public class SeccionListController extends AbstractListController<Seccion> {
 
+    public Carta owner;
+
+    public SeccionListController(Carta owner) {
+        super(SeccionDAO.getInstance());
+        this.owner = owner;
+    }
+
     public SeccionListController() {
-        super(new SeccionDAO());
+        super(SeccionDAO.getInstance());
     }
 
     public SeccionListController(Window parent) {
-        super(new SeccionDAO());
+        super(SeccionDAO.getInstance());
         constructView(parent);
     }
 
@@ -43,10 +53,41 @@ public class SeccionListController extends AbstractListController<Seccion> {
         newSeccion.setDescripcion("");
         newSeccion.setNombreSeccion(nombre);
         newSeccion.setProductoVentaList(new ArrayList<>());
+        if (owner != null) {
+            newSeccion.setCartacodCarta(owner);
+        }
 
         if (nombre != null && !nombre.isEmpty()) {
             if (validate(newSeccion)) {
+                getModel().startTransaction();
                 create(newSeccion);
+                getModel().commitTransaction();
+            } else {
+                showErrorDialog(getView(), "La sección a crear ya existe");
+            }
+        }
+    }
+    
+        public void createInstanceOffline(Carta a, AbstractView view) {
+            setView(view);
+        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la sección a crear",
+                "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
+        getModel().removePropertyChangeListener(this);
+        Seccion newSeccion = new Seccion();
+        newSeccion.setDescripcion("");
+        newSeccion.setNombreSeccion(nombre);
+        newSeccion.setProductoVentaList(new ArrayList<>());
+        newSeccion.setCartacodCarta(a);
+        if (owner != null) {
+            newSeccion.setCartacodCarta(owner);
+        }
+
+        if (nombre != null && !nombre.isEmpty()) {
+            if (validate(newSeccion)) {
+                getModel().startTransaction();
+                create(newSeccion);
+                getModel().commitTransaction();
+                a.getSeccionList().add(newSeccion);
             } else {
                 showErrorDialog(getView(), "La sección a crear ya existe");
             }
@@ -55,9 +96,9 @@ public class SeccionListController extends AbstractListController<Seccion> {
 
     @Override
     public void update(Seccion selected) {
-         String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nuevo nombre de la sección",
+        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nuevo nombre de la sección",
                 "Editar Sección", JOptionPane.QUESTION_MESSAGE);
-         selected.setNombreSeccion(nombre);
+        selected.setNombreSeccion(nombre);
         if (nombre != null && !nombre.isEmpty()) {
             if (validate(selected)) {
                 update(selected);
@@ -66,7 +107,7 @@ public class SeccionListController extends AbstractListController<Seccion> {
             }
         }
     }
-    
+
     @Override
     public AbstractDetailController<Seccion> getDetailControllerForNew() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.

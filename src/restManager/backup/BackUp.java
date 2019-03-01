@@ -33,7 +33,10 @@ import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.exceptions.IllegalOrphanException;
 import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
 import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.AreaDAO;
 import restManager.persistencia.models.InsumoDAO;
+import restManager.persistencia.models.PuestoTrabajoDAO;
+import restManager.persistencia.models.VentaDAO;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
 
@@ -100,13 +103,12 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     //
     // Metodos Heredados SwingWorker
     //
-    
     @Override
     protected Boolean doInBackground() throws Exception {
 
         EjecutarBackUp(tipoBackUp);
-        if(borradoRemoto){
-            BorradoRemotoVentas(staticContent.ventaJPA.findVentaEntities());
+        if (borradoRemoto) {
+            BorradoRemotoVentas(VentaDAO.getInstance().findAll());
         }
         return true;
     }
@@ -154,7 +156,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         return true;
 
     }
-    
+
     private boolean backUpArea(List<Area> areas) {
         for (Area a : areas) {
             if (EntityExist(a, a.getCodArea())) {
@@ -295,7 +297,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private boolean BackUpPersonal(List<Personal> p) {
         for (Personal x : p) {
             if (EntityExist(x, x.getUsuario())) {
-                
+
                 em.merge(x);
             } else {
                 x.setOrdenList(null);
@@ -353,28 +355,20 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     //
     // Borrados Remotos
     //
-    
-    
     //TODO: Mal hecho
-      private boolean BorradoRemotoVentas(List<Venta> ventas){
-          for (Venta x : ventas) {
-              try {
-                  staticContent.ventaJPA.destroy(x.getFecha());
-              } catch (IllegalOrphanException ex) {
-                  Logger.getLogger(BackUp.class.getName()).log(Level.SEVERE, null, ex);
-              } catch (NonexistentEntityException ex) {
-                  Logger.getLogger(BackUp.class.getName()).log(Level.SEVERE, null, ex);
-              }
-          }
-          return true;
+    private boolean BorradoRemotoVentas(List<Venta> ventas) {
+        for (Venta x : ventas) {
+            VentaDAO.getInstance().remove(x);
+        }
+        return true;
     }
-    
+
     //
     // scripts de backup
     //
     private boolean EjecutarBackUpPersonal() {
         startBackupTransaction();
-        BackUpPuestoDeTrabajo(staticContent.puestosJPA.findPuestoTrabajoEntities());
+        BackUpPuestoDeTrabajo(PuestoTrabajoDAO.getInstance().findAll());
         BackUpPersonal(staticContent.personalJPA.findPersonalEntities());
         BackUpDatosPersonales(staticContent.datosPJPA.findDatosPersonalesEntities());
         commitBackupTransaction();
@@ -385,7 +379,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
 
         startBackupTransaction();
         //backup area
-        backUpArea(staticContent.areaJPA.findAreaEntities());
+        backUpArea(AreaDAO.getInstance().findAll());
         //backup carta
         BackUpCarta(staticContent.cartaJPA.findCartaEntities());
         // backup cocinas

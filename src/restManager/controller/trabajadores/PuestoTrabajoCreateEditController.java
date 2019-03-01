@@ -30,20 +30,20 @@ import restManager.persistencia.models.PuestoTrabajoDAO;
 public class PuestoTrabajoCreateEditController extends AbstractDetailController<PuestoTrabajo> {
 
     public PuestoTrabajoCreateEditController() {
-        super(new PuestoTrabajoDAO());
+        super(PuestoTrabajoDAO.getInstance());
     }
 
     public PuestoTrabajoCreateEditController(PuestoTrabajo instance) {
-        super(instance, new PuestoTrabajoDAO());
+        super(instance, PuestoTrabajoDAO.getInstance());
 
     }
 
     public PuestoTrabajoCreateEditController(Window parent) {
-        super(parent, new PuestoTrabajoDAO());
+        super(parent, PuestoTrabajoDAO.getInstance());
     }
 
     public PuestoTrabajoCreateEditController(PuestoTrabajo instance, Window parent) {
-        super(instance, parent, new PuestoTrabajoDAO());
+        super(instance, parent, PuestoTrabajoDAO.getInstance());
     }
 
     /**

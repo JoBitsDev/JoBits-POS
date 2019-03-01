@@ -17,7 +17,9 @@ import java.util.Date;
 import java.util.List;
 
 import restManager.controller.AbstractDialogController;
+import restManager.controller.venta.VentaDetailController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.ValidatingException;
 
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
@@ -151,10 +153,25 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public void darEntrada(Insumo insumo, Cocina cocina, Date fecha, Float cantidad) {
-        IpvRegistro reg = IpvRegistroDAO.getInstance().getIpvRegistro(cocina, fecha, insumo);
+      try{ 
+          IpvRegistro reg = IpvRegistroDAO.getInstance().getIpvRegistro(cocina, fecha, insumo);
         if (reg != null) {
             reg.setEntrada(reg.getEntrada() + cantidad);
             updateInstance(reg);
         }
+        }catch(Exception e){
+                throw new ValidatingException(getView(),
+                    "El insumo en el ipv a dar entrada no existe o no hay un ipv inizializado en el dia actual");
+        
+        }
+    }
+
+    public ArrayList<IpvRegistro> calculate_IPV_to_Currenr(ArrayList<IpvRegistro> listaRegistros) {
+        VentaDetailController controller = new VentaDetailController();
+        for (IpvRegistro x : listaRegistros) {
+                 x.setConsumo(controller.getGastoTotalDeInsumo(x));
+                 updateInstance(x);
+        }
+        return listaRegistros;
     }
 }

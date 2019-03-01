@@ -14,6 +14,7 @@ import restManager.controller.AbstractListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.models.InsumoDAO;
+
 /**
  * FirstDream
  *
@@ -29,10 +30,10 @@ public class InsumoListController extends AbstractListController<Insumo> {
     }
 
     public InsumoListController(Window frame) {
-        this();
+        super(InsumoDAO.getInstance());
         constructView(frame);
     }
-    
+
     /**
      *
      * @param parent the value of parent
@@ -44,8 +45,11 @@ public class InsumoListController extends AbstractListController<Insumo> {
         getView().setVisible(true);
     }
 
-    public void crossReferenceInsumo(Insumo objectAtSelectedRow) {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    @Override
+    public void createInstance() {
+        detailController = getDetailControllerForNew();
+        items = null;
+        getView().updateView();//TODO:metodo forzado
     }
 
     @Override

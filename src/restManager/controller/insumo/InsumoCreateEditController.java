@@ -11,11 +11,14 @@ import java.awt.Window;
 import java.util.Collections;
 import java.util.List;
 import restManager.controller.AbstractDetailController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
+import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.models.AlmacenDAO;
 import restManager.persistencia.models.InsumoDAO;
+import restManager.persistencia.models.ProductoInsumoDAO;
 import restManager.persistencia.models.ProductoVentaDAO;
 import restManager.resources.R;
 
@@ -76,5 +79,14 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
         List <ProductoVenta> ret = ProductoVentaDAO.getInstance().findAll();
         Collections.sort(ret, (ProductoVenta o1, ProductoVenta o2) -> o1.getNombre().compareTo(o2.getNombre()));
         return ret;
+    }
+
+    public void updateInsumoOnFichas(Insumo insumo) {
+        for (ProductoInsumo p : insumo.getProductoInsumoList()) {
+            getModel().startTransaction();
+            p.setCosto(insumo.getCostoPorUnidad()*p.getCantidad());
+            ProductoInsumoDAO.getInstance().edit(p);
+            getModel().commitTransaction();
+        }
     }
 }

@@ -30,7 +30,7 @@ public class PuestoTrabajoListController extends AbstractListController<PuestoTr
 
     //PuestoTrabajoListView getView();
     public PuestoTrabajoListController() {
-        super(new PuestoTrabajoDAO());
+        super(PuestoTrabajoDAO.getInstance());
     }
 
     public PuestoTrabajoListController(Window frame) {

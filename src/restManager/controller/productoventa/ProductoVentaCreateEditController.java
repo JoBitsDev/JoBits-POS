@@ -74,7 +74,11 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
     }
 
     public List<Seccion> getSeccionList() {
-        return new SeccionDAO().findAll();
+        List<Seccion> ret = SeccionDAO.getInstance().findAll();
+        Collections.sort(ret,(o1, o2) -> {
+            return o1.getNombreSeccion().compareTo(o2.getNombreSeccion());
+        });
+        return ret;
     }
 
     public List<Insumo> getInsumoList() {

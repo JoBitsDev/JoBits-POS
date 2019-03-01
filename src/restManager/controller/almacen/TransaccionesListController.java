@@ -7,9 +7,12 @@ package restManager.controller.almacen;
 
 import GUI.Views.AbstractView;
 import GUI.Views.Almacen.TransaccionListView;
+import com.jidesoft.swing.JideButton;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
+import javax.swing.JButton;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
 import restManager.exceptions.DevelopingOperationException;
@@ -18,6 +21,7 @@ import restManager.persistencia.Transaccion;
 import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.TransaccionDAO;
 import restManager.persistencia.models.TransaccionEntradaDAO;
+import restManager.printservice.Impresion;
 
 /**
  * FirstDream
@@ -50,7 +54,9 @@ public class TransaccionesListController extends AbstractListController<Transacc
     @Override
     public void constructView(Container parent) {
         setView(new TransaccionListView(this, (AbstractView) parent, true));
-        getView().getjXPanelControles().setVisible(false);
+        getView().getjButtonAdd().setVisible(false);
+        getView().getjButtonEdit().setVisible(false);       
+
         getView().updateView();
         getView().setVisible(true);
     }
@@ -63,6 +69,13 @@ public class TransaccionesListController extends AbstractListController<Transacc
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         getView().updateView();
+    }
+
+    public void imprimirTransaccionesSeleccionadas(List<Transaccion> selectedsObjects) {
+        if (!selectedsObjects.isEmpty()) {
+        Impresion i = new Impresion();
+        i.printComprobanteTransaccion(selectedsObjects);
+        }
     }
     
     
