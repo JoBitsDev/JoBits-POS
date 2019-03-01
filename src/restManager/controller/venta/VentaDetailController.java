@@ -21,8 +21,10 @@ import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
+import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
+import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
 import restManager.persistencia.jpa.staticContent;
@@ -67,6 +69,13 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         instance = getDiaDeVenta(diaVentas);
         state = State.CREATING;
         constructView(parent);
+    }
+
+    public VentaDetailController(Date diaVentas) {
+        super(VentaDAO.getInstance());
+        OrdenDAO.getInstance().addPropertyChangeListener(this);
+        instance = getDiaDeVenta(diaVentas);
+        state = State.CREATING;
     }
 
     public VentaDetailController(Venta instance, Window parent) {
@@ -263,7 +272,23 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     private void constructFastView(AbstractView parent) {
-        
+
+    }
+
+    public Float getGastoTotalDeInsumo(IpvRegistro i) {
+        float total = 0;
+        for (Orden x : getInstance().getOrdenList()) {
+            for (ProductovOrden p : x.getProductovOrdenList()) {
+                if (p.getProductoVenta().getCocinacodCocina().equals(i.getIpv().getCocina())) {
+                    for (ProductoInsumo in : p.getProductoVenta().getProductoInsumoList()) {
+                        if (in.getInsumo().equals(i.getIpv().getInsumo())) {
+                            total += p.getCantidad() * in.getCantidad();
+                        }
+                    }
+                }
+            }
+        }
+        return total;
     }
 
 }
