@@ -5,19 +5,14 @@
  */
 package restManager.controller;
 
-import GUI.Views.AbstractView;
 import GUI.Views.View;
-import com.jidesoft.dialog.JideOptionPane;
 import java.awt.Container;
-import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.models.AbstractModel;
 import restManager.resources.R;
-import restManager.util.LoadingWindow;
 
 /**
  * FirstDream
@@ -308,19 +303,25 @@ public abstract class AbstractController<T> implements Controller {
     private void persist(PersistAction persistAction) {
         if (selected != null) {
             getModel().startTransaction();
-            switch (persistAction) {
-                case CREATE:
-                    getModel().create(selected);
-                    break;
-                case DELETE:
-                    getModel().remove(selected);
-                    selected = null;
-                    break;
-                case UPDATE:
-                    getModel().edit(selected);
-                    break;
+            try {
+                switch (persistAction) {
+                    case CREATE:
+                        getModel().create(selected);
+                        break;
+                    case DELETE:
+                        getModel().remove(selected);
+                        selected = null;
+                        break;
+                    case UPDATE:
+                        getModel().edit(selected);
+                        break;
+                }
+                getModel().getEntityManager().getEntityManagerFactory().getCache().evict(getModel().getClass());
+                getModel().commitTransaction();
+            }catch(Exception e ){
+                showErrorDialog((Container)getView(), "No Pueden Existir duplicados en la base de datos \n" + e.getMessage() );
+                getModel().getEntityManager().getTransaction().rollback();
             }
-            getModel().commitTransaction();
         }
     }
 
