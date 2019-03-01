@@ -397,16 +397,6 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                         switch (columnIndex) {
                             case 1:
-                                float cant_anterior = items.get(rowIndex).getCantidad();
-                                float dif = (float) aValue - cant_anterior;
-                                OrdenController.UpdateIpvAction action;
-                                if (dif > 0) {
-                                    action = OrdenController.UpdateIpvAction.AGREGAR;
-                                } else {
-                                    action = OrdenController.UpdateIpvAction.REMOVER;
-                                }
-                                dif = Math.abs(dif);
-                                getController().updateIPVs(items.get(rowIndex), dif, action);
                                 items.get(rowIndex).setCantidad((float) aValue);
                                 fireTableRowsUpdated(rowIndex, rowIndex);
                                 updateValorTotal();

@@ -415,7 +415,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     }//GEN-LAST:event_jButtonImprimirZActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        int row = jTableVentasDependientes.getSelectedRow();
+        int row = jTableVentasPorCocina.getSelectedRow();
         if (row == -1) {
             throw new NoSelectedException(jTableVentasDependientes);
         }

@@ -64,8 +64,8 @@ public class Resumenes extends javax.swing.JPanel {
 
             MessageFormat footer = new MessageFormat("-Pag {0}-");
 
-            jTableGastos.print(JTable.PrintMode.FIT_WIDTH, headerGastos, footer);
-            jTableVenta.print(JTable.PrintMode.FIT_WIDTH, headerVentas, footer);
+            jTableGastos.print(JTable.PrintMode.NORMAL, headerGastos, footer);
+            jTableVenta.print(JTable.PrintMode.NORMAL, headerVentas, footer);
 
         } catch (PrinterException ex) {
             Logger.getLogger(Resumen.class.getName()).log(Level.SEVERE, null, ex);
