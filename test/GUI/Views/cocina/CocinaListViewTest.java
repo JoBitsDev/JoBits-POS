@@ -8,7 +8,7 @@ package GUI.Views.cocina;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import restManager.controller.cocina.CocinaListController;
+import restManager.controller.puntoelaboracion.PuntoElaboracionListController;
 
 /**
  *
@@ -28,7 +28,7 @@ public class CocinaListViewTest {
      */
     @Test
     public void testGenerateTableModel() {
-        CocinaListController controller = new CocinaListController(null);
+        PuntoElaboracionListController controller = new PuntoElaboracionListController(null);
     }
     
 }

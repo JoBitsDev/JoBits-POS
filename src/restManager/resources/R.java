@@ -36,6 +36,8 @@ public class R {
     public static final float PERCENTAGE = 0;
 
     public static final int COINCHANGE = 25;
+    
+    public static final String NO_MESA = "M-0";
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
     
