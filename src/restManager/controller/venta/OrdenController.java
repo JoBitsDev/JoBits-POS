@@ -90,7 +90,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         ret.setPersonalusuario(R.loggedUser);
         ret.setDeLaCasa(false);
         ret.setGananciaXporciento(R.PERCENTAGE);
-        ret.setMesacodMesa(MesaDAO.getInstance().find("M-0"));
+        ret.setMesacodMesa(MesaDAO.getInstance().find("M-100"));
         ret.setHoraComenzada(new Date());
         ret.setOrdengastoEninsumos((float) 0);
         ret.setOrdenvalorMonetario((float) 0);
@@ -190,7 +190,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
         instance.getProductovOrdenList().remove(objectAtSelectedRow);
 
-        updateIPVs(objectAtSelectedRow, objectAtSelectedRow.getCantidad(), UpdateIpvAction.REMOVER);
         update(instance);
         view.updateValorTotal();
     }
@@ -269,28 +268,9 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             getInstance().getProductovOrdenList().add(founded);
         }
         cantidadAgregada = founded.getCantidad();
-        updateIPVs(founded, cantidadAgregada, UpdateIpvAction.AGREGAR);
         update(instance);
         view.updateValorTotal();
 
-    }
-
-    public void updateIPVs(ProductovOrden founded, float cantidad, UpdateIpvAction action) {
-        for (ProductoInsumo prodIns : founded.getProductoVenta().getProductoInsumoList()) {
-            IpvRegistro reg = IpvRegistroDAO.getInstance().getIpvRegistro(founded.getProductoVenta().getCocinacodCocina(), instance.getVentafecha().getFecha(), prodIns.getInsumo());
-            IPVController controller = new IPVController();
-            if (reg != null) {
-                switch (action) {
-                    case AGREGAR:
-                        reg.setConsumo(reg.getConsumo() + prodIns.getCantidad() * cantidad);
-                        break;
-                    case REMOVER:
-                        reg.setConsumo(reg.getConsumo() - prodIns.getCantidad() * cantidad);
-                        break;
-                }
-                controller.updateInstance(reg);
-            }
-        }
     }
 
     public enum UpdateIpvAction {
