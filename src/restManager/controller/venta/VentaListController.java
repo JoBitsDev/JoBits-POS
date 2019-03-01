@@ -71,7 +71,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
                     initDateNotSet = false;
                 }
             }
-            c.roll(Calendar.DAY_OF_MONTH, true);
+            c.add(Calendar.DAY_OF_MONTH, 1);
         }
         if (initDateNotSet) {
             throw new ValidatingException(getView());
