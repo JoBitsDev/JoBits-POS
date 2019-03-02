@@ -376,7 +376,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
                 ret.setProductoInsumoPK(pk);
                 ret.setInsumo(selected);
                 ret.setProductoVenta(getController().getInstance());
-                ret.setCantidad(1);
+                ret.setCantidad(0);
                 ret.setCosto(selected.getCostoPorUnidad());
                 return ret;
             }
