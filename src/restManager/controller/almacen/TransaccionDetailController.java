@@ -139,6 +139,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         TransaccionMerma rebaja = new TransaccionMerma(pk);
         rebaja.setTransaccion(t);
         rebaja.setRazon(showInputDialog(getView(), "Introduzca la causa de la Rebaja"));
+        a.getTransaccionList().add(t);
         createNewTransaccionMerma(rebaja);
     }
 
@@ -153,23 +154,20 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     public void createNewTransaccionSalida(Transaccion transaccion) {
         TransaccionDAO.getInstance().startTransaction();
-        TransaccionDAO.getInstance().create(transaccion);
-//        TransaccionDAO.getInstance().commitTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(transaccion.getAlmacen());
         almacenController.setView(getView());
         almacenController.darSalidaAInsumo(transaccion);
+        TransaccionDAO.getInstance().create(transaccion);
         getModel().commitTransaction();
 
     }
 
     public void createNewTransaccionMerma(TransaccionMerma transaccion) {
         TransaccionMermaDAO.getInstance().startTransaction();
-        TransaccionMermaDAO.getInstance().create(transaccion);
-        TransaccionMermaDAO.getInstance().commitTransaction();
-        getModel().startTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(transaccion.getTransaccion().getAlmacen());
         almacenController.setView(getView());
         almacenController.darMermaInsumo(transaccion.getTransaccion());
+        TransaccionMermaDAO.getInstance().create(transaccion);
         getModel().commitTransaction();
 
     }

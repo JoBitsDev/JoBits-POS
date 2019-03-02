@@ -83,24 +83,6 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         OrdenDAO.getInstance().addPropertyChangeListener(this);
     }
 
-    public VentaDetailController(AbstractView parent, Date diaVentas, boolean b) {
-        super(VentaDAO.getInstance());
-        this.parent = parent;
-        OrdenDAO.getInstance().addPropertyChangeListener(this);
-        instance = getDiaDeVenta(diaVentas);
-        state = State.CREATING;
-        constructFastView(parent);
-    }
-
-    public VentaDetailController(AbstractView parent, boolean b) {
-        super(VentaDAO.getInstance());
-        this.parent = parent;
-        OrdenDAO.getInstance().addPropertyChangeListener(this);
-        instance = getDiaDeVenta(null);
-        state = State.CREATING;
-        constructFastView(parent);
-    }
-
     @Override
     public Venta createNewInstance() {
         return getDiaDeVenta(null);
@@ -204,6 +186,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             //revisar si ya el dia esta creado pero no terminado
             ret = VentaDAO.getInstance().find(new Date());
             if (ret != null) {
+                new IPVController().inicializarIpvs(ret.getFecha());
                 return ret;
             }
 
@@ -269,10 +252,6 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
         });
         Impresion.getDefaultInstance().printResumenPuntoElab(aux, c, getInstance().getFecha());
-    }
-
-    private void constructFastView(AbstractView parent) {
-
     }
 
     public Float getGastoTotalDeInsumo(IpvRegistro i) {

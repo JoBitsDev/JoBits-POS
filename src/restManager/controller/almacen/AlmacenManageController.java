@@ -232,6 +232,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         }
         instance.setValorMonetario(total);
         update(instance, true);
+        getModel().getEntityManager().getEntityManagerFactory().getCache().evict(Almacen.class);
+        instance = getModel().find(instance.getCodAlmacen());
     }
 
     public void createInsumo(InsumoAlmacen newInsumo) {

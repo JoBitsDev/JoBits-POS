@@ -29,6 +29,7 @@ import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
 import restManager.util.RestManagerListModel;
+import restManager.util.comun;
 
 /**
  *
@@ -373,7 +374,7 @@ public class IpvGestionView extends AbstractView {
                     jTableRegistro) {
                 @Override
                 public int getColumnCount() {
-                    return 7;
+                    return 8;
                 }
 
                 @Override
@@ -393,8 +394,9 @@ public class IpvGestionView extends AbstractView {
                             return items.get(rowIndex).getConsumoReal();
                         case 6:
                             return items.get(rowIndex).getFinal1();
-//                        case 7:
-//                            return;
+                        case 7:
+                            return comun.setDosLugaresDecimales(
+                                    items.get(rowIndex).getFinal1()*items.get(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
                         default:
                             return null;
                     }
@@ -417,8 +419,8 @@ public class IpvGestionView extends AbstractView {
                             return "Consumo Real";
                         case 6:
                             return "Final";
-//                        case 7 :
-//                            return "Importe";
+                        case 7 :
+                            return "Importe";
                         default:
                             return null;
                     }

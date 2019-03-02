@@ -28,6 +28,7 @@ import restManager.controller.trabajadores.PuestoTrabajoListController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.controller.venta.VentaListController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.ExceptionHandler;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.Carta;
 import restManager.persistencia.Negocio;
@@ -125,37 +126,20 @@ public class MainController extends AbstractDialogController<Personal> {
                         controller = new VentaDetailController(getView());
                     }
                     break;
-                case VENTA_RAPIDA:
-                    String date = JOptionPane.showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
-                            + "o deje la casilla en blanco para comenzar en el ultimo dia sin cerrar ", "Entrada", JOptionPane.QUESTION_MESSAGE);
-                    if (date == null) {
-                        controller = new VentaDetailController(getView(),true);
-                    } else {
-                        try {
-                            Venta v = VentaDAO.getInstance().find(R.DATE_FORMAT.parse(date));
-                            if (v == null) {
-                                controller = new VentaDetailController(getView(), R.DATE_FORMAT.parse(date),true);
-                            } else {
-                               throw new restManager.exceptions.ValidatingException(getView());
-                            }
-                        } catch (ParseException ex) {
-                            showErrorDialog(getView(), ex.getMessage());
-                        }
-                    }
-                    break;
                 default:
                     getView().setEnabled(true);
                     throw new DevelopingOperationException(getView());
 
             }
         } catch (Exception e) {
+            ExceptionHandler.showExceptionToUser(e, getView());
             e.printStackTrace();
         }
         getView().setEnabled(true);
     }
 
     private void validate(Personal loggedUser, MenuButtons menuButtons) {
-        if (! (loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= menuButtons.getNivelMinimoAcceso())){
+        if (!(loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= menuButtons.getNivelMinimoAcceso())) {
             throw new UnauthorizedAccessException(getView());
         }
     }
