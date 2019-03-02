@@ -23,7 +23,6 @@ public class LogInDialogView extends AbstractView {
         super(DialogType.DEFINED, controller);
         initComponents();
         ComponentMover cr = new ComponentMover(this, jPanelCenter);
-        actualizarLabelConexion(getController().connectRemote());
         buttonGroup1.add(jRadioButtonLocal);
         buttonGroup1.add(jRadioButtonRemoto);
 
@@ -141,7 +140,6 @@ public class LogInDialogView extends AbstractView {
         jPanelConn.add(jRadioButtonLocal);
 
         jRadioButtonRemoto.setBackground(new java.awt.Color(0, 102, 102));
-        jRadioButtonRemoto.setSelected(true);
         jRadioButtonRemoto.setText(bundle.getString("label_servidor_remoto")); // NOI18N
         jRadioButtonRemoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
