@@ -59,6 +59,15 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
         return ret;
     }
 
+    @Override
+    public void createUpdateInstance() {
+        super.createUpdateInstance(); //To change body of generated methods, choose Tools | Templates.
+        if (showConfirmDialog(getView(),"Desea actualizar el costo en los productos de venta")) {
+            updateInsumoOnFichas(getInstance());
+        }
+    }
+
+    
     /**
      *
      * @param parent the value of parent
