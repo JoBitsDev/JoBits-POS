@@ -219,12 +219,19 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
             },
             new String [] {
-                "Usuario", "Monto"
+                "Usuario", "Monto", "Ordenes Atendidas"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];

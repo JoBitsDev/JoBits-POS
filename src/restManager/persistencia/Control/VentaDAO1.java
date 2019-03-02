@@ -153,14 +153,16 @@ public class VentaDAO1 {
     public static void getResumenVentasCamareroOnTable(JTable tabla, Venta v, Personal p) {
 
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[2]);
+        ArrayList[] rowData = comun.initArray(new ArrayList[3]);
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         float total = 0;
+        int totalOrdenes = 0;
         //llenando l array
         for (Orden o : aux) {
             if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p) && o.getHoraTerminada() != null) {
                 total += o.getOrdenvalorMonetario();
+                totalOrdenes++;
             }
         }//n
 
@@ -168,6 +170,7 @@ public class VentaDAO1 {
         if (total != 0) {
             rowData[0].add(p.getUsuario());
             rowData[1].add(comun.setDosLugaresDecimales(total));
+            rowData[2].add(totalOrdenes);
 
             //llenando la tabla
             try {
