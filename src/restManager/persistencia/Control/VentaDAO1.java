@@ -284,8 +284,10 @@ public class VentaDAO1 {
 
         //llenando l array
         for (Orden o : aux) {
-            joinListsProductovOrdenByCocina(ret,
-                    new ArrayList<>(o.getProductovOrdenList()), c);
+            if (!o.getDeLaCasa()) {
+                joinListsProductovOrdenByCocina(ret,
+                        new ArrayList<>(o.getProductovOrdenList()), c);
+            }
 
         }//nˆ3
 
@@ -650,7 +652,7 @@ public class VentaDAO1 {
     }
 
     public static float getValorTotalGastos(Venta instance) {
-         float total = 0;
+        float total = 0;
         for (Orden x : instance.getOrdenList()) {
             if (!x.getDeLaCasa() && x.getHoraTerminada() != null) {
                 total += x.getOrdengastoEninsumos();
