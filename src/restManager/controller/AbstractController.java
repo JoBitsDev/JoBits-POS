@@ -318,8 +318,9 @@ public abstract class AbstractController<T> implements Controller {
                 }
                 getModel().getEntityManager().getEntityManagerFactory().getCache().evict(getModel().getClass());
                 getModel().commitTransaction();
-            }catch(Exception e ){
-                showErrorDialog((Container)getView(), "No Pueden Existir duplicados en la base de datos \n" + e.getMessage() );
+            }catch(Exception e){
+                showErrorDialog((Container)getView(), "La accion no pudo se rcompletada \n" + e.getMessage() );
+                e.printStackTrace();
                 getModel().getEntityManager().getTransaction().rollback();
             }
         }

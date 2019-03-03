@@ -139,7 +139,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         if (ins.getValorMonetario() / ins.getCantidad() != insumo.getCostoPorUnidad()) {
             if (showConfirmDialog(getView(), "Actualizar el costo del insumo " + insumo + " \n de "
                     + insumo.getCostoPorUnidad() + R.coinSuffix + " a " + comun.setDosLugaresDecimales(ins.getValorMonetario() / ins.getCantidad()))) {
-                insumo.setCostoPorUnidad(ins.getValorMonetario() / ins.getCantidad());
+                insumo.setCostoPorUnidad(comun.setDosLugaresDecimalesFloat(ins.getValorMonetario() / ins.getCantidad()));
                 InsumoCreateEditController controller = new InsumoCreateEditController();
                 controller.setView(getView());
                 controller.setShowDialogs(false);

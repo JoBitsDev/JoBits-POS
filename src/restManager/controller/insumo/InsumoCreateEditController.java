@@ -47,7 +47,7 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
     public InsumoCreateEditController(Insumo instance, Window parent) {
         super(instance, parent, InsumoDAO.getInstance());
     }
-    
+
     @Override
     public Insumo createNewInstance() {
         Insumo ret = new Insumo(super.getModel().generateStringCode(PREFIX_FOR_ID));
@@ -62,12 +62,13 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
     @Override
     public void createUpdateInstance() {
         super.createUpdateInstance(); //To change body of generated methods, choose Tools | Templates.
-        if (showConfirmDialog(getView(),"Desea actualizar el costo en los productos de venta")) {
-            updateInsumoOnFichas(getInstance());
+        if (!instance.getProductoInsumoList().isEmpty()) {
+            if (showConfirmDialog(getView(), "Desea actualizar el costo en los productos de venta")) {
+                updateInsumoOnFichas(getInstance());
+            }
         }
     }
 
-    
     /**
      *
      * @param parent the value of parent
@@ -85,7 +86,7 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
     }
 
     public List<ProductoVenta> getProductoList() {
-        List <ProductoVenta> ret = ProductoVentaDAO.getInstance().findAll();
+        List<ProductoVenta> ret = ProductoVentaDAO.getInstance().findAll();
         Collections.sort(ret, (ProductoVenta o1, ProductoVenta o2) -> o1.getNombre().compareTo(o2.getNombre()));
         return ret;
     }
@@ -93,7 +94,7 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
     public void updateInsumoOnFichas(Insumo insumo) {
         for (ProductoInsumo p : insumo.getProductoInsumoList()) {
             getModel().startTransaction();
-            p.setCosto(insumo.getCostoPorUnidad()*p.getCantidad());
+            p.setCosto(insumo.getCostoPorUnidad() * p.getCantidad());
             ProductoInsumoDAO.getInstance().edit(p);
             getModel().commitTransaction();
         }

@@ -17,8 +17,10 @@ import restManager.controller.AbstractListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Area;
 import restManager.persistencia.Carta;
+import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.Seccion;
 import restManager.persistencia.models.AbstractModel;
+import restManager.persistencia.models.ProductoVentaDAO;
 import restManager.persistencia.models.SeccionDAO;
 
 /**
@@ -67,9 +69,9 @@ public class SeccionListController extends AbstractListController<Seccion> {
             }
         }
     }
-    
-        public void createInstanceOffline(Carta a, AbstractView view) {
-            setView(view);
+
+    public void createInstanceOffline(Carta a, AbstractView view) {
+        setView(view);
         String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la sección a crear",
                 "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
         getModel().removePropertyChangeListener(this);
@@ -106,6 +108,25 @@ public class SeccionListController extends AbstractListController<Seccion> {
                 showErrorDialog(getView(), "La sección a crear ya existe");
             }
         }
+    }
+
+    @Override
+    public void destroy(Seccion selected) {
+        if (!selected.getProductoVentaList().isEmpty()) {
+            if (showConfirmDialog(getView(), "La seccion " + selected
+                    + " contiene " + selected.getProductoVentaList().size()
+                    + " productos de venta enlazados \n" + "presione si para borrar los productos de venta, no para cancelar")) {
+                for (ProductoVenta x : selected.getProductoVentaList()) {
+                    x.setSeccionnombreSeccion(null);
+                    x.setVisible(false);
+                    ProductoVentaDAO.getInstance().edit(x);
+                }
+
+            }else{
+                return;
+            }
+        }
+        super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

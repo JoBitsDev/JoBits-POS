@@ -89,9 +89,9 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
                     case 2:
                         return items.get(rowIndex).getPrecioVenta() + R.coinSuffix;
                     case 3:
-                        return items.get(rowIndex).getSeccionnombreSeccion().getNombreSeccion();
+                        return items.get(rowIndex).getSeccionnombreSeccion();
                     case 4:
-                        return items.get(rowIndex).getCocinacodCocina().getNombreCocina();
+                        return items.get(rowIndex).getCocinacodCocina();
                     case 5:
                         return items.get(rowIndex).getVisible();
                     default:
@@ -136,7 +136,7 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
 
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                if (columnIndex == 5) {
+                if (columnIndex == 5 && getController().canSetVisible(items.get(rowIndex))) {
                     items.get(rowIndex).setVisible((Boolean) aValue);
                     getController().setSelected(items.get(rowIndex));
                     getController().update();

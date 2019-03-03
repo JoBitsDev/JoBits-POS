@@ -88,7 +88,7 @@ public class CartaListController extends AbstractListController<Carta> {
         new SeccionListController().createInstanceOffline(selectedValue, getView());
     }
 
-    public void removeCarta(Seccion selectedValue) {
+    public void removeSeccionFromCarta(Seccion selectedValue) {
         SeccionListController controller = new SeccionListController();
         controller.getModel().removePropertyChangeListener(controller);
         controller.destroy(selectedValue);
@@ -102,6 +102,7 @@ public class CartaListController extends AbstractListController<Carta> {
                         + " contiene " + s.getProductoVentaList().size() + " productos de venta enlazados \n" + "presione si para borrar los productos de venta, no para cancelar")) {
                     for (ProductoVenta p : s.getProductoVentaList()) {
                         p.setSeccionnombreSeccion(null);
+                        p.setVisible(false);
                         ProductoVentaDAO.getInstance().edit(p);
                     }
 

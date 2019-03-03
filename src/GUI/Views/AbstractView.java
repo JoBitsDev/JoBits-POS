@@ -190,7 +190,7 @@ public abstract class AbstractView extends JDialog implements  View{
             case NORMAL:
                 return new Dimension(800, 600);
             case LIST:
-                return new Dimension(400, 600);
+                return new Dimension(450, 600);
             case INPUT_LARGE:
                 return new Dimension(590, 700);
             case INPUT:

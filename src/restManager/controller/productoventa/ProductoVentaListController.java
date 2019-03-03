@@ -11,6 +11,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.models.ProductoVentaDAO;
@@ -82,6 +83,15 @@ public class ProductoVentaListController extends AbstractListController<Producto
         if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3) {
             throw new UnauthorizedAccessException(getView());
         }
+    }
+
+    public boolean canSetVisible(ProductoVenta get) {
+        if(get.getCocinacodCocina() == null || get.getSeccionnombreSeccion() == null){
+            showErrorDialog(getView(), "El Producto de venta no puede ponerse visible "
+                    + "\n si no se encuentra dentro de una seccion y una cocina");
+            return false;
+        }
+        return true;
     }
 
 }
