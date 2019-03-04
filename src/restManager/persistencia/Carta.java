@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia;
 
 import java.io.Serializable;
@@ -24,7 +23,7 @@ import javax.persistence.Table;
 /**
  * FirstDream
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "carta")
@@ -48,12 +47,9 @@ public class Carta implements Serializable {
     private String monedaPrincipal;
     @Column(name = "porciento_por_servicio")
     private Integer porcientoPorServicio;
-    @JoinTable(name = "carta_area", joinColumns = {
-        @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")}, inverseJoinColumns = {
-        @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "cartaList")
     private List<Area> areaList;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "cartacodCarta")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartacodCarta")
     private List<Seccion> seccionList;
 
     public Carta() {
@@ -138,7 +134,7 @@ public class Carta implements Serializable {
 
     @Override
     public String toString() {
-        return "("+getMonedaPrincipal()+")-" + getNombreCarta() + "["+getCodCarta()+"]";
+        return "(" + getMonedaPrincipal() + ")-" + getNombreCarta() + "[" + getCodCarta() + "]";
     }
 
 }

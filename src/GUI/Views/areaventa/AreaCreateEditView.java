@@ -54,8 +54,8 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         jButtonAddMenu = new javax.swing.JButton();
         jButtonDeleteMenu = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(267, 431));
@@ -147,14 +147,6 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
 
-        jButton1.setText(bundle.getString("label_cancelar")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton1);
-
         jButton2.setText(bundle.getString("label_aceptar")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,6 +154,14 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
             }
         });
         jPanel3.add(jButton2);
+
+        jButton1.setText(bundle.getString("label_cancelar")); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton1);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_END);
 

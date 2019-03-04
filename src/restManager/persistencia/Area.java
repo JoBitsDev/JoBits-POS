@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia;
 
 import java.io.Serializable;
@@ -13,6 +12,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,8 +22,9 @@ import javax.persistence.Table;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "area")
@@ -42,9 +44,12 @@ public class Area implements Serializable {
     private Integer capacidad;
     @Column(name = "nombre")
     private String nombre;
-    @ManyToMany(mappedBy = "areaList",cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "carta_area", joinColumns = {
+        @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")}, inverseJoinColumns = {
+        @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")})
     private List<Carta> cartaList;
-    @OneToMany(mappedBy = "areacodArea",cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "areacodArea", cascade = {CascadeType.ALL})
     private List<Mesa> mesaList;
 
     public Area() {
@@ -116,7 +121,7 @@ public class Area implements Serializable {
 
     @Override
     public String toString() {
-        return nombre +" [ "+ codArea + " ]";
+        return nombre + " [ " + codArea + " ]";
     }
 
 }

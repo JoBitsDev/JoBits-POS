@@ -6,6 +6,7 @@
 
 package restManager.controller.areaventa;
 
+import GUI.Views.AbstractDetailView;
 import GUI.Views.AbstractView;
 import GUI.Views.areaventa.AreaCreateEditView;
 import java.awt.Container;
@@ -13,6 +14,7 @@ import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 import restManager.controller.AbstractDetailController;
+import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Area;
 import restManager.persistencia.Carta;
 import restManager.persistencia.models.AbstractModel;
@@ -54,6 +56,25 @@ public class AreaDetailController extends AbstractDetailController<Area>{
     }
 
     @Override
+    public void createUpdateInstance() {
+         if (getView().validateData()) {
+            switch (state) {
+                case CREATING:
+                    create(instance);
+                    break;
+                case EDITING:
+                    
+                    update(instance);
+                    break;
+            }
+        }else{
+            throw new ValidatingException();
+        }
+    }
+
+    
+    
+    @Override
     public void constructView(Container parent) {
         setView(new AreaCreateEditView(getInstance(), this, (AbstractView) parent));
         getView().updateView();
@@ -63,5 +84,11 @@ public class AreaDetailController extends AbstractDetailController<Area>{
     public List<Carta> getCartaList(){
         return CartaDAO.getInstance().findAll();
     }
+
+    @Override
+    public AbstractDetailView<Area> getView() {
+        return (AbstractDetailView<Area>) super.getView(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }
