@@ -14,6 +14,7 @@ import java.util.AbstractList;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
+import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.models.PersonalDAO;
 
@@ -54,6 +55,25 @@ public class PersonalListController extends AbstractListController<Personal> {
     @Override
     public AbstractDetailController<Personal> getDetailControllerForEdit(Personal selected) {
     return new PersonalCreateEditController(selected, getView());
+    }
+
+    @Override
+    public void destroy(Personal selected) {
+      if(!selected.getOrdenList().isEmpty()){
+          if (showConfirmDialog(getView(), "ATENCION: esto elimina al usuario de todas las ordenes que ha atendido."
+                  + "\n Esta seguro que desea continuar?") ) {
+              getModel().startTransaction();
+              for (Orden o : selected.getOrdenList()) {
+                  o.setPersonalusuario(null);
+              }
+              super.destroy(selected);
+              getModel().commitTransaction();
+              return;
+          }else{
+              return;
+          }
+      }
+        super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
     }
     
     
