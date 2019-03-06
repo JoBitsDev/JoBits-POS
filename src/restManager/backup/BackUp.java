@@ -5,14 +5,10 @@
  */
 package restManager.backup;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 import restManager.persistencia.Area;
@@ -30,12 +26,16 @@ import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.Seccion;
 import restManager.persistencia.Venta;
-import restManager.persistencia.jpa.exceptions.IllegalOrphanException;
-import restManager.persistencia.jpa.exceptions.NonexistentEntityException;
-import restManager.persistencia.jpa.staticContent;
 import restManager.persistencia.models.AreaDAO;
+import restManager.persistencia.models.CartaDAO;
+import restManager.persistencia.models.CocinaDAO;
+import restManager.persistencia.models.ConfiguracionDAO;
 import restManager.persistencia.models.InsumoDAO;
+import restManager.persistencia.models.MesaDAO;
+import restManager.persistencia.models.PersonalDAO;
+import restManager.persistencia.models.ProductoVentaDAO;
 import restManager.persistencia.models.PuestoTrabajoDAO;
+import restManager.persistencia.models.SeccionDAO;
 import restManager.persistencia.models.VentaDAO;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
@@ -369,8 +369,8 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private boolean EjecutarBackUpPersonal() {
         startBackupTransaction();
         BackUpPuestoDeTrabajo(PuestoTrabajoDAO.getInstance().findAll());
-        BackUpPersonal(staticContent.personalJPA.findPersonalEntities());
-        BackUpDatosPersonales(staticContent.datosPJPA.findDatosPersonalesEntities());
+        BackUpPersonal(PersonalDAO.getInstance().findAll());
+//        BackUpDatosPersonales(Dato);
         commitBackupTransaction();
         return true;
     }
@@ -381,17 +381,17 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         //backup area
         backUpArea(AreaDAO.getInstance().findAll());
         //backup carta
-        BackUpCarta(staticContent.cartaJPA.findCartaEntities());
+        BackUpCarta(CartaDAO.getInstance().findAll());
         // backup cocinas
-        backUPCocina(staticContent.cocinaJPA.findCocinaEntities());
+        backUPCocina(CocinaDAO.getInstance().findAll());
         // backup secciones
-        BackUPSecciones(staticContent.seccionJPA.findSeccionEntities());
+        BackUPSecciones(SeccionDAO.getInstance().findAll());
         // backup ingredientes
         BackUpInsumos(InsumoDAO.getInstance().findAll());
         // backup platos
-        BackUpProd(staticContent.productoJPA.findProductoVentaEntities());
+        BackUpProd(ProductoVentaDAO.getInstance().findAll());
         // backup mesas
-        backUPMesa(staticContent.mesasJPA.findMesaEntities());
+        backUPMesa(MesaDAO.getInstance().findAll());
         commitBackupTransaction();
 
         return true;
@@ -401,14 +401,14 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private boolean EjecutarBackUpVentas() {
         startBackupTransaction();
         //backup ventas
-        BackUpVentas(staticContent.ventaJPA.findVentaEntities());
+        BackUpVentas(VentaDAO.getInstance().findAll());
         commitBackupTransaction();
         return true;
     }
 
     private boolean EjecutarBackUpAll() {
         try {
-            BackUpConfiguracion(staticContent.configJPA.findConfiguracionEntities());
+            BackUpConfiguracion(ConfiguracionDAO.getInstance().findAll());
         } catch (Exception e) {
             System.out.println("error en config");
         }

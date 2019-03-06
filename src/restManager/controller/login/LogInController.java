@@ -5,23 +5,14 @@
  */
 package restManager.controller.login;
 
-import GUI.EsquemaSalon;
-import GUI.Views.login.MainView;
 import GUI.Views.login.LogInDialogView;
 import java.awt.Container;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
-import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Personal;
 import restManager.persistencia.jpa.staticContent;
-import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
@@ -60,16 +51,22 @@ public class LogInController extends AbstractDialogController<Personal> {
             @Override
             protected String doInBackground() throws Exception {
                 getView().setEnabled(false);
-                staticContent.init(R.PERIRSTENCE_UNIT_NAME);
+                try {
+                    staticContent.init(R.PERIRSTENCE_UNIT_NAME);
+                } catch (Exception e) {
+                    LoadingWindow.hide();
+                    showErrorDialog(getView(), e.getMessage());
+                    return "error";
+                }
                 return "gg";
             }
 
             @Override
             protected void done() {
-                    getView().updateView();
-                    getView().setEnabled(true);
-                    LoadingWindow.hide();
-          
+                getView().updateView();
+                getView().setEnabled(true);
+                LoadingWindow.hide();
+
             }
         };
         worker.execute();
@@ -113,7 +110,6 @@ public class LogInController extends AbstractDialogController<Personal> {
                         showErrorDialog(getView(), status);
                     }
                 } catch (InterruptedException | ExecutionException ex) {
-                    Logger.getLogger(EsquemaSalon.class.getName()).log(Level.SEVERE, null, ex);
                     LoadingWindow.hide();
                     showErrorDialog(getView(), ex.getMessage());
                 }

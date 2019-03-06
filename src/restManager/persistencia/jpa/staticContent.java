@@ -22,40 +22,6 @@ public class staticContent {
 
     private static EntityManagerFactory EMF;
 
-    public static ProductoVentaJpaController productoJPA;
-
-    public static CocinaJpaController cocinaJPA;
-
-    public static SeccionJpaController seccionJPA;
-
-    public static PersonalJpaController personalJPA;
-
-    public static PuestoTrabajoJpaController puestosJPA;
-
-    public static DatosPersonalesJpaController datosPJPA;
-
-    public static VentaJpaController ventaJPA;
-
-    public static CartaJpaController cartaJPA;
-
-    public static MesaJpaController mesasJPA;
-
-    public static AreaJpaController areaJPA;
-
-    public static OrdenJpaController ordenJPA;
-
-    public static ProductovOrdenJpaController productovOrdenJpa;
-
-    public static ConfiguracionJpaController configJPA;
-
-    public static ProductoInsumoJpaController productoInsumo;
-
-    public static IpvJpaController ipvJPA;
-
-    public static IpvRegistroJpaController ipvregJPA;
-
-    public static NotaJpaController notaJPA;
-
     private staticContent(String persistenceUnitName) {
         staticContent.persistenceUnitName = persistenceUnitName;
         EMF = Persistence.createEntityManagerFactory(persistenceUnitName);
@@ -101,41 +67,6 @@ public class staticContent {
 
         try {
             EMF.createEntityManager();
-            
-            productoJPA = new ProductoVentaJpaController(EMF);
-
-            cocinaJPA = new CocinaJpaController(EMF);
-
-            seccionJPA = new SeccionJpaController(EMF);
-
-            personalJPA = new PersonalJpaController(EMF);
-
-            puestosJPA = new PuestoTrabajoJpaController(EMF);
-
-            datosPJPA = new DatosPersonalesJpaController(EMF);
-
-            ventaJPA = new VentaJpaController(EMF);
-
-            cartaJPA = new CartaJpaController(EMF);
-
-            mesasJPA = new MesaJpaController(EMF);
-
-            areaJPA = new AreaJpaController(EMF);
-
-            ordenJPA = new OrdenJpaController(EMF);
-
-            productovOrdenJpa = new ProductovOrdenJpaController(EMF);
-
-            configJPA = new ConfiguracionJpaController(EMF);
-
-            productoInsumo = new ProductoInsumoJpaController(EMF);
-
-            ipvJPA = new IpvJpaController(EMF);
-
-            ipvregJPA = new IpvRegistroJpaController(EMF);
-
-            notaJPA = new NotaJpaController(EMF);
-
             CONECTADO = true;
         } catch (Exception e) {
             CONECTADO = false;

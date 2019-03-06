@@ -146,7 +146,7 @@ public class MainView extends AbstractView {
         jPanelPDV.add(BotonCocina);
 
         BotonSeccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonsecciones.png"))); // NOI18N
-        BotonSeccion.setText(bundle.getString("label_seccion")); // NOI18N
+        BotonSeccion.setText(bundle.getString("label_menu_seccion")); // NOI18N
         BotonSeccion.setBorderPainted(false);
         BotonSeccion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BotonSeccion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

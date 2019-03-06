@@ -15,7 +15,6 @@ import restManager.persistencia.Configuracion;
 import restManager.persistencia.DatosPersonales;
 import restManager.persistencia.Personal;
 import restManager.persistencia.PuestoTrabajo;
-import restManager.persistencia.jpa.staticContent;
 
 /**
  *
@@ -287,7 +286,7 @@ public class FirstTimeDialog extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden o son vacias, intentelo de nuevo");
             jPasswordField1.setText("");
             jPasswordField2.setText("");
-        } else {
+        } else { 
             try {
                 ArrayList <PuestoTrabajo> listaTrabajos = new ArrayList<>();
                 
@@ -308,12 +307,12 @@ public class FirstTimeDialog extends javax.swing.JDialog {
                 n.setValor(1);
                 c.setValor(1);
 
-                staticContent.puestosJPA.create(administrador);
-                staticContent.personalJPA.create(adminUser);
-                staticContent.datosPJPA.create(datosUser);
-                staticContent.configJPA.create(c);
+//                staticContent.puestosJPA.create(administrador);
+//                staticContent.personalJPA.create(adminUser);
+//                staticContent.datosPJPA.create(datosUser);
+//                staticContent.configJPA.create(c);
                 
-                staticContent.cartaJPA.create(new Carta("Mnu-1", Nombre_Local));
+//                staticContent.cartaJPA.create(new Carta("Mnu-1", Nombre_Local));
                 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Error al inicializar el software");

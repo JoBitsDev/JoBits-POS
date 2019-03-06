@@ -37,10 +37,10 @@ import restManager.persistencia.Personal;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Transaccion;
 import restManager.persistencia.Venta;
-import restManager.persistencia.jpa.staticContent;
 import restManager.persistencia.models.CartaDAO;
 import restManager.persistencia.models.MenuDAO;
 import restManager.persistencia.models.NegocioDAO;
+import restManager.persistencia.models.ProductovOrdenDAO;
 import restManager.resources.R;
 import restManager.util.comun;
 
@@ -54,7 +54,6 @@ public class Impresion {
      * @param args the command line arguments
      */
     private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
-    private String nombreRest;
     private boolean monedaCUC;
     private static float cambio = R.COINCHANGE;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
@@ -149,7 +148,6 @@ public class Impresion {
     }
 
     public Impresion(Carta m, String footer, boolean monedaCUC, float cambio, int cantidadCopias) {
-        this.nombreRest = NegocioDAO.getInstance().find(1).getNombre();
         Impresion.cambio = cambio;
         Impresion.cantidadCopias = cantidadCopias;
         if (footer != null) {
@@ -517,7 +515,7 @@ public class Impresion {
                 x.setEnviadosacocina(x.getCantidad());
             }
             try {
-                staticContent.productovOrdenJpa.edit(x);
+                ProductovOrdenDAO.getInstance().edit(x);
             } catch (Exception ex) {
                 Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -596,7 +594,7 @@ public class Impresion {
             }
             try {
 
-                staticContent.productovOrdenJpa.edit(x);
+                ProductovOrdenDAO.getInstance().edit(x);
             } catch (Exception ex) {
                 Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -695,7 +693,7 @@ public class Impresion {
                 t.alignLeft();
                 x.setEnviadosacocina(x.getCantidad());
                 try {
-                    staticContent.productovOrdenJpa.edit(x);
+                    ProductovOrdenDAO.getInstance().edit(x);
                 } catch (Exception ex) {
                     Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -979,7 +977,7 @@ public class Impresion {
         t.alignCenter();
         t.setText(CABECERA);
         t.newLine();
-        t.setText(this.nombreRest);
+        t.setText(R.restName);
         t.newLine();
     }
 
@@ -1199,7 +1197,7 @@ public class Impresion {
                 t.alignLeft();
                 x.setEnviadosacocina(x.getCantidad());
                 try {
-                    staticContent.productovOrdenJpa.edit(x);
+                    ProductovOrdenDAO.getInstance().edit(x);
                 } catch (Exception ex) {
                     Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1282,7 +1280,7 @@ public class Impresion {
         } else if (tr.getTransaccionMerma() != null) {
             tipoTrans += tr.getTransaccionMerma().getRazon().toUpperCase();
         } else {
-            tipoTrans += "SALIDA: "+ tr.getCocina();
+            tipoTrans += "SALIDA: " + tr.getCocina();
         }
 
         t.setText(tipoTrans);
@@ -1291,7 +1289,7 @@ public class Impresion {
 
         for (Transaccion in : selectedsObjects) {
             t.alignLeft();
-            
+
             t.setText(in.getInsumo().toString() + "{" + in.getInsumo().getUm() + "}");
             t.newLine();
             t.alignRight();
