@@ -70,7 +70,7 @@ public class Impresion {
     /**
      * String referentes a la impresion de ordenes
      */
-    private final String CABECERA = "Carniceria",
+    private final String CABECERA = "Restaurante",
             COCINA = "Cocina: ",
             DELACASA = "(Pedido por la casa)",
             ORDEN = "Orden No: ",
@@ -93,12 +93,14 @@ public class Impresion {
     /**
      * Strings referentes a la impresion de resumenes de ventas
      */
-    private final String RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
+    private final String 
+            RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
             RESUMEN_VENTAS_COCINA = "Resumen de ventas por area ",
             TOTAL_VENTAS = "Total Vendido: ",
             RESUMEN_CONSUMO_CASA = "Resumen del consumo de la casa ";
 
-    private final String IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
+    private final String 
+            IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
             IPV_HEADER = "Resumen de gasto de insumos",
             IPV_PUNTO_ELAB = "Punto de elaboracion";
 
@@ -107,7 +109,7 @@ public class Impresion {
      */
     private final String STOCK_BALANCE = "Balance de stock en almacen",
             STOCK_FORMAT = "En Almacen | Diferencia ",
-            COMPROBANTE_TRANSACCION = "Comprbante de Transaccion";
+            COMPROBANTE_TRANSACCION = "Comprobante de Transaccion";
 
     //
     //Constructors
