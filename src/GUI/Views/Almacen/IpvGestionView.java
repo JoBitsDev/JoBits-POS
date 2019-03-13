@@ -396,7 +396,7 @@ public class IpvGestionView extends AbstractView {
                             return items.get(rowIndex).getFinal1();
                         case 7:
                             return comun.setDosLugaresDecimales(
-                                    items.get(rowIndex).getFinal1()*items.get(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
+                                    items.get(rowIndex).getFinal1() * items.get(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
                         default:
                             return null;
                     }
@@ -419,7 +419,7 @@ public class IpvGestionView extends AbstractView {
                             return "Consumo Real";
                         case 6:
                             return "Final";
-                        case 7 :
+                        case 7:
                             return "Importe";
                         default:
                             return null;
@@ -448,17 +448,14 @@ public class IpvGestionView extends AbstractView {
     }
 
     private void imprimirTabla() {
-        
-            MessageFormat footer = new MessageFormat("-Pag {0}-");
-            MessageFormat header = new MessageFormat("IPV " +jComboBox1.getSelectedItem().toString() +" Dia " + jListRegistro.getSelectedValue());
-            
-
+        MessageFormat footer = new MessageFormat("-Pag {0}-");
+        MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + jListRegistro.getSelectedValue());
         try {
             ComponentPrinter.printComponent(jScrollPane2,
-                    "IPV " +jComboBox1.getSelectedItem().toString() +" Dia " + jListRegistro.getSelectedValue(), true);
-            jTableRegistro.print(JTable.PrintMode.FIT_WIDTH, header , footer);
+                    "IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + jListRegistro.getSelectedValue(), true);
+            jTableRegistro.print(JTable.PrintMode.FIT_WIDTH, header, footer);
         } catch (PrinterException ex) {
             Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        }
+    }
 }
