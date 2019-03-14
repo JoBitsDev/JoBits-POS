@@ -78,7 +78,6 @@ public class ProductoVentaReadOnlyView extends AbstractReadOnlyView<ProductoVent
         jPanel6 = new javax.swing.JPanel();
         jXLabelCosto = new org.jdesktop.swingx.JXLabel();
         jXLabelGasto = new org.jdesktop.swingx.JXLabel();
-        jXLabelMoneda1 = new org.jdesktop.swingx.JXLabel();
         jPanelCrossRef = new javax.swing.JPanel();
         jPanelActions = new javax.swing.JPanel();
         jButtonCancelar = new javax.swing.JButton();
@@ -119,7 +118,7 @@ public class ProductoVentaReadOnlyView extends AbstractReadOnlyView<ProductoVent
         jSpinnerPrecio.setPreferredSize(new java.awt.Dimension(100, 26));
         jPanel7.add(jSpinnerPrecio);
 
-        jXLabelMoneda.setText(R.coinSuffix);
+        jXLabelMoneda.setText(R.COIN_SUFFIX);
         jXLabelMoneda.setPreferredSize(new java.awt.Dimension(50, 16));
         jPanel7.add(jXLabelMoneda);
 
@@ -154,10 +153,6 @@ public class ProductoVentaReadOnlyView extends AbstractReadOnlyView<ProductoVent
 
         jXLabelGasto.setText("0.00"); // NOI18N
         jPanel6.add(jXLabelGasto);
-
-        jXLabelMoneda1.setText(R.coinSuffix);
-        jXLabelMoneda1.setPreferredSize(new java.awt.Dimension(50, 16));
-        jPanel6.add(jXLabelMoneda1);
 
         jPanelTable.add(jPanel6);
 
@@ -315,7 +310,6 @@ public class ProductoVentaReadOnlyView extends AbstractReadOnlyView<ProductoVent
     private org.jdesktop.swingx.JXLabel jXLabelCosto;
     private org.jdesktop.swingx.JXLabel jXLabelGasto;
     private org.jdesktop.swingx.JXLabel jXLabelMoneda;
-    private org.jdesktop.swingx.JXLabel jXLabelMoneda1;
     private org.jdesktop.swingx.JXLabel jXLabelNombre;
     private org.jdesktop.swingx.JXLabel jXLabelPCod;
     private org.jdesktop.swingx.JXLabel jXLabelPrecio;

@@ -120,7 +120,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jPanel10.add(jXLabel1);
 
         jLabelMoneda.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelMoneda.setText(R.coinSuffix);
+        jLabelMoneda.setText(R.COIN_SUFFIX);
         jPanel10.add(jLabelMoneda);
 
         getContentPane().add(jPanel10);

@@ -24,7 +24,7 @@ public class OrdenControllerTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
-        R.coinSuffix = " CUC";
+        R.COIN_SUFFIX = " CUC";
     }
 
     @Test

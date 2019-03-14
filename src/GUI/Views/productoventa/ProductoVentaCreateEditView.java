@@ -146,7 +146,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jSpinnerPrecio.setPreferredSize(new java.awt.Dimension(100, 26));
         jPanel7.add(jSpinnerPrecio);
 
-        jXLabelMoneda.setText(R.coinSuffix);
+        jXLabelMoneda.setText(R.COIN_SUFFIX);
         jXLabelMoneda.setPreferredSize(new java.awt.Dimension(50, 16));
         jPanel7.add(jXLabelMoneda);
 

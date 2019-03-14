@@ -87,7 +87,7 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
                     case 1:
                         return items.get(rowIndex).getNombre();
                     case 2:
-                        return items.get(rowIndex).getPrecioVenta() + R.coinSuffix;
+                        return items.get(rowIndex).getPrecioVenta() + R.COIN_SUFFIX;
                     case 3:
                         return items.get(rowIndex).getSeccionnombreSeccion();
                     case 4:

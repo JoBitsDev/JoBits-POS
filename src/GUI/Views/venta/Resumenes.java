@@ -471,10 +471,10 @@ public class Resumenes extends javax.swing.JPanel {
         comun.limpiarTabla(jTableVenta);
         if (c == null) {
             VentaDAO1.getResumenVentasOnTable(jTableVenta, dia);
-            jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.coinSuffix);
+            jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.COIN_SUFFIX);
         } else {
             VentaDAO1.getResumenDetalladoVentasCocinaOnTable(jTableVenta, dia, c);
-            jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.coinSuffix);
+            jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.COIN_SUFFIX);
 
         }
 
@@ -484,13 +484,13 @@ public class Resumenes extends javax.swing.JPanel {
         comun.limpiarTabla(jTableGastos);
         if (c == null) {
             VentaDAO1.getResumenGastosOnTable(jTableGastos, dia);
-            jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.coinSuffix);
+            jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.COIN_SUFFIX);
         } else {
             VentaDAO1.getResumenGastosCocinaOnTable(jTableGastos, dia, c);
-            jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.coinSuffix);
+            jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.COIN_SUFFIX);
         }
 
-        jTextFieldGanancia.setText(" " + (Float.parseFloat(jTextFieldTotalRecaudado.getText().split(" ")[0]) - Float.parseFloat(jTextFieldInversion.getText().split(" ")[0])) + R.coinSuffix);
+        jTextFieldGanancia.setText(" " + (Float.parseFloat(jTextFieldTotalRecaudado.getText().split(" ")[0]) - Float.parseFloat(jTextFieldInversion.getText().split(" ")[0])) + R.COIN_SUFFIX);
 
     }
 

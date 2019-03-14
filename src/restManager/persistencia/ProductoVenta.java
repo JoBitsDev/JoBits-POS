@@ -193,7 +193,7 @@ public class ProductoVenta implements Serializable {
 
     @Override
     public String toString() {
-        return nombre + " (" + precioVenta + R.coinSuffix + " )";
+        return nombre + " (" + precioVenta + R.COIN_SUFFIX + " )";
     }
 
 }

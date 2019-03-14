@@ -376,30 +376,18 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jideButtonAgregarNotaActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="com.jidesoft.swing.JideButton" name="jideButtonEnviarCocina">
+                <Component class="com.jidesoft.swing.JideButton" name="jideButtonCerrarMesaEnviarCocina">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/restManager/resources/images/campana.png"/>
+                      <Image iconType="3" name="/restManager/resources/images/enviar_cocina.png"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="Strings.properties" key="label_enviarcocina" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jideButtonEnviarCocinaActionPerformed"/>
-                  </Events>
-                </Component>
-                <Component class="com.jidesoft.swing.JideButton" name="jideButtonCerrarMesa">
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/restManager/resources/images/cobrar.png"/>
-                    </Property>
+                    <Property name="mnemonic" type="int" value="99"/>
                     <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="Strings.properties" key="label_cerrar_orden" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jideButtonCerrarMesaActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jideButtonCerrarMesaEnviarCocinaActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

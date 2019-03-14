@@ -3,6 +3,7 @@ package GUI.Views.login;
 
 import GUI.Views.AbstractView;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.login.LogInController;
 import restManager.util.ComponentMover;
@@ -25,6 +26,7 @@ public class LogInDialogView extends AbstractView {
         ComponentMover cr = new ComponentMover(this, jPanelCenter);
         buttonGroup1.add(jRadioButtonLocal);
         buttonGroup1.add(jRadioButtonRemoto);
+       // jRadioButtonLocal.setMnemonic(KeyEvent.VK_L);
 
     }
 
@@ -131,6 +133,7 @@ public class LogInDialogView extends AbstractView {
         jPanelConn.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 0));
 
         jRadioButtonLocal.setBackground(new java.awt.Color(0, 102, 102));
+        jRadioButtonLocal.setMnemonic('l');
         jRadioButtonLocal.setText(bundle.getString("label_servidor_local")); // NOI18N
         jRadioButtonLocal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,6 +143,7 @@ public class LogInDialogView extends AbstractView {
         jPanelConn.add(jRadioButtonLocal);
 
         jRadioButtonRemoto.setBackground(new java.awt.Color(0, 102, 102));
+        jRadioButtonRemoto.setMnemonic('r');
         jRadioButtonRemoto.setText(bundle.getString("label_servidor_remoto")); // NOI18N
         jRadioButtonRemoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

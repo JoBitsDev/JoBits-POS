@@ -49,7 +49,7 @@ public class CartaListController extends AbstractListController<Carta> {
         Carta c = new Carta();
         c.setAreaList(new ArrayList<>());
         c.setCodCarta(getModel().generateStringCode("Mnu-"));
-        c.setMonedaPrincipal(R.coinSuffix.trim());
+        c.setMonedaPrincipal(R.COIN_SUFFIX.trim());
         c.setNombreCarta(nombre);
         c.setPorcientoPorServicio((int) R.PERCENTAGE * 100);
         c.setSeccionList(new ArrayList<>());

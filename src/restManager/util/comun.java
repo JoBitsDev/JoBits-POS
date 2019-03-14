@@ -189,7 +189,7 @@ public class comun {
         if (ref != 0) {
             valorConvertidoEntero += 5 - ref;
         }
-        return R.formatoMoneda.format((float) valorConvertidoEntero / 100) + R.coinSuffix;
+        return R.formatoMoneda.format((float) valorConvertidoEntero / 100) + R.COIN_SUFFIX;
     }
 
     /**
@@ -206,7 +206,7 @@ public class comun {
         if (ref != 0) {
             valorConvertidoEntero += 5 - ref;
         }
-        return R.formatoMoneda.format((float) valorConvertidoEntero / 100) + R.coinSuffix;
+        return R.formatoMoneda.format((float) valorConvertidoEntero / 100) + R.COIN_SUFFIX;
     }
 
     /**
@@ -216,7 +216,7 @@ public class comun {
      * @return
      */
     public static String setDosLugaresDecimales(float valorARedondear) {
-        return Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2) + R.coinSuffix;
+        return Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2) + R.COIN_SUFFIX;
     }
 
     /**

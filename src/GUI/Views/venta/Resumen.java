@@ -32,7 +32,7 @@ public class Resumen extends AbstractView{
         String  hVentas,
                 hGastos,
                 cDate,
-                nombreMenu = R.restName;
+                nombreMenu = R.REST_NAME;
         
          if (getController().getInstance().getFecha().getDate() == fechaFinal.getDate() &&
                  getController().getInstance().getFecha().getMonth() == fechaFinal.getMonth()) {

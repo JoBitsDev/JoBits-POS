@@ -52,8 +52,9 @@ public class MainController extends AbstractDialogController<Personal> {
         super(PersonalDAO.getInstance());
         R.loggedUser = loggedUser;
         Negocio model = NegocioDAO.getInstance().find(1);
-        R.restName = model.getNombre();
-        R.coinSuffix = " " + model.getMonedaPrincipal();
+        R.REST_NAME = model.getNombre();
+        R.MAIN_COIN = model.getMonedaPrincipal();
+        R.COIN_SUFFIX = " " + model.getMonedaPrincipal();
     }
 
     public MainController(Personal loggedUser, AbstractView parentView) {

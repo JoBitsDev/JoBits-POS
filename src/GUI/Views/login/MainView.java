@@ -82,7 +82,7 @@ public class MainView extends AbstractView {
 
         styledLabelRestName.setForeground(new java.awt.Color(255, 255, 255));
         styledLabelRestName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        styledLabelRestName.setText(R.restName);
+        styledLabelRestName.setText(R.REST_NAME);
         styledLabelRestName.setFont(new java.awt.Font("Marker Felt", 2, 60)); // NOI18N
         styledLabelRestName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         styledLabelRestName.setMinimumSize(new java.awt.Dimension(400, 68));

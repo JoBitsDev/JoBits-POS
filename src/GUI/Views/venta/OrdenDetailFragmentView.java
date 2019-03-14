@@ -33,6 +33,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
     private AbstractCrossReferenePanel<ProductovOrden, ProductoVenta> crossReferencePanel;
     private Orden instance;
+    private ButtonState state = ButtonState.ENVIAR_COCINA;
 
     public OrdenDetailFragmentView(Controller controller, Orden instance) {
         super(controller);
@@ -79,8 +80,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jXPanelBotones = new org.jdesktop.swingx.JXPanel();
         jPanel1 = new javax.swing.JPanel();
         jideButtonAgregarNota = new com.jidesoft.swing.JideButton();
-        jideButtonEnviarCocina = new com.jidesoft.swing.JideButton();
-        jideButtonCerrarMesa = new com.jidesoft.swing.JideButton();
+        jideButtonCerrarMesaEnviarCocina = new com.jidesoft.swing.JideButton();
 
         setBackground(new java.awt.Color(204, 204, 204));
         setLayout(new java.awt.BorderLayout());
@@ -237,23 +237,15 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         });
         jPanel1.add(jideButtonAgregarNota);
 
-        jideButtonEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/campana.png"))); // NOI18N
-        jideButtonEnviarCocina.setToolTipText(bundle.getString("label_enviarcocina")); // NOI18N
-        jideButtonEnviarCocina.addActionListener(new java.awt.event.ActionListener() {
+        jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png"))); // NOI18N
+        jideButtonCerrarMesaEnviarCocina.setMnemonic('c');
+        jideButtonCerrarMesaEnviarCocina.setToolTipText(bundle.getString("label_cerrar_orden")); // NOI18N
+        jideButtonCerrarMesaEnviarCocina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jideButtonEnviarCocinaActionPerformed(evt);
+                jideButtonCerrarMesaEnviarCocinaActionPerformed(evt);
             }
         });
-        jPanel1.add(jideButtonEnviarCocina);
-
-        jideButtonCerrarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/cobrar.png"))); // NOI18N
-        jideButtonCerrarMesa.setToolTipText(bundle.getString("label_cerrar_orden")); // NOI18N
-        jideButtonCerrarMesa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jideButtonCerrarMesaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jideButtonCerrarMesa);
+        jPanel1.add(jideButtonCerrarMesaEnviarCocina);
 
         jXPanelBotones.add(jPanel1, java.awt.BorderLayout.SOUTH);
 
@@ -275,10 +267,6 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         getController().updatePorciento((float) jSpinner1.getValue());
     }//GEN-LAST:event_jSpinner1StateChanged
 
-    private void jideButtonEnviarCocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonEnviarCocinaActionPerformed
-        getController().enviarACocina();
-    }//GEN-LAST:event_jideButtonEnviarCocinaActionPerformed
-
     private void jideButtonAgregarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonAgregarNotaActionPerformed
         getController().addNota(getModel().getObjectAtSelectedRow());
     }//GEN-LAST:event_jideButtonAgregarNotaActionPerformed
@@ -287,9 +275,9 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         getController().imprimirPreTicket();
     }//GEN-LAST:event_jideButtonImpimirTicketActionPerformed
 
-    private void jideButtonCerrarMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonCerrarMesaActionPerformed
-        getController().despachar();
-    }//GEN-LAST:event_jideButtonCerrarMesaActionPerformed
+    private void jideButtonCerrarMesaEnviarCocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonCerrarMesaEnviarCocinaActionPerformed
+        executeButtonState();
+    }//GEN-LAST:event_jideButtonCerrarMesaEnviarCocinaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -316,8 +304,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     private javax.swing.JSpinner jSpinner1;
     private org.jdesktop.swingx.JXPanel jXPanelBotones;
     private com.jidesoft.swing.JideButton jideButtonAgregarNota;
-    private com.jidesoft.swing.JideButton jideButtonCerrarMesa;
-    private com.jidesoft.swing.JideButton jideButtonEnviarCocina;
+    private com.jidesoft.swing.JideButton jideButtonCerrarMesaEnviarCocina;
     private com.jidesoft.swing.JideButton jideButtonImpimirTicket;
     // End of variables declaration//GEN-END:variables
 
@@ -399,6 +386,8 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                             case 1:
                                 items.get(rowIndex).setCantidad((float) aValue);
                                 fireTableRowsUpdated(rowIndex, rowIndex);
+                                state = ButtonState.ENVIAR_COCINA;
+                                jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
                                 updateValorTotal();
                                 break;
                             default:
@@ -423,7 +412,9 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
             public ProductovOrden transformK_T(ProductoVenta selected) {
                 getController().addProduct(selected);
                 getModel().setItems(getInstance().getProductovOrdenList());
-                getjTableCrossReference().repaint();
+                state = ButtonState.ENVIAR_COCINA;
+                jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
+                // getjTableCrossReference().repaint();
                 return null;
             }
 
@@ -432,6 +423,9 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                 ProductovOrden po = getModel().getObjectAtSelectedRow();
                 getController().removeProduct(po);
                 getModel().setItems(getInstance().getProductovOrdenList());
+                state = ButtonState.ENVIAR_COCINA;
+                jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
+
                 repaint();
             }
         };
@@ -455,7 +449,25 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
     }
 
+    public void executeButtonState() {
+        switch (state) {
+            case DESPACHAR:
+                getController().despachar();
+                break;
+            case ENVIAR_COCINA:
+                getController().enviarACocina();
+                state = ButtonState.DESPACHAR;
+                jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/cobrar.png")));
+                break;
+        }
+
+    }
+
     public void updateValorTotal() {
         jLabelVALORTotal.setText(comun.setDosLugaresDecimales(getController().getValorTotal()));
+    }
+
+    private enum ButtonState {
+        DESPACHAR, ENVIAR_COCINA;
     }
 }

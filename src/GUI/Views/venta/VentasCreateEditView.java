@@ -462,7 +462,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
                     case 1:
                         return items.get(rowIndex).getMesacodMesa().getCodMesa();
                     case 2:
-                        return items.get(rowIndex).getOrdenvalorMonetario() + R.coinSuffix;
+                        return items.get(rowIndex).getOrdenvalorMonetario() + R.COIN_SUFFIX;
                     case 3:
                         return items.get(rowIndex);
                     default:

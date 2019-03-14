@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
 import restManager.persistencia.Personal;
+import restManager.persistencia.models.NegocioDAO;
 
 /**
  * FirstDream
@@ -23,11 +24,11 @@ public class R {
 
     public static final String SEPARADOR = "_";
     
-    public static String restName = null;
+    public static String REST_NAME = null;
     
     public static String logFilePath = "logs/";
     
-    public static String coinSuffix ;
+    public static String COIN_SUFFIX ;
 
     public static Personal loggedUser = null;
 
@@ -36,6 +37,8 @@ public class R {
     public static final float PERCENTAGE = 0;
 
     public static final int COINCHANGE = 25;
+    
+    public static String MAIN_COIN = null;
     
     public static final String NO_MESA = "M-0";
 

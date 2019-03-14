@@ -1,11 +1,7 @@
 package restManager.printservice;
 
-import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -22,11 +18,9 @@ import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
 import restManager.persistencia.Almacen;
 
-import restManager.persistencia.Carta;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Insumo;
@@ -37,9 +31,7 @@ import restManager.persistencia.Personal;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Transaccion;
 import restManager.persistencia.Venta;
-import restManager.persistencia.models.CartaDAO;
-import restManager.persistencia.models.MenuDAO;
-import restManager.persistencia.models.NegocioDAO;
+import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.ProductovOrdenDAO;
 import restManager.resources.R;
 import restManager.util.comun;
@@ -54,12 +46,11 @@ public class Impresion {
      * @param args the command line arguments
      */
     private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
+
     private boolean monedaCUC;
-    private static float cambio = R.COINCHANGE;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
-    private boolean showPrices = true;
-    private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy ' ' ");
-    private final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat(" hh ':' mm ' ' a ");
+    private final boolean showPrices = true;
+    private final boolean PRINT_IN_CENTRAL_KITCHEN = true;
     private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     private final String DEFAULT_PRINT_LOCATION = null;
     private final boolean IMPRIMIR_TICKET_COCINA = false;
@@ -115,47 +106,26 @@ public class Impresion {
     //Constructors
     //
     public Impresion() {
-        this(MenuDAO.getInstance().find("Mnu-1"));
+        this(null);
     }
 
-    /**
-     * Constructor por defecto
-     *
-     * @param m una instancia de una carta especifica
-     */
-    public Impresion(Carta m) {
-        this(m, m.getMonedaPrincipal().equals("CUC"), cambio);
-
-    }
-
+    //
+    //Constructores
+    //
     /**
      *
-     * @param m
-     * @param monedaCUC
-     * @param cambio
-     */
-    public Impresion(Carta m, boolean monedaCUC, float cambio) {
-        this(m, null, monedaCUC, cambio, cantidadCopias);
-
-    }
-
-    /**
-     *
-     * @param m
      * @param footer
      */
-    public Impresion(Carta m, String footer) {
-        this(m, m.getMonedaPrincipal().equals("CUC"), cambio);
-        PIE = footer;
+    public Impresion(String footer) {
+        this(null, cantidadCopias);
     }
 
-    public Impresion(Carta m, String footer, boolean monedaCUC, float cambio, int cantidadCopias) {
-        Impresion.cambio = cambio;
+    public Impresion(String footer, int cantidadCopias) {
         Impresion.cantidadCopias = cantidadCopias;
         if (footer != null) {
             PIE = footer;
         }
-        if (this.monedaCUC = monedaCUC) {
+        if ((monedaCUC = R.COIN_SUFFIX.trim().toUpperCase().equals(CUC))) {
             MONEDA = CUC;
         } else {
             MONEDA = MN;
@@ -163,7 +133,7 @@ public class Impresion {
     }
 
     public static Impresion getDefaultInstance() {
-        return new Impresion(CartaDAO.getInstance().find("Mnu-1"));
+        return new Impresion();
     }
 
     //
@@ -231,129 +201,44 @@ public class Impresion {
      * @deprecated usar <code>printKitchen(Orden o,Cocina c,String sync)</code>
      */
     public Orden printKitchen(Orden o) {
-        //return printKitchenForced(printKitchen(printCancelationTicket(o), staticContent.cocinaJPA.findCocina("C-2"), ""));
-        Ticket t = new Ticket();
-
-        addHeader(t);
-
-        addMetaData(t, o, new Date());
-
-        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
-        for (ProductovOrden x : o.getProductovOrdenList()) {
-            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
-                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
-            }
-        }
-        if (cocinasExistentesEnLaOrden.size() > 1) {
-            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
-                String sync = SYNC;
-                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
-                    if (i == j) {
-                        continue;
-                    }
-                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
-                }
-                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
-            }
+        if (PRINT_IN_CENTRAL_KITCHEN) {
+            return printKitchenForced(printKitchen(printCancelationTicket(o), CocinaDAO.getInstance().find("C-2"), ""));
         } else {
-            if (cocinasExistentesEnLaOrden.size() > 0) {
-                printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+            printCancelationTicket(o);
+            Ticket t = new Ticket();
+
+            addHeader(t);
+
+            addMetaData(t, o, new Date());
+
+            List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
+            for (ProductovOrden x : o.getProductovOrdenList()) {
+                if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
+                    cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
+                }
+            }
+            if (cocinasExistentesEnLaOrden.size() > 1) {
+                for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
+                    String sync = SYNC;
+                    for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
+                        if (i == j) {
+                            continue;
+                        }
+                        sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
+                    }
+                    printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+                }
+            } else {
+                if (cocinasExistentesEnLaOrden.size() > 0) {
+                    printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+                }
+
             }
 
+            cleanAndPrintRAM();
+
+            return o;
         }
-
-        cleanAndPrintRAM();
-
-        return o;
-//    }
-//
-//    public Orden printKitchenForced(Orden o) throws PrintException {
-//
-//        Ticket t = new Ticket();
-//        boolean ordenSinPlatos = true;
-//
-//        addHeader(t);
-//
-//        addMetaData(t, o, new Date());
-//
-//        ArrayList<String> entrantes = new ArrayList<>();
-//        entrantes.add("Entrantes Calientes");
-//        entrantes.add("Entrantes Frios");
-//
-//        ArrayList<ProductovOrden> items = new ArrayList<>(o.getProductovOrdenList());
-//        items.sort((ProductovOrden o1, ProductovOrden o2) -> {
-//            ArrayList<String> entrantes1 = new ArrayList<>();
-//            entrantes1.add("Entrantes Calientes");
-//            entrantes1.add("Entrantes Frios");
-//            if (entrantes1.contains(o1.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion())) {
-//                return -1;
-//            }
-//            if (entrantes1.contains(o2.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion())) {
-//                return 1;
-//            }
-//            if (o1.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().matches("Postres")) {
-//                return 1;
-//            }
-//            if (o2.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().matches("Postres")) {
-//                return -1;
-//            }
-//            return 0;
-//        });
-//
-//        t.alignLeft();
-//
-//        boolean entrante = false;
-//        boolean postre = false;
-//
-//        for (ProductovOrden x : items) {
-//            if (x.getEnviadosacocina() < x.getCantidad()) {
-//                if (!entrantes.contains(x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion()) && !entrante) {
-//                    t.addLineSeperator();
-//                    t.newLine();
-//                    entrante = true;
-//                }
-//                if (x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().equals("Postres") && !postre) {
-//                    t.addLineSeperator();
-//                    t.newLine();
-//                    postre = true;
-//                }
-//                if (x.getNota() != null) {
-//                    t.alignCenter();
-//                    t.emphasized(true);
-//                    t.setText(x.getNota().getDescripcion().replace('%', ' '));
-//                    t.newLine();
-//                    t.alignLeft();
-//                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getProductoVenta().getNombre());
-//                } else {
-//                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
-//                }
-//                t.newLine();
-//                t.alignRight();
-//                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
-//                t.newLine();
-//                t.alignLeft();
-//                x.setEnviadosacocina(x.getCantidad());
-//                try {
-//                    staticContent.productovOrdenJpa.edit(x);
-//                } catch (Exception ex) {
-//                    Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//                ordenSinPlatos = false;
-//            }
-//        }
-//
-//        t.addLineSeperator();
-//        t.alignCenter();
-//        t.newLine();
-//        t.feed((byte) 3);
-//        t.finit();
-//
-//        if (!ordenSinPlatos) {
-//            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_KITCHEN_PRINTER_LOCATION);
-//        }
-//        cleanAndPrintRAM();
-//
-//        return o;
     }
 
     public Orden printCancelationTicket(Orden o) {
@@ -744,7 +629,7 @@ public class Impresion {
         t.setText(p.getDatosPersonales().getNombre());
         t.newLine();
         t.alignLeft();
-        t.setText(FECHA + this.DATE_FORMAT.format(fecha));
+        t.setText(FECHA + R.DATE_FORMAT.format(fecha));
         t.newLine();
         t.addLineSeperator();
         t.newLine();
@@ -783,7 +668,7 @@ public class Impresion {
         t.setText(c.getNombreCocina());
         t.newLine();
         t.alignLeft();
-        t.setText(FECHA + this.DATE_FORMAT.format(fecha));
+        t.setText(FECHA + R.DATE_FORMAT.format(fecha));
         t.newLine();
         t.addLineSeperator();
         t.newLine();
@@ -826,7 +711,7 @@ public class Impresion {
         t.setText(c.getNombreCocina());
         t.newLine();
         t.alignLeft();
-        t.setText(FECHA + this.DATE_FORMAT.format(fecha));
+        t.setText(FECHA + R.DATE_FORMAT.format(fecha));
         t.newLine();
         t.addLineSeperator();
         t.alignCenter();
@@ -937,9 +822,9 @@ public class Impresion {
 
             if (monedaCUC) {
 
-                t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total * cambio));
+                t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total * R.COINCHANGE));
             } else {
-                t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, total / cambio));
+                t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, total / R.COINCHANGE));
             }
 
         }
@@ -979,7 +864,7 @@ public class Impresion {
         t.alignCenter();
         t.setText(CABECERA);
         t.newLine();
-        t.setText(R.restName);
+        t.setText(R.REST_NAME);
         t.newLine();
     }
 
@@ -990,7 +875,7 @@ public class Impresion {
         t.setText(customHeader);
         t.newLine();
         t.alignLeft();
-        t.setText(FECHA + this.DATE_FORMAT.format(fecha));
+        t.setText(FECHA + R.DATE_FORMAT.format(fecha));
         t.newLine();
         t.addLineSeperator();
         t.newLine();
@@ -1001,7 +886,7 @@ public class Impresion {
         t.addLineSeperator();
         t.newLine();
         t.alignRight();
-        t.setText(FECHA + this.DATE_FORMAT.format(o.getVentafecha().getFecha()) + TIME_FORMAT.format(date));
+        t.setText(FECHA + R.DATE_FORMAT.format(o.getVentafecha().getFecha()) + R.TIME_FORMAT.format(date));
         t.newLine();
         t.setText(ORDEN + o.getCodOrden());
         t.newLine();
