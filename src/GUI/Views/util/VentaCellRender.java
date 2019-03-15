@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableCellRenderer;
+import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Venta;
 import restManager.util.RestManagerAbstractTableCellModel;
 import restManager.util.comun;
@@ -48,6 +50,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
 
         jLabelGastos = new javax.swing.JLabel();
         jLabelVentas = new javax.swing.JLabel();
+        jLabelHoraPico = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""+v.getFecha().getDate()));
         setOpaque(false);
@@ -59,21 +62,35 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         setLayout(new java.awt.BorderLayout());
 
         jLabelGastos.setBackground(new java.awt.Color(255, 255, 255));
-        jLabelGastos.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabelGastos.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jLabelGastos.setForeground(new java.awt.Color(102, 0, 0));
         jLabelGastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgares-abajo.png"))); // NOI18N
         jLabelGastos.setText(v.getVentagastosEninsumos() != null
             ? comun.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue())
             : "-");
-        add(jLabelGastos, java.awt.BorderLayout.PAGE_END);
+        jLabelGastos.setToolTipText("Gastos");
+        add(jLabelGastos, java.awt.BorderLayout.CENTER);
 
-        jLabelVentas.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabelVentas.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jLabelVentas.setForeground(new java.awt.Color(0, 102, 51));
+        jLabelVentas.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgar-arriba.png"))); // NOI18N
         jLabelVentas.setText(v.getVentaTotal() != null
             ? comun.setDosLugaresDecimales(v.getVentaTotal().floatValue())
             :"-");
-        add(jLabelVentas, java.awt.BorderLayout.LINE_END);
+        jLabelVentas.setToolTipText("Ventas");
+        jLabelVentas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        add(jLabelVentas, java.awt.BorderLayout.PAGE_START);
+
+        jLabelHoraPico.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
+        jLabelHoraPico.setForeground(new java.awt.Color(0, 0, 255));
+        jLabelHoraPico.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelHoraPico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/hora_pico.png"))); // NOI18N
+        jLabelHoraPico.setText(v.getVentaTotal() != null
+            ? getPickHour(v)
+            :"-");
+        jLabelHoraPico.setToolTipText("Hora Pico");
+        add(jLabelHoraPico, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -83,6 +100,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelGastos;
+    private javax.swing.JLabel jLabelHoraPico;
     private javax.swing.JLabel jLabelVentas;
     // End of variables declaration//GEN-END:variables
 
@@ -107,6 +125,11 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
 
     public Venta getV() {
         return v;
+    }
+
+    private String getPickHour(Venta v) {
+        int a;
+        return (a = VentaDAO1.getPickHour(v)) > 12 ? (a - 12)  + " PM" : (a) + " AM";
     }
 
 }

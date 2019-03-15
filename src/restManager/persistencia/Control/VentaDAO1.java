@@ -8,8 +8,10 @@ import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.Venta;
 import restManager.persistencia.Orden;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -659,6 +661,38 @@ public class VentaDAO1 {
             }
         }
         return total;
+    }
+
+    /**
+     *
+     * @param v - la Venta a calcular la hora pico
+     * @return un entero del 0-23 con la hora pico del dia de ventas
+     */
+    public static int getPickHour(Venta v) {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(v.getFecha().getTime());
+        int current_day = c.get(Calendar.DAY_OF_MONTH);
+        float monto_hora_pico = 0;
+        int hora_pico = 0,
+                hora = 0;
+
+        Collections.sort(v.getOrdenList(), (o1, o2) -> {
+            return o1.getCodOrden().compareTo(o2.getCodOrden());
+        });
+        while (hora < 24) {
+            float aux_hora_pico = 0;
+            for (Orden o : v.getOrdenList()) {
+                if (o.getHoraComenzada().getHours() == hora && !o.getDeLaCasa()) {
+                    aux_hora_pico += o.getOrdenvalorMonetario();
+                }
+            }
+            if (aux_hora_pico > monto_hora_pico) {
+                monto_hora_pico = aux_hora_pico;
+                hora_pico = hora;
+            }
+            hora++;
+        }
+        return hora_pico;
     }
 
 }
