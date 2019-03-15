@@ -49,12 +49,13 @@ public class Impresion {
 
     private boolean monedaCUC;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
-    private final boolean showPrices = true;
-    private final boolean PRINT_IN_CENTRAL_KITCHEN = true;
+    private final boolean SHOW_PRICES = true;
+    private final boolean PRINT_IN_CENTRAL_KITCHEN = false;
     private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     private final String DEFAULT_PRINT_LOCATION = null;
-    private final boolean IMPRIMIR_TICKET_COCINA = false;
+    private final boolean IMPRIMIR_TICKET_COCINA = true;
     private static int cantidadCopias = 0;
+    private final boolean REDONDEO_POR_EXCESO = true;
 
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
@@ -84,14 +85,12 @@ public class Impresion {
     /**
      * Strings referentes a la impresion de resumenes de ventas
      */
-    private final String 
-            RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
+    private final String RESUMEN_VENTAS_CAMAREROS = "Resumen de ventas personal ",
             RESUMEN_VENTAS_COCINA = "Resumen de ventas por area ",
             TOTAL_VENTAS = "Total Vendido: ",
             RESUMEN_CONSUMO_CASA = "Resumen del consumo de la casa ";
 
-    private final String 
-            IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
+    private final String IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
             IPV_HEADER = "Resumen de gasto de insumos",
             IPV_PUNTO_ELAB = "Punto de elaboracion";
 
@@ -815,16 +814,23 @@ public class Impresion {
     private void addTotal(Ticket t, float total) {
         t.addLineSeperator();
         t.newLine();
-        if (showPrices) {
+        if (SHOW_PRICES) {
             t.alignRight();
             t.setText(String.format(TOTAL_VENTAS + "%.2f" + MONEDA, total));
             t.newLine();
 
             if (monedaCUC) {
-
-                t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total * R.COINCHANGE));
+                if (REDONDEO_POR_EXCESO) {
+                    t.setText(TOTAL_VENTAS + comun.redondeoPorExceso(total * R.COINCHANGE));
+                } else {
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total * R.COINCHANGE));
+                }
             } else {
-                t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, total / R.COINCHANGE));
+                if (REDONDEO_POR_EXCESO) {
+                    t.setText(TOTAL_VENTAS + comun.redondeoPorExceso(total / R.COINCHANGE));
+                } else {
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total / R.COINCHANGE));
+                }
             }
 
         }
