@@ -203,6 +203,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jPanelActions.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
         jPanelActions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 5));
 
+        jButtonCrear.setMnemonic('c');
         jButtonCrear.setText(bundle.getString("label_crear_producto")); // NOI18N
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -300,6 +300,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="jButtonCrear">
               <Properties>
+                <Property name="mnemonic" type="int" value="99"/>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                   <ResourceString bundle="Strings.properties" key="label_crear_producto" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
