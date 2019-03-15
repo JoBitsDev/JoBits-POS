@@ -241,8 +241,8 @@ public class MainView extends AbstractView {
         });
         jPanelContabilidad.add(jButtonVentas);
 
-        jButtonArchivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonarchivos.png"))); // NOI18N
-        jButtonArchivos.setText(bundle.getString("label_archivos")); // NOI18N
+        jButtonArchivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/gastos.png"))); // NOI18N
+        jButtonArchivos.setText(bundle.getString("label_gastos")); // NOI18N
         jButtonArchivos.setBorderPainted(false);
         jButtonArchivos.setEnabled(false);
         jButtonArchivos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
