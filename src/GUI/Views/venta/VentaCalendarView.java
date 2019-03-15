@@ -18,6 +18,7 @@ import restManager.controller.venta.VentaDetailController;
 import restManager.controller.venta.VentaListController;
 import restManager.exceptions.NoSelectedException;
 import restManager.exceptions.ValidatingException;
+import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Venta;
 import restManager.util.RestManagerAbstractTableCellModel;
 import restManager.util.comun;
@@ -84,6 +85,7 @@ public class VentaCalendarView extends AbstractView {
         jPanelVentas = new javax.swing.JPanel();
         jLabelTotalVendido = new javax.swing.JLabel();
         jLabelPromedioVendido = new javax.swing.JLabel();
+        jLabelHoraPico = new javax.swing.JLabel();
         jPanelGastos = new javax.swing.JPanel();
         jPanelResumen = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -239,16 +241,25 @@ public class VentaCalendarView extends AbstractView {
         jPanelEstadisticas.setLayout(new java.awt.GridLayout(3, 0));
 
         jPanelVentas.setBorder(javax.swing.BorderFactory.createTitledBorder("Ventas"));
-        jPanelVentas.setLayout(new java.awt.GridLayout(2, 0));
+        jPanelVentas.setLayout(new java.awt.GridLayout(3, 0));
 
         jLabelTotalVendido.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabelTotalVendido.setText("Total 26000 CUC");
-        jLabelTotalVendido.setToolTipText("");
+        jLabelTotalVendido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgar-arriba.png"))); // NOI18N
+        jLabelTotalVendido.setText("26000 CUC");
+        jLabelTotalVendido.setToolTipText("Total");
         jPanelVentas.add(jLabelTotalVendido);
 
         jLabelPromedioVendido.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabelPromedioVendido.setText(" 3000 CUC");
+        jLabelPromedioVendido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/promedio.png"))); // NOI18N
+        jLabelPromedioVendido.setText("3000 CUC");
+        jLabelPromedioVendido.setToolTipText("Promedio");
         jPanelVentas.add(jLabelPromedioVendido);
+
+        jLabelHoraPico.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabelHoraPico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/hora_pico.png"))); // NOI18N
+        jLabelHoraPico.setText("4 PM");
+        jLabelHoraPico.setToolTipText("Hora Pico");
+        jPanelVentas.add(jLabelHoraPico);
 
         jPanelEstadisticas.add(jPanelVentas);
 
@@ -352,6 +363,7 @@ public class VentaCalendarView extends AbstractView {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelHoraPico;
     private javax.swing.JLabel jLabelPromedioVendido;
     private javax.swing.JLabel jLabelTotalVendido;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
@@ -390,9 +402,7 @@ public class VentaCalendarView extends AbstractView {
         jScrollPane1.getViewport().setOpaque(false);
 
         int month = jMonthChooser1.getMonth();
-        System.out.println(month);
         int year = jYearChooser1.getYear();
-        System.out.println(year);
         model = new RestManagerAbstractTableCellModel<Venta>(findVentas(month, year), jTableCalendar) {
             @Override
             public int getColumnCount() {
@@ -485,16 +495,22 @@ public class VentaCalendarView extends AbstractView {
     public void updatePanelEstaidisticas(List<Venta> ventas) {
         double suma = 0;
         double gastos = 0;
+        int cantidad = 0;
+        int horas_pico = 0;
         for (Venta x : ventas) {
             if (x.getVentaTotal() != null) {
                 suma += x.getVentaTotal();
                 gastos += x.getVentagastosEninsumos();
+                horas_pico += VentaDAO1.getPickHour(x);
+                cantidad ++;
             }
         }
-        double promedio = suma / ventas.size();
+        double promedio = suma / cantidad;
 
-        jLabelTotalVendido.setText("Total Ventas: " + comun.setDosLugaresDecimales((float) suma));
-        jLabelPromedioVendido.setText("Promedio: " + comun.setDosLugaresDecimales((float) promedio));
+        jLabelTotalVendido.setText(comun.setDosLugaresDecimales((float) suma));
+        jLabelPromedioVendido.setText(comun.setDosLugaresDecimales((float) promedio));
+        int hora_pico_promedio = VentaDAO1.getModalPickHour(ventas);
+        jLabelHoraPico.setText(hora_pico_promedio > 12 ? (hora_pico_promedio-12) + " PM" : hora_pico_promedio + " AM");
     }
 
     private void editSelected() {

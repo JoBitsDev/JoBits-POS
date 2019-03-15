@@ -695,4 +695,20 @@ public class VentaDAO1 {
         return hora_pico;
     }
 
+    public static int getModalPickHour(List<Venta> ventas) {
+        int[] modas = new int[24];
+        ventas.forEach((v) -> {
+            modas[getPickHour(v)]++;
+        });
+        int mayor_moda = 0,cantidad_repeticiones = 0;
+        
+        for (int i = 0; i < modas.length; i++) {
+            if(modas[i] > cantidad_repeticiones){
+                cantidad_repeticiones = modas[i];
+                mayor_moda = i;
+            }
+        }
+        return mayor_moda;
+    }
+
 }
