@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.almacen.IPVController;
@@ -25,6 +26,7 @@ import restManager.persistencia.Ipv;
 import restManager.persistencia.IpvPK;
 import restManager.persistencia.IpvRegistro;
 import restManager.printservice.ComponentPrinter;
+import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
@@ -256,7 +258,21 @@ public class IpvGestionView extends AbstractView {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        imprimirTabla();        // TODO add your handling code here:
+            String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+        int selection = JOptionPane.showOptionDialog(this,
+                R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
+                R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        switch (selection) {
+            case 0:
+                imprimirTabla();
+                break;//impresion normal
+            case 1:
+                new Impresion().printResumenIPVDePuntoElaboracion(registroList);
+                break;//impresion ticket
+            default:
+                break;//cancelado
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     @Override
@@ -367,10 +383,10 @@ public class IpvGestionView extends AbstractView {
     private void updateTableRegistroIpv() {
         try {
             jCheckBox1.setSelected(false);
-            ArrayList<IpvRegistro> listaRegistros = new ArrayList<>(getController()
+             registroList = new ArrayList<>(getController()
                     .getIpvRegistroList(currentSelectedKitchen, R.DATE_FORMAT.parse(jListRegistro.getSelectedValue())));
-            listaRegistros = getController().calculate_IPV_to_Currenr(listaRegistros);
-            jTableRegistro.setModel(new RestManagerAbstractTableModel<IpvRegistro>(listaRegistros,
+            registroList = getController().calculate_IPV_to_Currenr((ArrayList<IpvRegistro>) registroList);
+            jTableRegistro.setModel(new RestManagerAbstractTableModel<IpvRegistro>(registroList,
                     jTableRegistro) {
                 @Override
                 public int getColumnCount() {
