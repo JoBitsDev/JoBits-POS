@@ -10,19 +10,17 @@ import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import org.jdesktop.swingx.JXPanel;
-import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractListController;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
+import restManager.resources.R;
 
 /**
  *
@@ -178,6 +176,7 @@ public abstract class AbstractListView<T> extends AbstractView {
         jXPanelControles.setBackground(new java.awt.Color(204, 204, 204));
         jXPanelControles.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
 
+        jButtonAdd.setMnemonic('a');
         jButtonAdd.setText(bundle.getString("label_agregar")); // NOI18N
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -186,6 +185,7 @@ public abstract class AbstractListView<T> extends AbstractView {
         });
         jXPanelControles.add(jButtonAdd);
 
+        jButtonEdit.setMnemonic('e');
         jButtonEdit.setText(bundle.getString("label_editar")); // NOI18N
         jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -194,6 +194,7 @@ public abstract class AbstractListView<T> extends AbstractView {
         });
         jXPanelControles.add(jButtonEdit);
 
+        jButtonDelete.setMnemonic('d');
         jButtonDelete.setText(bundle.getString("label_eliminar")); // NOI18N
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,8 +243,27 @@ public abstract class AbstractListView<T> extends AbstractView {
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
-        getController().setSelected(model.getObjectAtSelectedRow());
-        getController().destroy(getController().getSelected());
+        if (jTableList.getSelectedRows().length > 0) {
+            int[] selecteds = jTableList.getSelectedRows();
+            int r = JOptionPane.showConfirmDialog(this, "Desea borrar " + selecteds.length + " elementos de la lista."
+                    + "\n Esta accion no se puede deshacer");
+            if (r == JOptionPane.YES_OPTION) {
+                ArrayList<T> sel = new ArrayList<>();
+                for (int s : selecteds) {
+                    sel.add(model.getObjectAt(s));
+                }
+                for (T x : sel) {
+                    getController().destroy(x, true);
+                }
+                JOptionPane.showMessageDialog(this, R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"),
+                        R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
+                        new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
+            }
+        } else {
+            getController().setSelected(model.getObjectAtSelectedRow());
+            getController().destroy(getController().getSelected());
+        }
+
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditActionPerformed
@@ -442,7 +462,7 @@ public abstract class AbstractListView<T> extends AbstractView {
         }
 
         public T getObjectAt(int rowIndex) {
-            return items.get(rowIndex);
+            return items.get(jTableList.convertRowIndexToModel(rowIndex));
         }
 
         public TableRowSorter<MyJTableModel<T>> getSorter() {

@@ -250,6 +250,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jButtonAdd">
           <Properties>
+            <Property name="mnemonic" type="int" value="97"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="Strings.properties" key="label_agregar" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
@@ -260,6 +261,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButtonEdit">
           <Properties>
+            <Property name="mnemonic" type="int" value="101"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="Strings.properties" key="label_editar" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
@@ -270,6 +272,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButtonDelete">
           <Properties>
+            <Property name="mnemonic" type="int" value="100"/>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
               <ResourceString bundle="Strings.properties" key="label_eliminar" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
