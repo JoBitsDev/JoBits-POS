@@ -167,7 +167,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public ArrayList<IpvRegistro> calculate_IPV_to_Currenr(ArrayList<IpvRegistro> listaRegistros) {
-        VentaDetailController controller = new VentaDetailController();
+        VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getIpvRegistroPK().getFecha());
         for (IpvRegistro x : listaRegistros) {
                  x.setConsumo(controller.getGastoTotalDeInsumo(x));
                  updateInstance(x);
