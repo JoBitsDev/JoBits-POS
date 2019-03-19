@@ -827,9 +827,9 @@ public class Impresion {
                 }
             } else {
                 if (REDONDEO_POR_EXCESO) {
-                    t.setText(TOTAL_VENTAS + comun.redondeoPorExceso(total / R.COINCHANGE));
+                    t.setText(TOTAL_VENTAS + comun.redondeoPorExceso(total / R.COINCHANGE).split(" ")[0] + CUC);
                 } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total / R.COINCHANGE));
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, total / R.COINCHANGE));
                 }
             }
 
