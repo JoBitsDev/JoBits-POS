@@ -14,6 +14,7 @@ import restManager.controller.AbstractFragmentController;
 import restManager.controller.almacen.IPVController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
+import restManager.persistencia.Configuracion;
 import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.IpvRegistroPK;
 
@@ -25,6 +26,7 @@ import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
+import restManager.persistencia.models.ConfigDAO;
 import restManager.persistencia.models.IpvRegistroDAO;
 import restManager.persistencia.models.MesaDAO;
 import restManager.persistencia.models.NotaDAO;
@@ -86,7 +88,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     @Override
     public Orden createNewInstance() {
         Orden ret = new Orden();
-        ret.setCodOrden(getModel().generateStringCode("O-"));
+        ret.setCodOrden(getOrdenCod());
         ret.setPersonalusuario(R.loggedUser);
         ret.setDeLaCasa(false);
         ret.setGananciaXporciento(R.PERCENTAGE);
@@ -271,6 +273,18 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         update(instance);
         view.updateValorTotal();
 
+    }
+
+    private String getOrdenCod() {
+
+        ConfigDAO conf = new ConfigDAO();
+        Configuracion c = conf.find("O");
+        int orden = c.getValor();
+        c.setValor(orden + 1);
+        conf.startTransaction();
+        conf.edit(c);
+        conf.commitTransaction();
+        return "O-" + orden;
     }
 
     public enum UpdateIpvAction {
