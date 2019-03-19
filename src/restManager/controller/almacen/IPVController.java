@@ -84,16 +84,30 @@ public class IPVController extends AbstractDialogController<Ipv> {
         return InsumoDAO.getInstance().find(ipvinsumocodInsumo);
     }
 
-    public void darEntrada(IpvRegistro instance, float cant) {
-        if (showConfirmDialog(getView(), "Desea dar entrada a " + cant + " de " + instance.getIpv().getInsumo())) {
-            instance.setEntrada(instance.getEntrada() + cant);
+    public void darEntrada(IpvRegistro instance) {
+        float cantidad;
+        try {
+            cantidad = Integer.parseInt(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
+        } catch (NumberFormatException e) {
+            showErrorDialog(getView(), "El valor introducido no es correcto");
+            return;
+        }
+        if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo())) {
+            instance.setEntrada(instance.getEntrada() + cantidad);
             updateInstance(instance);
         }
     }
 
-    public void ajustarConsumo(IpvRegistro instance, float cant) {
-        if (showConfirmDialog(getView(), "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cant)) {
-            instance.setConsumoReal(cant);
+    public void ajustarConsumo(IpvRegistro instance) {
+        float cantidad;
+        try {
+            cantidad = Integer.parseInt(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
+        } catch (NumberFormatException e) {
+            showErrorDialog(getView(), "El valor introducido no es correcto");
+            return;
+        }
+        if (showConfirmDialog(getView(), "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad)) {
+            instance.setConsumoReal(cantidad);
             updateInstance(instance);
         }
 
@@ -153,24 +167,24 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public void darEntrada(Insumo insumo, Cocina cocina, Date fecha, Float cantidad) {
-      try{ 
-          IpvRegistro reg = IpvRegistroDAO.getInstance().getIpvRegistro(cocina, fecha, insumo);
-        if (reg != null) {
-            reg.setEntrada(reg.getEntrada() + cantidad);
-            updateInstance(reg);
-        }
-        }catch(Exception e){
-                throw new ValidatingException(getView(),
+        try {
+            IpvRegistro reg = IpvRegistroDAO.getInstance().getIpvRegistro(cocina, fecha, insumo);
+            if (reg != null) {
+                reg.setEntrada(reg.getEntrada() + cantidad);
+                updateInstance(reg);
+            }
+        } catch (Exception e) {
+            throw new ValidatingException(getView(),
                     "El insumo en el ipv a dar entrada no existe o no hay un ipv inizializado en el dia actual");
-        
+
         }
     }
 
     public ArrayList<IpvRegistro> calculate_IPV_to_Currenr(ArrayList<IpvRegistro> listaRegistros) {
         VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getIpvRegistroPK().getFecha());
         for (IpvRegistro x : listaRegistros) {
-                 x.setConsumo(controller.getGastoTotalDeInsumo(x));
-                 updateInstance(x);
+            x.setConsumo(controller.getGastoTotalDeInsumo(x));
+            updateInstance(x);
         }
         return listaRegistros;
     }

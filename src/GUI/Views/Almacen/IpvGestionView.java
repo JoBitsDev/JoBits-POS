@@ -64,12 +64,8 @@ public class IpvGestionView extends AbstractView {
         jTableRegistro = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jSpinnerAjustarinsumo = new javax.swing.JSpinner();
-        jButton3 = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jSpinnerAjustarinsumo1 = new javax.swing.JSpinner();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jListRegistro = new javax.swing.JList<>();
         jPanel4 = new javax.swing.JPanel();
@@ -104,46 +100,23 @@ public class IpvGestionView extends AbstractView {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.setLayout(new java.awt.GridLayout());
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButton4.setMnemonic('i');
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButton4.setText(bundle.getString("label_imprimir")); // NOI18N
+        jButton4.setToolTipText("Imprimir");
         jButton4.setBorderPainted(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton4, java.awt.BorderLayout.WEST);
-
-        jPanel2.setOpaque(false);
-
-        jSpinnerAjustarinsumo.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
-        jSpinnerAjustarinsumo.setPreferredSize(new java.awt.Dimension(80, 26));
-        jPanel2.add(jSpinnerAjustarinsumo);
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/analitica.png"))); // NOI18N
-        jButton3.setText("null");
-        jButton3.setToolTipText(bundle.getString("label_ajustar_consumo")); // NOI18N
-        jButton3.setBorderPainted(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton3);
-
-        jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
-
-        jPanel3.setOpaque(false);
-
-        jSpinnerAjustarinsumo1.setModel(new javax.swing.SpinnerNumberModel(0.0f, null, null, 5.0f));
-        jSpinnerAjustarinsumo1.setPreferredSize(new java.awt.Dimension(80, 26));
-        jPanel3.add(jSpinnerAjustarinsumo1);
+        jPanel1.add(jButton4);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/agregar_circular.png"))); // NOI18N
-        jButton2.setText("null");
+        jButton2.setMnemonic('e');
         jButton2.setToolTipText(bundle.getString("label_dar_entada")); // NOI18N
         jButton2.setBorderPainted(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -151,9 +124,18 @@ public class IpvGestionView extends AbstractView {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton2);
+        jPanel1.add(jButton2);
 
-        jPanel1.add(jPanel3, java.awt.BorderLayout.EAST);
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/analitica.png"))); // NOI18N
+        jButton3.setMnemonic('a');
+        jButton3.setToolTipText(bundle.getString("label_ajustar_consumo")); // NOI18N
+        jButton3.setBorderPainted(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3);
 
         jPanelRegistros.add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
@@ -236,15 +218,13 @@ public class IpvGestionView extends AbstractView {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         getController().darEntrada(
-                ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getObjectAtSelectedRow(),
-                (float) jSpinnerAjustarinsumo1.getValue());
+                ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getObjectAtSelectedRow());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int selectedRow = jTableRegistro.convertRowIndexToModel(jTableRegistro.getSelectedRow());
         getController().ajustarConsumo(
-                ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getObjectAtSelectedRow(),
-                (float) jSpinnerAjustarinsumo.getValue());
+                ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getObjectAtSelectedRow());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jListRegistroValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListRegistroValueChanged
@@ -357,16 +337,12 @@ public class IpvGestionView extends AbstractView {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jListRegistro;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelData;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelRegistros;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JSpinner jSpinnerAjustarinsumo;
-    private javax.swing.JSpinner jSpinnerAjustarinsumo1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableRegistro;
     // End of variables declaration//GEN-END:variables
