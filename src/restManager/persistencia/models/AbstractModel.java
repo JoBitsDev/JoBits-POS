@@ -204,7 +204,7 @@ public abstract class AbstractModel<T> implements Model {
                     firePropertyChange(PropertyName.UPDATE.toString(), entity, entity);
                     break;
             }
-            getEntityManager().getEntityManagerFactory().getCache().evict(getClass());
+            getEntityManager().getEntityManagerFactory().getCache().evict(entityClass);
         } catch (Exception e) {
             ExceptionHandler.showExceptionToUser(e, "Error en base de datos");
             try {
