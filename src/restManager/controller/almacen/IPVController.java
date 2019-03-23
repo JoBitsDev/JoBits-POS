@@ -31,6 +31,7 @@ import restManager.persistencia.models.InsumoDAO;
 import restManager.persistencia.models.IpvDAO;
 import restManager.persistencia.models.IpvRegistroDAO;
 import restManager.resources.R;
+import restManager.util.comun;
 
 /**
  * FirstDream
@@ -183,7 +184,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     public ArrayList<IpvRegistro> calculate_IPV_to_Currenr(ArrayList<IpvRegistro> listaRegistros) {
         VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getIpvRegistroPK().getFecha());
         for (IpvRegistro x : listaRegistros) {
-            x.setConsumo(controller.getGastoTotalDeInsumo(x));
+            x.setConsumo(comun.setDosLugaresDecimalesFloat(controller.getGastoTotalDeInsumo(x)));
             updateInstance(x);
         }
         return listaRegistros;

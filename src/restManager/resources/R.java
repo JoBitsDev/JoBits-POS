@@ -36,7 +36,7 @@ public class R {
 
     public static final float PERCENTAGE = 0;
 
-    public static final int COINCHANGE = 25;
+    public static final int COINCHANGE = 24;
     
     public static String MAIN_COIN = null;
     

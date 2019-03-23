@@ -264,6 +264,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
         jRadioButtonEntrada.setSelected(true);
         jRadioButtonEntrada.setText(bundle.getString("label_entrada")); // NOI18N
+        jRadioButtonEntrada.setToolTipText("");
         jRadioButtonEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonEntradaActionPerformed(evt);
