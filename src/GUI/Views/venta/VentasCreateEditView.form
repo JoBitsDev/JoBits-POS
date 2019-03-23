@@ -584,6 +584,15 @@
                                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
                               </Events>
                             </Component>
+                            <Component class="javax.swing.JButton" name="jButtonEnviarCerrarCrearNueva">
+                              <Properties>
+                                <Property name="mnemonic" type="int" value="114"/>
+                                <Property name="text" type="java.lang.String" value="Cerrado Rapido"/>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEnviarCerrarCrearNuevaActionPerformed"/>
+                              </Events>
+                            </Component>
                           </SubComponents>
                         </Container>
                         <Container class="javax.swing.JScrollPane" name="jScrollPane2">

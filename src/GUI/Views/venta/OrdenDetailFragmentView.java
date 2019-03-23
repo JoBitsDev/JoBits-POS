@@ -445,6 +445,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
     public void setInstance(Orden instance) {
         this.instance = instance;
+        setVisible(true);
         updateView();
 
     }
@@ -453,6 +454,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         switch (state) {
             case DESPACHAR:
                 getController().despachar();
+                jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
                 break;
             case ENVIAR_COCINA:
                 getController().enviarACocina();

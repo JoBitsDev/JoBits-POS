@@ -11,6 +11,7 @@ import GUI.Views.util.AutenticacionFragmentView;
 import java.awt.Container;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
+import javax.swing.JDialog;
 import javax.swing.SwingWorker;
 import restManager.controller.AbstractDialogController;
 import restManager.exceptions.DevelopingOperationException;
@@ -37,14 +38,14 @@ public class LogInController extends AbstractDialogController<Personal> {
     }
     
     public boolean constructoAuthorizationView(Container parent, int nivelMinimo){
-        constructLoginPanel(parent);
+        constructLoginPanel(parent, "Nivel Minimo ("+nivelMinimo+ ")");
         this.nivelMinimo = nivelMinimo;
         getView().setVisible(true);
         return AUTORIZADO;
     }
 
     public boolean constructoAuthorizationView(Container parent, String usuario){
-        constructLoginPanel(parent);
+        constructLoginPanel(parent, "Usuario Requerido ("+usuario+")");
         this.usuarioRequerido = usuario;
         getView().setVisible(true);
         return AUTORIZADO;
@@ -56,8 +57,8 @@ public class LogInController extends AbstractDialogController<Personal> {
         getView().setVisible(true);
     }
     
-    private void constructLoginPanel(Container Parent){
-        setView(new AutenticacionFragmentView((AbstractView) Parent,this, true));
+    private void constructLoginPanel(Container Parent,String title){
+        setView(new AutenticacionFragmentView(Parent,this, true,title));
         
     }
 
@@ -159,6 +160,10 @@ public class LogInController extends AbstractDialogController<Personal> {
                   Personal  p = PersonalDAO.getInstance().find(user);
                     if (p != null) {
                         if (Arrays.equals(p.getContrasenna().toCharArray(), password)) {
+                           if(p.getPuestoTrabajonombrePuesto().getNivelAcceso() > 3){
+                           AUTORIZADO = true;
+                           return;
+                           }
                             if(nivelMinimo != -1){
                              AUTORIZADO = p.getPuestoTrabajonombrePuesto().getNivelAcceso() >=  nivelMinimo;
                             }

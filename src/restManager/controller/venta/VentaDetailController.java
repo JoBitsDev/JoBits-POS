@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.JDialog;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.almacen.IPVController;
+import restManager.controller.login.LogInController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.Cocina;
@@ -101,11 +102,13 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public void updateOrdenDialog(Orden objectAtSelectedRow) {
-        if (ordController == null) {
-            ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
+        if (autorize(objectAtSelectedRow)) {
+            if (ordController == null) {
+                ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
 
-        } else {
-            ordController.setInstance(objectAtSelectedRow);
+            } else {
+                ordController.setInstance(objectAtSelectedRow);
+            }
         }
     }
 
@@ -272,6 +275,30 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     public void printGastosCasa() {
         Impresion.getDefaultInstance().printResumenCasa(VentaDAO1.getResumenVentasCasa(getInstance()), getInstance().getFecha());
+    }
+
+    public void cerrarOrdenRapido() {
+        if (ordController != null) {
+            if (showConfirmDialog(getView(), "Desea enviar a cocina, cerrar y crear una nueva orden")) {
+                ordController.enviarACocina();
+                ordController.despachar();
+                createNewOrden();
+            }
+        }
+
+    }
+
+    private boolean autorize(Orden o) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 3 || o.getPersonalusuario().getUsuario().equals(R.loggedUser.getUsuario()) ) {
+            return true;
+        } else {
+            LogInController control = new LogInController();
+            if (control.constructoAuthorizationView(getParent(), o.getPersonalusuario().getUsuario())) {
+                return true;
+            }
+
+        }
+        return false;
     }
 
 }

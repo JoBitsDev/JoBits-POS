@@ -6,15 +6,9 @@
 package GUI.Views.util;
 
 import GUI.Views.AbstractView;
+import java.awt.Container;
 import restManager.controller.AbstractDialogController;
-import restManager.controller.Controller;
 import restManager.controller.login.LogInController;
-import restManager.exceptions.DevelopingOperationException;
-import restManager.persistencia.Orden;
-import restManager.printservice.Impresion;
-import restManager.resources.R;
-import restManager.util.ComponentMover;
-import restManager.util.comun;
 
 /**
  *
@@ -22,12 +16,11 @@ import restManager.util.comun;
  */
 public class AutenticacionFragmentView extends AbstractView {
 
-
-
-    public AutenticacionFragmentView(AbstractView parent, AbstractDialogController controller, boolean modal) {
-        super(DialogType.DEFINED, controller, parent, modal);
+    public AutenticacionFragmentView(Container parent, AbstractDialogController controller, boolean modal, String title) {
+        super(DialogType.DEFINED, controller, (AbstractView) parent, modal);
         setUndecorated(true);
         initComponents();
+        jLabel1.setText(title);
     }
 
     /**
@@ -40,6 +33,9 @@ public class AutenticacionFragmentView extends AbstractView {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanelUser = new javax.swing.JPanel();
         jideLabel1 = new com.jidesoft.swing.JideLabel();
         overlayTextField1 = new com.jidesoft.swing.OverlayTextField();
@@ -52,12 +48,28 @@ public class AutenticacionFragmentView extends AbstractView {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 102));
-        setMinimumSize(new java.awt.Dimension(287, 188));
+        setMaximumSize(new java.awt.Dimension(371, 181));
+        setMinimumSize(new java.awt.Dimension(371, 181));
         setUndecorated(true);
         setType(java.awt.Window.Type.POPUP);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel2.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel1.setText("Autorizacion: ");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jPanel2.add(jLabel1, java.awt.BorderLayout.CENTER);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Para acceder necesita privilegios");
+        jPanel2.add(jLabel2, java.awt.BorderLayout.PAGE_START);
+
+        jPanel1.add(jPanel2);
 
         jPanelUser.setBackground(new java.awt.Color(0, 153, 153));
         jPanelUser.setOpaque(false);
@@ -123,7 +135,7 @@ public class AutenticacionFragmentView extends AbstractView {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed
-
+        autenticar();
     }//GEN-LAST:event_jPasswordFieldActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -131,15 +143,17 @@ public class AutenticacionFragmentView extends AbstractView {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonAutenticarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAutenticarActionPerformed
-        getController().autorizar(overlayTextField1.getText(), jPasswordField.getPassword());
-        jPasswordField.setText("");
+        autenticar();
     }//GEN-LAST:event_jButtonAutenticarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAutenticar;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelPass;
     private javax.swing.JPanel jPanelUser;
@@ -149,15 +163,20 @@ public class AutenticacionFragmentView extends AbstractView {
     private com.jidesoft.swing.OverlayTextField overlayTextField1;
     // End of variables declaration//GEN-END:variables
 
-    
-        @Override
+    private void autenticar() {
+        getController().autorizar(overlayTextField1.getText(), jPasswordField.getPassword());
+        jPasswordField.setText("");
+        this.dispose();
+    }
+
+    @Override
     public LogInController getController() {
         return (LogInController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void updateView() {
-        
+
     }
 
 }

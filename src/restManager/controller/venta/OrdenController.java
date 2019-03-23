@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import restManager.controller.AbstractFragmentController;
 import restManager.controller.almacen.IPVController;
+import restManager.controller.login.LogInController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
 import restManager.persistencia.Configuracion;
@@ -179,6 +180,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             }
         }
         setShowDialogs(false);
+        getView().setVisible(false);
     }
 
     public void updatePorciento(float f) {

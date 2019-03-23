@@ -115,6 +115,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButtonEnviarCerrarCrearNueva = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jXTableOrdActivas = new org.jdesktop.swingx.JXTable();
 
@@ -366,6 +367,15 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         });
         jXPanelOrdenControl.add(jButton6);
 
+        jButtonEnviarCerrarCrearNueva.setMnemonic('r');
+        jButtonEnviarCerrarCrearNueva.setText("Cerrado Rapido");
+        jButtonEnviarCerrarCrearNueva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEnviarCerrarCrearNuevaActionPerformed(evt);
+            }
+        });
+        jXPanelOrdenControl.add(jButtonEnviarCerrarCrearNueva);
+
         jPanelOrdenesActivas.add(jXPanelOrdenControl, java.awt.BorderLayout.PAGE_END);
 
         jXTableOrdActivas.setModel(new javax.swing.table.DefaultTableModel(
@@ -443,6 +453,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private void jButtonImprimirZ1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirZ1ActionPerformed
         getController().printGastosCasa();       // TODO add your handling code here:
     }//GEN-LAST:event_jButtonImprimirZ1ActionPerformed
+
+    private void jButtonEnviarCerrarCrearNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCerrarCrearNuevaActionPerformed
+        enviarCerrarCrear();
+    }//GEN-LAST:event_jButtonEnviarCerrarCrearNuevaActionPerformed
 
     @Override
 
@@ -543,6 +557,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirZ;
     private javax.swing.JButton jButtonImprimirZ1;
@@ -608,6 +623,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
             VentaDAO1.getResumenVentasCocinaOnTable(jTableVentasPorCocina, getInstance(), x);
         });
 
+    }
+
+    private void enviarCerrarCrear() {
+    getController().cerrarOrdenRapido();
     }
 
 }
