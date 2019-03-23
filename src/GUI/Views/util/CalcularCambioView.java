@@ -5,6 +5,7 @@
  */
 package GUI.Views.util;
 
+import GUI.Views.AbstractView;
 import restManager.persistencia.Orden;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
@@ -22,14 +23,7 @@ public class CalcularCambioView extends javax.swing.JDialog {
      */
     private Orden o;
 
-    public CalcularCambioView(java.awt.Frame parent, boolean modal, Orden o) {
-        super(parent, modal);
-        this.o = o;
-        init(o);
-
-    }
-
-    public CalcularCambioView(java.awt.Dialog parent, boolean modal, Orden o) {
+    public CalcularCambioView(AbstractView parent, boolean modal, Orden o) {
         super(parent, modal);
         this.o = o;
         init(o);
