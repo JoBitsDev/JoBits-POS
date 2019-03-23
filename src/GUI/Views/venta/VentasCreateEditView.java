@@ -105,6 +105,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jButton8 = new javax.swing.JButton();
         jPanelGastos = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jButtonImprimirZ1 = new javax.swing.JButton();
         jLabelTotalGastos = new javax.swing.JLabel();
         jPanelVentas = new javax.swing.JPanel();
         jPanelDetailOrdenes = new javax.swing.JPanel();
@@ -301,12 +302,22 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelGastos.setLayout(new javax.swing.BoxLayout(jPanelGastos, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jButtonImprimirZ1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonImprimirZ1.setText(bundle.getString("imprimir_gastos_casa")); // NOI18N
+        jButtonImprimirZ1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jButtonImprimirZ1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirZ1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonImprimirZ1, java.awt.BorderLayout.LINE_START);
 
         jLabelTotalGastos.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabelTotalGastos.setText("850.23 CUC");
         jLabelTotalGastos.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_total"))); // NOI18N
-        jPanel2.add(jLabelTotalGastos);
+        jPanel2.add(jLabelTotalGastos, java.awt.BorderLayout.EAST);
 
         jPanelGastos.add(jPanel2);
 
@@ -426,8 +437,12 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         if (row == -1) {
             throw new NoSelectedException(jTableVentasDependientes);
         }
-        getController().printCocinaResumen((String)jTableVentasPorCocina.getValueAt(row, 0));      
+        getController().printCocinaResumen((String) jTableVentasPorCocina.getValueAt(row, 0));
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButtonImprimirZ1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirZ1ActionPerformed
+        getController().printGastosCasa();       // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonImprimirZ1ActionPerformed
 
     @Override
 
@@ -530,6 +545,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirZ;
+    private javax.swing.JButton jButtonImprimirZ1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabelTotalGastos;
     private javax.swing.JLabel jLabelTotalVentas;
