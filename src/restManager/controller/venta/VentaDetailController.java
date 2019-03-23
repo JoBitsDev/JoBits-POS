@@ -270,4 +270,8 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         return total;
     }
 
+    public void printGastosCasa() {
+        Impresion.getDefaultInstance().printResumenCasa(VentaDAO1.getResumenVentasCasa(getInstance()), getInstance().getFecha());
+    }
+
 }
