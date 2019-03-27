@@ -25,6 +25,8 @@ import restManager.persistencia.models.VentaDAO;
  */
 public class VentaListController extends AbstractDialogController<Venta> {
 
+    private int SELECCION = 0;
+
     public VentaListController() {
         super(VentaDAO.getInstance());
     }
@@ -57,18 +59,46 @@ public class VentaListController extends AbstractDialogController<Venta> {
         v.setVentagastosEninsumos(0.0);
         Date current;
 
+        Object[] selections = {"Turno Dia", "Turno Noche", "Ambos Turnos"};
+        Object seleccion = showInputDialog(getView(), "Seleccione el turno para realizar estadisticas", "Seleccion", selections, selections[0]);
+        switch (seleccion.toString()) {
+            case "Turno Dia":
+                SELECCION = 0;
+                break;
+            case "Turno Noche":
+                SELECCION = 1;
+                break;
+            case "Ambos Turnos":
+                SELECCION = 2;
+                break;
+
+        }
         while ((current = new Date(c.get(Calendar.YEAR),
                 c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH))).
                 compareTo(al) <= 0) {
             Venta ve = getModel().find(current);
-            if (ve != null) {
-                v.getOrdenList().addAll(ve.getOrdenList());
-                v.setVentaTotal(v.getVentaTotal() + ve.getVentaTotal());
-                v.setVentagastosEninsumos(v.getVentagastosEninsumos() + ve.getVentagastosEninsumos());
                 if (initDateNotSet) {
                     v.setFecha(current);
                     initDateNotSet = false;
+                }
+            if (ve != null) {
+                switch (SELECCION) {
+                    case 0:
+                        v.getOrdenList().add(ve.getOrdenList().get(0));
+                        v.setVentaTotal(v.getVentaTotal() + ve.getOrdenList().get(0).getOrdenvalorMonetario());
+                        v.setVentagastosEninsumos(v.getVentagastosEninsumos() + ve.getOrdenList().get(0).getOrdengastoEninsumos());
+                        break;
+                    case 1:
+                        v.getOrdenList().add(ve.getOrdenList().get(1));
+                        v.setVentaTotal(v.getVentaTotal() + ve.getOrdenList().get(1).getOrdenvalorMonetario());
+                        v.setVentagastosEninsumos(v.getVentagastosEninsumos() + ve.getOrdenList().get(1).getOrdengastoEninsumos());
+                        break;
+                    case 2:
+                        v.getOrdenList().addAll(ve.getOrdenList());
+                        v.setVentaTotal(v.getVentaTotal() + ve.getVentaTotal());
+                        v.setVentagastosEninsumos(v.getVentagastosEninsumos() + ve.getVentagastosEninsumos());
+                        break;
                 }
             }
             c.add(Calendar.DAY_OF_MONTH, 1);
