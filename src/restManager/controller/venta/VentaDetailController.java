@@ -45,6 +45,7 @@ import restManager.util.comun;
  */
 public class VentaDetailController extends AbstractDetailController<Venta> {
 
+    Date fechaFin = null;
     OrdenController ordController;
     private VentasCreateEditView vi;
 
@@ -83,6 +84,15 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         super(instance, parent, VentaDAO.getInstance());
         OrdenDAO.getInstance().addPropertyChangeListener(this);
     }
+    
+     public VentaDetailController(Venta instance, Window parent, Date fechafin) {
+        super(VentaDAO.getInstance());
+         setParent(parent);
+         setInstance(instance);
+        this.fechaFin = fechafin;
+        OrdenDAO.getInstance().addPropertyChangeListener(this);
+         constructView(parent);
+    }
 
     @Override
     public Venta createNewInstance() {
@@ -95,7 +105,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        vi = new VentasCreateEditView(getInstance(), this, (JDialog) parent);
+        vi = new VentasCreateEditView(getInstance(), this, (JDialog) parent,fechaFin);
         setView(vi);
         getView().updateView();
         getView().setVisible(true);

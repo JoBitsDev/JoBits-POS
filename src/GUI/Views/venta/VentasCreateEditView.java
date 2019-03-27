@@ -12,6 +12,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.util.Date;
 import java.util.List;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BoxLayout;
@@ -35,6 +36,7 @@ import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.Venta;
+import restManager.persistencia.models.CocinaDAO;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.comun;
@@ -46,6 +48,7 @@ import restManager.util.comun;
 public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     RestManagerAbstractTableModel<Orden> modelOrd;
+    Date fechaFin;
 
     public VentasCreateEditView(Venta instance, AbstractDialogController controller) {
         super(instance, DialogType.FULL_SCREEN, controller);
@@ -65,6 +68,13 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         init();
     }
 
+    public VentasCreateEditView(Venta instance, AbstractDialogController controller, Dialog owner, Date fechaFin) {
+        super(instance, DialogType.FULL_SCREEN, controller, owner);
+        this.fechaFin = fechaFin;
+        initComponents();
+        init();
+    }
+
     public JPanel getjPanelDetailOrdenes() {
         return jPanelDetailOrdenes;
     }
@@ -77,17 +87,15 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        substanceDatePickerUI1 = new org.pushingpixels.substance.swingx.SubstanceDatePickerUI();
-        jPanelExtracciones = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableExtracciones = new javax.swing.JTable();
+        jPanelResumenDetallado = new javax.swing.JPanel();
+        jTabbedPaneResumen = new javax.swing.JTabbedPane();
         jPanelRoot = new javax.swing.JPanel();
         jPanelOptions = new javax.swing.JPanel();
         jideButton1 = new com.jidesoft.swing.JideButton();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jButtonTerminarVentas = new javax.swing.JButton();
+        jLabelFecha = new javax.swing.JLabel();
         jPanelData = new javax.swing.JPanel();
         jTabbedPaneData = new javax.swing.JTabbedPane();
         jPanelResumen = new javax.swing.JPanel();
@@ -119,24 +127,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jScrollPane2 = new javax.swing.JScrollPane();
         jXTableOrdActivas = new org.jdesktop.swingx.JXTable();
 
-        jPanelExtracciones.setBorder(javax.swing.BorderFactory.createTitledBorder("Extracciones"));
-        jPanelExtracciones.setOpaque(false);
-        jPanelExtracciones.setLayout(new java.awt.BorderLayout());
-
-        jTableExtracciones.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTableExtracciones);
-
-        jPanelExtracciones.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanelResumenDetallado.setLayout(new java.awt.BorderLayout());
+        jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         com.jidesoft.swing.JideBorderLayout jideBorderLayout1 = new com.jidesoft.swing.JideBorderLayout();
@@ -167,16 +159,17 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jButton1.setEnabled(false);
         jPanel1.add(jButton1);
 
-        jButton2.setText(bundle.getString("label_terminar_ventas")); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonTerminarVentas.setText(bundle.getString("label_terminar_ventas")); // NOI18N
+        jButtonTerminarVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonTerminarVentasActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2);
+        jPanel1.add(jButtonTerminarVentas);
 
-        jDateChooser1.setEnabled(false);
-        jPanel1.add(jDateChooser1);
+        jLabelFecha.setText("Del 15/03/19 al 25/03/19");
+        jLabelFecha.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha"));
+        jPanel1.add(jLabelFecha);
 
         jPanelOptions.add(jPanel1);
 
@@ -185,6 +178,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelData.setLayout(new java.awt.BorderLayout());
 
         jTabbedPaneData.setToolTipText("");
+        jTabbedPaneData.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
 
         jPanelResumen.setLayout(new javax.swing.BoxLayout(jPanelResumen, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -422,9 +416,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         getController().fetchNewDataFromServer();
     }//GEN-LAST:event_jideButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonTerminarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarVentasActionPerformed
         getController().terminarVentas();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonTerminarVentasActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         getController().calcularCambio(getModelOrd().getObjectAtSelectedRow());
@@ -476,65 +470,75 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     @Override
     public void updateView() {
-        jDateChooser1.setDate(instance.getFecha());
-        modelOrd = new RestManagerAbstractTableModel<Orden>(getController().getOrdenesActivas(), jXTableOrdActivas) {
-            @Override
-            public int getColumnCount() {
-                return 4;
-            }
+        if (fechaFin != null) {
+            jLabelFecha.setText("Del " + R.DATE_FORMAT.format(instance.getFecha()) + " Al "
+                    + R.DATE_FORMAT.format(fechaFin));
+            jTabbedPaneData.removeTabAt(1);
+            jButtonTerminarVentas.setVisible(false);
 
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-                switch (columnIndex) {
-                    case 0:
-                        return items.get(rowIndex).getCodOrden();
-                    case 1:
-                        return items.get(rowIndex).getMesacodMesa().getCodMesa();
-                    case 2:
-                        return items.get(rowIndex).getOrdenvalorMonetario() + R.COIN_SUFFIX;
-                    case 3:
-                        return items.get(rowIndex);
-                    default:
-                        return null;
-                }
-            }
+        } else {
+            jLabelFecha.setText(R.DATE_FORMAT.format(instance.getFecha()));
 
-            @Override
-            public String getColumnName(int column) {
-                switch (column) {
-                    case 0:
-                        return "Codigo Orden";
-                    case 1:
-                        return "Mesa";
-                    case 2:
-                        return "Valor Total";
-                    case 3:
-                        return "Estados";
-                    default:
-                        return null;
+            modelOrd = new RestManagerAbstractTableModel<Orden>(getController().getOrdenesActivas(), jXTableOrdActivas) {
+                @Override
+                public int getColumnCount() {
+                    return 4;
+                }
 
+                @Override
+                public Object getValueAt(int rowIndex, int columnIndex) {
+                    switch (columnIndex) {
+                        case 0:
+                            return items.get(rowIndex).getCodOrden();
+                        case 1:
+                            return items.get(rowIndex).getMesacodMesa().getCodMesa();
+                        case 2:
+                            return items.get(rowIndex).getOrdenvalorMonetario() + R.COIN_SUFFIX;
+                        case 3:
+                            return items.get(rowIndex);
+                        default:
+                            return null;
+                    }
                 }
-            }
-        };
-        jXTableOrdActivas.setModel(modelOrd);
-        jXTableOrdActivas.getColumn(3).setCellRenderer(new StateCellRender<Orden>() {
-            @Override
-            public void processData(Orden object, Container root) {
-                if (object.getDeLaCasa()) {
-                    root.add(getjState1());
-                }
-                if (object.getHoraTerminada() != null) {
-                    root.add(getjState2());
-                }
-                if (object.getPorciento() != 0) {
-                    root.add(getJstate3());
-                }
-            }
-        });
-        jXTableOrdActivas.setRowHeight(40);
 
+                @Override
+                public String getColumnName(int column) {
+                    switch (column) {
+                        case 0:
+                            return "Codigo Orden";
+                        case 1:
+                            return "Mesa";
+                        case 2:
+                            return "Valor Total";
+                        case 3:
+                            return "Estados";
+                        default:
+                            return null;
+
+                    }
+                }
+            };
+            jXTableOrdActivas.setModel(modelOrd);
+            jXTableOrdActivas.getColumn(3).setCellRenderer(new StateCellRender<Orden>() {
+                @Override
+                public void processData(Orden object, Container root) {
+                    if (object.getDeLaCasa()) {
+                        root.add(getjState1());
+                    }
+                    if (object.getHoraTerminada() != null) {
+                        root.add(getjState2());
+                    }
+                    if (object.getPorciento() != 0) {
+                        root.add(getJstate3());
+                    }
+                }
+            });
+            jXTableOrdActivas.setRowHeight(40);
+
+        }
         updateTableResumenDependientes();
         updateTableResumenCocinas();
+        updateTableResumenDetallado();
         jLabelTotalVentas.setText(getController().getTotalVendido());
         jLabelTotalGastos.setText(getController().getTotalGastado());
 
@@ -552,7 +556,6 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -561,37 +564,36 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirZ;
     private javax.swing.JButton jButtonImprimirZ1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JButton jButtonTerminarVentas;
+    private javax.swing.JLabel jLabelFecha;
     private javax.swing.JLabel jLabelTotalGastos;
     private javax.swing.JLabel jLabelTotalVentas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelData;
     private javax.swing.JPanel jPanelDetailOrdenes;
-    private javax.swing.JPanel jPanelExtracciones;
     private javax.swing.JPanel jPanelGastos;
     private javax.swing.JPanel jPanelNumero;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelOrdenesActivas;
     private javax.swing.JPanel jPanelResumen;
+    private javax.swing.JPanel jPanelResumenDetallado;
     private javax.swing.JPanel jPanelResumenVentas;
     private javax.swing.JPanel jPanelRoot;
     private javax.swing.JPanel jPanelVentas;
     private javax.swing.JPanel jPanelVentasCamareras;
     private javax.swing.JPanel jPanelVentasCocinas;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPaneData;
-    private javax.swing.JTable jTableExtracciones;
+    private javax.swing.JTabbedPane jTabbedPaneResumen;
     private javax.swing.JTable jTableVentasDependientes;
     private javax.swing.JTable jTableVentasPorCocina;
     private org.jdesktop.swingx.JXPanel jXPanelOrdenControl;
     private org.jdesktop.swingx.JXTable jXTableOrdActivas;
     private com.jidesoft.swing.JideButton jideButton1;
     private com.jidesoft.swing.JideLabel jideLabel1;
-    private org.pushingpixels.substance.swingx.SubstanceDatePickerUI substanceDatePickerUI1;
     // End of variables declaration//GEN-END:variables
 
     private void init() {
@@ -626,7 +628,44 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     }
 
     private void enviarCerrarCrear() {
-    getController().cerrarOrdenRapido();
+        getController().cerrarOrdenRapido();
+    }
+
+    private void updateTableResumenDetallado() {
+        if (fechaFin != null) {
+            jTabbedPaneData.addTab("Resumen Detallado", jPanelResumenDetallado);
+            crearFrame();
+        }
+    }
+
+    private void crearFrame() {
+        String hVentas,
+                hGastos,
+                cDate,
+                nombreMenu = R.REST_NAME;
+
+        if (getController().getInstance().getFecha().getDate() == fechaFin.getDate()
+                && getController().getInstance().getFecha().getMonth() == fechaFin.getMonth()) {
+            cDate = R.DATE_FORMAT.format(getController().getInstance().getFecha())
+                    + "(" + nombreMenu + ")";
+            hVentas = ("Ventas del dia " + cDate);
+            hGastos = ("Gastos por productos del dia " + cDate);
+
+        } else {
+            cDate = R.DATE_FORMAT.format(getController().getInstance().getFecha())
+                    + " al " + R.DATE_FORMAT.format(fechaFin) + "(" + nombreMenu + ")";
+            hVentas = ("Resumen de ventas del " + cDate);
+            hGastos = ("Resumen de gastos del " + cDate);
+        }
+
+        jTabbedPaneResumen.addTab("Resumen Total ", new Resumenes(getController().getInstance(), fechaFin, hVentas, hGastos));
+        List<Cocina> cocinas = CocinaDAO.getInstance().findAll();
+        for (int i = 0; i < cocinas.size(); i++) {
+            jTabbedPaneResumen.addTab(cocinas.get(i).getNombreCocina(),
+                    new Resumenes(getController().getInstance(), cocinas.get(i), fechaFin,
+                            "Ventas de " + cocinas.get(i).getNombreCocina() + " " + cDate,
+                            "Gastos por producto " + cocinas.get(i).getNombreCocina() + " " + cDate));
+        }
     }
 
 }

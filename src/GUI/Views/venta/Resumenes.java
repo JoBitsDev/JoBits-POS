@@ -64,11 +64,11 @@ public class Resumenes extends javax.swing.JPanel {
 
             MessageFormat footer = new MessageFormat("-Pag {0}-");
 
-            jTableGastos.print(JTable.PrintMode.NORMAL, headerGastos, footer);
-            jTableVenta.print(JTable.PrintMode.NORMAL, headerVentas, footer);
+            jTableGastos.print(JTable.PrintMode.FIT_WIDTH, headerGastos, footer);
+            jTableVenta.print(JTable.PrintMode.FIT_WIDTH, headerVentas, footer);
 
         } catch (PrinterException ex) {
-            Logger.getLogger(Resumen.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Resumenes.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -490,7 +490,8 @@ public class Resumenes extends javax.swing.JPanel {
             jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.COIN_SUFFIX);
         }
 
-        jTextFieldGanancia.setText(" " + (Float.parseFloat(jTextFieldTotalRecaudado.getText().split(" ")[0]) - Float.parseFloat(jTextFieldInversion.getText().split(" ")[0])) + R.COIN_SUFFIX);
+        jTextFieldGanancia.setText(" " + (Float.parseFloat(jTextFieldTotalRecaudado.getText().split(" ")[0]) 
+                - Float.parseFloat(jTextFieldInversion.getText().split(" ")[0])) + R.COIN_SUFFIX);
 
     }
 

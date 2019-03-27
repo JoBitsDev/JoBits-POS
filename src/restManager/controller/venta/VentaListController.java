@@ -76,7 +76,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
         if (initDateNotSet) {
             throw new ValidatingException(getView());
         }
-        ResumenVentaController controller = new ResumenVentaController(v, getView(), al);
+        VentaDetailController controller = new VentaDetailController(v, getView(), al);
 
     }
 

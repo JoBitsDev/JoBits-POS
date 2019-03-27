@@ -83,6 +83,10 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
         return instance;
     }
 
+    public void setInstance(T instance) {
+        this.instance = instance;
+    }
+
     public State getState() {
         return state;
     }
