@@ -51,6 +51,7 @@ public class Impresion {
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
     private final boolean SHOW_PRICES = true;
     private final boolean PRINT_IN_CENTRAL_KITCHEN = false;
+    private final boolean PRINT_GASTOS_EN_AUTORIZOS = false;
     private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     private final String DEFAULT_PRINT_LOCATION = null;
     private final boolean IMPRIMIR_TICKET_COCINA = true;
@@ -916,14 +917,22 @@ public class Impresion {
             t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
             t.newLine();
             t.alignRight();
-            if (!x.getOrden().getDeLaCasa()) {
-                t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+            if (x.getOrden().getDeLaCasa()) {
+                if (PRINT_GASTOS_EN_AUTORIZOS) {
+                    t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getGasto()));
+                } else {
+                    t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                }
             } else {
-                t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getGasto()));
+                t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
             }
             t.newLine();
             if (x.getOrden().getDeLaCasa()) {
-                total += x.getCantidad() * x.getProductoVenta().getGasto();
+                if (PRINT_GASTOS_EN_AUTORIZOS) {
+                    total += x.getCantidad() * x.getProductoVenta().getGasto();
+                } else {
+                    total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+                }
             } else {
                 total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
             }

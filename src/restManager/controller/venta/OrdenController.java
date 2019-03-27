@@ -281,6 +281,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
         ConfigDAO conf = new ConfigDAO();
         Configuracion c = conf.find("O");
+        getModel().getEntityManager().refresh(c);
         int orden = c.getValor();
         c.setValor(orden + 1);
         conf.startTransaction();

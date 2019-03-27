@@ -40,6 +40,8 @@ public class R {
     
     public static String MAIN_COIN = null;
     
+    public static final boolean CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = true;
+    
     public static final String NO_MESA = "M-0";
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");

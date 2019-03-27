@@ -286,7 +286,7 @@ public class VentaDAO1 {
 
         //llenando l array
         for (Orden o : aux) {
-            if (!o.getDeLaCasa()) {
+           if (!o.getDeLaCasa() || R.CONSUMO_DE_LA_CASA_EN_ESTADISTICAS) {
                 joinListsProductovOrdenByCocina(ret,
                         new ArrayList<>(o.getProductovOrdenList()), c);
             }

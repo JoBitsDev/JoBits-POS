@@ -18,7 +18,7 @@ import restManager.util.LoadingWindow;
 public class Main {
 
     public static void main(String[] args) {
-
+                
         java.awt.EventQueue.invokeLater(() -> {
             LogInController loginController = new LogInController();
             loginController.constructView(null);
