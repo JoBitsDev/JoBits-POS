@@ -170,6 +170,7 @@ public class LogInDialogView extends AbstractView {
         jPanelOptions.add(jButtonCancelar);
 
         jButtonAutenticar.setText(bundle.getString("label_autenticar")); // NOI18N
+        jButtonAutenticar.setEnabled(false);
         jButtonAutenticar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAutenticarActionPerformed(evt);
