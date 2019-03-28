@@ -92,11 +92,11 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
     }
 
     public void updateInsumoOnFichas(Insumo insumo) {
+        getModel().startTransaction();
         for (ProductoInsumo p : insumo.getProductoInsumoList()) {
-            getModel().startTransaction();
             p.setCosto(insumo.getCostoPorUnidad() * p.getCantidad());
             ProductoInsumoDAO.getInstance().edit(p);
-            getModel().commitTransaction();
         }
+        getModel().commitTransaction();
     }
 }
