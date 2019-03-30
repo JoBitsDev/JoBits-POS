@@ -34,9 +34,9 @@ public class R {
 
     public static final Date TODAYS_DATE = new Date();
 
-    public static final float PERCENTAGE = 0;
+    public static final float PERCENTAGE = 10;
 
-    public static final int COINCHANGE = 24;
+    public static final int COINCHANGE = 25;
     
     public static String MAIN_COIN = null;
     
@@ -56,7 +56,7 @@ public class R {
 
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
-    public static String RELEASE_VERSION = "Version 2.0";
+    public static String RELEASE_VERSION = "Version 2.5";
     
     public static int BUILD_VERSION = 1;
     
