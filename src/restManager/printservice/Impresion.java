@@ -125,7 +125,7 @@ public class Impresion {
         if (footer != null) {
             PIE = footer;
         }
-        if ((monedaCUC = R.COIN_SUFFIX.trim().toUpperCase().equals(CUC))) {
+        if ((monedaCUC = R.COIN_SUFFIX.toUpperCase().equals(CUC))) {
             MONEDA = CUC;
         } else {
             MONEDA = MN;
@@ -242,41 +242,43 @@ public class Impresion {
     }
 
     public Orden printCancelationTicket(Orden o) {
-
-        // return printCancelationKitchenForced(printCancelationKitchen(o, staticContent.cocinaJPA.findCocina("C-2")));
-        Ticket t = new Ticket();
-
-        addHeader(t);
-
-        addMetaData(t, o, new Date());
-
-        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
-        for (ProductovOrden x : o.getProductovOrdenList()) {
-            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
-                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
-            }
-        }
-        if (cocinasExistentesEnLaOrden.size() > 1) {
-            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
-                String sync = SYNC;
-                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
-                    if (i == j) {
-                        continue;
-                    }
-                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
-                }
-                printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
-            }
+        if (PRINT_IN_CENTRAL_KITCHEN) {
+            return printCancelationKitchenForced(printCancelationKitchen(o, CocinaDAO.getInstance().find("C-2")));
         } else {
-            if (cocinasExistentesEnLaOrden.size() > 0) {
-                printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+            Ticket t = new Ticket();
+
+            addHeader(t);
+
+            addMetaData(t, o, new Date());
+
+            List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
+            for (ProductovOrden x : o.getProductovOrdenList()) {
+                if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
+                    cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
+                }
+            }
+            if (cocinasExistentesEnLaOrden.size() > 1) {
+                for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
+                    String sync = SYNC;
+                    for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
+                        if (i == j) {
+                            continue;
+                        }
+                        sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
+                    }
+                    printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+                }
+            } else {
+                if (cocinasExistentesEnLaOrden.size() > 0) {
+                    printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+                }
+
             }
 
+            cleanAndPrintRAM();
+
+            return o;
         }
-
-        cleanAndPrintRAM();
-
-        return o;
 //    }
 //
 //    public Orden printKitchenForced(Orden o) throws PrintException {
@@ -822,13 +824,13 @@ public class Impresion {
 
             if (monedaCUC) {
                 if (REDONDEO_POR_EXCESO) {
-                    t.setText(TOTAL_VENTAS + comun.redondeoPorExceso(total * R.COINCHANGE));
+                    t.setText(TOTAL_VENTAS + comun.redondeoPorExcesoFloat(total * R.COINCHANGE) + MN);
                 } else {
                     t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total * R.COINCHANGE));
                 }
             } else {
                 if (REDONDEO_POR_EXCESO) {
-                    t.setText(TOTAL_VENTAS + comun.redondeoPorExceso(total / R.COINCHANGE).split(" ")[0] + CUC);
+                    t.setText(TOTAL_VENTAS + comun.redondeoPorExcesoFloat(total / R.COINCHANGE) + CUC);
                 } else {
                     t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, total / R.COINCHANGE));
                 }
