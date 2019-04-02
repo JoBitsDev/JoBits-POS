@@ -305,7 +305,6 @@ public class MainView extends AbstractView {
         jButtonCopiaSeguridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoncopiaseg.png"))); // NOI18N
         jButtonCopiaSeguridad.setText(bundle.getString("label_copia_seguridad")); // NOI18N
         jButtonCopiaSeguridad.setBorderPainted(false);
-        jButtonCopiaSeguridad.setEnabled(false);
         jButtonCopiaSeguridad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonCopiaSeguridad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonCopiaSeguridad.addActionListener(new java.awt.event.ActionListener() {

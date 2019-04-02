@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import java.awt.Dialog;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import restManager.backup.BackUp;
 import restManager.resources.R;
@@ -19,7 +21,7 @@ public class copiaSegView extends javax.swing.JDialog {
     /**
      * Creates new form copiaSegView
      */
-    public copiaSegView(java.awt.Frame parent, boolean modal) {
+    public copiaSegView(JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setVisible(true);
@@ -49,8 +51,11 @@ public class copiaSegView extends javax.swing.JDialog {
         setTitle(bundle.getString("label_copia_seguridad")); // NOI18N
         getContentPane().setLayout(new java.awt.BorderLayout(10, 10));
 
+        jXPanel1.setLayout(new java.awt.BorderLayout());
+
         jXLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jXLabel1.setText(bundle.getString("label_realizar_copia_de")); // NOI18N
+        jXPanel1.add(jXLabel1, java.awt.BorderLayout.PAGE_START);
 
         jXPanel2.setLayout(new java.awt.GridLayout(0, 1));
 
@@ -66,39 +71,19 @@ public class copiaSegView extends javax.swing.JDialog {
         jCheckBoxTodo.setText(bundle.getString("boton_todos")); // NOI18N
         jXPanel2.add(jCheckBoxTodo);
 
+        jXPanel1.add(jXPanel2, java.awt.BorderLayout.CENTER);
+
         botonRealizarCopia.setText(bundle.getString("boton_realizar_copia")); // NOI18N
         botonRealizarCopia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonRealizarCopiaActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jXPanel1Layout = new javax.swing.GroupLayout(jXPanel1);
-        jXPanel1.setLayout(jXPanel1Layout);
-        jXPanel1Layout.setHorizontalGroup(
-            jXPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jXPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jXPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jXPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jXLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jXPanel1Layout.createSequentialGroup()
-                .addGap(0, 4, Short.MAX_VALUE)
-                .addComponent(botonRealizarCopia, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jXPanel1Layout.setVerticalGroup(
-            jXPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jXPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jXLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jXPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(9, 9, 9)
-                .addComponent(botonRealizarCopia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jXPanel1.add(botonRealizarCopia, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(jXPanel1, java.awt.BorderLayout.CENTER);
+
+        jProgressBar1.setStringPainted(true);
         getContentPane().add(jProgressBar1, java.awt.BorderLayout.PAGE_END);
 
         pack();

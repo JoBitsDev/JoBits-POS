@@ -162,9 +162,11 @@ public class VentaDAO1 {
         int totalOrdenes = 0;
         //llenando l array
         for (Orden o : aux) {
-            if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p) && o.getHoraTerminada() != null) {
-                total += o.getOrdenvalorMonetario();
-                totalOrdenes++;
+            if (o.getPersonalusuario() != null) {
+                if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p) && o.getHoraTerminada() != null) {
+                    total += o.getOrdenvalorMonetario();
+                    totalOrdenes++;
+                }
             }
         }//n
 
@@ -286,7 +288,7 @@ public class VentaDAO1 {
 
         //llenando l array
         for (Orden o : aux) {
-           if (!o.getDeLaCasa() || R.CONSUMO_DE_LA_CASA_EN_ESTADISTICAS) {
+            if (!o.getDeLaCasa() || R.CONSUMO_DE_LA_CASA_EN_ESTADISTICAS) {
                 joinListsProductovOrdenByCocina(ret,
                         new ArrayList<>(o.getProductovOrdenList()), c);
             }
@@ -700,10 +702,10 @@ public class VentaDAO1 {
         ventas.forEach((v) -> {
             modas[getPickHour(v)]++;
         });
-        int mayor_moda = 0,cantidad_repeticiones = 0;
-        
+        int mayor_moda = 0, cantidad_repeticiones = 0;
+
         for (int i = 0; i < modas.length; i++) {
-            if(modas[i] > cantidad_repeticiones){
+            if (modas[i] > cantidad_repeticiones) {
                 cantidad_repeticiones = modas[i];
                 mayor_moda = i;
             }

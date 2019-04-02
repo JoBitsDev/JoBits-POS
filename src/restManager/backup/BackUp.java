@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
+import restManager.exceptions.ExceptionHandler;
 import restManager.persistencia.Area;
 import restManager.persistencia.Carta;
 import restManager.persistencia.Cocina;
@@ -39,6 +40,7 @@ import restManager.persistencia.models.SeccionDAO;
 import restManager.persistencia.models.VentaDAO;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
+import restManager.util.comun;
 
 /**
  * FirstDream
@@ -55,6 +57,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private TipoBackUp tipoBackUp;
     private boolean borradoRemoto = false;
     private float progress = 0;
+    private float topeProceso = 100;
 
     //
     //Constructores
@@ -123,7 +126,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     protected void process(List<Float> chunks) {
         for (Float chunk : chunks) {
             barraDeProgreso.setValue(chunk.intValue());
-            barraDeProgreso.setString(chunk + "%");
+            barraDeProgreso.setString(comun.setDosLugaresDecimalesFloat(chunk) + "%");
         }
     }
 
@@ -132,13 +135,11 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     //
     private boolean startBackupTransaction() {
         em.getTransaction().begin();
-        incrementarProgreso(1);
         return true;
     }
 
     private boolean commitBackupTransaction() {
         em.getTransaction().commit();
-        incrementarProgreso(1);
         return true;
     }
 
@@ -146,18 +147,24 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     //BackUps de entidades
     //
     private boolean BackUpCarta(List<Carta> findCartaEntities) {
+        float sumaXCantidad = topeProceso / findCartaEntities.size();
         for (Carta x : findCartaEntities) {
             if (EntityExist(x, x.getCodCarta())) {
                 em.merge(x);
             } else {
                 em.persist(x);
             }
+
+            BackUPSecciones(x.getSeccionList());
+
+            incrementarProgreso(sumaXCantidad);
         }
         return true;
 
     }
 
     private boolean backUpArea(List<Area> areas) {
+        float sumaXCantidad = topeProceso / areas.size();
         for (Area a : areas) {
             if (EntityExist(a, a.getCodArea())) {
                 em.merge(a);
@@ -166,7 +173,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
             }
 
             backUPMesa(a.getMesaList());
-
+            incrementarProgreso(sumaXCantidad);
         }
         return true;
     }
@@ -185,6 +192,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private boolean backUPCocina(List<Cocina> cocina) {
+        float sumaXCantidad = topeProceso / cocina.size();
         for (Cocina c : cocina) {
             c.setIpvList(null);
             if (EntityExist(c, c.getCodCocina())) {
@@ -192,11 +200,13 @@ public class BackUp extends SwingWorker<Boolean, Float> {
             } else {
                 em.persist(c);
             }
+            incrementarProgreso(sumaXCantidad);
         }
         return true;
     }
 
     private boolean BackUpProd(List<ProductoVenta> prods) {
+        float sumaXCantidad = topeProceso / prods.size();
         for (ProductoVenta pv : prods) {
             pv.setProductovOrdenList(null);
             BackUpProdInsumo(pv.getProductoInsumoList());
@@ -207,6 +217,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
                 em.persist(pv);
 
             }
+            incrementarProgreso(sumaXCantidad);
 
         }
         return true;
@@ -252,16 +263,15 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private boolean BackUpVentas(List<Venta> ventas) {
-
+        float sumaXCantidad = topeProceso / ventas.size();
         for (Venta v : ventas) {
-
             BackUpOrdenes(v.getOrdenList());
-
             if (EntityExist(v, v.getFecha())) {
                 em.merge(v);
             } else {
                 em.persist(v);
             }
+            incrementarProgreso(sumaXCantidad);
         }
 
         return true;
@@ -269,14 +279,15 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private boolean BackUpInsumos(List<Insumo> ins) {
+        float sumaXCantidad = topeProceso / ins.size();
         for (Insumo in : ins) {
-            //in.setAlmacencodAlmacen(null);
             if (EntityExist(in, in.getCodInsumo())) {
                 em.merge(in);
 
             } else {
                 em.persist(in);
             }
+            incrementarProgreso(sumaXCantidad);
         }
         return true;
     }
@@ -295,25 +306,28 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private boolean BackUpPersonal(List<Personal> p) {
+        float sumaXCantidad = topeProceso / p.size();
         for (Personal x : p) {
             if (EntityExist(x, x.getUsuario())) {
-
                 em.merge(x);
             } else {
                 x.setOrdenList(null);
                 em.persist(x);
             }
+            incrementarProgreso(sumaXCantidad);
         }
         return true;
     }
 
     private boolean BackUpPuestoDeTrabajo(List<PuestoTrabajo> puestos) {
+        float sumaXCantidad = topeProceso / puestos.size();
         for (PuestoTrabajo puesto : puestos) {
             if (EntityExist(puesto, puesto.getNombrePuesto())) {
                 em.merge(puesto);
             } else {
                 em.persist(puesto);
             }
+            incrementarProgreso(sumaXCantidad);
         }
 
         return true;
@@ -376,7 +390,6 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private boolean EjecutarBackUpProductos() {
-
         startBackupTransaction();
         //backup area
         backUpArea(AreaDAO.getInstance().findAll());
@@ -384,14 +397,11 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         BackUpCarta(CartaDAO.getInstance().findAll());
         // backup cocinas
         backUPCocina(CocinaDAO.getInstance().findAll());
-        // backup secciones
-        BackUPSecciones(SeccionDAO.getInstance().findAll());
         // backup ingredientes
         BackUpInsumos(InsumoDAO.getInstance().findAll());
         // backup platos
         BackUpProd(ProductoVentaDAO.getInstance().findAll());
-        // backup mesas
-        backUPMesa(MesaDAO.getInstance().findAll());
+
         commitBackupTransaction();
 
         return true;
@@ -410,42 +420,46 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         try {
             BackUpConfiguracion(ConfiguracionDAO.getInstance().findAll());
         } catch (Exception e) {
-            System.out.println("error en config");
+            ExceptionHandler.showExceptionToUser(e, "Error ejecutando copia de seguridad en Configuracion");
         }
 
         try {
             EjecutarBackUpPersonal();
         } catch (Exception e) {
-            System.out.println("error en personal");
-            System.out.println();
+            ExceptionHandler.showExceptionToUser(e, "Error ejecutando copia de seguridad en Personal");
 
         }
         try {
             EjecutarBackUpProductos();
         } catch (Exception e) {
-            System.out.println("error en productos");
+            ExceptionHandler.showExceptionToUser(e, "Error ejecutando copia de seguridad en Productos");
         }
         try {
             EjecutarBackUpVentas();
         } catch (Exception e) {
-            System.out.println("Error en ventas");
+            ExceptionHandler.showExceptionToUser(e, "Error ejecutando copia de seguridad en Ventas");
         }
         return true;
 
     }
 
     private boolean EjecutarBackUp(TipoBackUp tipo) {
+        barraDeProgreso.setValue(0);
         switch (tipo) {
             case PERSONAL:
+                topeProceso = 50;
                 EjecutarBackUpPersonal();
                 break;
             case PRODUCTOS:
+                topeProceso = 20;
                 EjecutarBackUpProductos();
                 break;
             case VENTA:
+                topeProceso = 100;
                 EjecutarBackUpVentas();
                 break;
             case All:
+                topeProceso = 10;
                 EjecutarBackUpAll();
 
         }

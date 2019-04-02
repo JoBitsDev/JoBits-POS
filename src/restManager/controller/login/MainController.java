@@ -8,6 +8,7 @@ package restManager.controller.login;
 import GUI.Views.AbstractView;
 import GUI.Views.login.MainView;
 import GUI.Views.seccion.CartaSeccionView;
+import GUI.copiaSegView;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.HeadlessException;
@@ -127,6 +128,9 @@ public class MainController extends AbstractDialogController<Personal> {
                         controller = new VentaDetailController(getView());
                     }
                     break;
+                case COPIA_SEG:
+                    copiaSegView seg = new copiaSegView(getView(), true);
+                    break;
                 default:
                     getView().setEnabled(true);
                     throw new DevelopingOperationException(getView());
@@ -139,10 +143,11 @@ public class MainController extends AbstractDialogController<Personal> {
         getView().setEnabled(true);
     }
 
-    private void validate(Personal loggedUser, MenuButtons menuButtons) {
+    private boolean validate(Personal loggedUser, MenuButtons menuButtons) {
         if (!(loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= menuButtons.getNivelMinimoAcceso())) {
             throw new UnauthorizedAccessException(getView());
         }
+        return true;
     }
 
     public enum MenuButtons {
