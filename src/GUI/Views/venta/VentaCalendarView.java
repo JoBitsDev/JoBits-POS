@@ -74,9 +74,10 @@ public class VentaCalendarView extends AbstractView {
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanelControles = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanelSeleccion = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
         jLabel8 = new javax.swing.JLabel();
@@ -188,14 +189,6 @@ public class VentaCalendarView extends AbstractView {
         jPanelControles.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButton1.setText(bundle.getString("label_salir")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanelControles.add(jButton1);
-
         jButton2.setText(bundle.getString("label_editar")); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,11 +201,23 @@ public class VentaCalendarView extends AbstractView {
 
         jPanelSeleccion.setBackground(new java.awt.Color(204, 204, 204));
         jPanelSeleccion.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
-        jPanelSeleccion.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanelSeleccion.setLayout(new java.awt.BorderLayout());
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanelSeleccion.add(jButton1, java.awt.BorderLayout.LINE_START);
+
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 2, 18)); // NOI18N
         jLabel9.setText("Año");
-        jPanelSeleccion.add(jLabel9);
+        jPanel3.add(jLabel9);
 
         jYearChooser1.setOpaque(false);
         jYearChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -220,11 +225,11 @@ public class VentaCalendarView extends AbstractView {
                 jYearChooser1PropertyChange(evt);
             }
         });
-        jPanelSeleccion.add(jYearChooser1);
+        jPanel3.add(jYearChooser1);
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 2, 18)); // NOI18N
         jLabel8.setText("Mes");
-        jPanelSeleccion.add(jLabel8);
+        jPanel3.add(jLabel8);
 
         jMonthChooser1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jMonthChooser1.setOpaque(false);
@@ -233,7 +238,9 @@ public class VentaCalendarView extends AbstractView {
                 jMonthChooser1PropertyChange(evt);
             }
         });
-        jPanelSeleccion.add(jMonthChooser1);
+        jPanel3.add(jMonthChooser1);
+
+        jPanelSeleccion.add(jPanel3, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
 
@@ -369,6 +376,7 @@ public class VentaCalendarView extends AbstractView {
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelCalendario;
     private javax.swing.JPanel jPanelControles;
     private javax.swing.JPanel jPanelDetalles;

@@ -112,11 +112,13 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public void enviarACocina() {
-        Impresion i = new Impresion();
-        instance = i.printKitchen(instance);
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINEST, instance);
-        update(instance);
-        showSuccessDialog(getView(), "Productos enviados a cocina exitosamente");
+        if (autorize()) {
+            Impresion i = new Impresion();
+            instance = i.printKitchen(instance);
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINEST, instance);
+            update(instance);
+            showSuccessDialog(getView(), "Productos enviados a cocina exitosamente");
+        }
     }
 
     public void imprimirPreTicket() {
@@ -151,36 +153,38 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public void despachar() {
-        Impresion i = new Impresion();
-        setShowDialogs(true);
-        if (showConfirmDialog(getView(), "Desea cerrar la orden " + instance.getCodOrden())) {
-            setShowDialogs(false);
-            boolean enviar = true;
-            for (ProductovOrden x : instance.getProductovOrdenList()) {
-                if (x.getCantidad() != x.getEnviadosacocina()) {
-                    showErrorDialog(getView(), "Existen productos que no han sido enviados a cocina. Envie a cocina antes de cerrar la orden");
-                    return;
+        if (autorize()) {
+            Impresion i = new Impresion();
+            setShowDialogs(true);
+            if (showConfirmDialog(getView(), "Desea cerrar la orden " + instance.getCodOrden())) {
+                setShowDialogs(false);
+                boolean enviar = true;
+                for (ProductovOrden x : instance.getProductovOrdenList()) {
+                    if (x.getCantidad() != x.getEnviadosacocina()) {
+                        showErrorDialog(getView(), "Existen productos que no han sido enviados a cocina. Envie a cocina antes de cerrar la orden");
+                        return;
+                    }
                 }
-            }
-            if (enviar) {
-                if (showConfirmDialog(getView(), "Desea imprimir un ticket de la orden")) {
+                if (enviar) {
+                    if (showConfirmDialog(getView(), "Desea imprimir un ticket de la orden")) {
 
-                    i.print(instance, false);
-                    RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIRTICKET, Level.FINE, instance);
+                        i.print(instance, false);
+                        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIRTICKET, Level.FINE, instance);
+                    }
+                    instance.setHoraTerminada(new Date());
+                    instance.setOrdengastoEninsumos(getGastosInsumos(instance));
+                    RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.CERRAR, Level.FINE, instance);
+                    Mesa m = instance.getMesacodMesa();
+                    m.setEstado("vacia");
+                    instance.setMesacodMesa(m);
+                    MesaDAO.getInstance().edit(m);
+                    setDismissOnAction(true);
+                    update(instance, true);
                 }
-                instance.setHoraTerminada(new Date());
-                instance.setOrdengastoEninsumos(getGastosInsumos(instance));
-                RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.CERRAR, Level.FINE, instance);
-                Mesa m = instance.getMesacodMesa();
-                m.setEstado("vacia");
-                instance.setMesacodMesa(m);
-                MesaDAO.getInstance().edit(m);
-                setDismissOnAction(true);
-                update(instance, true);
             }
+            setShowDialogs(false);
+            getView().setVisible(false);
         }
-        setShowDialogs(false);
-        getView().setVisible(false);
     }
 
     public void updatePorciento(float f) {
@@ -190,12 +194,13 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public void removeProduct(ProductovOrden objectAtSelectedRow) {
+        if (autorize()) {
+            ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
+            instance.getProductovOrdenList().remove(objectAtSelectedRow);
 
-        ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
-        instance.getProductovOrdenList().remove(objectAtSelectedRow);
-
-        update(instance);
-        view.updateValorTotal();
+            update(instance);
+            view.updateValorTotal();
+        }
     }
 
     public float getGastosInsumos(Orden instance) {
@@ -247,33 +252,36 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public void addProduct(ProductoVenta selected) {
-        boolean found = false;
-        ProductovOrden founded = null;
-        float cantidadAgregada = 1;
-        for (ProductovOrden x : new ArrayList<>(getInstance().getProductovOrdenList())) {
-            if (x.getProductoVenta().getPCod().equals(selected.getPCod())) {
-                founded = x;
-                found = true;
-                break;
-            }
-        }
-        if (found) {
-            founded.setCantidad(founded.getCantidad() + 1);
-            ProductovOrdenDAO.getInstance().edit(founded);
+        if (autorize()) {
 
-        } else {
-            founded = new ProductovOrden(selected.getPCod(), getInstance().getCodOrden());
-            founded.setOrden(getInstance());
-            founded.setProductoVenta(selected);
-            founded.setCantidad(Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad")));
-            founded.setEnviadosacocina(0);
-            founded.setNumeroComensal(0);
-            ProductovOrdenDAO.getInstance().create(founded);
-            getInstance().getProductovOrdenList().add(founded);
+            boolean found = false;
+            ProductovOrden founded = null;
+            float cantidadAgregada = 1;
+            for (ProductovOrden x : new ArrayList<>(getInstance().getProductovOrdenList())) {
+                if (x.getProductoVenta().getPCod().equals(selected.getPCod())) {
+                    founded = x;
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                founded.setCantidad(founded.getCantidad() + 1);
+                ProductovOrdenDAO.getInstance().edit(founded);
+
+            } else {
+                founded = new ProductovOrden(selected.getPCod(), getInstance().getCodOrden());
+                founded.setOrden(getInstance());
+                founded.setProductoVenta(selected);
+                founded.setCantidad(Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad")));
+                founded.setEnviadosacocina(0);
+                founded.setNumeroComensal(0);
+                ProductovOrdenDAO.getInstance().create(founded);
+                getInstance().getProductovOrdenList().add(founded);
+            }
+            cantidadAgregada = founded.getCantidad();
+            update(instance);
+            view.updateValorTotal();
         }
-        cantidadAgregada = founded.getCantidad();
-        update(instance);
-        view.updateValorTotal();
 
     }
 
@@ -292,5 +300,18 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public enum UpdateIpvAction {
         AGREGAR, REMOVER
+    }
+
+    public boolean autorize() {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 || instance.getPersonalusuario().getUsuario().equals(R.loggedUser.getUsuario())) {
+            return true;
+        } else {
+            LogInController control = new LogInController();
+            if (control.constructoAuthorizationView(null, instance.getPersonalusuario().getUsuario())) {
+                return true;
+            }
+
+        }
+        return false;
     }
 }

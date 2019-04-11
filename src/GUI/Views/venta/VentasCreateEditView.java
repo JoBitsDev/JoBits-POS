@@ -79,6 +79,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jTabbedPaneResumen = new javax.swing.JTabbedPane();
         jPanelRoot = new javax.swing.JPanel();
         jPanelOptions = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         jideButton1 = new com.jidesoft.swing.JideButton();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -119,6 +121,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
         com.jidesoft.swing.JideBorderLayout jideBorderLayout1 = new com.jidesoft.swing.JideBorderLayout();
         jideBorderLayout1.setHgap(10);
         jideBorderLayout1.setVgap(10);
@@ -129,7 +132,19 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelOptions.setBackground(new java.awt.Color(204, 204, 204));
         jPanelOptions.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
-        jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanelOptions.setLayout(new java.awt.BorderLayout());
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanelOptions.add(jButton2, java.awt.BorderLayout.WEST);
+
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
         jideButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +152,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
                 jideButton1ActionPerformed(evt);
             }
         });
-        jPanelOptions.add(jideButton1);
+        jPanel3.add(jideButton1);
 
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -159,7 +174,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jLabelFecha.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha"));
         jPanel1.add(jLabelFecha);
 
-        jPanelOptions.add(jPanel1);
+        jPanel3.add(jPanel1);
+
+        jPanelOptions.add(jPanel3, java.awt.BorderLayout.CENTER);
 
         jPanelRoot.add(jPanelOptions, java.awt.BorderLayout.NORTH);
 
@@ -440,6 +457,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         enviarCerrarCrear();
     }//GEN-LAST:event_jButtonEnviarCerrarCrearNuevaActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     @Override
 
     public void setEditingMode() {
@@ -544,6 +565,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -558,6 +580,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JLabel jLabelTotalVentas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelData;
     private javax.swing.JPanel jPanelDetailOrdenes;
     private javax.swing.JPanel jPanelGastos;
@@ -593,7 +616,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
             }
         });
         adj.adjustColumns();
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 4) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3) {
             jTabbedPaneData.remove(0);
         }
     }
