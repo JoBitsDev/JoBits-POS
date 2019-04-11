@@ -384,11 +384,13 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                         switch (columnIndex) {
                             case 1:
-                                items.get(rowIndex).setCantidad((float) aValue);
-                                fireTableRowsUpdated(rowIndex, rowIndex);
-                                state = ButtonState.ENVIAR_COCINA;
-                                jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
-                                updateValorTotal();
+                                if (getController().autorize()) {
+                                    items.get(rowIndex).setCantidad((float) aValue);
+                                    fireTableRowsUpdated(rowIndex, rowIndex);
+                                    state = ButtonState.ENVIAR_COCINA;
+                                    jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
+                                    updateValorTotal();
+                                }
                                 break;
                             default:
                                 super.setValueAt(aValue, rowIndex, columnIndex);

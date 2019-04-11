@@ -41,6 +41,7 @@ public class LogInDialogView extends AbstractView {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
+        jButtonCancelar = new javax.swing.JButton();
         jXLabelUser1 = new org.jdesktop.swingx.JXLabel();
         jideButtonConfig = new com.jidesoft.swing.JideButton();
         jPanelCenter = new javax.swing.JPanel();
@@ -56,18 +57,27 @@ public class LogInDialogView extends AbstractView {
         jRadioButtonLocal = new javax.swing.JRadioButton();
         jRadioButtonRemoto = new javax.swing.JRadioButton();
         jPanelOptions = new javax.swing.JPanel();
-        jButtonCancelar = new javax.swing.JButton();
         jButtonAutenticar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(153, 153, 153));
-        setMinimumSize(new java.awt.Dimension(426, 272));
+        setMaximumSize(new java.awt.Dimension(498, 272));
+        setMinimumSize(new java.awt.Dimension(498, 272));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(452, 239));
+        setPreferredSize(new java.awt.Dimension(498, 272));
         setResizable(false);
         getContentPane().setLayout(new java.awt.BorderLayout(20, 0));
 
         jPanel2.setOpaque(false);
+
+        jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jButtonCancelar.setBorderPainted(false);
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonCancelar);
 
         jXLabelUser1.setBackground(new java.awt.Color(153, 153, 153));
         jXLabelUser1.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
@@ -93,8 +103,8 @@ public class LogInDialogView extends AbstractView {
         jideLabel1.setText(bundle.getString("label_usuario")); // NOI18N
         jPanelUser.add(jideLabel1);
 
-        overlayTextField1.setMinimumSize(new java.awt.Dimension(200, 26));
-        overlayTextField1.setPreferredSize(new java.awt.Dimension(257, 22));
+        overlayTextField1.setMinimumSize(new java.awt.Dimension(250, 26));
+        overlayTextField1.setPreferredSize(new java.awt.Dimension(300, 22));
         jPanelUser.add(overlayTextField1);
 
         jPanelCenter.add(jPanelUser);
@@ -108,7 +118,7 @@ public class LogInDialogView extends AbstractView {
         jPasswordField.setToolTipText("Contraseña");
         jPasswordField.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         jPasswordField.setMinimumSize(new java.awt.Dimension(200, 26));
-        jPasswordField.setPreferredSize(new java.awt.Dimension(257, 22));
+        jPasswordField.setPreferredSize(new java.awt.Dimension(300, 22));
         jPasswordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPasswordFieldActionPerformed(evt);
@@ -160,14 +170,6 @@ public class LogInDialogView extends AbstractView {
         jPanelOptions.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
         jPanelOptions.setMaximumSize(new java.awt.Dimension(272, 44));
         jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
-
-        jButtonCancelar.setText(bundle.getString("label_salir")); // NOI18N
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
-            }
-        });
-        jPanelOptions.add(jButtonCancelar);
 
         jButtonAutenticar.setText(bundle.getString("label_autenticar")); // NOI18N
         jButtonAutenticar.setEnabled(false);

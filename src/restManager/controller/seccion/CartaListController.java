@@ -51,7 +51,6 @@ public class CartaListController extends AbstractListController<Carta> {
         c.setCodCarta(getModel().generateStringCode("Mnu-"));
         c.setMonedaPrincipal(R.COIN_SUFFIX.trim());
         c.setNombreCarta(nombre);
-        c.setPorcientoPorServicio((int) R.PERCENTAGE * 100);
         c.setSeccionList(new ArrayList<>());
         if (nombre != null && !nombre.isEmpty()) {
             getModel().startTransaction();

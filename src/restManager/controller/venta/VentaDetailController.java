@@ -112,14 +112,12 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public void updateOrdenDialog(Orden objectAtSelectedRow) {
-        if (autorize(objectAtSelectedRow)) {
             if (ordController == null) {
                 ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
 
             } else {
                 ordController.setInstance(objectAtSelectedRow);
             }
-        }
     }
 
     public void createNewOrden() {
@@ -299,7 +297,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     private boolean autorize(Orden o) {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 3 || o.getPersonalusuario().getUsuario().equals(R.loggedUser.getUsuario()) ) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 || o.getPersonalusuario().getUsuario().equals(R.loggedUser.getUsuario()) ) {
             return true;
         } else {
             LogInController control = new LogInController();
