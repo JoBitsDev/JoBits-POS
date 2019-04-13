@@ -84,14 +84,14 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         super(instance, parent, VentaDAO.getInstance());
         OrdenDAO.getInstance().addPropertyChangeListener(this);
     }
-    
-     public VentaDetailController(Venta instance, Window parent, Date fechafin) {
+
+    public VentaDetailController(Venta instance, Window parent, Date fechafin) {
         super(VentaDAO.getInstance());
-         setParent(parent);
-         setInstance(instance);
+        setParent(parent);
+        setInstance(instance);
         this.fechaFin = fechafin;
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-         constructView(parent);
+        constructView(parent);
     }
 
     @Override
@@ -105,27 +105,30 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        vi = new VentasCreateEditView(getInstance(), this, (JDialog) parent,fechaFin);
+        vi = new VentasCreateEditView(getInstance(), this, (JDialog) parent, fechaFin);
         setView(vi);
         getView().updateView();
         getView().setVisible(true);
     }
 
     public void updateOrdenDialog(Orden objectAtSelectedRow) {
-            if (ordController == null) {
-                ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
+        if (ordController == null) {
+            ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
 
-            } else {
-                ordController.setInstance(objectAtSelectedRow);
-            }
+        } else {
+            ordController.setInstance(objectAtSelectedRow);
+        }
     }
 
     public void createNewOrden() {
         boolean nil = ordController == null;
+        Orden newOrden;
         if (nil) {
             ordController = new OrdenController(getInstance());
+            newOrden = ordController.getInstance();
+        } else {
+          newOrden =  ordController.createNewInstance();
         }
-        Orden newOrden = ordController.createNewInstance();
         getInstance().getOrdenList().add(newOrden);
         ordController.create(newOrden, true);
         if (nil) {
@@ -297,7 +300,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     private boolean autorize(Orden o) {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 || o.getPersonalusuario().getUsuario().equals(R.loggedUser.getUsuario()) ) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 || o.getPersonalusuario().getUsuario().equals(R.loggedUser.getUsuario())) {
             return true;
         } else {
             LogInController control = new LogInController();
