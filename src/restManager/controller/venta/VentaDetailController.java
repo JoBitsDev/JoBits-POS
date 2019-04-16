@@ -230,11 +230,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public String getTotalVendido() {
-        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentas(getInstance()));
+       return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentas(getInstance()));
     }
 
-    public String getTotalGastado() {
-        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalGastos(getInstance()));
+    public String getTotalGastadoInsumos() {
+        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalGastosInsumo(getInstance()));
     }
 
     public List<Personal> getPersonalList() {
@@ -310,6 +310,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
         }
         return false;
+    }
+
+    public String getTotalVendidoNeto() {
+           return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentasNeta(getInstance()));
+    
     }
 
 }

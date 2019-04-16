@@ -23,12 +23,12 @@ import restManager.persistencia.models.NegocioDAO;
 public class R {
 
     public static final String SEPARADOR = "_";
-    
+
     public static String REST_NAME = null;
-    
+
     public static String logFilePath = "logs/";
-    
-    public static String COIN_SUFFIX ;
+
+    public static String COIN_SUFFIX;
 
     public static Personal loggedUser = null;
 
@@ -39,16 +39,16 @@ public class R {
     public static final int COINCHANGE = 25;
     
     public static String MAIN_COIN = null;
-    
+
     public static final boolean CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = true;
-    
+
     public static final String NO_MESA = "M-0";
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
-    
+
     public static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat(" hh ':' mm ' ' a ");
-    
-    public static final SimpleDateFormat DATE_FORMAT_FOR_LOGS= new SimpleDateFormat("yyyy'_'MM'_'dd");
+
+    public static final SimpleDateFormat DATE_FORMAT_FOR_LOGS = new SimpleDateFormat("yyyy'_'MM'_'dd");
 
     public static DecimalFormat formatoMoneda = new DecimalFormat("0.00");
 
@@ -56,10 +56,10 @@ public class R {
 
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
-    public static String RELEASE_VERSION = "Version 2.4.2";
-    
-    public static int BUILD_VERSION = 4;
-    
+    public static String RELEASE_VERSION = "Version 2.5";
+
+    public static int BUILD_VERSION = 5;
+
     public static void setLookAndFeels() {
         try {
             javax.swing.UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
@@ -109,6 +109,31 @@ public class R {
         public int getNivel() {
             return nivel;
         }
+    }
+
+    public enum TipoGasto {
+        UNSPECIFIED("-"),
+        CONSUMIBLE("CONSUMIBLE"),
+        COMISION("COMISION"),
+        FIJO("FIJO"),
+        IMPUESTO("IMPUESTO"),
+        OTROS("OTROS");
+
+        private final String nombre;
+
+        private TipoGasto(String nombre) {
+            this.nombre = nombre;
+        }
+
+        @Override
+        public String toString() {
+            return nombre;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
     }
 
 }

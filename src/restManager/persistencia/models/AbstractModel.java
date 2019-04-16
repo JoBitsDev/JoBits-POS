@@ -9,13 +9,10 @@ import java.util.logging.Logger;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.FlushModeType;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
-import org.postgresql.util.PSQLException;
 import restManager.controller.AbstractController.PersistAction;
-import restManager.controller.AbstractDialogController;
 import restManager.exceptions.ExceptionHandler;
 import restManager.resources.R;
 
@@ -66,7 +63,7 @@ public abstract class AbstractModel<T> implements Model {
                 getEntityManager().getTransaction().commit();
             } catch (PersistenceException e) {
                 getEntityManager().getTransaction().rollback();
-                JOptionPane.showConfirmDialog(null, e.getMessage(),"Error",JOptionPane.OK_OPTION);
+                JOptionPane.showConfirmDialog(null, e.getMessage(), "Error", JOptionPane.OK_OPTION);
             }
         }
     }
@@ -130,6 +127,20 @@ public abstract class AbstractModel<T> implements Model {
         }
 
         return prefix + "" + cont;
+    }
+
+    /**
+     * Tu generate IDs for the relational model of the application
+     *
+     * @return
+     */
+    public int generateIDCode() {
+        int cont = 0;
+        T a = find(cont);
+        while (a != null) {
+            cont++;
+        }
+        return cont;
     }
 
     public int generate(String idName) {
@@ -206,7 +217,7 @@ public abstract class AbstractModel<T> implements Model {
             }
             getEntityManager().getEntityManagerFactory().getCache().evict(entityClass);
         } catch (Exception e) {
-            ExceptionHandler.showExceptionToUser(e, "Error en base de datos");
+            ExceptionHandler.showExceptionToUser(e, "Error en base de datos \n "+e.getMessage() );
             try {
                 getEntityManager().getTransaction().setRollbackOnly();
             } catch (PersistenceException p) {

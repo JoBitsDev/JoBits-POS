@@ -303,7 +303,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public boolean autorize() {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 || instance.getPersonalusuario().getUsuario().equals(R.loggedUser.getUsuario())) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2) {
             return true;
         } else {
             LogInController control = new LogInController();

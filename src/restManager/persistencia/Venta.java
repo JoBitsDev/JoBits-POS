@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia;
 
 import java.io.Serializable;
@@ -24,8 +23,9 @@ import restManager.resources.R;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "venta")
@@ -33,6 +33,10 @@ import restManager.resources.R;
     @NamedQuery(name = "Venta.findAll", query = "SELECT v FROM Venta v"),
     @NamedQuery(name = "Venta.findByFecha", query = "SELECT v FROM Venta v WHERE v.fecha = :fecha"),
     @NamedQuery(name = "Venta.findByVentaTotal", query = "SELECT v FROM Venta v WHERE v.ventaTotal = :ventaTotal"),
+    @NamedQuery(name = "Venta.findByVentagastosEninsumos", query = "SELECT v FROM Venta v WHERE v.ventagastosEninsumos = :ventagastosEninsumos"),
+    @NamedQuery(name = "Venta.findByHoraPico", query = "SELECT v FROM Venta v WHERE v.horaPico = :horaPico"),
+    @NamedQuery(name = "Venta.findByVentagastosPagotrabajadores", query = "SELECT v FROM Venta v WHERE v.ventagastosPagotrabajadores = :ventagastosPagotrabajadores"),
+    @NamedQuery(name = "Venta.findByVentagastosGastos", query = "SELECT v FROM Venta v WHERE v.ventagastosGastos = :ventagastosGastos"),
     @NamedQuery(name = "Venta.findByVentagastosEninsumos", query = "SELECT v FROM Venta v WHERE v.ventagastosEninsumos = :ventagastosEninsumos")})
 public class Venta implements Serializable {
 
@@ -47,6 +51,14 @@ public class Venta implements Serializable {
     private Double ventaTotal;
     @Column(name = "ventagastos_eninsumos")
     private Double ventagastosEninsumos;
+    @Column(name = "hora_pico")
+    private Integer horaPico;
+    @Column(name = "ventagastos_pagotrabajadores")
+    private Float ventagastosPagotrabajadores;
+    @Column(name = "ventagastos_gastos")
+    private Float ventagastosGastos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta")
+    private List<GastoVenta> gastoVentaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventafecha")
     private List<Orden> ordenList;
 
@@ -81,12 +93,44 @@ public class Venta implements Serializable {
         this.ventagastosEninsumos = ventagastosEninsumos;
     }
 
+    public Integer getHoraPico() {
+        return horaPico;
+    }
+
     public List<Orden> getOrdenList() {
         return ordenList;
     }
-
+    
     public void setOrdenList(List<Orden> ordenList) {
         this.ordenList = ordenList;
+    }
+
+    public void setHoraPico(Integer horaPico) {
+        this.horaPico = horaPico;
+    }
+
+    public Float getVentagastosPagotrabajadores() {
+        return ventagastosPagotrabajadores;
+    }
+
+    public void setVentagastosPagotrabajadores(Float ventagastosPagotrabajadores) {
+        this.ventagastosPagotrabajadores = ventagastosPagotrabajadores;
+    }
+
+    public Float getVentagastosGastos() {
+        return ventagastosGastos;
+    }
+
+    public void setVentagastosGastos(Float ventagastosGastos) {
+        this.ventagastosGastos = ventagastosGastos;
+    }
+
+    public List<GastoVenta> getGastoVentaList() {
+        return gastoVentaList;
+    }
+
+    public void setGastoVentaList(List<GastoVenta> gastoVentaList) {
+        this.gastoVentaList = gastoVentaList;
     }
 
     @Override

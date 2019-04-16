@@ -169,7 +169,6 @@ public class MainController extends AbstractDialogController<Personal> {
         //
         //Contabilidad
         //
-        VENTA_RAPIDA(4),
         VENTAS(4),
         ARCHIVOS(4),
         PRESUPUESTO(4),
