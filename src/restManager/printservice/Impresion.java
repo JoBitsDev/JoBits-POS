@@ -2,6 +2,7 @@ package restManager.printservice;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,11 +19,13 @@ import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
 import restManager.persistencia.Almacen;
 
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
+import restManager.persistencia.GastoVenta;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.IpvRegistro;
@@ -94,6 +97,8 @@ public class Impresion {
     private final String IPV_TABLE_HEADER = "Ini. |Ent. |Disp.|Cons.|Final.",
             IPV_HEADER = "Resumen de gasto de insumos",
             IPV_PUNTO_ELAB = "Punto de elaboracion";
+
+    private final String GASTO_HEADER = "Resumen de gastos";
 
     /**
      * String referentes al almacen
@@ -1206,6 +1211,41 @@ public class Impresion {
         t.addLineSeperator();
 
         addFinal(t);
+
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+    }
+
+    public void printResumenGastos(List<GastoVenta> lista) {
+        Collections.sort(lista, (GastoVenta o1, GastoVenta o2) -> o1.getGasto().getNombre().compareTo(o2.getGasto().getNombre()));
+
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        t.addLineSeperator();
+        t.newLine();
+        t.alignCenter();
+        t.setText(GASTO_HEADER);
+        t.newLine();
+        t.alignRight();
+        t.setText(FECHA + R.DATE_FORMAT.format(lista.get(0).getVenta().getFecha()));
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+
+        float total = 0;
+        for (GastoVenta x : lista) {
+            t.alignLeft();
+            t.setText(x.getGasto().getNombre());
+            t.newLine();
+            t.alignRight();
+            t.setText(x.getImporte().toString() + R.COIN_SUFFIX);
+            t.newLine();
+            t.newLine();
+            total += x.getImporte();
+        }
+
+        addTotalAndFinal(t, total);
 
         sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }

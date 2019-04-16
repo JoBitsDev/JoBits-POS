@@ -8,6 +8,7 @@ package GUI.Views.venta;
 import GUI.Views.AbstractDetailView;
 import GUI.Views.util.StateCellRender;
 import GUI.Views.util.TableColumnAdjuster;
+import com.jidesoft.hints.ListDataIntelliHints;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -16,6 +17,8 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import restManager.controller.AbstractDialogController;
+import restManager.controller.gasto.GastoController;
+import restManager.controller.gasto.GastoOperacionController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
@@ -25,6 +28,7 @@ import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.CocinaDAO;
+import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.comun;
@@ -36,6 +40,7 @@ import restManager.util.comun;
 public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     RestManagerAbstractTableModel<Orden> modelOrd;
+    GastoOperacionController gastoController = new GastoOperacionController();
     Date fechaFin;
 
     public VentasCreateEditView(Venta instance, AbstractDialogController controller) {
@@ -79,7 +84,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jTabbedPaneResumen = new javax.swing.JTabbedPane();
         jPanelRoot = new javax.swing.JPanel();
         jPanelOptions = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        jideButton2 = new com.jidesoft.swing.JideButton();
         jPanel3 = new javax.swing.JPanel();
         jideButton1 = new com.jidesoft.swing.JideButton();
         jPanel1 = new javax.swing.JPanel();
@@ -92,6 +97,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelResumenVentas = new javax.swing.JPanel();
         jPanelNumero = new javax.swing.JPanel();
         jLabelTotalVentas = new javax.swing.JLabel();
+        jLabelTotalVentasNeta = new javax.swing.JLabel();
         jButtonImprimirZ = new javax.swing.JButton();
         jPanelVentasCamareras = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -104,7 +110,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelGastos = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButtonImprimirZ1 = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jLabelTotalGastosInsumo = new javax.swing.JLabel();
         jLabelTotalGastos = new javax.swing.JLabel();
+        jLabelTotalGastosPagoTrab = new javax.swing.JLabel();
         jPanelVentas = new javax.swing.JPanel();
         jPanelDetailOrdenes = new javax.swing.JPanel();
         jPanelOrdenesActivas = new javax.swing.JPanel();
@@ -116,6 +125,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jButtonEnviarCerrarCrearNueva = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jXTableOrdActivas = new org.jdesktop.swingx.JXTable();
+        jPanelOperaciones = new javax.swing.JPanel();
 
         jPanelResumenDetallado.setLayout(new java.awt.BorderLayout());
         jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
@@ -134,14 +144,14 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelOptions.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
         jPanelOptions.setLayout(new java.awt.BorderLayout());
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
-        jButton2.setBorderPainted(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jideButton2.setForeground(new java.awt.Color(204, 204, 204));
+        jideButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jideButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jideButton2ActionPerformed(evt);
             }
         });
-        jPanelOptions.add(jButton2, java.awt.BorderLayout.WEST);
+        jPanelOptions.add(jideButton2, java.awt.BorderLayout.WEST);
 
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -195,9 +205,15 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelNumero.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jLabelTotalVentas.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabelTotalVentas.setText("1503.52 CUC");
-        jLabelTotalVentas.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_total"))); // NOI18N
+        jLabelTotalVentas.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalVentas.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 51), 3, true), bundle.getString("label_total"))); // NOI18N
         jPanelNumero.add(jLabelTotalVentas);
+
+        jLabelTotalVentasNeta.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelTotalVentasNeta.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalVentasNeta.setToolTipText("Este recuadro muestra la venta sin porciento por servicio");
+        jLabelTotalVentasNeta.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 3, true), "Venta Neta"));
+        jPanelNumero.add(jLabelTotalVentasNeta);
 
         jButtonImprimirZ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jButtonImprimirZ.setText("Imprimir Z");
@@ -314,10 +330,26 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         });
         jPanel2.add(jButtonImprimirZ1, java.awt.BorderLayout.LINE_START);
 
+        jPanel6.setOpaque(false);
+        jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jLabelTotalGastosInsumo.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelTotalGastosInsumo.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalGastosInsumo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 0), 3, true), bundle.getString("label_insumo"))); // NOI18N
+        jPanel6.add(jLabelTotalGastosInsumo);
+
         jLabelTotalGastos.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabelTotalGastos.setText("850.23 CUC");
-        jLabelTotalGastos.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_total"))); // NOI18N
-        jPanel2.add(jLabelTotalGastos, java.awt.BorderLayout.EAST);
+        jLabelTotalGastos.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalGastos.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 3, true), bundle.getString("label_gastos"))); // NOI18N
+        jPanel6.add(jLabelTotalGastos);
+
+        jLabelTotalGastosPagoTrab.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelTotalGastosPagoTrab.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalGastosPagoTrab.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 0, 204), 3, true), bundle.getString("label_pago_salario"))); // NOI18N
+        jLabelTotalGastosPagoTrab.setEnabled(false);
+        jPanel6.add(jLabelTotalGastosPagoTrab);
+
+        jPanel2.add(jPanel6, java.awt.BorderLayout.CENTER);
 
         jPanelGastos.add(jPanel2);
 
@@ -397,6 +429,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jTabbedPaneData.addTab("Ventas", jPanelVentas);
 
+        jPanelOperaciones.setLayout(new java.awt.BorderLayout());
+        jTabbedPaneData.addTab("Operaciones", jPanelOperaciones);
+
         jPanelData.add(jTabbedPaneData, java.awt.BorderLayout.CENTER);
 
         jPanelRoot.add(jPanelData, java.awt.BorderLayout.CENTER);
@@ -457,9 +492,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         enviarCerrarCrear();
     }//GEN-LAST:event_jButtonEnviarCerrarCrearNuevaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jideButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton2ActionPerformed
         dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jideButton2ActionPerformed
 
     @Override
 
@@ -548,8 +583,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         updateTableResumenDependientes();
         updateTableResumenCocinas();
         updateTableResumenDetallado();
+        updateTableResumenGastos();
         jLabelTotalVentas.setText(getController().getTotalVendido());
-        jLabelTotalGastos.setText(getController().getTotalGastado());
+        jLabelTotalVentasNeta.setText(getController().getTotalVendidoNeto());
+        jLabelTotalGastosInsumo.setText(getController().getTotalGastadoInsumos());
 
     }
 
@@ -565,7 +602,6 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -577,14 +613,19 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButtonTerminarVentas;
     private javax.swing.JLabel jLabelFecha;
     private javax.swing.JLabel jLabelTotalGastos;
+    private javax.swing.JLabel jLabelTotalGastosInsumo;
+    private javax.swing.JLabel jLabelTotalGastosPagoTrab;
     private javax.swing.JLabel jLabelTotalVentas;
+    private javax.swing.JLabel jLabelTotalVentasNeta;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelData;
     private javax.swing.JPanel jPanelDetailOrdenes;
     private javax.swing.JPanel jPanelGastos;
     private javax.swing.JPanel jPanelNumero;
+    private javax.swing.JPanel jPanelOperaciones;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelOrdenesActivas;
     private javax.swing.JPanel jPanelResumen;
@@ -604,6 +645,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private org.jdesktop.swingx.JXPanel jXPanelOrdenControl;
     private org.jdesktop.swingx.JXTable jXTableOrdActivas;
     private com.jidesoft.swing.JideButton jideButton1;
+    private com.jidesoft.swing.JideButton jideButton2;
     private com.jidesoft.swing.JideLabel jideLabel1;
     // End of variables declaration//GEN-END:variables
 
@@ -679,4 +721,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         }
     }
 
-}
+    private void updateTableResumenGastos() {
+        gastoController.setParent(jPanelOperaciones);
+        gastoController.setDiaVenta(instance);
+        jLabelTotalGastos.setText(comun.setDosLugaresDecimales(gastoController.getValorTotalGastos()));
+        gastoController.constructView(jPanelOperaciones);
+    }
+
+    }

@@ -655,7 +655,7 @@ public class VentaDAO1 {
         return retOrd;
     }
 
-    public static float getValorTotalGastos(Venta instance) {
+    public static float getValorTotalGastosInsumo(Venta instance) {
         float total = 0;
         for (Orden x : instance.getOrdenList()) {
             if (!x.getDeLaCasa() && x.getHoraTerminada() != null) {
@@ -711,6 +711,18 @@ public class VentaDAO1 {
             }
         }
         return mayor_moda;
+    }
+
+    public static float getValorTotalVentasNeta(Venta v) {
+        float total = 0;
+        for (Orden x : v.getOrdenList()) {
+            if (!x.getDeLaCasa() && x.getHoraTerminada() != null) {
+                for (ProductovOrden p : x.getProductovOrdenList()) {
+                    total += p.getCantidad()*p.getProductoVenta().getPrecioVenta();
+                }
+            }
+        }
+        return total; 
     }
 
 }

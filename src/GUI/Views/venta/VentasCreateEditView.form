@@ -65,15 +65,17 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton2">
+            <Component class="com.jidesoft.swing.JideButton" name="jideButton2">
               <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="cc" red="cc" type="rgb"/>
+                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/restManager/resources/images/logout40.png"/>
                 </Property>
-                <Property name="borderPainted" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jideButton2ActionPerformed"/>
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -226,11 +228,40 @@
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Lucida Grande" size="24" style="0"/>
                                 </Property>
-                                <Property name="text" type="java.lang.String" value="1503.52 CUC"/>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="Strings.properties" key="label_numeros_moneda" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                                     <TitledBorder title="Total">
+                                      <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                        <LineBorder roundedCorners="true" thickness="3">
+                                          <Color PropertyName="color" blue="33" green="99" red="0" type="rgb"/>
+                                        </LineBorder>
+                                      </Border>
                                       <ResourceString PropertyName="titleX" bundle="Strings.properties" key="label_total" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                    </TitledBorder>
+                                  </Border>
+                                </Property>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JLabel" name="jLabelTotalVentasNeta">
+                              <Properties>
+                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                  <Font name="Lucida Grande" size="24" style="0"/>
+                                </Property>
+                                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                  <ResourceString bundle="Strings.properties" key="label_numeros_moneda" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                </Property>
+                                <Property name="toolTipText" type="java.lang.String" value="Este recuadro muestra la venta sin porciento por servicio"/>
+                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                    <TitledBorder title="Venta Neta">
+                                      <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                        <LineBorder roundedCorners="true" thickness="3">
+                                          <Color PropertyName="color" blue="99" green="99" red="0" type="rgb"/>
+                                        </LineBorder>
+                                      </Border>
                                     </TitledBorder>
                                   </Border>
                                 </Property>
@@ -463,26 +494,89 @@
                                 </Constraint>
                               </Constraints>
                             </Component>
-                            <Component class="javax.swing.JLabel" name="jLabelTotalGastos">
+                            <Container class="javax.swing.JPanel" name="jPanel6">
                               <Properties>
-                                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                  <Font name="Lucida Grande" size="24" style="0"/>
-                                </Property>
-                                <Property name="text" type="java.lang.String" value="850.23 CUC"/>
-                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                                    <TitledBorder title="Total">
-                                      <ResourceString PropertyName="titleX" bundle="Strings.properties" key="label_total" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
-                                    </TitledBorder>
-                                  </Border>
-                                </Property>
+                                <Property name="opaque" type="boolean" value="false"/>
                               </Properties>
                               <Constraints>
                                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                                  <BorderConstraints direction="East"/>
+                                  <BorderConstraints direction="Center"/>
                                 </Constraint>
                               </Constraints>
-                            </Component>
+
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                                <Property name="alignment" type="int" value="2"/>
+                              </Layout>
+                              <SubComponents>
+                                <Component class="javax.swing.JLabel" name="jLabelTotalGastosInsumo">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Lucida Grande" size="24" style="0"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                      <ResourceString bundle="Strings.properties" key="label_numeros_moneda" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                    </Property>
+                                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                        <TitledBorder title="Insumos">
+                                          <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                            <LineBorder roundedCorners="true" thickness="3">
+                                              <Color PropertyName="color" blue="0" green="99" red="99" type="rgb"/>
+                                            </LineBorder>
+                                          </Border>
+                                          <ResourceString PropertyName="titleX" bundle="Strings.properties" key="label_insumo" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                        </TitledBorder>
+                                      </Border>
+                                    </Property>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JLabel" name="jLabelTotalGastos">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Lucida Grande" size="24" style="0"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                      <ResourceString bundle="Strings.properties" key="label_numeros_moneda" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                    </Property>
+                                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                        <TitledBorder title="Gastos">
+                                          <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                            <LineBorder roundedCorners="true" thickness="3">
+                                              <Color PropertyName="color" blue="99" green="99" red="0" type="rgb"/>
+                                            </LineBorder>
+                                          </Border>
+                                          <ResourceString PropertyName="titleX" bundle="Strings.properties" key="label_gastos" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                        </TitledBorder>
+                                      </Border>
+                                    </Property>
+                                  </Properties>
+                                </Component>
+                                <Component class="javax.swing.JLabel" name="jLabelTotalGastosPagoTrab">
+                                  <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Lucida Grande" size="24" style="0"/>
+                                    </Property>
+                                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                                      <ResourceString bundle="Strings.properties" key="label_numeros_moneda" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                    </Property>
+                                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                        <TitledBorder title="Salarios">
+                                          <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                                            <LineBorder roundedCorners="true" thickness="3">
+                                              <Color PropertyName="color" blue="cc" green="0" red="cc" type="rgb"/>
+                                            </LineBorder>
+                                          </Border>
+                                          <ResourceString PropertyName="titleX" bundle="Strings.properties" key="label_pago_salario" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                                        </TitledBorder>
+                                      </Border>
+                                    </Property>
+                                    <Property name="enabled" type="boolean" value="false"/>
+                                  </Properties>
+                                </Component>
+                              </SubComponents>
+                            </Container>
                           </SubComponents>
                         </Container>
                       </SubComponents>
@@ -664,6 +758,17 @@
                       </SubComponents>
                     </Container>
                   </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="jPanelOperaciones">
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                      <JTabbedPaneConstraints tabName="Operaciones">
+                        <Property name="tabTitle" type="java.lang.String" value="Operaciones"/>
+                      </JTabbedPaneConstraints>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                 </Container>
               </SubComponents>
             </Container>
