@@ -306,13 +306,13 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return items.get(rowIndex).getGastoVentaPK().getGastocodGasto();
-                    case 1:
                         return items.get(rowIndex).getGasto().getTipoGastoidGasto().getNombre();
-                    case 2:
+                    case 1:
                         return items.get(rowIndex).getGasto().getNombre();
-                    case 3:
+                    case 2:
                         return items.get(rowIndex).getImporte();
+                    case 3:
+                        return items.get(rowIndex).getDescripcion();
                     default:
                         return null;
                 }
@@ -322,13 +322,13 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
             public String getColumnName(int column) {
                 switch (column) {
                     case 0:
-                        return "Codigo";
-                    case 1:
                         return "Categoria";
-                    case 2:
+                    case 1:
                         return "Tipo";
-                    case 3:
+                    case 2:
                         return "Monto";
+                    case 3:
+                        return "Descripcion";
                     default:
                         return null;
                 }
