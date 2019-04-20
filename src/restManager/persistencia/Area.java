@@ -42,6 +42,8 @@ public class Area implements Serializable {
     private String codArea;
     @Column(name = "capacidad")
     private Integer capacidad;
+    @Column(name = "porciento_por_servicio")
+    private Integer porcientoPorServicio;
     @Column(name = "nombre")
     private String nombre;
     @ManyToMany(cascade = {CascadeType.ALL})
@@ -122,6 +124,14 @@ public class Area implements Serializable {
     @Override
     public String toString() {
         return nombre + " [ " + codArea + " ]";
+    }
+
+    public Integer getPorcientoPorServicio() {
+        return porcientoPorServicio;
+    }
+
+    public void setPorcientoPorServicio(Integer porcientoPorServicio) {
+        this.porcientoPorServicio = porcientoPorServicio;
     }
 
 }

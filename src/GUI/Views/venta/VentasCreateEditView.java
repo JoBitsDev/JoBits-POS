@@ -723,7 +723,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     private void updateTableResumenGastos() {
         gastoController.setParent(jPanelOperaciones);
-        gastoController.setDiaVenta(instance);
+        gastoController.setDiaVenta(getController().getInstance());
         jLabelTotalGastos.setText(comun.setDosLugaresDecimales(gastoController.getValorTotalGastos()));
         gastoController.constructView(jPanelOperaciones);
     }

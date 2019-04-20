@@ -16,6 +16,7 @@ import java.util.List;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.controller.venta.VentaListController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Control.VentaDAO1;
@@ -41,13 +42,11 @@ public class VentaCalendarView extends AbstractView {
     public VentaCalendarView(AbstractDialogController controller) {
         super(DialogType.FULL_SCREEN, controller);
         initComponents();
-        init();
     }
 
     public VentaCalendarView(AbstractDialogController<Venta> controller, AbstractView parentComponent) {
         super(DialogType.FULL_SCREEN, controller, parentComponent);
         initComponents();
-        init();
     }
 
     /**
@@ -74,7 +73,8 @@ public class VentaCalendarView extends AbstractView {
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanelControles = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jPanelSeleccion = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -88,6 +88,9 @@ public class VentaCalendarView extends AbstractView {
         jLabelPromedioVendido = new javax.swing.JLabel();
         jLabelHoraPico = new javax.swing.JLabel();
         jPanelGastos = new javax.swing.JPanel();
+        jLabelInsumo = new javax.swing.JLabel();
+        jLabelTrabajadores = new javax.swing.JLabel();
+        jLabelOtros = new javax.swing.JLabel();
         jPanelResumen = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -189,13 +192,21 @@ public class VentaCalendarView extends AbstractView {
         jPanelControles.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButton2.setText(bundle.getString("label_editar")); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEliminar.setText(bundle.getString("label_eliminar")); // NOI18N
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonEliminarActionPerformed(evt);
             }
         });
-        jPanelControles.add(jButton2);
+        jPanelControles.add(jButtonEliminar);
+
+        jButtonEditar.setText(bundle.getString("label_editar")); // NOI18N
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+        jPanelControles.add(jButtonEditar);
 
         getContentPane().add(jPanelControles, java.awt.BorderLayout.PAGE_END);
 
@@ -244,36 +255,63 @@ public class VentaCalendarView extends AbstractView {
 
         getContentPane().add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
 
-        jPanelEstadisticas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadisticas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 18))); // NOI18N
+        jPanelEstadisticas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadisticas Generales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
         jPanelEstadisticas.setLayout(new java.awt.GridLayout(3, 0));
 
-        jPanelVentas.setBorder(javax.swing.BorderFactory.createTitledBorder("Ventas"));
+        jPanelVentas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ventas", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
         jPanelVentas.setLayout(new java.awt.GridLayout(3, 0));
 
         jLabelTotalVendido.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabelTotalVendido.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelTotalVendido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgar-arriba.png"))); // NOI18N
-        jLabelTotalVendido.setText("26000 CUC");
+        jLabelTotalVendido.setText("XXXXXX.XX < >");
         jLabelTotalVendido.setToolTipText("Total");
+        jLabelTotalVendido.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
         jPanelVentas.add(jLabelTotalVendido);
 
         jLabelPromedioVendido.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabelPromedioVendido.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPromedioVendido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/promedio.png"))); // NOI18N
-        jLabelPromedioVendido.setText("3000 CUC");
+        jLabelPromedioVendido.setText("XXXXXX.XX < >");
         jLabelPromedioVendido.setToolTipText("Promedio");
+        jLabelPromedioVendido.setBorder(javax.swing.BorderFactory.createTitledBorder("Promedio"));
         jPanelVentas.add(jLabelPromedioVendido);
 
         jLabelHoraPico.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabelHoraPico.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelHoraPico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/hora_pico.png"))); // NOI18N
-        jLabelHoraPico.setText("4 PM");
+        jLabelHoraPico.setText("XX PM/AM");
         jLabelHoraPico.setToolTipText("Hora Pico");
+        jLabelHoraPico.setBorder(javax.swing.BorderFactory.createTitledBorder("Hora Pico"));
         jPanelVentas.add(jLabelHoraPico);
 
         jPanelEstadisticas.add(jPanelVentas);
 
-        jPanelGastos.setBorder(javax.swing.BorderFactory.createTitledBorder("Gastos"));
+        jPanelGastos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gastos", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
+        jPanelGastos.setLayout(new java.awt.GridLayout(3, 0));
+
+        jLabelInsumo.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabelInsumo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelInsumo.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelInsumo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 0), 3, true), "Insumo"));
+        jPanelGastos.add(jLabelInsumo);
+
+        jLabelTrabajadores.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabelTrabajadores.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelTrabajadores.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTrabajadores.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 0, 204), 3, true), "Trabajadores"));
+        jLabelTrabajadores.setEnabled(false);
+        jPanelGastos.add(jLabelTrabajadores);
+
+        jLabelOtros.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabelOtros.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelOtros.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelOtros.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 3, true), "Otros"));
+        jPanelGastos.add(jLabelOtros);
+
         jPanelEstadisticas.add(jPanelGastos);
 
-        jPanelResumen.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen Detallado"));
+        jPanelResumen.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resumen Detallado", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
         jPanelResumen.setLayout(new javax.swing.BoxLayout(jPanelResumen, javax.swing.BoxLayout.PAGE_AXIS));
 
         jLabel10.setText("Del");
@@ -313,13 +351,13 @@ public class VentaCalendarView extends AbstractView {
 
     private void jYearChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jYearChooser1PropertyChange
         if (evt.getPropertyName().equals("year")) {
-            init();
+            updateView();
         }
     }//GEN-LAST:event_jYearChooser1PropertyChange
 
     private void jMonthChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jMonthChooser1PropertyChange
         if (evt.getPropertyName().equals("month")) {
-            init();
+            updateView();
         }
     }//GEN-LAST:event_jMonthChooser1PropertyChange
 
@@ -335,9 +373,9 @@ public class VentaCalendarView extends AbstractView {
 
     }//GEN-LAST:event_jTableCalendarFocusLost
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         editSelected();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jTableCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCalendarMouseClicked
         if (evt.getClickCount() == 2 && evt.getButton() == 1) {
@@ -353,10 +391,15 @@ public class VentaCalendarView extends AbstractView {
 //        jDateChooserAl.setDate((Date) evt.getNewValue());
     }//GEN-LAST:event_jDateChooserDelPropertyChange
 
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        deleteSelected();// TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonEliminar;
     private com.toedter.calendar.JDateChooser jDateChooserAl;
     private com.toedter.calendar.JDateChooser jDateChooserDel;
     private javax.swing.JLabel jLabel1;
@@ -371,8 +414,11 @@ public class VentaCalendarView extends AbstractView {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelHoraPico;
+    private javax.swing.JLabel jLabelInsumo;
+    private javax.swing.JLabel jLabelOtros;
     private javax.swing.JLabel jLabelPromedioVendido;
     private javax.swing.JLabel jLabelTotalVendido;
+    private javax.swing.JLabel jLabelTrabajadores;
     private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -395,17 +441,6 @@ public class VentaCalendarView extends AbstractView {
 
     @Override
     public void updateView() {
-//    Venta root = new Venta();
-//    root.setOrdenList(new ArrayList<Orden>());
-//        RestManagerVentaTreeNode rootNode = new RestManagerVentaTreeNode(root);
-//        for (Venta x : getController().getItems()) {
-//            rootNode.insert(x);
-//        }
-//        jTree1 = new JTree(rootNode);
-
-    }
-
-    public void init() {
         updateCalendar();
         jScrollPane1.getViewport().setOpaque(false);
 
@@ -464,11 +499,7 @@ public class VentaCalendarView extends AbstractView {
         };
         jTableCalendar.setModel(model);
         updatePanelEstaidisticas(model.getItems());
-//        model.addSelectionListener((PropertyChangeEvent evt) -> {
-//            updatePanelEstaidisticas(getSelectedVentas());
-//        });
         jTableCalendar.setDefaultRenderer(Venta.class, new VentaCellRender());
-        //jTableCalendar.setRowHeight(80);
     }
 
     public List<Venta> findVentas(int month, int year) {
@@ -502,23 +533,30 @@ public class VentaCalendarView extends AbstractView {
 
     public void updatePanelEstaidisticas(List<Venta> ventas) {
         double suma = 0;
-        double gastos = 0;
+        double gInsumos = 0;
+        double gGastos = 0;
+        double gTrabajadores = 0;
         int cantidad = 0;
-        int horas_pico = 0;
         for (Venta x : ventas) {
             if (x.getVentaTotal() != null) {
                 suma += x.getVentaTotal();
-                gastos += x.getVentagastosEninsumos();
-                horas_pico += VentaDAO1.getPickHour(x);
-                cantidad ++;
+                if (x.getVentagastosEninsumos() != null) {
+                    gInsumos += x.getVentagastosEninsumos();
+                }
+                if (x.getVentagastosGastos() != null) {
+                    gGastos += x.getVentagastosGastos();
+                }
+                cantidad++;
             }
         }
         double promedio = suma / cantidad;
 
         jLabelTotalVendido.setText(comun.setDosLugaresDecimales((float) suma));
         jLabelPromedioVendido.setText(comun.setDosLugaresDecimales((float) promedio));
+        jLabelInsumo.setText(comun.setDosLugaresDecimales((float) gInsumos));
+        jLabelOtros.setText(comun.setDosLugaresDecimales((float) gGastos));
         int hora_pico_promedio = VentaDAO1.getModalPickHour(ventas);
-        jLabelHoraPico.setText(hora_pico_promedio > 12 ? (hora_pico_promedio-12) + " PM" : hora_pico_promedio + " AM");
+        jLabelHoraPico.setText(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
     }
 
     private void editSelected() {
@@ -535,4 +573,7 @@ public class VentaCalendarView extends AbstractView {
         getController().createDetailResumenView(jDateChooserDel.getDate(), jDateChooserAl.getDate());
     }
 
+    private void deleteSelected() {
+        getController().destroy(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()));
+    }
 }

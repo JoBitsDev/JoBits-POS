@@ -6,15 +6,10 @@
 package GUI.Views.util;
 
 import java.awt.Component;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.TableCellRenderer;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Venta;
-import restManager.util.RestManagerAbstractTableCellModel;
 import restManager.util.comun;
 
 /**
@@ -24,6 +19,7 @@ import restManager.util.comun;
 public class VentaCellRender extends javax.swing.JPanel implements TableCellRenderer {
 
     Venta v;
+    final String RETORNO_CARRO = "\n";
 
     /**
      * Creates new form VentaCellRender
@@ -48,11 +44,13 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jidePopup1 = new com.jidesoft.popup.JidePopup();
         jLabelGastos = new javax.swing.JLabel();
         jLabelVentas = new javax.swing.JLabel();
         jLabelHoraPico = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""+v.getFecha().getDate()));
+        setToolTipText(CreateToolTip(v));
         setOpaque(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -102,6 +100,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     private javax.swing.JLabel jLabelGastos;
     private javax.swing.JLabel jLabelHoraPico;
     private javax.swing.JLabel jLabelVentas;
+    private com.jidesoft.popup.JidePopup jidePopup1;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -129,7 +128,21 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
 
     private String getPickHour(Venta v) {
         int a;
-        return (a = VentaDAO1.getPickHour(v)) > 12 ? (a - 12)  + " PM" : (a) + " AM";
+        return (a = VentaDAO1.getPickHour(v)) > 12 ? (a - 12) + " PM" : (a) + " AM";
+    }
+
+    private String CreateToolTip(Venta v) {
+        String toolTip = "Total ordenes atendidas: " + v.getOrdenList().size();
+        toolTip += RETORNO_CARRO;
+        if (v.getVentagastosGastos() != null) {
+            toolTip += "Total otros gastos: " + comun.setDosLugaresDecimales(v.getVentagastosGastos());
+        }
+        toolTip += RETORNO_CARRO;
+        if (v.getVentagastosEninsumos() != null) {
+            toolTip += "Total gastos insumos " + comun.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue());
+        }
+        toolTip += RETORNO_CARRO;
+        return toolTip;
     }
 
 }

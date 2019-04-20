@@ -38,7 +38,7 @@ public class VentaDAO1 {
 
         //llenando l array
         for (Orden o : aux) {
-            if (!o.getDeLaCasa()) {
+            if (!o.getDeLaCasa() && o.getHoraTerminada() != null) {
                 joinListsProductovOrden(ret,
                         new ArrayList(o.getProductovOrdenList()));
             }
@@ -718,11 +718,11 @@ public class VentaDAO1 {
         for (Orden x : v.getOrdenList()) {
             if (!x.getDeLaCasa() && x.getHoraTerminada() != null) {
                 for (ProductovOrden p : x.getProductovOrdenList()) {
-                    total += p.getCantidad()*p.getProductoVenta().getPrecioVenta();
+                    total += p.getCantidad() * p.getProductoVenta().getPrecioVenta();
                 }
             }
         }
-        return total; 
+        return total;
     }
 
 }

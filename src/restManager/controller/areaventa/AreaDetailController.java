@@ -52,6 +52,7 @@ public class AreaDetailController extends AbstractDetailController<Area>{
         ret.setCodArea(getModel().generateStringCode("A-"));
         ret.setMesaList(new ArrayList<>());
         ret.setNombre("Nueva Area");
+        ret.setPorcientoPorServicio(0);
         return ret;
     }
 

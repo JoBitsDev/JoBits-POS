@@ -163,13 +163,13 @@ public class MainController extends AbstractDialogController<Personal> {
         //
         // Almacen
         //
-        ALMACEN(3),
-        INVENTARIO(3),
-        IPV(3),
+        ALMACEN(2),
+        INVENTARIO(2),
+        IPV(2),
         //
         //Contabilidad
         //
-        VENTAS(4),
+        VENTAS(3),
         ARCHIVOS(4),
         PRESUPUESTO(4),
         COMENZAR_VENTAS(1),
