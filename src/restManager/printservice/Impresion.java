@@ -1237,6 +1237,9 @@ public class Impresion {
         for (GastoVenta x : lista) {
             t.alignLeft();
             t.setText(x.getGasto().getNombre());
+            if (x.getDescripcion() != null) {
+                t.setText(" (" + x.getDescripcion() + ")");
+            }
             t.newLine();
             t.alignRight();
             t.setText(x.getImporte().toString() + R.COIN_SUFFIX);

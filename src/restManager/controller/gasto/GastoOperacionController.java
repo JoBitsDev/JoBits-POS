@@ -143,6 +143,7 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
             v.setImporte(monto);
             v.setGasto(gast);
             v.setVenta(diaVenta);
+            v.setDescripcion(descripcion);
             getModel().startTransaction();
             GastoVentaDAO.getInstance().create(v);
             getModel().commitTransaction();

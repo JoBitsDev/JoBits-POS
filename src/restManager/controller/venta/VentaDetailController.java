@@ -5,11 +5,9 @@
  */
 package restManager.controller.venta;
 
-import GUI.Views.AbstractView;
 import GUI.Views.util.CalcularCambioView;
 import GUI.Views.venta.VentasCreateEditView;
 import java.awt.Window;
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -18,17 +16,16 @@ import javax.swing.JDialog;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
+import restManager.persistencia.GastoVenta;
 import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
-import restManager.persistencia.jpa.staticContent;
 import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.OrdenDAO;
 import restManager.persistencia.models.PersonalDAO;
@@ -127,7 +124,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             ordController = new OrdenController(getInstance());
             newOrden = ordController.getInstance();
         } else {
-          newOrden =  ordController.createNewInstance();
+            newOrden = ordController.createNewInstance();
         }
         getInstance().getOrdenList().add(newOrden);
         ordController.create(newOrden, true);
@@ -147,12 +144,10 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public void removeOrden(Orden objectAtSelectedRow) {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3) {
-            throw new UnauthorizedAccessException(getView());
+        if (new LogInController().constructoAuthorizationView(getView(), 4)) {
+            ordController.destroy(objectAtSelectedRow, false);
+            fetchNewDataFromServer();
         }
-        ordController.destroy(objectAtSelectedRow, false);
-        fetchNewDataFromServer();
-
     }
 
     public void fetchNewDataFromServer() {
@@ -163,7 +158,10 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public void terminarVentas() {
         if (showConfirmDialog(vi, "¿Desea terminar el día de trabajo?")) {
             float ventaTotal = 0,
-                    ventasGastosEnInsumos = 0;
+                    ventasGastosEnInsumos = 0,
+                    ventasGastosGastos = 0,
+                    ventasPagoTrabajadores = 0;
+
             for (Orden x : getInstance().getOrdenList()) {
                 if (x.getHoraTerminada() == null) {
                     showErrorDialog(vi, "Existen tickets sin cerrar. Cierre los tickets antes de terminar la venta");
@@ -175,8 +173,12 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
                 ventasGastosEnInsumos += x.getOrdengastoEninsumos();
 
             }
+            for (GastoVenta x : getInstance().getGastoVentaList()) {
+                ventasGastosGastos += x.getImporte();
+            }
             getInstance().setVentaTotal((double) ventaTotal);
             getInstance().setVentagastosEninsumos((double) ventasGastosEnInsumos);
+            getInstance().setVentagastosGastos(ventasGastosGastos);
             update(getInstance());
 
         }
@@ -230,7 +232,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public String getTotalVendido() {
-       return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentas(getInstance()));
+        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentas(getInstance()));
     }
 
     public String getTotalGastadoInsumos() {
@@ -313,8 +315,8 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public String getTotalVendidoNeto() {
-           return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentasNeta(getInstance()));
-    
+        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentasNeta(getInstance()));
+
     }
 
 }
