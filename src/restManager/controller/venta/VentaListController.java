@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import restManager.controller.AbstractDialogController;
+import restManager.controller.login.LogInController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Venta;
@@ -42,9 +43,21 @@ public class VentaListController extends AbstractDialogController<Venta> {
     @Override
     public void constructView(Container parent) {
         setView(new VentaCalendarView(this, (AbstractView) parent));
+        getView().updateView();
         getView().setVisible(true);
     }
 
+    @Override
+    public void destroy(Venta selected) {
+        if (showDeleteDialog((Container) getView(), selected) && new LogInController().constructoAuthorizationView(getView(), 4)) {
+            this.selected = selected;
+            this.destroy();
+            this.selected = null;
+            getView().updateView();
+            showSuccessDialog(getView());
+        }
+    }
+    
     public void createDetailResumenView(Date del, Date al) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, del.getYear());
@@ -55,6 +68,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
 //        v.setFecha(selectedVentas.get(0).getFecha());
         v.setVentaTotal(0.0);
         v.setOrdenList(new ArrayList<>());
+        v.setGastoVentaList(new ArrayList<>());
         v.setVentagastosEninsumos(0.0);
         Date current;
 
@@ -65,6 +79,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
             Venta ve = getModel().find(current);
             if (ve != null) {
                 v.getOrdenList().addAll(ve.getOrdenList());
+                v.getGastoVentaList().addAll(ve.getGastoVentaList());
                 v.setVentaTotal(v.getVentaTotal() + ve.getVentaTotal());
                 v.setVentagastosEninsumos(v.getVentagastosEninsumos() + ve.getVentagastosEninsumos());
                 if (initDateNotSet) {

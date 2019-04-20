@@ -92,7 +92,7 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
 
             },
             new String [] {
-                "Codigo", "Categoria", "Tipo", "Monto"
+                "Categoria", "Tipo", "Monto", "Descripcion"
             }
         ));
         jScrollPane4.setViewportView(jTableInfo);
@@ -336,7 +336,7 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
         });
 
         jLabelGast.setText(
-                comun.setDosLugaresDecimales(comun.calcularSumaTabla(jTableInfo, 3)));
+                comun.setDosLugaresDecimales(comun.calcularSumaTabla(jTableInfo, 2)));
         jComboBoxCategoria.setModel(new DefaultComboBoxModel<>(R.TipoGasto.values()));
         jLabelMonto.setText(R.COIN_SUFFIX);
 

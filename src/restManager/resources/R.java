@@ -56,7 +56,7 @@ public class R {
 
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
-    public static String RELEASE_VERSION = "Version 2.5";
+    public static String RELEASE_VERSION = "Version 2.5.1 (BETA)";
 
     public static int BUILD_VERSION = 5;
 
@@ -114,9 +114,12 @@ public class R {
     public enum TipoGasto {
         UNSPECIFIED("-"),
         CONSUMIBLE("CONSUMIBLE"),
-        COMISION("COMISION"),
         FIJO("FIJO"),
         IMPUESTO("IMPUESTO"),
+        INVERSION("INVERSION"),
+        TRANSPORTE("TRANSPORTE"),
+        SERVICIO("SERVICIO"),
+        ACTIVO_FIJO("ACTIVO_FIJO"),
         OTROS("OTROS");
 
         private final String nombre;
