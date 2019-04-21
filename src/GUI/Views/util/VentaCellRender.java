@@ -6,15 +6,10 @@
 package GUI.Views.util;
 
 import java.awt.Component;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.TableCellRenderer;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Venta;
-import restManager.util.RestManagerAbstractTableCellModel;
 import restManager.util.comun;
 
 /**
@@ -139,12 +134,12 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     private String CreateToolTip(Venta v) {
         String toolTip = "Total ordenes atendidas: " + v.getOrdenList().size();
         toolTip += RETORNO_CARRO;
-        if (v.getVentagastosEninsumos() != null) {
-            toolTip += "Total gastos insumos " + comun.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue());
-        }
-        toolTip += RETORNO_CARRO;
         if (v.getVentagastosGastos() != null) {
             toolTip += "Total otros gastos: " + comun.setDosLugaresDecimales(v.getVentagastosGastos());
+        }
+        toolTip += RETORNO_CARRO;
+        if (v.getVentagastosEninsumos() != null) {
+            toolTip += "Total gastos insumos " + comun.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue());
         }
         toolTip += RETORNO_CARRO;
         return toolTip;

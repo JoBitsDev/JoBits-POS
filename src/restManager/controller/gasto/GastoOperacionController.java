@@ -83,7 +83,9 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
 
     @Override
     public void constructView(Container parent) {
-        setView(new GastoOperacionView(this, parent));
+        if (getView() == null) {
+            setView(new GastoOperacionView(this, parent));
+        }
         getView().updateView();
         getView().setVisible(true);
     }

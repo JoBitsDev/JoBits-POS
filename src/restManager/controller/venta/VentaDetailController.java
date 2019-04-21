@@ -273,11 +273,13 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public Float getGastoTotalDeInsumo(IpvRegistro i) {
         float total = 0;
         for (Orden x : getInstance().getOrdenList()) {
-            for (ProductovOrden p : x.getProductovOrdenList()) {
-                if (p.getProductoVenta().getCocinacodCocina().equals(i.getIpv().getCocina())) {
-                    for (ProductoInsumo in : p.getProductoVenta().getProductoInsumoList()) {
-                        if (in.getInsumo().equals(i.getIpv().getInsumo())) {
-                            total += p.getCantidad() * in.getCantidad();
+            if (x.getHoraTerminada() != null) {
+                for (ProductovOrden p : x.getProductovOrdenList()) {
+                    if (p.getProductoVenta().getCocinacodCocina().equals(i.getIpv().getCocina())) {
+                        for (ProductoInsumo in : p.getProductoVenta().getProductoInsumoList()) {
+                            if (in.getInsumo().equals(i.getIpv().getInsumo())) {
+                                total += p.getCantidad() * in.getCantidad();
+                            }
                         }
                     }
                 }

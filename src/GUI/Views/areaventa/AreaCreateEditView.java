@@ -46,6 +46,9 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jSpinnerCantidad = new javax.swing.JSpinner();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jSpinnerPorciento = new javax.swing.JSpinner();
         jPanel6 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -100,10 +103,22 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         jLabel2.setText(bundle.getString("label_cantidad_de_mesas")); // NOI18N
         jPanel4.add(jLabel2);
 
+        jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, 20, 1));
         jSpinnerCantidad.setPreferredSize(new java.awt.Dimension(60, 26));
         jPanel4.add(jSpinnerCantidad);
 
         jPanel8.add(jPanel4);
+
+        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel3.setText(bundle.getString("label_porciento")); // NOI18N
+        jPanel9.add(jLabel3);
+
+        jSpinnerPorciento.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        jSpinnerPorciento.setPreferredSize(new java.awt.Dimension(60, 26));
+        jPanel9.add(jSpinnerPorciento);
+
+        jPanel8.add(jPanel9);
 
         jPanel2.add(jPanel8);
 
@@ -204,6 +219,7 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         }
         getInstance().setNombre(jTextFieldNombre.getText());
         getInstance().setCapacidad((Integer) jSpinnerCantidad.getValue());
+        getInstance().setPorcientoPorServicio((Integer) jSpinnerPorciento.getValue());
         return true;
     }
 
@@ -219,6 +235,9 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         if (getInstance().getCapacidad() != null) {
             jSpinnerCantidad.setValue(getInstance().getCapacidad());
         }
+        if (getInstance().getPorcientoPorServicio() != null) {
+            jSpinnerPorciento.setValue(getInstance().getPorcientoPorServicio());
+        }
         jComboBox1.setModel(new RestManagerComboBoxModel<>(getController().getCartaList()));
         jList1.setModel(new RestManagerListModel<>(getInstance().getCartaList()));
 
@@ -232,6 +251,7 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
     private javax.swing.JComboBox<Carta> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelID;
     private javax.swing.JList<Carta> jList1;
@@ -243,8 +263,10 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinnerCantidad;
+    private javax.swing.JSpinner jSpinnerPorciento;
     private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 

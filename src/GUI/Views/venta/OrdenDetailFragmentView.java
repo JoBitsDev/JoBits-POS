@@ -72,7 +72,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jPanel2 = new javax.swing.JPanel();
         jideButtonImpimirTicket = new com.jidesoft.swing.JideButton();
         jCheckBoxPorciento = new javax.swing.JCheckBox();
-        jSpinner1 = new javax.swing.JSpinner();
+        jSpinnerPorciento = new javax.swing.JSpinner();
         jCheckBoxDELACASA = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jLabelVALORTotal = new javax.swing.JLabel();
@@ -184,13 +184,13 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         });
         jPanel2.add(jCheckBoxPorciento);
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(10.0f), Float.valueOf(-100.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
-        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+        jSpinnerPorciento.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(-100.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
+        jSpinnerPorciento.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinner1StateChanged(evt);
+                jSpinnerPorcientoStateChanged(evt);
             }
         });
-        jPanel2.add(jSpinner1);
+        jPanel2.add(jSpinnerPorciento);
 
         jCheckBoxDELACASA.setBackground(new java.awt.Color(255, 255, 153));
         jCheckBoxDELACASA.setText("De la Casa");
@@ -263,9 +263,9 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         //   addPorcientoToOrden(jCheckBoxPorciento.isSelected());
     }//GEN-LAST:event_jCheckBoxPorcientoActionPerformed
 
-    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-        getController().updatePorciento((float) jSpinner1.getValue());
-    }//GEN-LAST:event_jSpinner1StateChanged
+    private void jSpinnerPorcientoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerPorcientoStateChanged
+        getController().updatePorciento((float) jSpinnerPorciento.getValue());
+    }//GEN-LAST:event_jSpinnerPorcientoStateChanged
 
     private void jideButtonAgregarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonAgregarNotaActionPerformed
         getController().addNota(getModel().getObjectAtSelectedRow());
@@ -301,7 +301,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     private javax.swing.JPanel jPanelDetalles;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelroot;
-    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinnerPorciento;
     private org.jdesktop.swingx.JXPanel jXPanelBotones;
     private com.jidesoft.swing.JideButton jideButtonAgregarNota;
     private com.jidesoft.swing.JideButton jideButtonCerrarMesaEnviarCocina;
@@ -320,7 +320,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jLabelVALORMesa.setText(getInstance().getMesacodMesa().getCodMesa());
         jLabelVALORNOORDEN.setText(getInstance().getCodOrden());
         jCheckBoxDELACASA.setSelected(getInstance().getDeLaCasa());
-        jSpinner1.setValue(getInstance().getPorciento());
+        jSpinnerPorciento.setValue(getInstance().getPorciento());
         updateValorTotal();
 
     }
