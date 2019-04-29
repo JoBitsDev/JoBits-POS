@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia;
 
 import java.io.Serializable;
@@ -22,11 +21,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import restManager.exceptions.DevelopingOperationException;
 
 /**
  * FirstDream
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "orden")
@@ -40,7 +40,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Orden.findByGananciaXporciento", query = "SELECT o FROM Orden o WHERE o.gananciaXporciento = :gananciaXporciento"),
     @NamedQuery(name = "Orden.findByOrdenvalorMonetario", query = "SELECT o FROM Orden o WHERE o.ordenvalorMonetario = :ordenvalorMonetario"),
     @NamedQuery(name = "Orden.findByOrdengastoEninsumos", query = "SELECT o FROM Orden o WHERE o.ordengastoEninsumos = :ordengastoEninsumos")})
-public class Orden implements Serializable {
+public class Orden implements Serializable, Comparable<Orden> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -218,7 +218,21 @@ public class Orden implements Serializable {
 
     @Override
     public String toString() {
-        return  codOrden ;
+        return codOrden;
+    }
+
+    @Override
+    public int compareTo(Orden o) {
+        int o2 = Integer.parseInt(o.getCodOrden().split("-")[1]);
+        int o1 = Integer.parseInt(getCodOrden().split("-")[1]);
+
+        if (o1 > o2) {
+            return 1;
+        }
+        if (o1 < o2) {
+            return -1;
+        }
+        return 0;
     }
 
 }

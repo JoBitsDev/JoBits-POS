@@ -31,6 +31,7 @@ import restManager.persistencia.models.CocinaDAO;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
+import restManager.util.RestManagerComboBoxModel;
 import restManager.util.comun;
 
 /**
@@ -88,7 +89,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanel3 = new javax.swing.JPanel();
         jideButton1 = new com.jidesoft.swing.JideButton();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jButtonCambiarTurno = new javax.swing.JButton();
         jButtonTerminarVentas = new javax.swing.JButton();
         jLabelFecha = new javax.swing.JLabel();
         jPanelData = new javax.swing.JPanel();
@@ -168,9 +169,13 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButton1.setText(bundle.getString("label_imprimir_resumen")); // NOI18N
-        jButton1.setEnabled(false);
-        jPanel1.add(jButton1);
+        jButtonCambiarTurno.setText(bundle.getString("label_cambiar_turno")); // NOI18N
+        jButtonCambiarTurno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCambiarTurnoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonCambiarTurno);
 
         jButtonTerminarVentas.setText(bundle.getString("label_terminar_ventas")); // NOI18N
         jButtonTerminarVentas.addActionListener(new java.awt.event.ActionListener() {
@@ -496,6 +501,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jideButton2ActionPerformed
 
+    private void jButtonCambiarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiarTurnoActionPerformed
+        getController().cambiarTurno();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCambiarTurnoActionPerformed
+
     @Override
 
     public void setEditingMode() {
@@ -601,11 +610,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButtonCambiarTurno;
     private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirZ;
@@ -658,9 +667,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
             }
         });
         adj.adjustColumns();
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
             jTabbedPaneData.remove(0);
         }
+        jButtonCambiarTurno.setEnabled(getController().getInstance().getCambioTurno1() == null);
     }
 
     private void updateTableResumenCocinas() {
@@ -728,4 +738,4 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         gastoController.constructView(jPanelOperaciones);
     }
 
-    }
+}

@@ -272,9 +272,11 @@ public class VentaDAO1 {
 
         //llenando l array
         for (Orden o : aux) {
-            if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p)) {
-                joinListsProductovOrden(ret,
-                        new ArrayList(o.getProductovOrdenList()));
+            if (o.getPersonalusuario() != null) {
+                if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p)) {
+                    joinListsProductovOrden(ret,
+                            new ArrayList(o.getProductovOrdenList()));
+                }
             }
         }//nˆ3
 

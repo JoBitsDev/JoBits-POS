@@ -40,6 +40,11 @@ import restManager.resources.R;
     @NamedQuery(name = "Venta.findByVentagastosEninsumos", query = "SELECT v FROM Venta v WHERE v.ventagastosEninsumos = :ventagastosEninsumos")})
 public class Venta implements Serializable {
 
+    @Column(name = "cambio_turno1")
+    private String cambioTurno1;
+    @Column(name = "cambio_turno2")
+    private String cambioTurno2;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -100,7 +105,7 @@ public class Venta implements Serializable {
     public List<Orden> getOrdenList() {
         return ordenList;
     }
-    
+
     public void setOrdenList(List<Orden> ordenList) {
         this.ordenList = ordenList;
     }
@@ -156,6 +161,22 @@ public class Venta implements Serializable {
     @Override
     public String toString() {
         return "Venta del dia " + R.DATE_FORMAT.format(fecha);
+    }
+
+    public String getCambioTurno1() {
+        return cambioTurno1;
+    }
+
+    public void setCambioTurno1(String cambioTurno1) {
+        this.cambioTurno1 = cambioTurno1;
+    }
+
+    public String getCambioTurno2() {
+        return cambioTurno2;
+    }
+
+    public void setCambioTurno2(String cambioTurno2) {
+        this.cambioTurno2 = cambioTurno2;
     }
 
 }

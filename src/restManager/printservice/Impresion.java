@@ -52,7 +52,7 @@ public class Impresion {
 
     private boolean monedaCUC;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
-    private final boolean SHOW_PRICES = true;
+    private boolean SHOW_PRICES = true;
     private final boolean PRINT_IN_CENTRAL_KITCHEN = false;
     private final boolean PRINT_GASTOS_EN_AUTORIZOS = false;
     private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
@@ -271,11 +271,11 @@ public class Impresion {
                         }
                         sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
                     }
-                    printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+                    printCancelationKitchen(o, cocinasExistentesEnLaOrden.get(i));
                 }
             } else {
                 if (cocinasExistentesEnLaOrden.size() > 0) {
-                    printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+                    printCancelationKitchen(o, cocinasExistentesEnLaOrden.get(0));
                 }
 
             }
@@ -811,6 +811,14 @@ public class Impresion {
         return estadoImpresion;
     }
 
+    public boolean SHOW_PRICES() {
+        return SHOW_PRICES;
+    }
+
+    public void setSHOW_PRICES(boolean SHOW_PRICES) {
+        this.SHOW_PRICES = SHOW_PRICES;
+    }
+
     //
     // Private printing format methods
     //
@@ -845,7 +853,7 @@ public class Impresion {
     }
 
     private void addFinal(Ticket t) {
-        t.feed((byte) 5);
+        t.feed((byte) 3);
         t.finit();
     }
 
@@ -874,7 +882,7 @@ public class Impresion {
     private void addHeader(Ticket t) {
         t.resetAll();
         t.initialize();
-        //p.feedBack((byte)2);
+        t.feedBack((byte)2);
         t.alignCenter();
         t.setText(CABECERA);
         t.newLine();
@@ -924,16 +932,18 @@ public class Impresion {
             t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
             t.newLine();
             t.alignRight();
-            if (x.getOrden().getDeLaCasa()) {
-                if (PRINT_GASTOS_EN_AUTORIZOS) {
-                    t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getGasto()));
+            if (SHOW_PRICES) {
+                if (x.getOrden().getDeLaCasa()) {
+                    if (PRINT_GASTOS_EN_AUTORIZOS) {
+                        t.setText(comun.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getGasto()));
+                    } else {
+                        t.setText(comun.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                    }
                 } else {
-                    t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                    t.setText(comun.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
                 }
-            } else {
-                t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                t.newLine();
             }
-            t.newLine();
             if (x.getOrden().getDeLaCasa()) {
                 if (PRINT_GASTOS_EN_AUTORIZOS) {
                     total += x.getCantidad() * x.getProductoVenta().getGasto();
