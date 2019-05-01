@@ -103,10 +103,13 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelVentasCamareras = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableVentasDependientes = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
         jButtonImprimirDptes = new javax.swing.JButton();
+        jButtonImpPagoVentas = new javax.swing.JButton();
         jPanelVentasCocinas = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTableVentasPorCocina = new javax.swing.JTable();
+        jPanel5 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
         jPanelGastos = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -127,6 +130,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jScrollPane2 = new javax.swing.JScrollPane();
         jXTableOrdActivas = new org.jdesktop.swingx.JXTable();
         jPanelOperaciones = new javax.swing.JPanel();
+        jPanelExtracciones = new javax.swing.JPanel();
+        jPanelPagoTrabajadores = new javax.swing.JPanel();
 
         jPanelResumenDetallado.setLayout(new java.awt.BorderLayout());
         jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
@@ -241,14 +246,14 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
             },
             new String [] {
-                "Usuario", "Monto", "Ordenes Atendidas"
+                "Usuario", "Monto", "Ordenes Atendidas", "Pago por venta"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -263,14 +268,28 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelVentasCamareras.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
+        jPanel4.setOpaque(false);
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
         jButtonImprimirDptes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jButtonImprimirDptes.setText(bundle.getString("label_imprimir")); // NOI18N
+        jButtonImprimirDptes.setText(bundle.getString("label_imprimir_resumen_ventas")); // NOI18N
         jButtonImprimirDptes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonImprimirDptesActionPerformed(evt);
             }
         });
-        jPanelVentasCamareras.add(jButtonImprimirDptes, java.awt.BorderLayout.PAGE_END);
+        jPanel4.add(jButtonImprimirDptes, java.awt.BorderLayout.WEST);
+
+        jButtonImpPagoVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonImpPagoVentas.setText(bundle.getString("label_imprimir_pago_por_venta")); // NOI18N
+        jButtonImpPagoVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImpPagoVentasActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButtonImpPagoVentas, java.awt.BorderLayout.EAST);
+
+        jPanelVentasCamareras.add(jPanel4, java.awt.BorderLayout.PAGE_END);
 
         jPanelResumenVentas.add(jPanelVentasCamareras);
 
@@ -305,14 +324,19 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelVentasCocinas.add(jScrollPane5, java.awt.BorderLayout.CENTER);
 
+        jPanel5.setOpaque(false);
+        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jButton8.setText(bundle.getString("label_imprimir")); // NOI18N
+        jButton8.setText(bundle.getString("label_imprimir_resumen_ventas")); // NOI18N
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
-        jPanelVentasCocinas.add(jButton8, java.awt.BorderLayout.PAGE_END);
+        jPanel5.add(jButton8);
+
+        jPanelVentasCocinas.add(jPanel5, java.awt.BorderLayout.PAGE_END);
 
         jPanelResumenVentas.add(jPanelVentasCocinas);
 
@@ -435,6 +459,13 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jTabbedPaneData.addTab("Ventas", jPanelVentas);
 
         jPanelOperaciones.setLayout(new java.awt.BorderLayout());
+
+        jPanelExtracciones.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_extracciones"))); // NOI18N
+        jPanelOperaciones.add(jPanelExtracciones, java.awt.BorderLayout.WEST);
+
+        jPanelPagoTrabajadores.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_pago_trabajadores"))); // NOI18N
+        jPanelOperaciones.add(jPanelPagoTrabajadores, java.awt.BorderLayout.EAST);
+
         jTabbedPaneData.addTab("Operaciones", jPanelOperaciones);
 
         jPanelData.add(jTabbedPaneData, java.awt.BorderLayout.CENTER);
@@ -504,6 +535,14 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private void jButtonCambiarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiarTurnoActionPerformed
         getController().cambiarTurno();        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCambiarTurnoActionPerformed
+
+    private void jButtonImpPagoVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImpPagoVentasActionPerformed
+        int row = jTableVentasDependientes.getSelectedRow();
+        if (row == -1) {
+            throw new NoSelectedException(jTableVentasDependientes);
+        }
+        getController().printPagoPorVentaPersonal(jTableVentasDependientes.getValueAt(row, 0).toString());
+    }//GEN-LAST:event_jButtonImpPagoVentasActionPerformed
 
     @Override
 
@@ -589,8 +628,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
             jXTableOrdActivas.setRowHeight(40);
 
         }
-        updateTableResumenDependientes();
-        updateTableResumenCocinas();
+        updateTableResumenPuntosElaboracion();
+        updateTableResumenDptes();
         updateTableResumenDetallado();
         updateTableResumenGastos();
         jLabelTotalVentas.setText(getController().getTotalVendido());
@@ -616,6 +655,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonCambiarTurno;
     private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
+    private javax.swing.JButton jButtonImpPagoVentas;
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirZ;
     private javax.swing.JButton jButtonImprimirZ1;
@@ -629,14 +669,18 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelData;
     private javax.swing.JPanel jPanelDetailOrdenes;
+    private javax.swing.JPanel jPanelExtracciones;
     private javax.swing.JPanel jPanelGastos;
     private javax.swing.JPanel jPanelNumero;
     private javax.swing.JPanel jPanelOperaciones;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelOrdenesActivas;
+    private javax.swing.JPanel jPanelPagoTrabajadores;
     private javax.swing.JPanel jPanelResumen;
     private javax.swing.JPanel jPanelResumenDetallado;
     private javax.swing.JPanel jPanelResumenVentas;
@@ -673,7 +717,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jButtonCambiarTurno.setEnabled(getController().getInstance().getCambioTurno1() == null);
     }
 
-    private void updateTableResumenCocinas() {
+    private void updateTableResumenDptes() {
         List<Personal> p = getController().getPersonalList();
         comun.limpiarTabla(jTableVentasDependientes);
         p.forEach((x) -> {
@@ -681,7 +725,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         });
     }
 
-    private void updateTableResumenDependientes() {
+    private void updateTableResumenPuntosElaboracion() {
         List<Cocina> c = getController().getCocinaList();
         comun.limpiarTabla(jTableVentasPorCocina);
         c.forEach((x) -> {
@@ -732,7 +776,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     }
 
     private void updateTableResumenGastos() {
-        gastoController.setParent(jPanelOperaciones);
+        gastoController.setParent(jPanelExtracciones);
         gastoController.setDiaVenta(getController().getInstance());
         jLabelTotalGastos.setText(comun.setDosLugaresDecimales(gastoController.getValorTotalGastos()));
         gastoController.constructView(jPanelOperaciones);

@@ -16,6 +16,7 @@ import javax.swing.JDialog;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.GastoVenta;
@@ -350,8 +351,13 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     private Impresion getImpresionInstance() {
         Impresion i = Impresion.getDefaultInstance();
         i.setSHOW_PRICES(showConfirmDialog(
-                getView(), "Presione si para imprimir los valores, \n no para imprimir solo las cantidades"));
+                getView(), "Presione SI para imprimir los valores,\nNo para imprimir solo las cantidades"));
         return i;
+    }
+
+    public void printPagoPorVentaPersonal(String user) {
+      Impresion i = getImpresionInstance();
+      i.prinPagoPorVenta(getInstance(),user);
     }
 
 }

@@ -39,6 +39,9 @@ import restManager.resources.R;
     @NamedQuery(name = "ProductoVenta.findByVisible", query = "SELECT p FROM ProductoVenta p WHERE p.visible = :visible")})
 public class ProductoVenta implements Serializable {
 
+    @Column(name = "pago_por_venta")
+    private Float pagoPorVenta;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -194,6 +197,14 @@ public class ProductoVenta implements Serializable {
     @Override
     public String toString() {
         return nombre + " (" + precioVenta + R.COIN_SUFFIX + " )";
+    }
+
+    public Float getPagoPorVenta() {
+        return pagoPorVenta;
+    }
+
+    public void setPagoPorVenta(Float pagoPorVenta) {
+        this.pagoPorVenta = pagoPorVenta;
     }
 
 }

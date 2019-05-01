@@ -35,6 +35,7 @@ import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Transaccion;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.CocinaDAO;
+import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.ProductovOrdenDAO;
 import restManager.resources.R;
 import restManager.util.comun;
@@ -882,7 +883,7 @@ public class Impresion {
     private void addHeader(Ticket t) {
         t.resetAll();
         t.initialize();
-        t.feedBack((byte)2);
+        t.feedBack((byte) 2);
         t.alignCenter();
         t.setText(CABECERA);
         t.newLine();
@@ -1263,9 +1264,52 @@ public class Impresion {
         sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
+    public void prinPagoPorVenta(Venta instance, String usuario) {
+        Personal p = PersonalDAO.getInstance().find(usuario);
+        ArrayList<Orden> lista = new ArrayList<>(instance.getOrdenList());
+        Collections.sort(lista);
+
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        t.addLineSeperator();
+        t.newLine();
+        t.alignCenter();
+        t.setText(GASTO_HEADER);
+        t.newLine();
+        t.alignRight();
+        t.setText(FECHA + R.DATE_FORMAT.format(instance.getFecha()));
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+
+        float total = 0;
+        for (ProductovOrden pv : VentaDAO1.getResumenVentasCamarero(instance, p)) {
+            if (pv.getProductoVenta().getPagoPorVenta() != null) {
+                if (pv.getProductoVenta().getPagoPorVenta() != 0) {
+                    t.alignLeft();
+                    t.setText(pv.getCantidad() + " " + pv.getProductoVenta().getNombre());
+                    t.newLine();
+                    t.alignRight();
+                    if (SHOW_PRICES) {
+                        t.setText(comun.setDosLugaresDecimales(pv.getCantidad() * pv.getProductoVenta().getPagoPorVenta()));
+                    }
+                    t.newLine();
+                    total += pv.getCantidad() * pv.getProductoVenta().getPagoPorVenta();
+                }
+
+            }
+        }
+
+        addTotalAndFinal(t, total);
+
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+    }
     //
     //Inner Classes
     //
+
     private class JobListener implements PrintJobListener {
 
         private JOptionPane progressDialog;

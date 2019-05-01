@@ -84,6 +84,8 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jComboBoxSECCION = new javax.swing.JComboBox<>();
         jPanelTable = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
+        jXLabelPagoVenta = new org.jdesktop.swingx.JXLabel();
+        jSpinnerPagoVenta = new JSpinner();
         jideButton1 = new com.jidesoft.swing.JideButton();
         jXLabelCosto = new org.jdesktop.swingx.JXLabel();
         jXLabelGasto = new org.jdesktop.swingx.JXLabel();
@@ -174,6 +176,13 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         jPanelTable.setLayout(new javax.swing.BoxLayout(jPanelTable, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 15, 5));
+
+        jXLabelPagoVenta.setText(bundle.getString("label_pago_por_venta")); // NOI18N
+        jPanel6.add(jXLabelPagoVenta);
+
+        jSpinnerPagoVenta.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
+        jSpinnerPagoVenta.setPreferredSize(new java.awt.Dimension(100, 26));
+        jPanel6.add(jSpinnerPagoVenta);
 
         jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jideButton1.setToolTipText("Imprimir");
@@ -276,6 +285,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         instance.setGasto(Float.parseFloat(jXLabelGasto.getText().split(" ")[0]));
         instance.setVisible(false);
         instance.setGanancia(instance.getPrecioVenta() - instance.getGasto());
+        instance.setPagoPorVenta((float) jSpinnerPagoVenta.getValue());
         return (jComboBoxCOCINA.getSelectedItem() != null && jComboBoxSECCION.getSelectedItem() != null);
     }
 
@@ -284,6 +294,9 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         this.jXLabelPCod.setText(instance.getPCod());
         this.jTextFieldNombre.setText(instance.getNombre());
         jSpinnerPrecio.setValue(instance.getPrecioVenta());
+        if(instance.getPagoPorVenta() != null){
+            jSpinnerPagoVenta.setValue(instance.getPagoPorVenta());
+        }
         if (instance.getGasto() == null) {
             jXLabelGasto.setText(comun.setDosLugaresDecimales(0));
         } else {
@@ -408,6 +421,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     private javax.swing.JPanel jPanelInputs;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelTable;
+    private javax.swing.JSpinner jSpinnerPagoVenta;
     private javax.swing.JSpinner jSpinnerPrecio;
     private javax.swing.JTextField jTextFieldNombre;
     private org.jdesktop.swingx.JXLabel jXLabelCocina;
@@ -416,6 +430,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
     private org.jdesktop.swingx.JXLabel jXLabelMoneda;
     private org.jdesktop.swingx.JXLabel jXLabelNombre;
     private org.jdesktop.swingx.JXLabel jXLabelPCod;
+    private org.jdesktop.swingx.JXLabel jXLabelPagoVenta;
     private org.jdesktop.swingx.JXLabel jXLabelPrecio;
     private org.jdesktop.swingx.JXLabel jXLabelSeccion;
     private org.jdesktop.swingx.JXPanel jXPanelRoot;
