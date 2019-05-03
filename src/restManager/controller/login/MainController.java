@@ -16,6 +16,8 @@ import java.text.ParseException;
 import javax.swing.JOptionPane;
 import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
+import restManager.controller.Licence.Licence;
+import restManager.controller.Licence.LicenceController;
 import restManager.controller.almacen.AlmacenListController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.areaventa.AreaVentaController;
@@ -66,6 +68,7 @@ public class MainController extends AbstractDialogController<Personal> {
     @Override
     public void constructView(Container parent) {
         setView(new MainView(this, (Dialog) parent, true));
+        getView().updateView();
         getView().setVisible(true);
     }
 
@@ -131,6 +134,9 @@ public class MainController extends AbstractDialogController<Personal> {
                 case COPIA_SEG:
                     copiaSegView seg = new copiaSegView(getView(), true);
                     break;
+                case LICENCIA:
+                    controller = new LicenceController(getView());
+                    break;
                 default:
                     getView().setEnabled(true);
                     throw new DevelopingOperationException(getView());
@@ -150,6 +156,18 @@ public class MainController extends AbstractDialogController<Personal> {
         return true;
     }
 
+    public Licence getEstadoLicencia() {
+        LicenceController licence = new LicenceController();
+        return licence.getLicence();
+    }
+
+    @Override
+    public MainView getView() {
+        return (MainView) super.getView(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
     public enum MenuButtons {
 
         //
@@ -183,7 +201,9 @@ public class MainController extends AbstractDialogController<Personal> {
         //CONFIGURACION
         //
 
-        COPIA_SEG(4);
+        COPIA_SEG(4), 
+        LICENCIA(0);
+        
         private final int nivelMinimoAcceso;
 
         private MenuButtons(int nivelMinimoAcceso) {

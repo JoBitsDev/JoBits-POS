@@ -155,37 +155,44 @@ public class VentaDAO1 {
     public static void getResumenVentasCamareroOnTable(JTable tabla, Venta v, Personal p) {
 
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[3]);
+        ArrayList[] rowData = comun.initArray(new ArrayList[4]);
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         float total = 0;
         int totalOrdenes = 0;
+        float pago_por_ventas = 0;
         //llenando l array
         for (Orden o : aux) {
             if (o.getPersonalusuario() != null) {
                 if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p) && o.getHoraTerminada() != null) {
                     total += o.getOrdenvalorMonetario();
                     totalOrdenes++;
+                    for (ProductovOrden pv : o.getProductovOrdenList()) {
+                        if (pv.getProductoVenta().getPagoPorVenta() != null) {
+                            pago_por_ventas += pv.getCantidad() * pv.getProductoVenta().getPagoPorVenta();
+                        }
+                    }
                 }
             }
         }//n
 
-        //convirtiendo a rowData
-        if (total != 0) {
-            rowData[0].add(p.getUsuario());
-            rowData[1].add(comun.setDosLugaresDecimales(total));
-            rowData[2].add(totalOrdenes);
+            //convirtiendo a rowData
+            if (total != 0) {
+                rowData[0].add(p.getUsuario());
+                rowData[1].add(comun.setDosLugaresDecimales(total));
+                rowData[2].add(totalOrdenes);
+                rowData[3].add(comun.setDosLugaresDecimales(pago_por_ventas));
 
-            //llenando la tabla
-            try {
-                comun.AddToTable(rowData, tabla);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
+                //llenando la tabla
+                try {
+                    comun.AddToTable(rowData, tabla);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(),
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
-    }
-
+    
     /**
      * crea un resumen del total que ha vendido cda cocina
      *
@@ -272,9 +279,11 @@ public class VentaDAO1 {
 
         //llenando l array
         for (Orden o : aux) {
-            if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p)) {
-                joinListsProductovOrden(ret,
-                        new ArrayList(o.getProductovOrdenList()));
+            if (o.getPersonalusuario() != null) {
+                if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p)) {
+                    joinListsProductovOrden(ret,
+                            new ArrayList(o.getProductovOrdenList()));
+                }
             }
         }//nˆ3
 

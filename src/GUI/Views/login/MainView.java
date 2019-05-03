@@ -6,9 +6,13 @@
 package GUI.Views.login;
 
 import GUI.Views.AbstractView;
+import com.jidesoft.swing.JideLabel;
+import java.awt.Color;
 import java.awt.Dialog;
+import javax.swing.JPanel;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Controller;
+import restManager.controller.Licence.Licence;
 import restManager.controller.login.MainController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.resources.R;
@@ -46,7 +50,7 @@ public class MainView extends AbstractView {
         styledLabelRestName = new com.jidesoft.swing.StyledLabel();
         jButton26 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelDetalles = new javax.swing.JPanel();
         jPanelPDV = new javax.swing.JPanel();
         BotonMenu = new javax.swing.JButton();
         BotonInsumo = new javax.swing.JButton();
@@ -68,13 +72,22 @@ public class MainView extends AbstractView {
         jPanelConfiguracion = new javax.swing.JPanel();
         jButtonCopiaSeguridad = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jideLabelLicencia = new com.jidesoft.swing.JideLabel();
+        jButton1 = new javax.swing.JButton();
         jideLabel3 = new com.jidesoft.swing.JideLabel();
-        jideLabel2 = new com.jidesoft.swing.JideLabel();
         jideLabel1 = new com.jidesoft.swing.JideLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(840, 720));
         setUndecorated(true);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
@@ -102,7 +115,7 @@ public class MainView extends AbstractView {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelDetalles.setLayout(new javax.swing.BoxLayout(jPanelDetalles, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelPDV.setBackground(new java.awt.Color(204, 204, 204));
         jPanelPDV.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createTitledBorder(null, "Productos de Venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
@@ -169,7 +182,7 @@ public class MainView extends AbstractView {
         });
         jPanelPDV.add(jButtonSalon);
 
-        jPanel3.add(jPanelPDV);
+        jPanelDetalles.add(jPanelPDV);
 
         jPanelAlmacen.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createTitledBorder(null, "Almacén", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
         jPanelAlmacen.setLayout(new java.awt.GridLayout(1, 0));
@@ -211,7 +224,7 @@ public class MainView extends AbstractView {
         });
         jPanelAlmacen.add(jButtonIPVs);
 
-        jPanel3.add(jPanelAlmacen);
+        jPanelDetalles.add(jPanelAlmacen);
 
         jPanelContabilidad.setBackground(new java.awt.Color(204, 204, 204));
         jPanelContabilidad.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createTitledBorder(null, "Contabilidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
@@ -267,7 +280,7 @@ public class MainView extends AbstractView {
         });
         jPanelContabilidad.add(jButtonPresupuesto);
 
-        jPanel3.add(jPanelContabilidad);
+        jPanelDetalles.add(jPanelContabilidad);
 
         jPanelTrabajadores.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Trabajadores", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24))); // NOI18N
         jPanelTrabajadores.setLayout(new java.awt.GridLayout(1, 0));
@@ -296,7 +309,7 @@ public class MainView extends AbstractView {
         });
         jPanelTrabajadores.add(jButtonPTrabajo);
 
-        jPanel3.add(jPanelTrabajadores);
+        jPanelDetalles.add(jPanelTrabajadores);
 
         jPanelConfiguracion.setBackground(new java.awt.Color(204, 204, 204));
         jPanelConfiguracion.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createTitledBorder(null, "Configuración", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
@@ -314,9 +327,9 @@ public class MainView extends AbstractView {
         });
         jPanelConfiguracion.add(jButtonCopiaSeguridad);
 
-        jPanel3.add(jPanelConfiguracion);
+        jPanelDetalles.add(jPanelConfiguracion);
 
-        jScrollPane1.setViewportView(jPanel3);
+        jScrollPane1.setViewportView(jPanelDetalles);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -324,13 +337,27 @@ public class MainView extends AbstractView {
         jPanel2.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jPanel4.setOpaque(false);
+
+        jideLabelLicencia.setForeground(new java.awt.Color(255, 255, 255));
+        jideLabelLicencia.setText("<Estado Licencia>");
+        jPanel4.add(jideLabelLicencia);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/key.png"))); // NOI18N
+        jButton1.setToolTipText("Activar");
+        jButton1.setBorderPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton1);
+
+        jPanel2.add(jPanel4, java.awt.BorderLayout.WEST);
+
         jideLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jideLabel3.setText(R.RELEASE_VERSION);
         jPanel2.add(jideLabel3, java.awt.BorderLayout.LINE_END);
-
-        jideLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jideLabel2.setText("Error en la licencia");
-        jPanel2.add(jideLabel2, java.awt.BorderLayout.LINE_START);
 
         jideLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jideLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -408,9 +435,37 @@ public class MainView extends AbstractView {
         action(MainController.MenuButtons.COPIA_SEG);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCopiaSeguridadActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        action(MainController.MenuButtons.LICENCIA);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
+        updateView();        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowGainedFocus
+
     @Override
     public void updateView() {
+        updateLicenceStatus();
+    }
 
+    private void updateLicenceStatus() {
+        Licence l = getController().getEstadoLicencia();
+
+        if (!l.LICENCIA_ACTIVA || !l.LICENCIA_VALIDA) {
+            jButtonVentas.setEnabled(false);
+            jButtonVender.setEnabled(false);
+            jButtonIPVs.setEnabled(false);
+            jButtonAlmacen.setEnabled(false);
+            jideLabelLicencia.setForeground(Color.red);
+            jideLabelLicencia.setText("Licencia vencida o faltante");
+        } else {
+            jButtonVender.setEnabled(true);
+            jButtonVentas.setEnabled(true);
+            jButtonIPVs.setEnabled(true);
+            jButtonAlmacen.setEnabled(true);
+            jideLabelLicencia.setForeground(Color.white);
+            jideLabelLicencia.setText("Dias Restantes de licencia " + l.DIAS_RESTANTES);
+        }
     }
 
     @Override
@@ -425,6 +480,7 @@ public class MainView extends AbstractView {
     private javax.swing.JButton BotonMenu;
     private javax.swing.JButton BotonSeccion;
     private org.edisoncor.gui.varios.ClockFace clockFace1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton26;
     private javax.swing.JButton jButtonAlmacen;
     private javax.swing.JButton jButtonArchivos;
@@ -439,16 +495,17 @@ public class MainView extends AbstractView {
     private javax.swing.JButton jButtonVentas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelAlmacen;
     private javax.swing.JPanel jPanelConfiguracion;
     private javax.swing.JPanel jPanelContabilidad;
+    private javax.swing.JPanel jPanelDetalles;
     private javax.swing.JPanel jPanelPDV;
     private javax.swing.JPanel jPanelTrabajadores;
     private javax.swing.JScrollPane jScrollPane1;
     private com.jidesoft.swing.JideLabel jideLabel1;
-    private com.jidesoft.swing.JideLabel jideLabel2;
     private com.jidesoft.swing.JideLabel jideLabel3;
+    private com.jidesoft.swing.JideLabel jideLabelLicencia;
     private com.jidesoft.swing.StyledLabel styledLabelRestName;
     // End of variables declaration//GEN-END:variables
 

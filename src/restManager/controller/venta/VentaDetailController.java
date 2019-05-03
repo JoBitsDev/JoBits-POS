@@ -16,7 +16,7 @@ import javax.swing.JDialog;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
-import restManager.exceptions.UnauthorizedAccessException;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.GastoVenta;
@@ -126,7 +126,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         } else {
             newOrden = ordController.createNewInstance();
         }
-        getInstance().getOrdenList().add(newOrden);
+        super.getInstance().getOrdenList().add(newOrden);
         ordController.create(newOrden, true);
         if (nil) {
             ordController = new OrdenController(newOrden, vi.getjPanelDetailOrdenes());
@@ -156,13 +156,15 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public void terminarVentas() {
+
         if (showConfirmDialog(vi, "¿Desea terminar el día de trabajo?")) {
             float ventaTotal = 0,
                     ventasGastosEnInsumos = 0,
                     ventasGastosGastos = 0,
                     ventasPagoTrabajadores = 0;
 
-            for (Orden x : getInstance().getOrdenList()) {
+            getModel().getEntityManager().refresh(super.getInstance());
+            for (Orden x : super.getInstance().getOrdenList()) {
                 if (x.getHoraTerminada() == null) {
                     showErrorDialog(vi, "Existen tickets sin cerrar. Cierre los tickets antes de terminar la venta");
                     return;
@@ -173,13 +175,13 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
                 ventasGastosEnInsumos += x.getOrdengastoEninsumos();
 
             }
-            for (GastoVenta x : getInstance().getGastoVentaList()) {
+            for (GastoVenta x : super.getInstance().getGastoVentaList()) {
                 ventasGastosGastos += x.getImporte();
             }
-            getInstance().setVentaTotal((double) ventaTotal);
-            getInstance().setVentagastosEninsumos((double) ventasGastosEnInsumos);
-            getInstance().setVentagastosGastos(ventasGastosGastos);
-            update(getInstance());
+            super.getInstance().setVentaTotal((double) ventaTotal);
+            super.getInstance().setVentagastosEninsumos((double) ventasGastosEnInsumos);
+            super.getInstance().setVentagastosGastos(ventasGastosGastos);
+            update(super.getInstance());
 
         }
     }
@@ -253,7 +255,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         Collections.sort(aux, (o1, o2) -> {
             return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
         });
-        Impresion.getDefaultInstance().printPersonalResumen(aux, p, getInstance().getFecha());
+        getImpresionInstance().printPersonalResumen(aux, p, getInstance().getFecha());
 
     }
 
@@ -261,13 +263,13 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         Impresion.getDefaultInstance().printZ(getInstance());
     }
 
-    public void printCocinaResumen(String string) {
-        Cocina c = CocinaDAO.getInstance().find(string);
+    public void printCocinaResumen(String codCocina) {
+        Cocina c = CocinaDAO.getInstance().find(codCocina);
         List<ProductovOrden> aux = VentaDAO1.getResumenVentasCocina(getInstance(), c);
         Collections.sort(aux, (o1, o2) -> {
             return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
         });
-        Impresion.getDefaultInstance().printResumenPuntoElab(aux, c, getInstance().getFecha());
+        getImpresionInstance().printResumenPuntoElab(aux, c, getInstance().getFecha());
     }
 
     public Float getGastoTotalDeInsumo(IpvRegistro i) {
@@ -303,22 +305,59 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     }
 
-    private boolean autorize(Orden o) {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 || o.getPersonalusuario().getUsuario().equals(R.loggedUser.getUsuario())) {
-            return true;
-        } else {
-            LogInController control = new LogInController();
-            if (control.constructoAuthorizationView(getParent(), o.getPersonalusuario().getUsuario())) {
-                return true;
-            }
-
-        }
-        return false;
-    }
-
     public String getTotalVendidoNeto() {
         return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentasNeta(getInstance()));
+    }
 
+    @Override
+    public Venta getInstance() {
+        if (super.getInstance().getCambioTurno1() == null || R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= 4) {
+            return super.getInstance();
+        }
+        String cod_orden = super.getInstance().getCambioTurno1();
+        ArrayList<Orden> ord = new ArrayList<>(super.getInstance().getOrdenList());
+        Collections.sort(ord);
+        Venta vent = null;
+        for (int i = 0; i < ord.size(); i++) {
+            if (ord.get(i).getCodOrden().equals(cod_orden)) {
+                vent = VentaDAO.getInstance().find(super.getInstance().getFecha());
+                vent.setOrdenList(ord.subList(i + 1, ord.size()));
+            }
+        }
+        return vent == null ? super.getInstance() : vent;
+    }
+
+    public void cambiarTurno() {
+        //getModel().getEntityManager().refresh(super.getInstance());
+        if (showConfirmDialog(getView(), "Seguro desea cambiar el turno. Esta accion no se puede deshacer")) {
+
+            ArrayList<Orden> ord = new ArrayList<>(super.getInstance().getOrdenList());
+            Collections.sort(ord);
+            for (Orden x : ord) {
+                if (x.getHoraTerminada() == null) {
+                    showErrorDialog(getView(), "No se puede cambiar turno con ordenes abiertas");
+                    return;
+                }
+            }
+
+            super.getInstance().setCambioTurno1(ord.get(ord.size() - 1).getCodOrden());
+            update(super.getInstance(), true);
+            showSuccessDialog(getView(), "Turno cambiado exitosamente");
+            fetchNewDataFromServer();
+        }
+
+    }
+
+    private Impresion getImpresionInstance() {
+        Impresion i = Impresion.getDefaultInstance();
+        i.setSHOW_PRICES(showConfirmDialog(
+                getView(), "Presione SI para imprimir los valores,\nNo para imprimir solo las cantidades"));
+        return i;
+    }
+
+    public void printPagoPorVentaPersonal(String user) {
+      Impresion i = getImpresionInstance();
+      i.prinPagoPorVenta(getInstance(),user);
     }
 
 }

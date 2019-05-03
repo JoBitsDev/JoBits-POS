@@ -102,7 +102,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     public void ajustarConsumo(IpvRegistro instance) {
         float cantidad;
         try {
-            cantidad = Integer.parseInt(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
+            cantidad = Integer.parseInt(showInputDialog(getView(), "Introduzca la cantidad a ajustar"));
         } catch (NumberFormatException e) {
             showErrorDialog(getView(), "El valor introducido no es correcto");
             return;

@@ -41,6 +41,10 @@ public class R {
     public static String MAIN_COIN = null;
 
     public static final boolean CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = true;
+    
+    public static final boolean VARIOS_TURNOS = true;
+    
+    public static final boolean CAJERO_PERMISOS_ESPECIALES = true;
 
     public static final String NO_MESA = "M-0";
 
@@ -56,9 +60,9 @@ public class R {
 
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
-    public static String RELEASE_VERSION = "Version 2.5.1 (BETA)";
+    public static String RELEASE_VERSION = "Version 2.6";
 
-    public static int BUILD_VERSION = 5;
+    public static int BUILD_VERSION = 8;
 
     public static void setLookAndFeels() {
         try {

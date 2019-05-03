@@ -35,6 +35,7 @@ import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Transaccion;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.CocinaDAO;
+import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.ProductovOrdenDAO;
 import restManager.resources.R;
 import restManager.util.comun;
@@ -271,11 +272,11 @@ public class Impresion {
                         }
                         sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
                     }
-                    printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+                    printCancelationKitchen(o, cocinasExistentesEnLaOrden.get(i));
                 }
             } else {
                 if (cocinasExistentesEnLaOrden.size() > 0) {
-                    printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+                    printCancelationKitchen(o, cocinasExistentesEnLaOrden.get(0));
                 }
 
             }
@@ -811,6 +812,14 @@ public class Impresion {
         return estadoImpresion;
     }
 
+    public boolean SHOW_PRICES() {
+        return SHOW_PRICES;
+    }
+
+    public void setSHOW_PRICES(boolean SHOW_PRICES) {
+        this.SHOW_PRICES = SHOW_PRICES;
+    }
+
     //
     // Private printing format methods
     //
@@ -845,7 +854,7 @@ public class Impresion {
     }
 
     private void addFinal(Ticket t) {
-        t.feed((byte) 5);
+        t.feed((byte) 3);
         t.finit();
     }
 
@@ -874,7 +883,7 @@ public class Impresion {
     private void addHeader(Ticket t) {
         t.resetAll();
         t.initialize();
-        //p.feedBack((byte)2);
+        t.feedBack((byte) 2);
         t.alignCenter();
         t.setText(CABECERA);
         t.newLine();
@@ -924,16 +933,18 @@ public class Impresion {
             t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
             t.newLine();
             t.alignRight();
-            if (x.getOrden().getDeLaCasa()) {
-                if (PRINT_GASTOS_EN_AUTORIZOS) {
-                    t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getGasto()));
+            if (SHOW_PRICES) {
+                if (x.getOrden().getDeLaCasa()) {
+                    if (PRINT_GASTOS_EN_AUTORIZOS) {
+                        t.setText(comun.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getGasto()));
+                    } else {
+                        t.setText(comun.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                    }
                 } else {
-                    t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                    t.setText(comun.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
                 }
-            } else {
-                t.setText(comun.redondeoPorExceso(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                t.newLine();
             }
-            t.newLine();
             if (x.getOrden().getDeLaCasa()) {
                 if (PRINT_GASTOS_EN_AUTORIZOS) {
                     total += x.getCantidad() * x.getProductoVenta().getGasto();
@@ -1253,9 +1264,52 @@ public class Impresion {
         sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
+    public void prinPagoPorVenta(Venta instance, String usuario) {
+        Personal p = PersonalDAO.getInstance().find(usuario);
+        ArrayList<Orden> lista = new ArrayList<>(instance.getOrdenList());
+        Collections.sort(lista);
+
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        t.addLineSeperator();
+        t.newLine();
+        t.alignCenter();
+        t.setText(GASTO_HEADER);
+        t.newLine();
+        t.alignRight();
+        t.setText(FECHA + R.DATE_FORMAT.format(instance.getFecha()));
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+
+        float total = 0;
+        for (ProductovOrden pv : VentaDAO1.getResumenVentasCamarero(instance, p)) {
+            if (pv.getProductoVenta().getPagoPorVenta() != null) {
+                if (pv.getProductoVenta().getPagoPorVenta() != 0) {
+                    t.alignLeft();
+                    t.setText(pv.getCantidad() + " " + pv.getProductoVenta().getNombre());
+                    t.newLine();
+                    t.alignRight();
+                    if (SHOW_PRICES) {
+                        t.setText(comun.setDosLugaresDecimales(pv.getCantidad() * pv.getProductoVenta().getPagoPorVenta()));
+                    }
+                    t.newLine();
+                    total += pv.getCantidad() * pv.getProductoVenta().getPagoPorVenta();
+                }
+
+            }
+        }
+
+        addTotalAndFinal(t, total);
+
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+    }
     //
     //Inner Classes
     //
+
     private class JobListener implements PrintJobListener {
 
         private JOptionPane progressDialog;
