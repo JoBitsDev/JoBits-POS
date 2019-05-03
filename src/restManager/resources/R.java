@@ -42,9 +42,9 @@ public class R {
 
     public static final boolean CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = true;
     
-    public static final boolean VARIOS_TURNOS = true;
+    public static final boolean VARIOS_TURNOS = false;
     
-    public static final boolean CAJERO_PERMISOS_ESPECIALES = true;
+    public static final boolean CAJERO_PERMISOS_ESPECIALES = false;
 
     public static final String NO_MESA = "M-0";
 
