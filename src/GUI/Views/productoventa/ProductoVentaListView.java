@@ -12,15 +12,21 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.List;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import restManager.controller.AbstractListController;
 import restManager.controller.productoventa.ProductoVentaListController;
 import restManager.controller.venta.OrdenController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.Carta;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.Orden;
 import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
+import restManager.persistencia.models.CartaDAO;
 import restManager.persistencia.models.InsumoDAO;
 import restManager.persistencia.models.OrdenDAO;
 import restManager.persistencia.models.ProductoInsumoDAO;
@@ -68,7 +74,16 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
         jideButton1.addActionListener((ActionEvent e) -> {
             getController().printProductoVenta(model.getObjectAtSelectedRow());
         });
+        JComboBox<Carta> cartas= new JComboBox<>(getController().getCartaList());
+        cartas.addItem(null);
+        cartas.addItemListener((ItemEvent e) -> {
+            getController().setSelectedCarta((Carta)cartas.getSelectedItem());
+        });
+        JLabel label = new JLabel("Menu: ");
+
         super.getjXPanelControles().add(jideButton1);
+        super.getjPanelExtra().add(label);
+        super.getjPanelExtra().add(cartas);
     }
 
     @Override

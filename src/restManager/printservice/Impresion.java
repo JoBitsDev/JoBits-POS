@@ -101,6 +101,7 @@ public class Impresion {
 
     private final String GASTO_HEADER = "Resumen de gastos";
 
+    private final String PAGO_POR_VENTA_HEADER = "Pago por ventas";
     /**
      * String referentes al almacen
      */
@@ -840,13 +841,13 @@ public class Impresion {
                 if (REDONDEO_POR_EXCESO) {
                     t.setText(TOTAL_VENTAS + comun.redondeoPorExcesoFloat(total * R.COINCHANGE) + MN);
                 } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total * R.COINCHANGE));
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, comun.redondeoPorExcesoFloat(total * R.COINCHANGE)));
                 }
             } else {
                 if (REDONDEO_POR_EXCESO) {
                     t.setText(TOTAL_VENTAS + comun.redondeoPorExcesoFloat(total / R.COINCHANGE) + CUC);
                 } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, total / R.COINCHANGE));
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, comun.redondeoPorExcesoFloat(total / R.COINCHANGE)));
                 }
             }
 
@@ -1276,9 +1277,10 @@ public class Impresion {
         t.addLineSeperator();
         t.newLine();
         t.alignCenter();
-        t.setText(GASTO_HEADER);
+        t.setText(PAGO_POR_VENTA_HEADER);
         t.newLine();
         t.alignRight();
+        t.setText(usuario);
         t.setText(FECHA + R.DATE_FORMAT.format(instance.getFecha()));
         t.newLine();
         t.addLineSeperator();

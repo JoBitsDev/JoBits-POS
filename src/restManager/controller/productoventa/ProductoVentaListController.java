@@ -9,11 +9,17 @@ import GUI.Views.productoventa.ProductoVentaListView;
 import GUI.Views.productoventa.ProductoVentaReadOnlyView;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.util.ArrayList;
+import java.util.List;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
+import restManager.controller.login.LogInController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
+import restManager.persistencia.Carta;
 import restManager.persistencia.ProductoVenta;
+import restManager.persistencia.Seccion;
+import restManager.persistencia.models.CartaDAO;
 import restManager.persistencia.models.ProductoVentaDAO;
 import restManager.printservice.ComponentPrinter;
 import restManager.resources.R;
@@ -26,6 +32,8 @@ import restManager.resources.R;
  */
 public class ProductoVentaListController extends AbstractListController<ProductoVenta> {
 
+    Carta selectedCarta = null;
+
     public ProductoVentaListController() {
         super(ProductoVentaDAO.getInstance());
     }
@@ -37,19 +45,19 @@ public class ProductoVentaListController extends AbstractListController<Producto
 
     @Override
     public AbstractDetailController<ProductoVenta> getDetailControllerForNew() {
-        validate();
+        validate(R.NivelAcceso.ECONOMICO);
         return new ProductoVentaCreateEditController(getView());
     }
 
     @Override
     public AbstractDetailController<ProductoVenta> getDetailControllerForEdit(ProductoVenta selected) {
-        validate();
+        validate(R.NivelAcceso.ECONOMICO);
         return new ProductoVentaCreateEditController(selected, getView());
     }
 
     @Override
     public void destroy(ProductoVenta selected) {
-        validate();
+        validate(R.NivelAcceso.ADMINISTRADOR);
         super.destroy(selected);
     }
 
@@ -66,7 +74,7 @@ public class ProductoVentaListController extends AbstractListController<Producto
     }
 
     public void printProductoVenta(ProductoVenta objectAtSelectedRow) {
-        validate();
+        validate(R.NivelAcceso.CAJERO);
         ProductoVentaReadOnlyView printView = new ProductoVentaReadOnlyView(objectAtSelectedRow, this, getView(), true);
         printView.updateView();
         printView.pack();
@@ -79,19 +87,46 @@ public class ProductoVentaListController extends AbstractListController<Producto
         });
     }
 
-    private void validate() {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3) {
+    public Carta[] getCartaList() {
+        List<Carta> cartas = CartaDAO.getInstance().findAll();
+        Carta [] ret = new Carta[cartas.size()];
+        for (int i = 0; i < cartas.size(); i++) {
+            ret[i] = cartas.get(i);
+        }
+        return ret;
+    }
+
+    private void validate(R.NivelAcceso nivel) {
+        if (!new LogInController().constructoAuthorizationView(getView(), nivel.getNivel())) {
             throw new UnauthorizedAccessException(getView());
         }
     }
 
     public boolean canSetVisible(ProductoVenta get) {
-        if(get.getCocinacodCocina() == null || get.getSeccionnombreSeccion() == null){
+        if (get.getCocinacodCocina() == null || get.getSeccionnombreSeccion() == null) {
             showErrorDialog(getView(), "El Producto de venta no puede ponerse visible "
                     + "\n si no se encuentra dentro de una seccion y una cocina");
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<ProductoVenta> getItems() {
+        if (selectedCarta != null) {
+            ArrayList<ProductoVenta> ret = new ArrayList<>();
+            for (Seccion seccion : selectedCarta.getSeccionList()) {
+                ret.addAll(seccion.getProductoVentaList());
+            }
+            return ret;
+        } else {
+            return super.getItems();
+        }
+    }
+
+    public void setSelectedCarta(Carta carta) {
+        selectedCarta = carta;
+        getView().updateView();
     }
 
 }
