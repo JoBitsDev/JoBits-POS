@@ -6,6 +6,7 @@
 package GUI.Views.util;
 
 import com.jidesoft.hints.ListDataIntelliHints;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,17 +23,17 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
 
     private final TableWithComboBoxAutoComplete<K, T> handler;
     private ListDataIntelliHints<K> intellihints;
-            /**
-             * Creates new form AbstractCrossReferenePanel
-             *
-             * @param jTextFieldDataName
-             * @param autoCompletitionData
-             */
 
+    /**
+     * Creates new form AbstractCrossReferenePanel
+     *
+     * @param jTextFieldDataName
+     * @param autoCompletitionData
+     */
     public AbstractCrossReferenePanel(String jTextFieldDataName, List<K> autoCompletitionData) {
         initComponents();
         jLabel1.setText(jTextFieldDataName);
-        intellihints = new ListDataIntelliHints(jTextFieldAutoComplete, autoCompletitionData);
+        // intellihints = new ListDataIntelliHints(jTextFieldAutoComplete, autoCompletitionData);
         handler = new TableWithComboBoxAutoComplete<K, T>(
                 jTableCrossReference, jButtonAgregarProd,
                 jButtonDeleteProd, jTextFieldAutoComplete,
@@ -82,10 +83,10 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         this.intellihints = intellihints;
     }
 
-    public void addItemToComboBox(K item){
+    public void addItemToComboBox(K item) {
         intellihints.getCompletionList().add(item);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,7 +142,14 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
     }//GEN-LAST:event_jTextFieldAutoCompleteFocusGained
 
     private void jTextFieldAutoCompleteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAutoCompleteKeyPressed
-
+        if (evt.getExtendedKeyCode() == KeyEvent.VK_ENTER && handler.getItems().getSelectedHint() != null) {
+            T transformedInstance = transformK_T(handler.getItems().getSelectedHint());
+            if (transformedInstance != null) {
+                handler.getTableModel().addObject(transformedInstance);
+                jTextFieldAutoComplete.setText("");
+            }
+                        
+        }
     }//GEN-LAST:event_jTextFieldAutoCompleteKeyPressed
 
 

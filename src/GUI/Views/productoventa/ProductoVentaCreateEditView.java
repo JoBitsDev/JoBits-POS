@@ -11,6 +11,7 @@ import GUI.Views.util.AbstractCrossReferenePanel;
 import GUI.Views.AbstractDetailView;
 import java.awt.Dialog;
 import java.awt.Frame;
+import javax.swing.JOptionPane;
 import org.jdesktop.swingx.JXPanel;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.productoventa.ProductoVentaCreateEditController;
@@ -283,7 +284,9 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         instance.setCocinacodCocina((Cocina) jComboBoxCOCINA.getSelectedItem());
         instance.setSeccionnombreSeccion((Seccion) jComboBoxSECCION.getSelectedItem());
         instance.setGasto(Float.parseFloat(jXLabelGasto.getText().split(" ")[0]));
-        instance.setVisible(false);
+        if (instance.getVisible() == null) {
+            instance.setVisible(false);
+        }
         instance.setGanancia(instance.getPrecioVenta() - instance.getGasto());
         instance.setPagoPorVenta((float) jSpinnerPagoVenta.getValue());
         return (jComboBoxCOCINA.getSelectedItem() != null && jComboBoxSECCION.getSelectedItem() != null);
@@ -294,7 +297,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         this.jXLabelPCod.setText(instance.getPCod());
         this.jTextFieldNombre.setText(instance.getNombre());
         jSpinnerPrecio.setValue(instance.getPrecioVenta());
-        if(instance.getPagoPorVenta() != null){
+        if (instance.getPagoPorVenta() != null) {
             jSpinnerPagoVenta.setValue(instance.getPagoPorVenta());
         }
         if (instance.getGasto() == null) {
@@ -390,7 +393,13 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
                 ret.setProductoInsumoPK(pk);
                 ret.setInsumo(selected);
                 ret.setProductoVenta(getController().getInstance());
-                ret.setCantidad(0);
+                int i = 0;
+                try{
+                i = Integer.parseInt(JOptionPane.showInputDialog(this, "Introduzca la cantidad", 0));
+                }catch(NumberFormatException e){
+                    
+                }
+                ret.setCantidad(i);
                 ret.setCosto(selected.getCostoPorUnidad());
                 return ret;
             }

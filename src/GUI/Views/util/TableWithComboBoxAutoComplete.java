@@ -114,7 +114,7 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
         return null;
     }
 
-    private class RestaurantManagerListIntelliHint<K> extends ListDataIntelliHints<K> {
+    public class RestaurantManagerListIntelliHint<K> extends ListDataIntelliHints<K> {
 
         public RestaurantManagerListIntelliHint(JTextComponent comp, List<K> completionList) {
             super(comp, completionList);

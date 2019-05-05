@@ -28,6 +28,8 @@ public class R {
 
     public static String logFilePath = "logs/";
 
+    public static String LICENCE_KEY_PATH = "lic.key";
+            
     public static String COIN_SUFFIX;
 
     public static Personal loggedUser = null;
@@ -60,9 +62,9 @@ public class R {
 
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
-    public static String RELEASE_VERSION = "Version 2.6";
+    public static String RELEASE_VERSION = "Version 2.6.1";
 
-    public static int BUILD_VERSION = 8;
+    public static int BUILD_VERSION = 9;
 
     public static void setLookAndFeels() {
         try {

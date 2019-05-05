@@ -9,6 +9,13 @@ import GUI.Views.AbstractView;
 import GUI.Views.Licence.LicenceDialogView;
 import GUI.Views.View;
 import java.awt.Container;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.licencia.Licencia;
@@ -16,6 +23,7 @@ import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Configuracion;
 import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.ConfiguracionDAO;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -31,24 +39,14 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
     public LicenceController() {
         super(ConfiguracionDAO.getInstance());
         licence = Licence.getInstance();
-        Configuracion c = getModel().find("Lic");
-        if (c != null) {
-            if (c.getValorString() != null) {
-                licence.setLicence(c.getValorString().replaceAll("-", ""));
-            }
-        }
+        getEstadoLicencia();
     }
 
     public LicenceController(Container parent) {
         super(ConfiguracionDAO.getInstance());
         this.parent = parent;
         licence = Licence.getInstance();
-        Configuracion c = getModel().find("Lic");
-        if (c != null) {
-            if (c.getValorString() != null) {
-                licence.setLicence(c.getValorString().replaceAll("-", ""));
-            }
-        }
+        getEstadoLicencia();
         constructView(parent);
     }
 
@@ -60,19 +58,27 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
     }
 
     public String getEstadoLicencia() {
-        Configuracion c = getModel().find("Lic");
-        if (c == null) {
-            return "Error en la licencia";
+        File f = new File(R.LICENCE_KEY_PATH);
+        if (!f.exists() || !f.canRead()) {
+            return "Archivo de licencia no encontrado o ilegible";
         }
-        if (c.getValorString() == null) {
-            return "Licencia nula o faltante";
+        FileInputStream in;
+        String key;
+        try {
+            in = new FileInputStream(f);
+            byte[] b = new byte[32];
+            in.read(b);
+            key = new String(b);
+        } catch (FileNotFoundException ex) {
+            return "Error de lectura de la licencia";
+        } catch (IOException ex) {
+            return "Error de lectura de la licencia";
         }
-
-        Licence.getInstance().setLicence(c.getValorString().replaceAll("-", ""));
+        Licence.getInstance().setLicence(key.replaceAll("-", ""));
         if (licence.LICENCIA_VALIDA && licence.LICENCIA_ACTIVA) {
             return "Dias restantes " + licence.DIAS_RESTANTES;
         } else {
-            return "Licencia erronea";
+            return "Licencia invalida";
         }
     }
 
@@ -92,17 +98,15 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
     }
 
     private void safeLicence(String key) {
-        Configuracion c = ConfiguracionDAO.getInstance().find("Lic");
-        getModel().startTransaction();
-        if (c == null) {
-            c = new Configuracion("Lic");
-            c.setValorString(stringFormatter(key));
-            getModel().create(c);
-        } else {
-            c.setValorString(stringFormatter(key));
-            getModel().edit(c);
+        File f = new File(R.LICENCE_KEY_PATH);
+        try (FileOutputStream out = new FileOutputStream(f)) {
+            out.write(key.getBytes());
+            out.flush();
+        } catch (FileNotFoundException ex) {
+            showErrorDialog(getView(), "El archivo de licencia no se encontro");
+        } catch (IOException ex) {
+            showErrorDialog(getView(), "Error de escritura");
         }
-        getModel().commitTransaction();
     }
 
     public Licence getLicence() {
