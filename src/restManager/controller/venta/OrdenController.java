@@ -151,7 +151,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     }
 
-    public void despachar() {
+     public void despachar() {
         if (autorize()) {
             Impresion i = new Impresion();
             setShowDialogs(true);

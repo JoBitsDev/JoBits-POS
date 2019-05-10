@@ -88,7 +88,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     public void darEntrada(IpvRegistro instance) {
         float cantidad;
         try {
-            cantidad = Integer.parseInt(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
+            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
         } catch (NumberFormatException e) {
             showErrorDialog(getView(), "El valor introducido no es correcto");
             return;
