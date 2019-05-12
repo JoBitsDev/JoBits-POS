@@ -319,7 +319,7 @@ public abstract class AbstractController<T> implements Controller {
                 getModel().getEntityManager().getEntityManagerFactory().getCache().evict(getModel().getClass());
                 getModel().commitTransaction();
             }catch(Exception e){
-                showErrorDialog((Container)getView(), "La accion no pudo se rcompletada \n" + e.getMessage() );
+                showErrorDialog((Container)getView(), "La accion no pudo ser completada \n" + e.getMessage() );
                 e.printStackTrace();
                 getModel().getEntityManager().getTransaction().rollback();
             }

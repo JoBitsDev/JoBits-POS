@@ -238,7 +238,7 @@ public class IpvGestionView extends AbstractView {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+            String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
         int selection = JOptionPane.showOptionDialog(this,
                 R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
                 R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
@@ -359,14 +359,14 @@ public class IpvGestionView extends AbstractView {
     private void updateTableRegistroIpv() {
         try {
             jCheckBox1.setSelected(false);
-            registroList = new ArrayList<>(getController()
+             registroList = new ArrayList<>(getController()
                     .getIpvRegistroList(currentSelectedKitchen, R.DATE_FORMAT.parse(jListRegistro.getSelectedValue())));
             registroList = getController().calculate_IPV_to_Currenr((ArrayList<IpvRegistro>) registroList);
             jTableRegistro.setModel(new RestManagerAbstractTableModel<IpvRegistro>(registroList,
                     jTableRegistro) {
                 @Override
                 public int getColumnCount() {
-                    return 9;
+                    return 8;
                 }
 
                 @Override
@@ -375,20 +375,18 @@ public class IpvGestionView extends AbstractView {
                         case 0:
                             return getController().getInsumo(items.get(rowIndex).getIpvRegistroPK().getIpvinsumocodInsumo());
                         case 1:
-                            return items.get(rowIndex).getIpv().getInsumo().getUm();
-                        case 2:
                             return items.get(rowIndex).getInicio();
-                        case 3:
+                        case 2:
                             return items.get(rowIndex).getEntrada();
-                        case 4:
+                        case 3:
                             return items.get(rowIndex).getDisponible();
-                        case 5:
+                        case 4:
                             return items.get(rowIndex).getConsumo();
-                        case 6:
+                        case 5:
                             return items.get(rowIndex).getConsumoReal();
-                        case 7:
+                        case 6:
                             return items.get(rowIndex).getFinal1();
-                        case 8:
+                        case 7:
                             return comun.setDosLugaresDecimales(
                                     items.get(rowIndex).getFinal1() * items.get(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
                         default:
@@ -402,20 +400,18 @@ public class IpvGestionView extends AbstractView {
                         case 0:
                             return "Insumo";
                         case 1:
-                            return "UM";
-                        case 2:
                             return "Inicio";
-                        case 3:
+                        case 2:
                             return "Entrada";
-                        case 4:
+                        case 3:
                             return "Disponible";
-                        case 5:
+                        case 4:
                             return "Consumo";
-                        case 6:
+                        case 5:
                             return "Consumo Real";
-                        case 7:
+                        case 6:
                             return "Final";
-                        case 8:
+                        case 7:
                             return "Importe";
                         default:
                             return null;

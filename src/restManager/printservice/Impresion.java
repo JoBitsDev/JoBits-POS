@@ -2,7 +2,6 @@ package restManager.printservice;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +18,6 @@ import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
 import restManager.persistencia.Almacen;
 
@@ -170,7 +168,7 @@ public class Impresion {
         total = addPvOrden(t, o.getProductovOrdenList());
 
         float subTotalPrint = comun.redondeoPorExcesoFloat(total);
-        float sumaPorciento = comun.redondeoPorExcesoFloat(subTotalPrint / o.getPorciento());
+        float sumaPorciento = comun.redondeoPorExcesoFloat((subTotalPrint * o.getPorciento())/100);
         float totalPrint = subTotalPrint;
         t.alignRight();
         t.newLine();
@@ -731,7 +729,7 @@ public class Impresion {
         t.newLine();
 
         for (IpvRegistro x : registros) {
-            t.setText(x.getIpv().getInsumo().getNombre());
+            t.setText(x.getIpv().getInsumo().toString());
             t.newLine();
             t.setText(createTableLineForIPVReg(x));
             t.newLine();
@@ -793,7 +791,6 @@ public class Impresion {
             t.setText(in.getNombre() + "(" + in.getUm() + ")");
             t.newLine();
             t.alignRight();
-//            t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente() - in.getStockEstimation()));
             t.newLine();
         }
 
@@ -1280,8 +1277,9 @@ public class Impresion {
         t.setText(PAGO_POR_VENTA_HEADER);
         t.newLine();
         t.alignRight();
-        t.setText(usuario);
         t.setText(FECHA + R.DATE_FORMAT.format(instance.getFecha()));
+        t.newLine();
+        t.setText(usuario);
         t.newLine();
         t.addLineSeperator();
         t.newLine();
