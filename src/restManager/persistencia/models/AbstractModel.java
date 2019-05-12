@@ -59,7 +59,7 @@ public abstract class AbstractModel<T> implements Model {
     public void commitTransaction() {
         if (getEntityManager().getTransaction().isActive()) {
             try {
-                getEntityManager().flush();
+               // getEntityManager().flush();
                 getEntityManager().getTransaction().commit();
             } catch (PersistenceException e) {
                 getEntityManager().getTransaction().rollback();

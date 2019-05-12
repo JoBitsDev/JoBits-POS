@@ -189,4 +189,11 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
         return listaRegistros;
     }
+
+    @Override
+    public void create(Ipv selected, boolean quietMode) {
+        super.create(selected, quietMode); //To change body of generated methods, choose Tools | Templates.
+        inicializarIpvs(new VentaDetailController().getDiaDeVenta(null).getFecha());
+    }
+
 }
