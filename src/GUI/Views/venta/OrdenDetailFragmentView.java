@@ -456,6 +456,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         switch (state) {
             case DESPACHAR:
                 getController().despachar();
+                state = ButtonState.ENVIAR_COCINA;
                 jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
                 break;
             case ENVIAR_COCINA:

@@ -151,7 +151,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     }
 
-     public void despachar() {
+    public void despachar() {
         if (autorize()) {
             Impresion i = new Impresion();
             setShowDialogs(true);
@@ -205,6 +205,16 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     public float getGastosInsumos(Orden instance) {
         float ret = 0;
         for (ProductovOrden x : instance.getProductovOrdenList()) {
+            float check = 0;
+            for (ProductoInsumo pi : x.getProductoVenta().getProductoInsumoList()) {
+                check += pi.getCosto();
+            }
+            if (check != x.getProductoVenta().getGasto()) {
+                x.getProductoVenta().setGasto(check);
+                getModel().startTransaction();
+                ProductoVentaDAO.getInstance().edit(x.getProductoVenta());
+                getModel().commitTransaction();
+            }
             ret += x.getProductoVenta().getGasto() * x.getCantidad();
         }
         return ret;
