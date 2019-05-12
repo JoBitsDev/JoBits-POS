@@ -93,7 +93,7 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
 
     public float getCosto(ProductoVenta v) {
         float ret = 0;
-        for (ProductoInsumo productoInsumo : getInstance().getProductoInsumoList()) {
+        for (ProductoInsumo productoInsumo : v.getProductoInsumoList()) {
             ret += productoInsumo.getCosto();
         }
 

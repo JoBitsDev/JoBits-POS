@@ -1007,8 +1007,8 @@ public class Impresion {
 
         String ret = "";
         String separador = "|";
-        int LenghtPerSeparator = 5;
         int Separators = 5;
+        int LenghtPerSeparator = (int) ((Ticket.PAPER_LENGHT-Separators) / 5);
         ret += fillSpace(x.getInicio(), LenghtPerSeparator) + separador;
         ret += fillSpace(x.getEntrada(), LenghtPerSeparator) + separador;
         ret += fillSpace(x.getDisponible(), LenghtPerSeparator) + separador;
@@ -1018,8 +1018,8 @@ public class Impresion {
         return ret;
     }
 
-    private String fillSpace(Object number, int finalLenght) {
-        String ret = String.format(" %.0f", number);
+    private String fillSpace(float number, int finalLenght) {
+        String ret = "" + comun.setDosLugaresDecimalesFloat(number);
         while (ret.length() < finalLenght) {
             ret += " ";
         }

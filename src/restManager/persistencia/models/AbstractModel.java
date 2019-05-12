@@ -82,7 +82,7 @@ public abstract class AbstractModel<T> implements Model {
 
     public T find(Object id) {
         return getEntityManager().find(entityClass, id);
-    }
+        }
 
     public List<T> findAll() {
         try {
@@ -217,11 +217,11 @@ public abstract class AbstractModel<T> implements Model {
             }
             getEntityManager().getEntityManagerFactory().getCache().evict(entityClass);
         } catch (Exception e) {
-            ExceptionHandler.showExceptionToUser(e, "Error en base de datos \n "+e.getMessage() );
+            ExceptionHandler.showExceptionToUser(e, "Error en base de datos \n " + e.getMessage());
             try {
                 getEntityManager().getTransaction().setRollbackOnly();
             } catch (PersistenceException p) {
-                //TODO: not implemented exception
+                ExceptionHandler.showExceptionToUser(p);
             }
         }
     }
