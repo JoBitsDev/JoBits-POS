@@ -52,7 +52,7 @@ public class Impresion {
     private boolean monedaCUC;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
     private boolean SHOW_PRICES = true;
-    private final boolean PRINT_IN_CENTRAL_KITCHEN = false;
+    private final boolean PRINT_IN_CENTRAL_KITCHEN = true;
     private final boolean PRINT_GASTOS_EN_AUTORIZOS = false;
     private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     private final String DEFAULT_PRINT_LOCATION = null;

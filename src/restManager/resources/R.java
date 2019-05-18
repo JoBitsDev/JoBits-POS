@@ -36,15 +36,15 @@ public class R {
 
     public static final Date TODAYS_DATE = new Date();
 
-    public static final float PERCENTAGE = 0;
+    public static final float PERCENTAGE = 10;
 
-    public static final int COINCHANGE = 24;
-
+    public static final int COINCHANGE = 25;
+    
     public static String MAIN_COIN = null;
 
     public static final boolean CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = true;
     
-    public static final boolean VARIOS_TURNOS = true;
+    public static final boolean VARIOS_TURNOS = false;
     
     public static final boolean CAJERO_PERMISOS_ESPECIALES = false;
 
