@@ -44,7 +44,7 @@ public class R {
 
     public static final boolean CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = true;
     
-    public static final boolean VARIOS_TURNOS = false;
+    public static final boolean VARIOS_TURNOS = true;
     
     public static final boolean CAJERO_PERMISOS_ESPECIALES = false;
 
@@ -62,7 +62,7 @@ public class R {
 
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
-    public static String RELEASE_VERSION = "Version 2.6.2(BETA)";
+    public static String RELEASE_VERSION = "Version 2.6.3(BETA)";
 
     public static int BUILD_VERSION = 10;
 

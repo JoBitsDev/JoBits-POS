@@ -48,7 +48,7 @@ public class MainView extends AbstractView {
         clockFace1 = new org.edisoncor.gui.varios.ClockFace();
         jPanel1 = new javax.swing.JPanel();
         styledLabelRestName = new com.jidesoft.swing.StyledLabel();
-        jButton26 = new javax.swing.JButton();
+        jideButton1 = new com.jidesoft.swing.JideButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanelDetalles = new javax.swing.JPanel();
         jPanelPDV = new javax.swing.JPanel();
@@ -101,17 +101,13 @@ public class MainView extends AbstractView {
         styledLabelRestName.setMinimumSize(new java.awt.Dimension(400, 68));
         jPanel1.add(styledLabelRestName, java.awt.BorderLayout.CENTER);
 
-        jButton26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonlogout.png"))); // NOI18N
-        jButton26.setBorderPainted(false);
-        jButton26.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton26.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jButton26.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton26.addActionListener(new java.awt.event.ActionListener() {
+        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonlogout.png"))); // NOI18N
+        jideButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton26ActionPerformed(evt);
+                jideButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton26, java.awt.BorderLayout.LINE_START);
+        jPanel1.add(jideButton1, java.awt.BorderLayout.LINE_START);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
@@ -375,10 +371,6 @@ public class MainView extends AbstractView {
         action(MainController.MenuButtons.MENU);
     }//GEN-LAST:event_BotonMenuActionPerformed
 
-    private void jButton26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton26ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton26ActionPerformed
-
     private void BotonInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonInsumoActionPerformed
         action(MainController.MenuButtons.INSUMO);
     }//GEN-LAST:event_BotonInsumoActionPerformed
@@ -443,6 +435,10 @@ public class MainView extends AbstractView {
         updateView();        // TODO add your handling code here:
     }//GEN-LAST:event_formWindowGainedFocus
 
+    private void jideButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton1ActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jideButton1ActionPerformed
+
     @Override
     public void updateView() {
         updateLicenceStatus();
@@ -481,7 +477,6 @@ public class MainView extends AbstractView {
     private javax.swing.JButton BotonSeccion;
     private org.edisoncor.gui.varios.ClockFace clockFace1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton26;
     private javax.swing.JButton jButtonAlmacen;
     private javax.swing.JButton jButtonArchivos;
     private javax.swing.JButton jButtonCopiaSeguridad;
@@ -503,6 +498,7 @@ public class MainView extends AbstractView {
     private javax.swing.JPanel jPanelPDV;
     private javax.swing.JPanel jPanelTrabajadores;
     private javax.swing.JScrollPane jScrollPane1;
+    private com.jidesoft.swing.JideButton jideButton1;
     private com.jidesoft.swing.JideLabel jideLabel1;
     private com.jidesoft.swing.JideLabel jideLabel3;
     private com.jidesoft.swing.JideLabel jideLabelLicencia;

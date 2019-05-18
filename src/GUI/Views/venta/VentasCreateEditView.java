@@ -84,13 +84,17 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelResumenDetallado = new javax.swing.JPanel();
         jTabbedPaneResumen = new javax.swing.JTabbedPane();
         jPanelRoot = new javax.swing.JPanel();
+        jPanelFooter = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jButtonTerminarVentas = new javax.swing.JButton();
         jPanelOptions = new javax.swing.JPanel();
         jideButton2 = new com.jidesoft.swing.JideButton();
         jPanel3 = new javax.swing.JPanel();
         jideButton1 = new com.jidesoft.swing.JideButton();
         jPanel1 = new javax.swing.JPanel();
+        jPanelTurnosTrabajo = new javax.swing.JPanel();
         jButtonCambiarTurno = new javax.swing.JButton();
-        jButtonTerminarVentas = new javax.swing.JButton();
+        jComboBoxSeleccionarVentaPorTurno = new javax.swing.JComboBox<>();
         jLabelFecha = new javax.swing.JLabel();
         jPanelData = new javax.swing.JPanel();
         jTabbedPaneData = new javax.swing.JTabbedPane();
@@ -124,7 +128,6 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jideLabel1 = new com.jidesoft.swing.JideLabel();
         jXPanelOrdenControl = new org.jdesktop.swingx.JXPanel();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButtonEnviarCerrarCrearNueva = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -145,6 +148,26 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelRoot.setPreferredSize(new java.awt.Dimension(800, 600));
         jPanelRoot.setLayout(new java.awt.BorderLayout());
+
+        jPanelFooter.setBackground(new java.awt.Color(204, 204, 204));
+        jPanelFooter.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
+        jPanelFooter.setLayout(new java.awt.BorderLayout());
+
+        jPanel8.setOpaque(false);
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButtonTerminarVentas.setText(bundle.getString("label_terminar_ventas")); // NOI18N
+        jButtonTerminarVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTerminarVentasActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButtonTerminarVentas);
+
+        jPanelFooter.add(jPanel8, java.awt.BorderLayout.CENTER);
+
+        jPanelRoot.add(jPanelFooter, java.awt.BorderLayout.SOUTH);
 
         jPanelOptions.setBackground(new java.awt.Color(204, 204, 204));
         jPanelOptions.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
@@ -173,22 +196,27 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jPanelTurnosTrabajo.setBorder(javax.swing.BorderFactory.createTitledBorder("Turnos de Trabajo"));
+        jPanelTurnosTrabajo.setOpaque(false);
+
         jButtonCambiarTurno.setText(bundle.getString("label_cambiar_turno")); // NOI18N
         jButtonCambiarTurno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCambiarTurnoActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonCambiarTurno);
+        jPanelTurnosTrabajo.add(jButtonCambiarTurno);
 
-        jButtonTerminarVentas.setText(bundle.getString("label_terminar_ventas")); // NOI18N
-        jButtonTerminarVentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonTerminarVentasActionPerformed(evt);
+        jComboBoxSeleccionarVentaPorTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todo", "Turno 1", "Turno 2" }));
+        jComboBoxSeleccionarVentaPorTurno.setToolTipText("Seleccione el turno a visualizar");
+        jComboBoxSeleccionarVentaPorTurno.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxSeleccionarVentaPorTurnoItemStateChanged(evt);
             }
         });
-        jPanel1.add(jButtonTerminarVentas);
+        jPanelTurnosTrabajo.add(jComboBoxSeleccionarVentaPorTurno);
+
+        jPanel1.add(jPanelTurnosTrabajo);
 
         jLabelFecha.setText("Del 15/03/19 al 25/03/19");
         jLabelFecha.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha"));
@@ -411,14 +439,6 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         });
         jXPanelOrdenControl.add(jButton4);
 
-        jButton5.setText(bundle.getString("label_eliminar")); // NOI18N
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jXPanelOrdenControl.add(jButton5);
-
         jButton6.setText(bundle.getString("label_calcular_cambio")); // NOI18N
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -482,14 +502,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         getController().createNewOrden();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        getController().removeOrden(modelOrd.getObjectAtSelectedRow());
-        modelOrd.fireTableDataChanged();
-// TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     private void jideButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton1ActionPerformed
-        getController().fetchNewDataFromServer();
+        getController().fetchNewDataFromServer(jComboBoxSeleccionarVentaPorTurno.getSelectedIndex());
     }//GEN-LAST:event_jideButton1ActionPerformed
 
     private void jButtonTerminarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarVentasActionPerformed
@@ -543,6 +557,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         }
         getController().printPagoPorVentaPersonal(jTableVentasDependientes.getValueAt(row, 0).toString());
     }//GEN-LAST:event_jButtonImpPagoVentasActionPerformed
+
+    private void jComboBoxSeleccionarVentaPorTurnoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxSeleccionarVentaPorTurnoItemStateChanged
+        getController().mostrarVenta(jComboBoxSeleccionarVentaPorTurno.getSelectedIndex());
+    }//GEN-LAST:event_jComboBoxSeleccionarVentaPorTurnoItemStateChanged
 
     @Override
 
@@ -650,7 +668,6 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonCambiarTurno;
@@ -660,6 +677,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButtonImprimirZ;
     private javax.swing.JButton jButtonImprimirZ1;
     private javax.swing.JButton jButtonTerminarVentas;
+    private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
     private javax.swing.JLabel jLabelFecha;
     private javax.swing.JLabel jLabelTotalGastos;
     private javax.swing.JLabel jLabelTotalGastosInsumo;
@@ -672,9 +690,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelData;
     private javax.swing.JPanel jPanelDetailOrdenes;
     private javax.swing.JPanel jPanelExtracciones;
+    private javax.swing.JPanel jPanelFooter;
     private javax.swing.JPanel jPanelGastos;
     private javax.swing.JPanel jPanelNumero;
     private javax.swing.JPanel jPanelOperaciones;
@@ -685,6 +705,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JPanel jPanelResumenDetallado;
     private javax.swing.JPanel jPanelResumenVentas;
     private javax.swing.JPanel jPanelRoot;
+    private javax.swing.JPanel jPanelTurnosTrabajo;
     private javax.swing.JPanel jPanelVentas;
     private javax.swing.JPanel jPanelVentasCamareras;
     private javax.swing.JPanel jPanelVentasCocinas;
@@ -714,6 +735,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
             jTabbedPaneData.remove(0);
         }
+        jPanelTurnosTrabajo.setVisible(R.VARIOS_TURNOS);
+        jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso()>2);
         jButtonCambiarTurno.setEnabled(getController().getInstance().getCambioTurno1() == null);
     }
 
