@@ -667,7 +667,7 @@ public class VentaDAO1 {
     public static float getValorTotalGastosInsumo(Venta instance) {
         float total = 0;
         for (Orden x : instance.getOrdenList()) {
-            if (!x.getDeLaCasa() && x.getHoraTerminada() != null) {
+            if (x.getHoraTerminada() != null) {
                 total += x.getOrdengastoEninsumos();
             }
         }

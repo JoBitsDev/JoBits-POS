@@ -190,7 +190,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         CalcularCambioView cc = new CalcularCambioView(getView(), true, objectAtSelectedRow);
     }
 
-    private Venta getDiaDeVenta(Date fecha) {
+    public Venta getDiaDeVenta(Date fecha) {
         Venta ret;
         if (fecha == null) {
             //revisar si hay un dia sin cerrar

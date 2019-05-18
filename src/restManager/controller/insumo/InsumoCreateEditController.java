@@ -11,6 +11,7 @@ import java.awt.Window;
 import java.util.Collections;
 import java.util.List;
 import restManager.controller.AbstractDetailController;
+import restManager.controller.productoventa.ProductoVentaCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Insumo;
@@ -61,12 +62,15 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
 
     @Override
     public void createUpdateInstance() {
+        setDismissOnAction(false);
         super.createUpdateInstance(); //To change body of generated methods, choose Tools | Templates.
+        getModel().getEntityManager().refresh(instance);
         if (!instance.getProductoInsumoList().isEmpty()) {
             if (showConfirmDialog(getView(), "Desea actualizar el costo en los productos de venta")) {
                 updateInsumoOnFichas(getInstance());
             }
         }
+        getView().dispose();
     }
 
     /**
@@ -78,7 +82,6 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
         setView(new InsumoCreateEditView(this, (Dialog) parent, true, getInstance()));
         getView().updateView();
         getView().setVisible(true);
-        setView(null);
     }
 
     public List<Almacen> getAlmacenList() {
@@ -93,9 +96,12 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
 
     public void updateInsumoOnFichas(Insumo insumo) {
         getModel().startTransaction();
+        ProductoVentaCreateEditController controller = new ProductoVentaCreateEditController();
         for (ProductoInsumo p : insumo.getProductoInsumoList()) {
             p.setCosto(insumo.getCostoPorUnidad() * p.getCantidad());
-            ProductoInsumoDAO.getInstance().edit(p);
+            p.getProductoVenta().setGasto(controller.getCosto(p.getProductoVenta()));
+            getModel().getEntityManager().merge(p);
+            getModel().getEntityManager().merge(p.getProductoVenta());
         }
         getModel().commitTransaction();
     }

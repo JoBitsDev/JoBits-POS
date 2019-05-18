@@ -2,7 +2,6 @@ package restManager.printservice;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +18,6 @@ import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
 import restManager.persistencia.Almacen;
 
@@ -101,6 +99,7 @@ public class Impresion {
 
     private final String GASTO_HEADER = "Resumen de gastos";
 
+    private final String PAGO_POR_VENTA_HEADER = "Pago por ventas";
     /**
      * String referentes al almacen
      */
@@ -169,7 +168,7 @@ public class Impresion {
         total = addPvOrden(t, o.getProductovOrdenList());
 
         float subTotalPrint = comun.redondeoPorExcesoFloat(total);
-        float sumaPorciento = comun.redondeoPorExcesoFloat(subTotalPrint / o.getPorciento());
+        float sumaPorciento = comun.redondeoPorExcesoFloat((subTotalPrint * o.getPorciento())/100);
         float totalPrint = subTotalPrint;
         t.alignRight();
         t.newLine();
@@ -730,7 +729,7 @@ public class Impresion {
         t.newLine();
 
         for (IpvRegistro x : registros) {
-            t.setText(x.getIpv().getInsumo().getNombre());
+            t.setText(x.getIpv().getInsumo().toString());
             t.newLine();
             t.setText(createTableLineForIPVReg(x));
             t.newLine();
@@ -792,7 +791,6 @@ public class Impresion {
             t.setText(in.getNombre() + "(" + in.getUm() + ")");
             t.newLine();
             t.alignRight();
-//            t.setText(String.format("%.2f | %+.2f", in.getCantidadExistente(), in.getCantidadExistente() - in.getStockEstimation()));
             t.newLine();
         }
 
@@ -840,13 +838,13 @@ public class Impresion {
                 if (REDONDEO_POR_EXCESO) {
                     t.setText(TOTAL_VENTAS + comun.redondeoPorExcesoFloat(total * R.COINCHANGE) + MN);
                 } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, total * R.COINCHANGE));
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, comun.redondeoPorExcesoFloat(total * R.COINCHANGE)));
                 }
             } else {
                 if (REDONDEO_POR_EXCESO) {
                     t.setText(TOTAL_VENTAS + comun.redondeoPorExcesoFloat(total / R.COINCHANGE) + CUC);
                 } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, total / R.COINCHANGE));
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, comun.redondeoPorExcesoFloat(total / R.COINCHANGE)));
                 }
             }
 
@@ -1006,8 +1004,8 @@ public class Impresion {
 
         String ret = "";
         String separador = "|";
-        int LenghtPerSeparator = 5;
         int Separators = 5;
+        int LenghtPerSeparator = (int) ((Ticket.PAPER_LENGHT-Separators) / 5);
         ret += fillSpace(x.getInicio(), LenghtPerSeparator) + separador;
         ret += fillSpace(x.getEntrada(), LenghtPerSeparator) + separador;
         ret += fillSpace(x.getDisponible(), LenghtPerSeparator) + separador;
@@ -1017,8 +1015,8 @@ public class Impresion {
         return ret;
     }
 
-    private String fillSpace(Object number, int finalLenght) {
-        String ret = String.format(" %.0f", number);
+    private String fillSpace(float number, int finalLenght) {
+        String ret = "" + comun.setDosLugaresDecimalesFloat(number);
         while (ret.length() < finalLenght) {
             ret += " ";
         }
@@ -1276,10 +1274,12 @@ public class Impresion {
         t.addLineSeperator();
         t.newLine();
         t.alignCenter();
-        t.setText(GASTO_HEADER);
+        t.setText(PAGO_POR_VENTA_HEADER);
         t.newLine();
         t.alignRight();
         t.setText(FECHA + R.DATE_FORMAT.format(instance.getFecha()));
+        t.newLine();
+        t.setText(usuario);
         t.newLine();
         t.addLineSeperator();
         t.newLine();

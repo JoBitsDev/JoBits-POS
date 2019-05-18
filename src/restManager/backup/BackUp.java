@@ -356,9 +356,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private boolean EntityExist(Object entity, Object primaryKey) {
-
         return em.find(entity.getClass(), primaryKey) != null;
-
     }
 
     private void incrementarProgreso(float i) {
@@ -417,6 +415,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private boolean EjecutarBackUpAll() {
+        startBackupTransaction();
         try {
             BackUpConfiguracion(ConfiguracionDAO.getInstance().findAll());
         } catch (Exception e) {
@@ -439,6 +438,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         } catch (Exception e) {
             ExceptionHandler.showExceptionToUser(e, "Error ejecutando copia de seguridad en Ventas");
         }
+        commitBackupTransaction();
         return true;
 
     }

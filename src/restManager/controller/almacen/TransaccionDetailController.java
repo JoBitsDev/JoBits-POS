@@ -89,7 +89,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
                             t.getTransaccionPK().getFecha(),
                             t.getTransaccionPK().getHora(), a.getCodAlmacen());
             TransaccionEntrada ret = new TransaccionEntrada(retPK);
-            ret.setConsumido(false);
+            ret.setJustificado(false);
             ret.setTransaccion(t);
             ret.setValorTotal(Float.parseFloat(showInputDialog(getView(), "Introduzca el Importe de la entrada"
                     + "\n(el importe mostrado es con el coste actual del insumo)", t.getCantidad() * selected.getCostoPorUnidad())));

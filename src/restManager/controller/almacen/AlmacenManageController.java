@@ -45,6 +45,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
 
     public AlmacenManageController(Window parent, Almacen a) {
         super(a, parent, AlmacenDAO.getInstance());
+        getModel().getEntityManager().refresh(getInstance());
         TransaccionDAO.getInstance().addPropertyChangeListener(this);
         InsumoAlmacenDAO.getInstance().addPropertyChangeListener(this);
         TransaccionEntradaDAO.getInstance().addPropertyChangeListener(this);
@@ -115,7 +116,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
     }
 
     public List<InsumoAlmacen> getInsumoAlmacenList(Almacen a) {
-        return InsumoAlmacenDAO.getInstance().getInsumoAlmacenList(a);
+        return a.getInsumoAlmacenList();
     }
 
     public List<Insumo> getInsumoList() {
