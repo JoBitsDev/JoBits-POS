@@ -283,12 +283,13 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
         instance.setPrecioVenta((float) jSpinnerPrecio.getValue());
         instance.setCocinacodCocina((Cocina) jComboBoxCOCINA.getSelectedItem());
         instance.setSeccionnombreSeccion((Seccion) jComboBoxSECCION.getSelectedItem());
-        instance.setGasto(Float.parseFloat(jXLabelGasto.getText().split(" ")[0]));
+        instance.setGasto(getController().getCosto(instance));
         if (instance.getVisible() == null) {
             instance.setVisible(false);
         }
         instance.setGanancia(instance.getPrecioVenta() - instance.getGasto());
         instance.setPagoPorVenta((float) jSpinnerPagoVenta.getValue());
+        instance.getSeccionnombreSeccion().getProductoVentaList().add(instance);
         return (jComboBoxCOCINA.getSelectedItem() != null && jComboBoxSECCION.getSelectedItem() != null);
     }
 
@@ -393,14 +394,14 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
                 ret.setProductoInsumoPK(pk);
                 ret.setInsumo(selected);
                 ret.setProductoVenta(getController().getInstance());
-                int i = 0;
-                try{
-                i = Integer.parseInt(JOptionPane.showInputDialog(this, "Introduzca la cantidad", 0));
-                }catch(NumberFormatException e){
-                    
+                float i = 0;
+                try {
+                    i = Float.parseFloat(JOptionPane.showInputDialog(this, "Introduzca la cantidad", 0));
+                } catch (NumberFormatException e) {
+
                 }
                 ret.setCantidad(i);
-                ret.setCosto(selected.getCostoPorUnidad());
+                ret.setCosto(comun.setDosLugaresDecimalesFloat(i * selected.getCostoPorUnidad()));
                 return ret;
             }
         };

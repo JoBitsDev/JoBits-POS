@@ -59,11 +59,11 @@ public abstract class AbstractModel<T> implements Model {
     public void commitTransaction() {
         if (getEntityManager().getTransaction().isActive()) {
             try {
-                getEntityManager().flush();
+                // getEntityManager().flush();
                 getEntityManager().getTransaction().commit();
             } catch (PersistenceException e) {
                 getEntityManager().getTransaction().rollback();
-                JOptionPane.showConfirmDialog(null, e.getMessage(), "Error", JOptionPane.OK_OPTION);
+                JOptionPane.showConfirmDialog(null, "Los datos no se archivaron en la base de datos", "Error", JOptionPane.OK_OPTION);
             }
         }
     }
@@ -217,12 +217,11 @@ public abstract class AbstractModel<T> implements Model {
             }
             getEntityManager().getEntityManagerFactory().getCache().evict(entityClass);
         } catch (Exception e) {
-            ExceptionHandler.showExceptionToUser(e, "Error en base de datos \n "+e.getMessage() );
-            try {
+            ExceptionHandler.showExceptionToUser(e, "Error en base de datos \n " + e.getLocalizedMessage());
+            if (getEntityManager().getTransaction().isActive()) {
                 getEntityManager().getTransaction().setRollbackOnly();
-            } catch (PersistenceException p) {
-                //TODO: not implemented exception
             }
+
         }
     }
 

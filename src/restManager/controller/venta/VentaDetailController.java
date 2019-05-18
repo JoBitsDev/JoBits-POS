@@ -45,6 +45,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     Date fechaFin = null;
     OrdenController ordController;
     private VentasCreateEditView vi;
+    int turnoActivo = 0;
 
     public VentaDetailController() {
         super(VentaDAO.getInstance());
@@ -143,14 +144,8 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         }
     }
 
-    public void removeOrden(Orden objectAtSelectedRow) {
-        if (new LogInController().constructoAuthorizationView(getView(), 4)) {
-            ordController.destroy(objectAtSelectedRow, false);
-            fetchNewDataFromServer();
-        }
-    }
-
-    public void fetchNewDataFromServer() {
+    public void fetchNewDataFromServer(int turnoTrabajo) {
+        turnoActivo = turnoTrabajo;
         getModel().getEntityManager().refresh(getInstance());
         vi.updateView();
     }
@@ -190,7 +185,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         CalcularCambioView cc = new CalcularCambioView(getView(), true, objectAtSelectedRow);
     }
 
-    private Venta getDiaDeVenta(Date fecha) {
+    public Venta getDiaDeVenta(Date fecha) {
         Venta ret;
         if (fecha == null) {
             //revisar si hay un dia sin cerrar
@@ -311,18 +306,50 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     @Override
     public Venta getInstance() {
-        if (super.getInstance().getCambioTurno1() == null || R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= 4) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= 3) {
             return super.getInstance();
+        } else {
+            if (super.getInstance().getCambioTurno1() == null) {
+                return super.getInstance();
+            }else{
+                turnoActivo = 2;
+            }
+
         }
-        String cod_orden = super.getInstance().getCambioTurno1();
+
         ArrayList<Orden> ord = new ArrayList<>(super.getInstance().getOrdenList());
         Collections.sort(ord);
         Venta vent = null;
+        String cod_orden_low;
+        String cod_orden_high;
+        switch (turnoActivo) {
+            case 1:
+                cod_orden_low = ord.get(0).getCodOrden();
+                cod_orden_high = super.getInstance().getCambioTurno1();
+                break;
+            case 2:
+                cod_orden_low = super.getInstance().getCambioTurno1();
+                cod_orden_high = ord.get(ord.size() - 1).getCodOrden();
+                break;
+            default:
+                cod_orden_low = ord.get(0).getCodOrden();
+                cod_orden_high = ord.get(ord.size() - 1).getCodOrden();
+                break;
+        }
+        int cod_orden_low_pos = 0,
+                cod_orden_high_pos = ord.size();
+
         for (int i = 0; i < ord.size(); i++) {
-            if (ord.get(i).getCodOrden().equals(cod_orden)) {
-                vent = VentaDAO.getInstance().find(super.getInstance().getFecha());
-                vent.setOrdenList(ord.subList(i + 1, ord.size()));
+            if (ord.get(i).getCodOrden().equals(cod_orden_low)) {
+                cod_orden_low_pos = turnoActivo == 2 ? i + 1 : i;
             }
+            if (ord.get(i).getCodOrden().equals(cod_orden_high)) {
+                cod_orden_high_pos = i+1;
+            }
+        }
+        vent = VentaDAO.getInstance().find(super.getInstance().getFecha());
+        if (vent != null) {
+            vent.setOrdenList(ord.subList(cod_orden_low_pos, cod_orden_high_pos));
         }
         return vent == null ? super.getInstance() : vent;
     }
@@ -343,7 +370,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             super.getInstance().setCambioTurno1(ord.get(ord.size() - 1).getCodOrden());
             update(super.getInstance(), true);
             showSuccessDialog(getView(), "Turno cambiado exitosamente");
-            fetchNewDataFromServer();
+            fetchNewDataFromServer(2);
         }
 
     }
@@ -356,8 +383,21 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public void printPagoPorVentaPersonal(String user) {
-      Impresion i = getImpresionInstance();
-      i.prinPagoPorVenta(getInstance(),user);
+        Impresion i = getImpresionInstance();
+        i.prinPagoPorVenta(getInstance(), user);
+    }
+
+    public void mostrarVenta(int turnoVenta) {
+        switch (turnoVenta) {
+            case 0:
+            case 1:
+            case 2:
+                fetchNewDataFromServer(turnoVenta);
+                break;
+            default:
+                fetchNewDataFromServer(0);
+                break;
+        }
     }
 
 }

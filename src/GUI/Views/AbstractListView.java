@@ -77,7 +77,9 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jPopupMenuClickDerecho = new javax.swing.JPopupMenu();
         jXPanelLista = new org.jdesktop.swingx.JXPanel();
-        jXPanel1 = new org.jdesktop.swingx.JXPanel();
+        jXPanelSuperior = new org.jdesktop.swingx.JXPanel();
+        jPanelExtra = new javax.swing.JPanel();
+        jPanelHeader = new javax.swing.JPanel();
         jXLabel1 = new org.jdesktop.swingx.JXLabel();
         jTextFieldBusqueda = new javax.swing.JTextField();
         jPanelControlesSuperiores = new javax.swing.JPanel();
@@ -106,15 +108,22 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jXPanelLista.setLayout(new java.awt.BorderLayout(0, 10));
 
-        jXPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jXPanel1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
-        jXPanel1.setLayout(new java.awt.BorderLayout());
+        jXPanelSuperior.setBackground(new java.awt.Color(204, 204, 204));
+        jXPanelSuperior.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        jXPanelSuperior.setLayout(new java.awt.BorderLayout());
+
+        jPanelExtra.setOpaque(false);
+        jPanelExtra.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jXPanelSuperior.add(jPanelExtra, java.awt.BorderLayout.PAGE_END);
+
+        jPanelHeader.setOpaque(false);
+        jPanelHeader.setLayout(new java.awt.BorderLayout());
 
         jXLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jXLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/buscar.png"))); // NOI18N
         jXLabel1.setText(bundle.getString("label_buscar")); // NOI18N
         jXLabel1.setToolTipText("Buscar");
-        jXPanel1.add(jXLabel1, java.awt.BorderLayout.CENTER);
+        jPanelHeader.add(jXLabel1, java.awt.BorderLayout.CENTER);
 
         jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(300, 26));
         jTextFieldBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -125,7 +134,7 @@ public abstract class AbstractListView<T> extends AbstractView {
                 jTextFieldBusquedaKeyReleased(evt);
             }
         });
-        jXPanel1.add(jTextFieldBusqueda, java.awt.BorderLayout.EAST);
+        jPanelHeader.add(jTextFieldBusqueda, java.awt.BorderLayout.EAST);
 
         jPanelControlesSuperiores.setOpaque(false);
 
@@ -133,9 +142,11 @@ public abstract class AbstractListView<T> extends AbstractView {
         jLabelCantidad.setText("40 Elementos");
         jPanelControlesSuperiores.add(jLabelCantidad);
 
-        jXPanel1.add(jPanelControlesSuperiores, java.awt.BorderLayout.LINE_START);
+        jPanelHeader.add(jPanelControlesSuperiores, java.awt.BorderLayout.LINE_START);
 
-        jXPanelLista.add(jXPanel1, java.awt.BorderLayout.PAGE_START);
+        jXPanelSuperior.add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
+
+        jXPanelLista.add(jXPanelSuperior, java.awt.BorderLayout.PAGE_START);
 
         jPanelTabla.setLayout(new java.awt.BorderLayout());
 
@@ -211,7 +222,7 @@ public abstract class AbstractListView<T> extends AbstractView {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jXPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+                    .addComponent(jXPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jXPanelControles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -293,15 +304,17 @@ public abstract class AbstractListView<T> extends AbstractView {
     private javax.swing.JButton jButtonEdit;
     private javax.swing.JLabel jLabelCantidad;
     private javax.swing.JPanel jPanelControlesSuperiores;
+    private javax.swing.JPanel jPanelExtra;
+    private javax.swing.JPanel jPanelHeader;
     private javax.swing.JPanel jPanelTabla;
     protected javax.swing.JPopupMenu jPopupMenuClickDerecho;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableList;
     private javax.swing.JTextField jTextFieldBusqueda;
     private org.jdesktop.swingx.JXLabel jXLabel1;
-    private org.jdesktop.swingx.JXPanel jXPanel1;
     private org.jdesktop.swingx.JXPanel jXPanelControles;
     private org.jdesktop.swingx.JXPanel jXPanelLista;
+    private org.jdesktop.swingx.JXPanel jXPanelSuperior;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -385,6 +398,10 @@ public abstract class AbstractListView<T> extends AbstractView {
 
     public JPanel getjPanelControlesSuperiores() {
         return jPanelControlesSuperiores;
+    }
+
+    public JPanel getjPanelExtra() {
+        return jPanelExtra;
     }
 
     //

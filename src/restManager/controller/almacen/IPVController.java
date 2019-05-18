@@ -88,7 +88,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     public void darEntrada(IpvRegistro instance) {
         float cantidad;
         try {
-            cantidad = Integer.parseInt(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
+            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
         } catch (NumberFormatException e) {
             showErrorDialog(getView(), "El valor introducido no es correcto");
             return;
@@ -102,7 +102,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     public void ajustarConsumo(IpvRegistro instance) {
         float cantidad;
         try {
-            cantidad = Integer.parseInt(showInputDialog(getView(), "Introduzca la cantidad a ajustar"));
+            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a ajustar"));
         } catch (NumberFormatException e) {
             showErrorDialog(getView(), "El valor introducido no es correcto");
             return;
@@ -189,4 +189,11 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
         return listaRegistros;
     }
+
+    @Override
+    public void create(Ipv selected, boolean quietMode) {
+        super.create(selected, quietMode); //To change body of generated methods, choose Tools | Templates.
+        inicializarIpvs(new VentaDetailController().getDiaDeVenta(null).getFecha());
+    }
+
 }

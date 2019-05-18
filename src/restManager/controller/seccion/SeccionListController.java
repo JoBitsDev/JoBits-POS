@@ -115,18 +115,18 @@ public class SeccionListController extends AbstractListController<Seccion> {
         if (!selected.getProductoVentaList().isEmpty()) {
             if (showConfirmDialog(getView(), "La seccion " + selected
                     + " contiene " + selected.getProductoVentaList().size()
-                    + " productos de venta enlazados \n" + "presione si para borrar los productos de venta, no para cancelar")) {
+                    + " productos de venta enlazados \n" + "presione si para borrar el enlace de los productos de venta, no para cancelar")) {
                 for (ProductoVenta x : selected.getProductoVentaList()) {
                     x.setSeccionnombreSeccion(null);
                     x.setVisible(false);
                     ProductoVentaDAO.getInstance().edit(x);
                 }
-
-            }else{
+            } else {
                 return;
             }
         }
         super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
+        selected.getCartacodCarta().getSeccionList().remove(selected);
     }
 
     @Override

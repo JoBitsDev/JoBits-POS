@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia;
 
 import java.io.Serializable;
@@ -20,8 +19,9 @@ import javax.persistence.Table;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "insumo")
@@ -206,7 +206,7 @@ public class Insumo implements Serializable {
 
     @Override
     public String toString() {
-        return   nombre+"("+codInsumo+")";
+        return nombre + "(" + codInsumo + ")" + "(" + um + ")" ;
     }
 
 }
