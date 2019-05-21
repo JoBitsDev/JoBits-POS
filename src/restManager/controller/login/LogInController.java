@@ -55,6 +55,10 @@ public class LogInController extends AbstractDialogController<Personal> {
     }
 
     public boolean constructoAuthorizationView(Container parent, String usuario) {
+        int nivelUsuario = PersonalDAO.getInstance().find(usuario).getPuestoTrabajonombrePuesto().getNivelAcceso();
+        if(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > nivelUsuario){
+            return true;
+        }
         if (R.loggedUser.getUsuario().equals(usuario)) {
             return true;
         }

@@ -194,6 +194,10 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public void removeProduct(ProductovOrden objectAtSelectedRow) {
         if (autorize()) {
+            int index = instance.getProductovOrdenList().indexOf(objectAtSelectedRow);
+            instance.getProductovOrdenList().get(index).setCantidad(0);
+            Impresion i = new Impresion();
+            i.printCancelationTicket(instance);
             ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
             instance.getProductovOrdenList().remove(objectAtSelectedRow);
 
@@ -312,15 +316,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public boolean autorize() {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2) {
-            return true;
-        } else {
-            LogInController control = new LogInController();
-            if (control.constructoAuthorizationView(null, instance.getPersonalusuario().getUsuario())) {
-                return true;
-            }
-
-        }
-        return false;
+        return new LogInController().constructoAuthorizationView(null, instance.getPersonalusuario().getUsuario());
     }
 }

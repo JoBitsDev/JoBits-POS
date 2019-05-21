@@ -11,12 +11,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ExceptionHandler;
 import restManager.persistencia.Area;
 import restManager.persistencia.Carta;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Configuracion;
 import restManager.persistencia.DatosPersonales;
+import restManager.persistencia.GastoVenta;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.Mesa;
 import restManager.persistencia.Orden;
@@ -51,7 +53,7 @@ import restManager.util.comun;
  */
 public class BackUp extends SwingWorker<Boolean, Float> {
 
-    private EntityManagerFactory emf;
+    private final EntityManagerFactory emf;
     private final EntityManager em;
     private JProgressBar barraDeProgreso;
     private TipoBackUp tipoBackUp;
@@ -139,6 +141,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private boolean commitBackupTransaction() {
+        em.flush();
         em.getTransaction().commit();
         return true;
     }
@@ -266,6 +269,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         float sumaXCantidad = topeProceso / ventas.size();
         for (Venta v : ventas) {
             BackUpOrdenes(v.getOrdenList());
+            BackUpGastos(v.getGastoVentaList());
             if (EntityExist(v, v.getFecha())) {
                 em.merge(v);
             } else {
@@ -462,6 +466,29 @@ public class BackUp extends SwingWorker<Boolean, Float> {
                 topeProceso = 10;
                 EjecutarBackUpAll();
 
+        }
+
+        return true;
+    }
+
+    private boolean BackUpGastos(List<GastoVenta> gastoVentaList) {
+        for (GastoVenta o : gastoVentaList) {
+            if (EntityExist(o.getGasto().getTipoGastoidGasto(), o.getGasto().getTipoGastoidGasto().getIdGasto())) {
+                em.merge(o.getGasto().getTipoGastoidGasto());
+            } else {
+                em.persist(o.getGasto().getTipoGastoidGasto());
+            }
+            if (EntityExist(o.getGasto(), o.getGasto().getCodGasto())) {
+                em.merge(o.getGasto());
+            } else {
+                em.persist(o.getGasto());
+            }
+
+            if (EntityExist(o, o.getGastoVentaPK())) {
+                em.merge(o);
+            } else {
+                em.persist(o);
+            }
         }
 
         return true;
