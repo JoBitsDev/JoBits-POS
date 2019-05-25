@@ -36,7 +36,7 @@ public class PuestoTrabajoCreateEditControllerTest {
     public static void setUpClass() {
        
         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
-        PuestoTrabajoDAO dataaccess = new PuestoTrabajoDAO();
+        PuestoTrabajoDAO dataaccess = PuestoTrabajoDAO.getInstance();
         p = dataaccess.findAll().get(1);
         
     }

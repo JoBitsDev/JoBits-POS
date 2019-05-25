@@ -12,8 +12,8 @@ public class Ticket {
     /**
      * the paper lenght is 32 for 58mm and 48 for 80mm
      */
-    final static int PAPER_LENGHT = 32;
-    final static char LINE_CHAR = '*';
+    public static int PAPER_LENGHT = 48;
+    public static char LINE_CHAR = '*';
     private AlignmentState posState = AlignmentState.LEFT;
 
     public Ticket() {

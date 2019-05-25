@@ -52,13 +52,13 @@ public class Impresion {
     private boolean monedaCUC;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
     private boolean SHOW_PRICES = true;
-    private final boolean PRINT_IN_CENTRAL_KITCHEN = true;
-    private final boolean PRINT_GASTOS_EN_AUTORIZOS = false;
-    private final String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
-    private final String DEFAULT_PRINT_LOCATION = null;
-    private final boolean IMPRIMIR_TICKET_COCINA = true;
-    private static int cantidadCopias = 0;
-    private final boolean REDONDEO_POR_EXCESO = true;
+    public static boolean PRINT_IN_CENTRAL_KITCHEN = true;
+    public static boolean PRINT_GASTOS_EN_AUTORIZOS = false;
+    public static String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
+    public static String DEFAULT_PRINT_LOCATION = null;
+    public static boolean IMPRIMIR_TICKET_COCINA = true;
+    public static int cantidadCopias = 0;
+    public static boolean REDONDEO_POR_EXCESO = true;
 
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
@@ -1165,7 +1165,7 @@ public class Impresion {
 
         for (InsumoAlmacen in : ret) {
             t.alignLeft();
-            t.setText(in.getInsumo().toString() + "{" + in.getInsumo().getUm() + "}");
+            t.setText(in.getInsumo().toString());
             t.newLine();
             t.alignRight();
             t.setText("" + in.getCantidad());

@@ -92,7 +92,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         ret.setCodOrden(getOrdenCod());
         ret.setPersonalusuario(R.loggedUser);
         ret.setDeLaCasa(false);
-        ret.setMesacodMesa(MesaDAO.getInstance().find(R.NO_MESA));
+        ret.setMesacodMesa(MesaDAO.getInstance().find(R.NO_MESA_CAJA));
         ret.setPorciento(ret.getMesacodMesa().getAreacodArea().getPorcientoPorServicio().floatValue());
         ret.setHoraComenzada(new Date());
         ret.setOrdengastoEninsumos((float) 0);

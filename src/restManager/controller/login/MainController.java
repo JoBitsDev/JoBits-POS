@@ -38,10 +38,14 @@ import restManager.persistencia.Negocio;
 import restManager.persistencia.Personal;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.CartaDAO;
+import restManager.persistencia.models.ConfiguracionDAO;
 import restManager.persistencia.models.NegocioDAO;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.VentaDAO;
+import restManager.printservice.Impresion;
+import restManager.printservice.Ticket;
 import restManager.resources.R;
+import static restManager.resources.R.COINCHANGE;
 
 /**
  * FirstDream
@@ -54,10 +58,7 @@ public class MainController extends AbstractDialogController<Personal> {
     public MainController(Personal loggedUser) {
         super(PersonalDAO.getInstance());
         R.loggedUser = loggedUser;
-        Negocio model = NegocioDAO.getInstance().find(1);
-        R.REST_NAME = model.getNombre();
-        R.MAIN_COIN = model.getMonedaPrincipal();
-        R.COIN_SUFFIX = " " + model.getMonedaPrincipal();
+        cargarConfiguracion();
     }
 
     public MainController(Personal loggedUser, AbstractView parentView) {
@@ -166,8 +167,25 @@ public class MainController extends AbstractDialogController<Personal> {
         return (MainView) super.getView(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
+    private void cargarConfiguracion() {
+        Negocio model = NegocioDAO.getInstance().find(1);
+        ConfiguracionDAO c = ConfiguracionDAO.getInstance();
+        R.REST_NAME = model.getNombre();
+        R.MAIN_COIN = model.getMonedaPrincipal();
+        R.COIN_SUFFIX = " " + model.getMonedaPrincipal();
+        R.COINCHANGE = c.find(R.SettingID.GENERAL_CAMBIO_MONEDA.getValue()).getValor();
+        R.VARIOS_TURNOS = c.find(R.SettingID.GENERAL_TURNOS_VARIOS.getValue()).getValor() == 1;
+        R.CAJERO_PERMISOS_ESPECIALES = c.find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.getValue()).getValor() == 1;
+        R.CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = c.find(R.SettingID.GENERAL_CONSUMO_CASA_ESTADISTICAL.getValue()).getValor() == 1;
+        Ticket.PAPER_LENGHT = c.find(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL.getValue()).getValor();
+        Ticket.LINE_CHAR = c.find(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR.getValue()).getValorString().charAt(0);
+        Impresion.PRINT_IN_CENTRAL_KITCHEN = c.find(R.SettingID.IMPRESION_IMPRIMIR_COCINA_CENTRAL.getValue()).getValor() == 1;
+        Impresion.PRINT_GASTOS_EN_AUTORIZOS = c.find(R.SettingID.IMPRESION_IMPRIMIR_GASTOS_AUTORIZOS.getValue()).getValor() == 1;
+        Impresion.IMPRIMIR_TICKET_COCINA = c.find(R.SettingID.IMPRESION_IMPRIMIR_TICKET_EN_COCINA.getValue()).getValor() == 1;
+        Impresion.cantidadCopias = c.find(R.SettingID.IMPRESION_CANTIDAD_COPIAS.getValue()).getValor();
+        Impresion.REDONDEO_POR_EXCESO = c.find(R.SettingID.IMPRESION_REDONDEO_EXCESO.getValue()).getValor() == 1;
+    }
+
     public enum MenuButtons {
 
         //
@@ -201,9 +219,9 @@ public class MainController extends AbstractDialogController<Personal> {
         //CONFIGURACION
         //
 
-        COPIA_SEG(4), 
+        COPIA_SEG(4),
         LICENCIA(0);
-        
+
         private final int nivelMinimoAcceso;
 
         private MenuButtons(int nivelMinimoAcceso) {

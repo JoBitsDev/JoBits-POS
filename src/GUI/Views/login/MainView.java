@@ -9,6 +9,7 @@ import GUI.Views.AbstractView;
 import com.jidesoft.swing.JideLabel;
 import java.awt.Color;
 import java.awt.Dialog;
+import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Controller;
@@ -71,6 +72,7 @@ public class MainView extends AbstractView {
         jButtonPTrabajo = new javax.swing.JButton();
         jPanelConfiguracion = new javax.swing.JPanel();
         jButtonCopiaSeguridad = new javax.swing.JButton();
+        jButtonCONFIG = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jideLabelLicencia = new com.jidesoft.swing.JideLabel();
@@ -323,6 +325,19 @@ public class MainView extends AbstractView {
         });
         jPanelConfiguracion.add(jButtonCopiaSeguridad);
 
+        jButtonCONFIG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/config.png"))); // NOI18N
+        jButtonCONFIG.setText(bundle.getString("label_configuracion")); // NOI18N
+        jButtonCONFIG.setBorderPainted(false);
+        jButtonCONFIG.setEnabled(false);
+        jButtonCONFIG.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonCONFIG.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonCONFIG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCONFIGActionPerformed(evt);
+            }
+        });
+        jPanelConfiguracion.add(jButtonCONFIG);
+
         jPanelDetalles.add(jPanelConfiguracion);
 
         jScrollPane1.setViewportView(jPanelDetalles);
@@ -439,6 +454,10 @@ public class MainView extends AbstractView {
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jideButton1ActionPerformed
 
+    private void jButtonCONFIGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCONFIGActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCONFIGActionPerformed
+
     @Override
     public void updateView() {
         updateLicenceStatus();
@@ -479,6 +498,7 @@ public class MainView extends AbstractView {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAlmacen;
     private javax.swing.JButton jButtonArchivos;
+    private javax.swing.JButton jButtonCONFIG;
     private javax.swing.JButton jButtonCopiaSeguridad;
     private javax.swing.JButton jButtonIPVs;
     private javax.swing.JButton jButtonPTrabajo;

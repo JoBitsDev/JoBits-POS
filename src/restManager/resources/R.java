@@ -8,11 +8,15 @@ package restManager.resources;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Personal;
+import restManager.persistencia.models.ConfiguracionDAO;
 import restManager.persistencia.models.NegocioDAO;
+import restManager.printservice.Ticket;
 
 /**
  * FirstDream
@@ -36,19 +40,17 @@ public class R {
 
     public static final Date TODAYS_DATE = new Date();
 
-    public static final float PERCENTAGE = 10;
-
-    public static final int COINCHANGE = 25;
+    public static  int COINCHANGE = 25;
     
     public static String MAIN_COIN = null;
 
-    public static final boolean CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = true;
+    public static boolean CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = true;
     
-    public static final boolean VARIOS_TURNOS = false;
+    public static boolean VARIOS_TURNOS = false;
     
-    public static final boolean CAJERO_PERMISOS_ESPECIALES = false;
+    public static boolean CAJERO_PERMISOS_ESPECIALES = false;
 
-    public static final String NO_MESA = "M-0";
+    public static String NO_MESA_CAJA = "M-0";
 
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd'/'MM'/'yy");
 
@@ -59,7 +61,7 @@ public class R {
     public static DecimalFormat formatoMoneda = new DecimalFormat("0.00");
 
     public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("Strings");
-
+    
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
     public static String RELEASE_VERSION = "Version 2.6.2.1";
@@ -74,6 +76,43 @@ public class R {
         }
     }
 
+    public static enum SettingID{
+        
+        //
+        //GENERALES
+        //
+        
+        GENERAL_CAMBIO_MONEDA("GENERAL_CAMBIO_MONEDA"),
+        GENERAL_TURNOS_VARIOS("GENERAL_MULTIPLES_TURNOS"),
+        GENERAL_CAJERO_PERMISOS_ESP("GENERAL_CAJERO_PERMISOS_ESP"),
+        GENERAL_CONSUMO_CASA_ESTADISTICAL("GENERAL_CONSUMO_CASA_ESTADISTICAS"),
+        GENERAL_SERVER_IP("GENERAL_SERVIDOR_IP"),
+        
+        
+        //
+        //IMPRESION
+        //
+        
+        IMPRESION_TICKET_TAMANO_PAPEL("PRINTING_TICKET_PAPER_SIZE"),
+        IMPRESION_TICKET_CARACTER_SEPARADOR("PRINTING_TICKET_SEPARATOR_CHAR"),
+        IMPRESION_IMPRIMIR_COCINA_CENTRAL("PRINTING_CENTRAL_KITCHEN"),
+        IMPRESION_IMPRIMIR_GASTOS_AUTORIZOS("PRINTING_EXPENSES_IN_HAUSE_TICKETS"),
+        IMPRESION_IMPRIMIR_TICKET_EN_COCINA("PRINTING_PRINT_KITCHEN_TICKET"),
+        IMPRESION_CANTIDAD_COPIAS("PRINTING_COPIES"),
+        IMPRESION_REDONDEO_EXCESO("PRINTING_ROUNDING");
+        
+        private final String value;
+
+        private SettingID(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+        
+    }  
+    
     public static enum UM {
         U("U"),
         Gr("Gr"),
