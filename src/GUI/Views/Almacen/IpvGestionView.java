@@ -58,6 +58,8 @@ public class IpvGestionView extends AbstractView {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListRegistro = new javax.swing.JList<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelRegistros = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -66,8 +68,6 @@ public class IpvGestionView extends AbstractView {
         jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jListRegistro = new javax.swing.JList<>();
         jPanel4 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanelData = new javax.swing.JPanel();
@@ -75,6 +75,19 @@ public class IpvGestionView extends AbstractView {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+
+        jListRegistro.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { " " };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jListRegistro.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListRegistro.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListRegistroValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jListRegistro);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -86,6 +99,7 @@ public class IpvGestionView extends AbstractView {
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTableRegistro.setAutoCreateRowSorter(true);
+        jTableRegistro.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jTableRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -94,13 +108,15 @@ public class IpvGestionView extends AbstractView {
 
             }
         ));
+        jTableRegistro.setRowHeight(25);
+        jTableRegistro.setRowMargin(4);
         jScrollPane2.setViewportView(jTableRegistro);
 
         jPanelRegistros.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
-        jPanel1.setLayout(new java.awt.GridLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jButton4.setMnemonic('i');
@@ -138,21 +154,6 @@ public class IpvGestionView extends AbstractView {
         jPanel1.add(jButton3);
 
         jPanelRegistros.add(jPanel1, java.awt.BorderLayout.PAGE_END);
-
-        jListRegistro.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { " " };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jListRegistro.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jListRegistro.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jListRegistroValueChanged(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jListRegistro);
-
-        jPanelRegistros.add(jScrollPane3, java.awt.BorderLayout.LINE_START);
 
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 

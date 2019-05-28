@@ -269,6 +269,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelVentasCamareras.setOpaque(false);
         jPanelVentasCamareras.setLayout(new java.awt.BorderLayout());
 
+        jTableVentasDependientes.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jTableVentasDependientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -292,6 +293,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
                 return canEdit [columnIndex];
             }
         });
+        jTableVentasDependientes.setRowHeight(25);
+        jTableVentasDependientes.setRowMargin(5);
         jScrollPane3.setViewportView(jTableVentasDependientes);
 
         jPanelVentasCamareras.add(jScrollPane3, java.awt.BorderLayout.CENTER);
@@ -325,6 +328,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelVentasCocinas.setOpaque(false);
         jPanelVentasCocinas.setLayout(new java.awt.BorderLayout());
 
+        jTableVentasPorCocina.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jTableVentasPorCocina.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -348,6 +352,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
                 return canEdit [columnIndex];
             }
         });
+        jTableVentasPorCocina.setRowHeight(25);
+        jTableVentasPorCocina.setRowMargin(5);
         jScrollPane5.setViewportView(jTableVentasPorCocina);
 
         jPanelVentasCocinas.add(jScrollPane5, java.awt.BorderLayout.CENTER);
@@ -470,6 +476,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
             }
         ));
         jXTableOrdActivas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jXTableOrdActivas.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         jScrollPane2.setViewportView(jXTableOrdActivas);
 
         jPanelOrdenesActivas.add(jScrollPane2, java.awt.BorderLayout.CENTER);

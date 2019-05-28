@@ -132,6 +132,9 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         add(jButtonDeleteProd, java.awt.BorderLayout.PAGE_END);
 
         jTableCrossReference.setAutoCreateRowSorter(true);
+        jTableCrossReference.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jTableCrossReference.setRowHeight(32);
+        jTableCrossReference.setRowMargin(4);
         jScrollPaneCrossReference.setViewportView(jTableCrossReference);
 
         add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);

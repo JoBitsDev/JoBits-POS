@@ -52,6 +52,7 @@ public class AlmacenManageControllerTest {
         Almacen a = null;
         AlmacenManageController instance = new AlmacenManageController(a);
         instance.imprimirReporteParaCompras(a);
+        
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

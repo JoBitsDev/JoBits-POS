@@ -191,9 +191,9 @@ public class Impresion {
         addFinal(t);
 
         for (int i = 0; i < cantidadCopias; i++) {
-            RAM.add(new CopiaTicket(DEFAULT_PRINT_LOCATION, t.finalCommandSet().getBytes()));
+            RAM.add(new CopiaTicket(o.getMesacodMesa().getAreacodArea().getNombre(), t.finalCommandSet().getBytes()));
         }
-        feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        feedPrinter(t.finalCommandSet().getBytes(), o.getMesacodMesa().getAreacodArea().getNombre());
 
         cleanAndPrintRAM();
     }

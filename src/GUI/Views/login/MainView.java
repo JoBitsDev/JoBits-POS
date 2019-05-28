@@ -15,9 +15,17 @@ import restManager.controller.AbstractDialogController;
 import restManager.controller.Controller;
 import restManager.controller.Licence.Licence;
 import restManager.controller.login.MainController;
+import restManager.controller.venta.OrdenController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.ProductoInsumo;
+import restManager.persistencia.ProductoVenta;
+import restManager.persistencia.ProductovOrden;
+import restManager.persistencia.models.InsumoDAO;
+import restManager.persistencia.models.ProductoInsumoDAO;
+import restManager.persistencia.models.ProductoVentaDAO;
 import restManager.resources.R;
 import restManager.util.ComponentMover;
+import restManager.util.comun;
 
 /**
  *
