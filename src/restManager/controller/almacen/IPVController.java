@@ -116,10 +116,10 @@ public class IPVController extends AbstractDialogController<Ipv> {
 
     public void updateInstance(IpvRegistro instance) {
         instance.setDisponible(instance.getEntrada() + instance.getInicio());
-        instance.setFinal1(instance.getDisponible() - instance.getConsumo());
+        instance.setFinal1(comun.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumo()));
         if (instance.getConsumoReal() != null) {
             if (instance.getConsumoReal() > 0) {
-                instance.setFinal1(instance.getDisponible() - instance.getConsumoReal());
+                instance.setFinal1(comun.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumoReal()));
             }
         }
         IpvRegistroDAO.getInstance().startTransaction();

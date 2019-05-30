@@ -154,7 +154,7 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jTableList.setAutoCreateRowSorter(true);
         jTableList.setBackground(getBackground());
-        jTableList.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jTableList.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jTableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -164,6 +164,7 @@ public abstract class AbstractListView<T> extends AbstractView {
             }
         ));
         jTableList.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        jTableList.setRowHeight(25);
         jTableList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jTableList.setShowGrid(false);
         jTableList.getTableHeader().setReorderingAllowed(false);

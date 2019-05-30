@@ -58,8 +58,6 @@ public class IpvGestionView extends AbstractView {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jListRegistro = new javax.swing.JList<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelRegistros = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -68,6 +66,8 @@ public class IpvGestionView extends AbstractView {
         jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListRegistro = new javax.swing.JList<>();
         jPanel4 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanelData = new javax.swing.JPanel();
@@ -75,19 +75,6 @@ public class IpvGestionView extends AbstractView {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-
-        jListRegistro.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { " " };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jListRegistro.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jListRegistro.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jListRegistroValueChanged(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jListRegistro);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -155,6 +142,22 @@ public class IpvGestionView extends AbstractView {
 
         jPanelRegistros.add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
+        jListRegistro.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jListRegistro.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { " " };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jListRegistro.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListRegistro.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListRegistroValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jListRegistro);
+
+        jPanelRegistros.add(jScrollPane3, java.awt.BorderLayout.LINE_START);
+
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jCheckBox1.setText(bundle.getString("label_ocultar_insumos_no_utilizados")); // NOI18N
@@ -192,7 +195,8 @@ public class IpvGestionView extends AbstractView {
         jLabel1.setText(bundle.getString("label_cocina")); // NOI18N
         jPanelOptions.add(jLabel1, java.awt.BorderLayout.CENTER);
 
-        jComboBox1.setMinimumSize(new java.awt.Dimension(150, 27));
+        jComboBox1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jComboBox1.setMinimumSize(new java.awt.Dimension(150, 70));
         jComboBox1.setPreferredSize(new java.awt.Dimension(150, 27));
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {

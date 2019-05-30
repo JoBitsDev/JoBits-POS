@@ -137,11 +137,14 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public List<Orden> getOrdenesActivas() {
+       ArrayList<Orden> ret ;
         if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() <= 2) {
-            return VentaDAO1.getOrdenesActivas(getInstance());
+             ret = new ArrayList<>(VentaDAO1.getOrdenesActivas(getInstance()));
         } else {
-            return getInstance().getOrdenList();
+            ret = new ArrayList<>(getInstance().getOrdenList());
         }
+        Collections.sort(ret);
+        return ret;
     }
 
     public void fetchNewDataFromServer(int turnoTrabajo) {
