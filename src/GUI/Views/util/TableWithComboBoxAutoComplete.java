@@ -54,7 +54,7 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
     }
 
     public T addFromAutoComplete() {
-       jTextField.setText(jTextField.getText().trim());
+        jTextField.setText(jTextField.getText().trim());
         K selected = findSelected(jTextField.getText());
         if (selected == null) {
             throw new NoSelectedException(table);
@@ -63,6 +63,7 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
         if (transformedInstance != null) {
             tableModel.addObject(transformedInstance);
         }
+        jTextField.setText("");
         return transformedInstance;
     }
 
@@ -107,7 +108,7 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
 
     private K findSelected(String text) {
         for (K k : itemList) {
-            if(k.toString().equals(text)){
+            if (k.toString().equals(text)) {
                 return k;
             }
         }
@@ -124,14 +125,14 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
         public boolean updateHints(Object context) {
             ArrayList<K> ret = new ArrayList<>();
             for (K x : getCompletionList()) {
-                if(x.toString().toLowerCase().contains(context.toString().toLowerCase())){
+                if (x.toString().toLowerCase().contains(context.toString().toLowerCase())) {
                     ret.add(x);
                 }
             }
             setListData(ret.toArray());
             return true;
         }
-           
+
         @Override
         public K getSelectedHint() {
             return (K) super.getSelectedHint(); //To change body of generated methods, choose Tools | Templates.

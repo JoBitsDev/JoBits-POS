@@ -100,9 +100,10 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         jLabel1 = new javax.swing.JLabel();
         jTextFieldAutoComplete = new javax.swing.JTextField();
         jButtonAgregarProd = new javax.swing.JButton();
-        jButtonDeleteProd = new javax.swing.JButton();
         jScrollPaneCrossReference = new javax.swing.JScrollPane();
         jTableCrossReference = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jButtonDeleteProd = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -123,13 +124,12 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         });
         jPanel2.add(jTextFieldAutoComplete);
 
+        jButtonAgregarProd.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jButtonAgregarProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/aceptar16.png"))); // NOI18N
         jButtonAgregarProd.setText(bundle.getString("label_agregar")); // NOI18N
         jPanel2.add(jButtonAgregarProd);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
-
-        jButtonDeleteProd.setText(bundle.getString("label_eliminar")); // NOI18N
-        add(jButtonDeleteProd, java.awt.BorderLayout.PAGE_END);
 
         jTableCrossReference.setAutoCreateRowSorter(true);
         jTableCrossReference.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
@@ -138,6 +138,16 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         jScrollPaneCrossReference.setViewportView(jTableCrossReference);
 
         add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jButtonDeleteProd.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jButtonDeleteProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/borrar16.png"))); // NOI18N
+        jButtonDeleteProd.setText(bundle.getString("label_eliminar")); // NOI18N
+        jPanel1.add(jButtonDeleteProd);
+
+        add(jPanel1, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldAutoCompleteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldAutoCompleteFocusGained
@@ -149,8 +159,8 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
             T transformedInstance = transformK_T(handler.getItems().getSelectedHint());
             if (transformedInstance != null) {
                 handler.getTableModel().addObject(transformedInstance);
-                jTextFieldAutoComplete.setText("");
             }
+                jTextFieldAutoComplete.setText("");
                         
         }
     }//GEN-LAST:event_jTextFieldAutoCompleteKeyPressed
@@ -160,6 +170,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
     private javax.swing.JButton jButtonAgregarProd;
     private javax.swing.JButton jButtonDeleteProd;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPaneCrossReference;
     private javax.swing.JTable jTableCrossReference;
