@@ -172,7 +172,7 @@ public class Impresion {
         float totalPrint = subTotalPrint;
         t.alignRight();
         t.newLine();
-        // t.setText(SUBTOTAL + subTotalPrint + MONEDA);
+        t.setText(SUBTOTAL + subTotalPrint + MONEDA);
         if (o.getPorciento() != 0) {
             t.newLine();
             t.setText("+ " + o.getPorciento() + PORCIENTO + sumaPorciento + MONEDA);

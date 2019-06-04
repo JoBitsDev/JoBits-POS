@@ -41,6 +41,7 @@ public class IpvRegistroDAO extends AbstractModel<IpvRegistro> {
     }
 
     public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha) {
+        getEntityManager().getEntityManagerFactory().getCache().evict(IpvRegistro.class);
         return getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFecha")
                 .setParameter("ipvcocinacodCocina", cocina.getCodCocina())
                 .setParameter("fecha", fecha)

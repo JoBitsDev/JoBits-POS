@@ -311,7 +311,7 @@ public class IpvGestionView extends AbstractView {
             @Override
             public void removeObjectSelected() {
                 Ipv selected = getHandler().getTableModel().getObjectAtSelectedRow();
-                getController().destroy(getHandler().getTableModel().getObjectAtSelectedRow(), true);
+                getController().destroy(selected, true);
                 getHandler().getTableModel().removeObject(selected);
             }
 
