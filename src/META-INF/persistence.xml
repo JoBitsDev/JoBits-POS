@@ -77,6 +77,7 @@
     <class>restManager.persistencia.Gasto</class>
     <class>restManager.persistencia.GastoVenta</class>
     <class>restManager.persistencia.TipoGasto</class>
+    <class>restManager.persistencia.AsistenciaPersonal</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Restaurant_Manager_DB"/>
       <property name="javax.persistence.jdbc.user" value="Rest_Admin"/>

@@ -22,6 +22,7 @@ import restManager.persistencia.IpvRegistroPK;
 import restManager.persistencia.Mesa;
 import restManager.persistencia.Nota;
 import restManager.persistencia.NotaPK;
+import restManager.persistencia.NotificacionEnvioCocina;
 import restManager.persistencia.Orden;
 import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
@@ -198,6 +199,11 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             instance.getProductovOrdenList().get(index).setCantidad(0);
             Impresion i = new Impresion();
             i.printCancelationTicket(instance);
+            getModel().startTransaction();
+            for (NotificacionEnvioCocina x : instance.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
+                getModel().getEntityManager().remove(x);
+            }
+            getModel().commitTransaction();
             ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
             instance.getProductovOrdenList().remove(objectAtSelectedRow);
 

@@ -196,4 +196,18 @@ public class IPVController extends AbstractDialogController<Ipv> {
         inicializarIpvs(new VentaDetailController().getDiaDeVenta(null).getFecha());
     }
 
+    @Override
+    public void destroy(Ipv selected, boolean quietMode) {
+        boolean previousValue = showDialogs;
+        setShowDialogs(!quietMode);
+        getModel().startTransaction();
+        for (IpvRegistro x : selected.getIpvRegistroList()) {
+            getModel().getEntityManager().remove(x);
+        }
+        
+        getModel().getEntityManager().remove(selected);
+        getModel().commitTransaction();
+        setShowDialogs(previousValue);
+    }
+
 }

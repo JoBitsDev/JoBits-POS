@@ -27,8 +27,8 @@ public abstract class AbstractController<T> implements Controller {
     protected List<T> items = null;
     protected T selected;
     private View view;
-    private boolean dismissOnAction = true;
-    private boolean showDialogs = true;
+    protected boolean dismissOnAction = true;
+    protected boolean showDialogs = true;
 
     public AbstractController(AbstractModel<T> dataAccess) {
         model = dataAccess;

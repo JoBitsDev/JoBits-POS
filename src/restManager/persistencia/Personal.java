@@ -25,6 +25,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import restManager.exceptions.DevelopingOperationException;
 
 /**
  * FirstDream
@@ -38,13 +39,17 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Personal.findByUsuario", query = "SELECT p FROM Personal p WHERE p.usuario = :usuario"),
     @NamedQuery(name = "Personal.findByContrasenna", query = "SELECT p FROM Personal p WHERE p.contrasenna = :contrasenna"),
     @NamedQuery(name = "Personal.findByOnline", query = "SELECT p FROM Personal p WHERE p.online = :online"),
-    @NamedQuery(name = "Personal.findByFrecuencia", query = "SELECT p FROM Personal p WHERE p.frecuencia = :frecuencia"),
-    @NamedQuery(name = "Personal.findByUltimodiaTrabajo", query = "SELECT p FROM Personal p WHERE p.ultimodiaTrabajo = :ultimodiaTrabajo")})
+    @NamedQuery(name = "Personal.findByFrecuencia", query = "SELECT p FROM Personal p WHERE p.frecuencia = :frecuencia"),})
 public class Personal implements Serializable {
 
     @Lob
     @Column(name = "foto")
     private byte[] foto;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "pago_pendiente")
+    private Float pagoPendiente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personal")
+    private List<AsistenciaPersonal> asistenciaPersonalList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,9 +63,9 @@ public class Personal implements Serializable {
     private Boolean online;
     @Column(name = "frecuencia")
     private Short frecuencia;
-    @Column(name = "ultimodia_trabajo")
+    @Column(name = "ultimodia_pago")
     @Temporal(TemporalType.DATE)
-    private Date ultimodiaTrabajo;
+    private Date ultimodiaPago;
     @ManyToMany(mappedBy = "personalList")
     private List<PuestoTrabajo> puestoTrabajoList;
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "personalusuario")
@@ -115,12 +120,12 @@ public class Personal implements Serializable {
         this.frecuencia = frecuencia;
     }
 
-    public Date getUltimodiaTrabajo() {
-        return ultimodiaTrabajo;
+    public Date getUltimodiaPago() {
+        return ultimodiaPago;
     }
 
-    public void setUltimodiaTrabajo(Date ultimodiaTrabajo) {
-        this.ultimodiaTrabajo = ultimodiaTrabajo;
+    public void setUltimodiaPago(Date ultimodiaPago) {
+        this.ultimodiaPago = ultimodiaPago;
     }
 
 
@@ -181,6 +186,15 @@ public class Personal implements Serializable {
         return usuario ;
     }
 
+
+    public List<AsistenciaPersonal> getAsistenciaPersonalList() {
+        return asistenciaPersonalList;
+    }
+
+    public void setAsistenciaPersonalList(List<AsistenciaPersonal> asistenciaPersonalList) {
+        this.asistenciaPersonalList = asistenciaPersonalList;
+    }
+
     public byte[] getFoto() {
         return foto;
     }
@@ -189,4 +203,11 @@ public class Personal implements Serializable {
         this.foto = foto;
     }
 
+    public Float getPagoPendiente() {
+        return pagoPendiente;
+    }
+
+    public void setPagoPendiente(Float pagoPendiente) {
+        this.pagoPendiente = pagoPendiente;
+    }
 }

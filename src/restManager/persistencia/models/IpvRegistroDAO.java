@@ -5,6 +5,7 @@
  */
 package restManager.persistencia.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import restManager.persistencia.Cocina;
@@ -41,10 +42,10 @@ public class IpvRegistroDAO extends AbstractModel<IpvRegistro> {
     }
 
     public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha) {
-        return getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFecha")
+        return new ArrayList<>(getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFecha")
                 .setParameter("ipvcocinacodCocina", cocina.getCodCocina())
                 .setParameter("fecha", fecha)
-                .getResultList();
+                .getResultList());
 
     }
 

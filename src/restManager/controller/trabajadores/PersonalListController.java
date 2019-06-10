@@ -5,18 +5,18 @@
  */
 package restManager.controller.trabajadores;
 
-
 import GUI.Views.trabajadores.PersonalListView;
 import java.awt.Dialog;
-import java.awt.Frame;
 import java.awt.Window;
-import java.util.AbstractList;
-import restManager.controller.AbstractDialogController;
+import java.util.Date;
+import java.util.List;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
+import restManager.persistencia.AsistenciaPersonal;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.models.PersonalDAO;
+import restManager.printservice.Impresion;
 
 /**
  * FirstDream
@@ -48,34 +48,64 @@ public class PersonalListController extends AbstractListController<Personal> {
     }
 
     @Override
+    public List<Personal> getItems() {
+        List<Personal> p = getModel().findAll();
+        for (Personal pe : p) {
+            pe.setPagoPendiente((float) 0);
+            for (AsistenciaPersonal a : pe.getAsistenciaPersonalList()) {
+                if (pe.getUltimodiaPago() == null) {
+                    pe.setUltimodiaPago(new Date());
+                }
+                if (a.getVenta().getFecha().after(pe.getUltimodiaPago())) {
+                    pe.setPagoPendiente(pe.getPagoPendiente() != null ? pe.getPagoPendiente() + a.getPago() : a.getPago());
+                }
+            }
+            getModel().startTransaction();
+            getModel().edit(pe);
+            getModel().commitTransaction();
+        }
+        return p;
+    }
+
+    @Override
     public AbstractDetailController<Personal> getDetailControllerForNew() {
-    return new PersonalCreateEditController(getView());
+        return new PersonalCreateEditController(getView());
     }
 
     @Override
     public AbstractDetailController<Personal> getDetailControllerForEdit(Personal selected) {
-    return new PersonalCreateEditController(selected, getView());
+        return new PersonalCreateEditController(selected, getView());
     }
 
     @Override
     public void destroy(Personal selected) {
-      if(!selected.getOrdenList().isEmpty()){
-          if (showConfirmDialog(getView(), "ATENCION: esto elimina al usuario de todas las ordenes que ha atendido."
-                  + "\n Esta seguro que desea continuar?") ) {
-              getModel().startTransaction();
-              for (Orden o : selected.getOrdenList()) {
-                  o.setPersonalusuario(null);
-              }
-              super.destroy(selected);
-              getModel().commitTransaction();
-              return;
-          }else{
-              return;
-          }
-      }
+        if (!selected.getOrdenList().isEmpty()) {
+            if (showConfirmDialog(getView(), "ATENCION: esto elimina al usuario de todas las ordenes que ha atendido."
+                    + "\n Esta seguro que desea continuar?")) {
+                getModel().startTransaction();
+                for (Orden o : selected.getOrdenList()) {
+                    o.setPersonalusuario(null);
+                }
+                super.destroy(selected);
+                getModel().commitTransaction();
+                return;
+            } else {
+                return;
+            }
+        }
         super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
+    public void pagar(Personal personal) {
+        if (showConfirmDialog(getView(), "Confirme el pago a " + personal.getDatosPersonales().getNombre() + personal.getDatosPersonales().getApellidos())) {
+            PersonalCreateEditController controller = new PersonalCreateEditController(personal);
+            controller.setView(getView());
+            if (showConfirmDialog(getView(), "Desea imprimir un comprobante de pago")) {
+                Impresion i = Impresion.getDefaultInstance();
+                i.printComprobantePago(personal);
+            }
+            controller.pagarTrabajador();
+        }
+    }
 
 }

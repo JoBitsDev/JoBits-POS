@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionEvent;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.gasto.GastoController;
 import restManager.controller.gasto.GastoOperacionController;
+import restManager.controller.trabajadores.AsistenciaPersonalController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
@@ -42,6 +43,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     RestManagerAbstractTableModel<Orden> modelOrd;
     GastoOperacionController gastoController = new GastoOperacionController();
+    AsistenciaPersonalController personalController = new AsistenciaPersonalController();
     Date fechaFin;
 
     public VentasCreateEditView(Venta instance, AbstractDialogController controller) {
@@ -409,7 +411,6 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jLabelTotalGastosPagoTrab.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabelTotalGastosPagoTrab.setText(bundle.getString("label_numeros_moneda")); // NOI18N
         jLabelTotalGastosPagoTrab.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 0, 204), 3, true), bundle.getString("label_pago_salario"))); // NOI18N
-        jLabelTotalGastosPagoTrab.setEnabled(false);
         jPanel6.add(jLabelTotalGastosPagoTrab);
 
         jPanel2.add(jPanel6, java.awt.BorderLayout.CENTER);
@@ -657,9 +658,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         updateTableResumenDptes();
         updateTableResumenDetallado();
         updateTableResumenGastos();
+        updateTablePagoTrabajadores();
         jLabelTotalVentas.setText(getController().getTotalVendido());
         jLabelTotalVentasNeta.setText(getController().getTotalVendidoNeto());
         jLabelTotalGastosInsumo.setText(getController().getTotalGastadoInsumos());
+        jLabelTotalGastosPagoTrab.setText(getController().getTotalPagoTrabajadores());
 
     }
 
@@ -809,7 +812,12 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         gastoController.setParent(jPanelExtracciones);
         gastoController.setDiaVenta(getController().getInstance());
         jLabelTotalGastos.setText(comun.setDosLugaresDecimales(gastoController.getValorTotalGastos()));
-        gastoController.constructView(jPanelOperaciones);
+        gastoController.constructView(jPanelExtracciones);
     }
 
+    private void updateTablePagoTrabajadores() {
+        personalController.setParent(jPanelPagoTrabajadores);
+        personalController.setDiaVenta(getController().getInstance());
+        personalController.constructView(jPanelPagoTrabajadores);
+    }
 }
