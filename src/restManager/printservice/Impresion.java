@@ -18,8 +18,10 @@ import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
 import restManager.persistencia.Almacen;
+import restManager.persistencia.AsistenciaPersonal;
 
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
@@ -107,6 +109,12 @@ public class Impresion {
             STOCK_FORMAT = "En Almacen | Diferencia ",
             COMPROBANTE_TRANSACCION = "Comprobante de Transaccion";
 
+    /**
+     * String referentes a los pagos de trabajadores
+     */
+    
+    private final String PAGO_TRABAJADOR = "Comprobante de pago a trabajador";
+    
     //
     //Constructors
     //
@@ -1309,6 +1317,41 @@ public class Impresion {
     //
     //Inner Classes
     //
+
+    public void printComprobantePago(Personal personal) {
+        ArrayList<AsistenciaPersonal> lista = new ArrayList<>(personal.getAsistenciaPersonalList());
+        Collections.sort(lista);
+
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        t.addLineSeperator();
+        t.newLine();
+        t.alignCenter();
+        t.setText(PAGO_TRABAJADOR);
+        t.newLine();
+        t.alignRight();
+        t.setText(FECHA + R.DATE_FORMAT.format(R.TODAYS_DATE));
+        t.newLine();
+        t.setText(personal.getDatosPersonales().getNombre());
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+
+        float total = 0;
+        for (AsistenciaPersonal a : lista) {
+            t.alignLeft();
+            t.setText(R.DATE_FORMAT.format(a.getAsistenciaPersonalPK().getVentafecha()));
+            t.alignRight();
+            t.setText(comun.setDosLugaresDecimales(a.getPago()));
+            t.newLine();
+        }
+
+        addTotalAndFinal(t, total);
+
+        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+    }
 
     private class JobListener implements PrintJobListener {
 

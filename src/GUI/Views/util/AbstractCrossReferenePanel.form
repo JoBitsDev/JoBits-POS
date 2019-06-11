@@ -85,7 +85,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="jPanelOpciones">
       <Properties>
         <Property name="opaque" type="boolean" value="false"/>
       </Properties>

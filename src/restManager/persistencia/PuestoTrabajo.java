@@ -48,7 +48,7 @@ public class PuestoTrabajo implements Serializable {
     @Column(name = "nombre_puesto")
     private String nombrePuesto;
     @Column(name = "salario_fijo")
-    private Integer salarioFijo;
+    private Float salarioFijo;
     @Column(name = "area_pago")
     private String areaPago;
     @Column(name = "nivel_acceso")
@@ -89,11 +89,11 @@ public class PuestoTrabajo implements Serializable {
         this.nombrePuesto = nombrePuesto;
     }
 
-    public Integer getSalarioFijo() {
+    public Float getSalarioFijo() {
         return salarioFijo;
     }
 
-    public void setSalarioFijo(Integer salarioFijo) {
+    public void setSalarioFijo(Float salarioFijo) {
         this.salarioFijo = salarioFijo;
     }
 

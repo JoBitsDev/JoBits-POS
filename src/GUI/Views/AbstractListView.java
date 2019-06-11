@@ -191,6 +191,7 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jButtonAdd.setMnemonic('a');
         jButtonAdd.setText(bundle.getString("label_agregar")); // NOI18N
+        jButtonAdd.setPreferredSize(new java.awt.Dimension(93, 40));
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddActionPerformed(evt);
@@ -200,6 +201,7 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jButtonEdit.setMnemonic('e');
         jButtonEdit.setText(bundle.getString("label_editar")); // NOI18N
+        jButtonEdit.setPreferredSize(new java.awt.Dimension(80, 40));
         jButtonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditActionPerformed(evt);
@@ -209,6 +211,7 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jButtonDelete.setMnemonic('d');
         jButtonDelete.setText(bundle.getString("label_eliminar")); // NOI18N
+        jButtonDelete.setPreferredSize(new java.awt.Dimension(95, 40));
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDeleteActionPerformed(evt);
@@ -231,7 +234,7 @@ public abstract class AbstractListView<T> extends AbstractView {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jXPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                .addComponent(jXPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jXPanelControles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())

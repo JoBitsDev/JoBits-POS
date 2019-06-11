@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.Arrays;
+import java.util.Date;
 import javax.swing.border.LineBorder;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.trabajadores.PersonalCreateEditController;
@@ -379,6 +380,8 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
         } else {
             instance.getDatosPersonales().setSexo('F');
         }
+        instance.setUltimodiaPago(new Date());
+        instance.setPagoPendiente((float)0);
         instance.setPuestoTrabajonombrePuesto((PuestoTrabajo) jComboBoxPuestoTrabajo.getSelectedItem());
         instance.setOnline(false);
         return true;

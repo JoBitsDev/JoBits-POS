@@ -10,8 +10,10 @@ import GUI.Views.trabajadores.PersonalCreateEditView;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import restManager.controller.AbstractDetailController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.DatosPersonales;
 import restManager.persistencia.Personal;
 import restManager.persistencia.PuestoTrabajo;
@@ -64,6 +66,18 @@ public class PersonalCreateEditController extends AbstractDetailController<Perso
   public List<PuestoTrabajo> getPuestoTrabajoList(){
       return PuestoTrabajoDAO.getInstance().findAll();
   }
+
+    public void pagarTrabajador() {
+        instance.setUltimodiaPago(new Date());
+        instance.setPagoPendiente((float)0);
+        update(selected, true);
+        showSuccessDialog(null, "Trabajador Pagado exitosamente");
+    }
+    
+    public  void acumularSalarioTrabajador(float salarioAcumular){
+        instance.setPagoPendiente(instance.getPagoPendiente() + salarioAcumular);
+        update(instance,true);
+    }
 
 
     

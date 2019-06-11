@@ -8,6 +8,7 @@ package GUI.Views.util;
 import com.jidesoft.hints.ListDataIntelliHints;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -87,6 +88,10 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         intellihints.getCompletionList().add(item);
     }
 
+    public JPanel getjPanelOpciones() {
+        return jPanelOpciones;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -102,7 +107,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         jButtonAgregarProd = new javax.swing.JButton();
         jScrollPaneCrossReference = new javax.swing.JScrollPane();
         jTableCrossReference = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelOpciones = new javax.swing.JPanel();
         jButtonDeleteProd = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
@@ -139,15 +144,15 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
 
         add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanelOpciones.setOpaque(false);
+        jPanelOpciones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonDeleteProd.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jButtonDeleteProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/borrar16.png"))); // NOI18N
         jButtonDeleteProd.setText(bundle.getString("label_eliminar")); // NOI18N
-        jPanel1.add(jButtonDeleteProd);
+        jPanelOpciones.add(jButtonDeleteProd);
 
-        add(jPanel1, java.awt.BorderLayout.PAGE_END);
+        add(jPanelOpciones, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldAutoCompleteFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldAutoCompleteFocusGained
@@ -160,8 +165,8 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
             if (transformedInstance != null) {
                 handler.getTableModel().addObject(transformedInstance);
             }
-                jTextFieldAutoComplete.setText("");
-                        
+            jTextFieldAutoComplete.setText("");
+
         }
     }//GEN-LAST:event_jTextFieldAutoCompleteKeyPressed
 
@@ -170,8 +175,8 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
     private javax.swing.JButton jButtonAgregarProd;
     private javax.swing.JButton jButtonDeleteProd;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelOpciones;
     private javax.swing.JScrollPane jScrollPaneCrossReference;
     private javax.swing.JTable jTableCrossReference;
     private javax.swing.JTextField jTextFieldAutoComplete;

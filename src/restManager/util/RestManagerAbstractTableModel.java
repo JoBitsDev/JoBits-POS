@@ -62,13 +62,14 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
         return items.get(table.convertRowIndexToModel(table.getSelectedRow()));
     }
 
-    public void removeObjectAtSelectedRow() {
+    public T removeObjectAtSelectedRow() {
         if (table.getSelectedRow() == -1) {
             throw new NoSelectedException(table.getParent());
         }
         int itemToDelete = table.convertRowIndexToModel(table.getSelectedRow());
         T deleted = items.remove(itemToDelete);
         fireTableRowsDeleted(itemToDelete, itemToDelete);
+        return deleted;
     }
 
     public void addObject(T object) {

@@ -17,6 +17,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.AsistenciaPersonal;
+import restManager.persistencia.models.AsistenciaPersonalDAO;
 
 import restManager.resources.R;
 import restManager.util.comun;
@@ -732,6 +734,16 @@ public class VentaDAO1 {
             }
         }
         return total;
+    }
+
+    public static float getValorTotalPagoTrabajadores(Venta instance) {
+       ArrayList<AsistenciaPersonal> personalTrabajando = 
+               new ArrayList<>(AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(instance.getFecha()));
+       float pagoTotal = 0;
+        for (AsistenciaPersonal a : personalTrabajando) {
+            pagoTotal += a.getPago();
+        }
+        return comun.setDosLugaresDecimalesFloat(pagoTotal);
     }
 
 }

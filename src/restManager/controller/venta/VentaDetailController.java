@@ -16,7 +16,9 @@ import javax.swing.JDialog;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
+import restManager.controller.trabajadores.PersonalCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.AsistenciaPersonal;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.GastoVenta;
@@ -25,6 +27,7 @@ import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductovOrden;
+import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.OrdenDAO;
@@ -137,9 +140,9 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public List<Orden> getOrdenesActivas() {
-       ArrayList<Orden> ret ;
+        ArrayList<Orden> ret;
         if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() <= 2) {
-             ret = new ArrayList<>(VentaDAO1.getOrdenesActivas(getInstance()));
+            ret = new ArrayList<>(VentaDAO1.getOrdenesActivas(getInstance()));
         } else {
             ret = new ArrayList<>(getInstance().getOrdenList());
         }
@@ -176,9 +179,13 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             for (GastoVenta x : super.getInstance().getGastoVentaList()) {
                 ventasGastosGastos += x.getImporte();
             }
+            for (AsistenciaPersonal x : super.getInstance().getAsistenciaPersonalList()) {
+                ventasPagoTrabajadores += x.getPago();
+            }
             super.getInstance().setVentaTotal((double) ventaTotal);
             super.getInstance().setVentagastosEninsumos((double) ventasGastosEnInsumos);
             super.getInstance().setVentagastosGastos(ventasGastosGastos);
+            super.getInstance().setVentagastosPagotrabajadores(ventasPagoTrabajadores);
             update(super.getInstance());
 
         }
@@ -237,6 +244,10 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     public String getTotalGastadoInsumos() {
         return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalGastosInsumo(getInstance()));
+    }
+
+    public String getTotalPagoTrabajadores() {
+        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalPagoTrabajadores(getInstance()));
     }
 
     public List<Personal> getPersonalList() {
@@ -314,7 +325,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         } else {
             if (super.getInstance().getCambioTurno1() == null) {
                 return super.getInstance();
-            }else{
+            } else {
                 turnoActivo = 2;
             }
 
@@ -347,7 +358,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
                 cod_orden_low_pos = turnoActivo == 2 ? i + 1 : i;
             }
             if (ord.get(i).getCodOrden().equals(cod_orden_high)) {
-                cod_orden_high_pos = i+1;
+                cod_orden_high_pos = i + 1;
             }
         }
         vent = VentaDAO.getInstance().find(super.getInstance().getFecha());
@@ -401,6 +412,27 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
                 fetchNewDataFromServer(0);
                 break;
         }
+    }
+
+    public Float getPagoTrabajador(Personal personal) {
+        float pago = 0;
+        PuestoTrabajo p = personal.getPuestoTrabajonombrePuesto();
+        float totalVentas = VentaDAO1.getValorTotalVentas(getInstance());
+
+        pago += p.getSalarioFijo();
+        if (totalVentas > p.getAPartirDe()) {
+            pago += (totalVentas - p.getAPartirDe()) * (p.getSalarioPorcientoDeArea() / 100);
+            totalVentas -= p.getAPartirDe();
+        }
+        if (p.getAreaPago() != null) {//implementar
+         //   pago += (p.getAreaPago()* VentaDAO1.getValorTotalVentas(getInstance())) / 100;
+        } 
+        else {
+            pago += (p.getSalarioPorcientoVentaTotal() * totalVentas) / 100;
+        }
+
+        return comun.setDosLugaresDecimalesFloat(pago);
+
     }
 
 }

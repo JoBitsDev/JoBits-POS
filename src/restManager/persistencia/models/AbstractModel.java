@@ -88,7 +88,7 @@ public abstract class AbstractModel<T> implements Model {
         try {
             javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
             cq.select(cq.from(entityClass));
-            return getEntityManager().createQuery(cq).getResultList();
+            return new ArrayList<>(getEntityManager().createQuery(cq).getResultList());
         } catch (Exception e) {
             getEntityManager().getTransaction().rollback();
             return new ArrayList<>(findAll());

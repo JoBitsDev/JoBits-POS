@@ -6,10 +6,12 @@
 package GUI.Views;
 
 import java.awt.Container;
+import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JPanel;
 import restManager.controller.Controller;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.resources.values.Fonts;
 import restManager.util.ComponentMover;
 
 /**
@@ -41,6 +43,12 @@ public abstract class AbstractFragmentView<T> extends JPanel implements View {
         ComponentMover cr = new ComponentMover(this, this);
     }
 
+    @Override
+    public Font getFont() {
+       return Fonts.BODY;
+    }
+
+    
     public Container getParentComponent() {
         return parentComponent;
     }

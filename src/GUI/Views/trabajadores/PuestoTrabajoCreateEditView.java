@@ -172,7 +172,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jLabelSalarioFijo.setText("Salario fijo");
         jPanel2.add(jLabelSalarioFijo);
 
-        jSpinnerSalarioFijo.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 5));
+        jSpinnerSalarioFijo.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
         jSpinnerSalarioFijo.setPreferredSize(new java.awt.Dimension(150, 26));
         jPanel2.add(jSpinnerSalarioFijo);
 
@@ -359,7 +359,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         instance.setNivelAcceso(jComboBoxNivelAccesso.getItemAt(jComboBoxNivelAccesso.getSelectedIndex()).getNivel());
         instance.setPuestosDisponibles((Integer) jSpinnerPuestosDisponibles.getValue());
         instance.setAPartirDe((Integer) jSpinnerAPartir.getValue());
-        instance.setSalarioFijo((Integer) jSpinnerSalarioFijo.getValue());
+        instance.setSalarioFijo((Float) jSpinnerSalarioFijo.getValue());
         instance.setSalarioPorcientoDeArea(Float.valueOf(jSpinnerPorcientoAPartirDe.getValue().toString()));
         instance.setSalarioPorcientoVentaTotal(Float.valueOf(jSpinnerPorcientoVenta.getValue().toString()));
         if (instance.getPersonalList() == null) {
