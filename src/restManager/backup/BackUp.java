@@ -210,8 +210,10 @@ public class BackUp extends SwingWorker<Boolean, Float> {
 
     private boolean BackUpProd(List<ProductoVenta> prods) {
         float sumaXCantidad = topeProceso / prods.size();
+        System.out.println("inicio productos venta");
         for (ProductoVenta pv : prods) {
             pv.setProductovOrdenList(null);
+            System.out.println(pv);
             BackUpProdInsumo(pv.getProductoInsumoList());
 
             if (EntityExist(pv, pv.getPCod())) {
@@ -285,10 +287,16 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private boolean BackUpInsumos(List<Insumo> ins) {
         float sumaXCantidad = topeProceso / ins.size();
         for (Insumo in : ins) {
+            System.out.println(in.toString());
+            in.setProductoInsumoList(null);
+            in.setTransaccionList(null);
+            in.setInsumoAlmacenList(null);
             if (EntityExist(in, in.getCodInsumo())) {
+                System.out.println("Actualizando " + in);
                 em.merge(in);
 
             } else {
+                System.out.println("Creando " + in);
                 em.persist(in);
             }
             incrementarProgreso(sumaXCantidad);
@@ -395,14 +403,39 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         startBackupTransaction();
         //backup area
         backUpArea(AreaDAO.getInstance().findAll());
-        //backup carta
-        BackUpCarta(CartaDAO.getInstance().findAll());
-        // backup cocinas
-        backUPCocina(CocinaDAO.getInstance().findAll());
-        // backup ingredientes
-        BackUpInsumos(InsumoDAO.getInstance().findAll());
+
+//        commitBackupTransaction();
+//        System.out.println("areas");
+//        startBackupTransaction();
+//
+//        //backup carta
+//        BackUpCarta(CartaDAO.getInstance().findAll());
+//
+//        commitBackupTransaction();
+//        System.out.println("carta");
+//        startBackupTransaction();
+//
+//        // backup cocinas
+//        backUPCocina(CocinaDAO.getInstance().findAll());
+//
+//        commitBackupTransaction();
+//        System.out.println("cocina");
+//        startBackupTransaction();
+        
         // backup platos
         BackUpProd(ProductoVentaDAO.getInstance().findAll());
+
+        commitBackupTransaction();
+        System.out.println("productos");
+        startBackupTransaction();
+
+        // backup ingredientes
+        BackUpInsumos(InsumoDAO.getInstance().findAll());
+
+        commitBackupTransaction();
+        System.out.println("insumo");
+        startBackupTransaction();
+
 
         commitBackupTransaction();
 

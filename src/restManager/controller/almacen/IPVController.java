@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import restManager.controller.AbstractDialogController;
+import restManager.controller.login.LogInController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
@@ -94,6 +95,11 @@ public class IPVController extends AbstractDialogController<Ipv> {
             return;
         }
         if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo())) {
+            if (cantidad < 0) {
+                if(!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR.getNivel())){
+                    return;
+                }
+            }
             instance.setEntrada(instance.getEntrada() + cantidad);
             updateInstance(instance);
         }

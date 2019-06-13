@@ -112,9 +112,8 @@ public class Impresion {
     /**
      * String referentes a los pagos de trabajadores
      */
-    
     private final String PAGO_TRABAJADOR = "Comprobante de pago a trabajador";
-    
+
     //
     //Constructors
     //
@@ -176,7 +175,7 @@ public class Impresion {
         total = addPvOrden(t, o.getProductovOrdenList());
 
         float subTotalPrint = comun.redondeoPorExcesoFloat(total);
-        float sumaPorciento = comun.redondeoPorExcesoFloat((subTotalPrint * o.getPorciento())/100);
+        float sumaPorciento = comun.redondeoPorExcesoFloat((subTotalPrint * o.getPorciento()) / 100);
         float totalPrint = subTotalPrint;
         t.alignRight();
         t.newLine();
@@ -201,7 +200,7 @@ public class Impresion {
         for (int i = 0; i < cantidadCopias; i++) {
             RAM.add(new CopiaTicket(o.getMesacodMesa().getAreacodArea().getNombre(), t.finalCommandSet().getBytes()));
         }
-        feedPrinter(t.finalCommandSet().getBytes(), o.getMesacodMesa().getAreacodArea().getNombre());
+        feedPrinter(t.finalCommandSet().getBytes(), o.getMesacodMesa().getAreacodArea().getNombre(), TipoImpresion.ORDEN);
 
         cleanAndPrintRAM();
     }
@@ -433,7 +432,7 @@ public class Impresion {
                 //RAM.add(new CopiaTicket(c.getNombreCocina(), t.finalCommandSet().getBytes()));
             }
 
-            feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina());
+            feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina(), TipoImpresion.COCINA);
 
         } else {
             System.out.println("No existen platos de la cocina "
@@ -472,7 +471,7 @@ public class Impresion {
 
         for (ProductovOrden x : o.getProductovOrdenList()) {
             log(o, x);
-
+            
             if (x.getEnviadosacocina() < x.getCantidad()
                     && x.getProductoVenta().getCocinacodCocina().equals(c)) {
                 if (x.getNota() != null) {
@@ -516,7 +515,7 @@ public class Impresion {
                 // RAM.add(new CopiaTicket(c.getNombreCocina(), t.finalCommandSet().getBytes()));
             }
 
-            feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina());
+            feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina(), TipoImpresion.COCINA);
 
         } else {
             System.out.println("No existen platos de la cocina "
@@ -611,7 +610,7 @@ public class Impresion {
         t.finit();
 
         if (!ordenSinPlatos) {
-            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_KITCHEN_PRINTER_LOCATION);
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_KITCHEN_PRINTER_LOCATION, TipoImpresion.COCINA);
         }
         cleanAndPrintRAM();
 
@@ -653,7 +652,7 @@ public class Impresion {
 
         addTotalAndFinal(t, total);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -692,7 +691,7 @@ public class Impresion {
 
         addTotalAndFinal(t, total);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -746,7 +745,7 @@ public class Impresion {
 
         addFinal(t);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -767,7 +766,7 @@ public class Impresion {
 
         addTotalAndFinal(t, total);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -781,7 +780,7 @@ public class Impresion {
 
         addTotalAndFinal(t, total);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
     public void printStockBalance(List<Insumo> items, boolean printOverStoraged) {
@@ -807,7 +806,7 @@ public class Impresion {
 
         addFinal(t);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -846,13 +845,13 @@ public class Impresion {
                 if (REDONDEO_POR_EXCESO) {
                     t.setText(TOTAL_VENTAS + comun.redondeoPorExcesoFloat(total * R.COINCHANGE) + MN);
                 } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, comun.redondeoPorExcesoFloat(total * R.COINCHANGE)));
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, comun.setDosLugaresDecimalesFloat(total * R.COINCHANGE)));
                 }
             } else {
                 if (REDONDEO_POR_EXCESO) {
                     t.setText(TOTAL_VENTAS + comun.redondeoPorExcesoFloat(total / R.COINCHANGE) + CUC);
                 } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, comun.redondeoPorExcesoFloat(total / R.COINCHANGE)));
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, comun.setDosLugaresDecimalesFloat(total / R.COINCHANGE)));
                 }
             }
 
@@ -869,7 +868,7 @@ public class Impresion {
         t.resetAll();
         t.initialize();
         t.drawerKick();
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
@@ -878,12 +877,12 @@ public class Impresion {
         t.resetAll();
         t.initialize();
         t.soundBuzzer();
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
 
-    private void sendToPrinter(byte[] byteData, String printLocation) {
-        feedPrinter(byteData, printLocation);
+    private void sendToPrinterStatistics(byte[] byteData, String printLocation) {
+        feedPrinter(byteData, printLocation, TipoImpresion.RESUMEN);
     }
 
     private void addHeader(Ticket t) {
@@ -968,13 +967,13 @@ public class Impresion {
     //
     //Private Methods
     //
-    public void feedPrinter(byte[] b, String printerName) {
+    private void feedPrinter(byte[] b, String printerName, TipoImpresion modo) {
 
         PrintService[] prints = PrintServiceLookup.lookupPrintServices(null, null);
         DocPrintJob job = PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
         job.addPrintJobListener(new JobListener());
         for (int i = 0; i < prints.length; i++) {
-            if (prints[i].getName().equals(printerName)) {
+            if (prints[i].getName().contains(printerName)) {
                 job = prints[i].createPrintJob();
             }
         }
@@ -984,8 +983,14 @@ public class Impresion {
 
         try {
             if (printerName != null) {
-                if (IMPRIMIR_TICKET_COCINA) {
-                    job.print(doc, null);
+                switch (modo) {
+                    case COCINA:
+                        if (IMPRIMIR_TICKET_COCINA) {
+                            job.print(doc, null);
+                        }
+                        break;
+                    default:
+                        job.print(doc, null);break;
                 }
             } else {
                 job.print(doc, null);
@@ -1013,7 +1018,7 @@ public class Impresion {
         String ret = "";
         String separador = "|";
         int Separators = 5;
-        int LenghtPerSeparator = (int) ((Ticket.PAPER_LENGHT-Separators) / 5);
+        int LenghtPerSeparator = (int) ((Ticket.PAPER_LENGHT - Separators) / 5);
         ret += fillSpace(x.getInicio(), LenghtPerSeparator) + separador;
         ret += fillSpace(x.getEntrada(), LenghtPerSeparator) + separador;
         ret += fillSpace(x.getDisponible(), LenghtPerSeparator) + separador;
@@ -1033,7 +1038,7 @@ public class Impresion {
 
     private void cleanAndPrintRAM() {
         while (!RAM.isEmpty()) {
-            sendToPrinter(RAM.get(0).getImpresionData(), RAM.get(0).getNombreImpresora());
+            sendToPrinterStatistics(RAM.get(0).getImpresionData(), RAM.get(0).getNombreImpresora());
             RAM.remove(0);
         }
     }
@@ -1140,7 +1145,7 @@ public class Impresion {
         t.finit();
 
         if (!ordenSinPlatos) {
-            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_KITCHEN_PRINTER_LOCATION);
+            feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_KITCHEN_PRINTER_LOCATION, TipoImpresion.COCINA);
         }
         cleanAndPrintRAM();
 
@@ -1186,7 +1191,7 @@ public class Impresion {
 
         addFinal(t);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
     public void printComprobanteTransaccion(List<Transaccion> selectedsObjects) {
@@ -1229,7 +1234,7 @@ public class Impresion {
 
         addFinal(t);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
     public void printResumenGastos(List<GastoVenta> lista) {
@@ -1267,7 +1272,7 @@ public class Impresion {
 
         addTotalAndFinal(t, total);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
     public void prinPagoPorVenta(Venta instance, String usuario) {
@@ -1312,7 +1317,7 @@ public class Impresion {
 
         addTotalAndFinal(t, total);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
     //
     //Inner Classes
@@ -1341,16 +1346,19 @@ public class Impresion {
 
         float total = 0;
         for (AsistenciaPersonal a : lista) {
-            t.alignLeft();
-            t.setText(R.DATE_FORMAT.format(a.getAsistenciaPersonalPK().getVentafecha()));
-            t.alignRight();
-            t.setText(comun.setDosLugaresDecimales(a.getPago()));
-            t.newLine();
+            if (a.getVenta().getFecha().after(personal.getUltimodiaPago())) {
+                t.alignLeft();
+                t.setText(R.DATE_FORMAT.format(a.getAsistenciaPersonalPK().getVentafecha()));
+                t.newLine();
+                t.alignRight();
+                t.setText(comun.setDosLugaresDecimales(a.getPago()));
+                t.newLine();
+            }
         }
 
         addTotalAndFinal(t, total);
 
-        sendToPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
     private class JobListener implements PrintJobListener {
@@ -1399,6 +1407,11 @@ public class Impresion {
             estadoImpresion = EstadoImpresion.REQUIERE_ATTENTION;
             System.out.println(getStatus());
         }
+    }
+
+    private enum TipoImpresion {
+        COCINA, RESUMEN, ORDEN
+
     }
 
     private enum EstadoImpresion {

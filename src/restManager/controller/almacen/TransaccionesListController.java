@@ -71,6 +71,19 @@ public class TransaccionesListController extends AbstractListController<Transacc
         getView().updateView();
     }
 
+    @Override
+    public void destroy(Transaccion selected) {
+        super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
+        getModel().getEntityManager().refresh(selected.getAlmacen());
+        getView().updateView();
+   //     selected.getAlmacen().getTransaccionList().remove(selected);
+//        getModel().startTransaction();
+//        getModel().getEntityManager().merge(selected);
+//        getModel().commitTransaction();
+    }
+    
+    
+    
     public void imprimirTransaccionesSeleccionadas(List<Transaccion> selectedsObjects) {
         if (!selectedsObjects.isEmpty()) {
         Impresion i = new Impresion();
