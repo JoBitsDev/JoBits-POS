@@ -364,7 +364,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         if (jComboBoxAreaPago.getSelectedItem() == null) {
             instance.setAreaPago(null);
         } else {
-            instance.setAreaPago(jComboBoxAreaPago.getItemAt(jComboBoxAreaPago.getSelectedIndex()).getNombreCocina());
+            instance.setAreaPago(jComboBoxAreaPago.getItemAt(jComboBoxAreaPago.getSelectedIndex()).getCodCocina());
         }
         instance.setNivelAcceso(jComboBoxNivelAccesso.getItemAt(jComboBoxNivelAccesso.getSelectedIndex()).getNivel());
         instance.setPuestosDisponibles((Integer) jSpinnerPuestosDisponibles.getValue());

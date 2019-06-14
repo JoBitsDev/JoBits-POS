@@ -143,9 +143,8 @@ public class MainController extends AbstractDialogController<Personal> {
                     throw new DevelopingOperationException(getView());
 
             }
-        } catch (Exception e) {
-            ExceptionHandler.showExceptionToUser(e, getView());
-            e.printStackTrace();
+        } catch (UnauthorizedAccessException | DevelopingOperationException e) {
+            //  ExceptionHandler.showExceptionToUser(e, getView());
         }
         getView().setEnabled(true);
     }

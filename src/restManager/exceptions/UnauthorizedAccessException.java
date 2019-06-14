@@ -36,7 +36,7 @@ public class UnauthorizedAccessException extends RestManagerRuntimeException{
 
     public UnauthorizedAccessException(Component throwedFrom, String message) {
         super(throwedFrom, message);
-        showMessage(EXCEPTION_MESSAGE);
+        showMessage(message);
     }
 
     

@@ -14,10 +14,12 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JDialog;
 import restManager.controller.AbstractDetailController;
+import restManager.controller.Licence.LicenceController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
 import restManager.controller.trabajadores.PersonalCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.AsistenciaPersonal;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
@@ -197,6 +199,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     public Venta getDiaDeVenta(Date fecha) {
         Venta ret;
+        LicenceController licence = new LicenceController();
         if (fecha == null) {
             //revisar si hay un dia sin cerrar
             List<Venta> ventas = getItems();
@@ -222,6 +225,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             new IPVController().inicializarIpvs(ret.getFecha());
             return ret;
         } else {
+
+            //revisar si la fecha donde se quiere crear el dia excede el tiempo de licencia
+            if (licence.getLicence().getFechaFinMilis() < fecha.toInstant().toEpochMilli()) {
+                throw new UnauthorizedAccessException(getView(), "No se pueden crear ventas mas alla de la fecha fin de la licencia");
+            }
             //revisar si la fecha donde se quiere crear el dia ya esta creada
             ret = VentaDAO.getInstance().find(fecha);
             if (ret != null) {
@@ -417,19 +425,19 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public Float getPagoTrabajador(Personal personal) {
         float pago = 0;
         PuestoTrabajo p = personal.getPuestoTrabajonombrePuesto();
-        float totalVentas = VentaDAO1.getValorTotalVentas(getInstance());
+        float totalVentas;
+        if (p.getAreaPago() != null) {
+            totalVentas = VentaDAO1.getValorVentasCocina(getInstance(), CocinaDAO.getInstance().find(p.getAreaPago()));
+        } else {
+            totalVentas = VentaDAO1.getValorTotalVentas(getInstance());
+        }
 
         pago += p.getSalarioFijo();
         if (totalVentas > p.getAPartirDe()) {
             pago += (totalVentas - p.getAPartirDe()) * (p.getSalarioPorcientoDeArea() / 100);
             totalVentas -= p.getAPartirDe();
         }
-        if (p.getAreaPago() != null) {//implementar
-         //   pago += (p.getAreaPago()* VentaDAO1.getValorTotalVentas(getInstance())) / 100;
-        } 
-        else {
-            pago += (p.getSalarioPorcientoVentaTotal() * totalVentas) / 100;
-        }
+        pago += (p.getSalarioPorcientoVentaTotal() * totalVentas) / 100;
 
         return comun.setDosLugaresDecimalesFloat(pago);
 

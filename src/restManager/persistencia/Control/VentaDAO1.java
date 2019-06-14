@@ -625,6 +625,28 @@ public class VentaDAO1 {
         }
         return total;
     }
+    
+    public static float getValorVentasCocina(Venta v, Cocina c) {
+        //inicializando los datos
+        ArrayList<ProductovOrden> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            if (!o.getDeLaCasa() || R.CONSUMO_DE_LA_CASA_EN_ESTADISTICAS) {
+                joinListsProductovOrdenByCocina(ret,
+                        new ArrayList<>(o.getProductovOrdenList()), c);
+            }
+
+        }//nˆ3
+        
+        float valor = 0;
+        for (ProductovOrden x : ret) {
+            valor += x.getCantidad()*x.getProductoVenta().getPrecioVenta();
+        }
+
+        return valor;
+    }
 
     public static float getValorTotalRedondeoAFavorDeLaCasa(Venta v) {
         int total = 0;

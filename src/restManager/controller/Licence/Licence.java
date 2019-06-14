@@ -41,6 +41,14 @@ public class Licence {
         validarLicencia();
     }
 
+    public long getFechaFinMilis() {
+        return fechaFinMilis;
+    }
+
+    public void setFechaFinMilis(long fechaFinMilis) {
+        this.fechaFinMilis = fechaFinMilis;
+    }
+
     private void descifrarLicenciaCalcularRestante() {
         try {
             Cipher c = new Cipher("R-" + LicenceController.stringFormatter(SerialNumber.getUID()));
