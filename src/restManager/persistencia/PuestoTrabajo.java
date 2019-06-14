@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -41,6 +42,10 @@ import javax.persistence.Table;
     @NamedQuery(name = "PuestoTrabajo.findByAPartirDe", query = "SELECT p FROM PuestoTrabajo p WHERE p.aPartirDe = :aPartirDe"),
     @NamedQuery(name = "PuestoTrabajo.findByIdPuesto", query = "SELECT p FROM PuestoTrabajo p WHERE p.idPuesto = :idPuesto")})
 public class PuestoTrabajo implements Serializable {
+
+    @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")
+    @ManyToOne
+    private Area areacodArea;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -200,6 +205,14 @@ public class PuestoTrabajo implements Serializable {
     @Override
     public String toString() {
         return nombrePuesto ;
+    }
+
+    public Area getAreacodArea() {
+        return areacodArea;
+    }
+
+    public void setAreacodArea(Area areacodArea) {
+        this.areacodArea = areacodArea;
     }
 
 }

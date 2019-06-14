@@ -66,8 +66,6 @@ public class Personal implements Serializable {
     @Column(name = "ultimodia_pago")
     @Temporal(TemporalType.DATE)
     private Date ultimodiaPago;
-    @ManyToMany(mappedBy = "personalList")
-    private List<PuestoTrabajo> puestoTrabajoList;
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "personalusuario")
     private List<Orden> ordenList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personal")
@@ -128,15 +126,6 @@ public class Personal implements Serializable {
         this.ultimodiaPago = ultimodiaPago;
     }
 
-
-    public List<PuestoTrabajo> getPuestoTrabajoList() {
-        return puestoTrabajoList;
-    }
-
-    public void setPuestoTrabajoList(List<PuestoTrabajo> puestoTrabajoList) {
-        this.puestoTrabajoList = puestoTrabajoList;
-    }
-
     public List<Orden> getOrdenList() {
         return ordenList;
     }
@@ -195,13 +184,6 @@ public class Personal implements Serializable {
         this.asistenciaPersonalList = asistenciaPersonalList;
     }
 
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
 
     public Float getPagoPendiente() {
         return pagoPendiente;
@@ -209,5 +191,13 @@ public class Personal implements Serializable {
 
     public void setPagoPendiente(Float pagoPendiente) {
         this.pagoPendiente = pagoPendiente;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 }
