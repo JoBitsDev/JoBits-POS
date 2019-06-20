@@ -838,8 +838,11 @@ int row = jTableVentasPorArea.getSelectedRow();
             jTabbedPaneData.remove(0);
         }
         jPanelTurnosTrabajo.setVisible(R.VARIOS_TURNOS);
-        jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso()>2);
+        jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);
         jButtonCambiarTurno.setEnabled(getController().getInstance().getCambioTurno1() == null);
+        if (R.VARIOS_TURNOS) {
+            jButtonTerminarVentas.setEnabled(getController().getInstance().getCambioTurno1() != null);
+        }
     }
 
     private void updateTableResumenDptes() {
