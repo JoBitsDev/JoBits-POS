@@ -5,19 +5,16 @@
  */
 package restManager.controller.trabajadores;
 
-import GUI.Views.AbstractView;
 import GUI.Views.trabajadores.PuestoTrabajoCreateEditView;
-import java.awt.Container;
-import java.awt.Dialog;
 import java.awt.Window;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractDetailController;
+import restManager.persistencia.Area;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.PuestoTrabajo;
-import restManager.persistencia.models.AbstractModel;
+import restManager.persistencia.models.AreaDAO;
 import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.PuestoTrabajoDAO;
 
@@ -67,8 +64,12 @@ public class PuestoTrabajoCreateEditController extends AbstractDetailController<
         return new PuestoTrabajo();
     }
 
+    public List<Area> getAreaList() {
+        return AreaDAO.getInstance().findAll();
+    }
+
     public List<Cocina> getAreasPago() {
-        return  CocinaDAO.getInstance().findAll();
+        return CocinaDAO.getInstance().findAll();
 
     }
 

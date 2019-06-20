@@ -29,6 +29,7 @@ import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.ConfigDAO;
+import restManager.persistencia.models.ConfiguracionDAO;
 import restManager.persistencia.models.IpvRegistroDAO;
 import restManager.persistencia.models.MesaDAO;
 import restManager.persistencia.models.NotaDAO;
@@ -90,10 +91,34 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     @Override
     public Orden createNewInstance() {
         Orden ret = new Orden();
+        Mesa m;
+        if (ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_MESA_FIJA_CAJERO.getValue()).getValor() == 0) {
+            ArrayList<Mesa> mesas = (ArrayList<Mesa>) MesaDAO.getInstance().findAll();
+            for (int i = 0; i < mesas.size();) {
+                if (!mesas.get(i).getEstado().equals("vacia")) {
+                    mesas.remove(i);
+                } else {
+                    i++;
+                }
+            }
+            if (R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea() != null) {
+                for (int i = 0; i < mesas.size();) {
+                    if (!mesas.get(i).getAreacodArea().equals(R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea())) {
+                        mesas.remove(i);
+                    } else {
+                        i++;
+                    }
+                }
+            }
+            m = (Mesa) showInputDialog(null, "Seleccione la mesa", "Mesas disponibles", mesas.toArray(), MesaDAO.getInstance().find(R.NO_MESA_CAJA));
+        } else {
+            m = MesaDAO.getInstance().find(R.NO_MESA_CAJA);
+        }
+        ret.setMesacodMesa(m);
         ret.setCodOrden(getOrdenCod());
+        m.setEstado(ret.getCodOrden() + " " + R.loggedUser.getUsuario());
         ret.setPersonalusuario(R.loggedUser);
         ret.setDeLaCasa(false);
-        ret.setMesacodMesa((Mesa) showInputDialog(null, "Seleccione la mesa","Mesas disponibles", MesaDAO.getInstance().findAll().toArray(),MesaDAO.getInstance().find(R.NO_MESA_CAJA)));
         ret.setPorciento(ret.getMesacodMesa().getAreacodArea().getPorcientoPorServicio().floatValue());
         ret.setHoraComenzada(new Date());
         ret.setOrdengastoEninsumos((float) 0);
@@ -267,7 +292,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public List<ProductoVenta> getPDVList() {
-        return ProductoVentaDAO.getInstance().findAllVisible();
+        return ProductoVentaDAO.getInstance().findAllVisible(getInstance().getMesacodMesa());
     }
 
     public void addProduct(ProductoVenta selected) {

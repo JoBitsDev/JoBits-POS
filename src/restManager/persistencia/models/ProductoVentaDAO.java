@@ -8,7 +8,11 @@ package restManager.persistencia.models;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.Carta;
+import restManager.persistencia.Mesa;
 import restManager.persistencia.ProductoVenta;
+import restManager.persistencia.Seccion;
 
 /**
  * FirstDream
@@ -53,6 +57,23 @@ public class ProductoVentaDAO extends AbstractModel<ProductoVenta> {
     public List<ProductoVenta> findAllVisible() {
         List<ProductoVenta> ret = new ArrayList<>();
         findAll().stream().filter((x) -> (x.getVisible())).forEachOrdered((x) -> {
+            ret.add(x);
+        });
+        Collections.sort(ret,(o1, o2) -> {
+            return o1.getNombre().compareTo(o2.getNombre());
+        });
+        return ret;
+    }
+
+    public List<ProductoVenta> findAllVisible(Mesa mesacodMesa) {
+        ArrayList<ProductoVenta> productosDisp = new ArrayList<>();
+        for (Carta c : mesacodMesa.getAreacodArea().getCartaList()) {
+            for (Seccion s : c.getSeccionList()) {
+                productosDisp.addAll(new ArrayList<>(s.getProductoVentaList()));
+            }
+        }
+          List<ProductoVenta> ret = new ArrayList<>();
+        productosDisp.stream().filter((x) -> (x.getVisible())).forEachOrdered((x) -> {
             ret.add(x);
         });
         Collections.sort(ret,(o1, o2) -> {

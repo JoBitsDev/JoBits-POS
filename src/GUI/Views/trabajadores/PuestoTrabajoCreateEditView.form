@@ -53,6 +53,36 @@
         <Property name="alignment" type="int" value="2"/>
       </Layout>
       <SubComponents>
+        <Container class="javax.swing.JPanel" name="jPanel1">
+          <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+            <Property name="alignment" type="int" value="0"/>
+          </Layout>
+          <SubComponents>
+            <Component class="org.jdesktop.swingx.JXLabel" name="jLabelNombre">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+                <Property name="text" type="java.lang.String" value="Nombre Puesto"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextFieldNombre">
+              <Properties>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 25]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 25]"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTextField()"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
         <Component class="org.jdesktop.swingx.JXLabel" name="jXLabel1">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
@@ -90,11 +120,11 @@
         <Container class="javax.swing.JPanel" name="jPanelpuesto">
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-            <Property name="columns" type="int" value="1"/>
-            <Property name="rows" type="int" value="1"/>
+            <Property name="columns" type="int" value="3"/>
+            <Property name="rows" type="int" value="0"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="jPanel1">
+            <Container class="javax.swing.JPanel" name="jPanel9">
               <Properties>
                 <Property name="opaque" type="boolean" value="false"/>
               </Properties>
@@ -103,23 +133,19 @@
                 <Property name="alignment" type="int" value="0"/>
               </Layout>
               <SubComponents>
-                <Component class="org.jdesktop.swingx.JXLabel" name="jLabelNombre">
+                <Component class="org.jdesktop.swingx.JXLabel" name="jLabelNivelDeAcceso1">
                   <Properties>
-                    <Property name="horizontalAlignment" type="int" value="11"/>
-                    <Property name="text" type="java.lang.String" value="Nombre Puesto"/>
+                    <Property name="text" type="java.lang.String" value="Area de trabajo"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextFieldNombre">
+                <Component class="javax.swing.JComboBox" name="jComboBoxAreaTrabajo">
                   <Properties>
-                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[150, 25]"/>
-                    </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[150, 25]"/>
+                      <Dimension value="[150, 27]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTextField()"/>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Area&gt;"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

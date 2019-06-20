@@ -98,7 +98,7 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
     public void setParent(Window parent) {
         this.parent = parent;
     }
-   
+
 //    @Override
 //    public AbstractDetailView<T> getView() {
 //        return (AbstractDetailView<T>)super.getView();

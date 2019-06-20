@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.controller.trabajadores;
 
 import GUI.Views.trabajadores.PersonalCreateEditView;
@@ -23,10 +22,11 @@ import restManager.persistencia.models.PuestoTrabajoDAO;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-public class PersonalCreateEditController extends AbstractDetailController<Personal>{
+public class PersonalCreateEditController extends AbstractDetailController<Personal> {
 
     public PersonalCreateEditController() {
         super(PersonalDAO.getInstance());
@@ -50,38 +50,32 @@ public class PersonalCreateEditController extends AbstractDetailController<Perso
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView( new PersonalCreateEditView(instance, this, (Dialog) parent, true));
+        setView(new PersonalCreateEditView(instance, this, (Dialog) parent, true));
         getView().setVisible(true);
     }
 
     @Override
     public Personal createNewInstance() {
         Personal ret = new Personal();
-        ret.setPuestoTrabajoList(new ArrayList<>());
         ret.setOrdenList(new ArrayList<>());
         ret.setDatosPersonales(new DatosPersonales());
         return ret;
     }
 
-  public List<PuestoTrabajo> getPuestoTrabajoList(){
-      return PuestoTrabajoDAO.getInstance().findAll();
-  }
+    public List<PuestoTrabajo> getPuestoTrabajoList() {
+        return PuestoTrabajoDAO.getInstance().findAll();
+    }
 
     public void pagarTrabajador() {
         instance.setUltimodiaPago(new Date());
-        instance.setPagoPendiente((float)0);
+        instance.setPagoPendiente((float) 0);
         update(selected, true);
         showSuccessDialog(null, "Trabajador Pagado exitosamente");
     }
-    
-    public  void acumularSalarioTrabajador(float salarioAcumular){
+
+    public void acumularSalarioTrabajador(float salarioAcumular) {
         instance.setPagoPendiente(instance.getPagoPendiente() + salarioAcumular);
-        update(instance,true);
+        update(instance, true);
     }
-
-
-    
-    
-    
 
 }

@@ -23,6 +23,7 @@ import restManager.controller.trabajadores.AsistenciaPersonalController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
+import restManager.persistencia.Area;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Orden;
@@ -112,13 +113,21 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanel4 = new javax.swing.JPanel();
         jButtonImprimirDptes = new javax.swing.JButton();
         jButtonImpPagoVentas = new javax.swing.JButton();
+        jPanelCocinaArea = new javax.swing.JPanel();
         jPanelVentasCocinas = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTableVentasPorCocina = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
+        jPanelVentasArea = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTableVentasPorArea = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        jButton9 = new javax.swing.JButton();
         jPanelGastos = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabelTotalGastosAutorizo = new javax.swing.JLabel();
         jButtonImprimirZ1 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabelTotalGastosInsumo = new javax.swing.JLabel();
@@ -326,7 +335,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelResumenVentas.add(jPanelVentasCamareras);
 
-        jPanelVentasCocinas.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen de Ventas por Cocina"));
+        jPanelCocinaArea.setOpaque(false);
+        jPanelCocinaArea.setLayout(new java.awt.GridLayout());
+
+        jPanelVentasCocinas.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen de ventas por cocina"));
         jPanelVentasCocinas.setOpaque(false);
         jPanelVentasCocinas.setLayout(new java.awt.BorderLayout());
 
@@ -374,7 +386,59 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelVentasCocinas.add(jPanel5, java.awt.BorderLayout.PAGE_END);
 
-        jPanelResumenVentas.add(jPanelVentasCocinas);
+        jPanelCocinaArea.add(jPanelVentasCocinas);
+
+        jPanelVentasArea.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen de ventas por area"));
+        jPanelVentasArea.setOpaque(false);
+        jPanelVentasArea.setLayout(new java.awt.BorderLayout());
+
+        jTableVentasPorArea.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jTableVentasPorArea.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Nombre", "Monto"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableVentasPorArea.setRowHeight(25);
+        jTableVentasPorArea.setRowMargin(5);
+        jScrollPane6.setViewportView(jTableVentasPorArea);
+
+        jPanelVentasArea.add(jScrollPane6, java.awt.BorderLayout.CENTER);
+
+        jPanel7.setOpaque(false);
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButton9.setText(bundle.getString("label_imprimir_resumen_ventas")); // NOI18N
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButton9);
+
+        jPanelVentasArea.add(jPanel7, java.awt.BorderLayout.PAGE_END);
+
+        jPanelCocinaArea.add(jPanelVentasArea);
+
+        jPanelResumenVentas.add(jPanelCocinaArea);
 
         jPanelResumen.add(jPanelResumenVentas);
 
@@ -385,6 +449,14 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jPanel9.setOpaque(false);
+        jPanel9.setLayout(new java.awt.BorderLayout());
+
+        jLabelTotalGastosAutorizo.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelTotalGastosAutorizo.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalGastosAutorizo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 102), 3, true), bundle.getString("label_autorizo"))); // NOI18N
+        jPanel9.add(jLabelTotalGastosAutorizo, java.awt.BorderLayout.WEST);
+
         jButtonImprimirZ1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jButtonImprimirZ1.setText(bundle.getString("imprimir_gastos_casa")); // NOI18N
         jButtonImprimirZ1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -393,7 +465,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
                 jButtonImprimirZ1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonImprimirZ1, java.awt.BorderLayout.LINE_START);
+        jPanel9.add(jButtonImprimirZ1, java.awt.BorderLayout.EAST);
+
+        jPanel2.add(jPanel9, java.awt.BorderLayout.WEST);
 
         jPanel6.setOpaque(false);
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -570,6 +644,14 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         getController().mostrarVenta(jComboBoxSeleccionarVentaPorTurno.getSelectedIndex());
     }//GEN-LAST:event_jComboBoxSeleccionarVentaPorTurnoItemStateChanged
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+int row = jTableVentasPorArea.getSelectedRow();
+        if (row == -1) {
+            throw new NoSelectedException(jTableVentasPorArea);
+        }
+        getController().printAreaResumen((String) jTableVentasPorArea.getValueAt(row, 0));
+    }//GEN-LAST:event_jButton9ActionPerformed
+
     @Override
 
     public void setEditingMode() {
@@ -659,10 +741,12 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         updateTableResumenDetallado();
         updateTableResumenGastos();
         updateTablePagoTrabajadores();
+        updateTableResumenAreaVenta();
         jLabelTotalVentas.setText(getController().getTotalVendido());
         jLabelTotalVentasNeta.setText(getController().getTotalVendidoNeto());
         jLabelTotalGastosInsumo.setText(getController().getTotalGastadoInsumos());
         jLabelTotalGastosPagoTrab.setText(getController().getTotalPagoTrabajadores());
+        jLabelTotalGastosAutorizo.setText(getController().getTotalAutorizos());
 
     }
 
@@ -680,6 +764,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonCambiarTurno;
     private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
     private javax.swing.JButton jButtonImpPagoVentas;
@@ -690,6 +775,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
     private javax.swing.JLabel jLabelFecha;
     private javax.swing.JLabel jLabelTotalGastos;
+    private javax.swing.JLabel jLabelTotalGastosAutorizo;
     private javax.swing.JLabel jLabelTotalGastosInsumo;
     private javax.swing.JLabel jLabelTotalGastosPagoTrab;
     private javax.swing.JLabel jLabelTotalVentas;
@@ -700,7 +786,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelCocinaArea;
     private javax.swing.JPanel jPanelData;
     private javax.swing.JPanel jPanelDetailOrdenes;
     private javax.swing.JPanel jPanelExtracciones;
@@ -717,14 +806,17 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JPanel jPanelRoot;
     private javax.swing.JPanel jPanelTurnosTrabajo;
     private javax.swing.JPanel jPanelVentas;
+    private javax.swing.JPanel jPanelVentasArea;
     private javax.swing.JPanel jPanelVentasCamareras;
     private javax.swing.JPanel jPanelVentasCocinas;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPaneData;
     private javax.swing.JTabbedPane jTabbedPaneResumen;
     private javax.swing.JTable jTableVentasDependientes;
+    private javax.swing.JTable jTableVentasPorArea;
     private javax.swing.JTable jTableVentasPorCocina;
     private org.jdesktop.swingx.JXPanel jXPanelOrdenControl;
     private org.jdesktop.swingx.JXTable jXTableOrdActivas;
@@ -763,6 +855,15 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         comun.limpiarTabla(jTableVentasPorCocina);
         c.forEach((x) -> {
             VentaDAO1.getResumenVentasCocinaOnTable(jTableVentasPorCocina, getInstance(), x);
+        });
+
+    }
+    
+    private void updateTableResumenAreaVenta() {
+        List<Area> a = getController().getAreaList();
+        comun.limpiarTabla(jTableVentasPorArea);
+        a.forEach((x) -> {
+            VentaDAO1.getResumenVentaPorAreaOnTable(jTableVentasPorArea, getInstance(), x);
         });
 
     }

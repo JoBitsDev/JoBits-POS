@@ -16,9 +16,11 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.AbstractDetailController;
+import restManager.controller.trabajadores.PersonalCreateEditController;
 import restManager.controller.trabajadores.PuestoTrabajoCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
+import restManager.persistencia.Area;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.resources.R;
@@ -46,6 +48,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         updateView();
     }
 
+    @Override
     public PuestoTrabajo getInstance() {
         return instance;
     }
@@ -56,6 +59,8 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jComboBoxAreaPago.setSelectedIndex(0);
         jComboBoxAreaPago.addItem(null);
         jComboBoxNivelAccesso.setModel(new DefaultComboBoxModel<>(R.NivelAcceso.values()));
+        jComboBoxAreaTrabajo.setModel(new RestManagerComboBoxModel<>(getController().getAreaList()));
+        jComboBoxAreaTrabajo.addItem(null);
     }
 
     /**
@@ -69,13 +74,16 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
     private void initComponents() {
 
         jPanel10 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelNombre = new org.jdesktop.swingx.JXLabel();
+        jTextFieldNombre = new JTextField();
         jXLabel1 = new org.jdesktop.swingx.JXLabel();
         jLabelMoneda = new org.jdesktop.swingx.JXLabel();
         jPanelcentro = new javax.swing.JPanel();
         jPanelpuesto = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabelNombre = new org.jdesktop.swingx.JXLabel();
-        jTextFieldNombre = new JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jLabelNivelDeAcceso1 = new org.jdesktop.swingx.JXLabel();
+        jComboBoxAreaTrabajo = new javax.swing.JComboBox<>();
         jPanel8 = new javax.swing.JPanel();
         jLabelPuestosDisponibles = new org.jdesktop.swingx.JXLabel();
         jSpinnerPuestosDisponibles = new JSpinner();
@@ -115,6 +123,19 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jPanel10.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabelNombre.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelNombre.setText("Nombre Puesto");
+        jPanel1.add(jLabelNombre);
+
+        jTextFieldNombre.setMinimumSize(new java.awt.Dimension(150, 25));
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(150, 25));
+        jPanel1.add(jTextFieldNombre);
+
+        jPanel10.add(jPanel1);
+
         jXLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jXLabel1.setText(bundle.getString("label_moneda")); // NOI18N
@@ -129,20 +150,18 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jPanelcentro.setBackground(new java.awt.Color(0, 153, 153));
         jPanelcentro.setLayout(new javax.swing.BoxLayout(jPanelcentro, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanelpuesto.setLayout(new java.awt.GridLayout(1, 1));
+        jPanelpuesto.setLayout(new java.awt.GridLayout(0, 3));
 
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanel9.setOpaque(false);
+        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabelNombre.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelNombre.setText("Nombre Puesto");
-        jPanel1.add(jLabelNombre);
+        jLabelNivelDeAcceso1.setText("Area de trabajo");
+        jPanel9.add(jLabelNivelDeAcceso1);
 
-        jTextFieldNombre.setMinimumSize(new java.awt.Dimension(150, 25));
-        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(150, 25));
-        jPanel1.add(jTextFieldNombre);
+        jComboBoxAreaTrabajo.setPreferredSize(new java.awt.Dimension(150, 27));
+        jPanel9.add(jComboBoxAreaTrabajo);
 
-        jPanelpuesto.add(jPanel1);
+        jPanelpuesto.add(jPanel9);
 
         jPanel8.setOpaque(false);
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -302,6 +321,12 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         } else {
             jComboBoxAreaPago.setSelectedItem(instance.getAreaPago());
         }
+        
+        if (instance.getAreacodArea() == null) {
+            jComboBoxAreaTrabajo.setSelectedItem(null);
+        }else{
+            jComboBoxAreaTrabajo.setSelectedItem(instance.getAreacodArea());
+        }
 
     }
 
@@ -309,9 +334,11 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JComboBox<Cocina> jComboBoxAreaPago;
+    private javax.swing.JComboBox<Area> jComboBoxAreaTrabajo;
     private javax.swing.JComboBox<R.NivelAcceso> jComboBoxNivelAccesso;
     private org.jdesktop.swingx.JXLabel jLabelMoneda;
     private org.jdesktop.swingx.JXLabel jLabelNivelDeAcceso;
+    private org.jdesktop.swingx.JXLabel jLabelNivelDeAcceso1;
     private org.jdesktop.swingx.JXLabel jLabelNombre;
     private org.jdesktop.swingx.JXLabel jLabelPuestosDisponibles;
     private org.jdesktop.swingx.JXLabel jLabelSalarioFijo;
@@ -329,6 +356,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelbasico;
     private javax.swing.JPanel jPanelcentro;
     private javax.swing.JPanel jPanelopciones;
@@ -354,6 +382,12 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
     }
 
     @Override
+    public PuestoTrabajoCreateEditController getController() {
+        return (PuestoTrabajoCreateEditController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    @Override
     public boolean validateData() {
         String nombre = jTextFieldNombre.getText();
         if (nombre.length() > 30 || !nombre.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
@@ -365,6 +399,11 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
             instance.setAreaPago(null);
         } else {
             instance.setAreaPago(jComboBoxAreaPago.getItemAt(jComboBoxAreaPago.getSelectedIndex()).getCodCocina());
+        }
+        if (jComboBoxAreaTrabajo.getSelectedItem() == null) {
+            instance.setAreacodArea(null);
+        } else {
+            instance.setAreacodArea((Area) jComboBoxAreaTrabajo.getSelectedItem());
         }
         instance.setNivelAcceso(jComboBoxNivelAccesso.getItemAt(jComboBoxNivelAccesso.getSelectedIndex()).getNivel());
         instance.setPuestosDisponibles((Integer) jSpinnerPuestosDisponibles.getValue());

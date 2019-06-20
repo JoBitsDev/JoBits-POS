@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.Area;
 import restManager.persistencia.AsistenciaPersonal;
 import restManager.persistencia.models.AsistenciaPersonalDAO;
 
@@ -178,23 +179,23 @@ public class VentaDAO1 {
             }
         }//n
 
-            //convirtiendo a rowData
-            if (total != 0) {
-                rowData[0].add(p.getUsuario());
-                rowData[1].add(comun.setDosLugaresDecimales(total));
-                rowData[2].add(totalOrdenes);
-                rowData[3].add(comun.setDosLugaresDecimales(pago_por_ventas));
+        //convirtiendo a rowData
+        if (total != 0) {
+            rowData[0].add(p.getUsuario());
+            rowData[1].add(comun.setDosLugaresDecimales(total));
+            rowData[2].add(totalOrdenes);
+            rowData[3].add(comun.setDosLugaresDecimales(pago_por_ventas));
 
-                //llenando la tabla
-                try {
-                    comun.AddToTable(rowData, tabla);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage(),
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
+            //llenando la tabla
+            try {
+                comun.AddToTable(rowData, tabla);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-    
+    }
+
     /**
      * crea un resumen del total que ha vendido cda cocina
      *
@@ -271,6 +272,58 @@ public class VentaDAO1 {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    public static void getResumenVentaPorAreaOnTable(JTable tabla, Venta v, Area a) {
+        //inicializando los datos
+        ArrayList[] rowData = comun.initArray(new ArrayList[3]);
+        ArrayList<ProductovOrden> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
+                joinListsProductovOrden(ret, new ArrayList<>(o.getProductovOrdenList()));
+            }
+
+        }//nˆ3
+
+        //convirtiendo a rowData
+        float total = 0;
+        for (ProductovOrden x : ret) {
+            ProductoVenta pv = x.getProductoVenta();
+            total += pv.getPrecioVenta() * x.getCantidad();
+        }
+        if (total != 0) {
+            rowData[0].add(a.getCodArea());
+            rowData[1].add(a.getNombre());
+            rowData[2].add(comun.setDosLugaresDecimales(total));
+
+            //llenando la tabla
+            try {
+                comun.AddToTable(rowData, tabla);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
+    }
+    
+    public static List<ProductovOrden> getResumenVentaPorArea(Venta v, Area a) {
+        //inicializando los datos
+        ArrayList<ProductovOrden> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
+                joinListsProductovOrden(ret, new ArrayList<>(o.getProductovOrdenList()));
+            }
+
+        }//nˆ3
+
+       return ret;
     }
 
     public static List<ProductovOrden> getResumenVentasCamarero(Venta v, Personal p) {
@@ -625,7 +678,7 @@ public class VentaDAO1 {
         }
         return total;
     }
-    
+
     public static float getValorVentasCocina(Venta v, Cocina c) {
         //inicializando los datos
         ArrayList<ProductovOrden> ret = new ArrayList<>();
@@ -639,10 +692,10 @@ public class VentaDAO1 {
             }
 
         }//nˆ3
-        
+
         float valor = 0;
         for (ProductovOrden x : ret) {
-            valor += x.getCantidad()*x.getProductoVenta().getPrecioVenta();
+            valor += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
         }
 
         return valor;
@@ -759,9 +812,9 @@ public class VentaDAO1 {
     }
 
     public static float getValorTotalPagoTrabajadores(Venta instance) {
-       ArrayList<AsistenciaPersonal> personalTrabajando = 
-               new ArrayList<>(AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(instance.getFecha()));
-       float pagoTotal = 0;
+        ArrayList<AsistenciaPersonal> personalTrabajando
+                = new ArrayList<>(AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(instance.getFecha()));
+        float pagoTotal = 0;
         for (AsistenciaPersonal a : personalTrabajando) {
             pagoTotal += a.getPago();
         }

@@ -102,6 +102,8 @@ public class Impresion {
     private final String GASTO_HEADER = "Resumen de gastos";
 
     private final String PAGO_POR_VENTA_HEADER = "Pago por ventas";
+    
+    private final String RESUMEN_AREA = "Resumen de area de venta";
     /**
      * String referentes al almacen
      */
@@ -471,7 +473,7 @@ public class Impresion {
 
         for (ProductovOrden x : o.getProductovOrdenList()) {
             log(o, x);
-            
+
             if (x.getEnviadosacocina() < x.getCantidad()
                     && x.getProductoVenta().getCocinacodCocina().equals(c)) {
                 if (x.getNota() != null) {
@@ -972,9 +974,12 @@ public class Impresion {
         PrintService[] prints = PrintServiceLookup.lookupPrintServices(null, null);
         DocPrintJob job = PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
         job.addPrintJobListener(new JobListener());
-        for (int i = 0; i < prints.length; i++) {
-            if (prints[i].getName().contains(printerName)) {
-                job = prints[i].createPrintJob();
+        if (printerName != null) {
+            for (int i = 0; i < prints.length; i++) {
+                if (prints[i].getName().contains(printerName)) {
+                    job = prints[i].createPrintJob();
+                    break;
+                }
             }
         }
 
@@ -990,7 +995,8 @@ public class Impresion {
                         }
                         break;
                     default:
-                        job.print(doc, null);break;
+                        job.print(doc, null);
+                        break;
                 }
             } else {
                 job.print(doc, null);
@@ -1355,6 +1361,20 @@ public class Impresion {
                 t.newLine();
             }
         }
+
+        addTotalAndFinal(t, total);
+
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+    }
+
+    public void printResumenVentaArea(List<ProductovOrden> resumenVentaPorArea, Date fecha) {
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        addCustomMetaData(t, RESUMEN_AREA, fecha );
+
+        float total = addPvOrden(t,resumenVentaPorArea);
 
         addTotalAndFinal(t, total);
 
