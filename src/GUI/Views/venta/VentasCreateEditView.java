@@ -280,6 +280,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelVentasCamareras.setOpaque(false);
         jPanelVentasCamareras.setLayout(new java.awt.BorderLayout());
 
+        jTableVentasDependientes.setAutoCreateRowSorter(true);
         jTableVentasDependientes.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jTableVentasDependientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -336,12 +337,13 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelResumenVentas.add(jPanelVentasCamareras);
 
         jPanelCocinaArea.setOpaque(false);
-        jPanelCocinaArea.setLayout(new java.awt.GridLayout());
+        jPanelCocinaArea.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanelVentasCocinas.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen de ventas por cocina"));
         jPanelVentasCocinas.setOpaque(false);
         jPanelVentasCocinas.setLayout(new java.awt.BorderLayout());
 
+        jTableVentasPorCocina.setAutoCreateRowSorter(true);
         jTableVentasPorCocina.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jTableVentasPorCocina.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -392,6 +394,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelVentasArea.setOpaque(false);
         jPanelVentasArea.setLayout(new java.awt.BorderLayout());
 
+        jTableVentasPorArea.setAutoCreateRowSorter(true);
         jTableVentasPorArea.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jTableVentasPorArea.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -552,6 +555,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         ));
         jXTableOrdActivas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jXTableOrdActivas.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jXTableOrdActivas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jXTableOrdActivasMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jXTableOrdActivas);
 
         jPanelOrdenesActivas.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -645,12 +653,15 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     }//GEN-LAST:event_jComboBoxSeleccionarVentaPorTurnoItemStateChanged
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-int row = jTableVentasPorArea.getSelectedRow();
+        int row = jTableVentasPorArea.getSelectedRow();
         if (row == -1) {
             throw new NoSelectedException(jTableVentasPorArea);
         }
         getController().printAreaResumen((String) jTableVentasPorArea.getValueAt(row, 0));
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jXTableOrdActivasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jXTableOrdActivasMouseClicked
+    }//GEN-LAST:event_jXTableOrdActivasMouseClicked
 
     @Override
 
@@ -861,7 +872,7 @@ int row = jTableVentasPorArea.getSelectedRow();
         });
 
     }
-    
+
     private void updateTableResumenAreaVenta() {
         List<Area> a = getController().getAreaList();
         comun.limpiarTabla(jTableVentasPorArea);

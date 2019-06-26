@@ -111,6 +111,9 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     @Override
     public void constructView(java.awt.Container parent) {
         vi = new VentasCreateEditView(getInstance(), this, (JDialog) parent, fechaFin);
+        if (getInstance().getCambioTurno1() != null) {
+            turnoActivo = 2;
+        }
         setView(vi);
         getView().updateView();
         getView().setVisible(true);
@@ -157,6 +160,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public void fetchNewDataFromServer(int turnoTrabajo) {
         turnoActivo = turnoTrabajo;
         getModel().getEntityManager().refresh(getInstance());
+        if (ordController != null) {
+            if (ordController.getInstance() != null) {
+                ordController.update(ordController.getInstance());
+            }
+        }
         vi.updateView();
     }
 
@@ -330,36 +338,36 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     @Override
     public Venta getInstance() {
+        Venta vent = super.getInstance();
         //si es admin ve la venta general
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= 3) {
-            return super.getInstance();
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= 3 && turnoActivo == 0) {
+            return vent;
         } else {
-            if (super.getInstance().getCambioTurno1() == null) {
-
-                Venta vent = VentaDAO.getInstance().find(super.getInstance().getFecha());
-                if (vent != null) {
-                    if (R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea() != null) {
-                        for (int i = 0; i < vent.getOrdenList().size();) {
-                            if (!vent.getOrdenList().get(i).getMesacodMesa().getAreacodArea().
-                                    equals(R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea())) {
-                                vent.getOrdenList().remove(i);
-                            } else {
-                                i++;
-                            }
+            //sino a cambiado de turno ve la venta general
+            if (vent.getCambioTurno1() == null) {
+                if (R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea() != null) {
+                    for (int i = 0; i < vent.getOrdenList().size();) {
+                        if (!vent.getOrdenList().get(i).getMesacodMesa().getAreacodArea().
+                                equals(R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea())) {
+                            vent.getOrdenList().remove(i);
+                        } else {
+                            i++;
                         }
                     }
-                    return vent;
                 }
+                return vent;
             } else {
-                turnoActivo = 2;
+                if (turnoActivo == 0) {
+                    turnoActivo = 2;
+                }
             }
 
         }
 
         //ordenamos la venta por numero de orden
-        ArrayList<Orden> ord = new ArrayList<>(super.getInstance().getOrdenList());
+        getModel().getEntityManager().refresh(vent);
+        ArrayList<Orden> ord = new ArrayList<>(vent.getOrdenList());
         Collections.sort(ord);
-        Venta vent = null;
         String cod_orden_low;
         String cod_orden_high;
         //depende el turno activo fraccionamos la venta segun el turno.
@@ -396,7 +404,8 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             if (R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea() != null) {
                 for (int i = 0; i < vent.getOrdenList().size();) {
                     if (!vent.getOrdenList().get(i).getMesacodMesa().getAreacodArea().
-                            equals(R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea())) {
+                            equals(R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea())
+                            && R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea() != null) {
                         vent.getOrdenList().remove(i);
                     } else {
                         i++;
@@ -490,7 +499,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     public void printAreaResumen(String string) {
         Area a = AreaDAO.getInstance().find(string);
-        Impresion.getDefaultInstance().printResumenVentaArea(VentaDAO1.getResumenVentaPorArea(getInstance(), a),getInstance().getFecha());
+        Impresion.getDefaultInstance().printResumenVentaArea(VentaDAO1.getResumenVentaPorArea(getInstance(), a), getInstance().getFecha());
     }
 
 }

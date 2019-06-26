@@ -64,9 +64,9 @@ public class R {
     
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
-    public static String RELEASE_VERSION = "Version 2.6.4.1";
+    public static String RELEASE_VERSION = "Version 2.6.4.3";
 
-    public static int BUILD_VERSION = 15;
+    public static int BUILD_VERSION = 17;
 
     public static void setLookAndFeels() {
         try {
@@ -82,35 +82,55 @@ public class R {
         //GENERALES
         //
         
-        GENERAL_CAMBIO_MONEDA("GENERAL_CAMBIO_MONEDA"),
-        GENERAL_TURNOS_VARIOS("GENERAL_MULTIPLES_TURNOS"),
-        GENERAL_CAJERO_PERMISOS_ESP("GENERAL_CAJERO_PERMISOS_ESP"),
-        GENERAL_CONSUMO_CASA_ESTADISTICAL("GENERAL_CONSUMO_CASA_ESTADISTICAS"),
-        GENERAL_SERVER_IP("GENERAL_SERVIDOR_IP"),
-        GENERAL_MESA_FIJA_CAJERO("GENERAL_MESA_FIJA_CAJERO"),
+        GENERAL_CAMBIO_MONEDA("GENERAL_CAMBIO_MONEDA",24,null),
+        GENERAL_TURNOS_VARIOS("GENERAL_MULTIPLES_TURNOS",0,null),
+        GENERAL_CAJERO_PERMISOS_ESP("GENERAL_CAJERO_PERMISOS_ESP",0,null),
+        GENERAL_CONSUMO_CASA_ESTADISTICAL("GENERAL_CONSUMO_CASA_ESTADISTICAS",0,null),
+        GENERAL_SERVER_IP("GENERAL_SERVIDOR_IP",-1,"192.168.173.1"),
+        GENERAL_MESA_FIJA_CAJERO("GENERAL_MESA_FIJA_CAJERO",1,null),
         
         
         //
         //IMPRESION
         //
         
-        IMPRESION_TICKET_TAMANO_PAPEL("PRINTING_TICKET_PAPER_SIZE"),
-        IMPRESION_TICKET_CARACTER_SEPARADOR("PRINTING_TICKET_SEPARATOR_CHAR"),
-        IMPRESION_IMPRIMIR_COCINA_CENTRAL("PRINTING_CENTRAL_KITCHEN"),
-        IMPRESION_IMPRIMIR_GASTOS_AUTORIZOS("PRINTING_EXPENSES_IN_HAUSE_TICKETS"),
-        IMPRESION_IMPRIMIR_TICKET_EN_COCINA("PRINTING_PRINT_KITCHEN_TICKET"),
-        IMPRESION_CANTIDAD_COPIAS("PRINTING_COPIES"),
-        IMPRESION_REDONDEO_EXCESO("PRINTING_ROUNDING");
+        IMPRESION_TICKET_TAMANO_PAPEL("PRINTING_TICKET_PAPER_SIZE",38,null),
+        IMPRESION_TICKET_CARACTER_SEPARADOR("PRINTING_TICKET_SEPARATOR_CHAR",-1,"*"),
+        IMPRESION_TICKET_ENCABEZADO_RESTAURANTE("PRINTING_TICKET_HEADER",1,null),
+        IMPRESION_IMPRIMIR_COCINA_CENTRAL("PRINTING_CENTRAL_KITCHEN",0,null),
+        IMPRESION_IMPRIMIR_GASTOS_AUTORIZOS("PRINTING_EXPENSES_IN_HAUSE_TICKETS",0,null),
+        IMPRESION_IMPRIMIR_TICKET_EN_COCINA("PRINTING_PRINT_KITCHEN_TICKET",1,null),
+        IMPRESION_CANTIDAD_COPIAS("PRINTING_COPIES",0,null),
+        IMPRESION_REDONDEO_EXCESO("PRINTING_ROUNDING",1,null);
         
         private final String value;
+        private final int integerValue;
+        private final String stringValue;
 
-        private SettingID(String value) {
+        private SettingID(String value,Integer valorInt, String valorString) {
             this.value = value;
+            this.integerValue = valorInt;
+            this.stringValue = valorString;
         }
 
         public String getValue() {
             return value;
         }
+
+        public int getIntegerValue() {
+            return integerValue;
+        }
+
+        public String getStringValue() {
+            return stringValue;
+        }
+
+        @Override
+        public String toString() {
+            return getValue();
+        }
+        
+        
         
     }  
     

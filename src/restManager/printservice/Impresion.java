@@ -56,6 +56,7 @@ public class Impresion {
     private boolean SHOW_PRICES = true;
     public static boolean PRINT_IN_CENTRAL_KITCHEN = true;
     public static boolean PRINT_GASTOS_EN_AUTORIZOS = false;
+    public static boolean SHOW_HEADER = true;
     public static String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     public static String DEFAULT_PRINT_LOCATION = null;
     public static boolean IMPRIMIR_TICKET_COCINA = true;
@@ -102,7 +103,7 @@ public class Impresion {
     private final String GASTO_HEADER = "Resumen de gastos";
 
     private final String PAGO_POR_VENTA_HEADER = "Pago por ventas";
-    
+
     private final String RESUMEN_AREA = "Resumen de area de venta";
     /**
      * String referentes al almacen
@@ -891,11 +892,17 @@ public class Impresion {
         t.resetAll();
         t.initialize();
         t.feedBack((byte) 2);
-        t.alignCenter();
-        t.setText(CABECERA);
-        t.newLine();
-        t.setText(R.REST_NAME);
-        t.newLine();
+            t.alignCenter();
+        if (SHOW_HEADER) {
+            t.setText(CABECERA);
+            t.newLine();
+            t.setText(R.REST_NAME);
+            t.newLine();
+        }else{
+            t.setText("BIENVENIDO");
+            t.newLine();
+            t.newLine();
+        }
     }
 
     private void addCustomMetaData(Ticket t, String customHeader, Date fecha) {
@@ -1372,9 +1379,9 @@ public class Impresion {
 
         addHeader(t);
 
-        addCustomMetaData(t, RESUMEN_AREA, fecha );
+        addCustomMetaData(t, RESUMEN_AREA, fecha);
 
-        float total = addPvOrden(t,resumenVentaPorArea);
+        float total = addPvOrden(t, resumenVentaPorArea);
 
         addTotalAndFinal(t, total);
 

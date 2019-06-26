@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia;
 
 import java.io.Serializable;
@@ -24,8 +23,9 @@ import javax.persistence.Table;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "puesto_trabajo")
@@ -42,6 +42,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "PuestoTrabajo.findByAPartirDe", query = "SELECT p FROM PuestoTrabajo p WHERE p.aPartirDe = :aPartirDe"),
     @NamedQuery(name = "PuestoTrabajo.findByIdPuesto", query = "SELECT p FROM PuestoTrabajo p WHERE p.idPuesto = :idPuesto")})
 public class PuestoTrabajo implements Serializable {
+
+    @Column(name = "pago_por_ventas")
+    private Boolean pagoPorVentas;
 
     @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")
     @ManyToOne
@@ -204,7 +207,7 @@ public class PuestoTrabajo implements Serializable {
 
     @Override
     public String toString() {
-        return nombrePuesto ;
+        return nombrePuesto;
     }
 
     public Area getAreacodArea() {
@@ -213,6 +216,14 @@ public class PuestoTrabajo implements Serializable {
 
     public void setAreacodArea(Area areacodArea) {
         this.areacodArea = areacodArea;
+    }
+
+    public Boolean getPagoPorVentas() {
+        return pagoPorVentas;
+    }
+
+    public void setPagoPorVentas(Boolean pagoPorVentas) {
+        this.pagoPorVentas = pagoPorVentas;
     }
 
 }

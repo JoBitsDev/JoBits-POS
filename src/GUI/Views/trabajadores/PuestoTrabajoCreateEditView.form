@@ -298,6 +298,24 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Container class="javax.swing.JPanel" name="jPanel11">
+                  <Properties>
+                    <Property name="opaque" type="boolean" value="false"/>
+                  </Properties>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JCheckBox" name="jCheckBoxPagoPorVentas">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Pago por ventas"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="horizontalTextPosition" type="int" value="0"/>
+                        <Property name="verticalTextPosition" type="int" value="1"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>

@@ -40,10 +40,11 @@ public abstract class AbstractModel<T> implements Model {
             EMF = emf;
             currentConnection = EMF.createEntityManager();
             persistenceUnitName = R.PERIRSTENCE_UNIT_NAME;
-        } else {
-            Logger l = Logger.getLogger(getClass().getName());
-            l.log(Level.WARNING, R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_found") + "" + getClass().getName());
         }
+//        else {
+//            Logger l = Logger.getLogger(getClass().getName());
+//            l.log(Level.WARNING, R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_found") + "" + getClass().getName());
+//        }
     }
 
     public EntityManager getEntityManager() {

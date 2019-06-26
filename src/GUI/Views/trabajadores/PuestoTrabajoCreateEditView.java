@@ -34,7 +34,7 @@ import restManager.util.RestManagerComboBoxModel;
 public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabajo> {
 
     public PuestoTrabajoCreateEditView(AbstractDetailController<PuestoTrabajo> controller, Frame owner, boolean modal, PuestoTrabajo p) {
-        super(p, DialogType.DEFINED, controller,owner, modal);
+        super(p, DialogType.DEFINED, controller, owner, modal);
         initComponents();
         fetchComponentData();
         updateView();
@@ -42,7 +42,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
     }
 
     public PuestoTrabajoCreateEditView(AbstractDetailController<PuestoTrabajo> controller, Dialog owner, boolean modal, PuestoTrabajo p) {
-        super(p, DialogType.DEFINED, controller,owner, modal);
+        super(p, DialogType.DEFINED, controller, owner, modal);
         initComponents();
         fetchComponentData();
         updateView();
@@ -98,6 +98,8 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jPanel3 = new javax.swing.JPanel();
         jLabelSalarioFijo1 = new org.jdesktop.swingx.JXLabel();
         jSpinnerPorcientoVenta = new JSpinner();
+        jPanel11 = new javax.swing.JPanel();
+        jCheckBoxPagoPorVentas = new javax.swing.JCheckBox();
         jPanelvanzado = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabelSalarioFijo3 = new org.jdesktop.swingx.JXLabel();
@@ -223,6 +225,17 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
 
         jPanel16.add(jPanel3);
 
+        jPanel11.setOpaque(false);
+
+        jCheckBoxPagoPorVentas.setText("Pago por ventas");
+        jCheckBoxPagoPorVentas.setToolTipText("");
+        jCheckBoxPagoPorVentas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCheckBoxPagoPorVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jCheckBoxPagoPorVentas.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jPanel11.add(jCheckBoxPagoPorVentas);
+
+        jPanel16.add(jPanel11);
+
         jPanelbasico.add(jPanel16);
 
         jPanelcentro.add(jPanelbasico);
@@ -308,6 +321,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jSpinnerPorcientoVenta.setValue(instance.getSalarioPorcientoVentaTotal());
         jSpinnerPorcientoAPartirDe.setValue(instance.getSalarioPorcientoDeArea());
         jSpinnerAPartir.setValue(instance.getAPartirDe());
+        jCheckBoxPagoPorVentas.setSelected(instance.getPagoPorVentas() == null ? false : instance.getPagoPorVentas());
 
         if (instance.getNivelAcceso() != null) {
             jComboBoxNivelAccesso.setSelectedIndex(instance.getNivelAcceso());
@@ -317,14 +331,14 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         }
 
         if (instance.getAreaPago() == null) {
-           jComboBoxAreaPago.setSelectedItem(null);
+            jComboBoxAreaPago.setSelectedItem(null);
         } else {
             jComboBoxAreaPago.setSelectedItem(instance.getAreaPago());
         }
-        
+
         if (instance.getAreacodArea() == null) {
             jComboBoxAreaTrabajo.setSelectedItem(null);
-        }else{
+        } else {
             jComboBoxAreaTrabajo.setSelectedItem(instance.getAreacodArea());
         }
 
@@ -333,6 +347,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCrear;
+    private javax.swing.JCheckBox jCheckBoxPagoPorVentas;
     private javax.swing.JComboBox<Cocina> jComboBoxAreaPago;
     private javax.swing.JComboBox<Area> jComboBoxAreaTrabajo;
     private javax.swing.JComboBox<R.NivelAcceso> jComboBoxNivelAccesso;
@@ -348,6 +363,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
     private org.jdesktop.swingx.JXLabel jLabelSalarioFijo4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -386,7 +402,6 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         return (PuestoTrabajoCreateEditController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
     @Override
     public boolean validateData() {
         String nombre = jTextFieldNombre.getText();
@@ -405,6 +420,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         } else {
             instance.setAreacodArea((Area) jComboBoxAreaTrabajo.getSelectedItem());
         }
+        instance.setPagoPorVentas(jCheckBoxPagoPorVentas.isSelected());
         instance.setNivelAcceso(jComboBoxNivelAccesso.getItemAt(jComboBoxNivelAccesso.getSelectedIndex()).getNivel());
         instance.setPuestosDisponibles((Integer) jSpinnerPuestosDisponibles.getValue());
         instance.setAPartirDe((Integer) jSpinnerAPartir.getValue());

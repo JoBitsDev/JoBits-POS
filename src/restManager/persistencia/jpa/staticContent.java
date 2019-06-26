@@ -8,6 +8,7 @@ package restManager.persistencia.jpa;
 import javax.persistence.EntityManagerFactory;
 
 import javax.persistence.Persistence;
+import restManager.persistencia.models.AbstractModel;
 import restManager.resources.R;
 
 /**
@@ -18,55 +19,27 @@ public class staticContent {
 
     private static boolean CONECTADO;
 
-    private static  String persistenceUnitName;
-
-    private static EntityManagerFactory EMF;
+    private static String persistenceUnitName;
 
     private staticContent(String persistenceUnitName) {
         staticContent.persistenceUnitName = persistenceUnitName;
-        EMF = Persistence.createEntityManagerFactory(persistenceUnitName);
-        if (EMF != null) {
+        AbstractModel.setEMF(Persistence.createEntityManagerFactory(persistenceUnitName));
+        if (AbstractModel.getEMF() != null) {
             initJPAConnections();
-           
-        } else {
-            throw new NullPointerException(R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_Found"));
-        }
-    }
-
-    /**
-     * refresca el cache de la conexion haciendo posible la actualizacion en
-     * tiempo real
-     */
-    public static void clearConnCache() {
-        if (EMF != null) {
-            EMF.getCache().evictAll();
 
         } else {
             throw new NullPointerException(R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_Found"));
         }
-    }
-
-    public static void clearCache(Class cls) {
-        if (EMF != null) {
-            EMF.getCache().evict(cls);
-        } else {
-            throw new NullPointerException(R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_Found"));
-        }
-
-    }
-
-    public static EntityManagerFactory getEMF() {
-        return EMF;
     }
 
     public static boolean isCONECTADO() {
         return CONECTADO;
     }
-    
+
     private void initJPAConnections() {
 
         try {
-            EMF.createEntityManager();
+            AbstractModel.setCurrentConnection(AbstractModel.getEMF().createEntityManager());
             CONECTADO = true;
         } catch (Exception e) {
             CONECTADO = false;
@@ -75,15 +48,12 @@ public class staticContent {
 
     }
 
-    public static staticContent init(String persistenceUnitName){
+    public static staticContent init(String persistenceUnitName) {
         return new staticContent(persistenceUnitName);
     }
 
     public static String getPersistenceUnitName() {
         return persistenceUnitName;
     }
-    
-    
-    
-    
+
 }

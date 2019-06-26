@@ -57,7 +57,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
             showSuccessDialog(getView());
         }
     }
-    
+
     public void createDetailResumenView(Date del, Date al) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, del.getYear());
@@ -80,8 +80,12 @@ public class VentaListController extends AbstractDialogController<Venta> {
             if (ve != null) {
                 v.getOrdenList().addAll(ve.getOrdenList());
                 v.getGastoVentaList().addAll(ve.getGastoVentaList());
-                v.setVentaTotal(v.getVentaTotal() + ve.getVentaTotal());
-                v.setVentagastosEninsumos(v.getVentagastosEninsumos() + ve.getVentagastosEninsumos());
+                if (ve.getVentaTotal() != null) {
+                    v.setVentaTotal(v.getVentaTotal() + ve.getVentaTotal());
+                }
+                if (ve.getVentagastosEninsumos() != null) {
+                    v.setVentagastosEninsumos(v.getVentagastosEninsumos() + ve.getVentagastosEninsumos());
+                }
                 if (initDateNotSet) {
                     v.setFecha(current);
                     initDateNotSet = false;

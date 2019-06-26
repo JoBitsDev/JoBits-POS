@@ -17,6 +17,7 @@ import restManager.controller.AbstractDialogController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Personal;
 import restManager.persistencia.jpa.staticContent;
+import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;

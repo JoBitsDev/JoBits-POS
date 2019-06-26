@@ -8,11 +8,13 @@ package restManager.persistencia.models;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Area;
 import restManager.persistencia.Configuracion;
 import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.Mesa;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -35,6 +37,19 @@ public class ConfiguracionDAO extends AbstractModel<Configuracion> {
         } else {
             return INSTANCE;
         }
+    }
+
+    public Configuracion find(R.SettingID id) {
+        Configuracion c = super.find(id.getValue()); //To change body of generated methods, choose Tools | Templates.
+        if (c == null) {
+            c = new Configuracion(id.getValue());
+            c.setValor(id.getIntegerValue());
+            c.setValorString(id.getStringValue());
+            startTransaction();
+            create(c);
+            commitTransaction();
+        }
+        return c;
     }
 
 }

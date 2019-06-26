@@ -14,8 +14,6 @@ import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import restManager.controller.AbstractDialogController;
 import restManager.controller.insumo.InsumoCreateEditController;
 import restManager.persistencia.Almacen;
@@ -148,6 +146,12 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
                                 return null;
                         }
                     }
+
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return columnIndex == 3 ? true : super.isCellEditable(rowIndex, columnIndex); //To change body of generated methods, choose Tools | Templates.
+                    }
+
                 };
             }
 
@@ -216,7 +220,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
                         switch (columnIndex) {
                             case 3:
                                 items.get(rowIndex).setCantidad(Float.parseFloat((String) aValue));
-                                
+
                                 fireTableCellUpdated(rowIndex, columnIndex);
                                 break;
 
@@ -256,7 +260,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     }
 
     private void updateComboBoxes() {
-       for (R.UM x : R.UM.values()) {
+        for (R.UM x : R.UM.values()) {
             jComboBoxUM.addItem(x);
         }
     }

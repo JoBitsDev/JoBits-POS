@@ -247,8 +247,10 @@ public class VentaDAO1 {
 
         //llenando l array
         for (Orden o : aux) {
-            joinListsProductovOrdenByCocina(ret,
-                    new ArrayList(o.getProductovOrdenList()), c);
+            if (!o.getDeLaCasa()) {
+                joinListsProductovOrdenByCocina(ret,
+                        new ArrayList(o.getProductovOrdenList()), c);
+            }
 
         }//nˆ3
 
@@ -309,7 +311,7 @@ public class VentaDAO1 {
 
         }
     }
-    
+
     public static List<ProductovOrden> getResumenVentaPorArea(Venta v, Area a) {
         //inicializando los datos
         ArrayList<ProductovOrden> ret = new ArrayList<>();
@@ -323,7 +325,7 @@ public class VentaDAO1 {
 
         }//nˆ3
 
-       return ret;
+        return ret;
     }
 
     public static List<ProductovOrden> getResumenVentasCamarero(Venta v, Personal p) {

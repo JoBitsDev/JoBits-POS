@@ -49,77 +49,10 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     @Override
     public void constructView(Container parent) {
         if (getView() == null) {
-            setView(new AsistenciaTrabajadoresView(this, parent,diaVenta));
+            setView(new AsistenciaTrabajadoresView(this, parent, diaVenta));
         }
         getView().updateView();
         getView().setVisible(true);
-    }
-
-    public void createNewGasto(R.TipoGasto cat, String nombre, float monto, String descripcion) {
-        if (showConfirmDialog(getView(), "Desea confirmar la accion")) {
-            int idCat = -1;
-            for (TipoGasto x : TipoGastoDAO.getInstance().findAll()) {
-                if (x.getNombre().equals(cat.getNombre())) {
-                    idCat = x.getIdGasto();
-                    break;
-                }
-            }
-
-            if (idCat == -1) {
-                TipoGasto nuevo = new TipoGasto(TipoGastoDAO.getInstance().generateIDCode());
-                nuevo.setGastoList(new ArrayList<>());
-                nuevo.setNombre(cat.getNombre());
-                getModel().startTransaction();
-                TipoGastoDAO.getInstance().create(nuevo);
-                getModel().commitTransaction();
-                idCat = nuevo.getIdGasto();
-            }
-
-            Gasto gast = null;
-            for (Gasto g : GastoDAO.getInstance().findAll()) {
-                if (g.getNombre().equals(nombre)) {
-                    gast = g;
-                    break;
-                }
-            }
-            if (gast == null) {
-                gast = new Gasto(GastoDAO.getInstance().generateStringCode("G-"));
-                gast.setFrecuenciaPago(-1);
-                gast.setGastoVentaList(new ArrayList<>());
-                gast.setNombre(nombre);
-                gast.setTipoGastoidGasto(TipoGastoDAO.getInstance().find(idCat));
-                gast.setUltimoPago(diaVenta.getFecha());
-                getModel().startTransaction();
-                GastoDAO.getInstance().create(gast);
-                getModel().commitTransaction();
-            }
-
-            for (GastoVenta li : diaVenta.getGastoVentaList()) {
-                if (li.getGasto().getNombre().equals(nombre)) {
-                    li.setImporte(li.getImporte() + monto);
-                    getModel().startTransaction();
-                    GastoVentaDAO.getInstance().edit(li);
-                    getModel().commitTransaction();
-                    showSuccessDialog(getView());
-                    getView().updateView();
-                    return;
-                }
-            }
-
-            GastoVenta v = new GastoVenta(gast.getCodGasto(), diaVenta.getFecha());
-            v.setImporte(monto);
-            v.setGasto(gast);
-            v.setVenta(diaVenta);
-            v.setDescripcion(descripcion);
-            getModel().startTransaction();
-            GastoVentaDAO.getInstance().create(v);
-            getModel().commitTransaction();
-            diaVenta.getGastoVentaList().add(v);
-            showSuccessDialog(getView());
-            getView().updateView();
-
-        }
-
     }
 
     @Override
@@ -150,7 +83,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
         ret.setPersonal(selected);
         ret.setVenta(v);
         calcularPagoTrabajador(ret);
-        create(ret,true);
+        create(ret, true);
         return ret;
     }
 
@@ -161,9 +94,13 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     public List<AsistenciaPersonal> updateSalaries() {
         ArrayList<AsistenciaPersonal> ret = new ArrayList<>(getPersonalTrabajando(diaVenta));
         VentaDetailController controller = new VentaDetailController(diaVenta);
+        int pagoVenta = 0;
         for (AsistenciaPersonal a : ret) {
             a.setPago(controller.getPagoTrabajador(a.getPersonal()));
             update(a, true);
+            if (a.getPersonal().getPuestoTrabajonombrePuesto().getPagoPorVentas()) {
+                pagoVenta ++;
+            }
         }
         return ret;
     }

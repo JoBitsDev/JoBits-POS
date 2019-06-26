@@ -38,7 +38,6 @@ public class CalcularCambioView extends javax.swing.JDialog {
         jLabelValorMontoAPagar.setText(comun.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
         jLabelValorMontoADevolver.setText("");
         ComponentMover cr = new ComponentMover(this, jPanel1);
-        new Impresion().forceDrawerKick();
         this.setVisible(true);
 
     }
@@ -52,7 +51,9 @@ public class CalcularCambioView extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabelNombre1 = new org.jdesktop.swingx.JXLabel();
         jLabelValorMontoAPagar = new org.jdesktop.swingx.JXLabel();
@@ -68,6 +69,8 @@ public class CalcularCambioView extends javax.swing.JDialog {
         setMinimumSize(new java.awt.Dimension(287, 188));
         setType(java.awt.Window.Type.POPUP);
 
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButton1.setText(bundle.getString("label_salir")); // NOI18N
         jButton1.setOpaque(true);
@@ -76,21 +79,36 @@ public class CalcularCambioView extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, java.awt.BorderLayout.SOUTH);
+        jPanel2.add(jButton1, java.awt.BorderLayout.WEST);
+
+        jButton2.setText(bundle.getString("label_abrir_cajon")); // NOI18N
+        jButton2.setOpaque(true);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton2, java.awt.BorderLayout.EAST);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setLayout(new java.awt.GridLayout(4, 1));
 
         jLabelNombre1.setText("Total a pagar:");
+        jLabelNombre1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jPanel1.add(jLabelNombre1);
 
         jLabelValorMontoAPagar.setForeground(new java.awt.Color(0, 153, 0));
         jLabelValorMontoAPagar.setText("XX.XX");
+        jLabelValorMontoAPagar.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jPanel1.add(jLabelValorMontoAPagar);
 
         jLabelNombre2.setText("CUC");
+        jLabelNombre2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jPanel1.add(jLabelNombre2);
 
+        jSpinnerCUC.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
         jSpinnerCUC.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
         jSpinnerCUC.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -105,21 +123,30 @@ public class CalcularCambioView extends javax.swing.JDialog {
         jPanel1.add(jSpinnerCUC);
 
         jLabelNombre4.setText("MN");
+        jLabelNombre4.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jPanel1.add(jLabelNombre4);
 
+        jSpinnerMN.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
         jSpinnerMN.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 10));
         jSpinnerMN.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinnerMNStateChanged(evt);
             }
         });
+        jSpinnerMN.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jSpinnerMNFocusGained(evt);
+            }
+        });
         jPanel1.add(jSpinnerMN);
 
         jLabelSalarioFijo1.setText("Monto a devolver:");
+        jLabelSalarioFijo1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jPanel1.add(jLabelSalarioFijo1);
 
         jLabelValorMontoADevolver.setForeground(new java.awt.Color(204, 0, 0));
         jLabelValorMontoADevolver.setText("XX.XX");
+        jLabelValorMontoADevolver.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jPanel1.add(jLabelValorMontoADevolver);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -129,24 +156,33 @@ public class CalcularCambioView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jSpinnerCUCStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerCUCStateChanged
-       actualizarVuelto();
+        actualizarVuelto();
     }//GEN-LAST:event_jSpinnerCUCStateChanged
 
     private void jSpinnerMNStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerMNStateChanged
-       actualizarVuelto();
+        actualizarVuelto();
     }//GEN-LAST:event_jSpinnerMNStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-dispose();        // TODO add your handling code here:
+        dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jSpinnerCUCFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSpinnerCUCFocusGained
-    //   jSpinnerCUC.getEditor().set
+        jSpinnerCUC.setValue(null);
     }//GEN-LAST:event_jSpinnerCUCFocusGained
+
+    private void jSpinnerMNFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSpinnerMNFocusGained
+        jSpinnerMN.setValue(null);        // TODO add your handling code here:
+    }//GEN-LAST:event_jSpinnerMNFocusGained
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Impresion.getDefaultInstance().forceDrawerKick();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private org.jdesktop.swingx.JXLabel jLabelNombre1;
     private org.jdesktop.swingx.JXLabel jLabelNombre2;
     private org.jdesktop.swingx.JXLabel jLabelNombre4;
@@ -154,6 +190,7 @@ dispose();        // TODO add your handling code here:
     private org.jdesktop.swingx.JXLabel jLabelValorMontoADevolver;
     private org.jdesktop.swingx.JXLabel jLabelValorMontoAPagar;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JSpinner jSpinnerCUC;
     private javax.swing.JSpinner jSpinnerMN;
     // End of variables declaration//GEN-END:variables
@@ -162,14 +199,25 @@ dispose();        // TODO add your handling code here:
 
         float montoADevolver = o.getOrdenvalorMonetario();
 
-        
+        if (R.COIN_SUFFIX.equals(" CUC")) {
             float cuc = (float) jSpinnerCUC.getValue();
             montoADevolver -= cuc;
 
             float mn = (int) jSpinnerMN.getValue();
             mn /= R.COINCHANGE;
             montoADevolver -= mn;
-   
+
+        }
+        else{
+            float cuc = (float) jSpinnerCUC.getValue();
+            comun.setDosLugaresDecimales(cuc *= R.COINCHANGE);
+            montoADevolver -= cuc;
+
+            float mn = (int) jSpinnerMN.getValue();
+            montoADevolver -= mn;
+ 
+        }
+
         if (montoADevolver > 0) {
             jLabelValorMontoADevolver.setText("Falta Dinero");
         } else {

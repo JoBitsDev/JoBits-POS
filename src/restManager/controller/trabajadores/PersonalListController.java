@@ -56,7 +56,7 @@ public class PersonalListController extends AbstractListController<Personal> {
                 if (pe.getUltimodiaPago() == null) {
                     pe.setUltimodiaPago(new Date());
                 }
-                if (a.getVenta().getFecha().after(pe.getUltimodiaPago())) {
+                if (a.getVenta().getFecha().compareTo(pe.getUltimodiaPago()) >= 0 && a.getVenta().getVentaTotal() != null) {
                     pe.setPagoPendiente(pe.getPagoPendiente() != null ? pe.getPagoPendiente() + a.getPago() : a.getPago());
                 }
             }
@@ -97,13 +97,13 @@ public class PersonalListController extends AbstractListController<Personal> {
     }
 
     public void pagar(Personal personal) {
+            if (showConfirmDialog(getView(), "Desea imprimir un comprobante de pago")) {
+            Impresion i = Impresion.getDefaultInstance();
+            i.printComprobantePago(personal);
+        }
         if (showConfirmDialog(getView(), "Confirme el pago a " + personal.getDatosPersonales().getNombre() + personal.getDatosPersonales().getApellidos())) {
             PersonalCreateEditController controller = new PersonalCreateEditController(personal);
             controller.setView(getView());
-            if (showConfirmDialog(getView(), "Desea imprimir un comprobante de pago")) {
-                Impresion i = Impresion.getDefaultInstance();
-                i.printComprobantePago(personal);
-            }
             controller.pagarTrabajador();
         }
     }

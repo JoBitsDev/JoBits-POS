@@ -65,7 +65,9 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
         jLabelUsuario = new javax.swing.JLabel();
         jTextFieldUsuario = new JTextField();
         jLabelpassword = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
         jPasswordFieldPassAntigua = new javax.swing.JPasswordField();
+        jToggleButtonMostrarPass = new javax.swing.JToggleButton();
         jLabelpassword1 = new javax.swing.JLabel();
         jPasswordFieldPassNueva = new javax.swing.JPasswordField();
         jLabelpassword2 = new javax.swing.JLabel();
@@ -141,7 +143,7 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
 
         jPanel1.setBackground(getBackground());
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Seguridad"));
-        jPanel1.setLayout(new java.awt.GridLayout(4, 1));
+        jPanel1.setLayout(new java.awt.GridLayout(4, 2));
 
         jLabelUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -155,7 +157,20 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
         jLabelpassword.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelpassword.setText("Contraseña Antigua");
         jPanel1.add(jLabelpassword);
-        jPanel1.add(jPasswordFieldPassAntigua);
+
+        jPanel5.setOpaque(false);
+        jPanel5.setLayout(new java.awt.BorderLayout());
+        jPanel5.add(jPasswordFieldPassAntigua, java.awt.BorderLayout.CENTER);
+
+        jToggleButtonMostrarPass.setBorderPainted(false);
+        jToggleButtonMostrarPass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonMostrarPassActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jToggleButtonMostrarPass, java.awt.BorderLayout.EAST);
+
+        jPanel1.add(jPanel5);
 
         jLabelpassword1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelpassword1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -272,6 +287,10 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void jToggleButtonMostrarPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonMostrarPassActionPerformed
+        jPasswordFieldPassAntigua.setEchoChar(!jToggleButtonMostrarPass.isSelected() ? '*' : (char) 0);
+    }//GEN-LAST:event_jToggleButtonMostrarPassActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
@@ -299,6 +318,7 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPasswordField jPasswordFieldPassAntigua;
@@ -307,6 +327,7 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
     private javax.swing.JTextField jTextFieldApellidos;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldUsuario;
+    private javax.swing.JToggleButton jToggleButtonMostrarPass;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -381,7 +402,7 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
             instance.getDatosPersonales().setSexo('F');
         }
         instance.setUltimodiaPago(new Date());
-        instance.setPagoPendiente((float)0);
+        instance.setPagoPendiente((float) 0);
         instance.setPuestoTrabajonombrePuesto((PuestoTrabajo) jComboBoxPuestoTrabajo.getSelectedItem());
         instance.setOnline(false);
         return true;
