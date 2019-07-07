@@ -162,6 +162,7 @@ public class PersonalCreateEditView extends AbstractDetailView<Personal> {
         jPanel5.setLayout(new java.awt.BorderLayout());
         jPanel5.add(jPasswordFieldPassAntigua, java.awt.BorderLayout.CENTER);
 
+        jToggleButtonMostrarPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/visualizar.PNG"))); // NOI18N
         jToggleButtonMostrarPass.setBorderPainted(false);
         jToggleButtonMostrarPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
