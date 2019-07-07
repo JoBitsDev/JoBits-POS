@@ -823,4 +823,14 @@ public class VentaDAO1 {
         return comun.setDosLugaresDecimalesFloat(pagoTotal);
     }
 
+    public static float getValorPagoPorVentas(Venta instance) {
+        ArrayList<ProductovOrden> list = getResumenVentas(instance);
+        float ret = 0;
+        for (ProductovOrden x : list) {
+            ProductoVenta v = x.getProductoVenta();
+            ret += v.getPagoPorVenta() != null ? v.getPagoPorVenta() * x.getCantidad() : 0 ; 
+        }
+        return comun.setDosLugaresDecimalesFloat(ret);
+    }
+
 }

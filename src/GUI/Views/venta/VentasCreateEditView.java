@@ -45,6 +45,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     RestManagerAbstractTableModel<Orden> modelOrd;
     GastoOperacionController gastoController = new GastoOperacionController();
     AsistenciaPersonalController personalController = new AsistenciaPersonalController();
+
     Date fechaFin;
 
     public VentasCreateEditView(Venta instance, AbstractDialogController controller) {
@@ -568,7 +569,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jTabbedPaneData.addTab("Ventas", jPanelVentas);
 
-        jPanelOperaciones.setLayout(new javax.swing.BoxLayout(jPanelOperaciones, javax.swing.BoxLayout.LINE_AXIS));
+        jPanelOperaciones.setLayout(new java.awt.GridLayout());
 
         jPanelExtracciones.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_extracciones"))); // NOI18N
         jPanelOperaciones.add(jPanelExtracciones);

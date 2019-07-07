@@ -7,16 +7,20 @@ package restManager.controller.venta;
 
 import GUI.Views.util.CalcularCambioView;
 import GUI.Views.venta.VentasCreateEditView;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JDialog;
+import javax.swing.JPanel;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.Licence.LicenceController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
+import restManager.controller.trabajadores.AsistenciaPersonalController;
 import restManager.controller.trabajadores.PersonalCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
@@ -50,7 +54,7 @@ import restManager.util.comun;
 public class VentaDetailController extends AbstractDetailController<Venta> {
 
     Date fechaFin = null;
-    OrdenController ordController;
+    private OrdenController ordController;
     private VentasCreateEditView vi;
     int turnoActivo = 0;
 
@@ -117,6 +121,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         setView(vi);
         getView().updateView();
         getView().setVisible(true);
+
     }
 
     public void updateOrdenDialog(Orden objectAtSelectedRow) {
@@ -480,6 +485,20 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             totalVentas -= p.getAPartirDe();
         }
         pago += (p.getSalarioPorcientoVentaTotal() * totalVentas) / 100;
+
+        if (personal.getPuestoTrabajonombrePuesto().getPagoPorVentas() != null) {
+            if (personal.getPuestoTrabajonombrePuesto().getPagoPorVentas()) {
+                int personalTrabajandoPorVentas = 0;
+                for (AsistenciaPersonal x : new AsistenciaPersonalController().getPersonalTrabajando(getInstance())) {
+                    if (x.getPersonal().getPuestoTrabajonombrePuesto().getPagoPorVentas()) {
+                        personalTrabajandoPorVentas++;
+                    }
+                }
+                float pagoGeneralPorVentas = VentaDAO1.getValorPagoPorVentas(getInstance());
+
+                pago += pagoGeneralPorVentas / personalTrabajandoPorVentas;
+            }
+        }
 
         return comun.setDosLugaresDecimalesFloat(pago);
 

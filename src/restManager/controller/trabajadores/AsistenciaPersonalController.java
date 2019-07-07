@@ -94,13 +94,9 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     public List<AsistenciaPersonal> updateSalaries() {
         ArrayList<AsistenciaPersonal> ret = new ArrayList<>(getPersonalTrabajando(diaVenta));
         VentaDetailController controller = new VentaDetailController(diaVenta);
-        int pagoVenta = 0;
         for (AsistenciaPersonal a : ret) {
             a.setPago(controller.getPagoTrabajador(a.getPersonal()));
             update(a, true);
-            if (a.getPersonal().getPuestoTrabajonombrePuesto().getPagoPorVentas()) {
-                pagoVenta ++;
-            }
         }
         return ret;
     }
