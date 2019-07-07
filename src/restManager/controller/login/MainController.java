@@ -184,6 +184,7 @@ public class MainController extends AbstractDialogController<Personal> {
         Impresion.IMPRIMIR_TICKET_COCINA = c.find(R.SettingID.IMPRESION_IMPRIMIR_TICKET_EN_COCINA).getValor() == 1;
         Impresion.cantidadCopias = c.find(R.SettingID.IMPRESION_CANTIDAD_COPIAS).getValor();
         Impresion.REDONDEO_POR_EXCESO = c.find(R.SettingID.IMPRESION_REDONDEO_EXCESO).getValor() == 1;
+        Impresion.SHOW_SUBTOTAL = c.find(R.SettingID.IMPRESION_TICKET_SUBTOTAL).getValor() == 1;
     }
 
     public enum MenuButtons {

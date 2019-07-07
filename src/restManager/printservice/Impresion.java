@@ -57,6 +57,7 @@ public class Impresion {
     public static boolean PRINT_IN_CENTRAL_KITCHEN = true;
     public static boolean PRINT_GASTOS_EN_AUTORIZOS = false;
     public static boolean SHOW_HEADER = true;
+    public static boolean SHOW_SUBTOTAL = true;
     public static String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     public static String DEFAULT_PRINT_LOCATION = null;
     public static boolean IMPRIMIR_TICKET_COCINA = true;
@@ -182,7 +183,9 @@ public class Impresion {
         float totalPrint = subTotalPrint;
         t.alignRight();
         t.newLine();
+        if (SHOW_SUBTOTAL) {
         t.setText(SUBTOTAL + subTotalPrint + MONEDA);
+        }
         if (o.getPorciento() != 0) {
             t.newLine();
             t.setText("+ " + o.getPorciento() + PORCIENTO + sumaPorciento + MONEDA);
