@@ -1362,13 +1362,14 @@ public class Impresion {
 
         float total = 0;
         for (AsistenciaPersonal a : lista) {
-            if (a.getVenta().getFecha().after(personal.getUltimodiaPago())) {
+            if (a.getVenta().getFecha().compareTo(personal.getUltimodiaPago()) >= 0 ) {
                 t.alignLeft();
                 t.setText(R.DATE_FORMAT.format(a.getAsistenciaPersonalPK().getVentafecha()));
                 t.newLine();
                 t.alignRight();
                 t.setText(comun.setDosLugaresDecimales(a.getPago()));
                 t.newLine();
+                total += comun.setDosLugaresDecimalesFloat(a.getPago());
             }
         }
 
