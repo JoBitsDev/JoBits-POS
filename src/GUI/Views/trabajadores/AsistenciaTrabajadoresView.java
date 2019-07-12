@@ -55,7 +55,6 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
 
         jButtonImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jButtonImprimir.setText("Imprimir");
-        jButtonImprimir.setEnabled(false);
         jButtonImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jButtonImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,7 +69,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirActionPerformed
-        //  getController().print();        // TODO add your handling code here:
+        getController().imprimirAsistencia();
     }//GEN-LAST:event_jButtonImprimirActionPerformed
 
     @Override

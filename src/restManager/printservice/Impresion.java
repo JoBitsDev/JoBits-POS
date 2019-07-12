@@ -102,6 +102,7 @@ public class Impresion {
             IPV_PUNTO_ELAB = "Punto de elaboracion";
 
     private final String GASTO_HEADER = "Resumen de gastos";
+    private final String ASISTENCIA_PERSONAL = "Asistencia del personal";
 
     private final String PAGO_POR_VENTA_HEADER = "Pago por ventas";
 
@@ -184,7 +185,7 @@ public class Impresion {
         t.alignRight();
         t.newLine();
         if (SHOW_SUBTOTAL) {
-        t.setText(SUBTOTAL + subTotalPrint + MONEDA);
+            t.setText(SUBTOTAL + subTotalPrint + MONEDA);
         }
         if (o.getPorciento() != 0) {
             t.newLine();
@@ -895,13 +896,13 @@ public class Impresion {
         t.resetAll();
         t.initialize();
         t.feedBack((byte) 2);
-            t.alignCenter();
+        t.alignCenter();
         if (SHOW_HEADER) {
             t.setText(CABECERA);
             t.newLine();
             t.setText(R.REST_NAME);
             t.newLine();
-        }else{
+        } else {
             t.setText("BIENVENIDO");
             t.newLine();
             t.newLine();
@@ -1291,6 +1292,37 @@ public class Impresion {
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
+    public void printPersonalTrabajando(List<AsistenciaPersonal> lista) {
+        Collections.sort(lista, (AsistenciaPersonal o1, AsistenciaPersonal o2) -> o1.getPersonal().getDatosPersonales().getNombre().compareTo(o2.getPersonal().getDatosPersonales().getNombre()));
+
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        t.addLineSeperator();
+        t.newLine();
+        t.alignCenter();
+        t.setText(ASISTENCIA_PERSONAL);
+        t.newLine();
+        t.alignRight();
+        t.setText(FECHA + R.DATE_FORMAT.format(lista.get(0).getVenta().getFecha()));
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+
+        float total = 0;
+        for (AsistenciaPersonal x : lista) {
+            t.alignLeft();
+            t.setText(x.getPersonal().getDatosPersonales().getNombre());
+            t.newLine();
+            t.newLine();
+        }
+        addFinal(t);
+//        addTotalAndFinal(t, total);
+
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+    }
+
     public void prinPagoPorVenta(Venta instance, String usuario) {
         Personal p = PersonalDAO.getInstance().find(usuario);
         ArrayList<Orden> lista = new ArrayList<>(instance.getOrdenList());
@@ -1362,7 +1394,7 @@ public class Impresion {
 
         float total = 0;
         for (AsistenciaPersonal a : lista) {
-            if (a.getVenta().getFecha().compareTo(personal.getUltimodiaPago()) >= 0 ) {
+            if (a.getVenta().getFecha().compareTo(personal.getUltimodiaPago()) >= 0) {
                 t.alignLeft();
                 t.setText(R.DATE_FORMAT.format(a.getAsistenciaPersonalPK().getVentafecha()));
                 t.newLine();

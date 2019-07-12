@@ -23,6 +23,7 @@ import restManager.persistencia.models.GastoDAO;
 import restManager.persistencia.models.GastoVentaDAO;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.TipoGastoDAO;
+import restManager.printservice.Impresion;
 import restManager.resources.R;
 
 /**
@@ -99,6 +100,10 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
             update(a, true);
         }
         return ret;
+    }
+
+    public void imprimirAsistencia() {
+        Impresion.getDefaultInstance().printPersonalTrabajando(getItems());
     }
 
 }
