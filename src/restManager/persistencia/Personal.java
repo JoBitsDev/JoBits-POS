@@ -45,6 +45,8 @@ public class Personal implements Serializable {
     @Lob
     @Column(name = "foto")
     private byte[] foto;
+    @ManyToMany(mappedBy = "personalList")
+    private List<PuestoTrabajo> puestoTrabajoList;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "pago_pendiente")
     private Float pagoPendiente;
@@ -199,5 +201,13 @@ public class Personal implements Serializable {
 
     public void setFoto(byte[] foto) {
         this.foto = foto;
+    }
+
+    public List<PuestoTrabajo> getPuestoTrabajoList() {
+        return puestoTrabajoList;
+    }
+
+    public void setPuestoTrabajoList(List<PuestoTrabajo> puestoTrabajoList) {
+        this.puestoTrabajoList = puestoTrabajoList;
     }
 }

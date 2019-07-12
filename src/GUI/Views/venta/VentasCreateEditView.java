@@ -105,6 +105,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelResumen = new javax.swing.JPanel();
         jPanelResumenVentas = new javax.swing.JPanel();
         jPanelNumero = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        jSpinner1 = new javax.swing.JSpinner();
+        jLabel1 = new javax.swing.JLabel();
         jLabelTotalVentas = new javax.swing.JLabel();
         jLabelTotalVentasNeta = new javax.swing.JLabel();
         jButtonImprimirZ = new javax.swing.JButton();
@@ -253,6 +256,26 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelNumero.setOpaque(false);
         jPanelNumero.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 204), 3), "Propina"));
+        jPanel10.setOpaque(false);
+
+        jSpinner1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
+        jSpinner1.setToolTipText("Propina general de la venta");
+        jSpinner1.setMinimumSize(new java.awt.Dimension(50, 50));
+        jSpinner1.setPreferredSize(new java.awt.Dimension(100, 20));
+        jSpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSpinner1StateChanged(evt);
+            }
+        });
+        jPanel10.add(jSpinner1);
+
+        jLabel1.setText(R.COIN_SUFFIX);
+        jPanel10.add(jLabel1);
+
+        jPanelNumero.add(jPanel10);
 
         jLabelTotalVentas.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabelTotalVentas.setText(bundle.getString("label_numeros_moneda")); // NOI18N
@@ -569,7 +592,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jTabbedPaneData.addTab("Ventas", jPanelVentas);
 
-        jPanelOperaciones.setLayout(new java.awt.GridLayout());
+        jPanelOperaciones.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanelExtracciones.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_extracciones"))); // NOI18N
         jPanelOperaciones.add(jPanelExtracciones);
@@ -664,6 +687,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private void jXTableOrdActivasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jXTableOrdActivasMouseClicked
     }//GEN-LAST:event_jXTableOrdActivasMouseClicked
 
+    private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
+       getController().setPropina((float) jSpinner1.getValue());
+       updateTablePagoTrabajadores();
+    }//GEN-LAST:event_jSpinner1StateChanged
+
     @Override
 
     public void setEditingMode() {
@@ -754,6 +782,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         updateTableResumenGastos();
         updateTablePagoTrabajadores();
         updateTableResumenAreaVenta();
+        jSpinner1.setValue(getController().getInstance().getVentapropina());
         jLabelTotalVentas.setText(getController().getTotalVendido());
         jLabelTotalVentasNeta.setText(getController().getTotalVendidoNeto());
         jLabelTotalGastosInsumo.setText(getController().getTotalGastadoInsumos());
@@ -785,6 +814,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButtonImprimirZ1;
     private javax.swing.JButton jButtonTerminarVentas;
     private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelFecha;
     private javax.swing.JLabel jLabelTotalGastos;
     private javax.swing.JLabel jLabelTotalGastosAutorizo;
@@ -793,6 +823,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JLabel jLabelTotalVentas;
     private javax.swing.JLabel jLabelTotalVentasNeta;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -825,6 +856,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTabbedPane jTabbedPaneData;
     private javax.swing.JTabbedPane jTabbedPaneResumen;
     private javax.swing.JTable jTableVentasDependientes;

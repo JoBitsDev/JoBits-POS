@@ -32,6 +32,11 @@ import restManager.exceptions.DevelopingOperationException;
     @NamedQuery(name = "AsistenciaPersonal.findByPago", query = "SELECT a FROM AsistenciaPersonal a WHERE a.pago = :pago")})
 public class AsistenciaPersonal implements Serializable, Comparable<AsistenciaPersonal> {
 
+    @Column(name = "a_mayores")
+    private Float aMayores;
+    @Column(name = "propina")
+    private Float propina;
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AsistenciaPersonalPK asistenciaPersonalPK;
@@ -116,6 +121,22 @@ public class AsistenciaPersonal implements Serializable, Comparable<AsistenciaPe
     @Override
     public int compareTo(AsistenciaPersonal o) {
         return o.getAsistenciaPersonalPK().getVentafecha().compareTo(getAsistenciaPersonalPK().getVentafecha());
+    }
+
+    public Float getAMayores() {
+        return aMayores;
+    }
+
+    public void setAMayores(Float aMayores) {
+        this.aMayores = aMayores;
+    }
+
+    public Float getPropina() {
+        return propina;
+    }
+
+    public void setPropina(Float propina) {
+        this.propina = propina;
     }
 
 }

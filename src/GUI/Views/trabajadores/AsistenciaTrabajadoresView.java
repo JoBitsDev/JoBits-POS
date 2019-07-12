@@ -85,7 +85,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
                 return new RestManagerAbstractTableModel<AsistenciaPersonal>(getController().getPersonalTrabajando(v), getjTableCrossReference()) {
                     @Override
                     public int getColumnCount() {
-                        return R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 ? 3 : 2;
+                        return R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 ? 4 : 2;
                     }
 
                     @Override
@@ -97,6 +97,8 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
                                 return getItems().get(rowIndex).getPersonal().getUsuario();
                             case 2:
                                 return getItems().get(rowIndex).getPago();
+                            case 3:
+                                return getItems().get(rowIndex).getPropina();
                             default:
                                 return null;
                         }
@@ -111,6 +113,8 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
                                 return "Usuario trabajando";
                             case 2:
                                 return "Estimado de pago";
+                            case 3:
+                                return "Propina ";
                             default:
                                 return null;
                         }

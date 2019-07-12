@@ -234,6 +234,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             // crear el dia nuevo
             ret = new Venta();
             ret.setVentagastosEninsumos(0.0);
+            ret.setVentapropina((float) 0);
             ret.setOrdenList(new ArrayList<>());
             ret.setFecha(new Date());
             create(ret, true);
@@ -472,11 +473,12 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public Float getPagoTrabajador(Personal personal) {
         float pago = 0;
         PuestoTrabajo p = personal.getPuestoTrabajonombrePuesto();
+        Venta v = getInstance();
         float totalVentas;
         if (p.getAreaPago() != null) {
-            totalVentas = VentaDAO1.getValorVentasCocina(getInstance(), CocinaDAO.getInstance().find(p.getAreaPago()));
+            totalVentas = VentaDAO1.getValorVentasCocina(v, CocinaDAO.getInstance().find(p.getAreaPago()));
         } else {
-            totalVentas = VentaDAO1.getValorTotalVentas(getInstance());
+            totalVentas = VentaDAO1.getValorTotalVentas(v);
         }
 
         pago += p.getSalarioFijo();
@@ -494,9 +496,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
                         personalTrabajandoPorVentas++;
                     }
                 }
-                float pagoGeneralPorVentas = VentaDAO1.getValorPagoPorVentas(getInstance());
-
-                pago += pagoGeneralPorVentas / personalTrabajandoPorVentas;
+                pago += VentaDAO1.getValorPagoPorVentas(getInstance()) / personalTrabajandoPorVentas;
             }
         }
 
@@ -519,6 +519,32 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public void printAreaResumen(String string) {
         Area a = AreaDAO.getInstance().find(string);
         Impresion.getDefaultInstance().printResumenVentaArea(VentaDAO1.getResumenVentaPorArea(getInstance(), a), getInstance().getFecha());
+    }
+
+    public void setPropina(float value) {
+        super.getInstance().setVentapropina(value);
+        update(super.getInstance(), true);
+    }
+
+    public Float getPropinaTrabajador(Personal personal) {
+        float ret = 0;
+        Venta v = getInstance();
+        if (personal.getPuestoTrabajonombrePuesto().getPropina()) {
+            int personalTrabajandoPropina = 0;
+            for (AsistenciaPersonal x : new AsistenciaPersonalController().getPersonalTrabajando(v)) {
+                if (x.getPersonal().getPuestoTrabajonombrePuesto().getPropina()) {
+                    personalTrabajandoPropina++;
+                }
+            }
+
+            if (personal.getPuestoTrabajonombrePuesto().getPropina()) {
+                if (v.getVentapropina() != null) {
+                    ret += v.getVentapropina() / personalTrabajandoPropina;
+                }
+            }
+
+        }
+        return comun.setDosLugaresDecimalesFloat(ret);
     }
 
 }

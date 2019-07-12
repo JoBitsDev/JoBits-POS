@@ -40,6 +40,9 @@ import restManager.resources.R;
     @NamedQuery(name = "Venta.findByVentagastosEninsumos", query = "SELECT v FROM Venta v WHERE v.ventagastosEninsumos = :ventagastosEninsumos")})
 public class Venta implements Serializable {
 
+    @Column(name = "ventapropina")
+    private Float ventapropina;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta")
     private List<AsistenciaPersonal> asistenciaPersonalList;
 
@@ -188,6 +191,14 @@ public class Venta implements Serializable {
 
     public void setAsistenciaPersonalList(List<AsistenciaPersonal> asistenciaPersonalList) {
         this.asistenciaPersonalList = asistenciaPersonalList;
+    }
+
+    public Float getVentapropina() {
+        return ventapropina;
+    }
+
+    public void setVentapropina(Float ventapropina) {
+        this.ventapropina = ventapropina;
     }
 
 }

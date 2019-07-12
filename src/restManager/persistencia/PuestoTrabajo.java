@@ -43,6 +43,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "PuestoTrabajo.findByIdPuesto", query = "SELECT p FROM PuestoTrabajo p WHERE p.idPuesto = :idPuesto")})
 public class PuestoTrabajo implements Serializable {
 
+    @Column(name = "propina")
+    private Boolean propina;
+
     @Column(name = "pago_por_ventas")
     private Boolean pagoPorVentas;
 
@@ -224,6 +227,14 @@ public class PuestoTrabajo implements Serializable {
 
     public void setPagoPorVentas(Boolean pagoPorVentas) {
         this.pagoPorVentas = pagoPorVentas;
+    }
+
+    public Boolean getPropina() {
+        return propina;
+    }
+
+    public void setPropina(Boolean propina) {
+        this.propina = propina;
     }
 
 }

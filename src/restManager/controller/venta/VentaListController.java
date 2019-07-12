@@ -86,6 +86,9 @@ public class VentaListController extends AbstractDialogController<Venta> {
                 if (ve.getVentagastosEninsumos() != null) {
                     v.setVentagastosEninsumos(v.getVentagastosEninsumos() + ve.getVentagastosEninsumos());
                 }
+                if (ve.getVentapropina() != null) {
+                    v.setVentapropina(v.getVentapropina() + ve.getVentapropina());
+                }
                 if (initDateNotSet) {
                     v.setFecha(current);
                     initDateNotSet = false;

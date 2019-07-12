@@ -1392,7 +1392,7 @@ public class Impresion {
         t.addLineSeperator();
         t.newLine();
 
-        float total = 0;
+        float total = 0, propina = 0;
         for (AsistenciaPersonal a : lista) {
             if (a.getVenta().getFecha().compareTo(personal.getUltimodiaPago()) >= 0) {
                 t.alignLeft();
@@ -1401,11 +1401,24 @@ public class Impresion {
                 t.alignRight();
                 t.setText(comun.setDosLugaresDecimales(a.getPago()));
                 t.newLine();
-                total += comun.setDosLugaresDecimalesFloat(a.getPago());
+                if (a.getPropina() != null) {
+                    if (a.getPropina() > 0) {
+                        t.setText("Propina: " + a.getPropina());
+                    }
+                }
+                propina += a.getPropina();
+                total += a.getPago();
             }
         }
-
-        addTotalAndFinal(t, total);
+        t.addLineSeperator();
+        t.alignRight();
+        if (propina > 0) {
+            t.setText("Total Propina: " + comun.setDosLugaresDecimales(propina));
+        }
+        t.newLine();
+        t.setText("'Total a Pagar: " + comun.setDosLugaresDecimales(total));
+        t.newLine();
+        addFinal(t);
 
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
