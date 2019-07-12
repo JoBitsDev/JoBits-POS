@@ -6,18 +6,15 @@
 package restManager.controller.login;
 
 import GUI.Views.AbstractView;
-import GUI.Views.login.LogInDialogView;
+import GUI.Views.login.LogInView;
 import GUI.Views.util.AutenticacionFragmentView;
 import java.awt.Container;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-import javax.swing.JDialog;
 import javax.swing.SwingWorker;
 import restManager.controller.AbstractDialogController;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Personal;
 import restManager.persistencia.jpa.staticContent;
-import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
@@ -33,51 +30,16 @@ public class LogInController extends AbstractDialogController<Personal> {
     private boolean AUTORIZADO = false;
     private int nivelMinimo = -1;
     private String usuarioRequerido = "";
+    private LogInView mainView;
 
     public LogInController() {
         super(null);
     }
 
-    public boolean constructoAuthorizationView(Container parent, int nivelMinimo) {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= nivelMinimo) {
-            return true;
-        }
-        String nombreNivel = "No Identificado";
-        for (R.NivelAcceso v : R.NivelAcceso.values()) {
-            if (v.getNivel() == nivelMinimo) {
-                nombreNivel = v.name();
-            }
-        }
-
-        constructLoginPanel(parent, "Nivel Minimo (" + nombreNivel + ")");
-        this.nivelMinimo = nivelMinimo;
-        getView().setVisible(true);
-        return AUTORIZADO;
-    }
-
-    public boolean constructoAuthorizationView(Container parent, String usuario) {
-        int nivelUsuario = PersonalDAO.getInstance().find(usuario).getPuestoTrabajonombrePuesto().getNivelAcceso();
-        if(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > nivelUsuario){
-            return true;
-        }
-        if (R.loggedUser.getUsuario().equals(usuario)) {
-            return true;
-        }
-        constructLoginPanel(parent, "Usuario Requerido (" + usuario + ")");
-        this.usuarioRequerido = usuario;
-        getView().setVisible(true);
-        return AUTORIZADO;
-    }
-
     @Override
     public void constructView(Container parent) {
-        setView(new LogInDialogView(this));
-        getView().setVisible(true);
-    }
-
-    private void constructLoginPanel(Container Parent, String title) {
-        setView(new AutenticacionFragmentView(Parent, this, true, title));
-
+        mainView = new LogInView(this);
+        mainView.setVisible(true);
     }
 
     public boolean connectLocal() {
@@ -91,16 +53,16 @@ public class LogInController extends AbstractDialogController<Personal> {
     }
 
     private boolean connect() {
-        LoadingWindow.show(getView());
+        LoadingWindow.show(mainView);
         SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
             @Override
             protected String doInBackground() throws Exception {
-                getView().setEnabled(false);
+                mainView.setEnabled(false);
                 try {
                     staticContent.init(R.PERIRSTENCE_UNIT_NAME);
                 } catch (Exception e) {
                     LoadingWindow.hide();
-                    showErrorDialog(getView(), e.getMessage());
+                    showErrorDialog(mainView, e.getMessage());
                     return "error";
                 }
                 return "gg";
@@ -108,8 +70,8 @@ public class LogInController extends AbstractDialogController<Personal> {
 
             @Override
             protected void done() {
-                getView().updateView();
-                getView().setEnabled(true);
+                mainView.updateView();
+                mainView.setEnabled(true);
                 LoadingWindow.hide();
 
             }
@@ -150,7 +112,7 @@ public class LogInController extends AbstractDialogController<Personal> {
                     LoadingWindow.hide();
                     if (status.equals("Autenticación correcta")) {
                         showSuccessDialog(getView(), "Bienvenido");
-                        MainController controller = new MainController(p, getView());
+                        MainController controller = new MainController(p, mainView);
                     } else {
                         showErrorDialog(getView(), status);
                     }
@@ -166,6 +128,46 @@ public class LogInController extends AbstractDialogController<Personal> {
 
     public boolean isConnected() {
         return staticContent.isCONECTADO();
+    }
+
+    //
+    //Metodos para la ventana de autorizacion
+    //
+    
+    private void constructLoginPanel(Container Parent, String title) {
+        setView(new AutenticacionFragmentView(Parent, this, true, title));
+
+    }
+
+    public boolean constructoAuthorizationView(Container parent, int nivelMinimo) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= nivelMinimo) {
+            return true;
+        }
+        String nombreNivel = "No Identificado";
+        for (R.NivelAcceso v : R.NivelAcceso.values()) {
+            if (v.getNivel() == nivelMinimo) {
+                nombreNivel = v.name();
+            }
+        }
+
+        constructLoginPanel(parent, "Nivel Minimo (" + nombreNivel + ")");
+        this.nivelMinimo = nivelMinimo;
+        getView().setVisible(true);
+        return AUTORIZADO;
+    }
+
+    public boolean constructoAuthorizationView(Container parent, String usuario) {
+        int nivelUsuario = PersonalDAO.getInstance().find(usuario).getPuestoTrabajonombrePuesto().getNivelAcceso();
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > nivelUsuario) {
+            return true;
+        }
+        if (R.loggedUser.getUsuario().equals(usuario)) {
+            return true;
+        }
+        constructLoginPanel(parent, "Usuario Requerido (" + usuario + ")");
+        this.usuarioRequerido = usuario;
+        getView().setVisible(true);
+        return AUTORIZADO;
     }
 
     /**

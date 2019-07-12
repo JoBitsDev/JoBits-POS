@@ -5,12 +5,8 @@
  */
 package restManager.algoritmo;
 
-import GUI.Views.login.LogInDialogView;
-import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import javax.swing.SwingWorker;
 import restManager.persistencia.Orden;

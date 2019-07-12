@@ -5,14 +5,11 @@
  */
 package restManager.controller.login;
 
-import GUI.Views.AbstractView;
 import GUI.Views.login.MainView;
-import GUI.Views.seccion.CartaSeccionView;
 import GUI.copiaSegView;
 import java.awt.Container;
-import java.awt.Dialog;
-import java.awt.HeadlessException;
 import java.text.ParseException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
@@ -25,19 +22,15 @@ import restManager.controller.puntoelaboracion.PuntoElaboracionListController;
 import restManager.controller.insumo.InsumoListController;
 import restManager.controller.productoventa.ProductoVentaListController;
 import restManager.controller.seccion.CartaListController;
-import restManager.controller.seccion.SeccionListController;
 import restManager.controller.trabajadores.PersonalListController;
 import restManager.controller.trabajadores.PuestoTrabajoListController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.controller.venta.VentaListController;
 import restManager.exceptions.DevelopingOperationException;
-import restManager.exceptions.ExceptionHandler;
 import restManager.exceptions.UnauthorizedAccessException;
-import restManager.persistencia.Carta;
 import restManager.persistencia.Negocio;
 import restManager.persistencia.Personal;
 import restManager.persistencia.Venta;
-import restManager.persistencia.models.CartaDAO;
 import restManager.persistencia.models.ConfiguracionDAO;
 import restManager.persistencia.models.NegocioDAO;
 import restManager.persistencia.models.PersonalDAO;
@@ -45,7 +38,6 @@ import restManager.persistencia.models.VentaDAO;
 import restManager.printservice.Impresion;
 import restManager.printservice.Ticket;
 import restManager.resources.R;
-import static restManager.resources.R.COINCHANGE;
 
 /**
  * FirstDream
@@ -61,14 +53,14 @@ public class MainController extends AbstractDialogController<Personal> {
         cargarConfiguracion();
     }
 
-    public MainController(Personal loggedUser, AbstractView parentView) {
+    public MainController(Personal loggedUser, JFrame parentView) {
         this(loggedUser);
         constructView(parentView);
     }
 
     @Override
     public void constructView(Container parent) {
-        setView(new MainView(this, (Dialog) parent, true));
+        setView(new MainView(this, (JFrame) parent, true));
         getView().updateView();
         getView().setVisible(true);
     }

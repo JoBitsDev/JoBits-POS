@@ -10,6 +10,7 @@ import com.jidesoft.swing.JideLabel;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Controller;
@@ -39,7 +40,7 @@ public class MainView extends AbstractView {
         ComponentMover cr = new ComponentMover(this, getRootPane());
     }
 
-    public MainView(AbstractDialogController controller, Dialog owner, boolean modal) {
+    public MainView(AbstractDialogController controller, JFrame owner, boolean modal) {
         super(DialogType.FULL_SCREEN, controller, owner, modal);
         initComponents();
         ComponentMover cr = new ComponentMover(this, styledLabelRestName);
