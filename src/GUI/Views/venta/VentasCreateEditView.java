@@ -595,9 +595,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelOperaciones.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanelExtracciones.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_extracciones"))); // NOI18N
+        jPanelExtracciones.setLayout(new java.awt.BorderLayout());
         jPanelOperaciones.add(jPanelExtracciones);
 
         jPanelPagoTrabajadores.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_pago_trabajadores"))); // NOI18N
+        jPanelPagoTrabajadores.setLayout(new java.awt.BorderLayout());
         jPanelOperaciones.add(jPanelPagoTrabajadores);
 
         jTabbedPaneData.addTab("Operaciones", jPanelOperaciones);
