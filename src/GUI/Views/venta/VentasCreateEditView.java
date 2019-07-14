@@ -782,7 +782,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         updateTableResumenGastos();
         updateTablePagoTrabajadores();
         updateTableResumenAreaVenta();
-        jSpinner1.setValue(getController().getInstance().getVentapropina());
+        jSpinner1.setValue(getController().getInstance().getVentapropina() != null ? getController().getInstance().getVentapropina() : (float)0);
         jLabelTotalVentas.setText(getController().getTotalVendido());
         jLabelTotalVentasNeta.setText(getController().getTotalVendidoNeto());
         jLabelTotalGastosInsumo.setText(getController().getTotalGastadoInsumos());

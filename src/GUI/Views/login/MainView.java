@@ -78,6 +78,7 @@ public class MainView extends AbstractView {
         jButtonPresupuesto = new javax.swing.JButton();
         jPanelTrabajadores = new javax.swing.JPanel();
         jButtonTrabajadores = new javax.swing.JButton();
+        jButtonNominas = new javax.swing.JButton();
         jButtonPTrabajo = new javax.swing.JButton();
         jPanelConfiguracion = new javax.swing.JPanel();
         jButtonCopiaSeguridad = new javax.swing.JButton();
@@ -304,6 +305,18 @@ public class MainView extends AbstractView {
         });
         jPanelTrabajadores.add(jButtonTrabajadores);
 
+        jButtonNominas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonnominas.png"))); // NOI18N
+        jButtonNominas.setText(bundle.getString("label_nominas")); // NOI18N
+        jButtonNominas.setBorderPainted(false);
+        jButtonNominas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonNominas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonNominas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNominasActionPerformed(evt);
+            }
+        });
+        jPanelTrabajadores.add(jButtonNominas);
+
         jButtonPTrabajo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonpuestotrabajo.png"))); // NOI18N
         jButtonPTrabajo.setText(bundle.getString("label_puesto_trabajo")); // NOI18N
         jButtonPTrabajo.setBorderPainted(false);
@@ -467,6 +480,10 @@ public class MainView extends AbstractView {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCONFIGActionPerformed
 
+    private void jButtonNominasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNominasActionPerformed
+        action(MainController.MenuButtons.NOMINAS);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonNominasActionPerformed
+
     @Override
     public void updateView() {
         updateLicenceStatus();
@@ -510,6 +527,7 @@ public class MainView extends AbstractView {
     private javax.swing.JButton jButtonCONFIG;
     private javax.swing.JButton jButtonCopiaSeguridad;
     private javax.swing.JButton jButtonIPVs;
+    private javax.swing.JButton jButtonNominas;
     private javax.swing.JButton jButtonPTrabajo;
     private javax.swing.JButton jButtonPresupuesto;
     private javax.swing.JButton jButtonSalon;

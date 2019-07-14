@@ -22,6 +22,7 @@ import restManager.controller.puntoelaboracion.PuntoElaboracionListController;
 import restManager.controller.insumo.InsumoListController;
 import restManager.controller.productoventa.ProductoVentaListController;
 import restManager.controller.seccion.CartaListController;
+import restManager.controller.trabajadores.NominasController;
 import restManager.controller.trabajadores.PersonalListController;
 import restManager.controller.trabajadores.PuestoTrabajoListController;
 import restManager.controller.venta.VentaDetailController;
@@ -130,6 +131,9 @@ public class MainController extends AbstractDialogController<Personal> {
                 case LICENCIA:
                     controller = new LicenceController(getView());
                     break;
+                case NOMINAS:
+                    controller = new NominasController(getView());
+                    break;
                 default:
                     getView().setEnabled(true);
                     throw new DevelopingOperationException(getView());
@@ -137,6 +141,7 @@ public class MainController extends AbstractDialogController<Personal> {
             }
         } catch (UnauthorizedAccessException | DevelopingOperationException e) {
             //  ExceptionHandler.showExceptionToUser(e, getView());
+            e.printStackTrace();
         }
         getView().setEnabled(true);
     }
@@ -208,6 +213,7 @@ public class MainController extends AbstractDialogController<Personal> {
 
         TRABAJADORES(4),
         PUESTOS_TRABAJO(4),
+        NOMINAS(3),
         //
         //CONFIGURACION
         //

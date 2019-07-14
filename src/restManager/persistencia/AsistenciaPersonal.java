@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import restManager.controller.trabajadores.NominasController;
 import restManager.exceptions.DevelopingOperationException;
 
 /**
@@ -103,6 +104,10 @@ public class AsistenciaPersonal implements Serializable, Comparable<AsistenciaPe
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
+        if (object instanceof NominasController.AsistenciaPersonalEstadisticas) {
+            return object.equals(this);
+        }
+
         if (!(object instanceof AsistenciaPersonal)) {
             return false;
         }
