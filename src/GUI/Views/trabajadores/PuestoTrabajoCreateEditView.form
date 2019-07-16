@@ -303,6 +303,9 @@
                 </Container>
                 <Container class="javax.swing.JPanel" name="jPanel11">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection component="jPanelbasico" name="background" type="property"/>
+                    </Property>
                     <Property name="opaque" type="boolean" value="false"/>
                   </Properties>
 

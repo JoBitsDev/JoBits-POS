@@ -186,7 +186,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 boolean enviar = true;
                 for (ProductovOrden x : instance.getProductovOrdenList()) {
                     if (x.getCantidad() != x.getEnviadosacocina()) {
-                        showErrorDialog(getView(), "Existen productos que no han sido enviados a cocina. Envie a cocina antes de cerrar la orden");
+                        showErrorDialog(getView(), "Existen productos que no han sido enviados a elaborar. Envie a elaborar antes de cerrar la orden");
                         return;
                     }
                 }

@@ -155,6 +155,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         setUndecorated(true);
         com.jidesoft.swing.JideBorderLayout jideBorderLayout1 = new com.jidesoft.swing.JideBorderLayout();
         jideBorderLayout1.setHgap(10);
@@ -363,7 +364,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelCocinaArea.setOpaque(false);
         jPanelCocinaArea.setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanelVentasCocinas.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen de ventas por cocina"));
+        jPanelVentasCocinas.setBorder(javax.swing.BorderFactory.createTitledBorder("Ventas por punto elaboración"));
         jPanelVentasCocinas.setOpaque(false);
         jPanelVentasCocinas.setLayout(new java.awt.BorderLayout());
 

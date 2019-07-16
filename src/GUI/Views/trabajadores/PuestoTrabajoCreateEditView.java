@@ -229,8 +229,9 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
 
         jPanel16.add(jPanel3);
 
+        jPanel11.setBackground(jPanelbasico.getBackground());
         jPanel11.setOpaque(false);
-        jPanel11.setLayout(new java.awt.GridLayout());
+        jPanel11.setLayout(new java.awt.GridLayout(1, 0));
 
         jCheckBoxPagoPorVentas.setText("Pago por ventas");
         jCheckBoxPagoPorVentas.setToolTipText("");

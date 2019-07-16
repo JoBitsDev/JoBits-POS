@@ -300,7 +300,6 @@ public class VentaCalendarView extends AbstractView {
         jLabelTrabajadores.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelTrabajadores.setText(bundle.getString("label_numeros_moneda")); // NOI18N
         jLabelTrabajadores.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 0, 204), 3, true), "Trabajadores"));
-        jLabelTrabajadores.setEnabled(false);
         jPanelGastos.add(jLabelTrabajadores);
 
         jLabelOtros.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -546,6 +545,9 @@ public class VentaCalendarView extends AbstractView {
                 if (x.getVentagastosGastos() != null) {
                     gGastos += x.getVentagastosGastos();
                 }
+                if (x.getVentagastosPagotrabajadores() != null) {
+                    gTrabajadores += x.getVentagastosPagotrabajadores();
+                }
                 cantidad++;
             }
         }
@@ -554,6 +556,7 @@ public class VentaCalendarView extends AbstractView {
         jLabelTotalVendido.setText(comun.setDosLugaresDecimales((float) suma));
         jLabelPromedioVendido.setText(comun.setDosLugaresDecimales((float) promedio));
         jLabelInsumo.setText(comun.setDosLugaresDecimales((float) gInsumos));
+        jLabelTrabajadores.setText(comun.setDosLugaresDecimales((float)(gTrabajadores)));
         jLabelOtros.setText(comun.setDosLugaresDecimales((float) gGastos));
         int hora_pico_promedio = VentaDAO1.getModalPickHour(ventas);
         jLabelHoraPico.setText(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");

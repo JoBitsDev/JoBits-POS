@@ -532,7 +532,6 @@
                     </TitledBorder>
                   </Border>
                 </Property>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelOtros">

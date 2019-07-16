@@ -58,7 +58,7 @@ public class CocinaListView extends AbstractListView<Cocina> {
                     case 1:
                         return "Nombre";
                     case 2:
-                        return "Cantidad de platos";
+                        return "Cantidad de productos";
                     default:
                         return null;
                 }

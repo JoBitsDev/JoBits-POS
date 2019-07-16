@@ -72,6 +72,7 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
 
         jPanelInfo.setLayout(new java.awt.BorderLayout());
 
+        jTableInfo.setAutoCreateRowSorter(true);
         jTableInfo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

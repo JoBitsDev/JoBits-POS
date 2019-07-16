@@ -70,6 +70,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
         v.setOrdenList(new ArrayList<>());
         v.setGastoVentaList(new ArrayList<>());
         v.setVentagastosEninsumos(0.0);
+        v.setVentapropina((float)0.0);
         Date current;
 
         while ((current = new Date(c.get(Calendar.YEAR),

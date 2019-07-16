@@ -223,6 +223,7 @@ public abstract class AbstractView extends JDialog implements  View{
         setPreferredSize(getPreferredSize());
         setFont(getFont());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setModalityType(ModalityType.APPLICATION_MODAL);
         ComponentMover cr = new ComponentMover(this, this);
     }
 

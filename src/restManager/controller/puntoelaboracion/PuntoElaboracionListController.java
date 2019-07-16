@@ -40,7 +40,7 @@ public class PuntoElaboracionListController extends AbstractListController<Cocin
 
     @Override
     public void createInstance() {
-        String newCocina = showInputDialog(getView(), "Introduzca el nombre de la nueva Cocina");
+        String newCocina = showInputDialog(getView(), "Introduzca el nombre del nuevo punto de elaboracion");
         Cocina c = new Cocina(getModel().generateStringCode("C-"));
         c.setImpresoraList(new ArrayList<>());
         c.setIpvList(new ArrayList<>());
@@ -56,7 +56,7 @@ public class PuntoElaboracionListController extends AbstractListController<Cocin
 
     @Override
     public void update(Cocina selected) {
-        String editCocina = showInputDialog(getView(), "Introduzca el nuevo nombre a la Cocina", selected.getNombreCocina());
+        String editCocina = showInputDialog(getView(), "Introduzca el nuevo nombre al punto de elaboracion", selected.getNombreCocina());
         getItems().stream().filter((x)
                 -> (x.getNombreCocina().toLowerCase().equals(editCocina.toLowerCase()))).forEachOrdered((_item) -> {
             throw new ValidatingException(getView());
@@ -70,7 +70,7 @@ public class PuntoElaboracionListController extends AbstractListController<Cocin
     @Override
     public void destroy(Cocina selected) {
         if (!selected.getProductoVentaList().isEmpty()) {
-            if (showConfirmDialog(getView(),"La cocina " + selected
+            if (showConfirmDialog(getView(),"El punto de elaboracion " + selected
                         + " contiene " + selected.getProductoVentaList().size() 
                     + " productos de venta enlazados \n" + "presione si para borrar los productos de venta, no para cancelar")) {
                 for (ProductoVenta p : selected.getProductoVentaList()) {

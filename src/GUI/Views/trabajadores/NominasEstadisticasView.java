@@ -21,8 +21,12 @@ import org.knowm.xchart.QuickChart;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.XChartTheme;
+import org.knowm.xchart.style.markers.Circle;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.trabajadores.NominasController;
 import restManager.exceptions.DevelopingOperationException;
@@ -78,11 +82,14 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
         jRadioButtonRaw = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableUsuariosActivos = new javax.swing.JTable();
+        jCheckBoxseleccionarTodos = new javax.swing.JCheckBox();
         jPanelData = new javax.swing.JPanel();
         jPanelControles = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
         jPanelGrafica = new javax.swing.JPanel();
         jPanelEstadisticaGeneral = new javax.swing.JPanel();
         jLabelAcumulado = new javax.swing.JLabel();
+        jLabelMedia = new javax.swing.JLabel();
         jLabelPropina = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -160,7 +167,7 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
 
         jPanelChoice.setBorder(javax.swing.BorderFactory.createTitledBorder("Visualizar como"));
         jPanelChoice.setOpaque(false);
-        jPanelChoice.setLayout(new java.awt.GridLayout());
+        jPanelChoice.setLayout(new java.awt.GridLayout(1, 0));
 
         jRadioButtonXY.setSelected(true);
         jRadioButtonXY.setText("Dias Trabajados");
@@ -186,12 +193,10 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
 
         jPanelIzq.add(jPanelDetalles, java.awt.BorderLayout.PAGE_END);
 
+        jTableUsuariosActivos.setAutoCreateRowSorter(true);
         jTableUsuariosActivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Usuario", "Dias", "Promedio", ""
@@ -215,27 +220,52 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
 
         jPanelIzq.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
+        jCheckBoxseleccionarTodos.setText("Seleccionar Todos");
+        jCheckBoxseleccionarTodos.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jCheckBoxseleccionarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxseleccionarTodosActionPerformed(evt);
+            }
+        });
+        jPanelIzq.add(jCheckBoxseleccionarTodos, java.awt.BorderLayout.PAGE_START);
+
         getContentPane().add(jPanelIzq, java.awt.BorderLayout.WEST);
 
         jPanelData.setLayout(new java.awt.BorderLayout());
 
         jPanelControles.setLayout(new java.awt.BorderLayout());
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButton3.setText("Imprimir Acumulado");
+        jButton3.setEnabled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanelControles.add(jButton3, java.awt.BorderLayout.EAST);
+
         jPanelData.add(jPanelControles, java.awt.BorderLayout.PAGE_END);
 
         jPanelGrafica.setLayout(new java.awt.BorderLayout());
         jPanelData.add(jPanelGrafica, java.awt.BorderLayout.CENTER);
 
-        jPanelEstadisticaGeneral.setLayout(new java.awt.BorderLayout());
+        jPanelEstadisticaGeneral.setLayout(new java.awt.GridLayout(1, 0, 20, 0));
 
         jLabelAcumulado.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabelAcumulado.setText("           --               ");
         jLabelAcumulado.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 0), 3), "Acumulado"));
-        jPanelEstadisticaGeneral.add(jLabelAcumulado, java.awt.BorderLayout.WEST);
+        jPanelEstadisticaGeneral.add(jLabelAcumulado);
+
+        jLabelMedia.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabelMedia.setText("           --               ");
+        jLabelMedia.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 0, 0), 3), "Media"));
+        jPanelEstadisticaGeneral.add(jLabelMedia);
 
         jLabelPropina.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabelPropina.setText("           --               ");
         jLabelPropina.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 153), 3), "Propina"));
-        jPanelEstadisticaGeneral.add(jLabelPropina, java.awt.BorderLayout.EAST);
+        jPanelEstadisticaGeneral.add(jLabelPropina);
 
         jPanelData.add(jPanelEstadisticaGeneral, java.awt.BorderLayout.PAGE_START);
 
@@ -283,6 +313,14 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         getController().pagar(model.getObjectAtSelectedRow());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jCheckBoxseleccionarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxseleccionarTodosActionPerformed
+        seleccionarTodos(jCheckBoxseleccionarTodos.isSelected());
+    }//GEN-LAST:event_jCheckBoxseleccionarTodosActionPerformed
 
     @Override
     public void fetchComponentData() {
@@ -394,12 +432,15 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JCheckBox jCheckBoxseleccionarTodos;
     private com.toedter.calendar.JDateChooser jDateChooserAl;
     private com.toedter.calendar.JDateChooser jDateChooserDel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelAcumulado;
+    private javax.swing.JLabel jLabelMedia;
     private javax.swing.JLabel jLabelPropina;
     private javax.swing.JLabel jLabelUltimoPago;
     private javax.swing.JPanel jPanel1;
@@ -424,25 +465,24 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
         if (jPanelGrafica.getComponentCount() > 0) {
             jPanelGrafica.removeAll();
         }
-
         XYChart chart = new XYChartBuilder().xAxisTitle("Dias").yAxisTitle("Monto").build();
         PieChart chartPie = new PieChartBuilder().theme(Styler.ChartTheme.XChart).title("Total Pago").build();
+
+        chart.getStyler().setDatePattern("dd'/'MM'/'yy");
+        chart.getStyler().setPlotGridLinesVisible(false);
+            
+        chartPie.getStyler().setAnnotationType(PieStyler.AnnotationType.Percentage);
 
         float acumulado = 0, propina = 0;
 
         for (NominasController.AsistenciaPersonalEstadisticas a : displayList) {
             String label = a.getP().getUsuario() + "(" + a.getCantidadDiasTrabajados() + " Dias) ( " + comun.setDosLugaresDecimales(a.getTotalPago()) + ")";
-            chart.addSeries(label, a.getDiasTrabajados(), a.getMontos()); // Show it
+            XYSeries serie =  chart.addSeries(label, a.getDiasTrabajados(), a.getMontos());
             chartPie.addSeries(label, a.getTotalPago());
             acumulado += a.getTotalPago();
             propina += a.getTotalPropina();
 
         }
-
-        chart.getStyler().setDatePattern("dd'/'MM'/'yy");
-        chart.getStyler().setPlotGridLinesVisible(false);
-
-        chartPie.getStyler().setAnnotationType(PieStyler.AnnotationType.Percentage);
 
         XChartPanel wrapper = new XChartPanel(chart),
                 wrapperPie = new XChartPanel(chartPie);
@@ -460,7 +500,17 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
         }
         jLabelAcumulado.setText(comun.setDosLugaresDecimales(acumulado));
         jLabelPropina.setText(comun.setDosLugaresDecimales(propina));
+        jLabelMedia.setText(comun.setDosLugaresDecimales(acumulado / displayList.size()));
         pack();
+    }
+
+    private void seleccionarTodos(boolean selected) {
+        if (model != null) {
+            for (NominasController.AsistenciaPersonalEstadisticas x : model.getItems()) {
+                x.setUse(selected);
+            }
+            model.fireTableDataChanged();
+        }
     }
 
     private enum Choice {

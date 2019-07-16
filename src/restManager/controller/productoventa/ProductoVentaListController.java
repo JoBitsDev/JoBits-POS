@@ -104,8 +104,8 @@ public class ProductoVentaListController extends AbstractListController<Producto
 
     public boolean canSetVisible(ProductoVenta get) {
         if (get.getCocinacodCocina() == null || get.getSeccionnombreSeccion() == null) {
-            showErrorDialog(getView(), "El Producto de venta no puede ponerse visible "
-                    + "\n si no se encuentra dentro de una seccion y una cocina");
+            showErrorDialog(getView(), "El producto de venta no puede ponerse visible "
+                    + "\n si no se encuentra dentro de una seccion y un punto de elaboracion");
             return false;
         }
         return true;
