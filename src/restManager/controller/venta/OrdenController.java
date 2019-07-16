@@ -1,6 +1,7 @@
 package restManager.controller.venta;
 
 import GUI.Views.View;
+import GUI.Views.util.CalcularCambioView;
 import GUI.Views.venta.OrdenDetailFragmentView;
 import java.awt.Container;
 
@@ -209,6 +210,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             }
             setShowDialogs(false);
             getView().setVisible(false);
+            CalcularCambioView cambio = new CalcularCambioView(null, true, getInstance());
         }
     }
 

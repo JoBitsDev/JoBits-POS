@@ -7,6 +7,7 @@ package GUI.Views.venta;
 
 import GUI.Views.AbstractFragmentView;
 import GUI.Views.util.AbstractCrossReferenePanel;
+import GUI.Views.util.CalcularCambioView;
 import java.awt.Container;
 import java.util.ArrayList;
 import javax.swing.JDialog;
