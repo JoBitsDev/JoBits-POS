@@ -18,6 +18,7 @@ import javax.print.event.PrintJobEvent;
 import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
+import restManager.controller.trabajadores.NominasController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.logs.RestManagerHandler;
 import restManager.persistencia.Almacen;
@@ -1435,6 +1436,58 @@ public class Impresion {
         float total = addPvOrden(t, resumenVentaPorArea);
 
         addTotalAndFinal(t, total);
+
+        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+    }
+
+    public void printComprobantePago(NominasController.AsistenciaPersonalEstadisticas i) {
+        List<AsistenciaPersonal> lista = i.getAsistencia();
+        Collections.sort(lista);
+
+        Ticket t = new Ticket();
+
+        addHeader(t);
+
+        t.addLineSeperator();
+        t.newLine();
+        t.alignCenter();
+        t.setText(PAGO_TRABAJADOR);
+        t.newLine();
+        t.alignRight();
+        t.setText(FECHA + R.DATE_FORMAT.format(R.TODAYS_DATE));
+        t.newLine();
+        t.setText(i.getP().getDatosPersonales().getNombre());
+        t.newLine();
+        t.addLineSeperator();
+        t.newLine();
+
+        float total = 0, propina = 0;
+        for (AsistenciaPersonal a : lista) {
+            if (a.getVenta().getVentaTotal() != null) {
+                t.alignLeft();
+                t.setText(R.DATE_FORMAT.format(a.getAsistenciaPersonalPK().getVentafecha()));
+                t.newLine();
+                t.alignRight();
+                t.setText(comun.setDosLugaresDecimales(a.getPago()));
+                t.newLine();
+                if (a.getPropina() != null) {
+                    if (a.getPropina() > 0) {
+                        t.setText("Propina: " + comun.setDosLugaresDecimales(a.getPropina()));
+                    }
+                }
+                propina += a.getPropina();
+                total += a.getPago();
+            }
+        }
+        t.addLineSeperator();
+        t.alignRight();
+        if (propina > 0) {
+            t.setText("Total Propina: " + comun.setDosLugaresDecimales(propina));
+        }
+        t.newLine();
+        t.setText("'Total a Pagar: " + comun.setDosLugaresDecimales(total));
+        t.newLine();
+        addFinal(t);
 
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }

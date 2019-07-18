@@ -87,6 +87,12 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
         }
     }
 
+    public void imprimirEstadisticas(List<AsistenciaPersonalEstadisticas> items) {
+        for (AsistenciaPersonalEstadisticas i : items) {
+            Impresion.getDefaultInstance().printComprobantePago(i);
+        }
+    }
+
     public class AsistenciaPersonalEstadisticas {
 
         private List<AsistenciaPersonal> asistencia;
