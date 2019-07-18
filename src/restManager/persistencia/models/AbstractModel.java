@@ -13,7 +13,9 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
 import restManager.controller.AbstractController.PersistAction;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ExceptionHandler;
+import restManager.persistencia.AsistenciaPersonal;
 import restManager.resources.R;
 
 /**
@@ -67,6 +69,10 @@ public abstract class AbstractModel<T> implements Model {
                 JOptionPane.showConfirmDialog(null, "Los datos no se archivaron en la base de datos", "Error", JOptionPane.OK_OPTION);
             }
         }
+    }
+
+    public void refresh(T a) {
+        getEntityManager().refresh(a);
     }
 
     public void create(T entity) throws EntityExistsException {
@@ -220,7 +226,7 @@ public abstract class AbstractModel<T> implements Model {
         } catch (Exception e) {
             ExceptionHandler.showExceptionToUser(e, "Error en base de datos \n " + e.getLocalizedMessage());
             if (getEntityManager().getTransaction().isActive()) {
-                getEntityManager().getTransaction().setRollbackOnly();
+                getEntityManager().getTransaction().rollback();
             }
 
         }

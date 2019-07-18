@@ -95,17 +95,4 @@ public class PersonalListController extends AbstractListController<Personal> {
         }
         super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
     }
-
-    public void pagar(Personal personal) {
-            if (showConfirmDialog(getView(), "Desea imprimir un comprobante de pago")) {
-            Impresion i = Impresion.getDefaultInstance();
-            i.printComprobantePago(personal);
-        }
-        if (showConfirmDialog(getView(), "Confirme el pago a " + personal.getDatosPersonales().getNombre() + personal.getDatosPersonales().getApellidos())) {
-            PersonalCreateEditController controller = new PersonalCreateEditController(personal);
-            controller.setView(getView());
-            controller.pagarTrabajador();
-        }
-    }
-
 }

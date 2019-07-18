@@ -26,6 +26,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
 
     AbstractCrossReferenePanel<AsistenciaPersonal, Personal> panel;
     Venta v;
+    private boolean  readOnly = false;
 
     public AsistenciaTrabajadoresView(Controller controller, Venta v) {
         super(controller);
@@ -34,9 +35,10 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
         initDefaults();
     }
 
-    public AsistenciaTrabajadoresView(Controller controller, Container parentComponent, Venta v) {
+    public AsistenciaTrabajadoresView(Controller controller, Container parentComponent, Venta v,boolean readOnly) {
         super(controller, parentComponent);
         this.v = v;
+        this.readOnly = readOnly;
         initComponents();
         initDefaults();
     }
@@ -135,6 +137,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
 
         };
         panel.getjPanelOpciones().add(jButtonImprimir);
+        panel.setReadOnlyMode(readOnly);
         jPanelDetail.add(panel);
     }
 

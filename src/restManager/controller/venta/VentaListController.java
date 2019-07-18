@@ -15,6 +15,7 @@ import restManager.controller.AbstractDialogController;
 import restManager.controller.login.LogInController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
+import restManager.persistencia.AsistenciaPersonal;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.VentaDAO;
 import restManager.util.LoadingWindow;
@@ -69,6 +70,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
         v.setVentaTotal(0.0);
         v.setOrdenList(new ArrayList<>());
         v.setGastoVentaList(new ArrayList<>());
+        v.setAsistenciaPersonalList(new ArrayList<>());
         v.setVentagastosEninsumos(0.0);
         v.setVentapropina((float)0.0);
         Date current;
@@ -95,6 +97,26 @@ public class VentaListController extends AbstractDialogController<Venta> {
                     initDateNotSet = false;
                 }
             }
+            for (AsistenciaPersonal a : ve.getAsistenciaPersonalList()) {
+                boolean founded = false;
+                for (AsistenciaPersonal b : v.getAsistenciaPersonalList()) {
+                    if (b.getPersonal().getUsuario().equals(a.getPersonal().getUsuario())) {
+                        founded = true;
+                        b.setPago(a.getPago() + b.getPago());
+                        if (b.getPropina() != null) {
+                        b.setPropina(a.getPropina() + b.getPropina());
+                        }
+                        if (b.getAMayores() != null) {
+                        b.setAMayores(a.getAMayores() + b.getAMayores());
+                        }
+                        break;
+                    }
+                }
+                if (!founded) {
+                    v.getAsistenciaPersonalList().add(a);
+                }
+            }
+            
             c.add(Calendar.DAY_OF_MONTH, 1);
         }
         if (initDateNotSet) {

@@ -94,7 +94,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelOptions = new javax.swing.JPanel();
         jideButton2 = new com.jidesoft.swing.JideButton();
         jPanel3 = new javax.swing.JPanel();
-        jideButton1 = new com.jidesoft.swing.JideButton();
+        jButtonRefrescar = new com.jidesoft.swing.JideButton();
         jPanel1 = new javax.swing.JPanel();
         jPanelTurnosTrabajo = new javax.swing.JPanel();
         jButtonCambiarTurno = new javax.swing.JButton();
@@ -201,13 +201,13 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
-        jideButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRefrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
+        jButtonRefrescar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jideButton1ActionPerformed(evt);
+                jButtonRefrescarActionPerformed(evt);
             }
         });
-        jPanel3.add(jideButton1);
+        jPanel3.add(jButtonRefrescar);
 
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -619,9 +619,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         getController().createNewOrden();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jideButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton1ActionPerformed
+    private void jButtonRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefrescarActionPerformed
         getController().fetchNewDataFromServer(jComboBoxSeleccionarVentaPorTurno.getSelectedIndex());
-    }//GEN-LAST:event_jideButton1ActionPerformed
+    }//GEN-LAST:event_jButtonRefrescarActionPerformed
 
     private void jButtonTerminarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarVentasActionPerformed
         getController().terminarVentas();        // TODO add your handling code here:
@@ -691,8 +691,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     }//GEN-LAST:event_jXTableOrdActivasMouseClicked
 
     private void jSpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinner1StateChanged
-       getController().setPropina((float) jSpinner1.getValue());
-       updateTablePagoTrabajadores();
+        getController().setPropina((float) jSpinner1.getValue());
+        updateTablePagoTrabajadores();
     }//GEN-LAST:event_jSpinner1StateChanged
 
     @Override
@@ -718,6 +718,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
                     + R.DATE_FORMAT.format(fechaFin));
             jTabbedPaneData.removeTabAt(1);
             jButtonTerminarVentas.setVisible(false);
+            jButtonRefrescar.setVisible(false);
 
         } else {
             jLabelFecha.setText(R.DATE_FORMAT.format(instance.getFecha()));
@@ -785,7 +786,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         updateTableResumenGastos();
         updateTablePagoTrabajadores();
         updateTableResumenAreaVenta();
-        jSpinner1.setValue(getController().getInstance().getVentapropina() != null ? getController().getInstance().getVentapropina() : (float)0);
+        jSpinner1.setValue(getController().getInstance().getVentapropina() != null ? getController().getInstance().getVentapropina() : (float) 0);
         jLabelTotalVentas.setText(getController().getTotalVendido());
         jLabelTotalVentasNeta.setText(getController().getTotalVendidoNeto());
         jLabelTotalGastosInsumo.setText(getController().getTotalGastadoInsumos());
@@ -815,6 +816,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirZ;
     private javax.swing.JButton jButtonImprimirZ1;
+    private com.jidesoft.swing.JideButton jButtonRefrescar;
     private javax.swing.JButton jButtonTerminarVentas;
     private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
     private javax.swing.JLabel jLabel1;
@@ -867,7 +869,6 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JTable jTableVentasPorCocina;
     private org.jdesktop.swingx.JXPanel jXPanelOrdenControl;
     private org.jdesktop.swingx.JXTable jXTableOrdActivas;
-    private com.jidesoft.swing.JideButton jideButton1;
     private com.jidesoft.swing.JideButton jideButton2;
     private com.jidesoft.swing.JideLabel jideLabel1;
     // End of variables declaration//GEN-END:variables
@@ -969,6 +970,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private void updateTablePagoTrabajadores() {
         personalController.setParent(jPanelPagoTrabajadores);
         personalController.setDiaVenta(getController().getInstance());
+        if (fechaFin != null) {
+            personalController.setReadOnlyData(true);
+        }
         personalController.constructView(jPanelPagoTrabajadores);
     }
 }

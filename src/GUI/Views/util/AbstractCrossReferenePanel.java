@@ -24,6 +24,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
 
     private final TableWithComboBoxAutoComplete<K, T> handler;
     private ListDataIntelliHints<K> intellihints;
+    private boolean readOnlyMode = false;
 
     /**
      * Creates new form AbstractCrossReferenePanel
@@ -92,6 +93,15 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         return jPanelOpciones;
     }
 
+    public void setReadOnlyMode(boolean readOnlyMode) {
+        this.readOnlyMode = readOnlyMode;
+        jTextFieldAutoComplete.setEnabled(!readOnlyMode);
+        jButtonAgregarProd.setEnabled(!readOnlyMode);
+        jButtonDeleteProd.setEnabled(!readOnlyMode);
+    }
+    
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,7 +111,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jPanelInsert = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldAutoComplete = new javax.swing.JTextField();
         jButtonAgregarProd = new javax.swing.JButton();
@@ -114,7 +124,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jLabel1.setText(bundle.getString("label_producto_venta")); // NOI18N
-        jPanel2.add(jLabel1);
+        jPanelInsert.add(jLabel1);
 
         jTextFieldAutoComplete.setPreferredSize(new java.awt.Dimension(250, 26));
         jTextFieldAutoComplete.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -127,14 +137,14 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
                 jTextFieldAutoCompleteKeyPressed(evt);
             }
         });
-        jPanel2.add(jTextFieldAutoComplete);
+        jPanelInsert.add(jTextFieldAutoComplete);
 
         jButtonAgregarProd.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jButtonAgregarProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/aceptar16.png"))); // NOI18N
         jButtonAgregarProd.setText(bundle.getString("label_agregar")); // NOI18N
-        jPanel2.add(jButtonAgregarProd);
+        jPanelInsert.add(jButtonAgregarProd);
 
-        add(jPanel2, java.awt.BorderLayout.PAGE_START);
+        add(jPanelInsert, java.awt.BorderLayout.PAGE_START);
 
         jTableCrossReference.setAutoCreateRowSorter(true);
         jTableCrossReference.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
@@ -175,7 +185,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
     private javax.swing.JButton jButtonAgregarProd;
     private javax.swing.JButton jButtonDeleteProd;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelInsert;
     private javax.swing.JPanel jPanelOpciones;
     private javax.swing.JScrollPane jScrollPaneCrossReference;
     private javax.swing.JTable jTableCrossReference;

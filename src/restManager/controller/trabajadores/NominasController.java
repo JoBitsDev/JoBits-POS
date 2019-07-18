@@ -63,6 +63,7 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
         for (AsistenciaPersonal a : i) {
             if (a.getVenta().getFecha().compareTo(del) >= 0 && a.getVenta().getFecha().compareTo(al) <= 0) {
                 int index = ret.indexOf(a);
+                getModel().refresh(a);
                 if (index == -1) {
                     ret.add(new AsistenciaPersonalEstadisticas(a, a.getPersonal()));
                 } else {
@@ -76,11 +77,11 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
 
     public void pagar(AsistenciaPersonalEstadisticas objectAtSelectedRow) {
         Personal personal = objectAtSelectedRow.getP();
-        if (showConfirmDialog(getView(), "Desea imprimir un comprobante de pago")) {
+        if (showConfirmDialog(getView(), "Desea imprimir un comprobante de pago a" + personal)) {
             Impresion i = Impresion.getDefaultInstance();
             i.printComprobantePago(personal);
         }
-        if (showConfirmDialog(getView(), "Confirme el pago a " + personal.getDatosPersonales().getNombre() + personal.getDatosPersonales().getApellidos())) {
+        if (showConfirmDialog(getView(), "Confirme el pago a " + personal.getDatosPersonales().getNombre() + " " + personal.getDatosPersonales().getApellidos())) {
             PersonalCreateEditController controller = new PersonalCreateEditController(personal);
             controller.setView(getView());
             controller.pagarTrabajador();
@@ -89,7 +90,9 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
 
     public void imprimirEstadisticas(List<AsistenciaPersonalEstadisticas> items) {
         for (AsistenciaPersonalEstadisticas i : items) {
-            Impresion.getDefaultInstance().printComprobantePago(i);
+            if (i.isUse()) {
+                Impresion.getDefaultInstance().printComprobantePago(i);
+            }
         }
     }
 

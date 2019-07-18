@@ -34,7 +34,8 @@ import restManager.resources.R;
  */
 public class AsistenciaPersonalController extends AbstractFragmentListController<AsistenciaPersonal> {
 
-    Venta diaVenta;
+    private Venta diaVenta;
+    private boolean readOnlyData = false;
 
     public AsistenciaPersonalController() {
         super(AsistenciaPersonalDAO.getInstance());
@@ -50,7 +51,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     @Override
     public void constructView(Container parent) {
         if (getView() == null) {
-            setView(new AsistenciaTrabajadoresView(this, parent, diaVenta));
+            setView(new AsistenciaTrabajadoresView(this, parent, diaVenta,readOnlyData));
         }
         getView().updateView();
         getView().setVisible(true);
@@ -74,7 +75,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
         VentaDetailController controller = new VentaDetailController(ret.getVenta());
         ret.setPago(controller.getPagoTrabajador(ret.getPersonal()));
         ret.setPropina(controller.getPropinaTrabajador(ret.getPersonal()));
-        
+
     }
 
     public List<AsistenciaPersonal> getPersonalTrabajando(Venta v) {
@@ -94,7 +95,16 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
         this.diaVenta = instance;
     }
 
+    public boolean isReadOnlyData() {
+        return readOnlyData;
+    }
+
+    public void setReadOnlyData(boolean readOnlyData) {
+        this.readOnlyData = readOnlyData;
+    }
+    
     public List<AsistenciaPersonal> updateSalaries() {
+        if (!readOnlyData) {
         ArrayList<AsistenciaPersonal> ret = new ArrayList<>(getPersonalTrabajando(diaVenta));
         VentaDetailController controller = new VentaDetailController(diaVenta);
         for (AsistenciaPersonal a : ret) {
@@ -103,6 +113,9 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
             update(a, true);
         }
         return ret;
+        }
+        return diaVenta.getAsistenciaPersonalList();
+        
     }
 
     public void imprimirAsistencia() {

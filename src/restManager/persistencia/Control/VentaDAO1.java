@@ -814,10 +814,8 @@ public class VentaDAO1 {
     }
 
     public static float getValorTotalPagoTrabajadores(Venta instance) {
-        ArrayList<AsistenciaPersonal> personalTrabajando
-                = new ArrayList<>(AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(instance.getFecha()));
         float pagoTotal = 0;
-        for (AsistenciaPersonal a : personalTrabajando) {
+        for (AsistenciaPersonal a : instance.getAsistenciaPersonalList()) {
             pagoTotal += a.getPago();
         }
         return comun.setDosLugaresDecimalesFloat(pagoTotal);

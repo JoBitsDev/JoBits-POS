@@ -30,16 +30,6 @@ public class PersonalListView extends AbstractListView<Personal> {
 
     public PersonalListView(AbstractListController<Personal> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
-        JButton jideButton1 = new JButton();
-        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/banknote.png"))); // NOI18N
-        jideButton1.setToolTipText("Pagar");
-        jideButton1.setFont(Fonts.BODY);
-        jideButton1.setText("Pagar");
-        jideButton1.setMinimumSize(new java.awt.Dimension(100, 40));
-        jideButton1.addActionListener((ActionEvent e) -> {
-            getController().pagar(model.getObjectAtSelectedRow());
-        });
-        getjXPanelControles().add(jideButton1);
     }
 
     @Override
@@ -47,7 +37,7 @@ public class PersonalListView extends AbstractListView<Personal> {
         return new MyJTableModel<Personal>(items) {
             @Override
             public int getColumnCount() {
-                return 4;
+                return 3;
             }
 
             @Override
@@ -59,9 +49,7 @@ public class PersonalListView extends AbstractListView<Personal> {
                         return items.get(rowIndex).getDatosPersonales().getNombre();
                     case 2:
                         return items.get(rowIndex).getPuestoTrabajonombrePuesto();
-                    case 3:
-                        return comun.setDosLugaresDecimales(items.get(rowIndex).getPagoPendiente() != null ? items.get(rowIndex).getPagoPendiente() : 0);
-                    default:
+                     default:
                         return null;
                 }
             }
@@ -75,8 +63,6 @@ public class PersonalListView extends AbstractListView<Personal> {
                         return "Nombre";
                     case 2:
                         return "Puesto de Trabajo";
-                    case 3:
-                        return "Por Pagar";
                     default:
                         return null;
                 }
