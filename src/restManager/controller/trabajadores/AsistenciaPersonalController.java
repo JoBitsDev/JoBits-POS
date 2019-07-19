@@ -119,7 +119,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     }
 
     public void imprimirAsistencia() {
-        Impresion.getDefaultInstance().printPersonalTrabajando(getItems());
+        Impresion.getDefaultInstance().printPersonalTrabajando(getPersonalTrabajando(diaVenta));
     }
 
 }

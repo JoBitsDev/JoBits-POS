@@ -876,6 +876,7 @@ public class Impresion {
         t.resetAll();
         t.initialize();
         t.drawerKick();
+        addFinal(t);
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }

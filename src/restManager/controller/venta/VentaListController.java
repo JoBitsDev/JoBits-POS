@@ -72,7 +72,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
         v.setGastoVentaList(new ArrayList<>());
         v.setAsistenciaPersonalList(new ArrayList<>());
         v.setVentagastosEninsumos(0.0);
-        v.setVentapropina((float)0.0);
+        v.setVentapropina((float) 0.0);
         Date current;
 
         while ((current = new Date(c.get(Calendar.YEAR),
@@ -96,27 +96,27 @@ public class VentaListController extends AbstractDialogController<Venta> {
                     v.setFecha(current);
                     initDateNotSet = false;
                 }
-            }
-            for (AsistenciaPersonal a : ve.getAsistenciaPersonalList()) {
-                boolean founded = false;
-                for (AsistenciaPersonal b : v.getAsistenciaPersonalList()) {
-                    if (b.getPersonal().getUsuario().equals(a.getPersonal().getUsuario())) {
-                        founded = true;
-                        b.setPago(a.getPago() + b.getPago());
-                        if (b.getPropina() != null) {
-                        b.setPropina(a.getPropina() + b.getPropina());
+                for (AsistenciaPersonal a : ve.getAsistenciaPersonalList()) {
+                    boolean founded = false;
+                    for (AsistenciaPersonal b : v.getAsistenciaPersonalList()) {
+                        if (b.getPersonal().getUsuario().equals(a.getPersonal().getUsuario())) {
+                            founded = true;
+                            b.setPago(a.getPago() + b.getPago());
+                            if (b.getPropina() != null) {
+                                b.setPropina(a.getPropina() + b.getPropina());
+                            }
+                            if (b.getAMayores() != null) {
+                                b.setAMayores(a.getAMayores() + b.getAMayores());
+                            }
+                            break;
                         }
-                        if (b.getAMayores() != null) {
-                        b.setAMayores(a.getAMayores() + b.getAMayores());
-                        }
-                        break;
+                    }
+                    if (!founded) {
+                        v.getAsistenciaPersonalList().add(a);
                     }
                 }
-                if (!founded) {
-                    v.getAsistenciaPersonalList().add(a);
-                }
             }
-            
+
             c.add(Calendar.DAY_OF_MONTH, 1);
         }
         if (initDateNotSet) {
