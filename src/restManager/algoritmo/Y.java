@@ -20,7 +20,7 @@ import restManager.util.LoadingWindow;
  * @author Jorge
  *
  */
-public class VentaB extends SwingWorker<List<Orden>, Integer> {
+public class Y extends SwingWorker<List<Orden>, Integer> {
 
     private final String SECCION_COCTELERIA = "Cocteleria";
 
@@ -38,7 +38,7 @@ public class VentaB extends SwingWorker<List<Orden>, Integer> {
 
     private final byte porciento_a_ajustar = 20;
 
-    public VentaB(Venta ventaReal) {
+    public Y(Venta ventaReal) {
         this.ventaReal = ventaReal;
     }
 

@@ -311,14 +311,14 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 }
             }
             if (found) {
-                founded.setCantidad(founded.getCantidad() + 1);
+                founded.setCantidad(founded.getCantidad() + Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de "+ founded.getProductoVenta())));
                 ProductovOrdenDAO.getInstance().edit(founded);
 
             } else {
                 founded = new ProductovOrden(selected.getPCod(), getInstance().getCodOrden());
                 founded.setOrden(getInstance());
                 founded.setProductoVenta(selected);
-                founded.setCantidad(Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad")));
+                founded.setCantidad(Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta())));
                 founded.setEnviadosacocina(0);
                 founded.setNumeroComensal(0);
                 ProductovOrdenDAO.getInstance().create(founded);

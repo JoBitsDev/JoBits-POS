@@ -64,9 +64,9 @@ public class R {
     
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
-    public static String RELEASE_VERSION = "Version 2.6.4.8";
+    public static String RELEASE_VERSION = "Version 2.6.4.9";
 
-    public static int BUILD_VERSION = 19;
+    public static int BUILD_VERSION = 20;
 
     public static void setLookAndFeels() {
         try {

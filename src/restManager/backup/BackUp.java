@@ -14,10 +14,12 @@ import javax.swing.SwingWorker;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ExceptionHandler;
 import restManager.persistencia.Area;
+import restManager.persistencia.AsistenciaPersonal;
 import restManager.persistencia.Carta;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Configuracion;
 import restManager.persistencia.DatosPersonales;
+import restManager.persistencia.Gasto;
 import restManager.persistencia.GastoVenta;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.Mesa;
@@ -28,11 +30,14 @@ import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.Seccion;
+import restManager.persistencia.TipoGasto;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.AreaDAO;
+import restManager.persistencia.models.AsistenciaPersonalDAO;
 import restManager.persistencia.models.CartaDAO;
 import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.ConfiguracionDAO;
+import restManager.persistencia.models.GastoVentaDAO;
 import restManager.persistencia.models.InsumoDAO;
 import restManager.persistencia.models.MesaDAO;
 import restManager.persistencia.models.PersonalDAO;
@@ -152,7 +157,9 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private boolean BackUpCarta(List<Carta> findCartaEntities) {
         float sumaXCantidad = topeProceso / findCartaEntities.size();
         for (Carta x : findCartaEntities) {
-            if (EntityExist(x, x.getCodCarta())) {
+            Carta c = em.find(Carta.class, x.getCodCarta());
+            if (c != null) {
+//TODO: mezclar secciones;
                 em.merge(x);
             } else {
                 em.persist(x);
@@ -169,9 +176,16 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private boolean backUpArea(List<Area> areas) {
         float sumaXCantidad = topeProceso / areas.size();
         for (Area a : areas) {
-            if (EntityExist(a, a.getCodArea())) {
+            Area area = em.find(Area.class, a.getCodArea());
+            if (area != null) {
+                a.setCartaList(area.getCartaList());
+                a.setMesaList(area.getMesaList());
+                a.setPuestoTrabajoList(area.getPuestoTrabajoList());
                 em.merge(a);
             } else {
+                a.setCartaList(null);
+                a.setMesaList(null);
+                a.setPuestoTrabajoList(null);
                 em.persist(a);
             }
 
@@ -197,10 +211,18 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private boolean backUPCocina(List<Cocina> cocina) {
         float sumaXCantidad = topeProceso / cocina.size();
         for (Cocina c : cocina) {
-            c.setIpvList(null);
-            if (EntityExist(c, c.getCodCocina())) {
+            Cocina coc = em.find(Cocina.class, c.getCodCocina());
+            if (coc != null) {
+                c.setImpresoraList(coc.getImpresoraList());
+                c.setNotificacionEnvioCocinaList(coc.getNotificacionEnvioCocinaList());
+                c.setProductoVentaList(coc.getProductoVentaList());
+                c.setIpvList(coc.getIpvList());
                 em.merge(c);
             } else {
+                c.setImpresoraList(null);
+                c.setNotificacionEnvioCocinaList(null);
+                c.setProductoVentaList(null);
+                c.setIpvList(null);
                 em.persist(c);
             }
             incrementarProgreso(sumaXCantidad);
@@ -210,15 +232,14 @@ public class BackUp extends SwingWorker<Boolean, Float> {
 
     private boolean BackUpProd(List<ProductoVenta> prods) {
         float sumaXCantidad = topeProceso / prods.size();
-        System.out.println("inicio productos venta");
         for (ProductoVenta pv : prods) {
-            pv.setProductovOrdenList(null);
-            System.out.println(pv);
-            BackUpProdInsumo(pv.getProductoInsumoList());
-
-            if (EntityExist(pv, pv.getPCod())) {
+            ProductoVenta p = em.find(ProductoVenta.class, pv.getPCod());
+//            BackUpProdInsumo(pv.getProductoInsumoList());
+            if (p != null) {
+                pv.setProductovOrdenList(p.getProductovOrdenList());
                 em.merge(pv);
             } else {
+                pv.setProductovOrdenList(null);
                 em.persist(pv);
 
             }
@@ -270,14 +291,16 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private boolean BackUpVentas(List<Venta> ventas) {
         float sumaXCantidad = topeProceso / ventas.size();
         for (Venta v : ventas) {
-            BackUpOrdenes(v.getOrdenList());
-            BackUpGastos(v.getGastoVentaList());
-            if (EntityExist(v, v.getFecha())) {
-                em.merge(v);
-            } else {
-                em.persist(v);
+            if (v.getVentaTotal() != null) {
+                if (EntityExist(v, v.getFecha())) {
+                } else {
+                    em.persist(v);
+                    BackUpOrdenes(v.getOrdenList());
+                    BackUpGastos(v.getGastoVentaList());
+                    backUpAsistenciaPersonal(v.getAsistenciaPersonalList());
+                }
+                incrementarProgreso(sumaXCantidad);
             }
-            incrementarProgreso(sumaXCantidad);
         }
 
         return true;
@@ -287,16 +310,21 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private boolean BackUpInsumos(List<Insumo> ins) {
         float sumaXCantidad = topeProceso / ins.size();
         for (Insumo in : ins) {
-            System.out.println(in.toString());
-            in.setProductoInsumoList(null);
-            in.setTransaccionList(null);
-            in.setInsumoAlmacenList(null);
-            if (EntityExist(in, in.getCodInsumo())) {
-                System.out.println("Actualizando " + in);
+            Insumo i = em.find(Insumo.class, in.getCodInsumo());
+            if (i != null) {
+                in.setInsumoAlmacenList(i.getInsumoAlmacenList());
+                in.setInsumoElaboradoList(i.getInsumoElaboradoList());
+                in.setInsumoElaboradoList1(i.getInsumoElaboradoList1());
+                in.setIpvList(i.getIpvList());
+                in.setTransaccionList(i.getTransaccionList());
                 em.merge(in);
 
             } else {
-                System.out.println("Creando " + in);
+                in.setInsumoAlmacenList(null);
+                in.setInsumoElaboradoList(null);
+                in.setInsumoElaboradoList1(null);
+                in.setIpvList(null);
+                in.setTransaccionList(null);
                 em.persist(in);
             }
             incrementarProgreso(sumaXCantidad);
@@ -317,13 +345,17 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         return true;
     }
 
-    private boolean BackUpPersonal(List<Personal> p) {
-        float sumaXCantidad = topeProceso / p.size();
-        for (Personal x : p) {
-            if (EntityExist(x, x.getUsuario())) {
+    private boolean BackUpPersonal(List<Personal> per) {
+        float sumaXCantidad = topeProceso / per.size();
+        for (Personal x : per) {
+            Personal p = em.find(x.getClass(), x.getUsuario());
+            if (p != null) {
+                x.setAsistenciaPersonalList(p.getAsistenciaPersonalList());
+                x.setOrdenList(p.getOrdenList());
                 em.merge(x);
             } else {
                 x.setOrdenList(null);
+                x.setAsistenciaPersonalList(null);
                 em.persist(x);
             }
             incrementarProgreso(sumaXCantidad);
@@ -334,9 +366,12 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private boolean BackUpPuestoDeTrabajo(List<PuestoTrabajo> puestos) {
         float sumaXCantidad = topeProceso / puestos.size();
         for (PuestoTrabajo puesto : puestos) {
-            if (EntityExist(puesto, puesto.getNombrePuesto())) {
+            PuestoTrabajo p = em.find(puesto.getClass(), puesto.getNombrePuesto());
+            if (p != null) {
+                puesto.setPersonalList(p.getPersonalList());
                 em.merge(puesto);
             } else {
+                puesto.setPersonalList(null);
                 em.persist(puesto);
             }
             incrementarProgreso(sumaXCantidad);
@@ -382,7 +417,9 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     //TODO: Mal hecho
     private boolean BorradoRemotoVentas(List<Venta> ventas) {
         for (Venta x : ventas) {
-            VentaDAO.getInstance().remove(x);
+            if (x.getVentaTotal() != null) {
+                VentaDAO.getInstance().remove(x);
+            }
         }
         return true;
     }
@@ -404,38 +441,17 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         //backup area
         backUpArea(AreaDAO.getInstance().findAll());
 
-//        commitBackupTransaction();
-//        System.out.println("areas");
-//        startBackupTransaction();
-//
-//        //backup carta
-//        BackUpCarta(CartaDAO.getInstance().findAll());
-//
-//        commitBackupTransaction();
-//        System.out.println("carta");
-//        startBackupTransaction();
-//
-//        // backup cocinas
-//        backUPCocina(CocinaDAO.getInstance().findAll());
-//
-//        commitBackupTransaction();
-//        System.out.println("cocina");
-//        startBackupTransaction();
-        
+        //backup carta
+        BackUpCarta(CartaDAO.getInstance().findAll());
+
+        // backup cocinas
+        backUPCocina(CocinaDAO.getInstance().findAll());
+
         // backup platos
         BackUpProd(ProductoVentaDAO.getInstance().findAll());
 
-        commitBackupTransaction();
-        System.out.println("productos");
-        startBackupTransaction();
-
         // backup ingredientes
         BackUpInsumos(InsumoDAO.getInstance().findAll());
-
-        commitBackupTransaction();
-        System.out.println("insumo");
-        startBackupTransaction();
-
 
         commitBackupTransaction();
 
@@ -506,18 +522,26 @@ public class BackUp extends SwingWorker<Boolean, Float> {
 
     private boolean BackUpGastos(List<GastoVenta> gastoVentaList) {
         for (GastoVenta o : gastoVentaList) {
-            if (EntityExist(o.getGasto().getTipoGastoidGasto(), o.getGasto().getTipoGastoidGasto().getIdGasto())) {
+            TipoGasto tipo = em.find(o.getGasto().getTipoGastoidGasto().getClass(), o.getGasto().getTipoGastoidGasto().getIdGasto());
+            if (tipo != null) {
+                o.getGasto().getTipoGastoidGasto().setGastoList(tipo.getGastoList());
                 em.merge(o.getGasto().getTipoGastoidGasto());
             } else {
+                o.getGasto().getTipoGastoidGasto().setGastoList(null);
                 em.persist(o.getGasto().getTipoGastoidGasto());
             }
-            if (EntityExist(o.getGasto(), o.getGasto().getCodGasto())) {
+
+            Gasto g = em.find(Gasto.class, o.getGasto().getCodGasto());
+            if (g != null) {
+                o.getGasto().setGastoVentaList(g.getGastoVentaList());
                 em.merge(o.getGasto());
             } else {
+                o.getGasto().setGastoVentaList(null);
                 em.persist(o.getGasto());
             }
 
-            if (EntityExist(o, o.getGastoVentaPK())) {
+            GastoVenta gv = em.find(GastoVenta.class, o.getGastoVentaPK());
+            if (gv != null) {
                 em.merge(o);
             } else {
                 em.persist(o);
@@ -527,9 +551,15 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         return true;
     }
 
-    //
-    // Clase Interna
-    //
+    private void backUpAsistenciaPersonal(List<AsistenciaPersonal> asistenciaPersonalList) {
+        for (AsistenciaPersonal a : asistenciaPersonalList) {
+            em.persist(a);
+        }
+    }
+
+//
+// Clase Interna
+//
     public enum TipoBackUp {
         PERSONAL,
         PRODUCTOS,

@@ -77,13 +77,8 @@ public class PuestoTrabajo implements Serializable {
     private Integer aPartirDe;
     @Column(name = "id_puesto")
     private String idPuesto;
-    @JoinTable(name = "puesto_trabajo_personal", joinColumns = {
-        @JoinColumn(name = "puesto_trabajonombre_puesto", referencedColumnName = "nombre_puesto")}, inverseJoinColumns = {
-        @JoinColumn(name = "personalusuario", referencedColumnName = "usuario")})
-    @ManyToMany
-    private List<Personal> personalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puestoTrabajonombrePuesto")
-    private List<Personal> personalList1;
+    private List<Personal> personalList;
 
     public PuestoTrabajo() {
     }
@@ -178,14 +173,6 @@ public class PuestoTrabajo implements Serializable {
 
     public void setPersonalList(List<Personal> personalList) {
         this.personalList = personalList;
-    }
-
-    public List<Personal> getPersonalList1() {
-        return personalList1;
-    }
-
-    public void setPersonalList1(List<Personal> personalList1) {
-        this.personalList1 = personalList1;
     }
 
     @Override
