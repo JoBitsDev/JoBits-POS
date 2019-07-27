@@ -22,7 +22,7 @@ import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Venta;
 import restManager.util.RestManagerAbstractTableCellModel;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -553,11 +553,11 @@ public class VentaCalendarView extends AbstractView {
         }
         double promedio = suma / cantidad;
 
-        jLabelTotalVendido.setText(comun.setDosLugaresDecimales((float) suma));
-        jLabelPromedioVendido.setText(comun.setDosLugaresDecimales((float) promedio));
-        jLabelInsumo.setText(comun.setDosLugaresDecimales((float) gInsumos));
-        jLabelTrabajadores.setText(comun.setDosLugaresDecimales((float)(gTrabajadores)));
-        jLabelOtros.setText(comun.setDosLugaresDecimales((float) gGastos));
+        jLabelTotalVendido.setText(utils.setDosLugaresDecimales((float) suma));
+        jLabelPromedioVendido.setText(utils.setDosLugaresDecimales((float) promedio));
+        jLabelInsumo.setText(utils.setDosLugaresDecimales((float) gInsumos));
+        jLabelTrabajadores.setText(utils.setDosLugaresDecimales((float)(gTrabajadores)));
+        jLabelOtros.setText(utils.setDosLugaresDecimales((float) gGastos));
         int hora_pico_promedio = VentaDAO1.getModalPickHour(ventas);
         jLabelHoraPico.setText(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
     }

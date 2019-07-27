@@ -28,7 +28,7 @@ import restManager.printservice.ComponentPrinter;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -302,9 +302,9 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
             jSpinnerPagoVenta.setValue(instance.getPagoPorVenta());
         }
         if (instance.getGasto() == null) {
-            jXLabelGasto.setText(comun.setDosLugaresDecimales(0));
+            jXLabelGasto.setText(utils.setDosLugaresDecimales(0));
         } else {
-            jXLabelGasto.setText(comun.setDosLugaresDecimales(instance.getGasto()));
+            jXLabelGasto.setText(utils.setDosLugaresDecimales(instance.getGasto()));
         }
         jComboBoxCOCINA.setSelectedItem(instance.getCocinacodCocina());
         jComboBoxSECCION.setSelectedItem(instance.getSeccionnombreSeccion());
@@ -379,7 +379,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
                                 items.get(rowIndex).setCantidad((float) aValue);
                                 items.get(rowIndex).setCosto(items.get(rowIndex).getInsumo().getCostoPorUnidad() * (float) aValue);
                                 getController().updateCosto();
-                                jXLabelGasto.setText(comun.setDosLugaresDecimales(getInstance().getGasto()));
+                                jXLabelGasto.setText(utils.setDosLugaresDecimales(getInstance().getGasto()));
                                 fireTableRowsUpdated(rowIndex, rowIndex);
                                 break;
                         }
@@ -401,7 +401,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
                 }
                 ret.setCantidad(i);
-                ret.setCosto(comun.setDosLugaresDecimalesFloat(i * selected.getCostoPorUnidad()));
+                ret.setCosto(utils.setDosLugaresDecimalesFloat(i * selected.getCostoPorUnidad()));
                 return ret;
             }
         };

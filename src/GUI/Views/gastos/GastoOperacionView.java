@@ -18,7 +18,7 @@ import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.resources.R.TipoGasto;
 import restManager.util.RestManagerAbstractTableModel;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -321,8 +321,7 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
             }
         });
 
-        jLabelGast.setText(
-                comun.setDosLugaresDecimales(comun.calcularSumaTabla(jTableInfo, 2)));
+        jLabelGast.setText(utils.setDosLugaresDecimales(utils.calcularSumaTabla(jTableInfo, 2)));
         jComboBoxCategoria.setModel(new DefaultComboBoxModel<>(R.TipoGasto.values()));
         jLabelMonto.setText(R.COIN_SUFFIX);
 

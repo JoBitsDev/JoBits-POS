@@ -30,7 +30,7 @@ import restManager.persistencia.models.InsumoAlmacenDAO;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -86,9 +86,9 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
                                 return this.items.get(rowIndex).getCantidad();
                             case 4:
                                 return this.items.get(rowIndex).getCantidad() != 0
-                                        ? comun.setDosLugaresDecimales(this.items.get(rowIndex).getValorMonetario() / this.items.get(rowIndex).getCantidad()) : 0;
+                                        ? utils.setDosLugaresDecimales(this.items.get(rowIndex).getValorMonetario() / this.items.get(rowIndex).getCantidad()) : 0;
                             case 5:
-                                return comun.setDosLugaresDecimales(this.items.get(rowIndex).getValorMonetario());
+                                return utils.setDosLugaresDecimales(this.items.get(rowIndex).getValorMonetario());
                             default:
                                 return null;
 
@@ -138,7 +138,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
  
         }
        
-        jXLabelValorTotal.setText(comun.setDosLugaresDecimales(getController().getInstance().getValorMonetario()));
+        jXLabelValorTotal.setText(utils.setDosLugaresDecimales(getController().getInstance().getValorMonetario()));
 
     }
 

@@ -31,7 +31,7 @@ import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
 import restManager.util.RestManagerListModel;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -392,7 +392,7 @@ public class IpvGestionView extends AbstractView {
                         case 6:
                             return items.get(rowIndex).getFinal1();
                         case 7:
-                            return comun.setDosLugaresDecimales(
+                            return utils.setDosLugaresDecimales(
                                     items.get(rowIndex).getFinal1() * items.get(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
                         default:
                             return null;

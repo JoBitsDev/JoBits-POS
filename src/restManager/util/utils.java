@@ -11,7 +11,7 @@ import restManager.resources.R;
  *
  * @author Jorge
  */
-public class comun {
+public class utils {
 
     public static void limpiarTabla(JTable table) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();

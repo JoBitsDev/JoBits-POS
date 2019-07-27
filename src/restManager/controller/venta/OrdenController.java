@@ -40,7 +40,7 @@ import restManager.persistencia.models.ProductovOrdenDAO;
 import restManager.printservice.Impresion;
 
 import restManager.resources.R;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  * FirstDream
@@ -263,7 +263,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
 
         }
-        instance.setOrdenvalorMonetario(comun.redondeoPorExcesoFloat(total * (1 + instance.getPorciento() / 100)));
+        instance.setOrdenvalorMonetario(utils.redondeoPorExcesoFloat(total * (1 + instance.getPorciento() / 100)));
         update(instance, true);
         return instance.getOrdenvalorMonetario();
     }

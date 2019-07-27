@@ -47,7 +47,7 @@ import restManager.persistencia.models.SeccionDAO;
 import restManager.persistencia.models.VentaDAO;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  * FirstDream
@@ -133,7 +133,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     protected void process(List<Float> chunks) {
         for (Float chunk : chunks) {
             barraDeProgreso.setValue(chunk.intValue());
-            barraDeProgreso.setString(comun.setDosLugaresDecimalesFloat(chunk) + "%");
+            barraDeProgreso.setString(utils.setDosLugaresDecimalesFloat(chunk) + "%");
         }
     }
 

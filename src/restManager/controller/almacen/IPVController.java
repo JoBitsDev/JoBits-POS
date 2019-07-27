@@ -32,7 +32,7 @@ import restManager.persistencia.models.InsumoDAO;
 import restManager.persistencia.models.IpvDAO;
 import restManager.persistencia.models.IpvRegistroDAO;
 import restManager.resources.R;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  * FirstDream
@@ -122,10 +122,10 @@ public class IPVController extends AbstractDialogController<Ipv> {
 
     public void updateInstance(IpvRegistro instance) {
         instance.setDisponible(instance.getEntrada() + instance.getInicio());
-        instance.setFinal1(comun.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumo()));
+        instance.setFinal1(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumo()));
         if (instance.getConsumoReal() != null) {
             if (instance.getConsumoReal() > 0) {
-                instance.setFinal1(comun.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumoReal()));
+                instance.setFinal1(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumoReal()));
             }
         }
         IpvRegistroDAO.getInstance().startTransaction();
@@ -190,7 +190,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     public ArrayList<IpvRegistro> calculate_IPV_to_Currenr(ArrayList<IpvRegistro> listaRegistros) {
         VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getIpvRegistroPK().getFecha());
         for (IpvRegistro x : listaRegistros) {
-            x.setConsumo(comun.setDosLugaresDecimalesFloat(controller.getGastoTotalDeInsumo(x)));
+            x.setConsumo(utils.setDosLugaresDecimalesFloat(controller.getGastoTotalDeInsumo(x)));
             updateInstance(x);
         }
         return listaRegistros;

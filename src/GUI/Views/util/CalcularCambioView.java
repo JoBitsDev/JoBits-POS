@@ -18,7 +18,7 @@ import restManager.persistencia.Orden;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.util.ComponentMover;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -44,7 +44,7 @@ public class CalcularCambioView extends javax.swing.JDialog {
         initComponents();
 
         jLabel1.setText(o.toString());
-        jLabelValorMontoAPagar.setText(comun.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
+        jLabelValorMontoAPagar.setText(utils.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
         jLabelValorMontoADevolver.setText("");
 
         ActionListener l = (ActionEvent e) -> {
@@ -252,7 +252,7 @@ public class CalcularCambioView extends javax.swing.JDialog {
 
         } else {
             float cuc = (float) jSpinnerCUC.getValue();
-            comun.setDosLugaresDecimales(cuc *= R.COINCHANGE);
+            utils.setDosLugaresDecimales(cuc *= R.COINCHANGE);
             montoADevolver -= cuc;
 
             float mn = (int) jSpinnerMN.getValue();
@@ -263,7 +263,7 @@ public class CalcularCambioView extends javax.swing.JDialog {
         if (montoADevolver > 0) {
             jLabelValorMontoADevolver.setText("Falta Dinero");
         } else {
-            jLabelValorMontoADevolver.setText(comun.setDosLugaresDecimales(montoADevolver));
+            jLabelValorMontoADevolver.setText(utils.setDosLugaresDecimales(montoADevolver));
 
         }
 

@@ -18,7 +18,7 @@ import restManager.controller.trabajadores.PersonalListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Personal;
 import restManager.resources.values.Fonts;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  * FirstDream

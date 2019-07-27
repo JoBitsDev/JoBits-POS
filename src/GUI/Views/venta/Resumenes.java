@@ -19,7 +19,7 @@ import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.CocinaDAO;
 import restManager.resources.R;
-import restManager.util.comun;
+import restManager.util.utils;
 
 public class Resumenes extends javax.swing.JPanel {
 
@@ -468,26 +468,26 @@ public class Resumenes extends javax.swing.JPanel {
     }
 
     private void fillTablaVentas(Cocina c) {
-        comun.limpiarTabla(jTableVenta);
+        utils.limpiarTabla(jTableVenta);
         if (c == null) {
             VentaDAO1.getResumenVentasOnTable(jTableVenta, dia);
-            jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.COIN_SUFFIX);
+            jTextFieldTotalRecaudado.setText(utils.calcularSumaTabla(jTableVenta, 4) + R.COIN_SUFFIX);
         } else {
             VentaDAO1.getResumenDetalladoVentasCocinaOnTable(jTableVenta, dia, c);
-            jTextFieldTotalRecaudado.setText(comun.calcularSumaTabla(jTableVenta, 4) + R.COIN_SUFFIX);
+            jTextFieldTotalRecaudado.setText(utils.calcularSumaTabla(jTableVenta, 4) + R.COIN_SUFFIX);
 
         }
 
     }
 
     private void fillTablaGastos(Cocina c) {
-        comun.limpiarTabla(jTableGastos);
+        utils.limpiarTabla(jTableGastos);
         if (c == null) {
             VentaDAO1.getResumenGastosOnTable(jTableGastos, dia);
-            jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.COIN_SUFFIX);
+            jTextFieldInversion.setText(utils.calcularSumaTabla(jTableGastos, 4) + R.COIN_SUFFIX);
         } else {
             VentaDAO1.getResumenGastosCocinaOnTable(jTableGastos, dia, c);
-            jTextFieldInversion.setText(comun.calcularSumaTabla(jTableGastos, 4) + R.COIN_SUFFIX);
+            jTextFieldInversion.setText(utils.calcularSumaTabla(jTableGastos, 4) + R.COIN_SUFFIX);
         }
 
         jTextFieldGanancia.setText(" " + (Float.parseFloat(jTextFieldTotalRecaudado.getText().split(" ")[0]) 

@@ -10,7 +10,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Venta;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -64,7 +64,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         jLabelGastos.setForeground(new java.awt.Color(102, 0, 0));
         jLabelGastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgares-abajo.png"))); // NOI18N
         jLabelGastos.setText(v.getVentagastosEninsumos() != null
-            ? comun.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue())
+            ? utils.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue())
             : "-");
         jLabelGastos.setToolTipText("Gastos");
         add(jLabelGastos, java.awt.BorderLayout.CENTER);
@@ -74,7 +74,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         jLabelVentas.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgar-arriba.png"))); // NOI18N
         jLabelVentas.setText(v.getVentaTotal() != null
-            ? comun.setDosLugaresDecimales(v.getVentaTotal().floatValue())
+            ? utils.setDosLugaresDecimales(v.getVentaTotal().floatValue())
             :"-");
         jLabelVentas.setToolTipText("Ventas");
         jLabelVentas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -135,11 +135,11 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         String toolTip = "Total ordenes atendidas: " + v.getOrdenList().size();
         toolTip += RETORNO_CARRO;
         if (v.getVentagastosGastos() != null) {
-            toolTip += "Total otros gastos: " + comun.setDosLugaresDecimales(v.getVentagastosGastos());
+            toolTip += "Total otros gastos: " + utils.setDosLugaresDecimales(v.getVentagastosGastos());
         }
         toolTip += RETORNO_CARRO;
         if (v.getVentagastosEninsumos() != null) {
-            toolTip += "Total gastos insumos " + comun.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue());
+            toolTip += "Total gastos insumos " + utils.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue());
         }
         toolTip += RETORNO_CARRO;
         return toolTip;

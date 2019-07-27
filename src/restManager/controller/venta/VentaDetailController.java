@@ -43,7 +43,7 @@ import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.VentaDAO;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  * FirstDream
@@ -263,15 +263,15 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public String getTotalVendido() {
-        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentas(getInstance()));
+        return utils.setDosLugaresDecimales(VentaDAO1.getValorTotalVentas(getInstance()));
     }
 
     public String getTotalGastadoInsumos() {
-        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalGastosInsumo(getInstance()));
+        return utils.setDosLugaresDecimales(VentaDAO1.getValorTotalGastosInsumo(getInstance()));
     }
 
     public String getTotalPagoTrabajadores() {
-        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalPagoTrabajadores(getInstance()));
+        return utils.setDosLugaresDecimales(VentaDAO1.getValorTotalPagoTrabajadores(getInstance()));
     }
 
     public List<Personal> getPersonalList() {
@@ -339,7 +339,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public String getTotalVendidoNeto() {
-        return comun.setDosLugaresDecimales(VentaDAO1.getValorTotalVentasNeta(getInstance()));
+        return utils.setDosLugaresDecimales(VentaDAO1.getValorTotalVentasNeta(getInstance()));
     }
 
     @Override
@@ -500,7 +500,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             }
         }
 
-        return comun.setDosLugaresDecimalesFloat(pago);
+        return utils.setDosLugaresDecimalesFloat(pago);
 
     }
 
@@ -509,7 +509,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         for (ProductovOrden x : VentaDAO1.getResumenVentasCasa(getInstance())) {
             ret += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
         }
-        return comun.setDosLugaresDecimales(ret);
+        return utils.setDosLugaresDecimales(ret);
     }
 
     public List<Area> getAreaList() {
@@ -544,7 +544,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             }
 
         }
-        return comun.setDosLugaresDecimalesFloat(ret);
+        return utils.setDosLugaresDecimalesFloat(ret);
     }
 
 }

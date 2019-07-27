@@ -24,7 +24,7 @@ import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.AsistenciaPersonalDAO;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  * FirstDream
@@ -153,7 +153,7 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
             for (AsistenciaPersonal a : asistencia) {
                 ret += a.getPago();
             }
-            return comun.setDosLugaresDecimalesFloat(ret / getCantidadDiasTrabajados());
+            return utils.setDosLugaresDecimalesFloat(ret / getCantidadDiasTrabajados());
         }
 
         public float getTotalPago() {
@@ -163,7 +163,7 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
                     ret += a.getPago();
                 }
             }
-            return comun.setDosLugaresDecimalesFloat(ret);
+            return utils.setDosLugaresDecimalesFloat(ret);
 
         }
 
@@ -174,7 +174,7 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
                     ret += a.getPropina();
                 }
             }
-            return comun.setDosLugaresDecimalesFloat(ret);
+            return utils.setDosLugaresDecimalesFloat(ret);
         }
 
         public List<?> getDiasTrabajados() {

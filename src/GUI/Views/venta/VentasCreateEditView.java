@@ -34,7 +34,7 @@ import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -895,7 +895,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     private void updateTableResumenDptes() {
         List<Personal> p = getController().getPersonalList();
-        comun.limpiarTabla(jTableVentasDependientes);
+        utils.limpiarTabla(jTableVentasDependientes);
         p.forEach((x) -> {
             VentaDAO1.getResumenVentasCamareroOnTable(jTableVentasDependientes, getInstance(), x);
         });
@@ -903,7 +903,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     private void updateTableResumenPuntosElaboracion() {
         List<Cocina> c = getController().getCocinaList();
-        comun.limpiarTabla(jTableVentasPorCocina);
+        utils.limpiarTabla(jTableVentasPorCocina);
         c.forEach((x) -> {
             VentaDAO1.getResumenVentasCocinaOnTable(jTableVentasPorCocina, getInstance(), x);
         });
@@ -912,7 +912,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     private void updateTableResumenAreaVenta() {
         List<Area> a = getController().getAreaList();
-        comun.limpiarTabla(jTableVentasPorArea);
+        utils.limpiarTabla(jTableVentasPorArea);
         a.forEach((x) -> {
             VentaDAO1.getResumenVentaPorAreaOnTable(jTableVentasPorArea, getInstance(), x);
         });
@@ -963,7 +963,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private void updateTableResumenGastos() {
         gastoController.setParent(jPanelExtracciones);
         gastoController.setDiaVenta(getController().getInstance());
-        jLabelTotalGastos.setText(comun.setDosLugaresDecimales(gastoController.getValorTotalGastos()));
+        jLabelTotalGastos.setText(utils.setDosLugaresDecimales(gastoController.getValorTotalGastos()));
         gastoController.constructView(jPanelExtracciones);
     }
 

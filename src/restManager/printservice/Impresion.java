@@ -39,7 +39,7 @@ import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.ProductovOrdenDAO;
 import restManager.resources.R;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -180,8 +180,8 @@ public class Impresion {
 
         total = addPvOrden(t, o.getProductovOrdenList());
 
-        float subTotalPrint = comun.redondeoPorExcesoFloat(total);
-        float sumaPorciento = comun.redondeoPorExcesoFloat((subTotalPrint * o.getPorciento()) / 100);
+        float subTotalPrint = utils.redondeoPorExcesoFloat(total);
+        float sumaPorciento = utils.redondeoPorExcesoFloat((subTotalPrint * o.getPorciento()) / 100);
         float totalPrint = subTotalPrint;
         t.alignRight();
         t.newLine();
@@ -191,7 +191,7 @@ public class Impresion {
         if (o.getPorciento() != 0) {
             t.newLine();
             t.setText("+ " + o.getPorciento() + PORCIENTO + sumaPorciento + MONEDA);
-            totalPrint = comun.redondeoPorExcesoFloat(subTotalPrint + sumaPorciento);
+            totalPrint = utils.redondeoPorExcesoFloat(subTotalPrint + sumaPorciento);
 
         }
         t.newLine();
@@ -851,15 +851,15 @@ public class Impresion {
 
             if (monedaCUC) {
                 if (REDONDEO_POR_EXCESO) {
-                    t.setText(TOTAL_VENTAS + comun.redondeoPorExcesoFloat(total * R.COINCHANGE) + MN);
+                    t.setText(TOTAL_VENTAS + utils.redondeoPorExcesoFloat(total * R.COINCHANGE) + MN);
                 } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, comun.setDosLugaresDecimalesFloat(total * R.COINCHANGE)));
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, utils.setDosLugaresDecimalesFloat(total * R.COINCHANGE)));
                 }
             } else {
                 if (REDONDEO_POR_EXCESO) {
-                    t.setText(TOTAL_VENTAS + comun.redondeoPorExcesoFloat(total / R.COINCHANGE) + CUC);
+                    t.setText(TOTAL_VENTAS + utils.redondeoPorExcesoFloat(total / R.COINCHANGE) + CUC);
                 } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, comun.setDosLugaresDecimalesFloat(total / R.COINCHANGE)));
+                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, utils.setDosLugaresDecimalesFloat(total / R.COINCHANGE)));
                 }
             }
 
@@ -956,12 +956,12 @@ public class Impresion {
             if (SHOW_PRICES) {
                 if (x.getOrden().getDeLaCasa()) {
                     if (PRINT_GASTOS_EN_AUTORIZOS) {
-                        t.setText(comun.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getGasto()));
+                        t.setText(utils.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getGasto()));
                     } else {
-                        t.setText(comun.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                        t.setText(utils.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
                     }
                 } else {
-                    t.setText(comun.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                    t.setText(utils.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
                 }
                 t.newLine();
             }
@@ -1048,7 +1048,7 @@ public class Impresion {
     }
 
     private String fillSpace(float number, int finalLenght) {
-        String ret = "" + comun.setDosLugaresDecimalesFloat(number);
+        String ret = "" + utils.setDosLugaresDecimalesFloat(number);
         while (ret.length() < finalLenght) {
             ret += " ";
         }
@@ -1356,7 +1356,7 @@ public class Impresion {
                     t.newLine();
                     t.alignRight();
                     if (SHOW_PRICES) {
-                        t.setText(comun.setDosLugaresDecimales(pv.getCantidad() * pv.getProductoVenta().getPagoPorVenta()));
+                        t.setText(utils.setDosLugaresDecimales(pv.getCantidad() * pv.getProductoVenta().getPagoPorVenta()));
                     }
                     t.newLine();
                     total += pv.getCantidad() * pv.getProductoVenta().getPagoPorVenta();
@@ -1402,11 +1402,11 @@ public class Impresion {
                     t.setText(R.DATE_FORMAT.format(a.getAsistenciaPersonalPK().getVentafecha()));
                     t.newLine();
                     t.alignRight();
-                    t.setText(comun.setDosLugaresDecimales(a.getPago()));
+                    t.setText(utils.setDosLugaresDecimales(a.getPago()));
                     t.newLine();
                     if (a.getPropina() != null) {
                         if (a.getPropina() > 0) {
-                            t.setText("Propina: " + comun.setDosLugaresDecimales(a.getPropina()));
+                            t.setText("Propina: " + utils.setDosLugaresDecimales(a.getPropina()));
                         }
                     }
                     propina += a.getPropina();
@@ -1417,10 +1417,10 @@ public class Impresion {
         t.addLineSeperator();
         t.alignRight();
         if (propina > 0) {
-            t.setText("Total Propina: " + comun.setDosLugaresDecimales(propina));
+            t.setText("Total Propina: " + utils.setDosLugaresDecimales(propina));
         }
         t.newLine();
-        t.setText("'Total a Pagar: " + comun.setDosLugaresDecimales(total));
+        t.setText("'Total a Pagar: " + utils.setDosLugaresDecimales(total));
         t.newLine();
         addFinal(t);
 
@@ -1469,11 +1469,11 @@ public class Impresion {
                 t.setText(R.DATE_FORMAT.format(a.getAsistenciaPersonalPK().getVentafecha()));
                 t.newLine();
                 t.alignRight();
-                t.setText(comun.setDosLugaresDecimales(a.getPago()));
+                t.setText(utils.setDosLugaresDecimales(a.getPago()));
                 t.newLine();
                 if (a.getPropina() != null) {
                     if (a.getPropina() > 0) {
-                        t.setText("Propina: " + comun.setDosLugaresDecimales(a.getPropina()));
+                        t.setText("Propina: " + utils.setDosLugaresDecimales(a.getPropina()));
                     }
                 }
                 propina += a.getPropina();
@@ -1483,10 +1483,10 @@ public class Impresion {
         t.addLineSeperator();
         t.alignRight();
         if (propina > 0) {
-            t.setText("Total Propina: " + comun.setDosLugaresDecimales(propina));
+            t.setText("Total Propina: " + utils.setDosLugaresDecimales(propina));
         }
         t.newLine();
-        t.setText("'Total a Pagar: " + comun.setDosLugaresDecimales(total));
+        t.setText("'Total a Pagar: " + utils.setDosLugaresDecimales(total));
         t.newLine();
         addFinal(t);
 

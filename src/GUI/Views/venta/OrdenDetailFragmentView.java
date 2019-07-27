@@ -24,7 +24,7 @@ import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -355,7 +355,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                             case 1:
                                 return items.get(rowIndex).getCantidad();
                             case 2:
-                                return comun.redondeoPorExceso(items.get(rowIndex).getCantidad()
+                                return utils.redondeoPorExceso(items.get(rowIndex).getCantidad()
                                         * items.get(rowIndex).getProductoVenta().getPrecioVenta());
                             default:
                                 return null;
@@ -470,7 +470,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     }
 
     public void updateValorTotal() {
-        jLabelVALORTotal.setText(comun.setDosLugaresDecimales(getController().getValorTotal()));
+        jLabelVALORTotal.setText(utils.setDosLugaresDecimales(getController().getValorTotal()));
     }
 
     private enum ButtonState {

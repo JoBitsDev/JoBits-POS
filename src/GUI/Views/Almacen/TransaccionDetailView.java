@@ -28,7 +28,7 @@ import restManager.persistencia.TransaccionPK;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -261,7 +261,7 @@ public class TransaccionDetailView extends AbstractDetailView<Transaccion> {
                                 case 1:
                                     return items.get(rowIndex).getCantidad();
                                 case 2:
-                                    return comun.setDosLugaresDecimales(items.get(rowIndex).getInsumo().getCostoPorUnidad() * items.get(rowIndex).getCantidad());
+                                    return utils.setDosLugaresDecimales(items.get(rowIndex).getInsumo().getCostoPorUnidad() * items.get(rowIndex).getCantidad());
                                 default:
                                     return null;
                             }

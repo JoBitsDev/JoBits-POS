@@ -22,7 +22,7 @@ import restManager.persistencia.AsistenciaPersonal;
 import restManager.persistencia.models.AsistenciaPersonalDAO;
 
 import restManager.resources.R;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  * FirstDream
@@ -57,7 +57,7 @@ public class VentaDAO1 {
     public static void getResumenVentasOnTable(JTable tabla, Venta v) {
 
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
         ArrayList<ProductovOrden> ret = getResumenVentas(v);
 
         //convirtiendo a rowData
@@ -74,7 +74,7 @@ public class VentaDAO1 {
 
         //llenando la tabla
         try {
-            comun.AddToTable(rowData, tabla);
+            utils.AddToTable(rowData, tabla);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -85,7 +85,7 @@ public class VentaDAO1 {
     public static void getResumenVentasDeLaCasaOnTable(JTable tabla, Venta v) {
 
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -111,7 +111,7 @@ public class VentaDAO1 {
 
         //llenando la tabla
         try {
-            comun.AddToTable(rowData, tabla);
+            utils.AddToTable(rowData, tabla);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -121,7 +121,7 @@ public class VentaDAO1 {
 
     public static void getResumenVentasDeLaCasaXCocinaOnTable(JTable tabla, Venta v, Cocina c) {
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -148,7 +148,7 @@ public class VentaDAO1 {
 
         //llenando la tabla
         try {
-            comun.AddToTable(rowData, tabla);
+            utils.AddToTable(rowData, tabla);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -158,7 +158,7 @@ public class VentaDAO1 {
     public static void getResumenVentasCamareroOnTable(JTable tabla, Venta v, Personal p) {
 
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[4]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         float total = 0;
@@ -182,13 +182,13 @@ public class VentaDAO1 {
         //convirtiendo a rowData
         if (total != 0) {
             rowData[0].add(p.getUsuario());
-            rowData[1].add(comun.setDosLugaresDecimales(total));
+            rowData[1].add(utils.setDosLugaresDecimales(total));
             rowData[2].add(totalOrdenes);
-            rowData[3].add(comun.setDosLugaresDecimales(pago_por_ventas));
+            rowData[3].add(utils.setDosLugaresDecimales(pago_por_ventas));
 
             //llenando la tabla
             try {
-                comun.AddToTable(rowData, tabla);
+                utils.AddToTable(rowData, tabla);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
@@ -205,7 +205,7 @@ public class VentaDAO1 {
      */
     public static void getResumenVentasCocinaOnTable(JTable tabla, Venta v, Cocina c) {
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[3]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[3]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -225,11 +225,11 @@ public class VentaDAO1 {
         if (total != 0) {
             rowData[0].add(c.getCodCocina());
             rowData[1].add(c.getNombreCocina());
-            rowData[2].add(comun.setDosLugaresDecimales(total));
+            rowData[2].add(utils.setDosLugaresDecimales(total));
 
             //llenando la tabla
             try {
-                comun.AddToTable(rowData, tabla);
+                utils.AddToTable(rowData, tabla);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
@@ -241,7 +241,7 @@ public class VentaDAO1 {
 
     public static void getResumenDetalladoVentasCocinaOnTable(JTable tabla, Venta v, Cocina c) {
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -268,7 +268,7 @@ public class VentaDAO1 {
 
         //llenando la tabla
         try {
-            comun.AddToTable(rowData, tabla);
+            utils.AddToTable(rowData, tabla);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -278,7 +278,7 @@ public class VentaDAO1 {
 
     public static void getResumenVentaPorAreaOnTable(JTable tabla, Venta v, Area a) {
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[3]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[3]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -299,11 +299,11 @@ public class VentaDAO1 {
         if (total != 0) {
             rowData[0].add(a.getCodArea());
             rowData[1].add(a.getNombre());
-            rowData[2].add(comun.setDosLugaresDecimales(total));
+            rowData[2].add(utils.setDosLugaresDecimales(total));
 
             //llenando la tabla
             try {
-                comun.AddToTable(rowData, tabla);
+                utils.AddToTable(rowData, tabla);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
@@ -406,7 +406,7 @@ public class VentaDAO1 {
     public static void getResumenGastosOnTable(JTable tabla, Venta v) {
 
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
         ArrayList<ProductoInsumo> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -437,7 +437,7 @@ public class VentaDAO1 {
 
         //llenando la tabla
         try {
-            comun.AddToTable(rowData, tabla);
+            utils.AddToTable(rowData, tabla);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -448,7 +448,7 @@ public class VentaDAO1 {
     public static void getResumenGastosCocinaOnTable(JTable tabla, Venta v, Cocina c) {
 
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
         ArrayList<ProductoInsumo> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -481,7 +481,7 @@ public class VentaDAO1 {
 
         //llenando la tabla
         try {
-            comun.AddToTable(rowData, tabla);
+            utils.AddToTable(rowData, tabla);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -493,7 +493,7 @@ public class VentaDAO1 {
     public static void getResumenGastosDeLaCasaOnTable(JTable tabla, Venta v) {
 
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
         ArrayList<ProductoInsumo> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -522,7 +522,7 @@ public class VentaDAO1 {
 
         //llenando la tabla
         try {
-            comun.AddToTable(rowData, tabla);
+            utils.AddToTable(rowData, tabla);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -533,7 +533,7 @@ public class VentaDAO1 {
     public static void getResumenGastosDeLaCasaCocinaOnTable(JTable tabla, Venta v, Cocina c) {
 
         //inicializando los datos
-        ArrayList[] rowData = comun.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
         ArrayList<ProductoInsumo> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -564,7 +564,7 @@ public class VentaDAO1 {
 
         //llenando la tabla
         try {
-            comun.AddToTable(rowData, tabla);
+            utils.AddToTable(rowData, tabla);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(),
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -706,7 +706,7 @@ public class VentaDAO1 {
     public static float getValorTotalRedondeoAFavorDeLaCasa(Venta v) {
         int total = 0;
         for (Orden x : v.getOrdenList()) {
-            total += comun.cantidadARedondearPorExceso((int) Math.ceil(x.getOrdenvalorMonetario() * 100));
+            total += utils.cantidadARedondearPorExceso((int) Math.ceil(x.getOrdenvalorMonetario() * 100));
         }
         return ((float) total) / 100;
     }
@@ -818,7 +818,7 @@ public class VentaDAO1 {
         for (AsistenciaPersonal a : instance.getAsistenciaPersonalList()) {
             pagoTotal += a.getPago();
         }
-        return comun.setDosLugaresDecimalesFloat(pagoTotal);
+        return utils.setDosLugaresDecimalesFloat(pagoTotal);
     }
 
     public static float getValorPagoPorVentas(Venta instance) {
@@ -828,7 +828,7 @@ public class VentaDAO1 {
             ProductoVenta v = x.getProductoVenta();
             ret += v.getPagoPorVenta() != null ? v.getPagoPorVenta() * x.getCantidad() : 0 ; 
         }
-        return comun.setDosLugaresDecimalesFloat(ret);
+        return utils.setDosLugaresDecimalesFloat(ret);
     }
 
 }

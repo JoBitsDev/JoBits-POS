@@ -29,7 +29,7 @@ import restManager.persistencia.models.TransaccionEntradaDAO;
 import restManager.persistencia.models.TransaccionMermaDAO;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  * FirstDream
@@ -139,8 +139,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         updateInsumo(ins);
         if (ins.getValorMonetario() / ins.getCantidad() != insumo.getCostoPorUnidad()) {
             if (showConfirmDialog(getView(), "Actualizar el costo del insumo " + insumo + " \n de "
-                    + insumo.getCostoPorUnidad() + R.COIN_SUFFIX + " a " + comun.setDosLugaresDecimales(ins.getValorMonetario() / ins.getCantidad()))) {
-                insumo.setCostoPorUnidad(comun.setDosLugaresDecimalesFloat(ins.getValorMonetario() / ins.getCantidad()));
+                    + insumo.getCostoPorUnidad() + R.COIN_SUFFIX + " a " + utils.setDosLugaresDecimales(ins.getValorMonetario() / ins.getCantidad()))) {
+                insumo.setCostoPorUnidad(utils.setDosLugaresDecimalesFloat(ins.getValorMonetario() / ins.getCantidad()));
                 InsumoCreateEditController controller = new InsumoCreateEditController();
                 controller.setView(getView());
                 controller.setShowDialogs(false);

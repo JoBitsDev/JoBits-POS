@@ -26,7 +26,7 @@ import restManager.persistencia.models.ProductoInsumoDAO;
 import restManager.persistencia.models.ProductoVentaDAO;
 import restManager.resources.R;
 import restManager.util.ComponentMover;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *

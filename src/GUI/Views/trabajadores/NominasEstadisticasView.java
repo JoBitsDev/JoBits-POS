@@ -34,7 +34,7 @@ import restManager.exceptions.NoSelectedException;
 import restManager.persistencia.AsistenciaPersonal;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
-import restManager.util.comun;
+import restManager.util.utils;
 
 /**
  *
@@ -382,7 +382,7 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
                     case 1:
                         return getItems().get(rowIndex).getCantidadDiasTrabajados();
                     case 2:
-                        return comun.setDosLugaresDecimales(getItems().get(rowIndex).getPromedioCobro());
+                        return utils.setDosLugaresDecimales(getItems().get(rowIndex).getPromedioCobro());
                     case 3:
                         return getItems().get(rowIndex).isUse();
                     default:
@@ -482,7 +482,7 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
         float acumulado = 0, propina = 0;
 
         for (NominasController.AsistenciaPersonalEstadisticas a : displayList) {
-            String label = a.getP().getUsuario() + "(" + a.getCantidadDiasTrabajados() + " Dias) ( " + comun.setDosLugaresDecimales(a.getTotalPago()) + ")";
+            String label = a.getP().getUsuario() + "(" + a.getCantidadDiasTrabajados() + " Dias) ( " + utils.setDosLugaresDecimales(a.getTotalPago()) + ")";
             XYSeries serie = chart.addSeries(label, a.getDiasTrabajados(), a.getMontos());
             chartPie.addSeries(label, a.getTotalPago());
             acumulado += a.getTotalPago();
@@ -504,9 +504,9 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
                 break;
 
         }
-        jLabelAcumulado.setText(comun.setDosLugaresDecimales(acumulado));
-        jLabelPropina.setText(comun.setDosLugaresDecimales(propina));
-        jLabelMedia.setText(comun.setDosLugaresDecimales(acumulado / displayList.size()));
+        jLabelAcumulado.setText(utils.setDosLugaresDecimales(acumulado));
+        jLabelPropina.setText(utils.setDosLugaresDecimales(propina));
+        jLabelMedia.setText(utils.setDosLugaresDecimales(acumulado / displayList.size()));
         pack();
     }
 
