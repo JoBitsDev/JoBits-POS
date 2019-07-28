@@ -8,9 +8,12 @@ package GUI.Views.gastos;
 import GUI.Views.AbstractFragmentView;
 import com.jidesoft.hints.ListDataIntelliHints;
 import java.awt.Container;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.DefaultComboBoxModel;
 import restManager.controller.Controller;
 import restManager.controller.gasto.GastoOperacionController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Gasto;
 import restManager.persistencia.GastoVenta;
@@ -62,8 +65,10 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
         jPanel5 = new javax.swing.JPanel();
         jSpinnerMonto = new javax.swing.JSpinner();
         jLabelMonto = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
+        jLabelleft = new javax.swing.JLabel();
         jButtonCrearE = new javax.swing.JButton();
         jButtonLimpiar = new javax.swing.JButton();
 
@@ -121,8 +126,6 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
         jPanelAgregar.setPreferredSize(new java.awt.Dimension(182, 100));
         jPanelAgregar.setLayout(new java.awt.BorderLayout());
 
-        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 15));
-
         jComboBoxCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoría"));
         jComboBoxCategoria.setPreferredSize(new java.awt.Dimension(140, 51));
         jComboBoxCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -166,13 +169,14 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
 
         jPanel8.add(jPanel5);
 
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Descripción"));
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane1.setMaximumSize(new java.awt.Dimension(150, 32767));
         jScrollPane1.setMinimumSize(new java.awt.Dimension(140, 150));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(140, 150));
-        jScrollPane1.setSize(new java.awt.Dimension(140, 150));
 
         jTextAreaDescripcion.setColumns(5);
         jTextAreaDescripcion.setLineWrap(true);
@@ -182,9 +186,20 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
         jTextAreaDescripcion.setMinimumSize(new java.awt.Dimension(140, 140));
         jTextAreaDescripcion.setPreferredSize(new java.awt.Dimension(240, 140));
         jTextAreaDescripcion.setSize(new java.awt.Dimension(240, 140));
+        jTextAreaDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextAreaDescripcionKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTextAreaDescripcion);
 
-        jPanel8.add(jScrollPane1);
+        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jLabelleft.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelleft.setText("90");
+        jPanel1.add(jLabelleft, java.awt.BorderLayout.PAGE_START);
+
+        jPanel8.add(jPanel1);
 
         jPanelAgregar.add(jPanel8, java.awt.BorderLayout.CENTER);
 
@@ -257,6 +272,16 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
     getController().removeGasto(((RestManagerAbstractTableModel<GastoVenta>)jTableInfo.getModel()).getObjectAtSelectedRow());        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jTextAreaDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaDescripcionKeyTyped
+        int max = 90;
+        String s = jTextAreaDescripcion.getText();
+        int l = s.length();
+        jLabelleft.setText(String.valueOf(max - l));
+            if (l >= max) {
+                evt.consume();
+            }
+    }//GEN-LAST:event_jTextAreaDescripcionKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -266,6 +291,8 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
     private javax.swing.JComboBox<TipoGasto> jComboBoxCategoria;
     private javax.swing.JLabel jLabelGast;
     private javax.swing.JLabel jLabelMonto;
+    private javax.swing.JLabel jLabelleft;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
@@ -324,6 +351,7 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
         jLabelGast.setText(utils.setDosLugaresDecimales(utils.calcularSumaTabla(jTableInfo, 2)));
         jComboBoxCategoria.setModel(new DefaultComboBoxModel<>(R.TipoGasto.values()));
         jLabelMonto.setText(R.COIN_SUFFIX);
+     
 
     }
 
