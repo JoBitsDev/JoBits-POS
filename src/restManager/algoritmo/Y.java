@@ -8,11 +8,24 @@ package restManager.algoritmo;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Queue;
 import javax.swing.SwingWorker;
+import restManager.controller.Controller;
+import restManager.controller.venta.VentaListController;
+import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.Configuracion;
+import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Orden;
+import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
+import restManager.persistencia.Seccion;
 import restManager.persistencia.Venta;
+import restManager.persistencia.models.ConfiguracionDAO;
+import restManager.persistencia.models.SeccionDAO;
+import restManager.persistencia.models.VentaDAO;
+import restManager.resources.R;
 import restManager.util.LoadingWindow;
+import restManager.util.utils;
 
 /**
  * FirstDream
@@ -22,24 +35,35 @@ import restManager.util.LoadingWindow;
  */
 public class Y extends SwingWorker<List<Orden>, Integer> {
 
-    private final String SECCION_COCTELERIA = "Cocteleria";
+    private ProductoVentaFilter filter;
 
-    private final String SECCION_TRAGOS = "Tragos";
+    private float VALOR_MAXIMO_MONETARIO;
 
-    private float VALOR_MAXIMO_MONETARIO = 15;
-
-    private float VALOR_MIN_MONETARIO = 3;
+    private float VALOR_MIN_MONETARIO;
 
     private Venta ventaReal;
 
     private float monto_A_Ajustar;
 
-    private List<Orden> ordEncontradas;
+    private List<Orden> ordCompletadas;
 
-    private final byte porciento_a_ajustar = 20;
+    private final byte porciento_a_ajustar = 30;
+
+    private VentaListController controller;
+
+    //
+    //buscar otra forma
+    //
+    private float montoRecaudado;
+    private int puntero, limite;
 
     public Y(Venta ventaReal) {
         this.ventaReal = ventaReal;
+    }
+
+    public Y(Venta valueAt, VentaListController controller) {
+        this.ventaReal = valueAt;
+        this.controller = controller;
     }
 
     public Venta getVentaReal() {
@@ -60,78 +84,15 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
 
     @Override
     protected List<Orden> doInBackground() throws Exception {
-        ordenarOrdenes();
-        ordEncontradas = new ArrayList<>();
+        return ejecutarAlgoritmo();
 
-        float montoRecaudado = 0;
-        int noOrdenDelDia = 1001;
-
-        int cantidadOrdenes = ventaReal.getOrdenList().size() - 1;
-        int punteroAlmuerzo = 0;
-        int punteroComida = cantidadOrdenes / 2;
-
-        List<Orden> horarioAlmuerzo = ventaReal.getOrdenList().subList(punteroComida, cantidadOrdenes);
-        List<Orden> horarioComida = ventaReal.getOrdenList().subList(punteroAlmuerzo, punteroComida - 1);
-
-        int pasoAlmuerzo = horarioAlmuerzo.size() % 2 == 0 ? 2 : 1;
-        int pasoComida = horarioComida.size() % 2 == 0 ? 2 : 1;
-
-        int limite = cantidadOrdenes;
-
-        //monto_A_Ajustar =(float) (calcularMontoTotal()*porciento_a_ajustar/100);
-        monto_A_Ajustar = 40;
-        while (monto_A_Ajustar > montoRecaudado) {
-
-            montoRecaudado += agregarOrden(horarioAlmuerzo.get(punteroAlmuerzo % horarioAlmuerzo.size()), punteroAlmuerzo);
-            int porcientoCompletado = ((int) ((montoRecaudado / monto_A_Ajustar) * 100));
-            publish(porcientoCompletado);
-
-            if (porcientoCompletado > 100) {
-                break;
-            }
-
-            montoRecaudado += agregarOrden(horarioComida.get(punteroComida % horarioComida.size()), punteroComida);
-            porcientoCompletado = ((int) ((montoRecaudado / monto_A_Ajustar) * 100));
-            publish(porcientoCompletado);
-
-            if (porcientoCompletado > 100) {
-                break;
-            }
-
-            punteroAlmuerzo += pasoAlmuerzo;
-            punteroComida += pasoComida;
-            limite--;
-            if (limite == 0) {
-                if (VALOR_MAXIMO_MONETARIO < 100) {
-                    VALOR_MAXIMO_MONETARIO += 5;
-
-                } else if (VALOR_MIN_MONETARIO > 0) {
-                    VALOR_MIN_MONETARIO -= 1;
-
-                }
-
-                limite = cantidadOrdenes;
-            }
-
-        }
-
-        Collections.sort(ordEncontradas, (o1, o2) -> {
-            return numOrden(o1.getCodOrden()) > numOrden(o2.getCodOrden()) ? 1 : -1; //To change body of generated lambdas, choose Tools | Templates.
-        });
-
-        for (Orden x : ordEncontradas) {
-            x.setCodOrden(crearNumOrden(noOrdenDelDia));
-            noOrdenDelDia++;
-        }
-
-        
-        return ordEncontradas;
     }
 
     @Override
     protected void done() {
         LoadingWindow.hide();
         super.done(); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
@@ -142,6 +103,19 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         super.process(chunks); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void metodoA(float valorMaxOrden, List<Orden> lista) {
+        float valorAgregado = agregarOrden(lista.get(puntero % lista.size()), valorMaxOrden);
+        montoRecaudado += valorAgregado;
+        // int porcientoCompletado = ((int) ((montoRecaudado / monto_A_Ajustar) * 100));
+        if (valorAgregado != 0) {
+            limite--;
+            // publish(porcientoCompletado);
+        }
+        if (limite == 0) {
+            limite++;
+        }
+    }
+
     private void ordenarOrdenes() {
         Collections.sort(ventaReal.getOrdenList(), (o1, o2) -> {
             return numOrden(o1.getCodOrden()) > numOrden(o2.getCodOrden()) ? 1 : -1; //To change body of generated lambdas, choose Tools | Templates.
@@ -149,96 +123,237 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
     }
 
     private int numOrden(String noOrden) {
-        return Integer.parseInt(noOrden.substring(3));
+        return Integer.parseInt(noOrden.substring(2));
     }
 
-    private String crearNumOrden(int noOrden) {
-        return "O-" + noOrden;
-    }
-
-    private float agregarOrden(Orden get, int puntero) {
-        puntero++;
-        if (ordEncontradas.contains(get)) {
+    private float agregarOrden(Orden get, float valorMaxOrden) {
+        if (ordCompletadas.contains(get)) {
             return 0;
         }
-        limpiarMaquillarOrden(get);
+        limpiarMaquillarOrden(get, valorMaxOrden);
 
-        if (get.getOrdenvalorMonetario() > VALOR_MAXIMO_MONETARIO) {
-            return 0;
-        }
-
-        if (get.getOrdenvalorMonetario() < VALOR_MIN_MONETARIO) {
-            return 0;
-        }
-
-        if (tieneLiquidosProhibidos(get) || get.getOrdenvalorMonetario() == 0) {
+        if (get.getOrdenvalorMonetario() == 0) {
             return 0;
         } else {
-            ordEncontradas.add(get);
-
+            ordCompletadas.add(get);
+            if (get.getDeLaCasa()) {
+                return 0;
+            }
             return get.getOrdenvalorMonetario();
-
         }
 
     }
 
-    private boolean tieneLiquidosProhibidos(Orden get) {
-        for (ProductovOrden x : get.getProductovOrdenList()) {
-            if (x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().equals(SECCION_TRAGOS)
-                    || x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().equals(SECCION_COCTELERIA)) {
-                return true;
-            }
-            if (x.getProductoVenta().getNombre().contains("Pulpo")) {
-                return true;
-            }
-            if (x.getProductoVenta().getNombre().contains("calamar")) {
-                return true;
+    private void limpiarMaquillarOrden(Orden get, float valorMaximo) {
+        if (get.getOrdenvalorMonetario() < valorMaximo || get.getOrdenvalorMonetario() == 0) {
+            return;
+        }
+
+        //
+        // quitar luego
+        //
+        List<Seccion> secciones = SeccionDAO.getInstance().findAll();
+        List<Seccion> bebidas = new ArrayList<>();
+        for (Seccion s : secciones) {
+
+            switch (s.getNombreSeccion()) {
+
+                case "Bebida":
+                case "Cocteleria":
+                    bebidas.add(s);
+                    break;
+                default:
+                    break;
             }
         }
-        return false;
-    }
+        filter = new ProductoVentaFilter(bebidas);
 
-    private boolean limpiarMaquillarOrden(Orden get) {
-        float total = 0;
-        for (int i = 0; i < get.getProductovOrdenList().size();) {
-            boolean remove = false;
-            ProductovOrden x = get.getProductovOrdenList().get(i);
+        //
+        // hasta aqui
+        //
+        List<ProductovOrden> liquidos = filter.getLiquidos(get);
+        List<ProductovOrden> comidas = filter.getComida(get);
+        Collections.sort(comidas, (ProductovOrden o1, ProductovOrden o2) -> {
+            return Float.compare(o1.getCantidad() * o1.getProductoVenta().getPrecioVenta(),
+                    o2.getCantidad() * o2.getProductoVenta().getPrecioVenta());
+        });
+        Collections.sort(liquidos, (ProductovOrden o1, ProductovOrden o2) -> {
+            return Float.compare(o1.getCantidad() * o1.getProductoVenta().getPrecioVenta(),
+                    o2.getCantidad() * o2.getProductoVenta().getPrecioVenta());
+        });
 
-            if (x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().equals(SECCION_TRAGOS)
-                    || x.getProductoVenta().getSeccionnombreSeccion().getNombreSeccion().equals(SECCION_COCTELERIA)) {
-                remove = true;
-            }
-            if (x.getProductoVenta().getNombre().contains("Pulpo")) {
-                remove = true;
-            }
-            if (x.getProductoVenta().getNombre().contains("calamar")) {
-                remove = true;
-            }
-
-            if (remove) {
-                get.getProductovOrdenList().remove(i);
-
+        float valorMaxAjustado = (float) (valorMaximo * (1.1));
+        while (get.getOrdenvalorMonetario() > valorMaxAjustado) {
+            if (comidas.size() >= liquidos.size()) {
+                iterarEnComidas(liquidos, comidas, valorMaxAjustado, get);
             } else {
-                i++;
-                x.setCantidad(1);
-                total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+                iterarEnLiquidos(liquidos, comidas, valorMaxAjustado, get);
             }
-
         }
-        get.setOrdenvalorMonetario(total * Float.parseFloat("1.1"));
 
-        return true;
+        get.setProductovOrdenList(comidas);
+        get.getProductovOrdenList().addAll(liquidos);
+
     }
 
-    private float calcularMontoTotal() {
-        if (ventaReal.getVentaTotal() != null) {
-            return ventaReal.getVentaTotal().floatValue();
+    private void iterarEnComidas(List<ProductovOrden> liquidos, List<ProductovOrden> comidas, float valorMaxAjustado, Orden get) {
+        for (int i = 0; i < comidas.size() && get.getOrdenvalorMonetario() > valorMaxAjustado && comidas.size() >= liquidos.size();) {
+            if (comidas.get(i).getCantidad() > 1) {
+                comidas.get(i).setCantidad(comidas.get(i).getCantidad() - 1);
+                i++;
+            } else {
+                comidas.remove(i);
+            }
+            actualizarValorMonetarioOrden(liquidos, comidas, get);
         }
+    }
+
+    private void iterarEnLiquidos(List<ProductovOrden> liquidos, List<ProductovOrden> comidas, float valorMaxAjustado, Orden get) {
+        for (int i = 0; i < liquidos.size() && get.getOrdenvalorMonetario() > valorMaxAjustado && liquidos.size() >= comidas.size();) {
+            if (liquidos.get(i).getCantidad() > 1) {
+                liquidos.get(i).setCantidad(liquidos.get(i).getCantidad() - 1);
+                i++;
+            } else {
+                liquidos.remove(i);
+            }
+            actualizarValorMonetarioOrden(liquidos, comidas, get);
+        }
+    }
+
+    private void actualizarValorMonetarioOrden(List<ProductovOrden> liquidos, List<ProductovOrden> comidas, Orden get) {
         float total = 0;
-        for (Orden x : ventaReal.getOrdenList()) {
-            total += x.getOrdenvalorMonetario();
+        for (ProductovOrden x : liquidos) {
+            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
         }
-        return total;
+        for (ProductovOrden x : comidas) {
+            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+        }
+
+        get.setOrdenvalorMonetario(utils.redondeoPorExcesoFloat(total * (1 + (get.getPorciento() / 100))));
+    }
+
+    private String actualizarUltimoCodOrden() {
+        ConfiguracionDAO conf = ConfiguracionDAO.getInstance();
+        Configuracion c = conf.find(R.SettingID.GENERAL_ULTIMA_ORDEN_PRUEBA);
+        ConfiguracionDAO.getCurrentConnection().refresh(c);
+        int orden = c.getValor();
+        c.setValor(orden + 1);
+        conf.startTransaction();
+        conf.edit(c);
+        conf.commitTransaction();
+        return "O-" + orden;
+    }
+
+    public List<Orden> ejecutarAlgoritmo() {
+
+//ordenamos arreglo
+        ordenarOrdenes();
+        ordCompletadas = new ArrayList<>();
+
+        //separar ventas en dos arreglo almuerzo y comida
+        int cantidadOrdenes = ventaReal.getOrdenList().size() - 1;
+        int punteroAlmuerzo = 0;
+        int punteroComida = cantidadOrdenes / 2;
+
+        List<Orden> listaHorarioAlmuerzo = ventaReal.getOrdenList().subList(punteroComida, cantidadOrdenes);
+        List<Orden> listaHorarioComida = ventaReal.getOrdenList().subList(punteroAlmuerzo, punteroComida - 1);
+
+        //inicializamos las variables
+        Configuracion c = ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_ULTIMA_ORDEN_PRUEBA);
+        int ultimoCodOrden = c.getValor();
+        if (ultimoCodOrden == -1) {
+            c.setValor(Integer.valueOf(ventaReal.getOrdenList().get(0).getCodOrden().substring(2)));
+            ConfiguracionDAO.getInstance().startTransaction();
+            ConfiguracionDAO.getInstance().edit(c);
+            ConfiguracionDAO.getInstance().commitTransaction();
+        }
+
+        limite = cantidadOrdenes / 2;
+        puntero = 0;
+        monto_A_Ajustar = (float) (ventaReal.getVentaTotal() * porciento_a_ajustar / 100);
+
+        int i = 0;
+        while (monto_A_Ajustar > montoRecaudado && puntero < cantidadOrdenes) {
+            float valorMaxOrden = (monto_A_Ajustar - montoRecaudado) / limite;
+            metodoA(valorMaxOrden, listaHorarioAlmuerzo);
+            valorMaxOrden = (monto_A_Ajustar - montoRecaudado) / limite;
+            metodoA(valorMaxOrden, listaHorarioComida);
+            puntero++;
+        }
+
+        Collections.sort(ordCompletadas, (o1, o2) -> {
+            return numOrden(o1.getCodOrden()) > numOrden(o2.getCodOrden()) ? 1 : -1; //To change body of generated lambdas, choose Tools | Templates.
+        });
+
+        for (Orden ord : ordCompletadas) {
+            ord.setCodOrden(actualizarUltimoCodOrden());
+            for (ProductovOrden pv : ord.getProductovOrdenList()) {
+                pv.getProductovOrdenPK().setOrdencodOrden(ord.getCodOrden());
+                if (pv.getNota() != null) {
+                    pv.getNota().getNotaPK().setProductovOrdenordencodOrden(ord.getCodOrden());
+                }
+            }
+        }
+
+        return ordCompletadas;
+    }
+
+    public class ProductoVentaFilter {
+
+        private List<Seccion> seccionLiquidos;
+        private boolean modoPrueba = true;
+
+        public ProductoVentaFilter() {
+            if (cargarArchivos()) {
+                modoPrueba = false;
+            }
+        }
+
+        public ProductoVentaFilter(List<Seccion> seccionLiquidos) {
+            this.seccionLiquidos = seccionLiquidos;
+            modoPrueba = false;
+        }
+
+        public boolean isLiquido(ProductoVenta p) {
+            if (modoPrueba) {
+                return false;
+            }
+            for (Seccion s : seccionLiquidos) {
+                if (p.getSeccionnombreSeccion().equals(s)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public boolean isComida(ProductoVenta p) {
+            return !isLiquido(p);
+        }
+
+        public List<ProductovOrden> getLiquidos(Orden o) {
+            List<ProductovOrden> ret = new ArrayList<>();
+            for (ProductovOrden pv : o.getProductovOrdenList()) {
+                if (isLiquido(pv.getProductoVenta())) {
+                    ret.add(pv);
+                }
+            }
+            return ret;
+        }
+
+        public List<ProductovOrden> getComida(Orden o) {
+            List<ProductovOrden> ret = new ArrayList<>();
+            for (ProductovOrden pv : o.getProductovOrdenList()) {
+                if (isComida(pv.getProductoVenta())) {
+                    ret.add(pv);
+                }
+            }
+            return ret;
+        }
+
+        private boolean cargarArchivos() {
+            throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        }
+
     }
 
 }
