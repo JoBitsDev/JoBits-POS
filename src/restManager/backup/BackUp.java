@@ -417,11 +417,13 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     //
     //TODO: Mal hecho
     private boolean BorradoRemotoVentas(List<Venta> ventas) {
+        float sumaXCantidad = topeProceso / ventas.size();
         VentaListController controller = new VentaListController();
         controller.setShowDialogs(false);
         for (Venta x : ventas) {
             if (x.getVentaTotal() != null) {
                 controller.destroy(x);
+                incrementarProgreso(sumaXCantidad);
             }
         }
         return true;
@@ -511,7 +513,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
                 EjecutarBackUpProductos();
                 break;
             case VENTA:
-                topeProceso = 100;
+                topeProceso = borradoRemoto ? 50 : 100;
                 EjecutarBackUpVentas();
                 break;
             case All:
