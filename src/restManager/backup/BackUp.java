@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
+import restManager.controller.venta.VentaListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ExceptionHandler;
 import restManager.persistencia.Area;
@@ -416,9 +417,11 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     //
     //TODO: Mal hecho
     private boolean BorradoRemotoVentas(List<Venta> ventas) {
+        VentaListController controller = new VentaListController();
+        controller.setShowDialogs(false);
         for (Venta x : ventas) {
             if (x.getVentaTotal() != null) {
-                VentaDAO.getInstance().remove(x);
+                controller.destroy(x);
             }
         }
         return true;
