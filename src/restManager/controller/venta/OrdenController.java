@@ -263,7 +263,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
 
         }
-        instance.setOrdenvalorMonetario(utils.redondeoPorExcesoFloat(total * (1 + instance.getPorciento() / 100)));
+        instance.setOrdenvalorMonetario(Impresion.REDONDEO_POR_EXCESO ? utils.redondeoPorExcesoFloat(total * (1 + (instance.getPorciento() / 100))) : utils.setDosLugaresDecimalesFloat(total * (1 + (instance.getPorciento() / 100))));
         update(instance, true);
         return instance.getOrdenvalorMonetario();
     }
@@ -311,7 +311,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 }
             }
             if (found) {
-                founded.setCantidad(founded.getCantidad() + Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de "+ founded.getProductoVenta())));
+                founded.setCantidad(founded.getCantidad() + Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta())));
                 ProductovOrdenDAO.getInstance().edit(founded);
 
             } else {
