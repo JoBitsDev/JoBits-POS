@@ -104,15 +104,19 @@ public abstract class AbstractController<T> implements Controller {
     //Protected Methods
     //
     protected void showSuccessDialog(Container view) {
-        JOptionPane.showMessageDialog(view, R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"),
-                R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
-                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
+        if (showDialogs) {
+            JOptionPane.showMessageDialog(view, R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"),
+                    R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
+                    new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
+        }
     }
 
     protected void showSuccessDialog(Container view, String text) {
-        JOptionPane.showMessageDialog(view, text,
-                R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
-                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
+        if (showDialogs) {
+            JOptionPane.showMessageDialog(view, text,
+                    R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
+                    new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
+        }
     }
 
     protected boolean showConfirmDialog(Container view) {
@@ -137,9 +141,11 @@ public abstract class AbstractController<T> implements Controller {
     }
 
     protected void showErrorDialog(Container view, String errorText) {
-        JOptionPane.showMessageDialog(view, errorText,
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE,
-                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/alerta.png")));
+        if (showDialogs) {
+            JOptionPane.showMessageDialog(view, errorText,
+                    R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE,
+                    new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/alerta.png")));
+        }
     }
 
     protected boolean showDeleteDialog(Container view, Object obj) {
@@ -318,8 +324,8 @@ public abstract class AbstractController<T> implements Controller {
                 }
                 getModel().getEntityManager().getEntityManagerFactory().getCache().evict(getModel().getClass());
                 getModel().commitTransaction();
-            }catch(Exception e){
-                showErrorDialog((Container)getView(), "La accion no pudo ser completada \n" + e.getMessage() );
+            } catch (Exception e) {
+                showErrorDialog((Container) getView(), "La accion no pudo ser completada \n" + e.getMessage());
                 e.printStackTrace();
                 getModel().getEntityManager().getTransaction().rollback();
             }

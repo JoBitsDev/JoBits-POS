@@ -53,7 +53,9 @@ public class VentaListController extends AbstractDialogController<Venta> {
             this.selected = selected;
             this.destroy();
             this.selected = null;
-            getView().updateView();
+            if (getView() != null) {
+                getView().updateView();
+            }
             showSuccessDialog(getView());
         }
     }
