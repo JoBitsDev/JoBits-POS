@@ -300,8 +300,8 @@ public class BackUp extends SwingWorker<Boolean, Float> {
                     BackUpGastos(v.getGastoVentaList());
                     backUpAsistenciaPersonal(v.getAsistenciaPersonalList());
                 }
-                incrementarProgreso(sumaXCantidad);
             }
+            incrementarProgreso(sumaXCantidad);
         }
 
         return true;

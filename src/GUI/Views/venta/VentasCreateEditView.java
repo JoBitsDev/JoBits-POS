@@ -426,14 +426,14 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
             },
             new String [] {
-                "Codigo", "Nombre", "Monto"
+                "Codigo", "Nombre", "Neta", "Real"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -660,7 +660,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     }//GEN-LAST:event_jButtonEnviarCerrarCrearNuevaActionPerformed
 
     private void jideButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton2ActionPerformed
-        dispose();        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_jideButton2ActionPerformed
 
     private void jButtonCambiarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiarTurnoActionPerformed
@@ -719,6 +719,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
             jTabbedPaneData.removeTabAt(1);
             jButtonTerminarVentas.setVisible(false);
             jButtonRefrescar.setVisible(false);
+            jSpinner1.setVisible(false);
 
         } else {
             jLabelFecha.setText(R.DATE_FORMAT.format(instance.getFecha()));
@@ -786,7 +787,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         updateTableResumenGastos();
         updateTablePagoTrabajadores();
         updateTableResumenAreaVenta();
-        jSpinner1.setValue(getController().getInstance().getVentapropina() != null ? getController().getInstance().getVentapropina() : (float) 0);
+        if (fechaFin != null) {
+            jLabel1.setText(utils.setDosLugaresDecimales(getController().getInstance().getVentapropina()));
+        } else {
+            jSpinner1.setValue(getController().getInstance().getVentapropina() != null ? getController().getInstance().getVentapropina() : (float) 0);
+        }
         jLabelTotalVentas.setText(getController().getTotalVendido());
         jLabelTotalVentasNeta.setText(getController().getTotalVendidoNeto());
         jLabelTotalGastosInsumo.setText(getController().getTotalGastadoInsumos());

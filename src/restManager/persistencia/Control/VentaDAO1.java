@@ -278,28 +278,31 @@ public class VentaDAO1 {
 
     public static void getResumenVentaPorAreaOnTable(JTable tabla, Venta v, Area a) {
         //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[3]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         //llenando l array
+        float totalReal = 0;
         for (Orden o : aux) {
             if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
                 joinListsProductovOrden(ret, new ArrayList<>(o.getProductovOrdenList()));
+                totalReal += o.getOrdenvalorMonetario();
             }
 
         }//nˆ3
 
         //convirtiendo a rowData
-        float total = 0;
+        float totalNeta = 0;
         for (ProductovOrden x : ret) {
             ProductoVenta pv = x.getProductoVenta();
-            total += pv.getPrecioVenta() * x.getCantidad();
+            totalNeta += pv.getPrecioVenta() * x.getCantidad();
         }
-        if (total != 0) {
+        if (totalNeta != 0) {
             rowData[0].add(a.getCodArea());
             rowData[1].add(a.getNombre());
-            rowData[2].add(utils.setDosLugaresDecimales(total));
+            rowData[2].add(utils.setDosLugaresDecimales(totalNeta));
+            rowData[3].add(utils.setDosLugaresDecimales(totalReal));
 
             //llenando la tabla
             try {
