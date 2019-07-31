@@ -183,14 +183,16 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         });
 
         float valorMaxAjustado = (float) (valorMaximo * (1.1));
-        while (get.getOrdenvalorMonetario() > valorMaxAjustado) {
+        int i = 0, iteracionesMax = comidas.size() * liquidos.size();
+        System.out.println("while de limpiar maquillar " + get);
+        while (get.getOrdenvalorMonetario() > valorMaxAjustado && i < iteracionesMax) {
             if (comidas.size() >= liquidos.size()) {
                 iterarEnComidas(liquidos, comidas, valorMaxAjustado, get);
             } else {
                 iterarEnLiquidos(liquidos, comidas, valorMaxAjustado, get);
             }
         }
-
+        System.out.println("fin de while de limpiar maquillar");
         get.setProductovOrdenList(comidas);
         get.getProductovOrdenList().addAll(liquidos);
 
@@ -275,9 +277,11 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         int i = 0;
         while (monto_A_Ajustar > montoRecaudado && puntero < cantidadOrdenes) {
             float valorMaxOrden = (monto_A_Ajustar - montoRecaudado) / limite;
-            metodoA(valorMaxOrden, listaHorarioAlmuerzo);
-            valorMaxOrden = (monto_A_Ajustar - montoRecaudado) / limite;
-            metodoA(valorMaxOrden, listaHorarioComida);
+            if (puntero % 2 == 0) {
+                metodoA(valorMaxOrden, listaHorarioAlmuerzo);
+            } else {
+                metodoA(valorMaxOrden, listaHorarioComida);
+            }
             puntero++;
         }
 

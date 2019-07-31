@@ -13,14 +13,21 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import restManager.algoritmo.Y;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.controller.venta.VentaListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.NoSelectedException;
+import restManager.exceptions.UnauthorizedAccessException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Venta;
+import restManager.persistencia.models.VentaDAO;
+import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableCellModel;
 import restManager.util.utils;
 
@@ -75,6 +82,7 @@ public class VentaCalendarView extends AbstractView {
         jPanelControles = new javax.swing.JPanel();
         jButtonEliminar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
+        jButtonEditar1 = new javax.swing.JButton();
         jPanelSeleccion = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -207,6 +215,14 @@ public class VentaCalendarView extends AbstractView {
             }
         });
         jPanelControles.add(jButtonEditar);
+
+        jButtonEditar1.setText("Maquillar");
+        jButtonEditar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditar1ActionPerformed(evt);
+            }
+        });
+        jPanelControles.add(jButtonEditar1);
 
         getContentPane().add(jPanelControles, java.awt.BorderLayout.PAGE_END);
 
@@ -394,10 +410,28 @@ public class VentaCalendarView extends AbstractView {
         deleteSelected();// TODO add your handling code here:
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
+    private void jButtonEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditar1ActionPerformed
+        if (!R.PERIRSTENCE_UNIT_NAME.equals(R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota"))) {
+            throw new UnauthorizedAccessException(this, "Esta operacion solo se puede ejecutar conectado al servidor remoto");
+        }
+        Y alg = new Y(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), getController());
+        Venta old = alg.getVentaReal();
+        getController().destroy(VentaDAO.getInstance().find(old.getFecha()),true);
+        alg.getVentaReal().setOrdenList(alg.ejecutarAlgoritmo());
+        alg.getVentaReal().setGastoVentaList(new ArrayList<>());
+        alg.getVentaReal().setVentagastosPagotrabajadores(VentaDAO1.getValorTotalPagoTrabajadores(alg.getVentaReal()));
+        alg.getVentaReal().setVentagastosGastos((float) 0.0);
+        alg.getVentaReal().setVentaTotal((double) VentaDAO1.getValorTotalVentas(alg.getVentaReal()));
+        VentaDAO.getInstance().startTransaction();
+        VentaDAO.getInstance().create(alg.getVentaReal());
+        VentaDAO.getInstance().commitTransaction();
+    }//GEN-LAST:event_jButtonEditar1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonEditar1;
     private javax.swing.JButton jButtonEliminar;
     private com.toedter.calendar.JDateChooser jDateChooserAl;
     private com.toedter.calendar.JDateChooser jDateChooserDel;
@@ -556,7 +590,7 @@ public class VentaCalendarView extends AbstractView {
         jLabelTotalVendido.setText(utils.setDosLugaresDecimales((float) suma));
         jLabelPromedioVendido.setText(utils.setDosLugaresDecimales((float) promedio));
         jLabelInsumo.setText(utils.setDosLugaresDecimales((float) gInsumos));
-        jLabelTrabajadores.setText(utils.setDosLugaresDecimales((float)(gTrabajadores)));
+        jLabelTrabajadores.setText(utils.setDosLugaresDecimales((float) (gTrabajadores)));
         jLabelOtros.setText(utils.setDosLugaresDecimales((float) gGastos));
         int hora_pico_promedio = VentaDAO1.getModalPickHour(ventas);
         jLabelHoraPico.setText(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
