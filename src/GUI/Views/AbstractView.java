@@ -5,6 +5,7 @@
  */
 package GUI.Views;
 
+import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -194,7 +195,7 @@ public abstract class AbstractView extends JDialog implements  View{
             case INPUT_LARGE:
                 return new Dimension(590, 700);
             case INPUT:
-                return new Dimension(WIDTH, HEIGHT);
+                return new Dimension(400, 600);
             case FULL_SCREEN:
                 return new Dimension(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize());
             default:
@@ -215,6 +216,11 @@ public abstract class AbstractView extends JDialog implements  View{
     //
     //Private Methods
     //
+
+    @Override
+    public Container getContainer() {
+        return this;
+    }
     
     @Override
     public void initDefaults() {

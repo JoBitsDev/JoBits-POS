@@ -5,6 +5,7 @@
  */
 package GUI.Views;
 
+import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Controller;
@@ -24,6 +25,8 @@ public interface View {
     public void fetchComponentData();
 
     public Controller getController();
+    
+    public Container getContainer();
 
     public void dispose();
 

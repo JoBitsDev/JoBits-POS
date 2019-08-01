@@ -68,6 +68,11 @@ public abstract class AbstractFragmentView<T> extends JPanel implements View {
     }
 
     @Override
+    public Container getContainer() {
+        return this;
+    }
+    
+    @Override
     public void fetchComponentData() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
