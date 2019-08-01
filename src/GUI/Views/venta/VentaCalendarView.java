@@ -216,7 +216,8 @@ public class VentaCalendarView extends AbstractView {
         });
         jPanelControles.add(jButtonEditar);
 
-        jButtonEditar1.setText("Maquillar");
+        jButtonEditar1.setText("Y");
+        jButtonEditar1.setEnabled(false);
         jButtonEditar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEditar1ActionPerformed(evt);
