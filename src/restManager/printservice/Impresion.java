@@ -64,14 +64,15 @@ public class Impresion {
     public static boolean IMPRIMIR_TICKET_COCINA = true;
     public static int cantidadCopias = 0;
     public static boolean REDONDEO_POR_EXCESO = true;
-
+    public static String CABECERA = "Restaurante";
+    
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
     /**
      * String referentes a la impresion de ordenes
      */
-    private final String CABECERA = "Restaurante",
-            COCINA = "Cocina: ",
+    private final String
+            COCINA = "Pto Elaboracion: ",
             DELACASA = "(Pedido por la casa)",
             ORDEN = "Orden No: ",
             MESA = "Mesa: ",
