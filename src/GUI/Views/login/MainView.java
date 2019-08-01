@@ -350,7 +350,6 @@ public class MainView extends AbstractView {
         jButtonCONFIG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/config.png"))); // NOI18N
         jButtonCONFIG.setText(bundle.getString("label_configuracion")); // NOI18N
         jButtonCONFIG.setBorderPainted(false);
-        jButtonCONFIG.setEnabled(false);
         jButtonCONFIG.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonCONFIG.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonCONFIG.addActionListener(new java.awt.event.ActionListener() {
@@ -477,7 +476,7 @@ public class MainView extends AbstractView {
     }//GEN-LAST:event_jideButton1ActionPerformed
 
     private void jButtonCONFIGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCONFIGActionPerformed
-        // TODO add your handling code here:
+        action(MainController.MenuButtons.CONFIGURACION);
     }//GEN-LAST:event_jButtonCONFIGActionPerformed
 
     private void jButtonNominasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNominasActionPerformed

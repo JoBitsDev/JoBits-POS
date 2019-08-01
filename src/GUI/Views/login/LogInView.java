@@ -7,6 +7,7 @@ package GUI.Views.login;
 
 import GUI.Views.View;
 import java.awt.Color;
+import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import restManager.controller.login.LogInController;
 import restManager.exceptions.DevelopingOperationException;
@@ -271,6 +272,11 @@ public class LogInView extends javax.swing.JFrame implements View{
     @Override
     public void fetchComponentData() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Container getContainer() {
+        return this;
     }
 
 }

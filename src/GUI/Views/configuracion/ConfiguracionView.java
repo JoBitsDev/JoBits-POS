@@ -8,7 +8,9 @@ package GUI.Views.configuracion;
 import GUI.Views.AbstractView;
 import java.awt.Dialog;
 import restManager.controller.AbstractDialogController;
+import restManager.controller.configuracion.ConfiguracionController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.resources.R;
 
 /**
  *
@@ -16,11 +18,10 @@ import restManager.exceptions.DevelopingOperationException;
  */
 public class ConfiguracionView extends AbstractView {
 
-    public ConfiguracionView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner) {
-        super(DIALOG_TYPE, controller, owner);
+    public ConfiguracionView(AbstractDialogController controller, Dialog owner) {
+        super(DialogType.INPUT, controller, owner);
+        initComponents();
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,49 +32,313 @@ public class ConfiguracionView extends AbstractView {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel12 = new javax.swing.JPanel();
+        jButtonCancelar = new javax.swing.JButton();
+        jButtonAplicar = new javax.swing.JButton();
+        jButtonAceptar = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanelImpresion = new javax.swing.JPanel();
-        jPanelTicket = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelGenerales = new javax.swing.JPanel();
+        jPanelNegocio = new javax.swing.JPanel();
+        jPanel24HR = new javax.swing.JPanel();
+        jCheckBoxMultiplesTurnos = new javax.swing.JCheckBox();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxTipoNegocio = new javax.swing.JComboBox<>();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBoxCambioMoneda = new javax.swing.JComboBox<>();
+        jPanelCaja = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jCheckBoxPermEsp = new javax.swing.JCheckBox();
+        jPanel1 = new javax.swing.JPanel();
+        jCheckBoxMesaFija = new javax.swing.JCheckBox();
+        jPanelImpresion = new javax.swing.JPanel();
+        jPanelGeneral = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jCheckBoxTicketCocina = new javax.swing.JCheckBox();
+        jPanel10 = new javax.swing.JPanel();
+        jCheckBoxRounding = new javax.swing.JCheckBox();
+        jPanelCaracterSeparador1 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBoxCantCopias = new javax.swing.JComboBox<>();
+        jPanelTickets = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jCheckBoxEncabezadoRestaurante = new javax.swing.JCheckBox();
+        jPanelCaracterSeparador = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBoxCaracterSeparador = new javax.swing.JComboBox<>();
+        jPanelTamannoPapel = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBoxTamannoTicket = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMaximumSize(getMaximumSize());
+        setMinimumSize(getMinimumSize());
+        setUndecorated(true);
+        setPreferredSize(getPreferredSize());
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
+        jPanel12.add(jButtonCancelar);
+
+        jButtonAplicar.setText(bundle.getString("label_aplicar")); // NOI18N
+        jButtonAplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAplicarActionPerformed(evt);
+            }
+        });
+        jPanel12.add(jButtonAplicar);
+
+        jButtonAceptar.setText(bundle.getString("label_aceptar")); // NOI18N
+        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAceptarActionPerformed(evt);
+            }
+        });
+        jPanel12.add(jButtonAceptar);
+
+        getContentPane().add(jPanel12, java.awt.BorderLayout.PAGE_END);
+
+        jPanelGenerales.setLayout(new javax.swing.BoxLayout(jPanelGenerales, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanelNegocio.setBorder(javax.swing.BorderFactory.createTitledBorder("Negocio"));
+        jPanelNegocio.setLayout(new java.awt.GridLayout(3, 1, 0, 3));
+
+        jPanel24HR.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jCheckBoxMultiplesTurnos.setText("Abierto 24 horas");
+        jCheckBoxMultiplesTurnos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jCheckBoxMultiplesTurnos.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jPanel24HR.add(jCheckBoxMultiplesTurnos);
+
+        jPanelNegocio.add(jPanel24HR);
+
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel2.setText("Tipo Negocio");
+        jPanel7.add(jLabel2);
+
+        jComboBoxTipoNegocio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Restaurante", "Cafeteria", "Bar", "Carniceria", "Dulceria", "Tienda" }));
+        jPanel7.add(jComboBoxTipoNegocio);
+
+        jPanelNegocio.add(jPanel7);
+
+        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel1.setText("Cambio de moneda");
+        jPanel9.add(jLabel1);
+
+        jComboBoxCambioMoneda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "24", "25" }));
+        jPanel9.add(jComboBoxCambioMoneda);
+
+        jPanelNegocio.add(jPanel9);
+
+        jPanelGenerales.add(jPanelNegocio);
+
+        jPanelCaja.setBorder(javax.swing.BorderFactory.createTitledBorder("Caja"));
+        jPanelCaja.setLayout(new java.awt.GridLayout(2, 1));
+
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jCheckBoxPermEsp.setText("Permisos Especiales");
+        jCheckBoxPermEsp.setToolTipText("Marcar para que el cajero pueda tener acceso a la venta general del dia");
+        jPanel2.add(jCheckBoxPermEsp);
+
+        jPanelCaja.add(jPanel2);
+
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jCheckBoxMesaFija.setText("Venta por mesa fija");
+        jCheckBoxMesaFija.setToolTipText("Marcar si el cajero solo puede vender por una mesa especifica");
+        jPanel1.add(jCheckBoxMesaFija);
+
+        jPanelCaja.add(jPanel1);
+
+        jPanelGenerales.add(jPanelCaja);
+
+        jTabbedPane1.addTab("Generales", jPanelGenerales);
 
         jPanelImpresion.setLayout(new javax.swing.BoxLayout(jPanelImpresion, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanelTicket.setBorder(javax.swing.BorderFactory.createTitledBorder("Generales"));
-        jPanelImpresion.add(jPanelTicket);
+        jPanelGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder("Generales"));
+        jPanelGeneral.setLayout(new javax.swing.BoxLayout(jPanelGeneral, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Tickets"));
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tamaño Papel"));
+        jCheckBoxTicketCocina.setText("Imprimir ticket a cocina");
+        jCheckBoxTicketCocina.setToolTipText("");
+        jPanel11.add(jCheckBoxTicketCocina);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "58mm", "80mm" }));
-        jPanel2.add(jComboBox1);
+        jPanelGeneral.add(jPanel11);
 
-        jPanel1.add(jPanel2);
+        jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jPanelImpresion.add(jPanel1);
+        jCheckBoxRounding.setText("Redondeo por exceso en tickets");
+        jCheckBoxRounding.setToolTipText("Redondear todos los valores por exceso");
+        jPanel10.add(jCheckBoxRounding);
+
+        jPanelGeneral.add(jPanel10);
+
+        jPanelCaracterSeparador1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel5.setText("Cantidad de copias de impresión");
+        jPanelCaracterSeparador1.add(jLabel5);
+
+        jComboBoxCantCopias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5" }));
+        jComboBoxCantCopias.setToolTipText("el valor 0 es solo la original");
+        jPanelCaracterSeparador1.add(jComboBoxCantCopias);
+
+        jPanelGeneral.add(jPanelCaracterSeparador1);
+
+        jPanelImpresion.add(jPanelGeneral);
+
+        jPanelTickets.setBorder(javax.swing.BorderFactory.createTitledBorder("Tickets"));
+        jPanelTickets.setLayout(new javax.swing.BoxLayout(jPanelTickets, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jCheckBoxEncabezadoRestaurante.setText("Mostrar encabezado en tickets");
+        jCheckBoxEncabezadoRestaurante.setToolTipText("");
+        jPanel8.add(jCheckBoxEncabezadoRestaurante);
+
+        jPanelTickets.add(jPanel8);
+
+        jPanelCaracterSeparador.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel3.setText("Caracter separador");
+        jPanelCaracterSeparador.add(jLabel3);
+
+        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", "ˆ" }));
+        jPanelCaracterSeparador.add(jComboBoxCaracterSeparador);
+
+        jPanelTickets.add(jPanelCaracterSeparador);
+
+        jPanelTamannoPapel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel4.setText("Tamanno Ticket");
+        jLabel4.setToolTipText("");
+        jPanelTamannoPapel.add(jLabel4);
+
+        jComboBoxTamannoTicket.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "58mm", "80mm" }));
+        jPanelTamannoPapel.add(jComboBoxTamannoTicket);
+
+        jPanelTickets.add(jPanelTamannoPapel);
+
+        jPanelImpresion.add(jPanelTickets);
 
         jTabbedPane1.addTab("Impresion", jPanelImpresion);
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAceptarActionPerformed
+
+    private void jButtonAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAplicarActionPerformed
+        validateData();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAplicarActionPerformed
 
     @Override
     public void updateView() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        jCheckBoxMultiplesTurnos.setSelected((boolean) fetch(R.SettingID.GENERAL_TURNOS_VARIOS));
+        jComboBoxCambioMoneda.setSelectedItem(fetch(R.SettingID.GENERAL_CAMBIO_MONEDA));
+        jCheckBoxPermEsp.setSelected((boolean) fetch(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP));
+        jCheckBoxMesaFija.setSelected((boolean) fetch(R.SettingID.GENERAL_MESA_FIJA_CAJERO));
+        jCheckBoxTicketCocina.setSelected((boolean) fetch(R.SettingID.IMPRESION_IMPRIMIR_TICKET_EN_COCINA));
+        jCheckBoxRounding.setSelected((boolean) fetch(R.SettingID.IMPRESION_REDONDEO_EXCESO));
+        jComboBoxCantCopias.setSelectedItem(fetch(R.SettingID.IMPRESION_CANTIDAD_COPIAS));
+        jCheckBoxEncabezadoRestaurante.setSelected((boolean) fetch(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE));
+        jComboBoxCaracterSeparador.setSelectedItem(fetch(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR));
+        jComboBoxTipoNegocio.setSelectedItem(fetch(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO));
+        int selected = 0;
+        if (fetch(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL).equals("48")) {
+            selected = 1;
+        }
+        jComboBoxTamannoTicket.setSelectedIndex(selected);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JButton jButtonAplicar;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JCheckBox jCheckBoxEncabezadoRestaurante;
+    private javax.swing.JCheckBox jCheckBoxMesaFija;
+    private javax.swing.JCheckBox jCheckBoxMultiplesTurnos;
+    private javax.swing.JCheckBox jCheckBoxPermEsp;
+    private javax.swing.JCheckBox jCheckBoxRounding;
+    private javax.swing.JCheckBox jCheckBoxTicketCocina;
+    private javax.swing.JComboBox<String> jComboBoxCambioMoneda;
+    private javax.swing.JComboBox<String> jComboBoxCantCopias;
+    private javax.swing.JComboBox<String> jComboBoxCaracterSeparador;
+    private javax.swing.JComboBox<String> jComboBoxTamannoTicket;
+    private javax.swing.JComboBox<String> jComboBoxTipoNegocio;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel24HR;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelCaja;
+    private javax.swing.JPanel jPanelCaracterSeparador;
+    private javax.swing.JPanel jPanelCaracterSeparador1;
+    private javax.swing.JPanel jPanelGeneral;
+    private javax.swing.JPanel jPanelGenerales;
     private javax.swing.JPanel jPanelImpresion;
-    private javax.swing.JPanel jPanelTicket;
+    private javax.swing.JPanel jPanelNegocio;
+    private javax.swing.JPanel jPanelTamannoPapel;
+    private javax.swing.JPanel jPanelTickets;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public ConfiguracionController getController() {
+        return (ConfiguracionController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private Object fetch(R.SettingID settingID) {
+        return getController().getConfiguracion(settingID);
+    }
+
+    private void save(R.SettingID settingID, Object update) {
+        getController().updateConfiguracion(settingID, update);
+    }
+
+    private void validateData() {
+        save(R.SettingID.GENERAL_TURNOS_VARIOS, jCheckBoxMultiplesTurnos.isSelected());
+        save(R.SettingID.GENERAL_CAMBIO_MONEDA, jComboBoxCambioMoneda.getSelectedItem());
+        save(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP, jCheckBoxPermEsp.isSelected());
+        save(R.SettingID.GENERAL_MESA_FIJA_CAJERO, jCheckBoxMesaFija.isSelected());
+        save(R.SettingID.IMPRESION_IMPRIMIR_TICKET_EN_COCINA, jCheckBoxTicketCocina.isSelected());
+        save(R.SettingID.IMPRESION_REDONDEO_EXCESO, jCheckBoxRounding.isSelected());
+        save(R.SettingID.IMPRESION_CANTIDAD_COPIAS, jComboBoxCantCopias.getSelectedItem());
+        save(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE, jCheckBoxEncabezadoRestaurante.isSelected());
+        save(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR, jComboBoxCaracterSeparador.getSelectedItem());
+        save(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO, jComboBoxTipoNegocio.getSelectedItem());
+        String selected = "32";
+        if (jComboBoxTamannoTicket.getSelectedItem().equals("80mm")) {
+            selected = "48";
+        }
+        save(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL, selected);
+    }
+
 }
