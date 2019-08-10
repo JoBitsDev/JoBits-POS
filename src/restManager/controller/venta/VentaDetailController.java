@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import restManager.controller.AbstractDetailController;
+import restManager.controller.Licence.Licence;
 import restManager.controller.Licence.LicenceController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
@@ -215,7 +216,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     public Venta getDiaDeVenta(Date fecha) {
         Venta ret;
-        LicenceController licence = new LicenceController();
+        LicenceController licence = new LicenceController(Licence.TipoLicencia.APLICACION);
         if (fecha == null) {
             //revisar si hay un dia sin cerrar
             List<Venta> ventas = getItems();

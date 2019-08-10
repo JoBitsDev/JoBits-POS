@@ -14,16 +14,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
-import restManager.controller.licencia.Licencia;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Configuracion;
-import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.ConfiguracionDAO;
-import restManager.resources.R;
 
 /**
  * FirstDream
@@ -35,18 +28,21 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
 
     private final Licence licence;
     private Container parent;
+    private Licence.TipoLicencia tipoLic;
 
-    public LicenceController() {
+    public LicenceController(Licence.TipoLicencia tipoLic) {
         super(ConfiguracionDAO.getInstance());
         licence = Licence.getInstance();
-        getEstadoLicencia();
+        this.tipoLic = tipoLic;
+        getEstadoLicencia(this.tipoLic);
     }
 
-    public LicenceController(Container parent) {
+    public LicenceController(Container parent, Licence.TipoLicencia tipoLic) {
         super(ConfiguracionDAO.getInstance());
         this.parent = parent;
         licence = Licence.getInstance();
-        getEstadoLicencia();
+        this.tipoLic = tipoLic;
+        getEstadoLicencia(this.tipoLic);
         constructView(parent);
     }
 
@@ -57,8 +53,8 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
         getView().setVisible(true);
     }
 
-    public String getEstadoLicencia() {
-        File f = new File(R.LICENCE_KEY_PATH);
+    public String getEstadoLicencia(Licence.TipoLicencia tipo) {
+        File f = new File(tipo.getPath());
         if (!f.exists() || !f.canRead()) {
             return "Archivo de licencia no encontrado o ilegible";
         }
@@ -74,6 +70,7 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
         } catch (IOException ex) {
             return "Error de lectura de la licencia";
         }
+        Licence.getInstance().setTipoLicencia(tipo);
         Licence.getInstance().setLicence(key.replaceAll("-", ""));
         if (licence.LICENCIA_VALIDA && licence.LICENCIA_ACTIVA) {
             return "Dias restantes " + licence.DIAS_RESTANTES;
@@ -98,7 +95,7 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
     }
 
     private void safeLicence(String key) {
-        File f = new File(R.LICENCE_KEY_PATH);
+        File f = new File(tipoLic.getPath());
         try (FileOutputStream out = new FileOutputStream(f)) {
             out.write(key.getBytes());
             out.flush();
@@ -114,7 +111,7 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
     }
 
     public String getSoftwareUID() {
-        return "R-" + stringFormatter(SerialNumber.getUID());
+        return tipoLic + stringFormatter(SerialNumber.getUID());
     }
 
     public static String stringFormatter(String key) {

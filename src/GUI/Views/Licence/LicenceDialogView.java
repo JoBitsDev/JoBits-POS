@@ -7,8 +7,10 @@ package GUI.Views.Licence;
 
 import GUI.Views.AbstractView;
 import java.awt.Dialog;
+import java.awt.event.KeyEvent;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Controller;
+import restManager.controller.Licence.Licence;
 import restManager.controller.Licence.LicenceController;
 import restManager.exceptions.DevelopingOperationException;
 
@@ -225,7 +227,7 @@ public class LicenceDialogView extends AbstractView {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
-        if (jTextField2.getText().length() > 2) {
+        if (jTextField2.getText().length() > 2 ) {
             jTextField2.transferFocus();
         }// TODO add your handling code here:
     }//GEN-LAST:event_jTextField2KeyTyped
@@ -286,7 +288,7 @@ public class LicenceDialogView extends AbstractView {
 
     @Override
     public void updateView() {
-        jideLabelEstadoLic.setText(getController().getEstadoLicencia());
+        jideLabelEstadoLic.setText(getController().getEstadoLicencia(Licence.TipoLicencia.APLICACION));
         jideLabelIdentificador.setText(getController().getSoftwareUID());
     }
 

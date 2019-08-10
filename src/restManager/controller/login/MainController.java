@@ -130,7 +130,7 @@ public class MainController extends AbstractDialogController<Personal> {
                     copiaSegView seg = new copiaSegView(getView(), true);
                     break;
                 case LICENCIA:
-                    controller = new LicenceController(getView());
+                    controller = new LicenceController(getView(),Licence.TipoLicencia.APLICACION);
                     break;
                 case NOMINAS:
                     controller = new NominasController(getView());
@@ -158,7 +158,7 @@ public class MainController extends AbstractDialogController<Personal> {
     }
 
     public Licence getEstadoLicencia() {
-        LicenceController licence = new LicenceController();
+        LicenceController licence = new LicenceController(Licence.TipoLicencia.APLICACION);
         return licence.getLicence();
     }
 

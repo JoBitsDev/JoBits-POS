@@ -32,8 +32,6 @@ public class R {
 
     public static String logFilePath = "logs/";
 
-    public static String LICENCE_KEY_PATH = "lic.key";
-            
     public static String COIN_SUFFIX;
 
     public static Personal loggedUser = null;

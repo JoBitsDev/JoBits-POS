@@ -19,6 +19,7 @@ public class Licence {
 
     private static final Licence INSTANCE = new Licence();
     private String licence;
+    private TipoLicencia tipoLicencia = TipoLicencia.APLICACION;
     private long fechaFinMilis;
     public boolean LICENCIA_VALIDA = false;
     public boolean LICENCIA_ACTIVA = false;
@@ -49,9 +50,17 @@ public class Licence {
         this.fechaFinMilis = fechaFinMilis;
     }
 
+    public TipoLicencia getTipoLicencia() {
+        return tipoLicencia;
+    }
+
+    public void setTipoLicencia(TipoLicencia tipoLicencia) {
+        this.tipoLicencia = tipoLicencia;
+    }
+    
     private void descifrarLicenciaCalcularRestante() {
         try {
-            Cipher c = new Cipher("R-" + LicenceController.stringFormatter(SerialNumber.getUID()));
+            Cipher c = new Cipher(tipoLicencia + LicenceController.stringFormatter(SerialNumber.getUID()));
             fechaFinMilis = Long.parseLong(c.decrypt(licence));
             long milisLastSale = new Date().toInstant().toEpochMilli();
             for (Venta v : VentaDAO.getInstance().findAll()) {
@@ -64,10 +73,10 @@ public class Licence {
                 LICENCIA_ACTIVA = false;
             } else {
                 long milisToday = new Date().toInstant().toEpochMilli();
-                if(milisLastSale > milisToday){
+                if (milisLastSale > milisToday) {
                     milisToday = milisLastSale;
                 }
-                DIAS_RESTANTES = (fechaFinMilis - milisToday ) / 86400000L;
+                DIAS_RESTANTES = (fechaFinMilis - milisToday) / 86400000L;
                 LICENCIA_ACTIVA = DIAS_RESTANTES >= 0;
             }
         } catch (Exception ex) {
@@ -78,6 +87,34 @@ public class Licence {
 
     private void validarLicencia() {
         LICENCIA_VALIDA = true;
+    }
+
+    public enum TipoLicencia {
+        APLICACION("R-", "lic.key"),
+        SECUNDARIA("B-","aux.key");
+
+        private final String prefijo,path;
+
+        private TipoLicencia(String prefijo,String path) {
+            this.prefijo = prefijo;
+            this.path = path;
+        }
+
+        public String getPrefijo() {
+            return prefijo;
+        }
+
+        public String getPath() {
+            return path;
+        }
+
+        @Override
+        public String toString() {
+            return prefijo;
+        }
+
+        
+        
     }
 
 }
