@@ -57,18 +57,19 @@ public class VentaDAO1 {
     public static void getResumenVentasOnTable(JTable tabla, Venta v) {
 
         //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
         ArrayList<ProductovOrden> ret = getResumenVentas(v);
+
+        Collections.sort(ret, (ProductovOrden o1, ProductovOrden o2) -> o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre()));
 
         //convirtiendo a rowData
         float total = 0;
         for (ProductovOrden x : ret) {
             ProductoVenta pv = x.getProductoVenta();
-            rowData[0].add(pv.getPCod());
-            rowData[1].add(pv.getNombre());
-            rowData[2].add(pv.getPrecioVenta());
-            rowData[3].add(x.getCantidad());
-            rowData[4].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
+            rowData[0].add(pv.getNombre());
+            rowData[1].add(pv.getPrecioVenta());
+            rowData[2].add(x.getCantidad());
+            rowData[3].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
             total += pv.getPrecioVenta() * x.getCantidad();
         }
 
@@ -241,7 +242,7 @@ public class VentaDAO1 {
 
     public static void getResumenDetalladoVentasCocinaOnTable(JTable tabla, Venta v, Cocina c) {
         //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -254,14 +255,14 @@ public class VentaDAO1 {
 
         }//nˆ3
 
+        Collections.sort(ret, (ProductovOrden o1, ProductovOrden o2) -> o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre()));
         //convirtiendo a rowData
         float total = 0;
         for (ProductovOrden x : ret) {
-            rowData[0].add(x.getProductoVenta().getPCod());
-            rowData[1].add(x.getProductoVenta().getNombre());
-            rowData[2].add(x.getProductoVenta().getPrecioVenta());
-            rowData[3].add(x.getCantidad());
-            rowData[4].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
+            rowData[0].add(x.getProductoVenta().getNombre());
+            rowData[1].add(x.getProductoVenta().getPrecioVenta());
+            rowData[2].add(x.getCantidad());
+            rowData[3].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
 
             total += x.getProductoVenta().getPrecioVenta() * x.getCantidad();
         }
@@ -409,7 +410,7 @@ public class VentaDAO1 {
     public static void getResumenGastosOnTable(JTable tabla, Venta v) {
 
         //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
         ArrayList<ProductoInsumo> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -429,12 +430,10 @@ public class VentaDAO1 {
         //convirtiendo a rowData
         float total = 0;
         for (ProductoInsumo x : ret) {
-
-            rowData[0].add(x.getInsumo().getCodInsumo());
-            rowData[1].add(x.getInsumo().getNombre());
-            rowData[2].add(x.getInsumo().getUm());
-            rowData[3].add(x.getCantidad());
-            rowData[4].add(x.getCosto());
+            rowData[0].add(x.getInsumo().getNombre());
+            rowData[1].add(x.getInsumo().getUm());
+            rowData[2].add(x.getCantidad());
+            rowData[3].add(x.getCosto());
             total += x.getCosto();
         }
 
@@ -451,7 +450,7 @@ public class VentaDAO1 {
     public static void getResumenGastosCocinaOnTable(JTable tabla, Venta v, Cocina c) {
 
         //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
         ArrayList<ProductoInsumo> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
@@ -474,11 +473,10 @@ public class VentaDAO1 {
         float total = 0;
         for (ProductoInsumo x : ret) {
 
-            rowData[0].add(x.getInsumo().getCodInsumo());
-            rowData[1].add(x.getInsumo().getNombre());
-            rowData[2].add(x.getInsumo().getUm());
-            rowData[3].add(x.getCantidad());
-            rowData[4].add(x.getCosto());
+            rowData[0].add(x.getInsumo().getNombre());
+            rowData[1].add(x.getInsumo().getUm());
+            rowData[2].add(x.getCantidad());
+            rowData[3].add(x.getCosto());
             total += x.getCosto();
         }
 
@@ -829,7 +827,7 @@ public class VentaDAO1 {
         float ret = 0;
         for (ProductovOrden x : list) {
             ProductoVenta v = x.getProductoVenta();
-            ret += v.getPagoPorVenta() != null ? v.getPagoPorVenta() * x.getCantidad() : 0 ; 
+            ret += v.getPagoPorVenta() != null ? v.getPagoPorVenta() * x.getCantidad() : 0;
         }
         return utils.setDosLugaresDecimalesFloat(ret);
     }

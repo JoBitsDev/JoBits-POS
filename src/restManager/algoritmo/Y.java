@@ -47,7 +47,7 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
 
     private List<Orden> ordCompletadas;
 
-    private final byte porciento_a_ajustar = 30;
+    private final byte porciento_a_ajustar = 20;
 
     private VentaListController controller;
 
@@ -55,7 +55,8 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
     //buscar otra forma
     //
     private float montoRecaudado;
-    private int puntero, limite;
+    private int puntero, 
+            limiteOrdenes = -1;
 
     public Y(Venta ventaReal) {
         this.ventaReal = ventaReal;
@@ -108,11 +109,11 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         montoRecaudado += valorAgregado;
         // int porcientoCompletado = ((int) ((montoRecaudado / monto_A_Ajustar) * 100));
         if (valorAgregado != 0) {
-            limite--;
+            limiteOrdenes--;
             // publish(porcientoCompletado);
         }
-        if (limite == 0) {
-            limite++;
+        if (limiteOrdenes == 0) {
+            limiteOrdenes++;
         }
     }
 
@@ -270,13 +271,16 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
             ConfiguracionDAO.getInstance().commitTransaction();
         }
 
-        limite = cantidadOrdenes / 2;
+        if (limiteOrdenes == -1) {
+        limiteOrdenes = cantidadOrdenes / 2;
+        }
+        
         puntero = 0;
         monto_A_Ajustar = (float) (ventaReal.getVentaTotal() * porciento_a_ajustar / 100);
 
         int i = 0;
         while (monto_A_Ajustar > montoRecaudado && puntero < cantidadOrdenes) {
-            float valorMaxOrden = (monto_A_Ajustar - montoRecaudado) / limite;
+            float valorMaxOrden = (monto_A_Ajustar - montoRecaudado) / limiteOrdenes;
             if (puntero % 2 == 0) {
                 metodoA(valorMaxOrden, listaHorarioAlmuerzo);
             } else {

@@ -6,14 +6,12 @@
 package GUI.Views.util;
 
 import GUI.Components.JSpinner;
-import GUI.Components.JTextField;
 import GUI.Views.AbstractView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.JFormattedTextField;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Orden;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
@@ -60,16 +58,15 @@ public class CalcularCambioView extends javax.swing.JDialog {
             public void focusLost(FocusEvent e) {
             }
         };
-        
+
         final JFormattedTextField fieldCUC = ((JSpinner.NumberEditor) jSpinnerCUC.getEditor()).getTextField();
         final JFormattedTextField fieldMN = ((JSpinner.NumberEditor) jSpinnerMN.getEditor()).getTextField();
-        
+
         fieldCUC.addActionListener(l);
         fieldMN.addActionListener(l);
         fieldCUC.addFocusListener(focus);
         fieldMN.addFocusListener(focus);
-        
-        
+
         ComponentMover cr = new ComponentMover(this, jPanel1);
 
         this.setVisible(true);
@@ -157,11 +154,6 @@ public class CalcularCambioView extends javax.swing.JDialog {
                 jSpinnerCUCStateChanged(evt);
             }
         });
-        jSpinnerCUC.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jSpinnerCUCFocusGained(evt);
-            }
-        });
         jPanel1.add(jSpinnerCUC);
 
         jLabelNombre4.setText("MN");
@@ -208,9 +200,6 @@ public class CalcularCambioView extends javax.swing.JDialog {
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSalirActionPerformed
-
-    private void jSpinnerCUCFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSpinnerCUCFocusGained
-    }//GEN-LAST:event_jSpinnerCUCFocusGained
 
     private void jSpinnerMNFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSpinnerMNFocusGained
     }//GEN-LAST:event_jSpinnerMNFocusGained
@@ -261,7 +250,7 @@ public class CalcularCambioView extends javax.swing.JDialog {
         }
 
         if (montoADevolver > 0) {
-            jLabelValorMontoADevolver.setText("Falta Dinero");
+            jLabelValorMontoADevolver.setText("Falta " + utils.setDosLugaresDecimales(montoADevolver));
         } else {
             jLabelValorMontoADevolver.setText(utils.setDosLugaresDecimales(montoADevolver));
 

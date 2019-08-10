@@ -15,6 +15,7 @@ import restManager.controller.AbstractFragmentController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.ValidatingException;
 import restManager.logs.RestManagerHandler;
 import restManager.persistencia.Configuracion;
 import restManager.persistencia.IpvRegistro;
@@ -96,6 +97,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         if (ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_MESA_FIJA_CAJERO.getValue()).getValor() == 0) {
             ArrayList<Mesa> mesas = (ArrayList<Mesa>) MesaDAO.getInstance().findAll();
             for (int i = 0; i < mesas.size();) {
+                getModel().getEntityManager().refresh(mesas.get(i));
                 if (!mesas.get(i).getEstado().equals("vacia")) {
                     mesas.remove(i);
                 } else {

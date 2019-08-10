@@ -323,6 +323,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jCheckBoxDELACASA.setSelected(getInstance().getDeLaCasa());
         jSpinnerPorciento.setValue(getInstance().getPorciento());
         updateValorTotal();
+        crossReferencePanel.getjTextFieldAutoComplete().requestFocus();
 
     }
 

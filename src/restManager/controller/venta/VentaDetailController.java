@@ -167,7 +167,8 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         getModel().getEntityManager().refresh(getInstance());
         if (ordController != null) {
             if (ordController.getInstance() != null) {
-                ordController.update(ordController.getInstance());
+                int index = getOrdenesActivas().indexOf(ordController.getInstance());
+                ordController.setInstance(getOrdenesActivas().get(index));
             }
         }
         vi.updateView();

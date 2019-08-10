@@ -149,7 +149,6 @@
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerCUCStateChanged"/>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jSpinnerCUCFocusGained"/>
           </Events>
         </Component>
         <Component class="org.jdesktop.swingx.JXLabel" name="jLabelNombre4">
