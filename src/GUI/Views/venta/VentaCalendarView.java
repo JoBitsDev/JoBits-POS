@@ -18,6 +18,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import restManager.algoritmo.Y;
 import restManager.controller.AbstractDialogController;
+import restManager.controller.Licence.Licence;
+import restManager.controller.Licence.LicenceController;
+import restManager.controller.configuracion.ConfiguracionController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.controller.venta.VentaListController;
 import restManager.exceptions.DevelopingOperationException;
@@ -25,10 +28,12 @@ import restManager.exceptions.NoSelectedException;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Control.VentaDAO1;
+import restManager.persistencia.Seccion;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.VentaDAO;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableCellModel;
+import restManager.util.RestManagerComboBoxModel;
 import restManager.util.utils;
 
 /**
@@ -49,11 +54,13 @@ public class VentaCalendarView extends AbstractView {
     public VentaCalendarView(AbstractDialogController controller) {
         super(DialogType.FULL_SCREEN, controller);
         initComponents();
+        fetchComponentData();
     }
 
     public VentaCalendarView(AbstractDialogController<Venta> controller, AbstractView parentComponent) {
         super(DialogType.FULL_SCREEN, controller, parentComponent);
         initComponents();
+        fetchComponentData();
     }
 
     /**
@@ -82,7 +89,7 @@ public class VentaCalendarView extends AbstractView {
         jPanelControles = new javax.swing.JPanel();
         jButtonEliminar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
-        jButtonEditar1 = new javax.swing.JButton();
+        jButtonY = new javax.swing.JButton();
         jPanelSeleccion = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -216,14 +223,13 @@ public class VentaCalendarView extends AbstractView {
         });
         jPanelControles.add(jButtonEditar);
 
-        jButtonEditar1.setText("Y");
-        jButtonEditar1.setEnabled(false);
-        jButtonEditar1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonY.setText("Y");
+        jButtonY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditar1ActionPerformed(evt);
+                jButtonYActionPerformed(evt);
             }
         });
-        jPanelControles.add(jButtonEditar1);
+        jPanelControles.add(jButtonY);
 
         getContentPane().add(jPanelControles, java.awt.BorderLayout.PAGE_END);
 
@@ -248,6 +254,7 @@ public class VentaCalendarView extends AbstractView {
         jPanel3.add(jLabel9);
 
         jYearChooser1.setOpaque(false);
+        jYearChooser1.setPreferredSize(new java.awt.Dimension(80, 35));
         jYearChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jYearChooser1PropertyChange(evt);
@@ -259,8 +266,10 @@ public class VentaCalendarView extends AbstractView {
         jLabel8.setText("Mes");
         jPanel3.add(jLabel8);
 
-        jMonthChooser1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jMonthChooser1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jMonthChooser1.setMinimumSize(new java.awt.Dimension(176, 40));
         jMonthChooser1.setOpaque(false);
+        jMonthChooser1.setPreferredSize(new java.awt.Dimension(176, 40));
         jMonthChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jMonthChooser1PropertyChange(evt);
@@ -268,7 +277,7 @@ public class VentaCalendarView extends AbstractView {
         });
         jPanel3.add(jMonthChooser1);
 
-        jPanelSeleccion.add(jPanel3, java.awt.BorderLayout.CENTER);
+        jPanelSeleccion.add(jPanel3, java.awt.BorderLayout.EAST);
 
         getContentPane().add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
 
@@ -411,13 +420,13 @@ public class VentaCalendarView extends AbstractView {
         deleteSelected();// TODO add your handling code here:
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
-    private void jButtonEditar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditar1ActionPerformed
+    private void jButtonYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonYActionPerformed
         if (!R.PERIRSTENCE_UNIT_NAME.equals(R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota"))) {
             throw new UnauthorizedAccessException(this, "Esta operacion solo se puede ejecutar conectado al servidor remoto");
         }
         Y alg = new Y(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), getController());
         Venta old = alg.getVentaReal();
-        getController().destroy(VentaDAO.getInstance().find(old.getFecha()),true);
+        getController().destroy(VentaDAO.getInstance().find(old.getFecha()), true);
         alg.getVentaReal().setOrdenList(alg.ejecutarAlgoritmo());
         alg.getVentaReal().setGastoVentaList(new ArrayList<>());
         alg.getVentaReal().setVentagastosPagotrabajadores(VentaDAO1.getValorTotalPagoTrabajadores(alg.getVentaReal()));
@@ -426,14 +435,14 @@ public class VentaCalendarView extends AbstractView {
         VentaDAO.getInstance().startTransaction();
         VentaDAO.getInstance().create(alg.getVentaReal());
         VentaDAO.getInstance().commitTransaction();
-    }//GEN-LAST:event_jButtonEditar1ActionPerformed
+    }//GEN-LAST:event_jButtonYActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonEditar;
-    private javax.swing.JButton jButtonEditar1;
     private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JButton jButtonY;
     private com.toedter.calendar.JDateChooser jDateChooserAl;
     private com.toedter.calendar.JDateChooser jDateChooserDel;
     private javax.swing.JLabel jLabel1;
@@ -614,4 +623,11 @@ public class VentaCalendarView extends AbstractView {
     private void deleteSelected() {
         getController().destroy(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()));
     }
+
+    @Override
+    public void fetchComponentData() {
+        LicenceController controller = new LicenceController(Licence.TipoLicencia.SECUNDARIA);
+        jButtonY.setVisible(controller.getLicence().LICENCIA_ACTIVA && controller.getLicence().LICENCIA_VALIDA);
+    }
+
 }

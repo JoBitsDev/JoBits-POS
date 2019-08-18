@@ -6,8 +6,8 @@
 package GUI.Views.areaventa;
 
 import GUI.Views.AbstractDetailView;
+import GUI.Views.util.ComboBoxWithList;
 import java.awt.Dialog;
-import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.areaventa.AreaDetailController;
 import restManager.exceptions.DevelopingOperationException;
@@ -15,7 +15,6 @@ import restManager.exceptions.DuplicatedException;
 import restManager.exceptions.NoSelectedException;
 import restManager.persistencia.Area;
 import restManager.persistencia.Carta;
-import restManager.util.RestManagerComboBoxModel;
 import restManager.util.RestManagerListModel;
 
 /**
@@ -24,6 +23,8 @@ import restManager.util.RestManagerListModel;
  */
 public class AreaCreateEditView extends AbstractDetailView<Area> {
 
+    ComboBoxWithList<Carta> model;
+    
     public AreaCreateEditView(Area instance, AbstractDialogController controller, Dialog owner) {
         super(instance, DialogType.DEFINED, controller, owner);
         initComponents();
@@ -50,12 +51,6 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         jLabel3 = new javax.swing.JLabel();
         jSpinnerPorciento = new javax.swing.JSpinner();
         jPanel6 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jPanel7 = new javax.swing.JPanel();
-        jButtonAddMenu = new javax.swing.JButton();
-        jButtonDeleteMenu = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -124,37 +119,6 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_carta"))); // NOI18N
         jPanel6.setLayout(new java.awt.BorderLayout());
-
-        jComboBox1.setToolTipText("Seleccione el menú a agregar");
-        jPanel6.add(jComboBox1, java.awt.BorderLayout.PAGE_START);
-
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jList1);
-
-        jPanel6.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jButtonAddMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/aceptar16.png"))); // NOI18N
-        jButtonAddMenu.setToolTipText("Agregar Menu");
-        jButtonAddMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddMenuActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jButtonAddMenu);
-
-        jButtonDeleteMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/borrar16.png"))); // NOI18N
-        jButtonDeleteMenu.setToolTipText("Quitar Menu");
-        jButtonDeleteMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDeleteMenuActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jButtonDeleteMenu);
-
-        jPanel6.add(jPanel7, java.awt.BorderLayout.PAGE_END);
-
         jPanel2.add(jPanel6);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -193,14 +157,6 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButtonDeleteMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteMenuActionPerformed
-        eliminarMenu();
-    }//GEN-LAST:event_jButtonDeleteMenuActionPerformed
-
-    private void jButtonAddMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddMenuActionPerformed
-        adicionarMenu();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAddMenuActionPerformed
-
     @Override
     public void setEditingMode() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
@@ -220,6 +176,7 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         getInstance().setNombre(jTextFieldNombre.getText());
         getInstance().setCapacidad((Integer) jSpinnerCantidad.getValue());
         getInstance().setPorcientoPorServicio((Integer) jSpinnerPorciento.getValue());
+        getInstance().setCartaList(model.getListModel().getElements());
         return true;
     }
 
@@ -238,57 +195,30 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         if (getInstance().getPorcientoPorServicio() != null) {
             jSpinnerPorciento.setValue(getInstance().getPorcientoPorServicio());
         }
-        jComboBox1.setModel(new RestManagerComboBoxModel<>(getController().getCartaList()));
-        jList1.setModel(new RestManagerListModel<>(getInstance().getCartaList()));
+        model = new ComboBoxWithList<>(getController().getCartaList(), getInstance().getCartaList());
+        jPanel6.add(model);
 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButtonAddMenu;
-    private javax.swing.JButton jButtonDeleteMenu;
-    private javax.swing.JComboBox<Carta> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelID;
-    private javax.swing.JList<Carta> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinnerCantidad;
     private javax.swing.JSpinner jSpinnerPorciento;
     private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 
-    private void eliminarMenu() {
-        if (jList1.getSelectedIndex() == -1) {
-            throw new NoSelectedException(this);
-        }
-
-        getInstance().getCartaList().remove(jList1.getSelectedValue());
-        jList1.setModel(new RestManagerListModel<>(getInstance().getCartaList()));
-    }
-
-    private void adicionarMenu() {
-        if (jComboBox1.getSelectedIndex() == -1) {
-            throw new NoSelectedException(this);
-        }
-        Carta c = (Carta) jComboBox1.getSelectedItem();
-        
-        if (getInstance().getCartaList().contains(c)) {
-            throw new DuplicatedException(this);
-        }
-        getInstance().getCartaList().add(c);
-        jList1.setModel(new RestManagerListModel<>(getInstance().getCartaList()));
-    }
 }

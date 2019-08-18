@@ -144,6 +144,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             newOrden = ordController.createNewInstance();
         }
         super.getInstance().getOrdenList().add(newOrden);
+        getView().updateView();
         ordController.create(newOrden, true);
         if (nil) {
             ordController = new OrdenController(newOrden, vi.getjPanelDetailOrdenes());
@@ -165,7 +166,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     public void fetchNewDataFromServer(int turnoTrabajo) {
         turnoActivo = turnoTrabajo;
-        getModel().getEntityManager().refresh(getInstance());
+        getModel().getEntityManager().refresh(getModel().find(getInstance().getFecha()));
         if (ordController != null) {
             if (ordController.getInstance() != null) {
                 int index = getOrdenesActivas().indexOf(ordController.getInstance());

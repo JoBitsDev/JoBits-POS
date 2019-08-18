@@ -60,6 +60,7 @@ public class IpvGestionView extends AbstractView {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelRegistros = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableRegistro = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -83,6 +84,8 @@ public class IpvGestionView extends AbstractView {
 
         jPanelRegistros.setLayout(new java.awt.BorderLayout(5, 0));
 
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTableRegistro.setAutoCreateRowSorter(true);
@@ -99,7 +102,9 @@ public class IpvGestionView extends AbstractView {
         jTableRegistro.setRowMargin(4);
         jScrollPane2.setViewportView(jTableRegistro);
 
-        jPanelRegistros.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jPanelRegistros.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
@@ -342,6 +347,7 @@ public class IpvGestionView extends AbstractView {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jListRegistro;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelData;
     private javax.swing.JPanel jPanelOptions;
@@ -448,7 +454,7 @@ public class IpvGestionView extends AbstractView {
         MessageFormat footer = new MessageFormat("-Pag {0}-");
         MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + jListRegistro.getSelectedValue());
         try {
-            ComponentPrinter.printComponent(jScrollPane2,
+            ComponentPrinter.printComponent(jPanel2,
                     "IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + jListRegistro.getSelectedValue(), true);
             jTableRegistro.print(JTable.PrintMode.FIT_WIDTH, header, footer);
         } catch (PrinterException ex) {

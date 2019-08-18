@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Queue;
 import javax.swing.SwingWorker;
 import restManager.controller.Controller;
+import restManager.controller.configuracion.ConfiguracionController;
 import restManager.controller.venta.VentaListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Configuracion;
@@ -37,17 +38,14 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
 
     private ProductoVentaFilter filter;
 
-    private float VALOR_MAXIMO_MONETARIO;
-
-    private float VALOR_MIN_MONETARIO;
-
     private Venta ventaReal;
 
     private float monto_A_Ajustar;
 
     private List<Orden> ordCompletadas;
 
-    private final byte porciento_a_ajustar = 20;
+    private byte porciento_a_ajustar,
+            porciento_cantidad_ordenes;
 
     private VentaListController controller;
 
@@ -55,16 +53,27 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
     //buscar otra forma
     //
     private float montoRecaudado;
-    private int puntero, 
+    private int puntero,
             limiteOrdenes = -1;
 
     public Y(Venta ventaReal) {
         this.ventaReal = ventaReal;
+        ConfiguracionController conf = new ConfiguracionController();
+        ParametrosConfiguracion params = conf.cargarConfiguracionY();
+        filter = new ProductoVentaFilter(params.bebidas, params.excluidos);
+        this.porciento_a_ajustar = params.getM();
+        this.porciento_cantidad_ordenes = params.getC();
     }
 
     public Y(Venta valueAt, VentaListController controller) {
-        this.ventaReal = valueAt;
+        this(valueAt);
         this.controller = controller;
+    }
+
+    public Y(Venta ventaReal, byte porciento_a_ajustar, byte porciento_cantidad_ordenes, VentaListController controller) {
+        this(ventaReal, controller);
+        this.porciento_a_ajustar = porciento_a_ajustar;
+        this.porciento_cantidad_ordenes = porciento_cantidad_ordenes;
     }
 
     public Venta getVentaReal() {
@@ -81,6 +90,30 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
 
     public void setMonto_A_Ajustar(float monto_A_Ajustar) {
         this.monto_A_Ajustar = monto_A_Ajustar;
+    }
+
+    public byte getPorciento_a_ajustar() {
+        return porciento_a_ajustar;
+    }
+
+    public void setPorciento_a_ajustar(byte porciento_a_ajustar) {
+        this.porciento_a_ajustar = porciento_a_ajustar;
+    }
+
+    public byte getPorciento_cantidad_ordenes() {
+        return porciento_cantidad_ordenes;
+    }
+
+    public void setPorciento_cantidad_ordenes(byte porciento_cantidad_ordenes) {
+        this.porciento_cantidad_ordenes = porciento_cantidad_ordenes;
+    }
+
+    public ProductoVentaFilter getFilter() {
+        return filter;
+    }
+
+    public void setFilter(ProductoVentaFilter filter) {
+        this.filter = filter;
     }
 
     @Override
@@ -150,28 +183,6 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
             return;
         }
 
-        //
-        // quitar luego
-        //
-        List<Seccion> secciones = SeccionDAO.getInstance().findAll();
-        List<Seccion> bebidas = new ArrayList<>();
-        for (Seccion s : secciones) {
-
-            switch (s.getNombreSeccion()) {
-
-                case "Bebida":
-                case "Cocteleria":
-                    bebidas.add(s);
-                    break;
-                default:
-                    break;
-            }
-        }
-        filter = new ProductoVentaFilter(bebidas);
-
-        //
-        // hasta aqui
-        //
         List<ProductovOrden> liquidos = filter.getLiquidos(get);
         List<ProductovOrden> comidas = filter.getComida(get);
         Collections.sort(comidas, (ProductovOrden o1, ProductovOrden o2) -> {
@@ -272,9 +283,9 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         }
 
         if (limiteOrdenes == -1) {
-        limiteOrdenes = cantidadOrdenes / 2;
+            limiteOrdenes = cantidadOrdenes * porciento_cantidad_ordenes / 100;
         }
-        
+
         puntero = 0;
         monto_A_Ajustar = (float) (ventaReal.getVentaTotal() * porciento_a_ajustar / 100);
 
@@ -309,6 +320,7 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
     public class ProductoVentaFilter {
 
         private List<Seccion> seccionLiquidos;
+        private List<Seccion> excluidos;
         private boolean modoPrueba = true;
 
         public ProductoVentaFilter() {
@@ -317,8 +329,9 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
             }
         }
 
-        public ProductoVentaFilter(List<Seccion> seccionLiquidos) {
+        public ProductoVentaFilter(List<Seccion> seccionLiquidos, List<Seccion> excluidos) {
             this.seccionLiquidos = seccionLiquidos;
+            this.excluidos = excluidos;
             modoPrueba = false;
         }
 
@@ -337,11 +350,20 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         public boolean isComida(ProductoVenta p) {
             return !isLiquido(p);
         }
+        
+        public boolean isExcluido(ProductoVenta p){
+            for (Seccion s : excluidos) {
+                if (p.getSeccionnombreSeccion().equals(s)) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public List<ProductovOrden> getLiquidos(Orden o) {
             List<ProductovOrden> ret = new ArrayList<>();
             for (ProductovOrden pv : o.getProductovOrdenList()) {
-                if (isLiquido(pv.getProductoVenta())) {
+                if (isLiquido(pv.getProductoVenta()) && !isExcluido(pv.getProductoVenta())) {
                     ret.add(pv);
                 }
             }
@@ -351,7 +373,7 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         public List<ProductovOrden> getComida(Orden o) {
             List<ProductovOrden> ret = new ArrayList<>();
             for (ProductovOrden pv : o.getProductovOrdenList()) {
-                if (isComida(pv.getProductoVenta())) {
+                if (isComida(pv.getProductoVenta()) && !isExcluido(pv.getProductoVenta())) {
                     ret.add(pv);
                 }
             }

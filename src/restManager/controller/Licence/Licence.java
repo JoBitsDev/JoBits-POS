@@ -6,6 +6,7 @@
 package restManager.controller.Licence;
 
 import java.util.Date;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.VentaDAO;
 
@@ -87,6 +88,11 @@ public class Licence {
 
     private void validarLicencia() {
         LICENCIA_VALIDA = true;
+    }
+
+    public void reset() {
+        LICENCIA_ACTIVA = false;
+        LICENCIA_VALIDA = false;
     }
 
     public enum TipoLicencia {

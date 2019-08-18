@@ -24,7 +24,7 @@ import restManager.resources.R;
 /**
  * FirstDream
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "producto_venta")

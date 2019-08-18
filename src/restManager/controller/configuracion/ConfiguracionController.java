@@ -7,17 +7,28 @@ package restManager.controller.configuracion;
 
 import GUI.Views.View;
 import GUI.Views.configuracion.ConfiguracionView;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.Container;
 import java.awt.Dialog;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import restManager.algoritmo.ParametrosConfiguracion;
 import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Configuracion;
 import restManager.persistencia.Negocio;
+import restManager.persistencia.Seccion;
 import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.ConfiguracionDAO;
 import restManager.persistencia.models.NegocioDAO;
+import restManager.persistencia.models.SeccionDAO;
 import restManager.printservice.Impresion;
 import restManager.printservice.Ticket;
 import restManager.resources.R;
@@ -29,6 +40,8 @@ import restManager.resources.R;
  *
  */
 public class ConfiguracionController extends AbstractDialogController<Configuracion> {
+
+    private ParametrosConfiguracion configuracionY;
 
     public ConfiguracionController() {
         super(ConfiguracionDAO.getInstance());
@@ -59,6 +72,38 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
         Impresion.REDONDEO_POR_EXCESO = c.find(R.SettingID.IMPRESION_REDONDEO_EXCESO).getValor() == 1;
         Impresion.SHOW_SUBTOTAL = c.find(R.SettingID.IMPRESION_TICKET_SUBTOTAL).getValor() == 1;
         Impresion.CABECERA = c.find(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO).getValorString();
+    }
+
+    public ParametrosConfiguracion cargarConfiguracionY() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            configuracionY = mapper.readValue(new File("aux.cfg"), ParametrosConfiguracion.class);
+        } catch (JsonProcessingException ex) {
+            ex.printStackTrace();
+            configuracionY = new ParametrosConfiguracion(new ArrayList<>(), new ArrayList<>(), (byte) 40, (byte) 30);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            configuracionY = new ParametrosConfiguracion(new ArrayList<>(), new ArrayList<>(), (byte) 40, (byte) 30);
+
+        }
+        return configuracionY;
+    }
+
+    public void updateConfiguracionY(ParametrosConfiguracion conf) {
+        ObjectMapper mapper = new ObjectMapper();
+        for (Seccion s : conf.getBebidas()) {
+            s.setCartacodCarta(null);
+            s.setProductoVentaList(null);
+        }
+        for (Seccion s : conf.getExcluidos()) {
+            s.setCartacodCarta(null);
+            s.setProductoVentaList(null);
+        }
+        try {
+            mapper.writeValue(new File("aux.cfg"), conf);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -119,6 +164,18 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
 
         }
         update(c, true);
+    }
+
+    public List<Seccion> getSeccionList() {
+        return SeccionDAO.getInstance().findAll();
+    }
+
+    public ParametrosConfiguracion getConfiguracionY() {
+        return configuracionY;
+    }
+
+    public void setConfiguracionY(ParametrosConfiguracion configuracionY) {
+        this.configuracionY = configuracionY;
     }
 
 }

@@ -6,17 +6,26 @@
 package GUI.Views.configuracion;
 
 import GUI.Views.AbstractView;
+import GUI.Views.util.ComboBoxWithList;
+import GUI.Views.util.TableWithComboBoxAutoComplete;
 import java.awt.Dialog;
 import restManager.controller.AbstractDialogController;
+import restManager.controller.Licence.Licence;
+import restManager.controller.Licence.LicenceController;
 import restManager.controller.configuracion.ConfiguracionController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.Seccion;
 import restManager.resources.R;
+import restManager.util.RestManagerComboBoxModel;
+import restManager.util.RestManagerListModel;
 
 /**
  *
  * @author Jorge
  */
 public class ConfiguracionView extends AbstractView {
+
+    private ComboBoxWithList<Seccion> bebida, excluir;
 
     public ConfiguracionView(AbstractDialogController controller, Dialog owner) {
         super(DialogType.INPUT, controller, owner);
@@ -70,6 +79,15 @@ public class ConfiguracionView extends AbstractView {
         jPanelTamannoPapel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBoxTamannoTicket = new javax.swing.JComboBox<>();
+        jPanelY = new javax.swing.JPanel();
+        jPanelPorcientoEstimado = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jSpinnerM = new javax.swing.JSpinner();
+        jLabel13 = new javax.swing.JLabel();
+        jSpinnerC = new javax.swing.JSpinner();
+        jPanel3 = new javax.swing.JPanel();
+        jPanelExcluir = new javax.swing.JPanel();
+        jPanelBebidas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(getMaximumSize());
@@ -233,6 +251,40 @@ public class ConfiguracionView extends AbstractView {
 
         jTabbedPane1.addTab("Impresion", jPanelImpresion);
 
+        jPanelY.setLayout(new java.awt.BorderLayout());
+
+        jPanelPorcientoEstimado.setOpaque(false);
+
+        jLabel12.setText("M");
+        jPanelPorcientoEstimado.add(jLabel12);
+
+        jSpinnerM.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 5));
+        jPanelPorcientoEstimado.add(jSpinnerM);
+
+        jLabel13.setText("C");
+        jPanelPorcientoEstimado.add(jLabel13);
+
+        jSpinnerC.setModel(new javax.swing.SpinnerNumberModel(0, 0, 50, 5));
+        jPanelPorcientoEstimado.add(jSpinnerC);
+
+        jPanelY.add(jPanelPorcientoEstimado, java.awt.BorderLayout.PAGE_START);
+
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanelExcluir.setBorder(javax.swing.BorderFactory.createTitledBorder("Excluir"));
+        jPanelExcluir.setPreferredSize(new java.awt.Dimension(0, 0));
+        jPanelExcluir.setLayout(new java.awt.BorderLayout());
+        jPanel3.add(jPanelExcluir);
+
+        jPanelBebidas.setBorder(javax.swing.BorderFactory.createTitledBorder("Bebidas"));
+        jPanelBebidas.setPreferredSize(new java.awt.Dimension(0, 0));
+        jPanelBebidas.setLayout(new java.awt.BorderLayout());
+        jPanel3.add(jPanelBebidas);
+
+        jPanelY.add(jPanel3, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane1.addTab("Y", jPanelY);
+
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         pack();
@@ -268,7 +320,22 @@ public class ConfiguracionView extends AbstractView {
             selected = 1;
         }
         jComboBoxTamannoTicket.setSelectedIndex(selected);
+
+        LicenceController controller = new LicenceController(Licence.TipoLicencia.SECUNDARIA);
+        if (!controller.getLicence().LICENCIA_ACTIVA && !controller.getLicence().LICENCIA_VALIDA) {
+            jTabbedPane1.remove(2);
+        }
+
+        getController().cargarConfiguracionY();
+        jSpinnerC.setValue(new Byte(getController().getConfiguracionY().getC()).intValue());
+        jSpinnerM.setValue(new Byte(getController().getConfiguracionY().getM()).intValue());
+
+        excluir = new ComboBoxWithList<>(getController().getSeccionList(), getController().getConfiguracionY().getExcluidos());
+        bebida = new ComboBoxWithList<>(getController().getSeccionList(), getController().getConfiguracionY().getBebidas());
+        jPanelBebidas.add(bebida);
+        jPanelExcluir.add(excluir);
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonAplicar;
@@ -285,6 +352,8 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JComboBox<String> jComboBoxTamannoTicket;
     private javax.swing.JComboBox<String> jComboBoxTipoNegocio;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -295,18 +364,25 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel24HR;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelBebidas;
     private javax.swing.JPanel jPanelCaja;
     private javax.swing.JPanel jPanelCaracterSeparador;
     private javax.swing.JPanel jPanelCaracterSeparador1;
+    private javax.swing.JPanel jPanelExcluir;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JPanel jPanelGenerales;
     private javax.swing.JPanel jPanelImpresion;
     private javax.swing.JPanel jPanelNegocio;
+    private javax.swing.JPanel jPanelPorcientoEstimado;
     private javax.swing.JPanel jPanelTamannoPapel;
     private javax.swing.JPanel jPanelTickets;
+    private javax.swing.JPanel jPanelY;
+    private javax.swing.JSpinner jSpinnerC;
+    private javax.swing.JSpinner jSpinnerM;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 
@@ -339,6 +415,13 @@ public class ConfiguracionView extends AbstractView {
             selected = "48";
         }
         save(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL, selected);
+
+        getController().getConfiguracionY().setC(new Integer((int) jSpinnerC.getValue()).byteValue());
+        getController().getConfiguracionY().setM(new Integer((int) jSpinnerM.getValue()).byteValue());
+        getController().getConfiguracionY().setBebidas(bebida.getListModel().getElements());
+        getController().getConfiguracionY().setExcluidos(excluir.getListModel().getElements());
+        getController().updateConfiguracionY(getController().getConfiguracionY());
+
     }
 
 }

@@ -29,12 +29,13 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
     private final Licence licence;
     private Container parent;
     private Licence.TipoLicencia tipoLic;
+    private final String estadoLic;
 
     public LicenceController(Licence.TipoLicencia tipoLic) {
         super(ConfiguracionDAO.getInstance());
         licence = Licence.getInstance();
         this.tipoLic = tipoLic;
-        getEstadoLicencia(this.tipoLic);
+        estadoLic = getEstadoLicencia(this.tipoLic);
     }
 
     public LicenceController(Container parent, Licence.TipoLicencia tipoLic) {
@@ -42,7 +43,7 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
         this.parent = parent;
         licence = Licence.getInstance();
         this.tipoLic = tipoLic;
-        getEstadoLicencia(this.tipoLic);
+        estadoLic = getEstadoLicencia(this.tipoLic);
         constructView(parent);
     }
 
@@ -54,6 +55,7 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
     }
 
     public String getEstadoLicencia(Licence.TipoLicencia tipo) {
+        licence.reset();
         File f = new File(tipo.getPath());
         if (!f.exists() || !f.canRead()) {
             return "Archivo de licencia no encontrado o ilegible";
@@ -112,6 +114,10 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
 
     public String getSoftwareUID() {
         return tipoLic + stringFormatter(SerialNumber.getUID());
+    }
+
+    public String getEstadoLic() {
+        return estadoLic;
     }
 
     public static String stringFormatter(String key) {

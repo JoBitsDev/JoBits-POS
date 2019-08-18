@@ -65,14 +65,13 @@ public class Impresion {
     public static int cantidadCopias = 0;
     public static boolean REDONDEO_POR_EXCESO = true;
     public static String CABECERA = "Restaurante";
-    
+
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
     /**
      * String referentes a la impresion de ordenes
      */
-    private final String
-            COCINA = "Pto Elaboracion: ",
+    private final String COCINA = "Pto Elaboracion: ",
             DELACASA = "(Pedido por la casa)",
             ORDEN = "Orden No: ",
             MESA = "Mesa: ",
@@ -1475,9 +1474,9 @@ public class Impresion {
                 if (a.getPropina() != null) {
                     if (a.getPropina() > 0) {
                         t.setText("Propina: " + utils.setDosLugaresDecimales(a.getPropina()));
+                        propina += a.getPropina();
                     }
                 }
-                propina += a.getPropina();
                 total += a.getPago();
             }
         }

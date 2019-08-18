@@ -8,15 +8,10 @@ package restManager.resources;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Personal;
-import restManager.persistencia.models.ConfiguracionDAO;
-import restManager.persistencia.models.NegocioDAO;
-import restManager.printservice.Ticket;
 
 /**
  * FirstDream
@@ -62,9 +57,9 @@ public class R {
     
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
-    public static String RELEASE_VERSION = "Version 2.6.5.0";
+    public static String RELEASE_VERSION = "Version 2.6.5.1";
 
-    public static int BUILD_VERSION = 21;
+    public static int BUILD_VERSION = 22;
 
     public static void setLookAndFeels() {
         try {
@@ -141,7 +136,7 @@ public class R {
         Lbs("Lbs"),
         Lts("Lts");
 
-        private String valor;
+        private final String valor;
 
         private UM(String valor) {
             this.valor = valor;
