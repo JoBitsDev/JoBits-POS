@@ -114,14 +114,14 @@ public class Resumenes extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Código", "Plato", "Precio", "Cantidad", "Dinero Recaudado"
+                "Producto Venta", "Precio", "Cantidad", "Dinero Recaudado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Float.class
+                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -160,14 +160,14 @@ public class Resumenes extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Código", "Ingrediente", "U/M", "Cantidad", "Costo"
+                "Insumo", "U/M", "Cantidad", "Costo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -184,7 +184,6 @@ public class Resumenes extends javax.swing.JPanel {
         jTextFieldTotalRecaudado.setEditable(false);
         jTextFieldTotalRecaudado.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTextFieldTotalRecaudado.setForeground(new java.awt.Color(153, 153, 0));
-        jTextFieldTotalRecaudado.setText("Recaudo");
         jTextFieldTotalRecaudado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldTotalRecaudadoActionPerformed(evt);
@@ -194,12 +193,10 @@ public class Resumenes extends javax.swing.JPanel {
         jTextFieldInversion.setEditable(false);
         jTextFieldInversion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTextFieldInversion.setForeground(new java.awt.Color(204, 0, 0));
-        jTextFieldInversion.setText("inversion");
 
         jTextFieldGanancia.setEditable(false);
         jTextFieldGanancia.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTextFieldGanancia.setForeground(new java.awt.Color(0, 153, 0));
-        jTextFieldGanancia.setText("Ganancia");
 
         jLabelGastosCasa.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelGastosCasa.setForeground(new java.awt.Color(255, 255, 255));
@@ -208,7 +205,6 @@ public class Resumenes extends javax.swing.JPanel {
         jTextFieldGastos.setEditable(false);
         jTextFieldGastos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTextFieldGastos.setForeground(new java.awt.Color(204, 0, 0));
-        jTextFieldGastos.setText("Gastos");
 
         jCheckBoxRedondearValores.setBackground(new java.awt.Color(51, 51, 51));
         jCheckBoxRedondearValores.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
@@ -470,11 +466,10 @@ public class Resumenes extends javax.swing.JPanel {
     private void fillTablaVentas(Cocina c) {
         utils.limpiarTabla(jTableVenta);
         if (c == null) {
-            VentaDAO1.getResumenVentasOnTable(jTableVenta, dia);
-            jTextFieldTotalRecaudado.setText(utils.calcularSumaTabla(jTableVenta, 4) + R.COIN_SUFFIX);
+
+            jTextFieldTotalRecaudado.setText(VentaDAO1.getResumenVentasOnTable(jTableVenta, dia) + R.COIN_SUFFIX);
         } else {
-            VentaDAO1.getResumenDetalladoVentasCocinaOnTable(jTableVenta, dia, c);
-            jTextFieldTotalRecaudado.setText(utils.calcularSumaTabla(jTableVenta, 4) + R.COIN_SUFFIX);
+            jTextFieldTotalRecaudado.setText(VentaDAO1.getResumenVentasCocinaDetalladoOnTable(jTableVenta, dia, c) + R.COIN_SUFFIX);
 
         }
 
@@ -483,14 +478,11 @@ public class Resumenes extends javax.swing.JPanel {
     private void fillTablaGastos(Cocina c) {
         utils.limpiarTabla(jTableGastos);
         if (c == null) {
-            VentaDAO1.getResumenGastosOnTable(jTableGastos, dia);
-            jTextFieldInversion.setText(utils.calcularSumaTabla(jTableGastos, 4) + R.COIN_SUFFIX);
+            jTextFieldInversion.setText(VentaDAO1.getResumenGastosOnTable(jTableGastos, dia) + R.COIN_SUFFIX);
         } else {
-            VentaDAO1.getResumenGastosCocinaOnTable(jTableGastos, dia, c);
-            jTextFieldInversion.setText(utils.calcularSumaTabla(jTableGastos, 4) + R.COIN_SUFFIX);
+            jTextFieldInversion.setText(VentaDAO1.getResumenGastosCocinaOnTable(jTableGastos, dia, c) + R.COIN_SUFFIX);
         }
-
-        jTextFieldGanancia.setText(" " + (Float.parseFloat(jTextFieldTotalRecaudado.getText().split(" ")[0]) 
+        jTextFieldGanancia.setText(" " + (Float.parseFloat(jTextFieldTotalRecaudado.getText().split(" ")[0])
                 - Float.parseFloat(jTextFieldInversion.getText().split(" ")[0])) + R.COIN_SUFFIX);
 
     }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Seccion;
 import restManager.resources.R;
 
@@ -106,14 +107,13 @@ public class utils {
      *
      * @param rowData los datos pasados en un array de arrays
      * @param table la tabla que se va a llenar con la info
-     * @throws java.lang.Exception si los datos contienen mas columnas que la
      * tabla
      */
-    public static void AddToTable(ArrayList[] rowData, JTable table) throws Exception {
+    public static void AddToTable(ArrayList[] rowData, JTable table) {
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         if (table.getColumnCount() != rowData.length) {
-            throw new Exception("Los datos tienen mas columnas que la tabla");
+            throw new ValidatingException("Los datos tienen mas columnas que la tabla");
         }
         Object[] row = new Object[rowData.length];
         for (int i = 0; i < rowData[0].size(); i++) {

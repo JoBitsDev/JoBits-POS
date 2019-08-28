@@ -32,128 +32,57 @@ import restManager.util.utils;
  */
 public class VentaDAO1 {
 
-    //
-    //Métodos referentes a resumenes de las ventas
-    //
-    public static ArrayList<ProductovOrden> getResumenVentas(Venta v) {
-        ArrayList<ProductovOrden> ret = new ArrayList<>();
-        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
-
-        //llenando l array
-        for (Orden o : aux) {
-            if (!o.getDeLaCasa() && o.getHoraTerminada() != null) {
-                joinListsProductovOrden(ret,
-                        new ArrayList(o.getProductovOrdenList()));
-            }
-        }//nˆ3
-
-        Collections.sort(ret, (o1, o2) -> {
-            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
-        });
-
-        return ret;
-    }
-
-    public static void getResumenVentasOnTable(JTable tabla, Venta v) {
-
+    //******************************************************************************************************************
+    //******************************************************************************************************************
+    // ********************************Resumenes de ventas***********************************************************
+    //******************************************************************************************************************
+    //******************************************************************************************************************
+    public static float getResumenVentasOnTable(JTable tabla, Venta v) {
         //inicializando los datos
         ArrayList[] rowData = utils.initArray(new ArrayList[4]);
         ArrayList<ProductovOrden> ret = getResumenVentas(v);
-
-        Collections.sort(ret, (ProductovOrden o1, ProductovOrden o2) -> o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre()));
-
         //convirtiendo a rowData
-        float total = 0;
-        for (ProductovOrden x : ret) {
-            ProductoVenta pv = x.getProductoVenta();
-            rowData[0].add(pv.getNombre());
-            rowData[1].add(pv.getPrecioVenta());
-            rowData[2].add(x.getCantidad());
-            rowData[3].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
-            total += pv.getPrecioVenta() * x.getCantidad();
-        }
-
+        float total = convertProductoOrdenToRowData(rowData, ret);
         //llenando la tabla
-        try {
-            utils.AddToTable(rowData, tabla);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
+        utils.AddToTable(rowData, tabla);
+        return total;
     }
 
-    public static void getResumenVentasDeLaCasaOnTable(JTable tabla, Venta v) {
-
+    public static float getResumenVentasDeLaCasaOnTable(JTable tabla, Venta v) {
         //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         //llenando l array
-        for (Orden o : aux) {
-            if (o.getDeLaCasa()) {
-                joinListsProductovOrden(ret,
-                        new ArrayList(o.getProductovOrdenList()));
-            }
-        }//nˆ3
+        llenarArrayProductoVOrden(ret, aux, null, true, false);
 
         //convirtiendo a rowData
-        float total = 0;
-        for (ProductovOrden x : ret) {
-            ProductoVenta pv = x.getProductoVenta();
-            rowData[0].add(pv.getPCod());
-            rowData[1].add(pv.getNombre());
-            rowData[2].add(pv.getPrecioVenta());
-            rowData[3].add(x.getCantidad());
-            rowData[4].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
-            total += pv.getPrecioVenta() * x.getCantidad();
-        }
+        float total = convertProductoOrdenToRowData(rowData, ret);
 
         //llenando la tabla
-        try {
-            utils.AddToTable(rowData, tabla);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        utils.AddToTable(rowData, tabla);
 
+        return total;
     }
 
-    public static void getResumenVentasDeLaCasaXCocinaOnTable(JTable tabla, Venta v, Cocina c) {
+    public static float getResumenVentasDeLaCasaXCocinaOnTable(JTable tabla, Venta v, Cocina c) {
         //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         //llenando l array
-        for (Orden o : aux) {
-            if (o.getDeLaCasa()) {
-                joinListsProductovOrdenByCocina(ret,
-                        new ArrayList(o.getProductovOrdenList()), c);
-            }
-
-        }//nˆ3
+        llenarArrayProductoVOrden(ret, aux, c, true, false);
 
         //convirtiendo a rowData
-        float total = 0;
-        for (ProductovOrden x : ret) {
-            ProductoVenta pv = x.getProductoVenta();
-            rowData[0].add(pv.getPCod());
-            rowData[1].add(pv.getNombre());
-            rowData[2].add(pv.getPrecioVenta());
-            rowData[3].add(x.getCantidad());
-            rowData[4].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
-            total += pv.getPrecioVenta() * x.getCantidad();
-        }
+        float total = convertProductoOrdenToRowData(rowData, ret);
 
         //llenando la tabla
-        try {
-            utils.AddToTable(rowData, tabla);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        utils.AddToTable(rowData, tabla);
+
+        return total;
+
     }
 
     public static void getResumenVentasCamareroOnTable(JTable tabla, Venta v, Personal p) {
@@ -188,12 +117,7 @@ public class VentaDAO1 {
             rowData[3].add(utils.setDosLugaresDecimales(pago_por_ventas));
 
             //llenando la tabla
-            try {
-                utils.AddToTable(rowData, tabla);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            utils.AddToTable(rowData, tabla);
         }
     }
 
@@ -211,11 +135,7 @@ public class VentaDAO1 {
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         //llenando l array
-        for (Orden o : aux) {
-            joinListsProductovOrdenByCocina(ret,
-                    new ArrayList(o.getProductovOrdenList()), c);
-
-        }//nˆ3
+        llenarArrayProductoVOrden(ret, aux, c, false, false);
 
         //convirtiendo a rowData
         float total = 0;
@@ -229,52 +149,28 @@ public class VentaDAO1 {
             rowData[2].add(utils.setDosLugaresDecimales(total));
 
             //llenando la tabla
-            try {
-                utils.AddToTable(rowData, tabla);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            utils.AddToTable(rowData, tabla);
 
         }
 
     }
 
-    public static void getResumenDetalladoVentasCocinaOnTable(JTable tabla, Venta v, Cocina c) {
+    public static float getResumenVentasCocinaDetalladoOnTable(JTable tabla, Venta v, Cocina c) {
         //inicializando los datos
         ArrayList[] rowData = utils.initArray(new ArrayList[4]);
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         //llenando l array
-        for (Orden o : aux) {
-            if (!o.getDeLaCasa()) {
-                joinListsProductovOrdenByCocina(ret,
-                        new ArrayList(o.getProductovOrdenList()), c);
-            }
+        llenarArrayProductoVOrden(ret, aux, c, false, false);
 
-        }//nˆ3
-
-        Collections.sort(ret, (ProductovOrden o1, ProductovOrden o2) -> o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre()));
         //convirtiendo a rowData
-        float total = 0;
-        for (ProductovOrden x : ret) {
-            rowData[0].add(x.getProductoVenta().getNombre());
-            rowData[1].add(x.getProductoVenta().getPrecioVenta());
-            rowData[2].add(x.getCantidad());
-            rowData[3].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
-
-            total += x.getProductoVenta().getPrecioVenta() * x.getCantidad();
-        }
+        float total = convertProductoOrdenToRowData(rowData, ret);
 
         //llenando la tabla
-        try {
-            utils.AddToTable(rowData, tabla);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        utils.AddToTable(rowData, tabla);
 
+        return total;
     }
 
     public static void getResumenVentaPorAreaOnTable(JTable tabla, Venta v, Area a) {
@@ -287,7 +183,7 @@ public class VentaDAO1 {
         float totalReal = 0;
         for (Orden o : aux) {
             if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
-                joinListsProductovOrden(ret, new ArrayList<>(o.getProductovOrdenList()));
+                joinListsProductovOrdenByCocina(ret, new ArrayList<>(o.getProductovOrdenList()), null);
                 totalReal += o.getOrdenvalorMonetario();
             }
 
@@ -306,14 +202,180 @@ public class VentaDAO1 {
             rowData[3].add(utils.setDosLugaresDecimales(totalReal));
 
             //llenando la tabla
-            try {
-                utils.AddToTable(rowData, tabla);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(),
-                        "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            utils.AddToTable(rowData, tabla);
 
         }
+    }
+
+    //******************************************************************************************************************
+    //******************************************************************************************************************
+    // ********************************Resumenes de gastos***********************************************************
+    //******************************************************************************************************************
+    //******************************************************************************************************************
+    public static float getResumenGastosOnTable(JTable tabla, Venta v) {
+
+        //inicializando los datos
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
+        ArrayList<ProductoInsumo> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            for (ProductovOrden p : o.getProductovOrdenList()) {
+                joinListsProductoInsumos(ret,
+                        new ArrayList<>(p.getProductoVenta().
+                                getProductoInsumoList()), p.getCantidad());
+            }
+        }
+
+        //ordeneando los datos alfabeticamente 
+        Collections.sort(ret, (ProductoInsumo o1, ProductoInsumo o2)
+                -> o1.getInsumo().getNombre().compareTo(o2.getInsumo().getNombre()));
+
+        //convirtiendo a rowData
+        float total = 0;
+        for (ProductoInsumo x : ret) {
+            rowData[0].add(x.getInsumo().getNombre());
+            rowData[1].add(x.getInsumo().getUm());
+            rowData[2].add(x.getCantidad());
+            rowData[3].add(utils.setDosLugaresDecimales(x.getCosto()));
+            total += x.getCosto();
+        }
+
+        //llenando la tabla
+        utils.AddToTable(rowData, tabla);
+
+        return total;
+
+    }
+
+    public static float getResumenGastosCocinaOnTable(JTable tabla, Venta v, Cocina c) {
+
+        //inicializando los datos
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
+        ArrayList<ProductoInsumo> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            for (ProductovOrden p : o.getProductovOrdenList()) {
+                if (p.getProductoVenta().getCocinacodCocina().equals(c)) {
+                    joinListsProductoInsumos(ret,
+                            new ArrayList<>(p.getProductoVenta().
+                                    getProductoInsumoList()), p.getCantidad());
+                }
+            }
+        }
+
+        //ordeneando los datos alfabeticamente 
+        Collections.sort(ret, (ProductoInsumo o1, ProductoInsumo o2)
+                -> o1.getInsumo().getNombre().compareTo(o2.getInsumo().getNombre()));
+
+        //convirtiendo a rowData
+        float total = 0;
+        for (ProductoInsumo x : ret) {
+
+            rowData[0].add(x.getInsumo().getNombre());
+            rowData[1].add(x.getInsumo().getUm());
+            rowData[2].add(x.getCantidad());
+            rowData[3].add(utils.setDosLugaresDecimales(x.getCosto()));
+            total += x.getCosto();
+        }
+
+        //llenando la tabla
+        utils.AddToTable(rowData, tabla);
+
+        return total;
+    }
+
+    public static float getResumenGastosDeLaCasaOnTable(JTable tabla, Venta v) {
+
+        //inicializando los datos
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
+        ArrayList<ProductoInsumo> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            if (o.getDeLaCasa()) {
+                for (ProductovOrden p : o.getProductovOrdenList()) {
+                    joinListsProductoInsumos(ret,
+                            new ArrayList<>(p.getProductoVenta().
+                                    getProductoInsumoList()), p.getCantidad());
+                }
+            }
+        }
+
+        //convirtiendo a rowData
+        float total = 0;
+        for (ProductoInsumo x : ret) {
+
+            rowData[0].add(x.getInsumo().getNombre());
+            rowData[1].add(x.getInsumo().getUm());
+            rowData[2].add(x.getCantidad());
+            rowData[3].add(x.getCosto());
+            total += x.getCosto();
+        }
+
+        //llenando la tabla
+        utils.AddToTable(rowData, tabla);
+        return total;
+    }
+
+    public static float getResumenGastosDeLaCasaCocinaOnTable(JTable tabla, Venta v, Cocina c) {
+
+        //inicializando los datos
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
+        ArrayList<ProductoInsumo> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        for (Orden o : aux) {
+            if (o.getDeLaCasa()) {
+                for (ProductovOrden p : o.getProductovOrdenList()) {
+                    if (p.getProductoVenta().getCocinacodCocina().equals(c)) {
+                        joinListsProductoInsumos(ret,
+                                new ArrayList<>(p.getProductoVenta().
+                                        getProductoInsumoList()), p.getCantidad());
+                    }
+                }
+            }
+        }
+
+        //convirtiendo a rowData
+        float total = 0;
+        for (ProductoInsumo x : ret) {
+
+            rowData[0].add(x.getInsumo().getNombre());
+            rowData[1].add(x.getInsumo().getUm());
+            rowData[2].add(x.getCantidad());
+            rowData[3].add(x.getCosto());
+            total += x.getCosto();
+        }
+
+        //llenando la tabla
+        utils.AddToTable(rowData, tabla);
+        
+        return total;
+
+    }
+
+    //******************************************************************************************************************
+    //******************************************************************************************************************
+    // ********************************Resumenes en objetos**********************************************************
+    //******************************************************************************************************************
+    //******************************************************************************************************************
+    public static ArrayList<ProductovOrden> getResumenVentas(Venta v) {
+        ArrayList<ProductovOrden> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        llenarArrayProductoVOrden(ret, aux, null, false, false);
+
+        Collections.sort(ret, (o1, o2) -> {
+            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
+        });
+        return ret;
     }
 
     public static List<ProductovOrden> getResumenVentaPorArea(Venta v, Area a) {
@@ -324,7 +386,7 @@ public class VentaDAO1 {
         //llenando l array
         for (Orden o : aux) {
             if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
-                joinListsProductovOrden(ret, new ArrayList<>(o.getProductovOrdenList()));
+                joinListsProductovOrdenByCocina(ret, new ArrayList<>(o.getProductovOrdenList()), null);
             }
 
         }//nˆ3
@@ -342,8 +404,8 @@ public class VentaDAO1 {
         for (Orden o : aux) {
             if (o.getPersonalusuario() != null) {
                 if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p)) {
-                    joinListsProductovOrden(ret,
-                            new ArrayList(o.getProductovOrdenList()));
+                    joinListsProductovOrdenByCocina(ret,
+                            new ArrayList(o.getProductovOrdenList()), null);
                 }
             }
         }//nˆ3
@@ -374,13 +436,7 @@ public class VentaDAO1 {
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
         //llenando l array
-        for (Orden o : aux) {
-            if (o.getDeLaCasa()) {
-                joinListsProductovOrden(ret,
-                        new ArrayList<>(o.getProductovOrdenList()));
-            }
-
-        }//nˆ3
+        llenarArrayProductoVOrden(ret, aux, null, true, false);
 
         return ret;
     }
@@ -407,271 +463,11 @@ public class VentaDAO1 {
         return ret;
     }
 
-    public static void getResumenGastosOnTable(JTable tabla, Venta v) {
-
-        //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
-        ArrayList<ProductoInsumo> ret = new ArrayList<>();
-        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
-
-        //llenando l array
-        for (Orden o : aux) {
-            for (ProductovOrden p : o.getProductovOrdenList()) {
-                joinListsProductoInsumos(ret,
-                        new ArrayList<>(p.getProductoVenta().
-                                getProductoInsumoList()), p.getCantidad());
-            }
-        }
-
-        //ordeneando los datos alfabeticamente 
-        Collections.sort(ret, (ProductoInsumo o1, ProductoInsumo o2)
-                -> o1.getInsumo().getNombre().compareTo(o2.getInsumo().getNombre()));
-
-        //convirtiendo a rowData
-        float total = 0;
-        for (ProductoInsumo x : ret) {
-            rowData[0].add(x.getInsumo().getNombre());
-            rowData[1].add(x.getInsumo().getUm());
-            rowData[2].add(x.getCantidad());
-            rowData[3].add(x.getCosto());
-            total += x.getCosto();
-        }
-
-        //llenando la tabla
-        try {
-            utils.AddToTable(rowData, tabla);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-
-        }
-    }
-
-    public static void getResumenGastosCocinaOnTable(JTable tabla, Venta v, Cocina c) {
-
-        //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
-        ArrayList<ProductoInsumo> ret = new ArrayList<>();
-        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
-
-        //llenando l array
-        for (Orden o : aux) {
-            for (ProductovOrden p : o.getProductovOrdenList()) {
-                if (p.getProductoVenta().getCocinacodCocina().equals(c)) {
-                    joinListsProductoInsumos(ret,
-                            new ArrayList<>(p.getProductoVenta().
-                                    getProductoInsumoList()), p.getCantidad());
-                }
-            }
-        }
-
-        //ordeneando los datos alfabeticamente 
-        Collections.sort(ret, (ProductoInsumo o1, ProductoInsumo o2)
-                -> o1.getInsumo().getNombre().compareTo(o2.getInsumo().getNombre()));
-
-        //convirtiendo a rowData
-        float total = 0;
-        for (ProductoInsumo x : ret) {
-
-            rowData[0].add(x.getInsumo().getNombre());
-            rowData[1].add(x.getInsumo().getUm());
-            rowData[2].add(x.getCantidad());
-            rowData[3].add(x.getCosto());
-            total += x.getCosto();
-        }
-
-        //llenando la tabla
-        try {
-            utils.AddToTable(rowData, tabla);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-
-        }
-
-    }
-
-    public static void getResumenGastosDeLaCasaOnTable(JTable tabla, Venta v) {
-
-        //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
-        ArrayList<ProductoInsumo> ret = new ArrayList<>();
-        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
-
-        //llenando l array
-        for (Orden o : aux) {
-            if (o.getDeLaCasa()) {
-                for (ProductovOrden p : o.getProductovOrdenList()) {
-                    joinListsProductoInsumos(ret,
-                            new ArrayList<>(p.getProductoVenta().
-                                    getProductoInsumoList()), p.getCantidad());
-                }
-            }
-        }
-
-        //convirtiendo a rowData
-        float total = 0;
-        for (ProductoInsumo x : ret) {
-
-            rowData[0].add(x.getInsumo().getCodInsumo());
-            rowData[1].add(x.getInsumo().getNombre());
-            rowData[2].add(x.getInsumo().getUm());
-            rowData[3].add(x.getCantidad());
-            rowData[4].add(x.getCosto());
-            total += x.getCosto();
-        }
-
-        //llenando la tabla
-        try {
-            utils.AddToTable(rowData, tabla);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-
-        }
-    }
-
-    public static void getResumenGastosDeLaCasaCocinaOnTable(JTable tabla, Venta v, Cocina c) {
-
-        //inicializando los datos
-        ArrayList[] rowData = utils.initArray(new ArrayList[5]);
-        ArrayList<ProductoInsumo> ret = new ArrayList<>();
-        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
-
-        //llenando l array
-        for (Orden o : aux) {
-            if (o.getDeLaCasa()) {
-                for (ProductovOrden p : o.getProductovOrdenList()) {
-                    if (p.getProductoVenta().getCocinacodCocina().equals(c)) {
-                        joinListsProductoInsumos(ret,
-                                new ArrayList<>(p.getProductoVenta().
-                                        getProductoInsumoList()), p.getCantidad());
-                    }
-                }
-            }
-        }
-
-        //convirtiendo a rowData
-        float total = 0;
-        for (ProductoInsumo x : ret) {
-
-            rowData[0].add(x.getInsumo().getCodInsumo());
-            rowData[1].add(x.getInsumo().getNombre());
-            rowData[2].add(x.getInsumo().getUm());
-            rowData[3].add(x.getCantidad());
-            rowData[4].add(x.getCosto());
-            total += x.getCosto();
-        }
-
-        //llenando la tabla
-        try {
-            utils.AddToTable(rowData, tabla);
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-
-        }
-
-    }
-
-    //
-    //Métodos privados para el funcionamiento de la clase
-    //
-    /**
-     * agrega a un arreglo de ProductosvOrdenes una nueva orden
-     *
-     * @param pivot - el arreglo al que agregar la nueva orden
-     * @param b - la orden a agregar
-     *
-     */
-    private static void joinListsProductovOrden(ArrayList<ProductovOrden> pivot,
-            ArrayList<ProductovOrden> b) {
-
-        while (!b.isEmpty()) {
-            boolean founded = false;
-            for (int j = 0; j < pivot.size() && !founded; j++) {
-                if (b.get(0).getProductoVenta().getPCod().equals(
-                        pivot.get(j).getProductoVenta().getPCod())) {
-                    founded = true;
-                    pivot.get(j).setCantidad(pivot.get(j).getCantidad() + b.get(0).getCantidad());
-                }
-            }
-            if (!founded) {
-                ProductovOrden po = new ProductovOrden(b.get(0).getProductovOrdenPK());
-                po.setCantidad(b.get(0).getCantidad());
-                po.setEnviadosacocina(b.get(0).getEnviadosacocina());
-                po.setOrden(b.get(0).getOrden());
-                po.setProductoVenta(b.get(0).getProductoVenta());
-                pivot.add(po);
-            }
-            b.remove(0);
-
-        }
-
-    }
-
-    private static void joinListsProductovOrdenByCocina(ArrayList<ProductovOrden> pivot,
-            ArrayList<ProductovOrden> b, Cocina c) {
-
-        while (!b.isEmpty()) {
-            boolean founded = false;
-            for (int j = 0; j < pivot.size() && !founded; j++) {
-                if (b.get(0).getProductoVenta().getPCod().equals(
-                        pivot.get(j).getProductoVenta().getPCod())) {
-                    founded = true;
-                    pivot.get(j).setCantidad(pivot.get(j).getCantidad() + b.get(0).getCantidad());
-                }
-            }
-            if (!founded && b.get(0).getProductoVenta().getCocinacodCocina().equals(c)) {
-                ProductovOrden po = new ProductovOrden(b.get(0).getProductovOrdenPK());
-                po.setCantidad(b.get(0).getCantidad());
-                po.setEnviadosacocina(b.get(0).getEnviadosacocina());
-                po.setOrden(b.get(0).getOrden());
-                po.setProductoVenta(b.get(0).getProductoVenta());
-                pivot.add(po);
-            }
-            b.remove(0);
-
-        }
-
-    }
-
-    /**
-     * este metodo es para acumular la relacion producto insumo en un solo
-     * arreglo
-     *
-     * @param pivot - el arreglo que se tiene para acumular
-     * @param b - el nuevo productos que se va a incluir
-     * @param cant - la cantidad de ese producto
-     */
-    private static void joinListsProductoInsumos(
-            ArrayList<ProductoInsumo> pivot,
-            ArrayList<ProductoInsumo> b, float cant) {
-
-        for (ProductoInsumo x : b) {
-            boolean founded = false;
-
-            for (int j = 0; j < pivot.size() && !founded; j++) {
-                if (x.getInsumo().getCodInsumo().
-                        equals(pivot.get(j).getInsumo().getCodInsumo())) {
-                    founded = true;
-                    pivot.get(j).setCantidad(pivot.get(j).getCantidad() + (x.getCantidad() * cant));
-                    pivot.get(j).setCosto(pivot.get(j).getCosto() + (x.getCosto() * cant));
-                }
-            }
-            if (!founded) {
-                ProductoInsumo pi = new ProductoInsumo(x.getProductoInsumoPK());
-                pi.setCantidad(x.getCantidad() * cant);
-                pi.setCosto(x.getCosto() * cant);
-                pi.setInsumo(x.getInsumo());
-                pi.setProductoVenta(x.getProductoVenta());
-                pivot.add(pi);
-
-            }
-        }
-
-    }
-
+    //******************************************************************************************************************
+    //******************************************************************************************************************
+    // ********************************Metodos para estadisticas de ventas*******************************************
+    //******************************************************************************************************************
+    //******************************************************************************************************************
     public static float getValorTotalVentas(Venta v) {
         float total = 0;
         for (Orden x : v.getOrdenList()) {
@@ -687,14 +483,7 @@ public class VentaDAO1 {
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
 
-        //llenando l array
-        for (Orden o : aux) {
-            if (!o.getDeLaCasa() || R.CONSUMO_DE_LA_CASA_EN_ESTADISTICAS) {
-                joinListsProductovOrdenByCocina(ret,
-                        new ArrayList<>(o.getProductovOrdenList()), c);
-            }
-
-        }//nˆ3
+        llenarArrayProductoVOrden(ret, aux, c, false, false);
 
         float valor = 0;
         for (ProductovOrden x : ret) {
@@ -702,14 +491,6 @@ public class VentaDAO1 {
         }
 
         return valor;
-    }
-
-    public static float getValorTotalRedondeoAFavorDeLaCasa(Venta v) {
-        int total = 0;
-        for (Orden x : v.getOrdenList()) {
-            total += utils.cantidadARedondearPorExceso((int) Math.ceil(x.getOrdenvalorMonetario() * 100));
-        }
-        return ((float) total) / 100;
     }
 
     public static List<Orden> getOrdenesActivas(Venta ventas) {
@@ -830,6 +611,106 @@ public class VentaDAO1 {
             ret += v.getPagoPorVenta() != null ? v.getPagoPorVenta() * x.getCantidad() : 0;
         }
         return utils.setDosLugaresDecimalesFloat(ret);
+    }
+
+    //******************************************************************************************************************
+    //******************************************************************************************************************
+    // ********************************Metodos privados de la clase **************************************************
+    //******************************************************************************************************************
+    //******************************************************************************************************************
+    /**
+     * agrega a un arreglo de ProductosvOrdenes una nueva orden
+     *
+     * @param pivot - el arreglo al que agregar la nueva orden
+     * @param b - la orden a agregar
+     *
+     */
+    private static void llenarArrayProductoVOrden(ArrayList<ProductovOrden> ret, ArrayList<Orden> aux, Cocina c, boolean condicionAutorizo, boolean aceptarOrdenesAbiertas) {
+        for (Orden o : aux) {
+            if (o.getDeLaCasa() == condicionAutorizo ) {
+                if (aceptarOrdenesAbiertas  ||  o.getHoraTerminada() != null) {
+                joinListsProductovOrdenByCocina(ret,
+                        new ArrayList(o.getProductovOrdenList()), c);
+                }
+            }
+        }
+    }
+
+    private static float convertProductoOrdenToRowData(ArrayList[] rowData, ArrayList<ProductovOrden> ret) {
+        float total = 0;
+        Collections.sort(ret, (ProductovOrden o1, ProductovOrden o2) -> o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre()));
+        for (ProductovOrden x : ret) {
+            rowData[0].add(x.getProductoVenta().getNombre());
+            rowData[1].add(x.getProductoVenta().getPrecioVenta());
+            rowData[2].add(x.getCantidad());
+            rowData[3].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
+
+            total += x.getProductoVenta().getPrecioVenta() * x.getCantidad();
+        }
+
+        return total;
+    }
+
+    private static void joinListsProductovOrdenByCocina(ArrayList<ProductovOrden> pivot,
+            ArrayList<ProductovOrden> b, Cocina c) {
+
+        while (!b.isEmpty()) {
+            boolean founded = false;
+            for (int j = 0; j < pivot.size() && !founded; j++) {
+                if (b.get(0).getProductoVenta().getPCod().equals(
+                        pivot.get(j).getProductoVenta().getPCod())) {
+                    founded = true;
+                    pivot.get(j).setCantidad(pivot.get(j).getCantidad() + b.get(0).getCantidad());
+                }
+            }
+            if (!founded && (c == null || b.get(0).getProductoVenta().getCocinacodCocina().equals(c))) {
+                ProductovOrden po = new ProductovOrden(b.get(0).getProductovOrdenPK());
+                po.setCantidad(b.get(0).getCantidad());
+                po.setEnviadosacocina(b.get(0).getEnviadosacocina());
+                po.setOrden(b.get(0).getOrden());
+                po.setProductoVenta(b.get(0).getProductoVenta());
+                pivot.add(po);
+            }
+            b.remove(0);
+
+        }
+
+    }
+
+    /**
+     * este metodo es para acumular la relacion producto insumo en un solo
+     * arreglo
+     *
+     * @param pivot - el arreglo que se tiene para acumular
+     * @param b - el nuevo productos que se va a incluir
+     * @param cant - la cantidad de ese producto
+     */
+    private static void joinListsProductoInsumos(
+            ArrayList<ProductoInsumo> pivot,
+            ArrayList<ProductoInsumo> b, float cant) {
+
+        for (ProductoInsumo x : b) {
+            boolean founded = false;
+
+            for (int j = 0; j < pivot.size() && !founded; j++) {
+                if (x.getInsumo().getCodInsumo().
+                        equals(pivot.get(j).getInsumo().getCodInsumo())) {
+                    founded = true;
+                    pivot.get(j).setCantidad(pivot.get(j).getCantidad() + (x.getCantidad() * cant));
+                    pivot.get(j).setCosto(pivot.get(j).getCosto() + (x.getCosto() * cant));
+                }
+            }
+            if (!founded) {
+                ProductoInsumo pi = new ProductoInsumo(x.getProductoInsumoPK());
+                pi.setCantidad(x.getCantidad() * cant);
+                pi.setCosto(x.getCosto() * cant);
+                pi.setInsumo(x.getInsumo());
+                pi.setProductoVenta(x.getProductoVenta());
+                pivot.add(pi);
+
+            }
+        }
+
     }
 
 }

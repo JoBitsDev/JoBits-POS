@@ -546,16 +546,7 @@ public class VentaCalendarView extends AbstractView {
     }
 
     public List<Venta> findVentas(int month, int year) {
-        ArrayList<Venta> ret = new ArrayList<>();
-        getController().getModel().findAll().stream().map((x) -> {
-            if (x.getFecha().getMonth() == month && x.getFecha().getYear() + 1900 == year) {
-                ret.add(x);
-            }
-            return x;
-        }).forEachOrdered((Venta _item) -> {
-            Collections.sort(ret, (Venta o1, Venta o2) -> o1.getFecha().compareTo(o2.getFecha()));
-        });
-        return ret;
+       return  getController().findVentas(month,year);
     }
 
     @Override

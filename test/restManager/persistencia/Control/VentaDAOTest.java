@@ -99,7 +99,7 @@ public class VentaDAOTest {
     }
 
     /**
-     * Test of getResumenDetalladoVentasCocinaOnTable method, of class VentaDAO1.
+     * Test of getResumenVentasCocinaDetalladoOnTable method, of class VentaDAO1.
      */
     @Test
     public void testGetResumenDetalladoVentasCocinaOnTable() {
@@ -107,7 +107,7 @@ public class VentaDAOTest {
         JTable tabla = null;
         Venta v = null;
         Cocina c = null;
-        VentaDAO1.getResumenDetalladoVentasCocinaOnTable(tabla, v, c);
+        VentaDAO1.getResumenVentasCocinaDetalladoOnTable(tabla, v, c);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

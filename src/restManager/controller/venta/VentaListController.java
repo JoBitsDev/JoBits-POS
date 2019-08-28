@@ -10,7 +10,9 @@ import GUI.Views.venta.VentaCalendarView;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.login.LogInController;
 import restManager.exceptions.DevelopingOperationException;
@@ -97,7 +99,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
                     v.setFecha(current);
                     initDateNotSet = false;
                 }
-                for (AsistenciaPersonal a : ve.getAsistenciaPersonalList()) {
+                for (AsistenciaPersonal a : ve.getAsistenciaPersonalList()) { 
                     boolean founded = false;
                     for (AsistenciaPersonal b : v.getAsistenciaPersonalList()) {
                         if (b.getPersonal().getUsuario().equals(a.getPersonal().getUsuario())) {
@@ -125,6 +127,19 @@ public class VentaListController extends AbstractDialogController<Venta> {
         }
         VentaDetailController controller = new VentaDetailController(v, getView(), al);
 
+    }
+
+    public List<Venta> findVentas(int month, int year) {
+        ArrayList<Venta> ret = new ArrayList<>();
+        getModel().findAll().stream().map((x) -> {
+            if (x.getFecha().getMonth() == month && x.getFecha().getYear() + 1900 == year) {
+                ret.add(x);
+            }
+            return x;
+        }).forEachOrdered((Venta _item) -> {
+            Collections.sort(ret, (Venta o1, Venta o2) -> o1.getFecha().compareTo(o2.getFecha()));
+        });
+        return ret;
     }
 
 }
