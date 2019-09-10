@@ -9,6 +9,7 @@ import GUI.Views.AbstractDetailView;
 import GUI.Views.util.StateCellRender;
 import GUI.Views.util.TableColumnAdjuster;
 import com.jidesoft.hints.ListDataIntelliHints;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -16,6 +17,15 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
+import mdlaf.components.button.MaterialButtonUI;
+import mdlaf.components.panel.MaterialPanelUI;
+import mdlaf.components.tabbedpane.MaterialTabbedPaneUI;
+import org.knowm.xchart.PieChart;
+import org.knowm.xchart.PieChartBuilder;
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.style.PieStyler;
+import org.knowm.xchart.style.Styler;
+import org.pushingpixels.substance.internal.ui.SubstanceTabbedPaneUI;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.gasto.GastoController;
 import restManager.controller.gasto.GastoOperacionController;
@@ -103,40 +113,47 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelData = new javax.swing.JPanel();
         jTabbedPaneData = new javax.swing.JTabbedPane();
         jPanelResumen = new javax.swing.JPanel();
-        jPanelResumenVentas = new javax.swing.JPanel();
+        jTabbedPaneResumenD = new javax.swing.JTabbedPane();
+        jPanelGeneral = new javax.swing.JPanel();
+        jPanelGastos = new javax.swing.JPanel();
+        jLabelTotalGastosInsumo = new javax.swing.JLabel();
+        jLabelTotalGastosPagoTrab = new javax.swing.JLabel();
+        jLabelTotalGastos = new javax.swing.JLabel();
+        jPanelAutorizos = new javax.swing.JPanel();
+        jLabelTotalGastosAutorizo = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jButtonImprimirZ1 = new javax.swing.JButton();
         jPanelNumero = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabelTotalVentasNeta = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jButtonImprimirZ = new javax.swing.JButton();
+        jLabelTotalVentas = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
-        jLabelTotalVentas = new javax.swing.JLabel();
-        jLabelTotalVentasNeta = new javax.swing.JLabel();
-        jButtonImprimirZ = new javax.swing.JButton();
+        jPanel13 = new javax.swing.JPanel();
+        jPanelGraficaPieGenerales = new javax.swing.JPanel();
+        jPanelAreas = new javax.swing.JPanel();
+        jPanelVentasArea = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTableVentasPorArea = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        jButton9 = new javax.swing.JButton();
+        jPanelDependientes = new javax.swing.JPanel();
         jPanelVentasCamareras = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableVentasDependientes = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jButtonImprimirDptes = new javax.swing.JButton();
         jButtonImpPagoVentas = new javax.swing.JButton();
+        jPanelPtoElab = new javax.swing.JPanel();
         jPanelCocinaArea = new javax.swing.JPanel();
         jPanelVentasCocinas = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTableVentasPorCocina = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
-        jPanelVentasArea = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jTableVentasPorArea = new javax.swing.JTable();
-        jPanel7 = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
-        jPanelGastos = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabelTotalGastosAutorizo = new javax.swing.JLabel();
-        jButtonImprimirZ1 = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
-        jLabelTotalGastosInsumo = new javax.swing.JLabel();
-        jLabelTotalGastos = new javax.swing.JLabel();
-        jLabelTotalGastosPagoTrab = new javax.swing.JLabel();
         jPanelVentas = new javax.swing.JPanel();
         jPanelDetailOrdenes = new javax.swing.JPanel();
         jPanelOrdenesActivas = new javax.swing.JPanel();
@@ -249,14 +266,92 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jTabbedPaneData.setToolTipText("");
         jTabbedPaneData.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
 
-        jPanelResumen.setLayout(new javax.swing.BoxLayout(jPanelResumen, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelResumen.setLayout(new java.awt.BorderLayout());
 
-        jPanelResumenVentas.setBackground(new java.awt.Color(153, 255, 153));
-        jPanelResumenVentas.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 102, 51), null, null), javax.swing.BorderFactory.createTitledBorder(null, "Ventas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 36)))); // NOI18N
-        jPanelResumenVentas.setLayout(new javax.swing.BoxLayout(jPanelResumenVentas, javax.swing.BoxLayout.PAGE_AXIS));
+        jTabbedPaneResumenD.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabbedPaneResumenD.setToolTipText("");
+        jTabbedPaneResumenD.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
 
-        jPanelNumero.setOpaque(false);
-        jPanelNumero.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanelGeneral.setLayout(new java.awt.BorderLayout());
+
+        jPanelGastos.setBackground(new java.awt.Color(255, 102, 102));
+        jPanelGastos.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 102, 0), null, null), javax.swing.BorderFactory.createTitledBorder(null, "Gastos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 36)))); // NOI18N
+        jPanelGastos.setLayout(new java.awt.GridLayout(8, 0));
+
+        jLabelTotalGastosInsumo.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelTotalGastosInsumo.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalGastosInsumo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 0), 3, true), bundle.getString("label_insumo"))); // NOI18N
+        jPanelGastos.add(jLabelTotalGastosInsumo);
+
+        jLabelTotalGastosPagoTrab.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelTotalGastosPagoTrab.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalGastosPagoTrab.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 0, 204), 3, true), bundle.getString("label_pago_salario"))); // NOI18N
+        jPanelGastos.add(jLabelTotalGastosPagoTrab);
+
+        jLabelTotalGastos.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelTotalGastos.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalGastos.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 3, true), bundle.getString("label_otros"))); // NOI18N
+        jPanelGastos.add(jLabelTotalGastos);
+
+        jPanelAutorizos.setOpaque(false);
+        jPanelAutorizos.setLayout(new java.awt.BorderLayout());
+
+        jLabelTotalGastosAutorizo.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelTotalGastosAutorizo.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalGastosAutorizo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 102), 3, true), bundle.getString("label_autorizo"))); // NOI18N
+        jPanelAutorizos.add(jLabelTotalGastosAutorizo, java.awt.BorderLayout.CENTER);
+
+        jPanel12.setOpaque(false);
+
+        jButtonImprimirZ1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonImprimirZ1.setToolTipText(bundle.getString("imprimir_gastos_casa")); // NOI18N
+        jButtonImprimirZ1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jButtonImprimirZ1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirZ1ActionPerformed(evt);
+            }
+        });
+        jPanel12.add(jButtonImprimirZ1);
+
+        jPanelAutorizos.add(jPanel12, java.awt.BorderLayout.EAST);
+
+        jPanelGastos.add(jPanelAutorizos);
+
+        jPanelGeneral.add(jPanelGastos, java.awt.BorderLayout.EAST);
+
+        jPanelNumero.setBackground(new java.awt.Color(153, 255, 153));
+        jPanelNumero.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), javax.swing.BorderFactory.createTitledBorder(null, "Ventas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 36)))); // NOI18N
+        jPanelNumero.setLayout(new java.awt.GridLayout(7, 0));
+
+        jPanel9.setOpaque(false);
+        jPanel9.setLayout(new java.awt.BorderLayout());
+
+        jLabelTotalVentasNeta.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelTotalVentasNeta.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalVentasNeta.setToolTipText("Este recuadro muestra la venta sin porciento por servicio");
+        jLabelTotalVentasNeta.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 3, true), "Venta Neta"));
+        jPanel9.add(jLabelTotalVentasNeta, java.awt.BorderLayout.CENTER);
+
+        jPanel11.setOpaque(false);
+
+        jButtonImprimirZ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonImprimirZ.setToolTipText("Imprimir Z");
+        jButtonImprimirZ.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jButtonImprimirZ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirZActionPerformed(evt);
+            }
+        });
+        jPanel11.add(jButtonImprimirZ);
+
+        jPanel9.add(jPanel11, java.awt.BorderLayout.EAST);
+
+        jPanelNumero.add(jPanel9);
+
+        jLabelTotalVentas.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelTotalVentas.setText(bundle.getString("label_numeros_moneda")); // NOI18N
+        jLabelTotalVentas.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 51), 3, true), bundle.getString("label_total"))); // NOI18N
+        jPanelNumero.add(jLabelTotalVentas);
 
         jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 204), 3), "Propina"));
         jPanel10.setOpaque(false);
@@ -278,28 +373,73 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelNumero.add(jPanel10);
 
-        jLabelTotalVentas.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabelTotalVentas.setText(bundle.getString("label_numeros_moneda")); // NOI18N
-        jLabelTotalVentas.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 51), 3, true), bundle.getString("label_total"))); // NOI18N
-        jPanelNumero.add(jLabelTotalVentas);
+        jPanelGeneral.add(jPanelNumero, java.awt.BorderLayout.WEST);
 
-        jLabelTotalVentasNeta.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabelTotalVentasNeta.setText(bundle.getString("label_numeros_moneda")); // NOI18N
-        jLabelTotalVentasNeta.setToolTipText("Este recuadro muestra la venta sin porciento por servicio");
-        jLabelTotalVentasNeta.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 3, true), "Venta Neta"));
-        jPanelNumero.add(jLabelTotalVentasNeta);
+        jPanel13.setLayout(new java.awt.BorderLayout());
 
-        jButtonImprimirZ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jButtonImprimirZ.setText("Imprimir Z");
-        jButtonImprimirZ.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jButtonImprimirZ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImprimirZActionPerformed(evt);
+        jPanelGraficaPieGenerales.setLayout(new java.awt.BorderLayout());
+        jPanel13.add(jPanelGraficaPieGenerales, java.awt.BorderLayout.CENTER);
+
+        jPanelGeneral.add(jPanel13, java.awt.BorderLayout.CENTER);
+
+        jTabbedPaneResumenD.addTab("General", jPanelGeneral);
+
+        jPanelAreas.setLayout(new javax.swing.BoxLayout(jPanelAreas, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanelVentasArea.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen de ventas por area"));
+        jPanelVentasArea.setOpaque(false);
+        jPanelVentasArea.setLayout(new java.awt.BorderLayout());
+
+        jTableVentasPorArea.setAutoCreateRowSorter(true);
+        jTableVentasPorArea.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jTableVentasPorArea.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Nombre", "Neta", "Real"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jPanelNumero.add(jButtonImprimirZ);
+        jTableVentasPorArea.setRowHeight(25);
+        jTableVentasPorArea.setRowMargin(5);
+        jScrollPane6.setViewportView(jTableVentasPorArea);
 
-        jPanelResumenVentas.add(jPanelNumero);
+        jPanelVentasArea.add(jScrollPane6, java.awt.BorderLayout.CENTER);
+
+        jPanel7.setOpaque(false);
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButton9.setText(bundle.getString("label_imprimir_resumen_ventas")); // NOI18N
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jButton9);
+
+        jPanelVentasArea.add(jPanel7, java.awt.BorderLayout.PAGE_END);
+
+        jPanelAreas.add(jPanelVentasArea);
+
+        jTabbedPaneResumenD.addTab("Areas", jPanelAreas);
+
+        jPanelDependientes.setLayout(new java.awt.BorderLayout());
 
         jPanelVentasCamareras.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen Ventas Dependientes"));
         jPanelVentasCamareras.setOpaque(false);
@@ -359,7 +499,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelVentasCamareras.add(jPanel4, java.awt.BorderLayout.PAGE_END);
 
-        jPanelResumenVentas.add(jPanelVentasCamareras);
+        jPanelDependientes.add(jPanelVentasCamareras, java.awt.BorderLayout.CENTER);
+
+        jTabbedPaneResumenD.addTab("Dependientes", jPanelDependientes);
+
+        jPanelPtoElab.setLayout(new java.awt.BorderLayout());
 
         jPanelCocinaArea.setOpaque(false);
         jPanelCocinaArea.setLayout(new java.awt.GridLayout(1, 0));
@@ -415,111 +559,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jPanelCocinaArea.add(jPanelVentasCocinas);
 
-        jPanelVentasArea.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen de ventas por area"));
-        jPanelVentasArea.setOpaque(false);
-        jPanelVentasArea.setLayout(new java.awt.BorderLayout());
+        jPanelPtoElab.add(jPanelCocinaArea, java.awt.BorderLayout.CENTER);
 
-        jTableVentasPorArea.setAutoCreateRowSorter(true);
-        jTableVentasPorArea.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jTableVentasPorArea.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        jTabbedPaneResumenD.addTab("Ptos Elaboracion", jPanelPtoElab);
 
-            },
-            new String [] {
-                "Codigo", "Nombre", "Neta", "Real"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableVentasPorArea.setRowHeight(25);
-        jTableVentasPorArea.setRowMargin(5);
-        jScrollPane6.setViewportView(jTableVentasPorArea);
-
-        jPanelVentasArea.add(jScrollPane6, java.awt.BorderLayout.CENTER);
-
-        jPanel7.setOpaque(false);
-        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jButton9.setText(bundle.getString("label_imprimir_resumen_ventas")); // NOI18N
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-        jPanel7.add(jButton9);
-
-        jPanelVentasArea.add(jPanel7, java.awt.BorderLayout.PAGE_END);
-
-        jPanelCocinaArea.add(jPanelVentasArea);
-
-        jPanelResumenVentas.add(jPanelCocinaArea);
-
-        jPanelResumen.add(jPanelResumenVentas);
-
-        jPanelGastos.setBackground(new java.awt.Color(255, 102, 102));
-        jPanelGastos.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(153, 0, 0), null, null), javax.swing.BorderFactory.createTitledBorder(null, "Gastos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 36)))); // NOI18N
-        jPanelGastos.setLayout(new javax.swing.BoxLayout(jPanelGastos, javax.swing.BoxLayout.PAGE_AXIS));
-
-        jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        jPanel9.setOpaque(false);
-        jPanel9.setLayout(new java.awt.BorderLayout());
-
-        jLabelTotalGastosAutorizo.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabelTotalGastosAutorizo.setText(bundle.getString("label_numeros_moneda")); // NOI18N
-        jLabelTotalGastosAutorizo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 0, 102), 3, true), bundle.getString("label_autorizo"))); // NOI18N
-        jPanel9.add(jLabelTotalGastosAutorizo, java.awt.BorderLayout.WEST);
-
-        jButtonImprimirZ1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jButtonImprimirZ1.setText(bundle.getString("imprimir_gastos_casa")); // NOI18N
-        jButtonImprimirZ1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jButtonImprimirZ1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImprimirZ1ActionPerformed(evt);
-            }
-        });
-        jPanel9.add(jButtonImprimirZ1, java.awt.BorderLayout.EAST);
-
-        jPanel2.add(jPanel9, java.awt.BorderLayout.WEST);
-
-        jPanel6.setOpaque(false);
-        jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jLabelTotalGastosInsumo.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabelTotalGastosInsumo.setText(bundle.getString("label_numeros_moneda")); // NOI18N
-        jLabelTotalGastosInsumo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 0), 3, true), bundle.getString("label_insumo"))); // NOI18N
-        jPanel6.add(jLabelTotalGastosInsumo);
-
-        jLabelTotalGastos.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabelTotalGastos.setText(bundle.getString("label_numeros_moneda")); // NOI18N
-        jLabelTotalGastos.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 3, true), bundle.getString("label_gastos"))); // NOI18N
-        jPanel6.add(jLabelTotalGastos);
-
-        jLabelTotalGastosPagoTrab.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabelTotalGastosPagoTrab.setText(bundle.getString("label_numeros_moneda")); // NOI18N
-        jLabelTotalGastosPagoTrab.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 0, 204), 3, true), bundle.getString("label_pago_salario"))); // NOI18N
-        jPanel6.add(jLabelTotalGastosPagoTrab);
-
-        jPanel2.add(jPanel6, java.awt.BorderLayout.CENTER);
-
-        jPanelGastos.add(jPanel2);
-
-        jPanelResumen.add(jPanelGastos);
+        jPanelResumen.add(jTabbedPaneResumenD, java.awt.BorderLayout.CENTER);
 
         jTabbedPaneData.addTab("Resumen", jPanelResumen);
 
@@ -624,7 +668,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     }//GEN-LAST:event_jButtonRefrescarActionPerformed
 
     private void jButtonTerminarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarVentasActionPerformed
-        getController().terminarVentas();        // TODO add your handling code here:
+        getController().terminarVentas();
     }//GEN-LAST:event_jButtonTerminarVentasActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -659,10 +703,6 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         enviarCerrarCrear();
     }//GEN-LAST:event_jButtonEnviarCerrarCrearNuevaActionPerformed
 
-    private void jideButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton2ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jideButton2ActionPerformed
-
     private void jButtonCambiarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCambiarTurnoActionPerformed
         getController().cambiarTurno();        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCambiarTurnoActionPerformed
@@ -695,8 +735,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         updateTablePagoTrabajadores();
     }//GEN-LAST:event_jSpinner1StateChanged
 
-    @Override
+    private void jideButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jideButton2ActionPerformed
 
+    @Override
     public void setEditingMode() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
@@ -798,6 +841,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jLabelTotalGastosPagoTrab.setText(getController().getTotalPagoTrabajadores());
         jLabelTotalGastosAutorizo.setText(getController().getTotalAutorizos());
 
+        updateGraficasResumenGeneralVentas();
+
     }
 
     @Override
@@ -834,28 +879,34 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JLabel jLabelTotalVentasNeta;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelAreas;
+    private javax.swing.JPanel jPanelAutorizos;
     private javax.swing.JPanel jPanelCocinaArea;
     private javax.swing.JPanel jPanelData;
+    private javax.swing.JPanel jPanelDependientes;
     private javax.swing.JPanel jPanelDetailOrdenes;
     private javax.swing.JPanel jPanelExtracciones;
     private javax.swing.JPanel jPanelFooter;
     private javax.swing.JPanel jPanelGastos;
+    private javax.swing.JPanel jPanelGeneral;
+    private javax.swing.JPanel jPanelGraficaPieGenerales;
     private javax.swing.JPanel jPanelNumero;
     private javax.swing.JPanel jPanelOperaciones;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelOrdenesActivas;
     private javax.swing.JPanel jPanelPagoTrabajadores;
+    private javax.swing.JPanel jPanelPtoElab;
     private javax.swing.JPanel jPanelResumen;
     private javax.swing.JPanel jPanelResumenDetallado;
-    private javax.swing.JPanel jPanelResumenVentas;
     private javax.swing.JPanel jPanelRoot;
     private javax.swing.JPanel jPanelTurnosTrabajo;
     private javax.swing.JPanel jPanelVentas;
@@ -869,6 +920,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTabbedPane jTabbedPaneData;
     private javax.swing.JTabbedPane jTabbedPaneResumen;
+    private javax.swing.JTabbedPane jTabbedPaneResumenD;
     private javax.swing.JTable jTableVentasDependientes;
     private javax.swing.JTable jTableVentasPorArea;
     private javax.swing.JTable jTableVentasPorCocina;
@@ -896,6 +948,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         if (R.VARIOS_TURNOS) {
             jButtonTerminarVentas.setEnabled(getController().getInstance().getCambioTurno1() != null);
         }
+
+        jTabbedPaneResumenD.setUI(new MaterialTabbedPaneUI());
+        jTabbedPaneData.setUI(new MaterialTabbedPaneUI());
     }
 
     private void updateTableResumenDptes() {
@@ -979,5 +1034,26 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
             personalController.setReadOnlyData(true);
         }
         personalController.constructView(jPanelPagoTrabajadores);
+    }
+
+    private void updateGraficasResumenGeneralVentas() {
+        PieChart chartPie = new PieChartBuilder().theme(Styler.ChartTheme.XChart).title("Ventas/Gastos ").build();
+        chartPie.getStyler().setAnnotationType(PieStyler.AnnotationType.Percentage);
+        chartPie.getStyler().setChartTitleBoxVisible(true);
+        chartPie.getStyler().setLegendPosition(Styler.LegendPosition.InsideSE);
+        chartPie.getStyler().setLegendBackgroundColor(new Color(255, 255, 255, 0));
+
+        float insumo = Float.parseFloat(jLabelTotalGastosInsumo.getText().split(" ")[0]);
+        float otros = Float.parseFloat(jLabelTotalGastos.getText().split(" ")[0]);
+        float trabajadores = Float.parseFloat(jLabelTotalGastosPagoTrab.getText().split(" ")[0]);
+        float gananciaRelativa = Float.parseFloat(jLabelTotalVentas.getText().split(" ")[0]) - insumo - otros - trabajadores;
+
+        chartPie.addSeries("Gastos de Insumo " + utils.setDosLugaresDecimales(insumo), insumo);
+        chartPie.addSeries("Pago a trabajadores " + utils.setDosLugaresDecimales(trabajadores), trabajadores);
+        chartPie.addSeries("Otros gastos " + utils.setDosLugaresDecimales(otros), otros);
+        chartPie.addSeries("Resto de efectivo " + utils.setDosLugaresDecimales(gananciaRelativa), gananciaRelativa).setFillColor(Color.GREEN);
+
+        XChartPanel wrapperPie = new XChartPanel(chartPie);
+        jPanelGraficaPieGenerales.add(wrapperPie);
     }
 }

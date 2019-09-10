@@ -118,7 +118,7 @@ public class Resumenes extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -356,37 +356,37 @@ public class Resumenes extends javax.swing.JPanel {
 
         if (jCheckBoxRedondearValores.isSelected()) {
             for (int i = 0; i < jTableGastos.getRowCount(); i++) {
-                if (jTableGastos.getValueAt(i, 3) != null
-                        && (float) jTableGastos.getValueAt(i, 3) >= 1) {
-                    listaVentas.add((float) jTableGastos.getValueAt(i, 3));
+                if (jTableGastos.getValueAt(i, 2) != null
+                        && (float) jTableGastos.getValueAt(i, 2) >= 1) {
+                    listaVentas.add((float) jTableGastos.getValueAt(i, 2));
                     jTableGastos.setValueAt((float) Math.
-                            round((float) jTableGastos.getValueAt(i, 3)), i, 3);
+                            round((float) jTableGastos.getValueAt(i, 2)), i, 2);
                 }
 
             }
             for (int i = 0; i < jTableGastos.getRowCount(); i++) {
-                if (jTableGastos.getValueAt(i, 4) != null
-                        && (float) jTableGastos.getValueAt(i, 4) >= 1) {
-                    listaGastos.add((float) jTableGastos.getValueAt(i, 4));
+                if (jTableGastos.getValueAt(i, 3) != null
+                        && (float) jTableGastos.getValueAt(i, 3) >= 1) {
+                    listaGastos.add((float) jTableGastos.getValueAt(i, 3));
                     jTableGastos.setValueAt((float) Math.
-                            round((float) jTableGastos.getValueAt(i, 4)), i, 4);
+                            round((float) jTableGastos.getValueAt(i, 3)), i, 3);
                 }
 
             }
 
         } else {
             for (int i = 0; i < jTableGastos.getRowCount(); i++) {
-                if (jTableGastos.getValueAt(i, 3) != null
-                        && (float) jTableGastos.getValueAt(i, 3) >= 1) {
-                    jTableGastos.setValueAt(listaVentas.remove(0), i, 3);
+                if (jTableGastos.getValueAt(i, 2) != null
+                        && (float) jTableGastos.getValueAt(i, 2) >= 1) {
+                    jTableGastos.setValueAt(listaVentas.remove(0), i, 2);
 
                 }
 
             }
             for (int i = 0; i < jTableGastos.getRowCount(); i++) {
-                if (jTableGastos.getValueAt(i, 4) != null
-                        && (float) jTableGastos.getValueAt(i, 4) >= 1) {
-                    jTableGastos.setValueAt(listaGastos.remove(0), i, 4);
+                if (jTableGastos.getValueAt(i, 3) != null
+                        && (float) jTableGastos.getValueAt(i, 3) >= 1) {
+                    jTableGastos.setValueAt(listaGastos.remove(0), i, 3);
 
                 }
 

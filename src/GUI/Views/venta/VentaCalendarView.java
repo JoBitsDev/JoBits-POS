@@ -559,6 +559,10 @@ public class VentaCalendarView extends AbstractView {
         cal.set(Calendar.YEAR, jYearChooser1.getYear());
         cal.set(Calendar.MONTH, jMonthChooser1.getMonth());
         monthOffset = cal.get(Calendar.DAY_OF_WEEK) - 2;
+        if (monthOffset == -1) {
+            monthOffset = 6;
+        }
+        
     }
 
     public List<Venta> getSelectedVentas() {

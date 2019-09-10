@@ -238,7 +238,7 @@ public class VentaDAO1 {
             rowData[0].add(x.getInsumo().getNombre());
             rowData[1].add(x.getInsumo().getUm());
             rowData[2].add(x.getCantidad());
-            rowData[3].add(utils.setDosLugaresDecimales(x.getCosto()));
+            rowData[3].add(utils.setDosLugaresDecimalesFloat(x.getCosto()));
             total += x.getCosto();
         }
 
@@ -278,7 +278,7 @@ public class VentaDAO1 {
             rowData[0].add(x.getInsumo().getNombre());
             rowData[1].add(x.getInsumo().getUm());
             rowData[2].add(x.getCantidad());
-            rowData[3].add(utils.setDosLugaresDecimales(x.getCosto()));
+            rowData[3].add(utils.setDosLugaresDecimalesFloat(x.getCosto()));
             total += x.getCosto();
         }
 
@@ -355,7 +355,7 @@ public class VentaDAO1 {
 
         //llenando la tabla
         utils.AddToTable(rowData, tabla);
-        
+
         return total;
 
     }
@@ -627,10 +627,10 @@ public class VentaDAO1 {
      */
     private static void llenarArrayProductoVOrden(ArrayList<ProductovOrden> ret, ArrayList<Orden> aux, Cocina c, boolean condicionAutorizo, boolean aceptarOrdenesAbiertas) {
         for (Orden o : aux) {
-            if (o.getDeLaCasa() == condicionAutorizo ) {
-                if (aceptarOrdenesAbiertas  ||  o.getHoraTerminada() != null) {
-                joinListsProductovOrdenByCocina(ret,
-                        new ArrayList(o.getProductovOrdenList()), c);
+            if (o.getDeLaCasa() == condicionAutorizo) {
+                if (aceptarOrdenesAbiertas || o.getHoraTerminada() != null) {
+                    joinListsProductovOrdenByCocina(ret,
+                            new ArrayList(o.getProductovOrdenList()), c);
                 }
             }
         }
@@ -643,7 +643,7 @@ public class VentaDAO1 {
             rowData[0].add(x.getProductoVenta().getNombre());
             rowData[1].add(x.getProductoVenta().getPrecioVenta());
             rowData[2].add(x.getCantidad());
-            rowData[3].add(x.getProductoVenta().getPrecioVenta() * x.getCantidad());
+            rowData[3].add(utils.setDosLugaresDecimalesFloat(x.getProductoVenta().getPrecioVenta() * x.getCantidad()));
 
             total += x.getProductoVenta().getPrecioVenta() * x.getCantidad();
         }

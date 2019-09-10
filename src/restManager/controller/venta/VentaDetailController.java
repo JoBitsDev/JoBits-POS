@@ -187,7 +187,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             getModel().getEntityManager().refresh(super.getInstance());
             for (Orden x : super.getInstance().getOrdenList()) {
                 if (x.getHoraTerminada() == null) {
-                    showErrorDialog(vi, "Existen tickets sin cerrar. Cierre los tickets antes de terminar la venta");
+                    showErrorDialog(vi, "Existen tickets sin cerrar ("+x+"). Cierre los tickets antes de terminar la venta");
                     return;
                 }
                 if (!x.getDeLaCasa()) {

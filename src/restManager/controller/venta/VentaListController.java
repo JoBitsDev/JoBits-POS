@@ -105,7 +105,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
                         if (b.getPersonal().getUsuario().equals(a.getPersonal().getUsuario())) {
                             founded = true;
                             b.setPago(a.getPago() + b.getPago());
-                            if (b.getPropina() != null) {
+                            if (b.getPropina() != null && a.getPropina() != null) {
                                 b.setPropina(a.getPropina() + b.getPropina());
                             }
                             if (b.getAMayores() != null) {
