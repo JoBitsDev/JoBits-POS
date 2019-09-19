@@ -50,7 +50,7 @@ public class Impresion {
     /**
      * @param args the command line arguments
      */
-    private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
+    private static final Logger LOGGER = Logger.getLogger(Impresion.class.getSimpleName());
 
     private boolean monedaCUC;
     private static EstadoImpresion estadoImpresion = EstadoImpresion.UKNOWN;
@@ -1063,17 +1063,10 @@ public class Impresion {
     }
 
     private void log(Orden o, ProductovOrden x) {
-        if (x.getEnviadosacocina() > x.getCantidad()) {
-            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.BORRAR,
-                    x.getEnviadosacocina() > 0 && o.getHoraTerminada() != null ? Level.SEVERE : Level.WARNING,
-                    o, x.getProductoVenta(),
-                    x.getEnviadosacocina() - x.getCantidad());
-        } else {
-            if (x.getEnviadosacocina() < x.getCantidad()) {
-                RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR,
-                        Level.FINER, o.getCodOrden(), x.getProductoVenta(), x.getCantidad() - x.getEnviadosacocina());
-            }
-        }
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIENDO_PRODUCTO,
+                Level.FINEST,
+                o, x.getProductoVenta(),
+                x.getEnviadosacocina() - x.getCantidad());
     }
 
     private Orden printCancelationKitchenForced(Orden o) {

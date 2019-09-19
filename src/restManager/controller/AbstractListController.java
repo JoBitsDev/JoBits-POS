@@ -30,13 +30,14 @@ public abstract class AbstractListController<T> extends AbstractDialogController
         detailController = getDetailControllerForNew();
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        switch(evt.getPropertyName()){
-            case "CREATE" : getView().getModel().addrow((T)evt.getNewValue());break;
-            case "DELETE" : getView().getModel().deleteRow((T) evt.getOldValue());break;
-        }
-    }
+//    @Override
+//    public void propertyChange(PropertyChangeEvent evt) {
+//        super.
+//        switch(evt.getPropertyName()){
+//            case "CREATE" : getView().getModel().addrow((T)evt.getNewValue());break;
+//            case "DELETE" : getView().getModel().deleteRow((T) evt.getOldValue());break;
+//        }
+//    }
 
     @Override
     public void update(T selected) {

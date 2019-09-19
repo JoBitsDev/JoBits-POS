@@ -196,7 +196,6 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
 
         float valorMaxAjustado = (float) (valorMaximo * (1.1));
         int i = 0, iteracionesMax = comidas.size() * liquidos.size();
-        System.out.println("while de limpiar maquillar " + get);
         while (get.getOrdenvalorMonetario() > valorMaxAjustado && i < iteracionesMax) {
             if (comidas.size() >= liquidos.size()) {
                 iterarEnComidas(liquidos, comidas, valorMaxAjustado, get);
@@ -204,7 +203,6 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
                 iterarEnLiquidos(liquidos, comidas, valorMaxAjustado, get);
             }
         }
-        System.out.println("fin de while de limpiar maquillar");
         get.setProductovOrdenList(comidas);
         get.getProductovOrdenList().addAll(liquidos);
 

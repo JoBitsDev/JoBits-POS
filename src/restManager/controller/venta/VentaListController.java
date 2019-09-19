@@ -20,6 +20,7 @@ import restManager.exceptions.ValidatingException;
 import restManager.persistencia.AsistenciaPersonal;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.VentaDAO;
+import restManager.resources.R;
 
 /**
  * FirstDream
@@ -51,7 +52,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
 
     @Override
     public void destroy(Venta selected) {
-        if (showDeleteDialog((Container) getView(), selected) && new LogInController().constructoAuthorizationView(getView(), 4)) {
+        if (showDeleteDialog((Container) getView(), selected) && new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR.getNivel())) {
             this.selected = selected;
             this.destroy();
             this.selected = null;

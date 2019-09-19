@@ -62,22 +62,6 @@ public abstract class AbstractFragmentController<T> extends AbstractController<T
         this.parent = parent;
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println(evt.getPropagationId());
-        System.out.println(evt.getPropertyName());
-        System.out.println(evt.getSource());
-        System.out.println(getClass().toString());
-        if (getView() != null) {
-            System.out.println(getView().getClass().toString());
-            items = null;
-            switch (PropertyName.valueOf(evt.getPropertyName())) {
-                case DELETE:break;
-                default:getView().updateView();
-            }
-        }
-    }
-
     public abstract T createNewInstance();
 
     @Override

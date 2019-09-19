@@ -387,11 +387,19 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                         switch (columnIndex) {
                             case 1:
                                 if (getController().autorize()) {
+                                    float cantidadOld = items.get(rowIndex).getCantidad();
                                     items.get(rowIndex).setCantidad((float) aValue);
+                                    float diferencia = cantidadOld - (float)aValue;
+                                    if (diferencia > 0) {
+                                        getController().fireWarningOnDeleting( items.get(rowIndex), diferencia);
+                                    }else{
+                                        getController().fireWarningOnAdding(items.get(rowIndex), diferencia*-1);
+                                    }
                                     fireTableRowsUpdated(rowIndex, rowIndex);
                                     state = ButtonState.ENVIAR_COCINA;
                                     jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
                                     updateValorTotal();
+
                                 }
                                 break;
                             default:
@@ -429,7 +437,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                 getModel().setItems(getInstance().getProductovOrdenList());
                 state = ButtonState.ENVIAR_COCINA;
                 jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
-
+                getController().fireWarningOnDeleting(po, po.getCantidad());
                 repaint();
             }
         };

@@ -171,7 +171,7 @@ public class ProductovOrden implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.ProductovOrden[ productovOrdenPK=" + productovOrdenPK + " ]";
+        return  getOrden() +"_"+ getProductoVenta();
     }
 
 }

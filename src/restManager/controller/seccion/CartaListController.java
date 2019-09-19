@@ -72,11 +72,6 @@ public class CartaListController extends AbstractListController<Carta> {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getView().updateView();
-    }
-
-    @Override
     public void constructView(Container parent) {
         setView(new CartaSeccionView(this, (AbstractView) parent));
         getView().updateView();

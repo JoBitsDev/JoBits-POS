@@ -67,11 +67,6 @@ public class TransaccionesListController extends AbstractListController<Transacc
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getView().updateView();
-    }
-
-    @Override
     public void destroy(Transaccion selected) {
         super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
         getModel().getEntityManager().refresh(selected.getAlmacen());

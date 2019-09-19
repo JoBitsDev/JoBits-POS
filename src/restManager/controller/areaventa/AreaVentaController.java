@@ -96,15 +96,4 @@ public class AreaVentaController extends AbstractListController<Area> {
         }
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        switch (evt.getPropertyName()) {
-            case "CREATE":
-            case "DELETE":
-                items = null;
-                getView().updateView();
-                break;
-        }
-    }
-
 }

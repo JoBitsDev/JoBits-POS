@@ -58,24 +58,21 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public OrdenController(Venta fecha) {
         super(OrdenDAO.getInstance());
+        init();
         this.fechaOrden = fecha;
-        setDismissOnAction(false);
-        setShowDialogs(false);
         instance = createNewInstance();
     }
 
     public OrdenController(Orden instance) {
         super(instance, OrdenDAO.getInstance());
+        init();
         fechaOrden = instance.getVentafecha();
-        setDismissOnAction(false);
-        setShowDialogs(false);
     }
 
     public OrdenController(Container parent, Venta fecha) {
         super(parent, OrdenDAO.getInstance());
+        init();
         this.fechaOrden = fecha;
-        setDismissOnAction(false);
-        setShowDialogs(false);
         instance = createNewInstance();
         view = new OrdenDetailFragmentView(instance, this, parent);
         constructView(parent);
@@ -83,11 +80,17 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public OrdenController(Orden instance, Container parent) {
         super(instance, parent, OrdenDAO.getInstance());
+        init();
         fechaOrden = instance.getVentafecha();
-        setDismissOnAction(false);
-        setShowDialogs(false);
         view = new OrdenDetailFragmentView(getInstance(), this, parent);
         constructView(parent);
+    }
+
+    private void init() {
+        setDismissOnAction(false);
+        setShowDialogs(false);
+        LOGGER.addHandler(new RestManagerHandler(Venta.class));
+        LOGGER.setLevel(Level.FINE);
     }
 
     @Override
@@ -128,6 +131,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         ret.setOrdenvalorMonetario((float) 0);
         ret.setProductovOrdenList(new ArrayList<>());
         ret.setVentafecha(fechaOrden);
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.CREADO, Level.FINE, ret);
         return ret;
 
     }
@@ -143,7 +147,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         if (autorize()) {
             Impresion i = new Impresion();
             instance = i.printKitchen(instance);
-            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINEST, instance);
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINE, instance);
             update(instance);
             showSuccessDialog(getView(), "Productos enviados a cocina exitosamente");
         }
@@ -152,7 +156,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     public void imprimirPreTicket() {
         Impresion i = new Impresion();
         i.print(instance, true);
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIR_TICKET_PARCIAL, Level.FINER, instance);
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIR_TICKET_PARCIAL, Level.FINE, instance);
     }
 
     public void addNota(ProductovOrden prod) {
@@ -304,7 +308,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
             boolean found = false;
             ProductovOrden founded = null;
-            float cantidadAgregada = 1;
+            float cantidadAgregada = 0;
             for (ProductovOrden x : new ArrayList<>(getInstance().getProductovOrdenList())) {
                 if (x.getProductoVenta().getPCod().equals(selected.getPCod())) {
                     founded = x;
@@ -313,6 +317,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 }
             }
             if (found) {
+                cantidadAgregada = founded.getCantidad();
                 founded.setCantidad(founded.getCantidad() + Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta())));
                 ProductovOrdenDAO.getInstance().edit(founded);
 
@@ -326,7 +331,8 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 ProductovOrdenDAO.getInstance().create(founded);
                 getInstance().getProductovOrdenList().add(founded);
             }
-            cantidadAgregada = founded.getCantidad();
+            cantidadAgregada = founded.getCantidad() - cantidadAgregada;
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR, Level.FINE, founded, cantidadAgregada);
             update(instance);
             view.updateValorTotal();
         }
@@ -346,11 +352,19 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         return "O-" + orden;
     }
 
-    public enum UpdateIpvAction {
-        AGREGAR, REMOVER
-    }
-
     public boolean autorize() {
         return new LogInController().constructoAuthorizationView(null, instance.getPersonalusuario().getUsuario());
+    }
+
+    public void fireWarningOnDeleting(ProductovOrden producto, float cantidad) {
+        Level l = getInstance().getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.BORRAR, l, producto, cantidad);
+
+    }
+
+    public void fireWarningOnAdding(ProductovOrden producto, float cantidad) {
+     //   Level l = getInstance().getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR, Level.FINE, producto, cantidad);
+
     }
 }

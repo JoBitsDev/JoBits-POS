@@ -546,7 +546,7 @@ public class VentaCalendarView extends AbstractView {
     }
 
     public List<Venta> findVentas(int month, int year) {
-       return  getController().findVentas(month,year);
+        return getController().findVentas(month, year);
     }
 
     @Override
@@ -562,7 +562,7 @@ public class VentaCalendarView extends AbstractView {
         if (monthOffset == -1) {
             monthOffset = 6;
         }
-        
+
     }
 
     public List<Venta> getSelectedVentas() {
@@ -616,7 +616,18 @@ public class VentaCalendarView extends AbstractView {
     }
 
     private void deleteSelected() {
-        getController().destroy(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()));
+        if (jTableCalendar.getSelectedColumnCount() > 1 || jTableCalendar.getSelectedRowCount() > 1) {
+            for (int selectedColumn : jTableCalendar.getSelectedColumns()) {
+                for (int selectedRow : jTableCalendar.getSelectedRows()) {
+                    Venta v = model.getValueAt(selectedRow, selectedColumn);
+                    if (v != null) {
+                    getController().destroy(model.getValueAt(selectedRow, selectedColumn));
+                    }
+                }
+            }
+        } else {
+            getController().destroy(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()));
+        }
     }
 
     @Override

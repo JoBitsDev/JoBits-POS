@@ -30,6 +30,7 @@ public abstract class AbstractController<T> implements Controller {
     protected boolean dismissOnAction = true;
     protected boolean showDialogs = true;
 
+
     public AbstractController(AbstractModel<T> dataAccess) {
         model = dataAccess;
         setPropertyChangeMethods();
@@ -66,10 +67,8 @@ public abstract class AbstractController<T> implements Controller {
     // Use this to observe property changes from registered models // and propagate them on to all the views.
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println(evt.getPropagationId());
-        System.out.println(evt.getPropertyName());
-        System.out.println(evt.getSource());
-        System.out.println(getClass().toString());
+        System.out.println("U: " + R.loggedUser +": "+ evt.getPropertyName() + " - (nuevo):"+evt.getNewValue() + " - (viejo):" + evt.getOldValue() 
+                +" \n      Origen: "+getClass().getName());
         if (view != null) {
             System.out.println(view.getClass().toString());
             items = null;

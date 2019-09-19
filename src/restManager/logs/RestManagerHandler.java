@@ -91,10 +91,12 @@ public class RestManagerHandler extends Handler {
     }
 
     public enum Action {
+        CREADO,
         BORRAR,
         EDITAR,
         AGREGAR,
         ENVIAR_COCINA,
+        IMPRIMIENDO_PRODUCTO,
         IMPRIMIR_TICKET_PARCIAL,
         IMPRIMIRTICKET,
         CERRAR,
@@ -105,8 +107,7 @@ public class RestManagerHandler extends Handler {
 
     public class RestManagerFormatter extends Formatter {
 
-        private final String format = "%4$s: %5$s [%1$tY/%1$tm/%1$td/%1$tT]%n";
-        private final Date dat = new Date();
+        private final String format = "%4$s: %5$s [%1$tY/%1$tm/%1$td %1$tT]%n";
 
         private RestManagerFormatter() {
         }
@@ -114,7 +115,7 @@ public class RestManagerHandler extends Handler {
         @Override
         public String format(LogRecord record) {
             //dat.setTime(record.getMillis());
-            R.DATE_FORMAT_FOR_LOGS.format(dat);
+            R.DATE_FORMAT_FOR_LOGS.format(new Date());
             String source;
             if (record.getSourceClassName() != null) {
                 source = record.getSourceClassName();
@@ -124,7 +125,7 @@ public class RestManagerHandler extends Handler {
             } else {
                 source = record.getLoggerName();
             }
-            String message = formatMessage(record);
+            String message = formatMessage(record) + " [Usuario: "+ R.loggedUser + "]";
             String throwable = "";
             if (record.getThrown() != null) {
                 StringWriter sw = new StringWriter();
@@ -135,7 +136,7 @@ public class RestManagerHandler extends Handler {
                 throwable = sw.toString();
             }
             return String.format(format,
-                    dat,
+                    new Date(),
                     source,
                     record.getLoggerName(),
                     record.getLevel().getLocalizedName(),

@@ -44,10 +44,10 @@ import javax.persistence.Table;
 public class PuestoTrabajo implements Serializable {
 
     @Column(name = "propina")
-    private Boolean propina;
+    private Boolean propina = false;
 
     @Column(name = "pago_por_ventas")
-    private Boolean pagoPorVentas;
+    private Boolean pagoPorVentas = false;
 
     @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")
     @ManyToOne
@@ -65,16 +65,16 @@ public class PuestoTrabajo implements Serializable {
     @Column(name = "nivel_acceso")
     private Integer nivelAcceso;
     @Column(name = "requiere_autenticar")
-    private Boolean requiereAutenticar;
+    private Boolean requiereAutenticar = true;
     @Column(name = "puestos_disponibles")
-    private Integer puestosDisponibles;
+    private Integer puestosDisponibles = 1;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "salario_porciento_venta_total")
-    private Float salarioPorcientoVentaTotal;
+    private Float salarioPorcientoVentaTotal = (float) 0.0;
     @Column(name = "salario_porciento_de_area")
-    private Float salarioPorcientoDeArea;
+    private Float salarioPorcientoDeArea = (float)0.0;
     @Column(name = "a_partir_de")
-    private Integer aPartirDe;
+    private Integer aPartirDe = 0;
     @Column(name = "id_puesto")
     private String idPuesto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puestoTrabajonombrePuesto")
