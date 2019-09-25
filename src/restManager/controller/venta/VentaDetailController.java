@@ -11,6 +11,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Window;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -548,6 +549,27 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
         }
         return utils.setDosLugaresDecimalesFloat(ret);
+    }
+
+    public void reabrirVentas() {
+        if (new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ECONOMICO)) {
+           Calendar limitTime = Calendar.getInstance();
+           limitTime.add( Calendar.DAY_OF_YEAR,-1);
+           limitTime.set(Calendar.HOUR_OF_DAY, 0);
+           limitTime.set(Calendar.MINUTE, 0);
+           limitTime.set(Calendar.SECOND, 0);
+           limitTime.set(Calendar.MILLISECOND, 0);
+            if (super.getInstance().getFecha().getTime() < limitTime.getTimeInMillis()) {
+                showErrorDialog(getView(), "La venta solo se puede reabrir en el margen de 1 dia laboral. No antes");
+                return;
+            }
+            Venta v = super.getInstance();
+            v.setVentaTotal(null);
+            update(v, true);
+            showSuccessDialog(getView());
+            
+            
+        }
     }
 
 }

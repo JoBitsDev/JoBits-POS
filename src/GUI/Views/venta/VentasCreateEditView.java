@@ -668,7 +668,14 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     }//GEN-LAST:event_jButtonRefrescarActionPerformed
 
     private void jButtonTerminarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarVentasActionPerformed
-        getController().terminarVentas();
+        if (getInstance().getVentaTotal() != null) {
+            getController().reabrirVentas();
+            if (getInstance().getVentaTotal() == null) {
+                jButtonTerminarVentas.setText("Terminar Ventas");
+            }
+        } else {
+            getController().terminarVentas();
+        }
     }//GEN-LAST:event_jButtonTerminarVentasActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -947,6 +954,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jButtonCambiarTurno.setEnabled(getController().getInstance().getCambioTurno1() == null);
         if (R.VARIOS_TURNOS) {
             jButtonTerminarVentas.setEnabled(getController().getInstance().getCambioTurno1() != null);
+        }
+
+        if (getInstance().getVentaTotal() != null) {
+            jButtonTerminarVentas.setText("Reabrir ventas");
         }
 
         jTabbedPaneResumenD.setUI(new MaterialTabbedPaneUI());
