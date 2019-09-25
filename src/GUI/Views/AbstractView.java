@@ -28,20 +28,19 @@ import restManager.util.LoadingWindow;
  * @author Jorge
  *
  */
-public abstract class AbstractView extends JDialog implements  View{
+public abstract class AbstractView extends JDialog implements View {
 
     private final DialogType DIALOG_TYPE;
-     final Controller controller;
+    final Controller controller;
     //
     // Contructors
     //
-    
-    
+
     public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller) {
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
-        
+
     }
 
     public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner) {
@@ -152,23 +151,22 @@ public abstract class AbstractView extends JDialog implements  View{
     //
     //Protected Methods
     //
-    
     @Override
-        public void modelPropertyChange(final PropertyChangeEvent evt) {
-     //TODO: do something with this
-        }
-    
+    public void modelPropertyChange(final PropertyChangeEvent evt) {
+        //TODO: do something with this
+    }
+
     /**
      * Needs to be overwritten
      */
     @Override
-    public void fetchComponentData(){   
+    public void fetchComponentData() {
         throw new DevelopingOperationException();
     }
-    
+
     @Override
     public abstract void updateView();
-    
+
     //
     // Getters n Setters
     //
@@ -184,20 +182,20 @@ public abstract class AbstractView extends JDialog implements  View{
     public Dimension getMaximumSize() {
         return super.getMaximumSize(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public Dimension getMinimumSize() {
+        Dimension windows_size = new Dimension(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize());
         switch (DIALOG_TYPE) {
             case NORMAL:
-                return new Dimension(800, 600);
             case LIST:
-                return new Dimension(550, 600);
             case INPUT_LARGE:
-                return new Dimension(590, 700);
             case INPUT:
-                return new Dimension(400, 600);
+                return new Dimension(
+                        DIALOG_TYPE.width > windows_size.width ? windows_size.width : DIALOG_TYPE.width,
+                        DIALOG_TYPE.height > windows_size.height ? windows_size.height : DIALOG_TYPE.height);
             case FULL_SCREEN:
-                return new Dimension(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize());
+                return windows_size;
             default:
                 return super.getMinimumSize();
         }
@@ -216,12 +214,11 @@ public abstract class AbstractView extends JDialog implements  View{
     //
     //Private Methods
     //
-
     @Override
     public Container getContainer() {
         return this;
     }
-    
+
     @Override
     public void initDefaults() {
         setMaximumSize(getMaximumSize());
@@ -232,6 +229,5 @@ public abstract class AbstractView extends JDialog implements  View{
         setModalityType(ModalityType.APPLICATION_MODAL);
         ComponentMover cr = new ComponentMover(this, this);
     }
-
 
 }

@@ -34,26 +34,35 @@ public interface View {
         /**
          * 400 * 600
          */
-        LIST,
+        LIST(400,600),
         /**
          * 800*600
          */
-        NORMAL,
+        NORMAL(800,600),
         /**
          * 400*600
          */
-        INPUT,
+        INPUT(400,600),
         /**
          * 590 * 700
          */
-        INPUT_LARGE,
+        INPUT_LARGE(590,700),
         /**
          * Full screen size
          */
-        FULL_SCREEN,
+        FULL_SCREEN(-1,-1),
         /**
          * Defined by the user
          */
-        DEFINED
+        DEFINED(-1,-1);
+        
+        
+        public final int width,height;
+
+        private DialogType(int width, int height) {
+            this.width = width;
+            this.height = height;
+        }
+        
     }
 }
