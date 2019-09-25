@@ -97,7 +97,7 @@ public class ProductoVentaListController extends AbstractListController<Producto
     }
 
     private void validate(R.NivelAcceso nivel) {
-        if (!new LogInController().constructoAuthorizationView(getView(), nivel.getNivel())) {
+        if (!new LogInController().constructoAuthorizationView(getView(), nivel)) {
             throw new UnauthorizedAccessException(getView());
         }
     }

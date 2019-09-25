@@ -96,7 +96,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
         if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo())) {
             if (cantidad < 0) {
-                if(!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR.getNivel())){
+                if(!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)){
                     return;
                 }
             }

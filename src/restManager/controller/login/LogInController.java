@@ -139,19 +139,12 @@ public class LogInController extends AbstractDialogController<Personal> {
 
     }
 
-    public boolean constructoAuthorizationView(Container parent, int nivelMinimo) {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= nivelMinimo) {
+    public boolean constructoAuthorizationView(Container parent, R.NivelAcceso nivelMinimo) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= nivelMinimo.getNivel()) {
             return true;
         }
-        String nombreNivel = "No Identificado";
-        for (R.NivelAcceso v : R.NivelAcceso.values()) {
-            if (v.getNivel() == nivelMinimo) {
-                nombreNivel = v.name();
-            }
-        }
-
-        constructLoginPanel(parent, "Nivel Minimo (" + nombreNivel + ")");
-        this.nivelMinimo = nivelMinimo;
+        constructLoginPanel(parent, "Nivel Minimo (" + nivelMinimo + ")");
+        this.nivelMinimo = nivelMinimo.getNivel();
         getView().setVisible(true);
         return AUTORIZADO;
     }

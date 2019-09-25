@@ -52,7 +52,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
 
     @Override
     public void destroy(Venta selected) {
-        if (showDeleteDialog((Container) getView(), selected) && new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR.getNivel())) {
+        if (showDeleteDialog((Container) getView(), selected) && new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
             this.selected = selected;
             this.destroy();
             this.selected = null;
