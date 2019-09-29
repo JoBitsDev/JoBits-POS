@@ -5,7 +5,6 @@
  */
 package restManager.controller.login;
 
-import GUI.Views.AbstractView;
 import GUI.Views.login.LogInView;
 import GUI.Views.util.AutenticacionFragmentView;
 import java.awt.Container;
@@ -14,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 import restManager.controller.AbstractDialogController;
 import restManager.persistencia.Personal;
-import restManager.persistencia.jpa.staticContent;
+import restManager.resources.DBConnector;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
@@ -59,7 +58,7 @@ public class LogInController extends AbstractDialogController<Personal> {
             protected String doInBackground() throws Exception {
                 mainView.setEnabled(false);
                 try {
-                    staticContent.init(R.PERIRSTENCE_UNIT_NAME);
+                    DBConnector.init(R.PERIRSTENCE_UNIT_NAME);
                 } catch (Exception e) {
                     LoadingWindow.hide();
                     showErrorDialog(mainView, e.getMessage());
@@ -77,7 +76,7 @@ public class LogInController extends AbstractDialogController<Personal> {
             }
         };
         worker.execute();
-        return staticContent.isCONECTADO();
+        return DBConnector.isCONECTADO();
     }
 
     public void autenticar(String user, char[] password) {
@@ -127,7 +126,7 @@ public class LogInController extends AbstractDialogController<Personal> {
     }
 
     public boolean isConnected() {
-        return staticContent.isCONECTADO();
+        return DBConnector.isCONECTADO();
     }
 
     //

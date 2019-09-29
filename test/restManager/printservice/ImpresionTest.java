@@ -23,7 +23,7 @@ import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.Venta;
-import restManager.persistencia.jpa.staticContent;
+import restManager.resources.DBConnector;
 import restManager.persistencia.models.OrdenDAO;
 import restManager.resources.R;
 
@@ -41,7 +41,7 @@ public class ImpresionTest {
     @BeforeClass
     public static void setUpClass() {
          R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
-         staticContent.init(R.PERIRSTENCE_UNIT_NAME);
+         DBConnector.init(R.PERIRSTENCE_UNIT_NAME);
           instance = Impresion.getDefaultInstance();
     }
     

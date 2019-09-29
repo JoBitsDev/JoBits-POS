@@ -18,7 +18,7 @@ import restManager.controller.almacen.AlmacenListControllerTest;
 import restManager.controller.trabajadores.PersonalListControllerTest;
 import restManager.controller.trabajadores.PuestoTrabajoListControllerTest;
 import restManager.controller.venta.OrdenControllerTest;
-import restManager.persistencia.jpa.staticContent;
+import restManager.resources.DBConnector;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.resources.R;
 
@@ -35,7 +35,7 @@ public class TestSuiteInit {
         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
         R.COIN_SUFFIX = " CUC";
         R.loggedUser = PersonalDAO.getInstance().find("admin");
-        staticContent.init(R.PERIRSTENCE_UNIT_NAME);
+        DBConnector.init(R.PERIRSTENCE_UNIT_NAME);
     }
 
     @AfterClass

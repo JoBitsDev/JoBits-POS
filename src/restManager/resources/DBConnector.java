@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package restManager.persistencia.jpa;
+package restManager.resources;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -15,14 +15,14 @@ import restManager.resources.R;
  *
  * @author Jorge
  */
-public class staticContent {
+public class DBConnector {
 
     private static boolean CONECTADO;
 
     private static String persistenceUnitName;
 
-    private staticContent(String persistenceUnitName) {
-        staticContent.persistenceUnitName = persistenceUnitName;
+    private DBConnector(String persistenceUnitName) {
+        DBConnector.persistenceUnitName = persistenceUnitName;
         AbstractModel.setEMF(Persistence.createEntityManagerFactory(persistenceUnitName));
         if (AbstractModel.getEMF() != null) {
             initJPAConnections();
@@ -48,8 +48,8 @@ public class staticContent {
 
     }
 
-    public static staticContent init(String persistenceUnitName) {
-        return new staticContent(persistenceUnitName);
+    public static DBConnector init(String persistenceUnitName) {
+        return new DBConnector(persistenceUnitName);
     }
 
     public static String getPersistenceUnitName() {
