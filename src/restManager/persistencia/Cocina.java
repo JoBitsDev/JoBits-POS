@@ -32,8 +32,6 @@ import javax.persistence.Table;
     @NamedQuery(name = "Cocina.findByNombreCocina", query = "SELECT c FROM Cocina c WHERE c.nombreCocina = :nombreCocina")})
 public class Cocina implements Serializable {
 
-    @ManyToMany(mappedBy = "cocinaList")
-    private List<Transaccion> transaccionList;
 
     @Column(name = "limitar_venta_insumo_agotado")
     private Boolean limitarVentaInsumoAgotado = false;
@@ -156,14 +154,6 @@ public class Cocina implements Serializable {
 
     public void setRecibirNotificacion(Boolean recibirNotificacion) {
         this.recibirNotificacion = recibirNotificacion;
-    }
-
-    public List<Transaccion> getTransaccionList() {
-        return transaccionList;
-    }
-
-    public void setTransaccionList(List<Transaccion> transaccionList) {
-        this.transaccionList = transaccionList;
     }
 
 }
