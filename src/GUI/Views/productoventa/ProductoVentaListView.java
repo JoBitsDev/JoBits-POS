@@ -9,29 +9,15 @@ import GUI.Views.AbstractListView;
 import com.jidesoft.swing.JideButton;
 import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import restManager.controller.AbstractListController;
 import restManager.controller.productoventa.ProductoVentaListController;
-import restManager.controller.venta.OrdenController;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Carta;
-import restManager.persistencia.Insumo;
-import restManager.persistencia.Orden;
-import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
-import restManager.persistencia.models.CartaDAO;
-import restManager.persistencia.models.InsumoDAO;
-import restManager.persistencia.models.OrdenDAO;
-import restManager.persistencia.models.ProductoInsumoDAO;
-import restManager.persistencia.models.ProductoVentaDAO;
-import restManager.printservice.ComponentPrinter;
 import restManager.resources.R;
 
 /**
@@ -44,29 +30,6 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
 
     public ProductoVentaListView(AbstractListController<ProductoVenta> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
-
-////        for (ProductoInsumo pi : ProductoInsumoDAO.getInstance().findAll()) {
-////            pi.setCosto(pi.getCantidad() * pi.getInsumo().getCostoPorUnidad());
-////            ProductoInsumoDAO.getInstance().startTransaction();
-////            ProductoInsumoDAO.getInstance().edit(pi);
-////            ProductoInsumoDAO.getInstance().commitTransaction();
-////        }
-//        for (ProductoVenta x : ProductoVentaDAO.getInstance().findAll()) {
-//            float totalGastos = 0;
-//            for (ProductoInsumo i : x.getProductoInsumoList()) {
-//                totalGastos += i.getCosto();
-//            }
-//            x.setGasto(totalGastos);
-//            ProductoVentaDAO.getInstance().startTransaction();
-//            ProductoVentaDAO.getInstance().edit(x);
-//            ProductoVentaDAO.getInstance().commitTransaction();
-//        }
-//
-//        for (Orden o : OrdenDAO.getInstance().findAll()) {
-//            OrdenController cont = new OrdenController(o);
-//            o.setOrdengastoEninsumos(cont.getGastosInsumos(o));
-//            cont.update(o, true);
-//        }
         
         JideButton jideButton1 = new com.jidesoft.swing.JideButton();
         jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
