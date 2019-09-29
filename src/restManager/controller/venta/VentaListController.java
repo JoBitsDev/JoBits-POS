@@ -100,24 +100,9 @@ public class VentaListController extends AbstractDialogController<Venta> {
                     v.setFecha(current);
                     initDateNotSet = false;
                 }
-                for (AsistenciaPersonal a : ve.getAsistenciaPersonalList()) { 
-                    boolean founded = false;
-                    for (AsistenciaPersonal b : v.getAsistenciaPersonalList()) {
-                        if (b.getPersonal().getUsuario().equals(a.getPersonal().getUsuario())) {
-                            founded = true;
-                            b.setPago(a.getPago() + b.getPago());
-                            if (b.getPropina() != null && a.getPropina() != null) {
-                                b.setPropina(a.getPropina() + b.getPropina());
-                            }
-                            if (b.getAMayores() != null) {
-                                b.setAMayores(a.getAMayores() + b.getAMayores());
-                            }
-                            break;
-                        }
-                    }
-                    if (!founded) {
-                        v.getAsistenciaPersonalList().add(a);
-                    }
+                
+                if (ve.getAsistenciaPersonalList() != null) {
+                    v.getAsistenciaPersonalList().addAll(ve.getAsistenciaPersonalList());
                 }
             }
 
