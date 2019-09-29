@@ -522,9 +522,9 @@ public class Impresion {
             for (int i = 0; i < cantidadCopias; i++) {
                 // RAM.add(new CopiaTicket(c.getNombreCocina(), t.finalCommandSet().getBytes()));
             }
-
-            feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina(), TipoImpresion.COCINA);
-
+            if (c.getRecibirNotificacion()) {
+                feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina(), TipoImpresion.COCINA);
+            }
         } else {
             System.out.println("No existen platos de la cocina "
                     + c.getNombreCocina() + " de la orden " + o.getCodOrden() + " para imprimir");
@@ -1362,10 +1362,10 @@ public class Impresion {
 
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
+
     //
     //Inner Classes
     //
-
     public void printComprobantePago(Personal personal) {
         ArrayList<AsistenciaPersonal> lista = new ArrayList<>(personal.getAsistenciaPersonalList());
         Collections.sort(lista);

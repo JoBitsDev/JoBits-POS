@@ -33,7 +33,7 @@ public class CocinaListView extends AbstractListView<Cocina> {
         return new MyJTableModel<Cocina>(items) {
             @Override
             public int getColumnCount() {
-                return 3;
+                return 4;
             }
 
             @Override
@@ -45,8 +45,34 @@ public class CocinaListView extends AbstractListView<Cocina> {
                         return items.get(rowIndex).getNombreCocina();
                     case 2:
                         return items.get(rowIndex).getProductoVentaList().size();
+                    case 3:
+                        return items.get(rowIndex).getRecibirNotificacion();
                     default:
                         return null;
+                }
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return columnIndex == 3;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 3) {
+                    return Boolean.class;
+                } else {
+                    return super.getColumnClass(columnIndex);
+
+                }
+            }
+
+            @Override
+            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                if (columnIndex == 3) {
+                    items.get(rowIndex).setRecibirNotificacion((Boolean) aValue);
+                    getController().setSelected(items.get(rowIndex));
+                    getController().update();
                 }
             }
 
@@ -59,6 +85,8 @@ public class CocinaListView extends AbstractListView<Cocina> {
                         return "Nombre";
                     case 2:
                         return "Cantidad de productos";
+                    case 3:
+                        return "Recibir Notificaciones";
                     default:
                         return null;
                 }
