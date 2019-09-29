@@ -36,6 +36,9 @@ import javax.persistence.Table;
 public class Area implements Serializable {
 
     @OneToMany(mappedBy = "areacodArea")
+    private List<Impresora> impresoraList;
+
+    @OneToMany(mappedBy = "areacodArea")
     private List<PuestoTrabajo> puestoTrabajoList;
 
     private static final long serialVersionUID = 1L;
@@ -143,6 +146,14 @@ public class Area implements Serializable {
 
     public void setPuestoTrabajoList(List<PuestoTrabajo> puestoTrabajoList) {
         this.puestoTrabajoList = puestoTrabajoList;
+    }
+
+    public List<Impresora> getImpresoraList() {
+        return impresoraList;
+    }
+
+    public void setImpresoraList(List<Impresora> impresoraList) {
+        this.impresoraList = impresoraList;
     }
 
 }

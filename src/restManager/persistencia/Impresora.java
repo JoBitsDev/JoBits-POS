@@ -32,6 +32,10 @@ import javax.persistence.Table;
     @NamedQuery(name = "Impresora.findByNombreImpresora", query = "SELECT i FROM Impresora i WHERE i.nombreImpresora = :nombreImpresora")})
 public class Impresora implements Serializable {
 
+    @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")
+    @ManyToOne
+    private Area areacodArea;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -123,6 +127,14 @@ public class Impresora implements Serializable {
     @Override
     public String toString() {
         return "restManager.persistencia.Impresora[ codImpresora=" + codImpresora + " ]";
+    }
+
+    public Area getAreacodArea() {
+        return areacodArea;
+    }
+
+    public void setAreacodArea(Area areacodArea) {
+        this.areacodArea = areacodArea;
     }
 
 }
