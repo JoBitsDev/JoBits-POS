@@ -248,7 +248,7 @@ public class IpvGestionView extends AbstractView {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-            String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+        String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
         int selection = JOptionPane.showOptionDialog(this,
                 R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
                 R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
@@ -258,7 +258,11 @@ public class IpvGestionView extends AbstractView {
                 imprimirTabla();
                 break;//impresion normal
             case 1:
-                new Impresion().printResumenIPVDePuntoElaboracion(registroList);
+                List<IpvRegistro> registros = jCheckBox1.isSelected() 
+                        ? ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getItems() 
+                        : registroList;
+
+                Impresion.getDefaultInstance().printResumenIPVDePuntoElaboracion(registros);
                 break;//impresion ticket
             default:
                 break;//cancelado
@@ -370,7 +374,7 @@ public class IpvGestionView extends AbstractView {
     private void updateTableRegistroIpv() {
         try {
             jCheckBox1.setSelected(false);
-             registroList = new ArrayList<>(getController()
+            registroList = new ArrayList<>(getController()
                     .getIpvRegistroList(currentSelectedKitchen, R.DATE_FORMAT.parse(jListRegistro.getSelectedValue())));
             registroList = getController().calculate_IPV_to_Currenr((ArrayList<IpvRegistro>) registroList);
             jTableRegistro.setModel(new RestManagerAbstractTableModel<IpvRegistro>(registroList,
@@ -441,7 +445,7 @@ public class IpvGestionView extends AbstractView {
         if (selected) {
             registroList = model.getItems();
             List<IpvRegistro> filterList = new ArrayList<>();
-            registroList.stream().filter((x) -> (x.getConsumo() != 0)).forEachOrdered((x) -> {
+            registroList.stream().filter((x) -> (x.getConsumo() != 0 || x.getDisponible() != 0)).forEachOrdered((x) -> {
                 filterList.add(x);
             });
             model.setItems(filterList);
