@@ -188,7 +188,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             getModel().getEntityManager().refresh(super.getInstance());
             for (Orden x : super.getInstance().getOrdenList()) {
                 if (x.getHoraTerminada() == null) {
-                    showErrorDialog(vi, "Existen tickets sin cerrar ("+x+"). Cierre los tickets antes de terminar la venta");
+                    showErrorDialog(vi, "Existen tickets sin cerrar (" + x + "). Cierre los tickets antes de terminar la venta");
                     return;
                 }
                 if (!x.getDeLaCasa()) {
@@ -312,13 +312,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public Float getGastoTotalDeInsumo(IpvRegistro i) {
         float total = 0;
         for (Orden x : getInstance().getOrdenList()) {
-            if (x.getHoraTerminada() != null) {
-                for (ProductovOrden p : x.getProductovOrdenList()) {
-                    if (p.getProductoVenta().getCocinacodCocina().equals(i.getIpv().getCocina())) {
-                        for (ProductoInsumo in : p.getProductoVenta().getProductoInsumoList()) {
-                            if (in.getInsumo().equals(i.getIpv().getInsumo())) {
-                                total += p.getCantidad() * in.getCantidad();
-                            }
+            for (ProductovOrden p : x.getProductovOrdenList()) {
+                if (p.getProductoVenta().getCocinacodCocina().equals(i.getIpv().getCocina())) {
+                    for (ProductoInsumo in : p.getProductoVenta().getProductoInsumoList()) {
+                        if (in.getInsumo().equals(i.getIpv().getInsumo())) {
+                            total += p.getCantidad() * in.getCantidad();
                         }
                     }
                 }
@@ -553,12 +551,12 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     public void reabrirVentas() {
         if (new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ECONOMICO)) {
-           Calendar limitTime = Calendar.getInstance();
-           limitTime.add( Calendar.DAY_OF_YEAR,-1);
-           limitTime.set(Calendar.HOUR_OF_DAY, 0);
-           limitTime.set(Calendar.MINUTE, 0);
-           limitTime.set(Calendar.SECOND, 0);
-           limitTime.set(Calendar.MILLISECOND, 0);
+            Calendar limitTime = Calendar.getInstance();
+            limitTime.add(Calendar.DAY_OF_YEAR, -1);
+            limitTime.set(Calendar.HOUR_OF_DAY, 0);
+            limitTime.set(Calendar.MINUTE, 0);
+            limitTime.set(Calendar.SECOND, 0);
+            limitTime.set(Calendar.MILLISECOND, 0);
             if (super.getInstance().getFecha().getTime() < limitTime.getTimeInMillis()) {
                 showErrorDialog(getView(), "La venta solo se puede reabrir en el margen de 1 dia laboral. No antes");
                 return;
@@ -567,8 +565,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             v.setVentaTotal(null);
             update(v, true);
             showSuccessDialog(getView());
-            
-            
+
         }
     }
 

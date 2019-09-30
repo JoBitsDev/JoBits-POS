@@ -33,7 +33,7 @@ public class CocinaListView extends AbstractListView<Cocina> {
         return new MyJTableModel<Cocina>(items) {
             @Override
             public int getColumnCount() {
-                return 4;
+                return 5;
             }
 
             @Override
@@ -47,6 +47,8 @@ public class CocinaListView extends AbstractListView<Cocina> {
                         return items.get(rowIndex).getProductoVentaList().size();
                     case 3:
                         return items.get(rowIndex).getRecibirNotificacion();
+                    case 4:
+                        return items.get(rowIndex).getLimitarVentaInsumoAgotado();
                     default:
                         return null;
                 }
@@ -54,12 +56,12 @@ public class CocinaListView extends AbstractListView<Cocina> {
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 3;
+                return columnIndex == 3 || columnIndex == 4;
             }
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 3) {
+                if (columnIndex == 3 || columnIndex == 4) {
                     return Boolean.class;
                 } else {
                     return super.getColumnClass(columnIndex);
@@ -74,6 +76,11 @@ public class CocinaListView extends AbstractListView<Cocina> {
                     getController().setSelected(items.get(rowIndex));
                     getController().update();
                 }
+                if (columnIndex == 4) {
+                    items.get(rowIndex).setLimitarVentaInsumoAgotado((Boolean) aValue);
+                    getController().setSelected(items.get(rowIndex));
+                    getController().update();
+                }
             }
 
             @Override
@@ -84,9 +91,11 @@ public class CocinaListView extends AbstractListView<Cocina> {
                     case 1:
                         return "Nombre";
                     case 2:
-                        return "Cantidad de productos";
+                        return "Productos";
                     case 3:
-                        return "Recibir Notificaciones";
+                        return "Notificaciones";
+                    case 4:
+                        return "Restringir Ventas";
                     default:
                         return null;
                 }

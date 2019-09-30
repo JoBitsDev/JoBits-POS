@@ -318,7 +318,11 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             }
             if (found) {
                 cantidadAgregada = founded.getCantidad();
-                founded.setCantidad(founded.getCantidad() + Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta())));
+                float cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta()));
+                if (!esDespachable(selected, getInstance(), cantidad)) {
+                    throw new ValidatingException(getView(), "No hay existencias de" + selected + "en el IPV para elaborar");
+                }
+                founded.setCantidad(founded.getCantidad() + cantidad);
                 ProductovOrdenDAO.getInstance().edit(founded);
 
             } else {
@@ -328,10 +332,14 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 founded.setCantidad(Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta())));
                 founded.setEnviadosacocina(0);
                 founded.setNumeroComensal(0);
+                if (!esDespachable(selected, getInstance(), founded.getCantidad())) {
+                    throw new ValidatingException(getView(), "No hay existencias de" + selected + "en el IPV para elaborar");
+                }
                 ProductovOrdenDAO.getInstance().create(founded);
                 getInstance().getProductovOrdenList().add(founded);
             }
             cantidadAgregada = founded.getCantidad() - cantidadAgregada;
+
             RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR, Level.FINE, founded, cantidadAgregada);
             update(instance);
             view.updateValorTotal();
@@ -363,8 +371,53 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public void fireWarningOnAdding(ProductovOrden producto, float cantidad) {
-     //   Level l = getInstance().getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
+        //   Level l = getInstance().getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR, Level.FINE, producto, cantidad);
 
+    }
+
+    private boolean esDespachable(ProductoVenta selected, Orden ordenVenta, float cantidad) {
+        return selected.getCocinacodCocina().getLimitarVentaInsumoAgotado()
+                ? new IPVController().hayDisponibilidad(selected, ordenVenta.getVentafecha().getFecha(), cantidad)
+                : true;
+
+    }
+
+    public void addProduct(ProductovOrden selected, float cantidad) {
+        if (autorize()) {
+            if (!esDespachable(selected.getProductoVenta(), selected.getOrden(), cantidad)) {
+                throw new ValidatingException(getView(), "No hay existencias de " + selected + " en el IPV para elaborar");
+            }
+            selected.setCantidad(selected.getCantidad() + cantidad);
+            ProductovOrdenDAO.getInstance().edit(selected);
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR, Level.FINE, selected, cantidad);
+            update(instance);
+            view.updateValorTotal();
+        }
+    }
+
+    public void removeProduct(ProductovOrden selected, float cantidad) {
+        if (autorize()) {
+            int index = instance.getProductovOrdenList().indexOf(selected);
+            float diferencia = instance.getProductovOrdenList().get(index).getCantidad();
+            instance.getProductovOrdenList().get(index).setCantidad(diferencia - cantidad);
+            Impresion i = new Impresion();
+            i.printCancelationTicket(instance);
+            getModel().startTransaction();
+            for (NotificacionEnvioCocina x : instance.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
+                int dif = x.getCantidad() - (int) cantidad;
+                if (dif <= 0) {
+                    getModel().getEntityManager().remove(x);
+                } else {
+                    x.setCantidad(x.getCantidad());
+                    getModel().getEntityManager().merge(x);
+                }
+            }
+            getModel().commitTransaction();
+            ProductovOrdenDAO.getInstance().edit(selected);
+
+            update(instance);
+            view.updateValorTotal();
+        }
     }
 }

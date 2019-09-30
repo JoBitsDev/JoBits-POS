@@ -8,6 +8,8 @@ package restManager.persistencia.models;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.IpvRegistro;
@@ -49,7 +51,7 @@ public class IpvRegistroDAO extends AbstractModel<IpvRegistro> {
 
     }
 
-    public IpvRegistro getIpvRegistro(Cocina c, Date fecha, Insumo i) throws Exception{
+    public IpvRegistro getIpvRegistro(Cocina c, Date fecha, Insumo i)throws NoResultException,PersistenceException{
         return (IpvRegistro) getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFechaAndInsumo")
                 .setParameter("ipvcocinacodCocina", c.getCodCocina())
                 .setParameter("fecha", fecha)

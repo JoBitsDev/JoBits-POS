@@ -15,11 +15,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 
 import restManager.controller.AbstractDialogController;
 import restManager.controller.login.LogInController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.UnExpectedErrorException;
 import restManager.exceptions.ValidatingException;
 
 import restManager.persistencia.Cocina;
@@ -27,6 +32,8 @@ import restManager.persistencia.Insumo;
 import restManager.persistencia.Ipv;
 import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.IpvRegistroPK;
+import restManager.persistencia.ProductoInsumo;
+import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.InsumoDAO;
 import restManager.persistencia.models.IpvDAO;
@@ -96,7 +103,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
         if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo())) {
             if (cantidad < 0) {
-                if(!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)){
+                if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
                     return;
                 }
             }
@@ -161,13 +168,18 @@ public class IPVController extends AbstractDialogController<Ipv> {
 
         Calendar c = Calendar.getInstance();
         c.set(d.getYear() + 1900, d.getMonth(), d.getDate());
-        c.add(Calendar.DAY_OF_MONTH, -1);
 
-        d = Date.from(c.toInstant());
-        IpvRegistroPK newReg
-                = new IpvRegistroPK(reg.getIpvRegistroPK().getIpvinsumocodInsumo(),
-                        reg.getIpvRegistroPK().getIpvcocinacodCocina(), d);
-        IpvRegistro founded = IpvRegistroDAO.getInstance().find(newReg);
+        byte i = 0;
+        IpvRegistro founded = null;
+        do {
+            i++;
+            c.add(Calendar.DAY_OF_MONTH, -1);
+            d = Date.from(c.toInstant());
+            IpvRegistroPK newReg
+                    = new IpvRegistroPK(reg.getIpvRegistroPK().getIpvinsumocodInsumo(),
+                            reg.getIpvRegistroPK().getIpvcocinacodCocina(), d);
+            founded = IpvRegistroDAO.getInstance().find(newReg);
+        } while (founded == null && i < 7);
 
         return founded != null ? founded.getFinal1() : 0;
 
@@ -210,10 +222,35 @@ public class IPVController extends AbstractDialogController<Ipv> {
         for (IpvRegistro x : selected.getIpvRegistroList()) {
             getModel().getEntityManager().remove(x);
         }
-        
+
         getModel().getEntityManager().remove(selected);
         getModel().commitTransaction();
         setShowDialogs(previousValue);
+    }
+
+    public boolean hayDisponibilidad(ProductoVenta selected, Date fecha, float cantidad) {
+        VentaDetailController controller = new VentaDetailController(fecha);
+        for (ProductoInsumo insumo : selected.getProductoInsumoList()) {
+            try {
+                IpvRegistro ipv = IpvRegistroDAO.getInstance().getIpvRegistro(selected.getCocinacodCocina(), fecha, insumo.getInsumo());
+                float f = controller.getGastoTotalDeInsumo(ipv) + cantidad;
+                if (f > ipv.getDisponible()) {
+                    selected.setVisible(false);
+                    getModel().getEntityManager().getTransaction().begin();
+                    getModel().getEntityManager().merge(selected);
+                    getModel().getEntityManager().getTransaction().commit();
+                    return false;
+                }
+            } catch (NoResultException e) {
+                return true;
+            } catch (PersistenceException e) {
+                throw new UnExpectedErrorException(e.getMessage());
+
+            }
+
+        }
+        return true;
+
     }
 
 }
