@@ -791,7 +791,9 @@ public class Impresion {
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
-    public void printStockBalance(List<Insumo> items, boolean printOverStoraged) {
+    public void printStockBalance(Almacen a) {
+        ArrayList<InsumoAlmacen> ret = new ArrayList<>(a.getInsumoAlmacenList());
+        Collections.sort(ret, (InsumoAlmacen o1, InsumoAlmacen o2) -> o1.getInsumo().getNombre().compareTo(o2.getInsumo().getNombre()));
         Ticket t = new Ticket();
         addHeader(t);
         addCustomMetaData(t, STOCK_BALANCE, new Date());
@@ -801,12 +803,16 @@ public class Impresion {
         t.newLine();
         t.newLine();
 
-        for (Insumo in : items) {
-            t.alignLeft();
-            t.setText(in.getNombre() + "(" + in.getUm() + ")");
-            t.newLine();
-            t.alignRight();
-            t.newLine();
+        for (InsumoAlmacen in : ret) {
+            float diferencia = utils.setDosLugaresDecimalesFloat(in.getCantidad() - in.getInsumo().getStockEstimation());
+            if (diferencia < 0) {
+                t.alignLeft();
+                t.setText(in.getInsumo().toString());
+                t.newLine();
+                t.alignRight();
+                t.setText("" + in.getCantidad());
+                t.setText(utils.setDosLugaresDecimalesFloat(in.getCantidad()) + " | " + diferencia);
+            }
         }
 
         t.newLine();
@@ -814,7 +820,7 @@ public class Impresion {
 
         addFinal(t);
 
-        sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
+        feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION,TipoImpresion.RESUMEN);
 
     }
 

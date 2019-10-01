@@ -8,6 +8,7 @@ package restManager.controller.almacen;
 import GUI.Views.AbstractView;
 import GUI.Views.Almacen.AlmacenEditView;
 import java.awt.Window;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -103,11 +104,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
     }
 
     private void contructTicketAndPrint(Almacen a) {
-        throw new DevelopingOperationException();
-//        Impresion i = new Impresion();
-//        ArrayList<Insumo> list = new ArrayList<>(a.getInsumoAlmacenList());
-//        list.sort((Insumo o1, Insumo o2) -> o1.getNombre().compareTo(o2.getNombre()));
-//        i.printStockBalance(list, printOverStockedInsumos());
+        Impresion.getDefaultInstance().printStockBalance(a);
     }
 
     private boolean printOverStockedInsumos() {
