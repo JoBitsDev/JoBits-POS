@@ -11,16 +11,21 @@ import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 import restManager.controller.AbstractDetailController;
 import restManager.controller.insumo.InsumoCreateEditController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.NoSelectedException;
+import restManager.exceptions.UnExpectedErrorException;
+import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.Transaccion;
+import restManager.persistencia.TransaccionTraspaso;
 import restManager.persistencia.models.AlmacenDAO;
 import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.InsumoAlmacenDAO;
@@ -197,30 +202,66 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         return CocinaDAO.getInstance().findAll();
     }
 
+    void traspasarInsumo(TransaccionTraspaso x) {
+        InsumoAlmacen desde = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getTransaccion().getInsumo().getCodInsumo());
+        InsumoAlmacen hasta;
+        try {
+            hasta = AlmacenDAO.getInstance().findInsumo(x.getAlmacenDestino().getCodAlmacen(), x.getTransaccion().getInsumo().getCodInsumo());
+        } catch (NoResultException ex) {
+            throw new ValidatingException(getView(), "NO existe " + x.getTransaccion().getInsumo() + " en " + x.getAlmacenDestino());
+        }
+        float precioMedio = utils.redondeoPorExcesoFloat(desde.getValorMonetario() / desde.getCantidad());
+        desde.setCantidad(desde.getCantidad() - x.getTransaccion().getCantidad());
+        desde.setValorMonetario(desde.getValorMonetario() - x.getTransaccion().getCantidad() * precioMedio);
+
+        hasta.setCantidad(hasta.getCantidad() + x.getTransaccion().getCantidad());
+        hasta.setValorMonetario(hasta.getValorMonetario() + x.getTransaccion().getCantidad() * precioMedio);
+        getModel().startTransaction();
+        InsumoAlmacenDAO.getInstance().edit(desde);
+        InsumoAlmacenDAO.getInstance().edit(hasta);
+        getModel().commitTransaction();
+        updateValorTotalAlmacen(instance);
+        updateValorTotalAlmacen(x.getAlmacenDestino());
+
+    }
+
     /**
      *
      * @param ins
-     * @param tipo 0-entrada, 1- salida, 2-merma
+     * @param tipo 0-entrada, 1- salida, 2-merma, 3 traspaso
      * @param destino sino es de tipo destino este parametro es nulo
+     * @param destinoTraspaso
+     * @param cantidad
+     * @param importe
+     * @param causaRebaja
      */
-    public void crearTransaccion(InsumoAlmacen ins, int tipo, Cocina destino) {
+    public void crearTransaccion(InsumoAlmacen ins, int tipo, Cocina destino, Almacen destinoTraspaso, float cantidad, float importe, String causaRebaja) {
         TransaccionDetailController controller = new TransaccionDetailController();
         controller.setView(getView());
         getModel().startTransaction();
         switch (tipo) {
             case 0:
-                controller.addTransaccionEntrada(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance());
+                controller.addTransaccionEntrada(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, importe);
                 break;
             case 1:
-                controller.addTransaccionSalida(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino);
+                controller.addTransaccionSalida(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad);
                 break;
             case 2:
-                controller.addTransaccionMerma(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance());
+                controller.addTransaccionRebaja(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, causaRebaja);
+                break;
+            case 3:
+                if(ins.getCantidad() < cantidad ){
+                    throw new ValidatingException(getView(), "La cantidad a transferir tiene que ser mayor a la cantidad existente");
+                }
+                controller.addTransaccionTraspaso(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destinoTraspaso, cantidad);
+                break;
+            default:
+                throw new UnExpectedErrorException(getView());
         }
         getModel().commitTransaction();
         updateValorTotalAlmacen(getInstance());
         getView().updateView();
-
+        showSuccessDialog(getView());
     }
 
     private void updateValorTotalAlmacen(Almacen instance) {
@@ -231,7 +272,6 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         instance.setValorMonetario(total);
         update(instance, true);
         getModel().getEntityManager().getEntityManagerFactory().getCache().evict(Almacen.class);
-        instance = getModel().find(instance.getCodAlmacen());
     }
 
     public void createInsumo(InsumoAlmacen newInsumo) {
@@ -245,6 +285,11 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
             getInstance().getInsumoAlmacenList().remove(objectAtSelectedRow);
             getModel().commitTransaction();
         }
+    }
+
+    public void setCentroElaboracion(boolean selected) {
+        instance.setCentroElaboracion(selected);
+        update(instance, true);
     }
 
 }

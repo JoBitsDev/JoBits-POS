@@ -17,7 +17,7 @@ import restManager.persistencia.Almacen;
 /**
  * FirstDream
  * @author Jorge
- * 
+ *
  */
 public class AlmacenListView extends AbstractListView<Almacen>{
 
@@ -36,7 +36,7 @@ public class AlmacenListView extends AbstractListView<Almacen>{
             public int getColumnCount() {
                 return 2;
             }
-            
+
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch(columnIndex){

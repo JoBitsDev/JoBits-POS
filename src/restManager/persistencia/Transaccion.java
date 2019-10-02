@@ -39,6 +39,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Transaccion.findByDescripcion", query = "SELECT t FROM Transaccion t WHERE t.descripcion = :descripcion")})
 public class Transaccion implements Serializable {
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "transaccion")
+    private TransaccionTraspaso transaccionTraspaso;
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected TransaccionPK transaccionPK;
@@ -164,6 +167,14 @@ public class Transaccion implements Serializable {
     @Override
     public String toString() {
         return getTransaccionPK().getInsumocodInsumo() +" "+ getTransaccionPK().getAlmacencodAlmacen();
+    }
+
+    public TransaccionTraspaso getTransaccionTraspaso() {
+        return transaccionTraspaso;
+    }
+
+    public void setTransaccionTraspaso(TransaccionTraspaso transaccionTraspaso) {
+        this.transaccionTraspaso = transaccionTraspaso;
     }
 
 }

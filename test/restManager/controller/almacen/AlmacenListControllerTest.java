@@ -46,8 +46,8 @@ public class AlmacenListControllerTest {
     public void testCreateNewStorage() {
         System.out.println("createNewStorage");
         AlmacenListController instance = null;
-        JDialog parent  = new JDialog();
-        instance = new AlmacenListController(parent);
+        instance = new AlmacenListController();
+        instance.constructView(null);
     }
     
 }

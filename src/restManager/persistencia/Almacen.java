@@ -13,6 +13,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -33,6 +36,12 @@ import javax.persistence.Table;
     @NamedQuery(name = "Almacen.findByValorMonetario", query = "SELECT a FROM Almacen a WHERE a.valorMonetario = :valorMonetario")})
 public class Almacen implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacenDestino")
+    private List<TransaccionTraspaso> transaccionTraspasoList;
+
+    @Column(name = "centro_elaboracion")
+    private Boolean centroElaboracion = false;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -128,6 +137,22 @@ public class Almacen implements Serializable {
     @Override
     public String toString() {
         return codAlmacen +" : "+nombre ;
+    }
+
+    public Boolean getCentroElaboracion() {
+        return centroElaboracion == null ? false : centroElaboracion;
+    }
+
+    public void setCentroElaboracion(Boolean centroElaboracion) {
+        this.centroElaboracion = centroElaboracion;
+    }
+
+    public List<TransaccionTraspaso> getTransaccionTraspasoList() {
+        return transaccionTraspasoList;
+    }
+
+    public void setTransaccionTraspasoList(List<TransaccionTraspaso> transaccionTraspasoList) {
+        this.transaccionTraspasoList = transaccionTraspasoList;
     }
 
 }

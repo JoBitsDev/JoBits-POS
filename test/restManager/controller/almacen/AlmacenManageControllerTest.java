@@ -5,14 +5,13 @@
  */
 package restManager.controller.almacen;
 
-import java.awt.Window;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import restManager.persistencia.Almacen;
+import restManager.persistencia.models.AlmacenDAO;
 import restManager.resources.R;
 
 /**
@@ -27,6 +26,7 @@ public class AlmacenManageControllerTest {
     @BeforeClass
     public static void setUpClass() {
         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
+        R.COIN_SUFFIX = " CUC";
     }
     
     @AfterClass
@@ -49,12 +49,13 @@ public class AlmacenManageControllerTest {
     @Test
     public void testImprimirReporteParaCompras() {
         System.out.println("imprimirReporteParaCompras");
-        Almacen a = null;
+        Almacen a = AlmacenDAO.getInstance().find("A-1");
         AlmacenManageController instance = new AlmacenManageController(a);
-        instance.imprimirReporteParaCompras(a);
+        instance.constructView(null);
+        //instance.imprimirReporteParaCompras(a);
         
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       // fail("The test case is a prototype.");
     }
     
 }
