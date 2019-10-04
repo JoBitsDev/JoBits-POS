@@ -237,7 +237,7 @@ public class TransaccionDetailView extends AbstractDetailView<Transaccion> {
                         return getController().addTransaccionEntrada(selected,
                                 R.DATE_FORMAT.parse(jFormattedTextFieldFecha.getText()),
                                 R.TIME_FORMAT.parse(jFormattedTextFieldHora.getText()),
-                                a);
+                                a,0,0);
                     } catch (ParseException ex) {
                         throw new UnExpectedErrorException(this, ex.getMessage());
                     }
@@ -289,7 +289,7 @@ public class TransaccionDetailView extends AbstractDetailView<Transaccion> {
                         return getController().addTransaccionSalida(selected,
                                 R.DATE_FORMAT.parse(jFormattedTextFieldFecha.getText()),
                                 R.TIME_FORMAT.parse(jFormattedTextFieldHora.getText()),
-                                a, (Cocina) jComboBoxDestino.getSelectedItem());
+                                a, (Cocina) jComboBoxDestino.getSelectedItem(),0);
                     } catch (ParseException ex) {
                         throw new UnExpectedErrorException(this, ex.getMessage());
                     }
