@@ -57,7 +57,7 @@ public class TransaccionListView extends AbstractListView<Transaccion> {
                         return items.get(rowIndex).getCantidad();
                     case 4:
                         if (items.get(rowIndex).getTransaccionEntrada() != null) {
-                          return   "ENTRADA";
+                          return   "ENTRADA (Total: "+items.get(rowIndex).getTransaccionEntrada().getValorTotal() + R.COIN_SUFFIX + ")";
                         } else if (items.get(rowIndex).getTransaccionMerma() != null) {
                             return items.get(rowIndex).getTransaccionMerma().getRazon().toUpperCase();
                         } else {

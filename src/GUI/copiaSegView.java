@@ -43,6 +43,7 @@ public class copiaSegView extends javax.swing.JDialog {
         jCheckBoxPersonal = new javax.swing.JCheckBox();
         jCheckBoxVentas = new javax.swing.JCheckBox();
         jCheckBoxTodo = new javax.swing.JCheckBox();
+        jCheckBoxBorrado = new javax.swing.JCheckBox();
         botonRealizarCopia = new org.pushingpixels.substance.internal.utils.SubstanceTitleButton();
         jProgressBar1 = new javax.swing.JProgressBar();
 
@@ -70,6 +71,16 @@ public class copiaSegView extends javax.swing.JDialog {
 
         jCheckBoxTodo.setText(bundle.getString("boton_todos")); // NOI18N
         jXPanel2.add(jCheckBoxTodo);
+
+        jCheckBoxBorrado.setForeground(new java.awt.Color(204, 0, 0));
+        jCheckBoxBorrado.setText(bundle.getString("boton_borrado")); // NOI18N
+        jCheckBoxBorrado.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jCheckBoxBorrado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxBorradoActionPerformed(evt);
+            }
+        });
+        jXPanel2.add(jCheckBoxBorrado);
 
         jXPanel1.add(jXPanel2, java.awt.BorderLayout.CENTER);
 
@@ -106,18 +117,13 @@ public class copiaSegView extends javax.swing.JDialog {
 
             }
             if (jCheckBoxVentas.isSelected()) {
-                int ejecutarBorradoRemoto = JOptionPane.
-                        showConfirmDialog(this,
-                                R.RESOURCE_BUNDLE.getString("confirmacion_borrado_remoto"),
-                                R.RESOURCE_BUNDLE.getString("label_atencion"), JOptionPane.WARNING_MESSAGE);
                 bu = new BackUp(BackUp.TipoBackUp.VENTA);
-                if(ejecutarBorradoRemoto == JOptionPane.YES_OPTION){
-                bu.setBorradoRemoto(true);
-                }
-
             }
             if (jCheckBoxTodo.isSelected()) {
                 bu = new BackUp(BackUp.TipoBackUp.All);
+            }
+            if (jCheckBoxBorrado.isSelected()) {
+                bu = new BackUp(BackUp.TipoBackUp.LIMPIEZA);
             }
 
             if (bu != null) {
@@ -132,9 +138,14 @@ public class copiaSegView extends javax.swing.JDialog {
 
     }//GEN-LAST:event_botonRealizarCopiaActionPerformed
 
+    private void jCheckBoxBorradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxBorradoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxBorradoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.pushingpixels.substance.internal.utils.SubstanceTitleButton botonRealizarCopia;
+    private javax.swing.JCheckBox jCheckBoxBorrado;
     private javax.swing.JCheckBox jCheckBoxPersonal;
     private javax.swing.JCheckBox jCheckBoxProductos;
     private javax.swing.JCheckBox jCheckBoxTodo;

@@ -118,9 +118,6 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     protected Boolean doInBackground() throws Exception {
 
         EjecutarBackUp(tipoBackUp);
-        if (borradoRemoto) {
-            BorradoRemotoVentas(VentaDAO.getInstance().findAll());
-        }
         return true;
     }
 
@@ -416,7 +413,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     // Borrados Remotos
     //
     //TODO: Mal hecho
-    private boolean BorradoRemotoVentas(List<Venta> ventas) {
+    private boolean EjecutarLimpiezaVentas(List<Venta> ventas) {
         float sumaXCantidad = topeProceso / ventas.size();
         VentaListController controller = new VentaListController();
         controller.setShowDialogs(false);
@@ -513,12 +510,16 @@ public class BackUp extends SwingWorker<Boolean, Float> {
                 EjecutarBackUpProductos();
                 break;
             case VENTA:
-                topeProceso = borradoRemoto ? 50 : 100;
+                topeProceso = 100;
                 EjecutarBackUpVentas();
                 break;
             case All:
                 topeProceso = 10;
                 EjecutarBackUpAll();
+                break;
+            case LIMPIEZA:
+                topeProceso = 100;
+                EjecutarLimpiezaVentas(VentaDAO.getInstance().findAll());
 
         }
 
@@ -569,7 +570,8 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         PERSONAL,
         PRODUCTOS,
         VENTA,
-        All;
+        All,
+        LIMPIEZA;
     }
 
 }
