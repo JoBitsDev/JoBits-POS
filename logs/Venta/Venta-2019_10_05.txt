@@ -1,0 +1,4 @@
+DETALLADO: AGREGAR_O-13080_Cerveza Cristal (2.2 CUC )_1.0 [Usuario: admin] [2019/10/05 13:30:53]
+DETALLADO: AGREGAR_O-13080_Cerveza Cristal (2.2 CUC )_1.0 [Usuario: admin] [2019/10/05 13:30:53]
+ADVERTENCIA: BORRAR_O-13080_Cerveza Cristal (2.2 CUC )_0.0 [Usuario: admin] [2019/10/05 13:30:55]
+ADVERTENCIA: BORRAR_O-13080_Cerveza Cristal (2.2 CUC )_0.0 [Usuario: admin] [2019/10/05 13:30:55]

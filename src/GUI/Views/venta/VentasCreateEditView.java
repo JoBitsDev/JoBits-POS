@@ -100,7 +100,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanelRoot = new javax.swing.JPanel();
         jPanelFooter = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        jButtonTerminarVentas = new javax.swing.JButton();
+        jButtonReabrirVentas = new javax.swing.JButton();
+        jButtonTerminarVentas1 = new javax.swing.JButton();
         jPanelOptions = new javax.swing.JPanel();
         jideButton2 = new com.jidesoft.swing.JideButton();
         jPanel3 = new javax.swing.JPanel();
@@ -190,13 +191,22 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButtonTerminarVentas.setText(bundle.getString("label_terminar_ventas")); // NOI18N
-        jButtonTerminarVentas.addActionListener(new java.awt.event.ActionListener() {
+        jButtonReabrirVentas.setText(bundle.getString("label_reabrir_ventas")); // NOI18N
+        jButtonReabrirVentas.setEnabled(false);
+        jButtonReabrirVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonTerminarVentasActionPerformed(evt);
+                jButtonReabrirVentasActionPerformed(evt);
             }
         });
-        jPanel8.add(jButtonTerminarVentas);
+        jPanel8.add(jButtonReabrirVentas);
+
+        jButtonTerminarVentas1.setText(bundle.getString("label_terminar_ventas")); // NOI18N
+        jButtonTerminarVentas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTerminarVentas1ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButtonTerminarVentas1);
 
         jPanelFooter.add(jPanel8, java.awt.BorderLayout.CENTER);
 
@@ -667,16 +677,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         getController().fetchNewDataFromServer(jComboBoxSeleccionarVentaPorTurno.getSelectedIndex());
     }//GEN-LAST:event_jButtonRefrescarActionPerformed
 
-    private void jButtonTerminarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarVentasActionPerformed
-        if (getInstance().getVentaTotal() != null) {
-            getController().reabrirVentas();
-            if (getInstance().getVentaTotal() == null) {
-                jButtonTerminarVentas.setText("Terminar Ventas");
-            }
-        } else {
-            getController().terminarVentas();
-        }
-    }//GEN-LAST:event_jButtonTerminarVentasActionPerformed
+    private void jButtonReabrirVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReabrirVentasActionPerformed
+        getController().reabrirVentas();
+        jButtonReabrirVentas.setEnabled(getInstance().getVentaTotal() != null);
+    }//GEN-LAST:event_jButtonReabrirVentasActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         getController().calcularCambio(getModelOrd().getObjectAtSelectedRow());
@@ -746,6 +750,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         dispose();
     }//GEN-LAST:event_jideButton2ActionPerformed
 
+    private void jButtonTerminarVentas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarVentas1ActionPerformed
+        getController().terminarVentas();
+    }//GEN-LAST:event_jButtonTerminarVentas1ActionPerformed
+
     @Override
     public void setEditingMode() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
@@ -767,7 +775,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
             jLabelFecha.setText("Del " + R.DATE_FORMAT.format(instance.getFecha()) + " Al "
                     + R.DATE_FORMAT.format(fechaFin));
             jTabbedPaneData.removeTabAt(1);
-            jButtonTerminarVentas.setVisible(false);
+            jButtonReabrirVentas.setVisible(false);
             jButtonRefrescar.setVisible(false);
             jSpinner1.setVisible(false);
 
@@ -873,8 +881,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirZ;
     private javax.swing.JButton jButtonImprimirZ1;
+    private javax.swing.JButton jButtonReabrirVentas;
     private com.jidesoft.swing.JideButton jButtonRefrescar;
-    private javax.swing.JButton jButtonTerminarVentas;
+    private javax.swing.JButton jButtonTerminarVentas1;
     private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelFecha;
@@ -953,12 +962,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);
         jButtonCambiarTurno.setEnabled(getController().getInstance().getCambioTurno1() == null);
         if (R.VARIOS_TURNOS) {
-            jButtonTerminarVentas.setEnabled(getController().getInstance().getCambioTurno1() != null);
+            jButtonReabrirVentas.setEnabled(getController().getInstance().getCambioTurno1() != null);
         }
-
-        if (getInstance().getVentaTotal() != null) {
-            jButtonTerminarVentas.setText("Reabrir ventas");
-        }
+        jButtonReabrirVentas.setEnabled(getInstance().getVentaTotal() != null);
 
         jTabbedPaneResumenD.setUI(new MaterialTabbedPaneUI());
         jTabbedPaneData.setUI(new MaterialTabbedPaneUI());
