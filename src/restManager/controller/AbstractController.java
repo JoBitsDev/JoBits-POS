@@ -206,7 +206,7 @@ public abstract class AbstractController<T> implements Controller {
     public void create(T selected, boolean quietMode) {
         boolean previousValue = this.showDialogs;
         setShowDialogs(!quietMode);
-        create(selected);
+        this.create(selected);
         setShowDialogs(previousValue);
     }
 

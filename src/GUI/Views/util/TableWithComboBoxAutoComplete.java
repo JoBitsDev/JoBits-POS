@@ -5,14 +5,11 @@
  */
 package GUI.Views.util;
 
-import com.jidesoft.hints.ListDataIntelliHints;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.text.JTextComponent;
 import restManager.exceptions.NoSelectedException;
 import restManager.util.RestManagerAbstractTableModel;
 
@@ -115,28 +112,4 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
         return null;
     }
 
-    public class RestaurantManagerListIntelliHint<K> extends ListDataIntelliHints<K> {
-
-        public RestaurantManagerListIntelliHint(JTextComponent comp, List<K> completionList) {
-            super(comp, completionList);
-        }
-
-        @Override
-        public boolean updateHints(Object context) {
-            ArrayList<K> ret = new ArrayList<>();
-            for (K x : getCompletionList()) {
-                if (x.toString().toLowerCase().contains(context.toString().toLowerCase())) {
-                    ret.add(x);
-                }
-            }
-            setListData(ret.toArray());
-            return true;
-        }
-
-        @Override
-        public K getSelectedHint() {
-            return (K) super.getSelectedHint(); //To change body of generated methods, choose Tools | Templates.
-        }
-
-    }
 }
