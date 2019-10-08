@@ -8,7 +8,9 @@ package restManager.util;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 import restManager.exceptions.DuplicatedException;
 import restManager.exceptions.NoSelectedException;
 
@@ -23,13 +25,44 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
 
     protected List<T> items;
     private final JTable table;
+    private RestManagerTableRowFilter filter;
+    private TableRowSorter<RestManagerAbstractTableModel<T>> sorter;
 
     public RestManagerAbstractTableModel(List<T> items, JTable table) {
         this.items = items;
-        if(this.items == null){
-           this.items = new ArrayList<>();
+        if (this.items == null) {
+            this.items = new ArrayList<>();
         }
         this.table = table;
+        initFilterAndSorter();
+    }
+
+    private void initFilterAndSorter() {
+        sorter = new TableRowSorter<>(this);
+        filter = new RestManagerTableRowFilter();
+        sorter.setRowFilter(filter);
+    }
+
+    /**
+     * Shows the rows that contains the string passed by parameter this method
+     * is case sensitive
+     *
+     * @param s the string to search in the table
+     */
+    public void filterByString(String s) {
+        filter.setSearchParam(s);
+        sort();
+
+    }
+
+    /**
+     * Sorts and filters the rows in the view based on the sort keys of the
+     * columns currently being sorted and the filter, if any, associated with
+     * this sorter. An empty sortKeys list indicates that the view should
+     * unsorted, the same as the model.
+     */
+    public void sort() {
+        sorter.sort();
     }
 
     @Override
@@ -73,7 +106,7 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
     }
 
     public void addObject(T object) {
-        if(items.indexOf(object) != -1){
+        if (items.indexOf(object) != -1) {
             throw new DuplicatedException(table.getParent());
         }
         items.add(object);
@@ -81,7 +114,7 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
     }
 
     public void removeObject(T object) {
-       int index = items.indexOf(object);
+        int index = items.indexOf(object);
         items.remove(object);
         fireTableRowsDeleted(index, index);
     }
@@ -93,6 +126,38 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
     public void setItems(List<T> items) {
         this.items = items;
         fireTableDataChanged();
+    }
+
+    public TableRowSorter<RestManagerAbstractTableModel<T>> getSorter() {
+        return sorter;
+    }
+
+    public class RestManagerTableRowFilter extends RowFilter<RestManagerAbstractTableModel, Integer> {
+
+        private String searchParam;
+
+        public RestManagerTableRowFilter() {
+            searchParam = "";
+        }
+
+        public void setSearchParam(String searchParam) {
+            this.searchParam = searchParam;
+        }
+
+        @Override
+        public boolean include(RowFilter.Entry<? extends RestManagerAbstractTableModel, ? extends Integer> entry) {
+            if (searchParam.isEmpty()) {
+                return true;
+            }
+            for (int i = entry.getValueCount() - 1; i >= 0; i--) {
+                if (entry.getStringValue(i).toLowerCase().contains(searchParam.toLowerCase())) {
+                    return true;
+
+                }
+            }
+            return false;
+        }
+
     }
 
 }

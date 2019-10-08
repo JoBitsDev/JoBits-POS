@@ -21,4 +21,6 @@ public class RegularExpressions {
     
     public static final String USER_NAME = "[a-z]{3,20}";
     
+    public static final String NOT_EMPTY = ".+";
+    
 }

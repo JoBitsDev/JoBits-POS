@@ -10,6 +10,7 @@ import java.awt.Color;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
+import restManager.resources.RegularExpressions;
 
 /**
  * FirstDream
@@ -17,10 +18,11 @@ import javax.swing.border.LineBorder;
  * 
  */
 public class RestManagerInputVerifier extends InputVerifier{
-        private String regex = "[a-zA-Z][[a-zA-Z0-9\\p{IsLatin}]* X*[\\s]]*";
+        private final String regex ;
+               
 
         public RestManagerInputVerifier() {
-            super();
+           this.regex  = RegularExpressions.NOT_EMPTY;
         }
 
         public RestManagerInputVerifier(String regex) {
@@ -33,7 +35,7 @@ public class RestManagerInputVerifier extends InputVerifier{
             boolean invalid;
             String validName = in.getText();
 
-            invalid = !validName.matches(regex) || validName.length() > 60;
+            invalid = !validName.matches(regex) || validName.length() > 100;
 
             if (invalid) {
                 in.setBorder(new LineBorder(Color.red));
