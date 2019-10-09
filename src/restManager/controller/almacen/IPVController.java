@@ -181,7 +181,19 @@ public class IPVController extends AbstractDialogController<Ipv> {
             founded = IpvRegistroDAO.getInstance().find(newReg);
         } while (founded == null && i < 7);
 
-        return founded != null ? founded.getFinal1() : 0;
+        if (founded != null) {
+            updateInstance(founded);
+            if (founded.getConsumoReal() != null) {
+                if (founded.getConsumoReal() > 0) {
+                    return founded.getFinalReal();
+                } else {
+                    return founded.getFinal1();
+                }
+            } else {
+                return founded.getFinal1();
+            }
+        }
+        return 0;
 
     }
 
