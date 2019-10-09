@@ -61,7 +61,9 @@ public class CartaSeccionView extends AbstractListView<Carta> {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
 
+        jPanelMesas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 5, true));
         jPanelMesas.setLayout(new java.awt.BorderLayout(5, 5));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -99,6 +101,7 @@ public class CartaSeccionView extends AbstractListView<Carta> {
 
         getContentPane().add(jPanelMesas, java.awt.BorderLayout.EAST);
 
+        jPanelAreas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 5, true));
         jPanelAreas.setLayout(new java.awt.BorderLayout(5, 5));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -145,8 +148,10 @@ public class CartaSeccionView extends AbstractListView<Carta> {
         jPanel5.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
         jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonlogout.png"))); // NOI18N
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
         jButton1.setBorderPainted(false);
+        jButton1.setFocusable(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

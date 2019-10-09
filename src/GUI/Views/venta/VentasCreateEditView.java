@@ -218,6 +218,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jideButton2.setForeground(new java.awt.Color(204, 204, 204));
         jideButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jideButton2.setFocusable(false);
         jideButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jideButton2ActionPerformed(evt);

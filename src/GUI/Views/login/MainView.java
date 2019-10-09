@@ -6,27 +6,13 @@
 package GUI.Views.login;
 
 import GUI.Views.AbstractView;
-import com.jidesoft.swing.JideLabel;
 import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import restManager.controller.AbstractDialogController;
-import restManager.controller.Controller;
 import restManager.controller.Licence.Licence;
 import restManager.controller.login.MainController;
-import restManager.controller.venta.OrdenController;
-import restManager.exceptions.DevelopingOperationException;
-import restManager.persistencia.ProductoInsumo;
-import restManager.persistencia.ProductoVenta;
-import restManager.persistencia.ProductovOrden;
-import restManager.persistencia.models.InsumoDAO;
-import restManager.persistencia.models.ProductoInsumoDAO;
-import restManager.persistencia.models.ProductoVentaDAO;
 import restManager.resources.R;
 import restManager.util.ComponentMover;
-import restManager.util.utils;
 
 /**
  *
@@ -113,7 +99,8 @@ public class MainView extends AbstractView {
         styledLabelRestName.setMinimumSize(new java.awt.Dimension(400, 68));
         jPanel1.add(styledLabelRestName, java.awt.BorderLayout.CENTER);
 
-        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonlogout.png"))); // NOI18N
+        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jideButton1.setFocusable(false);
         jideButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jideButton1ActionPerformed(evt);

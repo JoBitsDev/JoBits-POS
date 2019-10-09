@@ -76,21 +76,21 @@ public abstract class AbstractListView<T> extends AbstractView {
     private void initComponents() {
 
         jPopupMenuClickDerecho = new javax.swing.JPopupMenu();
-        jXPanelLista = new org.jdesktop.swingx.JXPanel();
-        jXPanelSuperior = new org.jdesktop.swingx.JXPanel();
-        jPanelExtra = new javax.swing.JPanel();
-        jPanelHeader = new javax.swing.JPanel();
-        jXLabel1 = new org.jdesktop.swingx.JXLabel();
-        jTextFieldBusqueda = new javax.swing.JTextField();
+        jPanelTabla = new javax.swing.JPanel();
         jPanelControlesSuperiores = new javax.swing.JPanel();
         jLabelCantidad = new javax.swing.JLabel();
-        jPanelTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableList = new javax.swing.JTable();
         jXPanelControles = new org.jdesktop.swingx.JXPanel();
         jButtonAdd = new javax.swing.JButton();
         jButtonEdit = new javax.swing.JButton();
         jButtonDelete = new javax.swing.JButton();
+        jPanelHeader = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jXLabel1 = new org.jdesktop.swingx.JXLabel();
+        jTextFieldBusqueda = new javax.swing.JTextField();
+        jPanelExtra = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
 
         jPopupMenuClickDerecho.setInvoker(jTableList);
 
@@ -98,6 +98,7 @@ public abstract class AbstractListView<T> extends AbstractView {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         setTitle(bundle.getString("label_lista")); // NOI18N
         setMinimumSize(getMinimumSize());
+        setUndecorated(true);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
                 formWindowGainedFocus(evt);
@@ -106,49 +107,23 @@ public abstract class AbstractListView<T> extends AbstractView {
             }
         });
 
-        jXPanelLista.setLayout(new java.awt.BorderLayout(0, 10));
-
-        jXPanelSuperior.setBackground(new java.awt.Color(204, 204, 204));
-        jXPanelSuperior.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
-        jXPanelSuperior.setLayout(new java.awt.BorderLayout());
-
-        jPanelExtra.setOpaque(false);
-        jPanelExtra.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-        jXPanelSuperior.add(jPanelExtra, java.awt.BorderLayout.PAGE_END);
-
-        jPanelHeader.setOpaque(false);
-        jPanelHeader.setLayout(new java.awt.BorderLayout());
-
-        jXLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jXLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/buscar.png"))); // NOI18N
-        jXLabel1.setText(bundle.getString("label_buscar")); // NOI18N
-        jXLabel1.setToolTipText("Buscar");
-        jPanelHeader.add(jXLabel1, java.awt.BorderLayout.CENTER);
-
-        jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(300, 26));
-        jTextFieldBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldBusquedaKeyTyped(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldBusquedaKeyReleased(evt);
-            }
-        });
-        jPanelHeader.add(jTextFieldBusqueda, java.awt.BorderLayout.EAST);
+        org.jdesktop.swingx.border.DropShadowBorder dropShadowBorder1 = new org.jdesktop.swingx.border.DropShadowBorder();
+        dropShadowBorder1.setShadowColor(new java.awt.Color(102, 255, 204));
+        dropShadowBorder1.setShadowOpacity(1.0F);
+        dropShadowBorder1.setShowBottomShadow(false);
+        dropShadowBorder1.setShowLeftShadow(true);
+        jPanelTabla.setBorder(dropShadowBorder1);
+        jPanelTabla.setLayout(new java.awt.BorderLayout());
 
         jPanelControlesSuperiores.setOpaque(false);
+        jPanelControlesSuperiores.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabelCantidad.setFont(new java.awt.Font("Malayalam Sangam MN", 1, 13)); // NOI18N
+        jLabelCantidad.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelCantidad.setText("40 Elementos");
         jPanelControlesSuperiores.add(jLabelCantidad);
 
-        jPanelHeader.add(jPanelControlesSuperiores, java.awt.BorderLayout.LINE_START);
-
-        jXPanelSuperior.add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
-
-        jXPanelLista.add(jXPanelSuperior, java.awt.BorderLayout.PAGE_START);
-
-        jPanelTabla.setLayout(new java.awt.BorderLayout());
+        jPanelTabla.add(jPanelControlesSuperiores, java.awt.BorderLayout.PAGE_START);
 
         jScrollPane1.setBorder(new org.pushingpixels.substance.internal.utils.border.SubstanceBorder());
 
@@ -184,10 +159,14 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jPanelTabla.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jXPanelLista.add(jPanelTabla, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanelTabla, java.awt.BorderLayout.CENTER);
 
         jXPanelControles.setBackground(new java.awt.Color(204, 204, 204));
-        jXPanelControles.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
+        org.jdesktop.swingx.border.DropShadowBorder dropShadowBorder2 = new org.jdesktop.swingx.border.DropShadowBorder();
+        dropShadowBorder2.setShadowColor(new java.awt.Color(102, 255, 204));
+        dropShadowBorder2.setShadowOpacity(1.0F);
+        dropShadowBorder2.setShowLeftShadow(true);
+        jXPanelControles.setBorder(dropShadowBorder2);
 
         jButtonAdd.setMnemonic('a');
         jButtonAdd.setText(bundle.getString("label_agregar")); // NOI18N
@@ -219,26 +198,55 @@ public abstract class AbstractListView<T> extends AbstractView {
         });
         jXPanelControles.add(jButtonDelete);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jXPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jXPanelControles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jXPanelLista, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jXPanelControles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        getContentPane().add(jXPanelControles, java.awt.BorderLayout.PAGE_END);
+
+        jPanelHeader.setBackground(new java.awt.Color(204, 204, 204));
+        org.jdesktop.swingx.border.DropShadowBorder dropShadowBorder3 = new org.jdesktop.swingx.border.DropShadowBorder();
+        dropShadowBorder3.setShadowColor(new java.awt.Color(102, 255, 204));
+        dropShadowBorder3.setShadowOpacity(1.0F);
+        dropShadowBorder3.setShowBottomShadow(false);
+        dropShadowBorder3.setShowLeftShadow(true);
+        dropShadowBorder3.setShowTopShadow(true);
+        jPanelHeader.setBorder(dropShadowBorder3);
+        jPanelHeader.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jXLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jXLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/buscar.png"))); // NOI18N
+        jXLabel1.setText(bundle.getString("label_buscar")); // NOI18N
+        jXLabel1.setToolTipText("Buscar");
+        jPanel1.add(jXLabel1);
+
+        jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(200, 26));
+        jTextFieldBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldBusquedaKeyTyped(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldBusquedaKeyReleased(evt);
+            }
+        });
+        jPanel1.add(jTextFieldBusqueda);
+
+        jPanelHeader.add(jPanel1, java.awt.BorderLayout.EAST);
+
+        jPanelExtra.setOpaque(false);
+        jPanelExtra.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanelHeader.add(jPanelExtra, java.awt.BorderLayout.PAGE_END);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanelHeader.add(jButton1, java.awt.BorderLayout.WEST);
+
+        getContentPane().add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
 
         pack();
         setLocationRelativeTo(null);
@@ -302,11 +310,17 @@ public abstract class AbstractListView<T> extends AbstractView {
         showPopUpMenu(evt);
     }//GEN-LAST:event_jTableListMouseReleased
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonDelete;
     private javax.swing.JButton jButtonEdit;
     private javax.swing.JLabel jLabelCantidad;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelControlesSuperiores;
     private javax.swing.JPanel jPanelExtra;
     private javax.swing.JPanel jPanelHeader;
@@ -317,8 +331,6 @@ public abstract class AbstractListView<T> extends AbstractView {
     private javax.swing.JTextField jTextFieldBusqueda;
     private org.jdesktop.swingx.JXLabel jXLabel1;
     private org.jdesktop.swingx.JXPanel jXPanelControles;
-    private org.jdesktop.swingx.JXPanel jXPanelLista;
-    private org.jdesktop.swingx.JXPanel jXPanelSuperior;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -392,9 +404,6 @@ public abstract class AbstractListView<T> extends AbstractView {
         return jXPanelControles;
     }
 
-    public JXPanel getjXPanelLista() {
-        return jXPanelLista;
-    }
 
     public JTable getjTableList() {
         return jTableList;

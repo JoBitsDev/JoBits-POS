@@ -51,7 +51,6 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""+v.getFecha().getDate()));
         setToolTipText(CreateToolTip(v));
-        setOpaque(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
@@ -64,7 +63,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         jLabelGastos.setForeground(new java.awt.Color(102, 0, 0));
         jLabelGastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgares-abajo.png"))); // NOI18N
         jLabelGastos.setText(v.getVentagastosEninsumos() != null
-            ? utils.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue())
+            ? restManager.util.utils.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue())
             : "-");
         jLabelGastos.setToolTipText("Gastos");
         add(jLabelGastos, java.awt.BorderLayout.CENTER);
@@ -74,7 +73,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         jLabelVentas.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgar-arriba.png"))); // NOI18N
         jLabelVentas.setText(v.getVentaTotal() != null
-            ? utils.setDosLugaresDecimales(v.getVentaTotal().floatValue())
+            ? restManager.util.utils.setDosLugaresDecimales(v.getVentaTotal().floatValue())
             :"-");
         jLabelVentas.setToolTipText("Ventas");
         jLabelVentas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -107,18 +106,12 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         VentaCellRender ret = new VentaCellRender((Venta) value);
 
-        if (isSelected && ret.getV() != null) {
+        if (isSelected) {
             ret.setBackground(table.getSelectionBackground());
-//            ((RestManagerAbstractTableCellModel<Venta>) table.getModel()).getSelectedItems().add(ret.getV());
-
-        } else {
+        }else{
             ret.setBackground(table.getBackground());
-//            try{
-////            ((RestManagerAbstractTableCellModel<Venta>) table.getModel()).getSelectedItems().remove(ret.getV());}
-//            catch(NullPointerException e){
-//                System.out.println("error"); 
-//            }
         }
+        
         return ret;
     }
 

@@ -10,6 +10,7 @@ import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import restManager.exceptions.HiddenException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.models.AbstractModel;
 import restManager.resources.R;
@@ -159,7 +160,7 @@ public abstract class AbstractController<T> implements Controller {
         if (ret != null) {
             return ret;
         } else {
-            throw new ValidatingException(view);
+            throw new HiddenException();
         }
     }
 
@@ -168,7 +169,7 @@ public abstract class AbstractController<T> implements Controller {
         if (ret != null) {
             return ret;
         } else {
-            throw new ValidatingException(view);
+            throw new HiddenException();
         }
     }
 
@@ -180,7 +181,7 @@ public abstract class AbstractController<T> implements Controller {
         if (ret != null) {
             return ret;
         } else {
-            throw new ValidatingException(view);
+            throw new HiddenException();
         }
     }
 

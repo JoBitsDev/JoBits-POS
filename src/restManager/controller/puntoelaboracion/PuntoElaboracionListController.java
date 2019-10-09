@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractListController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.DuplicatedException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.ProductoVenta;
@@ -48,7 +49,7 @@ public class PuntoElaboracionListController extends AbstractListController<Cocin
         c.setProductoVentaList(new ArrayList<>());
         getItems().stream().filter((x)
                 -> (x.getNombreCocina().toLowerCase().equals(newCocina.toLowerCase()))).forEachOrdered((_item) -> {
-            throw new ValidatingException();
+            throw new DuplicatedException();
         });
         create(c);
 

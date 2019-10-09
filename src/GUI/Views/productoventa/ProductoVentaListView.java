@@ -30,21 +30,21 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
 
     public ProductoVentaListView(AbstractListController<ProductoVenta> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
-        
-        JideButton jideButton1 = new com.jidesoft.swing.JideButton();
-        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jideButton1.setToolTipText("Imprimir");
-        jideButton1.addActionListener((ActionEvent e) -> {
-            getController().printProductoVenta(model.getObjectAtSelectedRow());
-        });
-        JComboBox<Carta> cartas= new JComboBox<>(getController().getCartaList());
+
+//        JideButton jideButton1 = new com.jidesoft.swing.JideButton();
+//        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+//        jideButton1.setToolTipText("Imprimir");
+//        jideButton1.addActionListener((ActionEvent e) -> {
+//            getController().printProductoVenta(model.getObjectAtSelectedRow());
+//        });
+        JComboBox<Carta> cartas = new JComboBox<>(getController().getCartaList());
         cartas.addItem(null);
         cartas.addItemListener((ItemEvent e) -> {
-            getController().setSelectedCarta((Carta)cartas.getSelectedItem());
+            getController().setSelectedCarta((Carta) cartas.getSelectedItem());
         });
         JLabel label = new JLabel("Menu: ");
 
-        super.getjXPanelControles().add(jideButton1);
+//        super.getjXPanelControles().add(jideButton1);
         super.getjPanelExtra().add(label);
         super.getjPanelExtra().add(cartas);
     }

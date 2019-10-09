@@ -46,7 +46,7 @@ public interface View {
         /**
          * 590 * 700
          */
-        INPUT_LARGE(590,700),
+        INPUT_LARGE(590,650),
         /**
          * Full screen size
          */

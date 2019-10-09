@@ -137,6 +137,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
                 @Override
                 public void removeObjectSelected() {
                     getController().removeInsumoFromStorage(getHandler().getTableModel().getObjectAtSelectedRow());
+                    
                 }
 
             };
@@ -227,7 +228,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jLabelNombreAlmacen.setText("<Nombre Almacen>");
         jPanel3.add(jLabelNombreAlmacen, java.awt.BorderLayout.CENTER);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonlogout.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
         jButton1.setBorderPainted(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

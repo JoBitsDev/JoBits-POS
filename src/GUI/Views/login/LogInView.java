@@ -17,7 +17,7 @@ import restManager.util.ComponentMover;
  *
  * @author Jorge
  */
-public class LogInView extends javax.swing.JFrame implements View{
+public class LogInView extends javax.swing.JFrame implements View {
 
     /**
      * Creates new form LogInView
@@ -29,7 +29,7 @@ public class LogInView extends javax.swing.JFrame implements View{
     public LogInView(LogInController controller) {
         initComponents();
         this.controller = controller;
-        ComponentMover cr = new ComponentMover(this, jPanelCenter);
+        ComponentMover cr = new ComponentMover(this, this.getComponents());
         buttonGroup1.add(jRadioButtonLocal);
         buttonGroup1.add(jRadioButtonRemoto);
     }
@@ -45,9 +45,9 @@ public class LogInView extends javax.swing.JFrame implements View{
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
-        jButtonCancelar = new javax.swing.JButton();
         jXLabelUser1 = new org.jdesktop.swingx.JXLabel();
         jideButtonConfig = new com.jidesoft.swing.JideButton();
+        jideButtonConfig1 = new com.jidesoft.swing.JideButton();
         jPanelCenter = new javax.swing.JPanel();
         jPanelUser = new javax.swing.JPanel();
         jideLabel1 = new com.jidesoft.swing.JideLabel();
@@ -71,25 +71,26 @@ public class LogInView extends javax.swing.JFrame implements View{
         setPreferredSize(new java.awt.Dimension(483, 285));
 
         jPanel2.setOpaque(false);
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
-        jButtonCancelar.setBorderPainted(false);
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButtonCancelar);
-
-        jXLabelUser1.setBackground(new java.awt.Color(153, 153, 153));
-        jXLabelUser1.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
+        jXLabelUser1.setBackground(new java.awt.Color(153, 255, 255));
         jXLabelUser1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jXLabelUser1.setText("Restaurant Manager ");
         jXLabelUser1.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        jPanel2.add(jXLabelUser1);
+        jPanel2.add(jXLabelUser1, java.awt.BorderLayout.CENTER);
 
-        jideButtonConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/config.png"))); // NOI18N
-        jPanel2.add(jideButtonConfig);
+        jideButtonConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jideButtonConfig.setFocusable(false);
+        jideButtonConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jideButtonConfigActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jideButtonConfig, java.awt.BorderLayout.LINE_START);
+
+        jideButtonConfig1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/config.png"))); // NOI18N
+        jideButtonConfig1.setFocusable(false);
+        jPanel2.add(jideButtonConfig1, java.awt.BorderLayout.EAST);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
 
@@ -144,7 +145,7 @@ public class LogInView extends javax.swing.JFrame implements View{
         jPanelConn.setOpaque(false);
         jPanelConn.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 0));
 
-        jRadioButtonLocal.setBackground(new java.awt.Color(0, 102, 102));
+        jRadioButtonLocal.setBackground(new java.awt.Color(0, 153, 153));
         jRadioButtonLocal.setMnemonic('l');
         jRadioButtonLocal.setText(bundle.getString("label_servidor_local")); // NOI18N
         jRadioButtonLocal.addActionListener(new java.awt.event.ActionListener() {
@@ -154,7 +155,7 @@ public class LogInView extends javax.swing.JFrame implements View{
         });
         jPanelConn.add(jRadioButtonLocal);
 
-        jRadioButtonRemoto.setBackground(new java.awt.Color(0, 102, 102));
+        jRadioButtonRemoto.setBackground(new java.awt.Color(0, 153, 153));
         jRadioButtonRemoto.setMnemonic('r');
         jRadioButtonRemoto.setText(bundle.getString("label_servidor_remoto")); // NOI18N
         jRadioButtonRemoto.addActionListener(new java.awt.event.ActionListener() {
@@ -188,10 +189,6 @@ public class LogInView extends javax.swing.JFrame implements View{
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jButtonCancelarActionPerformed
-
     private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed
         if (jButtonAutenticar.isEnabled()) {
             getController().autenticar(overlayTextField1.getText(), jPasswordField.getPassword());
@@ -212,10 +209,13 @@ public class LogInView extends javax.swing.JFrame implements View{
         jPasswordField.setText("");
     }//GEN-LAST:event_jButtonAutenticarActionPerformed
 
+    private void jideButtonConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonConfigActionPerformed
+        System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_jideButtonConfigActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonAutenticar;
-    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCenter;
@@ -229,6 +229,7 @@ public class LogInView extends javax.swing.JFrame implements View{
     private org.jdesktop.swingx.JXLabel jXLabelConnected;
     private org.jdesktop.swingx.JXLabel jXLabelUser1;
     private com.jidesoft.swing.JideButton jideButtonConfig;
+    private com.jidesoft.swing.JideButton jideButtonConfig1;
     private com.jidesoft.swing.JideLabel jideLabel1;
     private com.jidesoft.swing.JideLabel jideLabel2;
     private com.jidesoft.swing.OverlayTextField overlayTextField1;

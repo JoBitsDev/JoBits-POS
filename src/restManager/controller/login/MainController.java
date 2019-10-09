@@ -30,15 +30,10 @@ import restManager.controller.venta.VentaDetailController;
 import restManager.controller.venta.VentaListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
-import restManager.persistencia.Negocio;
 import restManager.persistencia.Personal;
 import restManager.persistencia.Venta;
-import restManager.persistencia.models.ConfiguracionDAO;
-import restManager.persistencia.models.NegocioDAO;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.VentaDAO;
-import restManager.printservice.Impresion;
-import restManager.printservice.Ticket;
 import restManager.resources.R;
 
 /**
@@ -109,6 +104,10 @@ public class MainController extends AbstractDialogController<Personal> {
                         String date = JOptionPane.showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
                                 + "o deje la casilla en blanco para comenzar en el ultimo dia sin cerrar ", "Entrada", JOptionPane.QUESTION_MESSAGE);
                         if (date == null) {
+                            getView().setEnabled(true);
+                            return;
+                        }
+                        if (date.isEmpty()) {
                             controller = new VentaDetailController(getView());
                         } else {
                             try {

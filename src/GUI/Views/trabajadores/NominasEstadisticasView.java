@@ -69,6 +69,7 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
         jLabel2 = new javax.swing.JLabel();
         jDateChooserAl = new com.toedter.calendar.JDateChooser();
         jButtonBuscar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanelDer = new javax.swing.JPanel();
         jPanelIzq = new javax.swing.JPanel();
         jPanelDetalles = new javax.swing.JPanel();
@@ -93,6 +94,7 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
         jLabelPropina = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new java.awt.BorderLayout(5, 5));
 
         jPanelTop.setBackground(new java.awt.Color(204, 204, 204));
@@ -125,6 +127,15 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
         jPanel1.add(jButtonBuscar);
 
         jPanelTop.add(jPanel1, java.awt.BorderLayout.EAST);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanelTop.add(jButton1, java.awt.BorderLayout.LINE_START);
 
         getContentPane().add(jPanelTop, java.awt.BorderLayout.PAGE_START);
         getContentPane().add(jPanelDer, java.awt.BorderLayout.EAST);
@@ -328,6 +339,10 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
         seleccionarTodos(jCheckBoxseleccionarTodos.isSelected());
     }//GEN-LAST:event_jCheckBoxseleccionarTodosActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     @Override
     public void fetchComponentData() {
         jTableUsuariosActivos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -436,6 +451,7 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAcumulado;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonDetalles;
