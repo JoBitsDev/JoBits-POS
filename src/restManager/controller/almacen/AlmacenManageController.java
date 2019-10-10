@@ -25,6 +25,9 @@ import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.Transaccion;
+import restManager.persistencia.TransaccionEntrada;
+import restManager.persistencia.TransaccionMerma;
+import restManager.persistencia.TransaccionSalida;
 import restManager.persistencia.TransaccionTraspaso;
 import restManager.persistencia.models.AlmacenDAO;
 import restManager.persistencia.models.CocinaDAO;
@@ -51,7 +54,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
 
     public AlmacenManageController(Window parent, Almacen a) {
         super(a, parent, AlmacenDAO.getInstance());
-        getModel().getEntityManager().refresh(getInstance());
+//        getModel().getEntityManager().refresh(getInstance());
         TransaccionDAO.getInstance().addPropertyChangeListener(this);
         InsumoAlmacenDAO.getInstance().addPropertyChangeListener(this);
         TransaccionEntradaDAO.getInstance().addPropertyChangeListener(this);
@@ -134,20 +137,20 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    void darEntradaAInsumo(Insumo insumo, Float cantidad, Float valorTotal) {
-        InsumoAlmacen ins = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), insumo.getCodInsumo());
-        ins.setCantidad(ins.getCantidad() + cantidad);
-        ins.setValorMonetario(ins.getValorMonetario() + valorTotal);
+    void darEntradaAInsumo(TransaccionEntrada x) {
+        InsumoAlmacen ins = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getTransaccion().getInsumocodInsumo().getCodInsumo());
+        ins.setCantidad(ins.getCantidad() + x.getTransaccion().getCantidad());
+        ins.setValorMonetario(ins.getValorMonetario() + x.getValorTotal());
         updateInsumo(ins);
-        if (ins.getValorMonetario() / ins.getCantidad() != insumo.getCostoPorUnidad()) {
-            if (showConfirmDialog(getView(), "Actualizar el costo del insumo " + insumo + " \n de "
-                    + insumo.getCostoPorUnidad() + R.COIN_SUFFIX + " a " + utils.setDosLugaresDecimales(ins.getValorMonetario() / ins.getCantidad()))) {
-                insumo.setCostoPorUnidad(utils.setDosLugaresDecimalesFloat(ins.getValorMonetario() / ins.getCantidad()));
+        if (ins.getValorMonetario() / ins.getCantidad() != x.getTransaccion().getInsumocodInsumo().getCostoPorUnidad()) {
+            if (showConfirmDialog(getView(), "Actualizar el costo del insumo " + x.getTransaccion().getInsumocodInsumo()+ " \n de "
+                    + x.getTransaccion().getInsumocodInsumo().getCostoPorUnidad() + R.COIN_SUFFIX + " a " + utils.setDosLugaresDecimales(ins.getValorMonetario() / ins.getCantidad()))) {
+                x.getTransaccion().getInsumocodInsumo().setCostoPorUnidad(utils.setDosLugaresDecimalesFloat(ins.getValorMonetario() / ins.getCantidad()));
                 InsumoCreateEditController controller = new InsumoCreateEditController();
                 controller.setView(getView());
                 controller.setShowDialogs(false);
-                controller.update(insumo, true);
-                controller.updateInsumoOnFichas(insumo);
+                controller.update(x.getTransaccion().getInsumocodInsumo(), true);
+                controller.updateInsumoOnFichas(x.getTransaccion().getInsumocodInsumo());
             }
         }
         updateValorTotalAlmacen(instance);
@@ -159,39 +162,39 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         InsumoAlmacenDAO.getInstance().commitTransaction();
     }
 
-    void darSalidaAInsumo(Transaccion x) {
+    void darSalidaAInsumo(TransaccionSalida x) throws ValidatingException{
         IPVController controller = new IPVController();
         controller.setView(getView());
-        InsumoAlmacen insumoADarSalida = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getInsumo().getCodInsumo());
+        InsumoAlmacen insumoADarSalida = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getTransaccion().getInsumocodInsumo().getCodInsumo());
 
-        if (insumoADarSalida.getCantidad() < x.getCantidad()) {
+        if (insumoADarSalida.getCantidad() < x.getTransaccion().getCantidad()) {
             if (getModel().getEntityManager().getTransaction().isActive()) {
                 getModel().getEntityManager().getTransaction().rollback();
             }
-            throw new restManager.exceptions.ValidatingException(getView(), "No hay suficiente cantidad de " + x.getInsumo() + " para extraer del almacen");
+            throw new restManager.exceptions.ValidatingException(getView(), "No hay suficiente cantidad de " + x.getTransaccion().getInsumocodInsumo()+ " para extraer del almacen");
         }
-        controller.darEntrada(x.getInsumo(), x.getCocina(), x.getTransaccionPK().getFecha(), x.getCantidad());
+        controller.darEntrada(x.getTransaccion().getInsumocodInsumo(), x.getCocinacodCocina(), x.getTransaccion().getFecha(), x.getTransaccion().getCantidad());
         float precioMedio = insumoADarSalida.getValorMonetario() / insumoADarSalida.getCantidad();
-        insumoADarSalida.setCantidad(insumoADarSalida.getCantidad() - x.getCantidad());
-        insumoADarSalida.setValorMonetario(insumoADarSalida.getValorMonetario() - x.getCantidad() * precioMedio);
+        insumoADarSalida.setCantidad(insumoADarSalida.getCantidad() - x.getTransaccion().getCantidad());
+        insumoADarSalida.setValorMonetario(insumoADarSalida.getValorMonetario() - x.getTransaccion().getCantidad() * precioMedio);
         getModel().startTransaction();
         InsumoAlmacenDAO.getInstance().edit(insumoADarSalida);
         getModel().commitTransaction();
         updateValorTotalAlmacen(instance);
     }
 
-    void darMermaInsumo(Transaccion x) {
-        InsumoAlmacen insumoaRebajar = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getInsumo().getCodInsumo());
+    void darMermaInsumo(TransaccionMerma x) throws ValidatingException{
+        InsumoAlmacen insumoaRebajar = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getTransaccion().getInsumocodInsumo().getCodInsumo());
 
-        if (insumoaRebajar.getCantidad() < x.getCantidad()) {
+        if (insumoaRebajar.getCantidad() < x.getTransaccion().getCantidad()) {
             if (getModel().getEntityManager().getTransaction().isActive()) {
                 getModel().getEntityManager().getTransaction().rollback();
             }
-            throw new restManager.exceptions.ValidatingException(getView(), "No hay suficiente cantidad de " + x.getInsumo() + " para extraer del almacen");
+            throw new restManager.exceptions.ValidatingException(getView(), "No hay suficiente cantidad de " + x.getTransaccion().getInsumocodInsumo()+ " para extraer del almacen");
         }
         float precioMedio = insumoaRebajar.getValorMonetario() / insumoaRebajar.getCantidad();
-        insumoaRebajar.setCantidad(insumoaRebajar.getCantidad() - x.getCantidad());
-        insumoaRebajar.setValorMonetario(insumoaRebajar.getValorMonetario() - x.getCantidad() * precioMedio);
+        insumoaRebajar.setCantidad(insumoaRebajar.getCantidad() - x.getTransaccion().getCantidad());
+        insumoaRebajar.setValorMonetario(insumoaRebajar.getValorMonetario() - x.getTransaccion().getCantidad() * precioMedio);
         getModel().startTransaction();
         InsumoAlmacenDAO.getInstance().edit(insumoaRebajar);
         getModel().commitTransaction();
@@ -202,13 +205,13 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         return CocinaDAO.getInstance().findAll();
     }
 
-    void traspasarInsumo(TransaccionTraspaso x) {
-        InsumoAlmacen desde = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getTransaccion().getInsumo().getCodInsumo());
+    void darTraspasoInsumo(TransaccionTraspaso x) throws ValidatingException{
+        InsumoAlmacen desde = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getTransaccion().getInsumocodInsumo().getCodInsumo());
         InsumoAlmacen hasta;
         try {
-            hasta = AlmacenDAO.getInstance().findInsumo(x.getAlmacenDestino().getCodAlmacen(), x.getTransaccion().getInsumo().getCodInsumo());
+            hasta = AlmacenDAO.getInstance().findInsumo(x.getAlmacenDestino().getCodAlmacen(), x.getTransaccion().getInsumocodInsumo().getCodInsumo());
         } catch (NoResultException ex) {
-            throw new ValidatingException(getView(), "NO existe " + x.getTransaccion().getInsumo() + " en " + x.getAlmacenDestino());
+            throw new ValidatingException(getView(), "NO existe " + x.getTransaccion().getInsumocodInsumo()+ " en " + x.getAlmacenDestino());
         }
         float precioMedio = utils.redondeoPorExcesoFloat(desde.getValorMonetario() / desde.getCantidad());
         desde.setCantidad(desde.getCantidad() - x.getTransaccion().getCantidad());
@@ -241,19 +244,27 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         getModel().startTransaction();
         switch (tipo) {
             case 0:
-                controller.addTransaccionEntrada(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, importe);
+                if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " por " + importe + R.COIN_SUFFIX)) {
+                    controller.addTransaccionEntrada(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, importe);
+                }
                 break;
             case 1:
-                controller.addTransaccionSalida(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad);
+                if (showConfirmDialog(getView(), "Desea dar salida a " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " hacia " + destino)) {
+                    controller.addTransaccionSalida(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad);
+                }
                 break;
             case 2:
-                controller.addTransaccionRebaja(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, causaRebaja);
+                if (showConfirmDialog(getView(), "Desea rebajar  " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " debido a " + causaRebaja)) {
+                    controller.addTransaccionRebaja(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, causaRebaja);
+                }
                 break;
             case 3:
-                if(ins.getCantidad() < cantidad ){
+                if (ins.getCantidad() < cantidad) {
                     throw new ValidatingException(getView(), "La cantidad a transferir tiene que ser mayor a la cantidad existente");
                 }
-                controller.addTransaccionTraspaso(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destinoTraspaso, cantidad);
+                if (showConfirmDialog(getView(), "Desea traspasar " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " hacia " + destinoTraspaso)) {
+                    controller.addTransaccionTraspaso(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destinoTraspaso, cantidad);
+                }
                 break;
             default:
                 throw new UnExpectedErrorException(getView());

@@ -32,7 +32,6 @@ import javax.persistence.Table;
     @NamedQuery(name = "Cocina.findByNombreCocina", query = "SELECT c FROM Cocina c WHERE c.nombreCocina = :nombreCocina")})
 public class Cocina implements Serializable {
 
-
     @Column(name = "limitar_venta_insumo_agotado")
     private Boolean limitarVentaInsumoAgotado = false;
     @Column(name = "recibir_notificacion")
@@ -54,6 +53,8 @@ public class Cocina implements Serializable {
     private List<Ipv> ipvList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocinacodCocina")
     private List<Impresora> impresoraList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocinacodCocina")
+    private List<TransaccionSalida> transaccionSalidaList;
 
     public Cocina() {
     }
@@ -154,6 +155,14 @@ public class Cocina implements Serializable {
 
     public void setRecibirNotificacion(Boolean recibirNotificacion) {
         this.recibirNotificacion = recibirNotificacion;
+    }
+
+    public List<TransaccionSalida> getTransaccionSalidaList() {
+        return transaccionSalidaList;
+    }
+
+    public void setTransaccionSalidaList(List<TransaccionSalida> transaccionSalidaList) {
+        this.transaccionSalidaList = transaccionSalidaList;
     }
 
 }

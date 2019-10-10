@@ -7,13 +7,11 @@
 package restManager.persistencia;
 
 import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -28,18 +26,17 @@ import javax.persistence.Table;
 @Table(name = "transaccion_entrada")
 @NamedQueries({
     @NamedQuery(name = "TransaccionEntrada.findAll", query = "SELECT t FROM TransaccionEntrada t"),
-    @NamedQuery(name = "TransaccionEntrada.findByTransaccioninsumocodInsumo", query = "SELECT t FROM TransaccionEntrada t WHERE t.transaccionEntradaPK.transaccioninsumocodInsumo = :transaccioninsumocodInsumo"),
-    @NamedQuery(name = "TransaccionEntrada.findByTransaccionfecha", query = "SELECT t FROM TransaccionEntrada t WHERE t.transaccionEntradaPK.transaccionfecha = :transaccionfecha"),
-    @NamedQuery(name = "TransaccionEntrada.findByTransaccionhora", query = "SELECT t FROM TransaccionEntrada t WHERE t.transaccionEntradaPK.transaccionhora = :transaccionhora"),
-    @NamedQuery(name = "TransaccionEntrada.findByTransaccionalmacencodAlmacen", query = "SELECT t FROM TransaccionEntrada t WHERE t.transaccionEntradaPK.transaccionalmacencodAlmacen = :transaccionalmacencodAlmacen"),
-    @NamedQuery(name = "TransaccionEntrada.findByConsumido", query = "SELECT t FROM TransaccionEntrada t WHERE t.justificado = :justificado"),
+    @NamedQuery(name = "TransaccionEntrada.findByTransaccionnoTransaccion", query = "SELECT t FROM TransaccionEntrada t WHERE t.transaccionnoTransaccion = :transaccionnoTransaccion"),
+    @NamedQuery(name = "TransaccionEntrada.findByJustificado", query = "SELECT t FROM TransaccionEntrada t WHERE t.justificado = :justificado"),
     @NamedQuery(name = "TransaccionEntrada.findByPrecioPorUnidad", query = "SELECT t FROM TransaccionEntrada t WHERE t.precioPorUnidad = :precioPorUnidad"),
     @NamedQuery(name = "TransaccionEntrada.findByValorTotal", query = "SELECT t FROM TransaccionEntrada t WHERE t.valorTotal = :valorTotal")})
 public class TransaccionEntrada implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected TransaccionEntradaPK transaccionEntradaPK;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "transaccionno_transaccion")
+    private Integer transaccionnoTransaccion;
     @Column(name = "justificado")
     private Boolean justificado;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -47,31 +44,23 @@ public class TransaccionEntrada implements Serializable {
     private Float precioPorUnidad;
     @Column(name = "valor_total")
     private Float valorTotal;
-    @JoinColumns({
-        @JoinColumn(name = "transaccioninsumocod_insumo", referencedColumnName = "insumocod_insumo", insertable = false, updatable = false),
-        @JoinColumn(name = "transaccionalmacencod_almacen", referencedColumnName = "almacencod_almacen", insertable = false, updatable = false),
-        @JoinColumn(name = "transaccionfecha", referencedColumnName = "fecha", insertable = false, updatable = false),
-        @JoinColumn(name = "transaccionhora", referencedColumnName = "hora", insertable = false, updatable = false)})
-    @OneToOne(optional = false,cascade = {CascadeType.ALL})
+    @JoinColumn(name = "transaccionno_transaccion", referencedColumnName = "no_transaccion", insertable = false, updatable = false)
+    @OneToOne(optional = false)
     private Transaccion transaccion;
 
     public TransaccionEntrada() {
     }
 
-    public TransaccionEntrada(TransaccionEntradaPK transaccionEntradaPK) {
-        this.transaccionEntradaPK = transaccionEntradaPK;
+    public TransaccionEntrada(Integer transaccionnoTransaccion) {
+        this.transaccionnoTransaccion = transaccionnoTransaccion;
     }
 
-    public TransaccionEntrada(String transaccioninsumocodInsumo, Date transaccionfecha, Date transaccionhora, String transaccionalmacencodAlmacen) {
-        this.transaccionEntradaPK = new TransaccionEntradaPK(transaccioninsumocodInsumo, transaccionfecha, transaccionhora, transaccionalmacencodAlmacen);
+    public Integer getTransaccionnoTransaccion() {
+        return transaccionnoTransaccion;
     }
 
-    public TransaccionEntradaPK getTransaccionEntradaPK() {
-        return transaccionEntradaPK;
-    }
-
-    public void setTransaccionEntradaPK(TransaccionEntradaPK transaccionEntradaPK) {
-        this.transaccionEntradaPK = transaccionEntradaPK;
+    public void setTransaccionnoTransaccion(Integer transaccionnoTransaccion) {
+        this.transaccionnoTransaccion = transaccionnoTransaccion;
     }
 
     public Boolean getJustificado() {
@@ -109,7 +98,7 @@ public class TransaccionEntrada implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (transaccionEntradaPK != null ? transaccionEntradaPK.hashCode() : 0);
+        hash += (transaccionnoTransaccion != null ? transaccionnoTransaccion.hashCode() : 0);
         return hash;
     }
 
@@ -120,7 +109,7 @@ public class TransaccionEntrada implements Serializable {
             return false;
         }
         TransaccionEntrada other = (TransaccionEntrada) object;
-        if ((this.transaccionEntradaPK == null && other.transaccionEntradaPK != null) || (this.transaccionEntradaPK != null && !this.transaccionEntradaPK.equals(other.transaccionEntradaPK))) {
+        if ((this.transaccionnoTransaccion == null && other.transaccionnoTransaccion != null) || (this.transaccionnoTransaccion != null && !this.transaccionnoTransaccion.equals(other.transaccionnoTransaccion))) {
             return false;
         }
         return true;
@@ -128,7 +117,7 @@ public class TransaccionEntrada implements Serializable {
 
     @Override
     public String toString() {
-        return transaccionEntradaPK.toString();
+        return "restManager.persistencia.TransaccionEntrada[ transaccionnoTransaccion=" + transaccionnoTransaccion + " ]";
     }
 
 }

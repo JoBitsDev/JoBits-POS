@@ -330,7 +330,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 founded.setOrden(getInstance());
                 founded.setProductoVenta(selected);
                 founded.setCantidad(Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta())));
-                founded.setEnviadosacocina(0);
+                founded.setEnviadosacocina((float)0);
                 founded.setNumeroComensal(0);
                 if (!esDespachable(selected, getInstance(), founded.getCantidad())) {
                     throw new ValidatingException(getView(), "No hay existencias de" + selected + "en el IPV para elaborar");
@@ -405,7 +405,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             i.printCancelationTicket(instance);
             getModel().startTransaction();
             for (NotificacionEnvioCocina x : instance.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
-                int dif = x.getCantidad() - (int) cantidad;
+                float dif = x.getCantidad()  -  cantidad;
                 if (dif <= 0) {
                     getModel().getEntityManager().remove(x);
                 } else {

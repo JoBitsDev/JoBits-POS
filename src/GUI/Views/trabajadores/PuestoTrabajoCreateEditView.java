@@ -265,7 +265,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jLabelSalarioFijo4.setText("A partir de");
         jPanel5.add(jLabelSalarioFijo4);
 
-        jSpinnerAPartir.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        jSpinnerAPartir.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
         jSpinnerAPartir.setPreferredSize(new java.awt.Dimension(100, 26));
         jPanel5.add(jSpinnerAPartir);
 
@@ -451,7 +451,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         instance.setPropina(jCheckBoxPropina.isSelected());
         instance.setNivelAcceso(jComboBoxNivelAccesso.getItemAt(jComboBoxNivelAccesso.getSelectedIndex()).getNivel());
         instance.setPuestosDisponibles((Integer) jSpinnerPuestosDisponibles.getValue());
-        instance.setAPartirDe((Integer) jSpinnerAPartir.getValue());
+        instance.setAPartirDe((Float) jSpinnerAPartir.getValue());
         instance.setSalarioFijo(Float.parseFloat(jSpinnerSalarioFijo.getValue().toString()));
         instance.setSalarioPorcientoDeArea(Float.valueOf(jSpinnerPorcientoAPartirDe.getValue().toString()));
         instance.setSalarioPorcientoVentaTotal(Float.valueOf(jSpinnerPorcientoVenta.getValue().toString()));

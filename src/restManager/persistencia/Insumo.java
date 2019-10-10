@@ -36,6 +36,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Insumo.findByCantidadCreada", query = "SELECT i FROM Insumo i WHERE i.cantidadCreada = :cantidadCreada")})
 public class Insumo implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
+    private List<TransaccionTransformacion> transaccionTransformacionList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -57,7 +60,7 @@ public class Insumo implements Serializable {
     private Float cantidadCreada;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<ProductoInsumo> productoInsumoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumocodInsumo")
     private List<Transaccion> transaccionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<InsumoAlmacen> insumoAlmacenList;
@@ -207,6 +210,14 @@ public class Insumo implements Serializable {
     @Override
     public String toString() {
         return nombre + "(" + codInsumo + ")" + "(" + um + ")" ;
+    }
+
+    public List<TransaccionTransformacion> getTransaccionTransformacionList() {
+        return transaccionTransformacionList;
+    }
+
+    public void setTransaccionTransformacionList(List<TransaccionTransformacion> transaccionTransformacionList) {
+        this.transaccionTransformacionList = transaccionTransformacionList;
     }
 
 }

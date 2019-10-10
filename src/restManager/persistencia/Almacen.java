@@ -54,7 +54,7 @@ public class Almacen implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "valor_monetario")
     private Float valorMonetario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacen")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacencodAlmacen")
     private List<Transaccion> transaccionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacen")
     private List<InsumoAlmacen> insumoAlmacenList;

@@ -48,21 +48,33 @@ public class TransaccionListView extends AbstractListView<Transaccion> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return items.get(rowIndex).getInsumo();
+                        return items.get(rowIndex).getInsumocodInsumo();
                     case 1:
-                        return R.DATE_FORMAT.format(items.get(rowIndex).getTransaccionPK().getFecha());
+                        return R.DATE_FORMAT.format(items.get(rowIndex).getFecha());
                     case 2:
-                        return R.TIME_FORMAT.format(items.get(rowIndex).getTransaccionPK().getHora());
+                        return R.TIME_FORMAT.format(items.get(rowIndex).getHora());
                     case 3:
                         return items.get(rowIndex).getCantidad();
                     case 4:
-                        if (items.get(rowIndex).getTransaccionEntrada() != null) {
-                          return   "ENTRADA (Total: "+items.get(rowIndex).getTransaccionEntrada().getValorTotal() + R.COIN_SUFFIX + ")";
-                        } else if (items.get(rowIndex).getTransaccionMerma() != null) {
-                            return items.get(rowIndex).getTransaccionMerma().getRazon().toUpperCase();
-                        } else {
-                            return "SALIDA: "+ items.get(rowIndex).getCocina();
+                        Transaccion t = items.get(rowIndex);
+                        if (t.getTransaccionEntrada() != null) {
+                            return "ENTRADA (Total: " + t.getTransaccionEntrada().getValorTotal() + R.COIN_SUFFIX + ")";
                         }
+                        if (t.getTransaccionMerma() != null) {
+                            return t.getTransaccionMerma().getRazon().toUpperCase();
+                        }
+                        if (t.getTransaccionSalida() != null) {
+                            return "SALIDA: " + t.getTransaccionSalida().getCocinacodCocina();
+                        }
+                        if (t.getTransaccionTraspaso() != null) {
+                            return "TRASPASO: ";
+                        }
+                        if (t.getTransaccionTransformacionList() != null) {
+                           if(!t.getTransaccionTransformacionList().isEmpty()){
+                            return "TRANSFORMACION: ";
+                           }
+                        }
+                        
                     default:
                         return null;
                 }
@@ -89,6 +101,7 @@ public class TransaccionListView extends AbstractListView<Transaccion> {
     }
 
     @Override
+
     public void updateView() {
         super.updateView(); //To change body of generated methods, choose Tools | Templates.
         getjTableList().getRowSorter().toggleSortOrder(1);

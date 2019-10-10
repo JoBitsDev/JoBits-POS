@@ -6,6 +6,7 @@
 package GUI.Views;
 
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.jdesktop.swingx.JXPanel;
 import restManager.controller.AbstractListController;
 import restManager.exceptions.NoSelectedException;
 import restManager.resources.R;
+import restManager.util.ComponentResizer;
 
 /**
  *
@@ -33,6 +35,7 @@ public abstract class AbstractListView<T> extends AbstractView {
 
     public AbstractListView(DialogType type, AbstractListController<T> controller, AbstractView parent) {
         super(type, controller, parent);
+        initComponents();
 
     }
 
@@ -120,7 +123,7 @@ public abstract class AbstractListView<T> extends AbstractView {
 
         jLabelCantidad.setFont(new java.awt.Font("Malayalam Sangam MN", 1, 13)); // NOI18N
         jLabelCantidad.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabelCantidad.setText("40 Elementos");
+        jLabelCantidad.setText("xx Elementos");
         jPanelControlesSuperiores.add(jLabelCantidad);
 
         jPanelTabla.add(jPanelControlesSuperiores, java.awt.BorderLayout.PAGE_START);

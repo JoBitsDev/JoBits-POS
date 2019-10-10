@@ -36,10 +36,11 @@
     <class>restManager.persistencia.Gasto</class>
     <class>restManager.persistencia.TipoGasto</class>
     <class>restManager.persistencia.AsistenciaPersonal</class>
-    <class>restManager.persistencia.gastos_pagos.Factura</class>
-    <class>restManager.persistencia.gastos_pagos.FamiliaFactura</class>
-    <class>restManager.persistencia.gastos_pagos.Pago</class>
     <class>restManager.persistencia.TransaccionTraspaso</class>
+    <class>restManager.persistencia.Factura</class>
+    <class>restManager.persistencia.Pago</class>
+    <class>restManager.persistencia.TransaccionSalida</class>
+    <class>restManager.persistencia.TransaccionTransformacion</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.173.1:5432/Restaurant_Manager_DB"/>
       <property name="javax.persistence.jdbc.user" value="Rest_Admin"/>
@@ -83,10 +84,11 @@
     <class>restManager.persistencia.GastoVenta</class>
     <class>restManager.persistencia.TipoGasto</class>
     <class>restManager.persistencia.AsistenciaPersonal</class>
-    <class>restManager.persistencia.gastos_pagos.Factura</class>
-    <class>restManager.persistencia.gastos_pagos.FamiliaFactura</class>
-    <class>restManager.persistencia.gastos_pagos.Pago</class>
     <class>restManager.persistencia.TransaccionTraspaso</class>
+    <class>restManager.persistencia.TransaccionTransformacion</class>
+    <class>restManager.persistencia.Factura</class>
+    <class>restManager.persistencia.Pago</class>
+    <class>restManager.persistencia.TransaccionSalida</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Restaurant_Manager_DB"/>
       <property name="javax.persistence.jdbc.user" value="Rest_Admin"/>

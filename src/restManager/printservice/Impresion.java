@@ -1214,7 +1214,7 @@ public class Impresion {
 
     public void printComprobanteTransaccion(List<Transaccion> selectedsObjects) {
         Collections.sort(selectedsObjects, (o1, o2) -> {
-            return o1.getInsumo().getNombre().compareTo(o2.getInsumo().getNombre());
+            return o1.getInsumocodInsumo().getNombre().compareTo(o2.getInsumocodInsumo().getNombre());
         });
         Ticket t = new Ticket();
         addHeader(t);
@@ -1229,7 +1229,7 @@ public class Impresion {
         } else if (tr.getTransaccionMerma() != null) {
             tipoTrans += tr.getTransaccionMerma().getRazon().toUpperCase();
         } else {
-            tipoTrans += "SALIDA: " + tr.getCocina();
+            tipoTrans += "SALIDA: " + tr.getTransaccionSalida().getCocinacodCocina();
         }
 
         t.setText(tipoTrans);
@@ -1239,7 +1239,7 @@ public class Impresion {
         for (Transaccion in : selectedsObjects) {
             t.alignLeft();
 
-            t.setText(in.getInsumo().toString() + "{" + in.getInsumo().getUm() + "}");
+            t.setText(in.getInsumocodInsumo().toString() + "{" + in.getInsumocodInsumo().getUm() + "}");
             t.newLine();
             t.alignRight();
             t.setText("" + in.getCantidad());

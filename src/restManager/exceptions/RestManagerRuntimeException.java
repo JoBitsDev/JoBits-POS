@@ -19,9 +19,16 @@ import restManager.resources.R;
 public class RestManagerRuntimeException extends RuntimeException {
 
     protected Component throwedFrom;
+    protected boolean quietMode;
 
     public RestManagerRuntimeException() {
     }
+
+    public RestManagerRuntimeException(boolean quietMode) {
+        super();
+        this.quietMode = quietMode;
+    }
+    
 
     public RestManagerRuntimeException(String message) {
         super(message);
@@ -40,7 +47,6 @@ public class RestManagerRuntimeException extends RuntimeException {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
-    
     protected void showMessage(String message) {
         JOptionPane.showMessageDialog(throwedFrom, message,
                 R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE,

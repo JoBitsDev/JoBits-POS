@@ -43,6 +43,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "PuestoTrabajo.findByIdPuesto", query = "SELECT p FROM PuestoTrabajo p WHERE p.idPuesto = :idPuesto")})
 public class PuestoTrabajo implements Serializable {
 
+    @Column(name = "a_partir_de")
+    private Float aPartirDe;
+
     @Column(name = "propina")
     private Boolean propina = false;
 
@@ -73,8 +76,6 @@ public class PuestoTrabajo implements Serializable {
     private Float salarioPorcientoVentaTotal = (float) 0.0;
     @Column(name = "salario_porciento_de_area")
     private Float salarioPorcientoDeArea = (float)0.0;
-    @Column(name = "a_partir_de")
-    private Integer aPartirDe = 0;
     @Column(name = "id_puesto")
     private String idPuesto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puestoTrabajonombrePuesto")
@@ -151,14 +152,6 @@ public class PuestoTrabajo implements Serializable {
         this.salarioPorcientoDeArea = salarioPorcientoDeArea;
     }
 
-    public Integer getAPartirDe() {
-        return aPartirDe;
-    }
-
-    public void setAPartirDe(Integer aPartirDe) {
-        this.aPartirDe = aPartirDe;
-    }
-
     public String getIdPuesto() {
         return idPuesto;
     }
@@ -222,6 +215,14 @@ public class PuestoTrabajo implements Serializable {
 
     public void setPropina(Boolean propina) {
         this.propina = propina;
+    }
+
+    public Float getAPartirDe() {
+        return aPartirDe;
+    }
+
+    public void setAPartirDe(Float aPartirDe) {
+        this.aPartirDe = aPartirDe;
     }
 
 }

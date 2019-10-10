@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
+import java.awt.Insets;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JDialog;
@@ -20,6 +21,7 @@ import restManager.controller.Controller;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.resources.values.Fonts;
 import restManager.util.ComponentMover;
+import restManager.util.ComponentResizer;
 import restManager.util.LoadingWindow;
 
 /**
@@ -227,7 +229,12 @@ public abstract class AbstractView extends JDialog implements View {
         setFont(getFont());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setModalityType(ModalityType.APPLICATION_MODAL);
+        ComponentResizer resizer = new ComponentResizer(this);
         ComponentMover cr = new ComponentMover(this, this);
+       // Insets drag = new  Insets(0, 5, 0, 5);
+        //Insets move = new Insets(5, 0, 0, 5);
+        //resizer.setDragInsets(drag);
+        //cr.setEdgeInsets(move);
     }
 
 }

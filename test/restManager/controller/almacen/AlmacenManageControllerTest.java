@@ -11,7 +11,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import restManager.persistencia.Almacen;
+import restManager.persistencia.Transaccion;
 import restManager.persistencia.models.AlmacenDAO;
+import restManager.persistencia.models.TransaccionDAO;
 import restManager.resources.R;
 
 /**
@@ -19,32 +21,31 @@ import restManager.resources.R;
  * @author Jorge
  */
 public class AlmacenManageControllerTest {
-    
+
     public AlmacenManageControllerTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
         R.COIN_SUFFIX = " CUC";
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
- 
-
     /**
-     * Test of imprimirReporteParaCompras method, of class AlmacenManageController.
+     * Test of imprimirReporteParaCompras method, of class
+     * AlmacenManageController.
      */
     @Test
     public void testImprimirReporteParaCompras() {
@@ -53,9 +54,25 @@ public class AlmacenManageControllerTest {
         AlmacenManageController instance = new AlmacenManageController(a);
         instance.constructView(null);
         //instance.imprimirReporteParaCompras(a);
-        
+
         // TODO review the generated test code and remove the default call to fail.
-       // fail("The test case is a prototype.");
+        // fail("The test case is a prototype.");
     }
-    
+
+    /**
+     * Test of imprimirReporteParaCompras method, of class
+     * AlmacenManageController.
+     */
+    //@Test
+    public void testCrearTransaccion() {
+        System.out.println("Crear transaccion");
+        Transaccion t = new Transaccion();
+        TransaccionDAO.getInstance().create(t);
+        System.out.println(t.getNoTransaccion());
+        //instance.imprimirReporteParaCompras(a);
+
+        // TODO review the generated test code and remove the default call to fail.
+        // fail("The test case is a prototype.");
+    }
+
 }

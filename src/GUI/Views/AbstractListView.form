@@ -90,7 +90,7 @@
                   <Font name="Malayalam Sangam MN" size="13" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="2"/>
-                <Property name="text" type="java.lang.String" value="40 Elementos"/>
+                <Property name="text" type="java.lang.String" value="xx Elementos"/>
               </Properties>
             </Component>
           </SubComponents>

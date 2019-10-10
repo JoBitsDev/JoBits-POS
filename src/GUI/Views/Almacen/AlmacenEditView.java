@@ -11,9 +11,14 @@ import GUI.Views.util.AbstractCrossReferenePanel;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dialog;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.xml.ws.handler.MessageContext;
 import mdlaf.components.tabbedpane.MaterialTabbedPaneUI;
@@ -48,7 +53,10 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
      * @param modal
      */
     AbstractCrossReferenePanel<InsumoAlmacen, Insumo> model;
+    //AbstractCrossReferenePanel<Insumo, Object>
     final Color elaboracionColor = new Color(255, 255, 204);
+    final String labelInsumoSleccionado = "<Seleccione un insumo en la tabla>";
+    
 
     public AlmacenEditView(AbstractDetailController<Almacen> controller, AbstractView owner, Almacen instance) {
         super(instance, DialogType.FULL_SCREEN, controller, owner);
@@ -155,7 +163,35 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         if (getInstance().getCentroElaboracion()) {
             jCheckBox1.setSelected(true);
             jLabelNombreAlmacen.setForeground(elaboracionColor);
+            jXLabelTotalAlmacen.setForeground(elaboracionColor);
+            jXLabelValorTotal.setForeground(elaboracionColor);
         }
+        
+        model.getjTableCrossReference().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    getController().modificarStock(model.getTableModel().getObjectAtSelectedRow().getInsumo());
+                }
+            }
+        });
+        model.setFinderVisible(true);
+        model.getjTableCrossReference().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    if (model.getjTableCrossReference().getSelectedRow() != -1) {
+                        jLabelInsumoSeleccionado.setText(model.getTableModel().getObjectAtSelectedRow().getInsumo().toString());
+                        jLabelInsumoSeleccionado.setForeground(Color.BLUE);
+                    } else {
+                        jLabelInsumoSeleccionado.setText(labelInsumoSleccionado);
+                        jLabelInsumoSeleccionado.setForeground(Color.RED);
+                    }
+                }
+
+            }
+        });
+
     }
 
     @Override
@@ -182,6 +218,8 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanel6 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelTransaccion = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jButtonConfirmar = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jSpinnerCantidad = new javax.swing.JSpinner();
         jPanel8 = new javax.swing.JPanel();
@@ -200,8 +238,13 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jRadioButtonRebaja = new javax.swing.JRadioButton();
         jTextFieldRebaja = new javax.swing.JTextField();
         jPanelTransformacion = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jButtonConfirmar = new javax.swing.JButton();
+        jPanel13 = new javax.swing.JPanel();
+        jSpinner1 = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
+        jPanelTransformarEn = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jButtonConfirmar1 = new javax.swing.JButton();
+        jLabelInsumoSeleccionado = new org.jdesktop.swingx.JXLabel();
         jPanelTabla = new javax.swing.JPanel();
         jXPanelControles = new org.jdesktop.swingx.JXPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -217,7 +260,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         setFont(getFont());
         setMinimumSize(getMinimumSize());
         setUndecorated(true);
-        getContentPane().setLayout(new java.awt.BorderLayout(0, 5));
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
@@ -252,113 +294,29 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
         jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(new org.edisoncor.gui.util.DropShadowBorder(), "Operaciones"));
+        jPanel6.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Operaciones con", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel6.setPreferredSize(new java.awt.Dimension(300, 463));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
-        jPanelTransaccion.setOpaque(false);
-        jPanelTransaccion.setLayout(new java.awt.BorderLayout());
+        jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
+        jTabbedPane1.setForeground(new java.awt.Color(0, 153, 153));
+        jTabbedPane1.setMinimumSize(new java.awt.Dimension(250, 443));
+        jTabbedPane1.setOpaque(true);
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(250, 435));
 
-        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelTransaccion.setBackground(new java.awt.Color(204, 255, 255));
+        jPanelTransaccion.setLayout(new java.awt.BorderLayout(0, 5));
 
-        jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1000000.0f), Float.valueOf(1.0f)));
-        jSpinnerCantidad.setToolTipText("Cantidad");
-        jSpinnerCantidad.setBorder(javax.swing.BorderFactory.createTitledBorder("Cantidad"));
-        jPanel7.add(jSpinnerCantidad);
-
-        jPanelTransaccion.add(jPanel7, java.awt.BorderLayout.PAGE_START);
-
-        jPanel8.setLayout(new java.awt.GridLayout(4, 0));
-
-        jPanelEntrada.setLayout(new java.awt.BorderLayout());
-
-        jRadioButtonEntrada.setSelected(true);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jRadioButtonEntrada.setText(bundle.getString("label_entrada")); // NOI18N
-        jRadioButtonEntrada.setToolTipText("");
-        jRadioButtonEntrada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonEntradaActionPerformed(evt);
-            }
-        });
-        jPanelEntrada.add(jRadioButtonEntrada, java.awt.BorderLayout.CENTER);
-
-        jSpinnerMonto.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1000000.0f), Float.valueOf(1.0f)));
-        jSpinnerMonto.setToolTipText("Monto");
-        jPanel10.add(jSpinnerMonto);
-
-        jLabel1.setText(R.COIN_SUFFIX);
-        jPanel10.add(jLabel1);
-
-        jPanelEntrada.add(jPanel10, java.awt.BorderLayout.SOUTH);
-
-        jPanel8.add(jPanelEntrada);
-
-        jPanelTraspaso.setLayout(new java.awt.BorderLayout());
-
-        jRadioButtonTraspaso.setText(bundle.getString("label_traspaso")); // NOI18N
-        jRadioButtonTraspaso.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonTraspasoActionPerformed(evt);
-            }
-        });
-        jPanelTraspaso.add(jRadioButtonTraspaso, java.awt.BorderLayout.CENTER);
-
-        jComboBoxAlmacen.setEnabled(false);
-        jComboBoxAlmacen.setMinimumSize(new java.awt.Dimension(150, 27));
-        jComboBoxAlmacen.setPreferredSize(new java.awt.Dimension(150, 27));
-        jPanelTraspaso.add(jComboBoxAlmacen, java.awt.BorderLayout.SOUTH);
-
-        jPanel8.add(jPanelTraspaso);
-
-        jPaneldestino.setMinimumSize(new java.awt.Dimension(200, 61));
-        jPaneldestino.setLayout(new java.awt.BorderLayout());
-
-        jRadioButtonSalida.setText(bundle.getString("label_salida")); // NOI18N
-        jRadioButtonSalida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonSalidaActionPerformed(evt);
-            }
-        });
-        jPaneldestino.add(jRadioButtonSalida, java.awt.BorderLayout.CENTER);
-
-        jComboBoxPuntoElab.setEnabled(false);
-        jComboBoxPuntoElab.setMinimumSize(new java.awt.Dimension(150, 27));
-        jComboBoxPuntoElab.setPreferredSize(new java.awt.Dimension(150, 27));
-        jPaneldestino.add(jComboBoxPuntoElab, java.awt.BorderLayout.SOUTH);
-
-        jPanel8.add(jPaneldestino);
-
-        jPanelRazon.setLayout(new java.awt.BorderLayout());
-
-        jRadioButtonRebaja.setText(bundle.getString("label_rebaja")); // NOI18N
-        jRadioButtonRebaja.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonRebajaActionPerformed(evt);
-            }
-        });
-        jPanelRazon.add(jRadioButtonRebaja, java.awt.BorderLayout.CENTER);
-
-        jTextFieldRebaja.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jTextFieldRebaja.setToolTipText("Razon de rebaja");
-        jTextFieldRebaja.setEnabled(false);
-        jTextFieldRebaja.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanelRazon.add(jTextFieldRebaja, java.awt.BorderLayout.SOUTH);
-
-        jPanel8.add(jPanelRazon);
-
-        jPanelTransaccion.add(jPanel8, java.awt.BorderLayout.CENTER);
-
-        jTabbedPane1.addTab("Transaccion", jPanelTransaccion);
-        jTabbedPane1.addTab("Transformacion", jPanelTransformacion);
-
-        jPanel6.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
-
+        jPanel9.setOpaque(false);
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
         flowLayout1.setAlignOnBaseline(true);
         jPanel9.setLayout(flowLayout1);
 
+        jButtonConfirmar.setForeground(new java.awt.Color(0, 153, 153));
         jButtonConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/confirmar.png"))); // NOI18N
         jButtonConfirmar.setText("Confirmar");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonConfirmar.setToolTipText(bundle.getString("label_confirmar")); // NOI18N
         jButtonConfirmar.setBorderPainted(false);
         jButtonConfirmar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -370,21 +328,185 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         });
         jPanel9.add(jButtonConfirmar);
 
-        jPanel6.add(jPanel9, java.awt.BorderLayout.SOUTH);
+        jPanelTransaccion.add(jPanel9, java.awt.BorderLayout.SOUTH);
+
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Cantidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel7.setOpaque(false);
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1000000.0f), Float.valueOf(1.0f)));
+        jSpinnerCantidad.setToolTipText("Cantidad");
+        jSpinnerCantidad.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanel7.add(jSpinnerCantidad);
+
+        jPanelTransaccion.add(jPanel7, java.awt.BorderLayout.PAGE_START);
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Operaciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel8.setOpaque(false);
+        jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanelEntrada.setOpaque(false);
+        jPanelEntrada.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jRadioButtonEntrada.setSelected(true);
+        jRadioButtonEntrada.setText(bundle.getString("label_entrada")); // NOI18N
+        jRadioButtonEntrada.setToolTipText("");
+        jRadioButtonEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonEntradaActionPerformed(evt);
+            }
+        });
+        jPanelEntrada.add(jRadioButtonEntrada);
+
+        jPanel10.setOpaque(false);
+
+        jSpinnerMonto.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1000000.0f), Float.valueOf(1.0f)));
+        jSpinnerMonto.setToolTipText("Monto");
+        jSpinnerMonto.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanel10.add(jSpinnerMonto);
+
+        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel1.setText(R.COIN_SUFFIX);
+        jPanel10.add(jLabel1);
+
+        jPanelEntrada.add(jPanel10);
+
+        jPanel8.add(jPanelEntrada);
+
+        jPanelTraspaso.setOpaque(false);
+        jPanelTraspaso.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jRadioButtonTraspaso.setText(bundle.getString("label_traspaso")); // NOI18N
+        jRadioButtonTraspaso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonTraspasoActionPerformed(evt);
+            }
+        });
+        jPanelTraspaso.add(jRadioButtonTraspaso);
+
+        jComboBoxAlmacen.setEnabled(false);
+        jComboBoxAlmacen.setMinimumSize(new java.awt.Dimension(150, 27));
+        jComboBoxAlmacen.setPreferredSize(new java.awt.Dimension(150, 27));
+        jPanelTraspaso.add(jComboBoxAlmacen);
+
+        jPanel8.add(jPanelTraspaso);
+
+        jPaneldestino.setMinimumSize(new java.awt.Dimension(200, 61));
+        jPaneldestino.setOpaque(false);
+        jPaneldestino.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jRadioButtonSalida.setText(bundle.getString("label_salida")); // NOI18N
+        jRadioButtonSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonSalidaActionPerformed(evt);
+            }
+        });
+        jPaneldestino.add(jRadioButtonSalida);
+
+        jComboBoxPuntoElab.setEnabled(false);
+        jComboBoxPuntoElab.setMinimumSize(new java.awt.Dimension(150, 27));
+        jComboBoxPuntoElab.setPreferredSize(new java.awt.Dimension(150, 27));
+        jPaneldestino.add(jComboBoxPuntoElab);
+
+        jPanel8.add(jPaneldestino);
+
+        jPanelRazon.setOpaque(false);
+        jPanelRazon.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jRadioButtonRebaja.setText(bundle.getString("label_rebaja")); // NOI18N
+        jRadioButtonRebaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonRebajaActionPerformed(evt);
+            }
+        });
+        jPanelRazon.add(jRadioButtonRebaja);
+
+        jTextFieldRebaja.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jTextFieldRebaja.setToolTipText("Razon de rebaja");
+        jTextFieldRebaja.setEnabled(false);
+        jTextFieldRebaja.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanelRazon.add(jTextFieldRebaja);
+
+        jPanel8.add(jPanelRazon);
+
+        jPanelTransaccion.add(jPanel8, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane1.addTab("Transaccion", jPanelTransaccion);
+
+        jPanelTransformacion.setBackground(new java.awt.Color(204, 255, 255));
+        jPanelTransformacion.setLayout(new java.awt.BorderLayout());
+
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Transformar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel13.setOpaque(false);
+        jPanel13.setPreferredSize(new java.awt.Dimension(300, 70));
+        jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
+        jSpinner1.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanel13.add(jSpinner1);
+
+        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel2.setText("<U/M>");
+        jPanel13.add(jLabel2);
+
+        jPanelTransformacion.add(jPanel13, java.awt.BorderLayout.PAGE_START);
+
+        jPanelTransformarEn.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "En...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanelTransformarEn.setOpaque(false);
+        jPanelTransformarEn.setLayout(new java.awt.BorderLayout());
+        jPanelTransformacion.add(jPanelTransformarEn, java.awt.BorderLayout.CENTER);
+
+        jPanel11.setOpaque(false);
+        java.awt.FlowLayout flowLayout2 = new java.awt.FlowLayout();
+        flowLayout2.setAlignOnBaseline(true);
+        jPanel11.setLayout(flowLayout2);
+
+        jButtonConfirmar1.setForeground(new java.awt.Color(0, 153, 153));
+        jButtonConfirmar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/confirmar.png"))); // NOI18N
+        jButtonConfirmar1.setText("Confirmar");
+        jButtonConfirmar1.setToolTipText(bundle.getString("label_confirmar")); // NOI18N
+        jButtonConfirmar1.setBorderPainted(false);
+        jButtonConfirmar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonConfirmar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonConfirmar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmar1ActionPerformed(evt);
+            }
+        });
+        jPanel11.add(jButtonConfirmar1);
+
+        jPanelTransformacion.add(jPanel11, java.awt.BorderLayout.SOUTH);
+
+        jTabbedPane1.addTab("Transformacion", jPanelTransformacion);
+
+        jPanel6.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+
+        jLabelInsumoSeleccionado.setForeground(new java.awt.Color(255, 0, 0));
+        jLabelInsumoSeleccionado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelInsumoSeleccionado.setText("<Seleccione un insumo en la tabla>");
+        jLabelInsumoSeleccionado.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabelInsumoSeleccionado.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabelInsumoSeleccionado.setLineWrap(true);
+        jPanel6.add(jLabelInsumoSeleccionado, java.awt.BorderLayout.PAGE_START);
 
         jPanel5.add(jPanel6, java.awt.BorderLayout.EAST);
 
+        jPanelTabla.setBackground(new java.awt.Color(204, 204, 204));
         jPanelTabla.setLayout(new java.awt.BorderLayout());
         jPanel5.add(jPanelTabla, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
         jXPanelControles.setBackground(new java.awt.Color(204, 204, 204));
-        jXPanelControles.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
+        org.jdesktop.swingx.border.DropShadowBorder dropShadowBorder1 = new org.jdesktop.swingx.border.DropShadowBorder();
+        dropShadowBorder1.setShowBottomShadow(false);
+        dropShadowBorder1.setShowTopShadow(true);
+        jXPanelControles.setBorder(dropShadowBorder1);
         jXPanelControles.setLayout(new javax.swing.BoxLayout(jXPanelControles, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.setPreferredSize(new java.awt.Dimension(406, 40));
+        jPanel1.setLayout(new java.awt.BorderLayout(5, 5));
 
         jXLabelTotalAlmacen.setText(bundle.getString("label_valor_almacen")); // NOI18N
         jXLabelTotalAlmacen.setFont(new java.awt.Font("Apple Braille", 0, 24)); // NOI18N
@@ -408,11 +530,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanel2.add(jButtonDarReporte);
 
         jButtonModificarStock.setText(bundle.getString("label_mod_stock")); // NOI18N
-        jButtonModificarStock.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButtonModificarStockMouseClicked(evt);
-            }
-        });
         jButtonModificarStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonModificarStockActionPerformed(evt);
@@ -450,7 +567,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     }//GEN-LAST:event_jButtonDarReporteActionPerformed
 
     private void jButtonModificarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarStockActionPerformed
-
+        getController().modificarStock(model.getTableModel().getObjectAtSelectedRow().getInsumo());
     }//GEN-LAST:event_jButtonModificarStockActionPerformed
 
     private void jButtonVerFichasEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerFichasEntradaActionPerformed
@@ -484,27 +601,30 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         if (jCheckBox1.isSelected()) {
             jLabelNombreAlmacen.setForeground(elaboracionColor);
+            jXLabelTotalAlmacen.setForeground(elaboracionColor);
+            jXLabelValorTotal.setForeground(elaboracionColor);
         } else {
             jLabelNombreAlmacen.setForeground(Color.BLACK);
+            jXLabelTotalAlmacen.setForeground(Color.BLACK);
+            jXLabelValorTotal.setForeground(Color.BLACK);
         }
         getController().setCentroElaboracion(jCheckBox1.isSelected());
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    private void jButtonModificarStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonModificarStockMouseClicked
-        if (evt.getClickCount() == 2) {
-            getController().modificarStock(model.getTableModel().getObjectAtSelectedRow().getInsumo());
-        }
-    }//GEN-LAST:event_jButtonModificarStockMouseClicked
-
     private void jRadioButtonTraspasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTraspasoActionPerformed
         onCheckedCheckBox(CheckBoxType.TRASPASO);
     }//GEN-LAST:event_jRadioButtonTraspasoActionPerformed
+
+    private void jButtonConfirmar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonConfirmar1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonConfirmar;
+    private javax.swing.JButton jButtonConfirmar1;
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonModificarStock;
     private javax.swing.JButton jButtonVerFichasEntrada;
@@ -512,9 +632,13 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private javax.swing.JComboBox<Almacen> jComboBoxAlmacen;
     private javax.swing.JComboBox<Cocina> jComboBoxPuntoElab;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private org.jdesktop.swingx.JXLabel jLabelInsumoSeleccionado;
     private javax.swing.JLabel jLabelNombreAlmacen;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -528,12 +652,14 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private javax.swing.JPanel jPanelTabla;
     private javax.swing.JPanel jPanelTransaccion;
     private javax.swing.JPanel jPanelTransformacion;
+    private javax.swing.JPanel jPanelTransformarEn;
     private javax.swing.JPanel jPanelTraspaso;
     private javax.swing.JPanel jPaneldestino;
     private javax.swing.JRadioButton jRadioButtonEntrada;
     private javax.swing.JRadioButton jRadioButtonRebaja;
     private javax.swing.JRadioButton jRadioButtonSalida;
     private javax.swing.JRadioButton jRadioButtonTraspaso;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinnerCantidad;
     private javax.swing.JSpinner jSpinnerMonto;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -564,25 +690,25 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         float monto = (float) jSpinnerMonto.getValue();
         String causa = jTextFieldRebaja.getText();
         if (cantidad == 0) {
-            throw new ValidatingException(this,"La cantidad no puede ser 0");
+            throw new ValidatingException(this, "La cantidad no puede ser 0");
         }
         if (jRadioButtonEntrada.isSelected()) {
-            getController().crearTransaccion(ins, 0, null, null,cantidad, monto, causa);
+            getController().crearTransaccion(ins, 0, null, null, cantidad, monto, causa);
         }
         if (jRadioButtonSalida.isSelected()) {
-            getController().crearTransaccion(ins, 1, (Cocina) jComboBoxPuntoElab.getSelectedItem(), null,cantidad, monto, causa);
+            getController().crearTransaccion(ins, 1, (Cocina) jComboBoxPuntoElab.getSelectedItem(), null, cantidad, monto, causa);
         }
         if (jRadioButtonRebaja.isSelected()) {
-            if (causa == null  || causa.isEmpty()) {
+            if (causa == null || causa.isEmpty()) {
                 throw new ValidatingException(this, "La causa de la rebaja no puede estar vacía");
             }
-            getController().crearTransaccion(ins, 2, null, null,cantidad, monto, causa);
+            getController().crearTransaccion(ins, 2, null, null, cantidad, monto, causa);
         }
         if (jRadioButtonTraspaso.isSelected()) {
             if (getInstance().equals(jComboBoxAlmacen.getSelectedItem())) {
-                throw new ValidatingException(this,"El almacen destino para el traspaso debe ser diferente al abierto");
+                throw new ValidatingException(this, "El almacen destino para el traspaso debe ser diferente al abierto");
             }
-            getController().crearTransaccion(ins, 3, null, (Almacen) jComboBoxAlmacen.getSelectedItem(),cantidad, monto, causa);
+            getController().crearTransaccion(ins, 3, null, (Almacen) jComboBoxAlmacen.getSelectedItem(), cantidad, monto, causa);
         }
 
 //        model.getHandler().getTableModel().fireTableDataChanged();

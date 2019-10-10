@@ -37,11 +37,13 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "NotificacionEnvioCocina.findByHoraNotificacion", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.horaNotificacion = :horaNotificacion")})
 public class NotificacionEnvioCocina implements Serializable {
 
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "cantidad")
+    private Float cantidad;
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected NotificacionEnvioCocinaPK notificacionEnvioCocinaPK;
-    @Column(name = "cantidad")
-    private Integer cantidad;
     @Column(name = "hora_notificacion")
     @Temporal(TemporalType.TIME)
     private Date horaNotificacion;
@@ -76,13 +78,6 @@ public class NotificacionEnvioCocina implements Serializable {
         this.notificacionEnvioCocinaPK = notificacionEnvioCocinaPK;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
-    }
 
     public Date getHoraNotificacion() {
         return horaNotificacion;
@@ -141,6 +136,14 @@ public class NotificacionEnvioCocina implements Serializable {
     @Override
     public String toString() {
         return "restManager.persistencia.NotificacionEnvioCocina[ notificacionEnvioCocinaPK=" + notificacionEnvioCocinaPK + " ]";
+    }
+
+    public Float getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Float cantidad) {
+        this.cantidad = cantidad;
     }
 
 }

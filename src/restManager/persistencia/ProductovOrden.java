@@ -38,14 +38,16 @@ import javax.persistence.Table;
     @NamedQuery(name = "ProductovOrden.findByListoParaRecoger", query = "SELECT p FROM ProductovOrden p WHERE p.listoParaRecoger = :listoParaRecoger")})
 public class ProductovOrden implements Serializable {
 
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "enviadosacocina")
+    private Float enviadosacocina;
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ProductovOrdenPK productovOrdenPK;
     @Basic(optional = false)
     @Column(name = "cantidad")
     private float cantidad;
-    @Column(name = "enviadosacocina")
-    private float enviadosacocina;
     @Column(name = "numero_comensal")
     private Integer numeroComensal;
     @Column(name = "listo_para_recoger")
@@ -93,13 +95,6 @@ public class ProductovOrden implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public float getEnviadosacocina() {
-        return enviadosacocina;
-    }
-
-    public void setEnviadosacocina(float enviadosacocina) {
-        this.enviadosacocina = enviadosacocina;
-    }
 
     public Integer getNumeroComensal() {
         return numeroComensal;
@@ -172,6 +167,14 @@ public class ProductovOrden implements Serializable {
     @Override
     public String toString() {
         return  getOrden() +"_"+ getProductoVenta();
+    }
+
+    public Float getEnviadosacocina() {
+        return enviadosacocina;
+    }
+
+    public void setEnviadosacocina(Float enviadosacocina) {
+        this.enviadosacocina = enviadosacocina;
     }
 
 }
