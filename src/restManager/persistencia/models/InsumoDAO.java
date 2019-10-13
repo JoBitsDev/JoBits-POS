@@ -36,14 +36,14 @@ public class InsumoDAO extends AbstractModel<Insumo> {
     public void edit(Insumo entity) {
         Insumo oldInsumo = find(entity.getCodInsumo());
         startTransaction();
-        for (InsumoElaborado x : oldInsumo.getInsumoElaboradoList()) {
+        for (InsumoElaborado x : oldInsumo.getInsumoDerivadoList()) {
             getEntityManager().remove(x);
         }
         commitTransaction();
 
         startTransaction();
 
-        for (InsumoElaborado x : entity.getInsumoElaboradoList()) {
+        for (InsumoElaborado x : entity.getInsumoDerivadoList()) {
             getEntityManager().persist(x);
         }
 
@@ -60,11 +60,8 @@ public class InsumoDAO extends AbstractModel<Insumo> {
         if (insumo.getIpvList() == null) {
             insumo.setIpvList(new ArrayList<>());
         }
-        if (insumo.getInsumoElaboradoList() == null) {
-            insumo.setInsumoElaboradoList(new ArrayList<>());
-        }
-        if (insumo.getInsumoElaboradoList1() == null) {
-            insumo.setInsumoElaboradoList1(new ArrayList<>());
+        if (insumo.getInsumoDerivadoList() == null) {
+            insumo.setInsumoDerivadoList(new ArrayList<>());
         }
 
         if (insumo.getInsumoAlmacenList() == null) {

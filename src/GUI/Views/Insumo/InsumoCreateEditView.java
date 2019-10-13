@@ -55,7 +55,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
      */
     @Override
     public void updateView() {
-        updateTable(getInstance().getInsumoElaboradoList());
+        updateTable(getInstance().getInsumoDerivadoList());
         updateComboBoxes();
         updatePanelInputs();
 
@@ -96,11 +96,11 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
                     public Object getValueAt(int rowIndex, int columnIndex) {
                         switch (columnIndex) {
                             case 0:
-                                return items.get(rowIndex).getInsumo1().getCodInsumo();
+                                return items.get(rowIndex).getInsumo_derivado_nombre().getCodInsumo();
                             case 1:
-                                return items.get(rowIndex).getInsumo1().getNombre();
+                                return items.get(rowIndex).getInsumo_derivado_nombre().getNombre();
                             case 2:
-                                return items.get(rowIndex).getInsumo1().getUm();
+                                return items.get(rowIndex).getInsumo_derivado_nombre().getUm();
                             case 3:
                                 return items.get(rowIndex).getCantidad();
                             case 4:
@@ -161,7 +161,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
                 InsumoElaboradoPK pk = new InsumoElaboradoPK(instance.getCodInsumo(), selected.getCodInsumo());
                 newInsumo.setInsumoElaboradoPK(pk);
                 newInsumo.setInsumo(instance);
-                newInsumo.setInsumo1(selected);
+                newInsumo.setInsumo_derivado_nombre(selected);
                 newInsumo.setCantidad(0);
                 newInsumo.setCosto(0);
                 return newInsumo;
@@ -536,14 +536,14 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         instance.setNombre(jTextFieldNombre.getText());
         instance.setUm(jComboBoxUM.getSelectedItem().toString());
         instance.setProductoInsumoList(tableCrossReference.getTableModel().getItems());
-        instance.setInsumoElaboradoList1(instance.getInsumoElaboradoList1());
+        instance.setInsumoDerivadoList(instance.getInsumoDerivadoList());
         instance.setIpvList(instance.getIpvList());
         instance.setStockEstimation(Float.parseFloat(jSpinnerEstimacionStock.getValue().toString()));
 
         if (instance.getElaborado()) {
-            instance.setInsumoElaboradoList(tableIngElab.getTableModel().getItems());
+            instance.setInsumoDerivadoList(tableIngElab.getTableModel().getItems());
         } else {
-            instance.setInsumoElaboradoList(new ArrayList<>());
+            instance.setInsumoDerivadoList(new ArrayList<>());
         }
         return true;
     }

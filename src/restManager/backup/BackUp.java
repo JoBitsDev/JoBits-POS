@@ -311,16 +311,14 @@ public class BackUp extends SwingWorker<Boolean, Float> {
             Insumo i = em.find(Insumo.class, in.getCodInsumo());
             if (i != null) {
                 in.setInsumoAlmacenList(i.getInsumoAlmacenList());
-                in.setInsumoElaboradoList(i.getInsumoElaboradoList());
-                in.setInsumoElaboradoList1(i.getInsumoElaboradoList1());
+                in.setInsumoDerivadoList(i.getInsumoDerivadoList());
                 in.setIpvList(i.getIpvList());
                 in.setTransaccionList(i.getTransaccionList());
                 em.merge(in);
 
             } else {
                 in.setInsumoAlmacenList(null);
-                in.setInsumoElaboradoList(null);
-                in.setInsumoElaboradoList1(null);
+                in.setInsumoDerivadoList(null);
                 in.setIpvList(null);
                 in.setTransaccionList(null);
                 em.persist(in);

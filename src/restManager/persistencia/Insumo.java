@@ -66,10 +66,8 @@ public class Insumo implements Serializable {
     private List<InsumoAlmacen> insumoAlmacenList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<Ipv> ipvList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
-    private List<InsumoElaborado> insumoElaboradoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo1")
-    private List<InsumoElaborado> insumoElaboradoList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo_derivado_nombre")
+    private List<InsumoElaborado> insumoDerivadoList;
 
     public Insumo() {
     }
@@ -171,20 +169,12 @@ public class Insumo implements Serializable {
         this.ipvList = ipvList;
     }
 
-    public List<InsumoElaborado> getInsumoElaboradoList() {
-        return insumoElaboradoList;
+    public List<InsumoElaborado> getInsumoDerivadoList() {
+        return insumoDerivadoList;
     }
 
-    public void setInsumoElaboradoList(List<InsumoElaborado> insumoElaboradoList) {
-        this.insumoElaboradoList = insumoElaboradoList;
-    }
-
-    public List<InsumoElaborado> getInsumoElaboradoList1() {
-        return insumoElaboradoList1;
-    }
-
-    public void setInsumoElaboradoList1(List<InsumoElaborado> insumoElaboradoList1) {
-        this.insumoElaboradoList1 = insumoElaboradoList1;
+    public void setInsumoDerivadoList(List<InsumoElaborado> insumoDerivadoList) {
+        this.insumoDerivadoList = insumoDerivadoList;
     }
 
     @Override
@@ -197,6 +187,10 @@ public class Insumo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
+        if (object instanceof InsumoElaborado) {
+            InsumoElaborado e = (InsumoElaborado) object;
+            return e.getInsumo().getCodInsumo().equals(this.codInsumo);
+        }
         if (!(object instanceof Insumo)) {
             return false;
         }
@@ -209,7 +203,7 @@ public class Insumo implements Serializable {
 
     @Override
     public String toString() {
-        return nombre + "(" + codInsumo + ")" + "(" + um + ")" ;
+        return nombre + "(" + codInsumo + ")" + "(" + um + ")";
     }
 
     public List<TransaccionTransformacion> getTransaccionTransformacionList() {

@@ -46,7 +46,7 @@ public class InsumoElaborado implements Serializable {
     private Insumo insumo;
     @JoinColumn(name = "insumocod_insumo", referencedColumnName = "cod_insumo", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Insumo insumo1;
+    private Insumo insumo_derivado_nombre;
 
     public InsumoElaborado() {
     }
@@ -97,12 +97,12 @@ public class InsumoElaborado implements Serializable {
         this.insumo = insumo;
     }
 
-    public Insumo getInsumo1() {
-        return insumo1;
+    public Insumo getInsumo_derivado_nombre() {
+        return insumo_derivado_nombre;
     }
 
-    public void setInsumo1(Insumo insumo1) {
-        this.insumo1 = insumo1;
+    public void setInsumo_derivado_nombre(Insumo insumo_derivado_nombre) {
+        this.insumo_derivado_nombre = insumo_derivado_nombre;
     }
 
     @Override
