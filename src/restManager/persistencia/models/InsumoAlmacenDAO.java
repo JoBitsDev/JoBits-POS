@@ -48,10 +48,15 @@ public class InsumoAlmacenDAO extends AbstractModel<InsumoAlmacen> {
     }
 
     public InsumoAlmacen getInsumoAlmacen(String i, String a) {
-        return (InsumoAlmacen) getEntityManager().createNamedQuery("InsumoAlmacen.findByAlmacenInsumo")
-                .setParameter("almacencodAlmacen", a)
-                .setParameter("insumo", i)
-                .getSingleResult();
+        try {
+            return (InsumoAlmacen) getEntityManager().createNamedQuery("InsumoAlmacen.findByAlmacenInsumo")
+                    .setParameter("almacencodAlmacen", a)
+                    .setParameter("insumo", i)
+                    .getSingleResult();
+        }catch(Exception e){
+            return null;
+        }
+        
     }
 
 }

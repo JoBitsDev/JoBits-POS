@@ -32,6 +32,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "TransaccionTransformacion.findByDireccionInversa", query = "SELECT t FROM TransaccionTransformacion t WHERE t.direccionInversa = :direccionInversa")})
 public class TransaccionTransformacion implements Serializable {
 
+    @Column(name = "costo_unitario")
+    private Float costoUnitario;
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected TransaccionTransformacionPK transaccionTransformacionPK;
@@ -131,6 +134,14 @@ public class TransaccionTransformacion implements Serializable {
     @Override
     public String toString() {
         return "restManager.persistencia.TransaccionTransformacion[ transaccionTransformacionPK=" + transaccionTransformacionPK + " ]";
+    }
+
+    public Float getCostoUnitario() {
+        return costoUnitario;
+    }
+
+    public void setCostoUnitario(Float costoUnitario) {
+        this.costoUnitario = costoUnitario;
     }
 
 }

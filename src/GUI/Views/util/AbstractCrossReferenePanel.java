@@ -56,9 +56,9 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         jPanelFind.setVisible(finderVisible);
     }
 
-    public abstract RestManagerAbstractTableModel<T> getTableModel();
+    protected abstract RestManagerAbstractTableModel<T> getTableModel();
 
-    public abstract T transformK_T(K selected);
+    protected abstract T transformK_T(K selected);
 
     public void removeObjectSelected() {
         handler.getTableModel().removeObjectAtSelectedRow();
@@ -127,13 +127,19 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         jLabel1 = new javax.swing.JLabel();
         jTextFieldAutoComplete = new javax.swing.JTextField();
         jButtonAgregarProd = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPaneCrossReference = new javax.swing.JScrollPane();
         jTableCrossReference = new javax.swing.JTable();
         jPanelOpciones = new javax.swing.JPanel();
         jButtonDeleteProd = new javax.swing.JButton();
 
+        setMinimumSize(new java.awt.Dimension(250, 250));
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
+        jPanelInsert.setBackground(new java.awt.Color(204, 204, 204));
+        jPanelInsert.setOpaque(false);
+        jPanelInsert.setPreferredSize(new java.awt.Dimension(425, 80));
         jPanelInsert.setLayout(new java.awt.BorderLayout());
 
         jPanelFind.setOpaque(false);
@@ -146,7 +152,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         jXLabel1.setToolTipText("Buscar");
         jPanelFind.add(jXLabel1, java.awt.BorderLayout.CENTER);
 
-        jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(300, 26));
+        jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(250, 26));
         jTextFieldBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldBusquedaKeyTyped(evt);
@@ -159,10 +165,13 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
 
         jPanelInsert.add(jPanelFind, java.awt.BorderLayout.PAGE_END);
 
+        jPanel1.setOpaque(false);
+
         jLabel1.setText(bundle.getString("label_producto_venta")); // NOI18N
         jPanel1.add(jLabel1);
 
-        jTextFieldAutoComplete.setPreferredSize(new java.awt.Dimension(250, 26));
+        jTextFieldAutoComplete.setMinimumSize(new java.awt.Dimension(250, 26));
+        jTextFieldAutoComplete.setPreferredSize(new java.awt.Dimension(200, 26));
         jTextFieldAutoComplete.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextFieldAutoCompleteFocusGained(evt);
@@ -184,13 +193,18 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
 
         add(jPanelInsert, java.awt.BorderLayout.PAGE_START);
 
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
         jTableCrossReference.setAutoCreateRowSorter(true);
         jTableCrossReference.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         jTableCrossReference.setRowHeight(32);
         jTableCrossReference.setRowMargin(4);
         jScrollPaneCrossReference.setViewportView(jTableCrossReference);
 
-        add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
+
+        add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanelOpciones.setOpaque(false);
         jPanelOpciones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -232,6 +246,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
     private javax.swing.JButton jButtonDeleteProd;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelFind;
     private javax.swing.JPanel jPanelInsert;
     private javax.swing.JPanel jPanelOpciones;
