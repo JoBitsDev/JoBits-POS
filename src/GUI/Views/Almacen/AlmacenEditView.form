@@ -546,7 +546,7 @@
                         <Property name="alignment" type="int" value="0"/>
                       </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JSpinner" name="jSpinner1">
+                        <Component class="javax.swing.JSpinner" name="jSpinnerTransformar">
                           <Properties>
                             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                               <SpinnerModel initial="0.0" minimum="0.0" numberType="java.lang.Float" stepSize="1.0" type="number"/>
@@ -587,6 +587,48 @@
                       </Constraints>
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+                      <SubComponents>
+                        <Container class="javax.swing.JPanel" name="jPanel12">
+                          <Properties>
+                            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                                <TitledBorder title="Hacia">
+                                  <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                                    <EmptyBorder/>
+                                  </Border>
+                                  <Color PropertyName="color" blue="99" green="99" red="0" type="rgb"/>
+                                </TitledBorder>
+                              </Border>
+                            </Property>
+                            <Property name="opaque" type="boolean" value="false"/>
+                          </Properties>
+                          <Constraints>
+                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                              <BorderConstraints direction="Last"/>
+                            </Constraint>
+                          </Constraints>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+                          <SubComponents>
+                            <Component class="javax.swing.JComboBox" name="jComboBoxAlDestTransformacion">
+                              <Properties>
+                                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                  <StringArray count="0"/>
+                                </Property>
+                                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                  <Dimension value="[150, 27]"/>
+                                </Property>
+                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                  <Dimension value="[150, 27]"/>
+                                </Property>
+                              </Properties>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Almacen&gt;"/>
+                              </AuxValues>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                      </SubComponents>
                     </Container>
                     <Container class="javax.swing.JPanel" name="jPanel11">
                       <Properties>
@@ -598,7 +640,7 @@
                         </Constraint>
                       </Constraints>
                       <SubComponents>
-                        <Component class="javax.swing.JButton" name="jButtonConfirmar1">
+                        <Component class="javax.swing.JButton" name="jButtonConfirmarTransformacion">
                           <Properties>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="99" green="99" red="0" type="rgb"/>
@@ -615,7 +657,7 @@
                             <Property name="verticalTextPosition" type="int" value="3"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConfirmar1ActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConfirmarTransformacionActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -668,11 +710,11 @@
                             <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component"/>
                           </StatementProvider>
                           <Parameters>
-                            <CodeExpression id="8_jButtonConfirmar1">
-                              <CodeVariable name="jButtonConfirmar1" type="8194" declaredType="javax.swing.JButton"/>
+                            <CodeExpression id="8_jButtonConfirmarTransformacion">
+                              <CodeVariable name="jButtonConfirmarTransformacion" type="8194" declaredType="javax.swing.JButton"/>
                               <ExpressionOrigin>
                                 <ExpressionProvider type="ComponentRef">
-                                  <ComponentRef name="jButtonConfirmar1"/>
+                                  <ComponentRef name="jButtonConfirmarTransformacion"/>
                                 </ExpressionProvider>
                               </ExpressionOrigin>
                             </CodeExpression>

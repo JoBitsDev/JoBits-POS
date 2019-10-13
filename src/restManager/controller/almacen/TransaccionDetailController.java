@@ -18,10 +18,13 @@ import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
+import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.Transaccion;
 import restManager.persistencia.TransaccionEntrada;
 import restManager.persistencia.TransaccionMerma;
 import restManager.persistencia.TransaccionSalida;
+import restManager.persistencia.TransaccionTransformacion;
+import restManager.persistencia.TransaccionTransformacionPK;
 import restManager.persistencia.TransaccionTraspaso;
 import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.InsumoDAO;
@@ -117,8 +120,21 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         createNewTransaccionTraspaso(traspaso);
     }
 
+    public void addTransaccionTransformacion(InsumoAlmacen selected, Date fecha, Date hora, List<TransaccionTransformacion> items, float cantidad, float merma,Almacen destino) {
+        Transaccion t = nuevaTransaccion(selected.getInsumo(), fecha, hora, selected.getAlmacen(), cantidad);
+        float precioMedioNuevo = (cantidad * selected.getInsumo().getCostoPorUnidad()) / cantidad - merma;
+        for (TransaccionTransformacion i : items) {
+            TransaccionTransformacionPK pk = new TransaccionTransformacionPK(t.getNoTransaccion(), i.getInsumo().getCodInsumo());
+            i.setTransaccion(t);
+            i.setTransaccionTransformacionPK(pk);
+            i.setCostoUnitario(precioMedioNuevo);
+        }
+        t.setTransaccionTransformacionList(items);
+        createNewTransaccionTransformacion(t,destino);
+    }
+
     public void createNewTransaccionEntrada(TransaccionEntrada transaccion) {
-        TransaccionEntradaDAO.getInstance().startTransaction();
+        getModel().startTransaction();
         AlmacenManageController controller = new AlmacenManageController(transaccion.getTransaccion().getAlmacencodAlmacen());
         controller.setView(getView());
         controller.darEntradaAInsumo(transaccion);
@@ -127,7 +143,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     }
 
     public void createNewTransaccionSalida(TransaccionSalida transaccion) {
-        TransaccionDAO.getInstance().startTransaction();
+        getModel().startTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(transaccion.getTransaccion().getAlmacencodAlmacen());
         almacenController.setView(getView());
         almacenController.darSalidaAInsumo(transaccion);
@@ -137,7 +153,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     }
 
     public void createNewTransaccionRebaja(TransaccionMerma transaccion) {
-        TransaccionMermaDAO.getInstance().startTransaction();
+        getModel().startTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(transaccion.getTransaccion().getAlmacencodAlmacen());
         almacenController.setView(getView());
         almacenController.darMermaInsumo(transaccion);
@@ -147,12 +163,20 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     }
 
     private void createNewTransaccionTraspaso(TransaccionTraspaso transaccion) {
-        TransaccionTraspasoDAO.getInstance().startTransaction();
+        getModel().startTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(transaccion.getTransaccion().getAlmacencodAlmacen());
         almacenController.setView(getView());
         almacenController.darTraspasoInsumo(transaccion);
         TransaccionTraspasoDAO.getInstance().create(transaccion);
         getModel().commitTransaction();
+    }
+
+    private void createNewTransaccionTransformacion(Transaccion t,Almacen a) {
+        TransaccionDAO.getInstance().startTransaction();
+        AlmacenManageController almacenController = new AlmacenManageController(t.getAlmacencodAlmacen());
+        almacenController.setView(getView());
+        almacenController.darTransformacionAInsumo(t,a);
+        almacenController.getCocinaList();
     }
 
     public List<Cocina> getCocinaList() {

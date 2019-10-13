@@ -13,6 +13,7 @@ import org.junit.Test;
 import restManager.persistencia.Almacen;
 import restManager.persistencia.Transaccion;
 import restManager.persistencia.models.AlmacenDAO;
+import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.TransaccionDAO;
 import restManager.resources.R;
 
@@ -29,6 +30,7 @@ public class AlmacenManageControllerTest {
     public static void setUpClass() {
         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
         R.COIN_SUFFIX = " CUC";
+        R.loggedUser = PersonalDAO.getInstance().find("admin");
     }
 
     @AfterClass

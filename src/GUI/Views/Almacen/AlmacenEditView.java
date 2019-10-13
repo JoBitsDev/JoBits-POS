@@ -14,6 +14,7 @@ import java.awt.Dialog;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
@@ -34,6 +35,7 @@ import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.InsumoAlmacenPK;
+import restManager.persistencia.TransaccionTransformacion;
 import restManager.persistencia.models.InsumoAlmacenDAO;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
@@ -53,10 +55,9 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
      * @param modal
      */
     AbstractCrossReferenePanel<InsumoAlmacen, Insumo> model;
-    //AbstractCrossReferenePanel<Insumo, Object>
+    AbstractCrossReferenePanel<TransaccionTransformacion, Insumo> modelTransformacion;
     final Color elaboracionColor = new Color(255, 255, 204);
     final String labelInsumoSleccionado = "<Seleccione un insumo en la tabla>";
-    
 
     public AlmacenEditView(AbstractDetailController<Almacen> controller, AbstractView owner, Almacen instance) {
         super(instance, DialogType.FULL_SCREEN, controller, owner);
@@ -67,6 +68,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         buttonGroup1.add(jRadioButtonTraspaso);
         jComboBoxPuntoElab.setModel(new RestManagerComboBoxModel<>(getController().getCocinaList()));
         jComboBoxAlmacen.setModel(new RestManagerComboBoxModel<>(getController().getItems()));
+        jComboBoxAlDestTransformacion.setModel(new RestManagerComboBoxModel<>(getController().getItems()));
         jComboBoxPuntoElab.setSelectedIndex(0);
         jComboBoxAlmacen.setSelectedIndex(0);
 
@@ -145,12 +147,84 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
                 @Override
                 public void removeObjectSelected() {
                     getController().removeInsumoFromStorage(getHandler().getTableModel().getObjectAtSelectedRow());
-                    
+
                 }
 
             };
 
         }
+        modelTransformacion = new AbstractCrossReferenePanel<TransaccionTransformacion, Insumo>("Insumos", getController().getInsumoList()) {
+            @Override
+            public RestManagerAbstractTableModel<TransaccionTransformacion> getTableModel() {
+                return new RestManagerAbstractTableModel<TransaccionTransformacion>(new ArrayList<TransaccionTransformacion>(), getjTableCrossReference()) {
+                    @Override
+                    public int getColumnCount() {
+                        return 3;
+                    }
+
+                    @Override
+                    public Object getValueAt(int rowIndex, int columnIndex) {
+                        switch (columnIndex) {
+                            case 0:
+                                return items.get(rowIndex).getInsumo();
+                            case 1:
+                                return items.get(rowIndex).getCantidadCreada();
+                            case 2:
+                                return items.get(rowIndex).getCantidadUsada();
+                            default:
+                                return null;
+
+                        }
+                    }
+
+                    @Override
+                    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                        if (columnIndex == 1) {
+                            getItems().get(rowIndex).setCantidadCreada((Float) aValue);
+                            fireTableCellUpdated(rowIndex, rowIndex);
+                        }
+                        if (columnIndex == 2) {
+                            getItems().get(rowIndex).setCantidadUsada((Float) aValue);
+                            fireTableCellUpdated(rowIndex, rowIndex);
+                        }
+                    }
+
+                    @Override
+                    public String getColumnName(int column) {
+                        switch (column) {
+                            case 0:
+                                return "Insumo";
+                            case 1:
+                                return "Cantidad creada";
+                            case 2:
+                                return "Cantidad usada";
+                            default:
+                                return null;
+                        }
+                    }
+
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return columnIndex > 0;
+                    }
+
+                    @Override
+                    public Class<?> getColumnClass(int columnIndex) {
+                        return columnIndex > 0 ? Float.class : super.getColumnClass(columnIndex);
+                    }
+                };
+            }
+
+            @Override
+            public TransaccionTransformacion transformK_T(Insumo selected) {
+                TransaccionTransformacion nueva = new TransaccionTransformacion();
+                nueva.setCantidadCreada((float) 0);
+                nueva.setCantidadUsada((float) 0);
+                nueva.setDireccionInversa(false);
+                nueva.setInsumo(selected);
+                return nueva;
+            }
+        };
 
         jXLabelValorTotal.setText(utils.setDosLugaresDecimales(getController().getInstance().getValorMonetario()));
         jTabbedPane1.setUI(new MaterialTabbedPaneUI());
@@ -159,6 +233,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     @Override
     public void fetchComponentData() {
         jPanelTabla.add(model);
+        jPanelTransformarEn.add(modelTransformacion);
         jLabelNombreAlmacen.setText(getInstance().getNombre());
         if (getInstance().getCentroElaboracion()) {
             jCheckBox1.setSelected(true);
@@ -166,12 +241,12 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
             jXLabelTotalAlmacen.setForeground(elaboracionColor);
             jXLabelValorTotal.setForeground(elaboracionColor);
         }
-        
+
         model.getjTableCrossReference().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    getController().modificarStock(model.getTableModel().getObjectAtSelectedRow().getInsumo());
+                    getController().modificarStock(model.getHandler().getTableModel().getObjectAtSelectedRow().getInsumo());
                 }
             }
         });
@@ -181,7 +256,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     if (model.getjTableCrossReference().getSelectedRow() != -1) {
-                        jLabelInsumoSeleccionado.setText(model.getTableModel().getObjectAtSelectedRow().getInsumo().toString());
+                        jLabelInsumoSeleccionado.setText(model.getHandler().getTableModel().getObjectAtSelectedRow().getInsumo().toString());
                         jLabelInsumoSeleccionado.setForeground(Color.BLUE);
                     } else {
                         jLabelInsumoSeleccionado.setText(labelInsumoSleccionado);
@@ -239,11 +314,13 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jTextFieldRebaja = new javax.swing.JTextField();
         jPanelTransformacion = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
-        jSpinner1 = new javax.swing.JSpinner();
+        jSpinnerTransformar = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         jPanelTransformarEn = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
+        jComboBoxAlDestTransformacion = new javax.swing.JComboBox<>();
         jPanel11 = new javax.swing.JPanel();
-        jButtonConfirmar1 = new javax.swing.JButton();
+        jButtonConfirmarTransformacion = new javax.swing.JButton();
         jLabelInsumoSeleccionado = new org.jdesktop.swingx.JXLabel();
         jPanelTabla = new javax.swing.JPanel();
         jXPanelControles = new org.jdesktop.swingx.JXPanel();
@@ -441,9 +518,9 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanel13.setPreferredSize(new java.awt.Dimension(300, 70));
         jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
-        jSpinner1.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel13.add(jSpinner1);
+        jSpinnerTransformar.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
+        jSpinnerTransformar.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanel13.add(jSpinnerTransformar);
 
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("<U/M>");
@@ -454,6 +531,16 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanelTransformarEn.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "En...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
         jPanelTransformarEn.setOpaque(false);
         jPanelTransformarEn.setLayout(new java.awt.BorderLayout());
+
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Hacia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel12.setOpaque(false);
+
+        jComboBoxAlDestTransformacion.setMinimumSize(new java.awt.Dimension(150, 27));
+        jComboBoxAlDestTransformacion.setPreferredSize(new java.awt.Dimension(150, 27));
+        jPanel12.add(jComboBoxAlDestTransformacion);
+
+        jPanelTransformarEn.add(jPanel12, java.awt.BorderLayout.PAGE_END);
+
         jPanelTransformacion.add(jPanelTransformarEn, java.awt.BorderLayout.CENTER);
 
         jPanel11.setOpaque(false);
@@ -461,19 +548,19 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         flowLayout2.setAlignOnBaseline(true);
         jPanel11.setLayout(flowLayout2);
 
-        jButtonConfirmar1.setForeground(new java.awt.Color(0, 153, 153));
-        jButtonConfirmar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/confirmar.png"))); // NOI18N
-        jButtonConfirmar1.setText("Confirmar");
-        jButtonConfirmar1.setToolTipText(bundle.getString("label_confirmar")); // NOI18N
-        jButtonConfirmar1.setBorderPainted(false);
-        jButtonConfirmar1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonConfirmar1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonConfirmar1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonConfirmarTransformacion.setForeground(new java.awt.Color(0, 153, 153));
+        jButtonConfirmarTransformacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/confirmar.png"))); // NOI18N
+        jButtonConfirmarTransformacion.setText("Confirmar");
+        jButtonConfirmarTransformacion.setToolTipText(bundle.getString("label_confirmar")); // NOI18N
+        jButtonConfirmarTransformacion.setBorderPainted(false);
+        jButtonConfirmarTransformacion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonConfirmarTransformacion.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonConfirmarTransformacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonConfirmar1ActionPerformed(evt);
+                jButtonConfirmarTransformacionActionPerformed(evt);
             }
         });
-        jPanel11.add(jButtonConfirmar1);
+        jPanel11.add(jButtonConfirmarTransformacion);
 
         jPanelTransformacion.add(jPanel11, java.awt.BorderLayout.SOUTH);
 
@@ -567,7 +654,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     }//GEN-LAST:event_jButtonDarReporteActionPerformed
 
     private void jButtonModificarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarStockActionPerformed
-        getController().modificarStock(model.getTableModel().getObjectAtSelectedRow().getInsumo());
+        getController().modificarStock(model.getHandler().getTableModel().getObjectAtSelectedRow().getInsumo());
     }//GEN-LAST:event_jButtonModificarStockActionPerformed
 
     private void jButtonVerFichasEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerFichasEntradaActionPerformed
@@ -615,20 +702,21 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         onCheckedCheckBox(CheckBoxType.TRASPASO);
     }//GEN-LAST:event_jRadioButtonTraspasoActionPerformed
 
-    private void jButtonConfirmar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonConfirmar1ActionPerformed
+    private void jButtonConfirmarTransformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarTransformacionActionPerformed
+        getController().crearTransformacion(model.getHandler().getTableModel().getObjectAtSelectedRow(),(float)jSpinnerTransformar.getValue(),modelTransformacion.getHandler().getTableModel().getItems(),(Almacen)jComboBoxAlDestTransformacion.getSelectedItem());
+    }//GEN-LAST:event_jButtonConfirmarTransformacionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonConfirmar;
-    private javax.swing.JButton jButtonConfirmar1;
+    private javax.swing.JButton jButtonConfirmarTransformacion;
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonModificarStock;
     private javax.swing.JButton jButtonVerFichasEntrada;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<Almacen> jComboBoxAlDestTransformacion;
     private javax.swing.JComboBox<Almacen> jComboBoxAlmacen;
     private javax.swing.JComboBox<Cocina> jComboBoxPuntoElab;
     private javax.swing.JLabel jLabel1;
@@ -638,6 +726,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -659,9 +748,9 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private javax.swing.JRadioButton jRadioButtonRebaja;
     private javax.swing.JRadioButton jRadioButtonSalida;
     private javax.swing.JRadioButton jRadioButtonTraspaso;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinnerCantidad;
     private javax.swing.JSpinner jSpinnerMonto;
+    private javax.swing.JSpinner jSpinnerTransformar;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldRebaja;
     private org.jdesktop.swingx.JXLabel jXLabelTotalAlmacen;

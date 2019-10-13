@@ -343,7 +343,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         jPanel1.setMinimumSize(new java.awt.Dimension(454, 0));
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
 
-        jCheckBoxElaborado.setText(bundle.getString("label_elaborado")); // NOI18N
+        jCheckBoxElaborado.setText(bundle.getString("label_derivados")); // NOI18N
         jCheckBoxElaborado.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jCheckBoxElaboradoStateChanged(evt);
@@ -535,13 +535,13 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         instance.setElaborado(jCheckBoxElaborado.isSelected());
         instance.setNombre(jTextFieldNombre.getText());
         instance.setUm(jComboBoxUM.getSelectedItem().toString());
-        instance.setProductoInsumoList(tableCrossReference.getTableModel().getItems());
+        instance.setProductoInsumoList(tableCrossReference.getHandler().getTableModel().getItems());
         instance.setInsumoDerivadoList(instance.getInsumoDerivadoList());
         instance.setIpvList(instance.getIpvList());
         instance.setStockEstimation(Float.parseFloat(jSpinnerEstimacionStock.getValue().toString()));
 
         if (instance.getElaborado()) {
-            instance.setInsumoDerivadoList(tableIngElab.getTableModel().getItems());
+            instance.setInsumoDerivadoList(tableIngElab.getHandler().getTableModel().getItems());
         } else {
             instance.setInsumoDerivadoList(new ArrayList<>());
         }
@@ -550,7 +550,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
 
     public void updateLabelCost() {
         float total = 0;
-        total = tableIngElab.getTableModel().getItems().stream().map((x) -> x.getCosto()).reduce(total, (accumulator, _item) -> accumulator + _item);
+        total = tableIngElab.getHandler().getTableModel().getItems().stream().map((x) -> x.getCosto()).reduce(total, (accumulator, _item) -> accumulator + _item);
         jXLabelNombreValorCosto.setText(R.formatoMoneda.format(total));
     }
 }
