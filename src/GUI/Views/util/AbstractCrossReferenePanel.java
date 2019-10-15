@@ -163,7 +163,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         });
         jPanelFind.add(jTextFieldBusqueda, java.awt.BorderLayout.EAST);
 
-        jPanelInsert.add(jPanelFind, java.awt.BorderLayout.PAGE_END);
+        jPanelInsert.add(jPanelFind, java.awt.BorderLayout.PAGE_START);
 
         jPanel1.setOpaque(false);
 
@@ -201,6 +201,12 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         jTableCrossReference.setRowHeight(32);
         jTableCrossReference.setRowMargin(4);
         jScrollPaneCrossReference.setViewportView(jTableCrossReference);
+        if (jTableCrossReference.getColumnModel().getColumnCount() > 0) {
+            jTableCrossReference.getColumnModel().getColumn(0).setHeaderValue("Title 1");
+            jTableCrossReference.getColumnModel().getColumn(1).setHeaderValue("Title 2");
+            jTableCrossReference.getColumnModel().getColumn(2).setHeaderValue("Title 3");
+            jTableCrossReference.getColumnModel().getColumn(3).setHeaderValue("Title 4");
+        }
 
         jPanel2.add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
 
