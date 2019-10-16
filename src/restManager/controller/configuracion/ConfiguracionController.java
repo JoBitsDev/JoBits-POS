@@ -77,7 +77,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
     public ParametrosConfiguracion cargarConfiguracionY() {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            configuracionY = mapper.readValue(new File("aux.cfg"), ParametrosConfiguracion.class);
+            configuracionY = mapper.readValue(new File(R.CONFIG_FILE_PATH), ParametrosConfiguracion.class);
         } catch (JsonProcessingException ex) {
             ex.printStackTrace();
             configuracionY = new ParametrosConfiguracion(new ArrayList<>(), new ArrayList<>(), (byte) 40, (byte) 30);
@@ -91,16 +91,8 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
 
     public void updateConfiguracionY(ParametrosConfiguracion conf) {
         ObjectMapper mapper = new ObjectMapper();
-        for (Seccion s : conf.getBebidas()) {
-            s.setCartacodCarta(null);
-            s.setProductoVentaList(null);
-        }
-        for (Seccion s : conf.getExcluidos()) {
-            s.setCartacodCarta(null);
-            s.setProductoVentaList(null);
-        }
         try {
-            mapper.writeValue(new File("aux.cfg"), conf);
+            mapper.writeValue(new File(R.CONFIG_FILE_PATH), conf);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

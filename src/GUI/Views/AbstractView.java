@@ -5,6 +5,7 @@
  */
 package GUI.Views;
 
+import com.jidesoft.swing.ResizableDialog;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -115,41 +116,6 @@ public abstract class AbstractView extends JDialog implements View {
         initDefaults();
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner) {
-        super(owner);
-        this.DIALOG_TYPE = DIALOG_TYPE;
-        this.controller = controller;
-        initDefaults();
-    }
-
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, ModalityType modalityType) {
-        super(owner, modalityType);
-        this.DIALOG_TYPE = DIALOG_TYPE;
-        this.controller = controller;
-        initDefaults();
-    }
-
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, String title) {
-        super(owner, title);
-        this.DIALOG_TYPE = DIALOG_TYPE;
-        this.controller = controller;
-        initDefaults();
-    }
-
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, String title, ModalityType modalityType) {
-        super(owner, title, modalityType);
-        this.DIALOG_TYPE = DIALOG_TYPE;
-        this.controller = controller;
-        initDefaults();
-    }
-
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, String title, ModalityType modalityType, GraphicsConfiguration gc) {
-        super(owner, title, modalityType, gc);
-        this.DIALOG_TYPE = DIALOG_TYPE;
-        this.controller = controller;
-        initDefaults();
-    }
-
     //
     //Protected Methods
     //
@@ -229,12 +195,12 @@ public abstract class AbstractView extends JDialog implements View {
         setFont(getFont());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setModalityType(ModalityType.APPLICATION_MODAL);
+
+        Insets drag = new Insets(0, 10, 0, 10);
         ComponentResizer resizer = new ComponentResizer(this);
         ComponentMover cr = new ComponentMover(this, this);
-       // Insets drag = new  Insets(0, 5, 0, 5);
-        //Insets move = new Insets(5, 0, 0, 5);
-        //resizer.setDragInsets(drag);
-        //cr.setEdgeInsets(move);
+        cr.setDragInsets(drag);
+        resizer.setDragInsets(drag);
     }
 
 }

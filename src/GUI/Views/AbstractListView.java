@@ -35,7 +35,6 @@ public abstract class AbstractListView<T> extends AbstractView {
 
     public AbstractListView(DialogType type, AbstractListController<T> controller, AbstractView parent) {
         super(type, controller, parent);
-        initComponents();
 
     }
 
@@ -318,22 +317,22 @@ public abstract class AbstractListView<T> extends AbstractView {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonAdd;
-    private javax.swing.JButton jButtonDelete;
-    private javax.swing.JButton jButtonEdit;
-    private javax.swing.JLabel jLabelCantidad;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanelControlesSuperiores;
-    private javax.swing.JPanel jPanelExtra;
-    private javax.swing.JPanel jPanelHeader;
-    private javax.swing.JPanel jPanelTabla;
+    protected javax.swing.JButton jButton1;
+    protected javax.swing.JButton jButtonAdd;
+    protected javax.swing.JButton jButtonDelete;
+    protected javax.swing.JButton jButtonEdit;
+    protected javax.swing.JLabel jLabelCantidad;
+    protected javax.swing.JPanel jPanel1;
+    protected javax.swing.JPanel jPanelControlesSuperiores;
+    protected javax.swing.JPanel jPanelExtra;
+    protected javax.swing.JPanel jPanelHeader;
+    protected javax.swing.JPanel jPanelTabla;
     protected javax.swing.JPopupMenu jPopupMenuClickDerecho;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableList;
-    private javax.swing.JTextField jTextFieldBusqueda;
-    private org.jdesktop.swingx.JXLabel jXLabel1;
-    private org.jdesktop.swingx.JXPanel jXPanelControles;
+    protected javax.swing.JScrollPane jScrollPane1;
+    protected javax.swing.JTable jTableList;
+    protected javax.swing.JTextField jTextFieldBusqueda;
+    protected org.jdesktop.swingx.JXLabel jXLabel1;
+    protected org.jdesktop.swingx.JXPanel jXPanelControles;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -420,6 +419,13 @@ public abstract class AbstractListView<T> extends AbstractView {
         return jPanelExtra;
     }
 
+    public JPanel getjPanelTabla() {
+        return jPanelTabla;
+    }
+
+    public void setjPanelTabla(JPanel jPanelTabla) {
+        this.jPanelTabla = jPanelTabla;
+    }
     //
     // Inner Class
     //

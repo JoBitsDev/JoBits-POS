@@ -322,7 +322,7 @@ public class ConfiguracionView extends AbstractView {
         jComboBoxTamannoTicket.setSelectedIndex(selected);
 
         LicenceController controller = new LicenceController(Licence.TipoLicencia.SECUNDARIA);
-        if (!controller.getLicence().LICENCIA_ACTIVA && !controller.getLicence().LICENCIA_VALIDA) {
+        if (!controller.getLicence().LICENCIA_ACTIVA || !controller.getLicence().LICENCIA_VALIDA) {
             jTabbedPane1.remove(2);
         }
 

@@ -79,31 +79,6 @@ public abstract class AbstractReadOnlyView <T>  extends AbstractView{
         this.instance = instance;
     }
 
-    public AbstractReadOnlyView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner) {
-        super(DIALOG_TYPE, controller, owner);
-        this.instance = instance;
-    }
-
-    public AbstractReadOnlyView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, ModalityType modalityType) {
-        super(DIALOG_TYPE, controller, owner, modalityType);
-        this.instance = instance;
-    }
-
-    public AbstractReadOnlyView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, String title) {
-        super(DIALOG_TYPE, controller, owner, title);
-        this.instance = instance;
-    }
-
-    public AbstractReadOnlyView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, String title, ModalityType modalityType) {
-        super(DIALOG_TYPE, controller, owner, title, modalityType);
-        this.instance = instance;
-    }
-
-    public AbstractReadOnlyView(T instance, DialogType DIALOG_TYPE, AbstractDialogController controller, Window owner, String title, ModalityType modalityType, GraphicsConfiguration gc) {
-        super(DIALOG_TYPE, controller, owner, title, modalityType, gc);
-        this.instance = instance;
-    }
-
     public T getInstance() {
         return instance;
     }

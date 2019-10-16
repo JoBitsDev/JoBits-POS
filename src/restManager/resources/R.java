@@ -60,6 +60,8 @@ public class R {
     public static String RELEASE_VERSION = "Version 2.6.6 (BETA)";
 
     public static int BUILD_VERSION = 23;
+    
+    public static String CONFIG_FILE_PATH = "y.cfg";
 
     public static void setLookAndFeels() {
         try {

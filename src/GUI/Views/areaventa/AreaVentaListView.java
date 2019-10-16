@@ -37,13 +37,10 @@ public class AreaVentaListView extends AbstractListView<Area> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelMesas = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListVentas = new javax.swing.JList<>();
-        jPanel3 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jPanelAreas = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -52,55 +49,55 @@ public class AreaVentaListView extends AbstractListView<Area> {
         jButtonAgregarArea = new javax.swing.JButton();
         jButtonEditarArea = new javax.swing.JButton();
         jButtonEliminarArea = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        jPanelMesas = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListVentas = new javax.swing.JList<>();
+        jPanel3 = new javax.swing.JPanel();
+        jButton4 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(559, 585));
         setMinimumSize(new java.awt.Dimension(559, 585));
         setUndecorated(true);
-        getContentPane().setLayout(new java.awt.BorderLayout(20, 5));
+        getContentPane().setLayout(new java.awt.BorderLayout(0, 5));
 
-        jPanelMesas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 5, true));
-        jPanelMesas.setLayout(new java.awt.BorderLayout(5, 5));
+        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
+        org.jdesktop.swingx.border.DropShadowBorder dropShadowBorder1 = new org.jdesktop.swingx.border.DropShadowBorder();
+        dropShadowBorder1.setShadowColor(new java.awt.Color(102, 255, 204));
+        dropShadowBorder1.setShadowOpacity(1.0F);
+        dropShadowBorder1.setShowBottomShadow(false);
+        dropShadowBorder1.setShowLeftShadow(true);
+        dropShadowBorder1.setShowTopShadow(true);
+        jPanel5.setBorder(dropShadowBorder1);
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButton1, java.awt.BorderLayout.LINE_START);
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jLabel1.setText(bundle.getString("label_mesas")); // NOI18N
-        jPanelMesas.add(jLabel1, java.awt.BorderLayout.PAGE_START);
+        jLabel3.setText(bundle.getString("label_gestion_salon")); // NOI18N
+        jPanel5.add(jLabel3, java.awt.BorderLayout.CENTER);
 
-        jListVentas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jListVentas.setPreferredSize(new java.awt.Dimension(100, 85));
-        jScrollPane1.setViewportView(jListVentas);
+        getContentPane().add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
-        jPanelMesas.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        org.jdesktop.swingx.border.DropShadowBorder dropShadowBorder2 = new org.jdesktop.swingx.border.DropShadowBorder();
+        dropShadowBorder2.setShadowColor(new java.awt.Color(102, 255, 204));
+        dropShadowBorder2.setShadowOpacity(1.0F);
+        dropShadowBorder2.setShowLeftShadow(true);
+        jPanel1.setBorder(dropShadowBorder2);
+        jPanel1.setLayout(new java.awt.GridLayout(1, 1, 5, 0));
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
-
-        jButton4.setText(bundle.getString("label_agregar")); // NOI18N
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton4);
-
-        jButton3.setText(bundle.getString("label_eliminar")); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton3);
-
-        jPanelMesas.add(jPanel3, java.awt.BorderLayout.PAGE_END);
-
-        getContentPane().add(jPanelMesas, java.awt.BorderLayout.EAST);
-
-        jPanelAreas.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 5, true));
         jPanelAreas.setLayout(new java.awt.BorderLayout(5, 5));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -149,28 +146,45 @@ public class AreaVentaListView extends AbstractListView<Area> {
 
         jPanelAreas.add(jPanel4, java.awt.BorderLayout.PAGE_END);
 
-        getContentPane().add(jPanelAreas, java.awt.BorderLayout.WEST);
+        jPanel1.add(jPanelAreas);
 
-        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel5.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
-        jPanel5.setLayout(new java.awt.BorderLayout());
+        jPanelMesas.setLayout(new java.awt.BorderLayout(5, 5));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText(bundle.getString("label_mesas")); // NOI18N
+        jPanelMesas.add(jLabel1, java.awt.BorderLayout.PAGE_START);
+
+        jListVentas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListVentas.setPreferredSize(new java.awt.Dimension(100, 85));
+        jScrollPane1.setViewportView(jListVentas);
+
+        jPanelMesas.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
+
+        jButton4.setText(bundle.getString("label_agregar")); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
-        jPanel5.add(jButton1, java.awt.BorderLayout.LINE_START);
+        jPanel3.add(jButton4);
 
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText(bundle.getString("label_gestion_salon")); // NOI18N
-        jPanel5.add(jLabel3, java.awt.BorderLayout.CENTER);
+        jButton3.setText(bundle.getString("label_eliminar")); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3);
 
-        getContentPane().add(jPanel5, java.awt.BorderLayout.PAGE_START);
+        jPanelMesas.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+
+        jPanel1.add(jPanelMesas);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
@@ -222,6 +236,7 @@ public class AreaVentaListView extends AbstractListView<Area> {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JList<Area> jListAreas;
     private javax.swing.JList<Mesa> jListVentas;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

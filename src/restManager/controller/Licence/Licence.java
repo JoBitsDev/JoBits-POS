@@ -81,6 +81,8 @@ public class Licence {
                 LICENCIA_ACTIVA = DIAS_RESTANTES >= 0;
             }
         } catch (Exception ex) {
+            LICENCIA_VALIDA = false;
+            LICENCIA_ACTIVA = false;
             ex.printStackTrace();
         }
 
@@ -97,7 +99,7 @@ public class Licence {
 
     public enum TipoLicencia {
         APLICACION("R-", "lic.key"),
-        SECUNDARIA("B-","aux.key");
+        SECUNDARIA("B-","y.key");
 
         private final String prefijo,path;
 
