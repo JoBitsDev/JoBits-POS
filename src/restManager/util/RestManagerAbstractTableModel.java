@@ -24,7 +24,7 @@ import restManager.exceptions.NoSelectedException;
 public abstract class RestManagerAbstractTableModel<T> extends AbstractTableModel {
 
     protected List<T> items;
-    private final JTable table;
+    protected final JTable table;
     private RestManagerTableRowFilter filter;
     private TableRowSorter<RestManagerAbstractTableModel<T>> sorter;
 
@@ -41,6 +41,7 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
         sorter = new TableRowSorter<>(this);
         filter = new RestManagerTableRowFilter();
         sorter.setRowFilter(filter);
+        table.setRowSorter(sorter);
     }
 
     /**

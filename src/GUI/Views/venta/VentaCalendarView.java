@@ -489,6 +489,7 @@ public class VentaCalendarView extends AbstractView {
 
         int month = jMonthChooser1.getMonth();
         int year = jYearChooser1.getYear();
+        jDateChooserDel.setCalendar(cal);
         model = new RestManagerAbstractTableCellModel<Venta>(findVentas(month, year), jTableCalendar) {
             @Override
             public int getColumnCount() {
