@@ -1,6 +1,8 @@
 package restManager.util;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -106,8 +108,7 @@ public class utils {
      * borrar la informacion que esta ya contiene
      *
      * @param rowData los datos pasados en un array de arrays
-     * @param table la tabla que se va a llenar con la info
-     * tabla
+     * @param table la tabla que se va a llenar con la info tabla
      */
     public static void AddToTable(ArrayList[] rowData, JTable table) {
 
@@ -212,6 +213,7 @@ public class utils {
     /**
      *
      * reduce los decimales de un float a 2 y ademas agrega la moneda d sufijo
+     *
      * @param valorARedondear
      * @return
      */
@@ -233,11 +235,42 @@ public class utils {
     }
 
     public static float redondeoPorExcesoFloat(Float valorARedondear) {
-        int valorConvertidoEntero = (int) Math.ceil((int)(valorARedondear * 100));
+        int valorConvertidoEntero = (int) Math.ceil((int) (valorARedondear * 100));
         int ref = valorConvertidoEntero % 5;
         if (ref != 0) {
             valorConvertidoEntero += 5 - ref;
         }
-        return ((float) valorConvertidoEntero / 100) ;
+        return ((float) valorConvertidoEntero / 100);
+    }
+
+    public static int compararFechaSinTiempo(Date date, Date endDate) {
+        Date sDate = getZeroTimeDate(date);
+        Date eDate = getZeroTimeDate(endDate);
+        if (sDate.before(eDate)) {
+            return -1;
+        }
+        return (sDate.after(eDate)) ? 1 : 0;
+    }
+
+    public static boolean estaEnRangoSinTiempo(Date date, Date fromDate, Date toDate) {
+        if (toDate.compareTo(fromDate) < 0) {
+            throw new ValidatingException("La fecha fin no puede ser mayor a la fecha inicio");
+        }
+        Date compareDate = getZeroTimeDate(date);
+        Date fDate = getZeroTimeDate(fromDate);
+        Date tDate = getZeroTimeDate(toDate);
+
+        return compareDate.getTime() >= fDate.getTime() && compareDate.getTime() <= tDate.getTime();
+    }
+
+    private static Date getZeroTimeDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        date = calendar.getTime();
+        return date;
     }
 }

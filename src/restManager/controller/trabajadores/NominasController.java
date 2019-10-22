@@ -61,7 +61,7 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
         ArrayList<AsistenciaPersonalEstadisticas> ret = new ArrayList<>();
         ArrayList<AsistenciaPersonal> i = new ArrayList<>(getItems());
         for (AsistenciaPersonal a : i) {
-            if (a.getVenta().getFecha().compareTo(del) >= 0 && a.getVenta().getFecha().compareTo(al) <= 0) {
+            if (utils.estaEnRangoSinTiempo(a.getVenta().getFecha(), del, al)) {
                 int index = ret.indexOf(a);
                 getModel().refresh(a);
                 if (index == -1) {
