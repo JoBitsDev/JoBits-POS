@@ -6,6 +6,7 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -40,9 +41,11 @@ public class Seccion implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
     @OneToMany(mappedBy = "seccionnombreSeccion")
+    @JsonIgnore
     private List<ProductoVenta> productoVentaList;
     @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")
     @ManyToOne
+    @JsonIgnore
     private Carta cartacodCarta;
 
     public Seccion() {

@@ -252,7 +252,6 @@ public class MainView extends AbstractView {
         jButtonArchivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/gastos.png"))); // NOI18N
         jButtonArchivos.setText(bundle.getString("label_gastos")); // NOI18N
         jButtonArchivos.setBorderPainted(false);
-        jButtonArchivos.setEnabled(false);
         jButtonArchivos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonArchivos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonArchivos.addActionListener(new java.awt.event.ActionListener() {
@@ -431,7 +430,7 @@ public class MainView extends AbstractView {
     }//GEN-LAST:event_jButtonVentasActionPerformed
 
     private void jButtonArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonArchivosActionPerformed
-        action(MainController.MenuButtons.ARCHIVOS);        // TODO add your handling code here:
+        action(MainController.MenuButtons.CUENTAS_CONTABLES);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonArchivosActionPerformed
 
     private void jButtonPresupuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPresupuestoActionPerformed

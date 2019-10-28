@@ -38,5 +38,5 @@ import javax.swing.text.JTextComponent;
         public K getSelectedHint() {
             return (K) super.getSelectedHint(); //To change body of generated methods, choose Tools | Templates.
         }
-
+        
     }

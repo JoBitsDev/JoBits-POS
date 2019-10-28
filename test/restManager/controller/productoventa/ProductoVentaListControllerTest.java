@@ -6,6 +6,8 @@
 package restManager.controller.productoventa;
 
 import org.junit.Test;
+import restManager.persistencia.models.PersonalDAO;
+import restManager.resources.R;
 
 /**
  *
@@ -18,6 +20,7 @@ public class ProductoVentaListControllerTest {
     
 @Test
     public void testInstance(){
+        R.loggedUser = PersonalDAO.getInstance().find("admin");
         ProductoVentaListController instance = new ProductoVentaListController(null);
         
     }

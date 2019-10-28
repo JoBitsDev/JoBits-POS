@@ -62,10 +62,11 @@ public abstract class AbstractModel<T> implements Model {
     public void commitTransaction() {
         if (getEntityManager().getTransaction().isActive()) {
             try {
-                // getEntityManager().flush();
+                 getEntityManager().flush();
                 getEntityManager().getTransaction().commit();
-            } catch (PersistenceException e) {
-                JOptionPane.showMessageDialog(null, "Los datos no se archivaron en la base de datos", "Error", JOptionPane.OK_OPTION);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Los datos no se archivaron en la base de datos \n"
+                        + e.getMessage(), "Error", JOptionPane.OK_OPTION);
                 getEntityManager().getTransaction().rollback();
             }
         }

@@ -19,6 +19,7 @@ import restManager.controller.almacen.AlmacenListController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.areaventa.AreaVentaController;
 import restManager.controller.configuracion.ConfiguracionController;
+import restManager.controller.gastos_pagos.CuentaController;
 import restManager.controller.puntoelaboracion.PuntoElaboracionListController;
 import restManager.controller.insumo.InsumoListController;
 import restManager.controller.productoventa.ProductoVentaListController;
@@ -137,6 +138,9 @@ public class MainController extends AbstractDialogController<Personal> {
                 case CONFIGURACION:
                     controller = new ConfiguracionController(getView());
                     break;
+                case CUENTAS_CONTABLES:
+                    controller = new CuentaController(getView());
+                    break;
                 default:
                     getView().setEnabled(true);
                     throw new DevelopingOperationException(getView());
@@ -188,7 +192,7 @@ public class MainController extends AbstractDialogController<Personal> {
         //Contabilidad
         //
         VENTAS(3),
-        ARCHIVOS(4),
+        CUENTAS_CONTABLES(4),
         PRESUPUESTO(4),
         COMENZAR_VENTAS(1),
         //

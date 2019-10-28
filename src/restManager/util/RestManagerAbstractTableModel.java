@@ -124,6 +124,10 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
         return items;
     }
 
+    public RestManagerTableRowFilter getFilter() {
+        return filter;
+    }
+    
     public void setItems(List<T> items) {
         this.items = items;
         fireTableDataChanged();
