@@ -258,9 +258,11 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
                     if (model.getjTableCrossReference().getSelectedRow() != -1) {
                         jLabelInsumoSeleccionado.setText(model.getHandler().getTableModel().getObjectAtSelectedRow().getInsumo().toString());
                         jLabelInsumoSeleccionado.setForeground(Color.BLUE);
+                        jLabelUMTransformacion.setText(model.getHandler().getTableModel().getObjectAtSelectedRow().getInsumo().getUm());
                     } else {
                         jLabelInsumoSeleccionado.setText(labelInsumoSleccionado);
                         jLabelInsumoSeleccionado.setForeground(Color.RED);
+                        jLabelUMTransformacion.setText("U/M");
                     }
                 }
 
@@ -315,7 +317,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanelTransformacion = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         jSpinnerTransformar = new javax.swing.JSpinner();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelUMTransformacion = new javax.swing.JLabel();
         jPanelTransformarEn = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jComboBoxAlDestTransformacion = new javax.swing.JComboBox<>();
@@ -522,9 +524,9 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jSpinnerTransformar.setPreferredSize(new java.awt.Dimension(150, 26));
         jPanel13.add(jSpinnerTransformar);
 
-        jLabel2.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel2.setText("<U/M>");
-        jPanel13.add(jLabel2);
+        jLabelUMTransformacion.setForeground(new java.awt.Color(0, 153, 153));
+        jLabelUMTransformacion.setText("<U/M>");
+        jPanel13.add(jLabelUMTransformacion);
 
         jPanelTransformacion.add(jPanel13, java.awt.BorderLayout.PAGE_START);
 
@@ -720,9 +722,9 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private javax.swing.JComboBox<Almacen> jComboBoxAlmacen;
     private javax.swing.JComboBox<Cocina> jComboBoxPuntoElab;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private org.jdesktop.swingx.JXLabel jLabelInsumoSeleccionado;
     private javax.swing.JLabel jLabelNombreAlmacen;
+    private javax.swing.JLabel jLabelUMTransformacion;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

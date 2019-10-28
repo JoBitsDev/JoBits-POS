@@ -125,7 +125,7 @@ public class TransaccionTransformacion implements Serializable {
             return false;
         }
         TransaccionTransformacion other = (TransaccionTransformacion) object;
-        if ((this.transaccionTransformacionPK == null && other.transaccionTransformacionPK != null) || (this.transaccionTransformacionPK != null && !this.transaccionTransformacionPK.equals(other.transaccionTransformacionPK))) {
+        if (!this.insumo.equals(other.insumo)) {
             return false;
         }
         return true;
