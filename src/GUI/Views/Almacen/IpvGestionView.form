@@ -39,8 +39,8 @@
         <Container class="javax.swing.JPanel" name="jPanelRegistros">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Registros IPV" toolTip="Ver los registros de IPvs">
-                <Property name="tabTitle" type="java.lang.String" value="Registros IPV"/>
+              <JTabbedPaneConstraints tabName="Registros Existencias" toolTip="Ver los registros de IPvs">
+                <Property name="tabTitle" type="java.lang.String" value="Registros Existencias"/>
                 <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/restManager/resources/images/registro_lapiz.png"/>
                 </Property>
@@ -223,8 +223,8 @@
         <Container class="javax.swing.JPanel" name="jPanelData">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Ajustes IPV" toolTip="Ajustar que insumo va en que IPV">
-                <Property name="tabTitle" type="java.lang.String" value="Ajustes IPV"/>
+              <JTabbedPaneConstraints tabName="Ajustes Existencias" toolTip="Ajustar que insumo va en que IPV">
+                <Property name="tabTitle" type="java.lang.String" value="Ajustes Existencias"/>
                 <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/restManager/resources/images/controles.png"/>
                 </Property>

@@ -175,10 +175,10 @@ public class IpvGestionView extends AbstractView {
 
         jPanelRegistros.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
-        jTabbedPane1.addTab("Registros IPV", new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/registro_lapiz.png")), jPanelRegistros, "Ver los registros de IPvs"); // NOI18N
+        jTabbedPane1.addTab("Registros Existencias", new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/registro_lapiz.png")), jPanelRegistros, "Ver los registros de IPvs"); // NOI18N
 
         jPanelData.setLayout(new java.awt.BorderLayout());
-        jTabbedPane1.addTab("Ajustes IPV", new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/controles.png")), jPanelData, "Ajustar que insumo va en que IPV"); // NOI18N
+        jTabbedPane1.addTab("Ajustes Existencias", new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/controles.png")), jPanelData, "Ajustar que insumo va en que IPV"); // NOI18N
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 

@@ -281,7 +281,7 @@
                       <Image iconType="3" name="/restManager/resources/images/botonipv.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                      <ResourceString bundle="Strings.properties" key="label_ipv" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                      <ResourceString bundle="Strings.properties" key="label_ipv_existencias" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                     </Property>
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="horizontalTextPosition" type="int" value="0"/>

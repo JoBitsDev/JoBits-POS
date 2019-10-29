@@ -208,7 +208,7 @@ public class MainView extends AbstractView {
         jPanelAlmacen.add(jButtonStocking);
 
         jButtonIPVs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonipv.png"))); // NOI18N
-        jButtonIPVs.setText(bundle.getString("label_ipv")); // NOI18N
+        jButtonIPVs.setText(bundle.getString("label_ipv_existencias")); // NOI18N
         jButtonIPVs.setBorderPainted(false);
         jButtonIPVs.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonIPVs.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
