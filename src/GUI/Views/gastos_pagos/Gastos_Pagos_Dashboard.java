@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import mdlaf.components.tabbedpane.MaterialTabbedPaneUI;
 import mdlaf.components.table.MaterialTableUI;
+import org.pushingpixels.substance.internal.fonts.Fonts;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.gastos_pagos.CuentaController;
 import restManager.controller.gastos_pagos.FacturaController;
@@ -30,6 +31,7 @@ import restManager.resources.R;
 import restManager.resources.values.Colors;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
+import restManager.util.utils;
 
 /**
  *
@@ -49,7 +51,8 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
     RestManagerAbstractTableModel<CuentaController.BalanceComprobacionItem> modelBalanceComprobacion;
 
     //Auxiliares
-    ArrayList<CuentaController.BalanceComprobacionItem> listaCompleta = null;
+    ArrayList<CuentaController.BalanceComprobacionItem> listaBalanceCompleta = null;
+    ArrayList<Factura> listaFacturaCompleta = null;
 
     //Listas
     RestaurantManagerListIntelliHint<ContabilidadCuenta> listaFacturaAsociada;
@@ -68,7 +71,8 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         // Generales
         //
         jTabbedPane1.setUI(new MaterialTabbedPaneUI());
-
+        jComboBoxCuenta.setModel(new RestManagerComboBoxModel<>(cuentaController.getCuentasList()));
+        jComboBoxCuenta.addItem(null);
         //
         // Cuentas
         //
@@ -113,9 +117,10 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         jComboBoxCuentaEnlazada.setModel(new RestManagerComboBoxModel<>(cuentaController.getCuentasList()));
         jComboBoxCuentaPadre.addItem(null);
         jComboBoxCuentaEnlazada.addItem(null);
-        jTableCuentas.setModel(modelCuentas);
         jTableCuentas.setUI(new MaterialTableUI());
         jTableCuentas.setDefaultRenderer(String.class, new RestManagerCellRender());
+        jTableCuentas.setModel(modelCuentas);
+        jTableCuentas.setRowSorter(modelCuentas.getSorter());
 
         //
         //Facturas
@@ -171,8 +176,9 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         listaFacturaAsociada = new RestaurantManagerListIntelliHint<>(jTextFieldlFacturaCuentaAsociada, facturaController.getCuentaList());
         listaFacturaAfectada = new RestaurantManagerListIntelliHint<>(jTextFieldlFacturaCuentaAfectada, facturaController.getCuentaList());
         jTextFieldFacturaNombreFactura.setInputVerifier(new RestManagerInputVerifier());
-        jTableFacturas.setModel(modelFactura);
         jTableFacturas.setUI(new MaterialTableUI());
+        jTableFacturas.setModel(modelFactura);
+        jTableFacturas.setRowSorter(modelFactura.getSorter());
 
         //
         //Pagos
@@ -198,10 +204,10 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
                             }
                         }
                         if (p.getNoCheque() != null) {
-                            return "Cheque" + p.getNoCheque();
+                            return "Cheque: " + p.getNoCheque();
                         }
                         if (p.getNoRecibo() != null) {
-                            return "Efectivo " + p.getNoRecibo();
+                            return "Efectivo: " + p.getNoRecibo();
                         }
                         return null;
                     case 2:
@@ -219,18 +225,19 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
                     case 0:
                         return "Fecha";
                     case 1:
-                        return "Pago por";
+                        return "Pago/Cobro a";
                     case 2:
                         return "Factura";
                     case 3:
-                        return "Neto";
+                        return "Importe";
                     default:
                         return null;
                 }
             }
         };
-        jTablePagos.setModel(modelPago);
         jTablePagos.setUI(new MaterialTableUI());
+        jTablePagos.setModel(modelPago);
+        jTablePagos.setRowSorter(modelPago.getSorter());
 
         //
         // Balance Comprobacion
@@ -273,8 +280,19 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         jTextFieldBusquedaResumen = new javax.swing.JTextField();
         jPanel20 = new javax.swing.JPanel();
         jCheckBoxOcultarCuentas0 = new javax.swing.JCheckBox();
-        jCheckBoxOcultarCuentas1 = new javax.swing.JCheckBox();
+        jPanel22 = new javax.swing.JPanel();
+        jCheckBoxExclusivo = new javax.swing.JCheckBox();
+        jComboBoxElemento = new javax.swing.JComboBox<>();
+        jComboBoxCuenta = new javax.swing.JComboBox<>();
         jPanel19 = new javax.swing.JPanel();
+        jPanel25 = new javax.swing.JPanel();
+        jPanel29 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel27 = new javax.swing.JPanel();
+        jLabelDebitos = new javax.swing.JLabel();
+        jPanel28 = new javax.swing.JPanel();
+        jLabelCreditos = new javax.swing.JLabel();
+        jPanel26 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jPanelCuentas = new javax.swing.JPanel();
         jPanelNuevaCuenta = new javax.swing.JPanel();
@@ -327,9 +345,12 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         jXLabel1 = new org.jdesktop.swingx.JXLabel();
         jTextFieldBusquedaFactura = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBoxMostrarFacturasPorPagar = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
+        jPanel23 = new javax.swing.JPanel();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jPanel24 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jPanelPagos = new javax.swing.JPanel();
         jPanelPagoRoot = new javax.swing.JPanel();
@@ -416,6 +437,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
 
         jPanel15.setLayout(new java.awt.BorderLayout());
 
+        jTableBalanceComprobacion.setAutoCreateRowSorter(true);
         jTableBalanceComprobacion.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jTableBalanceComprobacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -481,20 +503,51 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         });
         jPanel20.add(jCheckBoxOcultarCuentas0);
 
-        jCheckBoxOcultarCuentas1.setText("Cuentas generales");
-        jCheckBoxOcultarCuentas1.setEnabled(false);
-        jCheckBoxOcultarCuentas1.addActionListener(new java.awt.event.ActionListener() {
+        jPanel18.add(jPanel20, java.awt.BorderLayout.WEST);
+
+        jCheckBoxExclusivo.setText("!");
+        jCheckBoxExclusivo.setToolTipText("Exclusivo");
+        jCheckBoxExclusivo.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jCheckBoxExclusivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxOcultarCuentas1ActionPerformed(evt);
+                jCheckBoxExclusivoActionPerformed(evt);
             }
         });
-        jPanel20.add(jCheckBoxOcultarCuentas1);
+        jPanel22.add(jCheckBoxExclusivo);
 
-        jPanel18.add(jPanel20, java.awt.BorderLayout.WEST);
+        jComboBoxElemento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cuenta", "Sub-Cuenta", "Analisis", "Detalle", "Elemento" }));
+        jComboBoxElemento.setSelectedIndex(4);
+        jComboBoxElemento.setToolTipText("Nivel de detalle");
+        jPanel22.add(jComboBoxElemento);
+
+        jComboBoxCuenta.setToolTipText("especificar cuenta");
+        jComboBoxCuenta.setPreferredSize(new java.awt.Dimension(200, 27));
+        jPanel22.add(jComboBoxCuenta);
+
+        jPanel18.add(jPanel22, java.awt.BorderLayout.CENTER);
 
         jPanel15.add(jPanel18, java.awt.BorderLayout.PAGE_START);
 
-        jPanel19.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel19.setLayout(new java.awt.BorderLayout());
+
+        jPanel25.setLayout(new java.awt.GridLayout(1, 3));
+
+        jLabel3.setText("Total Debitos/Creditos");
+        jPanel29.add(jLabel3);
+
+        jPanel25.add(jPanel29);
+
+        jLabelDebitos.setText("<debitos>");
+        jPanel27.add(jLabelDebitos);
+
+        jPanel25.add(jPanel27);
+
+        jLabelCreditos.setText("<creditos>");
+        jPanel28.add(jLabelCreditos);
+
+        jPanel25.add(jPanel28);
+
+        jPanel19.add(jPanel25, java.awt.BorderLayout.PAGE_START);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jButton4.setText("Imprimir Balance");
@@ -503,7 +556,9 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
                 jButton4ActionPerformed(evt);
             }
         });
-        jPanel19.add(jButton4);
+        jPanel26.add(jButton4);
+
+        jPanel19.add(jPanel26, java.awt.BorderLayout.LINE_END);
 
         jPanel15.add(jPanel19, java.awt.BorderLayout.PAGE_END);
 
@@ -594,6 +649,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
+        jTableCuentas.setAutoCreateRowSorter(true);
         jTableCuentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
@@ -678,7 +734,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         jPanelFactura.setPreferredSize(new java.awt.Dimension(200, 469));
         jPanelFactura.setLayout(new java.awt.BorderLayout());
 
-        jPanelNuevaFactura.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Nueva Factura"));
+        jPanelNuevaFactura.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Nueva Factura/Recepcion"));
         jPanelNuevaFactura.setPreferredSize(new java.awt.Dimension(200, 469));
         jPanelNuevaFactura.setLayout(new java.awt.BorderLayout());
 
@@ -704,7 +760,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
 
         jPanelINFO1.add(jPanelNoCuenta1);
 
-        jPanelNoCuenta2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Nombre Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), Colors.LABEL_FORM_COLOR)); // NOI18N
+        jPanelNoCuenta2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Nombre", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), Colors.LABEL_FORM_COLOR)); // NOI18N
         jPanelNoCuenta2.setOpaque(false);
 
         jTextFieldFacturaNombreFactura.setPreferredSize(new java.awt.Dimension(150, 26));
@@ -765,6 +821,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
 
         jPanelListaFacturas.setLayout(new java.awt.BorderLayout(5, 5));
 
+        jTableFacturas.setAutoCreateRowSorter(true);
         jTableFacturas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -834,23 +891,43 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
 
         jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jCheckBox1.setText("Mostrar Facturas Pagadas");
-        jCheckBox1.setEnabled(false);
-        jPanel13.add(jCheckBox1);
+        jCheckBoxMostrarFacturasPorPagar.setText("Mostrar Facturas por pagar");
+        jCheckBoxMostrarFacturasPorPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMostrarFacturasPorPagarActionPerformed(evt);
+            }
+        });
+        jPanel13.add(jCheckBoxMostrarFacturasPorPagar);
 
         jPanel1.add(jPanel13, java.awt.BorderLayout.SOUTH);
 
         jPanelListaFacturas.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel8.setLayout(new java.awt.BorderLayout());
 
-        jButton7.setText("Crear obligacion de pago");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jButton12.setForeground(new java.awt.Color(0, 204, 51));
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/income16.png"))); // NOI18N
+        jButton12.setText("Cobrar");
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                jButton12ActionPerformed(evt);
             }
         });
-        jPanel8.add(jButton7);
+        jPanel23.add(jButton12);
+
+        jButton13.setForeground(new java.awt.Color(255, 0, 0));
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/outcomemoney16.png"))); // NOI18N
+        jButton13.setText("Pagar");
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+        jPanel23.add(jButton13);
+
+        jPanel8.add(jPanel23, java.awt.BorderLayout.WEST);
+
+        jPanel24.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/borrar16.png"))); // NOI18N
         jButton2.setText("Eliminar");
@@ -859,7 +936,9 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel8.add(jButton2);
+        jPanel24.add(jButton2);
+
+        jPanel8.add(jPanel24, java.awt.BorderLayout.EAST);
 
         jPanelListaFacturas.add(jPanel8, java.awt.BorderLayout.PAGE_END);
 
@@ -867,7 +946,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
 
         jPanelFacturas.add(jPanelFactura, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("Facturas", jPanelFacturas);
+        jTabbedPane1.addTab("Facturas/Recepciones", jPanelFacturas);
 
         jPanelPagos.setLayout(new java.awt.BorderLayout());
 
@@ -879,6 +958,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
 
         jPanelListaFacturas1.setLayout(new java.awt.BorderLayout(5, 5));
 
+        jTablePagos.setAutoCreateRowSorter(true);
         jTablePagos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -887,7 +967,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
                 {null, null, null, null}
             },
             new String [] {
-                "Fecha", "Pago por", "Factura", "Neto"
+                "Fecha", "Pago/Cobro por", "Factura", "Importe"
             }
         ) {
             Class[] types = new Class [] {
@@ -931,7 +1011,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
 
         jPanelListaFacturas1.add(jPanel16, java.awt.BorderLayout.PAGE_START);
 
-        jPanel17.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel17.setLayout(new java.awt.BorderLayout());
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/borrar16.png"))); // NOI18N
         jButton9.setText("Eliminar");
@@ -940,13 +1020,13 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
                 jButton9ActionPerformed(evt);
             }
         });
-        jPanel17.add(jButton9);
+        jPanel17.add(jButton9, java.awt.BorderLayout.EAST);
 
         jPanelListaFacturas1.add(jPanel17, java.awt.BorderLayout.PAGE_END);
 
         jPanelPagos.add(jPanelListaFacturas1, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("Pagos", jPanelPagos);
+        jTabbedPane1.addTab("Cobros/Pagos", jPanelPagos);
 
         jPanelData.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -1008,19 +1088,6 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxCuentaEnlazadaItemStateChanged
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        Factura f = modelFactura.getObjectAtSelectedRow();
-        int index = jTableFacturas.getSelectedRow();
-        ObligacionDePago obligacion = new ObligacionDePago(this, f);
-        obligacion.setVisible(true);
-        Pago p = obligacion.getPago();
-        if (p != null) {
-            facturaController.createObligacionPago(f, p);
-            modelFactura.fireTableRowsUpdated(index, index);
-        }
-
-    }//GEN-LAST:event_jButton7ActionPerformed
-
     private void jTextFieldBusquedaPagoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBusquedaPagoKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldBusquedaPagoKeyTyped
@@ -1038,7 +1105,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
     }//GEN-LAST:event_jTextFieldBusquedaResumenKeyTyped
 
     private void jTextFieldBusquedaResumenKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBusquedaResumenKeyReleased
-        // TODO add your handling code here:
+        modelBalanceComprobacion.filterByString(jTextFieldBusquedaResumen.getText());
     }//GEN-LAST:event_jTextFieldBusquedaResumenKeyReleased
 
     private void jDateChooserDelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserDelPropertyChange
@@ -1061,9 +1128,21 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         ocultarMostrarCuentas();
     }//GEN-LAST:event_jCheckBoxOcultarCuentas0ActionPerformed
 
-    private void jCheckBoxOcultarCuentas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxOcultarCuentas1ActionPerformed
-        soloCuentasGenerales();
-    }//GEN-LAST:event_jCheckBoxOcultarCuentas1ActionPerformed
+    private void jCheckBoxMostrarFacturasPorPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMostrarFacturasPorPagarActionPerformed
+        mostrarFacturasPorPagar(jCheckBoxMostrarFacturasPorPagar.isSelected());
+    }//GEN-LAST:event_jCheckBoxMostrarFacturasPorPagarActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        crearObligacionCobro();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        crearObligacionPago();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jCheckBoxExclusivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxExclusivoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxExclusivoActionPerformed
 
     @Override
     public void updateView() {
@@ -1073,25 +1152,31 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton9;
     private javax.swing.JButton jButtonCrearFactura;
     private javax.swing.JButton jButtonCuentaCrear;
     private javax.swing.JButton jButtonVisualizar;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBoxExclusivo;
+    private javax.swing.JCheckBox jCheckBoxMostrarFacturasPorPagar;
     private javax.swing.JCheckBox jCheckBoxOcultarCuentas0;
-    private javax.swing.JCheckBox jCheckBoxOcultarCuentas1;
+    private javax.swing.JComboBox<ContabilidadCuenta> jComboBoxCuenta;
     private javax.swing.JComboBox<ContabilidadCuenta> jComboBoxCuentaEnlazada;
     private javax.swing.JComboBox<ContabilidadCuenta> jComboBoxCuentaPadre;
+    private javax.swing.JComboBox<String> jComboBoxElemento;
     private javax.swing.JComboBox<String> jComboBoxTipoCuenta;
     private com.toedter.calendar.JDateChooser jDateChooserAl;
     private com.toedter.calendar.JDateChooser jDateChooserDel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelCreditos;
     private javax.swing.JLabel jLabelCuentaPrefijoPadre;
+    private javax.swing.JLabel jLabelDebitos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -1106,6 +1191,14 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel28;
+    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1185,6 +1278,10 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         jTextFieldlFacturaCuentaAfectada.setText(empty);
         jTextFieldlFacturaCuentaAsociada.setText(empty);
     }
+    
+    private void onCreatePagoUpdate(){
+        modelPago.setItems(pagoController.getItems());
+    }
 
     private void crearCuenta() {
 
@@ -1206,7 +1303,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         f.setIdCuentaAcreedora(listaFacturaAfectada.getSelectedHint());
         f.setEsGasto(false);
         f.setIdCuentaDeudora(listaFacturaAsociada.getSelectedHint());
-        f.setMontoAPagar((Float) jSpinnerFacturaMonto.getValue());
+        f.setMontoAPagar(utils.setDosLugaresDecimalesFloat((Float) jSpinnerFacturaMonto.getValue()));
         f.setMontoPagado((float) 0);
         f.setNoSerieFactura(jTextFieldFacturaNoSerie.getText());
         f.setNombre(jTextFieldFacturaNombreFactura.getText());
@@ -1216,7 +1313,11 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
     }
 
     private void createBalanceComprobacion(Calendar del, Calendar al) {
-        modelBalanceComprobacion = new RestManagerAbstractTableModel<CuentaController.BalanceComprobacionItem>(cuentaController.getBalanceComprobacion(del, al), jTableBalanceComprobacion) {
+        modelBalanceComprobacion = new RestManagerAbstractTableModel<CuentaController.BalanceComprobacionItem>(
+                cuentaController.getBalanceComprobacion(del, al,
+                        jComboBoxCuenta.getItemAt(jComboBoxCuenta.getSelectedIndex()),
+                        jComboBoxElemento.getSelectedIndex(),jCheckBoxExclusivo.isSelected()),
+                jTableBalanceComprobacion) {
             @Override
             public int getColumnCount() {
                 return 3;
@@ -1266,6 +1367,10 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         };
         jTableBalanceComprobacion.setModel(modelBalanceComprobacion);
         jCheckBoxOcultarCuentas0.setSelected(false);
+        jTableBalanceComprobacion.setRowSorter(modelBalanceComprobacion.getSorter());
+        jLabelDebitos.setText(""+utils.setDosLugaresDecimalesFloat(cuentaController.getSumaDebitosActuales()));
+        jLabelCreditos.setText(""+utils.setDosLugaresDecimalesFloat(cuentaController.getSumaCreditosActuales()));
+
     }
 
     private void imprimirBalance() {
@@ -1274,6 +1379,7 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
         footer = new MessageFormat("-{0}-");
         try {
             /* print the table */
+            jTableBalanceComprobacion.setFont(Fonts.WINDOWS_VISTA_96DPI_LARGE);
             boolean complete = jTableBalanceComprobacion.print(JTable.PrintMode.FIT_WIDTH, header, footer,
                     true, null,
                     true, null);
@@ -1303,19 +1409,55 @@ public class Gastos_Pagos_Dashboard extends AbstractView {
 
     private void ocultarMostrarCuentas() {
         if (jCheckBoxOcultarCuentas0.isSelected()) {
-            listaCompleta = new ArrayList<>(modelBalanceComprobacion.getItems());
-            for (int i = 0; i < listaCompleta.size(); i++) {
-                CuentaController.BalanceComprobacionItem item = listaCompleta.get(i);
+            listaBalanceCompleta = new ArrayList<>(modelBalanceComprobacion.getItems());
+            for (int i = 0; i < listaBalanceCompleta.size(); i++) {
+                CuentaController.BalanceComprobacionItem item = listaBalanceCompleta.get(i);
                 if (item.getBalanceCredito() == 0 && item.getBalanceDebito() == 0) {
                     modelBalanceComprobacion.removeObject(item);
                 }
             }
         } else {
-            modelBalanceComprobacion.setItems(listaCompleta);
+            modelBalanceComprobacion.setItems(listaBalanceCompleta);
         }
     }
 
-    private void soloCuentasGenerales() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    private void mostrarFacturasPorPagar(boolean selected) {
+        if (selected) {
+            listaFacturaCompleta = new ArrayList<>(modelFactura.getItems());
+            for (int i = 0; i < listaFacturaCompleta.size(); i++) {
+                Factura item = listaFacturaCompleta.get(i);
+                if (item.getMontoAPagar() <= item.getMontoPagado()) {
+                    modelFactura.removeObject(item);
+                }
+            }
+        } else {
+            modelFactura.setItems(listaFacturaCompleta);
+        }
+    }
+
+    private void crearObligacionPago() {
+        Factura f = modelFactura.getObjectAtSelectedRow();
+        int index = jTableFacturas.getSelectedRow();
+        ObligacionDePago obligacion = new ObligacionDePago(this, f, cuentaController.getCuentasList(), false);
+        obligacion.setVisible(true);
+        Pago p = obligacion.getPago();
+        if (p != null) {
+            facturaController.createObligacionPago(f, p);
+            modelFactura.fireTableRowsUpdated(index, index);
+            onCreatePagoUpdate();
+        }
+    }
+
+    private void crearObligacionCobro() {
+        Factura f = modelFactura.getObjectAtSelectedRow();
+        int index = jTableFacturas.getSelectedRow();
+        ObligacionDePago obligacion = new ObligacionDePago(this, f, cuentaController.getCuentasList(), true);
+        obligacion.setVisible(true);
+        Pago p = obligacion.getPago();
+        if (p != null) {
+            facturaController.createObligacionCobro(f, p);
+            modelFactura.fireTableRowsUpdated(index, index);
+            onCreatePagoUpdate();
+        }
     }
 }

@@ -37,6 +37,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "ContabilidadCuenta.findByNumeroCuenta", query = "SELECT c FROM ContabilidadCuenta c WHERE c.numeroCuenta = :numeroCuenta")})
 public class ContabilidadCuenta implements Serializable {
 
+    @OneToMany(mappedBy = "idCuentaARebajar")
+    private List<Pago> pagoList;
+
     @JoinColumn(name = "cuenta_enlazada", referencedColumnName = "id_cuenta")
     @ManyToOne
     private ContabilidadCuenta cuentaEnlazada;
@@ -180,6 +183,14 @@ public class ContabilidadCuenta implements Serializable {
             return string;
         }
         
+    }
+
+    public List<Pago> getPagoList() {
+        return pagoList;
+    }
+
+    public void setPagoList(List<Pago> pagoList) {
+        this.pagoList = pagoList;
     }
 
 }

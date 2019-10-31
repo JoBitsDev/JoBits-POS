@@ -18,6 +18,7 @@ import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.ContabilidadCuenta;
 import restManager.persistencia.Factura;
+import restManager.persistencia.Pago;
 import restManager.persistencia.models.ContabilidadCuentaDAO;
 import restManager.resources.R;
 import restManager.util.utils;
@@ -31,6 +32,7 @@ import restManager.util.utils;
 public class CuentaController extends AbstractDialogController<ContabilidadCuenta> {
 
     Container parent;
+    private float sumaDebitosActuales = 0, sumaCreditosActuales = 0;
 
     public CuentaController() {
         super(ContabilidadCuentaDAO.getInstance());
@@ -81,24 +83,37 @@ public class CuentaController extends AbstractDialogController<ContabilidadCuent
         this.parent = parent;
     }
 
-    public List<BalanceComprobacionItem> getBalanceComprobacion(Calendar del, Calendar al) {
+    public List<BalanceComprobacionItem> getBalanceComprobacion(Calendar del, Calendar al, ContabilidadCuenta c, int nivel, boolean exclusivo) {
         ArrayList<BalanceComprobacionItem> ret = new ArrayList<>();
-        List<ContabilidadCuenta> cuentas = getItems();
+        List<ContabilidadCuenta> cuentas = new ArrayList<>(getItems());
         Collections.sort(cuentas, (ContabilidadCuenta o1, ContabilidadCuenta o2) -> {
             return o1.toString().compareTo(o2.toString());
         });
-        
+
         // obteniendo root items
         for (int i = 0; i < cuentas.size();) {
             if (cuentas.get(i).getIdCuentaPadre() != null) {
                 cuentas.remove(i);
             } else {
-                i++;
+                if (c != null) {
+                    if (!cuentas.get(i).getIdCuenta().equals(c.getIdCuenta())) {
+                        cuentas.remove(i);
+                    } else {
+                        i++;
+                    }
+                } else {
+                    i++;
+                }
             }
         }
 
+        sumaCreditosActuales = 0;
+        sumaDebitosActuales = 0;
         for (ContabilidadCuenta x : cuentas) {
-            calcularBalanceComprobacion(ret, x, del, al);
+            getModel().refresh(x);
+            BalanceComprobacionItem item = calcularBalanceComprobacion(ret, nivel, exclusivo, x, del, al);
+            sumaDebitosActuales += item.getBalanceDebito();
+            sumaCreditosActuales += item.getBalanceCredito();
         }
 
         Collections.sort(ret);
@@ -109,20 +124,39 @@ public class CuentaController extends AbstractDialogController<ContabilidadCuent
         return ContabilidadCuentaDAO.getInstance().findAll();
     }
 
-    private List<BalanceComprobacionItem> calcularBalanceComprobacion(List<BalanceComprobacionItem> lista, ContabilidadCuenta x, Calendar del, Calendar al) {
-        int initSize = lista.size();
-        if (x.getCuentasHijo() != null) {
-        for (ContabilidadCuenta y : x.getCuentasHijo()) {
-            calcularBalanceComprobacion(lista, y, del, al);
-        }
-        }
+    public float getSumaDebitosActuales() {
+        return sumaDebitosActuales;
+    }
+
+    public float getSumaCreditosActuales() {
+        return sumaCreditosActuales;
+    }
+
+    private BalanceComprobacionItem calcularBalanceComprobacion(List<BalanceComprobacionItem> lista, int nivel, boolean exclusivo, ContabilidadCuenta x, Calendar del, Calendar al) {
+        ArrayList<BalanceComprobacionItem> aux = new ArrayList<>();
         BalanceComprobacionItem current = calcularBalanceComprobacion(x, del, al);
-        for (int i = initSize; i < lista.size(); i++) {
-            current.setBalanceCredito(lista.get(i).getBalanceCredito() + current.getBalanceCredito());
-            current.setBalanceDebito(lista.get(i).getBalanceDebito() + current.getBalanceDebito());
+        if (x.getCuentasHijo() != null) {
+            for (ContabilidadCuenta y : x.getCuentasHijo()) {
+                BalanceComprobacionItem temporal;
+                if (nivel - 1 < 0) {
+                    temporal = calcularBalanceComprobacion(aux, nivel - 1, exclusivo, y, del, al);
+                } else {
+                    temporal = calcularBalanceComprobacion(lista, nivel - 1, exclusivo, y, del, al);
+                }
+                current.addBalanceCredito(temporal.getBalanceCredito());
+                current.addBalanceDebito(temporal.getBalanceDebito());
+
+            }
         }
-        lista.add(current);
-        return lista;
+        if (exclusivo) {
+            if (nivel == 0) {
+                lista.add(current);
+            }
+        } else {
+            lista.add(current);
+        }
+
+        return current;
     }
 
     private BalanceComprobacionItem calcularBalanceComprobacion(ContabilidadCuenta x, Calendar del, Calendar al) {
@@ -134,13 +168,33 @@ public class CuentaController extends AbstractDialogController<ContabilidadCuent
         for (Factura f : x.getFacturasDeudoras()) {
             if (utils.estaEnRangoSinTiempo(f.getFecha(), del.getTime(), al.getTime())) {
                 sumaDebitos += f.getMontoAPagar();
+                for (Pago p : f.getPagoList()) {
+                    if (p.getEsCobro()) {
+                        sumaCreditos += p.getMontoPagado();
+                    }
+                }
             }
         }
         for (Factura f : x.getFacturasAcreedoras()) {
             if (utils.estaEnRangoSinTiempo(f.getFecha(), del.getTime(), al.getTime())) {
                 sumaCreditos += f.getMontoAPagar();
+                for (Pago p : f.getPagoList()) {
+                    if (!p.getEsCobro()) {
+                        sumaDebitos += p.getMontoPagado();
+                    }
+                }
             }
         }
+        for (Pago p : x.getPagoList()) {
+            if (utils.estaEnRangoSinTiempo(p.getFecha(), del.getTime(), al.getTime())) {
+                if (p.getEsCobro()) {
+                    sumaDebitos += p.getMontoPagado();
+                } else {
+                    sumaCreditos += p.getMontoPagado();
+                }
+            }
+        }
+
         switch (x.getTipoCuenta()) {
             case "CREDITO":
                 ret = new BalanceComprobacionItem(x, 0, sumaCreditos - sumaDebitos);
@@ -189,6 +243,14 @@ public class CuentaController extends AbstractDialogController<ContabilidadCuent
 
         public void setBalanceCredito(float balanceCredito) {
             this.balanceCredito = balanceCredito;
+        }
+
+        public void addBalanceCredito(float balanceCredito) {
+            this.balanceCredito += balanceCredito;
+        }
+
+        public void addBalanceDebito(float balanceDebito) {
+            this.balanceDebito += balanceDebito;
         }
 
         @Override

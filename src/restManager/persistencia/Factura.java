@@ -193,7 +193,7 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return  "F:("+ noSerieFactura+")" + idCuentaDeudora;
+        return  "F:("+ noSerieFactura+")";
     }
 
 }

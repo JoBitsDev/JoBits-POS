@@ -38,6 +38,13 @@ import restManager.util.utils;
     @NamedQuery(name = "Pago.findByACuenta", query = "SELECT p FROM Pago p WHERE p.aCuenta = :aCuenta")})
 public class Pago implements Serializable {
 
+    @Column(name = "es_cobro")
+    private Boolean esCobro;
+
+    @JoinColumn(name = "id_cuenta_a_rebajar", referencedColumnName = "id_cuenta")
+    @ManyToOne
+    private ContabilidadCuenta idCuentaARebajar;
+
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
@@ -148,6 +155,22 @@ public class Pago implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public ContabilidadCuenta getIdCuentaARebajar() {
+        return idCuentaARebajar;
+    }
+
+    public void setIdCuentaARebajar(ContabilidadCuenta idCuentaARebajar) {
+        this.idCuentaARebajar = idCuentaARebajar;
+    }
+
+    public Boolean getEsCobro() {
+        return esCobro;
+    }
+
+    public void setEsCobro(Boolean esCobro) {
+        this.esCobro = esCobro;
     }
 
 }

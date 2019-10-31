@@ -38,11 +38,22 @@ public class PagoController extends AbstractDialogController<Pago> {
         if (selected.getNoCheque() == null && selected.getNoRecibo() == null && !selected.getACuenta()) {
             err = "Se debe especificar un metodo de pago";
         }
+        if (selected.getIdCuentaARebajar() == null) {
+            err = "Debe seleccionar una cuenta para rebajar el importe";
+
+        } else {
+            if (selected.getIdCuentaARebajar().getTipoCuenta().equals("CREDITO")) {
+                err = "La cuenta seleccionada solo puede ser de debito";
+            }
+        }
         if (err != null) {
             throw new ValidatingException(getView(), err);
         }
+        boolean previousValue = this.showDialogs;
+        setShowDialogs(false);
         selected.setFecha(new Date());
         super.create(selected); //To change body of generated methods, choose Tools | Templates.
+        setShowDialogs(previousValue);
     }
 
     @Override

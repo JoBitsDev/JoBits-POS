@@ -5,8 +5,11 @@
  */
 package GUI.Views.gastos_pagos;
 
+import GUI.Views.util.RestaurantManagerListIntelliHint;
 import java.awt.Dialog;
 import java.util.Date;
+import java.util.List;
+import restManager.persistencia.ContabilidadCuenta;
 import restManager.persistencia.Factura;
 import restManager.persistencia.Pago;
 import restManager.persistencia.PagoPK;
@@ -27,15 +30,26 @@ public class ObligacionDePago extends javax.swing.JDialog {
      * @param selected
      */
     private final Factura selected;
+    private final boolean esCobro;
     private Pago p;
+    private RestaurantManagerListIntelliHint<ContabilidadCuenta> listaCuentaAsociada;
 
-    public ObligacionDePago(Dialog parent, Factura selected) {
+
+    public ObligacionDePago(Dialog parent, Factura selected,List<ContabilidadCuenta> cuentas,boolean esCobro) {
         super(parent, true);
         this.selected = selected;
+        this.esCobro = esCobro;
         initComponents();
+        if (esCobro) {
+            jLabel1.setText("Obligacion de COBRO");
+        }
+        else{
+            jLabel1.setText("Obligacion de PAGO");
+        }
         buttonGroup1.add(jRadioButtonCheque);
         buttonGroup1.add(jRadioButtonTransaccion);
         buttonGroup1.add(jRadioButtonEfectivo);
+        listaCuentaAsociada = new RestaurantManagerListIntelliHint<>(jTextFieldCuentaAsociada,cuentas);
     }
 
     public Pago getPago() {
@@ -75,6 +89,8 @@ public class ObligacionDePago extends javax.swing.JDialog {
         jPanel5 = new javax.swing.JPanel();
         jLabelOpcionMetodoPago = new javax.swing.JLabel();
         jTextFieldJustOpcion = new javax.swing.JTextField();
+        jPanel6 = new javax.swing.JPanel();
+        jTextFieldCuentaAsociada = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(350, 500));
@@ -116,7 +132,7 @@ public class ObligacionDePago extends javax.swing.JDialog {
         jPanelMenu.add(jButton6, java.awt.BorderLayout.WEST);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Obligacion de pago");
+        jLabel1.setText("Obligacion de cobro/pago");
         jPanelMenu.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         jPanelRoot.add(jPanelMenu, java.awt.BorderLayout.PAGE_START);
@@ -124,7 +140,7 @@ public class ObligacionDePago extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         materialPanel2.setBackground(new java.awt.Color(0, 204, 204));
-        materialPanel2.setLayout(new java.awt.GridLayout(4, 0));
+        materialPanel2.setLayout(new java.awt.GridLayout(5, 0));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 102, 102))); // NOI18N
         jPanel2.setOpaque(false);
@@ -148,7 +164,7 @@ public class ObligacionDePago extends javax.swing.JDialog {
 
         materialPanel2.add(jPanel2);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Pagar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 102, 102))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "cobrar/pagar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 102, 102))); // NOI18N
         jPanel3.setOpaque(false);
 
         jSpinnerMontoAPagar.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
@@ -157,7 +173,7 @@ public class ObligacionDePago extends javax.swing.JDialog {
 
         materialPanel2.add(jPanel3);
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Método pago", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 102, 102))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Método cobro/pago", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 102, 102))); // NOI18N
         jPanel4.setOpaque(false);
 
         jRadioButtonCheque.setText("Cheque");
@@ -198,6 +214,16 @@ public class ObligacionDePago extends javax.swing.JDialog {
         jPanel5.add(jTextFieldJustOpcion);
 
         materialPanel2.add(jPanel5);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Cuenta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 102, 102))); // NOI18N
+        jPanel6.setOpaque(false);
+
+        jTextFieldCuentaAsociada.setToolTipText("");
+        jTextFieldCuentaAsociada.setPreferredSize(new java.awt.Dimension(170, 26));
+        jTextFieldCuentaAsociada.setSize(new java.awt.Dimension(150, 26));
+        jPanel6.add(jTextFieldCuentaAsociada);
+
+        materialPanel2.add(jPanel6);
 
         jPanel1.add(materialPanel2, java.awt.BorderLayout.CENTER);
 
@@ -240,9 +266,11 @@ public class ObligacionDePago extends javax.swing.JDialog {
         pk.setFacturaidFactura(selected.getIdFactura());
         p = new Pago();
         p.setPagoPK(pk);
+        p.setIdCuentaARebajar(listaCuentaAsociada.getSelectedHint());
+        p.setEsCobro(esCobro);
         p.setFactura(selected);
         p.setFecha(new Date());
-        p.setMontoPagado((Float) jSpinnerMontoAPagar.getValue());
+        p.setMontoPagado(utils.setDosLugaresDecimalesFloat((Float) jSpinnerMontoAPagar.getValue()));
             String texto = jTextFieldJustOpcion.getText();
         if (jRadioButtonCheque.isSelected()) {
             p.setNoCheque(texto);
@@ -273,6 +301,7 @@ public class ObligacionDePago extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelControls;
     private javax.swing.JPanel jPanelMenu;
     private javax.swing.JPanel jPanelRoot;
@@ -280,6 +309,7 @@ public class ObligacionDePago extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRadioButtonEfectivo;
     private javax.swing.JRadioButton jRadioButtonTransaccion;
     private javax.swing.JSpinner jSpinnerMontoAPagar;
+    private javax.swing.JTextField jTextFieldCuentaAsociada;
     private javax.swing.JTextField jTextFieldJustOpcion;
     private components.containers.MaterialPanel materialPanel2;
     // End of variables declaration//GEN-END:variables

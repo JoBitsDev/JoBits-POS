@@ -82,4 +82,15 @@ public class FacturaController extends AbstractDialogController<Factura> {
         update(f, false);
         getModel().refresh(f);
     }
+
+    public void createObligacionCobro(Factura f, Pago p) {
+                PagoController pagos = new PagoController();
+        if (p.getMontoPagado() > f.getMontoAPagar() - f.getMontoPagado()) {
+            throw new ValidatingException(getView(), "La obligacion de cobro es mayor que el monto por cobrar de la factura");
+        }
+        pagos.create(p);
+        f.setMontoPagado(f.getMontoPagado() + p.getMontoPagado());
+        update(f, false);
+        getModel().refresh(f);
+    }
 }

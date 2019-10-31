@@ -22,7 +22,7 @@ public class CuentaControllerTest {
 
     @Before
     public void setUp() {
-        R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
+        R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
         R.loggedUser = PersonalDAO.getInstance().find("admin");
         R.COIN_SUFFIX = " CUC";
     }
