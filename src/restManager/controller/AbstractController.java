@@ -9,6 +9,8 @@ import GUI.Views.View;
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
+import javax.persistence.EntityExistsException;
+import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
 import restManager.exceptions.HiddenException;
 import restManager.exceptions.ValidatingException;
@@ -30,7 +32,6 @@ public abstract class AbstractController<T> implements Controller {
     private View view;
     protected boolean dismissOnAction = true;
     protected boolean showDialogs = true;
-
 
     public AbstractController(AbstractModel<T> dataAccess) {
         model = dataAccess;
@@ -68,8 +69,8 @@ public abstract class AbstractController<T> implements Controller {
     // Use this to observe property changes from registered models // and propagate them on to all the views.
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("U: " + R.loggedUser +": "+ evt.getPropertyName() + " - (nuevo):"+evt.getNewValue() + " - (viejo):" + evt.getOldValue() 
-                +" \n      Origen: "+getClass().getName());
+        System.out.println("U: " + R.loggedUser + ": " + evt.getPropertyName() + " - (nuevo):" + evt.getNewValue() + " - (viejo):" + evt.getOldValue()
+                + " \n      Origen: " + getClass().getName());
         if (view != null) {
             System.out.println(view.getClass().toString());
             items = null;
@@ -309,26 +310,20 @@ public abstract class AbstractController<T> implements Controller {
     private void persist(PersistAction persistAction) {
         if (selected != null) {
             getModel().startTransaction();
-            try {
-                switch (persistAction) {
-                    case CREATE:
-                        getModel().create(selected);
-                        break;
-                    case DELETE:
-                        getModel().remove(selected);
-                        selected = null;
-                        break;
-                    case UPDATE:
-                        getModel().edit(selected);
-                        break;
-                }
-                getModel().getEntityManager().getEntityManagerFactory().getCache().evict(getModel().getClass());
-                getModel().commitTransaction();
-            } catch (Exception e) {
-                showErrorDialog((Container) getView(), "La accion no pudo ser completada \n" + e.getMessage());
-                e.printStackTrace();
-                getModel().getEntityManager().getTransaction().rollback();
+            switch (persistAction) {
+                case CREATE:
+                    getModel().create(selected);
+                    break;
+                case DELETE:
+                    getModel().remove(selected);
+                    selected = null;
+                    break;
+                case UPDATE:
+                    getModel().edit(selected);
+                    break;
             }
+            getModel().commitTransaction();
+          // getModel().getEntityManager().getEntityManagerFactory().getCache().evictAll();
         }
     }
 
