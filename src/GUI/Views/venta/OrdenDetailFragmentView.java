@@ -391,12 +391,9 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                                     float diferencia = cantidadOld - (float) aValue;
                                     if (diferencia > 0) {
                                         getController().removeProduct(items.get(rowIndex), diferencia);
-                                        // getController().fireWarningOnDeleting( items.get(rowIndex), diferencia);
                                     } else {
                                         getController().addProduct(items.get(rowIndex), diferencia *-1);
-                                        // getController().fireWarningOnAdding(items.get(rowIndex), diferencia*-1);
                                     }
-                                    //items.get(rowIndex).setCantidad((float) aValue);
                                     fireTableRowsUpdated(rowIndex, rowIndex);
                                     state = ButtonState.ENVIAR_COCINA;
                                     jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
