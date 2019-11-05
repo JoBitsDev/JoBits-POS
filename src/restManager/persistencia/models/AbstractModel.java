@@ -15,7 +15,9 @@ import javax.swing.JOptionPane;
 import restManager.controller.AbstractController.PersistAction;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ExceptionHandler;
+import restManager.exceptions.UnExpectedErrorException;
 import restManager.persistencia.AsistenciaPersonal;
+import restManager.resources.DBConnector;
 import restManager.resources.R;
 
 /**
@@ -40,13 +42,11 @@ public abstract class AbstractModel<T> implements Model {
 
         if (!R.PERIRSTENCE_UNIT_NAME.equals(persistenceUnitName)) {
             EMF = emf;
-            currentConnection = EMF.createEntityManager();
             persistenceUnitName = R.PERIRSTENCE_UNIT_NAME;
         }
-//        else {
-//            Logger l = Logger.getLogger(getClass().getName());
-//            l.log(Level.WARNING, R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_found") + "" + getClass().getName());
-//        }
+        if (EMF == null) {
+            currentConnection = EMF.createEntityManager();
+        }
     }
 
     public EntityManager getEntityManager() {
@@ -62,12 +62,10 @@ public abstract class AbstractModel<T> implements Model {
     public void commitTransaction() {
         if (getEntityManager().getTransaction().isActive()) {
             try {
-                 getEntityManager().flush();
+                getEntityManager().flush();
                 getEntityManager().getTransaction().commit();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Los datos no se archivaron en la base de datos \n"
-                        + e.getMessage(), "Error", JOptionPane.OK_OPTION);
-                getEntityManager().getTransaction().rollback();
+            } catch (PersistenceException e) {
+                dbException(e);
             }
         }
     }
@@ -223,14 +221,18 @@ public abstract class AbstractModel<T> implements Model {
                     firePropertyChange(PropertyName.UPDATE.toString(), entity, entity);
                     break;
             }
-            getEntityManager().getEntityManagerFactory().getCache().evict(entityClass);
-        } catch (Exception e) {
-            ExceptionHandler.showExceptionToUser(e, "Error en base de datos \n " + e.getLocalizedMessage());
-            if (getEntityManager().getTransaction().isActive()) {
-                getEntityManager().getTransaction().rollback();
-            }
-
+        } catch (PersistenceException e) {
+            dbException(e);
         }
+    }
+
+    private void dbException(PersistenceException e) {
+        ExceptionHandler.showExceptionToUser(e, "Error en base de datos. Reconectandose... \n " + e.getLocalizedMessage());
+        if (getEntityManager().getTransaction().isActive()) {
+            getEntityManager().getTransaction().rollback();
+        }
+        DBConnector.resetConnection(null);
+        e.printStackTrace();
     }
 
 }

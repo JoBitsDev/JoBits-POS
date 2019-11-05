@@ -436,7 +436,6 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                 getModel().setItems(getInstance().getProductovOrdenList());
                 state = ButtonState.ENVIAR_COCINA;
                 jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
-                getController().fireWarningOnDeleting(po, po.getCantidad());
                 repaint();
             }
         };

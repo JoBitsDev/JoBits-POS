@@ -64,7 +64,6 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
     public void createUpdateInstance() {
         setDismissOnAction(false);
         super.createUpdateInstance(); //To change body of generated methods, choose Tools | Templates.
-        getModel().getEntityManager().refresh(instance);
         if (!instance.getProductoInsumoList().isEmpty()) {
             if (showConfirmDialog(getView(), "Desea actualizar el costo en los productos de venta")) {
                 updateInsumoOnFichas(getInstance());

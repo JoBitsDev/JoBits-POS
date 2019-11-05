@@ -5,11 +5,10 @@
  */
 package restManager.resources;
 
-import javax.persistence.EntityManagerFactory;
 
+import GUI.Views.View;
 import javax.persistence.Persistence;
 import restManager.persistencia.models.AbstractModel;
-import restManager.resources.R;
 
 /**
  *
@@ -25,7 +24,7 @@ public class DBConnector {
         DBConnector.persistenceUnitName = persistenceUnitName;
         AbstractModel.setEMF(Persistence.createEntityManagerFactory(persistenceUnitName));
         if (AbstractModel.getEMF() != null) {
-            initJPAConnections();
+            initConnections();
 
         } else {
             throw new NullPointerException(R.RESOURCE_BUNDLE.getString("null_pointer_EMF_not_Found"));
@@ -36,7 +35,7 @@ public class DBConnector {
         return CONECTADO;
     }
 
-    private void initJPAConnections() {
+    private void initConnections() {
 
         try {
             AbstractModel.setCurrentConnection(AbstractModel.getEMF().createEntityManager());
@@ -49,6 +48,10 @@ public class DBConnector {
     }
 
     public static DBConnector init(String persistenceUnitName) {
+        return new DBConnector(persistenceUnitName);
+    }
+    
+    public static DBConnector resetConnection(View view){
         return new DBConnector(persistenceUnitName);
     }
 

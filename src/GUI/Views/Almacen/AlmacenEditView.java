@@ -147,7 +147,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
                 @Override
                 public void removeObjectSelected() {
                     getController().removeInsumoFromStorage(getHandler().getTableModel().getObjectAtSelectedRow());
-
+                    getHandler().getTableModel().fireTableDataChanged();
                 }
 
             };

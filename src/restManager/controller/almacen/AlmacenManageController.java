@@ -217,13 +217,13 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
     }
 
     public void crearTransformacion(InsumoAlmacen selected, float cantidad, List<TransaccionTransformacion> items, Almacen destino) {
-       
+
         // Validaciones
-        if (selected.getCantidad() < cantidad || cantidad <=0) {
+        if (selected.getCantidad() < cantidad || cantidad <= 0) {
             throw new ValidatingException("La cantidad a transformar no puede ser mayor que la cantidad existente en almacen"
                     + "\n Ni la cantidad a transformar ser igual o menor que cero ");
         }
-       
+
         if (items.isEmpty()) {
             throw new ValidatingException("La lista de insumos transformados esta vacia");
         }
@@ -245,8 +245,6 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
             throw new ValidatingException("La cantidad total transformada en insumos no puede ser mayor que la cantidad a transformar");
         }
 
-        
-        
         float merma = utils.setDosLugaresDecimalesFloat(sumaTransformacion - cantidad);
         if (sumaTransformacion < cantidad) {
             if (showConfirmDialog(getView(), selected.getInsumo() + " mermara " + merma + ". Desea continuar?")) {
@@ -361,6 +359,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
 
     private void updateValorTotalAlmacen(Almacen instance) {
         float total = 0;
+        instance = getModel().find(instance.getCodAlmacen());
         for (InsumoAlmacen x : instance.getInsumoAlmacenList()) {
             total += x.getValorMonetario();
         }

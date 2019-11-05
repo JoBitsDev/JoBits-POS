@@ -39,11 +39,8 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
     }
 
     public LicenceController(Container parent, Licence.TipoLicencia tipoLic) {
-        super(ConfiguracionDAO.getInstance());
+       this(tipoLic);
         this.parent = parent;
-        licence = Licence.getInstance();
-        this.tipoLic = tipoLic;
-        estadoLic = getEstadoLicencia(this.tipoLic);
         constructView(parent);
     }
 

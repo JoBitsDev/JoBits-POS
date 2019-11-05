@@ -259,8 +259,8 @@ public class IpvGestionView extends AbstractView {
                 imprimirTabla();
                 break;//impresion normal
             case 1:
-                List<IpvRegistro> registros = jCheckBox1.isSelected() 
-                        ? ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getItems() 
+                List<IpvRegistro> registros = jCheckBox1.isSelected()
+                        ? ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getItems()
                         : registroList;
 
                 Impresion.getDefaultInstance().printResumenIPVDePuntoElaboracion(registros);
@@ -375,9 +375,14 @@ public class IpvGestionView extends AbstractView {
     private void updateTableRegistroIpv() {
         try {
             jCheckBox1.setSelected(false);
-            registroList = new ArrayList<>(getController()
-                    .getIpvRegistroList(currentSelectedKitchen, R.DATE_FORMAT.parse(jListRegistro.getSelectedValue())));
-            registroList = getController().calculate_IPV_to_Currenr((ArrayList<IpvRegistro>) registroList);
+            if (jListRegistro.getSelectedValue() == null) {
+                registroList = new ArrayList<>(getController()
+                        .getIpvRegistroList(currentSelectedKitchen, R.DATE_FORMAT.parse(jListRegistro.getSelectedValue())));
+                registroList = getController().calculate_IPV_to_Currenr((ArrayList<IpvRegistro>) registroList);
+            } else {
+                registroList = new ArrayList<>();
+            }
+
             jTableRegistro.setModel(new RestManagerAbstractTableModel<IpvRegistro>(registroList,
                     jTableRegistro) {
                 @Override
