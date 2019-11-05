@@ -128,6 +128,12 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public void updateInstance(IpvRegistro instance) {
+        if (instance.getEntrada() == null) {
+            instance.setEntrada((float)0);
+        }
+        if (instance.getInicio() == null) {
+            instance.setInicio((float)0);
+        }
         instance.setDisponible(instance.getEntrada() + instance.getInicio());
         instance.setFinal1(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumo()));
         if (instance.getConsumoReal() != null) {
