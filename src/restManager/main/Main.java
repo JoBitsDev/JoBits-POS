@@ -5,7 +5,7 @@
  */
 package restManager.main;
 
-
+import java.util.Locale;
 import restManager.controller.login.LogInController;
 import restManager.util.LoadingWindow;
 
@@ -18,8 +18,9 @@ import restManager.util.LoadingWindow;
 public class Main {
 
     public static void main(String[] args) {
-                     
+
         java.awt.EventQueue.invokeLater(() -> {
+            Locale.setDefault(Locale.Category.FORMAT, Locale.ENGLISH); // But the formatting in English
             LogInController loginController = new LogInController();
             loginController.constructView(null);
         });
