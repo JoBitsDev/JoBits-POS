@@ -60,6 +60,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jComboBoxAreaPago.addItem(null);
         jComboBoxNivelAccesso.setModel(new DefaultComboBoxModel<>(R.NivelAcceso.values()));
         jComboBoxAreaTrabajo.setModel(new RestManagerComboBoxModel<>(getController().getAreaList()));
+        jSpinnerAPartir.setValue(0.0);
         jComboBoxAreaTrabajo.addItem(null);
     }
 
@@ -265,7 +266,8 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jLabelSalarioFijo4.setText("A partir de");
         jPanel5.add(jLabelSalarioFijo4);
 
-        jSpinnerAPartir.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
+        jSpinnerAPartir.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
+        jSpinnerAPartir.setMaximumSize(new java.awt.Dimension(32767, 26));
         jSpinnerAPartir.setPreferredSize(new java.awt.Dimension(100, 26));
         jPanel5.add(jSpinnerAPartir);
 
@@ -345,7 +347,6 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         jSpinnerAPartir.setValue(instance.getAPartirDe());
         jCheckBoxPagoPorVentas.setSelected(instance.getPagoPorVentas() == null ? false : instance.getPagoPorVentas());
         jCheckBoxPropina.setSelected(instance.getPropina() == null ? false : instance.getPropina());
-        
 
         if (instance.getNivelAcceso() != null) {
             jComboBoxNivelAccesso.setSelectedIndex(instance.getNivelAcceso());
@@ -451,7 +452,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
         instance.setPropina(jCheckBoxPropina.isSelected());
         instance.setNivelAcceso(jComboBoxNivelAccesso.getItemAt(jComboBoxNivelAccesso.getSelectedIndex()).getNivel());
         instance.setPuestosDisponibles((Integer) jSpinnerPuestosDisponibles.getValue());
-        instance.setAPartirDe((Float) jSpinnerAPartir.getValue());
+        instance.setAPartirDe(Float.parseFloat(jSpinnerAPartir.getValue().toString()));
         instance.setSalarioFijo(Float.parseFloat(jSpinnerSalarioFijo.getValue().toString()));
         instance.setSalarioPorcientoDeArea(Float.valueOf(jSpinnerPorcientoAPartirDe.getValue().toString()));
         instance.setSalarioPorcientoVentaTotal(Float.valueOf(jSpinnerPorcientoVenta.getValue().toString()));
