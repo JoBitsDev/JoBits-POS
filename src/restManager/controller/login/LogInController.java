@@ -132,10 +132,17 @@ public class LogInController extends AbstractDialogController<Personal> {
     //
     //Metodos para la ventana de autorizacion
     //
-    
     private void constructLoginPanel(Container Parent, String title) {
         setView(new AutenticacionFragmentView(Parent, this, true, title));
 
+    }
+
+    public boolean constructoAuthorizationViewForConfirm(Container parent) {
+
+        constructLoginPanel(parent, "Confirmar Accion (" + R.loggedUser.getUsuario() + ")");
+        this.usuarioRequerido = R.loggedUser.getUsuario();
+        getView().setVisible(true);
+        return AUTORIZADO;
     }
 
     public boolean constructoAuthorizationView(Container parent, R.NivelAcceso nivelMinimo) {

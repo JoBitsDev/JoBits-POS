@@ -6,9 +6,14 @@
 package GUI;
 
 import java.awt.Dialog;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import restManager.backup.BackUp;
+import restManager.controller.login.LogInController;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
 
@@ -102,39 +107,50 @@ public class copiaSegView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonRealizarCopiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRealizarCopiaActionPerformed
-        int resp = JOptionPane.showConfirmDialog(this, R.RESOURCE_BUNDLE.getString("confirmar_copia_seg"));
-
-        if (resp == JOptionPane.YES_OPTION) {
-            
-            BackUp bu = null;
-
-            if (jCheckBoxPersonal.isSelected()) {
-                bu = new BackUp(BackUp.TipoBackUp.PERSONAL);
-
-            }
-            if (jCheckBoxProductos.isSelected()) {
-                bu = new BackUp(BackUp.TipoBackUp.PRODUCTOS);
-
-            }
-            if (jCheckBoxVentas.isSelected()) {
-                bu = new BackUp(BackUp.TipoBackUp.VENTA);
-            }
-            if (jCheckBoxTodo.isSelected()) {
-                bu = new BackUp(BackUp.TipoBackUp.All);
-            }
-            if (jCheckBoxBorrado.isSelected()) {
-                bu = new BackUp(BackUp.TipoBackUp.LIMPIEZA);
-            }
-
-            if (bu != null) {
-                bu.setBarraDeProgreso(jProgressBar1);
-                LoadingWindow.show(this);
-                bu.execute();
+        try {
+            if (R.PERIRSTENCE_UNIT_NAME.equals(R.RESOURCE_BUNDLE.getString("unidad_persistencia_local")) || InetAddress.getLocalHost().getHostAddress().equals("192.168.173.1")) {
+                JOptionPane.showMessageDialog(this, "Las copias de seguridad no pueden realizarse en el mismo servidor que se origina el pedido ni en el servidor principal");
+            } else {
                 
+                int resp = JOptionPane.showConfirmDialog(this, R.RESOURCE_BUNDLE.getString("confirmar_copia_seg"),"Confirmacion", JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
+                
+                if (resp == JOptionPane.YES_OPTION) {
+                    
+                    BackUp bu = null;
+                    
+                    if (jCheckBoxPersonal.isSelected()) {
+                        bu = new BackUp(BackUp.TipoBackUp.PERSONAL);
+                        
+                    }
+                    if (jCheckBoxProductos.isSelected()) {
+                        bu = new BackUp(BackUp.TipoBackUp.PRODUCTOS);
+                        
+                    }
+                    if (jCheckBoxVentas.isSelected()) {
+                        bu = new BackUp(BackUp.TipoBackUp.VENTA);
+                    }
+                    if (jCheckBoxTodo.isSelected()) {
+                        bu = new BackUp(BackUp.TipoBackUp.All);
+                    }
+                    if (jCheckBoxBorrado.isSelected()) {
+                        LogInController controller = new LogInController();
+                        if (controller.constructoAuthorizationViewForConfirm(jXPanel1)) {
+                            bu = new BackUp(BackUp.TipoBackUp.LIMPIEZA);
+                        }
+                    }
+                    
+                    if (bu != null) {
+                        bu.setBarraDeProgreso(jProgressBar1);
+                        LoadingWindow.show(this);
+                        bu.execute();
+                        
+                    }
+                }
 
             }
+        } catch (UnknownHostException ex) {
+            JOptionPane.showMessageDialog(jXPanel1, "Para realizar las copias de seguridad debe estar conectado al servidor principal");
         }
-
 
     }//GEN-LAST:event_botonRealizarCopiaActionPerformed
 
