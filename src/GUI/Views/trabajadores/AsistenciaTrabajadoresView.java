@@ -132,7 +132,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
 
             @Override
             public void removeObjectSelected() {
-                getController().destroy(getTableModel().removeObjectAtSelectedRow(), true);
+                getController().destroy(getHandler().getTableModel().removeObjectAtSelectedRow(), true);
             }
 
         };
