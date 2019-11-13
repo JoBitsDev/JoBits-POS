@@ -8,6 +8,7 @@ package GUI.Views.login;
 import GUI.Views.AbstractView;
 import java.awt.Color;
 import javax.swing.JFrame;
+import mdlaf.components.button.MaterialButtonUI;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Licence.Licence;
 import restManager.controller.login.MainController;
@@ -116,6 +117,7 @@ public class MainView extends AbstractView {
         jPanelPDV.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createTitledBorder(null, "Productos de Venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
         jPanelPDV.setLayout(new java.awt.GridLayout(1, 0));
 
+        BotonMenu.setBackground(new java.awt.Color(204, 204, 204));
         BotonMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonmenu.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         BotonMenu.setText(bundle.getString("label_abrir_menu")); // NOI18N
@@ -129,6 +131,7 @@ public class MainView extends AbstractView {
         });
         jPanelPDV.add(BotonMenu);
 
+        BotonInsumo.setBackground(new java.awt.Color(204, 204, 204));
         BotonInsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoninsumos.png"))); // NOI18N
         BotonInsumo.setText(bundle.getString("label_ver_insumos")); // NOI18N
         BotonInsumo.setBorderPainted(false);
@@ -141,6 +144,7 @@ public class MainView extends AbstractView {
         });
         jPanelPDV.add(BotonInsumo);
 
+        BotonCocina.setBackground(new java.awt.Color(204, 204, 204));
         BotonCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoncocina.png"))); // NOI18N
         BotonCocina.setText(bundle.getString("label_ver_punto_elaboracion")); // NOI18N
         BotonCocina.setBorderPainted(false);
@@ -153,6 +157,7 @@ public class MainView extends AbstractView {
         });
         jPanelPDV.add(BotonCocina);
 
+        BotonSeccion.setBackground(new java.awt.Color(204, 204, 204));
         BotonSeccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonsecciones.png"))); // NOI18N
         BotonSeccion.setText(bundle.getString("label_menu_seccion")); // NOI18N
         BotonSeccion.setBorderPainted(false);
@@ -165,6 +170,7 @@ public class MainView extends AbstractView {
         });
         jPanelPDV.add(BotonSeccion);
 
+        jButtonSalon.setBackground(new java.awt.Color(204, 204, 204));
         jButtonSalon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botosalon.png"))); // NOI18N
         jButtonSalon.setText(bundle.getString("label_ver_esquema_salon")); // NOI18N
         jButtonSalon.setBorderPainted(false);
@@ -195,9 +201,8 @@ public class MainView extends AbstractView {
         jPanelAlmacen.add(jButtonAlmacen);
 
         jButtonStocking.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoninventario.png"))); // NOI18N
-        jButtonStocking.setText(bundle.getString("label_inventario")); // NOI18N
+        jButtonStocking.setText(bundle.getString("label_activo_fijo")); // NOI18N
         jButtonStocking.setBorderPainted(false);
-        jButtonStocking.setEnabled(false);
         jButtonStocking.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonStocking.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonStocking.addActionListener(new java.awt.event.ActionListener() {
@@ -225,6 +230,7 @@ public class MainView extends AbstractView {
         jPanelContabilidad.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createTitledBorder(null, "Contabilidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
         jPanelContabilidad.setLayout(new java.awt.GridLayout(1, 0));
 
+        jButtonVender.setBackground(new java.awt.Color(204, 204, 204));
         jButtonVender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/caja-registradora.png"))); // NOI18N
         jButtonVender.setText(bundle.getString("label_comenzar_dia")); // NOI18N
         jButtonVender.setBorderPainted(false);
@@ -237,6 +243,7 @@ public class MainView extends AbstractView {
         });
         jPanelContabilidad.add(jButtonVender);
 
+        jButtonVentas.setBackground(new java.awt.Color(204, 204, 204));
         jButtonVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonventas.png"))); // NOI18N
         jButtonVentas.setText(bundle.getString("label_ventas")); // NOI18N
         jButtonVentas.setBorderPainted(false);
@@ -249,6 +256,7 @@ public class MainView extends AbstractView {
         });
         jPanelContabilidad.add(jButtonVentas);
 
+        jButtonArchivos.setBackground(new java.awt.Color(204, 204, 204));
         jButtonArchivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/gastos.png"))); // NOI18N
         jButtonArchivos.setText(bundle.getString("label_gastos")); // NOI18N
         jButtonArchivos.setBorderPainted(false);
@@ -261,6 +269,7 @@ public class MainView extends AbstractView {
         });
         jPanelContabilidad.add(jButtonArchivos);
 
+        jButtonPresupuesto.setBackground(new java.awt.Color(204, 204, 204));
         jButtonPresupuesto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonpresupuesto.png"))); // NOI18N
         jButtonPresupuesto.setText(bundle.getString("label_presupuesto")); // NOI18N
         jButtonPresupuesto.setBorderPainted(false);
@@ -321,6 +330,7 @@ public class MainView extends AbstractView {
         jPanelConfiguracion.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createTitledBorder(null, "Configuración", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
         jPanelConfiguracion.setLayout(new java.awt.GridLayout(1, 0));
 
+        jButtonCopiaSeguridad.setBackground(new java.awt.Color(204, 204, 204));
         jButtonCopiaSeguridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoncopiaseg.png"))); // NOI18N
         jButtonCopiaSeguridad.setText(bundle.getString("label_copia_seguridad")); // NOI18N
         jButtonCopiaSeguridad.setBorderPainted(false);
@@ -333,6 +343,7 @@ public class MainView extends AbstractView {
         });
         jPanelConfiguracion.add(jButtonCopiaSeguridad);
 
+        jButtonCONFIG.setBackground(new java.awt.Color(204, 204, 204));
         jButtonCONFIG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/config.png"))); // NOI18N
         jButtonCONFIG.setText(bundle.getString("label_configuracion")); // NOI18N
         jButtonCONFIG.setBorderPainted(false);
@@ -414,7 +425,7 @@ public class MainView extends AbstractView {
     }//GEN-LAST:event_jButtonAlmacenActionPerformed
 
     private void jButtonStockingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStockingActionPerformed
-        action(MainController.MenuButtons.INVENTARIO);        // TODO add your handling code here:
+        action(MainController.MenuButtons.ACTIVOS);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonStockingActionPerformed
 
     private void jButtonIPVsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIPVsActionPerformed

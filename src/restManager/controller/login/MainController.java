@@ -15,6 +15,7 @@ import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Licence.Licence;
 import restManager.controller.Licence.LicenceController;
+import restManager.controller.almacen.ActivoFijoController;
 import restManager.controller.almacen.AlmacenListController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.areaventa.AreaVentaController;
@@ -99,6 +100,9 @@ public class MainController extends AbstractDialogController<Personal> {
                     break;
                 case IPV:
                     controller = new IPVController(getView());
+                    break;
+                case ACTIVOS:
+                    controller = new ActivoFijoController(getView());
                     break;
                 case COMENZAR_VENTAS:
                     if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > R.NivelAcceso.ECONOMICO.getNivel()) {
@@ -186,7 +190,7 @@ public class MainController extends AbstractDialogController<Personal> {
         // Almacen
         //
         ALMACEN(2),
-        INVENTARIO(2),
+        ACTIVOS(2),
         IPV(2),
         //
         //Contabilidad

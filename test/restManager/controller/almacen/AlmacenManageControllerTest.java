@@ -5,6 +5,7 @@
  */
 package restManager.controller.almacen;
 
+import java.util.Locale;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -31,6 +32,7 @@ public class AlmacenManageControllerTest {
         R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
         R.COIN_SUFFIX = " CUC";
         R.loggedUser = PersonalDAO.getInstance().find("admin");
+        Locale.setDefault(Locale.Category.FORMAT, Locale.ENGLISH); // But the formatting in English
     }
 
     @AfterClass

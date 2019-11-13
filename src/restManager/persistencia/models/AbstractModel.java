@@ -43,8 +43,9 @@ public abstract class AbstractModel<T> implements Model {
         if (!R.PERIRSTENCE_UNIT_NAME.equals(persistenceUnitName)) {
             EMF = emf;
             persistenceUnitName = R.PERIRSTENCE_UNIT_NAME;
+            currentConnection = EMF.createEntityManager();
         }
-        if (EMF == null) {
+        if (currentConnection == null) {
             currentConnection = EMF.createEntityManager();
         }
     }

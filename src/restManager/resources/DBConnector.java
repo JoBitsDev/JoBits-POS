@@ -38,6 +38,7 @@ public class DBConnector {
     private void initConnections() {
 
         try {
+            AbstractModel.getEMF().getCache().evictAll();
             AbstractModel.setCurrentConnection(AbstractModel.getEMF().createEntityManager());
             CONECTADO = true;
         } catch (Exception e) {
