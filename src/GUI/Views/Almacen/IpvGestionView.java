@@ -375,7 +375,7 @@ public class IpvGestionView extends AbstractView {
     private void updateTableRegistroIpv() {
         try {
             jCheckBox1.setSelected(false);
-            if (jListRegistro.getSelectedValue() == null) {
+            if (jListRegistro.getSelectedValue() != null) {
                 registroList = new ArrayList<>(getController()
                         .getIpvRegistroList(currentSelectedKitchen, R.DATE_FORMAT.parse(jListRegistro.getSelectedValue())));
                 registroList = getController().calculate_IPV_to_Currenr((ArrayList<IpvRegistro>) registroList);

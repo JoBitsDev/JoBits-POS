@@ -134,6 +134,21 @@ public class IPVController extends AbstractDialogController<Ipv> {
         if (instance.getInicio() == null) {
             instance.setInicio((float)0);
         }
+        if (instance.getConsumo()== null) {
+            instance.setConsumo((float)0);
+        }
+        if (instance.getConsumoReal()== null) {
+            instance.setConsumoReal((float)0);
+        }
+        if (instance.getFinal1()== null) {
+            instance.setFinal1((float)0);
+        }
+        if (instance.getFinalReal()== null) {
+            instance.setFinalReal((float)0);
+        }
+        if (instance.getDisponible()== null) {
+            instance.setDisponible((float)0);
+        }
         instance.setDisponible(instance.getEntrada() + instance.getInicio());
         instance.setFinal1(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumo()));
         if (instance.getConsumoReal() != null) {
@@ -148,7 +163,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
 
     public List<IpvRegistro> inicializarIpvs(Date fecha) {
         ArrayList<IpvRegistro> ret = new ArrayList<>();
-        getItems().forEach((x) -> {
+        IpvDAO.getInstance().findAll().forEach((x) -> {
             IpvRegistroPK pk = new IpvRegistroPK(x.getInsumo().getCodInsumo(), x.getCocina().getCodCocina(), fecha);
             IpvRegistro reg = IpvRegistroDAO.getInstance().find(pk);
             if (reg == null) {
