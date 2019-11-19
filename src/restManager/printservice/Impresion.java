@@ -184,16 +184,16 @@ public class Impresion {
         float sumaPorciento = utils.redondeoPorExcesoFloat((subTotalPrint * o.getPorciento()) / 100);
         float totalPrint = subTotalPrint;
         t.alignRight();
-        t.newLine();
         if (SHOW_SUBTOTAL) {
             t.setText(SUBTOTAL + subTotalPrint + MONEDA);
+            t.newLine();
         }
         if (o.getPorciento() != 0) {
-            t.newLine();
             t.setText("+ " + o.getPorciento() + PORCIENTO + sumaPorciento + MONEDA);
             totalPrint = utils.redondeoPorExcesoFloat(subTotalPrint + sumaPorciento);
 
         }
+        t.newLine();
         t.newLine();
 
         addTotal(t, totalPrint);
@@ -771,8 +771,14 @@ public class Impresion {
         addCustomMetaData(t, Z, v.getFecha());
 
         float total = addPvOrden(t, VentaDAO1.getResumenVentas(v));
+        addTotal(t, total);
 
-        addTotalAndFinal(t, total);
+        float porciento = VentaDAO1.getValorTotalPorcientoVenta(v);
+        t.newLine();
+        t.setText("+ " + "Porciento: " + utils.setDosLugaresDecimalesFloat(porciento) + MONEDA);
+        t.newLine();
+        t.setText("Total Real: " + utils.setDosLugaresDecimales(total + porciento));
+        addFinal(t);
 
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
@@ -820,7 +826,7 @@ public class Impresion {
 
         addFinal(t);
 
-        feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION,TipoImpresion.RESUMEN);
+        feedPrinter(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION, TipoImpresion.RESUMEN);
 
     }
 

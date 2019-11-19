@@ -612,6 +612,10 @@ public class VentaDAO1 {
         }
         return utils.setDosLugaresDecimalesFloat(ret);
     }
+    
+    public static float getValorTotalPorcientoVenta(Venta v) {
+        return getValorTotalVentas(v)-getValorTotalVentasNeta(v);
+    }
 
     //******************************************************************************************************************
     //******************************************************************************************************************
@@ -712,5 +716,7 @@ public class VentaDAO1 {
         }
 
     }
+
+    
 
 }

@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import restManager.algoritmo.Y;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Licence.Licence;
@@ -426,15 +427,26 @@ public class VentaCalendarView extends AbstractView {
         }
         Y alg = new Y(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), getController());
         Venta old = alg.getVentaReal();
-        getController().destroy(VentaDAO.getInstance().find(old.getFecha()), true);
-        alg.getVentaReal().setOrdenList(alg.ejecutarAlgoritmo());
-        alg.getVentaReal().setGastoVentaList(new ArrayList<>());
-        alg.getVentaReal().setVentagastosPagotrabajadores(VentaDAO1.getValorTotalPagoTrabajadores(alg.getVentaReal()));
-        alg.getVentaReal().setVentagastosGastos((float) 0.0);
-        alg.getVentaReal().setVentaTotal((double) VentaDAO1.getValorTotalVentas(alg.getVentaReal()));
-        VentaDAO.getInstance().startTransaction();
-        VentaDAO.getInstance().create(alg.getVentaReal());
-        VentaDAO.getInstance().commitTransaction();
+        Venta newVenta = new Venta();
+        try {
+            getController().destroy(VentaDAO.getInstance().find(old.getFecha()), true);
+            newVenta.setAsistenciaPersonalList(new ArrayList<>());
+            newVenta.setFecha(old.getFecha());
+            newVenta.setOrdenList(alg.ejecutarAlgoritmo());
+            newVenta.setGastoVentaList(new ArrayList<>());
+            newVenta.setVentagastosPagotrabajadores(VentaDAO1.getValorTotalPagoTrabajadores(newVenta));
+            newVenta.setVentagastosGastos((float) 0.0);
+            newVenta.setVentaTotal((double) VentaDAO1.getValorTotalVentas(newVenta));
+            VentaDAO.getInstance().startTransaction();
+            VentaDAO.getInstance().create(newVenta);
+            VentaDAO.getInstance().commitTransaction();
+        } catch (Exception e) {
+            VentaDAO.getInstance().startTransaction();
+            VentaDAO.getInstance().create(old);
+            VentaDAO.getInstance().commitTransaction();
+            JOptionPane.showMessageDialog(this, "La operacion no se ha podido completar correctamente. Contacte con soporte");
+
+        }
     }//GEN-LAST:event_jButtonYActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -622,7 +634,7 @@ public class VentaCalendarView extends AbstractView {
                 for (int selectedRow : jTableCalendar.getSelectedRows()) {
                     Venta v = model.getValueAt(selectedRow, selectedColumn);
                     if (v != null) {
-                    getController().destroy(model.getValueAt(selectedRow, selectedColumn));
+                        getController().destroy(model.getValueAt(selectedRow, selectedColumn));
                     }
                 }
             }

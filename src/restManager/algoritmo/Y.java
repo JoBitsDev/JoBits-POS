@@ -195,7 +195,8 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         });
 
         float valorMaxAjustado = (float) (valorMaximo * (1.1));
-        int i = 0, iteracionesMax = comidas.size() * liquidos.size();
+        int i = 0,
+                iteracionesMax = comidas.size() * liquidos.size();
         while (get.getOrdenvalorMonetario() > valorMaxAjustado && i < iteracionesMax) {
             if (comidas.size() >= liquidos.size()) {
                 iterarEnComidas(liquidos, comidas, valorMaxAjustado, get);
@@ -233,15 +234,19 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
     }
 
     private void actualizarValorMonetarioOrden(List<ProductovOrden> liquidos, List<ProductovOrden> comidas, Orden get) {
-        float total = 0;
+        float totalVenta = 0;
+        float totalGasto = 0;
         for (ProductovOrden x : liquidos) {
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            totalVenta += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            totalGasto += x.getCantidad() * x.getProductoVenta().getGasto();
         }
         for (ProductovOrden x : comidas) {
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            totalVenta += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            totalGasto += x.getCantidad() * x.getProductoVenta().getGasto();
         }
 
-        get.setOrdenvalorMonetario(utils.redondeoPorExcesoFloat(total * (1 + (get.getPorciento() / 100))));
+        get.setOrdenvalorMonetario(utils.redondeoPorExcesoFloat(totalVenta * (1 + (get.getPorciento() / 100))));
+        get.setOrdengastoEninsumos(utils.redondeoPorExcesoFloat(totalGasto * (1 + (get.getPorciento() / 100))));
     }
 
     private String actualizarUltimoCodOrden() {
@@ -288,6 +293,8 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         monto_A_Ajustar = (float) (ventaReal.getVentaTotal() * porciento_a_ajustar / 100);
 
         int i = 0;
+
+        //ejecutamos algoritmo
         while (monto_A_Ajustar > montoRecaudado && puntero < cantidadOrdenes) {
             float valorMaxOrden = (monto_A_Ajustar - montoRecaudado) / limiteOrdenes;
             if (puntero % 2 == 0) {
@@ -348,8 +355,8 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         public boolean isComida(ProductoVenta p) {
             return !isLiquido(p);
         }
-        
-        public boolean isExcluido(ProductoVenta p){
+
+        public boolean isExcluido(ProductoVenta p) {
             for (Seccion s : excluidos) {
                 if (p.getSeccionnombreSeccion().equals(s)) {
                     return true;
