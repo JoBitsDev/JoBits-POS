@@ -16,8 +16,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.NonUniqueResultException;
 import javax.swing.JOptionPane;
 import restManager.algoritmo.Y;
+import restManager.backup.BackUp;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Licence.Licence;
 import restManager.controller.Licence.LicenceController;
@@ -428,6 +430,9 @@ public class VentaCalendarView extends AbstractView {
         Y alg = new Y(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), getController());
         Venta old = alg.getVentaReal();
         Venta newVenta = new Venta();
+        if (new BackUp().ExisteVentaEnLocal(old)) {
+            throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
+        }
         try {
             getController().destroy(VentaDAO.getInstance().find(old.getFecha()), true);
             newVenta.setAsistenciaPersonalList(new ArrayList<>());
@@ -447,6 +452,13 @@ public class VentaCalendarView extends AbstractView {
             JOptionPane.showMessageDialog(this, "La operacion no se ha podido completar correctamente. Contacte con soporte");
 
         }
+        if (VentaDAO.getInstance().find(old.getFecha()) == null) {
+            VentaDAO.getInstance().startTransaction();
+            VentaDAO.getInstance().create(old);
+            VentaDAO.getInstance().commitTransaction();
+            JOptionPane.showMessageDialog(this, "La operacion no se ha podido completar correctamente. Contacte con soporte");
+        }
+
     }//GEN-LAST:event_jButtonYActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

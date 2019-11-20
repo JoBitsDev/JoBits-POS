@@ -83,6 +83,12 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         this.tipoBackUp = tipoBackUp;
     }
 
+    public BackUp() {
+        this.tipoBackUp = TipoBackUp.NULO;
+        emf = Persistence.createEntityManagerFactory(R.RESOURCE_BUNDLE.getString("unidad_persistencia_local"));
+        em = emf.createEntityManager();
+    }
+
     //
     // Metodos Publicos
     //
@@ -109,6 +115,15 @@ public class BackUp extends SwingWorker<Boolean, Float> {
 
     public void setBorradoRemoto(boolean borradoRemoto) {
         this.borradoRemoto = borradoRemoto;
+    }
+
+    public boolean ExisteVentaEnLocal(Venta v) {
+        if (tipoBackUp == TipoBackUp.NULO) {
+            Venta venta = em.find(Venta.class, v.getFecha());
+            return venta != null;
+        } else {
+            return false;
+        }
     }
 
     //
@@ -565,6 +580,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
 // Clase Interna
 //
     public enum TipoBackUp {
+        NULO,
         PERSONAL,
         PRODUCTOS,
         VENTA,
