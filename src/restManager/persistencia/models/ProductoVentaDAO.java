@@ -11,6 +11,7 @@ import java.util.List;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Carta;
 import restManager.persistencia.Mesa;
+import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.Seccion;
 
@@ -39,18 +40,20 @@ public class ProductoVentaDAO extends AbstractModel<ProductoVenta> {
 
     @Override
     public void edit(ProductoVenta entity) {
-        ProductoVenta oldProd = find(entity.getPCod());
         startTransaction();
-        for (int i = 0; i < oldProd.getProductoInsumoList().size(); i++) {
-            getEntityManager().remove(oldProd.getProductoInsumoList().get(i));
-        }
+        super.edit(entity);
         commitTransaction();
+        ArrayList<ProductoInsumo> list = new ArrayList<>(entity.getProductoInsumoList());
+        getEntityManager().refresh(entity);
         startTransaction();
         for (int i = 0; i < entity.getProductoInsumoList().size(); i++) {
-            getEntityManager().persist(entity.getProductoInsumoList().get(i));
+            getEntityManager().remove(entity.getProductoInsumoList().get(i));
         }
-        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
-
+        entity.setProductoInsumoList(null);
+        commitTransaction();
+        super.edit(entity);
+        entity.setProductoInsumoList(list);
+        super.edit(entity);
         commitTransaction();
     }
 
@@ -59,7 +62,7 @@ public class ProductoVentaDAO extends AbstractModel<ProductoVenta> {
         findAll().stream().filter((x) -> (x.getVisible())).forEachOrdered((x) -> {
             ret.add(x);
         });
-        Collections.sort(ret,(o1, o2) -> {
+        Collections.sort(ret, (o1, o2) -> {
             return o1.getNombre().compareTo(o2.getNombre());
         });
         return ret;
@@ -72,11 +75,11 @@ public class ProductoVentaDAO extends AbstractModel<ProductoVenta> {
                 productosDisp.addAll(new ArrayList<>(s.getProductoVentaList()));
             }
         }
-          List<ProductoVenta> ret = new ArrayList<>();
+        List<ProductoVenta> ret = new ArrayList<>();
         productosDisp.stream().filter((x) -> (x.getVisible())).forEachOrdered((x) -> {
             ret.add(x);
         });
-        Collections.sort(ret,(o1, o2) -> {
+        Collections.sort(ret, (o1, o2) -> {
             return o1.getNombre().compareTo(o2.getNombre());
         });
         return ret;
