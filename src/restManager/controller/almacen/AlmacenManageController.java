@@ -296,7 +296,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
             }
             throw new restManager.exceptions.ValidatingException(getView(), "No hay suficiente cantidad de " + x.getTransaccion().getInsumocodInsumo() + " para extraer del almacen");
         }
-        controller.darEntrada(x.getTransaccion().getInsumocodInsumo(), x.getCocinacodCocina(), x.getTransaccion().getFecha(), x.getTransaccion().getCantidad());
+        controller.darEntradaExistencia(x.getTransaccion().getInsumocodInsumo(), x.getCocinacodCocina(), x.getTransaccion().getFecha(), x.getTransaccion().getCantidad());
         float precioMedio = insumoADarSalida.getValorMonetario() / insumoADarSalida.getCantidad();
         insumoADarSalida.setCantidad(insumoADarSalida.getCantidad() - x.getTransaccion().getCantidad());
         insumoADarSalida.setValorMonetario(insumoADarSalida.getValorMonetario() - x.getTransaccion().getCantidad() * precioMedio);

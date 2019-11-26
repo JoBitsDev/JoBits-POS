@@ -9,6 +9,7 @@ import GUI.Views.login.MainView;
 import GUI.copiaSegView;
 import java.awt.Container;
 import java.text.ParseException;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import restManager.controller.AbstractController;
@@ -116,12 +117,10 @@ public class MainController extends AbstractDialogController<Personal> {
                             controller = new VentaDetailController(getView());
                         } else {
                             try {
-                                Venta v = VentaDAO.getInstance().find(R.DATE_FORMAT.parse(date));
-                                if (v == null) {
-                                    controller = new VentaDetailController(getView(), R.DATE_FORMAT.parse(date));
-                                } else {
-                                    controller = new VentaDetailController(v, getView());
-                                }
+                                Date fechaVenta = R.DATE_FORMAT.parse(date);
+                                Venta v = new VentaDetailController().getDiaDeVenta(fechaVenta);
+                                controller = new VentaDetailController(v, getView());
+                                
                             } catch (ParseException ex) {
                                 showErrorDialog(getView(), ex.getMessage());
                             }

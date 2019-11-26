@@ -35,6 +35,7 @@ import restManager.persistencia.IpvRegistro;
 import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.ProductoInsumo;
+import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
 import restManager.persistencia.PuestoTrabajo;
 import restManager.persistencia.Venta;
@@ -231,6 +232,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             //revisar si ya el dia esta creado pero no terminado
             ret = VentaDAO.getInstance().find(new Date());
             if (ret != null) {
+                new IPVController().inicializarExistencias(ret.getFecha());
                 new IPVController().inicializarIpvs(ret.getFecha());
                 return ret;
             }
@@ -242,6 +244,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             ret.setOrdenList(new ArrayList<>());
             ret.setFecha(new Date());
             create(ret, true);
+            new IPVController().inicializarExistencias(ret.getFecha());
             new IPVController().inicializarIpvs(ret.getFecha());
             return ret;
         } else {
@@ -253,6 +256,8 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             //revisar si la fecha donde se quiere crear el dia ya esta creada
             ret = VentaDAO.getInstance().find(fecha);
             if (ret != null) {
+                new IPVController().inicializarExistencias(ret.getFecha());
+                new IPVController().inicializarIpvs(ret.getFecha());
                 return ret;
             }
             // crear el dia con la fecha pasada por parametros
@@ -261,6 +266,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             ret.setVentagastosEninsumos(0.0);
             ret.setOrdenList(new ArrayList<>());
             create(ret, true);
+            new IPVController().inicializarExistencias(ret.getFecha());
             new IPVController().inicializarIpvs(ret.getFecha());
             return ret;
         }
@@ -312,12 +318,42 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public Float getGastoTotalDeInsumo(IpvRegistro i) {
         float total = 0;
         for (Orden x : getInstance().getOrdenList()) {
-            for (ProductovOrden p : x.getProductovOrdenList()) {
-                if (p.getProductoVenta().getCocinacodCocina().equals(i.getIpv().getCocina())) {
-                    for (ProductoInsumo in : p.getProductoVenta().getProductoInsumoList()) {
-                        if (in.getInsumo().equals(i.getIpv().getInsumo())) {
-                            total += p.getCantidad() * in.getCantidad();
+            if (x.getHoraTerminada() != null) {
+                for (ProductovOrden p : x.getProductovOrdenList()) {
+                    if (p.getProductoVenta().getCocinacodCocina().equals(i.getIpv().getCocina())) {
+                        for (ProductoInsumo in : p.getProductoVenta().getProductoInsumoList()) {
+                            if (in.getInsumo().equals(i.getIpv().getInsumo())) {
+                                total += p.getCantidad() * in.getCantidad();
+                            }
                         }
+                    }
+                }
+            }
+        }
+        return total;
+    }
+
+    public float getVentaTotalDelProducto(ProductoVenta productoVenta) {
+        float total = 0;
+        for (Orden x : getInstance().getOrdenList()) {
+            if (x.getHoraTerminada() != null && !x.getDeLaCasa()) {
+                for (ProductovOrden p : x.getProductovOrdenList()) {
+                    if (productoVenta.equals(p.getProductoVenta())) {
+                        total += p.getCantidad();
+                    }
+                }
+            }
+        }
+        return total;
+    }
+
+    public float getAutorizosTotalDelProducto(ProductoVenta productoVenta) {
+        float total = 0;
+        for (Orden x : getInstance().getOrdenList()) {
+            if (x.getDeLaCasa() && x.getHoraTerminada() != null) {
+                for (ProductovOrden p : x.getProductovOrdenList()) {
+                    if (productoVenta.equals(p.getProductoVenta())) {
+                        total += p.getCantidad();
                     }
                 }
             }

@@ -12,6 +12,7 @@ import java.awt.print.PrinterException;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,7 @@ import restManager.persistencia.Insumo;
 import restManager.persistencia.Ipv;
 import restManager.persistencia.IpvPK;
 import restManager.persistencia.IpvRegistro;
+import restManager.persistencia.IpvVentaRegistro;
 import restManager.printservice.ComponentPrinter;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
@@ -42,6 +44,7 @@ public class IpvGestionView extends AbstractView {
     private Cocina currentSelectedKitchen;
     private AbstractCrossReferenePanel<Ipv, Insumo> panelIPVAsign;
     private List<IpvRegistro> registroList;
+    private ArrayList<IpvVentaRegistro> ipvList;
 
     public IpvGestionView(AbstractView parent, AbstractDialogController controller) {
         super(DialogType.FULL_SCREEN, controller, parent);
@@ -58,6 +61,7 @@ public class IpvGestionView extends AbstractView {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTabbedPane2 = new javax.swing.JTabbedPane();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelRegistros = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -72,6 +76,17 @@ public class IpvGestionView extends AbstractView {
         jPanel4 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanelData = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanelIPV = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTableIPV = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel2 = new javax.swing.JLabel();
         jPanelOptions = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -180,7 +195,83 @@ public class IpvGestionView extends AbstractView {
         jPanelData.setLayout(new java.awt.BorderLayout());
         jTabbedPane1.addTab("Ajustes Existencias", new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/controles.png")), jPanelData, "Ajustar que insumo va en que IPV"); // NOI18N
 
-        getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+        jTabbedPane2.addTab("Existencias", jTabbedPane1);
+
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jPanelIPV.setLayout(new java.awt.BorderLayout(5, 0));
+
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        jTableIPV.setAutoCreateRowSorter(true);
+        jTableIPV.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jTableIPV.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTableIPV.setRowHeight(25);
+        jTableIPV.setRowMargin(4);
+        jScrollPane4.setViewportView(jTableIPV);
+
+        jPanel5.add(jScrollPane4, java.awt.BorderLayout.CENTER);
+
+        jPanelIPV.add(jPanel5, java.awt.BorderLayout.CENTER);
+
+        jPanel6.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel6.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
+        jPanel6.setLayout(new java.awt.GridLayout());
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButton5.setMnemonic('i');
+        jButton5.setText(bundle.getString("label_imprimir")); // NOI18N
+        jButton5.setToolTipText("Imprimir");
+        jButton5.setBorderPainted(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton5);
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/agregar_circular.png"))); // NOI18N
+        jButton6.setMnemonic('e');
+        jButton6.setToolTipText(bundle.getString("label_dar_entada")); // NOI18N
+        jButton6.setBorderPainted(false);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton6);
+
+        jPanelIPV.add(jPanel6, java.awt.BorderLayout.PAGE_END);
+
+        jPanel7.setLayout(new java.awt.BorderLayout());
+
+        jDateChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser1PropertyChange(evt);
+            }
+        });
+        jPanel7.add(jDateChooser1, java.awt.BorderLayout.EAST);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel2.setText("Fecha");
+        jPanel7.add(jLabel2, java.awt.BorderLayout.CENTER);
+
+        jPanelIPV.add(jPanel7, java.awt.BorderLayout.PAGE_START);
+
+        jPanel3.add(jPanelIPV, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane2.addTab("IPV", jPanel3);
+
+        getContentPane().add(jTabbedPane2, java.awt.BorderLayout.CENTER);
 
         jPanelOptions.setBackground(new java.awt.Color(204, 204, 204));
         jPanelOptions.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
@@ -209,6 +300,11 @@ public class IpvGestionView extends AbstractView {
                 jComboBox1ItemStateChanged(evt);
             }
         });
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
         jPanelOptions.add(jComboBox1, java.awt.BorderLayout.LINE_END);
 
         getContentPane().add(jPanelOptions, java.awt.BorderLayout.PAGE_START);
@@ -228,7 +324,7 @@ public class IpvGestionView extends AbstractView {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        getController().darEntrada(
+        getController().darEntradaExistencia(
                 ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getObjectAtSelectedRow());
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -270,17 +366,46 @@ public class IpvGestionView extends AbstractView {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        MessageFormat footer = new MessageFormat("-Pag {0}-");
+        MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser1.getDate()));
+        try {
+            ComponentPrinter.printComponent(jTableIPV,
+                    "IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser1.getDate()), true);
+            jTableIPV.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (PrinterException ex) {
+            Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+ getController().darEntradaIPV(
+                ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel()).getObjectAtSelectedRow());        
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
+        if (evt.getPropertyName().equals("date")) {
+            updatePanelIPV();
+        }
+    }//GEN-LAST:event_jDateChooser1PropertyChange
+
     @Override
     public void updateView() {
         if (currentSelectedKitchen != null && panelIPVAsign != null) {
             updatePanelAjustes();
             updatePanelRegistros();
+            updatePanelIPV();
         }
 
     }
 
     @Override
     public void fetchComponentData() {
+        jDateChooser1.setDate(new Date());
         jComboBox1.setModel(new RestManagerComboBoxModel<>(getController().getCocinaList()));
         jComboBox1.setSelectedIndex(0);
         currentSelectedKitchen = (Cocina) jComboBox1.getSelectedItem();
@@ -347,25 +472,107 @@ public class IpvGestionView extends AbstractView {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<Cocina> jComboBox1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jListRegistro;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanelData;
+    private javax.swing.JPanel jPanelIPV;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelRegistros;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable jTableIPV;
     private javax.swing.JTable jTableRegistro;
     // End of variables declaration//GEN-END:variables
 
     private void updatePanelRegistros() {
-        jListRegistro.setModel(new RestManagerListModel<>(getController().getIpvRegistroList(currentSelectedKitchen)));
+        jListRegistro.setModel(new RestManagerListModel<>(getController().getExistenciaRegistroList(currentSelectedKitchen)));
 
+    }
+
+    private void updatePanelIPV() {
+        if (jDateChooser1.getDate() != null) {
+            ipvList = new ArrayList<>(getController()
+                    .getIpvRegistroVentaList(currentSelectedKitchen, jDateChooser1.getDate()));
+            ipvList = getController().calcular_existencia_ipv_ventas(ipvList);
+        } else {
+            ipvList = new ArrayList<>();
+        }
+        jTableIPV.setModel(new RestManagerAbstractTableModel<IpvVentaRegistro>(ipvList,
+                jTableIPV) {
+            @Override
+            public int getColumnCount() {
+                return 9;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return items.get(rowIndex).getProductoVenta().getNombre();
+                    case 1:
+                        return items.get(rowIndex).getInicio();
+                    case 2:
+                        return items.get(rowIndex).getEntrada();
+                    case 3:
+                        return items.get(rowIndex).getDisponible();
+                    case 4:
+                        return items.get(rowIndex).getAutorizos();
+                    case 5:
+                        return items.get(rowIndex).getVendidos();
+                    case 6:
+                        return items.get(rowIndex).getPrecioVenta();
+                    case 7:
+                        return utils.setDosLugaresDecimales(items.get(rowIndex).getVendidos() * items.get(rowIndex).getProductoVenta().getPrecioVenta());
+                    case 8:
+                        return items.get(rowIndex).getFinal1();
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0:
+                        return "Producto Venta";
+                    case 1:
+                        return "Inicio";
+                    case 2:
+                        return "Entrada";
+                    case 3:
+                        return "Disponible";
+                    case 4:
+                        return "Autorizo";
+                    case 5:
+                        return "Venta";
+                    case 6:
+                        return "Precio Venta";
+                    case 7:
+                        return "Importe";
+                    case 8:
+                        return "Final";
+                    default:
+                        return null;
+                }
+            }
+        });
+        jTableIPV.getRowSorter().toggleSortOrder(0);
     }
 
     private void updatePanelAjustes() {
@@ -378,7 +585,7 @@ public class IpvGestionView extends AbstractView {
             if (jListRegistro.getSelectedValue() != null) {
                 registroList = new ArrayList<>(getController()
                         .getIpvRegistroList(currentSelectedKitchen, R.DATE_FORMAT.parse(jListRegistro.getSelectedValue())));
-                registroList = getController().calculate_IPV_to_Currenr((ArrayList<IpvRegistro>) registroList);
+                registroList = getController().calcular_existencia_a_dia((ArrayList<IpvRegistro>) registroList);
             } else {
                 registroList = new ArrayList<>();
             }
@@ -471,4 +678,5 @@ public class IpvGestionView extends AbstractView {
             Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }
