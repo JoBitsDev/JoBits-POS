@@ -40,7 +40,7 @@ public class VentaDetailControllerTest {
 
     @Test
     public void testVisualResumen() {
-        controller = new VentaDetailController(VentaDAO.getInstance().findAll().get(20), new JDialog());
+        controller = new VentaDetailController(VentaDAO.getInstance().findAll().get(0), new JDialog());
     }
 
     /**

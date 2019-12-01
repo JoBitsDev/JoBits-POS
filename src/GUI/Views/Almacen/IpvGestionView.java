@@ -225,7 +225,7 @@ public class IpvGestionView extends AbstractView {
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
         jPanel6.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
-        jPanel6.setLayout(new java.awt.GridLayout());
+        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jButton5.setMnemonic('i');
@@ -367,20 +367,12 @@ public class IpvGestionView extends AbstractView {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        MessageFormat footer = new MessageFormat("-Pag {0}-");
-        MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser1.getDate()));
-        try {
-            ComponentPrinter.printComponent(jTableIPV,
-                    "IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser1.getDate()), true);
-            jTableIPV.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-        } catch (PrinterException ex) {
-            Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Imprimir();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
- getController().darEntradaIPV(
-                ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel()).getObjectAtSelectedRow());        
+        getController().darEntradaIPV(
+                ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel()).getObjectAtSelectedRow());
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -677,6 +669,20 @@ public class IpvGestionView extends AbstractView {
         } catch (PrinterException ex) {
             Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public void Imprimir() {
+
+        MessageFormat footer = new MessageFormat("Entregado por         Recibido por         Revisado por");
+        MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser1.getDate()));
+        try {
+            ComponentPrinter.printComponent(jTableIPV, "IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser1.getDate()), true);
+            jTableIPV.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (PrinterException ex) {
+            Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

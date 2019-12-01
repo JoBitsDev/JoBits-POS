@@ -61,15 +61,11 @@ public class TransaccionesListController extends AbstractListController<Transacc
         getView().setVisible(true);
     }
 
-    @Override
-    public List<Transaccion> getItems() {
-        return a.getTransaccionList();
-    }
 
     @Override
     public void destroy(Transaccion selected) {
         super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
-        getModel().getEntityManager().refresh(selected.getAlmacencodAlmacen());
+        //getModel().getEntityManager().refresh(selected.getAlmacencodAlmacen());
         getView().updateView();
    //     selected.getAlmacen().getTransaccionList().remove(selected);
 //        getModel().startTransaction();

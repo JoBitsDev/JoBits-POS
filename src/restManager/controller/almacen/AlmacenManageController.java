@@ -8,6 +8,7 @@ package restManager.controller.almacen;
 import GUI.Views.AbstractView;
 import GUI.Views.Almacen.AlmacenEditView;
 import java.awt.Window;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -23,6 +24,7 @@ import restManager.persistencia.Almacen;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
 import restManager.persistencia.InsumoAlmacen;
+import restManager.persistencia.Operacion;
 import restManager.persistencia.Transaccion;
 import restManager.persistencia.TransaccionEntrada;
 import restManager.persistencia.TransaccionMerma;
@@ -33,9 +35,11 @@ import restManager.persistencia.models.AlmacenDAO;
 import restManager.persistencia.models.CocinaDAO;
 import restManager.persistencia.models.InsumoAlmacenDAO;
 import restManager.persistencia.models.InsumoDAO;
+import restManager.persistencia.models.OperacionDAO;
 import restManager.persistencia.models.TransaccionDAO;
 import restManager.persistencia.models.TransaccionEntradaDAO;
 import restManager.persistencia.models.TransaccionMermaDAO;
+import restManager.persistencia.volatil.TransaccionSimple;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.util.utils;
@@ -153,6 +157,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
 
     /**
      *
+     * @param o
      * @param ins
      * @param tipo 0-entrada, 1- salida, 2-merma, 3 traspaso
      * @param destino sino es de tipo destino este parametro es nulo
@@ -161,24 +166,24 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      * @param importe
      * @param causaRebaja
      */
-    public void crearTransaccion(InsumoAlmacen ins, int tipo, Cocina destino, Almacen destinoTraspaso, float cantidad, float importe, String causaRebaja) {
+    public void crearTransaccion(Operacion o,InsumoAlmacen ins, int tipo, Cocina destino, Almacen destinoTraspaso, float cantidad, float importe, String causaRebaja, boolean showSuccesDialog) {
         TransaccionDetailController controller = new TransaccionDetailController();
         controller.setView(getView());
         getModel().startTransaction();
         switch (tipo) {
             case 0:
                 if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " por " + importe + R.COIN_SUFFIX)) {
-                    controller.addTransaccionEntrada(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, importe);
+                    controller.addTransaccionEntrada(o,ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, importe);
                 }
                 break;
             case 1:
                 if (showConfirmDialog(getView(), "Desea dar salida a " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " hacia " + destino)) {
-                    controller.addTransaccionSalida(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad);
+                    controller.addTransaccionSalida(o,ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad);
                 }
                 break;
             case 2:
                 if (showConfirmDialog(getView(), "Desea rebajar  " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " debido a " + causaRebaja)) {
-                    controller.addTransaccionRebaja(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, causaRebaja);
+                    controller.addTransaccionRebaja(o,ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, causaRebaja);
                 }
                 break;
             case 3:
@@ -186,7 +191,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
                     throw new ValidatingException(getView(), "La cantidad a transferir tiene que ser mayor a la cantidad existente");
                 }
                 if (showConfirmDialog(getView(), "Desea traspasar " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " hacia " + destinoTraspaso)) {
-                    controller.addTransaccionTraspaso(ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destinoTraspaso, cantidad);
+                    controller.addTransaccionTraspaso(o,ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destinoTraspaso, cantidad);
                 }
                 break;
             default:
@@ -366,5 +371,46 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         instance.setValorMonetario(total);
         update(instance, true);
         getModel().getEntityManager().getEntityManagerFactory().getCache().evict(Almacen.class);
+    }
+
+    public void crearOperacion(ArrayList<TransaccionSimple> transacciones, CheckBoxType tipoOperacion, Date date, String recibo) {
+        Operacion o = new Operacion();
+        o.setAlmacen(getInstance());
+        o.setFecha(date);
+        o.setHora(new Date());
+        o.setNoRecibo(recibo);
+        getModel().startTransaction();
+        OperacionDAO.getInstance().create(o);
+        getModel().commitTransaction();
+        for (TransaccionSimple t : transacciones) {
+            switch (tipoOperacion) {
+                case ENTRADA:
+                    crearTransaccion(o,t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), t.getMonto(), null,false);break;
+                case REBAJA:
+                    crearTransaccion(o,t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), -1, t.getCausa(),false);break;
+                case SALIDA:
+                    crearTransaccion(o,t.getInsumo(), tipoOperacion.getNumero(), t.getcDestino(), null, t.getCantidad(), -1, null,false);break;
+                case TRASPASO:
+                    crearTransaccion(o,t.getInsumo(), tipoOperacion.getNumero(), null, t.getaDestino(), t.getCantidad(), -1, null,false);break;
+            }
+        }
+    }
+
+    public enum CheckBoxType {
+        ENTRADA(0),
+        REBAJA(2),
+        SALIDA(1),
+        TRASPASO(3);
+
+        final int numero;
+
+        CheckBoxType(int numero) {
+            this.numero = numero;
+        }
+
+        public int getNumero() {
+            return numero;
+        }
+
     }
 }

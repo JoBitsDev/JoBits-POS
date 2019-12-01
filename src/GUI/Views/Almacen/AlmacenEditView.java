@@ -27,6 +27,7 @@ import restManager.controller.AbstractDetailController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Controller;
 import restManager.controller.almacen.AlmacenManageController;
+import restManager.controller.almacen.AlmacenManageController.CheckBoxType;
 import restManager.controller.almacen.TransaccionDetailController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
@@ -236,7 +237,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanelTransformarEn.add(modelTransformacion);
         jLabelNombreAlmacen.setText(getInstance().getNombre());
         if (getInstance().getCentroElaboracion()) {
-            jCheckBox1.setSelected(true);
             jLabelNombreAlmacen.setForeground(elaboracionColor);
             jXLabelTotalAlmacen.setForeground(elaboracionColor);
             jXLabelValorTotal.setForeground(elaboracionColor);
@@ -290,7 +290,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanel3 = new javax.swing.JPanel();
         jLabelNombreAlmacen = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -330,6 +329,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jXLabelTotalAlmacen = new org.jdesktop.swingx.JXLabel();
         jXLabelValorTotal = new org.jdesktop.swingx.JXLabel();
         jPanel2 = new javax.swing.JPanel();
+        jButtonVerFichasEntrada1 = new javax.swing.JButton();
         jButtonDarReporte = new javax.swing.JButton();
         jButtonModificarStock = new javax.swing.JButton();
         jButtonVerFichasEntrada = new javax.swing.JButton();
@@ -357,17 +357,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
             }
         });
         jPanel3.add(jButton1, java.awt.BorderLayout.WEST);
-
-        jCheckBox1.setText("Centro Elaboracion");
-        jCheckBox1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jCheckBox1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jCheckBox1, java.awt.BorderLayout.LINE_END);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
@@ -610,6 +599,14 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
 
+        jButtonVerFichasEntrada1.setText(bundle.getString("label_nuevaFactura")); // NOI18N
+        jButtonVerFichasEntrada1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVerFichasEntrada1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonVerFichasEntrada1);
+
         jButtonDarReporte.setText(bundle.getString("label_reporte")); // NOI18N
         jButtonDarReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -687,19 +684,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         onCheckedCheckBox(CheckBoxType.REBAJA);
     }//GEN-LAST:event_jRadioButtonRebajaActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        if (jCheckBox1.isSelected()) {
-            jLabelNombreAlmacen.setForeground(elaboracionColor);
-            jXLabelTotalAlmacen.setForeground(elaboracionColor);
-            jXLabelValorTotal.setForeground(elaboracionColor);
-        } else {
-            jLabelNombreAlmacen.setForeground(Color.BLACK);
-            jXLabelTotalAlmacen.setForeground(Color.BLACK);
-            jXLabelValorTotal.setForeground(Color.BLACK);
-        }
-        getController().setCentroElaboracion(jCheckBox1.isSelected());
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
     private void jRadioButtonTraspasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTraspasoActionPerformed
         onCheckedCheckBox(CheckBoxType.TRASPASO);
     }//GEN-LAST:event_jRadioButtonTraspasoActionPerformed
@@ -707,6 +691,10 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private void jButtonConfirmarTransformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarTransformacionActionPerformed
         getController().crearTransformacion(model.getHandler().getTableModel().getObjectAtSelectedRow(),(float)jSpinnerTransformar.getValue(),modelTransformacion.getHandler().getTableModel().getItems(),(Almacen)jComboBoxAlDestTransformacion.getSelectedItem());
     }//GEN-LAST:event_jButtonConfirmarTransformacionActionPerformed
+
+    private void jButtonVerFichasEntrada1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerFichasEntrada1ActionPerformed
+       OperacionView view =  new OperacionView( getController(), this, true);
+    }//GEN-LAST:event_jButtonVerFichasEntrada1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -717,7 +705,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonModificarStock;
     private javax.swing.JButton jButtonVerFichasEntrada;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JButton jButtonVerFichasEntrada1;
     private javax.swing.JComboBox<Almacen> jComboBoxAlDestTransformacion;
     private javax.swing.JComboBox<Almacen> jComboBoxAlmacen;
     private javax.swing.JComboBox<Cocina> jComboBoxPuntoElab;
@@ -784,22 +772,22 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
             throw new ValidatingException(this, "La cantidad no puede ser 0");
         }
         if (jRadioButtonEntrada.isSelected()) {
-            getController().crearTransaccion(ins, 0, null, null, cantidad, monto, causa);
+            getController().crearTransaccion(null,ins, 0, null, null, cantidad, monto, causa,true);
         }
         if (jRadioButtonSalida.isSelected()) {
-            getController().crearTransaccion(ins, 1, (Cocina) jComboBoxPuntoElab.getSelectedItem(), null, cantidad, monto, causa);
+            getController().crearTransaccion(null,ins, 1, (Cocina) jComboBoxPuntoElab.getSelectedItem(), null, cantidad, monto, causa,true);
         }
         if (jRadioButtonRebaja.isSelected()) {
             if (causa == null || causa.isEmpty()) {
                 throw new ValidatingException(this, "La causa de la rebaja no puede estar vacía");
             }
-            getController().crearTransaccion(ins, 2, null, null, cantidad, monto, causa);
+            getController().crearTransaccion(null,ins, 2, null, null, cantidad, monto, causa,true);
         }
         if (jRadioButtonTraspaso.isSelected()) {
             if (getInstance().equals(jComboBoxAlmacen.getSelectedItem())) {
                 throw new ValidatingException(this, "El almacen destino para el traspaso debe ser diferente al abierto");
             }
-            getController().crearTransaccion(ins, 3, null, (Almacen) jComboBoxAlmacen.getSelectedItem(), cantidad, monto, causa);
+            getController().crearTransaccion(null,ins, 3, null, (Almacen) jComboBoxAlmacen.getSelectedItem(), cantidad, monto, causa,true);
         }
 
 //        model.getHandler().getTableModel().fireTableDataChanged();
@@ -812,8 +800,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jSpinnerMonto.setEnabled(tipo == CheckBoxType.ENTRADA);
     }
 
-    private enum CheckBoxType {
-        ENTRADA, REBAJA, SALIDA, TRASPASO
-    }
+  
 
 }

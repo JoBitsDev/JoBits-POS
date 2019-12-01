@@ -36,6 +36,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Almacen.findByValorMonetario", query = "SELECT a FROM Almacen a WHERE a.valorMonetario = :valorMonetario")})
 public class Almacen implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacen")
+    private List<Operacion> operacionList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacenDestino")
     private List<TransaccionTraspaso> transaccionTraspasoList;
 
@@ -54,8 +57,6 @@ public class Almacen implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "valor_monetario")
     private Float valorMonetario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacencodAlmacen")
-    private List<Transaccion> transaccionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacen")
     private List<InsumoAlmacen> insumoAlmacenList;
 
@@ -96,14 +97,6 @@ public class Almacen implements Serializable {
 
     public void setValorMonetario(Float valorMonetario) {
         this.valorMonetario = valorMonetario;
-    }
-
-    public List<Transaccion> getTransaccionList() {
-        return transaccionList;
-    }
-
-    public void setTransaccionList(List<Transaccion> transaccionList) {
-        this.transaccionList = transaccionList;
     }
 
     public List<InsumoAlmacen> getInsumoAlmacenList() {
@@ -153,6 +146,14 @@ public class Almacen implements Serializable {
 
     public void setTransaccionTraspasoList(List<TransaccionTraspaso> transaccionTraspasoList) {
         this.transaccionTraspasoList = transaccionTraspasoList;
+    }
+
+    public List<Operacion> getOperacionList() {
+        return operacionList;
+    }
+
+    public void setOperacionList(List<Operacion> operacionList) {
+        this.operacionList = operacionList;
     }
 
 }

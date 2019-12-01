@@ -1,0 +1,33 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package restManager.persistencia.models;
+
+
+import restManager.persistencia.Operacion;
+/**
+ * FirstDream
+ *
+ * @author Jorge
+ *
+ */
+public class OperacionDAO extends AbstractModel<Operacion> {
+
+    private static OperacionDAO INSTANCE = null;
+
+    private OperacionDAO() {
+        super(Operacion.class);
+    }
+
+    public static OperacionDAO getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new OperacionDAO();
+            return INSTANCE;
+        } else {
+            return INSTANCE;
+        }
+    }
+       
+}

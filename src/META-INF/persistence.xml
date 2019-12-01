@@ -45,6 +45,8 @@
     <class>restManager.persistencia.ActivoFijo</class>
     <class>restManager.persistencia.IpvVentaRegistro</class>
     <class>restManager.persistencia.Ubicacion</class>
+    <class>restManager.persistencia.Operacion</class>
+    <class>restManager.persistencia.Proveedor</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://192.168.173.1:5432/Restaurant_Manager_DB"/>
       <property name="javax.persistence.jdbc.user" value="Rest_Admin"/>
@@ -97,6 +99,8 @@
     <class>restManager.persistencia.ActivoFijo</class>
     <class>restManager.persistencia.IpvVentaRegistro</class>
     <class>restManager.persistencia.Ubicacion</class>
+    <class>restManager.persistencia.Operacion</class>
+    <class>restManager.persistencia.Proveedor</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Restaurant_Manager_DB"/>
       <property name="javax.persistence.jdbc.user" value="Rest_Admin"/>

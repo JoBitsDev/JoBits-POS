@@ -43,6 +43,10 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Transaccion.findByDescripcion", query = "SELECT t FROM Transaccion t WHERE t.descripcion = :descripcion")})
 public class Transaccion implements Serializable {
 
+    @JoinColumn(name = "operacionno_operacion", referencedColumnName = "no_operacion")
+    @ManyToOne
+    private Operacion operacionnoOperacion;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -69,9 +73,6 @@ public class Transaccion implements Serializable {
     private TransaccionTraspaso transaccionTraspaso;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "transaccion")
     private TransaccionEntrada transaccionEntrada;
-    @JoinColumn(name = "almacencod_almacen", referencedColumnName = "cod_almacen")
-    @ManyToOne(optional = false)
-    private Almacen almacencodAlmacen;
     @JoinColumn(name = "insumocod_insumo", referencedColumnName = "cod_insumo")
     @ManyToOne(optional = false)
     private Insumo insumocodInsumo;
@@ -157,14 +158,6 @@ public class Transaccion implements Serializable {
         this.transaccionEntrada = transaccionEntrada;
     }
 
-    public Almacen getAlmacencodAlmacen() {
-        return almacencodAlmacen;
-    }
-
-    public void setAlmacencodAlmacen(Almacen almacencodAlmacen) {
-        this.almacencodAlmacen = almacencodAlmacen;
-    }
-
     public Insumo getInsumocodInsumo() {
         return insumocodInsumo;
     }
@@ -211,7 +204,15 @@ public class Transaccion implements Serializable {
 
     @Override
     public String toString() {
-        return getInsumocodInsumo() +"_"+ getAlmacencodAlmacen()+ "_" + getCantidad() ;
+        return getInsumocodInsumo() + "_" + getCantidad() ;
+    }
+
+    public Operacion getOperacionnoOperacion() {
+        return operacionnoOperacion;
+    }
+
+    public void setOperacionnoOperacion(Operacion operacionnoOperacion) {
+        this.operacionnoOperacion = operacionnoOperacion;
     }
 
 }
