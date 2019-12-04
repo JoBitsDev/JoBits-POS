@@ -430,7 +430,7 @@ public class VentaCalendarView extends AbstractView {
         Y alg = new Y(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), getController());
         Venta old = alg.getVentaReal();
         Venta newVenta = new Venta();
-        if (new BackUp().ExisteVentaEnLocal(old)) {
+        if (!new BackUp().ExisteVentaEnLocal(old)) {
             throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
         }
         try {
