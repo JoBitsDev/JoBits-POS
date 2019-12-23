@@ -71,10 +71,10 @@ public class IpvGestionView extends AbstractView {
         jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jListRegistro = new javax.swing.JList<>();
         jPanel4 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
+        jLabel3 = new javax.swing.JLabel();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jPanelData = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanelIPV = new javax.swing.JPanel();
@@ -94,6 +94,12 @@ public class IpvGestionView extends AbstractView {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
+
+        jTabbedPane2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane2StateChanged(evt);
+            }
+        });
 
         jTabbedPane1.setToolTipText("");
 
@@ -162,23 +168,7 @@ public class IpvGestionView extends AbstractView {
 
         jPanelRegistros.add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
-        jListRegistro.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jListRegistro.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { " " };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jListRegistro.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jListRegistro.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jListRegistroValueChanged(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jListRegistro);
-
-        jPanelRegistros.add(jScrollPane3, java.awt.BorderLayout.LINE_START);
-
-        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel4.setLayout(new java.awt.BorderLayout());
 
         jCheckBox1.setText(bundle.getString("label_ocultar_insumos_no_utilizados")); // NOI18N
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -186,7 +176,18 @@ public class IpvGestionView extends AbstractView {
                 jCheckBox1ActionPerformed(evt);
             }
         });
-        jPanel4.add(jCheckBox1);
+        jPanel4.add(jCheckBox1, java.awt.BorderLayout.WEST);
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel3.setText("Fecha");
+        jPanel4.add(jLabel3, java.awt.BorderLayout.CENTER);
+
+        jDateChooser2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jDateChooser2PropertyChange(evt);
+            }
+        });
+        jPanel4.add(jDateChooser2, java.awt.BorderLayout.EAST);
 
         jPanelRegistros.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
@@ -334,12 +335,6 @@ public class IpvGestionView extends AbstractView {
                 ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getObjectAtSelectedRow());
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jListRegistroValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListRegistroValueChanged
-        if (!evt.getValueIsAdjusting()) {
-            updateTableRegistroIpv();
-        }
-    }//GEN-LAST:event_jListRegistroValueChanged
-
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         ocultar_insumos(jCheckBox1.isSelected());
     }//GEN-LAST:event_jCheckBox1ActionPerformed
@@ -385,12 +380,24 @@ public class IpvGestionView extends AbstractView {
         }
     }//GEN-LAST:event_jDateChooser1PropertyChange
 
+    private void jTabbedPane2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane2StateChanged
+        if (jTabbedPane2.getSelectedIndex() == 0) {
+            updateTableRegistroIpv();
+        } else {
+            updatePanelIPV();
+        }
+    }//GEN-LAST:event_jTabbedPane2StateChanged
+
+    private void jDateChooser2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser2PropertyChange
+        if (evt.getPropertyName().equals("date")) {
+            updateTableRegistroIpv();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jDateChooser2PropertyChange
+
     @Override
     public void updateView() {
         if (currentSelectedKitchen != null && panelIPVAsign != null) {
             updatePanelAjustes();
-            updatePanelRegistros();
-            updatePanelIPV();
         }
 
     }
@@ -469,9 +476,10 @@ public class IpvGestionView extends AbstractView {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<Cocina> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jListRegistro;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -484,18 +492,12 @@ public class IpvGestionView extends AbstractView {
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelRegistros;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTableIPV;
     private javax.swing.JTable jTableRegistro;
     // End of variables declaration//GEN-END:variables
-
-    private void updatePanelRegistros() {
-        jListRegistro.setModel(new RestManagerListModel<>(getController().getExistenciaRegistroList(currentSelectedKitchen)));
-
-    }
 
     private void updatePanelIPV() {
         if (jDateChooser1.getDate() != null) {
@@ -572,77 +574,72 @@ public class IpvGestionView extends AbstractView {
     }
 
     private void updateTableRegistroIpv() {
-        try {
-            jCheckBox1.setSelected(false);
-            if (jListRegistro.getSelectedValue() != null) {
-                registroList = new ArrayList<>(getController()
-                        .getIpvRegistroList(currentSelectedKitchen, R.DATE_FORMAT.parse(jListRegistro.getSelectedValue())));
-                registroList = getController().calcular_existencia_a_dia((ArrayList<IpvRegistro>) registroList);
-            } else {
-                registroList = new ArrayList<>();
-            }
-
-            jTableRegistro.setModel(new RestManagerAbstractTableModel<IpvRegistro>(registroList,
-                    jTableRegistro) {
-                @Override
-                public int getColumnCount() {
-                    return 8;
-                }
-
-                @Override
-                public Object getValueAt(int rowIndex, int columnIndex) {
-                    switch (columnIndex) {
-                        case 0:
-                            return getController().getInsumo(items.get(rowIndex).getIpvRegistroPK().getIpvinsumocodInsumo());
-                        case 1:
-                            return items.get(rowIndex).getInicio();
-                        case 2:
-                            return items.get(rowIndex).getEntrada();
-                        case 3:
-                            return items.get(rowIndex).getDisponible();
-                        case 4:
-                            return items.get(rowIndex).getConsumo();
-                        case 5:
-                            return items.get(rowIndex).getConsumoReal();
-                        case 6:
-                            return items.get(rowIndex).getFinalCalculado();
-                        case 7:
-                            return utils.setDosLugaresDecimales(
-                                    items.get(rowIndex).getFinalCalculado() * items.get(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
-                        default:
-                            return null;
-                    }
-                }
-
-                @Override
-                public String getColumnName(int column) {
-                    switch (column) {
-                        case 0:
-                            return "Insumo";
-                        case 1:
-                            return "Inicio";
-                        case 2:
-                            return "Entrada";
-                        case 3:
-                            return "Disponible";
-                        case 4:
-                            return "Consumo";
-                        case 5:
-                            return "Consumo Real";
-                        case 6:
-                            return "Final";
-                        case 7:
-                            return "Importe";
-                        default:
-                            return null;
-                    }
-                }
-            });
-            jTableRegistro.getRowSorter().toggleSortOrder(0);
-        } catch (ParseException ex) {
-            Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
+        jCheckBox1.setSelected(false);
+        if (jDateChooser2.getDate() != null) {
+            registroList = new ArrayList<>(getController()
+                    .getIpvRegistroList(currentSelectedKitchen, jDateChooser2.getDate()));
+            registroList = getController().calcular_existencia_a_dia((ArrayList<IpvRegistro>) registroList);
+        } else {
+            registroList = new ArrayList<>();
         }
 
+        jTableRegistro.setModel(new RestManagerAbstractTableModel<IpvRegistro>(registroList,
+                jTableRegistro) {
+            @Override
+            public int getColumnCount() {
+                return 8;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return getController().getInsumo(items.get(rowIndex).getIpvRegistroPK().getIpvinsumocodInsumo());
+                    case 1:
+                        return items.get(rowIndex).getInicio();
+                    case 2:
+                        return items.get(rowIndex).getEntrada();
+                    case 3:
+                        return items.get(rowIndex).getDisponible();
+                    case 4:
+                        return items.get(rowIndex).getConsumo();
+                    case 5:
+                        return items.get(rowIndex).getConsumoReal();
+                    case 6:
+                        return items.get(rowIndex).getFinalCalculado();
+                    case 7:
+                        return utils.setDosLugaresDecimales(
+                                items.get(rowIndex).getFinalCalculado() * items.get(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0:
+                        return "Insumo";
+                    case 1:
+                        return "Inicio";
+                    case 2:
+                        return "Entrada";
+                    case 3:
+                        return "Disponible";
+                    case 4:
+                        return "Consumo";
+                    case 5:
+                        return "Consumo Real";
+                    case 6:
+                        return "Final";
+                    case 7:
+                        return "Importe";
+                    default:
+                        return null;
+                }
+            }
+        });
+        jTableRegistro.getRowSorter().toggleSortOrder(0);
     }
 
     private void ocultar_insumos(boolean selected) {
@@ -661,10 +658,10 @@ public class IpvGestionView extends AbstractView {
 
     private void imprimirTabla() {
         MessageFormat footer = new MessageFormat("-Pag {0}-");
-        MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + jListRegistro.getSelectedValue());
+        MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser2.getDate()));
         try {
             ComponentPrinter.printComponent(jPanel2,
-                    "IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + jListRegistro.getSelectedValue(), true);
+                    "IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser2.getDate()), true);
             jTableRegistro.print(JTable.PrintMode.FIT_WIDTH, header, footer);
         } catch (PrinterException ex) {
             Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);

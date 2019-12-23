@@ -326,6 +326,9 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public ArrayList<IpvRegistro> calcular_existencia_a_dia(ArrayList<IpvRegistro> listaRegistros) {
+        if (listaRegistros.isEmpty()) {
+            return listaRegistros;
+        }
         VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getIpvRegistroPK().getFecha());
         for (IpvRegistro x : listaRegistros) {
             x.setConsumo(utils.setDosLugaresDecimalesFloat(controller.getGastoTotalDeInsumo(x)));
