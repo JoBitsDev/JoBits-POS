@@ -157,20 +157,20 @@ public class IPVController extends AbstractDialogController<Ipv> {
         if (instance.getConsumoReal() == null) {
             instance.setConsumoReal((float) 0);
         }
-        if (instance.getFinal1() == null) {
-            instance.setFinal1((float) 0);
+        if (instance.getFinalCalculado() == null) {
+            instance.setFinalCalculado((float) 0);
         }
-        if (instance.getFinalReal() == null) {
-            instance.setFinalReal((float) 0);
+        if (instance.getFinalAjustado() == null) {
+            instance.setFinalAjustado((float) 0);
         }
         if (instance.getDisponible() == null) {
             instance.setDisponible((float) 0);
         }
         instance.setDisponible(instance.getEntrada() + instance.getInicio());
-        instance.setFinal1(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumo()));
+        instance.setFinalCalculado(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumo()));
         if (instance.getConsumoReal() != null) {
             if (instance.getConsumoReal() > 0) {
-                instance.setFinal1(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumoReal()));
+                instance.setFinalCalculado(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumoReal()));
             }
         }
         IpvRegistroDAO.getInstance().startTransaction();
@@ -273,12 +273,12 @@ public class IPVController extends AbstractDialogController<Ipv> {
             updateInstance(founded);
             if (founded.getConsumoReal() != null) {
                 if (founded.getConsumoReal() > 0) {
-                    return founded.getFinalReal();
+                    return founded.getFinalAjustado();
                 } else {
-                    return founded.getFinal1();
+                    return founded.getFinalCalculado();
                 }
             } else {
-                return founded.getFinal1();
+                return founded.getFinalCalculado();
             }
         }
         return 0;

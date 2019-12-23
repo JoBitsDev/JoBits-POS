@@ -1054,7 +1054,7 @@ public class Impresion {
         ret += fillSpace(x.getEntrada(), LenghtPerSeparator) + separador;
         ret += fillSpace(x.getDisponible(), LenghtPerSeparator) + separador;
         ret += fillSpace(x.getConsumo(), LenghtPerSeparator) + separador;
-        ret += fillSpace(x.getFinal1(), LenghtPerSeparator);
+        ret += fillSpace(x.getFinalCalculado(), LenghtPerSeparator);
 
         return ret;
     }

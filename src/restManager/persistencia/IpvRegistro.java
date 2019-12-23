@@ -43,8 +43,8 @@ import restManager.resources.R;
     @NamedQuery(name = "IpvRegistro.findByDisponible", query = "SELECT i FROM IpvRegistro i WHERE i.disponible = :disponible"),
     @NamedQuery(name = "IpvRegistro.findByConsumo", query = "SELECT i FROM IpvRegistro i WHERE i.consumo = :consumo"),
     @NamedQuery(name = "IpvRegistro.findByConsumoReal", query = "SELECT i FROM IpvRegistro i WHERE i.consumoReal = :consumoReal"),
-    @NamedQuery(name = "IpvRegistro.findByFinal1", query = "SELECT i FROM IpvRegistro i WHERE i.final1 = :final1"),
-    @NamedQuery(name = "IpvRegistro.findByFinalReal", query = "SELECT i FROM IpvRegistro i WHERE i.finalReal = :finalReal")})
+    @NamedQuery(name = "IpvRegistro.findByFinal1", query = "SELECT i FROM IpvRegistro i WHERE i.finalCalculado = :final1"),
+    @NamedQuery(name = "IpvRegistro.findByFinalReal", query = "SELECT i FROM IpvRegistro i WHERE i.finalAjustado = :finalReal")})
 public class IpvRegistro implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,9 +62,9 @@ public class IpvRegistro implements Serializable {
     @Column(name = "consumo_real")
     private Float consumoReal;
     @Column(name = "final")
-    private Float final1;
+    private Float finalCalculado;
     @Column(name = "final_real")
-    private Float finalReal;
+    private Float finalAjustado;
     @JoinColumns({
         @JoinColumn(name = "ipvinsumocod_insumo", referencedColumnName = "insumocod_insumo", insertable = false, updatable = false),
         @JoinColumn(name = "ipvcocinacod_cocina", referencedColumnName = "cocinacod_cocina", insertable = false, updatable = false)})
@@ -130,20 +130,20 @@ public class IpvRegistro implements Serializable {
         this.consumoReal = consumoReal;
     }
 
-    public Float getFinal1() {
-        return final1;
+    public Float getFinalCalculado() {
+        return finalCalculado;
     }
 
-    public void setFinal1(Float final1) {
-        this.final1 = final1;
+    public void setFinalCalculado(Float finalCalculado) {
+        this.finalCalculado = finalCalculado;
     }
 
-    public Float getFinalReal() {
-        return finalReal;
+    public Float getFinalAjustado() {
+        return finalAjustado;
     }
 
-    public void setFinalReal(Float finalReal) {
-        this.finalReal = finalReal;
+    public void setFinalAjustado(Float finalAjustado) {
+        this.finalAjustado = finalAjustado;
     }
 
     public Ipv getIpv() {

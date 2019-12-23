@@ -605,10 +605,10 @@ public class IpvGestionView extends AbstractView {
                         case 5:
                             return items.get(rowIndex).getConsumoReal();
                         case 6:
-                            return items.get(rowIndex).getFinal1();
+                            return items.get(rowIndex).getFinalCalculado();
                         case 7:
                             return utils.setDosLugaresDecimales(
-                                    items.get(rowIndex).getFinal1() * items.get(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
+                                    items.get(rowIndex).getFinalCalculado() * items.get(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
                         default:
                             return null;
                     }
