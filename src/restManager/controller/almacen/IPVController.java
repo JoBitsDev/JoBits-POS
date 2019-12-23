@@ -7,43 +7,25 @@ package restManager.controller.almacen;
 
 import GUI.Views.AbstractView;
 import GUI.Views.Almacen.IpvGestionView;
-import com.sun.webkit.Timer;
 
 import java.awt.Container;
-import java.util.AbstractList;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
 import restManager.controller.AbstractDialogController;
 import restManager.controller.login.LogInController;
 import restManager.controller.venta.VentaDetailController;
-import restManager.exceptions.DevelopingOperationException;
+
 import restManager.exceptions.UnExpectedErrorException;
 import restManager.exceptions.ValidatingException;
 
-import restManager.persistencia.Cocina;
-import restManager.persistencia.Insumo;
-import restManager.persistencia.Ipv;
-import restManager.persistencia.IpvRegistro;
-import restManager.persistencia.IpvRegistroPK;
-import restManager.persistencia.IpvVentaRegistro;
-import restManager.persistencia.IpvVentaRegistroPK;
-import restManager.persistencia.ProductoInsumo;
-import restManager.persistencia.ProductoVenta;
-import restManager.persistencia.models.CocinaDAO;
-import restManager.persistencia.models.InsumoDAO;
-import restManager.persistencia.models.IpvDAO;
-import restManager.persistencia.models.IpvRegistroDAO;
-import restManager.persistencia.models.IpvRegistroVentaDAO;
-import restManager.persistencia.models.ProductoVentaDAO;
-import restManager.persistencia.models.VentaDAO;
+import restManager.persistencia.*;
+import restManager.persistencia.models.*;
 import restManager.resources.R;
 import restManager.util.utils;
 
@@ -270,6 +252,8 @@ public class IPVController extends AbstractDialogController<Ipv> {
         } while (founded == null && i < 7);
 
         if (founded != null) {
+            VentaDetailController controller = new VentaDetailController(founded.getIpvRegistroPK().getFecha());
+            founded.setConsumo(calcular_existencia_del_dia(controller, founded));
             updateInstance(founded);
             if (founded.getConsumoReal() != null) {
                 if (founded.getConsumoReal() > 0) {
@@ -331,10 +315,14 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
         VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getIpvRegistroPK().getFecha());
         for (IpvRegistro x : listaRegistros) {
-            x.setConsumo(utils.setDosLugaresDecimalesFloat(controller.getGastoTotalDeInsumo(x)));
+            x.setConsumo(calcular_existencia_del_dia(controller, x));
             updateInstance(x);
         }
         return listaRegistros;
+    }
+
+    private float calcular_existencia_del_dia(VentaDetailController controller, IpvRegistro registro) {
+        return utils.setDosLugaresDecimalesFloat(controller.getGastoTotalDeInsumo(registro));
     }
 
     public ArrayList<IpvVentaRegistro> calcular_existencia_ipv_ventas(ArrayList<IpvVentaRegistro> listaRegistros) {
