@@ -7,6 +7,7 @@ package GUI.Views.Almacen;
 
 import GUI.Views.AbstractView;
 import GUI.Views.util.AbstractCrossReferenePanel;
+import GUI.Views.util.LongProcessAction;
 import java.awt.event.ItemEvent;
 import java.awt.print.PrinterException;
 import java.text.MessageFormat;
@@ -375,8 +376,14 @@ public class IpvGestionView extends AbstractView {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jDateChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser1PropertyChange
+        LongProcessAction action = new LongProcessAction() {
+            @Override
+            public void longProcessMethod() {
+                updatePanelIPV();
+            }
+        };
         if (evt.getPropertyName().equals("date")) {
-            updatePanelIPV();
+            action.performAction(jDateChooser1);
         }
     }//GEN-LAST:event_jDateChooser1PropertyChange
 
@@ -389,9 +396,16 @@ public class IpvGestionView extends AbstractView {
     }//GEN-LAST:event_jTabbedPane2StateChanged
 
     private void jDateChooser2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser2PropertyChange
+        LongProcessAction action = new LongProcessAction() {
+            @Override
+            public void longProcessMethod() {
+                updateTableRegistroIpv();
+            }
+        };
+
         if (evt.getPropertyName().equals("date")) {
-            updateTableRegistroIpv();
-        }        // TODO add your handling code here:
+            action.performAction(jDateChooser2);
+        }
     }//GEN-LAST:event_jDateChooser2PropertyChange
 
     @Override
