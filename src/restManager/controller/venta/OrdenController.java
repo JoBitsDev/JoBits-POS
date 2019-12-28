@@ -6,6 +6,8 @@ import GUI.Views.venta.OrdenDetailFragmentView;
 import java.awt.Container;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -118,7 +120,8 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                     }
                 }
             }
-            m = (Mesa) showInputDialog(null, "Seleccione la mesa", "Mesas disponibles", mesas.toArray(), MesaDAO.getInstance().find(R.NO_MESA_CAJA));
+            Collections.sort(mesas, (Mesa o1, Mesa o2) -> Integer.compare(Integer.parseInt(o1.getCodMesa().split("-")[1]),Integer.parseInt(o2.getCodMesa().split("-")[1])));
+            m = (Mesa) showInputDialog(null, "Seleccione la mesa", "Mesas disponibles", mesas.toArray(), mesas.get(0));
         } else {
             m = MesaDAO.getInstance().find(R.NO_MESA_CAJA);
         }
