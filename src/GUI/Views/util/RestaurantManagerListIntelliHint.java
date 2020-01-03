@@ -14,6 +14,7 @@ import javax.swing.text.JTextComponent;
 /**
  * FirstDream
  * @author Jorge
+ * @param <K>
  * 
  */
  public class RestaurantManagerListIntelliHint<K> extends ListDataIntelliHints<K> {
