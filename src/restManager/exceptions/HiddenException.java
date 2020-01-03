@@ -6,8 +6,6 @@
 package restManager.exceptions;
 
 import java.awt.Component;
-import javax.swing.JOptionPane;
-import restManager.resources.R;
 
 /**
  * FirstDream
