@@ -5,8 +5,13 @@
  */
 package restManager.persistencia.models;
 
-
+import java.util.ArrayList;
+import java.util.List;
+import restManager.exceptions.DevelopingOperationException;
+import restManager.persistencia.Carta;
+import restManager.persistencia.Mesa;
 import restManager.persistencia.Seccion;
+
 /**
  * FirstDream
  *
@@ -29,5 +34,12 @@ public class SeccionDAO extends AbstractModel<Seccion> {
             return INSTANCE;
         }
     }
-       
+
+    public List<Seccion> findVisibleSecciones(Mesa mesacodMesa) {
+        List<Seccion> secciones = new ArrayList<>();
+        for (Carta c : mesacodMesa.getAreacodArea().getCartaList()) {
+            secciones.addAll(c.getSeccionList());
+        }
+        return secciones;
+    }
 }
