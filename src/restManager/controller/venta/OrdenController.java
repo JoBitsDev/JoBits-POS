@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import restManager.controller.AbstractFragmentController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
+import restManager.controller.seccion.SeccionListController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
 import restManager.logs.RestManagerHandler;
@@ -31,6 +32,7 @@ import restManager.persistencia.Orden;
 import restManager.persistencia.ProductoInsumo;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
+import restManager.persistencia.Seccion;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.ConfigDAO;
 import restManager.persistencia.models.ConfiguracionDAO;
@@ -40,6 +42,7 @@ import restManager.persistencia.models.NotaDAO;
 import restManager.persistencia.models.OrdenDAO;
 import restManager.persistencia.models.ProductoVentaDAO;
 import restManager.persistencia.models.ProductovOrdenDAO;
+import restManager.persistencia.models.SeccionDAO;
 import restManager.printservice.Impresion;
 
 import restManager.resources.R;
@@ -352,7 +355,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         }
 
     }
-
+    
     private String getOrdenCod() {
 
         ConfigDAO conf = new ConfigDAO();
@@ -426,5 +429,16 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             update(instance);
             view.updateValorTotal();
         }
+    }
+
+    public List<Seccion> getListaSecciones() {
+       List<Seccion> secciones =  SeccionDAO.getInstance().findVisibleSecciones(instance.getMesacodMesa());
+       Collections.sort(secciones, new Comparator<Seccion>() {
+           @Override
+           public int compare(Seccion o1, Seccion o2) {
+               return o1.toString().compareTo(o2.toString());
+           }
+       });
+       return secciones;
     }
 }
