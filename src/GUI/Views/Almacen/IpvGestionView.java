@@ -10,6 +10,8 @@ import GUI.Views.util.AbstractCrossReferenePanel;
 import GUI.Views.util.LongProcessAction;
 import java.awt.event.ItemEvent;
 import java.awt.print.PrinterException;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -51,6 +53,12 @@ public class IpvGestionView extends AbstractView {
         super(DialogType.FULL_SCREEN, controller, parent);
         initComponents();
         fetchComponentData();
+        jTableRegistro.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                System.out.println(evt.toString());
+            }
+        });
     }
 
     /**
@@ -674,9 +682,8 @@ public class IpvGestionView extends AbstractView {
         MessageFormat footer = new MessageFormat("-Pag {0}-");
         MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser2.getDate()));
         try {
-            ComponentPrinter.printComponent(jPanel2,
-                    "IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser2.getDate()), true);
             jTableRegistro.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+            System.out.println(jTableRegistro.getFont());
         } catch (PrinterException ex) {
             Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -688,7 +695,6 @@ public class IpvGestionView extends AbstractView {
         MessageFormat footer = new MessageFormat("Entregado por         Recibido por         Revisado por");
         MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser1.getDate()));
         try {
-            ComponentPrinter.printComponent(jTableIPV, "IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser1.getDate()), true);
             jTableIPV.print(JTable.PrintMode.FIT_WIDTH, header, footer);
         } catch (PrinterException ex) {
             Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);

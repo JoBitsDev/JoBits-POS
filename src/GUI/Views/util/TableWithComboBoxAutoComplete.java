@@ -50,7 +50,7 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
         this.table.setModel(this.tableModel);
     }
 
-    public T addFromAutoComplete() {
+    private T addFromAutoComplete() {
         jTextField.setText(jTextField.getText().trim());
         K selected = findSelected(jTextField.getText());
         if (selected == null) {
@@ -74,7 +74,7 @@ public abstract class TableWithComboBoxAutoComplete<K, T> {
      * @param selected the selected combo box data
      * @return the data to put in the table
      */
-    public abstract T transformK_to_T(K selected);
+    protected abstract T transformK_to_T(K selected);
 
     //
     //Getters
