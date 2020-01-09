@@ -28,7 +28,7 @@ public class RestManagerCellRender extends DefaultTableCellRenderer {
 
         // hides yellow selection highlight
         component.setBorder(BorderFactory.createEmptyBorder());
-        this.setHorizontalAlignment(SwingConstants.LEFT);
+        this.setHorizontalAlignment(SwingConstants.CENTER);
         this.setVerticalAlignment(SwingConstants.CENTER);
 
         return component;

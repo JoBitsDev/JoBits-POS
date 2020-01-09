@@ -7,23 +7,24 @@ package GUI.Views.venta;
 
 import GUI.Views.AbstractFragmentView;
 import GUI.Views.util.AbstractCrossReferenePanel;
-import GUI.Views.util.CalcularCambioView;
+import GUI.Views.util.RestManagerCellRender;
+
 import java.awt.Container;
 import java.util.ArrayList;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import restManager.controller.AbstractDialogController;
-import restManager.controller.AbstractDetailController;
+import java.util.Collections;
+import javax.swing.event.ListSelectionEvent;
+
 import restManager.controller.Controller;
 import restManager.controller.venta.OrdenController;
-import restManager.exceptions.DevelopingOperationException;
+
 import restManager.persistencia.Orden;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.ProductovOrden;
+import restManager.persistencia.Seccion;
 import restManager.resources.R;
+
 import restManager.util.RestManagerAbstractTableModel;
+import restManager.util.RestManagerListModel;
 import restManager.util.utils;
 
 /**
@@ -34,18 +35,21 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
     private AbstractCrossReferenePanel<ProductovOrden, ProductoVenta> crossReferencePanel;
     private Orden instance;
+    private RestManagerAbstractTableModel<ProductoVenta> currentProductosModel;
     private ButtonState state = ButtonState.ENVIAR_COCINA;
 
     public OrdenDetailFragmentView(Controller controller, Orden instance) {
         super(controller);
         this.instance = instance;
         initComponents();
+        initDefaults();
     }
 
     public OrdenDetailFragmentView(Orden instance, Controller controller, Container parentComponent) {
         super(controller, parentComponent);
         this.instance = instance;
         initComponents();
+        initDefaults();
     }
 
     /**
@@ -78,6 +82,11 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jLabel2 = new javax.swing.JLabel();
         jLabelVALORTotal = new javax.swing.JLabel();
         jPanelCrossReference = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableProductos = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListSecciones = new javax.swing.JList<>();
         jXPanelBotones = new org.jdesktop.swingx.JXPanel();
         jPanel1 = new javax.swing.JPanel();
         jideButtonAgregarNota = new com.jidesoft.swing.JideButton();
@@ -87,9 +96,9 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         setLayout(new java.awt.BorderLayout());
 
         jPanelroot.setBackground(new java.awt.Color(0, 204, 204));
-        jPanelroot.setMinimumSize(new java.awt.Dimension(531, 370));
+        jPanelroot.setMinimumSize(new java.awt.Dimension(300, 370));
         jPanelroot.setOpaque(false);
-        jPanelroot.setPreferredSize(new java.awt.Dimension(531, 570));
+        jPanelroot.setPreferredSize(new java.awt.Dimension(300, 570));
         jPanelroot.setLayout(new java.awt.BorderLayout());
 
         jPanelInfo.setBackground(new java.awt.Color(204, 204, 204));
@@ -155,7 +164,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jLabelVALORNOORDEN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelVALORNOORDEN.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelVALORNOORDEN.setText("No: 5534");
-        jPanelInfo.add(jLabelVALORNOORDEN, java.awt.BorderLayout.LINE_END);
+        jPanelInfo.add(jLabelVALORNOORDEN, java.awt.BorderLayout.EAST);
 
         jPanelroot.add(jPanelInfo, java.awt.BorderLayout.NORTH);
 
@@ -216,8 +225,40 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
         jPanelDetalles.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
+        jPanelCrossReference.setBorder(javax.swing.BorderFactory.createTitledBorder("Pedido"));
         jPanelCrossReference.setLayout(new java.awt.BorderLayout());
         jPanelDetalles.add(jPanelCrossReference, java.awt.BorderLayout.CENTER);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Selección de productos"));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane2.setColumnHeaderView(null);
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(250, 0));
+
+        jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTableProductos.setRowHeight(20);
+        jScrollPane2.setViewportView(jTableProductos);
+
+        jPanel3.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jListSecciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListSecciones.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListSeccionesValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jListSecciones);
+
+        jPanel3.add(jScrollPane3, java.awt.BorderLayout.LINE_START);
+
+        jPanelDetalles.add(jPanel3, java.awt.BorderLayout.WEST);
 
         jPanelroot.add(jPanelDetalles, java.awt.BorderLayout.CENTER);
 
@@ -280,6 +321,12 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         executeButtonState();
     }//GEN-LAST:event_jideButtonCerrarMesaEnviarCocinaActionPerformed
 
+    private void jListSeccionesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListSeccionesValueChanged
+        if (jListSecciones.getSelectedValue() != null) {
+            onSeccionClicked(jListSecciones.getSelectedValue());        // TODO add your handling code here:
+        }
+    }//GEN-LAST:event_jListSeccionesValueChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBoxDELACASA;
@@ -295,14 +342,19 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     private javax.swing.JLabel jLabelVALORNOORDEN;
     private javax.swing.JLabel jLabelVALORTotal;
     private javax.swing.JLabel jLabelVALORUsuario;
+    private javax.swing.JList<Seccion> jListSecciones;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelCrossReference;
     private javax.swing.JPanel jPanelDetalles;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelroot;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinnerPorciento;
+    private javax.swing.JTable jTableProductos;
     private org.jdesktop.swingx.JXPanel jXPanelBotones;
     private com.jidesoft.swing.JideButton jideButtonAgregarNota;
     private com.jidesoft.swing.JideButton jideButtonCerrarMesaEnviarCocina;
@@ -311,10 +363,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
     @Override
     public void updateView() {
-        if (crossReferencePanel != null) {
-            jPanelCrossReference.remove(crossReferencePanel);
-        }
-        initDefaults();
+        updateCrossReferencePanel();
         jLabelVALORFecha.setText(R.DATE_FORMAT.format(getInstance().getVentafecha().getFecha()));
         jLabelVALORHora.setText(R.TIME_FORMAT.format(getInstance().getHoraComenzada()));
         jLabelVALORUsuario.setText(getInstance().getPersonalusuario().getUsuario());
@@ -333,6 +382,55 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
     @Override
     public void initDefaults() {
+        initTableSeleccionProducto();
+        initCrossReferencePanel();
+
+    }
+
+    private void updateTableSeleccionProducto() {
+        jListSecciones.setModel(new RestManagerListModel<>(getController().getListaSecciones()));
+        if (currentProductosModel != null) {
+            currentProductosModel.setItems(new ArrayList<>());
+        }
+    }
+
+    private void initTableSeleccionProducto() {
+        updateTableSeleccionProducto();
+        jTableProductos.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            if (e.getValueIsAdjusting()) {
+                return;
+            }
+            if (jTableProductos.getSelectedRow() == -1) {
+                return;
+            }
+            getController().addProduct(currentProductosModel.getObjectAtSelectedRow());
+            updateCrossReferencePanel();
+        });
+        jListSecciones.setVisibleRowCount(12);
+        currentProductosModel = new RestManagerAbstractTableModel<ProductoVenta>(new ArrayList<ProductoVenta>(), jTableProductos) {
+            @Override
+            public int getColumnCount() {
+                return 1;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                return items.get(rowIndex).toString();
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                return "Productos Venta";
+            }
+        };
+        jTableProductos.setModel(currentProductosModel);
+    }
+
+    private void updateCrossReferencePanel() {
+    crossReferencePanel.getHandler().getTableModel().setItems(getInstance().getProductovOrdenList());
+    }
+
+    private void initCrossReferencePanel() {
         crossReferencePanel = new AbstractCrossReferenePanel<ProductovOrden, ProductoVenta>("Productos de venta", getController().getPDVList()) {
             @Override
             public RestManagerAbstractTableModel<ProductovOrden> getTableModel() {
@@ -392,7 +490,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                                     if (diferencia > 0) {
                                         getController().removeProduct(items.get(rowIndex), diferencia);
                                     } else {
-                                        getController().addProduct(items.get(rowIndex), diferencia *-1);
+                                        getController().addProduct(items.get(rowIndex), diferencia * -1);
                                     }
                                     fireTableRowsUpdated(rowIndex, rowIndex);
                                     state = ButtonState.ENVIAR_COCINA;
@@ -440,6 +538,16 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
             }
         };
         jPanelCrossReference.add(crossReferencePanel);
+        crossReferencePanel.getjTableCrossReference().getColumnModel().getColumn(1).setCellRenderer(new RestManagerCellRender());
+
+    }
+
+    private void onSeccionClicked(Seccion s) {
+        ArrayList<ProductoVenta> productos = new ArrayList<>(s.getProductoVentaList());
+        Collections.sort(productos, (ProductoVenta o1, ProductoVenta o2) -> o1.toString().compareToIgnoreCase(o2.toString()));
+        currentProductosModel.setItems(productos);
+//jTableProductos.setModel(currentProductosModel);
+
     }
 
     @Override
@@ -455,8 +563,10 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
     public void setInstance(Orden instance) {
         this.instance = instance;
-        setVisible(true);
         updateView();
+        updateTableSeleccionProducto();
+        updateCrossReferencePanel();
+        setVisible(true);
 
     }
 
