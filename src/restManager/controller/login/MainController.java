@@ -118,8 +118,7 @@ public class MainController extends AbstractDialogController<Personal> {
                         } else {
                             try {
                                 Date fechaVenta = R.DATE_FORMAT.parse(date);
-                                Venta v = new VentaDetailController().getDiaDeVenta(fechaVenta);
-                                controller = new VentaDetailController(v, getView());
+                                controller = new VentaDetailController(getView(),fechaVenta);
                                 
                             } catch (ParseException ex) {
                                 showErrorDialog(getView(), ex.getMessage());
