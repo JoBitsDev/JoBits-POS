@@ -288,6 +288,8 @@ public class IPVController extends AbstractDialogController<Ipv> {
         } while (founded == null && i < 7);
 
         if (founded != null) {
+            VentaDetailController controller = new VentaDetailController(founded.getFechaVenta().getFecha());
+            founded.setVendidos(controller.getVentaTotalDelProducto(founded.getProductoVenta()));
             updateInstance(founded);
             return founded.getFinal1();
         }
