@@ -325,7 +325,12 @@ public class IpvGestionView extends AbstractView {
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             currentSelectedKitchen = (Cocina) evt.getItem();
-            updateView();
+            if (jTabbedPane2.getSelectedIndex() == 1) {
+                updatePanelIPV();
+            }
+            else{
+                updateTableRegistroIpv();
+            }
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
