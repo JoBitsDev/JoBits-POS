@@ -216,17 +216,25 @@ public class IpvGestionView extends AbstractView {
         jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTableIPV.setAutoCreateRowSorter(true);
-        jTableIPV.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jTableIPV.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jTableIPV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-
+                "Producto Venta", "Inicio", "Entrada", "Disponible", "Autorizo", "Venta", "Precio Venta", "Importe", "Final"
             }
-        ));
-        jTableIPV.setRowHeight(25);
-        jTableIPV.setRowMargin(4);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTableIPV.setRowHeight(35);
+        jTableIPV.setRowMargin(5);
         jScrollPane4.setViewportView(jTableIPV);
 
         jPanel5.add(jScrollPane4, java.awt.BorderLayout.CENTER);
@@ -327,8 +335,7 @@ public class IpvGestionView extends AbstractView {
             currentSelectedKitchen = (Cocina) evt.getItem();
             if (jTabbedPane2.getSelectedIndex() == 1) {
                 updatePanelIPV();
-            }
-            else{
+            } else {
                 updateTableRegistroIpv();
             }
         }
@@ -700,11 +707,17 @@ public class IpvGestionView extends AbstractView {
         MessageFormat footer = new MessageFormat("Entregado por         Recibido por         Revisado por");
         MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser1.getDate()));
         try {
-            jTableIPV.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+            createAndPrintTable();
+            jTableIPV.print();
+//            jTableIPV.print(JTable.PrintMode.FIT_WIDTH, header, footer);
         } catch (PrinterException ex) {
             Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private void createAndPrintTable() {
+        
     }
 
 }
