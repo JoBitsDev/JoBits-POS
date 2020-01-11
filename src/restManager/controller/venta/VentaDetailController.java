@@ -85,16 +85,16 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         constructView(parent);
     }
 
+    public VentaDetailController(Venta instance, Window parent) {
+        super(instance, parent, VentaDAO.getInstance());
+        OrdenDAO.getInstance().addPropertyChangeListener(this);
+    }
+
     public VentaDetailController(Date diaVentas) {
         super(VentaDAO.getInstance());
         OrdenDAO.getInstance().addPropertyChangeListener(this);
         instance = getDiaDeVenta(diaVentas);
         state = State.CREATING;
-    }
-
-    public VentaDetailController(Venta instance, Window parent) {
-        super(instance, parent, VentaDAO.getInstance());
-        OrdenDAO.getInstance().addPropertyChangeListener(this);
     }
 
     public VentaDetailController(Venta instance, Window parent, Date fechafin) {
