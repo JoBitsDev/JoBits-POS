@@ -27,6 +27,8 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
     protected final JTable table;
     private RestManagerTableRowFilter filter;
     private TableRowSorter<RestManagerAbstractTableModel<T>> sorter;
+    protected boolean totalRowShowing = false;
+    protected int columnTotal = -1;
 
     public RestManagerAbstractTableModel(List<T> items, JTable table) {
         this.items = items;
@@ -68,7 +70,7 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
 
     @Override
     public int getRowCount() {
-        return items.size();
+        return totalRowShowing ? items.size() + 1 : items.size();
     }
 
     @Override
@@ -127,10 +129,33 @@ public abstract class RestManagerAbstractTableModel<T> extends AbstractTableMode
     public RestManagerTableRowFilter getFilter() {
         return filter;
     }
-    
+
     public void setItems(List<T> items) {
         this.items = items;
         fireTableDataChanged();
+    }
+
+    public void addTotalRow(int column) {
+        columnTotal = column;
+        totalRowShowing = true;
+        fireTableDataChanged();
+    }
+
+    public void removeTotalRow() {
+        totalRowShowing = false;
+        columnTotal = -1;
+        fireTableDataChanged();
+    }
+    
+    /**
+     * Implementado por default porque no todas las tablas usan la columna del total
+     * @return el total a mostrar
+     */
+    protected float calcularTotal(){
+        if (!totalRowShowing || columnTotal == -1) {
+            return 0;
+        }
+        return 0;
     }
 
     public TableRowSorter<RestManagerAbstractTableModel<T>> getSorter() {
