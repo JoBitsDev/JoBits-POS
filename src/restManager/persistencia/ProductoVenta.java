@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia;
 
 import java.io.Serializable;
@@ -23,6 +22,7 @@ import restManager.resources.R;
 
 /**
  * FirstDream
+ *
  * @author Jorge
  *
  */
@@ -38,6 +38,9 @@ import restManager.resources.R;
     @NamedQuery(name = "ProductoVenta.findByDescripcion", query = "SELECT p FROM ProductoVenta p WHERE p.descripcion = :descripcion"),
     @NamedQuery(name = "ProductoVenta.findByVisible", query = "SELECT p FROM ProductoVenta p WHERE p.visible = :visible")})
 public class ProductoVenta implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoVenta")
+    private List<IpvVentaRegistro> ipvVentaRegistroList;
 
     @Column(name = "pago_por_venta")
     private Float pagoPorVenta;
@@ -205,6 +208,14 @@ public class ProductoVenta implements Serializable {
 
     public void setPagoPorVenta(Float pagoPorVenta) {
         this.pagoPorVenta = pagoPorVenta;
+    }
+
+    public List<IpvVentaRegistro> getIpvVentaRegistroList() {
+        return ipvVentaRegistroList;
+    }
+
+    public void setIpvVentaRegistroList(List<IpvVentaRegistro> ipvVentaRegistroList) {
+        this.ipvVentaRegistroList = ipvVentaRegistroList;
     }
 
 }
