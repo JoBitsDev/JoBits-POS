@@ -6,6 +6,7 @@
 package GUI.Views.util;
 
 import com.jidesoft.hints.ListDataIntelliHints;
+import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JPanel;
@@ -97,7 +98,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
     public void setFinderVisible(boolean finderVisible) {
         this.finderVisible = finderVisible;
         if (finderVisible) {
-            jPanelInsert.add(jPanelFind);
+            jPanelInsert.add(jPanelFind,BorderLayout.NORTH);
         } else {
             jPanelInsert.remove(jPanelFind);
         }
@@ -133,7 +134,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         jPanelInsert.setBackground(new java.awt.Color(204, 204, 204));
         jPanelInsert.setMinimumSize(new java.awt.Dimension(100, 64));
         jPanelInsert.setOpaque(false);
-        jPanelInsert.setPreferredSize(new java.awt.Dimension(400, 50));
+        jPanelInsert.setPreferredSize(new java.awt.Dimension(400, 60));
         jPanelInsert.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setMinimumSize(new java.awt.Dimension(100, 38));
@@ -183,7 +184,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
         });
         jPanelFind.add(jTextFieldBusqueda, java.awt.BorderLayout.EAST);
 
-        jPanelInsert.add(jPanelFind, java.awt.BorderLayout.PAGE_START);
+        jPanelInsert.add(jPanelFind, java.awt.BorderLayout.NORTH);
 
         add(jPanelInsert, java.awt.BorderLayout.NORTH);
 
