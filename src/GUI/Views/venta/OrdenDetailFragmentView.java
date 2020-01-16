@@ -248,6 +248,8 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
         jPanel3.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
+        jListSecciones.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        jListSecciones.setForeground(new java.awt.Color(0, 102, 102));
         jListSecciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListSecciones.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
