@@ -53,6 +53,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
             }
 
         };
+        jTableCrossReference.setRowSorter(handler.getTableModel().getSorter());
         setFinderVisible(finderVisible);
     }
 
