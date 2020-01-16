@@ -113,7 +113,7 @@ public class IpvGestionView extends AbstractView {
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTableRegistro.setAutoCreateRowSorter(true);
-        jTableRegistro.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jTableRegistro.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jTableRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -486,6 +486,7 @@ public class IpvGestionView extends AbstractView {
             jPanelData.add(panelIPVAsign);
         }
         jPanelData.revalidate();
+        jTableIPV.getTableHeader().setFont(jTableIPV.getFont());
     }
 
     @Override
