@@ -23,7 +23,7 @@ import restManager.resources.R;
  *
  */
 public abstract class AbstractDialogController<T> extends AbstractController<T> {
-
+  
     public AbstractDialogController(AbstractModel<T> dataAccess) {
         super(dataAccess);
     }

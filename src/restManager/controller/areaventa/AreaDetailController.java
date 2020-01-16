@@ -28,10 +28,6 @@ import restManager.persistencia.models.CartaDAO;
  */
 public class AreaDetailController extends AbstractDetailController<Area>{
 
-    public AreaDetailController() {
-        super(AreaDAO.getInstance());
-    }
-
     public AreaDetailController(Area instance, AbstractModel<Area> model) {
         super(instance, AreaDAO.getInstance());
     }

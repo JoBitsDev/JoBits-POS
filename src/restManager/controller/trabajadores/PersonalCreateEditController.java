@@ -30,6 +30,7 @@ public class PersonalCreateEditController extends AbstractDetailController<Perso
 
     public PersonalCreateEditController() {
         super(PersonalDAO.getInstance());
+        instance = createNewInstance();
     }
 
     public PersonalCreateEditController(Personal instance) {

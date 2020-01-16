@@ -35,6 +35,7 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
 
     public InsumoCreateEditController() {
         super(InsumoDAO.getInstance());
+        instance = createNewInstance();
     }
 
     public InsumoCreateEditController(Insumo instance) {

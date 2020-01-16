@@ -29,6 +29,7 @@ public class ActivoFijoController extends AbstractDetailController<ActivoFijo> {
 
     public ActivoFijoController() {
         super(ActivoFijoDAO.getInstance());
+        instance = createNewInstance();
         setDismissOnAction(false);
     }
 
@@ -37,8 +38,6 @@ public class ActivoFijoController extends AbstractDetailController<ActivoFijo> {
         setParent(parent);
         constructView(parent);
     }
-    
-    
 
     @Override
     public void constructView(Container parent) {
