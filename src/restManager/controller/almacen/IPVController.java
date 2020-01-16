@@ -12,6 +12,8 @@ import java.awt.Container;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -20,6 +22,7 @@ import javax.persistence.PersistenceException;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.login.LogInController;
 import restManager.controller.venta.VentaDetailController;
+import restManager.exceptions.DevelopingOperationException;
 
 import restManager.exceptions.UnExpectedErrorException;
 import restManager.exceptions.ValidatingException;
@@ -77,6 +80,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
                 ret.add(x);
             }
         }
+        Collections.sort(ret, (IpvVentaRegistro o1, IpvVentaRegistro o2) -> o1.getProductoVenta().getNombre().compareToIgnoreCase(o2.getProductoVenta().getNombre()));
         return ret;
     }
 
