@@ -35,6 +35,8 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
 
     public ProductoVentaCreateEditController() {
         super(ProductoVentaDAO.getInstance());
+        instance = createNewInstance();
+
     }
 
     public ProductoVentaCreateEditController(ProductoVenta instance) {
@@ -75,7 +77,7 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
 
     public List<Seccion> getSeccionList() {
         List<Seccion> ret = SeccionDAO.getInstance().findAll();
-        Collections.sort(ret,(o1, o2) -> {
+        Collections.sort(ret, (o1, o2) -> {
             return o1.getNombreSeccion().compareTo(o2.getNombreSeccion());
         });
         return ret;
@@ -108,8 +110,8 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
     public void agregarIngrediente() {
         InsumoCreateEditController controller = new InsumoCreateEditController(getView());
 
-       ((ProductoVentaCreateEditView) getView()).getCrossReferencePanel().addItemToComboBox(controller.getInstance());
-        
+        ((ProductoVentaCreateEditView) getView()).getCrossReferencePanel().addItemToComboBox(controller.getInstance());
+
     }
 
 }

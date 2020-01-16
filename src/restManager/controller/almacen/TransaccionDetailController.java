@@ -47,6 +47,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     public TransaccionDetailController() {
         super(TransaccionDAO.getInstance());
+        instance = createNewInstance();
     }
 
     public TransaccionDetailController(Transaccion instance) {
@@ -54,7 +55,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     }
 
     public TransaccionDetailController(Window parent, Almacen a) {
-        super(TransaccionDAO.getInstance());
+        this();
         this.parent = parent;
         this.a = a;
         constructView(parent);
@@ -81,47 +82,47 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     }
 
     TransaccionEntrada addTransaccionEntrada(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad, float importe) {
-        Transaccion t = nuevaTransaccion(o,insumo, fecha, hora, a, cantidad);
+        Transaccion t = nuevaTransaccion(o, insumo, fecha, hora, a, cantidad);
         TransaccionEntrada ret = new TransaccionEntrada(t.getNoTransaccion());
         ret.setJustificado(false);
         ret.setTransaccion(t);
         ret.setValorTotal(importe);
         ret.setPrecioPorUnidad(ret.getValorTotal() / ret.getTransaccion().getCantidad());
         t.setTransaccionEntrada(ret);
-        createNewTransaccionEntrada(ret,a);
+        createNewTransaccionEntrada(ret, a);
         return ret;
 
     }
 
     public Transaccion addTransaccionSalida(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, Cocina cocina, float cantidad) {
-        Transaccion t = nuevaTransaccion(o,insumo, fecha, hora, a, cantidad);
+        Transaccion t = nuevaTransaccion(o, insumo, fecha, hora, a, cantidad);
 
         TransaccionSalida salida = new TransaccionSalida(t.getNoTransaccion());
         salida.setTransaccion(t);
         salida.setCocinacodCocina(cocina);
-        createNewTransaccionSalida(salida,a);
+        createNewTransaccionSalida(salida, a);
         return t;
 
     }
 
     public void addTransaccionRebaja(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad, String causaRebaja) {
-        Transaccion t = nuevaTransaccion(o,insumo, fecha, hora, a, cantidad);
+        Transaccion t = nuevaTransaccion(o, insumo, fecha, hora, a, cantidad);
         TransaccionMerma rebaja = new TransaccionMerma(t.getNoTransaccion());
         rebaja.setTransaccion(t);
         rebaja.setRazon(causaRebaja);
-        createNewTransaccionRebaja(rebaja,a);
+        createNewTransaccionRebaja(rebaja, a);
     }
 
     public void addTransaccionTraspaso(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, Almacen destinoTraspaso, float cantidad) {
-        Transaccion t = nuevaTransaccion(o,insumo, fecha, hora, a, cantidad);
+        Transaccion t = nuevaTransaccion(o, insumo, fecha, hora, a, cantidad);
         TransaccionTraspaso traspaso = new TransaccionTraspaso(t.getNoTransaccion());
         traspaso.setTransaccion(t);
         traspaso.setAlmacenDestino(destinoTraspaso);
-        createNewTransaccionTraspaso(traspaso,a);
+        createNewTransaccionTraspaso(traspaso, a);
     }
 
     public void addTransaccionTransformacion(InsumoAlmacen selected, Date fecha, Date hora, List<TransaccionTransformacion> items, float cantidad, float merma, Almacen destino) {
-        Transaccion t = nuevaTransaccion(null,selected.getInsumo(), fecha, hora, selected.getAlmacen(), cantidad);
+        Transaccion t = nuevaTransaccion(null, selected.getInsumo(), fecha, hora, selected.getAlmacen(), cantidad);
         float precioMedioNuevo = (cantidad * selected.getInsumo().getCostoPorUnidad()) / cantidad - merma;
         for (TransaccionTransformacion i : items) {
             TransaccionTransformacionPK pk = new TransaccionTransformacionPK(t.getNoTransaccion(), i.getInsumo().getCodInsumo());
@@ -130,7 +131,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
             i.setCostoUnitario(precioMedioNuevo);
         }
         t.setTransaccionTransformacionList(items);
-        createNewTransaccionTransformacion(t, destino,selected.getAlmacen());
+        createNewTransaccionTransformacion(t, destino, selected.getAlmacen());
     }
 
     public void createNewTransaccionEntrada(TransaccionEntrada transaccion, Almacen a) {
@@ -142,7 +143,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         TransaccionEntradaDAO.getInstance().commitTransaction();
     }
 
-    public void createNewTransaccionSalida(TransaccionSalida transaccion,Almacen a) {
+    public void createNewTransaccionSalida(TransaccionSalida transaccion, Almacen a) {
         getModel().startTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(a);
         almacenController.setView(getView());
@@ -152,7 +153,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     }
 
-    public void createNewTransaccionRebaja(TransaccionMerma transaccion,Almacen a) {
+    public void createNewTransaccionRebaja(TransaccionMerma transaccion, Almacen a) {
         getModel().startTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(a);
         almacenController.setView(getView());
@@ -162,7 +163,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     }
 
-    private void createNewTransaccionTraspaso(TransaccionTraspaso transaccion,Almacen a) {
+    private void createNewTransaccionTraspaso(TransaccionTraspaso transaccion, Almacen a) {
         getModel().startTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(a);
         almacenController.setView(getView());
@@ -171,7 +172,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         getModel().commitTransaction();
     }
 
-    private void createNewTransaccionTransformacion(Transaccion t, Almacen a,Almacen origen) {
+    private void createNewTransaccionTransformacion(Transaccion t, Almacen a, Almacen origen) {
         TransaccionDAO.getInstance().startTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(origen);
         almacenController.setView(getView());
@@ -183,7 +184,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         return CocinaDAO.getInstance().findAll();
     }
 
-    private Transaccion nuevaTransaccion(Operacion o,Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad) {
+    private Transaccion nuevaTransaccion(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad) {
         Transaccion t = new Transaccion();
         if (o != null) {
             t.setOperacionnoOperacion(o);
