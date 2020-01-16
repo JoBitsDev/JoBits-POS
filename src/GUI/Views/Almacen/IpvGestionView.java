@@ -8,6 +8,8 @@ package GUI.Views.Almacen;
 import GUI.Views.AbstractView;
 import GUI.Views.util.AbstractCrossReferenePanel;
 import GUI.Views.util.LongProcessAction;
+import GUI.Views.util.RestManagerCellRender;
+import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
@@ -53,12 +55,6 @@ public class IpvGestionView extends AbstractView {
         super(DialogType.FULL_SCREEN, controller, parent);
         initComponents();
         fetchComponentData();
-        jTableRegistro.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                System.out.println(evt.toString());
-            }
-        });
     }
 
     /**
@@ -119,7 +115,7 @@ public class IpvGestionView extends AbstractView {
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTableRegistro.setAutoCreateRowSorter(true);
-        jTableRegistro.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jTableRegistro.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTableRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -216,17 +212,25 @@ public class IpvGestionView extends AbstractView {
         jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTableIPV.setAutoCreateRowSorter(true);
-        jTableIPV.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jTableIPV.setFont(new java.awt.Font("Lucida Grande", 0, 22)); // NOI18N
         jTableIPV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-
+                "Producto Venta", "Inicio", "Entrada", "Disponible", "Autorizo", "Venta", "Precio Venta", "Importe", "Final"
             }
-        ));
-        jTableIPV.setRowHeight(25);
-        jTableIPV.setRowMargin(4);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTableIPV.setRowHeight(35);
+        jTableIPV.setRowMargin(5);
         jScrollPane4.setViewportView(jTableIPV);
 
         jPanel5.add(jScrollPane4, java.awt.BorderLayout.CENTER);
@@ -327,8 +331,7 @@ public class IpvGestionView extends AbstractView {
             currentSelectedKitchen = (Cocina) evt.getItem();
             if (jTabbedPane2.getSelectedIndex() == 1) {
                 updatePanelIPV();
-            }
-            else{
+            } else {
                 updateTableRegistroIpv();
             }
         }
@@ -485,6 +488,9 @@ public class IpvGestionView extends AbstractView {
             jPanelData.add(panelIPVAsign);
         }
         jPanelData.revalidate();
+        jTableIPV.getTableHeader().setFont(jTableIPV.getFont().deriveFont(Font.BOLD));
+        jTableIPV.setDefaultRenderer(Float.class, new RestManagerCellRender());
+
     }
 
     @Override
@@ -543,28 +549,40 @@ public class IpvGestionView extends AbstractView {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                switch (columnIndex) {
-                    case 0:
-                        return items.get(rowIndex).getProductoVenta().getNombre();
-                    case 1:
-                        return items.get(rowIndex).getInicio();
-                    case 2:
-                        return items.get(rowIndex).getEntrada();
-                    case 3:
-                        return items.get(rowIndex).getDisponible();
-                    case 4:
-                        return items.get(rowIndex).getAutorizos();
-                    case 5:
-                        return items.get(rowIndex).getVendidos();
-                    case 6:
-                        return items.get(rowIndex).getPrecioVenta();
-                    case 7:
-                        return utils.setDosLugaresDecimales(items.get(rowIndex).getVendidos() * items.get(rowIndex).getProductoVenta().getPrecioVenta());
-                    case 8:
-                        return items.get(rowIndex).getFinal1();
-                    default:
-                        return null;
+                if (rowIndex == getRowCount() - 1 && totalRowShowing) {
+                    if (columnIndex == 0) {
+                        return "Total";
+                    }
+                    if (columnIndex == columnTotal) {
+                        return utils.setDosLugaresDecimales(calcularTotal());
+                    }
+                    return null;
                 }
+                if (getRowCount() > 0 && !totalRowShowing || getRowCount() > 1 && totalRowShowing) {
+                    switch (columnIndex) {
+                        case 0:
+                            return items.get(rowIndex).getProductoVenta().getNombre();
+                        case 1:
+                            return items.get(rowIndex).getInicio();
+                        case 2:
+                            return items.get(rowIndex).getEntrada();
+                        case 3:
+                            return items.get(rowIndex).getDisponible();
+                        case 4:
+                            return items.get(rowIndex).getAutorizos();
+                        case 5:
+                            return items.get(rowIndex).getVendidos();
+                        case 6:
+                            return items.get(rowIndex).getPrecioVenta();
+                        case 7:
+                            return utils.setDosLugaresDecimales(items.get(rowIndex).getVendidos() * items.get(rowIndex).getProductoVenta().getPrecioVenta());
+                        case 8:
+                            return items.get(rowIndex).getFinal1();
+                        default:
+                            return null;
+                    }
+                }
+                return null;
             }
 
             @Override
@@ -592,8 +610,32 @@ public class IpvGestionView extends AbstractView {
                         return null;
                 }
             }
+
+            @Override
+            protected float calcularTotal() {
+                float total = 0;
+                if (totalRowShowing) {
+                    for (IpvVentaRegistro i : items) {
+                        total += i.getVendidos() * i.getProductoVenta().getPrecioVenta();
+                    }
+                }
+                return total;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                    case 8:
+                        return String.class;
+                    default:
+                        return Float.class;
+                }
+            }
         });
-        jTableIPV.getRowSorter().toggleSortOrder(0);
+        //jTableIPV.getRowSorter().toggleSortOrder(0);
+
+        ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel()).addTotalRow(7);
     }
 
     private void updatePanelAjustes() {
@@ -697,13 +739,18 @@ public class IpvGestionView extends AbstractView {
 
     public void Imprimir() {
 
-        MessageFormat footer = new MessageFormat("Entregado por         Recibido por         Revisado por");
+        MessageFormat footer = new MessageFormat("Entregado por                  Recibido por                  Revisado por");
         MessageFormat header = new MessageFormat("IPV " + jComboBox1.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooser1.getDate()));
         try {
+            createAndPrintTable();
             jTableIPV.print(JTable.PrintMode.FIT_WIDTH, header, footer);
         } catch (PrinterException ex) {
             Logger.getLogger(IpvGestionView.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    private void createAndPrintTable() {
 
     }
 
