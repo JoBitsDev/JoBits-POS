@@ -1,14 +1,11 @@
 package GUI.Views.util;
 
-import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
+import javax.swing.FocusManager;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,8 +21,9 @@ import javax.swing.SwingWorker;
  */
 public abstract class LongProcessAction {
 
-    private JDialog loadingDialog;
+    private static JDialog loadingDialog;
     private Window window;
+    private SwingWorker.StateValue state = SwingWorker.StateValue.PENDING;
 
     public LongProcessAction() {
     }
@@ -39,19 +37,25 @@ public abstract class LongProcessAction {
                 try {
                     longProcessMethod();
                 } catch (Exception e) {
+                    e.printStackTrace();
                     return null;
                 }
                 return null;
             }
         };
 
-        window = SwingUtilities.getWindowAncestor(c);
+        if (c == null) {
+            window = FocusManager.getCurrentManager().getActiveWindow();
+        } else {
+            window = SwingUtilities.getWindowAncestor(c);
+        }
         loadingDialog = new JDialog(window, null, Dialog.ModalityType.APPLICATION_MODAL);
 
         backgroundWorker.addPropertyChangeListener((PropertyChangeEvent evt1) -> {
             if (evt1.getPropertyName().equals("state")) {
                 if (evt1.getNewValue() == SwingWorker.StateValue.DONE) {
                     loadingDialog.dispose();
+                    state = SwingWorker.StateValue.DONE;
                 }
             }
         });
@@ -71,7 +75,7 @@ public abstract class LongProcessAction {
         loadingDialog.setUndecorated(true);
         loadingDialog.pack();
         loadingDialog.setLocationRelativeTo(window);
-        loadingDialog.setVisible(true);
+        loadingDialog.setVisible(state != SwingWorker.StateValue.DONE);
     }
 
 }
