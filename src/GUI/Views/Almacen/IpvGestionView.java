@@ -8,6 +8,8 @@ package GUI.Views.Almacen;
 import GUI.Views.AbstractView;
 import GUI.Views.util.AbstractCrossReferenePanel;
 import GUI.Views.util.LongProcessAction;
+import GUI.Views.util.RestManagerCellRender;
+import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
@@ -113,7 +115,7 @@ public class IpvGestionView extends AbstractView {
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTableRegistro.setAutoCreateRowSorter(true);
-        jTableRegistro.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jTableRegistro.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTableRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -210,7 +212,7 @@ public class IpvGestionView extends AbstractView {
         jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTableIPV.setAutoCreateRowSorter(true);
-        jTableIPV.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jTableIPV.setFont(new java.awt.Font("Lucida Grande", 0, 22)); // NOI18N
         jTableIPV.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -486,7 +488,9 @@ public class IpvGestionView extends AbstractView {
             jPanelData.add(panelIPVAsign);
         }
         jPanelData.revalidate();
-        jTableIPV.getTableHeader().setFont(jTableIPV.getFont());
+        jTableIPV.getTableHeader().setFont(jTableIPV.getFont().deriveFont(Font.BOLD));
+        jTableIPV.setDefaultRenderer(Float.class, new RestManagerCellRender());
+
     }
 
     @Override
@@ -545,7 +549,7 @@ public class IpvGestionView extends AbstractView {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                if (rowIndex == getRowCount()-1 && totalRowShowing) {
+                if (rowIndex == getRowCount() - 1 && totalRowShowing) {
                     if (columnIndex == 0) {
                         return "Total";
                     }
@@ -554,7 +558,7 @@ public class IpvGestionView extends AbstractView {
                     }
                     return null;
                 }
-                if (getRowCount()  > 0 && !totalRowShowing || getRowCount() >1 && totalRowShowing) {
+                if (getRowCount() > 0 && !totalRowShowing || getRowCount() > 1 && totalRowShowing) {
                     switch (columnIndex) {
                         case 0:
                             return items.get(rowIndex).getProductoVenta().getNombre();
@@ -609,7 +613,7 @@ public class IpvGestionView extends AbstractView {
 
             @Override
             protected float calcularTotal() {
-                    float total = 0;
+                float total = 0;
                 if (totalRowShowing) {
                     for (IpvVentaRegistro i : items) {
                         total += i.getVendidos() * i.getProductoVenta().getPrecioVenta();
@@ -617,9 +621,20 @@ public class IpvGestionView extends AbstractView {
                 }
                 return total;
             }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                    case 8:
+                        return String.class;
+                    default:
+                        return Float.class;
+                }
+            }
         });
         //jTableIPV.getRowSorter().toggleSortOrder(0);
-        
+
         ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel()).addTotalRow(7);
     }
 
