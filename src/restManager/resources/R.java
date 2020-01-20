@@ -33,14 +33,14 @@ public class R {
 
     public static final Date TODAYS_DATE = new Date();
 
-    public static  int COINCHANGE = 25;
-    
+    public static int COINCHANGE = 25;
+
     public static String MAIN_COIN = null;
 
     public static boolean CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = true;
-    
+
     public static boolean VARIOS_TURNOS = false;
-    
+
     public static boolean CAJERO_PERMISOS_ESPECIALES = false;
 
     public static String NO_MESA_CAJA = "M-0";
@@ -54,13 +54,13 @@ public class R {
     public static DecimalFormat formatoMoneda = new DecimalFormat("0.00");
 
     public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("Strings");
-    
+
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
     public static String RELEASE_VERSION = "Version 2.6.7.8";
 
     public static int BUILD_VERSION = 26;
-    
+
     public static String CONFIG_FILE_PATH = "y.cfg";
 
     public static void setLookAndFeels() {
@@ -71,40 +71,38 @@ public class R {
         }
     }
 
-    public static enum SettingID{
-        
+    public static enum SettingID {
+
         //
         //GENERALES
         //
-        
-        GENERAL_CAMBIO_MONEDA("GENERAL_CAMBIO_MONEDA",24,null),
-        GENERAL_TURNOS_VARIOS("GENERAL_MULTIPLES_TURNOS",0,null),
-        GENERAL_CAJERO_PERMISOS_ESP("GENERAL_CAJERO_PERMISOS_ESP",0,null),
-        GENERAL_CONSUMO_CASA_ESTADISTICAS("GENERAL_CONSUMO_CASA_ESTADISTICAS",0,null),
-        GENERAL_SERVER_IP("GENERAL_SERVIDOR_IP",-1,"192.168.173.1"),
-        GENERAL_MESA_FIJA_CAJERO("GENERAL_MESA_FIJA_CAJERO",1,null),
-        GENERAL_ULTIMA_ORDEN_PRUEBA("Y",-1,null),
-        
-        
+        GENERAL_CAMBIO_MONEDA("GENERAL_CAMBIO_MONEDA", 24, null),
+        GENERAL_TURNOS_VARIOS("GENERAL_MULTIPLES_TURNOS", 0, null),
+        GENERAL_CAJERO_PERMISOS_ESP("GENERAL_CAJERO_PERMISOS_ESP", 0, null),
+        GENERAL_CONSUMO_CASA_ESTADISTICAS("GENERAL_CONSUMO_CASA_ESTADISTICAS", 0, null),
+        GENERAL_SERVER_IP("GENERAL_SERVIDOR_IP", -1, "192.168.173.1"),
+        GENERAL_MESA_FIJA_CAJERO("GENERAL_MESA_FIJA_CAJERO", 1, null),
+        GENERAL_ULTIMA_ORDEN_PRUEBA("Y", -1, null),
         //
         //IMPRESION
         //
-        IMPRESION_TICKET_VALOR_ENCABEZADO("PRINTING_TICKET_HEADER_VALUE",-1,"Restaurante"),
-        IMPRESION_TICKET_TAMANO_PAPEL("PRINTING_TICKET_PAPER_SIZE",38,null),
-        IMPRESION_TICKET_CARACTER_SEPARADOR("PRINTING_TICKET_SEPARATOR_CHAR",-1,"*"),
-        IMPRESION_TICKET_ENCABEZADO_RESTAURANTE("PRINTING_TICKET_HEADER",1,null),
-        IMPRESION_TICKET_SUBTOTAL("PRINTING_TICKET_SUBTOTAL",1,null),
-        IMPRESION_IMPRIMIR_COCINA_CENTRAL("PRINTING_CENTRAL_KITCHEN",0,null),
-        IMPRESION_IMPRIMIR_GASTOS_AUTORIZOS("PRINTING_EXPENSES_IN_HAUSE_TICKETS",0,null),
-        IMPRESION_IMPRIMIR_TICKET_EN_COCINA("PRINTING_PRINT_KITCHEN_TICKET",1,null),
-        IMPRESION_CANTIDAD_COPIAS("PRINTING_COPIES",0,null),
-        IMPRESION_REDONDEO_EXCESO("PRINTING_ROUNDING",1,null);
-        
+        IMPRESION_TICKET_VALOR_ENCABEZADO("PRINTING_TICKET_HEADER_VALUE", -1, "Restaurante"),
+        IMPRESION_TICKET_TAMANO_PAPEL("PRINTING_TICKET_PAPER_SIZE", 38, null),
+        IMPRESION_TICKET_CARACTER_SEPARADOR("PRINTING_TICKET_SEPARATOR_CHAR", -1, "*"),
+        IMPRESION_TICKET_ENCABEZADO_RESTAURANTE("PRINTING_TICKET_HEADER", 1, null),
+        IMPRESION_TICKET_SUBTOTAL("PRINTING_TICKET_SUBTOTAL", 1, null),
+        IMPRESION_IMPRIMIR_COCINA_CENTRAL("PRINTING_CENTRAL_KITCHEN", 0, null),
+        IMPRESION_IMPRIMIR_GASTOS_AUTORIZOS("PRINTING_EXPENSES_IN_HAUSE_TICKETS", 0, null),
+        IMPRESION_IMPRIMIR_TICKET_EN_COCINA("PRINTING_PRINT_KITCHEN_TICKET", 1, null),
+        IMPRESION_CANTIDAD_COPIAS("PRINTING_COPIES", 0, null),
+        IMPRESION_REDONDEO_EXCESO("PRINTING_ROUNDING", 1, null),
+        IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA("PRINTING_SECOND_COIN", 1, null);
+
         private final String value;
         private final int integerValue;
         private final String stringValue;
 
-        private SettingID(String value,Integer valorInt, String valorString) {
+        private SettingID(String value, Integer valorInt, String valorString) {
             this.value = value;
             this.integerValue = valorInt;
             this.stringValue = valorString;
@@ -126,11 +124,9 @@ public class R {
         public String toString() {
             return getValue();
         }
-        
-        
-        
-    }  
-    
+
+    }
+
     public static enum UM {
         U("U"),
         Gr("Gr"),

@@ -61,6 +61,7 @@ public class Impresion {
     public static boolean SHOW_SUBTOTAL = true;
     public static String DEFAULT_KITCHEN_PRINTER_LOCATION = "Cocina";
     public static String DEFAULT_PRINT_LOCATION = null;
+    public static boolean PRINT_SECOND_COIN = true;
     public static boolean IMPRIMIR_TICKET_COCINA = true;
     public static int cantidadCopias = 0;
     public static boolean REDONDEO_POR_EXCESO = true;
@@ -860,21 +861,21 @@ public class Impresion {
             t.alignRight();
             t.setText(String.format(TOTAL_VENTAS + "%.2f" + MONEDA, total));
             t.newLine();
-
-            if (monedaCUC) {
-                if (REDONDEO_POR_EXCESO) {
-                    t.setText(TOTAL_VENTAS + utils.redondeoPorExcesoFloat(total * R.COINCHANGE) + MN);
+            if (PRINT_SECOND_COIN) {
+                if (monedaCUC) {
+                    if (REDONDEO_POR_EXCESO) {
+                        t.setText(TOTAL_VENTAS + utils.redondeoPorExcesoFloat(total * R.COINCHANGE) + MN);
+                    } else {
+                        t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, utils.setDosLugaresDecimalesFloat(total * R.COINCHANGE)));
+                    }
                 } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + MN, utils.setDosLugaresDecimalesFloat(total * R.COINCHANGE)));
-                }
-            } else {
-                if (REDONDEO_POR_EXCESO) {
-                    t.setText(TOTAL_VENTAS + utils.redondeoPorExcesoFloat(total / R.COINCHANGE) + CUC);
-                } else {
-                    t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, utils.setDosLugaresDecimalesFloat(total / R.COINCHANGE)));
+                    if (REDONDEO_POR_EXCESO) {
+                        t.setText(TOTAL_VENTAS + utils.redondeoPorExcesoFloat(total / R.COINCHANGE) + CUC);
+                    } else {
+                        t.setText(String.format(TOTAL_VENTAS + "%.2f" + CUC, utils.setDosLugaresDecimalesFloat(total / R.COINCHANGE)));
+                    }
                 }
             }
-
         }
     }
 
