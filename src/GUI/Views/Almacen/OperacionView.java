@@ -9,8 +9,13 @@ import GUI.Views.AbstractView;
 import GUI.Views.util.RestaurantManagerListIntelliHint;
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.almacen.AlmacenManageController;
@@ -72,6 +77,25 @@ public class OperacionView extends AbstractView {
         jTextFieldCausa.setVisible(false);
         list = new RestaurantManagerListIntelliHint<>(jTextFieldInsumo, this.controller.getInsumoAlmacenList(this.controller.getInstance()));
         jDateChooser1.setDate(new Date());
+        jSpinnerCantidad.addChangeListener((ChangeEvent e) -> {
+            calcularValorEntrada(list.getSelectedHint());
+            jSpinnerMonto.requestFocusInWindow();
+        });
+        JSpinner.DefaultEditor def = (JSpinner.DefaultEditor) jSpinnerCantidad.getEditor();
+        def.getTextField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                def.getTextField().setText(null);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+            }
+        });
+
+       // jSpinnerMonto.addChangeListener(new );
+
+        
         setVisible(true);
     }
 
@@ -102,9 +126,9 @@ public class OperacionView extends AbstractView {
         jLabel2 = new javax.swing.JLabel();
         jTextFieldInsumo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jFormattedTextFieldCantidad = new javax.swing.JFormattedTextField();
+        jSpinnerCantidad = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
-        jFormattedTextFieldMonto = new javax.swing.JFormattedTextField();
+        jSpinnerMonto = new javax.swing.JSpinner();
         jComboBoxAlmacenExistencias = new javax.swing.JComboBox<>();
         jTextFieldCausa = new javax.swing.JTextField();
         jButtonAdd = new javax.swing.JButton();
@@ -248,26 +272,16 @@ public class OperacionView extends AbstractView {
         jLabel3.setText("Cantidad");
         jPanel5.add(jLabel3);
 
-        jFormattedTextFieldCantidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        jFormattedTextFieldCantidad.setPreferredSize(new java.awt.Dimension(80, 26));
-        jFormattedTextFieldCantidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldCantidadActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jFormattedTextFieldCantidad);
+        jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
+        jSpinnerCantidad.setPreferredSize(new java.awt.Dimension(80, 26));
+        jPanel5.add(jSpinnerCantidad);
 
         jLabel4.setText("Monto");
         jPanel5.add(jLabel4);
 
-        jFormattedTextFieldMonto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        jFormattedTextFieldMonto.setPreferredSize(new java.awt.Dimension(80, 26));
-        jFormattedTextFieldMonto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldMontoActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jFormattedTextFieldMonto);
+        jSpinnerMonto.setMinimumSize(new java.awt.Dimension(70, 26));
+        jSpinnerMonto.setPreferredSize(new java.awt.Dimension(80, 26));
+        jPanel5.add(jSpinnerMonto);
 
         jComboBoxAlmacenExistencias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxAlmacenExistencias.addActionListener(new java.awt.event.ActionListener() {
@@ -352,16 +366,6 @@ public class OperacionView extends AbstractView {
         jTextFieldInsumo.transferFocus();        // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldInsumoActionPerformed
 
-    private void jFormattedTextFieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCantidadActionPerformed
-        jFormattedTextFieldCantidad.transferFocus();
-        calcularValorEntrada(list.getSelectedHint());// TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldCantidadActionPerformed
-
-    private void jFormattedTextFieldMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldMontoActionPerformed
-        jFormattedTextFieldMonto.transferFocus();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldMontoActionPerformed
-
     private void jTextFieldCausaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCausaActionPerformed
         jTextFieldCausa.transferFocus();
     }//GEN-LAST:event_jTextFieldCausaActionPerformed
@@ -402,8 +406,6 @@ public class OperacionView extends AbstractView {
     private javax.swing.JButton jButtonConfirmar;
     private javax.swing.JComboBox<Object> jComboBoxAlmacenExistencias;
     private com.toedter.calendar.JDateChooser jDateChooser1;
-    private javax.swing.JFormattedTextField jFormattedTextFieldCantidad;
-    private javax.swing.JFormattedTextField jFormattedTextFieldMonto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -419,6 +421,8 @@ public class OperacionView extends AbstractView {
     private javax.swing.JRadioButton jRadioButtonSalida;
     private javax.swing.JRadioButton jRadioButtonTraspaso;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner jSpinnerCantidad;
+    private javax.swing.JSpinner jSpinnerMonto;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextFieldCausa;
     private javax.swing.JTextField jTextFieldInsumo;
@@ -463,20 +467,20 @@ public class OperacionView extends AbstractView {
         //cambiando la estructura de los campos a rellenar
         jLabel4.setText(columnName);
         jTextFieldCausa.setVisible(checkBoxType == CheckBoxType.REBAJA);
-        jFormattedTextFieldMonto.setVisible(checkBoxType == CheckBoxType.ENTRADA);
+        jSpinnerMonto.setVisible(checkBoxType == CheckBoxType.ENTRADA);
         jComboBoxAlmacenExistencias.setVisible(checkBoxType == CheckBoxType.SALIDA || checkBoxType == CheckBoxType.TRASPASO);
         tipoOperacion = checkBoxType;
     }
 
     private void ejecutarOperacion() {
-        long cantidad = (long) jFormattedTextFieldCantidad.getValue();
+        float cantidad = (float) jSpinnerCantidad.getValue();
         TransaccionSimple transaccion = new TransaccionSimple(list.getSelectedHint(), (float) cantidad);
         Object[] row = new Object[3];
         row[0] = transaccion.getInsumo();
         row[1] = transaccion.getCantidad();
         switch (tipoOperacion) {
             case ENTRADA:
-                long c = (long) jFormattedTextFieldMonto.getValue();
+                float c = (float) jSpinnerMonto.getValue();
                 transaccion.setMonto((float) c);
 
                 row[2] = transaccion.getMonto();
@@ -510,8 +514,8 @@ public class OperacionView extends AbstractView {
     private void limpiarFormulario() {
         jTextFieldInsumo.setText("");
         jTextFieldCausa.setText("'");
-        jFormattedTextFieldMonto.setText("");
-        jFormattedTextFieldCantidad.setText("");
+        jSpinnerMonto.setValue(0);
+        jSpinnerCantidad.setValue(0);
     }
 
     private void lockTipoOp(boolean enabled) {
@@ -522,7 +526,7 @@ public class OperacionView extends AbstractView {
 
     private void calcularValorEntrada(InsumoAlmacen selectedHint) {
         if (selectedHint.getValorMonetario() != 0) {
-            jFormattedTextFieldMonto.setText("" + ((long) jFormattedTextFieldCantidad.getValue()) * utils.setDosLugaresDecimalesFloat(selectedHint.getValorMonetario() / selectedHint.getCantidad()));
+            jSpinnerMonto.setValue(((float) jSpinnerCantidad.getValue()) * utils.setDosLugaresDecimalesFloat(selectedHint.getValorMonetario() / selectedHint.getCantidad()));
 
         }
     }
