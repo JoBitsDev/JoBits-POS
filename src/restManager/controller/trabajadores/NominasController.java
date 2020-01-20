@@ -36,6 +36,7 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
 
     public NominasController() {
         super(AsistenciaPersonalDAO.getInstance());
+        instance = createNewInstance();
     }
 
     public NominasController(Window parent) {

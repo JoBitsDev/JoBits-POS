@@ -28,6 +28,8 @@ public class PuestoTrabajoCreateEditController extends AbstractDetailController<
 
     public PuestoTrabajoCreateEditController() {
         super(PuestoTrabajoDAO.getInstance());
+        instance = createNewInstance();
+
     }
 
     public PuestoTrabajoCreateEditController(PuestoTrabajo instance) {

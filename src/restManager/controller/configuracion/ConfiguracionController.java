@@ -72,6 +72,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
         Impresion.REDONDEO_POR_EXCESO = c.find(R.SettingID.IMPRESION_REDONDEO_EXCESO).getValor() == 1;
         Impresion.SHOW_SUBTOTAL = c.find(R.SettingID.IMPRESION_TICKET_SUBTOTAL).getValor() == 1;
         Impresion.CABECERA = c.find(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO).getValorString();
+        Impresion.PRINT_SECOND_COIN = c.find(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA).getValor() == 1;
     }
 
     public ParametrosConfiguracion cargarConfiguracionY() {
@@ -116,6 +117,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
             case IMPRESION_IMPRIMIR_TICKET_EN_COCINA:
             case IMPRESION_REDONDEO_EXCESO:
             case GENERAL_MESA_FIJA_CAJERO:
+            case IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA:
                 return c.getValor() == 1;
             case GENERAL_CAMBIO_MONEDA:
             case IMPRESION_CANTIDAD_COPIAS:
@@ -140,6 +142,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
             case IMPRESION_IMPRIMIR_TICKET_EN_COCINA:
             case IMPRESION_REDONDEO_EXCESO:
             case GENERAL_MESA_FIJA_CAJERO:
+            case IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA:
                 c.setValor((boolean) update == true ? 1 : 0);
                 break;
             case GENERAL_CAMBIO_MONEDA:

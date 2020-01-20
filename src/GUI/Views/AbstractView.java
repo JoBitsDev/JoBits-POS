@@ -5,7 +5,6 @@
  */
 package GUI.Views;
 
-import com.jidesoft.swing.ResizableDialog;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -14,7 +13,6 @@ import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.Insets;
-import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JDialog;
 import restManager.controller.AbstractDialogController;
@@ -23,7 +21,6 @@ import restManager.exceptions.DevelopingOperationException;
 import restManager.resources.values.Fonts;
 import restManager.util.ComponentMover;
 import restManager.util.ComponentResizer;
-import restManager.util.LoadingWindow;
 
 /**
  * FirstDream

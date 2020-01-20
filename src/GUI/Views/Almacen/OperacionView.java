@@ -7,9 +7,15 @@ package GUI.Views.Almacen;
 
 import GUI.Views.AbstractView;
 import GUI.Views.util.RestaurantManagerListIntelliHint;
+import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.almacen.AlmacenManageController;
@@ -21,6 +27,7 @@ import restManager.persistencia.Cocina;
 import restManager.persistencia.InsumoAlmacen;
 import restManager.persistencia.volatil.TransaccionSimple;
 import restManager.util.RestManagerComboBoxModel;
+import restManager.util.utils;
 
 /**
  *
@@ -35,7 +42,7 @@ public class OperacionView extends AbstractView {
 
     public OperacionView(AbstractDialogController controller) {
 
-        super(DialogType.INPUT_LARGE, controller);
+        super(DialogType.DEFINED, controller);
         this.controller = (AlmacenManageController) controller;
         initComponents();
         buttonGroup1.add(jRadioButtonTraspaso);
@@ -57,8 +64,10 @@ public class OperacionView extends AbstractView {
      * @param modal
      */
     public OperacionView(AbstractDialogController controller, Dialog owner, boolean modal) {
-        super(DialogType.INPUT_LARGE, controller, owner, modal);
+        super(DialogType.DEFINED, controller, owner, modal);
         this.controller = (AlmacenManageController) controller;
+        this.controller.setParent(owner);
+        this.controller.setView(this);
         initComponents();
         buttonGroup1.add(jRadioButtonTraspaso);
         buttonGroup1.add(jRadioButtonSalida);
@@ -68,6 +77,25 @@ public class OperacionView extends AbstractView {
         jTextFieldCausa.setVisible(false);
         list = new RestaurantManagerListIntelliHint<>(jTextFieldInsumo, this.controller.getInsumoAlmacenList(this.controller.getInstance()));
         jDateChooser1.setDate(new Date());
+        jSpinnerCantidad.addChangeListener((ChangeEvent e) -> {
+            calcularValorEntrada(list.getSelectedHint());
+            jSpinnerMonto.requestFocusInWindow();
+        });
+        JSpinner.DefaultEditor def = (JSpinner.DefaultEditor) jSpinnerCantidad.getEditor();
+        def.getTextField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                def.getTextField().setText(null);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+            }
+        });
+
+       // jSpinnerMonto.addChangeListener(new );
+
+        
         setVisible(true);
     }
 
@@ -98,9 +126,9 @@ public class OperacionView extends AbstractView {
         jLabel2 = new javax.swing.JLabel();
         jTextFieldInsumo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jFormattedTextFieldCantidad = new javax.swing.JFormattedTextField();
+        jSpinnerCantidad = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
-        jFormattedTextFieldMonto = new javax.swing.JFormattedTextField();
+        jSpinnerMonto = new javax.swing.JSpinner();
         jComboBoxAlmacenExistencias = new javax.swing.JComboBox<>();
         jTextFieldCausa = new javax.swing.JTextField();
         jButtonAdd = new javax.swing.JButton();
@@ -109,6 +137,9 @@ public class OperacionView extends AbstractView {
         jTextFieldRecibo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(730, 500));
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(730, 700));
 
         jButtonConfirmar.setForeground(new java.awt.Color(0, 153, 153));
         jButtonConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/confirmar.png"))); // NOI18N
@@ -133,6 +164,11 @@ public class OperacionView extends AbstractView {
         jRadioButtonEntrada.setSelected(true);
         jRadioButtonEntrada.setText(bundle.getString("label_entrada")); // NOI18N
         jRadioButtonEntrada.setToolTipText("");
+        jRadioButtonEntrada.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jRadioButtonEntradaStateChanged(evt);
+            }
+        });
         jRadioButtonEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonEntradaActionPerformed(evt);
@@ -141,6 +177,11 @@ public class OperacionView extends AbstractView {
         jPanel8.add(jRadioButtonEntrada);
 
         jRadioButtonTraspaso.setText(bundle.getString("label_traspaso")); // NOI18N
+        jRadioButtonTraspaso.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jRadioButtonTraspasoStateChanged(evt);
+            }
+        });
         jRadioButtonTraspaso.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonTraspasoActionPerformed(evt);
@@ -149,6 +190,11 @@ public class OperacionView extends AbstractView {
         jPanel8.add(jRadioButtonTraspaso);
 
         jRadioButtonSalida.setText(bundle.getString("label_salida")); // NOI18N
+        jRadioButtonSalida.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jRadioButtonSalidaStateChanged(evt);
+            }
+        });
         jRadioButtonSalida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonSalidaActionPerformed(evt);
@@ -157,6 +203,11 @@ public class OperacionView extends AbstractView {
         jPanel8.add(jRadioButtonSalida);
 
         jRadioButtonRebaja.setText(bundle.getString("label_rebaja")); // NOI18N
+        jRadioButtonRebaja.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jRadioButtonRebajaStateChanged(evt);
+            }
+        });
         jRadioButtonRebaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonRebajaActionPerformed(evt);
@@ -221,32 +272,32 @@ public class OperacionView extends AbstractView {
         jLabel3.setText("Cantidad");
         jPanel5.add(jLabel3);
 
-        jFormattedTextFieldCantidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        jFormattedTextFieldCantidad.setPreferredSize(new java.awt.Dimension(80, 26));
-        jFormattedTextFieldCantidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldCantidadActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jFormattedTextFieldCantidad);
+        jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
+        jSpinnerCantidad.setPreferredSize(new java.awt.Dimension(80, 26));
+        jPanel5.add(jSpinnerCantidad);
 
         jLabel4.setText("Monto");
         jPanel5.add(jLabel4);
 
-        jFormattedTextFieldMonto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        jFormattedTextFieldMonto.setPreferredSize(new java.awt.Dimension(80, 26));
-        jFormattedTextFieldMonto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldMontoActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jFormattedTextFieldMonto);
+        jSpinnerMonto.setMinimumSize(new java.awt.Dimension(70, 26));
+        jSpinnerMonto.setPreferredSize(new java.awt.Dimension(80, 26));
+        jPanel5.add(jSpinnerMonto);
 
         jComboBoxAlmacenExistencias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxAlmacenExistencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxAlmacenExistenciasActionPerformed(evt);
+            }
+        });
         jPanel5.add(jComboBoxAlmacenExistencias);
 
         jTextFieldCausa.setText("Causa");
         jTextFieldCausa.setPreferredSize(new java.awt.Dimension(150, 26));
+        jTextFieldCausa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCausaActionPerformed(evt);
+            }
+        });
         jPanel5.add(jTextFieldCausa);
 
         jPanel3.add(jPanel5, java.awt.BorderLayout.CENTER);
@@ -284,19 +335,19 @@ public class OperacionView extends AbstractView {
     }//GEN-LAST:event_jButtonConfirmarActionPerformed
 
     private void jRadioButtonRebajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonRebajaActionPerformed
-        onCheckedCheckBox(CheckBoxType.REBAJA);
+
     }//GEN-LAST:event_jRadioButtonRebajaActionPerformed
 
     private void jRadioButtonSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSalidaActionPerformed
-        onCheckedCheckBox(CheckBoxType.SALIDA);
+
     }//GEN-LAST:event_jRadioButtonSalidaActionPerformed
 
     private void jRadioButtonTraspasoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTraspasoActionPerformed
-        onCheckedCheckBox(CheckBoxType.TRASPASO);
+
     }//GEN-LAST:event_jRadioButtonTraspasoActionPerformed
 
     private void jRadioButtonEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonEntradaActionPerformed
-        onCheckedCheckBox(CheckBoxType.ENTRADA);
+
     }//GEN-LAST:event_jRadioButtonEntradaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -304,7 +355,10 @@ public class OperacionView extends AbstractView {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+        lockTipoOp(false);
         ejecutarOperacion();
+        limpiarFormulario();
+        jTextFieldInsumo.requestFocusInWindow();
 
     }//GEN-LAST:event_jButtonAddActionPerformed
 
@@ -312,14 +366,37 @@ public class OperacionView extends AbstractView {
         jTextFieldInsumo.transferFocus();        // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldInsumoActionPerformed
 
-    private void jFormattedTextFieldCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCantidadActionPerformed
-        jFormattedTextFieldCantidad.transferFocus();        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldCantidadActionPerformed
+    private void jTextFieldCausaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCausaActionPerformed
+        jTextFieldCausa.transferFocus();
+    }//GEN-LAST:event_jTextFieldCausaActionPerformed
 
-    private void jFormattedTextFieldMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldMontoActionPerformed
-        jFormattedTextFieldMonto.transferFocus();
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldMontoActionPerformed
+    private void jComboBoxAlmacenExistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxAlmacenExistenciasActionPerformed
+        jComboBoxAlmacenExistencias.transferFocus();
+    }//GEN-LAST:event_jComboBoxAlmacenExistenciasActionPerformed
+
+    private void jRadioButtonRebajaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButtonRebajaStateChanged
+        if (jRadioButtonRebaja.isSelected()) {
+            onCheckedCheckBox(CheckBoxType.REBAJA);
+        }
+    }//GEN-LAST:event_jRadioButtonRebajaStateChanged
+
+    private void jRadioButtonSalidaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButtonSalidaStateChanged
+        if (jRadioButtonSalida.isSelected()) {
+            onCheckedCheckBox(CheckBoxType.SALIDA);
+        }
+    }//GEN-LAST:event_jRadioButtonSalidaStateChanged
+
+    private void jRadioButtonTraspasoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButtonTraspasoStateChanged
+        if (jRadioButtonTraspaso.isSelected()) {
+            onCheckedCheckBox(CheckBoxType.TRASPASO);
+        }
+    }//GEN-LAST:event_jRadioButtonTraspasoStateChanged
+
+    private void jRadioButtonEntradaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButtonEntradaStateChanged
+        if (jRadioButtonEntrada.isSelected()) {
+            onCheckedCheckBox(CheckBoxType.ENTRADA);
+        }
+    }//GEN-LAST:event_jRadioButtonEntradaStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -329,8 +406,6 @@ public class OperacionView extends AbstractView {
     private javax.swing.JButton jButtonConfirmar;
     private javax.swing.JComboBox<Object> jComboBoxAlmacenExistencias;
     private com.toedter.calendar.JDateChooser jDateChooser1;
-    private javax.swing.JFormattedTextField jFormattedTextFieldCantidad;
-    private javax.swing.JFormattedTextField jFormattedTextFieldMonto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -346,6 +421,8 @@ public class OperacionView extends AbstractView {
     private javax.swing.JRadioButton jRadioButtonSalida;
     private javax.swing.JRadioButton jRadioButtonTraspaso;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSpinner jSpinnerCantidad;
+    private javax.swing.JSpinner jSpinnerMonto;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextFieldCausa;
     private javax.swing.JTextField jTextFieldInsumo;
@@ -354,7 +431,6 @@ public class OperacionView extends AbstractView {
 
     @Override
     public void updateView() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void onCheckedCheckBox(CheckBoxType checkBoxType) {
@@ -368,7 +444,7 @@ public class OperacionView extends AbstractView {
                 break;
         }
 
-        //cambiando columna tabla
+        //cambiando columna tabla 
         String columnName;
         switch (tipoOperacion) {
             case ENTRADA:
@@ -378,6 +454,8 @@ public class OperacionView extends AbstractView {
                 columnName = "Causa Rebaja";
                 break;
             case TRASPASO:
+                columnName = "Destino";
+                break;
             case SALIDA:
                 columnName = "Destino";
                 break;
@@ -387,21 +465,22 @@ public class OperacionView extends AbstractView {
         jTable1.getColumnModel().getColumn(2).setHeaderValue(columnName);
 
         //cambiando la estructura de los campos a rellenar
+        jLabel4.setText(columnName);
         jTextFieldCausa.setVisible(checkBoxType == CheckBoxType.REBAJA);
-        jFormattedTextFieldMonto.setVisible(checkBoxType == CheckBoxType.ENTRADA);
+        jSpinnerMonto.setVisible(checkBoxType == CheckBoxType.ENTRADA);
         jComboBoxAlmacenExistencias.setVisible(checkBoxType == CheckBoxType.SALIDA || checkBoxType == CheckBoxType.TRASPASO);
         tipoOperacion = checkBoxType;
     }
 
     private void ejecutarOperacion() {
-        long cantidad = (long) jFormattedTextFieldCantidad.getValue();
+        float cantidad = (float) jSpinnerCantidad.getValue();
         TransaccionSimple transaccion = new TransaccionSimple(list.getSelectedHint(), (float) cantidad);
         Object[] row = new Object[3];
         row[0] = transaccion.getInsumo();
         row[1] = transaccion.getCantidad();
         switch (tipoOperacion) {
             case ENTRADA:
-                long c = (long) jFormattedTextFieldMonto.getValue();
+                float c = (float) jSpinnerMonto.getValue();
                 transaccion.setMonto((float) c);
 
                 row[2] = transaccion.getMonto();
@@ -430,6 +509,26 @@ public class OperacionView extends AbstractView {
     private void aceptarOperacion() {
         controller.crearOperacion(this.transacciones, tipoOperacion, jDateChooser1.getDate(), jTextFieldRecibo.getText());
         dispose();
+    }
+
+    private void limpiarFormulario() {
+        jTextFieldInsumo.setText("");
+        jTextFieldCausa.setText("'");
+        jSpinnerMonto.setValue(0);
+        jSpinnerCantidad.setValue(0);
+    }
+
+    private void lockTipoOp(boolean enabled) {
+        for (Component c : jPanel8.getComponents()) {
+            c.setEnabled(enabled);
+        }
+    }
+
+    private void calcularValorEntrada(InsumoAlmacen selectedHint) {
+        if (selectedHint.getValorMonetario() != 0) {
+            jSpinnerMonto.setValue(((float) jSpinnerCantidad.getValue()) * utils.setDosLugaresDecimalesFloat(selectedHint.getValorMonetario() / selectedHint.getCantidad()));
+
+        }
     }
 
 }

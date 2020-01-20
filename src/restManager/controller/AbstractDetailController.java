@@ -7,7 +7,9 @@ package restManager.controller;
 
 import GUI.Views.AbstractDetailView;
 import GUI.Views.AbstractView;
+import GUI.Views.util.LongProcessAction;
 import java.awt.Window;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.models.AbstractModel;
 
@@ -26,7 +28,6 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
 
     public AbstractDetailController(AbstractModel<T> dataAccess) {
         super(dataAccess);
-        instance = createNewInstance();
         state = State.CREATING;
     }
 
@@ -44,12 +45,21 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
     public AbstractDetailController(Window parent, AbstractModel<T> dataAccess) {
         super(dataAccess);
         this.parent = parent;
-        instance = createNewInstance();
-        state = State.CREATING;
-        constructView(parent);
-       // getView().setCreatingMode();
-        //getView().setVisible(true);
+        new LongProcessAction() {
+            @Override
+            protected void longProcessMethod() {
+                instance = createNewInstance();
+            }
 
+            @Override
+            protected void whenDone() {
+                state = State.CREATING;
+                constructView(parent);
+            }
+
+        }.performAction(parent);
+        // getView().setCreatingMode();
+        //getView().setVisible(true);
     }
 
     public AbstractDetailController(T instance, Window parent, AbstractModel<T> dataAccess) {
@@ -59,11 +69,11 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
         state = State.EDITING;
         constructView(parent);
         //getView().setEditingMode();
-       // getView().setVisible(true);
+        // getView().setVisible(true);
     }
 
     public void createUpdateInstance() {
-        if (((AbstractDetailView<T>)getView()).validateData()) {
+        if (((AbstractDetailView<T>) getView()).validateData()) {
             switch (state) {
                 case CREATING:
                     create(instance);
@@ -72,7 +82,7 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
                     update(instance);
                     break;
             }
-        }else{
+        } else {
             throw new ValidatingException();
         }
     }
@@ -103,7 +113,6 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
 //    public AbstractDetailView<T> getView() {
 //        return (AbstractDetailView<T>)super.getView();
 //    }
-
     public enum State {
         CREATING, EDITING
     }

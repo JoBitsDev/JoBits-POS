@@ -6,6 +6,7 @@
 package GUI.Views.venta;
 
 import GUI.Views.AbstractView;
+import GUI.Views.util.LongProcessAction;
 import GUI.Views.util.VentaCellRender;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -394,7 +395,12 @@ public class VentaCalendarView extends AbstractView {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        createDetailResumenView();
+        new LongProcessAction() {
+            @Override
+            public void longProcessMethod() {
+                createDetailResumenView();
+            }
+        }.longProcessMethod();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTableCalendarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableCalendarFocusLost

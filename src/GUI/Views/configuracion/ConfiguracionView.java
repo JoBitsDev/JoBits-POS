@@ -73,6 +73,8 @@ public class ConfiguracionView extends AbstractView {
         jPanelTickets = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jCheckBoxEncabezadoRestaurante = new javax.swing.JCheckBox();
+        jPanel13 = new javax.swing.JPanel();
+        jCheckBoxSegundaMoneda = new javax.swing.JCheckBox();
         jPanelCaracterSeparador = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jComboBoxCaracterSeparador = new javax.swing.JComboBox<>();
@@ -224,6 +226,14 @@ public class ConfiguracionView extends AbstractView {
         jCheckBoxEncabezadoRestaurante.setToolTipText("");
         jPanel8.add(jCheckBoxEncabezadoRestaurante);
 
+        jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jCheckBoxSegundaMoneda.setText("Imprimir total en segunda moneda");
+        jCheckBoxSegundaMoneda.setToolTipText("");
+        jPanel13.add(jCheckBoxSegundaMoneda);
+
+        jPanel8.add(jPanel13);
+
         jPanelTickets.add(jPanel8);
 
         jPanelCaracterSeparador.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -315,6 +325,7 @@ public class ConfiguracionView extends AbstractView {
         jCheckBoxEncabezadoRestaurante.setSelected((boolean) fetch(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE));
         jComboBoxCaracterSeparador.setSelectedItem(fetch(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR));
         jComboBoxTipoNegocio.setSelectedItem(fetch(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO));
+        jCheckBoxSegundaMoneda.setSelected((boolean) fetch(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA));
         int selected = 0;
         if (fetch(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL).equals("48")) {
             selected = 1;
@@ -345,6 +356,7 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JCheckBox jCheckBoxMultiplesTurnos;
     private javax.swing.JCheckBox jCheckBoxPermEsp;
     private javax.swing.JCheckBox jCheckBoxRounding;
+    private javax.swing.JCheckBox jCheckBoxSegundaMoneda;
     private javax.swing.JCheckBox jCheckBoxTicketCocina;
     private javax.swing.JComboBox<String> jComboBoxCambioMoneda;
     private javax.swing.JComboBox<String> jComboBoxCantCopias;
@@ -362,6 +374,7 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel24HR;
     private javax.swing.JPanel jPanel3;
@@ -410,6 +423,7 @@ public class ConfiguracionView extends AbstractView {
         save(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE, jCheckBoxEncabezadoRestaurante.isSelected());
         save(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR, jComboBoxCaracterSeparador.getSelectedItem());
         save(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO, jComboBoxTipoNegocio.getSelectedItem());
+        save(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA, jCheckBoxSegundaMoneda.isSelected());
         String selected = "32";
         if (jComboBoxTamannoTicket.getSelectedItem().equals("80mm")) {
             selected = "48";

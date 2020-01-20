@@ -7,8 +7,6 @@ package restManager.controller.venta;
 
 import GUI.Views.util.CalcularCambioView;
 import GUI.Views.venta.VentasCreateEditView;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,34 +14,16 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.Licence.Licence;
 import restManager.controller.Licence.LicenceController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
 import restManager.controller.trabajadores.AsistenciaPersonalController;
-import restManager.controller.trabajadores.PersonalCreateEditController;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
-import restManager.persistencia.Area;
-import restManager.persistencia.AsistenciaPersonal;
-import restManager.persistencia.Cocina;
+import restManager.persistencia.*;
 import restManager.persistencia.Control.VentaDAO1;
-import restManager.persistencia.GastoVenta;
-import restManager.persistencia.IpvRegistro;
-import restManager.persistencia.Orden;
-import restManager.persistencia.Personal;
-import restManager.persistencia.ProductoInsumo;
-import restManager.persistencia.ProductoVenta;
-import restManager.persistencia.ProductovOrden;
-import restManager.persistencia.PuestoTrabajo;
-import restManager.persistencia.Venta;
-import restManager.persistencia.models.AreaDAO;
-import restManager.persistencia.models.CocinaDAO;
-import restManager.persistencia.models.OrdenDAO;
-import restManager.persistencia.models.PersonalDAO;
-import restManager.persistencia.models.VentaDAO;
+import restManager.persistencia.models.*;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.util.utils;
@@ -85,16 +65,16 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         constructView(parent);
     }
 
+    public VentaDetailController(Venta instance, Window parent) {
+        super(instance, parent, VentaDAO.getInstance());
+        OrdenDAO.getInstance().addPropertyChangeListener(this);
+    }
+
     public VentaDetailController(Date diaVentas) {
         super(VentaDAO.getInstance());
         OrdenDAO.getInstance().addPropertyChangeListener(this);
         instance = getDiaDeVenta(diaVentas);
         state = State.CREATING;
-    }
-
-    public VentaDetailController(Venta instance, Window parent) {
-        super(instance, parent, VentaDAO.getInstance());
-        OrdenDAO.getInstance().addPropertyChangeListener(this);
     }
 
     public VentaDetailController(Venta instance, Window parent, Date fechafin) {
