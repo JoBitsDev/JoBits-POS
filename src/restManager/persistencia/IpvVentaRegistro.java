@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package restManager.persistencia;
 
 import java.io.Serializable;
@@ -21,8 +20,9 @@ import restManager.persistencia.Venta;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "ipv_venta_registro")
@@ -35,7 +35,7 @@ import restManager.persistencia.Venta;
     @NamedQuery(name = "IpvVentaRegistro.findByDisponible", query = "SELECT i FROM IpvVentaRegistro i WHERE i.disponible = :disponible"),
     @NamedQuery(name = "IpvVentaRegistro.findByAutorizos", query = "SELECT i FROM IpvVentaRegistro i WHERE i.autorizos = :autorizos"),
     @NamedQuery(name = "IpvVentaRegistro.findByVenta", query = "SELECT i FROM IpvVentaRegistro i WHERE i.ipvVentaRegistroPK.ventafecha = :venta"),
-     @NamedQuery(name = "IpvVentaRegistro.findByIpvByFecha", 
+    @NamedQuery(name = "IpvVentaRegistro.findByIpvByFecha",
             query = "SELECT i FROM IpvVentaRegistro i WHERE i.ipvVentaRegistroPK.ventafecha = :fecha"),
     @NamedQuery(name = "IpvVentaRegistro.findByPrecioVenta", query = "SELECT i FROM IpvVentaRegistro i WHERE i.precioVenta = :precioVenta"),
     @NamedQuery(name = "IpvVentaRegistro.findByFinal1", query = "SELECT i FROM IpvVentaRegistro i WHERE i.final1 = :final1")})
@@ -179,7 +179,7 @@ public class IpvVentaRegistro implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.models.IpvVentaRegistro[ ipvVentaRegistroPK=" + ipvVentaRegistroPK + " ]";
+        return getProductoVenta().toString();
     }
 
 }
