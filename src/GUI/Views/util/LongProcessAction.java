@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import restManager.exceptions.DevelopingOperationException;
 
 /**
  * FirstDream
@@ -21,11 +22,17 @@ import javax.swing.SwingWorker;
  */
 public abstract class LongProcessAction {
 
-    protected static final JDialog LOADING_DIALOG = createLoadingDialog();
     private Window window;
     private SwingWorker.StateValue state = SwingWorker.StateValue.PENDING;
+    private static final JLabel LABEL_CARGANDO = new JLabel("Ejecutando Operacion.......");
+    protected static final JDialog LOADING_DIALOG = createLoadingDialog();
 
     public LongProcessAction() {
+        LABEL_CARGANDO.setText("Ejecutando Operacion.......");
+    }
+
+    public LongProcessAction(String labelAccion) {
+        LABEL_CARGANDO.setText(labelAccion);
     }
 
     protected abstract void longProcessMethod();
@@ -80,7 +87,7 @@ public abstract class LongProcessAction {
         progressBar.setIndeterminate(true);
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(progressBar, BorderLayout.CENTER);
-        panel.add(new JLabel("Ejecutando Operacion......."), BorderLayout.PAGE_START);
+        panel.add(LABEL_CARGANDO, BorderLayout.PAGE_START);
         ret.add(panel);
         ret.setUndecorated(true);
         ret.pack();
