@@ -407,5 +407,17 @@ public class IPVController extends AbstractDialogController<Ipv> {
             updateInstance(instance);
         }
     }
+    
+     public void darEntradaIPV(IpvVentaRegistro instance, float cantidad) {
+        if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta())) {
+            if (cantidad < 0) {
+                if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
+                    return;
+                }
+            }
+            instance.setEntrada(instance.getEntrada() + cantidad);
+            updateInstance(instance);
+        }
+    }
 
 }
