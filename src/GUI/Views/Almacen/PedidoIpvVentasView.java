@@ -96,7 +96,7 @@ public class PedidoIpvVentasView extends AbstractView {
         jLabel1.setText("Pedir del almcen");
         jPanel1.add(jLabel1);
 
-        jComboBox1.setPreferredSize(new java.awt.Dimension(120, 27));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(170, 27));
         jPanel1.add(jComboBox1);
 
         jPanelTop.add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -114,10 +114,7 @@ public class PedidoIpvVentasView extends AbstractView {
 
         jTablePedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Insumo", "Cantidad"
@@ -157,14 +154,17 @@ public class PedidoIpvVentasView extends AbstractView {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        getController().realizarPedidoDeIpv(listaPedido.getItems(),porPedirTable.getHandler().getTableModel().getItems(), elaboracion, (Almacen) jComboBox1.getSelectedItem());
+        if (getController().realizarPedidoDeIpv(listaPedido.getItems(),
+                porPedirTable.getHandler().getTableModel().getItems(),
+                elaboracion, (Almacen) jComboBox1.getSelectedItem())) {
+            dispose();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void initVariables() {
         jComboBox1.setModel(new RestManagerComboBoxModel<>(getController().getAlmacenList()));
         jComboBox1.setSelectedIndex(0);
 
-        
         porPedirTable = new AbstractCrossReferenePanel<ProdcutoVentaPedidoModel, IpvVentaRegistro>("Productos de IPV", ipvProductList) {
             @Override
             protected RestManagerAbstractTableModel<ProdcutoVentaPedidoModel> getTableModel() {
@@ -190,8 +190,6 @@ public class PedidoIpvVentasView extends AbstractView {
                 };
             }
 
-            
-            
             @Override
             protected ProdcutoVentaPedidoModel transformK_T(IpvVentaRegistro selected) {
                 float cantidad = Float.parseFloat(JOptionPane.showInputDialog(this, "Introduzca la cantidad a pedir"));
@@ -224,6 +222,8 @@ public class PedidoIpvVentasView extends AbstractView {
             }
         };
         jTablePedido.setModel(listaPedido);
+
+        getController().setView(this);
     }
 
     @Override
