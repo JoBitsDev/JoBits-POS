@@ -689,7 +689,7 @@ public class VentaDAO1 {
      * @param b - el nuevo productos que se va a incluir
      * @param cant - la cantidad de ese producto
      */
-    private static void joinListsProductoInsumos(
+    public static void joinListsProductoInsumos(
             ArrayList<ProductoInsumo> pivot,
             ArrayList<ProductoInsumo> b, float cant) {
 

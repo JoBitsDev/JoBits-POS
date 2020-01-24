@@ -6,6 +6,7 @@
 package restManager.controller.venta;
 
 import GUI.Views.util.CalcularCambioView;
+import GUI.Views.util.LongProcessAction;
 import GUI.Views.venta.VentasCreateEditView;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import restManager.controller.Licence.LicenceController;
 import restManager.controller.almacen.IPVController;
 import restManager.controller.login.LogInController;
 import restManager.controller.trabajadores.AsistenciaPersonalController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.*;
 import restManager.persistencia.Control.VentaDAO1;
@@ -60,7 +62,12 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         super(VentaDAO.getInstance());
         this.parent = parent;
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-        instance = getDiaDeVenta(diaVentas);
+        new LongProcessAction() {
+            @Override
+            protected void longProcessMethod() {
+                instance = initDiaVentas(diaVentas);
+            }
+        }.performAction(parent);
         state = State.CREATING;
         constructView(parent);
     }
@@ -73,7 +80,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public VentaDetailController(Date diaVentas) {
         super(VentaDAO.getInstance());
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-        instance = getDiaDeVenta(diaVentas);
+        instance = initDiaVentas(diaVentas);
         state = State.CREATING;
     }
 
@@ -88,7 +95,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     @Override
     public Venta createNewInstance() {
-        return getDiaDeVenta(null);
+        return initDiaVentas(null);
     }
 
     /**
@@ -197,6 +204,21 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         CalcularCambioView cc = new CalcularCambioView(getView(), true, objectAtSelectedRow);
     }
 
+    public Venta initDiaVentas(Date fecha) {
+        Venta v = getDiaDeVenta(fecha);
+        return v;
+    }
+
+    public void initIPV(Venta v) {
+        new LongProcessAction("Creando IPVs.........") {
+            @Override
+            protected void longProcessMethod() {
+                new IPVController().inicializarExistencias(v.getFecha());
+                new IPVController().inicializarIpvs(v.getFecha());
+            }
+        }.performAction(getView());
+    }
+
     public Venta getDiaDeVenta(Date fecha) {
         Venta ret;
         LicenceController licence = new LicenceController(Licence.TipoLicencia.APLICACION);
@@ -212,8 +234,6 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             //revisar si ya el dia esta creado pero no terminado
             ret = VentaDAO.getInstance().find(new Date());
             if (ret != null) {
-                new IPVController().inicializarExistencias(ret.getFecha());
-                new IPVController().inicializarIpvs(ret.getFecha());
                 return ret;
             }
 
@@ -224,8 +244,6 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             ret.setOrdenList(new ArrayList<>());
             ret.setFecha(new Date());
             create(ret, true);
-            new IPVController().inicializarExistencias(ret.getFecha());
-            new IPVController().inicializarIpvs(ret.getFecha());
             return ret;
         } else {
 
@@ -236,8 +254,6 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             //revisar si la fecha donde se quiere crear el dia ya esta creada
             ret = VentaDAO.getInstance().find(fecha);
             if (ret != null) {
-                new IPVController().inicializarExistencias(ret.getFecha());
-                new IPVController().inicializarIpvs(ret.getFecha());
                 return ret;
             }
             // crear el dia con la fecha pasada por parametros
@@ -246,8 +262,6 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             ret.setVentagastosEninsumos(0.0);
             ret.setOrdenList(new ArrayList<>());
             create(ret, true);
-            new IPVController().inicializarExistencias(ret.getFecha());
-            new IPVController().inicializarIpvs(ret.getFecha());
             return ret;
         }
     }

@@ -39,6 +39,7 @@ import restManager.persistencia.models.OperacionDAO;
 import restManager.persistencia.models.TransaccionDAO;
 import restManager.persistencia.models.TransaccionEntradaDAO;
 import restManager.persistencia.models.TransaccionMermaDAO;
+import restManager.persistencia.models.utils.InsumoPedidoModel;
 import restManager.persistencia.volatil.TransaccionSimple;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
@@ -264,6 +265,15 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         controller.addTransaccionTransformacion(selected, new Date(), new Date(), items, cantidad, merma, destino);
     }
 
+    public InsumoAlmacen findInsumo(Insumo ins){
+        for (InsumoAlmacen i : getInsumoAlmacenList(getInstance())) {
+            if (i.getInsumo().getCodInsumo().equals(ins.getCodInsumo())) {
+                return i;
+            }
+        }
+        return null;
+    }
+    
     //
     //Accesibles por otros controladores
     //

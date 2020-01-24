@@ -8,26 +8,23 @@ package GUI.Views.venta;
 import GUI.Views.AbstractDetailView;
 import GUI.Views.util.StateCellRender;
 import GUI.Views.util.TableColumnAdjuster;
-import com.jidesoft.hints.ListDataIntelliHints;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
-import mdlaf.components.button.MaterialButtonUI;
-import mdlaf.components.panel.MaterialPanelUI;
 import mdlaf.components.tabbedpane.MaterialTabbedPaneUI;
 import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
-import org.pushingpixels.substance.internal.ui.SubstanceTabbedPaneUI;
 import restManager.controller.AbstractDialogController;
-import restManager.controller.gasto.GastoController;
 import restManager.controller.gasto.GastoOperacionController;
 import restManager.controller.trabajadores.AsistenciaPersonalController;
 import restManager.controller.venta.VentaDetailController;
@@ -40,10 +37,8 @@ import restManager.persistencia.Orden;
 import restManager.persistencia.Personal;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.CocinaDAO;
-import restManager.printservice.Impresion;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableModel;
-import restManager.util.RestManagerComboBoxModel;
 import restManager.util.utils;
 
 /**
@@ -969,6 +964,13 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
         jTabbedPaneResumenD.setUI(new MaterialTabbedPaneUI());
         jTabbedPaneData.setUI(new MaterialTabbedPaneUI());
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                super.windowOpened(e); //To change body of generated methods, choose Tools | Templates.
+                getController().initIPV(getInstance());
+            }
+        });
     }
 
     private void updateTableResumenDptes() {
