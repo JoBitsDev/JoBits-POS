@@ -190,8 +190,16 @@ public class IPVController extends AbstractDialogController<Ipv> {
         IpvRegistroVentaDAO.getInstance().commitTransaction();
     }
 
+    /**
+     * este metodo debe invocarse una sola vez para inicializar los ipvs del dia
+     * de trabajo
+     *
+     * @param fecha
+     * @return
+     */
     public List<IpvRegistro> inicializarExistencias(Date fecha) {
         ArrayList<IpvRegistro> ret = new ArrayList<>();
+        actualizarIPVs();
         IpvDAO.getInstance().findAll().forEach((x) -> {
             IpvRegistroPK pk = new IpvRegistroPK(x.getInsumo().getCodInsumo(), x.getCocina().getCodCocina(), fecha);
             IpvRegistro reg = IpvRegistroDAO.getInstance().find(pk);
@@ -213,6 +221,13 @@ public class IPVController extends AbstractDialogController<Ipv> {
         return ret;
     }
 
+    /**
+     * este metodo debe invocarse una sola vez para inicializar los ipvs del dia
+     * de trabajo
+     *
+     * @param fecha
+     * @return
+     */
     public List<IpvVentaRegistro> inicializarIpvs(Date fecha) {
         ArrayList<IpvVentaRegistro> ret = new ArrayList<>();
         for (ProductoVenta x : ProductoVentaDAO.getInstance().findAll()) {
@@ -407,8 +422,8 @@ public class IPVController extends AbstractDialogController<Ipv> {
             updateInstance(instance);
         }
     }
-    
-     public void darEntradaIPV(IpvVentaRegistro instance, float cantidad) {
+
+    public void darEntradaIPV(IpvVentaRegistro instance, float cantidad) {
         if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta())) {
             if (cantidad < 0) {
                 if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
@@ -417,6 +432,24 @@ public class IPVController extends AbstractDialogController<Ipv> {
             }
             instance.setEntrada(instance.getEntrada() + cantidad);
             updateInstance(instance);
+        }
+    }
+
+    private void actualizarIPVs() {
+        for (Insumo i : InsumoDAO.getInstance().findAll()) {
+            for (ProductoInsumo pv : i.getProductoInsumoList()) {
+                IpvPK pk = new IpvPK(i.getCodInsumo(), pv.getProductoVenta().getCocinacodCocina().getCodCocina());
+                Ipv ipv = IpvDAO.getInstance().find(pk);
+                if (ipv == null) {
+                    ipv = new Ipv(pk);
+                    ipv.setCocina(pv.getProductoVenta().getCocinacodCocina());
+                    ipv.setInsumo(i);
+                    ipv.setIpvRegistroList(new ArrayList<>());
+                    IpvDAO.getInstance().startTransaction();
+                    IpvDAO.getInstance().create(ipv);
+                    IpvDAO.getInstance().commitTransaction();
+                }
+            }
         }
     }
 
