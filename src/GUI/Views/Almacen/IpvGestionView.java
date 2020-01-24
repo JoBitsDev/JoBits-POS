@@ -47,7 +47,6 @@ import restManager.util.utils;
 public class IpvGestionView extends AbstractView {
 
     private Cocina currentSelectedKitchen;
-    private AbstractCrossReferenePanel<Ipv, Insumo> panelIPVAsign;
     private List<IpvRegistro> registroList;
     private ArrayList<IpvVentaRegistro> ipvList;
 
@@ -67,7 +66,6 @@ public class IpvGestionView extends AbstractView {
     private void initComponents() {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelRegistros = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -80,7 +78,6 @@ public class IpvGestionView extends AbstractView {
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel3 = new javax.swing.JLabel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jPanelData = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanelIPV = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -89,6 +86,7 @@ public class IpvGestionView extends AbstractView {
         jPanel6 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButtonPedido = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
@@ -105,8 +103,6 @@ public class IpvGestionView extends AbstractView {
                 jTabbedPane2StateChanged(evt);
             }
         });
-
-        jTabbedPane1.setToolTipText("");
 
         jPanelRegistros.setLayout(new java.awt.BorderLayout(5, 0));
 
@@ -196,12 +192,7 @@ public class IpvGestionView extends AbstractView {
 
         jPanelRegistros.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
-        jTabbedPane1.addTab("Registros Existencias", new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/registro_lapiz.png")), jPanelRegistros, "Ver los registros de IPvs"); // NOI18N
-
-        jPanelData.setLayout(new java.awt.BorderLayout());
-        jTabbedPane1.addTab("Ajustes Existencias", new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/controles.png")), jPanelData, "Ajustar que insumo va en que IPV"); // NOI18N
-
-        jTabbedPane2.addTab("Existencias", jTabbedPane1);
+        jTabbedPane2.addTab("Registros Existencias", new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/registro_lapiz.png")), jPanelRegistros, "Ver los registros de IPvs"); // NOI18N
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
@@ -263,6 +254,17 @@ public class IpvGestionView extends AbstractView {
             }
         });
         jPanel6.add(jButton6);
+
+        jButtonPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pedido.png"))); // NOI18N
+        jButtonPedido.setMnemonic('a');
+        jButtonPedido.setToolTipText(bundle.getString("label_pedido")); // NOI18N
+        jButtonPedido.setBorderPainted(false);
+        jButtonPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPedidoActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonPedido);
 
         jPanelIPV.add(jPanel6, java.awt.BorderLayout.PAGE_END);
 
@@ -347,7 +349,6 @@ public class IpvGestionView extends AbstractView {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int selectedRow = jTableRegistro.convertRowIndexToModel(jTableRegistro.getSelectedRow());
         getController().ajustarConsumo(
                 ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getObjectAtSelectedRow());
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -424,12 +425,12 @@ public class IpvGestionView extends AbstractView {
         }
     }//GEN-LAST:event_jDateChooser2PropertyChange
 
+    private void jButtonPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPedidoActionPerformed
+        new PedidoIpvVentasView(this, ipvList, (Cocina) jComboBox1.getSelectedItem());
+    }//GEN-LAST:event_jButtonPedidoActionPerformed
+
     @Override
     public void updateView() {
-        if (currentSelectedKitchen != null && panelIPVAsign != null) {
-            updatePanelAjustes();
-        }
-
     }
 
     @Override
@@ -438,56 +439,6 @@ public class IpvGestionView extends AbstractView {
         jComboBox1.setModel(new RestManagerComboBoxModel<>(getController().getCocinaList()));
         jComboBox1.setSelectedIndex(0);
         currentSelectedKitchen = (Cocina) jComboBox1.getSelectedItem();
-        panelIPVAsign = new AbstractCrossReferenePanel<Ipv, Insumo>("Agregar Insumo", getController().getInsumoList()) {
-            @Override
-            public RestManagerAbstractTableModel<Ipv> getTableModel() {
-                return new RestManagerAbstractTableModel<Ipv>(currentSelectedKitchen.getIpvList(), getjTableCrossReference()) {
-                    @Override
-                    public int getColumnCount() {
-                        return 1;
-                    }
-
-                    @Override
-                    public Object getValueAt(int rowIndex, int columnIndex) {
-                        return items.get(rowIndex).getInsumo();
-                    }
-
-                    @Override
-                    public String getColumnName(int column) {
-                        return "Insumo";
-                    }
-                };
-            }
-
-            @Override
-            public Ipv transformK_T(Insumo selected) {
-                Ipv ret = new Ipv();
-                IpvPK retPK = new IpvPK(selected.getCodInsumo(), currentSelectedKitchen.getCodCocina());
-                ret.setCocina(currentSelectedKitchen);
-                ret.setInsumo(selected);
-                ret.setIpvPK(retPK);
-                ret.setIpvRegistroList(new ArrayList<>());
-
-                getController().create(ret, true);
-                return ret;
-            }
-
-            @Override
-            public void removeObjectSelected() {
-                Ipv selected = getHandler().getTableModel().getObjectAtSelectedRow();
-                getController().destroy(selected, true);
-                getHandler().getTableModel().removeObject(selected);
-            }
-
-        };
-        if (jPanelData.getComponentCount() == 0) {
-            jPanelData.add(panelIPVAsign);
-
-        } else {
-            jPanelData.remove(panelIPVAsign);
-            jPanelData.add(panelIPVAsign);
-        }
-        jPanelData.revalidate();
         jTableIPV.getTableHeader().setFont(jTableIPV.getFont().deriveFont(Font.BOLD));
         jTableIPV.setDefaultRenderer(Float.class, new RestManagerCellRender());
 
@@ -506,6 +457,7 @@ public class IpvGestionView extends AbstractView {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButtonPedido;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<Cocina> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -520,13 +472,11 @@ public class IpvGestionView extends AbstractView {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanelData;
     private javax.swing.JPanel jPanelIPV;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelRegistros;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTableIPV;
     private javax.swing.JTable jTableRegistro;
@@ -636,10 +586,6 @@ public class IpvGestionView extends AbstractView {
         //jTableIPV.getRowSorter().toggleSortOrder(0);
 
         ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel()).addTotalRow(7);
-    }
-
-    private void updatePanelAjustes() {
-        panelIPVAsign.getHandler().getTableModel().setItems(currentSelectedKitchen.getIpvList());
     }
 
     private void updateTableRegistroIpv() {
