@@ -36,20 +36,26 @@ public class PedidoIpvVentasController extends AbstractDialogController<IpvVenta
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void realizarPedidoDeIpv(List<InsumoPedidoModel> insumosARebajar, List<ProdcutoVentaPedidoModel> pedido, Cocina puntoDestino, Almacen almacenOrigen) {
+    public boolean realizarPedidoDeIpv(List<InsumoPedidoModel> insumosARebajar, List<ProdcutoVentaPedidoModel> pedido, Cocina puntoDestino, Almacen almacenOrigen) {
         if (showConfirmDialog(getView(), "Desea ejecutar el pedido")) {
             AlmacenManageController controller = new AlmacenManageController(almacenOrigen);
+            controller.setView(getView());
+            controller.setShowDialogs(false);
+
             IPVController ipvController = new IPVController();
             ipvController.setShowDialogs(false);
-            controller.setShowDialogs(false);
+            ipvController.setView(getView());
+
             for (InsumoPedidoModel i : insumosARebajar) {
                 controller.crearTransaccion(null, controller.findInsumo(i.getInsumo()), 1, puntoDestino, null, i.getCantidad(), 0, null, false);
             }
             for (ProdcutoVentaPedidoModel p : pedido) {
-                ipvController.darEntradaIPV(p.getIpvProducto());
+                ipvController.darEntradaIPV(p.getIpvProducto(), p.getCantidad());
             }
-            showConfirmDialog(getView());
+            showSuccessDialog(getView());
+            return true;
         }
+        return false;
     }
 
     public List<Almacen> getAlmacenList() {
