@@ -16,6 +16,7 @@ import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Carta;
 import restManager.persistencia.Seccion;
 import javax.swing.JOptionPane;
+import restManager.exceptions.NoSelectedException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.ProductoVenta;
 import restManager.persistencia.models.MenuDAO;
@@ -79,6 +80,9 @@ public class CartaListController extends AbstractListController<Carta> {
     }
 
     public void createSeccion(Carta selectedValue) {
+        if (selectedValue == null) {
+            throw new NoSelectedException(getView());
+        }
         new SeccionListController().createInstanceOffline(selectedValue, getView());
     }
 
