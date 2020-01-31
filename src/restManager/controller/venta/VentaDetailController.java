@@ -8,12 +8,18 @@ package restManager.controller.venta;
 import GUI.Views.util.CalcularCambioView;
 import GUI.Views.util.LongProcessAction;
 import GUI.Views.venta.VentasCreateEditView;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.Window;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import restManager.controller.AbstractDetailController;
 import restManager.controller.Licence.Licence;
@@ -596,6 +602,33 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             update(v, true);
             showSuccessDialog(getView());
 
+        }
+    }
+
+    public boolean terminarYExportar() {
+        // terminarVentas();
+        try {
+            new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writeValue(new File("export.data"), getInstance());
+            return true;
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            showErrorDialog(getView(), "Ocurrio un error exportando la venta.");
+            return false;
+        }
+    }
+
+    public boolean importarVenta(File file) {
+
+        try {
+            Venta ret = new ObjectMapper().readValue(file, Venta.class);
+            getModel().startTransaction();
+            create(ret);
+            getModel().commitTransaction();
+            return true;
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+            showErrorDialog(getView(), "Ocurrio un error impoertando la venta.");
+            return false;
         }
     }
 

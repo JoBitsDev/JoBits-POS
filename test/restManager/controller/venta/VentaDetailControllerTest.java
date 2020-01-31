@@ -5,15 +5,13 @@
  */
 package restManager.controller.venta;
 
-import java.awt.Container;
+import java.io.File;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import restManager.controller.configuracion.ConfiguracionController;
-import restManager.persistencia.Orden;
-import restManager.persistencia.Venta;
 import restManager.persistencia.models.PersonalDAO;
 import restManager.persistencia.models.VentaDAO;
 import restManager.resources.R;
@@ -25,7 +23,7 @@ import restManager.resources.R;
 public class VentaDetailControllerTest {
 
     private VentaDetailController controller;
-    
+
     public VentaDetailControllerTest() {
     }
 
@@ -38,198 +36,32 @@ public class VentaDetailControllerTest {
         controller = new VentaDetailController();
     }
 
-    @Test
+    @Ignore
     public void testVisualResumen() {
-        controller = new VentaDetailController(VentaDAO.getInstance().findAll().get(0), new JDialog());
+        controller = new VentaDetailController(VentaDAO.getInstance().find("2020-01-01"), new JDialog());
     }
 
     /**
      * Test of getOrdenesActivas method, of class VentaDetailController.
      */
-    @Test
-    public void testGetOrdenesActivas() {
+    @Ignore
+    public void testExportar() {
+        controller = new VentaDetailController(VentaDAO.getInstance().findAll().get(0));
+        assertTrue(controller.terminarYExportar());
+        VentaDAO.getInstance().startTransaction();
+        VentaDAO.getInstance().remove(VentaDAO.getInstance().findAll().get(0));
+        VentaDAO.getInstance().commitTransaction();
+        assertTrue(true);
     }
 
     /**
      * Test of fetchNewDataFromServer method, of class VentaDetailController.
      */
     @Test
-    public void testFetchNewDataFromServer() {
-    }
+    public void testImportar() {
+        controller = new VentaDetailController(VentaDAO.getInstance().findAll().get(0));
+        assertTrue(controller.importarVenta(new File("export.data")));
 
-    /**
-     * Test of terminarVentas method, of class VentaDetailController.
-     */
-    @Test
-    public void testTerminarVentas() {
-    }
-
-    /**
-     * Test of calcularCambio method, of class VentaDetailController.
-     */
-    @Test
-    public void testCalcularCambio() {
-    }
-
-    /**
-     * Test of getDiaDeVenta method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetDiaDeVenta() {
-    }
-
-    /**
-     * Test of getTotalVendido method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetTotalVendido() {
-    }
-
-    /**
-     * Test of getTotalGastadoInsumos method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetTotalGastadoInsumos() {
-    }
-
-    /**
-     * Test of getTotalPagoTrabajadores method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetTotalPagoTrabajadores() {
-    }
-
-    /**
-     * Test of getPersonalList method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetPersonalList() {
-    }
-
-    /**
-     * Test of getCocinaList method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetCocinaList() {
-    }
-
-    /**
-     * Test of printPersonalResumenRow method, of class VentaDetailController.
-     */
-    @Test
-    public void testPrintPersonalResumenRow() {
-    }
-
-    /**
-     * Test of printZ method, of class VentaDetailController.
-     */
-    @Test
-    public void testPrintZ() {
-    }
-
-    /**
-     * Test of printCocinaResumen method, of class VentaDetailController.
-     */
-    @Test
-    public void testPrintCocinaResumen() {
-    }
-
-    /**
-     * Test of getGastoTotalDeInsumo method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetGastoTotalDeInsumo() {
-    }
-
-    /**
-     * Test of printGastosCasa method, of class VentaDetailController.
-     */
-    @Test
-    public void testPrintGastosCasa() {
-    }
-
-    /**
-     * Test of cerrarOrdenRapido method, of class VentaDetailController.
-     */
-    @Test
-    public void testCerrarOrdenRapido() {
-    }
-
-    /**
-     * Test of getTotalVendidoNeto method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetTotalVendidoNeto() {
-    }
-
-    /**
-     * Test of getInstance method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetInstance() {
-    }
-
-    /**
-     * Test of cambiarTurno method, of class VentaDetailController.
-     */
-    @Test
-    public void testCambiarTurno() {
-    }
-
-    /**
-     * Test of printPagoPorVentaPersonal method, of class VentaDetailController.
-     */
-    @Test
-    public void testPrintPagoPorVentaPersonal() {
-    }
-
-    /**
-     * Test of mostrarVenta method, of class VentaDetailController.
-     */
-    @Test
-    public void testMostrarVenta() {
-    }
-
-    /**
-     * Test of getPagoTrabajador method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetPagoTrabajador() {
-    }
-
-    /**
-     * Test of getTotalAutorizos method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetTotalAutorizos() {
-    }
-
-    /**
-     * Test of getAreaList method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetAreaList() {
-    }
-
-    /**
-     * Test of printAreaResumen method, of class VentaDetailController.
-     */
-    @Test
-    public void testPrintAreaResumen() {
-    }
-
-    /**
-     * Test of setPropina method, of class VentaDetailController.
-     */
-    @Test
-    public void testSetPropina() {
-    }
-
-    /**
-     * Test of getPropinaTrabajador method, of class VentaDetailController.
-     */
-    @Test
-    public void testGetPropinaTrabajador() {
     }
 
 }

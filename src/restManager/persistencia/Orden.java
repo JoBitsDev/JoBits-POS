@@ -5,6 +5,8 @@
  */
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -25,9 +27,11 @@ import restManager.exceptions.DevelopingOperationException;
 
 /**
  * FirstDream
+ *
  * @author Jorge
  *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codOrden", scope = Orden.class)
 @Entity
 @Table(name = "orden")
 @NamedQueries({

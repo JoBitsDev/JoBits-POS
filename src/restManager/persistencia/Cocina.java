@@ -6,6 +6,7 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -45,14 +46,19 @@ public class Cocina implements Serializable {
     @Basic(optional = false)
     @Column(name = "nombre_cocina")
     private String nombreCocina;
+    @JsonIgnore
     @OneToMany(mappedBy = "cocinacodCocina")
     private List<ProductoVenta> productoVentaList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocina")
     private List<NotificacionEnvioCocina> notificacionEnvioCocinaList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocina")
     private List<Ipv> ipvList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocinacodCocina")
     private List<Impresora> impresoraList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cocinacodCocina")
     private List<TransaccionSalida> transaccionSalidaList;
 

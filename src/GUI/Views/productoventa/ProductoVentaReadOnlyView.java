@@ -191,7 +191,7 @@ public class ProductoVentaReadOnlyView extends AbstractReadOnlyView<ProductoVent
 
     @Override
     public void updateView() {
-        this.jXLabelPCod.setText(instance.getPCod());
+        this.jXLabelPCod.setText(instance.getCodigoProducto());
         this.jTextFieldNombre.setText(instance.getNombre());
         jSpinnerPrecio.setValue(instance.getPrecioVenta());
         if (instance.getGasto() == null) {

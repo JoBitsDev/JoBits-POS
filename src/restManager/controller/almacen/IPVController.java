@@ -231,7 +231,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     public List<IpvVentaRegistro> inicializarIpvs(Date fecha) {
         ArrayList<IpvVentaRegistro> ret = new ArrayList<>();
         for (ProductoVenta x : ProductoVentaDAO.getInstance().findAll()) {
-            IpvVentaRegistroPK pk = new IpvVentaRegistroPK(fecha, x.getPCod());
+            IpvVentaRegistroPK pk = new IpvVentaRegistroPK(fecha, x.getCodigoProducto());
             IpvVentaRegistro reg = IpvRegistroVentaDAO.getInstance().find(pk);
             if (reg == null) {
                 reg = new IpvVentaRegistro(pk);

@@ -5,6 +5,10 @@
  */
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +31,7 @@ import restManager.resources.R;
  * @author Jorge
  *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "fecha",scope = Venta.class )
 @Entity
 @Table(name = "venta")
 @NamedQueries({
@@ -40,8 +45,12 @@ import restManager.resources.R;
     @NamedQuery(name = "Venta.findByVentagastosEninsumos", query = "SELECT v FROM Venta v WHERE v.ventagastosEninsumos = :ventagastosEninsumos")})
 public class Venta implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fechaVenta")
-    private List<IpvVentaRegistro> ipvVentaRegistroList;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
 
     @Column(name = "ventapropina")
     private Float ventapropina;
@@ -54,12 +63,6 @@ public class Venta implements Serializable {
     @Column(name = "cambio_turno2")
     private String cambioTurno2;
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "venta_total")
     private Double ventaTotal;
@@ -75,6 +78,9 @@ public class Venta implements Serializable {
     private List<GastoVenta> gastoVentaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventafecha")
     private List<Orden> ordenList;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fechaVenta")
+    private List<IpvVentaRegistro> ipvVentaRegistroList;
 
     public Venta() {
     }

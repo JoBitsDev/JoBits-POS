@@ -6,7 +6,9 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -25,6 +27,7 @@ import javax.persistence.Table;
  * @author Jorge
  * 
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "nombreSeccion" ,scope = Seccion.class)
 @Entity
 @Table(name = "seccion")
 @NamedQueries({

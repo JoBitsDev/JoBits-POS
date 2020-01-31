@@ -6,6 +6,8 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,6 +24,7 @@ import javax.persistence.Table;
  * @author Jorge
  * 
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class ,property = "gastoVentaPK",scope = GastoVenta.class)
 @Entity
 @Table(name = "gasto_venta")
 @NamedQueries({

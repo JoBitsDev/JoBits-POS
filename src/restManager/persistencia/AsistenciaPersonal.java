@@ -5,6 +5,8 @@
  */
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -16,7 +18,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import restManager.controller.trabajadores.NominasController;
-import restManager.exceptions.DevelopingOperationException;
 
 /**
  * FirstDream
@@ -24,6 +25,7 @@ import restManager.exceptions.DevelopingOperationException;
  * @author Jorge
  *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "asistenciaPersonalPK" ,scope = AsistenciaPersonal.class)
 @Entity
 @Table(name = "asistencia_personal")
 @NamedQueries({

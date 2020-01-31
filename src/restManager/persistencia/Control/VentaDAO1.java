@@ -541,9 +541,9 @@ public class VentaDAO1 {
      * @return un entero del 0-23 con la hora pico del dia de ventas
      */
     public static int getPickHour(Venta v) {
-        Calendar c = Calendar.getInstance();
-        c.setTimeInMillis(v.getFecha().getTime());
-        int current_day = c.get(Calendar.DAY_OF_MONTH);
+//        Calendar c = Calendar.getInstance();
+//        c.setTimeInMillis(v.getFecha().getTime());
+//        int current_day = c.get(Calendar.DAY_OF_MONTH);
         float monto_hora_pico = 0;
         int hora_pico = 0,
                 hora = 0;
@@ -661,8 +661,8 @@ public class VentaDAO1 {
         while (!b.isEmpty()) {
             boolean founded = false;
             for (int j = 0; j < pivot.size() && !founded; j++) {
-                if (b.get(0).getProductoVenta().getPCod().equals(
-                        pivot.get(j).getProductoVenta().getPCod())) {
+                if (b.get(0).getProductoVenta().getCodigoProducto().equals(
+                        pivot.get(j).getProductoVenta().getCodigoProducto())) {
                     founded = true;
                     pivot.get(j).setCantidad(pivot.get(j).getCantidad() + b.get(0).getCantidad());
                 }

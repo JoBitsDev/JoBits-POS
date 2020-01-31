@@ -5,6 +5,10 @@
  */
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -24,6 +28,7 @@ import restManager.persistencia.Venta;
  * @author Jorge
  *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property =  "ipvVentaRegistroPK",scope = IpvVentaRegistro.class)
 @Entity
 @Table(name = "ipv_venta_registro")
 @NamedQueries({

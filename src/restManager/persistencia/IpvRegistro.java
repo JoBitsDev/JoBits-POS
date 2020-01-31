@@ -6,6 +6,8 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -24,6 +26,7 @@ import restManager.resources.R;
  * @author Jorge
  * 
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property =  "ipvRegistroPK",scope = IpvRegistro.class)
 @Entity
 @Table(name = "ipv_registro")
 @NamedQueries({

@@ -6,6 +6,9 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -22,6 +25,7 @@ import javax.persistence.Table;
  * @author Jorge
  * 
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "notaPK",scope = Nota.class )
 @Entity
 @Table(name = "nota")
 @NamedQueries({

@@ -97,6 +97,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         jPanel8 = new javax.swing.JPanel();
         jButtonReabrirVentas = new javax.swing.JButton();
         jButtonTerminarVentas1 = new javax.swing.JButton();
+        jButtonTerminarYExportar = new javax.swing.JButton();
         jPanelOptions = new javax.swing.JPanel();
         jideButton2 = new com.jidesoft.swing.JideButton();
         jPanel3 = new javax.swing.JPanel();
@@ -202,6 +203,14 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
             }
         });
         jPanel8.add(jButtonTerminarVentas1);
+
+        jButtonTerminarYExportar.setText(bundle.getString("label_terminar_y_exportar")); // NOI18N
+        jButtonTerminarYExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTerminarYExportarActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButtonTerminarYExportar);
 
         jPanelFooter.add(jPanel8, java.awt.BorderLayout.CENTER);
 
@@ -750,6 +759,10 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         getController().terminarVentas();
     }//GEN-LAST:event_jButtonTerminarVentas1ActionPerformed
 
+    private void jButtonTerminarYExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarYExportarActionPerformed
+        getController().terminarYExportar();
+    }//GEN-LAST:event_jButtonTerminarYExportarActionPerformed
+
     @Override
     public void setEditingMode() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
@@ -880,6 +893,7 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     private javax.swing.JButton jButtonReabrirVentas;
     private com.jidesoft.swing.JideButton jButtonRefrescar;
     private javax.swing.JButton jButtonTerminarVentas1;
+    private javax.swing.JButton jButtonTerminarYExportar;
     private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelFecha;
