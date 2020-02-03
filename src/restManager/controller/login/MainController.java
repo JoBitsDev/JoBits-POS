@@ -32,6 +32,7 @@ import restManager.controller.trabajadores.PuestoTrabajoListController;
 import restManager.controller.venta.VentaDetailController;
 import restManager.controller.venta.VentaListController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.ExceptionHandler;
 import restManager.exceptions.UnauthorizedAccessException;
 import restManager.persistencia.Personal;
 import restManager.persistencia.Venta;
@@ -66,7 +67,7 @@ public class MainController extends AbstractDialogController<Personal> {
     }
 
     public void actionButton(MenuButtons menuButtons) {
-        AbstractController controller;
+        AbstractController controller = null;
         getView().setEnabled(false);
         try {
             validate(R.loggedUser, menuButtons);
@@ -106,33 +107,13 @@ public class MainController extends AbstractDialogController<Personal> {
                     controller = new ActivoFijoController(getView());
                     break;
                 case COMENZAR_VENTAS:
-                    if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > R.NivelAcceso.ECONOMICO.getNivel()) {
-                        String date = JOptionPane.showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
-                                + "o deje la casilla en blanco para comenzar en el ultimo dia sin cerrar ", "Entrada", JOptionPane.QUESTION_MESSAGE);
-                        if (date == null) {
-                            getView().setEnabled(true);
-                            return;
-                        }
-                        if (date.isEmpty()) {
-                            controller = new VentaDetailController(getView());
-                        } else {
-                            try {
-                                Date fechaVenta = R.DATE_FORMAT.parse(date);
-                                controller = new VentaDetailController(getView(),fechaVenta);
-                                
-                            } catch (ParseException ex) {
-                                showErrorDialog(getView(), ex.getMessage());
-                            }
-                        }
-                    } else {
-                        controller = new VentaDetailController(getView());
-                    }
+                    controller = comenzarVentas();
                     break;
                 case COPIA_SEG:
                     copiaSegView seg = new copiaSegView(getView(), true);
                     break;
                 case LICENCIA:
-                    controller = new LicenceController(getView(),Licence.TipoLicencia.APLICACION);
+                    controller = new LicenceController(getView(), Licence.TipoLicencia.APLICACION);
                     break;
                 case NOMINAS:
                     controller = new NominasController(getView());
@@ -148,9 +129,13 @@ public class MainController extends AbstractDialogController<Personal> {
                     throw new DevelopingOperationException(getView());
 
             }
-        } catch (UnauthorizedAccessException | DevelopingOperationException e) {
-            //  ExceptionHandler.showExceptionToUser(e, getView());
-            e.printStackTrace();
+        } catch (Exception e) {
+            if (controller != null) {
+                controller.getView().dispose();
+                showErrorDialog((Container)controller.getView(), e.getMessage());
+            } else {
+                showErrorDialog(getView(), e.getMessage());
+            }
         }
         getView().setEnabled(true);
     }
@@ -172,7 +157,30 @@ public class MainController extends AbstractDialogController<Personal> {
         return (MainView) super.getView(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
+    private AbstractController comenzarVentas() throws ParseException {
+        int nivel = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso();
+        if (nivel > R.NivelAcceso.ECONOMICO.getNivel()) {
+            String date = JOptionPane.showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
+                    + "o deje la casilla en blanco para comenzar en el ultimo dia sin cerrar ", "Entrada", JOptionPane.QUESTION_MESSAGE);
+            if (date == null) {
+                getView().setEnabled(true);
+                return null;
+            }
+            if (date.isEmpty()) {
+                return new VentaDetailController(getView());
+            } else {
+                Date fechaVenta = R.DATE_FORMAT.parse(date);
+                return new VentaDetailController(getView(), fechaVenta);
+            }
+        } else if (nivel >= R.NivelAcceso.CAJERO.getNivel()) {
+            return new VentaDetailController(getView());
+        }else if(nivel >=  R.NivelAcceso.DEPENDIENTE.getNivel()){
+            if (showConfirmDialog(getView(), "Desea comenzar el dia de trabajo en el dia actual")) {
+               return new VentaDetailController(new Date());
+            }
+        }
+        return null;
+    }
 
     public enum MenuButtons {
 
@@ -196,7 +204,7 @@ public class MainController extends AbstractDialogController<Personal> {
         VENTAS(3),
         CUENTAS_CONTABLES(4),
         PRESUPUESTO(4),
-        COMENZAR_VENTAS(1),
+        COMENZAR_VENTAS(0),
         //
         //TRABAJADORES
         //
@@ -209,7 +217,7 @@ public class MainController extends AbstractDialogController<Personal> {
         //
 
         COPIA_SEG(4),
-        LICENCIA(0), 
+        LICENCIA(0),
         CONFIGURACION(5);
 
         private final int nivelMinimoAcceso;
