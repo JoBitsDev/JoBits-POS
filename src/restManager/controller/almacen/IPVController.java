@@ -346,7 +346,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
         return utils.setDosLugaresDecimalesFloat(controller.getGastoTotalDeInsumo(registro));
     }
 
-    public ArrayList<IpvVentaRegistro> calcular_existencia_ipv_ventas(ArrayList<IpvVentaRegistro> listaRegistros) {
+    public List<IpvVentaRegistro> calcular_existencia_ipv_ventas(List<IpvVentaRegistro> listaRegistros) {
         if (!listaRegistros.isEmpty()) {
             VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getFechaVenta().getFecha());
             for (IpvVentaRegistro x : listaRegistros) {
