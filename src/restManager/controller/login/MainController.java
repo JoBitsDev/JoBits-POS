@@ -176,7 +176,10 @@ public class MainController extends AbstractDialogController<Personal> {
             return new VentaDetailController(getView());
         }else if(nivel >=  R.NivelAcceso.DEPENDIENTE.getNivel()){
             if (showConfirmDialog(getView(), "Desea comenzar el dia de trabajo en el dia actual")) {
-               return new VentaDetailController(new Date());
+               VentaDetailController controller = new VentaDetailController(new Date());
+                showSuccessDialog(getView(), "El dia de trabajo esta iniciado en la fecha: " + R.DATE_FORMAT.format(controller.getInstance().getFecha()) 
+                        + " \npresione aceptar");
+                return controller;
             }
         }
         return null;
