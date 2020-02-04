@@ -6,6 +6,7 @@
 package restManager.controller.productoventa;
 
 import GUI.Views.productoventa.ProductoVentaCreateEditView;
+import GUI.Views.util.LongProcessAction;
 import java.awt.Graphics;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -108,9 +109,23 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
     }
 
     public void agregarIngrediente() {
-        InsumoCreateEditController controller = new InsumoCreateEditController(getView());
 
-        ((ProductoVentaCreateEditView) getView()).getCrossReferencePanel().addItemToComboBox(controller.getInstance());
+        InsumoCreateEditController controller = new InsumoCreateEditController();
+        controller.setParent(getView());
+        new LongProcessAction() {
+            @Override
+            protected void longProcessMethod() {
+                controller.setInstance(controller.createNewInstance());
+            }
+
+            @Override
+            protected void whenDone() {
+                controller.constructView(getView());
+                ((ProductoVentaCreateEditView) getView()).getCrossReferencePanel().addItemToComboBox(controller.getInstance());
+            }
+
+        }.performAction(getView());
+        // getView().setCreatingM
 
     }
 
