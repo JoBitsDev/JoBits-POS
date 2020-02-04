@@ -215,7 +215,7 @@ public class Ticket {
 
     public String drawerKick() {
 
-        final byte[] DrawerKick = {27, 70, 0, 60, 120};
+        final byte[] DrawerKick = {27, 112, 0, 60, 120};
         String s = new String(DrawerKick);
 
         commandSet += s;
@@ -245,7 +245,7 @@ public class Ticket {
     }
 
     public String setCodePageTable(byte codePage) {
-        final byte[] setuserDefinedCodePage = {27,37,1};
+        final byte[] setuserDefinedCodePage = {27, 37, 1};
         commandSet += new String(setuserDefinedCodePage);
         final byte[] setCodePageLatin = {27, 116, codePage};
         commandSet += new String(setCodePageLatin);
