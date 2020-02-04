@@ -887,9 +887,9 @@ public class Impresion {
     public void forceDrawerKick() {
         Ticket t = new Ticket();
         t.resetAll();
-        t.initialize();
+       // t.initialize();
         t.drawerKick();
-        addFinal(t);
+        //t.finit();
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
