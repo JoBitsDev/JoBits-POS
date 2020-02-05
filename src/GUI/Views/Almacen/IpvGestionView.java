@@ -48,7 +48,7 @@ public class IpvGestionView extends AbstractView {
 
     private Cocina currentSelectedKitchen;
     private List<IpvRegistro> registroList;
-    private ArrayList<IpvVentaRegistro> ipvList;
+    private List<IpvVentaRegistro> ipvList;
 
     public IpvGestionView(AbstractView parent, AbstractDialogController controller) {
         super(DialogType.FULL_SCREEN, controller, parent);
@@ -90,6 +90,7 @@ public class IpvGestionView extends AbstractView {
         jPanel7 = new javax.swing.JPanel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
+        jCheckBox2 = new javax.swing.JCheckBox();
         jPanelOptions = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -111,7 +112,7 @@ public class IpvGestionView extends AbstractView {
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jTableRegistro.setAutoCreateRowSorter(true);
-        jTableRegistro.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jTableRegistro.setFont(new java.awt.Font("Lucida Grande", 0, 22)); // NOI18N
         jTableRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -281,6 +282,14 @@ public class IpvGestionView extends AbstractView {
         jLabel2.setText("Fecha");
         jPanel7.add(jLabel2, java.awt.BorderLayout.CENTER);
 
+        jCheckBox2.setText(bundle.getString("label_productos_no_utilizados")); // NOI18N
+        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox2ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jCheckBox2, java.awt.BorderLayout.WEST);
+
         jPanelIPV.add(jPanel7, java.awt.BorderLayout.PAGE_START);
 
         jPanel3.add(jPanelIPV, java.awt.BorderLayout.CENTER);
@@ -354,7 +363,7 @@ public class IpvGestionView extends AbstractView {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        ocultar_insumos(jCheckBox1.isSelected());
+        ocultar_insumos_existencias(jCheckBox1.isSelected());
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -429,6 +438,10 @@ public class IpvGestionView extends AbstractView {
         new PedidoIpvVentasView(this, ipvList, (Cocina) jComboBox1.getSelectedItem());
     }//GEN-LAST:event_jButtonPedidoActionPerformed
 
+    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
+        ocultar_insumos_ipvs(jCheckBox2.isSelected());        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox2ActionPerformed
+
     @Override
     public void updateView() {
     }
@@ -441,6 +454,8 @@ public class IpvGestionView extends AbstractView {
         currentSelectedKitchen = (Cocina) jComboBox1.getSelectedItem();
         jTableIPV.getTableHeader().setFont(jTableIPV.getFont().deriveFont(Font.BOLD));
         jTableIPV.setDefaultRenderer(Float.class, new RestManagerCellRender());
+        jTableRegistro.getTableHeader().setFont(jTableIPV.getFont().deriveFont(Font.BOLD));
+        jTableRegistro.setDefaultRenderer(Float.class, new RestManagerCellRender());
 
     }
 
@@ -459,6 +474,7 @@ public class IpvGestionView extends AbstractView {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonPedido;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<Cocina> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
@@ -657,7 +673,7 @@ public class IpvGestionView extends AbstractView {
         jTableRegistro.getRowSorter().toggleSortOrder(0);
     }
 
-    private void ocultar_insumos(boolean selected) {
+    private void ocultar_insumos_existencias(boolean selected) {
         RestManagerAbstractTableModel<IpvRegistro> model = ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel());
         if (selected) {
             registroList = model.getItems();
@@ -668,6 +684,20 @@ public class IpvGestionView extends AbstractView {
             model.setItems(filterList);
         } else {
             model.setItems(registroList);
+        }
+    }
+    
+     private void ocultar_insumos_ipvs(boolean selected) {
+        RestManagerAbstractTableModel<IpvVentaRegistro> model = ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel());
+        if (selected) {
+            ipvList = model.getItems();
+            List<IpvVentaRegistro> filterList = new ArrayList<>();
+            ipvList.stream().filter((x) -> (x.getVendidos()!= 0 || x.getDisponible() != 0)).forEachOrdered((x) -> {
+                filterList.add(x);
+            });
+            model.setItems(filterList);
+        } else {
+            model.setItems(ipvList);
         }
     }
 
