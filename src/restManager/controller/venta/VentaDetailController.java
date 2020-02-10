@@ -605,10 +605,10 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         }
     }
 
-    public boolean terminarYExportar() {
-        // terminarVentas();
+    public boolean terminarYExportar(File file) {
+         terminarVentas();
         try {
-            new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writeValue(new File("export.data"), getInstance());
+            new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writeValue(file, getInstance());
             return true;
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -622,7 +622,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         try {
             Venta ret = new ObjectMapper().readValue(file, Venta.class);
             getModel().startTransaction();
+            if (getModel().find(ret.getFecha()) == null) {
             create(ret);
+            }else{
+                update(ret);
+            }
             getModel().commitTransaction();
             return true;
         } catch (IOException ex) {

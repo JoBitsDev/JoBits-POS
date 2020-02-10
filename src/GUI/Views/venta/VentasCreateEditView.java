@@ -16,6 +16,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import mdlaf.components.tabbedpane.MaterialTabbedPaneUI;
@@ -760,7 +761,11 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
     }//GEN-LAST:event_jButtonTerminarVentas1ActionPerformed
 
     private void jButtonTerminarYExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTerminarYExportarActionPerformed
-        getController().terminarYExportar();
+        JFileChooser file = new JFileChooser();
+        int result = file.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+        getController().terminarYExportar(file.getSelectedFile());
+        }
     }//GEN-LAST:event_jButtonTerminarYExportarActionPerformed
 
     @Override
