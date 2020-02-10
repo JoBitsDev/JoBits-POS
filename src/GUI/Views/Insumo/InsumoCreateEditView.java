@@ -182,7 +182,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
                     public Object getValueAt(int rowIndex, int columnIndex) {
                         switch (columnIndex) {
                             case 0:
-                                return items.get(rowIndex).getProductoVenta().getPCod();
+                                return items.get(rowIndex).getProductoVenta().getCodigoProducto();
                             case 1:
                                 return items.get(rowIndex).getProductoVenta().getNombre();
                             case 2:
@@ -233,7 +233,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
             @Override
             public ProductoInsumo transformK_T(ProductoVenta selected) {
                 ProductoInsumo ret = new ProductoInsumo();
-                ProductoInsumoPK pInsPK = new ProductoInsumoPK(selected.getPCod(), instance.getCodInsumo());
+                ProductoInsumoPK pInsPK = new ProductoInsumoPK(selected.getCodigoProducto(), instance.getCodInsumo());
                 ret.setProductoInsumoPK(pInsPK);
                 ret.setProductoVenta(selected);
                 ret.setInsumo(instance);

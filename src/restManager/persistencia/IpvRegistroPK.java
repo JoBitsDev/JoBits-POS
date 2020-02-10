@@ -6,6 +6,7 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -19,6 +20,7 @@ import javax.persistence.TemporalType;
  * @author Jorge
  * 
  */
+@JsonRootName(value = "ipvRegistroPK")
 @Embeddable
 public class IpvRegistroPK implements Serializable {
 

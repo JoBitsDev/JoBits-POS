@@ -5,6 +5,9 @@
  */
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -25,6 +28,7 @@ import javax.persistence.Table;
  * @author Jorge
  *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "codCarta",scope = Carta.class )
 @Entity
 @Table(name = "carta")
 @NamedQueries({
@@ -46,6 +50,7 @@ public class Carta implements Serializable {
     private String monedaPrincipal;
     @ManyToMany(mappedBy = "cartaList")
     private List<Area> areaList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartacodCarta")
     private List<Seccion> seccionList;
 

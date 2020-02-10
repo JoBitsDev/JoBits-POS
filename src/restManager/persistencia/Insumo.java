@@ -5,6 +5,11 @@
  */
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -23,6 +28,7 @@ import javax.persistence.Table;
  * @author Jorge
  *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "codInsumo",scope = Insumo.class )
 @Entity
 @Table(name = "insumo")
 @NamedQueries({
@@ -36,8 +42,6 @@ import javax.persistence.Table;
     @NamedQuery(name = "Insumo.findByCantidadCreada", query = "SELECT i FROM Insumo i WHERE i.cantidadCreada = :cantidadCreada")})
 public class Insumo implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
-    private List<TransaccionTransformacion> transaccionTransformacionList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,16 +62,23 @@ public class Insumo implements Serializable {
     private Float stockEstimation;
     @Column(name = "cantidad_creada")
     private Float cantidadCreada;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<ProductoInsumo> productoInsumoList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumocodInsumo")
     private List<Transaccion> transaccionList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<InsumoAlmacen> insumoAlmacenList;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<Ipv> ipvList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo_derivado_nombre")
     private List<InsumoElaborado> insumoDerivadoList;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
+    private List<TransaccionTransformacion> transaccionTransformacionList;
 
     public Insumo() {
     }

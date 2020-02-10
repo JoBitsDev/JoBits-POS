@@ -6,6 +6,11 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +37,7 @@ import restManager.exceptions.DevelopingOperationException;
  * @author Jorge
  * 
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class ,property = "usuario",scope = Personal.class)
 @Entity
 @Table(name = "personal")
 @NamedQueries({
@@ -47,6 +53,7 @@ public class Personal implements Serializable {
     private byte[] foto;
     @Column(name = "pago_pendiente")
     private Float pagoPendiente;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personal")
     private List<AsistenciaPersonal> asistenciaPersonalList;
 
@@ -65,6 +72,7 @@ public class Personal implements Serializable {
     @Column(name = "ultimodia_pago")
     @Temporal(TemporalType.DATE)
     private Date ultimodiaPago;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "personalusuario")
     private List<Orden> ordenList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "personal")

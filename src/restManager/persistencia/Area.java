@@ -5,6 +5,9 @@
  */
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -26,6 +29,7 @@ import javax.persistence.Table;
  * @author Jorge
  *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "codArea",scope = Area.class )
 @Entity
 @Table(name = "area")
 @NamedQueries({
@@ -35,9 +39,11 @@ import javax.persistence.Table;
     @NamedQuery(name = "Area.findByNombre", query = "SELECT a FROM Area a WHERE a.nombre = :nombre")})
 public class Area implements Serializable {
 
+    @JsonIgnore
     @OneToMany(mappedBy = "areacodArea")
     private List<Impresora> impresoraList;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "areacodArea")
     private List<PuestoTrabajo> puestoTrabajoList;
 
@@ -52,11 +58,13 @@ public class Area implements Serializable {
     private Integer porcientoPorServicio;
     @Column(name = "nombre")
     private String nombre;
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name = "carta_area", joinColumns = {
         @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")}, inverseJoinColumns = {
         @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")})
     private List<Carta> cartaList;
+    @JsonIgnore
     @OneToMany(mappedBy = "areacodArea", cascade = {CascadeType.ALL})
     private List<Mesa> mesaList;
 
