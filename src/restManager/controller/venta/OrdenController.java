@@ -320,7 +320,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             ProductovOrden founded = null;
             float cantidadAgregada = 0;
             for (ProductovOrden x : new ArrayList<>(getInstance().getProductovOrdenList())) {
-                if (x.getProductoVenta().getPCod().equals(selected.getPCod())) {
+                if (x.getProductoVenta().getCodigoProducto().equals(selected.getCodigoProducto())) {
                     founded = x;
                     found = true;
                     break;
@@ -336,7 +336,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 ProductovOrdenDAO.getInstance().edit(founded);
 
             } else {
-                founded = new ProductovOrden(selected.getPCod(), getInstance().getCodOrden());
+                founded = new ProductovOrden(selected.getCodigoProducto(), getInstance().getCodOrden());
                 founded.setOrden(getInstance());
                 founded.setProductoVenta(selected);
                 founded.setCantidad(Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta())));

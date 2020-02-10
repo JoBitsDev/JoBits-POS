@@ -5,6 +5,11 @@
  */
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -26,11 +31,12 @@ import restManager.resources.R;
  * @author Jorge
  *
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class ,property = "codigoProducto",scope = ProductoVenta.class)
 @Entity
 @Table(name = "producto_venta")
 @NamedQueries({
     @NamedQuery(name = "ProductoVenta.findAll", query = "SELECT p FROM ProductoVenta p"),
-    @NamedQuery(name = "ProductoVenta.findByPCod", query = "SELECT p FROM ProductoVenta p WHERE p.pCod = :pCod"),
+    @NamedQuery(name = "ProductoVenta.findByPCod", query = "SELECT p FROM ProductoVenta p WHERE p.codigoProducto = :codigoProducto"),
     @NamedQuery(name = "ProductoVenta.findByNombre", query = "SELECT p FROM ProductoVenta p WHERE p.nombre = :nombre"),
     @NamedQuery(name = "ProductoVenta.findByPrecioVenta", query = "SELECT p FROM ProductoVenta p WHERE p.precioVenta = :precioVenta"),
     @NamedQuery(name = "ProductoVenta.findByGanancia", query = "SELECT p FROM ProductoVenta p WHERE p.ganancia = :ganancia"),
@@ -39,17 +45,12 @@ import restManager.resources.R;
     @NamedQuery(name = "ProductoVenta.findByVisible", query = "SELECT p FROM ProductoVenta p WHERE p.visible = :visible")})
 public class ProductoVenta implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoVenta")
-    private List<IpvVentaRegistro> ipvVentaRegistroList;
-
-    @Column(name = "pago_por_venta")
-    private Float pagoPorVenta;
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "p_cod")
-    private String pCod;
+    private String codigoProducto;
     @Basic(optional = false)
     @Column(name = "nombre")
     private String nombre;
@@ -73,28 +74,35 @@ public class ProductoVenta implements Serializable {
     @JoinColumn(name = "seccionnombre_seccion", referencedColumnName = "nombre_seccion")
     @ManyToOne
     private Seccion seccionnombreSeccion;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoVenta")
     private List<ProductovOrden> productovOrdenList;
+   @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoVenta")
+    private List<IpvVentaRegistro> ipvVentaRegistroList;
+
+    @Column(name = "pago_por_venta")
+    private Float pagoPorVenta;
 
     public ProductoVenta() {
     }
 
     public ProductoVenta(String pCod) {
-        this.pCod = pCod;
+        this.codigoProducto = pCod;
     }
 
     public ProductoVenta(String pCod, String nombre, float precioVenta) {
-        this.pCod = pCod;
+        this.codigoProducto = pCod;
         this.nombre = nombre;
         this.precioVenta = precioVenta;
     }
 
-    public String getPCod() {
-        return pCod;
+    public String getCodigoProducto() {
+        return codigoProducto;
     }
 
-    public void setPCod(String pCod) {
-        this.pCod = pCod;
+    public void setCodigoProducto(String pCod) {
+        this.codigoProducto = pCod;
     }
 
     public String getNombre() {
@@ -180,7 +188,7 @@ public class ProductoVenta implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (pCod != null ? pCod.hashCode() : 0);
+        hash += (codigoProducto != null ? codigoProducto.hashCode() : 0);
         return hash;
     }
 
@@ -191,7 +199,7 @@ public class ProductoVenta implements Serializable {
             return false;
         }
         ProductoVenta other = (ProductoVenta) object;
-        if ((this.pCod == null && other.pCod != null) || (this.pCod != null && !this.pCod.equals(other.pCod))) {
+        if ((this.codigoProducto == null && other.codigoProducto != null) || (this.codigoProducto != null && !this.codigoProducto.equals(other.codigoProducto))) {
             return false;
         }
         return true;

@@ -61,7 +61,7 @@ public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return items.get(rowIndex).getPCod();
+                        return items.get(rowIndex).getCodigoProducto();
                     case 1:
                         return items.get(rowIndex).getNombre();
                     case 2:

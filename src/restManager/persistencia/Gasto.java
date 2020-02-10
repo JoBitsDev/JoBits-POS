@@ -6,6 +6,11 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +33,7 @@ import javax.persistence.TemporalType;
  * @author Jorge
  * 
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "codGasto",scope = Gasto.class )
 @Entity
 @Table(name = "gasto")
 @NamedQueries({
@@ -53,6 +59,7 @@ public class Gasto implements Serializable {
     @JoinColumn(name = "tipo_gastoid_gasto", referencedColumnName = "id_gasto")
     @ManyToOne(optional = false)
     private TipoGasto tipoGastoidGasto;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gasto")
     private List<GastoVenta> gastoVentaList;
 

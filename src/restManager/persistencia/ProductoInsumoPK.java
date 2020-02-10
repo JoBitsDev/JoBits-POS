@@ -6,6 +6,9 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,6 +19,7 @@ import javax.persistence.Embeddable;
  * @author Jorge
  * 
  */
+@JsonRootName(value = "productoInsumoPK")
 @Embeddable
 public class ProductoInsumoPK implements Serializable {
 

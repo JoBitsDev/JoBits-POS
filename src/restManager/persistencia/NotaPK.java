@@ -6,6 +6,7 @@
 
 package restManager.persistencia;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.Embeddable;
  * @author Jorge
  * 
  */
+@JsonRootName(value = "notaPK")
 @Embeddable
 public class NotaPK implements Serializable {
 

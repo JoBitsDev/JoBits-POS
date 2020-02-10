@@ -295,7 +295,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
 
     @Override
     public void updateView() {
-        this.jXLabelPCod.setText(instance.getPCod());
+        this.jXLabelPCod.setText(instance.getCodigoProducto());
         this.jTextFieldNombre.setText(instance.getNombre());
         jSpinnerPrecio.setValue(instance.getPrecioVenta());
         if (instance.getPagoPorVenta() != null) {
@@ -390,7 +390,7 @@ public class ProductoVentaCreateEditView extends AbstractDetailView<ProductoVent
             @Override
             public ProductoInsumo transformK_T(Insumo selected) {
                 ProductoInsumo ret = new ProductoInsumo();
-                ProductoInsumoPK pk = new ProductoInsumoPK(getController().getInstance().getPCod(), selected.getCodInsumo());
+                ProductoInsumoPK pk = new ProductoInsumoPK(getController().getInstance().getCodigoProducto(), selected.getCodInsumo());
                 ret.setProductoInsumoPK(pk);
                 ret.setInsumo(selected);
                 ret.setProductoVenta(getController().getInstance());

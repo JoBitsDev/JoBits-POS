@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.NonUniqueResultException;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import restManager.algoritmo.Y;
 import restManager.backup.BackUp;
@@ -94,6 +95,7 @@ public class VentaCalendarView extends AbstractView {
         jButtonEliminar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jButtonY = new javax.swing.JButton();
+        jButtonImportarVentas = new javax.swing.JButton();
         jPanelSeleccion = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -234,6 +236,14 @@ public class VentaCalendarView extends AbstractView {
             }
         });
         jPanelControles.add(jButtonY);
+
+        jButtonImportarVentas.setText("Importar Ventas");
+        jButtonImportarVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImportarVentasActionPerformed(evt);
+            }
+        });
+        jPanelControles.add(jButtonImportarVentas);
 
         getContentPane().add(jPanelControles, java.awt.BorderLayout.PAGE_END);
 
@@ -467,11 +477,16 @@ public class VentaCalendarView extends AbstractView {
 
     }//GEN-LAST:event_jButtonYActionPerformed
 
+    private void jButtonImportarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarVentasActionPerformed
+        importarVentas();
+    }//GEN-LAST:event_jButtonImportarVentasActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JButton jButtonImportarVentas;
     private javax.swing.JButton jButtonY;
     private com.toedter.calendar.JDateChooser jDateChooserAl;
     private com.toedter.calendar.JDateChooser jDateChooserDel;
@@ -665,6 +680,17 @@ public class VentaCalendarView extends AbstractView {
     public void fetchComponentData() {
         LicenceController controller = new LicenceController(Licence.TipoLicencia.SECUNDARIA);
         jButtonY.setVisible(controller.getLicence().LICENCIA_ACTIVA && controller.getLicence().LICENCIA_VALIDA);
+    }
+
+    private void importarVentas() {
+        VentaDetailController control  = new VentaDetailController();
+        JFileChooser file = new JFileChooser();
+        int result = file.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+        control.importarVenta(file.getSelectedFile());
+        updateView();
+        }
+        
     }
 
 }
