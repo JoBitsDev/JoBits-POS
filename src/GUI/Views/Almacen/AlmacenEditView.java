@@ -689,7 +689,10 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     }//GEN-LAST:event_jRadioButtonTraspasoActionPerformed
 
     private void jButtonConfirmarTransformacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarTransformacionActionPerformed
-        getController().crearTransformacion(model.getHandler().getTableModel().getObjectAtSelectedRow(),(float)jSpinnerTransformar.getValue(),modelTransformacion.getHandler().getTableModel().getItems(),(Almacen)jComboBoxAlDestTransformacion.getSelectedItem());
+        getController().crearTransformacion(model.getHandler().getTableModel().getObjectAtSelectedRow()
+                ,(float)jSpinnerTransformar.getValue()
+                ,modelTransformacion.getHandler().getTableModel().getItems()
+                ,(Almacen)jComboBoxAlDestTransformacion.getSelectedItem());
     }//GEN-LAST:event_jButtonConfirmarTransformacionActionPerformed
 
     private void jButtonVerFichasEntrada1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerFichasEntrada1ActionPerformed
