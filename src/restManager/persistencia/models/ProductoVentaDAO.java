@@ -38,24 +38,24 @@ public class ProductoVentaDAO extends AbstractModel<ProductoVenta> {
         }
     }
 
-    @Override
-    public void edit(ProductoVenta entity) {
-        startTransaction();
-        super.edit(entity);
-        commitTransaction();
-        ArrayList<ProductoInsumo> list = new ArrayList<>(entity.getProductoInsumoList());
-        getEntityManager().refresh(entity);
-        startTransaction();
-        for (int i = 0; i < entity.getProductoInsumoList().size(); i++) {
-            getEntityManager().remove(entity.getProductoInsumoList().get(i));
-        }
-        entity.setProductoInsumoList(null);
-        commitTransaction();
-        super.edit(entity);
-        entity.setProductoInsumoList(list);
-        super.edit(entity);
-        commitTransaction();
-    }
+//    @Override
+//    public void edit(ProductoVenta entity) {
+//        startTransaction();
+//        super.edit(entity);
+//        commitTransaction();
+//        ArrayList<ProductoInsumo> list = new ArrayList<>(entity.getProductoInsumoList());
+//        getEntityManager().refresh(entity);
+//        startTransaction();
+//        for (int i = 0; i < entity.getProductoInsumoList().size(); i++) {
+//            getEntityManager().remove(entity.getProductoInsumoList().get(i));
+//        }
+//        entity.setProductoInsumoList(null);
+//        commitTransaction();
+//        super.edit(entity);
+//        entity.setProductoInsumoList(list);
+//        super.edit(entity);
+//        commitTransaction();
+//    }
 
     public List<ProductoVenta> findAllVisible() {
         List<ProductoVenta> ret = new ArrayList<>();
