@@ -534,7 +534,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
             @Override
             public void removeObjectSelected() {
                 ProductovOrden po = getModel().getObjectAtSelectedRow();
-                getController().removeProduct(po);
+                getController().removeProduct(po,po.getCantidad());
                 getModel().setItems(getInstance().getProductovOrdenList());
                 state = ButtonState.ENVIAR_COCINA;
                 jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
