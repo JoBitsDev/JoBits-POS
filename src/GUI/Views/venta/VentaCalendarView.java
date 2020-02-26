@@ -410,7 +410,7 @@ public class VentaCalendarView extends AbstractView {
             public void longProcessMethod() {
                 createDetailResumenView();
             }
-        }.longProcessMethod();
+        }.performAction(this);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTableCalendarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableCalendarFocusLost

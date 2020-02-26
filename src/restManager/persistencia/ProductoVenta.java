@@ -66,7 +66,7 @@ public class ProductoVenta implements Serializable {
     private String descripcion;
     @Column(name = "visible")
     private Boolean visible;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoVenta")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productoVenta", orphanRemoval = true)
     private List<ProductoInsumo> productoInsumoList;
     @JoinColumn(name = "cocinacod_cocina", referencedColumnName = "cod_cocina")
     @ManyToOne

@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+     * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -406,6 +406,8 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
                 return;
             }
             getController().addProduct(currentProductosModel.getObjectAtSelectedRow());
+            state = ButtonState.ENVIAR_COCINA;
+            jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
             updateCrossReferencePanel();
         });
         jListSecciones.setVisibleRowCount(12);
@@ -429,7 +431,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     }
 
     private void updateCrossReferencePanel() {
-    crossReferencePanel.getHandler().getTableModel().setItems(getInstance().getProductovOrdenList());
+        crossReferencePanel.getHandler().getTableModel().setItems(getInstance().getProductovOrdenList());
     }
 
     private void initCrossReferencePanel() {
@@ -532,7 +534,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
             @Override
             public void removeObjectSelected() {
                 ProductovOrden po = getModel().getObjectAtSelectedRow();
-                getController().removeProduct(po);
+                getController().removeProduct(po,po.getCantidad());
                 getModel().setItems(getInstance().getProductovOrdenList());
                 state = ButtonState.ENVIAR_COCINA;
                 jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
@@ -546,6 +548,13 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
     private void onSeccionClicked(Seccion s) {
         ArrayList<ProductoVenta> productos = new ArrayList<>(s.getProductoVentaList());
+        for (int i = 0; i < productos.size();) {
+            if (!productos.get(i).getVisible()) {
+                productos.remove(i);
+            } else {
+                i++;
+            }
+        }
         Collections.sort(productos, (ProductoVenta o1, ProductoVenta o2) -> o1.toString().compareToIgnoreCase(o2.toString()));
         currentProductosModel.setItems(productos);
 //jTableProductos.setModel(currentProductosModel);

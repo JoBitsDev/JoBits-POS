@@ -341,9 +341,19 @@ public class IpvGestionView extends AbstractView {
         if (evt.getStateChange() == ItemEvent.SELECTED) {
             currentSelectedKitchen = (Cocina) evt.getItem();
             if (jTabbedPane2.getSelectedIndex() == 1) {
-                updatePanelIPV();
+                new LongProcessAction() {
+                    @Override
+                    protected void longProcessMethod() {
+                        updatePanelIPV();
+                    }
+                }.performAction(this);
             } else {
-                updateTableRegistroIpv();
+                new LongProcessAction() {
+                    @Override
+                    protected void longProcessMethod() {
+                        updateTableRegistroIpv();
+                    }
+                }.performAction(this);
             }
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
@@ -448,7 +458,6 @@ public class IpvGestionView extends AbstractView {
 
     @Override
     public void fetchComponentData() {
-        jDateChooser1.setDate(new Date());
         jComboBox1.setModel(new RestManagerComboBoxModel<>(getController().getCocinaList()));
         jComboBox1.setSelectedIndex(0);
         currentSelectedKitchen = (Cocina) jComboBox1.getSelectedItem();
@@ -502,7 +511,6 @@ public class IpvGestionView extends AbstractView {
         if (jDateChooser1.getDate() != null) {
             ipvList = new ArrayList<>(getController()
                     .getIpvRegistroVentaList(currentSelectedKitchen, jDateChooser1.getDate()));
-            ipvList = getController().calcular_existencia_ipv_ventas(ipvList);
         } else {
             ipvList = new ArrayList<>();
         }
@@ -609,7 +617,6 @@ public class IpvGestionView extends AbstractView {
         if (jDateChooser2.getDate() != null) {
             registroList = new ArrayList<>(getController()
                     .getIpvRegistroList(currentSelectedKitchen, jDateChooser2.getDate()));
-            registroList = getController().calcular_existencia_a_dia((ArrayList<IpvRegistro>) registroList);
         } else {
             registroList = new ArrayList<>();
         }
@@ -686,13 +693,13 @@ public class IpvGestionView extends AbstractView {
             model.setItems(registroList);
         }
     }
-    
-     private void ocultar_insumos_ipvs(boolean selected) {
+
+    private void ocultar_insumos_ipvs(boolean selected) {
         RestManagerAbstractTableModel<IpvVentaRegistro> model = ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel());
         if (selected) {
             ipvList = model.getItems();
             List<IpvVentaRegistro> filterList = new ArrayList<>();
-            ipvList.stream().filter((x) -> (x.getVendidos()!= 0 || x.getDisponible() != 0)).forEachOrdered((x) -> {
+            ipvList.stream().filter((x) -> (x.getVendidos() != 0 || x.getDisponible() != 0)).forEachOrdered((x) -> {
                 filterList.add(x);
             });
             model.setItems(filterList);

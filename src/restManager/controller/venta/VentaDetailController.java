@@ -178,8 +178,8 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
                     ventasGastosEnInsumos = 0,
                     ventasGastosGastos = 0,
                     ventasPagoTrabajadores = 0;
-
-            getModel().getEntityManager().refresh(super.getInstance());
+            Venta v = getModel().getEntityManager().find(Venta.class, super.getInstance().getFecha());
+            getModel().getEntityManager().refresh(v);
             for (Orden x : super.getInstance().getOrdenList()) {
                 if (x.getHoraTerminada() == null) {
                     showErrorDialog(vi, "Existen tickets sin cerrar (" + x + "). Cierre los tickets antes de terminar la venta");
@@ -606,7 +606,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public boolean terminarYExportar(File file) {
-         terminarVentas();
+        terminarVentas();
         try {
             new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writeValue(file, getInstance());
             return true;
@@ -623,8 +623,8 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             Venta ret = new ObjectMapper().readValue(file, Venta.class);
             getModel().startTransaction();
             if (getModel().find(ret.getFecha()) == null) {
-            create(ret);
-            }else{
+                create(ret);
+            } else {
                 update(ret);
             }
             getModel().commitTransaction();

@@ -57,9 +57,15 @@ public class R {
 
     public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
 
-    public static String RELEASE_VERSION = "Version 2.6.9.0";
+    public static final int MAJOR_VERSION = 2;
 
-    public static int BUILD_VERSION = 29;
+    public static final int MINOR_VERSION = 6;
+
+    public static final int PATCH_VERSION = 10;
+
+    public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
+
+    public static int BUILD_VERSION = 30;
 
     public static String CONFIG_FILE_PATH = "y.cfg";
 

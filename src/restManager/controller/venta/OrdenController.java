@@ -60,6 +60,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
     private View v;
     private OrdenDetailFragmentView view;
+    private IPVController ipvController = new IPVController();
 
     public OrdenController(Venta fecha) {
         super(OrdenDAO.getInstance());
@@ -123,7 +124,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                     }
                 }
             }
-            Collections.sort(mesas, (Mesa o1, Mesa o2) -> Integer.compare(Integer.parseInt(o1.getCodMesa().split("-")[1]),Integer.parseInt(o2.getCodMesa().split("-")[1])));
+            Collections.sort(mesas, (Mesa o1, Mesa o2) -> Integer.compare(Integer.parseInt(o1.getCodMesa().split("-")[1]), Integer.parseInt(o2.getCodMesa().split("-")[1])));
             m = (Mesa) showInputDialog(null, "Seleccione la mesa", "Mesas disponibles", mesas.toArray(), mesas.get(0));
         } else {
             m = MesaDAO.getInstance().find(R.NO_MESA_CAJA);
@@ -222,6 +223,9 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                     update(instance, true);
                 }
             }
+            if (instance.getDeLaCasa()) {
+                ipvController.consumirPorLaCasa(instance.getProductovOrdenList());
+            }
             setShowDialogs(false);
             getView().setVisible(false);
             CalcularCambioView cambio = new CalcularCambioView(null, true, getInstance());
@@ -234,13 +238,14 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         update(instance);
     }
 
-    public void removeProduct(ProductovOrden objectAtSelectedRow) {
+    private void removeProduct(ProductovOrden objectAtSelectedRow) {
         if (autorize()) {
             int index = instance.getProductovOrdenList().indexOf(objectAtSelectedRow);
-           float cantidadBorrada = instance.getProductovOrdenList().get(index).getCantidad();
+            float cantidadBorrada = instance.getProductovOrdenList().get(index).getCantidad();
             instance.getProductovOrdenList().get(index).setCantidad(0);
             Impresion i = new Impresion();
             i.printCancelationTicket(instance);
+            ipvController.devolver(objectAtSelectedRow, cantidadBorrada);
             getModel().startTransaction();
             for (NotificacionEnvioCocina x : instance.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
                 getModel().getEntityManager().remove(x);
@@ -330,10 +335,9 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 cantidadAgregada = founded.getCantidad();
                 float cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta()));
                 if (!esDespachable(selected, getInstance(), cantidad)) {
-                    throw new ValidatingException(getView(), "No hay existencias de" + selected + "en el IPV para elaborar");
+                    throw new ValidatingException(getView(), "No hay existencias de" + selected + " para elaborar");
                 }
                 founded.setCantidad(founded.getCantidad() + cantidad);
-                ProductovOrdenDAO.getInstance().edit(founded);
 
             } else {
                 founded = new ProductovOrden(selected.getCodigoProducto(), getInstance().getCodOrden());
@@ -343,9 +347,15 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 founded.setEnviadosacocina((float) 0);
                 founded.setNumeroComensal(0);
                 if (!esDespachable(selected, getInstance(), founded.getCantidad())) {
-                    throw new ValidatingException(getView(), "No hay existencias de" + selected + "en el IPV para elaborar");
+                    throw new ValidatingException(getView(), "No hay existencias de" + selected + " para elaborar. "
+                            + "\n el producto se cambiará a no visible");
                 }
                 ProductovOrdenDAO.getInstance().create(founded);
+            }
+            ipvController.consumir(founded, founded.getCantidad());
+            if (found) {
+                ProductovOrdenDAO.getInstance().edit(founded);
+            } else {
                 getInstance().getProductovOrdenList().add(founded);
             }
             cantidadAgregada = founded.getCantidad() - cantidadAgregada;
@@ -355,7 +365,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         }
 
     }
-    
+
     private String getOrdenCod() {
 
         ConfigDAO conf = new ConfigDAO();
@@ -382,7 +392,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     public void fireWarningOnAdding(ProductovOrden producto, float cantidad) {
         //   Level l = getInstance().getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR, Level.FINE, producto, cantidad);
-
     }
 
     private boolean esDespachable(ProductoVenta selected, Orden ordenVenta, float cantidad) {
@@ -395,9 +404,10 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     public void addProduct(ProductovOrden selected, float cantidad) {
         if (autorize()) {
             if (!esDespachable(selected.getProductoVenta(), selected.getOrden(), cantidad)) {
-                throw new ValidatingException(getView(), "No hay existencias de " + selected + " en el IPV para elaborar");
+                throw new ValidatingException(getView(), "No hay existencias de " + selected + " para elaborar");
             }
             selected.setCantidad(selected.getCantidad() + cantidad);
+            ipvController.consumir(selected, cantidad);
             ProductovOrdenDAO.getInstance().edit(selected);
             fireWarningOnAdding(selected, cantidad);
             update(instance);
@@ -409,9 +419,14 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         if (autorize()) {
             int index = instance.getProductovOrdenList().indexOf(selected);
             float difer = instance.getProductovOrdenList().get(index).getCantidad();
+            if (difer - diferencia == 0) {
+                removeProduct(selected);
+                return;
+            }
             instance.getProductovOrdenList().get(index).setCantidad(difer - diferencia);
             Impresion i = new Impresion();
             i.printCancelationTicket(instance);
+            ipvController.devolver(selected, diferencia);
             getModel().startTransaction();
             for (NotificacionEnvioCocina x : instance.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
                 float dif = x.getCantidad() - diferencia;
@@ -423,6 +438,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 }
             }
             getModel().commitTransaction();
+
             ProductovOrdenDAO.getInstance().edit(selected);
             fireWarningOnDeleting(selected, diferencia);
 
@@ -432,13 +448,13 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     }
 
     public List<Seccion> getListaSecciones() {
-       List<Seccion> secciones =  SeccionDAO.getInstance().findVisibleSecciones(instance.getMesacodMesa());
-       Collections.sort(secciones, new Comparator<Seccion>() {
-           @Override
-           public int compare(Seccion o1, Seccion o2) {
-               return o1.toString().compareTo(o2.toString());
-           }
-       });
-       return secciones;
+        List<Seccion> secciones = SeccionDAO.getInstance().findVisibleSecciones(instance.getMesacodMesa());
+        Collections.sort(secciones, new Comparator<Seccion>() {
+            @Override
+            public int compare(Seccion o1, Seccion o2) {
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
+        return secciones;
     }
 }
