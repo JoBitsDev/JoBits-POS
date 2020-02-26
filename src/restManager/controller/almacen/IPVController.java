@@ -359,7 +359,6 @@ public class IPVController extends AbstractDialogController<Ipv> {
 //        }
 //        return listaRegistros;
 //    }
-
     @Override
     public void create(Ipv selected, boolean quietMode) {
         super.create(selected, quietMode); //To change body of generated methods, choose Tools | Templates.
@@ -384,7 +383,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
         for (ProductoInsumo insumo : selected.getProductoInsumoList()) {
             try {
                 IpvRegistro ipv = IpvRegistroDAO.getInstance().getIpvRegistro(selected.getCocinacodCocina(), fecha, insumo.getInsumo());
-                float f = ipv.getConsumo() + insumo.getCantidad()*cantidad;
+                float f = ipv.getConsumo() + insumo.getCantidad() * cantidad;
                 if (f > ipv.getDisponible()) {
                     selected.setVisible(false);
                     getModel().getEntityManager().getTransaction().begin();
@@ -469,6 +468,39 @@ public class IPVController extends AbstractDialogController<Ipv> {
         for (IpvRegistro registro : updateList) {
             updateInstance(registro);
         }
+        IpvVentaRegistroPK pk = new IpvVentaRegistroPK(productoVenta.getOrden().getVentafecha().getFecha(), productoVenta.getProductoVenta().getCodigoProducto());
+        IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
+        if (ipvVenta != null) {
+            ipvVenta.setVendidos(ipvVenta.getVendidos() + cantidad);
+            updateInstance(ipvVenta);
+        }
+    }
+
+    //esto solo pincha cuando ponen el de la casa al final
+    public void consumirPorLaCasa(List<ProductovOrden> listaProductos) {
+        for (ProductovOrden x : listaProductos) {
+            IpvVentaRegistroPK pk = new IpvVentaRegistroPK(x.getOrden().getVentafecha().getFecha(), x.getProductoVenta().getCodigoProducto());
+            IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
+            if (ipvVenta != null) {
+                ipvVenta.setVendidos(ipvVenta.getVendidos() - x.getCantidad());
+                ipvVenta.setAutorizos(ipvVenta.getAutorizos() + x.getCantidad());
+                updateInstance(ipvVenta);
+            }
+        }
+
+    }
+    
+    //esto solo pincha cuando ponen el de la casa al final
+    public void devolverPorLaCasa(List<ProductovOrden> listaProductos) {
+        for (ProductovOrden x : listaProductos) {
+            IpvVentaRegistroPK pk = new IpvVentaRegistroPK(x.getOrden().getVentafecha().getFecha(), x.getProductoVenta().getCodigoProducto());
+            IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
+            if (ipvVenta != null) {
+                ipvVenta.setAutorizos(ipvVenta.getAutorizos() - x.getCantidad());
+                ipvVenta.setVendidos(ipvVenta.getVendidos() + x.getCantidad());
+                updateInstance(ipvVenta);
+            }
+        }
     }
 
     public void devolver(ProductovOrden productoVenta, float diferencia) {
@@ -486,6 +518,12 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
         for (IpvRegistro registro : updateList) {
             updateInstance(registro);
+        }
+        IpvVentaRegistroPK pk = new IpvVentaRegistroPK(productoVenta.getOrden().getVentafecha().getFecha(), productoVenta.getProductoVenta().getCodigoProducto());
+        IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
+        if (ipvVenta != null) {
+            ipvVenta.setVendidos(ipvVenta.getVendidos() - diferencia);
+            updateInstance(ipvVenta);
         }
     }
 

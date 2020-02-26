@@ -223,6 +223,9 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                     update(instance, true);
                 }
             }
+            if (instance.getDeLaCasa()) {
+                ipvController.consumirPorLaCasa(instance.getProductovOrdenList());
+            }
             setShowDialogs(false);
             getView().setVisible(false);
             CalcularCambioView cambio = new CalcularCambioView(null, true, getInstance());
@@ -404,7 +407,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 throw new ValidatingException(getView(), "No hay existencias de " + selected + " para elaborar");
             }
             selected.setCantidad(selected.getCantidad() + cantidad);
-            ipvController.consumir(selected,cantidad );
+            ipvController.consumir(selected, cantidad);
             ProductovOrdenDAO.getInstance().edit(selected);
             fireWarningOnAdding(selected, cantidad);
             update(instance);
