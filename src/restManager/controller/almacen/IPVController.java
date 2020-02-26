@@ -271,9 +271,9 @@ public class IPVController extends AbstractDialogController<Ipv> {
         } while (founded == null && i < 7);
 
         if (founded != null) {
-            VentaDetailController controller = new VentaDetailController(founded.getIpvRegistroPK().getFecha());
-            founded.setConsumo(calcular_existencia_del_dia(controller, founded));
-            updateInstance(founded);
+//            VentaDetailController controller = new VentaDetailController(founded.getIpvRegistroPK().getFecha());
+//            founded.setConsumo(calcular_existencia_del_dia(controller, founded));
+//            updateInstance(founded);
             if (founded.getConsumoReal() != null) {
                 if (founded.getConsumoReal() > 0) {
                     return founded.getFinalAjustado();
@@ -307,9 +307,9 @@ public class IPVController extends AbstractDialogController<Ipv> {
         } while (founded == null && i < 7);
 
         if (founded != null) {
-            VentaDetailController controller = new VentaDetailController(founded.getFechaVenta().getFecha());
-            founded.setVendidos(controller.getVentaTotalDelProducto(founded.getProductoVenta()));
-            updateInstance(founded);
+//            VentaDetailController controller = new VentaDetailController(founded.getFechaVenta().getFecha());
+//            founded.setVendidos(controller.getVentaTotalDelProducto(founded.getProductoVenta()));
+//            updateInstance(founded);
             return founded.getFinal1();
         }
         return 0;
@@ -324,41 +324,41 @@ public class IPVController extends AbstractDialogController<Ipv> {
                 updateInstance(reg);
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new ValidatingException(getView(),
                     "El insumo en el ipv a dar entrada no existe o no hay un ipv inizializado en el dia actual");
 
         }
     }
 
-    public ArrayList<IpvRegistro> calcular_existencia_a_dia(ArrayList<IpvRegistro> listaRegistros) {
-        if (listaRegistros.isEmpty()) {
-            return listaRegistros;
-        }
-        VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getIpvRegistroPK().getFecha());
-        for (IpvRegistro x : listaRegistros) {
-            x.setConsumo(calcular_existencia_del_dia(controller, x));
-            updateInstance(x);
-        }
-        return listaRegistros;
-    }
-
-    private float calcular_existencia_del_dia(VentaDetailController controller, IpvRegistro registro) {
-        return utils.setDosLugaresDecimalesFloat(controller.getGastoTotalDeInsumo(registro));
-    }
-
-    public List<IpvVentaRegistro> calcular_existencia_ipv_ventas(List<IpvVentaRegistro> listaRegistros) {
-        if (!listaRegistros.isEmpty()) {
-            VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getFechaVenta().getFecha());
-            for (IpvVentaRegistro x : listaRegistros) {
-                x.setVendidos(utils.setDosLugaresDecimalesFloat(controller.getVentaTotalDelProducto(x.getProductoVenta())));
-                x.setAutorizos(utils.setDosLugaresDecimalesFloat(controller.getAutorizosTotalDelProducto(x.getProductoVenta())));
-                x.setPrecioVenta(x.getProductoVenta().getPrecioVenta());
-                updateInstance(x);
-            }
-        }
-        return listaRegistros;
-    }
-
+//    public ArrayList<IpvRegistro> calcular_existencia_a_dia(ArrayList<IpvRegistro> listaRegistros) {
+//        if (listaRegistros.isEmpty()) {
+//            return listaRegistros;
+//        }
+//        VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getIpvRegistroPK().getFecha());
+//        for (IpvRegistro x : listaRegistros) {
+//            x.setConsumo(calcular_existencia_del_dia(controller, x));
+//            updateInstance(x);
+//        }
+//        return listaRegistros;
+//    }
+//
+//    private float calcular_existencia_del_dia(VentaDetailController controller, IpvRegistro registro) {
+//        return utils.setDosLugaresDecimalesFloat(controller.getGastoTotalDeInsumo(registro));
+//    }
+//
+//    public List<IpvVentaRegistro> calcular_existencia_ipv_ventas(List<IpvVentaRegistro> listaRegistros) {
+//        if (!listaRegistros.isEmpty()) {
+//            VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getFechaVenta().getFecha());
+//            for (IpvVentaRegistro x : listaRegistros) {
+//                x.setVendidos(utils.setDosLugaresDecimalesFloat(controller.getVentaTotalDelProducto(x.getProductoVenta())));
+//                x.setAutorizos(utils.setDosLugaresDecimalesFloat(controller.getAutorizosTotalDelProducto(x.getProductoVenta())));
+//                x.setPrecioVenta(x.getProductoVenta().getPrecioVenta());
+//                updateInstance(x);
+//            }
+//        }
+//        return listaRegistros;
+//    }
     @Override
     public void create(Ipv selected, boolean quietMode) {
         super.create(selected, quietMode); //To change body of generated methods, choose Tools | Templates.
@@ -380,11 +380,10 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public boolean hayDisponibilidad(ProductoVenta selected, Date fecha, float cantidad) {
-        VentaDetailController controller = new VentaDetailController(fecha);
         for (ProductoInsumo insumo : selected.getProductoInsumoList()) {
             try {
                 IpvRegistro ipv = IpvRegistroDAO.getInstance().getIpvRegistro(selected.getCocinacodCocina(), fecha, insumo.getInsumo());
-                float f = controller.getGastoTotalDeInsumo(ipv) + cantidad;
+                float f = ipv.getConsumo() + insumo.getCantidad() * cantidad;
                 if (f > ipv.getDisponible()) {
                     selected.setVisible(false);
                     getModel().getEntityManager().getTransaction().begin();
@@ -450,6 +449,81 @@ public class IPVController extends AbstractDialogController<Ipv> {
                     IpvDAO.getInstance().commitTransaction();
                 }
             }
+        }
+    }
+
+    public void consumir(ProductovOrden productoVenta, float cantidad) {
+        List<IpvRegistro> updateList = new ArrayList<>();
+        for (ProductoInsumo productoInsumo : productoVenta.getProductoVenta().getProductoInsumoList()) {
+            IpvRegistro registro = IpvRegistroDAO.getInstance().
+                    getIpvRegistro(productoVenta.getProductoVenta().getCocinacodCocina(),
+                            productoVenta.getOrden().getVentafecha().getFecha(),
+                            productoInsumo.getInsumo());
+            if (registro != null) {
+                float cantidadaRebajar = productoInsumo.getCantidad() * cantidad;
+                registro.setConsumo(registro.getConsumo() + cantidadaRebajar);
+                updateList.add(registro);
+            }
+        }
+        for (IpvRegistro registro : updateList) {
+            updateInstance(registro);
+        }
+        IpvVentaRegistroPK pk = new IpvVentaRegistroPK(productoVenta.getOrden().getVentafecha().getFecha(), productoVenta.getProductoVenta().getCodigoProducto());
+        IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
+        if (ipvVenta != null) {
+            ipvVenta.setVendidos(ipvVenta.getVendidos() + cantidad);
+            updateInstance(ipvVenta);
+        }
+    }
+
+    //esto solo pincha cuando ponen el de la casa al final
+    public void consumirPorLaCasa(List<ProductovOrden> listaProductos) {
+        for (ProductovOrden x : listaProductos) {
+            IpvVentaRegistroPK pk = new IpvVentaRegistroPK(x.getOrden().getVentafecha().getFecha(), x.getProductoVenta().getCodigoProducto());
+            IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
+            if (ipvVenta != null) {
+                ipvVenta.setVendidos(ipvVenta.getVendidos() - x.getCantidad());
+                ipvVenta.setAutorizos(ipvVenta.getAutorizos() + x.getCantidad());
+                updateInstance(ipvVenta);
+            }
+        }
+
+    }
+    
+    //esto solo pincha cuando ponen el de la casa al final
+    public void devolverPorLaCasa(List<ProductovOrden> listaProductos) {
+        for (ProductovOrden x : listaProductos) {
+            IpvVentaRegistroPK pk = new IpvVentaRegistroPK(x.getOrden().getVentafecha().getFecha(), x.getProductoVenta().getCodigoProducto());
+            IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
+            if (ipvVenta != null) {
+                ipvVenta.setAutorizos(ipvVenta.getAutorizos() - x.getCantidad());
+                ipvVenta.setVendidos(ipvVenta.getVendidos() + x.getCantidad());
+                updateInstance(ipvVenta);
+            }
+        }
+    }
+
+    public void devolver(ProductovOrden productoVenta, float diferencia) {
+        List<IpvRegistro> updateList = new ArrayList<>();
+        for (ProductoInsumo productoInsumo : productoVenta.getProductoVenta().getProductoInsumoList()) {
+            IpvRegistro registro = IpvRegistroDAO.getInstance().
+                    getIpvRegistro(productoVenta.getProductoVenta().getCocinacodCocina(),
+                            productoVenta.getOrden().getVentafecha().getFecha(),
+                            productoInsumo.getInsumo());
+            if (registro != null) {
+                float cantidadaRebajar = productoInsumo.getCantidad() * diferencia;
+                registro.setConsumo(registro.getConsumo() - cantidadaRebajar);
+                updateList.add(registro);
+            }
+        }
+        for (IpvRegistro registro : updateList) {
+            updateInstance(registro);
+        }
+        IpvVentaRegistroPK pk = new IpvVentaRegistroPK(productoVenta.getOrden().getVentafecha().getFecha(), productoVenta.getProductoVenta().getCodigoProducto());
+        IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
+        if (ipvVenta != null) {
+            ipvVenta.setVendidos(ipvVenta.getVendidos() - diferencia);
+            updateInstance(ipvVenta);
         }
     }
 

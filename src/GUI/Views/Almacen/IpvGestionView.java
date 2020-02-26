@@ -511,7 +511,6 @@ public class IpvGestionView extends AbstractView {
         if (jDateChooser1.getDate() != null) {
             ipvList = new ArrayList<>(getController()
                     .getIpvRegistroVentaList(currentSelectedKitchen, jDateChooser1.getDate()));
-            ipvList = getController().calcular_existencia_ipv_ventas(ipvList);
         } else {
             ipvList = new ArrayList<>();
         }
@@ -618,7 +617,6 @@ public class IpvGestionView extends AbstractView {
         if (jDateChooser2.getDate() != null) {
             registroList = new ArrayList<>(getController()
                     .getIpvRegistroList(currentSelectedKitchen, jDateChooser2.getDate()));
-            registroList = getController().calcular_existencia_a_dia((ArrayList<IpvRegistro>) registroList);
         } else {
             registroList = new ArrayList<>();
         }
