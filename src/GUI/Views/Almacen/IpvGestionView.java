@@ -547,7 +547,7 @@ public class IpvGestionView extends AbstractView {
                         case 5:
                             return items.get(rowIndex).getVendidos();
                         case 6:
-                            return items.get(rowIndex).getPrecioVenta();
+                            return items.get(rowIndex).getProductoVenta().getPrecioVenta();
                         case 7:
                             return utils.setDosLugaresDecimales(items.get(rowIndex).getVendidos() * items.get(rowIndex).getProductoVenta().getPrecioVenta());
                         case 8:
