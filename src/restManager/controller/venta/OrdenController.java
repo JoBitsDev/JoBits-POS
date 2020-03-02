@@ -223,9 +223,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                     update(instance, true);
                 }
             }
-            if (instance.getDeLaCasa()) {
-                ipvController.consumirPorLaCasa(instance.getProductovOrdenList());
-            }
             setShowDialogs(false);
             getView().setVisible(false);
             CalcularCambioView cambio = new CalcularCambioView(null, true, getInstance());
@@ -245,7 +242,11 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             instance.getProductovOrdenList().get(index).setCantidad(0);
             Impresion i = new Impresion();
             i.printCancelationTicket(instance);
-            ipvController.devolver(objectAtSelectedRow, cantidadBorrada);
+            if (instance.getDeLaCasa()) {
+                ipvController.devolverPorLaCasa(objectAtSelectedRow, cantidadBorrada);
+            } else {
+                ipvController.devolver(objectAtSelectedRow, cantidadBorrada);
+            }
             getModel().startTransaction();
             for (NotificacionEnvioCocina x : instance.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
                 getModel().getEntityManager().remove(x);
@@ -352,7 +353,11 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 }
                 ProductovOrdenDAO.getInstance().create(founded);
             }
-            ipvController.consumir(founded, founded.getCantidad());
+            if (instance.getDeLaCasa()) {
+                ipvController.consumirPorLaCasa(founded, founded.getCantidad());
+            } else {
+                ipvController.consumir(founded, founded.getCantidad());
+            }
             if (found) {
                 ProductovOrdenDAO.getInstance().edit(founded);
             } else {
@@ -407,7 +412,11 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 throw new ValidatingException(getView(), "No hay existencias de " + selected + " para elaborar");
             }
             selected.setCantidad(selected.getCantidad() + cantidad);
-            ipvController.consumir(selected, cantidad);
+            if (instance.getDeLaCasa()) {
+                ipvController.consumirPorLaCasa(selected, cantidad);
+            } else {
+                ipvController.consumir(selected, cantidad);
+            }
             ProductovOrdenDAO.getInstance().edit(selected);
             fireWarningOnAdding(selected, cantidad);
             update(instance);
@@ -426,7 +435,11 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             instance.getProductovOrdenList().get(index).setCantidad(difer - diferencia);
             Impresion i = new Impresion();
             i.printCancelationTicket(instance);
-            ipvController.devolver(selected, diferencia);
+            if (instance.getDeLaCasa()) {
+                ipvController.devolverPorLaCasa(selected, diferencia);
+            } else {
+                ipvController.devolver(selected, diferencia);
+            }
             getModel().startTransaction();
             for (NotificacionEnvioCocina x : instance.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
                 float dif = x.getCantidad() - diferencia;
@@ -456,5 +469,14 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             }
         });
         return secciones;
+    }
+
+    public void setDeLaCasa(boolean selected) {
+        instance.setDeLaCasa(selected);
+        if (selected) {
+            ipvController.consumirPorLaCasa(instance.getProductovOrdenList());
+        } else {
+            ipvController.devolverPorLaCasa(instance.getProductovOrdenList());
+        }
     }
 }
