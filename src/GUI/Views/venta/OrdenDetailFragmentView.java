@@ -299,8 +299,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBoxDELACASAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDELACASAActionPerformed
-        instance.setDeLaCasa(jCheckBoxDELACASA.isSelected());
-        getController().update(instance);
+       getController().setDeLaCasa(jCheckBoxDELACASA.isSelected());
     }//GEN-LAST:event_jCheckBoxDELACASAActionPerformed
 
     private void jCheckBoxPorcientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPorcientoActionPerformed
