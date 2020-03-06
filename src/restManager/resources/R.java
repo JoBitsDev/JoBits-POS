@@ -61,7 +61,7 @@ public class R {
 
     public static final int MINOR_VERSION = 6;
 
-    public static final int PATCH_VERSION = 12;
+    public static final int PATCH_VERSION = 13;
 
     public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
 

@@ -129,10 +129,11 @@ public class MainController extends AbstractDialogController<Personal> {
                     throw new DevelopingOperationException(getView());
 
             }
+        } catch (UnauthorizedAccessException e) {
         } catch (Exception e) {
             if (controller != null) {
                 controller.getView().dispose();
-                showErrorDialog((Container)controller.getView(), e.getMessage());
+                showErrorDialog((Container) controller.getView(), e.getMessage());
             } else {
                 showErrorDialog(getView(), e.getMessage());
             }
@@ -140,7 +141,7 @@ public class MainController extends AbstractDialogController<Personal> {
         getView().setEnabled(true);
     }
 
-    private boolean validate(Personal loggedUser, MenuButtons menuButtons) {
+    private boolean validate(Personal loggedUser, MenuButtons menuButtons) throws UnauthorizedAccessException {
         if (!(loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= menuButtons.getNivelMinimoAcceso())) {
             throw new UnauthorizedAccessException(getView());
         }
@@ -174,10 +175,11 @@ public class MainController extends AbstractDialogController<Personal> {
             }
         } else if (nivel >= R.NivelAcceso.CAJERO.getNivel()) {
             return new VentaDetailController(getView());
-        }else if(nivel >=  R.NivelAcceso.DEPENDIENTE.getNivel()){
-            if (showConfirmDialog(getView(), "Desea comenzar el dia de trabajo en el dia actual")) {
-               VentaDetailController controller = new VentaDetailController(new Date());
-                showSuccessDialog(getView(), "El dia de trabajo esta iniciado en la fecha: " + R.DATE_FORMAT.format(controller.getInstance().getFecha()) 
+        } else if (nivel >= R.NivelAcceso.DEPENDIENTE.getNivel()) {
+            if (showConfirmDialog(getView(), "Desea comenzar el dia de trabajo en el dia " + R.DATE_FORMAT.format(new Date()))) {
+                VentaDetailController controller = new VentaDetailController(new Date());
+                controller.initIPV(controller.getInstance());
+                showSuccessDialog(getView(), "El dia de trabajo esta iniciado en la fecha: " + R.DATE_FORMAT.format(controller.getInstance().getFecha())
                         + " \npresione aceptar");
                 return controller;
             }
