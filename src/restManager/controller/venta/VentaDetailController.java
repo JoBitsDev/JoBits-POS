@@ -60,8 +60,17 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public VentaDetailController(Window parent) {
-        super(parent, VentaDAO.getInstance());
+        super(VentaDAO.getInstance());
+        this.parent = parent;
         OrdenDAO.getInstance().addPropertyChangeListener(this);
+        new LongProcessAction() {
+            @Override
+            protected void longProcessMethod() {
+                instance = initDiaVentas(null);
+            }
+        }.performAction(parent);
+        state = State.CREATING;
+        constructView(parent);
     }
 
     public VentaDetailController(Window parent, Date diaVentas) {
