@@ -110,8 +110,10 @@ public class IPVController extends AbstractDialogController<Ipv> {
                     return;
                 }
             }
+            getModel().getEntityManager().refresh(instance);
             instance.setEntrada(instance.getEntrada() + cantidad);
             updateInstance(instance);
+            getModel().getEntityManager().refresh(instance);
         }
     }
 
@@ -152,13 +154,6 @@ public class IPVController extends AbstractDialogController<Ipv> {
         if (instance.getDisponible() == null) {
             instance.setDisponible((float) 0);
         }
-        instance.setDisponible(instance.getEntrada() + instance.getInicio());
-        instance.setFinalCalculado(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumo()));
-        if (instance.getConsumoReal() != null) {
-            if (instance.getConsumoReal() > 0) {
-                instance.setFinalCalculado(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getConsumoReal()));
-            }
-        }
         IpvRegistroDAO.getInstance().startTransaction();
         IpvRegistroDAO.getInstance().edit(instance);
         IpvRegistroDAO.getInstance().commitTransaction();
@@ -183,8 +178,6 @@ public class IPVController extends AbstractDialogController<Ipv> {
         if (instance.getAutorizos() == null) {
             instance.setAutorizos((float) 0);
         }
-        instance.setDisponible(instance.getEntrada() + instance.getInicio());
-        instance.setFinal1(utils.setDosLugaresDecimalesFloat(instance.getDisponible() - instance.getVendidos() - instance.getAutorizos()));
         IpvRegistroVentaDAO.getInstance().startTransaction();
         IpvRegistroVentaDAO.getInstance().edit(instance);
         IpvRegistroVentaDAO.getInstance().commitTransaction();
@@ -331,34 +324,6 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
     }
 
-//    public ArrayList<IpvRegistro> calcular_existencia_a_dia(ArrayList<IpvRegistro> listaRegistros) {
-//        if (listaRegistros.isEmpty()) {
-//            return listaRegistros;
-//        }
-//        VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getIpvRegistroPK().getFecha());
-//        for (IpvRegistro x : listaRegistros) {
-//            x.setConsumo(calcular_existencia_del_dia(controller, x));
-//            updateInstance(x);
-//        }
-//        return listaRegistros;
-//    }
-//
-//    private float calcular_existencia_del_dia(VentaDetailController controller, IpvRegistro registro) {
-//        return utils.setDosLugaresDecimalesFloat(controller.getGastoTotalDeInsumo(registro));
-//    }
-//
-//    public List<IpvVentaRegistro> calcular_existencia_ipv_ventas(List<IpvVentaRegistro> listaRegistros) {
-//        if (!listaRegistros.isEmpty()) {
-//            VentaDetailController controller = new VentaDetailController(listaRegistros.get(0).getFechaVenta().getFecha());
-//            for (IpvVentaRegistro x : listaRegistros) {
-//                x.setVendidos(utils.setDosLugaresDecimalesFloat(controller.getVentaTotalDelProducto(x.getProductoVenta())));
-//                x.setAutorizos(utils.setDosLugaresDecimalesFloat(controller.getAutorizosTotalDelProducto(x.getProductoVenta())));
-//                x.setPrecioVenta(x.getProductoVenta().getPrecioVenta());
-//                updateInstance(x);
-//            }
-//        }
-//        return listaRegistros;
-//    }
     @Override
     public void create(Ipv selected, boolean quietMode) {
         super.create(selected, quietMode); //To change body of generated methods, choose Tools | Templates.
@@ -417,8 +382,10 @@ public class IPVController extends AbstractDialogController<Ipv> {
                     return;
                 }
             }
+            getModel().getEntityManager().refresh(instance);
             instance.setEntrada(instance.getEntrada() + cantidad);
             updateInstance(instance);
+            getModel().getEntityManager().refresh(instance);
         }
     }
 
