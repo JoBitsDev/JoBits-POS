@@ -126,8 +126,10 @@ public class IPVController extends AbstractDialogController<Ipv> {
             return;
         }
         if (showConfirmDialog(getView(), "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad)) {
+            getModel().getEntityManager().refresh(instance);
             instance.setConsumoReal(cantidad);
             updateInstance(instance);
+            getModel().getEntityManager().refresh(instance);
         }
 
     }
