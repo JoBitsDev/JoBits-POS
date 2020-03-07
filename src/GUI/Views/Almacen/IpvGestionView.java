@@ -92,9 +92,11 @@ public class IpvGestionView extends AbstractView {
         jLabel2 = new javax.swing.JLabel();
         jCheckBox2 = new javax.swing.JCheckBox();
         jPanelOptions = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButtonRefrescar = new com.jidesoft.swing.JideButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -302,20 +304,13 @@ public class IpvGestionView extends AbstractView {
         jPanelOptions.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
         jPanelOptions.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanelOptions.add(jButton1, java.awt.BorderLayout.LINE_START);
+        jPanel8.setOpaque(false);
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jLabel1.setBackground(new java.awt.Color(204, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText(bundle.getString("label_cocina")); // NOI18N
-        jPanelOptions.add(jLabel1, java.awt.BorderLayout.CENTER);
+        jPanel8.add(jLabel1);
 
         jComboBox1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jComboBox1.setMinimumSize(new java.awt.Dimension(150, 70));
@@ -330,7 +325,27 @@ public class IpvGestionView extends AbstractView {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanelOptions.add(jComboBox1, java.awt.BorderLayout.LINE_END);
+        jPanel8.add(jComboBox1);
+
+        jButtonRefrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
+        jButtonRefrescar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRefrescarActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButtonRefrescar);
+
+        jPanelOptions.add(jPanel8, java.awt.BorderLayout.EAST);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusable(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanelOptions.add(jButton1, java.awt.BorderLayout.LINE_START);
 
         getContentPane().add(jPanelOptions, java.awt.BorderLayout.PAGE_START);
 
@@ -452,6 +467,10 @@ public class IpvGestionView extends AbstractView {
         ocultar_insumos_ipvs(jCheckBox2.isSelected());        // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
+    private void jButtonRefrescarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefrescarActionPerformed
+        refreshData();
+    }//GEN-LAST:event_jButtonRefrescarActionPerformed
+
     @Override
     public void updateView() {
     }
@@ -482,6 +501,7 @@ public class IpvGestionView extends AbstractView {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButtonPedido;
+    private com.jidesoft.swing.JideButton jButtonRefrescar;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<Cocina> jComboBox1;
@@ -497,6 +517,7 @@ public class IpvGestionView extends AbstractView {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelIPV;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelRegistros;
@@ -735,6 +756,11 @@ public class IpvGestionView extends AbstractView {
 
     private void createAndPrintTable() {
 
+    }
+
+    private void refreshData() {
+        updatePanelIPV();
+        updateTableRegistroIpv();
     }
 
 }
