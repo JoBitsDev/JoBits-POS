@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import restManager.persistencia.Cocina;
 import restManager.persistencia.Insumo;
@@ -38,13 +39,14 @@ public class IpvRegistroVentaDAO extends AbstractModel<IpvVentaRegistro> {
         }
     }
 
-
-    public List<IpvVentaRegistro> getIpvVentaRegistroList( Date fecha) {
-        getEntityManager().getEntityManagerFactory().getCache().evict(IpvRegistro.class);
-        return new ArrayList<>(getEntityManager().createNamedQuery("IpvVentaRegistro.findByVentafecha")
+    public List<IpvVentaRegistro> getIpvVentaRegistroList(Date fecha) {
+        List<IpvVentaRegistro> ret = new ArrayList<>(getEntityManager().createNamedQuery("IpvVentaRegistro.findByVentafecha")
                 .setParameter("ventafecha", fecha)
                 .getResultList());
-
+        for (IpvVentaRegistro x : ret) {
+            getEntityManager().refresh(x);
+        }
+        return ret;
     }
 
 }

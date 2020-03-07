@@ -44,62 +44,25 @@ public class IpvRegistroDAO extends AbstractModel<IpvRegistro> {
     }
 
     public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha) {
-        getEntityManager().getEntityManagerFactory().getCache().evict(IpvRegistro.class);
-        return new ArrayList<>(getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFecha")
+        List<IpvRegistro> ret = new ArrayList<>(getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFecha")
                 .setParameter("ipvcocinacodCocina", cocina.getCodCocina())
                 .setParameter("fecha", fecha)
                 .getResultList());
-
+        for (IpvRegistro x : ret) {
+            getEntityManager().refresh(x);
+        }
+        return ret;
     }
 
     public IpvRegistro getIpvRegistro(Cocina c, Date fecha, Insumo i)throws NoResultException,PersistenceException{
-        return (IpvRegistro) getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFechaAndInsumo")
+        IpvRegistro ret =  (IpvRegistro) getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFechaAndInsumo")
                 .setParameter("ipvcocinacodCocina", c.getCodCocina())
                 .setParameter("fecha", fecha)
                 .setParameter("codinsumo", i.getCodInsumo())
                 .getSingleResult();
 
+        getEntityManager().refresh(ret);
+        return ret;
     }
-//    @Override
-//    public void edit(IpvRegistro entity) {
-// entity.getIpvRegistroPK().setIpvinsumocodInsumo(entity.getIpv().getIpvPK().getInsumocodInsumo());
-//        entity.getIpvRegistroPK().setIpvcocinacodCocina(entity.getIpv().getIpvPK().getCocinacodCocina());
-//        EntityManager em = null;
-//        try {
-//            em = getEntityManager();
-//            em.getTransaction().begin();
-//            IpvRegistro persistentIpvRegistro = em.find(IpvRegistro.class, entity.getIpvRegistroPK());
-//            Ipv ipvOld = persistentIpvRegistro.getIpv();
-//            Ipv ipvNew = entity.getIpv();
-//            if (ipvNew != null) {
-//                ipvNew = em.getReference(ipvNew.getClass(), ipvNew.getIpvPK());
-//                entity.setIpv(ipvNew);
-//            }
-//            entity = em.merge(entity);
-//            if (ipvOld != null && !ipvOld.equals(ipvNew)) {
-//                ipvOld.getIpvRegistro().remove(entity);
-//                ipvOld = em.merge(ipvOld);
-//            }
-//            if (ipvNew != null && !ipvNew.equals(ipvOld)) {
-//                ipvNew.getIpvRegistro().add(entity);
-//                ipvNew = em.merge(ipvNew);
-//            }
-//            em.getTransaction().commit();
-//        } catch (Exception ex) {
-//            String msg = ex.getLocalizedMessage();
-//            if (msg == null || msg.length() == 0) {
-//                IpvRegistroPK id = entity.getIpvRegistroPK();
-//                if (findIpvRegistro(id) == null) {
-//                    System.out.println("The ipvRegistro with id " + id + " no longer exists.");
-//                }
-//            }
-//            throw ex;
-//        } finally {
-//            if (em != null) {
-//                em.close();
-//            }
-//        }
-//    }
-//    
 
 }
