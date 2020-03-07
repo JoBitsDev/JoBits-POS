@@ -759,8 +759,13 @@ public class IpvGestionView extends AbstractView {
     }
 
     private void refreshData() {
+        new LongProcessAction("Actualizando") {
+            @Override
+            protected void longProcessMethod() {
         updatePanelIPV();
         updateTableRegistroIpv();
+            }
+        }.performAction(this);
     }
 
 }
