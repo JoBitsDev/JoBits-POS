@@ -37,6 +37,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     private Orden instance;
     private RestManagerAbstractTableModel<ProductoVenta> currentProductosModel;
     private ButtonState state = ButtonState.ENVIAR_COCINA;
+    private static boolean showMenu = true;
 
     public OrdenDetailFragmentView(Controller controller, Orden instance) {
         super(controller);
@@ -75,6 +76,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jLabelVALORNOORDEN = new javax.swing.JLabel();
         jPanelDetalles = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jToggleButton1 = new com.jidesoft.swing.JideToggleButton();
         jideButtonImpimirTicket = new com.jidesoft.swing.JideButton();
         jCheckBoxPorciento = new javax.swing.JCheckBox();
         jSpinnerPorciento = new javax.swing.JSpinner();
@@ -174,6 +176,16 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 5));
 
+        jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/vista_menu.png"))); // NOI18N
+        jToggleButton1.setToolTipText("Mostrar/Ocultar menu lateral");
+        jToggleButton1.setSelected(true);
+        jToggleButton1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jToggleButton1ItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(jToggleButton1);
+
         jideButtonImpimirTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jideButtonImpimirTicket.setToolTipText(bundle.getString("label_imprimircuenta")); // NOI18N
         jideButtonImpimirTicket.addActionListener(new java.awt.event.ActionListener() {
@@ -230,6 +242,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jPanelDetalles.add(jPanelCrossReference, java.awt.BorderLayout.CENTER);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Selección de productos"));
+        jPanel3.setPreferredSize(new java.awt.Dimension(522, 130));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jScrollPane2.setColumnHeaderView(null);
@@ -299,7 +312,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBoxDELACASAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDELACASAActionPerformed
-       getController().setDeLaCasa(jCheckBoxDELACASA.isSelected());
+        getController().setDeLaCasa(jCheckBoxDELACASA.isSelected());
     }//GEN-LAST:event_jCheckBoxDELACASAActionPerformed
 
     private void jCheckBoxPorcientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPorcientoActionPerformed
@@ -327,6 +340,11 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
             onSeccionClicked(jListSecciones.getSelectedValue());        // TODO add your handling code here:
         }
     }//GEN-LAST:event_jListSeccionesValueChanged
+
+    private void jToggleButton1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton1ItemStateChanged
+        showMenu = jToggleButton1.isSelected();
+        jPanel3.setVisible(showMenu);
+    }//GEN-LAST:event_jToggleButton1ItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -356,6 +374,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSpinner jSpinnerPorciento;
     private javax.swing.JTable jTableProductos;
+    private com.jidesoft.swing.JideToggleButton jToggleButton1;
     private org.jdesktop.swingx.JXPanel jXPanelBotones;
     private com.jidesoft.swing.JideButton jideButtonAgregarNota;
     private com.jidesoft.swing.JideButton jideButtonCerrarMesaEnviarCocina;
@@ -385,6 +404,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     public void initDefaults() {
         initTableSeleccionProducto();
         initCrossReferencePanel();
+        jPanel3.setVisible(showMenu);
 
     }
 
@@ -533,7 +553,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
             @Override
             public void removeObjectSelected() {
                 ProductovOrden po = getModel().getObjectAtSelectedRow();
-                getController().removeProduct(po,po.getCantidad());
+                getController().removeProduct(po, po.getCantidad());
                 getModel().setItems(getInstance().getProductovOrdenList());
                 state = ButtonState.ENVIAR_COCINA;
                 jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
