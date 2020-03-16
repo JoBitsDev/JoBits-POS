@@ -231,6 +231,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public void updatePorciento(float f) {
         instance.setPorciento(f);
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, instance,f);
         view.updateValorTotal();
         update(instance);
     }
