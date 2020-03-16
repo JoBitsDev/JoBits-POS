@@ -101,6 +101,7 @@ public class RestManagerHandler extends Handler {
         IMPRIMIRTICKET,
         CERRAR,
         SET_CASA,
+        PORCIENTO_ACTUALIZADO,
         SET_NOTA;
 
     }
