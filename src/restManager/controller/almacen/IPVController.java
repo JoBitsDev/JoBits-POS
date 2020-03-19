@@ -514,4 +514,28 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
     }
 
+    /**
+     * Vuelve a calcular de manera manual todos los consumos del dia en la fecha
+     * seleccionada
+     *
+     * @param fecha
+     */
+    public void recalcularExistencias(Date fecha) {
+        VentaDetailController ventaController = new VentaDetailController(fecha);
+        for (IpvRegistro x : IpvRegistroDAO.getInstance().getIpvRegistroList(fecha)) {
+            x.setConsumo(ventaController.getGastoTotalDeInsumo(x));
+            IpvRegistroDAO.getInstance().edit(x);
+        }
+    }
+
+    public void recalcularIpvRegistros(Venta ret) {
+        VentaDetailController ventaController = new VentaDetailController(ret);
+        for (IpvVentaRegistro x : ret.getIpvVentaRegistroList()) {
+            x.setVendidos(ventaController.getVentaTotalDelProducto(x.getProductoVenta()));
+            x.setAutorizos(ventaController.getAutorizosTotalDelProducto(x.getProductoVenta()));
+            IpvRegistroVentaDAO.getInstance().edit(x);
+        }
+
+    }
+
 }
