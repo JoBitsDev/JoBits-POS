@@ -524,16 +524,20 @@ public class IPVController extends AbstractDialogController<Ipv> {
         VentaDetailController ventaController = new VentaDetailController(fecha);
         for (IpvRegistro x : IpvRegistroDAO.getInstance().getIpvRegistroList(fecha)) {
             x.setConsumo(ventaController.getGastoTotalDeInsumo(x));
+            getModel().startTransaction();
             IpvRegistroDAO.getInstance().edit(x);
+            getModel().commitTransaction();
         }
     }
 
     public void recalcularIpvRegistros(Venta ret) {
         VentaDetailController ventaController = new VentaDetailController(ret);
-        for (IpvVentaRegistro x : ret.getIpvVentaRegistroList()) {
+        for (IpvVentaRegistro x : IpvRegistroVentaDAO.getInstance().getIpvVentaRegistroList(ret.getFecha())) {
             x.setVendidos(ventaController.getVentaTotalDelProducto(x.getProductoVenta()));
             x.setAutorizos(ventaController.getAutorizosTotalDelProducto(x.getProductoVenta()));
+            getModel().startTransaction();
             IpvRegistroVentaDAO.getInstance().edit(x);
+            getModel().commitTransaction();
         }
 
     }
