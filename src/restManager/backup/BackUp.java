@@ -561,9 +561,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private void backUpRegistroExistencias(Venta v) {
-          List<IpvRegistro> ret = new ArrayList<>(em.createNamedQuery("IpvRegistro.findByFecha")
-                .setParameter("fecha", v.getFecha())
-                .getResultList());
+          List<IpvRegistro> ret = IpvRegistroDAO.getInstance().getIpvRegistroList(v.getFecha());
           for (IpvRegistro x : ret) {
               if (EntityExist(x, x.getIpvRegistroPK())) {
                   em.merge(x);
