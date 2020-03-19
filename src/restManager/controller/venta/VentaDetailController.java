@@ -640,7 +640,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             return true;
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
-            showErrorDialog(getView(), "Ocurrio un error impoertando la venta.");
+            showErrorDialog(getView(), "Ocurrio un error importando la venta.");
             return false;
         }
     }
