@@ -683,14 +683,19 @@ public class VentaCalendarView extends AbstractView {
     }
 
     private void importarVentas() {
-        VentaDetailController control  = new VentaDetailController();
+        VentaDetailController control = new VentaDetailController();
         JFileChooser file = new JFileChooser();
         int result = file.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-        control.importarVenta(file.getSelectedFile());
-        updateView();
+            new LongProcessAction("Importando Venta") {
+                @Override
+                protected void longProcessMethod() {
+                    control.importarVenta(file.getSelectedFile());
+                    updateView();
+                }
+            }.performAction(this);
         }
-        
+
     }
 
 }
