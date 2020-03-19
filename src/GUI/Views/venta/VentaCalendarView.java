@@ -440,41 +440,12 @@ public class VentaCalendarView extends AbstractView {
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonYActionPerformed
-        if (!R.PERIRSTENCE_UNIT_NAME.equals(R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota"))) {
-            throw new UnauthorizedAccessException(this, "Esta operacion solo se puede ejecutar conectado al servidor remoto");
-        }
-        Y alg = new Y(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), getController());
-        Venta old = alg.getVentaReal();
-        Venta newVenta = new Venta();
-        if (!new BackUp().ExisteVentaEnLocal(old)) {
-            throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
-        }
-        try {
-            getController().destroy(VentaDAO.getInstance().find(old.getFecha()), true);
-            newVenta.setAsistenciaPersonalList(new ArrayList<>());
-            newVenta.setFecha(old.getFecha());
-            newVenta.setOrdenList(alg.ejecutarAlgoritmo());
-            newVenta.setGastoVentaList(new ArrayList<>());
-            newVenta.setVentagastosPagotrabajadores(VentaDAO1.getValorTotalPagoTrabajadores(newVenta));
-            newVenta.setVentagastosGastos((float) 0.0);
-            newVenta.setVentaTotal((double) VentaDAO1.getValorTotalVentas(newVenta));
-            VentaDAO.getInstance().startTransaction();
-            VentaDAO.getInstance().create(newVenta);
-            VentaDAO.getInstance().commitTransaction();
-        } catch (Exception e) {
-            VentaDAO.getInstance().startTransaction();
-            VentaDAO.getInstance().create(old);
-            VentaDAO.getInstance().commitTransaction();
-            JOptionPane.showMessageDialog(this, "La operacion no se ha podido completar correctamente. Contacte con soporte");
-
-        }
-        if (VentaDAO.getInstance().find(old.getFecha()) == null) {
-            VentaDAO.getInstance().startTransaction();
-            VentaDAO.getInstance().create(old);
-            VentaDAO.getInstance().commitTransaction();
-            JOptionPane.showMessageDialog(this, "La operacion no se ha podido completar correctamente. Contacte con soporte");
-        }
-
+        new LongProcessAction("Ejecutando Y") {
+            @Override
+            protected void longProcessMethod() {
+                ejecutarY();
+            }
+        }.performAction(this);
     }//GEN-LAST:event_jButtonYActionPerformed
 
     private void jButtonImportarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarVentasActionPerformed
@@ -691,6 +662,44 @@ public class VentaCalendarView extends AbstractView {
         updateView();
         }
         
+    }
+
+    private void ejecutarY() {
+        if (!R.PERIRSTENCE_UNIT_NAME.equals(R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota"))) {
+            throw new UnauthorizedAccessException(this, "Esta operacion solo se puede ejecutar conectado al servidor remoto");
+        }
+        Y alg = new Y(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), getController());
+        Venta old = alg.getVentaReal();
+        Venta newVenta = new Venta();
+        if (!new BackUp().ExisteVentaEnLocal(old)) {
+            throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
+        }
+        try {
+            getController().destroy(VentaDAO.getInstance().find(old.getFecha()), true);
+            newVenta.setAsistenciaPersonalList(new ArrayList<>());
+            newVenta.setFecha(old.getFecha());
+            newVenta.setOrdenList(alg.ejecutarAlgoritmo());
+            newVenta.setGastoVentaList(new ArrayList<>());
+            newVenta.setVentagastosPagotrabajadores(VentaDAO1.getValorTotalPagoTrabajadores(newVenta));
+            newVenta.setVentagastosGastos((float) 0.0);
+            newVenta.setVentaTotal((double) VentaDAO1.getValorTotalVentas(newVenta));
+            VentaDAO.getInstance().startTransaction();
+            VentaDAO.getInstance().create(newVenta);
+            VentaDAO.getInstance().commitTransaction();
+        } catch (Exception e) {
+            VentaDAO.getInstance().startTransaction();
+            VentaDAO.getInstance().create(old);
+            VentaDAO.getInstance().commitTransaction();
+            JOptionPane.showMessageDialog(this, "La operacion no se ha podido completar correctamente. Contacte con soporte");
+
+        }
+        if (VentaDAO.getInstance().find(old.getFecha()) == null) {
+            VentaDAO.getInstance().startTransaction();
+            VentaDAO.getInstance().create(old);
+            VentaDAO.getInstance().commitTransaction();
+            JOptionPane.showMessageDialog(this, "La operacion no se ha podido completar correctamente. Contacte con soporte");
+        }
+
     }
 
 }
