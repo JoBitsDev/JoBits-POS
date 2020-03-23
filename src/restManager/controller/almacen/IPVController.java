@@ -394,7 +394,6 @@ public class IPVController extends AbstractDialogController<Ipv> {
                 ipvVenta.setAutorizos(ipvVenta.getAutorizos() + x.getCantidad());
                 updateInstance(ipvVenta);
             }
-            consumirIpvRegistro(x, x.getCantidad());
         }
 
     }
@@ -409,7 +408,6 @@ public class IPVController extends AbstractDialogController<Ipv> {
                 ipvVenta.setVendidos(ipvVenta.getVendidos() + x.getCantidad());
                 updateInstance(ipvVenta);
             }
-            devolverIpvRegistro(x, x.getCantidad());
         }
     }
 
