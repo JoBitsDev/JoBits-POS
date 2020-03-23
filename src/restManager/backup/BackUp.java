@@ -5,6 +5,7 @@
  */
 package restManager.backup;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,6 +13,7 @@ import javax.persistence.Persistence;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 import restManager.controller.venta.VentaListController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ExceptionHandler;
 import restManager.persistencia.*;
 import restManager.persistencia.models.*;
@@ -280,6 +282,8 @@ public class BackUp extends SwingWorker<Boolean, Float> {
                     BackUpOrdenes(v.getOrdenList());
                     BackUpGastos(v.getGastoVentaList());
                     backUpAsistenciaPersonal(v.getAsistenciaPersonalList());
+                    backUpIpvVentaRegistro(v.getIpvVentaRegistroList());
+                    backUpRegistroExistencias(v);
                 }
             }
             incrementarProgreso(sumaXCantidad);
@@ -542,6 +546,28 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     private void backUpAsistenciaPersonal(List<AsistenciaPersonal> asistenciaPersonalList) {
         for (AsistenciaPersonal a : asistenciaPersonalList) {
             em.persist(a);
+        }
+    }
+
+    private void backUpIpvVentaRegistro(List<IpvVentaRegistro> ipvVentaRegistroList) {
+        for (IpvVentaRegistro x : ipvVentaRegistroList) {
+            if (EntityExist(x, x.getIpvVentaRegistroPK())) {
+                em.merge(x);
+            } else {
+                em.persist(x);
+
+            }
+        }
+    }
+
+    private void backUpRegistroExistencias(Venta v) {
+          List<IpvRegistro> ret = IpvRegistroDAO.getInstance().getIpvRegistroList(v.getFecha());
+          for (IpvRegistro x : ret) {
+              if (EntityExist(x, x.getIpvRegistroPK())) {
+                  em.merge(x);
+              }else{
+                  em.persist(x);
+              }
         }
     }
 
