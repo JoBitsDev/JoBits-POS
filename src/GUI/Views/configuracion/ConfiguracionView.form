@@ -264,7 +264,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JCheckBox" name="jCheckBoxTicketCocina">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Imprimir ticket a cocina"/>
+                        <Property name="text" type="java.lang.String" value="Imprimir ticket a elaboracion"/>
                         <Property name="toolTipText" type="java.lang.String" value=""/>
                       </Properties>
                     </Component>

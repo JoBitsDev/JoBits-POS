@@ -190,7 +190,7 @@ public class ConfiguracionView extends AbstractView {
 
         jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jCheckBoxTicketCocina.setText("Imprimir ticket a cocina");
+        jCheckBoxTicketCocina.setText("Imprimir ticket a elaboracion");
         jCheckBoxTicketCocina.setToolTipText("");
         jPanel11.add(jCheckBoxTicketCocina);
 

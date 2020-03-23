@@ -444,7 +444,7 @@ public class Impresion {
             feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina(), TipoImpresion.COCINA);
 
         } else {
-            System.out.println("No existen platos de la cocina "
+            System.out.println("No existen productos del punto de elaboracion "
                     + c.getNombreCocina() + " de la orden " + o.getCodOrden() + " para cancelar");
             t.resetAll();
         }
@@ -527,7 +527,7 @@ public class Impresion {
                 feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina(), TipoImpresion.COCINA);
             }
         } else {
-            System.out.println("No existen platos de la cocina "
+            System.out.println("No existen productos de venta del punto de elaboracion "
                     + c.getNombreCocina() + " de la orden " + o.getCodOrden() + " para imprimir");
             t.resetAll();
         }

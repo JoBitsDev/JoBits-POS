@@ -51,7 +51,7 @@ public class SeccionListView extends AbstractListView<Seccion>{
             public String getColumnName(int column) {
                 switch(column){
                     case 0: return "Nombre";
-                    case 1: return "Cantidad de Platos";
+                    case 1: return "Productos de venta";
                     default:return null;
                 }
             }
