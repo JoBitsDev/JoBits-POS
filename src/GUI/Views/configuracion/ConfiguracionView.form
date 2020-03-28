@@ -284,6 +284,20 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Container class="javax.swing.JPanel" name="jPanel14">
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                    <Property name="alignment" type="int" value="0"/>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JCheckBox" name="jCheckBoxBuzzer">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Buzzer"/>
+                        <Property name="toolTipText" type="java.lang.String" value="Redondear todos los valores por exceso"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
                 <Container class="javax.swing.JPanel" name="jPanelCaracterSeparador1">
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
