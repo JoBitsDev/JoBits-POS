@@ -73,6 +73,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
         Impresion.SHOW_SUBTOTAL = c.find(R.SettingID.IMPRESION_TICKET_SUBTOTAL).getValor() == 1;
         Impresion.CABECERA = c.find(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO).getValorString();
         Impresion.PRINT_SECOND_COIN = c.find(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA).getValor() == 1;
+        Impresion.BUZZER_ON = c.find(R.SettingID.IMPRESION_BUZZER_ON).getValor() == 1;
     }
 
     public ParametrosConfiguracion cargarConfiguracionY() {

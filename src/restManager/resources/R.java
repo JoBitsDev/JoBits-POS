@@ -59,13 +59,13 @@ public class R {
 
     public static final int MAJOR_VERSION = 2;
 
-    public static final int MINOR_VERSION = 6;
+    public static final int MINOR_VERSION = 7;
 
-    public static final int PATCH_VERSION = 14;
+    public static final int PATCH_VERSION = 0;
 
     public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
 
-    public static int BUILD_VERSION = 30;
+    public static int BUILD_VERSION = 31;
 
     public static String CONFIG_FILE_PATH = "y.cfg";
 
@@ -102,7 +102,8 @@ public class R {
         IMPRESION_IMPRIMIR_TICKET_EN_COCINA("PRINTING_PRINT_KITCHEN_TICKET", 1, null),
         IMPRESION_CANTIDAD_COPIAS("PRINTING_COPIES", 0, null),
         IMPRESION_REDONDEO_EXCESO("PRINTING_ROUNDING", 1, null),
-        IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA("PRINTING_SECOND_COIN", 1, null);
+        IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA("PRINTING_SECOND_COIN", 1, null),
+        IMPRESION_BUZZER_ON("PRINTING_BUZZER_ON",1,null);
 
         private final String value;
         private final int integerValue;

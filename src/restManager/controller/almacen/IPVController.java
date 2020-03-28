@@ -40,6 +40,9 @@ import restManager.util.utils;
  */
 public class IPVController extends AbstractDialogController<Ipv> {
 
+    //
+    // Constructores
+    //
     public IPVController() {
         super(IpvDAO.getInstance());
     }
@@ -50,6 +53,9 @@ public class IPVController extends AbstractDialogController<Ipv> {
         constructView(parent);
     }
 
+    //
+    // Overrides
+    //
     @Override
     public void constructView(Container parent) {
         setView(new IpvGestionView((AbstractView) parent, this));
@@ -59,6 +65,29 @@ public class IPVController extends AbstractDialogController<Ipv> {
 
     }
 
+    @Override
+    public void create(Ipv selected, boolean quietMode) {
+        super.create(selected, quietMode); //To change body of generated methods, choose Tools | Templates.
+        inicializarExistencias(new VentaDetailController().getDiaDeVenta(null).getFecha());
+    }
+
+    @Override
+    public void destroy(Ipv selected, boolean quietMode) {
+        boolean previousValue = showDialogs;
+        setShowDialogs(!quietMode);
+        getModel().startTransaction();
+        for (IpvRegistro x : selected.getIpvRegistroList()) {
+            getModel().getEntityManager().remove(x);
+        }
+
+        getModel().getEntityManager().remove(selected);
+        getModel().commitTransaction();
+        setShowDialogs(previousValue);
+    }
+
+    //
+    // Getters
+    //
     public List<String> getExistenciaRegistroList(Cocina cocina) {
         List<Date> ret = IpvRegistroDAO.getInstance().getIpvRegistroList(cocina);
         List<String> r = new ArrayList<>();
@@ -94,157 +123,6 @@ public class IPVController extends AbstractDialogController<Ipv> {
 
     public Insumo getInsumo(String ipvinsumocodInsumo) {
         return InsumoDAO.getInstance().find(ipvinsumocodInsumo);
-    }
-
-    public void darEntradaExistencia(IpvRegistro instance) {
-        float cantidad;
-        try {
-            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
-        } catch (NumberFormatException e) {
-            showErrorDialog(getView(), "El valor introducido no es correcto");
-            return;
-        }
-        if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo())) {
-            if (cantidad < 0) {
-                if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
-                    return;
-                }
-            }
-            getModel().getEntityManager().refresh(instance);
-            instance.setEntrada(instance.getEntrada() + cantidad);
-            updateInstance(instance);
-            getModel().getEntityManager().refresh(instance);
-        }
-    }
-
-    public void ajustarConsumo(IpvRegistro instance) {
-        float cantidad;
-        try {
-            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a ajustar"));
-        } catch (NumberFormatException e) {
-            showErrorDialog(getView(), "El valor introducido no es correcto");
-            return;
-        }
-        if (showConfirmDialog(getView(), "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad)) {
-            getModel().getEntityManager().refresh(instance);
-            instance.setConsumoReal(cantidad);
-            updateInstance(instance);
-            getModel().getEntityManager().refresh(instance);
-        }
-
-    }
-
-    public void updateInstance(IpvRegistro instance) {
-        if (instance.getEntrada() == null) {
-            instance.setEntrada((float) 0);
-        }
-        if (instance.getInicio() == null) {
-            instance.setInicio((float) 0);
-        }
-        if (instance.getConsumo() == null) {
-            instance.setConsumo((float) 0);
-        }
-        if (instance.getConsumoReal() == null) {
-            instance.setConsumoReal((float) 0);
-        }
-        if (instance.getFinalCalculado() == null) {
-            instance.setFinalCalculado((float) 0);
-        }
-        if (instance.getFinalAjustado() == null) {
-            instance.setFinalAjustado((float) 0);
-        }
-        if (instance.getDisponible() == null) {
-            instance.setDisponible((float) 0);
-        }
-        IpvRegistroDAO.getInstance().startTransaction();
-        IpvRegistroDAO.getInstance().edit(instance);
-        IpvRegistroDAO.getInstance().commitTransaction();
-    }
-
-    public void updateInstance(IpvVentaRegistro instance) {
-        if (instance.getEntrada() == null) {
-            instance.setEntrada((float) 0);
-        }
-        if (instance.getInicio() == null) {
-            instance.setInicio((float) 0);
-        }
-        if (instance.getVendidos() == null) {
-            instance.setVendidos((float) 0);
-        }
-        if (instance.getFinal1() == null) {
-            instance.setFinal1((float) 0);
-        }
-        if (instance.getDisponible() == null) {
-            instance.setDisponible((float) 0);
-        }
-        if (instance.getAutorizos() == null) {
-            instance.setAutorizos((float) 0);
-        }
-        IpvRegistroVentaDAO.getInstance().startTransaction();
-        IpvRegistroVentaDAO.getInstance().edit(instance);
-        IpvRegistroVentaDAO.getInstance().commitTransaction();
-    }
-
-    /**
-     * este metodo debe invocarse una sola vez para inicializar los ipvs del dia
-     * de trabajo
-     *
-     * @param fecha
-     * @return
-     */
-    public List<IpvRegistro> inicializarExistencias(Date fecha) {
-        ArrayList<IpvRegistro> ret = new ArrayList<>();
-        actualizarIPVs();
-        IpvDAO.getInstance().findAll().forEach((x) -> {
-            IpvRegistroPK pk = new IpvRegistroPK(x.getInsumo().getCodInsumo(), x.getCocina().getCodCocina(), fecha);
-            IpvRegistro reg = IpvRegistroDAO.getInstance().find(pk);
-            if (reg == null) {
-                reg = new IpvRegistro(pk);
-                reg.setIpv(x);
-                IpvRegistroDAO.getInstance().startTransaction();
-                IpvRegistroDAO.getInstance().create(reg);
-                IpvRegistroDAO.getInstance().commitTransaction();
-                reg.setInicio(getEntradaDiaAnterior(reg));
-                reg.setEntrada((float) 0);
-                reg.setConsumo((float) 0);
-                reg.setConsumoReal((float) 0);
-                updateInstance(reg);
-            }
-            ret.add(reg);
-        });
-
-        return ret;
-    }
-
-    /**
-     * este metodo debe invocarse una sola vez para inicializar los ipvs del dia
-     * de trabajo
-     *
-     * @param fecha
-     * @return
-     */
-    public List<IpvVentaRegistro> inicializarIpvs(Date fecha) {
-        ArrayList<IpvVentaRegistro> ret = new ArrayList<>();
-        for (ProductoVenta x : ProductoVentaDAO.getInstance().findAll()) {
-            IpvVentaRegistroPK pk = new IpvVentaRegistroPK(fecha, x.getCodigoProducto());
-            IpvVentaRegistro reg = IpvRegistroVentaDAO.getInstance().find(pk);
-            if (reg == null) {
-                reg = new IpvVentaRegistro(pk);
-                IpvRegistroVentaDAO.getInstance().startTransaction();
-                IpvRegistroVentaDAO.getInstance().create(reg);
-                IpvRegistroVentaDAO.getInstance().commitTransaction();
-                reg.setInicio(getEntradaDiaAnterior(reg));
-                reg.setEntrada((float) 0);
-                reg.setVendidos((float) 0);
-                reg.setAutorizos((float) 0);
-                reg.setFechaVenta(VentaDAO.getInstance().find(fecha));
-                reg.setProductoVenta(x);
-                updateInstance(reg);
-            }
-            ret.add(reg);
-        }
-
-        return ret;
     }
 
     private float getEntradaDiaAnterior(IpvRegistro reg) {
@@ -311,6 +189,88 @@ public class IPVController extends AbstractDialogController<Ipv> {
 
     }
 
+    //
+    // Logica
+    //
+    public void ajustarConsumo(IpvRegistro instance) {
+        float cantidad;
+        try {
+            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a ajustar"));
+        } catch (NumberFormatException e) {
+            showErrorDialog(getView(), "El valor introducido no es correcto");
+            return;
+        }
+        if (showConfirmDialog(getView(), "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad)) {
+            getModel().getEntityManager().refresh(instance);
+            instance.setConsumoReal(cantidad);
+            updateInstance(instance);
+            getModel().getEntityManager().refresh(instance);
+        }
+
+    }
+
+    /**
+     * este metodo debe invocarse una sola vez para inicializar los ipvs del dia
+     * de trabajo
+     *
+     * @param fecha
+     * @return
+     */
+    public List<IpvRegistro> inicializarExistencias(Date fecha) {
+        ArrayList<IpvRegistro> ret = new ArrayList<>();
+        actualizarIPVs();
+        IpvDAO.getInstance().findAll().forEach((x) -> {
+            IpvRegistroPK pk = new IpvRegistroPK(x.getInsumo().getCodInsumo(), x.getCocina().getCodCocina(), fecha);
+            IpvRegistro reg = IpvRegistroDAO.getInstance().find(pk);
+            if (reg == null) {
+                reg = new IpvRegistro(pk);
+                reg.setIpv(x);
+                IpvRegistroDAO.getInstance().startTransaction();
+                IpvRegistroDAO.getInstance().create(reg);
+                IpvRegistroDAO.getInstance().commitTransaction();
+                reg.setInicio(getEntradaDiaAnterior(reg));
+                reg.setEntrada((float) 0);
+                reg.setConsumo((float) 0);
+                reg.setConsumoReal((float) 0);
+                updateInstance(reg);
+            }
+            ret.add(reg);
+        });
+
+        return ret;
+    }
+
+    /**
+     * este metodo debe invocarse una sola vez para inicializar los ipvs del dia
+     * de trabajo
+     *
+     * @param fecha
+     * @return
+     */
+    public List<IpvVentaRegistro> inicializarIpvs(Date fecha) {
+        ArrayList<IpvVentaRegistro> ret = new ArrayList<>();
+        for (ProductoVenta x : ProductoVentaDAO.getInstance().findAll()) {
+            IpvVentaRegistroPK pk = new IpvVentaRegistroPK(fecha, x.getCodigoProducto());
+            IpvVentaRegistro reg = IpvRegistroVentaDAO.getInstance().find(pk);
+            if (reg == null) {
+                reg = new IpvVentaRegistro(pk);
+                IpvRegistroVentaDAO.getInstance().startTransaction();
+                IpvRegistroVentaDAO.getInstance().create(reg);
+                IpvRegistroVentaDAO.getInstance().commitTransaction();
+                reg.setInicio(getEntradaDiaAnterior(reg));
+                reg.setEntrada((float) 0);
+                reg.setVendidos((float) 0);
+                reg.setAutorizos((float) 0);
+                reg.setFechaVenta(VentaDAO.getInstance().find(fecha));
+                reg.setProductoVenta(x);
+                updateInstance(reg);
+            }
+            ret.add(reg);
+        }
+
+        return ret;
+    }
+
     public void darEntradaExistencia(Insumo insumo, Cocina cocina, Date fecha, Float cantidad) {
         try {
             IpvRegistro reg = IpvRegistroDAO.getInstance().getIpvRegistro(cocina, fecha, insumo);
@@ -324,26 +284,6 @@ public class IPVController extends AbstractDialogController<Ipv> {
                     "El insumo en el ipv a dar entrada no existe o no hay un ipv inizializado en el dia actual");
 
         }
-    }
-
-    @Override
-    public void create(Ipv selected, boolean quietMode) {
-        super.create(selected, quietMode); //To change body of generated methods, choose Tools | Templates.
-        inicializarExistencias(new VentaDetailController().getDiaDeVenta(null).getFecha());
-    }
-
-    @Override
-    public void destroy(Ipv selected, boolean quietMode) {
-        boolean previousValue = showDialogs;
-        setShowDialogs(!quietMode);
-        getModel().startTransaction();
-        for (IpvRegistro x : selected.getIpvRegistroList()) {
-            getModel().getEntityManager().remove(x);
-        }
-
-        getModel().getEntityManager().remove(selected);
-        getModel().commitTransaction();
-        setShowDialogs(previousValue);
     }
 
     public boolean hayDisponibilidad(ProductoVenta selected, Date fecha, float cantidad) {
@@ -368,6 +308,27 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
         return true;
 
+    }
+
+    public void darEntradaExistencia(IpvRegistro instance) {
+        float cantidad;
+        try {
+            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
+        } catch (NumberFormatException e) {
+            showErrorDialog(getView(), "El valor introducido no es correcto");
+            return;
+        }
+        if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo())) {
+            if (cantidad < 0) {
+                if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
+                    return;
+                }
+            }
+            getModel().getEntityManager().refresh(instance);
+            instance.setEntrada(instance.getEntrada() + cantidad);
+            updateInstance(instance);
+            getModel().getEntityManager().refresh(instance);
+        }
     }
 
     public void darEntradaIPV(IpvVentaRegistro instance) {
@@ -403,40 +364,8 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
     }
 
-    private void actualizarIPVs() {
-        for (Insumo i : InsumoDAO.getInstance().findAll()) {
-            for (ProductoInsumo pv : i.getProductoInsumoList()) {
-                IpvPK pk = new IpvPK(i.getCodInsumo(), pv.getProductoVenta().getCocinacodCocina().getCodCocina());
-                Ipv ipv = IpvDAO.getInstance().find(pk);
-                if (ipv == null) {
-                    ipv = new Ipv(pk);
-                    ipv.setCocina(pv.getProductoVenta().getCocinacodCocina());
-                    ipv.setInsumo(i);
-                    ipv.setIpvRegistroList(new ArrayList<>());
-                    IpvDAO.getInstance().startTransaction();
-                    IpvDAO.getInstance().create(ipv);
-                    IpvDAO.getInstance().commitTransaction();
-                }
-            }
-        }
-    }
-
     public void consumir(ProductovOrden productoVenta, float cantidad) {
-        List<IpvRegistro> updateList = new ArrayList<>();
-        for (ProductoInsumo productoInsumo : productoVenta.getProductoVenta().getProductoInsumoList()) {
-            IpvRegistro registro = IpvRegistroDAO.getInstance().
-                    getIpvRegistro(productoVenta.getProductoVenta().getCocinacodCocina(),
-                            productoVenta.getOrden().getVentafecha().getFecha(),
-                            productoInsumo.getInsumo());
-            if (registro != null) {
-                float cantidadaRebajar = productoInsumo.getCantidad() * cantidad;
-                registro.setConsumo(registro.getConsumo() + cantidadaRebajar);
-                updateList.add(registro);
-            }
-        }
-        for (IpvRegistro registro : updateList) {
-            updateInstance(registro);
-        }
+        consumirIpvRegistro(productoVenta, cantidad);
         IpvVentaRegistroPK pk = new IpvVentaRegistroPK(productoVenta.getOrden().getVentafecha().getFecha(), productoVenta.getProductoVenta().getCodigoProducto());
         IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
         if (ipvVenta != null) {
@@ -446,6 +375,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public void consumirPorLaCasa(ProductovOrden productoVenta, float cantidad) {
+        consumirIpvRegistro(productoVenta, cantidad);
         IpvVentaRegistroPK pk = new IpvVentaRegistroPK(productoVenta.getOrden().getVentafecha().getFecha(), productoVenta.getProductoVenta().getCodigoProducto());
         IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
         if (ipvVenta != null) {
@@ -482,6 +412,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public void devolverPorLaCasa(ProductovOrden productoVenta, float diferencia) {
+        devolverIpvRegistro(productoVenta, diferencia);
         IpvVentaRegistroPK pk = new IpvVentaRegistroPK(productoVenta.getOrden().getVentafecha().getFecha(), productoVenta.getProductoVenta().getCodigoProducto());
         IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
         if (ipvVenta != null) {
@@ -490,7 +421,48 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
     }
 
-    public void devolver(ProductovOrden productoVenta, float diferencia) {
+    public void devolver(ProductovOrden productoVenta, float cantidad) {
+        devolverIpvRegistro(productoVenta, cantidad);
+        IpvVentaRegistroPK pk = new IpvVentaRegistroPK(productoVenta.getOrden().getVentafecha().getFecha(), productoVenta.getProductoVenta().getCodigoProducto());
+        IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
+        if (ipvVenta != null) {
+            ipvVenta.setVendidos(ipvVenta.getVendidos() - cantidad);
+            updateInstance(ipvVenta);
+        }
+    }
+
+    /**
+     * Vuelve a calcular de manera manual todos los consumos del dia en la fecha
+     * seleccionada
+     *
+     * @param fecha
+     */
+    public void recalcularExistencias(Date fecha) {
+        VentaDetailController ventaController = new VentaDetailController(fecha);
+        for (IpvRegistro x : IpvRegistroDAO.getInstance().getIpvRegistroList(fecha)) {
+            x.setConsumo(ventaController.getGastoTotalDeInsumo(x));
+            getModel().startTransaction();
+            IpvRegistroDAO.getInstance().edit(x);
+            getModel().commitTransaction();
+        }
+    }
+
+    public void recalcularIpvRegistros(Venta ret) {
+        VentaDetailController ventaController = new VentaDetailController(ret);
+        for (IpvVentaRegistro x : IpvRegistroVentaDAO.getInstance().getIpvVentaRegistroList(ret.getFecha())) {
+            x.setVendidos(ventaController.getVentaTotalDelProducto(x.getProductoVenta()));
+            x.setAutorizos(ventaController.getAutorizosTotalDelProducto(x.getProductoVenta()));
+            getModel().startTransaction();
+            IpvRegistroVentaDAO.getInstance().edit(x);
+            getModel().commitTransaction();
+        }
+
+    }
+
+    //
+    // Metodos Privados
+    //
+    private void consumirIpvRegistro(ProductovOrden productoVenta, float cantidad) {
         List<IpvRegistro> updateList = new ArrayList<>();
         for (ProductoInsumo productoInsumo : productoVenta.getProductoVenta().getProductoInsumoList()) {
             IpvRegistro registro = IpvRegistroDAO.getInstance().
@@ -498,7 +470,25 @@ public class IPVController extends AbstractDialogController<Ipv> {
                             productoVenta.getOrden().getVentafecha().getFecha(),
                             productoInsumo.getInsumo());
             if (registro != null) {
-                float cantidadaRebajar = productoInsumo.getCantidad() * diferencia;
+                float cantidadaRebajar = productoInsumo.getCantidad() * cantidad;
+                registro.setConsumo(registro.getConsumo() + cantidadaRebajar);
+                updateList.add(registro);
+            }
+        }
+        for (IpvRegistro registro : updateList) {
+            updateInstance(registro);
+        }
+    }
+
+    private void devolverIpvRegistro(ProductovOrden productoVenta, float cantidad) {
+        List<IpvRegistro> updateList = new ArrayList<>();
+        for (ProductoInsumo productoInsumo : productoVenta.getProductoVenta().getProductoInsumoList()) {
+            IpvRegistro registro = IpvRegistroDAO.getInstance().
+                    getIpvRegistro(productoVenta.getProductoVenta().getCocinacodCocina(),
+                            productoVenta.getOrden().getVentafecha().getFecha(),
+                            productoInsumo.getInsumo());
+            if (registro != null) {
+                float cantidadaRebajar = productoInsumo.getCantidad() * cantidad;
                 registro.setConsumo(registro.getConsumo() - cantidadaRebajar);
                 updateList.add(registro);
             }
@@ -506,11 +496,74 @@ public class IPVController extends AbstractDialogController<Ipv> {
         for (IpvRegistro registro : updateList) {
             updateInstance(registro);
         }
-        IpvVentaRegistroPK pk = new IpvVentaRegistroPK(productoVenta.getOrden().getVentafecha().getFecha(), productoVenta.getProductoVenta().getCodigoProducto());
-        IpvVentaRegistro ipvVenta = IpvRegistroVentaDAO.getInstance().find(pk);
-        if (ipvVenta != null) {
-            ipvVenta.setVendidos(ipvVenta.getVendidos() - diferencia);
-            updateInstance(ipvVenta);
+    }
+
+    private void updateInstance(IpvRegistro instance) {
+        if (instance.getEntrada() == null) {
+            instance.setEntrada((float) 0);
+        }
+        if (instance.getInicio() == null) {
+            instance.setInicio((float) 0);
+        }
+        if (instance.getConsumo() == null) {
+            instance.setConsumo((float) 0);
+        }
+        if (instance.getConsumoReal() == null) {
+            instance.setConsumoReal((float) 0);
+        }
+        if (instance.getFinalCalculado() == null) {
+            instance.setFinalCalculado((float) 0);
+        }
+        if (instance.getFinalAjustado() == null) {
+            instance.setFinalAjustado((float) 0);
+        }
+        if (instance.getDisponible() == null) {
+            instance.setDisponible((float) 0);
+        }
+        IpvRegistroDAO.getInstance().startTransaction();
+        IpvRegistroDAO.getInstance().edit(instance);
+        IpvRegistroDAO.getInstance().commitTransaction();
+    }
+
+    private void updateInstance(IpvVentaRegistro instance) {
+        if (instance.getEntrada() == null) {
+            instance.setEntrada((float) 0);
+        }
+        if (instance.getInicio() == null) {
+            instance.setInicio((float) 0);
+        }
+        if (instance.getVendidos() == null) {
+            instance.setVendidos((float) 0);
+        }
+        if (instance.getFinal1() == null) {
+            instance.setFinal1((float) 0);
+        }
+        if (instance.getDisponible() == null) {
+            instance.setDisponible((float) 0);
+        }
+        if (instance.getAutorizos() == null) {
+            instance.setAutorizos((float) 0);
+        }
+        IpvRegistroVentaDAO.getInstance().startTransaction();
+        IpvRegistroVentaDAO.getInstance().edit(instance);
+        IpvRegistroVentaDAO.getInstance().commitTransaction();
+    }
+
+    private void actualizarIPVs() {
+        for (Insumo i : InsumoDAO.getInstance().findAll()) {
+            for (ProductoInsumo pv : i.getProductoInsumoList()) {
+                IpvPK pk = new IpvPK(i.getCodInsumo(), pv.getProductoVenta().getCocinacodCocina().getCodCocina());
+                Ipv ipv = IpvDAO.getInstance().find(pk);
+                if (ipv == null) {
+                    ipv = new Ipv(pk);
+                    ipv.setCocina(pv.getProductoVenta().getCocinacodCocina());
+                    ipv.setInsumo(i);
+                    ipv.setIpvRegistroList(new ArrayList<>());
+                    IpvDAO.getInstance().startTransaction();
+                    IpvDAO.getInstance().create(ipv);
+                    IpvDAO.getInstance().commitTransaction();
+                }
+            }
         }
     }
 
