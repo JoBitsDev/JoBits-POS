@@ -67,6 +67,8 @@ public class ConfiguracionView extends AbstractView {
         jCheckBoxTicketCocina = new javax.swing.JCheckBox();
         jPanel10 = new javax.swing.JPanel();
         jCheckBoxRounding = new javax.swing.JCheckBox();
+        jPanel14 = new javax.swing.JPanel();
+        jCheckBoxBuzzer = new javax.swing.JCheckBox();
         jPanelCaracterSeparador1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jComboBoxCantCopias = new javax.swing.JComboBox<>();
@@ -190,7 +192,7 @@ public class ConfiguracionView extends AbstractView {
 
         jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jCheckBoxTicketCocina.setText("Imprimir ticket a cocina");
+        jCheckBoxTicketCocina.setText("Imprimir ticket a elaboracion");
         jCheckBoxTicketCocina.setToolTipText("");
         jPanel11.add(jCheckBoxTicketCocina);
 
@@ -203,6 +205,14 @@ public class ConfiguracionView extends AbstractView {
         jPanel10.add(jCheckBoxRounding);
 
         jPanelGeneral.add(jPanel10);
+
+        jPanel14.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jCheckBoxBuzzer.setText("Buzzer");
+        jCheckBoxBuzzer.setToolTipText("Redondear todos los valores por exceso");
+        jPanel14.add(jCheckBoxBuzzer);
+
+        jPanelGeneral.add(jPanel14);
 
         jPanelCaracterSeparador1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -306,6 +316,7 @@ public class ConfiguracionView extends AbstractView {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+        validateData();
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
@@ -326,6 +337,7 @@ public class ConfiguracionView extends AbstractView {
         jComboBoxCaracterSeparador.setSelectedItem(fetch(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR));
         jComboBoxTipoNegocio.setSelectedItem(fetch(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO));
         jCheckBoxSegundaMoneda.setSelected((boolean) fetch(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA));
+        jCheckBoxBuzzer.setSelected((boolean) fetch(R.SettingID.IMPRESION_BUZZER_ON));
         int selected = 0;
         if (fetch(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL).equals("48")) {
             selected = 1;
@@ -351,6 +363,7 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonAplicar;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JCheckBox jCheckBoxBuzzer;
     private javax.swing.JCheckBox jCheckBoxEncabezadoRestaurante;
     private javax.swing.JCheckBox jCheckBoxMesaFija;
     private javax.swing.JCheckBox jCheckBoxMultiplesTurnos;
@@ -375,6 +388,7 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel24HR;
     private javax.swing.JPanel jPanel3;
@@ -424,6 +438,7 @@ public class ConfiguracionView extends AbstractView {
         save(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR, jComboBoxCaracterSeparador.getSelectedItem());
         save(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO, jComboBoxTipoNegocio.getSelectedItem());
         save(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA, jCheckBoxSegundaMoneda.isSelected());
+        save(R.SettingID.IMPRESION_BUZZER_ON, jCheckBoxBuzzer.isSelected());
         String selected = "32";
         if (jComboBoxTamannoTicket.getSelectedItem().equals("80mm")) {
             selected = "48";

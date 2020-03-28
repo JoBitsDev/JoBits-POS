@@ -237,7 +237,7 @@ public class VentaDAO1 {
         for (ProductoInsumo x : ret) {
             rowData[0].add(x.getInsumo().getNombre());
             rowData[1].add(x.getInsumo().getUm());
-            rowData[2].add(x.getCantidad());
+            rowData[2].add(utils.setDosLugaresDecimalesFloat(x.getCantidad()));
             rowData[3].add(utils.setDosLugaresDecimalesFloat(x.getCosto()));
             total += x.getCosto();
         }
@@ -622,6 +622,7 @@ public class VentaDAO1 {
     // ********************************Metodos privados de la clase **************************************************
     //******************************************************************************************************************
     //******************************************************************************************************************
+    
     /**
      * agrega a un arreglo de ProductosvOrdenes una nueva orden
      *
@@ -646,7 +647,7 @@ public class VentaDAO1 {
         for (ProductovOrden x : ret) {
             rowData[0].add(x.getProductoVenta().getNombre());
             rowData[1].add(x.getProductoVenta().getPrecioVenta());
-            rowData[2].add(x.getCantidad());
+            rowData[2].add(utils.setDosLugaresDecimalesFloat(x.getCantidad()));
             rowData[3].add(utils.setDosLugaresDecimalesFloat(x.getProductoVenta().getPrecioVenta() * x.getCantidad()));
 
             total += x.getProductoVenta().getPrecioVenta() * x.getCantidad();

@@ -1,5 +1,7 @@
 package GUI.Views.venta;
 
+import GUI.Views.util.RestManagerCellRender;
+import java.awt.Font;
 import java.awt.print.PrinterException;
 
 import java.text.MessageFormat;
@@ -109,6 +111,7 @@ public class Resumenes extends javax.swing.JPanel {
         jLabelFecha.setText("Fecha");
 
         jTableVenta.setAutoCreateRowSorter(true);
+        jTableVenta.setFont(new java.awt.Font("Lucida Grande", 0, 22)); // NOI18N
         jTableVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -132,6 +135,8 @@ public class Resumenes extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTableVenta.setRowHeight(25);
+        jTableVenta.setRowMargin(4);
         jScrollPane2.setViewportView(jTableVenta);
 
         jLabelGanancia.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -155,6 +160,7 @@ public class Resumenes extends javax.swing.JPanel {
         });
 
         jTableGastos.setAutoCreateRowSorter(true);
+        jTableGastos.setFont(new java.awt.Font("Lucida Grande", 0, 22)); // NOI18N
         jTableGastos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -178,6 +184,8 @@ public class Resumenes extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTableGastos.setRowHeight(25);
+        jTableGastos.setRowMargin(4);
         jTableGastos.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableGastos);
 
@@ -458,6 +466,10 @@ public class Resumenes extends javax.swing.JPanel {
     private void updateDialog(Venta dia, Cocina c) {
         jTextFieldFechaInit.setText(restManager.resources.R.DATE_FORMAT.format(dia.getFecha()));
         jTextFieldFechaFin.setText(restManager.resources.R.DATE_FORMAT.format(end));
+        jTableVenta.getTableHeader().setFont(jTableVenta.getFont().deriveFont(Font.BOLD));
+        jTableVenta.setDefaultRenderer(Float.class, new RestManagerCellRender());
+        jTableGastos.getTableHeader().setFont(jTableGastos.getFont().deriveFont(Font.BOLD));
+        jTableGastos.setDefaultRenderer(Float.class, new RestManagerCellRender());
         fillTablaVentas(c);
         fillTablaGastos(c);
 
@@ -466,7 +478,6 @@ public class Resumenes extends javax.swing.JPanel {
     private void fillTablaVentas(Cocina c) {
         utils.limpiarTabla(jTableVenta);
         if (c == null) {
-
             jTextFieldTotalRecaudado.setText(VentaDAO1.getResumenVentasOnTable(jTableVenta, dia) + R.COIN_SUFFIX);
         } else {
             jTextFieldTotalRecaudado.setText(VentaDAO1.getResumenVentasCocinaDetalladoOnTable(jTableVenta, dia, c) + R.COIN_SUFFIX);

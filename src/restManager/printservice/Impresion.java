@@ -66,6 +66,7 @@ public class Impresion {
     public static int cantidadCopias = 0;
     public static boolean REDONDEO_POR_EXCESO = true;
     public static String CABECERA = "Restaurante";
+    public static  boolean BUZZER_ON = true;
 
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
@@ -444,7 +445,7 @@ public class Impresion {
             feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina(), TipoImpresion.COCINA);
 
         } else {
-            System.out.println("No existen platos de la cocina "
+            System.out.println("No existen productos del punto de elaboracion "
                     + c.getNombreCocina() + " de la orden " + o.getCodOrden() + " para cancelar");
             t.resetAll();
         }
@@ -527,7 +528,7 @@ public class Impresion {
                 feedPrinter(t.finalCommandSet().getBytes(), c.getNombreCocina(), TipoImpresion.COCINA);
             }
         } else {
-            System.out.println("No existen platos de la cocina "
+            System.out.println("No existen productos de venta del punto de elaboracion "
                     + c.getNombreCocina() + " de la orden " + o.getCodOrden() + " para imprimir");
             t.resetAll();
         }
@@ -887,9 +888,7 @@ public class Impresion {
     public void forceDrawerKick() {
         Ticket t = new Ticket();
         t.resetAll();
-       // t.initialize();
         t.drawerKick();
-        //t.finit();
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
     }
@@ -897,7 +896,6 @@ public class Impresion {
     public void forceBell() {
         Ticket t = new Ticket();
         t.resetAll();
-        t.initialize();
         t.soundBuzzer();
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
 
@@ -1017,6 +1015,9 @@ public class Impresion {
                 switch (modo) {
                     case COCINA:
                         if (IMPRIMIR_TICKET_COCINA) {
+                            if (BUZZER_ON) {
+                            forceBell();
+                            }
                             job.print(doc, null);
                         }
                         break;

@@ -10,6 +10,8 @@ import GUI.copiaSegView;
 import java.awt.Container;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import restManager.controller.AbstractController;
@@ -158,7 +160,7 @@ public class MainController extends AbstractDialogController<Personal> {
         return (MainView) super.getView(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private AbstractController comenzarVentas() throws ParseException {
+    private AbstractController comenzarVentas() throws IllegalArgumentException{
         int nivel = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso();
         if (nivel > R.NivelAcceso.ECONOMICO.getNivel()) {
             String date = JOptionPane.showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
@@ -170,7 +172,12 @@ public class MainController extends AbstractDialogController<Personal> {
             if (date.isEmpty()) {
                 return new VentaDetailController(getView());
             } else {
-                Date fechaVenta = R.DATE_FORMAT.parse(date);
+                Date fechaVenta;
+                try {
+                    fechaVenta = R.DATE_FORMAT.parse(date);
+                } catch (ParseException ex) {
+                    throw new IllegalArgumentException("La fecha introducida es incorrecta");
+                }
                 return new VentaDetailController(getView(), fechaVenta);
             }
         } else if (nivel >= R.NivelAcceso.CAJERO.getNivel()) {
