@@ -6,12 +6,24 @@
 package GUI.Views.login;
 
 import GUI.Views.View;
+import GUI.Views.util.LongProcessAction;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import restManager.controller.login.LogInController;
+import restManager.controller.login.UbicacionConexionController;
 import restManager.exceptions.DevelopingOperationException;
+import restManager.exceptions.ExceptionHandler;
+import restManager.persistencia.volatil.UbicacionConexionModel;
 import restManager.util.ComponentMover;
+import restManager.util.RestManagerComboBoxModel;
 
 /**
  *
@@ -23,15 +35,21 @@ public class LogInView extends javax.swing.JFrame implements View {
      * Creates new form LogInView
      */
     private final LogInController controller;
+    private final UbicacionConexionController ubicacionController;
     private String estadoConexion;
     private Color colorLabel;
 
     public LogInView(LogInController controller) {
         initComponents();
         this.controller = controller;
+        ubicacionController = new UbicacionConexionController();
         ComponentMover cr = new ComponentMover(this, this.getComponents());
-        buttonGroup1.add(jRadioButtonLocal);
-        buttonGroup1.add(jRadioButtonRemoto);
+        jComboBox1.setModel(new RestManagerComboBoxModel<>(Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
+        jComboBox1.setSelectedIndex(ubicacionController.getUbicaciones().getSelectedUbicacion());
+        onComboBoxItemChange(null);
+        jComboBox1.addItemListener((ItemEvent e) -> {
+            onComboBoxItemChange(e);
+        });
     }
 
     /**
@@ -47,7 +65,6 @@ public class LogInView extends javax.swing.JFrame implements View {
         jPanel2 = new javax.swing.JPanel();
         jXLabelUser1 = new org.jdesktop.swingx.JXLabel();
         jideButtonConfig = new com.jidesoft.swing.JideButton();
-        jideButtonConfig1 = new com.jidesoft.swing.JideButton();
         jPanelCenter = new javax.swing.JPanel();
         jPanelUser = new javax.swing.JPanel();
         jideLabel1 = new com.jidesoft.swing.JideLabel();
@@ -58,8 +75,8 @@ public class LogInView extends javax.swing.JFrame implements View {
         jPanel1 = new javax.swing.JPanel();
         jXLabelConnected = new org.jdesktop.swingx.JXLabel();
         jPanelConn = new javax.swing.JPanel();
-        jRadioButtonLocal = new javax.swing.JRadioButton();
-        jRadioButtonRemoto = new javax.swing.JRadioButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
         jPanelOptions = new javax.swing.JPanel();
         jButtonAutenticar = new javax.swing.JButton();
 
@@ -87,10 +104,6 @@ public class LogInView extends javax.swing.JFrame implements View {
             }
         });
         jPanel2.add(jideButtonConfig, java.awt.BorderLayout.LINE_START);
-
-        jideButtonConfig1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/config.png"))); // NOI18N
-        jideButtonConfig1.setFocusable(false);
-        jPanel2.add(jideButtonConfig1, java.awt.BorderLayout.EAST);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
 
@@ -141,29 +154,20 @@ public class LogInView extends javax.swing.JFrame implements View {
 
         jPanelCenter.add(jPanel1);
 
+        jPanelConn.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Ubicacion"));
         jPanelConn.setMaximumSize(new java.awt.Dimension(405, 23));
         jPanelConn.setOpaque(false);
-        jPanelConn.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 0));
+        jPanelConn.setLayout(new java.awt.BorderLayout());
 
-        jRadioButtonLocal.setBackground(new java.awt.Color(0, 153, 153));
-        jRadioButtonLocal.setMnemonic('l');
-        jRadioButtonLocal.setText(bundle.getString("label_servidor_local")); // NOI18N
-        jRadioButtonLocal.addActionListener(new java.awt.event.ActionListener() {
+        jPanelConn.add(jComboBox1, java.awt.BorderLayout.CENTER);
+
+        jButton1.setText("Editar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonLocalActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        jPanelConn.add(jRadioButtonLocal);
-
-        jRadioButtonRemoto.setBackground(new java.awt.Color(0, 153, 153));
-        jRadioButtonRemoto.setMnemonic('r');
-        jRadioButtonRemoto.setText(bundle.getString("label_servidor_remoto")); // NOI18N
-        jRadioButtonRemoto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonRemotoActionPerformed(evt);
-            }
-        });
-        jPanelConn.add(jRadioButtonRemoto);
+        jPanelConn.add(jButton1, java.awt.BorderLayout.EAST);
 
         jPanelCenter.add(jPanelConn);
 
@@ -196,26 +200,24 @@ public class LogInView extends javax.swing.JFrame implements View {
         }
     }//GEN-LAST:event_jPasswordFieldActionPerformed
 
-    private void jRadioButtonLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonLocalActionPerformed
-        actualizarLabelConexion(getController().connectLocal());
-    }//GEN-LAST:event_jRadioButtonLocalActionPerformed
-
-    private void jRadioButtonRemotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonRemotoActionPerformed
-        actualizarLabelConexion(getController().connectRemote());
-    }//GEN-LAST:event_jRadioButtonRemotoActionPerformed
-
     private void jButtonAutenticarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAutenticarActionPerformed
-        getController().autenticar(overlayTextField1.getText(), jPasswordField.getPassword());
-        jPasswordField.setText("");
+        onButtonAutenticarAction(evt);
+
     }//GEN-LAST:event_jButtonAutenticarActionPerformed
 
     private void jideButtonConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonConfigActionPerformed
         System.exit(0);        // TODO add your handling code here:
     }//GEN-LAST:event_jideButtonConfigActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        onCrearEditarClick(jComboBox1.getSelectedIndex());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAutenticar;
+    private javax.swing.JComboBox<UbicacionConexionModel> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCenter;
@@ -224,12 +226,9 @@ public class LogInView extends javax.swing.JFrame implements View {
     private javax.swing.JPanel jPanelPass;
     private javax.swing.JPanel jPanelUser;
     private com.jidesoft.swing.OverlayPasswordField jPasswordField;
-    private javax.swing.JRadioButton jRadioButtonLocal;
-    private javax.swing.JRadioButton jRadioButtonRemoto;
     private org.jdesktop.swingx.JXLabel jXLabelConnected;
     private org.jdesktop.swingx.JXLabel jXLabelUser1;
     private com.jidesoft.swing.JideButton jideButtonConfig;
-    private com.jidesoft.swing.JideButton jideButtonConfig1;
     private com.jidesoft.swing.JideLabel jideLabel1;
     private com.jidesoft.swing.JideLabel jideLabel2;
     private com.jidesoft.swing.OverlayTextField overlayTextField1;
@@ -258,6 +257,9 @@ public class LogInView extends javax.swing.JFrame implements View {
     @Override
     public void updateView() {
         actualizarLabelConexion(getController().isConnected());
+        jComboBox1.setModel(new RestManagerComboBoxModel<>(Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
+        jComboBox1.setSelectedIndex(ubicacionController.getUbicaciones().getSelectedUbicacion());
+
     }
 
     @Override
@@ -278,6 +280,37 @@ public class LogInView extends javax.swing.JFrame implements View {
     @Override
     public Container getContainer() {
         return this;
+    }
+
+    private void onCrearEditarClick(int selectedIndex) {
+        new UbicacionView(this, true, ubicacionController);
+        updateView();
+
+    }
+
+    private void onComboBoxItemChange(ItemEvent e) {
+        try {
+            ubicacionController.setSelectedUbicacion(jComboBox1.getSelectedIndex());
+            new LongProcessAction("Conectando a base de datos") {
+                @Override
+                protected void longProcessMethod() {
+                    try {
+                        controller.connect(ubicacionController.getUbicaciones().getUbicacionActiva());
+                    } catch (Exception ex) {
+                        Logger.getLogger(LogInView.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }.performAction(this);
+            actualizarLabelConexion(getController().isConnected());
+        } catch (Exception ex) {
+            ExceptionHandler.showExceptionToUser(ex);
+            Logger.getLogger(LogInView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void onButtonAutenticarAction(ActionEvent evt) {
+        getController().autenticar(overlayTextField1.getText(), jPasswordField.getPassword());
+        jPasswordField.setText("");
     }
 
 }

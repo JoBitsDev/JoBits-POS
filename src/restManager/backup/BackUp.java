@@ -17,6 +17,8 @@ import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ExceptionHandler;
 import restManager.persistencia.*;
 import restManager.persistencia.models.*;
+import restManager.persistencia.volatil.UbicacionConexionModel;
+import restManager.resources.DBConnector;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
 import restManager.util.utils;
@@ -41,23 +43,19 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     //
     //Constructores
     //
-    public BackUp(TipoBackUp tipoBackUp) {
+    public BackUp(UbicacionConexionModel ubicacion, TipoBackUp tipoBackUp) {
         this.tipoBackUp = tipoBackUp;
-        emf = Persistence.createEntityManagerFactory(R.RESOURCE_BUNDLE.getString("unidad_persistencia_local"));
+        emf = DBConnector.createEmfFrom(ubicacion);
         em = emf.createEntityManager();
     }
 
-    public BackUp(String persistenceUnitName, JProgressBar barraProgreso, TipoBackUp tipoBackUp) {
-        emf = Persistence.createEntityManagerFactory(persistenceUnitName);
-        em = emf.createEntityManager();
+    public BackUp(UbicacionConexionModel connector, JProgressBar barraProgreso, TipoBackUp tipoBackUp) {
+        this(connector, tipoBackUp);
         this.barraDeProgreso = barraProgreso;
-        this.tipoBackUp = tipoBackUp;
     }
 
-    public BackUp() {
-        this.tipoBackUp = TipoBackUp.NULO;
-        emf = Persistence.createEntityManagerFactory(R.RESOURCE_BUNDLE.getString("unidad_persistencia_local"));
-        em = emf.createEntityManager();
+    public BackUp(UbicacionConexionModel connector) {
+        this(connector, TipoBackUp.NULO);
     }
 
     //
@@ -561,13 +559,13 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private void backUpRegistroExistencias(Venta v) {
-          List<IpvRegistro> ret = IpvRegistroDAO.getInstance().getIpvRegistroList(v.getFecha());
-          for (IpvRegistro x : ret) {
-              if (EntityExist(x, x.getIpvRegistroPK())) {
-                  em.merge(x);
-              }else{
-                  em.persist(x);
-              }
+        List<IpvRegistro> ret = IpvRegistroDAO.getInstance().getIpvRegistroList(v.getFecha());
+        for (IpvRegistro x : ret) {
+            if (EntityExist(x, x.getIpvRegistroPK())) {
+                em.merge(x);
+            } else {
+                em.persist(x);
+            }
         }
     }
 

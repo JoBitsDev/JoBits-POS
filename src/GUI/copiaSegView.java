@@ -8,14 +8,18 @@ package GUI;
 import java.awt.Dialog;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import restManager.backup.BackUp;
 import restManager.controller.login.LogInController;
+import restManager.controller.login.UbicacionConexionController;
+import restManager.persistencia.volatil.UbicacionConexionModel;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
+import restManager.util.RestManagerComboBoxModel;
 
 /**
  *
@@ -26,9 +30,13 @@ public class copiaSegView extends javax.swing.JDialog {
     /**
      * Creates new form copiaSegView
      */
+    private UbicacionConexionController ubicacionController = new UbicacionConexionController();
+
     public copiaSegView(JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        jComboBox1.setModel(new RestManagerComboBoxModel<>(Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
+        jComboBox1.setSelectedItem(R.CURRENT_CONNECTION);
         setVisible(true);
     }
 
@@ -41,6 +49,8 @@ public class copiaSegView extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jXPanel1 = new org.jdesktop.swingx.JXPanel();
         jXLabel1 = new org.jdesktop.swingx.JXLabel();
         jXPanel2 = new org.jdesktop.swingx.JXPanel();
@@ -56,6 +66,13 @@ public class copiaSegView extends javax.swing.JDialog {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         setTitle(bundle.getString("label_copia_seguridad")); // NOI18N
         getContentPane().setLayout(new java.awt.BorderLayout(10, 10));
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Copiar a"));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.add(jComboBox1, java.awt.BorderLayout.PAGE_START);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         jXPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -107,49 +124,46 @@ public class copiaSegView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonRealizarCopiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRealizarCopiaActionPerformed
-        try {
-            if (R.PERIRSTENCE_UNIT_NAME.equals(R.RESOURCE_BUNDLE.getString("unidad_persistencia_local")) || InetAddress.getLocalHost().getHostAddress().equals("192.168.173.1")) {
-                JOptionPane.showMessageDialog(this, "Las copias de seguridad no pueden realizarse en el mismo servidor que se origina el pedido ni en el servidor principal");
-            } else {
-                
-                int resp = JOptionPane.showConfirmDialog(this, R.RESOURCE_BUNDLE.getString("confirmar_copia_seg"),"Confirmacion", JOptionPane.YES_NO_OPTION,JOptionPane.ERROR_MESSAGE);
-                
-                if (resp == JOptionPane.YES_OPTION) {
-                    
-                    BackUp bu = null;
-                    
-                    if (jCheckBoxPersonal.isSelected()) {
-                        bu = new BackUp(BackUp.TipoBackUp.PERSONAL);
-                        
-                    }
-                    if (jCheckBoxProductos.isSelected()) {
-                        bu = new BackUp(BackUp.TipoBackUp.PRODUCTOS);
-                        
-                    }
-                    if (jCheckBoxVentas.isSelected()) {
-                        bu = new BackUp(BackUp.TipoBackUp.VENTA);
-                    }
-                    if (jCheckBoxTodo.isSelected()) {
-                        bu = new BackUp(BackUp.TipoBackUp.All);
-                    }
-                    if (jCheckBoxBorrado.isSelected()) {
-                        LogInController controller = new LogInController();
-                        if (controller.constructoAuthorizationViewForConfirm(jXPanel1)) {
-                            bu = new BackUp(BackUp.TipoBackUp.LIMPIEZA);
-                        }
-                    }
-                    
-                    if (bu != null) {
-                        bu.setBarraDeProgreso(jProgressBar1);
-                        LoadingWindow.show(this);
-                        bu.execute();
-                        
+        UbicacionConexionModel model = (UbicacionConexionModel) jComboBox1.getSelectedItem();
+        if (R.CURRENT_CONNECTION.equals(model) || model.getTipoUbicacion() == UbicacionConexionModel.TipoUbicacion.MASTER) {
+            JOptionPane.showMessageDialog(this, "Las copias de seguridad no pueden realizarse en el mismo servidor que se origina el pedido ni en un servidor principal");
+        } else {
+
+            int resp = JOptionPane.showConfirmDialog(this, R.RESOURCE_BUNDLE.getString("confirmar_copia_seg"), "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+
+            if (resp == JOptionPane.YES_OPTION) {
+
+                BackUp bu = new BackUp((UbicacionConexionModel) jComboBox1.getSelectedItem());
+
+                if (jCheckBoxPersonal.isSelected()) {
+                    bu.setTipoBackUp(BackUp.TipoBackUp.PERSONAL);
+
+                }
+                if (jCheckBoxProductos.isSelected()) {
+                    bu.setTipoBackUp(BackUp.TipoBackUp.PRODUCTOS);
+
+                }
+                if (jCheckBoxVentas.isSelected()) {
+                    bu.setTipoBackUp(BackUp.TipoBackUp.VENTA);
+                }
+                if (jCheckBoxTodo.isSelected()) {
+                    bu.setTipoBackUp(BackUp.TipoBackUp.All);
+                }
+                if (jCheckBoxBorrado.isSelected()) {
+                    LogInController controller = new LogInController();
+                    if (controller.constructoAuthorizationViewForConfirm(jXPanel1)) {
+                        bu.setTipoBackUp(BackUp.TipoBackUp.LIMPIEZA);
                     }
                 }
 
+                if (bu.getTipoBackUp() != BackUp.TipoBackUp.NULO) {
+                    bu.setBarraDeProgreso(jProgressBar1);
+                    LoadingWindow.show(this);
+                    bu.execute();
+
+                }
             }
-        } catch (UnknownHostException ex) {
-            JOptionPane.showMessageDialog(jXPanel1, "Para realizar las copias de seguridad debe estar conectado al servidor principal");
+
         }
 
     }//GEN-LAST:event_botonRealizarCopiaActionPerformed
@@ -166,6 +180,8 @@ public class copiaSegView extends javax.swing.JDialog {
     private javax.swing.JCheckBox jCheckBoxProductos;
     private javax.swing.JCheckBox jCheckBoxTodo;
     private javax.swing.JCheckBox jCheckBoxVentas;
+    private javax.swing.JComboBox<UbicacionConexionModel> jComboBox1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private org.jdesktop.swingx.JXLabel jXLabel1;
     private org.jdesktop.swingx.JXPanel jXPanel1;

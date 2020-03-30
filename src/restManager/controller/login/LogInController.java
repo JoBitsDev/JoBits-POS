@@ -12,9 +12,11 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 import restManager.controller.AbstractDialogController;
+import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Personal;
 import restManager.resources.DBConnector;
 import restManager.persistencia.models.PersonalDAO;
+import restManager.persistencia.volatil.UbicacionConexionModel;
 import restManager.resources.R;
 import restManager.util.LoadingWindow;
 
@@ -30,6 +32,7 @@ public class LogInController extends AbstractDialogController<Personal> {
     private int nivelMinimo = -1;
     private String usuarioRequerido = "";
     private LogInView mainView;
+    private UbicacionConexionModel conexionActiva;
 
     public LogInController() {
         super(null);
@@ -41,41 +44,8 @@ public class LogInController extends AbstractDialogController<Personal> {
         mainView.setVisible(true);
     }
 
-    public boolean connectLocal() {
-        R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_local");
-        return connect();
-    }
-
-    public boolean connectRemote() {
-        R.PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
-        return connect();
-    }
-
-    private boolean connect() {
-        LoadingWindow.show(mainView);
-        SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
-            @Override
-            protected String doInBackground() throws Exception {
-                mainView.setEnabled(false);
-                try {
-                    DBConnector.init(R.PERIRSTENCE_UNIT_NAME);
-                } catch (Exception e) {
-                    LoadingWindow.hide();
-                    showErrorDialog(mainView, e.getMessage());
-                    return "error";
-                }
-                return "gg";
-            }
-
-            @Override
-            protected void done() {
-                mainView.updateView();
-                mainView.setEnabled(true);
-                LoadingWindow.hide();
-
-            }
-        };
-        worker.execute();
+    private boolean connect() throws Exception {
+        DBConnector.init(conexionActiva);
         return DBConnector.isCONECTADO();
     }
 
@@ -118,6 +88,7 @@ public class LogInController extends AbstractDialogController<Personal> {
                 } catch (InterruptedException | ExecutionException ex) {
                     LoadingWindow.hide();
                     showErrorDialog(getView(), ex.getMessage());
+                    ex.printStackTrace();
                 }
             }
         };
@@ -202,6 +173,11 @@ public class LogInController extends AbstractDialogController<Personal> {
             //   return "Campos vacios";
         }
         getView().dispose();
+    }
+
+    public void connect(UbicacionConexionModel ubicacionActiva) throws Exception{
+        this.conexionActiva = ubicacionActiva;
+        connect();
     }
 
 }

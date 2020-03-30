@@ -33,21 +33,11 @@ public abstract class AbstractModel<T> implements Model {
     private static EntityManagerFactory EMF;
     private static EntityManager currentConnection;
     protected PropertyChangeSupport propertyChangeSupport;
-    private static String persistenceUnitName = null;
 
     public AbstractModel(Class<T> entityClass) {
         this.entityClass = entityClass;
         propertyChangeSupport = new PropertyChangeSupport(this);
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory(R.PERIRSTENCE_UNIT_NAME);
-
-        if (!R.PERIRSTENCE_UNIT_NAME.equals(persistenceUnitName)) {
-            EMF = emf;
-            persistenceUnitName = R.PERIRSTENCE_UNIT_NAME;
-            currentConnection = EMF.createEntityManager();
-        }
-        if (currentConnection == null) {
-            currentConnection = EMF.createEntityManager();
-        }
+        DBConnector.init(R.CURRENT_CONNECTION);
     }
 
     public EntityManager getEntityManager() {
@@ -171,6 +161,9 @@ public abstract class AbstractModel<T> implements Model {
     }
 
     public static void setEMF(EntityManagerFactory EMF) {
+        if (AbstractModel.EMF != null) {
+            AbstractModel.EMF.close();
+        }
         AbstractModel.EMF = EMF;
     }
 
@@ -188,14 +181,6 @@ public abstract class AbstractModel<T> implements Model {
 
     public void setPropertyChangeSupport(PropertyChangeSupport propertyChangeSupport) {
         this.propertyChangeSupport = propertyChangeSupport;
-    }
-
-    public static String getPersistenceUnitName() {
-        return persistenceUnitName;
-    }
-
-    public static void setPersistenceUnitName(String persistenceUnitName) {
-        AbstractModel.persistenceUnitName = persistenceUnitName;
     }
 
     public Class<T> getEntityClass() {
