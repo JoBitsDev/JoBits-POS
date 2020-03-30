@@ -15,17 +15,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import restManager.algoritmo.ParametrosConfiguracion;
-import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
-import restManager.exceptions.DevelopingOperationException;
 import restManager.exceptions.ValidatingException;
 import restManager.persistencia.Configuracion;
 import restManager.persistencia.Negocio;
 import restManager.persistencia.Seccion;
-import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.ConfiguracionDAO;
 import restManager.persistencia.models.NegocioDAO;
 import restManager.persistencia.models.SeccionDAO;
@@ -119,6 +114,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
             case IMPRESION_REDONDEO_EXCESO:
             case GENERAL_MESA_FIJA_CAJERO:
             case IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA:
+            case IMPRESION_BUZZER_ON:
                 return c.getValor() == 1;
             case GENERAL_CAMBIO_MONEDA:
             case IMPRESION_CANTIDAD_COPIAS:
