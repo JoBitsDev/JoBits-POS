@@ -36,6 +36,8 @@ import restManager.persistencia.Control.VentaDAO1;
 import restManager.persistencia.Seccion;
 import restManager.persistencia.Venta;
 import restManager.persistencia.models.VentaDAO;
+import restManager.persistencia.volatil.UbicacionConexionModel;
+import restManager.resources.DBConnector;
 import restManager.resources.R;
 import restManager.util.RestManagerAbstractTableCellModel;
 import restManager.util.RestManagerComboBoxModel;
@@ -670,15 +672,15 @@ public class VentaCalendarView extends AbstractView {
     }
 
     private void ejecutarY() {
-        if (!R.PERIRSTENCE_UNIT_NAME.equals(R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota"))) {
-            throw new UnauthorizedAccessException(this, "Esta operacion solo se puede ejecutar conectado al servidor remoto");
+        if (R.CURRENT_CONNECTION.getTipoUbicacion() != UbicacionConexionModel.TipoUbicacion.MASTER) {
+            throw new UnauthorizedAccessException(this, "Esta operacion solo se puede ejecutar conectado a una ubicaion master");
         }
         Y alg = new Y(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), getController());
         Venta old = alg.getVentaReal();
         Venta newVenta = new Venta();
-        if (!new BackUp().ExisteVentaEnLocal(old)) {
-            throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
-        }
+        // if (!new BackUp().ExisteVentaEnLocal(old)) {
+        //   throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
+        // }
         try {
             getController().destroy(VentaDAO.getInstance().find(old.getFecha()), true);
             newVenta.setAsistenciaPersonalList(new ArrayList<>());

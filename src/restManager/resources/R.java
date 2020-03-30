@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
 import restManager.persistencia.Personal;
+import restManager.persistencia.volatil.UbicacionConexionModel;
 
 /**
  * FirstDream
@@ -55,7 +56,7 @@ public class R {
 
     public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("Strings");
 
-    public static String PERIRSTENCE_UNIT_NAME = R.RESOURCE_BUNDLE.getString("unidad_persistencia_remota");
+    public static UbicacionConexionModel CURRENT_CONNECTION; 
 
     public static final int MAJOR_VERSION = 2;
 
