@@ -76,3 +76,5 @@ nbdist/
 dist_ver/
 
 *.cfg
+
+ubicaciones.json
