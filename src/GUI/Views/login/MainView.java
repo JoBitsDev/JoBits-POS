@@ -9,6 +9,7 @@ import GUI.Views.AbstractView;
 import java.awt.Color;
 import javax.swing.JFrame;
 import mdlaf.components.button.MaterialButtonUI;
+import restManager.backup.SincronizacionController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Licence.Licence;
 import restManager.controller.login.MainController;
@@ -21,6 +22,8 @@ import restManager.util.ComponentMover;
  */
 public class MainView extends AbstractView {
 
+    SincronizacionController sincronizacion = new SincronizacionController();
+    
     public MainView(AbstractDialogController controller) {
         super(DialogType.FULL_SCREEN, controller);
         initComponents();
