@@ -29,6 +29,8 @@ public class UbicacionView extends javax.swing.JDialog {
         this.controller = controller;
         initComponents();
         jComboBox1.setModel(new RestManagerComboBoxModel<>(Arrays.asList(TipoUbicacion.values())));
+        jComboBox1.setSelectedIndex(0);
+        fillForm();
         setVisible(true);
     }
 
@@ -122,6 +124,15 @@ public class UbicacionView extends javax.swing.JDialog {
             ExceptionHandler.showExceptionToUser(ex);
         }
         dispose();
+    }
+
+    private void fillForm() {
+        jTextFieldNombre.setText(controller.getUbicaciones().getUbicacionActiva().getNombre());
+        jTextFieldDriver.setText(controller.getUbicaciones().getUbicacionActiva().getDriver());
+        jTextFieldUrl.setText(controller.getUbicaciones().getUbicacionActiva().getUrl());
+        jPasswordFielContrasena.setText(controller.getUbicaciones().getUbicacionActiva().getContrasena());
+        jComboBox1.setSelectedItem(controller.getUbicaciones().getUbicacionActiva().getTipoUbicacion());
+        jTextFieldUsuario.setText(controller.getUbicaciones().getUbicacionActiva().getUsuario());
     }
 
 }
