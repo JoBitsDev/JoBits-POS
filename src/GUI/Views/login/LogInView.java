@@ -46,6 +46,7 @@ public class LogInView extends javax.swing.JFrame implements View {
         ComponentMover cr = new ComponentMover(this, this.getComponents());
         jComboBox1.setModel(new RestManagerComboBoxModel<>(Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
         jComboBox1.setSelectedIndex(ubicacionController.getUbicaciones().getSelectedUbicacion());
+        onComboBoxItemChange(null);
         jComboBox1.addItemListener((ItemEvent e) -> {
             onComboBoxItemChange(e);
         });
@@ -160,7 +161,7 @@ public class LogInView extends javax.swing.JFrame implements View {
 
         jPanelConn.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
-        jButton1.setText("Crear/Editar");
+        jButton1.setText("Editar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
