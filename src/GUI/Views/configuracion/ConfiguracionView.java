@@ -9,12 +9,15 @@ import GUI.Views.AbstractView;
 import GUI.Views.util.ComboBoxWithList;
 import GUI.Views.util.TableWithComboBoxAutoComplete;
 import java.awt.Dialog;
+import java.util.Arrays;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Licence.Licence;
 import restManager.controller.Licence.LicenceController;
 import restManager.controller.configuracion.ConfiguracionController;
+import restManager.controller.login.UbicacionConexionController;
 import restManager.exceptions.DevelopingOperationException;
 import restManager.persistencia.Seccion;
+import restManager.persistencia.volatil.UbicacionConexionModel;
 import restManager.resources.R;
 import restManager.util.RestManagerComboBoxModel;
 import restManager.util.RestManagerListModel;
@@ -30,6 +33,7 @@ public class ConfiguracionView extends AbstractView {
     public ConfiguracionView(AbstractDialogController controller, Dialog owner) {
         super(DialogType.INPUT, controller, owner);
         initComponents();
+        fetchComponentData();
     }
 
     /**
@@ -83,6 +87,13 @@ public class ConfiguracionView extends AbstractView {
         jPanelTamannoPapel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBoxTamannoTicket = new javax.swing.JComboBox<>();
+        jPanelSincronizacion = new javax.swing.JPanel();
+        jPanelNegocio1 = new javax.swing.JPanel();
+        jPanel24HR1 = new javax.swing.JPanel();
+        jCheckBoxHabilitarSincronizacion = new javax.swing.JCheckBox();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jComboBoxSincronizacionUbicacion = new javax.swing.JComboBox<>();
         jPanelY = new javax.swing.JPanel();
         jPanelPorcientoEstimado = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -94,10 +105,8 @@ public class ConfiguracionView extends AbstractView {
         jPanelBebidas = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(getMaximumSize());
         setMinimumSize(getMinimumSize());
         setUndecorated(true);
-        setPreferredSize(getPreferredSize());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
@@ -271,6 +280,34 @@ public class ConfiguracionView extends AbstractView {
 
         jTabbedPane1.addTab("Impresion", jPanelImpresion);
 
+        jPanelSincronizacion.setLayout(new javax.swing.BoxLayout(jPanelSincronizacion, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanelNegocio1.setBorder(javax.swing.BorderFactory.createTitledBorder("Negocio"));
+        jPanelNegocio1.setLayout(new java.awt.GridLayout(3, 1, 0, 3));
+
+        jPanel24HR1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jCheckBoxHabilitarSincronizacion.setText("Habilitar sincronizacion");
+        jCheckBoxHabilitarSincronizacion.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jCheckBoxHabilitarSincronizacion.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jPanel24HR1.add(jCheckBoxHabilitarSincronizacion);
+
+        jPanelNegocio1.add(jPanel24HR1);
+
+        jPanel15.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel6.setText("Ubicacion");
+        jPanel15.add(jLabel6);
+
+        jComboBoxSincronizacionUbicacion.setPreferredSize(new java.awt.Dimension(200, 27));
+        jPanel15.add(jComboBoxSincronizacionUbicacion);
+
+        jPanelNegocio1.add(jPanel15);
+
+        jPanelSincronizacion.add(jPanelNegocio1);
+
+        jTabbedPane1.addTab("Sincronizacion", jPanelSincronizacion);
+
         jPanelY.setLayout(new java.awt.BorderLayout());
 
         jPanelPorcientoEstimado.setOpaque(false);
@@ -325,6 +362,12 @@ public class ConfiguracionView extends AbstractView {
     }//GEN-LAST:event_jButtonAplicarActionPerformed
 
     @Override
+    public void fetchComponentData() {
+        UbicacionConexionController ubicacionController = new UbicacionConexionController();
+        jComboBoxSincronizacionUbicacion.setModel(new RestManagerComboBoxModel<>(Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
+    }
+
+    @Override
     public void updateView() {
         jCheckBoxMultiplesTurnos.setSelected((boolean) fetch(R.SettingID.GENERAL_TURNOS_VARIOS));
         jComboBoxCambioMoneda.setSelectedItem(fetch(R.SettingID.GENERAL_CAMBIO_MONEDA));
@@ -338,6 +381,8 @@ public class ConfiguracionView extends AbstractView {
         jComboBoxTipoNegocio.setSelectedItem(fetch(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO));
         jCheckBoxSegundaMoneda.setSelected((boolean) fetch(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA));
         jCheckBoxBuzzer.setSelected((boolean) fetch(R.SettingID.IMPRESION_BUZZER_ON));
+        jCheckBoxHabilitarSincronizacion.setSelected((boolean) fetch(R.SettingID.SINCRONIZACION_HABILITAR));
+        jComboBoxSincronizacionUbicacion.setSelectedIndex(Integer.valueOf(fetch(R.SettingID.SINCRONIZACION_UBICACION).toString()));
         int selected = 0;
         if (fetch(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL).equals("48")) {
             selected = 1;
@@ -365,6 +410,7 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JCheckBox jCheckBoxBuzzer;
     private javax.swing.JCheckBox jCheckBoxEncabezadoRestaurante;
+    private javax.swing.JCheckBox jCheckBoxHabilitarSincronizacion;
     private javax.swing.JCheckBox jCheckBoxMesaFija;
     private javax.swing.JCheckBox jCheckBoxMultiplesTurnos;
     private javax.swing.JCheckBox jCheckBoxPermEsp;
@@ -374,6 +420,7 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JComboBox<String> jComboBoxCambioMoneda;
     private javax.swing.JComboBox<String> jComboBoxCantCopias;
     private javax.swing.JComboBox<String> jComboBoxCaracterSeparador;
+    private javax.swing.JComboBox<UbicacionConexionModel> jComboBoxSincronizacionUbicacion;
     private javax.swing.JComboBox<String> jComboBoxTamannoTicket;
     private javax.swing.JComboBox<String> jComboBoxTipoNegocio;
     private javax.swing.JLabel jLabel1;
@@ -383,14 +430,17 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel24HR;
+    private javax.swing.JPanel jPanel24HR1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -404,7 +454,9 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JPanel jPanelGenerales;
     private javax.swing.JPanel jPanelImpresion;
     private javax.swing.JPanel jPanelNegocio;
+    private javax.swing.JPanel jPanelNegocio1;
     private javax.swing.JPanel jPanelPorcientoEstimado;
+    private javax.swing.JPanel jPanelSincronizacion;
     private javax.swing.JPanel jPanelTamannoPapel;
     private javax.swing.JPanel jPanelTickets;
     private javax.swing.JPanel jPanelY;
@@ -439,6 +491,8 @@ public class ConfiguracionView extends AbstractView {
         save(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO, jComboBoxTipoNegocio.getSelectedItem());
         save(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA, jCheckBoxSegundaMoneda.isSelected());
         save(R.SettingID.IMPRESION_BUZZER_ON, jCheckBoxBuzzer.isSelected());
+        save(R.SettingID.SINCRONIZACION_HABILITAR,jCheckBoxHabilitarSincronizacion.isSelected());
+        save(R.SettingID.SINCRONIZACION_UBICACION, jComboBoxSincronizacionUbicacion.getSelectedIndex());
         String selected = "32";
         if (jComboBoxTamannoTicket.getSelectedItem().equals("80mm")) {
             selected = "48";

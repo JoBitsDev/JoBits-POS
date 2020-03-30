@@ -115,10 +115,12 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
             case GENERAL_MESA_FIJA_CAJERO:
             case IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA:
             case IMPRESION_BUZZER_ON:
+            case SINCRONIZACION_HABILITAR:
                 return c.getValor() == 1;
             case GENERAL_CAMBIO_MONEDA:
             case IMPRESION_CANTIDAD_COPIAS:
             case IMPRESION_TICKET_TAMANO_PAPEL:
+            case SINCRONIZACION_UBICACION:
                 return c.getValor().toString();
             case IMPRESION_TICKET_CARACTER_SEPARADOR:
             case IMPRESION_TICKET_VALOR_ENCABEZADO:
@@ -140,15 +142,19 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
             case IMPRESION_REDONDEO_EXCESO:
             case GENERAL_MESA_FIJA_CAJERO:
             case IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA:
+            case IMPRESION_BUZZER_ON:
+            case SINCRONIZACION_HABILITAR:
                 c.setValor((boolean) update == true ? 1 : 0);
                 break;
             case GENERAL_CAMBIO_MONEDA:
             case IMPRESION_CANTIDAD_COPIAS:
             case IMPRESION_TICKET_TAMANO_PAPEL:
+            case SINCRONIZACION_UBICACION:
                 c.setValor(Integer.parseInt(update.toString()));
                 break;
             case IMPRESION_TICKET_CARACTER_SEPARADOR:
             case IMPRESION_TICKET_VALOR_ENCABEZADO:
+            
                 c.setValorString(update.toString());
                 break;
             default:
