@@ -110,7 +110,8 @@ public class R {
         //Sincronizacion
         //
         SINCRONIZACION_HABILITAR("SINCRONIZACION_HABILITAR",0,null),
-        SINCRONIZACION_UBICACION("SINCRONIZACION_UBICACION",-1,null);
+        SINCRONIZACION_UBICACION("SINCRONIZACION_UBICACION",-1,null),
+        SINCRONIZACION_TIEMPO_LOOP("SINCRONIZACION_TIEMPO_LOOP",60 * 1000,null);
 
         private final String value;
         private final int integerValue;
