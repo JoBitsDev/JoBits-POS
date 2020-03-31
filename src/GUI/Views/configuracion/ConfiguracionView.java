@@ -94,6 +94,10 @@ public class ConfiguracionView extends AbstractView {
         jPanel15 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jComboBoxSincronizacionUbicacion = new javax.swing.JComboBox<>();
+        jPanel16 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jSpinner1 = new javax.swing.JSpinner();
+        jLabel8 = new javax.swing.JLabel();
         jPanelY = new javax.swing.JPanel();
         jPanelPorcientoEstimado = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -304,6 +308,21 @@ public class ConfiguracionView extends AbstractView {
 
         jPanelNegocio1.add(jPanel15);
 
+        jPanel16.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel7.setText("Sincronizar cada");
+        jPanel16.add(jLabel7);
+
+        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 60, 1));
+        jSpinner1.setPreferredSize(new java.awt.Dimension(100, 26));
+        jPanel16.add(jSpinner1);
+
+        jLabel8.setText("Minuto(s)");
+        jLabel8.setToolTipText("");
+        jPanel16.add(jLabel8);
+
+        jPanelNegocio1.add(jPanel16);
+
         jPanelSincronizacion.add(jPanelNegocio1);
 
         jTabbedPane1.addTab("Sincronizacion", jPanelSincronizacion);
@@ -383,6 +402,7 @@ public class ConfiguracionView extends AbstractView {
         jCheckBoxBuzzer.setSelected((boolean) fetch(R.SettingID.IMPRESION_BUZZER_ON));
         jCheckBoxHabilitarSincronizacion.setSelected((boolean) fetch(R.SettingID.SINCRONIZACION_HABILITAR));
         jComboBoxSincronizacionUbicacion.setSelectedIndex(Integer.valueOf(fetch(R.SettingID.SINCRONIZACION_UBICACION).toString()));
+        jSpinner1.setValue(Integer.parseInt(fetch(R.SettingID.SINCRONIZACION_TIEMPO_LOOP).toString())/60/1000);
         int selected = 0;
         if (fetch(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL).equals("48")) {
             selected = 1;
@@ -431,6 +451,8 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -438,6 +460,7 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel24HR;
     private javax.swing.JPanel jPanel24HR1;
@@ -460,6 +483,7 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JPanel jPanelTamannoPapel;
     private javax.swing.JPanel jPanelTickets;
     private javax.swing.JPanel jPanelY;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinnerC;
     private javax.swing.JSpinner jSpinnerM;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -493,6 +517,7 @@ public class ConfiguracionView extends AbstractView {
         save(R.SettingID.IMPRESION_BUZZER_ON, jCheckBoxBuzzer.isSelected());
         save(R.SettingID.SINCRONIZACION_HABILITAR,jCheckBoxHabilitarSincronizacion.isSelected());
         save(R.SettingID.SINCRONIZACION_UBICACION, jComboBoxSincronizacionUbicacion.getSelectedIndex());
+        save(R.SettingID.SINCRONIZACION_TIEMPO_LOOP,((int) jSpinner1.getValue() * 60 * 1000));
         String selected = "32";
         if (jComboBoxTamannoTicket.getSelectedItem().equals("80mm")) {
             selected = "48";

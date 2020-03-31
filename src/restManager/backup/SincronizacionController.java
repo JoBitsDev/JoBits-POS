@@ -26,6 +26,7 @@ public class SincronizacionController {
 
     private boolean habilitado;
     private UbicacionConexionModel ubicacion;
+    private int tiempoLoop = 60 * 1000;
     private final Timer syncTask = new Timer(true);
 
     public SincronizacionController() {
@@ -43,6 +44,7 @@ public class SincronizacionController {
         habilitado = (boolean) config.getConfiguracion(R.SettingID.SINCRONIZACION_HABILITAR);
         int ubicacionIndex = Integer.parseInt(config.getConfiguracion(R.SettingID.SINCRONIZACION_UBICACION).toString());
         UbicacionConexionController ubicaciones = new UbicacionConexionController();
+        tiempoLoop = Integer.parseInt(config.getConfiguracion(R.SettingID.SINCRONIZACION_TIEMPO_LOOP).toString());
         if (ubicacionIndex >= 0) {
             ubicacion = ubicaciones.getUbicaciones().getUbicaciones()[ubicacionIndex];
             if (ubicacion.getTipoUbicacion() != UbicacionConexionModel.TipoUbicacion.SINCRONIZACION) {
@@ -60,7 +62,7 @@ public class SincronizacionController {
                 sincronizarDatosConServidor();
             }
         };
-        syncTask.scheduleAtFixedRate(task, 0, 10 * 1000);
+        syncTask.scheduleAtFixedRate(task, 0, tiempoLoop);
     }
 
     private void sincronizarDatosConServidor() {

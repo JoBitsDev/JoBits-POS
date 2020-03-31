@@ -121,6 +121,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
             case IMPRESION_CANTIDAD_COPIAS:
             case IMPRESION_TICKET_TAMANO_PAPEL:
             case SINCRONIZACION_UBICACION:
+            case SINCRONIZACION_TIEMPO_LOOP:
                 return c.getValor().toString();
             case IMPRESION_TICKET_CARACTER_SEPARADOR:
             case IMPRESION_TICKET_VALOR_ENCABEZADO:
@@ -150,6 +151,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
             case IMPRESION_CANTIDAD_COPIAS:
             case IMPRESION_TICKET_TAMANO_PAPEL:
             case SINCRONIZACION_UBICACION:
+            case SINCRONIZACION_TIEMPO_LOOP:
                 c.setValor(Integer.parseInt(update.toString()));
                 break;
             case IMPRESION_TICKET_CARACTER_SEPARADOR:
