@@ -69,18 +69,20 @@ public class SincronizacionController {
         BackUp backupService = new BackUp(ubicacion);
         backupService.incluirDiaAbierto(true);
         Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, "Ejecutando sincronizacion con servidor");
-        backupService.EjecutarBackUpLineal(BackUp.TipoBackUp.PERSONAL);
-        backupService.EjecutarBackUpLineal(BackUp.TipoBackUp.PRODUCTOS);
         backupService.EjecutarBackUpLineal(BackUp.TipoBackUp.VENTA);
         Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, "Sincronizacion con servidor completada");
     }
 
     @Override
     protected void finalize() throws Throwable {
-        Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, "Limpiando Task por JVM");
-        syncTask.cancel();
+        terminarSincronizacion();
         super.finalize(); //To change body of generated methods, choose Tools | Templates.
 
+    }
+
+    public void terminarSincronizacion() {
+        Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, "Limpiando Task");
+        syncTask.cancel();
     }
 
 }
