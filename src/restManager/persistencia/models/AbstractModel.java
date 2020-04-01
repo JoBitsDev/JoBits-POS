@@ -161,9 +161,6 @@ public abstract class AbstractModel<T> implements Model {
     }
 
     public static void setEMF(EntityManagerFactory EMF) {
-        if (AbstractModel.EMF != null) {
-            AbstractModel.EMF.close();
-        }
         AbstractModel.EMF = EMF;
     }
 
