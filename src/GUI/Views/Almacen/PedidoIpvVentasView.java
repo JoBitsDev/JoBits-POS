@@ -5,7 +5,7 @@
  */
 package GUI.Views.Almacen;
 
-import restManager.persistencia.models.utils.ProdcutoVentaPedidoModel;
+import restManager.persistencia.volatil.ProdcutoVentaPedidoModel;
 import GUI.Views.AbstractView;
 import GUI.Views.util.AbstractCrossReferenePanel;
 import java.awt.Dialog;
@@ -16,7 +16,7 @@ import javax.swing.event.TableModelEvent;
 import restManager.controller.almacen.PedidoIpvVentasController;
 import restManager.persistencia.*;
 import restManager.persistencia.Control.VentaDAO1;
-import restManager.persistencia.models.utils.InsumoPedidoModel;
+import restManager.persistencia.volatil.InsumoPedidoModel;
 import restManager.util.RestManagerAbstractTableModel;
 import restManager.util.RestManagerComboBoxModel;
 

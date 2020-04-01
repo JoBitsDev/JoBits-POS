@@ -16,8 +16,8 @@ import restManager.persistencia.IpvVentaRegistro;
 import restManager.persistencia.models.AbstractModel;
 import restManager.persistencia.models.AlmacenDAO;
 import restManager.persistencia.models.IpvRegistroVentaDAO;
-import restManager.persistencia.models.utils.InsumoPedidoModel;
-import restManager.persistencia.models.utils.ProdcutoVentaPedidoModel;
+import restManager.persistencia.volatil.InsumoPedidoModel;
+import restManager.persistencia.volatil.ProdcutoVentaPedidoModel;
 
 /**
  * FirstDream

@@ -39,7 +39,7 @@ import restManager.persistencia.models.OperacionDAO;
 import restManager.persistencia.models.TransaccionDAO;
 import restManager.persistencia.models.TransaccionEntradaDAO;
 import restManager.persistencia.models.TransaccionMermaDAO;
-import restManager.persistencia.models.utils.InsumoPedidoModel;
+import restManager.persistencia.volatil.InsumoPedidoModel;
 import restManager.persistencia.volatil.TransaccionSimple;
 import restManager.printservice.Impresion;
 import restManager.resources.R;
