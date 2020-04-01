@@ -5,8 +5,10 @@
  */
 package restManager.backup;
 
+import com.sun.istack.internal.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.swing.JProgressBar;
@@ -99,29 +101,33 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     public boolean EjecutarBackUpLineal(TipoBackUp tipo) {
-        switch (tipo) {
-            case PERSONAL:
-                topeProceso = 50;
-                EjecutarBackUpPersonal();
-                break;
-            case PRODUCTOS:
-                topeProceso = 20;
-                EjecutarBackUpProductos();
-                break;
-            case VENTA:
-                topeProceso = 100;
-                EjecutarBackUpVentas();
-                break;
-            case All:
-                topeProceso = 10;
-                EjecutarBackUpAll();
-                break;
-            case LIMPIEZA:
-                topeProceso = 100;
-                EjecutarLimpiezaVentas(findAll(Venta.class));
+        try {
+            switch (tipo) {
+                case PERSONAL:
+                    topeProceso = 50;
+                    EjecutarBackUpPersonal();
+                    break;
+                case PRODUCTOS:
+                    topeProceso = 20;
+                    EjecutarBackUpProductos();
+                    break;
+                case VENTA:
+                    topeProceso = 100;
+                    EjecutarBackUpVentas();
+                    break;
+                case All:
+                    topeProceso = 10;
+                    EjecutarBackUpAll();
+                    break;
+                case LIMPIEZA:
+                    topeProceso = 100;
+                    EjecutarLimpiezaVentas(findAll(Venta.class));
 
+            }
+        } catch (Exception e) {
+            Logger.getLogger(BackUp.class).log(Level.SEVERE,  "Error en copia de seguridad: " + e.getMessage());
+            return false;
         }
-
         return true;
     }
 
@@ -142,7 +148,8 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     @Override
-    protected void process(List<Float> chunks) {
+    protected void process(List<Float> chunks
+    ) {
         for (Float chunk : chunks) {
             if (barraDeProgreso != null) {
                 barraDeProgreso.setValue(chunk.intValue());
@@ -152,10 +159,10 @@ public class BackUp extends SwingWorker<Boolean, Float> {
             }
         }
     }
-
     //
     //Metodos Privados
     //
+
     private boolean startBackupTransaction() {
         em.getTransaction().begin();
         return true;

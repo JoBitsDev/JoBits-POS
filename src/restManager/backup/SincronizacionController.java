@@ -69,8 +69,13 @@ public class SincronizacionController {
         BackUp backupService = new BackUp(ubicacion);
         backupService.incluirDiaAbierto(true);
         Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, "Ejecutando sincronizacion con servidor");
-        backupService.EjecutarBackUpLineal(BackUp.TipoBackUp.VENTA);
-        Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, "Sincronizacion con servidor completada");
+        String logRespuesta = "Sincronizacion con servidor completada ";
+        if (backupService.EjecutarBackUpLineal(BackUp.TipoBackUp.VENTA)) {
+            logRespuesta += "exitosamente";
+        } else {
+            logRespuesta += "con errores";
+        }
+        Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, logRespuesta);
     }
 
     @Override
