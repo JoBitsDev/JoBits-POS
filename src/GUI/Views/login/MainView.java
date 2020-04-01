@@ -22,7 +22,6 @@ import restManager.util.ComponentMover;
  */
 public class MainView extends AbstractView {
 
-    SincronizacionController sincronizacion = new SincronizacionController();
     
     public MainView(AbstractDialogController controller) {
         super(DialogType.FULL_SCREEN, controller);

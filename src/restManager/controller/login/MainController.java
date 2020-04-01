@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import restManager.backup.SincronizacionController;
 import restManager.controller.AbstractController;
 import restManager.controller.AbstractDialogController;
 import restManager.controller.Licence.Licence;
@@ -50,6 +51,8 @@ import restManager.resources.R;
  */
 public class MainController extends AbstractDialogController<Personal> {
 
+    private SincronizacionController sincronizacion = new SincronizacionController();
+
     public MainController(Personal loggedUser) {
         super(PersonalDAO.getInstance());
         R.loggedUser = loggedUser;
@@ -66,6 +69,7 @@ public class MainController extends AbstractDialogController<Personal> {
         setView(new MainView(this, (JFrame) parent, true));
         getView().updateView();
         getView().setVisible(true);
+        sincronizacion.terminarSincronizacion();
     }
 
     public void actionButton(MenuButtons menuButtons) {
@@ -160,7 +164,7 @@ public class MainController extends AbstractDialogController<Personal> {
         return (MainView) super.getView(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private AbstractController comenzarVentas() throws IllegalArgumentException{
+    private AbstractController comenzarVentas() throws IllegalArgumentException {
         int nivel = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso();
         if (nivel > R.NivelAcceso.ECONOMICO.getNivel()) {
             String date = JOptionPane.showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
