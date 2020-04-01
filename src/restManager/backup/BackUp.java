@@ -290,12 +290,16 @@ public class BackUp extends SwingWorker<Boolean, Float> {
 
     private boolean BackUpOrdenes(List<Orden> ords) {
         for (Orden o : ords) {
+            List<ProductovOrden> productos = o.getProductovOrdenList();
+            BackUpProdvOrden(o.getProductovOrdenList());
             if (EntityExist(o, o.getCodOrden())) {
+                o.setProductovOrdenList(null);
+                em.merge(o);
+                o.setProductovOrdenList(productos);
                 em.merge(o);
             } else {
                 em.persist(o);
             }
-            BackUpProdvOrden(o.getProductovOrdenList());
         }
 
         return true;
