@@ -1,0 +1,82 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'application'
+
+application{
+    mainClassName = 'restManager.main.Main'
+
+}
+
+sourceSets{
+    main{
+        java{
+            srcDirs = ["src/main/java"]
+        }
+       
+    }
+}
+
+
+repositories {
+    jcenter()
+}
+
+buildscript {
+    repositories {
+        jcenter()        
+    }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    
+    // https://mvnrepository.com/artifact/com.toedter/jcalendar
+    compile group: 'com.toedter', name: 'jcalendar', version: '1.4'
+
+    // https://mvnrepository.com/artifact/org.knowm.xchart/xchart
+    compile group: 'org.knowm.xchart', name: 'xchart', version: '3.6.2'
+
+    //EclipseLink
+    // https://mvnrepository.com/artifact/org.eclipse.persistence/eclipselink
+    compile group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.6'
+
+    // https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.jpa
+    compile group: 'org.eclipse.persistence', name: 'org.eclipse.persistence.jpa', version: '2.7.6'
+    
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core 
+    //Jackson
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.10.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
+    
+    //Java Persistence API
+    compile group: 'org.datanucleus', name: 'javax.persistence', version: '2.2.2'
+    
+    //JDBC
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
+    
+    //SWINGX
+    // https://mvnrepository.com/artifact/org.swinglabs/swingx
+    compile group: 'org.swinglabs', name: 'swingx', version: '1.6.1'
+    
+    //Substance
+    // https://mvnrepository.com/artifact/com.github.insubstantial/substance
+    compile group: 'com.github.insubstantial', name: 'substance', version: '7.3'
+
+
+    
+    implementation 'io.github.vincenzopalazzo:material-ui-swing:1.1.1_pre-release_6.1'
+
+    // https://mvnrepository.com/artifact/net.java.dev.timingframework/timingframework
+    compile group: 'net.java.dev.timingframework', name: 'timingframework', version: '1.0'
+
+    // https://mvnrepository.com/artifact/com.jidesoft/jide-oss
+    compile group: 'com.jidesoft', name: 'jide-oss', version: '3.6.18'
+
+
+
+    compile fileTree(dir: 'lib',include: '*.jar')
+
+
+    
+}

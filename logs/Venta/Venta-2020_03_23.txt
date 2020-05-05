@@ -1,0 +1,5 @@
+DETALLADO: CREADO_O-18570 [Usuario: admin] [2020/03/23 16:47:23]
+DETALLADO: AGREGAR_O-18570_Agua Mineral (15.0 MN )_1.0 [Usuario: admin] [2020/03/23 16:47:27]
+DETALLADO: AGREGAR_O-18570_Agua Mineral (15.0 MN )_2.0 [Usuario: admin] [2020/03/23 16:47:57]
+ADVERTENCIA: BORRAR_O-18570_Agua Mineral (15.0 MN )_3.0 [Usuario: admin] [2020/03/23 16:52:49]
+DETALLADO: AGREGAR_O-18570_Agua Mineral (15.0 MN )_1.0 [Usuario: admin] [2020/03/23 16:53:18]
