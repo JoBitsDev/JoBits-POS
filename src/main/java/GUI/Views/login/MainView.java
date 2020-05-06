@@ -44,7 +44,6 @@ public class MainView extends AbstractView {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        clockFace1 = new org.edisoncor.gui.varios.ClockFace();
         jPanel1 = new javax.swing.JPanel();
         styledLabelRestName = new com.jidesoft.swing.StyledLabel();
         jideButton1 = new com.jidesoft.swing.JideButton();
@@ -518,7 +517,6 @@ public class MainView extends AbstractView {
     private javax.swing.JButton BotonInsumo;
     private javax.swing.JButton BotonMenu;
     private javax.swing.JButton BotonSeccion;
-    private org.edisoncor.gui.varios.ClockFace clockFace1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAlmacen;
     private javax.swing.JButton jButtonArchivos;

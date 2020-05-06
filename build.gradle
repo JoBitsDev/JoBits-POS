@@ -75,7 +75,7 @@ dependencies {
 
 
 
-    compile fileTree(dir: 'lib',include: '*.jar')
+    implementation fileTree(dir: 'lib',include: '*.jar')
 
 
     
