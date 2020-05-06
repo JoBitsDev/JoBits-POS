@@ -1,0 +1,65 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.jobits.pos.controller.insumo;
+
+import com.jobits.pos.ui.insumo.InsumoListView;
+import java.awt.Dialog;
+import java.awt.Frame;
+import java.awt.Window;
+import com.jobits.pos.controller.AbstractDetailController;
+import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jobits.pos.persistencia.Insumo;
+import com.jobits.pos.persistencia.modelos.InsumoDAO;
+
+/**
+ * FirstDream
+ *
+ * @author Jorge
+ *
+ */
+public class InsumoListController extends AbstractListController<Insumo> {
+
+    private final String PREFIX_FOR_ID = "In-";
+
+    public InsumoListController() {
+        super(InsumoDAO.getInstance());
+    }
+
+    public InsumoListController(Window frame) {
+        super(InsumoDAO.getInstance());
+        constructView(frame);
+    }
+
+    /**
+     *
+     * @param parent the value of parent
+     */
+    @Override
+    public void constructView(java.awt.Container parent) {
+        setView(new InsumoListView(this, (Dialog) parent, true));
+        getView().updateView();
+        getView().setVisible(true);
+    }
+
+    @Override
+    public void createInstance() {
+        detailController = getDetailControllerForNew();
+        items = null;
+        getView().updateView();//TODO:metodo forzado
+    }
+
+    @Override
+    public AbstractDetailController<Insumo> getDetailControllerForNew() {
+        return new InsumoCreateEditController(getView());
+    }
+
+    @Override
+    public AbstractDetailController<Insumo> getDetailControllerForEdit(Insumo selected) {
+        return new InsumoCreateEditController(getSelected(), getView());
+    }
+
+}

@@ -3,7 +3,7 @@ apply plugin: 'jacoco'
 apply plugin: 'application'
 
 application{
-    mainClassName = 'restManager.main.Main'
+    mainClassName = 'com.jobits.pos.main.Main'
 
 }
 
