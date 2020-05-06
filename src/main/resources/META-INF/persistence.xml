@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="DATA_SOURCE" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.jobits.pos.persistencia.TransaccionSalida</class>
+    <class>com.jobits.pos.persistencia.Almacen</class>
+    <class>com.jobits.pos.persistencia.ProductoVenta</class>
+    <class>com.jobits.pos.persistencia.NotificacionEnvioCocina</class>
+    <class>com.jobits.pos.persistencia.Pago</class>
+    <class>com.jobits.pos.persistencia.ProductovOrden</class>
+    <class>com.jobits.pos.persistencia.Carta</class>
+    <class>com.jobits.pos.persistencia.Factura</class>
+    <class>com.jobits.pos.persistencia.DatosPersonales</class>
+    <class>com.jobits.pos.persistencia.Gasto</class>
+    <class>com.jobits.pos.persistencia.Area</class>
+    <class>com.jobits.pos.persistencia.ActivoFijo</class>
+    <class>com.jobits.pos.persistencia.ProductoInsumo</class>
+    <class>com.jobits.pos.persistencia.TransaccionMerma</class>
+    <class>com.jobits.pos.persistencia.Nota</class>
+    <class>com.jobits.pos.persistencia.Impresora</class>
+    <class>com.jobits.pos.persistencia.Configuracion</class>
+    <class>com.jobits.pos.persistencia.Extraccion</class>
+    <class>com.jobits.pos.persistencia.PuestoTrabajo</class>
+    <class>com.jobits.pos.persistencia.Log</class>
+    <class>com.jobits.pos.persistencia.Seccion</class>
+    <class>com.jobits.pos.persistencia.Mesa</class>
+    <class>com.jobits.pos.persistencia.IpvVentaRegistro</class>
+    <class>com.jobits.pos.persistencia.InsumoAlmacen</class>
+    <class>com.jobits.pos.persistencia.ContabilidadCuenta</class>
+    <class>com.jobits.pos.persistencia.TransaccionTransformacion</class>
+    <class>com.jobits.pos.persistencia.Proveedor</class>
+    <class>com.jobits.pos.persistencia.Orden</class>
+    <class>com.jobits.pos.persistencia.AsistenciaPersonal</class>
+    <class>com.jobits.pos.persistencia.Operacion</class>
+    <class>com.jobits.pos.persistencia.Ubicacion</class>
+    <class>com.jobits.pos.persistencia.Cocina</class>
+    <class>com.jobits.pos.persistencia.Insumo</class>
+    <class>com.jobits.pos.persistencia.Negocio</class>
+    <class>com.jobits.pos.persistencia.Ipv</class>
+    <class>com.jobits.pos.persistencia.TransaccionEntrada</class>
+    <class>com.jobits.pos.persistencia.Venta</class>
+    <class>com.jobits.pos.persistencia.Personal</class>
+    <class>com.jobits.pos.persistencia.IpvRegistro</class>
+    <class>com.jobits.pos.persistencia.InsumoElaborado</class>
+    <class>com.jobits.pos.persistencia.TipoGasto</class>
+    <class>com.jobits.pos.persistencia.Cliente</class>
+    <class>com.jobits.pos.persistencia.Transaccion</class>
+    <class>com.jobits.pos.persistencia.TransaccionTraspaso</class>
+    <class>com.jobits.pos.persistencia.GastoVenta</class>
+  </persistence-unit>
+</persistence>

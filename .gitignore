@@ -1,13 +1,7 @@
 
-# Created by https://www.gitignore.io/api/java,macos,netbeans,code-java
-# Edit at https://www.gitignore.io/?templates=java,macos,netbeans,code-java
 
-### Code-Java ###
-# Language Support for Java(TM) by Red Hat extension for Visual Studio Code - https://marketplace.visualstudio.com/items?itemName=redhat.java
-
-.project
-.classpath
-factoryConfiguration.json
+# Created by https://www.gitignore.io/api/java,macos,gradle,netbeans
+# Edit at https://www.gitignore.io/?templates=java,macos,gradle,netbeans
 
 ### Java ###
 # Compiled class file
@@ -15,7 +9,6 @@ factoryConfiguration.json
 
 # Log file
 *.log
-*.txt
 
 # BlueJ files
 *.ctxt
@@ -24,6 +17,7 @@ factoryConfiguration.json
 .mtj.tmp/
 
 # Package Files #
+*.jar
 *.war
 *.nar
 *.ear
@@ -72,7 +66,28 @@ dist/
 nbdist/
 .nb-gradle/
 
-	# End of https://www.gitignore.io/api/java,macos,netbeans,code-java
+### Gradle ###
+.gradle
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+# gradle/wrapper/gradle-wrapper.properties
+
+### Gradle Patch ###
+**/build/
+
+# End of https://www.gitignore.io/api/java,macos,gradle,netbeans
+
 dist_ver/
 
 *.cfg
+
+ubicaciones.json
