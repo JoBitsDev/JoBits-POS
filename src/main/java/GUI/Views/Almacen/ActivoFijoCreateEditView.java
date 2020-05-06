@@ -97,7 +97,7 @@ public class ActivoFijoCreateEditView extends AbstractDetailView<ActivoFijo> {
         jLabel2 = new javax.swing.JLabel();
         jDateChooserAlta = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
-        jButtonAceptar = new components.buttons.MaterialButton();
+        jButtonAplicar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(538, 497));
@@ -292,14 +292,14 @@ public class ActivoFijoCreateEditView extends AbstractDetailView<ActivoFijo> {
 
         jPanel4.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
-        jButtonAceptar.setBackground(new java.awt.Color(51, 255, 255));
-        jButtonAceptar.setText("Aceptar");
-        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButtonAplicar.setText(bundle.getString("label_aplicar")); // NOI18N
+        jButtonAplicar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAceptarActionPerformed(evt);
+                jButtonAplicarActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonAceptar);
+        jPanel3.add(jButtonAplicar);
 
         jPanel4.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
@@ -313,9 +313,9 @@ public class ActivoFijoCreateEditView extends AbstractDetailView<ActivoFijo> {
         dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+    private void jButtonAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAplicarActionPerformed
         crearEditarActivo();
-    }//GEN-LAST:event_jButtonAceptarActionPerformed
+    }//GEN-LAST:event_jButtonAplicarActionPerformed
 
     private void jComboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstadoActionPerformed
     }//GEN-LAST:event_jComboBoxEstadoActionPerformed
@@ -330,14 +330,18 @@ public class ActivoFijoCreateEditView extends AbstractDetailView<ActivoFijo> {
         jComboBoxUbicacion.addItem(getController().createNewUbicacion());
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        crearEditarActivo();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     @Override
     public void setEditingMode() {
-        jButtonAceptar.setText("Editar");
+        jButtonAplicar.setText("Editar");
     }
 
     @Override
     public void setCreatingMode() {
-        jButtonAceptar.setText("Crear");
+        jButtonAplicar.setText("Crear");
     }
 
     @Override
@@ -370,7 +374,7 @@ public class ActivoFijoCreateEditView extends AbstractDetailView<ActivoFijo> {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private components.buttons.MaterialButton jButtonAceptar;
+    private javax.swing.JButton jButtonAplicar;
     private javax.swing.JComboBox<String> jComboBoxEstado;
     private javax.swing.JComboBox<String> jComboBoxTipo;
     private javax.swing.JComboBox<Ubicacion> jComboBoxUbicacion;

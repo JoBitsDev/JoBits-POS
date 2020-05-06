@@ -5,10 +5,10 @@
  */
 package restManager.backup;
 
-import com.sun.istack.internal.logging.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.swing.JProgressBar;
@@ -125,7 +125,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
 
             }
         } catch (Exception e) {
-            Logger.getLogger(BackUp.class).log(Level.SEVERE,  "Error en copia de seguridad: " + e.getMessage());
+            Logger.getLogger(BackUp.class.getName()).log(Level.SEVERE,  "Error en copia de seguridad: " + e.getMessage());
             return false;
         }
         return true;

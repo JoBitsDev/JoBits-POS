@@ -5,7 +5,6 @@
  */
 package GUI.Views.Insumo;
 
-import GUI.Components.JSpinner;
 import GUI.Views.AbstractDetailView;
 import GUI.Views.util.AbstractCrossReferenePanel;
 
@@ -13,6 +12,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JSpinner;
 
 import restManager.controller.AbstractDialogController;
 import restManager.controller.insumo.InsumoCreateEditController;
@@ -280,9 +280,9 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         jXLabelUM = new org.jdesktop.swingx.JXLabel();
         jComboBoxUM = new javax.swing.JComboBox<>();
         jXLabelCostoU = new org.jdesktop.swingx.JXLabel();
-        jSpinnerCosto = new JSpinner();
+        jSpinnerCosto = new javax.swing.JSpinner();
         jXLabelNombre4 = new org.jdesktop.swingx.JXLabel();
-        jSpinnerEstimacionStock = new JSpinner();
+        jSpinnerEstimacionStock = new javax.swing.JSpinner();
         jXPanelTabla = new org.jdesktop.swingx.JXPanel();
         jPanel1 = new javax.swing.JPanel();
         jCheckBoxElaborado = new javax.swing.JCheckBox();
