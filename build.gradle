@@ -1,5 +1,7 @@
-apply plugin: 'java'
-apply plugin: 'jacoco'
+plugins {
+    id 'io.freefair.lombok' apply true
+}
+
 apply plugin: 'application'
 
 application{
@@ -7,27 +9,17 @@ application{
 
 }
 
-sourceSets{
-    main{
-        java{
-            srcDirs = ["src/main/java"]
-        }
-       
-    }
-}
-
 
 repositories {
     jcenter()
+    mavenCentral()
 }
 
-buildscript {
-    repositories {
-        jcenter()        
-    }
-}
+
 
 dependencies {
+    
+    
     testCompile 'junit:junit:4.12'
     
     // https://mvnrepository.com/artifact/com.toedter/jcalendar
@@ -62,21 +54,18 @@ dependencies {
     //Substance
     // https://mvnrepository.com/artifact/com.github.insubstantial/substance
     compile group: 'com.github.insubstantial', name: 'substance', version: '7.3'
-
-
     
     implementation 'io.github.vincenzopalazzo:material-ui-swing:1.1.1_pre-release_6.1'
 
-    // https://mvnrepository.com/artifact/net.java.dev.timingframework/timingframework
-    compile group: 'net.java.dev.timingframework', name: 'timingframework', version: '1.0'
+    implementation 'net.java.timingframework:timingframework-swing:7.3.0'
 
     // https://mvnrepository.com/artifact/com.jidesoft/jide-oss
     compile group: 'com.jidesoft', name: 'jide-oss', version: '3.6.18'
 
-
+    implementation project(':UIcomponents')
+    implementation project(':core')
 
     implementation fileTree(dir: 'lib',include: '*.jar')
-
 
     
 }
