@@ -5,25 +5,25 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jobits.pos.persistencia.modelos.VentaDAO;
-import com.jobits.pos.persistencia.modelos.InsumoDAO;
-import com.jobits.pos.persistencia.modelos.IpvRegistroDAO;
-import com.jobits.pos.persistencia.modelos.IpvDAO;
-import com.jobits.pos.persistencia.modelos.CocinaDAO;
-import com.jobits.pos.persistencia.modelos.ProductoVentaDAO;
-import com.jobits.pos.persistencia.modelos.IpvRegistroVentaDAO;
-import com.jobits.pos.persistencia.IpvVentaRegistro;
-import com.jobits.pos.persistencia.ProductoVenta;
-import com.jobits.pos.persistencia.Ipv;
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.ProductoInsumo;
-import com.jobits.pos.persistencia.Venta;
-import com.jobits.pos.persistencia.IpvRegistro;
-import com.jobits.pos.persistencia.Insumo;
-import com.jobits.pos.persistencia.IpvVentaRegistroPK;
-import com.jobits.pos.persistencia.IpvPK;
-import com.jobits.pos.persistencia.ProductovOrden;
-import com.jobits.pos.persistencia.IpvRegistroPK;
+import com.jobits.pos.adapters.repo.VentaDAO;
+import com.jobits.pos.adapters.repo.InsumoDAO;
+import com.jobits.pos.adapters.repo.IpvRegistroDAO;
+import com.jobits.pos.adapters.repo.IpvDAO;
+import com.jobits.pos.adapters.repo.CocinaDAO;
+import com.jobits.pos.adapters.repo.ProductoVentaDAO;
+import com.jobits.pos.adapters.repo.IpvRegistroVentaDAO;
+import com.jobits.pos.domain.models.IpvVentaRegistro;
+import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.domain.models.Ipv;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.ProductoInsumo;
+import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.domain.models.IpvRegistro;
+import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.domain.models.IpvVentaRegistroPK;
+import com.jobits.pos.domain.models.IpvPK;
+import com.jobits.pos.domain.models.ProductovOrden;
+import com.jobits.pos.domain.models.IpvRegistroPK;
 import com.jobits.pos.ui.AbstractView;
 import com.jobits.pos.ui.almacen.IpvGestionView;
 

@@ -22,10 +22,10 @@ import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
-import com.jobits.pos.persistencia.Almacen;
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.InsumoAlmacen;
-import com.jobits.pos.persistencia.volatil.TransaccionSimple;
+import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.InsumoAlmacen;
+import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
 import com.jobits.pos.ui.utils.utils;
 

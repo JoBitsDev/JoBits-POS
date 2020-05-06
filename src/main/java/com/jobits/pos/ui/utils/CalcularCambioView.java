@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.JFormattedTextField;
-import com.jobits.pos.persistencia.Orden;
+import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 

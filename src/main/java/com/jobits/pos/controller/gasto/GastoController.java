@@ -8,8 +8,8 @@ package com.jobits.pos.controller.gasto;
 
 import java.awt.Container;
 import com.jobits.pos.controller.AbstractController;
-import com.jobits.pos.persistencia.Gasto;
-import com.jobits.pos.persistencia.modelos.GastoDAO;
+import com.jobits.pos.domain.models.Gasto;
+import com.jobits.pos.adapters.repo.GastoDAO;
 
 /**
  * FirstDream

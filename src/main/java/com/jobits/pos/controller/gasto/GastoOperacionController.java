@@ -14,14 +14,14 @@ import com.jobits.pos.controller.AbstractFragmentController;
 import com.jobits.pos.controller.AbstractFragmentListController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Gasto;
-import com.jobits.pos.persistencia.GastoVenta;
-import com.jobits.pos.persistencia.TipoGasto;
-import com.jobits.pos.persistencia.Venta;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
-import com.jobits.pos.persistencia.modelos.GastoDAO;
-import com.jobits.pos.persistencia.modelos.GastoVentaDAO;
-import com.jobits.pos.persistencia.modelos.TipoGastoDAO;
+import com.jobits.pos.domain.models.Gasto;
+import com.jobits.pos.domain.models.GastoVenta;
+import com.jobits.pos.domain.models.TipoGasto;
+import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.GastoDAO;
+import com.jobits.pos.adapters.repo.GastoVentaDAO;
+import com.jobits.pos.adapters.repo.TipoGastoDAO;
 import com.jobits.pos.recursos.R;
 
 /**

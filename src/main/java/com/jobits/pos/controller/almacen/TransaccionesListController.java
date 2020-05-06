@@ -16,11 +16,11 @@ import javax.swing.JButton;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Almacen;
-import com.jobits.pos.persistencia.Transaccion;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
-import com.jobits.pos.persistencia.modelos.TransaccionDAO;
-import com.jobits.pos.persistencia.modelos.TransaccionEntradaDAO;
+import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.Transaccion;
+import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.TransaccionDAO;
+import com.jobits.pos.adapters.repo.TransaccionEntradaDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 
 /**

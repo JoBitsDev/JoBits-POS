@@ -12,8 +12,8 @@ import java.awt.Window;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Insumo;
-import com.jobits.pos.persistencia.modelos.InsumoDAO;
+import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.adapters.repo.InsumoDAO;
 
 /**
  * FirstDream

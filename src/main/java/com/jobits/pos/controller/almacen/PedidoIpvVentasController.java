@@ -10,14 +10,14 @@ import java.util.List;
 import com.jobits.pos.controller.AbstractController;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Almacen;
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.IpvVentaRegistro;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
-import com.jobits.pos.persistencia.modelos.AlmacenDAO;
-import com.jobits.pos.persistencia.modelos.IpvRegistroVentaDAO;
-import com.jobits.pos.persistencia.volatil.InsumoPedidoModel;
-import com.jobits.pos.persistencia.volatil.ProdcutoVentaPedidoModel;
+import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.IpvVentaRegistro;
+import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AlmacenDAO;
+import com.jobits.pos.adapters.repo.IpvRegistroVentaDAO;
+import com.jobits.pos.domain.InsumoPedidoModel;
+import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
 
 /**
  * FirstDream

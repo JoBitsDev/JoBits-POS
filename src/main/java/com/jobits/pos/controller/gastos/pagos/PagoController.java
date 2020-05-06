@@ -10,9 +10,9 @@ import java.util.Date;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.persistencia.Pago;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
-import com.jobits.pos.persistencia.modelos.PagoDAO;
+import com.jobits.pos.domain.models.Pago;
+import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.PagoDAO;
 
 /**
  * FirstDream

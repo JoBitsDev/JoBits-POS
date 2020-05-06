@@ -10,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Seccion;
+import com.jobits.pos.domain.models.Seccion;
 
 /**
  * FirstDream

@@ -16,7 +16,7 @@ import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Personal;
+import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.recursos.valores.Fonts;
 import com.jobits.pos.ui.utils.utils;
 

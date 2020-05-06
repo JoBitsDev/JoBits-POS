@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import com.jobits.pos.exceptions.DuplicatedException;
 import com.jobits.pos.exceptions.NoSelectedException;
-import com.jobits.pos.persistencia.Carta;
+import com.jobits.pos.domain.models.Carta;
 
 /**
  *

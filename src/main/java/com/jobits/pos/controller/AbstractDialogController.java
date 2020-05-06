@@ -12,7 +12,7 @@ import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractModel;
 import com.jobits.pos.recursos.R;
 
 /**

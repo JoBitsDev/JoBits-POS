@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.volatil.UbicacionConexionModel;
+import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.recursos.DBConnector;
 import com.jobits.pos.recursos.R;
 

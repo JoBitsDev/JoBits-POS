@@ -13,14 +13,14 @@ import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaCreateEditController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Almacen;
-import com.jobits.pos.persistencia.Insumo;
-import com.jobits.pos.persistencia.ProductoInsumo;
-import com.jobits.pos.persistencia.ProductoVenta;
-import com.jobits.pos.persistencia.modelos.AlmacenDAO;
-import com.jobits.pos.persistencia.modelos.InsumoDAO;
-import com.jobits.pos.persistencia.modelos.ProductoInsumoDAO;
-import com.jobits.pos.persistencia.modelos.ProductoVentaDAO;
+import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.domain.models.ProductoInsumo;
+import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.adapters.repo.AlmacenDAO;
+import com.jobits.pos.adapters.repo.InsumoDAO;
+import com.jobits.pos.adapters.repo.ProductoInsumoDAO;
+import com.jobits.pos.adapters.repo.ProductoVentaDAO;
 import com.jobits.pos.recursos.R;
 
 /**

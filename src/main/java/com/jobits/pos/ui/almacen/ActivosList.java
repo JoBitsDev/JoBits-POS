@@ -12,7 +12,7 @@ import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.Controller;
 import com.jobits.pos.controller.almacen.ActivoFijoController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.ActivoFijo;
+import com.jobits.pos.domain.models.ActivoFijo;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.utils;
 

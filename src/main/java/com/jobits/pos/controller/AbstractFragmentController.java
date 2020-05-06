@@ -11,8 +11,8 @@ import java.awt.Container;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
-import com.jobits.pos.persistencia.modelos.PropertyName;
+import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.PropertyName;
 
 /**
  * FirstDream

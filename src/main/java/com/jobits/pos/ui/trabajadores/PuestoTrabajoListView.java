@@ -13,7 +13,7 @@ import java.util.List;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.PuestoTrabajo;
+import com.jobits.pos.domain.models.PuestoTrabajo;
 
 /**
  * FirstDream

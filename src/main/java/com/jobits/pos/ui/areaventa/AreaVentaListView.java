@@ -13,8 +13,8 @@ import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Area;
-import com.jobits.pos.persistencia.Mesa;
+import com.jobits.pos.domain.models.Area;
+import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.ui.utils.RestManagerListModel;
 
 /**

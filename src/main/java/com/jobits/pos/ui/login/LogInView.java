@@ -21,7 +21,7 @@ import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ExceptionHandler;
-import com.jobits.pos.persistencia.volatil.UbicacionConexionModel;
+import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.utils.ComponentMover;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
 

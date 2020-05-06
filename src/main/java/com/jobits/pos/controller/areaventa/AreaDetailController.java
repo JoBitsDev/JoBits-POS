@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.persistencia.Area;
-import com.jobits.pos.persistencia.Carta;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
-import com.jobits.pos.persistencia.modelos.AreaDAO;
-import com.jobits.pos.persistencia.modelos.CartaDAO;
+import com.jobits.pos.domain.models.Area;
+import com.jobits.pos.domain.models.Carta;
+import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AreaDAO;
+import com.jobits.pos.adapters.repo.CartaDAO;
 
 /**
  * FirstDream

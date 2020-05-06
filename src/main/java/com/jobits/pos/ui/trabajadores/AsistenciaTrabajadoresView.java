@@ -12,9 +12,9 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import com.jobits.pos.controller.Controller;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.AsistenciaPersonal;
-import com.jobits.pos.persistencia.Personal;
-import com.jobits.pos.persistencia.Venta;
+import com.jobits.pos.domain.models.AsistenciaPersonal;
+import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 

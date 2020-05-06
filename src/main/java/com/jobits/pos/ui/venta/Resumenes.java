@@ -16,10 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.control.VentaDAO1;
-import com.jobits.pos.persistencia.Venta;
-import com.jobits.pos.persistencia.modelos.CocinaDAO;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.VentaDAO1;
+import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.adapters.repo.CocinaDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
 

@@ -15,25 +15,25 @@ import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
 
-import com.jobits.pos.persistencia.Almacen;
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.Insumo;
-import com.jobits.pos.persistencia.InsumoAlmacen;
-import com.jobits.pos.persistencia.Operacion;
-import com.jobits.pos.persistencia.Transaccion;
-import com.jobits.pos.persistencia.TransaccionEntrada;
-import com.jobits.pos.persistencia.TransaccionMerma;
-import com.jobits.pos.persistencia.TransaccionSalida;
-import com.jobits.pos.persistencia.TransaccionTransformacion;
-import com.jobits.pos.persistencia.TransaccionTransformacionPK;
-import com.jobits.pos.persistencia.TransaccionTraspaso;
-import com.jobits.pos.persistencia.modelos.CocinaDAO;
-import com.jobits.pos.persistencia.modelos.InsumoDAO;
-import com.jobits.pos.persistencia.modelos.TransaccionDAO;
-import com.jobits.pos.persistencia.modelos.TransaccionEntradaDAO;
-import com.jobits.pos.persistencia.modelos.TransaccionMermaDAO;
-import com.jobits.pos.persistencia.modelos.TransaccionSalidaDAO;
-import com.jobits.pos.persistencia.modelos.TransaccionTraspasoDAO;
+import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.domain.models.InsumoAlmacen;
+import com.jobits.pos.domain.models.Operacion;
+import com.jobits.pos.domain.models.Transaccion;
+import com.jobits.pos.domain.models.TransaccionEntrada;
+import com.jobits.pos.domain.models.TransaccionMerma;
+import com.jobits.pos.domain.models.TransaccionSalida;
+import com.jobits.pos.domain.models.TransaccionTransformacion;
+import com.jobits.pos.domain.models.TransaccionTransformacionPK;
+import com.jobits.pos.domain.models.TransaccionTraspaso;
+import com.jobits.pos.adapters.repo.CocinaDAO;
+import com.jobits.pos.adapters.repo.InsumoDAO;
+import com.jobits.pos.adapters.repo.TransaccionDAO;
+import com.jobits.pos.adapters.repo.TransaccionEntradaDAO;
+import com.jobits.pos.adapters.repo.TransaccionMermaDAO;
+import com.jobits.pos.adapters.repo.TransaccionSalidaDAO;
+import com.jobits.pos.adapters.repo.TransaccionTraspasoDAO;
 
 /**
  * FirstDream

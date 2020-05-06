@@ -37,10 +37,10 @@ import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ExceptionHandler;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
-import com.jobits.pos.persistencia.Personal;
-import com.jobits.pos.persistencia.Venta;
-import com.jobits.pos.persistencia.modelos.PersonalDAO;
-import com.jobits.pos.persistencia.modelos.VentaDAO;
+import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.adapters.repo.PersonalDAO;
+import com.jobits.pos.adapters.repo.VentaDAO;
 import com.jobits.pos.recursos.R;
 
 /**

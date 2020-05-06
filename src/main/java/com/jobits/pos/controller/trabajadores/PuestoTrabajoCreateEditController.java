@@ -11,12 +11,12 @@ import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.persistencia.Area;
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.PuestoTrabajo;
-import com.jobits.pos.persistencia.modelos.AreaDAO;
-import com.jobits.pos.persistencia.modelos.CocinaDAO;
-import com.jobits.pos.persistencia.modelos.PuestoTrabajoDAO;
+import com.jobits.pos.domain.models.Area;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.PuestoTrabajo;
+import com.jobits.pos.adapters.repo.AreaDAO;
+import com.jobits.pos.adapters.repo.CocinaDAO;
+import com.jobits.pos.adapters.repo.PuestoTrabajoDAO;
 
 /**
  * FirstDream

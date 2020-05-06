@@ -5,11 +5,11 @@
  */
 package com.jobits.pos.ui.almacen;
 
-import com.jobits.pos.persistencia.IpvVentaRegistro;
-import com.jobits.pos.persistencia.Almacen;
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.ProductoInsumo;
-import com.jobits.pos.persistencia.volatil.ProdcutoVentaPedidoModel;
+import com.jobits.pos.domain.models.IpvVentaRegistro;
+import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.ProductoInsumo;
+import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
 import com.jobits.pos.ui.AbstractView;
 import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
 import java.awt.Dialog;
@@ -18,8 +18,8 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasController;
-import com.jobits.pos.persistencia.control.VentaDAO1;
-import com.jobits.pos.persistencia.volatil.InsumoPedidoModel;
+import com.jobits.pos.domain.VentaDAO1;
+import com.jobits.pos.domain.InsumoPedidoModel;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
 

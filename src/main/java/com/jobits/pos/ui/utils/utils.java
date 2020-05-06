@@ -7,7 +7,7 @@ import java.util.Date;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.persistencia.Seccion;
+import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.recursos.R;
 
 /**

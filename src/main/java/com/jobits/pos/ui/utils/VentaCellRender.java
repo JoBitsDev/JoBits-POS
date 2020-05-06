@@ -8,8 +8,8 @@ package com.jobits.pos.ui.utils;
 import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import com.jobits.pos.persistencia.control.VentaDAO1;
-import com.jobits.pos.persistencia.Venta;
+import com.jobits.pos.domain.VentaDAO1;
+import com.jobits.pos.domain.models.Venta;
 
 /**
  *

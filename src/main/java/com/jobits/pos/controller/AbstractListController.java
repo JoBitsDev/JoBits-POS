@@ -8,7 +8,7 @@ package com.jobits.pos.controller;
 
 import com.jobits.pos.ui.AbstractListView;
 import java.beans.PropertyChangeEvent;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractModel;
 
 /**
  * FirstDream

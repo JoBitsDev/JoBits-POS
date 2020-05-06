@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javax.swing.UnsupportedLookAndFeelException;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
-import com.jobits.pos.persistencia.Personal;
-import com.jobits.pos.persistencia.volatil.UbicacionConexionModel;
+import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.domain.UbicacionConexionModel;
 
 /**
  * FirstDream

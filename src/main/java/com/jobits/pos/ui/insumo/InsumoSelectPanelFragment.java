@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.insumo;
 
 import java.util.List;
-import com.jobits.pos.persistencia.Insumo;
+import com.jobits.pos.domain.models.Insumo;
 
 /**
  *

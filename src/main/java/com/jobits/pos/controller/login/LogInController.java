@@ -13,10 +13,10 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Personal;
+import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.recursos.DBConnector;
-import com.jobits.pos.persistencia.modelos.PersonalDAO;
-import com.jobits.pos.persistencia.volatil.UbicacionConexionModel;
+import com.jobits.pos.adapters.repo.PersonalDAO;
+import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.LoadingWindow;
 

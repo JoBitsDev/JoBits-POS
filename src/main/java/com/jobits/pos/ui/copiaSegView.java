@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import com.jobits.pos.backup.BackUp;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
-import com.jobits.pos.persistencia.volatil.UbicacionConexionModel;
+import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.LoadingWindow;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;

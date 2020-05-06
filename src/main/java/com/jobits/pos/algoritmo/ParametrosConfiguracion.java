@@ -7,7 +7,7 @@
 package com.jobits.pos.algoritmo;
 
 import java.util.List;
-import com.jobits.pos.persistencia.Seccion;
+import com.jobits.pos.domain.models.Seccion;
 
 /**
  * FirstDream

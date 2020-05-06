@@ -14,8 +14,8 @@ import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.NoSelectedException;
-import com.jobits.pos.persistencia.Almacen;
-import com.jobits.pos.persistencia.modelos.AlmacenDAO;
+import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.adapters.repo.AlmacenDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.RegularExpressions;
 

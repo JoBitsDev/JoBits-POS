@@ -17,7 +17,7 @@ import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Insumo;
+import com.jobits.pos.domain.models.Insumo;
 
 /**
  * FirstDream

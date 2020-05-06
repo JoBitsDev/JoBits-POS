@@ -31,7 +31,7 @@ import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.NoSelectedException;
-import com.jobits.pos.persistencia.AsistenciaPersonal;
+import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.utils;

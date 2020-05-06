@@ -16,13 +16,13 @@ import javax.swing.JSpinner;
 
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.insumo.InsumoCreateEditController;
-import com.jobits.pos.persistencia.Almacen;
-import com.jobits.pos.persistencia.Insumo;
-import com.jobits.pos.persistencia.InsumoElaborado;
-import com.jobits.pos.persistencia.InsumoElaboradoPK;
-import com.jobits.pos.persistencia.ProductoInsumo;
-import com.jobits.pos.persistencia.ProductoInsumoPK;
-import com.jobits.pos.persistencia.ProductoVenta;
+import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.domain.models.InsumoElaborado;
+import com.jobits.pos.domain.models.InsumoElaboradoPK;
+import com.jobits.pos.domain.models.ProductoInsumo;
+import com.jobits.pos.domain.models.ProductoInsumoPK;
+import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 

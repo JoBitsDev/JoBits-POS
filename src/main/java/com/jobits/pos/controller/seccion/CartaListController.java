@@ -13,15 +13,15 @@ import java.util.ArrayList;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Carta;
-import com.jobits.pos.persistencia.Seccion;
+import com.jobits.pos.domain.models.Carta;
+import com.jobits.pos.domain.models.Seccion;
 import javax.swing.JOptionPane;
 import com.jobits.pos.exceptions.NoSelectedException;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.persistencia.ProductoVenta;
-import com.jobits.pos.persistencia.modelos.MenuDAO;
-import com.jobits.pos.persistencia.modelos.ProductoVentaDAO;
-import com.jobits.pos.persistencia.modelos.SeccionDAO;
+import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.adapters.repo.MenuDAO;
+import com.jobits.pos.adapters.repo.ProductoVentaDAO;
+import com.jobits.pos.adapters.repo.SeccionDAO;
 import com.jobits.pos.recursos.R;
 
 /**

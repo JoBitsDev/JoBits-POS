@@ -14,7 +14,7 @@ import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
 import com.jobits.pos.exceptions.HiddenException;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractModel;
 import com.jobits.pos.recursos.R;
 
 /**

@@ -16,11 +16,11 @@ import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.DuplicatedException;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.ProductoVenta;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
-import com.jobits.pos.persistencia.modelos.CocinaDAO;
-import com.jobits.pos.persistencia.modelos.ProductoVentaDAO;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.CocinaDAO;
+import com.jobits.pos.adapters.repo.ProductoVentaDAO;
 
 /**
  * FirstDream

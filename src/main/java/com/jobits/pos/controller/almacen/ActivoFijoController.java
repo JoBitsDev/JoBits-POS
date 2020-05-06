@@ -13,11 +13,11 @@ import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.ActivoFijo;
-import com.jobits.pos.persistencia.Ubicacion;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
-import com.jobits.pos.persistencia.modelos.ActivoFijoDAO;
-import com.jobits.pos.persistencia.modelos.UbicacionDAO;
+import com.jobits.pos.domain.models.ActivoFijo;
+import com.jobits.pos.domain.models.Ubicacion;
+import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.ActivoFijoDAO;
+import com.jobits.pos.adapters.repo.UbicacionDAO;
 
 /**
  * FirstDream

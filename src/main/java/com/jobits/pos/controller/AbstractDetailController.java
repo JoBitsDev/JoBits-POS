@@ -11,7 +11,7 @@ import com.jobits.pos.ui.utils.LongProcessAction;
 import java.awt.Window;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractModel;
 
 /**
  * FirstDream

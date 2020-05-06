@@ -14,7 +14,7 @@ import java.util.List;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Transaccion;
+import com.jobits.pos.domain.models.Transaccion;
 import com.jobits.pos.recursos.R;
 
 /**

@@ -7,7 +7,7 @@ package com.jobits.pos.controller;
 
 import com.jobits.pos.ui.View;
 import java.beans.PropertyChangeListener;
-import com.jobits.pos.persistencia.modelos.Model;
+import com.jobits.pos.adapters.repo.Model;
 
 /**
  *

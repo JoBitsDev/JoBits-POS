@@ -17,10 +17,10 @@ import javax.swing.event.ListSelectionEvent;
 import com.jobits.pos.controller.Controller;
 import com.jobits.pos.controller.venta.OrdenController;
 
-import com.jobits.pos.persistencia.Orden;
-import com.jobits.pos.persistencia.ProductoVenta;
-import com.jobits.pos.persistencia.ProductovOrden;
-import com.jobits.pos.persistencia.Seccion;
+import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.domain.models.ProductovOrden;
+import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.recursos.R;
 
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;

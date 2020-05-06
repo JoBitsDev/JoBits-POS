@@ -13,12 +13,12 @@ import java.util.Date;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.DatosPersonales;
-import com.jobits.pos.persistencia.Personal;
-import com.jobits.pos.persistencia.PuestoTrabajo;
-import com.jobits.pos.persistencia.modelos.AbstractModel;
-import com.jobits.pos.persistencia.modelos.PersonalDAO;
-import com.jobits.pos.persistencia.modelos.PuestoTrabajoDAO;
+import com.jobits.pos.domain.models.DatosPersonales;
+import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.domain.models.PuestoTrabajo;
+import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.PersonalDAO;
+import com.jobits.pos.adapters.repo.PuestoTrabajoDAO;
 
 /**
  * FirstDream

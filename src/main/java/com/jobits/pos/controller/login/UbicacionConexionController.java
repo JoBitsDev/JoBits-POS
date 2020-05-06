@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.jobits.pos.persistencia.volatil.UbicacionConexionModel;
-import com.jobits.pos.persistencia.volatil.UbicacionWrapper;
+import com.jobits.pos.domain.UbicacionConexionModel;
+import com.jobits.pos.domain.UbicacionWrapper;
 
 /**
  * FirstDream

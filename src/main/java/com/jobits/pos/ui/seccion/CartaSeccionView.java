@@ -12,8 +12,8 @@ import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.controller.seccion.CartaListController;
 import com.jobits.pos.controller.seccion.SeccionListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.Carta;
-import com.jobits.pos.persistencia.Seccion;
+import com.jobits.pos.domain.models.Carta;
+import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.utils.RestManagerListModel;
 
 /**

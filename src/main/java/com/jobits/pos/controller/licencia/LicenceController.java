@@ -15,8 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.persistencia.Configuracion;
-import com.jobits.pos.persistencia.modelos.ConfiguracionDAO;
+import com.jobits.pos.domain.models.Configuracion;
+import com.jobits.pos.adapters.repo.ConfiguracionDAO;
 
 /**
  * FirstDream

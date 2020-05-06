@@ -12,10 +12,10 @@ import java.util.Date;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.AbstractListController;
-import com.jobits.pos.persistencia.AsistenciaPersonal;
-import com.jobits.pos.persistencia.Orden;
-import com.jobits.pos.persistencia.Personal;
-import com.jobits.pos.persistencia.modelos.PersonalDAO;
+import com.jobits.pos.domain.models.AsistenciaPersonal;
+import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.adapters.repo.PersonalDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 
 /**

@@ -13,8 +13,8 @@ import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.DuplicatedException;
 import com.jobits.pos.exceptions.NoSelectedException;
-import com.jobits.pos.persistencia.Area;
-import com.jobits.pos.persistencia.Carta;
+import com.jobits.pos.domain.models.Area;
+import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.ui.utils.RestManagerListModel;
 
 /**

@@ -17,9 +17,9 @@ import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.persistencia.AsistenciaPersonal;
-import com.jobits.pos.persistencia.Venta;
-import com.jobits.pos.persistencia.modelos.VentaDAO;
+import com.jobits.pos.domain.models.AsistenciaPersonal;
+import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.adapters.repo.VentaDAO;
 import com.jobits.pos.recursos.R;
 
 /**

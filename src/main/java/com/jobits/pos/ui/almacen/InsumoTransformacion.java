@@ -6,7 +6,7 @@
 
 package com.jobits.pos.ui.almacen;
 
-import com.jobits.pos.persistencia.Insumo;
+import com.jobits.pos.domain.models.Insumo;
 
 /**
  * FirstDream

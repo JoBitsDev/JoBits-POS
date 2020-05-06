@@ -10,7 +10,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
 import com.jobits.pos.controller.AbstractListController;
-import com.jobits.pos.persistencia.Cocina;
+import com.jobits.pos.domain.models.Cocina;
 
 /**
  * FirstDream

@@ -10,7 +10,7 @@ import com.jobits.pos.ui.View;
 import java.beans.PropertyChangeEvent;
 import com.jobits.pos.controller.Controller;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.persistencia.modelos.Model;
+import com.jobits.pos.adapters.repo.Model;
 
 /**
  * FirstDream

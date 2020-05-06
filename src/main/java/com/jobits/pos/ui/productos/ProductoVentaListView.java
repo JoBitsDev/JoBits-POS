@@ -16,8 +16,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
-import com.jobits.pos.persistencia.Carta;
-import com.jobits.pos.persistencia.ProductoVenta;
+import com.jobits.pos.domain.models.Carta;
+import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.recursos.R;
 
 /**

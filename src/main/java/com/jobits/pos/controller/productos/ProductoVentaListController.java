@@ -16,11 +16,11 @@ import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
-import com.jobits.pos.persistencia.Carta;
-import com.jobits.pos.persistencia.ProductoVenta;
-import com.jobits.pos.persistencia.Seccion;
-import com.jobits.pos.persistencia.modelos.CartaDAO;
-import com.jobits.pos.persistencia.modelos.ProductoVentaDAO;
+import com.jobits.pos.domain.models.Carta;
+import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.adapters.repo.CartaDAO;
+import com.jobits.pos.adapters.repo.ProductoVentaDAO;
 import com.jobits.pos.servicios.impresion.ComponentPrinter;
 import com.jobits.pos.recursos.R;
 
