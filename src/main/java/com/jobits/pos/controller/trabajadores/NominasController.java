@@ -20,7 +20,7 @@ import com.jobits.pos.exceptions.NoSelectedException;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.Personal;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.AsistenciaPersonalDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;

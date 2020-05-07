@@ -16,7 +16,7 @@ import com.jobits.pos.domain.models.Negocio;
  * @author Jorge
  *
  */
-public class NegocioDAO extends AbstractModel<Negocio> {
+public class NegocioDAO extends AbstractRepository<Negocio> {
 
     private static NegocioDAO INSTANCE = null;
 

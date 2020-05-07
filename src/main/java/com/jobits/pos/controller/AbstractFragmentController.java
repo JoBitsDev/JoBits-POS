@@ -11,7 +11,7 @@ import java.awt.Container;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.PropertyName;
 
 /**
@@ -26,22 +26,22 @@ public abstract class AbstractFragmentController<T> extends AbstractController<T
     protected T instance;
     private Container parent;
 
-    public AbstractFragmentController(AbstractModel<T> dataAccess) {
+    public AbstractFragmentController(AbstractRepository<T> dataAccess) {
         super(dataAccess);
     }
 
-    public AbstractFragmentController(T instance, Container parent, AbstractModel<T> dataAccess) {
+    public AbstractFragmentController(T instance, Container parent, AbstractRepository<T> dataAccess) {
         super(dataAccess);
         this.instance = instance;
         this.parent = parent;
     }
 
-    public AbstractFragmentController(T instance, AbstractModel<T> dataAccess) {
+    public AbstractFragmentController(T instance, AbstractRepository<T> dataAccess) {
         super(dataAccess);
         this.instance = instance;
     }
 
-    public AbstractFragmentController(Container parent, AbstractModel<T> dataAccess) {
+    public AbstractFragmentController(Container parent, AbstractRepository<T> dataAccess) {
         super(dataAccess);
         this.parent = parent;
     }

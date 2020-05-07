@@ -27,14 +27,14 @@ import com.jobits.pos.recursos.R;
  * @param <T>
  *
  */
-public abstract class AbstractModel<T> implements Model {
+public abstract class AbstractRepository<T> implements Model {
 
     private final Class<T> entityClass;
     private static EntityManagerFactory EMF;
     private static EntityManager currentConnection;
     protected PropertyChangeSupport propertyChangeSupport;
 
-    public AbstractModel(Class<T> entityClass) {
+    public AbstractRepository(Class<T> entityClass) {
         this.entityClass = entityClass;
         propertyChangeSupport = new PropertyChangeSupport(this);
         DBConnector.init(R.CURRENT_CONNECTION);
@@ -161,7 +161,7 @@ public abstract class AbstractModel<T> implements Model {
     }
 
     public static void setEMF(EntityManagerFactory EMF) {
-        AbstractModel.EMF = EMF;
+        AbstractRepository.EMF = EMF;
     }
 
     public static EntityManager getCurrentConnection() {
@@ -169,7 +169,7 @@ public abstract class AbstractModel<T> implements Model {
     }
 
     public static void setCurrentConnection(EntityManager currentConnection) {
-        AbstractModel.currentConnection = currentConnection;
+        AbstractRepository.currentConnection = currentConnection;
     }
 
     public PropertyChangeSupport getPropertyChangeSupport() {

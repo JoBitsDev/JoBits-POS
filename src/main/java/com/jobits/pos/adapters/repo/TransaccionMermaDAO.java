@@ -15,7 +15,7 @@ import com.jobits.pos.domain.models.TransaccionMerma;
  * @author Jorge
  *
  */
-public class TransaccionMermaDAO extends AbstractModel<TransaccionMerma> {
+public class TransaccionMermaDAO extends AbstractRepository<TransaccionMerma> {
 
     private static TransaccionMermaDAO INSTANCE = null;
 

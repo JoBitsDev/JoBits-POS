@@ -12,7 +12,7 @@ import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.recursos.R;
 
 /**
@@ -24,7 +24,7 @@ import com.jobits.pos.recursos.R;
  */
 public abstract class AbstractDialogController<T> extends AbstractController<T> {
   
-    public AbstractDialogController(AbstractModel<T> dataAccess) {
+    public AbstractDialogController(AbstractRepository<T> dataAccess) {
         super(dataAccess);
     }
 

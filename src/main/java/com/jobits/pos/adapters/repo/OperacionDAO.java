@@ -13,7 +13,7 @@ import com.jobits.pos.domain.models.Operacion;
  * @author Jorge
  *
  */
-public class OperacionDAO extends AbstractModel<Operacion> {
+public class OperacionDAO extends AbstractRepository<Operacion> {
 
     private static OperacionDAO INSTANCE = null;
 

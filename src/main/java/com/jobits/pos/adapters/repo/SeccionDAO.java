@@ -18,7 +18,7 @@ import com.jobits.pos.domain.models.Seccion;
  * @author Jorge
  *
  */
-public class SeccionDAO extends AbstractModel<Seccion> {
+public class SeccionDAO extends AbstractRepository<Seccion> {
 
     private static SeccionDAO INSTANCE = null;
 

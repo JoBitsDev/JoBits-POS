@@ -11,7 +11,7 @@ import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.Pago;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.PagoDAO;
 
 /**

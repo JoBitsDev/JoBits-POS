@@ -20,7 +20,7 @@ import com.jobits.pos.domain.models.IpvRegistro;
  * @author Jorge
  *
  */
-public class IpvRegistroDAO extends AbstractModel<IpvRegistro> {
+public class IpvRegistroDAO extends AbstractRepository<IpvRegistro> {
 
     private static IpvRegistroDAO INSTANCE = null;
 

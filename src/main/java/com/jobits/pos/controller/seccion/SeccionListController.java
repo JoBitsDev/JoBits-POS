@@ -19,7 +19,7 @@ import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Seccion;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.ProductoVentaDAO;
 import com.jobits.pos.adapters.repo.SeccionDAO;
 

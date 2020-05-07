@@ -8,7 +8,7 @@ package com.jobits.pos.controller;
 
 import com.jobits.pos.ui.AbstractListView;
 import java.beans.PropertyChangeEvent;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 
 /**
  * FirstDream
@@ -20,7 +20,7 @@ public abstract class AbstractListController<T> extends AbstractDialogController
 
     protected AbstractDetailController<T> detailController;
 
-    public AbstractListController(AbstractModel<T> dataAccess) {
+    public AbstractListController(AbstractRepository<T> dataAccess) {
         super(dataAccess);
         setDismissOnAction(false);
     }

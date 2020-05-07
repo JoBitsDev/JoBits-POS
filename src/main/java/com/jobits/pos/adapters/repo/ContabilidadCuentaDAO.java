@@ -7,14 +7,14 @@ package com.jobits.pos.adapters.repo;
 
 
 import com.jobits.pos.domain.models.ContabilidadCuenta;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 /**
  * FirstDream
  *
  * @author Jorge
  *
  */
-public class ContabilidadCuentaDAO extends AbstractModel<ContabilidadCuenta> {
+public class ContabilidadCuentaDAO extends AbstractRepository<ContabilidadCuenta> {
 
     private static ContabilidadCuentaDAO INSTANCE = null;
 

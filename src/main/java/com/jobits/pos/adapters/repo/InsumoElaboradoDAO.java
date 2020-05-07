@@ -13,7 +13,7 @@ import com.jobits.pos.domain.models.InsumoElaborado;
  * @author Jorge
  * 
  */
-public class InsumoElaboradoDAO extends AbstractModel<InsumoElaborado>{
+public class InsumoElaboradoDAO extends AbstractRepository<InsumoElaborado>{
 
     public InsumoElaboradoDAO() {
         super(InsumoElaborado.class);

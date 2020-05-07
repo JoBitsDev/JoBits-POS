@@ -35,7 +35,6 @@ import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.domain.models.Transaccion;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.CocinaDAO;
-import com.jobits.pos.adapters.repo.PersonalDAO;
 import com.jobits.pos.adapters.repo.ProductovOrdenDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
@@ -1331,8 +1330,7 @@ public class Impresion {
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
-    public void prinPagoPorVenta(Venta instance, String usuario) {
-        Personal p = PersonalDAO.getInstance().find(usuario);
+    public void prinPagoPorVenta(Venta instance, Personal p) {
         ArrayList<Orden> lista = new ArrayList<>(instance.getOrdenList());
         Collections.sort(lista);
 
@@ -1348,7 +1346,7 @@ public class Impresion {
         t.alignRight();
         t.setText(FECHA + R.DATE_FORMAT.format(instance.getFecha()));
         t.newLine();
-        t.setText(usuario);
+        t.setText(p.getUsuario());
         t.newLine();
         t.addLineSeperator();
         t.newLine();

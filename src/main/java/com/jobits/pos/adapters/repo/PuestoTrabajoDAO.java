@@ -14,7 +14,7 @@ import com.jobits.pos.domain.models.Seccion;
  * @author Jorge
  *
  */
-public class PuestoTrabajoDAO extends AbstractModel<PuestoTrabajo> {
+public class PuestoTrabajoDAO extends AbstractRepository<PuestoTrabajo> {
 
     private static PuestoTrabajoDAO INSTANCE = null;
 

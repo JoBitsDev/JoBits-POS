@@ -15,7 +15,7 @@ import com.jobits.pos.domain.models.InsumoElaborado;
  * @author Jorge
  *
  */
-public class InsumoDAO extends AbstractModel<Insumo> {
+public class InsumoDAO extends AbstractRepository<Insumo> {
 
     private static InsumoDAO INSTANCE = null;
 

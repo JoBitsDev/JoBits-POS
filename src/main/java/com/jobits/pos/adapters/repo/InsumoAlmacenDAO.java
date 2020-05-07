@@ -17,7 +17,7 @@ import com.jobits.pos.domain.models.InsumoAlmacen;
  * @author Jorge
  *
  */
-public class InsumoAlmacenDAO extends AbstractModel<InsumoAlmacen> {
+public class InsumoAlmacenDAO extends AbstractRepository<InsumoAlmacen> {
 
     private static InsumoAlmacenDAO INSTANCE = null;
 

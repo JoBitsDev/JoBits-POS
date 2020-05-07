@@ -16,7 +16,7 @@ import com.jobits.pos.domain.models.ProductoInsumo;
  * @author Jorge
  *
  */
-public class ProductoInsumoDAO extends AbstractModel<ProductoInsumo> {
+public class ProductoInsumoDAO extends AbstractRepository<ProductoInsumo> {
 
     private static ProductoInsumoDAO INSTANCE = null;
 

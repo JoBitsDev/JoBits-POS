@@ -64,6 +64,7 @@ dependencies {
 
     implementation project(':UIcomponents')
     implementation project(':core')
+    implementation project(':autenticacion')
 
     implementation fileTree(dir: 'lib',include: '*.jar')
 

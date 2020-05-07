@@ -39,7 +39,7 @@ import com.jobits.pos.exceptions.ExceptionHandler;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.adapters.repo.PersonalDAO;
+import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.VentaDAO;
 import com.jobits.pos.recursos.R;
 

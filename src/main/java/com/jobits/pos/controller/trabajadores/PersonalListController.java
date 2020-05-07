@@ -15,7 +15,7 @@ import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Personal;
-import com.jobits.pos.adapters.repo.PersonalDAO;
+import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 
 /**

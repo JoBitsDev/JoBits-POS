@@ -21,7 +21,7 @@ import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.AsistenciaPersonalDAO;
 import com.jobits.pos.adapters.repo.GastoDAO;
 import com.jobits.pos.adapters.repo.GastoVentaDAO;
-import com.jobits.pos.adapters.repo.PersonalDAO;
+import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.TipoGastoDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;

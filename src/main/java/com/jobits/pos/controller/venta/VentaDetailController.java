@@ -8,7 +8,6 @@ package com.jobits.pos.controller.venta;
 import com.jobits.pos.adapters.repo.VentaDAO;
 import com.jobits.pos.adapters.repo.AreaDAO;
 import com.jobits.pos.adapters.repo.CocinaDAO;
-import com.jobits.pos.adapters.repo.PersonalDAO;
 import com.jobits.pos.adapters.repo.OrdenDAO;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.ProductoVenta;
@@ -27,6 +26,7 @@ import com.jobits.pos.ui.utils.LongProcessAction;
 import com.jobits.pos.ui.venta.VentasCreateEditView;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
@@ -316,8 +316,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         return CocinaDAO.getInstance().findAll();
     }
 
-    public void printPersonalResumenRow(String user) {
-        Personal p = PersonalDAO.getInstance().find(user);
+    public void printPersonalResumenRow(Personal p) {
         List<ProductovOrden> aux = VentaDAO1.getResumenVentasCamarero(getInstance(), p);
         Collections.sort(aux, (o1, o2) -> {
             return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
@@ -514,7 +513,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         return i;
     }
 
-    public void printPagoPorVentaPersonal(String user) {
+    public void printPagoPorVentaPersonal(Personal user) {
         Impresion i = getImpresionInstance();
         i.prinPagoPorVenta(getInstance(), user);
     }

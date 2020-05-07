@@ -14,7 +14,7 @@ import com.jobits.pos.domain.models.Configuracion;
  * @author Jorge
  * 
  */
-public class ConfigDAO extends AbstractModel<Configuracion>{
+public class ConfigDAO extends AbstractRepository<Configuracion>{
     
     public ConfigDAO( ) {
         super(Configuracion.class);

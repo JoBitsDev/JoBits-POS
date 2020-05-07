@@ -38,6 +38,7 @@ import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.CocinaDAO;
+import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.utils;
@@ -697,7 +698,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         if (row == -1) {
             throw new NoSelectedException(jTableVentasDependientes);
         }
-        getController().printPersonalResumenRow((String) jTableVentasDependientes.getValueAt(row, 0));        // TODO add your handling code here:
+        String nombreUsuario = (String) jTableVentasDependientes.getValueAt(row, 0);
+        
+        getController().printPersonalResumenRow(PersonalDAO.getInstance().find(nombreUsuario));        // Logica en views
     }//GEN-LAST:event_jButtonImprimirDptesActionPerformed
 
     private void jButtonImprimirZActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirZActionPerformed
@@ -729,7 +732,9 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         if (row == -1) {
             throw new NoSelectedException(jTableVentasDependientes);
         }
-        getController().printPagoPorVentaPersonal(jTableVentasDependientes.getValueAt(row, 0).toString());
+        String nombreUsuario = (String) jTableVentasDependientes.getValueAt(row, 0);
+        
+        getController().printPagoPorVentaPersonal(PersonalDAO.getInstance().find(nombreUsuario));// Logica en views
     }//GEN-LAST:event_jButtonImpPagoVentasActionPerformed
 
     private void jComboBoxSeleccionarVentaPorTurnoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxSeleccionarVentaPorTurnoItemStateChanged

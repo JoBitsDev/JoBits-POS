@@ -21,7 +21,7 @@ import com.jobits.pos.domain.models.Seccion;
  * @author Jorge
  *
  */
-public class ProductoVentaDAO extends AbstractModel<ProductoVenta> {
+public class ProductoVentaDAO extends AbstractRepository<ProductoVenta> {
 
     private static ProductoVentaDAO INSTANCE = null;
 

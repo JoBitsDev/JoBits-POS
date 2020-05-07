@@ -6,7 +6,7 @@
 package com.jobits.pos.backup;
 
 import com.jobits.pos.adapters.repo.IpvRegistroDAO;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.ProductoVenta;
@@ -68,7 +68,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
         this.tipoBackUp = tipoBackUp;
         emf = DBConnector.createEmfFrom(ubicacion);
         em = emf.createEntityManager();
-        localEm = AbstractModel.getEMF().createEntityManager();
+        localEm = AbstractRepository.getEMF().createEntityManager();
     }
 
     public BackUp(UbicacionConexionModel connector, JProgressBar barraProgreso, TipoBackUp tipoBackUp) {

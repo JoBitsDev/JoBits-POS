@@ -15,7 +15,7 @@ import com.jobits.pos.domain.models.Venta;
  * @author Jorge
  *
  */
-public class VentaDAO extends AbstractModel<Venta> {
+public class VentaDAO extends AbstractRepository<Venta> {
 
     private static VentaDAO INSTANCE = null;
 

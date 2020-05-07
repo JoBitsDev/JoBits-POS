@@ -16,7 +16,7 @@ import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.PuestoTrabajo;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.PuestoTrabajoDAO;
 import com.jobits.pos.recursos.R;
 

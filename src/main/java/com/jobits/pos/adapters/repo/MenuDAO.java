@@ -15,7 +15,7 @@ import com.jobits.pos.domain.models.Nota;
  * @author Jorge
  *
  */
-public class MenuDAO extends AbstractModel<Carta> {
+public class MenuDAO extends AbstractRepository<Carta> {
 
     private static MenuDAO INSTANCE = null;
 

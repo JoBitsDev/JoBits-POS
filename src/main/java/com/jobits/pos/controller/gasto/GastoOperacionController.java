@@ -18,7 +18,7 @@ import com.jobits.pos.domain.models.Gasto;
 import com.jobits.pos.domain.models.GastoVenta;
 import com.jobits.pos.domain.models.TipoGasto;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.GastoDAO;
 import com.jobits.pos.adapters.repo.GastoVentaDAO;
 import com.jobits.pos.adapters.repo.TipoGastoDAO;

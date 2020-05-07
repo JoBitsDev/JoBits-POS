@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.adapters.repo;
+package com.jobits.pos.adapters.repo.autenticacion;
 
 
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.domain.models.Personal;
 /**
  * FirstDream
@@ -13,7 +14,7 @@ import com.jobits.pos.domain.models.Personal;
  * @author Jorge
  *
  */
-public class PersonalDAO extends AbstractModel<Personal> {
+public class PersonalDAO extends AbstractRepository<Personal> {
 
     private static PersonalDAO INSTANCE = null;
 

@@ -16,7 +16,7 @@ import com.jobits.pos.domain.models.InsumoAlmacen;
  * @author Jorge
  *
  */
-public class CartaDAO extends AbstractModel<Carta> {
+public class CartaDAO extends AbstractRepository<Carta> {
 
     private static CartaDAO INSTANCE = null;
 

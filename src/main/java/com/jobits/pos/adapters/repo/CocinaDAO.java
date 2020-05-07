@@ -14,7 +14,7 @@ import com.jobits.pos.domain.models.Personal;
  * @author Jorge
  *
  */
-public class CocinaDAO extends AbstractModel<Cocina> {
+public class CocinaDAO extends AbstractRepository<Cocina> {
 
     private static CocinaDAO INSTANCE = null;
 

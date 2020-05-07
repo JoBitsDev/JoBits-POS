@@ -16,8 +16,8 @@ import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.DatosPersonales;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.PuestoTrabajo;
-import com.jobits.pos.adapters.repo.AbstractModel;
-import com.jobits.pos.adapters.repo.PersonalDAO;
+import com.jobits.pos.adapters.repo.AbstractRepository;
+import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.PuestoTrabajoDAO;
 
 /**

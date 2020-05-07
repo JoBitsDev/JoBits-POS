@@ -19,7 +19,7 @@ import com.jobits.pos.domain.models.Mesa;
  * @author Jorge
  *
  */
-public class AreaDAO extends AbstractModel<Area> {
+public class AreaDAO extends AbstractRepository<Area> {
 
     private static AreaDAO INSTANCE = null;
 

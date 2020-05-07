@@ -22,7 +22,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class ConfiguracionDAO extends AbstractModel<Configuracion> {
+public class ConfiguracionDAO extends AbstractRepository<Configuracion> {
 
     private static ConfiguracionDAO INSTANCE = null;
 

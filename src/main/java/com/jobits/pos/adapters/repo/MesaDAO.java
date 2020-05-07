@@ -14,7 +14,7 @@ import com.jobits.pos.domain.models.Nota;
  * @author Jorge
  *
  */
-public class MesaDAO extends AbstractModel<Mesa> {
+public class MesaDAO extends AbstractRepository<Mesa> {
 
     private static MesaDAO INSTANCE = null;
 

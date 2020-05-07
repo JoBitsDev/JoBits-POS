@@ -11,7 +11,7 @@ import com.jobits.pos.ui.AbstractListView;
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 
 /**
  * FirstDream
@@ -24,11 +24,11 @@ public abstract class AbstractFragmentListController<T> extends AbstractControll
     Container parent;
     List<T> list;
     
- public AbstractFragmentListController(AbstractModel<T> dataAccess) {
+ public AbstractFragmentListController(AbstractRepository<T> dataAccess) {
         super(dataAccess);
     }
 
-    public AbstractFragmentListController(List<T> list, Container parent, AbstractModel<T> dataAccess) {
+    public AbstractFragmentListController(List<T> list, Container parent, AbstractRepository<T> dataAccess) {
         super(dataAccess);
         this.list = list;
     }

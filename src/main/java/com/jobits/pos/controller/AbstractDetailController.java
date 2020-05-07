@@ -11,7 +11,7 @@ import com.jobits.pos.ui.utils.LongProcessAction;
 import java.awt.Window;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 
 /**
  * FirstDream
@@ -26,12 +26,12 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
     protected State state;
     protected Window parent;
 
-    public AbstractDetailController(AbstractModel<T> dataAccess) {
+    public AbstractDetailController(AbstractRepository<T> dataAccess) {
         super(dataAccess);
         state = State.CREATING;
     }
 
-    public AbstractDetailController(T instance, AbstractModel<T> model) {
+    public AbstractDetailController(T instance, AbstractRepository<T> model) {
         super(model);
         this.instance = instance;
         if (instance == null) {
@@ -42,7 +42,7 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
         }
     }
 
-    public AbstractDetailController(Window parent, AbstractModel<T> dataAccess) {
+    public AbstractDetailController(Window parent, AbstractRepository<T> dataAccess) {
         super(dataAccess);
         this.parent = parent;
         new LongProcessAction() {
@@ -62,7 +62,7 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
         //getView().setVisible(true);
     }
 
-    public AbstractDetailController(T instance, Window parent, AbstractModel<T> dataAccess) {
+    public AbstractDetailController(T instance, Window parent, AbstractRepository<T> dataAccess) {
         super(dataAccess);
         this.instance = instance;
         this.parent = parent;

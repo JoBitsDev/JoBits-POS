@@ -15,7 +15,7 @@ import com.jobits.pos.domain.models.InsumoAlmacen;
  * @author Jorge
  *
  */
-public class ActivoFijoDAO extends AbstractModel<ActivoFijo> {
+public class ActivoFijoDAO extends AbstractRepository<ActivoFijo> {
 
     private static ActivoFijoDAO INSTANCE = null;
 

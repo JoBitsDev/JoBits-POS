@@ -16,7 +16,7 @@ import com.jobits.pos.domain.models.Nota;
  * @author Jorge
  *
  */
-public class IpvDAO extends AbstractModel<Ipv> {
+public class IpvDAO extends AbstractRepository<Ipv> {
 
     private static IpvDAO INSTANCE = null;
 

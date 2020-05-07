@@ -14,7 +14,7 @@ import com.jobits.pos.domain.models.TipoGasto;
  * @author Jorge
  *
  */
-public class TipoGastoDAO extends AbstractModel<TipoGasto> {
+public class TipoGastoDAO extends AbstractRepository<TipoGasto> {
 
     private static TipoGastoDAO INSTANCE = null;
 

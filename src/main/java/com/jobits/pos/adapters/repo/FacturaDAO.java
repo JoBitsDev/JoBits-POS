@@ -8,14 +8,14 @@ package com.jobits.pos.adapters.repo;
 
 import com.jobits.pos.domain.models.Factura;
 import com.jobits.pos.domain.models.ContabilidadCuenta;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 /**
  * FirstDream
  *
  * @author Jorge
  *
  */
-public class FacturaDAO extends AbstractModel<Factura> {
+public class FacturaDAO extends AbstractRepository<Factura> {
 
     private static FacturaDAO INSTANCE = null;
 

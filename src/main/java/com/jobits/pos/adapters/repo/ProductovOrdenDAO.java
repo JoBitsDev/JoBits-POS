@@ -13,7 +13,7 @@ import com.jobits.pos.domain.models.ProductovOrden;
  * @author Jorge
  *
  */
-public class ProductovOrdenDAO extends AbstractModel<ProductovOrden> {
+public class ProductovOrdenDAO extends AbstractRepository<ProductovOrden> {
 
     private static ProductovOrdenDAO INSTANCE = null;
 

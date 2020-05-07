@@ -7,14 +7,14 @@ package com.jobits.pos.adapters.repo;
 
 
 import com.jobits.pos.domain.models.Pago;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 /**
  * FirstDream
  *
  * @author Jorge
  *
  */
-public class PagoDAO extends AbstractModel<Pago> {
+public class PagoDAO extends AbstractRepository<Pago> {
 
     private static PagoDAO INSTANCE = null;
 

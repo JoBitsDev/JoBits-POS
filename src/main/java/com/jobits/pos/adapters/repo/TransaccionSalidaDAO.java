@@ -15,7 +15,7 @@ import com.jobits.pos.domain.models.TransaccionSalida;
  * @author Jorge
  *
  */
-public class TransaccionSalidaDAO extends AbstractModel<TransaccionSalida> {
+public class TransaccionSalidaDAO extends AbstractRepository<TransaccionSalida> {
 
     private static TransaccionSalidaDAO INSTANCE = null;
 

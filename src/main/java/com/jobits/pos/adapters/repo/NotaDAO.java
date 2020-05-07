@@ -13,7 +13,7 @@ import com.jobits.pos.domain.models.Nota;
  * @author Jorge
  *
  */
-public class NotaDAO extends AbstractModel<Nota> {
+public class NotaDAO extends AbstractRepository<Nota> {
 
     private static NotaDAO INSTANCE = null;
 

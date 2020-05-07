@@ -14,7 +14,7 @@ import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
 import com.jobits.pos.exceptions.HiddenException;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.recursos.R;
 
 /**
@@ -26,14 +26,14 @@ import com.jobits.pos.recursos.R;
  */
 public abstract class AbstractController<T> implements Controller {
 
-    private AbstractModel<T> model;
+    private AbstractRepository<T> model;
     protected List<T> items = null;
     protected T selected;
     private View view;
     protected boolean dismissOnAction = true;
     protected boolean showDialogs = true;
 
-    public AbstractController(AbstractModel<T> dataAccess) {
+    public AbstractController(AbstractRepository<T> dataAccess) {
         model = dataAccess;
         setPropertyChangeMethods();
     }
@@ -91,7 +91,7 @@ public abstract class AbstractController<T> implements Controller {
      * property.
      */
     protected void setModelProperty(String propertyName, Object newValue) {
-//        for (AbstractModel m : registeredModels) {
+//        for (AbstractRepository m : registeredModels) {
 //            try {
 //                Method method = m.getClass().getMethod("set" + propertyName, new Class[]{newValue.getClass()});
 //                method.invoke(m, newValue);
@@ -279,11 +279,11 @@ public abstract class AbstractController<T> implements Controller {
     }
 
     @Override
-    public AbstractModel<T> getModel() {
+    public AbstractRepository<T> getModel() {
         return model;
     }
 
-    public void setModel(AbstractModel<T> model) {
+    public void setModel(AbstractRepository<T> model) {
         this.model = model;
         model.addPropertyChangeListener(this);
     }

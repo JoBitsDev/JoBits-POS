@@ -12,7 +12,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.domain.UbicacionConexionModel;
 
 /**
@@ -36,9 +36,9 @@ public class DBConnector {
         if (connectionProperties.equals(R.CURRENT_CONNECTION)) {
             return;
         }
-        AbstractModel.setEMF(getEmfFrom(connectionProperties));
+        AbstractRepository.setEMF(getEmfFrom(connectionProperties));
         R.CURRENT_CONNECTION = connectionProperties;
-        if (AbstractModel.getEMF() != null) {
+        if (AbstractRepository.getEMF() != null) {
             initConnections();
 
         } else {
@@ -64,8 +64,8 @@ public class DBConnector {
 
     private void initConnections() {
         try {
-            AbstractModel.getEMF().getCache().evictAll();
-            AbstractModel.setCurrentConnection(AbstractModel.getEMF().createEntityManager());
+            AbstractRepository.getEMF().getCache().evictAll();
+            AbstractRepository.setCurrentConnection(AbstractRepository.getEMF().createEntityManager());
             CONECTADO = true;
         } catch (Exception e) {
             CONECTADO = false;

@@ -16,7 +16,7 @@ import com.jobits.pos.domain.models.Ubicacion;
  * @author Jorge
  *
  */
-public class UbicacionDAO extends AbstractModel<Ubicacion> {
+public class UbicacionDAO extends AbstractRepository<Ubicacion> {
 
     private static UbicacionDAO INSTANCE = null;
 

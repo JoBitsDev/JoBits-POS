@@ -18,7 +18,7 @@ import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Transaccion;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.TransaccionDAO;
 import com.jobits.pos.adapters.repo.TransaccionEntradaDAO;
 import com.jobits.pos.servicios.impresion.Impresion;

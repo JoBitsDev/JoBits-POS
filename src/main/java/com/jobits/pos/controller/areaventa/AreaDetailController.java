@@ -17,7 +17,7 @@ import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Carta;
-import com.jobits.pos.adapters.repo.AbstractModel;
+import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.AreaDAO;
 import com.jobits.pos.adapters.repo.CartaDAO;
 
@@ -28,7 +28,7 @@ import com.jobits.pos.adapters.repo.CartaDAO;
  */
 public class AreaDetailController extends AbstractDetailController<Area>{
 
-    public AreaDetailController(Area instance, AbstractModel<Area> model) {
+    public AreaDetailController(Area instance, AbstractRepository<Area> model) {
         super(instance, AreaDAO.getInstance());
     }
 

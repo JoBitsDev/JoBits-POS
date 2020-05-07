@@ -16,7 +16,7 @@ import com.jobits.pos.domain.models.AsistenciaPersonal;
  * @author Jorge
  *
  */
-public class AsistenciaPersonalDAO extends AbstractModel<AsistenciaPersonal> {
+public class AsistenciaPersonalDAO extends AbstractRepository<AsistenciaPersonal> {
 
     private static AsistenciaPersonalDAO INSTANCE = null;
 

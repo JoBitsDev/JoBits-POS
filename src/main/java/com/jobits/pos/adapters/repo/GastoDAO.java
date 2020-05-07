@@ -16,7 +16,7 @@ import com.jobits.pos.domain.models.Gasto;
  * @author Jorge
  *
  */
-public class GastoDAO extends AbstractModel<Gasto> {
+public class GastoDAO extends AbstractRepository<Gasto> {
 
     private static GastoDAO INSTANCE = null;
 
