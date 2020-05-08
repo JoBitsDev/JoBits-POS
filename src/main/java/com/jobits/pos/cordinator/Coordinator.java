@@ -10,6 +10,6 @@ package com.jobits.pos.cordinator;
  * @author Jorge
  */
 public interface Coordinator {
-    
-    public void start();
+
+    public boolean canNavigateTo(String currentViewUID, String toViewUniqueName);
 }

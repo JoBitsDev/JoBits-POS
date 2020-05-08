@@ -21,7 +21,7 @@ import static com.jobits.pos.ui.login.presenter.LoginViewPresenter.*;
  */
 public class LogInView extends AbstractViewPanel {
 
-    public static String VIEW_NAME = "Autenticación";
+    public static final String VIEW_NAME = "Autenticación";
 
     /**
      * Creates new form LogInView

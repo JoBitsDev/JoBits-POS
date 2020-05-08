@@ -15,12 +15,15 @@ import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.login.MainController;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.ComponentMover;
+import java.util.List;
 
 /**
  *
  * @author Jorge
  */
 public class MainView extends OldAbstractView {
+
+    public static String VIEW_NAME = "Dashboard";
 
     
     public MainView(AbstractDialogController controller) {

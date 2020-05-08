@@ -5,24 +5,43 @@
  */
 package com.jobits.pos.ui;
 
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.ui.components.MaterialComponentsFactory;
-import javax.swing.JPanel;
+import com.jobits.pos.main.PresenterFacade;
+import com.jobits.pos.ui.login.LogInView;
+import components.containers.MaterialPanel;
+import java.awt.CardLayout;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
  * @author Jorge
  */
-public class RootView extends JPanel {
+public class RootView extends MaterialPanel {
 
     public static String VIEW_NAME = "Root View";
-    
+
+    private final CardLayout cards = new CardLayout();
+
+    private String currentDisplayedViewName;
+
+    private Map<String, View> views = new HashMap<>();
+
+    private static RootView instance;
+
     /**
      * Creates new form RootView
      */
-    public RootView() {  
+    private RootView() {
         super();
         initComponents();
+        jPanelContent.setLayout(cards);
+    }
+
+    public static RootView getInstance() {
+        if (instance == null) {
+            instance = new RootView();
+        }
+        return instance;
     }
 
     /**
@@ -37,24 +56,59 @@ public class RootView extends JPanel {
 
         jPanelHeader = new javax.swing.JPanel();
         jPanelContent = new javax.swing.JPanel();
-        jPanelEmpty = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
         jPanelHeader.setOpaque(false);
         add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
 
-        jPanelContent.setLayout(new java.awt.CardLayout());
-        jPanelContent.add(jPanelEmpty, "card2");
+        jPanelContent.setBackground(new java.awt.Color(153, 255, 204));
+
+        javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
+        jPanelContent.setLayout(jPanelContentLayout);
+        jPanelContentLayout.setHorizontalGroup(
+            jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 646, Short.MAX_VALUE)
+        );
+        jPanelContentLayout.setVerticalGroup(
+            jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 460, Short.MAX_VALUE)
+        );
 
         add(jPanelContent, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanelContent;
-    private javax.swing.JPanel jPanelEmpty;
     private javax.swing.JPanel jPanelHeader;
     // End of variables declaration//GEN-END:variables
 
+    public void showView(View view) {
+        if (!views.containsKey(view.getViewName())) {
+            addView(view);
+        }
+        currentDisplayedViewName = view.getViewName();
+        showView(currentDisplayedViewName);
+    }
+
+    private void addView(View view) {
+        views.put(view.getViewName(), view);
+        jPanelContent.add(view.getViewComponent(),view.getViewName());
+    }
+
+    private void showView(String viewNameToDisplay) {
+        currentDisplayedViewName = viewNameToDisplay;
+        cards.show(jPanelContent, currentDisplayedViewName);
+        repaint();
+        
+    }
+    
+    public String getCurrentViewName(String name){
+        return currentDisplayedViewName;
+    }
+    
+    public void showDefaultView(){
+        showView(new LogInView(PresenterFacade.getPresenterFor(LogInView.VIEW_NAME)));
+    }
 
 }

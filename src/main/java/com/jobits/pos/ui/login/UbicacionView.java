@@ -22,6 +22,8 @@ import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
  */
 public class UbicacionView extends javax.swing.JDialog {
 
+    public static String VIEW_NAME = "Editar ubicación";
+    
     private UbicacionConexionController controller;
 
     public UbicacionView(java.awt.Frame parent, boolean modal, UbicacionConexionController controller) {
