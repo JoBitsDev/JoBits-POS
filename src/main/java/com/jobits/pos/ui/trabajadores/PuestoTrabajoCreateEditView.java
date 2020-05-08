@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.trabajadores;
 
 import com.jobits.pos.ui.AbstractDetailView;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import GUI.Components.JSpinner;
 import GUI.Components.JTextField;
 import java.awt.Dialog;

@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.almacen;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.utils.RestManagerCellRender;
 import mdlaf.components.table.MaterialTableUI;
 import com.jobits.pos.controller.AbstractDialogController;
@@ -20,7 +20,7 @@ import com.jobits.pos.ui.utils.utils;
  *
  * @author Jorge
  */
-public class ActivosList extends AbstractView {
+public class ActivosList extends OldAbstractView {
 
     private RestManagerAbstractTableModel<ActivoFijo> modelLista;
 

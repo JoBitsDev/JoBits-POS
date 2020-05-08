@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.domain.UbicacionWrapper;
+import com.jobits.pos.domain.models.Ubicacion;
 
 /**
  * FirstDream
@@ -62,9 +63,13 @@ public class UbicacionConexionController {
         ubicaciones.setSelectedUbicacion(pos);
         guardarUbicacionesAlmacenadas();
     }
+    public void setSelectedUbicacion(UbicacionConexionModel ubicacionSeleccionada) throws IOException {
+        ubicaciones.setSelectedUbicacion(ubicacionSeleccionada);
+        guardarUbicacionesAlmacenadas();
+    }
 
-    public void editUbicacion(UbicacionConexionModel ubicacion, int pos) throws IOException,IllegalArgumentException {
-        ubicaciones.getUbicaciones()[pos] = ubicacion;
+    public void editUbicacion(UbicacionConexionModel ubicacionEditada, int pos) throws IOException,IllegalArgumentException {
+        ubicaciones.getUbicaciones()[pos] = ubicacionEditada;
         guardarUbicacionesAlmacenadas();
 
     }

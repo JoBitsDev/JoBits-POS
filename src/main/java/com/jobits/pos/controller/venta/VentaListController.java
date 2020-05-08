@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.venta;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import java.awt.Container;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
         super(VentaDAO.getInstance());
     }
 
-    public VentaListController(AbstractView parentView) {
+    public VentaListController(OldAbstractView parentView) {
         super(VentaDAO.getInstance());
         constructView(parentView);
     }
@@ -45,7 +45,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
 
     @Override
     public void constructView(Container parent) {
-        setView(new VentaCalendarView(this, (AbstractView) parent));
+        setView(new VentaCalendarView(this, (OldAbstractView) parent));
         getView().updateView();
         getView().setVisible(true);
     }

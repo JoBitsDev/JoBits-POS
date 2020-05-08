@@ -5,51 +5,30 @@
  */
 package com.jobits.pos.ui.login;
 
-import com.jobits.pos.ui.View;
-import com.jobits.pos.ui.utils.LongProcessAction;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import com.jobits.pos.controller.login.LogInController;
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.controller.login.UbicacionConexionController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.exceptions.ExceptionHandler;
 import com.jobits.pos.domain.UbicacionConexionModel;
+import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.utils.ComponentMover;
-import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import static com.jobits.pos.ui.login.presenter.LoginViewModel.*;
+import static com.jobits.pos.ui.login.presenter.LoginViewPresenter.*;
 
 /**
  *
  * @author Jorge
  */
-public class LogInView extends javax.swing.JFrame implements View {
+public class LogInView extends AbstractViewPanel {
+
+    public static String VIEW_NAME = "Autenticación";
 
     /**
      * Creates new form LogInView
+     * @param presenter
      */
-    private final LogInController controller;
-    private final UbicacionConexionController ubicacionController;
-    private String estadoConexion;
-    private Color colorLabel;
-
-    public LogInView(LogInController controller) {
-        initComponents();
-        this.controller = controller;
-        ubicacionController = new UbicacionConexionController();
-        ComponentMover cr = new ComponentMover(this, this.getComponents());
-        jComboBox1.setModel(new RestManagerComboBoxModel<>(Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
-        jComboBox1.setSelectedIndex(ubicacionController.getUbicaciones().getSelectedUbicacion());
-        onComboBoxItemChange(null);
-        jComboBox1.addItemListener((ItemEvent e) -> {
-            onComboBoxItemChange(e);
-        });
+    public LogInView(AbstractViewPresenter presenter) {
+        super(presenter, true);
     }
 
     /**
@@ -80,10 +59,9 @@ public class LogInView extends javax.swing.JFrame implements View {
         jPanelOptions = new javax.swing.JPanel();
         jButtonAutenticar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(483, 285));
         setName("main"); // NOI18N
-        setUndecorated(true);
+        setLayout(new java.awt.BorderLayout());
 
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.BorderLayout());
@@ -103,7 +81,7 @@ public class LogInView extends javax.swing.JFrame implements View {
         });
         jPanel2.add(jideButtonConfig, java.awt.BorderLayout.LINE_START);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
+        add(jPanel2, java.awt.BorderLayout.NORTH);
 
         jPanelCenter.setBackground(new java.awt.Color(0, 153, 153));
         jPanelCenter.setBorder(javax.swing.BorderFactory.createTitledBorder("Inicio Sesión"));
@@ -133,20 +111,15 @@ public class LogInView extends javax.swing.JFrame implements View {
         jPasswordField.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         jPasswordField.setMinimumSize(new java.awt.Dimension(200, 26));
         jPasswordField.setPreferredSize(new java.awt.Dimension(300, 22));
-        jPasswordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordFieldActionPerformed(evt);
-            }
-        });
         jPanelPass.add(jPasswordField);
 
         jPanelCenter.add(jPanelPass);
 
         jPanel1.setOpaque(false);
 
-        jXLabelConnected.setForeground(colorLabel);
+        jXLabelConnected.setForeground(new java.awt.Color(204, 204, 204));
         jXLabelConnected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jXLabelConnected.setText(estadoConexion);
+        jXLabelConnected.setText("Estado de la conexión");
         jXLabelConnected.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jPanel1.add(jXLabelConnected);
 
@@ -169,7 +142,7 @@ public class LogInView extends javax.swing.JFrame implements View {
 
         jPanelCenter.add(jPanelConn);
 
-        getContentPane().add(jPanelCenter, java.awt.BorderLayout.CENTER);
+        add(jPanelCenter, java.awt.BorderLayout.CENTER);
 
         jPanelOptions.setBackground(new java.awt.Color(153, 153, 153));
         jPanelOptions.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
@@ -178,30 +151,10 @@ public class LogInView extends javax.swing.JFrame implements View {
 
         jButtonAutenticar.setText(bundle.getString("label_autenticar")); // NOI18N
         jButtonAutenticar.setEnabled(false);
-        jButtonAutenticar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAutenticarActionPerformed(evt);
-            }
-        });
         jPanelOptions.add(jButtonAutenticar);
 
-        getContentPane().add(jPanelOptions, java.awt.BorderLayout.SOUTH);
-
-        pack();
-        setLocationRelativeTo(null);
+        add(jPanelOptions, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldActionPerformed
-        if (jButtonAutenticar.isEnabled()) {
-            getController().autenticar(overlayTextField1.getText(), jPasswordField.getPassword());
-            jPasswordField.setText("");
-        }
-    }//GEN-LAST:event_jPasswordFieldActionPerformed
-
-    private void jButtonAutenticarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAutenticarActionPerformed
-        onButtonAutenticarAction(evt);
-
-    }//GEN-LAST:event_jButtonAutenticarActionPerformed
 
     private void jideButtonConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonConfigActionPerformed
         System.exit(0);        // TODO add your handling code here:
@@ -232,83 +185,43 @@ public class LogInView extends javax.swing.JFrame implements View {
     private com.jidesoft.swing.OverlayTextField overlayTextField1;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public LogInController getController() {
-        return controller;
-    }
-
-    private void actualizarLabelConexion(boolean conn) {
-        if (conn) {
-            estadoConexion = "Conectado";
-            colorLabel = Color.green;
-        } else {
-            estadoConexion = "No hay conexión";
-            colorLabel = Color.red;
-        }
-        if (jXLabelConnected != null) {
-            jXLabelConnected.setText(estadoConexion);
-            jXLabelConnected.setForeground(colorLabel);
-        }
-        jButtonAutenticar.setEnabled(conn);
-    }
-
-    @Override
-    public void updateView() {
-        actualizarLabelConexion(getController().isConnected());
-        jComboBox1.setModel(new RestManagerComboBoxModel<>(Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
-        jComboBox1.setSelectedIndex(ubicacionController.getUbicaciones().getSelectedUbicacion());
-
-    }
-
-    @Override
-    public void initDefaults() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void modelPropertyChange(PropertyChangeEvent evt) {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void fetchComponentData() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Container getContainer() {
-        return this;
-    }
-
     private void onCrearEditarClick(int selectedIndex) {
-        new UbicacionView(this, true, ubicacionController);
-        updateView();
+        // new UbicacionView(this, true, new UbicacionConexionController());
+    }
+
+    public AbstractViewPresenter getPresenter() {
+        return presenter;
+    }
+
+    @Override
+    public void wireUp() {
+        Bindings.bind(jXLabelConnected, getPresenter().getModel(PROP_ESTADOCONEXION));
+        Bindings.bind(overlayTextField1, getPresenter().getModel(PROP_NOMBREUSUARIO));
+        Bindings.bind(jPasswordField, getPresenter().getModel(PROP_CONTRASENA));
+        Bindings.bind(jComboBox1, new SelectionInList<UbicacionConexionModel>(
+                getPresenter().getModel(PROP_LISTAUBICACIONES),
+                getPresenter().getModel(PROP_UBICACIONSELECCIONADA)));
+        Bindings.bind(jButtonAutenticar, "enabled", getPresenter().getModel(PROP_BOTON_AUTENTICAR_HABILITADO));
+        Bindings.bind(jXLabelConnected, "foreground", getPresenter().getModel(PROP_COLORLABELCONEXION));
+
+        jPasswordField.setAction(getPresenter().getOperation(ACTION_AUTENTICAR));
+        jButtonAutenticar.setAction(getPresenter().getOperation(ACTION_AUTENTICAR));
+        jButton1.setAction(getPresenter().getOperation(ACTION_EDITAR_UBICACION));
+
+        presenter.addNotificationListener(this);
 
     }
 
-    private void onComboBoxItemChange(ItemEvent e) {
-        try {
-            ubicacionController.setSelectedUbicacion(jComboBox1.getSelectedIndex());
-            new LongProcessAction("Conectando a base de datos") {
-                @Override
-                protected void longProcessMethod() {
-                    try {
-                        controller.connect(ubicacionController.getUbicaciones().getUbicacionActiva());
-                    } catch (Exception ex) {
-                        Logger.getLogger(LogInView.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }.performAction(this);
-            actualizarLabelConexion(getController().isConnected());
-        } catch (Exception ex) {
-            ExceptionHandler.showExceptionToUser(ex);
-            Logger.getLogger(LogInView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    @Override
+    public void uiInit() {
+        initComponents();
+        ComponentMover cr = new ComponentMover(this, this.getComponents());
+
     }
 
-    private void onButtonAutenticarAction(ActionEvent evt) {
-        getController().autenticar(overlayTextField1.getText(), jPasswordField.getPassword());
-        jPasswordField.setText("");
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }

@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.venta;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.utils.LongProcessAction;
 import com.jobits.pos.ui.utils.VentaCellRender;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ import com.jobits.pos.ui.utils.utils;
  *
  * @author Jorge
  */
-public class VentaCalendarView extends AbstractView {
+public class VentaCalendarView extends OldAbstractView {
 
     private RestManagerAbstractTableCellModel<Venta> model;
     Calendar cal = new GregorianCalendar();
@@ -64,7 +64,7 @@ public class VentaCalendarView extends AbstractView {
         fetchComponentData();
     }
 
-    public VentaCalendarView(AbstractDialogController<Venta> controller, AbstractView parentComponent) {
+    public VentaCalendarView(AbstractDialogController<Venta> controller, OldAbstractView parentComponent) {
         super(DialogType.FULL_SCREEN, controller, parentComponent);
         initComponents();
         fetchComponentData();

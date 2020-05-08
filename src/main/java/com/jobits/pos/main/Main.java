@@ -7,7 +7,12 @@ package com.jobits.pos.main;
 
 import java.util.Locale;
 import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.ui.RootView;
+import com.jobits.pos.ui.login.LogInView;
+import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import com.jobits.pos.ui.utils.LoadingWindow;
+import java.awt.Window;
+import javax.swing.JFrame;
 
 /**
  * FirstDream
@@ -21,8 +26,14 @@ public class Main {
 
         java.awt.EventQueue.invokeLater(() -> {
             Locale.setDefault(Locale.Category.FORMAT, Locale.ENGLISH); // But the formatting in English
-            LogInController loginController = new LogInController();
-            loginController.constructView(null);
+            //LogInView login = new LogInView(new LoginViewPresenter(new LogInController()));
+            RootView root = new RootView();
+            MainWindow n = new MainWindow();
+            n.setLocationRelativeTo(null);
+            n.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            n.getContentPane().add(root);
+            n.pack();
+            n.setVisible(true);
         });
     }
 

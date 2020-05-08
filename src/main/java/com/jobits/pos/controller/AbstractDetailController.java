@@ -6,7 +6,7 @@
 package com.jobits.pos.controller;
 
 import com.jobits.pos.ui.AbstractDetailView;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.utils.LongProcessAction;
 import java.awt.Window;
 import com.jobits.pos.exceptions.DevelopingOperationException;

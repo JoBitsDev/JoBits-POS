@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.almacen;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.utils.RestaurantManagerListIntelliHint;
 import java.awt.Component;
 import java.awt.Dialog;
@@ -33,7 +33,7 @@ import com.jobits.pos.ui.utils.utils;
  *
  * @author Jorge
  */
-public class OperacionView extends AbstractView {
+public class OperacionView extends OldAbstractView {
 
     private AlmacenManageController controller;
     private CheckBoxType tipoOperacion = CheckBoxType.ENTRADA;

@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.seccion;
 
 import com.jobits.pos.ui.AbstractListView;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import java.util.List;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.controller.seccion.CartaListController;
@@ -28,7 +28,7 @@ public class CartaSeccionView extends AbstractListView<Carta> {
      * @param controller
      * @param owner
      */
-    public CartaSeccionView(AbstractListController controller, AbstractView owner) {
+    public CartaSeccionView(AbstractListController controller, OldAbstractView owner) {
         super(DialogType.INPUT_LARGE, controller, owner);
         initComponents();
     }

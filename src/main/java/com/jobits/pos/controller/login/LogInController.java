@@ -26,7 +26,7 @@ import com.jobits.pos.ui.utils.LoadingWindow;
  * @author Jorge
  *
  */
-public class LogInController extends AbstractDialogController<Personal> {
+public class LogInController {
 
     private boolean AUTORIZADO = false;
     private int nivelMinimo = -1;
@@ -35,13 +35,7 @@ public class LogInController extends AbstractDialogController<Personal> {
     private UbicacionConexionModel conexionActiva;
 
     public LogInController() {
-        super(null);
-    }
 
-    @Override
-    public void constructView(Container parent) {
-        mainView = new LogInView(this);
-        mainView.setVisible(true);
     }
 
     private boolean connect() throws Exception {
@@ -49,51 +43,32 @@ public class LogInController extends AbstractDialogController<Personal> {
         return DBConnector.isCONECTADO();
     }
 
-    public void autenticar(String user, char[] password) {
-        LoadingWindow.show(getView());
+    public boolean autenticar(String user, char[] password) {
 
-        SwingWorker<String, Void> worker = new SwingWorker<String, Void>() {
-            Personal p;
+        Personal p;
+        String error;
 
-            @Override
-            protected String doInBackground() throws Exception {
-                if (!user.isEmpty() && password.length != 0) {
-                    p = PersonalDAO.getInstance().find(user);
-                    if (p != null) {
-                        if (Arrays.equals(p.getContrasenna().toCharArray(), password)) {
-                            return "Autenticación correcta";
-                        } else {
-                            return "La contraseña es incorrecta";
-                        }
-                    } else {
-                        return "El usuario no existe";
-                    }
+        if (!user.isEmpty() && password.length != 0) {
+            p = PersonalDAO.getInstance().find(user);
+            if (p != null) {
+                if (Arrays.equals(p.getContrasenna().toCharArray(), password)) {
+                    error = "Autenticación correcta";
                 } else {
-                    return "Campos vacios";
+                    error = "La contraseña es incorrecta";
                 }
+            } else {
+                error = "El usuario no existe";
             }
+        } else {
+            error = "Campos vacios";
+        }
+        if (error.equals("Autenticación correcta")) {
+            return true;
+            // MainController controller = new MainController(p, mainView); //TODO Cordinator
+        } else {
+            throw new IllegalArgumentException(error);
+        }
 
-            @Override
-            protected void done() {
-                String status;
-                try {
-                    status = get();
-                    LoadingWindow.hide();
-                    if (status.equals("Autenticación correcta")) {
-                        showSuccessDialog(getView(), "Bienvenido");
-                        MainController controller = new MainController(p, mainView);
-                    } else {
-                        showErrorDialog(getView(), status);
-                    }
-                } catch (InterruptedException | ExecutionException ex) {
-                    LoadingWindow.hide();
-                    showErrorDialog(getView(), ex.getMessage());
-                    ex.printStackTrace();
-                }
-            }
-        };
-
-        worker.execute();
     }
 
     public boolean isConnected() {
@@ -104,7 +79,7 @@ public class LogInController extends AbstractDialogController<Personal> {
     //Metodos para la ventana de autorizacion
     //
     private void constructLoginPanel(Container Parent, String title) {
-        setView(new AutenticacionFragmentView(Parent, this, true, title));
+        //  setView(new AutenticacionFragmentView(Parent, this, true, title));
 
     }
 
@@ -112,7 +87,7 @@ public class LogInController extends AbstractDialogController<Personal> {
 
         constructLoginPanel(parent, "Confirmar Accion (" + R.loggedUser.getUsuario() + ")");
         this.usuarioRequerido = R.loggedUser.getUsuario();
-        getView().setVisible(true);
+        // getView().setVisible(true); //TODO Cordinator
         return AUTORIZADO;
     }
 
@@ -122,7 +97,7 @@ public class LogInController extends AbstractDialogController<Personal> {
         }
         constructLoginPanel(parent, "Nivel Minimo (" + nivelMinimo + ")");
         this.nivelMinimo = nivelMinimo.getNivel();
-        getView().setVisible(true);
+        //  getView().setVisible(true); //TODO Cordinator
         return AUTORIZADO;
     }
 
@@ -136,7 +111,7 @@ public class LogInController extends AbstractDialogController<Personal> {
         }
         constructLoginPanel(parent, "Usuario Requerido (" + usuario + ")");
         this.usuarioRequerido = usuario;
-        getView().setVisible(true);
+        //getView().setVisible(true); //TODO Cordinator
         return AUTORIZADO;
     }
 
@@ -146,14 +121,14 @@ public class LogInController extends AbstractDialogController<Personal> {
      * @param password
      * @return
      */
-    public void autorizar(String user, char[] password) {
+    public boolean autorizar(String user, char[] password) {
         if (!user.isEmpty() && password.length != 0) {
             Personal p = PersonalDAO.getInstance().find(user);
             if (p != null) {
                 if (Arrays.equals(p.getContrasenna().toCharArray(), password)) {
                     if (p.getPuestoTrabajonombrePuesto().getNivelAcceso() > 3) {
-                        AUTORIZADO = true;
-                        return;
+                        return AUTORIZADO = true;
+
                     }
                     if (nivelMinimo != -1) {
                         AUTORIZADO = p.getPuestoTrabajonombrePuesto().getNivelAcceso() >= nivelMinimo;
@@ -172,10 +147,10 @@ public class LogInController extends AbstractDialogController<Personal> {
         } else {
             //   return "Campos vacios";
         }
-        getView().dispose();
+        return true;
     }
 
-    public void connect(UbicacionConexionModel ubicacionActiva) throws Exception{
+    public void connect(UbicacionConexionModel ubicacionActiva) throws Exception {
         this.conexionActiva = ubicacionActiva;
         connect();
     }

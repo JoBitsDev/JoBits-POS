@@ -72,7 +72,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     @Override
     public void constructView(Container parent) {
-//        setView(new TransaccionDetailView(a, this, (AbstractView) parent));
+//        setView(new TransaccionDetailView(a, this, (OldAbstractView) parent));
 //        getView().updateView();
 //        getView().setVisible(true);
     }

@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.licencia;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import java.awt.Dialog;
 import java.awt.event.KeyEvent;
 import com.jobits.pos.controller.AbstractDialogController;
@@ -18,7 +18,7 @@ import com.jobits.pos.exceptions.DevelopingOperationException;
  *
  * @author Jorge
  */
-public class LicenceDialogView extends AbstractView {
+public class LicenceDialogView extends OldAbstractView {
 
     public LicenceDialogView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, boolean modal) {
         super(DIALOG_TYPE, controller, owner, modal);

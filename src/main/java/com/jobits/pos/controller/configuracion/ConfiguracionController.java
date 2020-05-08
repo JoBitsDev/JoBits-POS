@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.controller.configuracion;
 
-import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +26,7 @@ import com.jobits.pos.adapters.repo.SeccionDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.Ticket;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.OldView;
 
 /**
  * FirstDream
@@ -42,7 +42,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
         super(ConfiguracionDAO.getInstance());
     }
 
-    public ConfiguracionController(View parentView) {
+    public ConfiguracionController(OldView parentView) {
         super(ConfiguracionDAO.getInstance());
         constructView(parentView.getContainer());
     }

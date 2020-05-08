@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.seccion;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.seccion.CartaSeccionView;
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
@@ -36,7 +36,7 @@ public class CartaListController extends AbstractListController<Carta> {
         super(MenuDAO.getInstance());
     }
 
-    public CartaListController(AbstractView parent) {
+    public CartaListController(OldAbstractView parent) {
         super(MenuDAO.getInstance());
         SeccionDAO.getInstance().addPropertyChangeListener(this);
         constructView(parent);
@@ -74,7 +74,7 @@ public class CartaListController extends AbstractListController<Carta> {
 
     @Override
     public void constructView(Container parent) {
-        setView(new CartaSeccionView(this, (AbstractView) parent));
+        setView(new CartaSeccionView(this, (OldAbstractView) parent));
         getView().updateView();
         getView().setVisible(true);
     }

@@ -5,9 +5,8 @@
  */
 package com.jobits.pos.controller.licencia;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
-import com.jobits.pos.ui.View;
 import java.awt.Container;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +16,7 @@ import java.io.IOException;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.domain.models.Configuracion;
 import com.jobits.pos.adapters.repo.ConfiguracionDAO;
+import com.jobits.pos.ui.OldView;
 
 /**
  * FirstDream
@@ -46,7 +46,7 @@ public class LicenceController extends AbstractDialogController<Configuracion> {
 
     @Override
     public void constructView(Container parent) {
-        setView(new LicenceDialogView(View.DialogType.DEFINED, this, (AbstractView) parent, true));
+        setView(new LicenceDialogView(OldView.DialogType.DEFINED, this, (OldAbstractView) parent, true));
         getView().updateView();
         getView().setVisible(true);
     }

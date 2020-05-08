@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.areaventa;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
@@ -35,7 +35,7 @@ public class AreaVentaController extends AbstractListController<Area> {
         super(AreaDAO.getInstance());
     }
 
-    public AreaVentaController(AbstractView parent) {
+    public AreaVentaController(OldAbstractView parent) {
         this();
         MesaDAO.getInstance().addPropertyChangeListener(this);
         constructView(parent);
@@ -43,7 +43,7 @@ public class AreaVentaController extends AbstractListController<Area> {
 
     @Override
     public void constructView(Container parent) {
-        setView(new AreaVentaListView(this, (AbstractView) parent));
+        setView(new AreaVentaListView(this, (OldAbstractView) parent));
         getView().updateView();
         getView().setVisible(true);
     }

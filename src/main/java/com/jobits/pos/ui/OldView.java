@@ -14,7 +14,7 @@ import com.jobits.pos.controller.Controller;
  *
  * @author Jorge
  */
-public interface View {
+public interface OldView {
 
     public void updateView();
 

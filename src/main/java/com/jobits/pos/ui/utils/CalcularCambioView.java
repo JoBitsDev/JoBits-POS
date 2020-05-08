@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.utils;
 
 import GUI.Components.JSpinner;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -27,7 +27,7 @@ public class CalcularCambioView extends javax.swing.JDialog {
      */
     private Orden o;
 
-    public CalcularCambioView(AbstractView parent, boolean modal, Orden o) {
+    public CalcularCambioView(OldAbstractView parent, boolean modal, Orden o) {
         super(parent, modal);
         this.o = o;
         init(o);

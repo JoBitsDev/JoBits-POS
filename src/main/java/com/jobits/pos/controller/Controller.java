@@ -5,9 +5,9 @@
  */
 package com.jobits.pos.controller;
 
-import com.jobits.pos.ui.View;
 import java.beans.PropertyChangeListener;
 import com.jobits.pos.adapters.repo.Model;
+import com.jobits.pos.ui.OldView;
 
 /**
  *
@@ -17,6 +17,6 @@ public interface Controller extends PropertyChangeListener{
     
         public Model getModel();
         
-        public View getView();
+        public OldView getView();
     
 }

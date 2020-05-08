@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.configuracion;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.utils.ComboBoxWithList;
 import com.jobits.pos.ui.utils.TableWithComboBoxAutoComplete;
 import java.awt.Dialog;
@@ -26,7 +26,7 @@ import com.jobits.pos.ui.utils.RestManagerListModel;
  *
  * @author Jorge
  */
-public class ConfiguracionView extends AbstractView {
+public class ConfiguracionView extends OldAbstractView {
 
     private ComboBoxWithList<Seccion> bebida, excluir;
 

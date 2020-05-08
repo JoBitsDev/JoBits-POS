@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.gastos.pagos;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.utils.RestManagerCellRender;
 import com.jobits.pos.ui.utils.RestManagerInputVerifier;
 import com.jobits.pos.ui.utils.RestaurantManagerListIntelliHint;
@@ -37,7 +37,7 @@ import com.jobits.pos.ui.utils.utils;
  *
  * @author Jorge
  */
-public class Gastos_Pagos_Dashboard extends AbstractView {
+public class Gastos_Pagos_Dashboard extends OldAbstractView {
 
     //Controllers
     CuentaController cuentaController = new CuentaController();

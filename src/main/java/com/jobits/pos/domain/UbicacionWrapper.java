@@ -6,6 +6,7 @@
 package com.jobits.pos.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jobits.pos.domain.models.Ubicacion;
 import java.util.List;
 
 /**
@@ -41,6 +42,15 @@ public class UbicacionWrapper {
 
     public void setSelectedUbicacion(int selectedUbicacion) {
         this.selectedUbicacion = selectedUbicacion;
+    }
+    
+    @JsonIgnore
+    public void setSelectedUbicacion(UbicacionConexionModel selectedUbicacion) {
+        for (int i = 0; i < ubicaciones.length; i++) {
+            if (ubicaciones[i].equals(selectedUbicacion)) {
+                this.selectedUbicacion = i;
+            }
+        }
     }
 
     @JsonIgnore

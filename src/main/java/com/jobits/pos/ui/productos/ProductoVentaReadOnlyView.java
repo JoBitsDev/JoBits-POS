@@ -10,7 +10,7 @@ import GUI.Components.JTextField;
 import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
 import com.jobits.pos.ui.AbstractDetailView;
 import com.jobits.pos.ui.AbstractReadOnlyView;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.MouseEvent;

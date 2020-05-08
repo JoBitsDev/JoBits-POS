@@ -1,6 +1,5 @@
 package com.jobits.pos.controller.venta;
 
-import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.utils.CalcularCambioView;
 import com.jobits.pos.ui.venta.OrdenDetailFragmentView;
 import java.awt.Container;
@@ -46,6 +45,7 @@ import com.jobits.pos.servicios.impresion.Impresion;
 
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.OldView;
 
 /**
  * FirstDream
@@ -57,7 +57,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     Venta fechaOrden;
     private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
-    private View v;
+    private OldView v;
     private OrdenDetailFragmentView view;
     private IPVController ipvController = new IPVController();
 

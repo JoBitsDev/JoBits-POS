@@ -28,7 +28,7 @@ import com.jobits.pos.ui.utils.ComponentResizer;
  * @author Jorge
  *
  */
-public abstract class AbstractView extends JDialog implements View {
+public abstract class OldAbstractView extends JDialog implements OldView {
 
     private final DialogType DIALOG_TYPE;
     final Controller controller;
@@ -36,77 +36,77 @@ public abstract class AbstractView extends JDialog implements View {
     // Contructors
     //
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller) {
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
 
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner) {
         super(owner);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, boolean modal) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, boolean modal) {
         super(owner, modal);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, String title) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, String title) {
         super(owner, title);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, String title, boolean modal) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, String title, boolean modal) {
         super(owner, title, modal);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, String title, boolean modal, GraphicsConfiguration gc) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, String title, boolean modal, GraphicsConfiguration gc) {
         super(owner, title, modal, gc);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner) {
         super(owner);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, boolean modal) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, boolean modal) {
         super(owner, modal);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, String title) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, String title) {
         super(owner, title);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, String title, boolean modal) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, String title, boolean modal) {
         super(owner, title, modal);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;
         initDefaults();
     }
 
-    public AbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, String title, boolean modal, GraphicsConfiguration gc) {
+    public OldAbstractView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, String title, boolean modal, GraphicsConfiguration gc) {
         super(owner, title, modal, gc);
         this.DIALOG_TYPE = DIALOG_TYPE;
         this.controller = controller;

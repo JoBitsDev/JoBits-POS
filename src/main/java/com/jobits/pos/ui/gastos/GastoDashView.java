@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.gastos;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import com.jobits.pos.controller.AbstractDialogController;
@@ -15,7 +15,7 @@ import com.jobits.pos.exceptions.DevelopingOperationException;
  *
  * @author Jorge
  */
-public class GastoDashView extends AbstractView {
+public class GastoDashView extends OldAbstractView {
 
     public GastoDashView(DialogType DIALOG_TYPE, AbstractDialogController controller, Frame owner, boolean modal) {
         super(DIALOG_TYPE, controller, owner, modal);

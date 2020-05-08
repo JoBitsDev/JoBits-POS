@@ -1,0 +1,109 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.jobits.pos.ui.login.presenter;
+
+import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.domain.UbicacionConexionModel;
+import com.jobits.pos.ui.presenters.AbstractViewAction;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.LongProcessAction;
+import java.awt.Color;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * JoBits
+ *
+ * @author Jorge
+ *
+ */
+public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
+
+    public static final String ACTION_AUTENTICAR = "Autenticar";
+
+    public static final String ACTION_EDITAR_UBICACION = "Editar ubicacion";
+
+    LogInController controller;
+    UbicacionConexionController ubicacionController;
+
+    public LoginViewPresenter(LogInController controller) {
+        super(new LoginViewModel());
+        this.controller = controller;
+        ubicacionController = new UbicacionConexionController();
+        getBean().setListaUbicaciones(new ArrayListModel<>(
+                Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
+        getBean().setUbicacionSeleccionada(ubicacionController.getUbicaciones().getUbicacionActiva());
+
+    }
+
+    private void onAutenticarClick() {
+        String password = getBean().getContraseña();
+        getBean().setContraseña("");
+        controller.autenticar(getBean().getNombreUsuario(), password.toCharArray());
+        fireToast("Bienvenido");
+    }
+
+    private void onUbicacionSeleccionadaChanged() {
+        new LongProcessAction("Conectando a BD") {//TODO: internacionalizar
+            @Override
+            protected void longProcessMethod() {
+                try {
+                    ubicacionController.setSelectedUbicacion(getBean().getUbicacionSeleccionada());
+                    controller.connect(ubicacionController.getUbicaciones().getUbicacionActiva());
+                    actualizarLabelConexionYBotonAutenticar(controller.isConnected());
+
+                } catch (IOException ex) {
+                    Logger.getLogger(LoginViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (Exception ex) {
+                    Logger.getLogger(LoginViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }.performAction(null);
+    }
+
+    private void onEditarUbicacionClick() {
+
+    }
+
+    private void actualizarLabelConexionYBotonAutenticar(boolean conn) {
+        if (conn) {
+            getBean().setEstadoConexion("Conectado");
+            getBean().setColorLabelConexion(Color.green);
+        } else {
+            getBean().setEstadoConexion("No hay conexión");
+            getBean().setColorLabelConexion(Color.red);
+        }
+        getBean().setBotonAutenticarHabilitado(conn);
+    }
+
+    @Override
+    protected void registerOperations() {
+        registerOperation(new AbstractViewAction(ACTION_AUTENTICAR) {
+            @Override
+            public Optional doAction() {
+                onAutenticarClick();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_EDITAR_UBICACION) {
+            @Override
+            public Optional doAction() {
+                onEditarUbicacionClick();
+                return Optional.empty();
+            }
+        });
+        getBean().addPropertyChangeListener(LoginViewModel.PROP_UBICACIONSELECCIONADA, (evt) -> {
+            onUbicacionSeleccionadaChanged();
+        });
+    }
+
+}

@@ -10,7 +10,7 @@ import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
 import java.awt.Dialog;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
  *
  * @author Jorge
  */
-public class PedidoIpvVentasView extends AbstractView {
+public class PedidoIpvVentasView extends OldAbstractView {
 
     private AbstractCrossReferenePanel<ProdcutoVentaPedidoModel, IpvVentaRegistro> porPedirTable;
     private RestManagerAbstractTableModel<InsumoPedidoModel> listaPedido;

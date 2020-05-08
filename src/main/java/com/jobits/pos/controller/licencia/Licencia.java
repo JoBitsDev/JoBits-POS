@@ -6,11 +6,11 @@
 
 package com.jobits.pos.controller.licencia;
 
-import com.jobits.pos.ui.View;
 import java.beans.PropertyChangeEvent;
 import com.jobits.pos.controller.Controller;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.adapters.repo.Model;
+import com.jobits.pos.ui.OldView;
 
 /**
  * FirstDream
@@ -26,7 +26,7 @@ public class Licencia implements Controller
     }
 
     @Override
-    public View getView() {
+    public OldView getView() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 

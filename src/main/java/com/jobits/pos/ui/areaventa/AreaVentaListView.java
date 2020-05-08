@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.areaventa;
 
 import com.jobits.pos.ui.AbstractListView;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import java.awt.Dialog;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDialogController;
@@ -23,7 +23,7 @@ import com.jobits.pos.ui.utils.RestManagerListModel;
  */
 public class AreaVentaListView extends AbstractListView<Area> {
 
-    public AreaVentaListView(AbstractListController controller, AbstractView owner) {
+    public AreaVentaListView(AbstractListController controller, OldAbstractView owner) {
         super(DialogType.INPUT_LARGE, controller, owner);
         initComponents();
     }

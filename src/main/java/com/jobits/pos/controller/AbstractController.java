@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.controller;
 
-import com.jobits.pos.ui.View;
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
@@ -16,6 +15,7 @@ import com.jobits.pos.exceptions.HiddenException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.OldView;
 
 /**
  * FirstDream
@@ -29,7 +29,7 @@ public abstract class AbstractController<T> implements Controller {
     private AbstractRepository<T> model;
     protected List<T> items = null;
     protected T selected;
-    private View view;
+    private OldView view;
     protected boolean dismissOnAction = true;
     protected boolean showDialogs = true;
 
@@ -48,11 +48,11 @@ public abstract class AbstractController<T> implements Controller {
     public abstract void constructView(java.awt.Container parent);
 
     @Override
-    public View getView() {
+    public OldView getView() {
         return view;
     }
 
-    public void setView(View view) {
+    public void setView(OldView view) {
         this.view = view;
 
     }

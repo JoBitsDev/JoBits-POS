@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.almacen;
 
 import com.jobits.pos.ui.AbstractDetailView;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
 import java.awt.Color;
 import java.awt.Container;
@@ -60,7 +60,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     final Color elaboracionColor = new Color(255, 255, 204);
     final String labelInsumoSleccionado = "<Seleccione un insumo en la tabla>";
 
-    public AlmacenEditView(AbstractDetailController<Almacen> controller, AbstractView owner, Almacen instance) {
+    public AlmacenEditView(AbstractDetailController<Almacen> controller, OldAbstractView owner, Almacen instance) {
         super(instance, DialogType.FULL_SCREEN, controller, owner);
         initComponents();
         buttonGroup1.add(jRadioButtonSalida);

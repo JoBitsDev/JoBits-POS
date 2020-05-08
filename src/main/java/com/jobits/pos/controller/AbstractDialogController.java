@@ -5,8 +5,7 @@
  */
 package com.jobits.pos.controller;
 
-import com.jobits.pos.ui.AbstractView;
-import com.jobits.pos.ui.View;
+import com.jobits.pos.ui.OldAbstractView;
 import java.awt.Container;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
@@ -14,6 +13,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.OldView;
 
 /**
  * FirstDream
@@ -29,8 +29,8 @@ public abstract class AbstractDialogController<T> extends AbstractController<T> 
     }
 
     @Override
-    public AbstractView getView() {
-        return (AbstractView) super.getView();
+    public OldAbstractView getView() {
+        return (OldAbstractView) super.getView();
     }
 
     //

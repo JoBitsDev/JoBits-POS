@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.almacen.AlmacenEditView;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -76,7 +76,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new AlmacenEditView(this, (AbstractView) parent, getInstance()));
+        setView(new AlmacenEditView(this, (OldAbstractView) parent, getInstance()));
         getView().updateView();
         getView().fetchComponentData();
         getView().setVisible(true);

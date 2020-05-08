@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.utils;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import java.awt.Container;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.login.LogInController;
@@ -14,10 +14,10 @@ import com.jobits.pos.controller.login.LogInController;
  *
  * @author Jorge
  */
-public class AutenticacionFragmentView extends AbstractView {
+public class AutenticacionFragmentView extends OldAbstractView {
 
     public AutenticacionFragmentView(Container parent, AbstractDialogController controller, boolean modal, String title) {
-        super(DialogType.DEFINED, controller, (AbstractView) parent, modal);
+        super(DialogType.DEFINED, controller, (OldAbstractView) parent, modal);
         setUndecorated(true);
         initComponents();
         jLabel1.setText(title);
@@ -163,16 +163,17 @@ public class AutenticacionFragmentView extends AbstractView {
     // End of variables declaration//GEN-END:variables
 
     private void autenticar() {
-        getController().autorizar(overlayTextField1.getText(), jPasswordField.getPassword());
+    //    getController().autorizar(overlayTextField1.getText(), jPasswordField.getPassword());
         jPasswordField.setText("");
         this.dispose();
     }
 
-    @Override
-    public LogInController getController() {
-        return (LogInController) super.getController(); //To change body of generated methods, choose Tools | Templates.
-    }
-
+//    @Override
+//    public LogInController getController() {
+//        return (LogInController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+//    }
+//TODO arreglar
+    
     @Override
     public void updateView() {
 

@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jidesoft.swing.JideButton;
 import java.awt.Container;
@@ -33,7 +33,7 @@ public class TransaccionesListController extends AbstractListController<Transacc
 
     Almacen a;
 
-    public TransaccionesListController(AbstractView parent, Almacen a) {
+    public TransaccionesListController(OldAbstractView parent, Almacen a) {
         super(TransaccionDAO.getInstance());
         this.a = a;
         TransaccionDAO.getInstance().addPropertyChangeListener(this);
@@ -53,7 +53,7 @@ public class TransaccionesListController extends AbstractListController<Transacc
 
     @Override
     public void constructView(Container parent) {
-        setView(new TransaccionListView(this, (AbstractView) parent, true));
+        setView(new TransaccionListView(this, (OldAbstractView) parent, true));
         getView().getjButtonAdd().setVisible(false);
         getView().getjButtonEdit().setVisible(false);       
 

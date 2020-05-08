@@ -20,7 +20,7 @@ import com.jobits.pos.controller.AbstractDetailController;
  * @param <T>
  * 
  */
-public abstract class AbstractReadOnlyView <T>  extends AbstractView{
+public abstract class AbstractReadOnlyView <T>  extends OldAbstractView{
 
     protected T instance;
 

@@ -29,16 +29,16 @@ import com.jobits.pos.ui.utils.ComponentResizer;
  * @author Jorge
  * @param <T>
  */
-public abstract class AbstractListView<T> extends AbstractView {
+public abstract class AbstractListView<T> extends OldAbstractView {
 
     protected MyJTableModel<T> model;
 
-    public AbstractListView(DialogType type, AbstractListController<T> controller, AbstractView parent) {
+    public AbstractListView(DialogType type, AbstractListController<T> controller, OldAbstractView parent) {
         super(type, controller, parent);
 
     }
 
-    public AbstractListView(AbstractListController<T> controller, AbstractView parent, boolean modal) {
+    public AbstractListView(AbstractListController<T> controller, OldAbstractView parent, boolean modal) {
         super(DialogType.LIST, controller, parent, modal);
         initComponents();
         createPopUpMenu();

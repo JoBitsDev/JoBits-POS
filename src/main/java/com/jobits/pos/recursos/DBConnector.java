@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.recursos;
 
-import com.jobits.pos.ui.View;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +13,7 @@ import javax.persistence.Persistence;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.domain.UbicacionConexionModel;
+import com.jobits.pos.ui.OldView;
 
 /**
  *
@@ -58,7 +58,7 @@ public class DBConnector {
         new DBConnector(connection);
     }
 
-    public static void resetConnection(View view) {
+    public static void resetConnection(OldView view) {
         new DBConnector(R.CURRENT_CONNECTION);
     }
 

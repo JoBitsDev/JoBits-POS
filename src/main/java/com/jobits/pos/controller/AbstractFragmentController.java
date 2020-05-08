@@ -6,13 +6,13 @@
 package com.jobits.pos.controller;
 
 import com.jobits.pos.ui.AbstractFragmentView;
-import com.jobits.pos.ui.View;
 import java.awt.Container;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.PropertyName;
+import com.jobits.pos.ui.OldView;
 
 /**
  * FirstDream

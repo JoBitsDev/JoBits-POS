@@ -24,7 +24,7 @@ import com.jobits.pos.domain.models.IpvVentaRegistroPK;
 import com.jobits.pos.domain.models.IpvPK;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.domain.models.IpvRegistroPK;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.almacen.IpvGestionView;
 
 import java.awt.Container;
@@ -74,7 +74,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     //
     @Override
     public void constructView(Container parent) {
-        setView(new IpvGestionView((AbstractView) parent, this));
+        setView(new IpvGestionView((OldAbstractView) parent, this));
         getView().updateView();
         getView().setVisible(true);
         IpvRegistroDAO.getInstance().removePropertyChangeListener(this);

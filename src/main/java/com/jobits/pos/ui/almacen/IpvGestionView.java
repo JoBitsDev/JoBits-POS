@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.almacen;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
 import com.jobits.pos.ui.utils.LongProcessAction;
 import com.jobits.pos.ui.utils.RestManagerCellRender;
@@ -44,13 +44,13 @@ import com.jobits.pos.ui.utils.utils;
  *
  * @author Jorge
  */
-public class IpvGestionView extends AbstractView {
+public class IpvGestionView extends OldAbstractView {
 
     private Cocina currentSelectedKitchen;
     private List<IpvRegistro> registroList;
     private List<IpvVentaRegistro> ipvList;
 
-    public IpvGestionView(AbstractView parent, AbstractDialogController controller) {
+    public IpvGestionView(OldAbstractView parent, AbstractDialogController controller) {
         super(DialogType.FULL_SCREEN, controller, parent);
         initComponents();
         fetchComponentData();

@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.seccion;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.seccion.SeccionListView;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -70,7 +70,7 @@ public class SeccionListController extends AbstractListController<Seccion> {
         }
     }
 
-    public void createInstanceOffline(Carta a, AbstractView view) {
+    public void createInstanceOffline(Carta a, OldAbstractView view) {
         setView(view);
         String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la sección a crear",
                 "Nueva Sección", JOptionPane.QUESTION_MESSAGE);

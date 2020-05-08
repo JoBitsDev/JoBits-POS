@@ -21,7 +21,7 @@ import com.jobits.pos.ui.utils.ComponentMover;
  * @param <T>
  *
  */
-public abstract class AbstractFragmentView<T> extends JPanel implements View {
+public abstract class AbstractFragmentView<T> extends JPanel implements OldView {
 
     final Controller controller;
     private Container parentComponent;

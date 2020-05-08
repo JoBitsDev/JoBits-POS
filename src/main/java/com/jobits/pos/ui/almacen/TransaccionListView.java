@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.almacen;
 
 import com.jobits.pos.ui.AbstractListView;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jidesoft.swing.JideButton;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -25,7 +25,7 @@ import com.jobits.pos.recursos.R;
  */
 public class TransaccionListView extends AbstractListView<Transaccion> {
 
-    public TransaccionListView(AbstractListController<Transaccion> controller, AbstractView parent, boolean modal) {
+    public TransaccionListView(AbstractListController<Transaccion> controller, OldAbstractView parent, boolean modal) {
         super(controller, parent, modal);
         JideButton jideButton1 = new com.jidesoft.swing.JideButton();
         jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N

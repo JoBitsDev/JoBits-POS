@@ -7,7 +7,7 @@
 package com.jobits.pos.controller.areaventa;
 
 import com.jobits.pos.ui.AbstractDetailView;
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.areaventa.AreaCreateEditView;
 import java.awt.Container;
 import java.awt.Window;
@@ -73,7 +73,7 @@ public class AreaDetailController extends AbstractDetailController<Area>{
     
     @Override
     public void constructView(Container parent) {
-        setView(new AreaCreateEditView(getInstance(), this, (AbstractView) parent));
+        setView(new AreaCreateEditView(getInstance(), this, (OldAbstractView) parent));
         getView().updateView();
         getView().setVisible(true);
     }

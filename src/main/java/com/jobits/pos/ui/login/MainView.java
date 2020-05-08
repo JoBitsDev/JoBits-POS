@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.login;
 
-import com.jobits.pos.ui.AbstractView;
+import com.jobits.pos.ui.OldAbstractView;
 import java.awt.Color;
 import javax.swing.JFrame;
 import mdlaf.components.button.MaterialButtonUI;
@@ -20,7 +20,7 @@ import com.jobits.pos.ui.utils.ComponentMover;
  *
  * @author Jorge
  */
-public class MainView extends AbstractView {
+public class MainView extends OldAbstractView {
 
     
     public MainView(AbstractDialogController controller) {
