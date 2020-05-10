@@ -21,15 +21,15 @@ public class NavigationNode {
 
     private NavigationNode parentNode;
 
-    private View view;
+    private String viewUIDName;
 
-    private NavigationNode(NavigationNode parentNode, View view) {
+    public NavigationNode(NavigationNode parentNode, String viewUIDName) {
         this.parentNode = parentNode;
-        this.view = view;
+        this.viewUIDName = viewUIDName;
     }
 
-    public static NavigationNode of(NavigationNode parentNode, View view) {
-        return new NavigationNode(parentNode, view);
+    public static NavigationNode of(NavigationNode parentNode, String viewUIDName) {
+        return new NavigationNode(parentNode, viewUIDName);
     }
 
 }

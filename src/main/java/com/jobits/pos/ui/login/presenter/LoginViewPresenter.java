@@ -8,7 +8,9 @@ package com.jobits.pos.ui.login.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.cordinator.MainNavigator;
 import com.jobits.pos.domain.UbicacionConexionModel;
+import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessAction;
@@ -71,6 +73,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     }
 
     private void onEditarUbicacionClick() {
+        MainNavigator.getInstance().navigateTo(UbicacionView.VIEW_NAME,new UbicacionViewPresenter(ubicacionController));//TODO codigo de ubicaciones
 
     }
 

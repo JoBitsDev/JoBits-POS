@@ -38,7 +38,8 @@ public class IpvRegistroDAO extends AbstractRepository<IpvRegistro> {
     }
 
       public List<IpvRegistro> getIpvRegistroList(Date fecha) {
-        List<IpvRegistro> ret = new ArrayList<>(getEntityManager().createNamedQuery("IpvRegistro.findByFecha")
+        List<IpvRegistro> ret = new ArrayList<>(
+                getEntityManager().createNamedQuery("IpvRegistro.findByFecha")
                 .setParameter("fecha", fecha)
                 .getResultList());
         for (IpvRegistro x : ret) {

@@ -7,24 +7,28 @@ package com.jobits.pos.ui.login;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.utils.ComponentMover;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.login.presenter.LoginViewModel.*;
 import static com.jobits.pos.ui.login.presenter.LoginViewPresenter.*;
+import com.jobits.ui.components.MaterialComponentsFactory;
+import javax.swing.JButton;
+import util.materials.MaterialColors;
+import util.materials.MaterialIcons;
 
 /**
  *
  * @author Jorge
  */
 public class LogInView extends AbstractViewPanel {
-
+    
     public static final String VIEW_NAME = "Autenticación";
 
     /**
      * Creates new form LogInView
+     *
      * @param presenter
      */
     public LogInView(AbstractViewPresenter presenter) {
@@ -41,187 +45,154 @@ public class LogInView extends AbstractViewPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jXLabelUser1 = new org.jdesktop.swingx.JXLabel();
-        jideButtonConfig = new com.jidesoft.swing.JideButton();
-        jPanelCenter = new javax.swing.JPanel();
-        jPanelUser = new javax.swing.JPanel();
-        jideLabel1 = new com.jidesoft.swing.JideLabel();
-        overlayTextField1 = new com.jidesoft.swing.OverlayTextField();
-        jPanelPass = new javax.swing.JPanel();
-        jideLabel2 = new com.jidesoft.swing.JideLabel();
-        jPasswordField = new com.jidesoft.swing.OverlayPasswordField();
-        jPanel1 = new javax.swing.JPanel();
-        jXLabelConnected = new org.jdesktop.swingx.JXLabel();
         jPanelConn = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jPanelOptions = new javax.swing.JPanel();
-        jButtonAutenticar = new javax.swing.JButton();
+        jButtonEdit = MaterialComponentsFactory.Buttons.getEditButton();
+        jLabelEstadoConexion = new javax.swing.JLabel();
+        jButtonAutenticar = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("Usuario","Introduzca el nombre de usuario");
+        jPasswordField = MaterialComponentsFactory.Input.getPasswordField("Contraseña", "Introduzca la contraseña");
 
         setMinimumSize(new java.awt.Dimension(483, 285));
         setName("main"); // NOI18N
-        setLayout(new java.awt.BorderLayout());
+        setOpaque(false);
 
-        jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        jPanel3.setBackground(MaterialColors.BLUEGREY_100);
+        jPanel3.setMaximumSize(new java.awt.Dimension(400, 600));
+        jPanel3.setMinimumSize(new java.awt.Dimension(400, 600));
+        jPanel3.setPreferredSize(new java.awt.Dimension(400, 600));
 
         jXLabelUser1.setBackground(new java.awt.Color(153, 255, 255));
         jXLabelUser1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jXLabelUser1.setText("Restaurant Manager ");
+        jXLabelUser1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/logo/banner.png"))); // NOI18N
         jXLabelUser1.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
-        jPanel2.add(jXLabelUser1, java.awt.BorderLayout.CENTER);
-
-        jideButtonConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
-        jideButtonConfig.setFocusable(false);
-        jideButtonConfig.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jideButtonConfigActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jideButtonConfig, java.awt.BorderLayout.LINE_START);
-
-        add(jPanel2, java.awt.BorderLayout.NORTH);
-
-        jPanelCenter.setBackground(new java.awt.Color(0, 153, 153));
-        jPanelCenter.setBorder(javax.swing.BorderFactory.createTitledBorder("Inicio Sesión"));
-        jPanelCenter.setMaximumSize(new java.awt.Dimension(417, 146));
-        jPanelCenter.setLayout(new javax.swing.BoxLayout(jPanelCenter, javax.swing.BoxLayout.PAGE_AXIS));
-
-        jPanelUser.setOpaque(false);
-
-        jideLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/usuario.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jideLabel1.setText(bundle.getString("label_usuario")); // NOI18N
-        jPanelUser.add(jideLabel1);
-
-        overlayTextField1.setMinimumSize(new java.awt.Dimension(250, 26));
-        overlayTextField1.setPreferredSize(new java.awt.Dimension(300, 22));
-        jPanelUser.add(overlayTextField1);
-
-        jPanelCenter.add(jPanelUser);
-
-        jPanelPass.setOpaque(false);
-
-        jideLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/contraseña.png"))); // NOI18N
-        jideLabel2.setText(bundle.getString("label_contrasena")); // NOI18N
-        jPanelPass.add(jideLabel2);
-
-        jPasswordField.setToolTipText("Contraseña");
-        jPasswordField.setMaximumSize(new java.awt.Dimension(2147483647, 22));
-        jPasswordField.setMinimumSize(new java.awt.Dimension(200, 26));
-        jPasswordField.setPreferredSize(new java.awt.Dimension(300, 22));
-        jPanelPass.add(jPasswordField);
-
-        jPanelCenter.add(jPanelPass);
-
-        jPanel1.setOpaque(false);
-
-        jXLabelConnected.setForeground(new java.awt.Color(204, 204, 204));
-        jXLabelConnected.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jXLabelConnected.setText("Estado de la conexión");
-        jXLabelConnected.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jPanel1.add(jXLabelConnected);
-
-        jPanelCenter.add(jPanel1);
 
         jPanelConn.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Ubicacion"));
         jPanelConn.setMaximumSize(new java.awt.Dimension(405, 23));
         jPanelConn.setOpaque(false);
         jPanelConn.setLayout(new java.awt.BorderLayout());
 
+        jComboBox1.setMinimumSize(new java.awt.Dimension(52, 48));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(52, 48));
         jPanelConn.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
-        jButton1.setText("Editar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanelConn.add(jButton1, java.awt.BorderLayout.EAST);
+        jButtonEdit.setMaximumSize(new java.awt.Dimension(40, 40));
+        jButtonEdit.setMinimumSize(new java.awt.Dimension(40, 40));
+        jButtonEdit.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButtonEdit.setSize(new java.awt.Dimension(40, 40));
+        jPanelConn.add(jButtonEdit, java.awt.BorderLayout.EAST);
 
-        jPanelCenter.add(jPanelConn);
+        jLabelEstadoConexion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelEstadoConexion.setPreferredSize(new java.awt.Dimension(45, 30));
+        jLabelEstadoConexion.setSize(new java.awt.Dimension(45, 30));
+        jPanelConn.add(jLabelEstadoConexion, java.awt.BorderLayout.PAGE_END);
 
-        add(jPanelCenter, java.awt.BorderLayout.CENTER);
-
-        jPanelOptions.setBackground(new java.awt.Color(153, 153, 153));
-        jPanelOptions.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
-        jPanelOptions.setMaximumSize(new java.awt.Dimension(272, 44));
-        jPanelOptions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
-
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonAutenticar.setText(bundle.getString("label_autenticar")); // NOI18N
         jButtonAutenticar.setEnabled(false);
-        jPanelOptions.add(jButtonAutenticar);
+        jButtonAutenticar.setPreferredSize(new java.awt.Dimension(180, 60));
 
-        add(jPanelOptions, java.awt.BorderLayout.SOUTH);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(jButtonAutenticar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelConn, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                            .addComponent(jPasswordField)
+                            .addComponent(jTextFieldUsuario)
+                            .addComponent(jXLabelUser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jXLabelUser1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanelConn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonAutenticar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(162, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(178, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(64, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jideButtonConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonConfigActionPerformed
-        System.exit(0);        // TODO add your handling code here:
-    }//GEN-LAST:event_jideButtonConfigActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        onCrearEditarClick(jComboBox1.getSelectedIndex());
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAutenticar;
+    private javax.swing.JButton jButtonEdit;
     private javax.swing.JComboBox<UbicacionConexionModel> jComboBox1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanelCenter;
+    private javax.swing.JLabel jLabelEstadoConexion;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelConn;
-    private javax.swing.JPanel jPanelOptions;
-    private javax.swing.JPanel jPanelPass;
-    private javax.swing.JPanel jPanelUser;
-    private com.jidesoft.swing.OverlayPasswordField jPasswordField;
-    private org.jdesktop.swingx.JXLabel jXLabelConnected;
+    private javax.swing.JPasswordField jPasswordField;
+    private javax.swing.JTextField jTextFieldUsuario;
     private org.jdesktop.swingx.JXLabel jXLabelUser1;
-    private com.jidesoft.swing.JideButton jideButtonConfig;
-    private com.jidesoft.swing.JideLabel jideLabel1;
-    private com.jidesoft.swing.JideLabel jideLabel2;
-    private com.jidesoft.swing.OverlayTextField overlayTextField1;
     // End of variables declaration//GEN-END:variables
 
-    private void onCrearEditarClick(int selectedIndex) {
-        // new UbicacionView(this, true, new UbicacionConexionController());
-    }
-
+    @Override
     public AbstractViewPresenter getPresenter() {
         return presenter;
     }
-
+    
     @Override
     public void wireUp() {
-        Bindings.bind(jXLabelConnected, getPresenter().getModel(PROP_ESTADOCONEXION));
-        Bindings.bind(overlayTextField1, getPresenter().getModel(PROP_NOMBREUSUARIO));
+        Bindings.bind(jLabelEstadoConexion, getPresenter().getModel(PROP_ESTADOCONEXION));
+        Bindings.bind(jTextFieldUsuario, getPresenter().getModel(PROP_NOMBREUSUARIO));
         Bindings.bind(jPasswordField, getPresenter().getModel(PROP_CONTRASENA));
         Bindings.bind(jComboBox1, new SelectionInList<UbicacionConexionModel>(
                 getPresenter().getModel(PROP_LISTAUBICACIONES),
                 getPresenter().getModel(PROP_UBICACIONSELECCIONADA)));
         Bindings.bind(jButtonAutenticar, "enabled", getPresenter().getModel(PROP_BOTON_AUTENTICAR_HABILITADO));
-        Bindings.bind(jXLabelConnected, "foreground", getPresenter().getModel(PROP_COLORLABELCONEXION));
-
+        Bindings.bind(jLabelEstadoConexion, "foreground", getPresenter().getModel(PROP_COLORLABELCONEXION));
+        
         jPasswordField.setAction(getPresenter().getOperation(ACTION_AUTENTICAR));
         jButtonAutenticar.setAction(getPresenter().getOperation(ACTION_AUTENTICAR));
-        jButton1.setAction(getPresenter().getOperation(ACTION_EDITAR_UBICACION));
-
-        presenter.addNotificationListener(this);
-
+        jButtonEdit.setAction(getPresenter().getOperation(ACTION_EDITAR_UBICACION));
+        jButtonEdit.setText("");
+        jButtonEdit.setIcon(MaterialIcons.EDIT);
     }
-
+    
     @Override
     public void uiInit() {
         initComponents();
         ComponentMover cr = new ComponentMover(this, this.getComponents());
-
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        
     }
-
+    
     @Override
     public String getViewName() {
         return VIEW_NAME;
     }
-
+    
 }

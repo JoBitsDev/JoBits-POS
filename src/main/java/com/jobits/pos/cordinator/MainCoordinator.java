@@ -23,17 +23,20 @@ import java.util.Map;
 public class MainCoordinator implements Coordinator {
 
     private Map<String, List<String>> navigationGraph;
-    
+
     private static MainCoordinator instance;
-    
-    private MainCoordinator(){
+
+    private MainCoordinator() {
         populateNavigationGraph();
     }
 
     public static MainCoordinator getInstance() {
+        if (instance == null) {
+            instance = new MainCoordinator();
+        }
         return instance;
     }
-    
+
     @Override
     public boolean canNavigateTo(String currentViewUID, String toViewUniqueName) {
         List<String> availablesViews = navigationGraph.get(currentViewUID);
@@ -42,7 +45,7 @@ public class MainCoordinator implements Coordinator {
 
     private void populateNavigationGraph() {
         navigationGraph = new HashMap<>();
-        navigationGraph.put(LogInView.VIEW_NAME,Arrays.asList(MainView.VIEW_NAME,UbicacionView.VIEW_NAME));
+        navigationGraph.put(LogInView.VIEW_NAME, Arrays.asList(MainView.VIEW_NAME, UbicacionView.VIEW_NAME));
     }
-    
+
 }

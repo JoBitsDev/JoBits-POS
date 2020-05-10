@@ -6,12 +6,22 @@
 package com.jobits.pos.main;
 
 import com.jobits.pos.cordinator.MainCoordinator;
+import com.jobits.pos.cordinator.MainNavigator;
 import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.View;
+import com.jobits.pos.ui.utils.utils;
+import com.jobits.ui.components.swing.notifications.NotificationHandler;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import ui.MaterialLookAndFeel;
+import util.Utils;
 
 /**
  *
@@ -30,6 +40,8 @@ public class Application {
 
     private MainCoordinator coordinator;
 
+    private MainNavigator navigator;
+
     private Personal loggedUser;
 
     private static Application application;
@@ -47,6 +59,7 @@ public class Application {
     public void start() {
         setLocale();
         setApplicationLooks();
+        setNotificationChannel();
         mainWindow = new MainWindow();
         mainWindow.setTitle(APP_NAME);
         mainWindow.setWelcomeHeader(true);
@@ -55,18 +68,26 @@ public class Application {
         mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainWindow.getContentPane().add(rootView);
         mainWindow.pack();
+        navigator = MainNavigator.getInstance();
         mainWindow.setVisible(true);
-        
-        rootView.showDefaultView();
+
     }
 
     private void setApplicationLooks() {
+        try {
+            UIManager.setLookAndFeel(new MaterialLookAndFeel());
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
     private void setLocale() {
         Locale.setDefault(Locale.Category.FORMAT, Locale.ENGLISH); // But the formatting in English
+    }
 
+    private void setNotificationChannel() {
+        NotificationService.registerNotificationChannel(new NotificationHandler());
     }
 
 }

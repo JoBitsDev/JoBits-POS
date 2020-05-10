@@ -5,12 +5,15 @@
  */
 package com.jobits.pos.ui;
 
-import com.jobits.pos.main.PresenterFacade;
-import com.jobits.pos.ui.login.LogInView;
+import com.jobits.pos.cordinator.MainNavigator;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
 import components.containers.MaterialPanel;
 import java.awt.CardLayout;
+import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -35,6 +38,7 @@ public class RootView extends MaterialPanel {
         super();
         initComponents();
         jPanelContent.setLayout(cards);
+   
     }
 
     public static RootView getInstance() {
@@ -55,60 +59,90 @@ public class RootView extends MaterialPanel {
     private void initComponents() {
 
         jPanelHeader = new javax.swing.JPanel();
+        jButtonBack = MaterialComponentsFactory.Buttons.getBackButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanelContent = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
         jPanelHeader.setOpaque(false);
+        jPanelHeader.setLayout(new java.awt.BorderLayout());
+
+        jButtonBack.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButtonBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBackActionPerformed(evt);
+            }
+        });
+        jPanelHeader.add(jButtonBack, java.awt.BorderLayout.WEST);
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/aceptar16.png"))); // NOI18N
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel1.setMinimumSize(new java.awt.Dimension(60, 40));
+        jLabel1.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanelHeader.add(jLabel1, java.awt.BorderLayout.CENTER);
+
         add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
 
-        jPanelContent.setBackground(new java.awt.Color(153, 255, 204));
+        jPanelContent.setBackground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
         jPanelContent.setLayout(jPanelContentLayout);
         jPanelContentLayout.setHorizontalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 646, Short.MAX_VALUE)
+            .addGap(0, 658, Short.MAX_VALUE)
         );
         jPanelContentLayout.setVerticalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 460, Short.MAX_VALUE)
+            .addGap(0, 416, Short.MAX_VALUE)
         );
 
         add(jPanelContent, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
+        MainNavigator.getInstance().navigateUp();
+    }//GEN-LAST:event_jButtonBackActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBack;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelHeader;
     // End of variables declaration//GEN-END:variables
 
-    public void showView(View view) {
-        if (!views.containsKey(view.getViewName())) {
-            addView(view);
-        }
-        currentDisplayedViewName = view.getViewName();
-        showView(currentDisplayedViewName);
-    }
-
     private void addView(View view) {
         views.put(view.getViewName(), view);
-        jPanelContent.add(view.getViewComponent(),view.getViewName());
+        jPanelContent.add(view.getViewComponent(), view.getViewName());
     }
 
-    private void showView(String viewNameToDisplay) {
+    public void showView(String viewNameToDisplay) {
+        if (!views.containsKey(viewNameToDisplay)) {
+            addView(ViewFacade.getView(viewNameToDisplay, null));
+        } else {
+            //        AbstractViewPresenter viewPresenter = PresenterFacade.getPresenterFor(viewNameToDisplay);
+            //      views.get(viewNameToDisplay).setPresenter(viewPresenter);
+        }
         currentDisplayedViewName = viewNameToDisplay;
         cards.show(jPanelContent, currentDisplayedViewName);
         repaint();
-        
+
     }
-    
-    public String getCurrentViewName(String name){
+
+    public String getCurrentViewName(String name) {
         return currentDisplayedViewName;
     }
-    
-    public void showDefaultView(){
-        showView(new LogInView(PresenterFacade.getPresenterFor(LogInView.VIEW_NAME)));
+
+    public void showView(String viewNameToDisplay, AbstractViewPresenter presenter) {
+        if (!views.containsKey(viewNameToDisplay)) {
+            addView(ViewFacade.getView(viewNameToDisplay, presenter));
+        } else {
+            views.get(viewNameToDisplay).setPresenter(presenter);
+        }
+        currentDisplayedViewName = viewNameToDisplay;
+        cards.show(jPanelContent, currentDisplayedViewName);
+        repaint();
     }
 
 }

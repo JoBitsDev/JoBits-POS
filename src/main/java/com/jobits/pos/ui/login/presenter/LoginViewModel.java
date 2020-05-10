@@ -27,14 +27,17 @@ public class LoginViewModel extends AbstractViewModel {
     private String contraseña;
 
     public static final String PROP_CONTRASENA = "contraseña";
-    
+
     private String estadoConexion;
 
     public static final String PROP_ESTADOCONEXION = "estadoConexion";
-    
+
     private Color colorLabelConexion;
 
     public static final String PROP_COLORLABELCONEXION = "colorLabelConexion";
+
+    public LoginViewModel() {
+    }
 
     /**
      * Get the value of colorLabelConexion
@@ -53,10 +56,9 @@ public class LoginViewModel extends AbstractViewModel {
     public void setColorLabelConexion(Color colorLabelConexion) {
         Color oldColorLabelConexion = this.colorLabelConexion;
         this.colorLabelConexion = colorLabelConexion;
-        firePropertyChange(PROP_COLORLABELCONEXION, oldColorLabelConexion, colorLabelConexion,false);
+        firePropertyChange(PROP_COLORLABELCONEXION, oldColorLabelConexion, colorLabelConexion, false);
     }
 
-    
     private boolean botonAutenticarHabilitado = false;
 
     public static final String PROP_BOTON_AUTENTICAR_HABILITADO = "botonAutenticarHabilitado";
@@ -78,9 +80,8 @@ public class LoginViewModel extends AbstractViewModel {
     public void setBotonAutenticarHabilitado(boolean botonAutenticarHabilitado) {
         boolean oldBotonAutenticarHabilitado = this.botonAutenticarHabilitado;
         this.botonAutenticarHabilitado = botonAutenticarHabilitado;
-        firePropertyChange(PROP_BOTON_AUTENTICAR_HABILITADO, oldBotonAutenticarHabilitado, botonAutenticarHabilitado,true);
+        firePropertyChange(PROP_BOTON_AUTENTICAR_HABILITADO, oldBotonAutenticarHabilitado, botonAutenticarHabilitado, true);
     }
-
 
     /**
      * Get the value of estadoConexion
@@ -99,9 +100,8 @@ public class LoginViewModel extends AbstractViewModel {
     public void setEstadoConexion(String estadoConexion) {
         String oldEstadoConexion = this.estadoConexion;
         this.estadoConexion = estadoConexion;
-        firePropertyChange(PROP_ESTADOCONEXION, oldEstadoConexion, estadoConexion,false);
+        firePropertyChange(PROP_ESTADOCONEXION, oldEstadoConexion, estadoConexion, false);
     }
-
 
     private List<UbicacionConexionModel> listaUbicaciones;
 

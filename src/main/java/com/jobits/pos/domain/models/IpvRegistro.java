@@ -33,7 +33,9 @@ import com.jobits.pos.recursos.R;
     @NamedQuery(name = "IpvRegistro.findAll", query = "SELECT i FROM IpvRegistro i"),
     @NamedQuery(name = "IpvRegistro.findByIpvinsumocodInsumo", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvinsumocodInsumo = :ipvinsumocodInsumo"),
     @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocina", 
-            query = "SELECT DISTINCT i.ipvRegistroPK.fecha FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina  ORDER BY i.ipvRegistroPK.fecha DESC"),
+            query = "SELECT DISTINCT i.ipvRegistroPK.fecha FROM IpvRegistro i "
+                    + "WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina  "
+                    + "ORDER BY i.ipvRegistroPK.fecha DESC"),
     @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndFecha", 
             query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina AND i.ipvRegistroPK.fecha = :fecha"),
     @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndFechaAndInsumo", 

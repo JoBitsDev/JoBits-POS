@@ -5,35 +5,27 @@
  */
 package com.jobits.pos.ui.login;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import com.jobits.pos.controller.login.UbicacionConexionController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.exceptions.ExceptionHandler;
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.domain.UbicacionConexionModel.TipoUbicacion;
-import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
+import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+
+import static com.jobits.pos.ui.login.presenter.UbicacionViewModel.*;
+import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  *
  * @author Jorge
  */
-public class UbicacionView extends javax.swing.JDialog {
+public class UbicacionView extends AbstractViewPanel {
 
-    public static String VIEW_NAME = "Editar ubicación";
-    
-    private UbicacionConexionController controller;
+    public static final String VIEW_NAME = "Editar ubicación";
 
-    public UbicacionView(java.awt.Frame parent, boolean modal, UbicacionConexionController controller) {
-        super(parent, modal);
-        this.controller = controller;
-        initComponents();
-        jComboBox1.setModel(new RestManagerComboBoxModel<>(Arrays.asList(TipoUbicacion.values())));
-        jComboBox1.setSelectedIndex(0);
-        fillForm();
-        setVisible(true);
+    public UbicacionView(AbstractViewPresenter presenter) {
+        super(presenter, true);
     }
 
     /**
@@ -47,7 +39,7 @@ public class UbicacionView extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jTextFieldNombre = new javax.swing.JTextField();
+        jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("","Nombre");
         jTextFieldUrl = new javax.swing.JTextField();
         jTextFieldUsuario = new javax.swing.JTextField();
         jPasswordFielContrasena = new javax.swing.JPasswordField();
@@ -55,8 +47,8 @@ public class UbicacionView extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 300));
+        setLayout(new java.awt.BorderLayout());
 
         jPanel1.setMinimumSize(new java.awt.Dimension(335, 227));
         jPanel1.setPreferredSize(new java.awt.Dimension(335, 227));
@@ -64,7 +56,7 @@ public class UbicacionView extends javax.swing.JDialog {
 
         jPanel1.add(jComboBox1);
 
-        jTextFieldNombre.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Nombre"));
+        jTextFieldNombre.setBorder(null);
         jPanel1.add(jTextFieldNombre);
 
         jTextFieldUrl.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Url"));
@@ -80,24 +72,12 @@ public class UbicacionView extends javax.swing.JDialog {
         jPanel1.add(jTextFieldDriver);
 
         jButton1.setText("Aceptar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
         jPanel2.add(jButton1);
 
         jPanel1.add(jPanel2);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
-
-        pack();
-        setLocationRelativeTo(null);
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        onAceptarClick();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -112,29 +92,31 @@ public class UbicacionView extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 
-    private void onAceptarClick() {
-        String nombre = jTextFieldNombre.getText();
-        String url = jTextFieldUrl.getText();
-        String usuario = jTextFieldUsuario.getText();
-        String pass = String.valueOf(jPasswordFielContrasena.getPassword());
-        String driver = jTextFieldDriver.getText();
-        UbicacionConexionModel uc = new UbicacionConexionModel(nombre, url,
-                usuario, nombre, driver, (TipoUbicacion) jComboBox1.getSelectedItem());
-        try {
-            controller.editUbicacion(uc, controller.getUbicaciones().getSelectedUbicacion());
-        } catch (IOException ex) {
-            ExceptionHandler.showExceptionToUser(ex);
-        }
-        dispose();
+  
+
+    @Override
+    public void wireUp() {
+        Bindings.bind(jTextFieldDriver, getPresenter().getModel(PROP_DRIVER));
+        Bindings.bind(jTextFieldNombre, getPresenter().getModel(PROP_NOMBRE_UBICACION));
+        Bindings.bind(jTextFieldUrl, getPresenter().getModel(PROP_URL));
+        Bindings.bind(jTextFieldUsuario, getPresenter().getModel(PROP_USUARIO));
+        Bindings.bind(jPasswordFielContrasena, getPresenter().getModel(PROP_PASSWORD));
+        Bindings.bind(jComboBox1,
+                new SelectionInList<UbicacionConexionModel.TipoUbicacion>(
+                        getPresenter().getModel(PROP_LISTA_TIPO_SERVIDOR),
+                        getPresenter().getModel(PROP_TIPO_SERVIDOR_SELECCIONADO)));
+        
+        jButton1.setAction(getPresenter().getOperation(UbicacionViewPresenter.ACTION_ACEPTAR_EDICION));
     }
 
-    private void fillForm() {
-        jTextFieldNombre.setText(controller.getUbicaciones().getUbicacionActiva().getNombre());
-        jTextFieldDriver.setText(controller.getUbicaciones().getUbicacionActiva().getDriver());
-        jTextFieldUrl.setText(controller.getUbicaciones().getUbicacionActiva().getUrl());
-        jPasswordFielContrasena.setText(controller.getUbicaciones().getUbicacionActiva().getContrasena());
-        jComboBox1.setSelectedItem(controller.getUbicaciones().getUbicacionActiva().getTipoUbicacion());
-        jTextFieldUsuario.setText(controller.getUbicaciones().getUbicacionActiva().getUsuario());
+    @Override
+    public void uiInit() {
+        initComponents();
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }
