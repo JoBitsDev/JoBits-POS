@@ -30,7 +30,7 @@ public class UbicacionView extends AbstractViewPanel {
     Box boxLayout = new Box(BoxLayout.Y_AXIS);
 
     public UbicacionView(AbstractViewPresenter presenter) {
-        super(presenter, true);
+        super(presenter);
     }
 
     /**

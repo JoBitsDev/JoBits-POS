@@ -34,7 +34,7 @@ public class LogInView extends AbstractViewPanel {
      * @param presenter
      */
     public LogInView(AbstractViewPresenter presenter) {
-        super(presenter, true);
+        super(presenter);
     }
 
     /**
