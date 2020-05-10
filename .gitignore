@@ -91,3 +91,7 @@ dist_ver/
 *.cfg
 
 ubicaciones.json
+
+lib/pers_mat.json
+
+pers_mat.json
