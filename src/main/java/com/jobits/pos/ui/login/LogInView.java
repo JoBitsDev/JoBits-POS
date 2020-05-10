@@ -26,6 +26,8 @@ public class LogInView extends AbstractViewPanel {
     
     public static final String VIEW_NAME = "Autenticación";
 
+   
+    
     /**
      * Creates new form LogInView
      *
@@ -51,7 +53,7 @@ public class LogInView extends AbstractViewPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         jButtonEdit = MaterialComponentsFactory.Buttons.getEditButton();
         jLabelEstadoConexion = new javax.swing.JLabel();
-        jButtonAutenticar = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jButtonAutenticar = MaterialComponentsFactory.Buttons.getAcceptButton();
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("Usuario","Introduzca el nombre de usuario");
         jPasswordField = MaterialComponentsFactory.Input.getPasswordField("Contraseña", "Introduzca la contraseña");
 
@@ -78,10 +80,11 @@ public class LogInView extends AbstractViewPanel {
         jComboBox1.setPreferredSize(new java.awt.Dimension(52, 48));
         jPanelConn.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
-        jButtonEdit.setMaximumSize(new java.awt.Dimension(40, 40));
+        jButtonEdit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonEdit.setMaximumSize(new java.awt.Dimension(60, 60));
         jButtonEdit.setMinimumSize(new java.awt.Dimension(40, 40));
         jButtonEdit.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButtonEdit.setSize(new java.awt.Dimension(40, 40));
+        jButtonEdit.setSize(new java.awt.Dimension(60, 60));
         jPanelConn.add(jButtonEdit, java.awt.BorderLayout.EAST);
 
         jLabelEstadoConexion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

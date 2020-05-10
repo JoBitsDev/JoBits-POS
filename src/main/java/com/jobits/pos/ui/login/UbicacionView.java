@@ -15,6 +15,10 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.login.presenter.UbicacionViewModel.*;
 import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
+import util.materials.MaterialColors;
 
 /**
  *
@@ -23,6 +27,7 @@ import com.jobits.ui.components.MaterialComponentsFactory;
 public class UbicacionView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Editar ubicación";
+    Box boxLayout = new Box(BoxLayout.Y_AXIS);
 
     public UbicacionView(AbstractViewPresenter presenter) {
         super(presenter, true);
@@ -37,50 +42,107 @@ public class UbicacionView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        jPanel1 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("","Nombre");
-        jTextFieldUrl = new javax.swing.JTextField();
-        jTextFieldUsuario = new javax.swing.JTextField();
-        jPasswordFielContrasena = new javax.swing.JPasswordField();
-        jTextFieldDriver = new javax.swing.JTextField();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        jTextFieldUrl = MaterialComponentsFactory.Input.getTextField("","Url");
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("","Usuario");
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        jPasswordFielContrasena = MaterialComponentsFactory.Input.getPasswordField("","Contraseña");
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        jTextFieldDriver = MaterialComponentsFactory.Input.getTextField("","Driver");
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jButton1 = MaterialComponentsFactory.Buttons.getAcceptButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
         setMinimumSize(new java.awt.Dimension(400, 300));
-        setLayout(new java.awt.BorderLayout());
+        setOpaque(false);
+        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
+        add(filler2);
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(335, 227));
-        jPanel1.setPreferredSize(new java.awt.Dimension(335, 227));
+        jPanel1.setBackground(MaterialColors.BLUEGREY_100);
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        jPanel1.setMaximumSize(new java.awt.Dimension(400, 500));
+        jPanel1.setMinimumSize(new java.awt.Dimension(400, 400));
+        jPanel1.setPreferredSize(new java.awt.Dimension(400, 500));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
 
+        jComboBox1.setMinimumSize(new java.awt.Dimension(52, 40));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(52, 40));
         jPanel1.add(jComboBox1);
+        jPanel1.add(filler8);
 
         jTextFieldNombre.setBorder(null);
+        jTextFieldNombre.setMaximumSize(new java.awt.Dimension(2147483647, 60));
+        jTextFieldNombre.setMinimumSize(new java.awt.Dimension(10, 30));
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(10, 60));
+        jTextFieldNombre.setSize(new java.awt.Dimension(0, 60));
         jPanel1.add(jTextFieldNombre);
+        jPanel1.add(filler3);
 
-        jTextFieldUrl.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Url"));
+        jTextFieldUrl.setBorder(null);
+        jTextFieldUrl.setMaximumSize(new java.awt.Dimension(2147483647, 60));
+        jTextFieldUrl.setMinimumSize(new java.awt.Dimension(10, 16));
+        jTextFieldUrl.setPreferredSize(new java.awt.Dimension(0, 60));
+        jTextFieldUrl.setSize(new java.awt.Dimension(0, 60));
         jPanel1.add(jTextFieldUrl);
+        jPanel1.add(filler4);
 
-        jTextFieldUsuario.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Usuario"));
+        jTextFieldUsuario.setBorder(null);
+        jTextFieldUsuario.setMaximumSize(new java.awt.Dimension(2147483647, 60));
+        jTextFieldUsuario.setMinimumSize(new java.awt.Dimension(0, 60));
+        jTextFieldUsuario.setPreferredSize(new java.awt.Dimension(0, 60));
         jPanel1.add(jTextFieldUsuario);
+        jPanel1.add(filler5);
 
-        jPasswordFielContrasena.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Contraseña"));
+        jPasswordFielContrasena.setBorder(null);
+        jPasswordFielContrasena.setMaximumSize(new java.awt.Dimension(2147483647, 60));
+        jPasswordFielContrasena.setMinimumSize(new java.awt.Dimension(0, 60));
+        jPasswordFielContrasena.setPreferredSize(new java.awt.Dimension(0, 60));
         jPanel1.add(jPasswordFielContrasena);
+        jPanel1.add(filler6);
 
-        jTextFieldDriver.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Driver"));
+        jTextFieldDriver.setBorder(null);
+        jTextFieldDriver.setMaximumSize(new java.awt.Dimension(2147483647, 60));
+        jTextFieldDriver.setPreferredSize(new java.awt.Dimension(0, 60));
+        jTextFieldDriver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldDriverActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldDriver);
+        jPanel1.add(filler7);
+
+        jPanel2.setOpaque(false);
 
         jButton1.setText("Aceptar");
         jPanel2.add(jButton1);
 
         jPanel1.add(jPanel2);
 
-        add(jPanel1, java.awt.BorderLayout.CENTER);
+        add(jPanel1);
+        add(filler1);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextFieldDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDriverActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDriverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
+    private javax.swing.Box.Filler filler7;
+    private javax.swing.Box.Filler filler8;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<TipoUbicacion> jComboBox1;
     private javax.swing.JPanel jPanel1;
@@ -112,6 +174,10 @@ public class UbicacionView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
+        boxLayout = new Box(BoxLayout.Y_AXIS);
+        boxLayout.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        boxLayout.add(Box.createVerticalGlue());
+        
     }
 
     @Override

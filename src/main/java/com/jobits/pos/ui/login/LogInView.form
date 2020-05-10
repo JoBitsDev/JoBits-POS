@@ -162,8 +162,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="jButtonEdit">
               <Properties>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[40, 40]"/>
+                  <Dimension value="[60, 60]"/>
                 </Property>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[40, 40]"/>
@@ -172,7 +173,7 @@
                   <Dimension value="[40, 40]"/>
                 </Property>
                 <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[40, 40]"/>
+                  <Dimension value="[60, 60]"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -213,7 +214,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getMaterialButton()"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getAcceptButton()"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldUsuario">

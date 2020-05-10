@@ -7,6 +7,7 @@ package com.jobits.pos.ui;
 
 import com.jobits.pos.cordinator.MainNavigator;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.AutenticacionFragmentView;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import components.containers.MaterialPanel;
 import java.awt.CardLayout;
@@ -24,7 +25,7 @@ public class RootView extends MaterialPanel {
     public static String VIEW_NAME = "Root View";
 
     private final CardLayout cards = new CardLayout();
-
+    
     private String currentDisplayedViewName;
 
     private Map<String, View> views = new HashMap<>();
@@ -59,6 +60,7 @@ public class RootView extends MaterialPanel {
     private void initComponents() {
 
         jPanelHeader = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jButtonBack = MaterialComponentsFactory.Buttons.getBackButton();
         jLabel1 = new javax.swing.JLabel();
         jPanelContent = new javax.swing.JPanel();
@@ -66,18 +68,27 @@ public class RootView extends MaterialPanel {
         setLayout(new java.awt.BorderLayout());
 
         jPanelHeader.setOpaque(false);
+        jPanelHeader.setPreferredSize(new java.awt.Dimension(120, 80));
         jPanelHeader.setLayout(new java.awt.BorderLayout());
 
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+
+        jButtonBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonBack.setMaximumSize(new java.awt.Dimension(40, 40));
+        jButtonBack.setMinimumSize(new java.awt.Dimension(40, 40));
         jButtonBack.setPreferredSize(new java.awt.Dimension(40, 40));
         jButtonBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBackActionPerformed(evt);
             }
         });
-        jPanelHeader.add(jButtonBack, java.awt.BorderLayout.WEST);
+        jPanel1.add(jButtonBack);
+
+        jPanelHeader.add(jPanel1, java.awt.BorderLayout.WEST);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/aceptar16.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/logo/banner.png"))); // NOI18N
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel1.setMinimumSize(new java.awt.Dimension(60, 40));
         jLabel1.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -95,7 +106,7 @@ public class RootView extends MaterialPanel {
         );
         jPanelContentLayout.setVerticalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 416, Short.MAX_VALUE)
+            .addGap(0, 376, Short.MAX_VALUE)
         );
 
         add(jPanelContent, java.awt.BorderLayout.CENTER);
@@ -108,6 +119,7 @@ public class RootView extends MaterialPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBack;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelHeader;
     // End of variables declaration//GEN-END:variables
