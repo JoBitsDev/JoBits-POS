@@ -67,7 +67,7 @@ public class MainNavigator implements Navigator {
     }
 
     private void showView() {
-        RootView.getInstance().showView(activeNode.getViewUIDName());
+        RootView.getInstance().showView(activeNode.getViewUIDName(),null);
     }
 
     private void showView(AbstractViewPresenter presenter) {

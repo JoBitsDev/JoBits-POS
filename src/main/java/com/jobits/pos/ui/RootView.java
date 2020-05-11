@@ -6,6 +6,10 @@
 package com.jobits.pos.ui;
 
 import com.jobits.pos.cordinator.MainNavigator;
+import com.jobits.pos.ui.dashboard.presenter.MainMenuPresenter;
+import com.jobits.pos.ui.login.DashBoardView;
+import com.jobits.pos.ui.login.MainMenuView;
+import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.AutenticacionFragmentView;
 import com.jobits.ui.components.MaterialComponentsFactory;
@@ -25,7 +29,9 @@ public class RootView extends MaterialPanel {
     public static String VIEW_NAME = "Root View";
 
     private final CardLayout cards = new CardLayout();
-    
+
+    private MainMenuView dashboard;
+
     private String currentDisplayedViewName;
 
     private Map<String, View> views = new HashMap<>();
@@ -39,7 +45,7 @@ public class RootView extends MaterialPanel {
         super();
         initComponents();
         jPanelContent.setLayout(cards);
-   
+
     }
 
     public static RootView getInstance() {
@@ -63,6 +69,7 @@ public class RootView extends MaterialPanel {
         jPanel1 = new javax.swing.JPanel();
         jButtonBack = MaterialComponentsFactory.Buttons.getBackButton();
         jLabel1 = new javax.swing.JLabel();
+        jPanelMainMenu = new javax.swing.JPanel();
         jPanelContent = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
@@ -96,13 +103,16 @@ public class RootView extends MaterialPanel {
 
         add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
 
+        jPanelMainMenu.setOpaque(false);
+        add(jPanelMainMenu, java.awt.BorderLayout.WEST);
+
         jPanelContent.setBackground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
         jPanelContent.setLayout(jPanelContentLayout);
         jPanelContentLayout.setHorizontalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 658, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanelContentLayout.setVerticalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,6 +132,7 @@ public class RootView extends MaterialPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelHeader;
+    private javax.swing.JPanel jPanelMainMenu;
     // End of variables declaration//GEN-END:variables
 
     private void addView(View view) {
@@ -129,14 +140,24 @@ public class RootView extends MaterialPanel {
         jPanelContent.add(view.getViewComponent(), view.getViewName());
     }
 
-    public void showView(String viewNameToDisplay) {
+    public void showView(String viewNameToDisplay, AbstractViewPresenter presenter) {
         if (!views.containsKey(viewNameToDisplay)) {
-            addView(ViewFacade.getView(viewNameToDisplay, null));
+            if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
+                if (dashboard == null) {
+                    dashboard = (MainMenuView) ViewFacade.getView(viewNameToDisplay, presenter);
+                    jPanelMainMenu.add(dashboard);
+                }
+                viewNameToDisplay = DashBoardView.VIEW_NAME;
+
+            }
+
         } else {
-            //        AbstractViewPresenter viewPresenter = PresenterFacade.getPresenterFor(viewNameToDisplay);
-            //      views.get(viewNameToDisplay).setPresenter(viewPresenter);
+            cards.removeLayoutComponent(views.get(viewNameToDisplay).getViewComponent());
         }
+        addView(ViewFacade.getView(viewNameToDisplay, presenter));
         currentDisplayedViewName = viewNameToDisplay;
+        jPanelHeader.setVisible(!currentDisplayedViewName.equals(LogInView.VIEW_NAME));
+        jPanelMainMenu.setVisible(!currentDisplayedViewName.equals(LogInView.VIEW_NAME));
         cards.show(jPanelContent, currentDisplayedViewName);
         repaint();
 
@@ -144,17 +165,6 @@ public class RootView extends MaterialPanel {
 
     public String getCurrentViewName(String name) {
         return currentDisplayedViewName;
-    }
-
-    public void showView(String viewNameToDisplay, AbstractViewPresenter presenter) {
-        if (!views.containsKey(viewNameToDisplay)) {
-            addView(ViewFacade.getView(viewNameToDisplay, presenter));
-        } else {
-            views.get(viewNameToDisplay).setPresenter(presenter);
-        }
-        currentDisplayedViewName = viewNameToDisplay;
-        cards.show(jPanelContent, currentDisplayedViewName);
-        repaint();
     }
 
 }

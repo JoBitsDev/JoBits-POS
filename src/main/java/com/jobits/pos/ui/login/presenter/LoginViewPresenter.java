@@ -6,10 +6,14 @@
 package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.cordinator.MainNavigator;
 import com.jobits.pos.domain.UbicacionConexionModel;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.ui.dashboard.presenter.MainMenuPresenter;
+import com.jobits.pos.ui.login.MainMenuView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -50,8 +54,11 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     private void onAutenticarClick() {
         String password = getBean().getContraseña();
         getBean().setContraseña("");
-        controller.autenticar(getBean().getNombreUsuario(), password.toCharArray());
-        fireToast("Bienvenido");
+        if (controller.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
+            fireToast("Bienvenido");
+            MainNavigator.getInstance().navigateTo(MainMenuView.VIEW_NAME,
+                    new MainMenuPresenter(new MainMenuController())); //TODO revisar eso codigo que no le pertenece a esta clse
+        }
     }
 
     private void onUbicacionSeleccionadaChanged() {
@@ -73,7 +80,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     }
 
     private void onEditarUbicacionClick() {
-        MainNavigator.getInstance().navigateTo(UbicacionView.VIEW_NAME,new UbicacionViewPresenter(ubicacionController));//TODO codigo de ubicaciones
+        MainNavigator.getInstance().navigateTo(UbicacionView.VIEW_NAME, new UbicacionViewPresenter(ubicacionController));//TODO codigo de ubicaciones
 
     }
 

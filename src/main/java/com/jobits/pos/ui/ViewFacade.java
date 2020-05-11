@@ -6,6 +6,8 @@
 package com.jobits.pos.ui;
 
 import com.jobits.pos.main.PresenterFacade;
+import com.jobits.pos.ui.login.DashBoardView;
+import com.jobits.pos.ui.login.MainMenuView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -36,6 +38,10 @@ public class ViewFacade {
                 return new UbicacionView(p);
             case LogInView.VIEW_NAME:
                 return getRootView(p);
+            case MainMenuView.VIEW_NAME:
+                return new MainMenuView(p);
+            case DashBoardView.VIEW_NAME:
+                return new DashBoardView(p);
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);
         }

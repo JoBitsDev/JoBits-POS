@@ -17,6 +17,7 @@ import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.recursos.DBConnector;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.domain.UbicacionConexionModel;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.LoadingWindow;
 
@@ -45,28 +46,29 @@ public class LogInController {
 
     public boolean autenticar(String user, char[] password) {
 
-        Personal p;
-        String error;
+        Personal p = null;
+        String msg;
 
         if (!user.isEmpty() && password.length != 0) {
             p = PersonalDAO.getInstance().find(user);
             if (p != null) {
                 if (Arrays.equals(p.getContrasenna().toCharArray(), password)) {
-                    error = "Autenticación correcta";
+                    msg = "Autenticación correcta";
                 } else {
-                    error = "La contraseña es incorrecta";
+                    msg = "La contraseña es incorrecta";
                 }
             } else {
-                error = "El usuario no existe";
+                msg = "El usuario no existe";
             }
         } else {
-            error = "Campos vacios";
+            msg = "Campos vacios";
         }
-        if (error.equals("Autenticación correcta")) {
+        if (msg.equals("Autenticación correcta")) {
+            Application.getInstance().setLoggedUser(p);
             return true;
-            // MainController controller = new MainController(p, mainView); //TODO Cordinator
+            // DashBoardController controller = new DashBoardController(p, mainView); //TODO Cordinator
         } else {
-            throw new IllegalArgumentException(error);
+            throw new IllegalArgumentException(msg);
         }
 
     }

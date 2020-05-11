@@ -5,9 +5,14 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.ui.View;
+import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
+import com.jobits.pos.ui.dashboard.presenter.MainMenuPresenter;
+import com.jobits.pos.ui.login.DashBoardView;
+import com.jobits.pos.ui.login.MainMenuView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
@@ -29,6 +34,10 @@ public class PresenterFacade {
                 return new LoginViewPresenter(new LogInController());
             case UbicacionView.VIEW_NAME:
                 return new UbicacionViewPresenter(new UbicacionConexionController());
+            case MainMenuView.VIEW_NAME:
+                throw new IllegalStateException("Bad call on view: " + MainMenuView.VIEW_NAME);
+            case DashBoardView.VIEW_NAME:
+                return new DashboardViewPresenter();
             default:
                 throw new IllegalArgumentException("No presenter register for " + viewUIDName);
         }
