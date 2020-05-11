@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.login;
 
-import com.jobits.pos.ui.login.MainView;
+import com.jobits.pos.ui.login.MainMenuView;
 import com.jobits.pos.ui.copiaSegView;
 import java.awt.Container;
 import java.text.ParseException;
@@ -41,7 +41,11 @@ import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.VentaDAO;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.NotificationService;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import java.time.LocalDate;
 
 /**
  * FirstDream
@@ -49,29 +53,20 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class MainController extends AbstractDialogController<Personal> {
+public class MainMenuController {
 
     private SincronizacionController sincronizacion = new SincronizacionController();
-
-    public MainController(Personal loggedUser) {
-        super(PersonalDAO.getInstance());
-        R.loggedUser = loggedUser;
+    
+    
+    public MainMenuController() {
+        if (Application.getInstance().getLoggedUser() == null) {
+            throw new IllegalStateException("Usuario no autenticado");
+        }
         new ConfiguracionController().cargarConfiguracion();
-    }
-
-    public MainController(Personal loggedUser, JFrame parentView) {
-        this(loggedUser);
-        constructView(parentView);
-    }
-
-    @Override
-    public void constructView(Container parent) {
-        setView(new MainView(this, (JFrame) parent, true));
-        getView().updateView();
-        getView().setVisible(true);
         sincronizacion.terminarSincronizacion();
     }
 
+    /*  
     public void actionButton(MenuButtons menuButtons) {
         AbstractController controller = null;
         getView().setEnabled(false);
@@ -139,17 +134,18 @@ public class MainController extends AbstractDialogController<Personal> {
         } catch (Exception e) {
             if (controller != null) {
                 controller.getView().dispose();
-                showErrorDialog((Container) controller.getView(), e.getMessage());
+                NotificationService.getInstance().notify(e.getMessage(),TipoNotificacion.ERROR);
             } else {
-                showErrorDialog(getView(), e.getMessage());
+                NotificationService.getInstance().notify(e.getMessage(),TipoNotificacion.ERROR);
             }
         }
         getView().setEnabled(true);
     }
-
+     */
     private boolean validate(Personal loggedUser, MenuButtons menuButtons) throws UnauthorizedAccessException {
         if (!(loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= menuButtons.getNivelMinimoAcceso())) {
-            throw new UnauthorizedAccessException(getView());
+            NotificationService.getInstance().notify("El usuario no tiene permisos", TipoNotificacion.ERROR);//TODO: Cambiar por autorization
+            return false;
         }
         return true;
     }
@@ -159,45 +155,29 @@ public class MainController extends AbstractDialogController<Personal> {
         return licence.getLicence();
     }
 
-    @Override
-    public MainView getView() {
-        return (MainView) super.getView(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private AbstractController comenzarVentas() throws IllegalArgumentException {
-        int nivel = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso();
-        if (nivel > R.NivelAcceso.ECONOMICO.getNivel()) {
-            String date = JOptionPane.showInputDialog(getView(), "Introduzca el dia a trabajar en el formato dd/mm/aa \n "
-                    + "o deje la casilla en blanco para comenzar en el ultimo dia sin cerrar ", "Entrada", JOptionPane.QUESTION_MESSAGE);
-            if (date == null) {
-                getView().setEnabled(true);
-                return null;
-            }
-            if (date.isEmpty()) {
-                return new VentaDetailController(getView());
-            } else {
-                Date fechaVenta;
-                try {
-                    fechaVenta = R.DATE_FORMAT.parse(date);
-                } catch (ParseException ex) {
-                    throw new IllegalArgumentException("La fecha introducida es incorrecta");
-                }
-                return new VentaDetailController(getView(), fechaVenta);
-            }
-        } else if (nivel >= R.NivelAcceso.CAJERO.getNivel()) {
-            return new VentaDetailController(getView());
-        } else if (nivel >= R.NivelAcceso.DEPENDIENTE.getNivel()) {
-            if (showConfirmDialog(getView(), "Desea comenzar el dia de trabajo en el dia " + R.DATE_FORMAT.format(new Date()))) {
-                VentaDetailController controller = new VentaDetailController(new Date());
-                controller.initIPV(controller.getInstance());
-                showSuccessDialog(getView(), "El dia de trabajo esta iniciado en la fecha: " + R.DATE_FORMAT.format(controller.getInstance().getFecha())
-                        + " \npresione aceptar");
-                return controller;
-            }
-        }
-        return null;
-    }
-
+//    private AbstractController comenzarVentas(LocalDate date) throws IllegalArgumentException {
+//        int nivel = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso();
+//        if (nivel > R.NivelAcceso.ECONOMICO.getNivel()) {
+//            if (date == null) {
+//             //   return new VentaDetailController(getView());
+//            } else {
+//               // return new VentaDetailController(getView(), date);
+//            }
+//        } else if (nivel >= R.NivelAcceso.CAJERO.getNivel()) {
+//            return new VentaDetailController(getView());
+//        } else if (nivel >= R.NivelAcceso.DEPENDIENTE.getNivel()) {
+//            if (showConfirmDialog(getView(), "Desea comenzar el dia de trabajo en el dia " + R.DATE_FORMAT.format(new Date()))) {
+//                VentaDetailController controller = new VentaDetailController(new Date());
+//                controller.initIPV(controller.getInstance());
+//                NotificationService.getInstance().
+//                        notify("El dia de trabajo esta iniciado en la fecha: " 
+//                                + R.DATE_FORMAT.format(controller.getInstance().getFecha()),
+//                         TipoNotificacion.SUCCESS);
+//                return controller;
+//            }
+//        }
+//        return null;
+//    }
     public enum MenuButtons {
 
         //

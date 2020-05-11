@@ -5,37 +5,23 @@
  */
 package com.jobits.pos.ui.login;
 
-import com.jobits.pos.ui.OldAbstractView;
-import java.awt.Color;
-import javax.swing.JFrame;
-import mdlaf.components.button.MaterialButtonUI;
-import com.jobits.pos.backup.SincronizacionController;
-import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.licencia.Licence;
-import com.jobits.pos.controller.login.MainController;
+import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.utils.ComponentMover;
-import java.util.List;
+import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
+import org.jdesktop.swingx.JXTaskPane;
 
 /**
  *
  * @author Jorge
  */
-public class MainView extends OldAbstractView {
+public class MainMenuView extends AbstractViewPanel {
 
-    public static String VIEW_NAME = "Dashboard";
+    public static final String VIEW_NAME = "Menu View";
 
-    
-    public MainView(AbstractDialogController controller) {
-        super(DialogType.FULL_SCREEN, controller);
-        initComponents();
-        ComponentMover cr = new ComponentMover(this, getRootPane());
-    }
-
-    public MainView(AbstractDialogController controller, JFrame owner, boolean modal) {
-        super(DialogType.FULL_SCREEN, controller, owner, modal);
-        initComponents();
-        ComponentMover cr = new ComponentMover(this, styledLabelRestName);
+    public MainMenuView(AbstractViewPresenter presenter) {
+        super(presenter);
     }
 
     /**
@@ -47,79 +33,36 @@ public class MainView extends OldAbstractView {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        styledLabelRestName = new com.jidesoft.swing.StyledLabel();
-        jideButton1 = new com.jidesoft.swing.JideButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanelDetalles = new javax.swing.JPanel();
-        jPanelPDV = new javax.swing.JPanel();
         BotonMenu = new javax.swing.JButton();
         BotonInsumo = new javax.swing.JButton();
         BotonCocina = new javax.swing.JButton();
         BotonSeccion = new javax.swing.JButton();
         jButtonSalon = new javax.swing.JButton();
-        jPanelAlmacen = new javax.swing.JPanel();
         jButtonAlmacen = new javax.swing.JButton();
         jButtonStocking = new javax.swing.JButton();
         jButtonIPVs = new javax.swing.JButton();
-        jPanelContabilidad = new javax.swing.JPanel();
+        jButtonPresupuesto = new javax.swing.JButton();
+        jButtonArchivos = new javax.swing.JButton();
         jButtonVender = new javax.swing.JButton();
         jButtonVentas = new javax.swing.JButton();
-        jButtonArchivos = new javax.swing.JButton();
-        jButtonPresupuesto = new javax.swing.JButton();
-        jPanelTrabajadores = new javax.swing.JPanel();
         jButtonTrabajadores = new javax.swing.JButton();
         jButtonNominas = new javax.swing.JButton();
         jButtonPTrabajo = new javax.swing.JButton();
-        jPanelConfiguracion = new javax.swing.JPanel();
-        jButtonCopiaSeguridad = new javax.swing.JButton();
         jButtonCONFIG = new javax.swing.JButton();
+        jButtonCopiaSeguridad = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jideLabelLicencia = new com.jidesoft.swing.JideLabel();
         jButton1 = new javax.swing.JButton();
         jideLabel3 = new com.jidesoft.swing.JideLabel();
         jideLabel1 = new com.jidesoft.swing.JideLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(840, 720));
-        setUndecorated(true);
-        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
-            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
-                formWindowGainedFocus(evt);
-            }
-            public void windowLostFocus(java.awt.event.WindowEvent evt) {
-            }
-        });
-
-        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel1.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
-        jPanel1.setLayout(new java.awt.BorderLayout());
-
-        styledLabelRestName.setForeground(new java.awt.Color(255, 255, 255));
-        styledLabelRestName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        styledLabelRestName.setText(R.REST_NAME);
-        styledLabelRestName.setFont(new java.awt.Font("Marker Felt", 2, 60)); // NOI18N
-        styledLabelRestName.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        styledLabelRestName.setMinimumSize(new java.awt.Dimension(400, 68));
-        jPanel1.add(styledLabelRestName, java.awt.BorderLayout.CENTER);
-
-        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
-        jideButton1.setFocusable(false);
-        jideButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jideButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jideButton1, java.awt.BorderLayout.LINE_START);
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
-
-        jPanelDetalles.setLayout(new javax.swing.BoxLayout(jPanelDetalles, javax.swing.BoxLayout.PAGE_AXIS));
-
-        jPanelPDV.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelPDV.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createTitledBorder(null, "Productos de Venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
-        jPanelPDV.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jXTaskPaneContainer1 = new org.jdesktop.swingx.JXTaskPaneContainer();
+        jXTaskPanePDV = new org.jdesktop.swingx.JXTaskPane();
+        jXTaskPaneAlmacen = new org.jdesktop.swingx.JXTaskPane();
+        jXTaskPaneContabilidad = new org.jdesktop.swingx.JXTaskPane();
+        jXTaskPaneNominas = new org.jdesktop.swingx.JXTaskPane();
+        jXTaskPaneConfiguracion = new org.jdesktop.swingx.JXTaskPane();
 
         BotonMenu.setBackground(new java.awt.Color(204, 204, 204));
         BotonMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonmenu.png"))); // NOI18N
@@ -133,7 +76,6 @@ public class MainView extends OldAbstractView {
                 BotonMenuActionPerformed(evt);
             }
         });
-        jPanelPDV.add(BotonMenu);
 
         BotonInsumo.setBackground(new java.awt.Color(204, 204, 204));
         BotonInsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoninsumos.png"))); // NOI18N
@@ -146,7 +88,6 @@ public class MainView extends OldAbstractView {
                 BotonInsumoActionPerformed(evt);
             }
         });
-        jPanelPDV.add(BotonInsumo);
 
         BotonCocina.setBackground(new java.awt.Color(204, 204, 204));
         BotonCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoncocina.png"))); // NOI18N
@@ -159,7 +100,6 @@ public class MainView extends OldAbstractView {
                 BotonCocinaActionPerformed(evt);
             }
         });
-        jPanelPDV.add(BotonCocina);
 
         BotonSeccion.setBackground(new java.awt.Color(204, 204, 204));
         BotonSeccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonsecciones.png"))); // NOI18N
@@ -172,7 +112,6 @@ public class MainView extends OldAbstractView {
                 BotonSeccionActionPerformed(evt);
             }
         });
-        jPanelPDV.add(BotonSeccion);
 
         jButtonSalon.setBackground(new java.awt.Color(204, 204, 204));
         jButtonSalon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botosalon.png"))); // NOI18N
@@ -185,12 +124,6 @@ public class MainView extends OldAbstractView {
                 jButtonSalonActionPerformed(evt);
             }
         });
-        jPanelPDV.add(jButtonSalon);
-
-        jPanelDetalles.add(jPanelPDV);
-
-        jPanelAlmacen.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createTitledBorder(null, "Almacén", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
-        jPanelAlmacen.setLayout(new java.awt.GridLayout(1, 0));
 
         jButtonAlmacen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonalmacen.png"))); // NOI18N
         jButtonAlmacen.setText(bundle.getString("label_almacen")); // NOI18N
@@ -202,7 +135,6 @@ public class MainView extends OldAbstractView {
                 jButtonAlmacenActionPerformed(evt);
             }
         });
-        jPanelAlmacen.add(jButtonAlmacen);
 
         jButtonStocking.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoninventario.png"))); // NOI18N
         jButtonStocking.setText(bundle.getString("label_activo_fijo")); // NOI18N
@@ -214,7 +146,6 @@ public class MainView extends OldAbstractView {
                 jButtonStockingActionPerformed(evt);
             }
         });
-        jPanelAlmacen.add(jButtonStocking);
 
         jButtonIPVs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonipv.png"))); // NOI18N
         jButtonIPVs.setText(bundle.getString("label_ipv_existencias")); // NOI18N
@@ -226,52 +157,6 @@ public class MainView extends OldAbstractView {
                 jButtonIPVsActionPerformed(evt);
             }
         });
-        jPanelAlmacen.add(jButtonIPVs);
-
-        jPanelDetalles.add(jPanelAlmacen);
-
-        jPanelContabilidad.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelContabilidad.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createTitledBorder(null, "Contabilidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
-        jPanelContabilidad.setLayout(new java.awt.GridLayout(1, 0));
-
-        jButtonVender.setBackground(new java.awt.Color(204, 204, 204));
-        jButtonVender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/caja-registradora.png"))); // NOI18N
-        jButtonVender.setText(bundle.getString("label_comenzar_dia")); // NOI18N
-        jButtonVender.setBorderPainted(false);
-        jButtonVender.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonVender.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonVender.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonVenderActionPerformed(evt);
-            }
-        });
-        jPanelContabilidad.add(jButtonVender);
-
-        jButtonVentas.setBackground(new java.awt.Color(204, 204, 204));
-        jButtonVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonventas.png"))); // NOI18N
-        jButtonVentas.setText(bundle.getString("label_ventas")); // NOI18N
-        jButtonVentas.setBorderPainted(false);
-        jButtonVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonVentas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonVentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonVentasActionPerformed(evt);
-            }
-        });
-        jPanelContabilidad.add(jButtonVentas);
-
-        jButtonArchivos.setBackground(new java.awt.Color(204, 204, 204));
-        jButtonArchivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/gastos.png"))); // NOI18N
-        jButtonArchivos.setText(bundle.getString("label_gastos")); // NOI18N
-        jButtonArchivos.setBorderPainted(false);
-        jButtonArchivos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonArchivos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonArchivos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonArchivosActionPerformed(evt);
-            }
-        });
-        jPanelContabilidad.add(jButtonArchivos);
 
         jButtonPresupuesto.setBackground(new java.awt.Color(204, 204, 204));
         jButtonPresupuesto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonpresupuesto.png"))); // NOI18N
@@ -285,12 +170,42 @@ public class MainView extends OldAbstractView {
                 jButtonPresupuestoActionPerformed(evt);
             }
         });
-        jPanelContabilidad.add(jButtonPresupuesto);
 
-        jPanelDetalles.add(jPanelContabilidad);
+        jButtonArchivos.setBackground(new java.awt.Color(204, 204, 204));
+        jButtonArchivos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/gastos.png"))); // NOI18N
+        jButtonArchivos.setText(bundle.getString("label_gastos")); // NOI18N
+        jButtonArchivos.setBorderPainted(false);
+        jButtonArchivos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonArchivos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonArchivos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonArchivosActionPerformed(evt);
+            }
+        });
 
-        jPanelTrabajadores.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Trabajadores", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24))); // NOI18N
-        jPanelTrabajadores.setLayout(new java.awt.GridLayout(1, 0));
+        jButtonVender.setBackground(new java.awt.Color(204, 204, 204));
+        jButtonVender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/caja-registradora.png"))); // NOI18N
+        jButtonVender.setText(bundle.getString("label_comenzar_dia")); // NOI18N
+        jButtonVender.setBorderPainted(false);
+        jButtonVender.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonVender.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVenderActionPerformed(evt);
+            }
+        });
+
+        jButtonVentas.setBackground(new java.awt.Color(204, 204, 204));
+        jButtonVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonventas.png"))); // NOI18N
+        jButtonVentas.setText(bundle.getString("label_ventas")); // NOI18N
+        jButtonVentas.setBorderPainted(false);
+        jButtonVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonVentas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVentasActionPerformed(evt);
+            }
+        });
 
         jButtonTrabajadores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botontrabajador.png"))); // NOI18N
         jButtonTrabajadores.setText(bundle.getString("label_trabajadores")); // NOI18N
@@ -302,7 +217,6 @@ public class MainView extends OldAbstractView {
                 jButtonTrabajadoresActionPerformed(evt);
             }
         });
-        jPanelTrabajadores.add(jButtonTrabajadores);
 
         jButtonNominas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonnominas.png"))); // NOI18N
         jButtonNominas.setText(bundle.getString("label_nominas")); // NOI18N
@@ -314,7 +228,6 @@ public class MainView extends OldAbstractView {
                 jButtonNominasActionPerformed(evt);
             }
         });
-        jPanelTrabajadores.add(jButtonNominas);
 
         jButtonPTrabajo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botonpuestotrabajo.png"))); // NOI18N
         jButtonPTrabajo.setText(bundle.getString("label_puesto_trabajo")); // NOI18N
@@ -326,26 +239,6 @@ public class MainView extends OldAbstractView {
                 jButtonPTrabajoActionPerformed(evt);
             }
         });
-        jPanelTrabajadores.add(jButtonPTrabajo);
-
-        jPanelDetalles.add(jPanelTrabajadores);
-
-        jPanelConfiguracion.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelConfiguracion.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), null, new java.awt.Color(204, 204, 204)), javax.swing.BorderFactory.createTitledBorder(null, "Configuración", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 2, 24)))); // NOI18N
-        jPanelConfiguracion.setLayout(new java.awt.GridLayout(1, 0));
-
-        jButtonCopiaSeguridad.setBackground(new java.awt.Color(204, 204, 204));
-        jButtonCopiaSeguridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoncopiaseg.png"))); // NOI18N
-        jButtonCopiaSeguridad.setText(bundle.getString("label_copia_seguridad")); // NOI18N
-        jButtonCopiaSeguridad.setBorderPainted(false);
-        jButtonCopiaSeguridad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonCopiaSeguridad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonCopiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCopiaSeguridadActionPerformed(evt);
-            }
-        });
-        jPanelConfiguracion.add(jButtonCopiaSeguridad);
 
         jButtonCONFIG.setBackground(new java.awt.Color(204, 204, 204));
         jButtonCONFIG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/config.png"))); // NOI18N
@@ -358,13 +251,18 @@ public class MainView extends OldAbstractView {
                 jButtonCONFIGActionPerformed(evt);
             }
         });
-        jPanelConfiguracion.add(jButtonCONFIG);
 
-        jPanelDetalles.add(jPanelConfiguracion);
-
-        jScrollPane1.setViewportView(jPanelDetalles);
-
-        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jButtonCopiaSeguridad.setBackground(new java.awt.Color(204, 204, 204));
+        jButtonCopiaSeguridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/botoncopiaseg.png"))); // NOI18N
+        jButtonCopiaSeguridad.setText(bundle.getString("label_copia_seguridad")); // NOI18N
+        jButtonCopiaSeguridad.setBorderPainted(false);
+        jButtonCopiaSeguridad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonCopiaSeguridad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonCopiaSeguridad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCopiaSeguridadActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
         jPanel2.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
@@ -394,124 +292,156 @@ public class MainView extends OldAbstractView {
 
         jideLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jideLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jideLabel1.setText(R.loggedUser.getUsuario());
+        jideLabel1.setText("Usuario Autenticado");
         jideLabel1.setToolTipText("");
         jPanel2.add(jideLabel1, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_END);
+        setMinimumSize(new java.awt.Dimension(840, 720));
+        setLayout(new java.awt.BorderLayout());
 
-        pack();
-        setLocationRelativeTo(null);
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jXTaskPaneContainer1.setMinimumSize(new java.awt.Dimension(120, 700));
+        jXTaskPaneContainer1.setScrollableHeightHint(org.jdesktop.swingx.ScrollableSizeHint.VERTICAL_STRETCH);
+        org.jdesktop.swingx.VerticalLayout verticalLayout1 = new org.jdesktop.swingx.VerticalLayout();
+        verticalLayout1.setGap(14);
+        jXTaskPaneContainer1.setLayout(verticalLayout1);
+
+        jXTaskPanePDV.setAutoscrolls(true);
+        jXTaskPanePDV.setCollapsed(true);
+        jXTaskPanePDV.setName(""); // NOI18N
+        jXTaskPanePDV.setOpaque(false);
+        jXTaskPanePDV.setScrollOnExpand(true);
+        jXTaskPanePDV.setTitle("Productos ");
+        jXTaskPaneContainer1.add(jXTaskPanePDV);
+
+        jXTaskPaneAlmacen.setAutoscrolls(true);
+        jXTaskPaneAlmacen.setCollapsed(true);
+        jXTaskPaneAlmacen.setName(""); // NOI18N
+        jXTaskPaneAlmacen.setOpaque(false);
+        jXTaskPaneAlmacen.setScrollOnExpand(true);
+        jXTaskPaneAlmacen.setTitle("Almacen");
+        jXTaskPaneContainer1.add(jXTaskPaneAlmacen);
+
+        jXTaskPaneContabilidad.setAutoscrolls(true);
+        jXTaskPaneContabilidad.setCollapsed(true);
+        jXTaskPaneContabilidad.setName(""); // NOI18N
+        jXTaskPaneContabilidad.setOpaque(false);
+        jXTaskPaneContabilidad.setScrollOnExpand(true);
+        jXTaskPaneContabilidad.setTitle("Contabilidad");
+        jXTaskPaneContainer1.add(jXTaskPaneContabilidad);
+
+        jXTaskPaneNominas.setAutoscrolls(true);
+        jXTaskPaneNominas.setCollapsed(true);
+        jXTaskPaneNominas.setName(""); // NOI18N
+        jXTaskPaneNominas.setOpaque(false);
+        jXTaskPaneNominas.setScrollOnExpand(true);
+        jXTaskPaneNominas.setTitle("Nominas");
+        jXTaskPaneContainer1.add(jXTaskPaneNominas);
+
+        jXTaskPaneConfiguracion.setAutoscrolls(true);
+        jXTaskPaneConfiguracion.setCollapsed(true);
+        jXTaskPaneConfiguracion.setName(""); // NOI18N
+        jXTaskPaneConfiguracion.setOpaque(false);
+        jXTaskPaneConfiguracion.setScrollOnExpand(true);
+        jXTaskPaneConfiguracion.setTitle("Configuracion");
+        jXTaskPaneContainer1.add(jXTaskPaneConfiguracion);
+
+        jPanel3.add(jXTaskPaneContainer1, java.awt.BorderLayout.CENTER);
+
+        add(jPanel3, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMenuActionPerformed
-        action(MainController.MenuButtons.MENU);
+        action(MainMenuController.MenuButtons.MENU);
     }//GEN-LAST:event_BotonMenuActionPerformed
 
     private void BotonInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonInsumoActionPerformed
-        action(MainController.MenuButtons.INSUMO);
+        action(MainMenuController.MenuButtons.INSUMO);
     }//GEN-LAST:event_BotonInsumoActionPerformed
 
     private void BotonCocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCocinaActionPerformed
-        action(MainController.MenuButtons.COCINA);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.COCINA);        // TODO add your handling code here:
     }//GEN-LAST:event_BotonCocinaActionPerformed
 
     private void BotonSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonSeccionActionPerformed
-        action(MainController.MenuButtons.SECCION);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.SECCION);        // TODO add your handling code here:
     }//GEN-LAST:event_BotonSeccionActionPerformed
 
     private void jButtonSalonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalonActionPerformed
-        action(MainController.MenuButtons.SALON);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.SALON);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSalonActionPerformed
 
     private void jButtonAlmacenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlmacenActionPerformed
-        action(MainController.MenuButtons.ALMACEN);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.ALMACEN);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAlmacenActionPerformed
 
     private void jButtonStockingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStockingActionPerformed
-        action(MainController.MenuButtons.ACTIVOS);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.ACTIVOS);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonStockingActionPerformed
 
     private void jButtonIPVsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIPVsActionPerformed
-        action(MainController.MenuButtons.IPV);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.IPV);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonIPVsActionPerformed
 
     private void jButtonVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVenderActionPerformed
-        action(MainController.MenuButtons.COMENZAR_VENTAS);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.COMENZAR_VENTAS);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVenderActionPerformed
 
     private void jButtonVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVentasActionPerformed
-        action(MainController.MenuButtons.VENTAS);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.VENTAS);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVentasActionPerformed
 
     private void jButtonArchivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonArchivosActionPerformed
-        action(MainController.MenuButtons.CUENTAS_CONTABLES);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.CUENTAS_CONTABLES);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonArchivosActionPerformed
 
     private void jButtonPresupuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPresupuestoActionPerformed
-        action(MainController.MenuButtons.PRESUPUESTO);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.PRESUPUESTO);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonPresupuestoActionPerformed
 
     private void jButtonTrabajadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTrabajadoresActionPerformed
-        action(MainController.MenuButtons.TRABAJADORES);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.TRABAJADORES);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonTrabajadoresActionPerformed
 
     private void jButtonPTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPTrabajoActionPerformed
-        action(MainController.MenuButtons.PUESTOS_TRABAJO);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.PUESTOS_TRABAJO);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonPTrabajoActionPerformed
 
     private void jButtonCopiaSeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCopiaSeguridadActionPerformed
-        action(MainController.MenuButtons.COPIA_SEG);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.COPIA_SEG);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCopiaSeguridadActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        action(MainController.MenuButtons.LICENCIA);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.LICENCIA);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
-        updateView();        // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowGainedFocus
-
-    private void jideButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButton1ActionPerformed
-        dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_jideButton1ActionPerformed
-
     private void jButtonCONFIGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCONFIGActionPerformed
-        action(MainController.MenuButtons.CONFIGURACION);
+        action(MainMenuController.MenuButtons.CONFIGURACION);
     }//GEN-LAST:event_jButtonCONFIGActionPerformed
 
     private void jButtonNominasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNominasActionPerformed
-        action(MainController.MenuButtons.NOMINAS);        // TODO add your handling code here:
+        action(MainMenuController.MenuButtons.NOMINAS);        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonNominasActionPerformed
 
-    @Override
-    public void updateView() {
-        updateLicenceStatus();
-    }
-
     private void updateLicenceStatus() {
-        Licence l = getController().getEstadoLicencia();
-
-        if (!l.LICENCIA_ACTIVA || !l.LICENCIA_VALIDA) {
-            jButtonVentas.setEnabled(false);
-            jButtonVender.setEnabled(false);
-            jButtonIPVs.setEnabled(false);
-            jButtonAlmacen.setEnabled(false);
-            jideLabelLicencia.setForeground(Color.red);
-            jideLabelLicencia.setText("Licencia vencida o faltante");
-        } else {
-            jButtonVender.setEnabled(true);
-            jButtonVentas.setEnabled(true);
-            jButtonIPVs.setEnabled(true);
-            jButtonAlmacen.setEnabled(true);
-            jideLabelLicencia.setForeground(Color.white);
-            jideLabelLicencia.setText("Dias Restantes de licencia " + l.DIAS_RESTANTES);
-        }
-    }
-
-    @Override
-    public MainController getController() {
-        return (MainController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+//        Licence l ;//= getController().getEstadoLicencia();
+//
+//        if (!l.LICENCIA_ACTIVA || !l.LICENCIA_VALIDA) {
+//            jButtonVentas.setEnabled(false);
+//            jButtonVender.setEnabled(false);
+//            jButtonIPVs.setEnabled(false);
+//            jButtonAlmacen.setEnabled(false);
+//            jideLabelLicencia.setForeground(Color.red);
+//            jideLabelLicencia.setText("Licencia vencida o faltante");
+//        } else {
+//            jButtonVender.setEnabled(true);
+//            jButtonVentas.setEnabled(true);
+//            jButtonIPVs.setEnabled(true);
+//            jButtonAlmacen.setEnabled(true);
+//            jideLabelLicencia.setForeground(Color.white);
+//            jideLabelLicencia.setText("Dias Restantes de licencia " + l.DIAS_RESTANTES);
+//        }
     }
 
 
@@ -534,24 +464,57 @@ public class MainView extends OldAbstractView {
     private javax.swing.JButton jButtonTrabajadores;
     private javax.swing.JButton jButtonVender;
     private javax.swing.JButton jButtonVentas;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanelAlmacen;
-    private javax.swing.JPanel jPanelConfiguracion;
-    private javax.swing.JPanel jPanelContabilidad;
-    private javax.swing.JPanel jPanelDetalles;
-    private javax.swing.JPanel jPanelPDV;
-    private javax.swing.JPanel jPanelTrabajadores;
-    private javax.swing.JScrollPane jScrollPane1;
-    private com.jidesoft.swing.JideButton jideButton1;
+    private org.jdesktop.swingx.JXTaskPane jXTaskPaneAlmacen;
+    private org.jdesktop.swingx.JXTaskPane jXTaskPaneConfiguracion;
+    private org.jdesktop.swingx.JXTaskPane jXTaskPaneContabilidad;
+    private org.jdesktop.swingx.JXTaskPaneContainer jXTaskPaneContainer1;
+    private org.jdesktop.swingx.JXTaskPane jXTaskPaneNominas;
+    private org.jdesktop.swingx.JXTaskPane jXTaskPanePDV;
     private com.jidesoft.swing.JideLabel jideLabel1;
     private com.jidesoft.swing.JideLabel jideLabel3;
     private com.jidesoft.swing.JideLabel jideLabelLicencia;
-    private com.jidesoft.swing.StyledLabel styledLabelRestName;
     // End of variables declaration//GEN-END:variables
 
-    private void action(MainController.MenuButtons menuButtons) {
-        getController().actionButton(menuButtons);
+    private void action(MainMenuController.MenuButtons menuButtons) {
+        //  getController().actionButton(menuButtons);
+
+    }
+
+    @Override
+    public void wireUp() {
+        jXTaskPanePDV.add(getPresenter().getOperation(MainMenuController.MenuButtons.MENU.toString()));
+        jXTaskPanePDV.add(getPresenter().getOperation(MainMenuController.MenuButtons.INSUMO.toString()));
+        jXTaskPanePDV.add(getPresenter().getOperation(MainMenuController.MenuButtons.COCINA.toString()));
+        jXTaskPanePDV.add(getPresenter().getOperation(MainMenuController.MenuButtons.SECCION.toString()));
+        jXTaskPanePDV.add(getPresenter().getOperation(MainMenuController.MenuButtons.SALON.toString()));
+
+        jXTaskPaneAlmacen.add(getPresenter().getOperation(MainMenuController.MenuButtons.ALMACEN.toString()));
+        jXTaskPaneAlmacen.add(getPresenter().getOperation(MainMenuController.MenuButtons.IPV.toString()));
+
+        jXTaskPaneContabilidad.add(getPresenter().getOperation(MainMenuController.MenuButtons.COMENZAR_VENTAS.toString()));
+        jXTaskPaneContabilidad.add(getPresenter().getOperation(MainMenuController.MenuButtons.VENTAS.toString()));
+
+        jXTaskPaneNominas.add(getPresenter().getOperation(MainMenuController.MenuButtons.NOMINAS.toString()));
+        jXTaskPaneNominas.add(getPresenter().getOperation(MainMenuController.MenuButtons.TRABAJADORES.toString()));
+        jXTaskPaneNominas.add(getPresenter().getOperation(MainMenuController.MenuButtons.PUESTOS_TRABAJO.toString()));
+
+        jXTaskPaneConfiguracion.add(getPresenter().getOperation(MainMenuController.MenuButtons.CONFIGURACION.toString()));
+        jXTaskPaneConfiguracion.add(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
+        jXTaskPaneConfiguracion.add(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
+
+       
+    }
+
+    @Override
+    public void uiInit() {
+        initComponents();
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
     }
 }
