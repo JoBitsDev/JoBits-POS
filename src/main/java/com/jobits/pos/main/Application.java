@@ -32,7 +32,7 @@ import util.Utils;
  */
 public class Application {
 
-    private final String APP_NAME = "JoBits POS";
+    private final String APP_NAME = "APP";
 
     private MainWindow mainWindow;
 
@@ -61,7 +61,7 @@ public class Application {
         setApplicationLooks();
         setNotificationChannel();
         mainWindow = new MainWindow();
-        mainWindow.setTitle(APP_NAME);
+        //mainWindow.setTitle(APP_NAME);
         mainWindow.setWelcomeHeader(true);
         rootView = RootView.getInstance();
         mainWindow.setLocationRelativeTo(null);
@@ -88,6 +88,14 @@ public class Application {
 
     private void setNotificationChannel() {
         NotificationService.registerNotificationChannel(new NotificationHandler());
+    }
+
+    public Personal getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(Personal loggedUser) {
+        this.loggedUser = loggedUser;
     }
 
 }

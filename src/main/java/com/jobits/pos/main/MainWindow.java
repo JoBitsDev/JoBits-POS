@@ -23,7 +23,6 @@ public class MainWindow extends MaterialFrame {
     public MainWindow() {
         super();
         getContentPane().setLayout(new BorderLayout());
-        setTitle("Ventana Principal");
         initComponents();
     }
 
@@ -38,8 +37,10 @@ public class MainWindow extends MaterialFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 300));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     void setWelcomeHeader(boolean b) {
