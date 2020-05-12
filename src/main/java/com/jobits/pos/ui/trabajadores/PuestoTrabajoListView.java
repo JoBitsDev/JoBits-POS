@@ -11,7 +11,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.PuestoTrabajo;
 
@@ -22,11 +22,11 @@ import com.jobits.pos.domain.models.PuestoTrabajo;
  */
 public class PuestoTrabajoListView extends OldAbstractListView<PuestoTrabajo>{
 
-    public PuestoTrabajoListView(AbstractListController<PuestoTrabajo> controller, Frame owner, boolean modal) {
+    public PuestoTrabajoListView(OldAbstractListController<PuestoTrabajo> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);
     }
 
-    public PuestoTrabajoListView(AbstractListController<PuestoTrabajo> controller, Dialog owner, boolean modal) {
+    public PuestoTrabajoListView(OldAbstractListController<PuestoTrabajo> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
     }
     

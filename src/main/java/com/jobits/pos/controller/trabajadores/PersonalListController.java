@@ -11,7 +11,7 @@ import java.awt.Window;
 import java.util.Date;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Personal;
@@ -24,7 +24,7 @@ import com.jobits.pos.servicios.impresion.Impresion;
  * @author Jorge
  *
  */
-public class PersonalListController extends AbstractListController<Personal> {
+public class PersonalListController extends OldAbstractListController<Personal> {
 
     public PersonalListController() {
         super(PersonalDAO.getInstance());

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import com.jobits.pos.controller.AbstractController;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.DuplicatedException;
 import com.jobits.pos.exceptions.ValidatingException;
@@ -29,7 +29,7 @@ import com.jobits.pos.adapters.repo.MesaDAO;
  * @author Jorge
  *
  */
-public class AreaVentaController extends AbstractListController<Area> {
+public class AreaVentaController extends OldAbstractListController<Area> {
 
     public AreaVentaController() {
         super(AreaDAO.getInstance());

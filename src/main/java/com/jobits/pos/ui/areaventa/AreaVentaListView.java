@@ -10,7 +10,7 @@ import com.jobits.pos.ui.OldAbstractView;
 import java.awt.Dialog;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Area;
@@ -23,7 +23,7 @@ import com.jobits.pos.ui.utils.RestManagerListModel;
  */
 public class AreaVentaListView extends OldAbstractListView<Area> {
 
-    public AreaVentaListView(AbstractListController controller, OldAbstractView owner) {
+    public AreaVentaListView(OldAbstractListController controller, OldAbstractView owner) {
         super(DialogType.INPUT_LARGE, controller, owner);
         initComponents();
     }

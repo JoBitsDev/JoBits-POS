@@ -11,7 +11,7 @@ import com.jidesoft.swing.JideButton;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.util.List;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Transaccion;
@@ -25,7 +25,7 @@ import com.jobits.pos.recursos.R;
  */
 public class TransaccionListView extends OldAbstractListView<Transaccion> {
 
-    public TransaccionListView(AbstractListController<Transaccion> controller, OldAbstractView parent, boolean modal) {
+    public TransaccionListView(OldAbstractListController<Transaccion> controller, OldAbstractView parent, boolean modal) {
         super(controller, parent, modal);
         JideButton jideButton1 = new com.jidesoft.swing.JideButton();
         jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N

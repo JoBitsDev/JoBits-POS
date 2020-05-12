@@ -10,7 +10,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.Window;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.adapters.repo.InsumoDAO;
@@ -21,7 +21,7 @@ import com.jobits.pos.adapters.repo.InsumoDAO;
  * @author Jorge
  *
  */
-public class InsumoListController extends AbstractListController<Insumo> {
+public class InsumoListController extends OldAbstractListController<Insumo> {
 
     private final String PREFIX_FOR_ID = "In-";
 

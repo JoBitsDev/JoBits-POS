@@ -12,7 +12,7 @@ import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.DuplicatedException;
 import com.jobits.pos.exceptions.ValidatingException;
@@ -28,7 +28,7 @@ import com.jobits.pos.adapters.repo.ProductoVentaDAO;
  * @author Jorge
  *
  */
-public class PuntoElaboracionListController extends AbstractListController<Cocina> {
+public class PuntoElaboracionListController extends OldAbstractListController<Cocina> {
 
     public PuntoElaboracionListController() {
         super(CocinaDAO.getInstance());

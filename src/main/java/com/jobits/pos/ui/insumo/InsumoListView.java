@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.JMenuItem;
 import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Insumo;
@@ -27,11 +27,11 @@ import com.jobits.pos.domain.models.Insumo;
  */
 public class InsumoListView extends OldAbstractListView<Insumo> {
 
-    public InsumoListView(AbstractListController<Insumo> controller, Frame owner, boolean modal) {
+    public InsumoListView(OldAbstractListController<Insumo> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);
     }
 
-    public InsumoListView(AbstractListController<Insumo> controller, Dialog owner, boolean modal) {
+    public InsumoListView(OldAbstractListController<Insumo> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
     }
 

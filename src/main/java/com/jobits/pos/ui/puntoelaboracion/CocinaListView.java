@@ -9,7 +9,7 @@ import com.jobits.pos.ui.OldAbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.domain.models.Cocina;
 
 /**
@@ -20,11 +20,11 @@ import com.jobits.pos.domain.models.Cocina;
  */
 public class CocinaListView extends OldAbstractListView<Cocina> {
 
-    public CocinaListView(AbstractListController<Cocina> controller, Frame owner, boolean modal) {
+    public CocinaListView(OldAbstractListController<Cocina> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);
     }
 
-    public CocinaListView(AbstractListController<Cocina> controller, Dialog owner, boolean modal) {
+    public CocinaListView(OldAbstractListController<Cocina> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
     }
 

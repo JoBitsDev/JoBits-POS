@@ -12,7 +12,7 @@ import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
@@ -30,7 +30,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class ProductoVentaListController extends AbstractListController<ProductoVenta> {
+public class ProductoVentaListController extends OldAbstractListController<ProductoVenta> {
 
     Carta selectedCarta = null;
 

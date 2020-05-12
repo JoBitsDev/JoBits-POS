@@ -10,7 +10,7 @@ import com.jobits.pos.ui.OldAbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.domain.models.Seccion;
 
 /**
@@ -20,11 +20,11 @@ import com.jobits.pos.domain.models.Seccion;
  */
 public class SeccionListView extends OldAbstractListView<Seccion>{
 
-    public SeccionListView(AbstractListController<Seccion> controller, Frame parent, boolean modal) {
+    public SeccionListView(OldAbstractListController<Seccion> controller, Frame parent, boolean modal) {
         super(controller, parent, modal);
     }
 
-    public SeccionListView(AbstractListController<Seccion> controller, Dialog parent, boolean modal) {
+    public SeccionListView(OldAbstractListController<Seccion> controller, Dialog parent, boolean modal) {
         super(controller, parent, modal);
     }
 

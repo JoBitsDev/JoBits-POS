@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.JButton;
 import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Personal;
@@ -28,7 +28,7 @@ import com.jobits.pos.ui.utils.utils;
  */
 public class PersonalListView extends OldAbstractListView<Personal> {
 
-    public PersonalListView(AbstractListController<Personal> controller, Dialog owner, boolean modal) {
+    public PersonalListView(OldAbstractListController<Personal> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
     }
 

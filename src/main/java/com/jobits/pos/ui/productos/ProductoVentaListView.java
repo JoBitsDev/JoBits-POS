@@ -14,7 +14,7 @@ import java.awt.event.ItemEvent;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.ProductoVenta;
@@ -28,7 +28,7 @@ import com.jobits.pos.recursos.R;
  */
 public class ProductoVentaListView extends OldAbstractListView<ProductoVenta> {
 
-    public ProductoVentaListView(AbstractListController<ProductoVenta> controller, Dialog owner, boolean modal) {
+    public ProductoVentaListView(OldAbstractListController<ProductoVenta> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
 
 //        JideButton jideButton1 = new com.jidesoft.swing.JideButton();

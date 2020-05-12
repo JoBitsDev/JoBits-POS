@@ -8,7 +8,7 @@ package com.jobits.pos.ui.seccion;
 import com.jobits.pos.ui.OldAbstractListView;
 import com.jobits.pos.ui.OldAbstractView;
 import java.util.List;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.controller.seccion.CartaListController;
 import com.jobits.pos.controller.seccion.SeccionListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
@@ -28,7 +28,7 @@ public class CartaSeccionView extends OldAbstractListView<Carta> {
      * @param controller
      * @param owner
      */
-    public CartaSeccionView(AbstractListController controller, OldAbstractView owner) {
+    public CartaSeccionView(OldAbstractListController controller, OldAbstractView owner) {
         super(DialogType.INPUT_LARGE, controller, owner);
         initComponents();
     }

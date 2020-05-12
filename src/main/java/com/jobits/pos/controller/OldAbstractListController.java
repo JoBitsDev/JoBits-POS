@@ -16,11 +16,11 @@ import com.jobits.pos.adapters.repo.AbstractRepository;
  * @param <T>
  * 
  */
-public abstract class AbstractListController<T> extends AbstractDialogController<T>{
+public abstract class OldAbstractListController<T> extends AbstractDialogController<T>{
 
     protected AbstractDetailController<T> detailController;
 
-    public AbstractListController(AbstractRepository<T> dataAccess) {
+    public OldAbstractListController(AbstractRepository<T> dataAccess) {
         super(dataAccess);
         setDismissOnAction(false);
     }

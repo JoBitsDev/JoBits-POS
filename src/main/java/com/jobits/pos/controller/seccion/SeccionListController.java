@@ -13,7 +13,7 @@ import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Carta;
@@ -29,7 +29,7 @@ import com.jobits.pos.adapters.repo.SeccionDAO;
  * @author Jorge
  *
  */
-public class SeccionListController extends AbstractListController<Seccion> {
+public class SeccionListController extends OldAbstractListController<Seccion> {
 
     public Carta owner;
 

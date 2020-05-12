@@ -11,7 +11,7 @@ import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Seccion;
@@ -30,7 +30,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class CartaListController extends AbstractListController<Carta> {
+public class CartaListController extends OldAbstractListController<Carta> {
 
     public CartaListController() {
         super(MenuDAO.getInstance());

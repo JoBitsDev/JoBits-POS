@@ -11,7 +11,7 @@ import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.domain.models.Almacen;
 
 /**
@@ -21,11 +21,11 @@ import com.jobits.pos.domain.models.Almacen;
  */
 public class AlmacenListView extends OldAbstractListView<Almacen>{
 
-    public AlmacenListView(AbstractListController<Almacen> controller, Frame owner, boolean modal) {
+    public AlmacenListView(OldAbstractListController<Almacen> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);
     }
 
-    public AlmacenListView(AbstractListController<Almacen> controller, Dialog owner, boolean modal) {
+    public AlmacenListView(OldAbstractListController<Almacen> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);
     }
 

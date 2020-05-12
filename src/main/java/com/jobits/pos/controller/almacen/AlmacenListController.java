@@ -11,7 +11,7 @@ import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.NoSelectedException;
 import com.jobits.pos.domain.models.Almacen;
@@ -25,7 +25,7 @@ import com.jobits.pos.recursos.RegularExpressions;
  * @author Jorge
  *
  */
-public class AlmacenListController extends AbstractListController<Almacen> {
+public class AlmacenListController extends OldAbstractListController<Almacen> {
 
     private final String PREFIX_FOR_ID = "A-";
 

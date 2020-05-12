@@ -19,7 +19,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 import org.jdesktop.swingx.JXPanel;
-import com.jobits.pos.controller.AbstractListController;
+import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.NoSelectedException;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.ComponentResizer;
@@ -33,26 +33,26 @@ public abstract class OldAbstractListView<T> extends OldAbstractView {
 
     protected MyJTableModel<T> model;
 
-    public OldAbstractListView(DialogType type, AbstractListController<T> controller, OldAbstractView parent) {
+    public OldAbstractListView(DialogType type, OldAbstractListController<T> controller, OldAbstractView parent) {
         super(type, controller, parent);
 
     }
 
-    public OldAbstractListView(AbstractListController<T> controller, OldAbstractView parent, boolean modal) {
+    public OldAbstractListView(OldAbstractListController<T> controller, OldAbstractView parent, boolean modal) {
         super(DialogType.LIST, controller, parent, modal);
         initComponents();
         createPopUpMenu();
 
     }
 
-    public OldAbstractListView(AbstractListController<T> controller, Frame parent, boolean modal) {
+    public OldAbstractListView(OldAbstractListController<T> controller, Frame parent, boolean modal) {
         super(DialogType.LIST, controller, parent, modal);
         initComponents();
         createPopUpMenu();
 
     }
 
-    public OldAbstractListView(AbstractListController<T> controller, Dialog parent, boolean modal) {
+    public OldAbstractListView(OldAbstractListController<T> controller, Dialog parent, boolean modal) {
         super(DialogType.LIST, controller, parent, modal);
         initComponents();
         createPopUpMenu();
@@ -351,8 +351,8 @@ public abstract class OldAbstractListView<T> extends OldAbstractView {
     }
 
     @Override
-    public AbstractListController<T> getController() {
-        return (AbstractListController<T>) super.getController();
+    public OldAbstractListController<T> getController() {
+        return (OldAbstractListController<T>) super.getController();
     }
 
     public abstract MyJTableModel<T> generateTableModel(List<T> items);
