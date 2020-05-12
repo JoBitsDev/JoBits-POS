@@ -6,7 +6,7 @@
 
 package com.jobits.pos.ui.almacen;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
@@ -19,7 +19,7 @@ import com.jobits.pos.domain.models.Almacen;
  * @author Jorge
  *
  */
-public class AlmacenListView extends AbstractListView<Almacen>{
+public class AlmacenListView extends OldAbstractListView<Almacen>{
 
     public AlmacenListView(AbstractListController<Almacen> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);

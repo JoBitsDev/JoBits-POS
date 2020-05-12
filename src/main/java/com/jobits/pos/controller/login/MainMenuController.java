@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.login;
 
-import com.jobits.pos.ui.login.MainMenuView;
+import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.copiaSegView;
 import java.awt.Container;
 import java.text.ParseException;

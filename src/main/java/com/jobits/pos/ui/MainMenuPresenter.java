@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.dashboard.presenter;
+package com.jobits.pos.ui;
 
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.cordinator.MainNavigator;
@@ -25,7 +25,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
     public MainMenuPresenter(MainMenuController controller) {
         super(new MainMenuViewModel());
         this.controller = controller;
-        
+
     }
 
     @Override
@@ -35,7 +35,6 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                 @Override
                 public Optional doAction() {
                     MainNavigator.getInstance().navigateTo(v.toString());
-                   // controller.actionButton(v);
                     return Optional.empty();
                 }
             });

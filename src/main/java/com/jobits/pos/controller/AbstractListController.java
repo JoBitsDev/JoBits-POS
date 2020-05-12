@@ -6,7 +6,7 @@
 
 package com.jobits.pos.controller;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import java.beans.PropertyChangeEvent;
 import com.jobits.pos.adapters.repo.AbstractRepository;
 
@@ -45,8 +45,8 @@ public abstract class AbstractListController<T> extends AbstractDialogController
     }
 
     @Override
-    public AbstractListView<T> getView() {
-        return (AbstractListView<T>) super.getView(); //To change body of generated methods, choose Tools | Templates.
+    public OldAbstractListView<T> getView() {
+        return (OldAbstractListView<T>) super.getView(); //To change body of generated methods, choose Tools | Templates.
     }
     
     public abstract AbstractDetailController<T> getDetailControllerForNew();

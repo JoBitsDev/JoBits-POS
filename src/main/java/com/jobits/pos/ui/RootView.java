@@ -7,9 +7,7 @@ package com.jobits.pos.ui;
 
 import com.jobits.pos.cordinator.MainNavigator;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.dashboard.presenter.MainMenuPresenter;
 import com.jobits.pos.ui.dashboard.DashBoardView;
-import com.jobits.pos.ui.login.MainMenuView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -162,7 +160,7 @@ public class RootView extends MaterialPanel {
                     jPanelMainMenu.add(dashboard);
                     statusBar.refreshView();
                 }
-                viewNameToDisplay = DashBoardView.VIEW_NAME;
+                viewNameToDisplay = DashBoardView.VIEW_NAME;//TODO: cuando se vuelva a la ventana de loggeo vaciar el usuario loggeado
 
             }
 

@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.productos;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import com.jidesoft.swing.JideButton;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -26,7 +26,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class ProductoVentaListView extends AbstractListView<ProductoVenta> {
+public class ProductoVentaListView extends OldAbstractListView<ProductoVenta> {
 
     public ProductoVentaListView(AbstractListController<ProductoVenta> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);

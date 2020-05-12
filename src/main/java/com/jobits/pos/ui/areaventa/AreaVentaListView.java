@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.areaventa;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import com.jobits.pos.ui.OldAbstractView;
 import java.awt.Dialog;
 import java.util.List;
@@ -21,7 +21,7 @@ import com.jobits.pos.ui.utils.RestManagerListModel;
  *
  * @author Jorge
  */
-public class AreaVentaListView extends AbstractListView<Area> {
+public class AreaVentaListView extends OldAbstractListView<Area> {
 
     public AreaVentaListView(AbstractListController controller, OldAbstractView owner) {
         super(DialogType.INPUT_LARGE, controller, owner);

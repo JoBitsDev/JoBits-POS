@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.almacen;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import com.jobits.pos.ui.OldAbstractView;
 import com.jidesoft.swing.JideButton;
 import java.awt.Frame;
@@ -23,7 +23,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class TransaccionListView extends AbstractListView<Transaccion> {
+public class TransaccionListView extends OldAbstractListView<Transaccion> {
 
     public TransaccionListView(AbstractListController<Transaccion> controller, OldAbstractView parent, boolean modal) {
         super(controller, parent, modal);

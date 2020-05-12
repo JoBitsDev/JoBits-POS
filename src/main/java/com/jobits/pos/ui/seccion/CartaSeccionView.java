@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.seccion;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import com.jobits.pos.ui.OldAbstractView;
 import java.util.List;
 import com.jobits.pos.controller.AbstractListController;
@@ -20,7 +20,7 @@ import com.jobits.pos.ui.utils.RestManagerListModel;
  *
  * @author Jorge
  */
-public class CartaSeccionView extends AbstractListView<Carta> {
+public class CartaSeccionView extends OldAbstractListView<Carta> {
 
     /**
      * Creates new form CartaSeccionView

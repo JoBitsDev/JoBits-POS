@@ -6,7 +6,7 @@
 package com.jobits.pos.cordinator;
 
 import com.jobits.pos.ui.login.LogInView;
-import com.jobits.pos.ui.login.MainMenuView;
+import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.login.UbicacionView;
 import java.util.Arrays;
 import java.util.HashMap;

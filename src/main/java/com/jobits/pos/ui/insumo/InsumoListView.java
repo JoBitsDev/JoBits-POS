@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.insumo;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.MenuItem;
@@ -25,7 +25,7 @@ import com.jobits.pos.domain.models.Insumo;
  * @author Jorge
  *
  */
-public class InsumoListView extends AbstractListView<Insumo> {
+public class InsumoListView extends OldAbstractListView<Insumo> {
 
     public InsumoListView(AbstractListController<Insumo> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);

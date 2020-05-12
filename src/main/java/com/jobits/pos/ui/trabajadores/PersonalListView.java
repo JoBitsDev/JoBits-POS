@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.trabajadores;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import com.jidesoft.swing.JideButton;
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -26,7 +26,7 @@ import com.jobits.pos.ui.utils.utils;
  * @author Jorge
  *
  */
-public class PersonalListView extends AbstractListView<Personal> {
+public class PersonalListView extends OldAbstractListView<Personal> {
 
     public PersonalListView(AbstractListController<Personal> controller, Dialog owner, boolean modal) {
         super(controller, owner, modal);

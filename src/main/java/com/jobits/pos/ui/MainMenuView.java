@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.login;
+package com.jobits.pos.ui;
 
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.recursos.R;

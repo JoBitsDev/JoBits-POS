@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.puntoelaboracion;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.jobits.pos.domain.models.Cocina;
  * @author Jorge
  *
  */
-public class CocinaListView extends AbstractListView<Cocina> {
+public class CocinaListView extends OldAbstractListView<Cocina> {
 
     public CocinaListView(AbstractListController<Cocina> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);

@@ -6,7 +6,7 @@
 
 package com.jobits.pos.ui.trabajadores;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
@@ -20,7 +20,7 @@ import com.jobits.pos.domain.models.PuestoTrabajo;
  * @author Jorge
  * 
  */
-public class PuestoTrabajoListView extends AbstractListView<PuestoTrabajo>{
+public class PuestoTrabajoListView extends OldAbstractListView<PuestoTrabajo>{
 
     public PuestoTrabajoListView(AbstractListController<PuestoTrabajo> controller, Frame owner, boolean modal) {
         super(controller, owner, modal);

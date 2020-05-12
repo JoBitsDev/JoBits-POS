@@ -7,7 +7,7 @@
 package com.jobits.pos.controller;
 
 import com.jobits.pos.ui.AbstractFragmentView;
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.util.List;

@@ -6,7 +6,7 @@
 
 package com.jobits.pos.ui.seccion;
 
-import com.jobits.pos.ui.AbstractListView;
+import com.jobits.pos.ui.OldAbstractListView;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.util.List;
@@ -18,7 +18,7 @@ import com.jobits.pos.domain.models.Seccion;
  * @author Jorge
  * 
  */
-public class SeccionListView extends AbstractListView<Seccion>{
+public class SeccionListView extends OldAbstractListView<Seccion>{
 
     public SeccionListView(AbstractListController<Seccion> controller, Frame parent, boolean modal) {
         super(controller, parent, modal);
