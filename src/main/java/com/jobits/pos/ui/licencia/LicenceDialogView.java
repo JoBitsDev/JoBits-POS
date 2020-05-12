@@ -283,13 +283,13 @@ public class LicenceDialogView extends OldAbstractView {
         key += jTextField7.getText();
         key += jTextField8.getText();
         key += jTextField9.getText();
-        getController().validateAndSafe(key);
+        getControl().validateAndSafe(key);
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     @Override
     public void updateView() {
-        jideLabelEstadoLic.setText(getController().getEstadoLicencia(Licence.TipoLicencia.APLICACION));
-        jideLabelIdentificador.setText(getController().getSoftwareUID());
+        jideLabelEstadoLic.setText(getControl().getEstadoLicencia(Licence.TipoLicencia.APLICACION));
+        jideLabelIdentificador.setText(getControl().getSoftwareUID());
     }
 
 
@@ -320,8 +320,8 @@ public class LicenceDialogView extends OldAbstractView {
     private com.jidesoft.swing.JideLabel jideLabelIdentificador;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public LicenceController getController() {
+    
+    public LicenceController getControl() {
         return (LicenceController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 

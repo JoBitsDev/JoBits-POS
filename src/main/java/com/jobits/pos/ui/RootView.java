@@ -6,10 +6,12 @@
 package com.jobits.pos.ui;
 
 import com.jobits.pos.cordinator.MainNavigator;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.dashboard.presenter.MainMenuPresenter;
-import com.jobits.pos.ui.login.DashBoardView;
+import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.login.MainMenuView;
 import com.jobits.pos.ui.login.LogInView;
+import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.AutenticacionFragmentView;
 import com.jobits.ui.components.MaterialComponentsFactory;
@@ -32,6 +34,8 @@ public class RootView extends MaterialPanel {
 
     private MainMenuView dashboard;
 
+    private StatusBarView statusBar = new StatusBarView(new StatusBarPresenter());
+
     private String currentDisplayedViewName;
 
     private Map<String, View> views = new HashMap<>();
@@ -45,6 +49,7 @@ public class RootView extends MaterialPanel {
         super();
         initComponents();
         jPanelContent.setLayout(cards);
+        jPanelStatus.add(statusBar);
 
     }
 
@@ -71,6 +76,7 @@ public class RootView extends MaterialPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanelMainMenu = new javax.swing.JPanel();
         jPanelContent = new javax.swing.JPanel();
+        jPanelStatus = MaterialComponentsFactory.Containers.getSecondaryPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -116,10 +122,17 @@ public class RootView extends MaterialPanel {
         );
         jPanelContentLayout.setVerticalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
+            .addGap(0, 316, Short.MAX_VALUE)
         );
 
         add(jPanelContent, java.awt.BorderLayout.CENTER);
+
+        jPanelStatus.setBackground(new java.awt.Color(204, 204, 204));
+        jPanelStatus.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        jPanelStatus.setMinimumSize(new java.awt.Dimension(5, 40));
+        jPanelStatus.setPreferredSize(new java.awt.Dimension(5, 60));
+        jPanelStatus.setLayout(new java.awt.BorderLayout());
+        add(jPanelStatus, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
@@ -133,6 +146,7 @@ public class RootView extends MaterialPanel {
     private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelHeader;
     private javax.swing.JPanel jPanelMainMenu;
+    private javax.swing.JPanel jPanelStatus;
     // End of variables declaration//GEN-END:variables
 
     private void addView(View view) {
@@ -146,6 +160,7 @@ public class RootView extends MaterialPanel {
                 if (dashboard == null) {
                     dashboard = (MainMenuView) ViewFacade.getView(viewNameToDisplay, presenter);
                     jPanelMainMenu.add(dashboard);
+                    statusBar.refreshView();
                 }
                 viewNameToDisplay = DashBoardView.VIEW_NAME;
 
@@ -156,8 +171,11 @@ public class RootView extends MaterialPanel {
         }
         addView(ViewFacade.getView(viewNameToDisplay, presenter));
         currentDisplayedViewName = viewNameToDisplay;
+        boolean displayAggregatesViews = !(currentDisplayedViewName.equals(LogInView.VIEW_NAME)
+                || currentDisplayedViewName.equals(UbicacionView.VIEW_NAME));
         jPanelHeader.setVisible(!currentDisplayedViewName.equals(LogInView.VIEW_NAME));
-        jPanelMainMenu.setVisible(!currentDisplayedViewName.equals(LogInView.VIEW_NAME));
+        jPanelMainMenu.setVisible(displayAggregatesViews);
+        jPanelStatus.setVisible(displayAggregatesViews);
         cards.show(jPanelContent, currentDisplayedViewName);
         repaint();
 

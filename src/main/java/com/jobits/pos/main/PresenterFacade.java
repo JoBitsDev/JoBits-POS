@@ -11,7 +11,7 @@ import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
 import com.jobits.pos.ui.dashboard.presenter.MainMenuPresenter;
-import com.jobits.pos.ui.login.DashBoardView;
+import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.login.MainMenuView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;

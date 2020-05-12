@@ -6,7 +6,7 @@
 package com.jobits.pos.ui;
 
 import com.jobits.pos.main.PresenterFacade;
-import com.jobits.pos.ui.login.DashBoardView;
+import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.login.MainMenuView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;

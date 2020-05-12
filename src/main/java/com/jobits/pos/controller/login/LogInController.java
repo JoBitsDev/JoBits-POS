@@ -5,21 +5,14 @@
  */
 package com.jobits.pos.controller.login;
 
-import com.jobits.pos.ui.login.LogInView;
-import com.jobits.pos.ui.utils.AutenticacionFragmentView;
 import java.awt.Container;
 import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
-import javax.swing.SwingWorker;
-import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.recursos.DBConnector;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.utils.LoadingWindow;
 
 /**
  * FirstDream
@@ -32,7 +25,6 @@ public class LogInController {
     private boolean AUTORIZADO = false;
     private int nivelMinimo = -1;
     private String usuarioRequerido = "";
-    private LogInView mainView;
     private UbicacionConexionModel conexionActiva;
 
     public LogInController() {
@@ -66,7 +58,6 @@ public class LogInController {
         if (msg.equals("Autenticación correcta")) {
             Application.getInstance().setLoggedUser(p);
             return true;
-            // DashBoardController controller = new DashBoardController(p, mainView); //TODO Cordinator
         } else {
             throw new IllegalArgumentException(msg);
         }

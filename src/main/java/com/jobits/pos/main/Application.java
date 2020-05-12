@@ -5,15 +5,13 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.cordinator.MainCoordinator;
 import com.jobits.pos.cordinator.MainNavigator;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.ui.RootView;
-import com.jobits.pos.ui.View;
-import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +19,6 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import ui.MaterialLookAndFeel;
-import util.Utils;
 
 /**
  *
@@ -32,8 +29,14 @@ import util.Utils;
  */
 public class Application {
 
+    //
+    // Name
+    //
     private final String APP_NAME = "APP";
 
+    //
+    // UI
+    //
     private MainWindow mainWindow;
 
     private RootView rootView;
@@ -41,6 +44,11 @@ public class Application {
     private MainCoordinator coordinator;
 
     private MainNavigator navigator;
+
+    //
+    // App
+    //
+    private LicenceController licenceController = new LicenceController();
 
     private Personal loggedUser;
 
@@ -60,6 +68,7 @@ public class Application {
         setLocale();
         setApplicationLooks();
         setNotificationChannel();
+        calculateLicenceLeft();
         mainWindow = new MainWindow();
         //mainWindow.setTitle(APP_NAME);
         mainWindow.setWelcomeHeader(true);
@@ -96,6 +105,13 @@ public class Application {
 
     public void setLoggedUser(Personal loggedUser) {
         this.loggedUser = loggedUser;
+    }
+
+    public LicenceController getLicenceController() {
+        return licenceController;
+    }
+
+    private void calculateLicenceLeft() {
     }
 
 }
