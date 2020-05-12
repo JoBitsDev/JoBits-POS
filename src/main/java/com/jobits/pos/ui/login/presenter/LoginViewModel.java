@@ -20,11 +20,11 @@ import java.util.List;
  */
 public class LoginViewModel extends AbstractViewModel {
 
-    private String nombreUsuario;
+    private String nombreUsuario = "";
 
     public static final String PROP_NOMBREUSUARIO = "nombreUsuario";
 
-    private String contraseña;
+    private String contraseña = "";
 
     public static final String PROP_CONTRASENA = "contraseña";
 
