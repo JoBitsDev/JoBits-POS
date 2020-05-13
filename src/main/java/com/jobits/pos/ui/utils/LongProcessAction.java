@@ -13,6 +13,9 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.Dimension;
+import javax.swing.SwingConstants;
 
 /**
  * FirstDream
@@ -83,14 +86,22 @@ public abstract class LongProcessAction {
 
     private static JDialog createLoadingDialog() {
         JDialog ret = new JDialog(null, null, Dialog.ModalityType.APPLICATION_MODAL);
+        ret.getContentPane().setLayout(new BorderLayout());
+
         JProgressBar progressBar = new JProgressBar();
         progressBar.setIndeterminate(true);
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(progressBar, BorderLayout.CENTER);
-        panel.add(LABEL_CARGANDO, BorderLayout.PAGE_START);
-        ret.add(panel);
+
+        JPanel panel = MaterialComponentsFactory.Containers.getTransparentPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(progressBar, BorderLayout.SOUTH);
+
+        LABEL_CARGANDO.setHorizontalAlignment(SwingConstants.CENTER);
+        panel.add(LABEL_CARGANDO, BorderLayout.NORTH);
+
+        ret.add(panel,BorderLayout.CENTER);
         ret.setUndecorated(true);
         ret.pack();
+
         return ret;
     }
 
