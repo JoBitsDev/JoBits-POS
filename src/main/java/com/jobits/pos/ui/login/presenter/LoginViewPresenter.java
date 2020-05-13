@@ -110,7 +110,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                 return Optional.empty();
             }
         });
-        registerOperation(new AbstractViewAction(ACTION_EDITAR_UBICACION) {
+        registerOperation(new AbstractViewAction(ACTION_EDITAR_UBICACION,false) {
             @Override
             public Optional doAction() {
                 onEditarUbicacionClick();

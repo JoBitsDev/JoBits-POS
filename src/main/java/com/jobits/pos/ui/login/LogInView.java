@@ -23,11 +23,9 @@ import util.materials.MaterialIcons;
  * @author Jorge
  */
 public class LogInView extends AbstractViewPanel {
-    
+
     public static final String VIEW_NAME = "Autenticación";
 
-   
-    
     /**
      * Creates new form LogInView
      *
@@ -166,7 +164,7 @@ public class LogInView extends AbstractViewPanel {
     public AbstractViewPresenter getPresenter() {
         return presenter;
     }
-    
+
     @Override
     public void wireUp() {
         Bindings.bind(jLabelEstadoConexion, getPresenter().getModel(PROP_ESTADOCONEXION));
@@ -177,25 +175,26 @@ public class LogInView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_UBICACIONSELECCIONADA)));
         Bindings.bind(jButtonAutenticar, "enabled", getPresenter().getModel(PROP_BOTON_AUTENTICAR_HABILITADO));
         Bindings.bind(jLabelEstadoConexion, "foreground", getPresenter().getModel(PROP_COLORLABELCONEXION));
-        
+
         jPasswordField.setAction(getPresenter().getOperation(ACTION_AUTENTICAR));
         jButtonAutenticar.setAction(getPresenter().getOperation(ACTION_AUTENTICAR));
         jButtonEdit.setAction(getPresenter().getOperation(ACTION_EDITAR_UBICACION));
-        jButtonEdit.setText("");
-        jButtonEdit.setIcon(MaterialIcons.EDIT);
+        jButtonEdit.setText("");//TODO mal manejo de los actions que hay que poner aqui las cosas manuales
+        jButtonEdit.setIcon(MaterialIcons.EDIT.deriveIconTTF(jButtonEdit.getForeground()));
+
     }
-    
+
     @Override
     public void uiInit() {
         initComponents();
         ComponentMover cr = new ComponentMover(this, this.getComponents());
         jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        
+
     }
-    
+
     @Override
     public String getViewName() {
         return VIEW_NAME;
     }
-    
+
 }
