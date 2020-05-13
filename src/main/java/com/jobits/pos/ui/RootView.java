@@ -15,7 +15,11 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.AutenticacionFragmentView;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import components.containers.MaterialPanel;
+import components.dashboards.smoot.PanelDual;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +42,10 @@ public class RootView extends MaterialPanel {
     private String currentDisplayedViewName;
 
     private Map<String, View> views = new HashMap<>();
+
+    private PanelDual panelDual;
+
+    private boolean shrinked;
 
     private static RootView instance;
 
@@ -69,12 +77,15 @@ public class RootView extends MaterialPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelHeader = new javax.swing.JPanel();
+        jPanelHeader = MaterialComponentsFactory.Containers.getHeaderPanel();
         jPanel1 = new javax.swing.JPanel();
         jButtonBack = MaterialComponentsFactory.Buttons.getBackButton();
         jLabel1 = new javax.swing.JLabel();
-        jPanelMainMenu = new javax.swing.JPanel();
         jPanelContent = new javax.swing.JPanel();
+        jPanelMainMenu = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelShinkButton = new javax.swing.JPanel();
+        jButtonShrink = MaterialComponentsFactory.Buttons.getMenuButton();
+        jPanelMenu = new javax.swing.JPanel();
         jPanelStatus = MaterialComponentsFactory.Containers.getSecondaryPanel();
 
         setLayout(new java.awt.BorderLayout());
@@ -108,16 +119,13 @@ public class RootView extends MaterialPanel {
 
         add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
 
-        jPanelMainMenu.setOpaque(false);
-        add(jPanelMainMenu, java.awt.BorderLayout.WEST);
-
         jPanelContent.setBackground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
         jPanelContent.setLayout(jPanelContentLayout);
         jPanelContentLayout.setHorizontalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 470, Short.MAX_VALUE)
         );
         jPanelContentLayout.setVerticalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,6 +133,30 @@ public class RootView extends MaterialPanel {
         );
 
         add(jPanelContent, java.awt.BorderLayout.CENTER);
+
+        jPanelMainMenu.setOpaque(false);
+        jPanelMainMenu.setLayout(new java.awt.BorderLayout());
+
+        jPanelShinkButton.setOpaque(false);
+        jPanelShinkButton.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jButtonShrink.setMaximumSize(new java.awt.Dimension(40, 40));
+        jButtonShrink.setMinimumSize(new java.awt.Dimension(40, 40));
+        jButtonShrink.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButtonShrink.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonShrinkActionPerformed(evt);
+            }
+        });
+        jPanelShinkButton.add(jButtonShrink);
+
+        jPanelMainMenu.add(jPanelShinkButton, java.awt.BorderLayout.PAGE_END);
+
+        jPanelMenu.setOpaque(false);
+        jPanelMenu.setLayout(new java.awt.BorderLayout());
+        jPanelMainMenu.add(jPanelMenu, java.awt.BorderLayout.CENTER);
+
+        add(jPanelMainMenu, java.awt.BorderLayout.WEST);
 
         jPanelStatus.setBackground(new java.awt.Color(204, 204, 204));
         jPanelStatus.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
@@ -138,13 +170,20 @@ public class RootView extends MaterialPanel {
         MainNavigator.getInstance().navigateUp();
     }//GEN-LAST:event_jButtonBackActionPerformed
 
+    private void jButtonShrinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShrinkActionPerformed
+        setShrinked(!shrinked);
+    }//GEN-LAST:event_jButtonShrinkActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBack;
+    private javax.swing.JButton jButtonShrink;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelHeader;
     private javax.swing.JPanel jPanelMainMenu;
+    private javax.swing.JPanel jPanelMenu;
+    private javax.swing.JPanel jPanelShinkButton;
     private javax.swing.JPanel jPanelStatus;
     // End of variables declaration//GEN-END:variables
 
@@ -158,7 +197,7 @@ public class RootView extends MaterialPanel {
             if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
                 if (dashboard == null) {
                     dashboard = (MainMenuView) ViewFacade.getView(viewNameToDisplay, presenter);
-                    jPanelMainMenu.add(dashboard);
+                    jPanelMenu.add(dashboard);
                     statusBar.refreshView();
                 }
                 viewNameToDisplay = DashBoardView.VIEW_NAME;//TODO: cuando se vuelva a la ventana de loggeo vaciar el usuario loggeado
@@ -182,6 +221,19 @@ public class RootView extends MaterialPanel {
 
     public String getCurrentViewName(String name) {
         return currentDisplayedViewName;
+    }
+
+    public void setShrinked(boolean shrink) {
+        if (shrink) {
+            jPanelMainMenu.setSize(new Dimension(jPanelMainMenu.getHeight(), jButtonShrink.getWidth() + 10));
+//panelDual.setASize(jButtonShrink.getIcon().getIconWidth() + 10);
+        } else {
+            jPanelMainMenu.setSize(new Dimension(jPanelMainMenu.getHeight(), jPanelMenu.getWidth()));
+            //panelDual.setASize(jPanelMenu.getSize().width);
+
+        }
+        jPanelMenu.setVisible(shrink);
+        shrinked = shrink;
     }
 
 }
