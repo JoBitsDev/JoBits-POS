@@ -7,7 +7,7 @@ package com.jobits.pos.cordinator;
 
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.View;
-import com.jobits.pos.ui.ViewFacade;
+import com.jobits.pos.main.ViewFacade;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.awt.Component;

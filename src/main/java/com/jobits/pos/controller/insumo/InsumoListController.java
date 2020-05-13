@@ -29,10 +29,6 @@ public class InsumoListController extends OldAbstractListController<Insumo> {
         super(InsumoDAO.getInstance());
     }
 
-    public InsumoListController(Window frame) {
-        super(InsumoDAO.getInstance());
-        constructView(frame);
-    }
 
     /**
      *
@@ -40,16 +36,14 @@ public class InsumoListController extends OldAbstractListController<Insumo> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new InsumoListView(this, (Dialog) parent, true));
-        getView().updateView();
-        getView().setVisible(true);
+  
     }
 
     @Override
     public void createInstance() {
         detailController = getDetailControllerForNew();
         items = null;
-        getView().updateView();//TODO:metodo forzado
+      //  getView().updateView();//TODO:metodo forzado
     }
 
     @Override

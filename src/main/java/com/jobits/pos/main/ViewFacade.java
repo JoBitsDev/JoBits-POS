@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui;
+package com.jobits.pos.main;
 
 import com.jobits.pos.main.PresenterFacade;
+import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.dashboard.DashBoardView;
+import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
@@ -45,6 +48,8 @@ public class ViewFacade {
                 return new DashBoardView(p);
             case ProductoVentaListView.VIEW_NAME:
                 return new ProductoVentaListView((AbstractListViewPresenter) p);
+            case InsumoListView.VIEW_NAME:
+                return new InsumoListView((AbstractListViewPresenter) p);
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);
         }

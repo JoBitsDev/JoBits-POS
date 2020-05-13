@@ -5,19 +5,10 @@
  */
 package com.jobits.pos.ui.insumo;
 
-import com.jobits.pos.ui.OldAbstractListView;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.MenuItem;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-import javax.swing.JMenuItem;
-import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.OldAbstractListController;
-import com.jobits.pos.controller.insumo.InsumoListController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.ui.AbstractListViewPanel;
+import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.utils.BindableTableModel;
 
 /**
  * FirstDream
@@ -25,19 +16,17 @@ import com.jobits.pos.domain.models.Insumo;
  * @author Jorge
  *
  */
-public class InsumoListView extends OldAbstractListView<Insumo> {
+public class InsumoListView extends AbstractListViewPanel<Insumo> {
 
-    public InsumoListView(OldAbstractListController<Insumo> controller, Frame owner, boolean modal) {
-        super(controller, owner, modal);
-    }
+    public static final String VIEW_NAME = "INSUMO";
 
-    public InsumoListView(OldAbstractListController<Insumo> controller, Dialog owner, boolean modal) {
-        super(controller, owner, modal);
+    public InsumoListView(AbstractListViewPresenter presenter) {
+        super(presenter);
     }
 
     @Override
-    public MyJTableModel<Insumo> generateTableModel(List<Insumo> items) {
-        return new MyJTableModel<Insumo>(items) {
+    public BindableTableModel<Insumo> generateTableModel() {
+        return new BindableTableModel<Insumo>(jTableList) {
             @Override
             public int getColumnCount() {
                 return 3;
@@ -47,11 +36,11 @@ public class InsumoListView extends OldAbstractListView<Insumo> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return items.get(rowIndex).getCodInsumo();
+                        return ((Insumo) getListModel().getElementAt(rowIndex)).getCodInsumo();
                     case 1:
-                        return items.get(rowIndex).getNombre();
+                        return ((Insumo) getListModel().getElementAt(rowIndex)).getNombre();
                     case 2:
-                        return items.get(rowIndex).getUm();
+                        return ((Insumo) getListModel().getElementAt(rowIndex)).getUm();
                     default:
                         return null;
 
@@ -82,6 +71,11 @@ public class InsumoListView extends OldAbstractListView<Insumo> {
                 }
             }
         };
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }

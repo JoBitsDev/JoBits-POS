@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui;
 
+import com.jobits.pos.main.ViewFacade;
 import com.jobits.pos.cordinator.MainNavigator;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.dashboard.DashBoardView;
