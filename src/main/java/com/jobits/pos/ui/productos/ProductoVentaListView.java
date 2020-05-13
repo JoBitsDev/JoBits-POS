@@ -19,6 +19,10 @@ import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.AbstractListViewPanel;
+import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  * FirstDream
@@ -26,32 +30,32 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class ProductoVentaListView extends OldAbstractListView<ProductoVenta> {
+public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> {
 
-    public ProductoVentaListView(OldAbstractListController<ProductoVenta> controller, Dialog owner, boolean modal) {
-        super(controller, owner, modal);
+    public static final String VIEW_NAME = "MENU";
 
-//        JideButton jideButton1 = new com.jidesoft.swing.JideButton();
-//        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-//        jideButton1.setToolTipText("Imprimir");
-//        jideButton1.addActionListener((ActionEvent e) -> {
-//            getController().printProductoVenta(model.getObjectAtSelectedRow());
-//        });
-        JComboBox<Carta> cartas = new JComboBox<>(getController().getCartaList());
-        cartas.addItem(null);
-        cartas.addItemListener((ItemEvent e) -> {
-            getController().setSelectedCarta((Carta) cartas.getSelectedItem());
-        });
-        JLabel label = new JLabel("Menu: ");
-
-//        super.getjXPanelControles().add(jideButton1);
-        super.getjPanelExtra().add(label);
-        super.getjPanelExtra().add(cartas);
+    public ProductoVentaListView(AbstractListViewPresenter presenter) {
+        super(presenter);
     }
 
     @Override
-    public MyJTableModel<ProductoVenta> generateTableModel(List<ProductoVenta> items) {
-        return new MyJTableModel<ProductoVenta>(items) {
+    public void uiInit() {
+        super.uiInit(); //To change body of generated methods, choose Tools | Templates.
+//        JComboBox<Carta> cartas = MaterialComponentsFactory.Displayers.getComboBox();
+//        cartas.addItem(null);
+//        cartas.addItemListener((ItemEvent e) -> {
+//            getController().setSelectedCarta((Carta) cartas.getSelectedItem());
+//        });
+//        JLabel label = new JLabel("Menu: ");
+//
+//        super.getjPanelExtra().add(label);
+//        super.getjPanelExtra().add(cartas);
+//TODO implementar el comboBox de los menu
+    }
+
+    @Override
+    public BindableTableModel<ProductoVenta> generateTableModel() {
+        return new BindableTableModel<ProductoVenta>(jTableList) {
             @Override
             public int getColumnCount() {
                 return 6;
@@ -61,17 +65,17 @@ public class ProductoVentaListView extends OldAbstractListView<ProductoVenta> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return items.get(rowIndex).getCodigoProducto();
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getCodigoProducto();
                     case 1:
-                        return items.get(rowIndex).getNombre();
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getNombre();
                     case 2:
-                        return items.get(rowIndex).getPrecioVenta() + R.COIN_SUFFIX;
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getPrecioVenta() + R.COIN_SUFFIX;
                     case 3:
-                        return items.get(rowIndex).getSeccionnombreSeccion();
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getSeccionnombreSeccion();
                     case 4:
-                        return items.get(rowIndex).getCocinacodCocina();
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getCocinacodCocina();
                     case 5:
-                        return items.get(rowIndex).getVisible();
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getVisible();
                     default:
                         return null;
                 }
@@ -114,23 +118,22 @@ public class ProductoVentaListView extends OldAbstractListView<ProductoVenta> {
 
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                if (columnIndex == 5 && getController().canSetVisible(items.get(rowIndex))) {
-                    items.get(rowIndex).setVisible((Boolean) aValue);
-                    getController().setSelected(items.get(rowIndex));
-                    getController().update();
+                if (columnIndex == 5) {
+                    ((ProductoVenta) getListModel().getElementAt(rowIndex)).setVisible((Boolean) aValue);
+                    fireTableCellUpdated(rowIndex, columnIndex);
                 }
+//                if (columnIndex == 5 && getController().canSetVisible(items.get(rowIndex))) {
+//                    items.get(rowIndex).setVisible((Boolean) aValue);
+//                    getController().setSelected(items.get(rowIndex));
+//                    getController().update();
+//                }
             }
         };
     }
 
     @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(700, 600);
-    }
-
-    @Override
-    public ProductoVentaListController getController() {
-        return (ProductoVentaListController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }

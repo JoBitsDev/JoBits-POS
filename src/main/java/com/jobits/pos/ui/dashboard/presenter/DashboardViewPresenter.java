@@ -23,7 +23,7 @@ public class DashboardViewPresenter extends AbstractViewPresenter<DashBoardViewM
     
     @Override
     protected void registerOperations() {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
 }

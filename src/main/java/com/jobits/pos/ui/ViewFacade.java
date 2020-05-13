@@ -9,7 +9,9 @@ import com.jobits.pos.main.PresenterFacade;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
+import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.productos.ProductoVentaListView;
 import javax.swing.JPanel;
 
 /**
@@ -41,6 +43,8 @@ public class ViewFacade {
                 return new MainMenuView(p);
             case DashBoardView.VIEW_NAME:
                 return new DashBoardView(p);
+            case ProductoVentaListView.VIEW_NAME:
+                return new ProductoVentaListView((AbstractListViewPresenter) p);
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);
         }

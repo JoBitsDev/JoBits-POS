@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui.dashboard;
 
+import com.jgoodies.forms.builder.ListViewBuilder;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 

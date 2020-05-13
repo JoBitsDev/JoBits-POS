@@ -217,6 +217,7 @@ public class MainMenuController {
         CONFIGURACION(5);
 
         private final int nivelMinimoAcceso;
+        
 
         private MenuButtons(int nivelMinimoAcceso) {
             this.nivelMinimoAcceso = nivelMinimoAcceso;
