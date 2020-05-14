@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui;
 
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.ViewFacade;
 import com.jobits.pos.cordinator.MainNavigator;
 import com.jobits.pos.recursos.R;
@@ -192,7 +193,7 @@ public class RootView extends MaterialPanel {
         jPanelContent.add(view.getViewComponent(), view.getViewName());
     }
 
-    public void showView(String viewNameToDisplay, AbstractViewPresenter presenter) {
+    public void showView(String viewNameToDisplay, AbstractViewPresenter presenter,DisplayType displayType) {//TODO trabjar en los popup
         if (!views.containsKey(viewNameToDisplay)) {
             if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
                 if (dashboard == null) {

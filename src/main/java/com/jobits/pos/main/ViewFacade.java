@@ -14,6 +14,7 @@ import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import javax.swing.JPanel;
 
@@ -48,6 +49,8 @@ public class ViewFacade {
                 return new DashBoardView(p);
             case ProductoVentaListView.VIEW_NAME:
                 return new ProductoVentaListView((AbstractListViewPresenter) p);
+            case ProductoVentaDetailView.VIEW_NAME:
+                return new ProductoVentaDetailView(p);
             case InsumoListView.VIEW_NAME:
                 return new InsumoListView((AbstractListViewPresenter) p);
             default:

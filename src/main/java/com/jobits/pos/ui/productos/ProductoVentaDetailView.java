@@ -1,0 +1,503 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.jobits.pos.ui.productos;
+
+import GUI.Components.JSpinner;
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
+import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
+import javax.swing.JOptionPane;
+import com.jobits.pos.controller.productos.ProductoVentaDetailController;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.domain.models.ProductoInsumo;
+import com.jobits.pos.domain.models.ProductoInsumoPK;
+import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.productos.presenter.ProductoVentaDetailPresenter;
+import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
+import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
+import com.jobits.pos.ui.utils.utils;
+import com.jobits.ui.components.MaterialComponentsFactory;
+import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.*;
+
+/**
+ *
+ * @author Jorge
+ */
+public class ProductoVentaDetailView extends AbstractViewPanel {
+
+    public static final String VIEW_NAME = "Crear Producto";
+
+    private AbstractCrossReferenePanel<ProductoInsumo, Insumo> crossReferencePanel;
+    private ProductoVenta instance;
+
+    public ProductoVentaDetailView(AbstractViewPresenter presenter) {
+        super(presenter);
+
+    }
+
+    public ProductoVentaDetailController getController() {
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel4 = new javax.swing.JPanel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
+        jPanelInputs = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel8 = new javax.swing.JPanel();
+        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jXLabelPCod = new org.jdesktop.swingx.JXLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
+        jPanel9 = new javax.swing.JPanel();
+        jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio venta",R.COIN_SUFFIX);
+        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
+        jTextFieldPrecioCosto = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio de costo",R.COIN_SUFFIX);
+        jPanel10 = new javax.swing.JPanel();
+        jComboBoxCOCINA = MaterialComponentsFactory.Displayers.getComboBox();
+        jButtonAddCocina = MaterialComponentsFactory.Buttons.getAddButton();
+        jPanel2 = new javax.swing.JPanel();
+        jComboBoxSECCION = MaterialComponentsFactory.Displayers.getComboBox();
+        jButtonAddSeccion = MaterialComponentsFactory.Buttons.getAddButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
+        jPanelTable = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jCheckBoxInventariarProducto = MaterialComponentsFactory.Input.getCheckBox();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jPanelInventario = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jCheckBoxProductoElaborado = MaterialComponentsFactory.Input.getCheckBox();
+        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jPanelCrossRef = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jButtonAddInsumo = MaterialComponentsFactory.Buttons.getAddButton();
+        jXLabelGasto = new org.jdesktop.swingx.JXLabel();
+        jPanel1 = new javax.swing.JPanel();
+        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
+        jPanel11 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jTextFieldPagoPorVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", "Comisión por venta",R.COIN_SUFFIX);
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
+        jPanelActions = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getCancelButton();
+        jButtonCrear = MaterialComponentsFactory.Buttons.getAcceptButton();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Crear/Editar Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 24))); // NOI18N
+        setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jScrollPane1.setOpaque(false);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.PAGE_AXIS));
+
+        filler2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.add(filler2);
+
+        jPanelInputs.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Básico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
+        jPanelInputs.setLayout(new javax.swing.BoxLayout(jPanelInputs, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanel8.setOpaque(false);
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel8.add(filler4);
+
+        jXLabelPCod.setText("P-Cod");
+        jPanel8.add(jXLabelPCod);
+
+        jPanelInputs.add(jPanel8);
+
+        jPanel7.setOpaque(false);
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+
+        jTextFieldNombre.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jTextFieldNombre.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
+        jTextFieldNombre.setMaximumSize(new java.awt.Dimension(2147483647, 60));
+        jTextFieldNombre.setMinimumSize(new java.awt.Dimension(250, 60));
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(400, 60));
+        jPanel7.add(jTextFieldNombre);
+
+        jPanelInputs.add(jPanel7);
+
+        jPanel9.setOpaque(false);
+        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+
+        jTextFieldPrecioVenta.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
+        jTextFieldPrecioVenta.setMinimumSize(new java.awt.Dimension(250, 60));
+        jTextFieldPrecioVenta.setPreferredSize(new java.awt.Dimension(250, 60));
+        jPanel9.add(jTextFieldPrecioVenta);
+        jPanel9.add(filler9);
+
+        jTextFieldPrecioCosto.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
+        jTextFieldPrecioCosto.setMaximumSize(new java.awt.Dimension(250, 60));
+        jTextFieldPrecioCosto.setMinimumSize(new java.awt.Dimension(250, 60));
+        jTextFieldPrecioCosto.setPreferredSize(new java.awt.Dimension(250, 60));
+        jPanel9.add(jTextFieldPrecioCosto);
+
+        jPanelInputs.add(jPanel9);
+
+        jPanel10.setOpaque(false);
+        jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+
+        jComboBoxCOCINA.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3), "Elaborado en"));
+        jComboBoxCOCINA.setMinimumSize(new java.awt.Dimension(250, 60));
+        jComboBoxCOCINA.setPreferredSize(new java.awt.Dimension(250, 60));
+        jPanel10.add(jComboBoxCOCINA);
+
+        jButtonAddCocina.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
+        jButtonAddCocina.setMaximumSize(new java.awt.Dimension(300, 60));
+        jButtonAddCocina.setMinimumSize(new java.awt.Dimension(60, 50));
+        jButtonAddCocina.setPreferredSize(new java.awt.Dimension(180, 50));
+        jButtonAddCocina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddCocinaActionPerformed(evt);
+            }
+        });
+        jPanel10.add(jButtonAddCocina);
+
+        jPanelInputs.add(jPanel10);
+
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+
+        jComboBoxSECCION.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3), "Categoría"));
+        jComboBoxSECCION.setMinimumSize(new java.awt.Dimension(250, 40));
+        jComboBoxSECCION.setPreferredSize(new java.awt.Dimension(250, 60));
+        jPanel2.add(jComboBoxSECCION);
+
+        jButtonAddSeccion.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
+        jButtonAddSeccion.setMaximumSize(new java.awt.Dimension(300, 60));
+        jButtonAddSeccion.setMinimumSize(new java.awt.Dimension(60, 50));
+        jButtonAddSeccion.setPreferredSize(new java.awt.Dimension(180, 50));
+        jButtonAddSeccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddSeccionActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonAddSeccion);
+
+        jPanelInputs.add(jPanel2);
+
+        jPanel4.add(jPanelInputs);
+        jPanel4.add(filler1);
+
+        jPanelTable.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Inventario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
+        jPanelTable.setLayout(new javax.swing.BoxLayout(jPanelTable, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+
+        jCheckBoxInventariarProducto.setText("Inventariar Producto");
+        jCheckBoxInventariarProducto.setContentAreaFilled(false);
+        jPanel3.add(jCheckBoxInventariarProducto);
+        jPanel3.add(filler6);
+
+        jPanelTable.add(jPanel3);
+        jPanelTable.add(jPanelInventario);
+
+        jPanel6.setOpaque(false);
+        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
+
+        jCheckBoxProductoElaborado.setText("Producto elaborado");
+        jCheckBoxProductoElaborado.setContentAreaFilled(false);
+        jPanel6.add(jCheckBoxProductoElaborado);
+        jPanel6.add(filler7);
+        jPanel6.add(filler8);
+
+        jPanelTable.add(jPanel6);
+
+        jPanelCrossRef.setOpaque(false);
+        jPanelCrossRef.setPreferredSize(new java.awt.Dimension(529, 300));
+        jPanelCrossRef.setLayout(new java.awt.BorderLayout());
+
+        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jButtonAddInsumo.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
+        jButtonAddInsumo.setMaximumSize(new java.awt.Dimension(130, 60));
+        jButtonAddInsumo.setMinimumSize(new java.awt.Dimension(60, 50));
+        jButtonAddInsumo.setPreferredSize(new java.awt.Dimension(130, 50));
+        jButtonAddInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddInsumoActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButtonAddInsumo);
+
+        jPanelCrossRef.add(jPanel5, java.awt.BorderLayout.NORTH);
+
+        jXLabelGasto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jXLabelGasto.setText("0.00"); // NOI18N
+        jPanelCrossRef.add(jXLabelGasto, java.awt.BorderLayout.PAGE_END);
+
+        jPanelTable.add(jPanelCrossRef);
+
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanelTable.add(jPanel1);
+
+        jPanel4.add(jPanelTable);
+        jPanel4.add(filler5);
+
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Otros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
+        jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+
+        jTextFieldPagoPorVenta.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
+        jTextFieldPagoPorVenta.setMaximumSize(new java.awt.Dimension(250, 60));
+        jTextFieldPagoPorVenta.setMinimumSize(new java.awt.Dimension(250, 60));
+        jTextFieldPagoPorVenta.setPreferredSize(new java.awt.Dimension(250, 60));
+        jPanel11.add(jTextFieldPagoPorVenta);
+
+        jPanel4.add(jPanel11);
+        jPanel4.add(filler3);
+
+        jPanelActions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 10, 5));
+
+        jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
+        jPanelActions.add(jButtonCancelar);
+
+        jButtonCrear.setMnemonic('c');
+        jButtonCrear.setText(bundle.getString("label_crear_producto")); // NOI18N
+        jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCrearActionPerformed(evt);
+            }
+        });
+        jPanelActions.add(jButtonCrear);
+
+        jPanel4.add(jPanelActions);
+
+        jScrollPane1.setViewportView(jPanel4);
+
+        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+    }//GEN-LAST:event_jButtonCrearActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonAddInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddInsumoActionPerformed
+    }//GEN-LAST:event_jButtonAddInsumoActionPerformed
+
+    private void jButtonAddCocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCocinaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAddCocinaActionPerformed
+
+    private void jButtonAddSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddSeccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAddSeccionActionPerformed
+
+    public void fetchComponentData() {
+        crossReferencePanel = new AbstractCrossReferenePanel<ProductoInsumo, Insumo>("Insumos", getController().getInsumoList()) {
+            @Override
+            public RestManagerAbstractTableModel getTableModel() {
+                return new RestManagerAbstractTableModel<ProductoInsumo>(instance.getProductoInsumoList(), getjTableCrossReference()) {
+                    @Override
+                    public int getColumnCount() {
+                        return 5;
+                    }
+
+                    @Override
+                    public Object getValueAt(int rowIndex, int columnIndex) {
+                        switch (columnIndex) {
+                            case 0:
+                                return items.get(rowIndex).getInsumo().getCodInsumo();
+                            case 1:
+                                return items.get(rowIndex).getInsumo().getNombre();
+                            case 2:
+                                return items.get(rowIndex).getInsumo().getUm();
+                            case 3:
+                                return items.get(rowIndex).getCantidad();
+                            case 4:
+                                return items.get(rowIndex).getCosto();
+                            default:
+                                return null;
+                        }
+                    }
+
+                    @Override
+                    public String getColumnName(int column) {
+                        switch (column) {
+                            case 0:
+                                return "Código";
+                            case 1:
+                                return "Nombre";
+                            case 2:
+                                return "U/M";
+                            case 3:
+                                return "Cantidad";
+                            case 4:
+                                return "Costo";
+                            default:
+                                return null;
+                        }
+                    }
+
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return columnIndex == 3;
+                    }
+
+                    @Override
+                    public Class<?> getColumnClass(int columnIndex) {
+                        if (columnIndex == 3) {
+                            return Float.class;
+                        }
+                        return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
+                    }
+
+                    @Override
+                    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                        switch (columnIndex) {
+                            case 3:
+                                items.get(rowIndex).setCantidad((float) aValue);
+                                items.get(rowIndex).setCosto(items.get(rowIndex).getInsumo().getCostoPorUnidad() * (float) aValue);
+                                getController().updateCosto();
+                                jXLabelGasto.setText(utils.setDosLugaresDecimales(instance.getGasto()));
+                                fireTableRowsUpdated(rowIndex, rowIndex);
+                                break;
+                        }
+                    }
+                };
+            }
+
+            @Override
+            public ProductoInsumo transformK_T(Insumo selected) {
+                ProductoInsumo ret = new ProductoInsumo();
+                ProductoInsumoPK pk = new ProductoInsumoPK(getController().getInstance().getCodigoProducto(), selected.getCodInsumo());
+                ret.setProductoInsumoPK(pk);
+                ret.setInsumo(selected);
+                ret.setProductoVenta(getController().getInstance());
+                float i = 0;
+                try {
+                    i = Float.parseFloat(JOptionPane.showInputDialog(this, "Introduzca la cantidad", 0));
+                } catch (NumberFormatException e) {
+
+                }
+                ret.setCantidad(i);
+                ret.setCosto(utils.setDosLugaresDecimalesFloat(i * selected.getCostoPorUnidad()));
+                return ret;
+            }
+        };
+        jPanelCrossRef.add(crossReferencePanel);
+
+    }
+
+    public AbstractCrossReferenePanel<ProductoInsumo, Insumo> getCrossReferencePanel() {
+        return crossReferencePanel;
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler5;
+    private javax.swing.Box.Filler filler6;
+    private javax.swing.Box.Filler filler7;
+    private javax.swing.Box.Filler filler8;
+    private javax.swing.Box.Filler filler9;
+    private javax.swing.JButton jButtonAddCocina;
+    private javax.swing.JButton jButtonAddInsumo;
+    private javax.swing.JButton jButtonAddSeccion;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonCrear;
+    private javax.swing.JCheckBox jCheckBoxInventariarProducto;
+    private javax.swing.JCheckBox jCheckBoxProductoElaborado;
+    private javax.swing.JComboBox<Cocina> jComboBoxCOCINA;
+    private javax.swing.JComboBox<Seccion> jComboBoxSECCION;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelActions;
+    private javax.swing.JPanel jPanelCrossRef;
+    private javax.swing.JPanel jPanelInputs;
+    private javax.swing.JPanel jPanelInventario;
+    private javax.swing.JPanel jPanelTable;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldPagoPorVenta;
+    private javax.swing.JTextField jTextFieldPrecioCosto;
+    private javax.swing.JTextField jTextFieldPrecioVenta;
+    private org.jdesktop.swingx.JXLabel jXLabelGasto;
+    private org.jdesktop.swingx.JXLabel jXLabelPCod;
+    // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void wireUp() {
+        //
+        //Basico
+        //
+        Bindings.bind(jComboBoxCOCINA, new SelectionInList<>(getPresenter().getModel(PROP_LISTA_ELABORADO), getPresenter().getModel(PROP_ELABORADO_SELECCIONADO)));
+        Bindings.bind(jComboBoxSECCION, new SelectionInList<>(getPresenter().getModel(PROP_LISTA_CATEGORIAS), getPresenter().getModel(PROP_CATEGORIA_SELECCIONADA)));
+        Bindings.bind(jTextFieldNombre, getPresenter().getModel(PROP_NOMBRE_PRODUCTO));
+        Bindings.bind(jTextFieldPrecioVenta, getPresenter().getModel(PROP_PRECIO_VENTA));
+        Bindings.bind(jXLabelPCod, getPresenter().getModel(PROP_CODIGO_PRODUCTO));
+        Bindings.bind(jTextFieldPrecioCosto, getPresenter().getModel(PROP_PRECIO_COSTO));
+        jButtonAddCocina.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR_PUNTO_ELABORACION));
+        jButtonAddSeccion.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR_CATEGORIA));
+
+        //
+        //Inventario
+        //
+
+        Bindings.bind(jCheckBoxInventariarProducto, getPresenter().getModel(PROP_CHECKBOX_INVENTARIAR_PRODUCTO));
+        Bindings.bind(jCheckBoxProductoElaborado, getPresenter().getModel(PROP_CHECKBOX_PRODUCTO_ELABORADO));
+        Bindings.bind(jPanelCrossRef, "visible", getPresenter().getModel(PROP_CHECKBOX_PRODUCTO_ELABORADO));
+        Bindings.bind(jPanelInventario, "visible", getPresenter().getModel(PROP_CHECKBOX_INVENTARIAR_PRODUCTO));
+
+        //TODO tabla y boton
+        jButtonAddInsumo.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR_INSUMO));
+        Bindings.bind(jXLabelGasto, getPresenter().getModel(PROP_PRECIO_COSTO));
+        
+        //
+        //Otros
+        //
+        Bindings.bind(jTextFieldPagoPorVenta, getPresenter().getModel(PROP_COMISION_POR_VENTA));
+
+        jButtonCrear.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR));
+        jButtonCancelar.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_CANCELAR));
+
+    }
+
+    @Override
+    public void uiInit() {
+        initComponents();
+        jComboBoxCOCINA.setOpaque(false);
+        jComboBoxSECCION.setOpaque(false);
+        jButtonAddCocina.setBorderPainted(true);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(50);
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
+    }
+}

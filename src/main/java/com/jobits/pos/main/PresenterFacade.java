@@ -22,6 +22,7 @@ import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaViewPresenter;
 
@@ -41,11 +42,13 @@ public class PresenterFacade {
             case UbicacionView.VIEW_NAME:
                 return new UbicacionViewPresenter(new UbicacionConexionController());
             case MainMenuView.VIEW_NAME:
-                throw new IllegalStateException("Bad call on view: " + MainMenuView.VIEW_NAME);
+                throw new IllegalStateException("Bad call on view: " + viewUIDName);
             case DashBoardView.VIEW_NAME:
                 return new DashboardViewPresenter();
             case ProductoVentaListView.VIEW_NAME:
                 return new ProductoVentaViewPresenter(new ProductoVentaListController());
+            case ProductoVentaDetailView.VIEW_NAME:
+                throw new IllegalStateException("Bad call on view: " + viewUIDName);
             case InsumoListView.VIEW_NAME:
                 return new InsumoListViewPresenter(new InsumoListController());
             default:

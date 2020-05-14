@@ -11,7 +11,7 @@ import java.awt.Window;
 import java.util.Collections;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.productos.ProductoVentaCreateEditController;
+import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Insumo;
@@ -96,7 +96,7 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
 
     public void updateInsumoOnFichas(Insumo insumo) {
         getModel().startTransaction();
-        ProductoVentaCreateEditController controller = new ProductoVentaCreateEditController();
+        ProductoVentaDetailController controller = new ProductoVentaDetailController();
         for (ProductoInsumo p : insumo.getProductoInsumoList()) {
             p.setCosto(insumo.getCostoPorUnidad() * p.getCantidad());
             p.getProductoVenta().setGasto(controller.getCosto(p.getProductoVenta()));

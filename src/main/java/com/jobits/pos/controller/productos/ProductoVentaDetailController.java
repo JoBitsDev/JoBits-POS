@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.productos;
 
-import com.jobits.pos.ui.productos.ProductoVentaCreateEditView;
+import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.utils.LongProcessAction;
 import java.awt.Graphics;
 import java.awt.Window;
@@ -32,23 +32,23 @@ import com.jobits.pos.adapters.repo.SeccionDAO;
  * @author Jorge
  *
  */
-public class ProductoVentaCreateEditController extends AbstractDetailController<ProductoVenta> {
+public class ProductoVentaDetailController extends AbstractDetailController<ProductoVenta> {
 
-    public ProductoVentaCreateEditController() {
+    public ProductoVentaDetailController() {
         super(ProductoVentaDAO.getInstance());
         instance = createNewInstance();
 
     }
 
-    public ProductoVentaCreateEditController(ProductoVenta instance) {
+    public ProductoVentaDetailController(ProductoVenta instance) {
         super(instance, ProductoVentaDAO.getInstance());
     }
 
-    public ProductoVentaCreateEditController(Window parent) {
+    public ProductoVentaDetailController(Window parent) {
         super(parent, ProductoVentaDAO.getInstance());
     }
 
-    public ProductoVentaCreateEditController(ProductoVenta instance, Window parent) {
+    public ProductoVentaDetailController(ProductoVenta instance, Window parent) {
         super(instance, parent, ProductoVentaDAO.getInstance());
     }
 
@@ -66,9 +66,9 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new ProductoVentaCreateEditView(instance, this, (JDialog) parent, true));
-        getView().updateView();
-        getView().setVisible(true);
+        //setView(new ProductoVentaDetailView(instance, this, (JDialog) parent, true));
+        //getView().updateView();
+        //getView().setVisible(true);
 
     }
 
@@ -121,7 +121,7 @@ public class ProductoVentaCreateEditController extends AbstractDetailController<
             @Override
             protected void whenDone() {
                 controller.constructView(getView());
-                ((ProductoVentaCreateEditView) getView()).getCrossReferencePanel().addItemToComboBox(controller.getInstance());
+             //   ((ProductoVentaDetailView) getView()).getCrossReferencePanel().addItemToComboBox(controller.getInstance());
             }
 
         }.performAction(getView());

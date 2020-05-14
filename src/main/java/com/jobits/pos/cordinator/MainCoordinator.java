@@ -9,6 +9,7 @@ import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.login.UbicacionView;
+import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +56,7 @@ public class MainCoordinator implements Coordinator {
         navigationGraph = new HashMap<>();
         navigationGraph.put(LogInView.VIEW_NAME, Arrays.asList(MainMenuView.VIEW_NAME, UbicacionView.VIEW_NAME));
         navigationGraph.put(AVAILABLE_EVERYWHERE, Arrays.asList(ProductoVentaListView.VIEW_NAME,InsumoListView.VIEW_NAME));
+        navigationGraph.put(ProductoVentaListView.VIEW_NAME, Arrays.asList(ProductoVentaDetailView.VIEW_NAME));
     }
 
 }
