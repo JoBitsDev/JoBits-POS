@@ -7,7 +7,7 @@ package com.jobits.pos.ui.almacen;
 
 import com.jobits.pos.ui.AbstractDetailView;
 import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
+import com.jobits.pos.ui.utils.OldAbstractCrossReferenePanel;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dialog;
@@ -55,8 +55,8 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
      * @param parent
      * @param modal
      */
-    AbstractCrossReferenePanel<InsumoAlmacen, Insumo> model;
-    AbstractCrossReferenePanel<TransaccionTransformacion, Insumo> modelTransformacion;
+    OldAbstractCrossReferenePanel<InsumoAlmacen, Insumo> model;
+    OldAbstractCrossReferenePanel<TransaccionTransformacion, Insumo> modelTransformacion;
     final Color elaboracionColor = new Color(255, 255, 204);
     final String labelInsumoSleccionado = "<Seleccione un insumo en la tabla>";
 
@@ -80,7 +80,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         if (model != null) {
             model.getHandler().getTableModel().setItems(getController().getInsumoAlmacenList(getInstance()));
         } else {
-            model = new AbstractCrossReferenePanel<InsumoAlmacen, Insumo>("Insumos", getController().getInsumoList()) {
+            model = new OldAbstractCrossReferenePanel<InsumoAlmacen, Insumo>("Insumos", getController().getInsumoList()) {
                 @Override
                 public RestManagerAbstractTableModel<InsumoAlmacen> getTableModel() {
                     return new RestManagerAbstractTableModel<InsumoAlmacen>(getController().getInsumoAlmacenList(getInstance()), getjTableCrossReference()) {
@@ -154,7 +154,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
             };
 
         }
-        modelTransformacion = new AbstractCrossReferenePanel<TransaccionTransformacion, Insumo>("Insumos", getController().getInsumoList()) {
+        modelTransformacion = new OldAbstractCrossReferenePanel<TransaccionTransformacion, Insumo>("Insumos", getController().getInsumoList()) {
             @Override
             public RestManagerAbstractTableModel<TransaccionTransformacion> getTableModel() {
                 return new RestManagerAbstractTableModel<TransaccionTransformacion>(new ArrayList<TransaccionTransformacion>(), getjTableCrossReference()) {

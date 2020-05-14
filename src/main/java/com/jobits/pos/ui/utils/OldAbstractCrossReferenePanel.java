@@ -21,7 +21,7 @@ import mdlaf.components.table.MaterialTableUI;
  * @param <T> the table content data
  * @param <K> the combobox model data
  */
-public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPanel {
+public abstract class OldAbstractCrossReferenePanel<T, K> extends javax.swing.JPanel {
 
     private final TableWithComboBoxAutoComplete<K, T> handler;
     private boolean readOnlyMode = false;
@@ -33,7 +33,7 @@ public abstract class AbstractCrossReferenePanel<T, K> extends javax.swing.JPane
      * @param jTextFieldDataName
      * @param autoCompletitionData
      */
-    public AbstractCrossReferenePanel(String jTextFieldDataName, List<K> autoCompletitionData) {
+    public OldAbstractCrossReferenePanel(String jTextFieldDataName, List<K> autoCompletitionData) {
         initComponents();
         jLabel1.setText(jTextFieldDataName);
         // intellihints = new ListDataIntelliHints(jTextFieldAutoComplete, autoCompletitionData);

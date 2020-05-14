@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.trabajadores;
 
 import com.jobits.pos.ui.AbstractFragmentView;
-import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
+import com.jobits.pos.ui.utils.OldAbstractCrossReferenePanel;
 import java.awt.Container;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import com.jobits.pos.controller.Controller;
@@ -24,7 +24,7 @@ import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
  */
 public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaPersonal> {
 
-    AbstractCrossReferenePanel<AsistenciaPersonal, Personal> panel;
+    OldAbstractCrossReferenePanel<AsistenciaPersonal, Personal> panel;
     Venta v;
     private boolean  readOnly = false;
 
@@ -81,7 +81,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
 
     @Override
     public void initDefaults() {
-        panel = new AbstractCrossReferenePanel<AsistenciaPersonal, Personal>("Trabajadores", getController().getTrabajadoresList()) {
+        panel = new OldAbstractCrossReferenePanel<AsistenciaPersonal, Personal>("Trabajadores", getController().getTrabajadoresList()) {
             @Override
             public RestManagerAbstractTableModel<AsistenciaPersonal> getTableModel() {
                 return new RestManagerAbstractTableModel<AsistenciaPersonal>(getController().getPersonalTrabajando(v), getjTableCrossReference()) {

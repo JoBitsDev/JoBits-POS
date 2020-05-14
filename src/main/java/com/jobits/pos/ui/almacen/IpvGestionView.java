@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.almacen;
 
 import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
+import com.jobits.pos.ui.utils.OldAbstractCrossReferenePanel;
 import com.jobits.pos.ui.utils.LongProcessAction;
 import com.jobits.pos.ui.utils.RestManagerCellRender;
 import java.awt.Font;

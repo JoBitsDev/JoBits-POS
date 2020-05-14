@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.venta;
 
 import com.jobits.pos.ui.AbstractFragmentView;
-import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
+import com.jobits.pos.ui.utils.OldAbstractCrossReferenePanel;
 import com.jobits.pos.ui.utils.RestManagerCellRender;
 
 import java.awt.Container;
@@ -33,7 +33,7 @@ import com.jobits.pos.ui.utils.utils;
  */
 public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
-    private AbstractCrossReferenePanel<ProductovOrden, ProductoVenta> crossReferencePanel;
+    private OldAbstractCrossReferenePanel<ProductovOrden, ProductoVenta> crossReferencePanel;
     private Orden instance;
     private RestManagerAbstractTableModel<ProductoVenta> currentProductosModel;
     private ButtonState state = ButtonState.ENVIAR_COCINA;
@@ -454,7 +454,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     }
 
     private void initCrossReferencePanel() {
-        crossReferencePanel = new AbstractCrossReferenePanel<ProductovOrden, ProductoVenta>("Productos de venta", getController().getPDVList()) {
+        crossReferencePanel = new OldAbstractCrossReferenePanel<ProductovOrden, ProductoVenta>("Productos de venta", getController().getPDVList()) {
             @Override
             public RestManagerAbstractTableModel<ProductovOrden> getTableModel() {
                 return new RestManagerAbstractTableModel<ProductovOrden>(getInstance().getProductovOrdenList(), getjTableCrossReference()) {

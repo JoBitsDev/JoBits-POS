@@ -11,7 +11,7 @@ import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
 import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
+import com.jobits.pos.ui.utils.OldAbstractCrossReferenePanel;
 import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
  */
 public class PedidoIpvVentasView extends OldAbstractView {
 
-    private AbstractCrossReferenePanel<ProdcutoVentaPedidoModel, IpvVentaRegistro> porPedirTable;
+    private OldAbstractCrossReferenePanel<ProdcutoVentaPedidoModel, IpvVentaRegistro> porPedirTable;
     private RestManagerAbstractTableModel<InsumoPedidoModel> listaPedido;
     private List<IpvVentaRegistro> ipvProductList;
     private Cocina elaboracion;
@@ -168,7 +168,7 @@ public class PedidoIpvVentasView extends OldAbstractView {
         jComboBox1.setModel(new RestManagerComboBoxModel<>(getController().getAlmacenList()));
         jComboBox1.setSelectedIndex(0);
 
-        porPedirTable = new AbstractCrossReferenePanel<ProdcutoVentaPedidoModel, IpvVentaRegistro>("Productos de IPV", ipvProductList) {
+        porPedirTable = new OldAbstractCrossReferenePanel<ProdcutoVentaPedidoModel, IpvVentaRegistro>("Productos de IPV", ipvProductList) {
             @Override
             protected RestManagerAbstractTableModel<ProdcutoVentaPedidoModel> getTableModel() {
                 return new RestManagerAbstractTableModel<ProdcutoVentaPedidoModel>(new ArrayList<ProdcutoVentaPedidoModel>(), getjTableCrossReference()) {

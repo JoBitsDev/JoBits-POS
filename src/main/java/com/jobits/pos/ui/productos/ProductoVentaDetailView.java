@@ -8,7 +8,7 @@ package com.jobits.pos.ui.productos;
 import GUI.Components.JSpinner;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
+import com.jobits.pos.ui.utils.OldAbstractCrossReferenePanel;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.domain.models.Cocina;
@@ -36,7 +36,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Crear Producto";
 
-    private AbstractCrossReferenePanel<ProductoInsumo, Insumo> crossReferencePanel;
+    private OldAbstractCrossReferenePanel<ProductoInsumo, Insumo> crossReferencePanel;
     private ProductoVenta instance;
 
     public ProductoVentaDetailView(AbstractViewPresenter presenter) {
@@ -307,7 +307,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     }//GEN-LAST:event_jButtonAddSeccionActionPerformed
 
     public void fetchComponentData() {
-        crossReferencePanel = new AbstractCrossReferenePanel<ProductoInsumo, Insumo>("Insumos", getController().getInsumoList()) {
+        crossReferencePanel = new OldAbstractCrossReferenePanel<ProductoInsumo, Insumo>("Insumos", getController().getInsumoList()) {
             @Override
             public RestManagerAbstractTableModel getTableModel() {
                 return new RestManagerAbstractTableModel<ProductoInsumo>(instance.getProductoInsumoList(), getjTableCrossReference()) {
@@ -402,7 +402,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
     }
 
-    public AbstractCrossReferenePanel<ProductoInsumo, Insumo> getCrossReferencePanel() {
+    public OldAbstractCrossReferenePanel<ProductoInsumo, Insumo> getCrossReferencePanel() {
         return crossReferencePanel;
     }
 

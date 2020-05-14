@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.insumo;
 
 import com.jobits.pos.ui.AbstractDetailView;
-import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
+import com.jobits.pos.ui.utils.OldAbstractCrossReferenePanel;
 
 import java.awt.Dialog;
 import java.awt.Frame;
@@ -32,8 +32,8 @@ import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
  */
 public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
 
-    private AbstractCrossReferenePanel<InsumoElaborado, Insumo> tableIngElab;
-    private AbstractCrossReferenePanel<ProductoInsumo, ProductoVenta> tableCrossReference;
+    private OldAbstractCrossReferenePanel<InsumoElaborado, Insumo> tableIngElab;
+    private OldAbstractCrossReferenePanel<ProductoInsumo, ProductoVenta> tableCrossReference;
 
     public InsumoCreateEditView(AbstractDialogController controller, Frame owner, boolean modal, Insumo ins) {
         super(ins, DialogType.DEFINED, controller, owner, modal);
@@ -67,7 +67,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     }
 
     private void updateTable(List<InsumoElaborado> items) {
-        tableIngElab = new AbstractCrossReferenePanel<InsumoElaborado, Insumo>("Ingredientes", getController().getItems()) {
+        tableIngElab = new OldAbstractCrossReferenePanel<InsumoElaborado, Insumo>("Ingredientes", getController().getItems()) {
             @Override
             public RestManagerAbstractTableModel<InsumoElaborado> getTableModel() {
                 return new RestManagerAbstractTableModel<InsumoElaborado>(items, getjTableCrossReference()) {
@@ -169,7 +169,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         };
         jPanelIngElab.add(tableIngElab);
 
-        tableCrossReference = new AbstractCrossReferenePanel< ProductoInsumo, ProductoVenta>("Productos de Venta", getController().getProductoList()) {
+        tableCrossReference = new OldAbstractCrossReferenePanel< ProductoInsumo, ProductoVenta>("Productos de Venta", getController().getProductoList()) {
             @Override
             public RestManagerAbstractTableModel<ProductoInsumo> getTableModel() {
                 return new RestManagerAbstractTableModel<ProductoInsumo>(instance.getProductoInsumoList(), getjTableCrossReference()) {
