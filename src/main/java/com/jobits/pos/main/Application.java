@@ -10,6 +10,7 @@ import com.jobits.pos.cordinator.MainCoordinator;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.notification.NotificationService;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.RootView;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
 import java.util.Locale;
@@ -105,6 +106,7 @@ public class Application {
 
     public void setLoggedUser(Personal loggedUser) {
         this.loggedUser = loggedUser;
+        R.loggedUser = loggedUser;
     }
 
     public LicenceController getLicenceController() {

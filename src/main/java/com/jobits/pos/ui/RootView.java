@@ -8,23 +8,16 @@ package com.jobits.pos.ui;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.ViewFacade;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.AutenticacionFragmentView;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import components.containers.MaterialPanel;
 import components.dashboards.smoot.PanelDual;
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -82,12 +75,12 @@ public class RootView extends MaterialPanel {
         jPanel1 = new javax.swing.JPanel();
         jButtonBack = MaterialComponentsFactory.Buttons.getBackButton();
         jLabel1 = new javax.swing.JLabel();
-        jPanelContent = new javax.swing.JPanel();
-        jPanelMainMenu = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelContent = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelMainMenu = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanelShinkButton = new javax.swing.JPanel();
         jButtonShrink = MaterialComponentsFactory.Buttons.getMenuButton();
         jPanelMenu = new javax.swing.JPanel();
-        jPanelStatus = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelStatus = MaterialComponentsFactory.Containers.getPrimaryPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -120,13 +113,11 @@ public class RootView extends MaterialPanel {
 
         add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
 
-        jPanelContent.setBackground(new java.awt.Color(204, 204, 204));
-
         javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
         jPanelContent.setLayout(jPanelContentLayout);
         jPanelContentLayout.setHorizontalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 470, Short.MAX_VALUE)
+            .addGap(0, 450, Short.MAX_VALUE)
         );
         jPanelContentLayout.setVerticalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,15 +126,14 @@ public class RootView extends MaterialPanel {
 
         add(jPanelContent, java.awt.BorderLayout.CENTER);
 
-        jPanelMainMenu.setOpaque(false);
         jPanelMainMenu.setLayout(new java.awt.BorderLayout());
 
         jPanelShinkButton.setOpaque(false);
         jPanelShinkButton.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jButtonShrink.setMaximumSize(new java.awt.Dimension(40, 40));
-        jButtonShrink.setMinimumSize(new java.awt.Dimension(40, 40));
-        jButtonShrink.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButtonShrink.setMaximumSize(new java.awt.Dimension(60, 40));
+        jButtonShrink.setMinimumSize(new java.awt.Dimension(60, 40));
+        jButtonShrink.setPreferredSize(new java.awt.Dimension(60, 40));
         jButtonShrink.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonShrinkActionPerformed(evt);
@@ -159,7 +149,6 @@ public class RootView extends MaterialPanel {
 
         add(jPanelMainMenu, java.awt.BorderLayout.WEST);
 
-        jPanelStatus.setBackground(new java.awt.Color(204, 204, 204));
         jPanelStatus.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jPanelStatus.setMinimumSize(new java.awt.Dimension(5, 40));
         jPanelStatus.setPreferredSize(new java.awt.Dimension(5, 60));
@@ -193,7 +182,7 @@ public class RootView extends MaterialPanel {
         jPanelContent.add(view.getViewComponent(), view.getViewName());
     }
 
-    public void showView(String viewNameToDisplay, AbstractViewPresenter presenter,DisplayType displayType) {//TODO trabjar en los popup
+    public void showView(String viewNameToDisplay, AbstractViewPresenter presenter, DisplayType displayType) {//TODO trabjar en los popup
         if (!views.containsKey(viewNameToDisplay)) {
             if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
                 if (dashboard == null) {
@@ -225,15 +214,8 @@ public class RootView extends MaterialPanel {
     }
 
     public void setShrinked(boolean shrink) {
-        if (shrink) {
-            jPanelMainMenu.setSize(new Dimension(jPanelMainMenu.getHeight(), jButtonShrink.getWidth() + 10));
-//panelDual.setASize(jButtonShrink.getIcon().getIconWidth() + 10);
-        } else {
-            jPanelMainMenu.setSize(new Dimension(jPanelMainMenu.getHeight(), jPanelMenu.getWidth()));
-            //panelDual.setASize(jPanelMenu.getSize().width);
-
-        }
-        jPanelMenu.setVisible(shrink);
+        dashboard.getCollapse().setCollapsed(shrink);
+        //jPanelMenu.setVisible(shrink);
         shrinked = shrink;
     }
 

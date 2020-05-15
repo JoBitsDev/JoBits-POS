@@ -10,6 +10,8 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.BorderLayout;
+import org.jdesktop.swingx.JXCollapsiblePane;
 import org.jdesktop.swingx.JXTaskPane;
 
 /**
@@ -33,20 +35,16 @@ public class MainMenuView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jXTaskPaneContainer1 = new org.jdesktop.swingx.JXTaskPaneContainer();
         jXTaskPanePDV = new org.jdesktop.swingx.JXTaskPane();
         jXTaskPaneAlmacen = new org.jdesktop.swingx.JXTaskPane();
         jXTaskPaneContabilidad = new org.jdesktop.swingx.JXTaskPane();
         jXTaskPaneNominas = new org.jdesktop.swingx.JXTaskPane();
         jXTaskPaneConfiguracion = new org.jdesktop.swingx.JXTaskPane();
-
-        setMinimumSize(new java.awt.Dimension(840, 720));
-        setLayout(new java.awt.BorderLayout());
-
-        jPanel3.setLayout(new java.awt.BorderLayout());
+        jXCollapsiblePane1 = new org.jdesktop.swingx.JXCollapsiblePane();
 
         jXTaskPaneContainer1.setMinimumSize(new java.awt.Dimension(120, 700));
+        jXTaskPaneContainer1.setOpaque(false);
         jXTaskPaneContainer1.setScrollableHeightHint(org.jdesktop.swingx.ScrollableSizeHint.VERTICAL_STRETCH);
         org.jdesktop.swingx.VerticalLayout verticalLayout1 = new org.jdesktop.swingx.VerticalLayout();
         verticalLayout1.setGap(14);
@@ -92,9 +90,13 @@ public class MainMenuView extends AbstractViewPanel {
         jXTaskPaneConfiguracion.setTitle("Configuracion");
         jXTaskPaneContainer1.add(jXTaskPaneConfiguracion);
 
-        jPanel3.add(jXTaskPaneContainer1, java.awt.BorderLayout.CENTER);
+        setMinimumSize(new java.awt.Dimension(840, 720));
+        setOpaque(false);
+        setLayout(new java.awt.BorderLayout());
 
-        add(jPanel3, java.awt.BorderLayout.LINE_START);
+        jXCollapsiblePane1.setDirection(org.jdesktop.swingx.JXCollapsiblePane.Direction.LEFT);
+        jXCollapsiblePane1.setOpaque(false);
+        add(jXCollapsiblePane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateLicenceStatus() {
@@ -119,7 +121,7 @@ public class MainMenuView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel3;
+    private org.jdesktop.swingx.JXCollapsiblePane jXCollapsiblePane1;
     private org.jdesktop.swingx.JXTaskPane jXTaskPaneAlmacen;
     private org.jdesktop.swingx.JXTaskPane jXTaskPaneConfiguracion;
     private org.jdesktop.swingx.JXTaskPane jXTaskPaneContabilidad;
@@ -150,16 +152,26 @@ public class MainMenuView extends AbstractViewPanel {
         jXTaskPaneConfiguracion.add(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
         jXTaskPaneConfiguracion.add(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
 
-       
     }
 
     @Override
     public void uiInit() {
         initComponents();
+
+        jXCollapsiblePane1.setLayout(new BorderLayout());
+        jXCollapsiblePane1.add(jXTaskPaneContainer1);
+        jXCollapsiblePane1.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
+        jXCollapsiblePane1.setOpaque(true);
+
     }
 
     @Override
     public String getViewName() {
         return VIEW_NAME;
     }
+
+    public JXCollapsiblePane getCollapse() {
+        return jXCollapsiblePane1;
+    }
+
 }

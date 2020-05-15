@@ -20,11 +20,11 @@ import com.jobits.pos.ui.productos.ProductoVentaListView;
  * @author Jorge
  *
  */
-public class ProductoVentaViewPresenter extends AbstractListViewPresenter<ProductoVentaListViewModel> {
+public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<ProductoVentaListViewModel> {
 
     private ProductoVentaListController controller;
 
-    public ProductoVentaViewPresenter(ProductoVentaListController controller) {
+    public ProductoVentaListViewPresenter(ProductoVentaListController controller) {
         super(new ProductoVentaListViewModel(), ProductoVentaListView.VIEW_NAME);
         this.controller = controller;
         setListToBean();
@@ -48,7 +48,8 @@ public class ProductoVentaViewPresenter extends AbstractListViewPresenter<Produc
 
     @Override
     protected void onEliminarClick() {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        controller.destroy(getBean().getElemento_seleccionado());
+        setListToBean();
     }
 
     @Override
