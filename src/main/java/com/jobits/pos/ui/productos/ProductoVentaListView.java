@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import com.jobits.pos.controller.OldAbstractListController;
+import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.ProductoVenta;
@@ -32,7 +33,7 @@ import com.jobits.ui.components.MaterialComponentsFactory;
  */
 public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> {
 
-    public static final String VIEW_NAME = "MENU";
+    public static final String VIEW_NAME = "Productos";
 
     public ProductoVentaListView(AbstractListViewPresenter presenter) {
         super(presenter);

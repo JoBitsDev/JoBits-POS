@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui.insumo;
 
+import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
@@ -18,7 +19,7 @@ import com.jobits.pos.ui.utils.BindableTableModel;
  */
 public class InsumoListView extends AbstractListViewPanel<Insumo> {
 
-    public static final String VIEW_NAME = "INSUMO";
+    public static final String VIEW_NAME = "Insumos";
 
     public InsumoListView(AbstractListViewPresenter presenter) {
         super(presenter);

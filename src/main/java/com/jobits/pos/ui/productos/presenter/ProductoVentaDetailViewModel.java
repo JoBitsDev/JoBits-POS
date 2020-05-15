@@ -11,6 +11,9 @@ import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -24,10 +27,12 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
     //
     //Basico
     //
+    @NotBlank
     private String nombre_producto;
 
     public static final String PROP_NOMBRE_PRODUCTO = "nombre_producto";
 
+    @NotBlank
     private String precio_venta;
 
     public static final String PROP_PRECIO_VENTA = "precio_venta";
@@ -40,6 +45,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_CATEGORIAS = "lista_categorias";
 
+    @NotNull
     private Seccion categoria_seleccionada;
 
     public static final String PROP_CATEGORIA_SELECCIONADA = "categoria_seleccionada";
@@ -48,10 +54,12 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_ELABORADO = "lista_elaborado";
 
+    @NotNull
     private Cocina elaborado_seleccionado;
 
     public static final String PROP_ELABORADO_SELECCIONADO = "elaborado_seleccionado";
 
+    @NotEmpty
     private String precio_costo;
 
     public static final String PROP_PRECIO_COSTO = "precio_costo";

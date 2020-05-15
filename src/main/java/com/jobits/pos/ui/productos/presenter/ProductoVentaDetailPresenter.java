@@ -8,13 +8,14 @@ package com.jobits.pos.ui.productos.presenter;
 import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.seccion.SeccionListController;
-import com.jobits.pos.cordinator.MainNavigator;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.utils;
 import java.util.Optional;
 
 /**
@@ -33,6 +34,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public static final String ACTION_CANCELAR = "Cancelar";
 
     private ProductoVentaDetailController controller;
+    private boolean creatingMode = true;
 
     /**
      * Si es nulo es que el producto que se va a crear es nuevo
@@ -46,11 +48,9 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setLista_categorias(controller.getSeccionList());
         getBean().setLista_elaborado(controller.getCocinaList());
         if (productoSeleccionado != null) {
-            throw new DevelopingOperationException();
-        } else {
-
+            fillForm(productoSeleccionado);
         }
-
+        creatingMode = productoSeleccionado == null;
     }
 
     private void onAddIngredienteClick() {
@@ -61,17 +61,23 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if ((boolean) NotificationService.getInstance().
                 showDialog("Desea guardar los cambios",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            ProductoVenta p = controller.createNewInstance();
-            p.setCocinacodCocina(getBean().getElaborado_seleccionado());
-            p.setNombre(getBean().getNombre_producto());
-            p.setPagoPorVenta(Float.parseFloat(getBean().getComision_por_venta()));
-            p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
-            if (getBean().isCheckbox_inventariar_producto()) {
-                p.setGasto(Float.valueOf(getBean().getPrecio_costo()));
+            ProductoVenta p;
+            if (creatingMode) {
+                p = controller.createNewInstance();
+            }else{
+                p = controller.getInstance();
             }
+            p.setNombre(getBean().getNombre_producto());
+            p.setCocinacodCocina(getBean().getElaborado_seleccionado());
             p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
+            p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
+            p.setGasto(Float.valueOf(getBean().getPrecio_costo()));
+            if (getBean().getComision_por_venta() != null) {
+                p.setPagoPorVenta(Float.parseFloat(getBean().getComision_por_venta()));
+            }
             p.setVisible(true);
             controller.create(p);
+            NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         }
 
     }
@@ -80,7 +86,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if ((boolean) NotificationService.getInstance().
                 showDialog("Desea descartar los cambios?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            MainNavigator.getInstance().navigateUp();
+            NavigationService.getInstance().navigateUp();
         }
 
     }
@@ -137,6 +143,18 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 return Optional.empty();
             }
         });
+    }
+
+    private void fillForm(ProductoVenta productoSeleccionado) {
+        getBean().setCategoria_seleccionada(productoSeleccionado.getSeccionnombreSeccion());
+        getBean().setNombre_producto(productoSeleccionado.getNombre());
+        getBean().setCodigo_producto(productoSeleccionado.getCodigoProducto());
+        getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPagoPorVenta()));
+        getBean().setElaborado_seleccionado(productoSeleccionado.getCocinacodCocina());
+        getBean().setLista_insumos_contenidos(productoSeleccionado.getProductoInsumoList());
+        getBean().setPrecio_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPrecioVenta()));
+        getBean().setPrecio_costo("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getGasto()));
+
     }
 
 }

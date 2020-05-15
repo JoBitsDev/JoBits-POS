@@ -7,7 +7,7 @@ package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.login.UbicacionConexionController;
-import com.jobits.pos.cordinator.MainNavigator;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -43,7 +43,7 @@ public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewM
                 getBean().getPassword(), getBean().getDriver(), getBean().getTipo_servidor_seleccionado());
         try {
             controller.editUbicacion(uc, controller.getUbicaciones().getSelectedUbicacion());
-            MainNavigator.getInstance().navigateUp();//TODO: codigo de navegacion
+            NavigationService.getInstance().navigateUp();//TODO: codigo de navegacion
         } catch (IOException | IllegalArgumentException ex) {
             Logger.getLogger(UbicacionViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }

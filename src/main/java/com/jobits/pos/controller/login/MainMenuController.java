@@ -56,8 +56,7 @@ import java.time.LocalDate;
 public class MainMenuController {
 
     private SincronizacionController sincronizacion = new SincronizacionController();
-    
-    
+
     public MainMenuController() {
         if (Application.getInstance().getLoggedUser() == null) {
             throw new IllegalStateException("Usuario no autenticado");
@@ -66,83 +65,8 @@ public class MainMenuController {
         sincronizacion.terminarSincronizacion();
     }
 
-    /*  
-    public void actionButton(MenuButtons menuButtons) {
-        AbstractController controller = null;
-        getView().setEnabled(false);
-        try {
-            validate(R.loggedUser, menuButtons);
-            //LoadingWindow.show(getView());
-            switch (menuButtons) {
-                case MENU:
-                    controller = new ProductoVentaListController(getView());
-                    break;
-                case INSUMO:
-                    controller = new InsumoListController(getView());
-                    break;
-                case COCINA:
-                    controller = new PuntoElaboracionListController(getView());
-                    break;
-                case SECCION:
-                    controller = new CartaListController(getView());
-                    break;
-                case SALON:
-                    controller = new AreaVentaController(getView());
-                    break;
-                case ALMACEN:
-                    controller = new AlmacenListController(getView());
-                    break;
-                case VENTAS:
-                    controller = new VentaListController(getView());
-                    break;
-                case TRABAJADORES:
-                    controller = new PersonalListController(getView());
-                    break;
-                case PUESTOS_TRABAJO:
-                    controller = new PuestoTrabajoListController(getView());
-                    break;
-                case IPV:
-                    controller = new IPVController(getView());
-                    break;
-                case ACTIVOS:
-                    controller = new ActivoFijoController(getView());
-                    break;
-                case COMENZAR_VENTAS:
-                    controller = comenzarVentas();
-                    break;
-                case COPIA_SEG:
-                    copiaSegView seg = new copiaSegView(getView(), true);
-                    break;
-                case LICENCIA:
-                    controller = new LicenceController(getView(), Licence.TipoLicencia.APLICACION);
-                    break;
-                case NOMINAS:
-                    controller = new NominasController(getView());
-                    break;
-                case CONFIGURACION:
-                    controller = new ConfiguracionController(getView());
-                    break;
-                case CUENTAS_CONTABLES:
-                    controller = new CuentaController(getView());
-                    break;
-                default:
-                    getView().setEnabled(true);
-                    throw new DevelopingOperationException(getView());
-
-            }
-        } catch (UnauthorizedAccessException e) {
-        } catch (Exception e) {
-            if (controller != null) {
-                controller.getView().dispose();
-                NotificationService.getInstance().notify(e.getMessage(),TipoNotificacion.ERROR);
-            } else {
-                NotificationService.getInstance().notify(e.getMessage(),TipoNotificacion.ERROR);
-            }
-        }
-        getView().setEnabled(true);
-    }
-     */
-    private boolean validate(Personal loggedUser, MenuButtons menuButtons) throws UnauthorizedAccessException {
+    
+    public boolean validate(Personal loggedUser, MenuButtons menuButtons) throws UnauthorizedAccessException {
         if (!(loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= menuButtons.getNivelMinimoAcceso())) {
             NotificationService.getInstance().notify("El usuario no tiene permisos", TipoNotificacion.ERROR);//TODO: Cambiar por autorization
             return false;
@@ -178,53 +102,66 @@ public class MainMenuController {
 //        }
 //        return null;
 //    }
+    
+    
     public enum MenuButtons {
 
         //
         //Productos de Venta
         //
-        MENU(1),
-        INSUMO(3),
-        COCINA(3),
-        SECCION(3),
-        SALON(3),
+        MENU(1, "Productos"),
+        INSUMO(3, "Insumos"),
+        COCINA(3, "Puntos elaboración"),
+        SECCION(3, "Menú"),
+        SALON(3,"Areas de Venta"),
         //
         // Almacen
         //
-        ALMACEN(2),
+        ALMACEN(2,"Almacenes"),
         ACTIVOS(2),
-        IPV(2),
+        IPV(2, "IPV"),
         //
         //Contabilidad
         //
-        VENTAS(3),
+        VENTAS(3,"Ventas"),
         CUENTAS_CONTABLES(4),
         PRESUPUESTO(4),
-        COMENZAR_VENTAS(0),
+        COMENZAR_VENTAS(0, "Comenzar Turno"),
         //
         //TRABAJADORES
         //
 
-        TRABAJADORES(4),
-        PUESTOS_TRABAJO(4),
-        NOMINAS(3),
+        TRABAJADORES(4, "Trabajadores"),
+        PUESTOS_TRABAJO(4, "Puesto de trabajo"),
+        NOMINAS(3, "Nóminas"),
         //
         //CONFIGURACION
         //
 
-        COPIA_SEG(4),
-        LICENCIA(0),
-        CONFIGURACION(5);
+        COPIA_SEG(4, "Copias de seguridad"),
+        LICENCIA(0,"Licencia"),
+        CONFIGURACION(5, "Configuración");
 
         private final int nivelMinimoAcceso;
-        
+        private final String nombreVisible;
 
         private MenuButtons(int nivelMinimoAcceso) {
             this.nivelMinimoAcceso = nivelMinimoAcceso;
+            this.nombreVisible = name();
+        }
+
+        private MenuButtons(int nivelMinimoAcceso, String nombreVisible) {
+            this.nivelMinimoAcceso = nivelMinimoAcceso;
+            this.nombreVisible = nombreVisible;
         }
 
         public int getNivelMinimoAcceso() {
             return nivelMinimoAcceso;
+        }
+
+        @Override
+        public String toString() {
+            return nombreVisible;
         }
 
     }

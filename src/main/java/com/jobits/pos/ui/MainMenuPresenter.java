@@ -6,7 +6,7 @@
 package com.jobits.pos.ui;
 
 import com.jobits.pos.controller.login.MainMenuController;
-import com.jobits.pos.cordinator.MainNavigator;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
@@ -34,7 +34,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
             registerOperation(new AbstractViewAction(v.toString()) {
                 @Override
                 public Optional doAction() {
-                    MainNavigator.getInstance().navigateTo(v.toString());
+                    NavigationService.getInstance().navigateTo(v.toString());
                     return Optional.empty();
                 }
             });

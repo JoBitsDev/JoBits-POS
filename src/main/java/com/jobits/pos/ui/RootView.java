@@ -7,7 +7,7 @@ package com.jobits.pos.ui;
 
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.ViewFacade;
-import com.jobits.pos.cordinator.MainNavigator;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.login.LogInView;
@@ -168,7 +168,7 @@ public class RootView extends MaterialPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
-        MainNavigator.getInstance().navigateUp();
+        NavigationService.getInstance().navigateUp();
     }//GEN-LAST:event_jButtonBackActionPerformed
 
     private void jButtonShrinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShrinkActionPerformed

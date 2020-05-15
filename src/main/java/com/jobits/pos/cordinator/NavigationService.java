@@ -23,22 +23,22 @@ import org.jboss.logging.Logger;
  * @author Jorge
  *
  */
-public class MainNavigator implements Navigator {
+public class NavigationService implements Navigator {
 
     private Coordinator coordinator = MainCoordinator.getInstance();
 
     private NavigationNode activeNode;
 
-    private static MainNavigator instance;
+    private static NavigationService instance;
 
-    public static MainNavigator getInstance() {
+    public static NavigationService getInstance() {
         if (instance == null) {
-            instance = new MainNavigator();
+            instance = new NavigationService();
         }
         return instance;
     }
 
-    private MainNavigator() {
+    private NavigationService() {
         this.activeNode = NavigationNode.of(null, ViewFacade.getView(LogInView.VIEW_NAME, null).getViewName());
         showView(null,DisplayType.NORMAL);
 

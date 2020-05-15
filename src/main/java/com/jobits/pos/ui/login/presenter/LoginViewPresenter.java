@@ -9,7 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
-import com.jobits.pos.cordinator.MainNavigator;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.NotificationService;
@@ -59,7 +59,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         try {
             if (controller.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
                 NotificationService.getInstance().notify("Bienvenido", TipoNotificacion.SUCCESS);
-                MainNavigator.getInstance().navigateTo(MainMenuView.VIEW_NAME,
+                NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
                         new MainMenuPresenter(new MainMenuController())); //TODO revisar eso codigo que no le pertenece a esta clse
             }
         } catch (IllegalArgumentException ex) {
@@ -86,7 +86,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     }
 
     private void onEditarUbicacionClick() {
-        MainNavigator.getInstance().navigateTo(UbicacionView.VIEW_NAME, new UbicacionViewPresenter(ubicacionController));//TODO codigo de ubicaciones
+        NavigationService.getInstance().navigateTo(UbicacionView.VIEW_NAME, new UbicacionViewPresenter(ubicacionController));//TODO codigo de ubicaciones
 
     }
 

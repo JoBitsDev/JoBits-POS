@@ -7,7 +7,7 @@ package com.jobits.pos.main;
 
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.cordinator.MainCoordinator;
-import com.jobits.pos.cordinator.MainNavigator;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.ui.RootView;
@@ -43,7 +43,7 @@ public class Application {
 
     private MainCoordinator coordinator;
 
-    private MainNavigator navigator;
+    private NavigationService navigator;
 
     //
     // App
@@ -77,7 +77,7 @@ public class Application {
         mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainWindow.getContentPane().add(rootView);
         mainWindow.pack();
-        navigator = MainNavigator.getInstance();
+        navigator = NavigationService.getInstance();
         mainWindow.setVisible(true);
 
     }
