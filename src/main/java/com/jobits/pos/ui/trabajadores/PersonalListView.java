@@ -18,7 +18,7 @@ import com.jobits.pos.ui.utils.BindableTableModel;
  */
 public class PersonalListView extends AbstractListViewPanel<Personal> {
 
-    public static final String VIEW_NAME = "Lista Personal";
+    public static final String VIEW_NAME = "Trabajadores";
 
     public PersonalListView(AbstractListViewPresenter presenter) {
         super(presenter);

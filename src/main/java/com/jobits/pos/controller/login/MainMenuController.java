@@ -5,47 +5,15 @@
  */
 package com.jobits.pos.controller.login;
 
-import com.jobits.pos.ui.MainMenuView;
-import com.jobits.pos.ui.copiaSegView;
-import java.awt.Container;
-import java.text.ParseException;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import com.jobits.pos.backup.SincronizacionController;
-import com.jobits.pos.controller.AbstractController;
-import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
-import com.jobits.pos.controller.almacen.ActivoFijoController;
-import com.jobits.pos.controller.almacen.AlmacenListController;
-import com.jobits.pos.controller.almacen.IPVController;
-import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
-import com.jobits.pos.controller.gastos.pagos.CuentaController;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
-import com.jobits.pos.controller.insumo.InsumoListController;
-import com.jobits.pos.controller.productos.ProductoVentaListController;
-import com.jobits.pos.controller.seccion.CartaListController;
-import com.jobits.pos.controller.trabajadores.NominasController;
-import com.jobits.pos.controller.trabajadores.PersonalListController;
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
-import com.jobits.pos.controller.venta.VentaDetailController;
-import com.jobits.pos.controller.venta.VentaListController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.exceptions.ExceptionHandler;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.domain.models.Personal;
-import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
-import com.jobits.pos.adapters.repo.VentaDAO;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
-import com.jobits.pos.recursos.R;
-import java.time.LocalDate;
 
 /**
  * FirstDream
@@ -65,7 +33,6 @@ public class MainMenuController {
         sincronizacion.terminarSincronizacion();
     }
 
-    
     public boolean validate(Personal loggedUser, MenuButtons menuButtons) throws UnauthorizedAccessException {
         if (!(loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= menuButtons.getNivelMinimoAcceso())) {
             NotificationService.getInstance().notify("El usuario no tiene permisos", TipoNotificacion.ERROR);//TODO: Cambiar por autorization
@@ -102,8 +69,6 @@ public class MainMenuController {
 //        }
 //        return null;
 //    }
-    
-    
     public enum MenuButtons {
 
         //
@@ -113,17 +78,17 @@ public class MainMenuController {
         INSUMO(3, "Insumos"),
         COCINA(3, "Puntos elaboración"),
         SECCION(3, "Menú"),
-        SALON(3,"Areas de Venta"),
+        SALON(3, "Areas de Venta"),
         //
         // Almacen
         //
-        ALMACEN(2,"Almacenes"),
+        ALMACEN(2, "Almacenes"),
         ACTIVOS(2),
         IPV(2, "IPV"),
         //
         //Contabilidad
         //
-        VENTAS(3,"Ventas"),
+        VENTAS(3, "Ventas"),
         CUENTAS_CONTABLES(4),
         PRESUPUESTO(4),
         COMENZAR_VENTAS(0, "Comenzar Turno"),
@@ -132,14 +97,14 @@ public class MainMenuController {
         //
 
         TRABAJADORES(4, "Trabajadores"),
-        PUESTOS_TRABAJO(4, "Puesto de trabajo"),
+        PUESTOS_TRABAJO(4, "Puestos de trabajos"),
         NOMINAS(3, "Nóminas"),
         //
         //CONFIGURACION
         //
 
         COPIA_SEG(4, "Copias de seguridad"),
-        LICENCIA(0,"Licencia"),
+        LICENCIA(0, "Licencia"),
         CONFIGURACION(5, "Configuración");
 
         private final int nivelMinimoAcceso;

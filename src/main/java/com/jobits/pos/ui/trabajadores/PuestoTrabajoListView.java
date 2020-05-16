@@ -18,7 +18,7 @@ import com.jobits.pos.ui.utils.BindableTableModel;
  */
 public class PuestoTrabajoListView extends AbstractListViewPanel<PuestoTrabajo>{
 
-    public static final String VIEW_NAME = "Puestos de trabajo";
+    public static final String VIEW_NAME = "Puestos de trabajos";
     
     public PuestoTrabajoListView(AbstractListViewPresenter presenter) {
         super(presenter);
