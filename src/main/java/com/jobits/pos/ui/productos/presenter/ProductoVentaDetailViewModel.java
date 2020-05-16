@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui.productos.presenter;
 
+import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.ProductoInsumo;
@@ -41,7 +42,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_CODIGO_PRODUCTO = "codigo_producto";
 
-    private List<Seccion> lista_categorias;
+    private ArrayListModel<Seccion> lista_categorias;
 
     public static final String PROP_LISTA_CATEGORIAS = "lista_categorias";
 
@@ -50,7 +51,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_CATEGORIA_SELECCIONADA = "categoria_seleccionada";
 
-    private List<Cocina> lista_elaborado;
+    private ArrayListModel<Cocina> lista_elaborado;
 
     public static final String PROP_LISTA_ELABORADO = "lista_elaborado";
 
@@ -79,9 +80,58 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_INSUMOS_DISPONIBLES = "lista_insumos_disponibles";
 
-    private List<ProductoInsumo> lista_insumos_contenidos;
+    private Insumo insumo_disponible_sel;
+
+    public static final String PROP_INSUMO_DISPONIBLE_SEL = "insumo_disponible_sel";
+
+    private ArrayListModel<ProductoInsumo> lista_insumos_contenidos;
 
     public static final String PROP_LISTA_INSUMOS_CONTENIDOS = "lista_insumos_contenidos";
+
+    private ProductoInsumo insumo_contenido_seleccionado;
+
+    public static final String PROP_INSUMO_SELECCIONADO = "insumo_contenido_seleccionado";
+
+    /**
+     * Get the value of insumo_disponible_sel
+     *
+     * @return the value of insumo_disponible_sel
+     */
+    public Insumo getInsumo_disponible_sel() {
+        return insumo_disponible_sel;
+    }
+
+    /**
+     * Set the value of insumo_disponible_sel
+     *
+     * @param insumo_disponible_sel new value of insumo_disponible_sel
+     */
+    public void setInsumo_disponible_sel(Insumo insumo_disponible_sel) {
+        Insumo oldInsumo_disponible_sel = this.insumo_disponible_sel;
+        this.insumo_disponible_sel = insumo_disponible_sel;
+        firePropertyChange(PROP_INSUMO_DISPONIBLE_SEL, oldInsumo_disponible_sel, insumo_disponible_sel,false);
+    }
+
+    /**
+     * Get the value of insumo_contenido_seleccionado
+     *
+     * @return the value of insumo_contenido_seleccionado
+     */
+    public ProductoInsumo getInsumo_contenido_seleccionado() {
+        return insumo_contenido_seleccionado;
+    }
+
+    /**
+     * Set the value of insumo_contenido_seleccionado
+     *
+     * @param insumo_contenido_seleccionado new value of
+     * insumo_contenido_seleccionado
+     */
+    public void setInsumo_contenido_seleccionado(ProductoInsumo insumo_contenido_seleccionado) {
+        ProductoInsumo oldInsumo_seleccionado = this.insumo_contenido_seleccionado;
+        this.insumo_contenido_seleccionado = insumo_contenido_seleccionado;
+        firePropertyChange(PROP_INSUMO_SELECCIONADO, oldInsumo_seleccionado, insumo_contenido_seleccionado,false);
+    }
 
     //
     // Otros
@@ -95,7 +145,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_insumos_contenidos
      */
-    public List<ProductoInsumo> getLista_insumos_contenidos() {
+    public ArrayListModel<ProductoInsumo> getLista_insumos_contenidos() {
         return lista_insumos_contenidos;
     }
 
@@ -104,8 +154,8 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      *
      * @param lista_insumos_contenidos new value of lista_insumos_contenidos
      */
-    public void setLista_insumos_contenidos(List<ProductoInsumo> lista_insumos_contenidos) {
-        List<ProductoInsumo> oldLista_insumos_contenidos = this.lista_insumos_contenidos;
+    public void setLista_insumos_contenidos(ArrayListModel<ProductoInsumo> lista_insumos_contenidos) {
+        ArrayListModel<ProductoInsumo> oldLista_insumos_contenidos = this.lista_insumos_contenidos;
         this.lista_insumos_contenidos = lista_insumos_contenidos;
         firePropertyChange(PROP_LISTA_INSUMOS_CONTENIDOS, oldLista_insumos_contenidos, lista_insumos_contenidos, false);
     }
@@ -237,7 +287,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_elaborado
      */
-    public List<Cocina> getLista_elaborado() {
+    public ArrayListModel<Cocina> getLista_elaborado() {
         return lista_elaborado;
     }
 
@@ -246,8 +296,8 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      *
      * @param lista_elaborado new value of lista_elaborado
      */
-    public void setLista_elaborado(List<Cocina> lista_elaborado) {
-        List<Cocina> oldLista_elaborado = this.lista_elaborado;
+    public void setLista_elaborado(ArrayListModel<Cocina> lista_elaborado) {
+        ArrayListModel<Cocina> oldLista_elaborado = this.lista_elaborado;
         this.lista_elaborado = lista_elaborado;
         firePropertyChange(PROP_LISTA_ELABORADO, oldLista_elaborado, lista_elaborado, false);
     }
@@ -277,7 +327,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_categorias
      */
-    public List<Seccion> getLista_categorias() {
+    public ArrayListModel<Seccion> getLista_categorias() {
         return lista_categorias;
     }
 
@@ -286,8 +336,8 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      *
      * @param lista_categorias new value of lista_categorias
      */
-    public void setLista_categorias(List<Seccion> lista_categorias) {
-        List<Seccion> oldLista_categorias = this.lista_categorias;
+    public void setLista_categorias(ArrayListModel<Seccion> lista_categorias) {
+        ArrayListModel<Seccion> oldLista_categorias = this.lista_categorias;
         this.lista_categorias = lista_categorias;
         firePropertyChange(PROP_LISTA_CATEGORIAS, oldLista_categorias, lista_categorias, false);
     }

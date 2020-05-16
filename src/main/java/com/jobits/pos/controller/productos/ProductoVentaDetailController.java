@@ -25,6 +25,8 @@ import com.jobits.pos.adapters.repo.CocinaDAO;
 import com.jobits.pos.adapters.repo.InsumoDAO;
 import com.jobits.pos.adapters.repo.ProductoVentaDAO;
 import com.jobits.pos.adapters.repo.SeccionDAO;
+import com.jobits.pos.domain.models.ProductoInsumoPK;
+import com.jobits.pos.ui.utils.utils;
 
 /**
  * FirstDream
@@ -108,7 +110,7 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
         getInstance().setGasto(getCosto(getInstance()));
     }
 
-    public void agregarIngrediente() {
+    public void registrarNuevoInsumo() {
 
         InsumoCreateEditController controller = new InsumoCreateEditController();
         controller.setParent(getView());
@@ -121,12 +123,31 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
             @Override
             protected void whenDone() {
                 controller.constructView(getView());
-             //   ((ProductoVentaDetailView) getView()).getCrossReferencePanel().addItemToComboBox(controller.getInstance());
+                //   ((ProductoVentaDetailView) getView()).getCrossReferencePanel().addItemToComboBox(controller.getInstance());
             }
 
         }.performAction(getView());
         // getView().setCreatingM
 
+    }
+
+    public void agregarInsumoaProducto(Insumo insumo_disponible_sel, float cantidad) {
+        ProductoInsumo ret = new ProductoInsumo();
+        ProductoInsumoPK pk = new ProductoInsumoPK(getInstance().getCodigoProducto(), insumo_disponible_sel.getCodInsumo());
+        ret.setProductoInsumoPK(pk);
+        ret.setInsumo(insumo_disponible_sel);
+        ret.setProductoVenta(getInstance());
+        ret.setCantidad(cantidad);
+        ret.setCosto(utils.setDosLugaresDecimalesFloat(cantidad * insumo_disponible_sel.getCostoPorUnidad()));
+        getInstance().getProductoInsumoList().add(ret);
+    }
+
+    public void discardChanges() {
+        instance = getModel().find(getInstance().getCodigoProducto());
+    }
+
+    public void eliminarInsumoProducto(ProductoInsumo insumo_contenido_seleccionado) {
+        getInstance().getProductoInsumoList().remove(insumo_contenido_seleccionado);
     }
 
 }

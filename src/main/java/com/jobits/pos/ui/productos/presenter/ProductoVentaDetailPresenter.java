@@ -5,10 +5,12 @@
  */
 package com.jobits.pos.ui.productos.presenter;
 
+import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.seccion.SeccionListController;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.notification.NotificationService;
@@ -32,6 +34,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public static final String ACTION_AGREGAR_INSUMO = "Nuevo Insumo";
     public static final String ACTION_AGREGAR = "Aceptar";
     public static final String ACTION_CANCELAR = "Cancelar";
+    public static String ACTION_AGREGAR_INSUMO_FICHA = "Registrar";
+    public static String ACTION_ELIMINAR_INSUMO_FICHA = "Eliminar";
 
     private ProductoVentaDetailController controller;
     private boolean creatingMode = true;
@@ -45,8 +49,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public ProductoVentaDetailPresenter(ProductoVentaDetailController controller, ProductoVenta productoSeleccionado) {
         super(new ProductoVentaDetailViewModel());
         this.controller = controller;
-        getBean().setLista_categorias(controller.getSeccionList());
-        getBean().setLista_elaborado(controller.getCocinaList());
+        getBean().setLista_categorias(new ArrayListModel<>(controller.getSeccionList()));
+        getBean().setLista_elaborado(new ArrayListModel<>(controller.getCocinaList()));
         if (productoSeleccionado != null) {
             fillForm(productoSeleccionado);
         }
@@ -54,7 +58,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAddIngredienteClick() {
-        controller.agregarIngrediente();
+        controller.registrarNuevoInsumo();
     }
 
     private void onAceptarClick() {
@@ -64,7 +68,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             ProductoVenta p;
             if (creatingMode) {
                 p = controller.createNewInstance();
-            }else{
+            } else {
                 p = controller.getInstance();
             }
             p.setNombre(getBean().getNombre_producto());
@@ -72,6 +76,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
             p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
             p.setGasto(Float.valueOf(getBean().getPrecio_costo()));
+            p.setProductoInsumoList(getBean().getLista_insumos_contenidos());
             if (getBean().getComision_por_venta() != null) {
                 p.setPagoPorVenta(Float.parseFloat(getBean().getComision_por_venta()));
             }
@@ -86,6 +91,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if ((boolean) NotificationService.getInstance().
                 showDialog("Desea descartar los cambios?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            controller.discardChanges();
             NavigationService.getInstance().navigateUp();
         }
 
@@ -93,13 +99,37 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private void onAddCategoriaClick() {
         new SeccionListController().getDetailControllerForNew();
-        getBean().setLista_categorias(controller.getSeccionList());
+        getBean().setLista_categorias(new ArrayListModel<>(controller.getSeccionList()));
 
     }
 
     private void onAddElaboracionCLick() {
         new PuntoElaboracionListController().createInstance();
-        getBean().setLista_elaborado(controller.getCocinaList());
+        getBean().setLista_elaborado(new ArrayListModel<>(controller.getCocinaList()));
+
+    }
+
+    private void onAgregarInsumoFichaClick() {
+        Optional<String> opt = NotificationService.getInstance().showDialog("Introduzca la cantidad de " + getBean().getInsumo_disponible_sel(), TipoNotificacion.DIALOG_INPUT);
+        if (opt.isPresent()) {
+            try {
+                float cantidad = Float.parseFloat(opt.get());
+                controller.agregarInsumoaProducto(getBean().getInsumo_disponible_sel(), cantidad);
+                getBean().setInsumo_disponible_sel(null);
+                getBean().getLista_insumos_contenidos().clear();
+                getBean().getLista_insumos_contenidos().addAll(controller.getInstance().getProductoInsumoList());
+            } catch (NumberFormatException ex) {
+                NotificationService.getInstance().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
+            }
+        }
+
+    }
+
+    private void onEliminarInsumoFichaClick() {
+        controller.eliminarInsumoProducto(getBean().getInsumo_contenido_seleccionado());
+        getBean().setInsumo_contenido_seleccionado(null);
+        getBean().getLista_insumos_contenidos().clear();
+        getBean().getLista_insumos_contenidos().addAll(controller.getInstance().getProductoInsumoList());
 
     }
 
@@ -143,6 +173,20 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_ELIMINAR_INSUMO_FICHA) {
+            @Override
+            public Optional doAction() {
+                onEliminarInsumoFichaClick();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_AGREGAR_INSUMO_FICHA) {
+            @Override
+            public Optional doAction() {
+                onAgregarInsumoFichaClick();
+                return Optional.empty();
+            }
+        });
     }
 
     private void fillForm(ProductoVenta productoSeleccionado) {
@@ -151,9 +195,10 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setCodigo_producto(productoSeleccionado.getCodigoProducto());
         getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPagoPorVenta()));
         getBean().setElaborado_seleccionado(productoSeleccionado.getCocinacodCocina());
-        getBean().setLista_insumos_contenidos(productoSeleccionado.getProductoInsumoList());
+        getBean().setLista_insumos_contenidos(new ArrayListModel<>(productoSeleccionado.getProductoInsumoList()));
         getBean().setPrecio_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPrecioVenta()));
         getBean().setPrecio_costo("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getGasto()));
+        getBean().setLista_insumos_disponibles(new ArrayListModel<>(controller.getInsumoList()));
 
     }
 

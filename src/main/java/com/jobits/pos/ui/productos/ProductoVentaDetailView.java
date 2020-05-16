@@ -5,28 +5,23 @@
  */
 package com.jobits.pos.ui.productos;
 
-import GUI.Components.JSpinner;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.ui.utils.OldAbstractCrossReferenePanel;
-import javax.swing.JOptionPane;
 import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.ProductoInsumo;
-import com.jobits.pos.domain.models.ProductoInsumoPK;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaDetailPresenter;
-import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
-import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
-import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.*;
+import com.jobits.pos.ui.utils.AddFromPanel;
+import com.jobits.pos.ui.utils.BindableTableModel;
+import java.awt.BorderLayout;
 
 /**
  *
@@ -36,7 +31,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Crear Producto";
 
-    private OldAbstractCrossReferenePanel<ProductoInsumo, Insumo> crossReferencePanel;
+    private AddFromPanel<ProductoInsumo, Insumo> crossReferencePanel;
     private ProductoVenta instance;
 
     public ProductoVentaDetailView(AbstractViewPresenter presenter) {
@@ -85,7 +80,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel5 = new javax.swing.JPanel();
         jButtonAddInsumo = MaterialComponentsFactory.Buttons.getAddButton();
         jXLabelGasto = new org.jdesktop.swingx.JXLabel();
-        jPanel1 = new javax.swing.JPanel();
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
         jPanel11 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jTextFieldPagoPorVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", "Comisión por venta",R.COIN_SUFFIX);
@@ -195,6 +189,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel4.add(filler1);
 
         jPanelTable.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Inventario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
+        jPanelTable.setPreferredSize(new java.awt.Dimension(500, 500));
         jPanelTable.setLayout(new javax.swing.BoxLayout(jPanelTable, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel3.setOpaque(false);
@@ -219,6 +214,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         jPanelTable.add(jPanel6);
 
+        jPanelCrossRef.setMinimumSize(new java.awt.Dimension(400, 76));
         jPanelCrossRef.setOpaque(false);
         jPanelCrossRef.setPreferredSize(new java.awt.Dimension(529, 300));
         jPanelCrossRef.setLayout(new java.awt.BorderLayout());
@@ -243,10 +239,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanelCrossRef.add(jXLabelGasto, java.awt.BorderLayout.PAGE_END);
 
         jPanelTable.add(jPanelCrossRef);
-
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-        jPanelTable.add(jPanel1);
 
         jPanel4.add(jPanelTable);
         jPanel4.add(filler5);
@@ -306,106 +298,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAddSeccionActionPerformed
 
-    public void fetchComponentData() {
-        crossReferencePanel = new OldAbstractCrossReferenePanel<ProductoInsumo, Insumo>("Insumos", getController().getInsumoList()) {
-            @Override
-            public RestManagerAbstractTableModel getTableModel() {
-                return new RestManagerAbstractTableModel<ProductoInsumo>(instance.getProductoInsumoList(), getjTableCrossReference()) {
-                    @Override
-                    public int getColumnCount() {
-                        return 5;
-                    }
-
-                    @Override
-                    public Object getValueAt(int rowIndex, int columnIndex) {
-                        switch (columnIndex) {
-                            case 0:
-                                return items.get(rowIndex).getInsumo().getCodInsumo();
-                            case 1:
-                                return items.get(rowIndex).getInsumo().getNombre();
-                            case 2:
-                                return items.get(rowIndex).getInsumo().getUm();
-                            case 3:
-                                return items.get(rowIndex).getCantidad();
-                            case 4:
-                                return items.get(rowIndex).getCosto();
-                            default:
-                                return null;
-                        }
-                    }
-
-                    @Override
-                    public String getColumnName(int column) {
-                        switch (column) {
-                            case 0:
-                                return "Código";
-                            case 1:
-                                return "Nombre";
-                            case 2:
-                                return "U/M";
-                            case 3:
-                                return "Cantidad";
-                            case 4:
-                                return "Costo";
-                            default:
-                                return null;
-                        }
-                    }
-
-                    @Override
-                    public boolean isCellEditable(int rowIndex, int columnIndex) {
-                        return columnIndex == 3;
-                    }
-
-                    @Override
-                    public Class<?> getColumnClass(int columnIndex) {
-                        if (columnIndex == 3) {
-                            return Float.class;
-                        }
-                        return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
-                    }
-
-                    @Override
-                    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                        switch (columnIndex) {
-                            case 3:
-                                items.get(rowIndex).setCantidad((float) aValue);
-                                items.get(rowIndex).setCosto(items.get(rowIndex).getInsumo().getCostoPorUnidad() * (float) aValue);
-                                getController().updateCosto();
-                                jXLabelGasto.setText(utils.setDosLugaresDecimales(instance.getGasto()));
-                                fireTableRowsUpdated(rowIndex, rowIndex);
-                                break;
-                        }
-                    }
-                };
-            }
-
-            @Override
-            public ProductoInsumo transformK_T(Insumo selected) {
-                ProductoInsumo ret = new ProductoInsumo();
-                ProductoInsumoPK pk = new ProductoInsumoPK(getController().getInstance().getCodigoProducto(), selected.getCodInsumo());
-                ret.setProductoInsumoPK(pk);
-                ret.setInsumo(selected);
-                ret.setProductoVenta(getController().getInstance());
-                float i = 0;
-                try {
-                    i = Float.parseFloat(JOptionPane.showInputDialog(this, "Introduzca la cantidad", 0));
-                } catch (NumberFormatException e) {
-
-                }
-                ret.setCantidad(i);
-                ret.setCosto(utils.setDosLugaresDecimalesFloat(i * selected.getCostoPorUnidad()));
-                return ret;
-            }
-        };
-        jPanelCrossRef.add(crossReferencePanel);
-
-    }
-
-    public OldAbstractCrossReferenePanel<ProductoInsumo, Insumo> getCrossReferencePanel() {
-        return crossReferencePanel;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
@@ -425,7 +317,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JCheckBox jCheckBoxProductoElaborado;
     private javax.swing.JComboBox<Cocina> jComboBoxCOCINA;
     private javax.swing.JComboBox<Seccion> jComboBoxSECCION;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
@@ -467,7 +358,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         //
         //Inventario
         //
-
         Bindings.bind(jCheckBoxInventariarProducto, getPresenter().getModel(PROP_CHECKBOX_INVENTARIAR_PRODUCTO));
         Bindings.bind(jCheckBoxProductoElaborado, getPresenter().getModel(PROP_CHECKBOX_PRODUCTO_ELABORADO));
         Bindings.bind(jPanelCrossRef, "visible", getPresenter().getModel(PROP_CHECKBOX_PRODUCTO_ELABORADO));
@@ -476,7 +366,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         //TODO tabla y boton
         jButtonAddInsumo.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR_INSUMO));
         Bindings.bind(jXLabelGasto, getPresenter().getModel(PROP_PRECIO_COSTO));
-        
+
         //
         //Otros
         //
@@ -494,6 +384,87 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jComboBoxSECCION.setOpaque(false);
         jButtonAddCocina.setBorderPainted(true);
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(50);
+
+        AddFromPanel.AddFromPanelBuilder<ProductoInsumo, Insumo> builder = AddFromPanel.builder();
+        builder.addAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR_INSUMO_FICHA));
+        builder.autoCOmpletitionDataSelection(getPresenter().getModel(PROP_INSUMO_DISPONIBLE_SEL));
+        builder.autoCompletitionData(getPresenter().getModel(PROP_LISTA_INSUMOS_DISPONIBLES));
+        builder.jTextFieldDataName("Insumos");
+        builder.removeAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_ELIMINAR_INSUMO_FICHA));
+        builder.tableDataHolder(getPresenter().getModel(PROP_LISTA_INSUMOS_CONTENIDOS));
+        builder.tableSelectionDataHolder(getPresenter().getModel(PROP_INSUMO_SELECCIONADO));
+
+        BindableTableModel<ProductoInsumo> tableModel
+                = new BindableTableModel<ProductoInsumo>() {
+            @Override
+            public int getColumnCount() {
+                return 5;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return getRow(rowIndex).getInsumo().getCodInsumo();
+                    case 1:
+                        return getRow(rowIndex).getInsumo().getNombre();
+                    case 2:
+                        return getRow(rowIndex).getInsumo().getUm();
+                    case 3:
+                        return getRow(rowIndex).getCantidad();
+                    case 4:
+                        return getRow(rowIndex).getCosto();
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0:
+                        return "Código";
+                    case 1:
+                        return "Nombre";
+                    case 2:
+                        return "U/M";
+                    case 3:
+                        return "Cantidad";
+                    case 4:
+                        return "Costo";
+                    default:
+                        return null;
+                }
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return columnIndex == 3;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 3) {
+                    return Float.class;
+                }
+                return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 3:
+                        getRow(rowIndex).setCantidad((float) aValue);
+                        getRow(rowIndex).setCosto(getRow(rowIndex).getInsumo().getCostoPorUnidad() * (float) aValue);
+                        fireTableRowsUpdated(rowIndex, rowIndex);
+                        break;
+                }
+            }
+        };
+        builder.tableModel(tableModel);
+        crossReferencePanel = builder.build();
+
+        jPanelCrossRef.add(crossReferencePanel,BorderLayout.CENTER);
     }
 
     @Override
