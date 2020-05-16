@@ -32,7 +32,6 @@ public class PersonalListController extends OldAbstractListController<Personal> 
 
     public PersonalListController(Window frame) {
         this();
-        constructView(frame);
     }
 
     /**
@@ -41,9 +40,6 @@ public class PersonalListController extends OldAbstractListController<Personal> 
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new PersonalListView(this, (Dialog) parent, true));
-        getView().updateView();
-        getView().setVisible(true);
 
     }
 

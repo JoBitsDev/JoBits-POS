@@ -27,16 +27,16 @@ import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
  *
  * @author Jorge
  */
-public class PersonalCreateEditView extends AbstractDetailView<Personal> {
+public class PersonalDetailView extends AbstractDetailView<Personal> {
 
-    public PersonalCreateEditView(Personal instance, AbstractDetailController controller, Frame owner, boolean modal) {
+    public PersonalDetailView(Personal instance, AbstractDetailController controller, Frame owner, boolean modal) {
         super(instance, DialogType.LIST, controller, owner, modal);
         initComponents();
         fetchComponentData();
         updateView();
     }
 
-    public PersonalCreateEditView(Personal instance, AbstractDetailController controller, Dialog owner, boolean modal) {
+    public PersonalDetailView(Personal instance, AbstractDetailController controller, Dialog owner, boolean modal) {
         super(instance, DialogType.LIST, controller, owner, modal);
         initComponents();
         fetchComponentData();

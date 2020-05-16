@@ -451,6 +451,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         } else {
             hideCrossReferenceDialog();
         }
+        setLocationRelativeTo(null);
     }//GEN-LAST:event_jToggleButtonCrossReferenceStateChanged
 
 

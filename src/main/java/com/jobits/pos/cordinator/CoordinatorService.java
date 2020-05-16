@@ -11,6 +11,8 @@ import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
+import com.jobits.pos.ui.trabajadores.PersonalListView;
+import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,21 +26,21 @@ import java.util.Map;
  * @author Jorge
  *
  */
-public class MainCoordinator implements Coordinator {
+public class CoordinatorService implements Coordinator {
 
     public static final String AVAILABLE_EVERYWHERE = "Available everywhere";
 
     private Map<String, List<String>> navigationGraph;
 
-    private static MainCoordinator instance;
+    private static CoordinatorService instance;
 
-    private MainCoordinator() {
+    private CoordinatorService() {
         populateNavigationGraph();
     }
 
-    public static MainCoordinator getInstance() {
+    public static CoordinatorService getInstance() {
         if (instance == null) {
-            instance = new MainCoordinator();
+            instance = new CoordinatorService();
         }
         return instance;
     }
@@ -55,7 +57,11 @@ public class MainCoordinator implements Coordinator {
     private void populateNavigationGraph() {
         navigationGraph = new HashMap<>();
         navigationGraph.put(LogInView.VIEW_NAME, Arrays.asList(MainMenuView.VIEW_NAME, UbicacionView.VIEW_NAME));
-        navigationGraph.put(AVAILABLE_EVERYWHERE, Arrays.asList(ProductoVentaListView.VIEW_NAME,InsumoListView.VIEW_NAME));
+        navigationGraph.put(AVAILABLE_EVERYWHERE,Arrays.asList(
+                        ProductoVentaListView.VIEW_NAME,
+                        InsumoListView.VIEW_NAME,
+                        PersonalListView.VIEW_NAME,
+                        PuestoTrabajoListView.VIEW_NAME));
         navigationGraph.put(ProductoVentaListView.VIEW_NAME, Arrays.asList(ProductoVentaDetailView.VIEW_NAME));
     }
 

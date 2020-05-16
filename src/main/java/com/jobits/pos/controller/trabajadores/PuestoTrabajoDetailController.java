@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
-import com.jobits.pos.ui.trabajadores.PuestoTrabajoCreateEditView;
+import com.jobits.pos.ui.trabajadores.PuestoTrabajoDetailView;
 import java.awt.Window;
 import java.util.List;
 import javax.swing.JDialog;
@@ -24,24 +24,24 @@ import com.jobits.pos.adapters.repo.PuestoTrabajoDAO;
  * @author Jorge
  *
  */
-public class PuestoTrabajoCreateEditController extends AbstractDetailController<PuestoTrabajo> {
+public class PuestoTrabajoDetailController extends AbstractDetailController<PuestoTrabajo> {
 
-    public PuestoTrabajoCreateEditController() {
+    public PuestoTrabajoDetailController() {
         super(PuestoTrabajoDAO.getInstance());
         instance = createNewInstance();
 
     }
 
-    public PuestoTrabajoCreateEditController(PuestoTrabajo instance) {
+    public PuestoTrabajoDetailController(PuestoTrabajo instance) {
         super(instance, PuestoTrabajoDAO.getInstance());
 
     }
 
-    public PuestoTrabajoCreateEditController(Window parent) {
+    public PuestoTrabajoDetailController(Window parent) {
         super(parent, PuestoTrabajoDAO.getInstance());
     }
 
-    public PuestoTrabajoCreateEditController(PuestoTrabajo instance, Window parent) {
+    public PuestoTrabajoDetailController(PuestoTrabajo instance, Window parent) {
         super(instance, parent, PuestoTrabajoDAO.getInstance());
     }
 
@@ -52,10 +52,10 @@ public class PuestoTrabajoCreateEditController extends AbstractDetailController<
     @Override
     public void constructView(java.awt.Container parent) {
         if (parent instanceof JDialog) {
-            setView(new PuestoTrabajoCreateEditView(this, (JDialog) parent, true, instance));
+            setView(new PuestoTrabajoDetailView(this, (JDialog) parent, true, instance));
 
         } else {
-            setView(new PuestoTrabajoCreateEditView(this, (JFrame) parent, true, instance));
+            setView(new PuestoTrabajoDetailView(this, (JFrame) parent, true, instance));
         }
         getView().updateView();
         getView().setVisible(true);

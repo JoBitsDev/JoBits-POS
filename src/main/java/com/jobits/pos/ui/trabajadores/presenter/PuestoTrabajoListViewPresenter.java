@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.insumo.presenter;
+package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.insumo.InsumoCreateEditController;
-import com.jobits.pos.controller.insumo.InsumoListController;
-import com.jobits.pos.ui.insumo.InsumoListView;
+import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
+import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 
 /**
  *
@@ -18,33 +17,32 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
  * @author Jorge
  *
  */
-public class InsumoListViewPresenter extends AbstractListViewPresenter<InsumoListViewModel> {
+public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<PuestoTrabajoListViewModel> {
 
-    InsumoListController controller;
+    PuestoTrabajoListController controller;
 
-    public InsumoListViewPresenter(InsumoListController controller) {
-        super(new InsumoListViewModel(), "Insumos");
+    public PuestoTrabajoListViewPresenter(PuestoTrabajoListController controller) {
+        super(new PuestoTrabajoListViewModel(), PuestoTrabajoListView.VIEW_NAME);
         this.controller = controller;
         setListToBean();
     }
 
     @Override
     protected void onAgregarClick() {
-        InsumoCreateEditController newController = new InsumoCreateEditController();
+        PuestoTrabajoDetailController newController = new PuestoTrabajoDetailController();
         setListToBean();
+
     }
 
     @Override
     protected void onEditarClick() {
-        InsumoCreateEditController newController = new InsumoCreateEditController(getBean().getElemento_seleccionado());
+        PuestoTrabajoDetailController newController = new PuestoTrabajoDetailController(getBean().getElemento_seleccionado());
         setListToBean();
-
     }
 
     @Override
     protected void onEliminarClick() {
         controller.destroy(getBean().getElemento_seleccionado());
-        getBean().setElemento_seleccionado(null);
         setListToBean();
     }
 

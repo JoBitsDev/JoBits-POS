@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.insumo.presenter;
+package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.insumo.InsumoCreateEditController;
-import com.jobits.pos.controller.insumo.InsumoListController;
-import com.jobits.pos.ui.insumo.InsumoListView;
+import com.jobits.pos.controller.trabajadores.PersonalCreateEditController;
+import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.trabajadores.PersonalListView;
 
 /**
  *
@@ -18,25 +17,25 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
  * @author Jorge
  *
  */
-public class InsumoListViewPresenter extends AbstractListViewPresenter<InsumoListViewModel> {
+public class PersonalListViewPresenter extends AbstractListViewPresenter<PersonalListViewModel> {
 
-    InsumoListController controller;
+    PersonalListController controller;
 
-    public InsumoListViewPresenter(InsumoListController controller) {
-        super(new InsumoListViewModel(), "Insumos");
+    public PersonalListViewPresenter(PersonalListController controller) {
+        super(new PersonalListViewModel(), PersonalListView.VIEW_NAME);
         this.controller = controller;
         setListToBean();
     }
 
     @Override
     protected void onAgregarClick() {
-        InsumoCreateEditController newController = new InsumoCreateEditController();
+        PersonalCreateEditController newController = new PersonalCreateEditController();
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
-        InsumoCreateEditController newController = new InsumoCreateEditController(getBean().getElemento_seleccionado());
+        PersonalCreateEditController newController = new PersonalCreateEditController(getBean().getElemento_seleccionado());
         setListToBean();
 
     }
@@ -44,7 +43,6 @@ public class InsumoListViewPresenter extends AbstractListViewPresenter<InsumoLis
     @Override
     protected void onEliminarClick() {
         controller.destroy(getBean().getElemento_seleccionado());
-        getBean().setElemento_seleccionado(null);
         setListToBean();
     }
 

@@ -35,6 +35,7 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
         NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
                 new ProductoVentaDetailPresenter(
                         new ProductoVentaDetailController(), null));
+        setListToBean();
     }
 
     @Override

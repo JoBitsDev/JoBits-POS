@@ -25,7 +25,7 @@ import org.jboss.logging.Logger;
  */
 public class NavigationService implements Navigator {
 
-    private Coordinator coordinator = MainCoordinator.getInstance();
+    private Coordinator coordinator = CoordinatorService.getInstance();
 
     private NavigationNode activeNode;
 

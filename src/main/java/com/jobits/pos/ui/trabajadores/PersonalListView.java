@@ -5,20 +5,10 @@
  */
 package com.jobits.pos.ui.trabajadores;
 
-import com.jobits.pos.ui.OldAbstractListView;
-import com.jidesoft.swing.JideButton;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.util.List;
-import javax.swing.JButton;
-import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.OldAbstractListController;
-import com.jobits.pos.controller.trabajadores.PersonalListController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Personal;
-import com.jobits.pos.recursos.valores.Fonts;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.AbstractListViewPanel;
+import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.utils.BindableTableModel;
 
 /**
  * FirstDream
@@ -26,15 +16,17 @@ import com.jobits.pos.ui.utils.utils;
  * @author Jorge
  *
  */
-public class PersonalListView extends OldAbstractListView<Personal> {
+public class PersonalListView extends AbstractListViewPanel<Personal> {
 
-    public PersonalListView(OldAbstractListController<Personal> controller, Dialog owner, boolean modal) {
-        super(controller, owner, modal);
+    public static final String VIEW_NAME = "Lista Personal";
+
+    public PersonalListView(AbstractListViewPresenter presenter) {
+        super(presenter);
     }
 
     @Override
-    public MyJTableModel<Personal> generateTableModel(List<Personal> items) {
-        return new MyJTableModel<Personal>(items) {
+    public BindableTableModel<Personal> generateTableModel() {
+        return new BindableTableModel<Personal>(jTableList) {
             @Override
             public int getColumnCount() {
                 return 3;
@@ -44,12 +36,12 @@ public class PersonalListView extends OldAbstractListView<Personal> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return items.get(rowIndex).getUsuario();
+                        return getRow(rowIndex).getUsuario();
                     case 1:
-                        return items.get(rowIndex).getDatosPersonales().getNombre();
+                        return getRow(rowIndex).getDatosPersonales().getNombre();
                     case 2:
-                        return items.get(rowIndex).getPuestoTrabajonombrePuesto();
-                     default:
+                        return getRow(rowIndex).getPuestoTrabajonombrePuesto();
+                    default:
                         return null;
                 }
             }
@@ -71,8 +63,9 @@ public class PersonalListView extends OldAbstractListView<Personal> {
     }
 
     @Override
-    public PersonalListController getController() {
-        return (PersonalListController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }

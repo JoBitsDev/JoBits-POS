@@ -17,7 +17,7 @@ import javax.swing.DefaultComboBoxModel;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalCreateEditController;
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoCreateEditController;
+import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.Area;
@@ -31,9 +31,9 @@ import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
  *
  * @author Jorge
  */
-public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabajo> {
+public class PuestoTrabajoDetailView extends AbstractDetailView<PuestoTrabajo> {
 
-    public PuestoTrabajoCreateEditView(AbstractDetailController<PuestoTrabajo> controller, Frame owner, boolean modal, PuestoTrabajo p) {
+    public PuestoTrabajoDetailView(AbstractDetailController<PuestoTrabajo> controller, Frame owner, boolean modal, PuestoTrabajo p) {
         super(p, DialogType.DEFINED, controller, owner, modal);
         initComponents();
         fetchComponentData();
@@ -41,7 +41,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
 
     }
 
-    public PuestoTrabajoCreateEditView(AbstractDetailController<PuestoTrabajo> controller, Dialog owner, boolean modal, PuestoTrabajo p) {
+    public PuestoTrabajoDetailView(AbstractDetailController<PuestoTrabajo> controller, Dialog owner, boolean modal, PuestoTrabajo p) {
         super(p, DialogType.DEFINED, controller, owner, modal);
         initComponents();
         fetchComponentData();
@@ -55,7 +55,7 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
 
     @Override
     public void fetchComponentData() {
-        jComboBoxAreaPago.setModel(new RestManagerComboBoxModel<>(((PuestoTrabajoCreateEditController) getController()).getAreasPago()));
+        jComboBoxAreaPago.setModel(new RestManagerComboBoxModel<>(((PuestoTrabajoDetailController) getController()).getAreasPago()));
         jComboBoxAreaPago.setSelectedIndex(0);
         jComboBoxAreaPago.addItem(null);
         jComboBoxNivelAccesso.setModel(new DefaultComboBoxModel<>(R.NivelAcceso.values()));
@@ -425,8 +425,8 @@ public class PuestoTrabajoCreateEditView extends AbstractDetailView<PuestoTrabaj
     }
 
     @Override
-    public PuestoTrabajoCreateEditController getController() {
-        return (PuestoTrabajoCreateEditController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    public PuestoTrabajoDetailController getController() {
+        return (PuestoTrabajoDetailController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

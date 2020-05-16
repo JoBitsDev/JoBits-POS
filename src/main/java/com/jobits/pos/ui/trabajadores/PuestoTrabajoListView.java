@@ -6,34 +6,27 @@
 
 package com.jobits.pos.ui.trabajadores;
 
-import com.jobits.pos.ui.OldAbstractListView;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.util.List;
-import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.OldAbstractListController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.PuestoTrabajo;
+import com.jobits.pos.ui.AbstractListViewPanel;
+import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.utils.BindableTableModel;
 
 /**
  * FirstDream
  * @author Jorge
  * 
  */
-public class PuestoTrabajoListView extends OldAbstractListView<PuestoTrabajo>{
+public class PuestoTrabajoListView extends AbstractListViewPanel<PuestoTrabajo>{
 
-    public PuestoTrabajoListView(OldAbstractListController<PuestoTrabajo> controller, Frame owner, boolean modal) {
-        super(controller, owner, modal);
-    }
-
-    public PuestoTrabajoListView(OldAbstractListController<PuestoTrabajo> controller, Dialog owner, boolean modal) {
-        super(controller, owner, modal);
-    }
+    public static final String VIEW_NAME = "Puestos de trabajo";
     
+    public PuestoTrabajoListView(AbstractListViewPresenter presenter) {
+        super(presenter);
+    }
 
     @Override
-    public MyJTableModel<PuestoTrabajo> generateTableModel(List<PuestoTrabajo> items) {
-      model = new MyJTableModel<PuestoTrabajo>(items) {
+    public BindableTableModel<PuestoTrabajo> generateTableModel() {
+      model = new BindableTableModel<PuestoTrabajo>() {
            @Override
            public int getColumnCount() {
                return 3;
@@ -42,9 +35,9 @@ public class PuestoTrabajoListView extends OldAbstractListView<PuestoTrabajo>{
            @Override
            public Object getValueAt(int rowIndex, int columnIndex) {
                switch(columnIndex){
-                   case 0: return items.get(rowIndex).getNombrePuesto();
-                   case 1: return items.get(rowIndex).getNivelAcceso();
-                   case 2: return items.get(rowIndex).getPuestosDisponibles();
+                   case 0: return getRow(rowIndex).getNombrePuesto();
+                   case 1: return getRow(rowIndex).getNivelAcceso();
+                   case 2: return getRow(rowIndex).getPuestosDisponibles();
                    default:return null;
                }
            }
@@ -60,6 +53,11 @@ public class PuestoTrabajoListView extends OldAbstractListView<PuestoTrabajo>{
            }
        };
        return model;
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
     }
     
     

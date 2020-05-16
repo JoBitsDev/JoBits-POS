@@ -6,7 +6,7 @@
 package com.jobits.pos.main;
 
 import com.jobits.pos.controller.licencia.LicenceController;
-import com.jobits.pos.cordinator.MainCoordinator;
+import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.notification.NotificationService;
@@ -42,7 +42,7 @@ public class Application {
 
     private RootView rootView;
 
-    private MainCoordinator coordinator;
+    private CoordinatorService coordinator;
 
     private NavigationService navigator;
 

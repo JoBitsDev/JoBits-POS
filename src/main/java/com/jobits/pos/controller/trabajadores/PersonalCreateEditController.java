@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
-import com.jobits.pos.ui.trabajadores.PersonalCreateEditView;
+import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class PersonalCreateEditController extends AbstractDetailController<Perso
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new PersonalCreateEditView(instance, this, (Dialog) parent, true));
+        setView(new PersonalDetailView(instance, this, (Dialog) parent, true));
         getView().setVisible(true);
     }
 
