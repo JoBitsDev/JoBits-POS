@@ -6,13 +6,12 @@
 package com.jobits.pos.ui;
 
 import com.jobits.pos.controller.login.MainMenuController;
-import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.ui.components.MaterialComponentsFactory;
+import com.jobits.ui.components.swing.containers.CollapseMenu;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import org.jdesktop.swingx.JXCollapsiblePane;
-import org.jdesktop.swingx.JXTaskPane;
+import util.materials.MaterialIcons;
 
 /**
  *
@@ -24,6 +23,7 @@ public class MainMenuView extends AbstractViewPanel {
 
     public MainMenuView(AbstractViewPresenter presenter) {
         super(presenter);
+
     }
 
     /**
@@ -36,11 +36,6 @@ public class MainMenuView extends AbstractViewPanel {
     private void initComponents() {
 
         jXTaskPaneContainer1 = new org.jdesktop.swingx.JXTaskPaneContainer();
-        jXTaskPanePDV = new org.jdesktop.swingx.JXTaskPane();
-        jXTaskPaneAlmacen = new org.jdesktop.swingx.JXTaskPane();
-        jXTaskPaneContabilidad = new org.jdesktop.swingx.JXTaskPane();
-        jXTaskPaneNominas = new org.jdesktop.swingx.JXTaskPane();
-        jXTaskPaneConfiguracion = new org.jdesktop.swingx.JXTaskPane();
         jXCollapsiblePane1 = new org.jdesktop.swingx.JXCollapsiblePane();
 
         jXTaskPaneContainer1.setMinimumSize(new java.awt.Dimension(120, 700));
@@ -50,52 +45,12 @@ public class MainMenuView extends AbstractViewPanel {
         verticalLayout1.setGap(14);
         jXTaskPaneContainer1.setLayout(verticalLayout1);
 
-        jXTaskPanePDV.setAutoscrolls(true);
-        jXTaskPanePDV.setCollapsed(true);
-        jXTaskPanePDV.setName(""); // NOI18N
-        jXTaskPanePDV.setOpaque(false);
-        jXTaskPanePDV.setScrollOnExpand(true);
-        jXTaskPanePDV.setTitle("Productos ");
-        jXTaskPaneContainer1.add(jXTaskPanePDV);
-
-        jXTaskPaneAlmacen.setAutoscrolls(true);
-        jXTaskPaneAlmacen.setCollapsed(true);
-        jXTaskPaneAlmacen.setName(""); // NOI18N
-        jXTaskPaneAlmacen.setOpaque(false);
-        jXTaskPaneAlmacen.setScrollOnExpand(true);
-        jXTaskPaneAlmacen.setTitle("Almacen");
-        jXTaskPaneContainer1.add(jXTaskPaneAlmacen);
-
-        jXTaskPaneContabilidad.setAutoscrolls(true);
-        jXTaskPaneContabilidad.setCollapsed(true);
-        jXTaskPaneContabilidad.setName(""); // NOI18N
-        jXTaskPaneContabilidad.setOpaque(false);
-        jXTaskPaneContabilidad.setScrollOnExpand(true);
-        jXTaskPaneContabilidad.setTitle("Contabilidad");
-        jXTaskPaneContainer1.add(jXTaskPaneContabilidad);
-
-        jXTaskPaneNominas.setAutoscrolls(true);
-        jXTaskPaneNominas.setCollapsed(true);
-        jXTaskPaneNominas.setName(""); // NOI18N
-        jXTaskPaneNominas.setOpaque(false);
-        jXTaskPaneNominas.setScrollOnExpand(true);
-        jXTaskPaneNominas.setTitle("Nominas");
-        jXTaskPaneContainer1.add(jXTaskPaneNominas);
-
-        jXTaskPaneConfiguracion.setAutoscrolls(true);
-        jXTaskPaneConfiguracion.setCollapsed(true);
-        jXTaskPaneConfiguracion.setName(""); // NOI18N
-        jXTaskPaneConfiguracion.setOpaque(false);
-        jXTaskPaneConfiguracion.setScrollOnExpand(true);
-        jXTaskPaneConfiguracion.setTitle("Configuracion");
-        jXTaskPaneContainer1.add(jXTaskPaneConfiguracion);
-
         setMinimumSize(new java.awt.Dimension(840, 720));
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
+        jXCollapsiblePane1.setBackground(new java.awt.Color(102, 255, 102));
         jXCollapsiblePane1.setDirection(org.jdesktop.swingx.JXCollapsiblePane.Direction.LEFT);
-        jXCollapsiblePane1.setOpaque(false);
         add(jXCollapsiblePane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -122,35 +77,42 @@ public class MainMenuView extends AbstractViewPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXCollapsiblePane jXCollapsiblePane1;
-    private org.jdesktop.swingx.JXTaskPane jXTaskPaneAlmacen;
-    private org.jdesktop.swingx.JXTaskPane jXTaskPaneConfiguracion;
-    private org.jdesktop.swingx.JXTaskPane jXTaskPaneContabilidad;
     private org.jdesktop.swingx.JXTaskPaneContainer jXTaskPaneContainer1;
-    private org.jdesktop.swingx.JXTaskPane jXTaskPaneNominas;
-    private org.jdesktop.swingx.JXTaskPane jXTaskPanePDV;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void wireUp() {
-        jXTaskPanePDV.add(getPresenter().getOperation(MainMenuController.MenuButtons.MENU.toString()));
-        jXTaskPanePDV.add(getPresenter().getOperation(MainMenuController.MenuButtons.INSUMO.toString()));
-        jXTaskPanePDV.add(getPresenter().getOperation(MainMenuController.MenuButtons.COCINA.toString()));
-        jXTaskPanePDV.add(getPresenter().getOperation(MainMenuController.MenuButtons.SECCION.toString()));
-        jXTaskPanePDV.add(getPresenter().getOperation(MainMenuController.MenuButtons.SALON.toString()));
 
-        jXTaskPaneAlmacen.add(getPresenter().getOperation(MainMenuController.MenuButtons.ALMACEN.toString()));
-        jXTaskPaneAlmacen.add(getPresenter().getOperation(MainMenuController.MenuButtons.IPV.toString()));
+        CollapseMenu productoVenta = new CollapseMenu(MaterialIcons.BUSINESS.deriveIconTTF(35f).deriveIconTTF(DefaultValues.PRIMARY_COLOR), "Productos");
+        productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.MENU.toString()));
+        productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.INSUMO.toString()));
+        productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COCINA.toString()));
+        productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.SECCION.toString()));
+        productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.SALON.toString()));
 
-        jXTaskPaneContabilidad.add(getPresenter().getOperation(MainMenuController.MenuButtons.COMENZAR_VENTAS.toString()));
-        jXTaskPaneContabilidad.add(getPresenter().getOperation(MainMenuController.MenuButtons.VENTAS.toString()));
+        CollapseMenu almacen = new CollapseMenu(MaterialIcons.STORAGE.deriveIconTTF(35f).deriveIconTTF(DefaultValues.PRIMARY_COLOR), "Almacén");
+        almacen.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.ALMACEN.toString()));
+        almacen.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.IPV.toString()));
 
-        jXTaskPaneNominas.add(getPresenter().getOperation(MainMenuController.MenuButtons.NOMINAS.toString()));
-        jXTaskPaneNominas.add(getPresenter().getOperation(MainMenuController.MenuButtons.TRABAJADORES.toString()));
-        jXTaskPaneNominas.add(getPresenter().getOperation(MainMenuController.MenuButtons.PUESTOS_TRABAJO.toString()));
+        CollapseMenu contabilidad = new CollapseMenu(MaterialIcons.MONETIZATION_ON.deriveIconTTF(35f).deriveIconTTF(DefaultValues.PRIMARY_COLOR), "Ventas");
+        contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COMENZAR_VENTAS.toString()));
+        contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.VENTAS.toString()));
 
-        jXTaskPaneConfiguracion.add(getPresenter().getOperation(MainMenuController.MenuButtons.CONFIGURACION.toString()));
-        jXTaskPaneConfiguracion.add(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
-        jXTaskPaneConfiguracion.add(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
+        CollapseMenu nominas = new CollapseMenu(MaterialIcons.ACCOUNT_BOX.deriveIconTTF(35f).deriveIconTTF(DefaultValues.PRIMARY_COLOR), "Nóminas");
+        nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.NOMINAS.toString()));
+        nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.TRABAJADORES.toString()));
+        nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.PUESTOS_TRABAJO.toString()));
+
+        CollapseMenu configuracion = new CollapseMenu(MaterialIcons.SETTINGS.deriveIconTTF(35f).deriveIconTTF(DefaultValues.PRIMARY_COLOR), "Configuración");
+        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.CONFIGURACION.toString()));
+        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
+        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
+
+        jXTaskPaneContainer1.add(productoVenta);
+        jXTaskPaneContainer1.add(almacen);
+        jXTaskPaneContainer1.add(contabilidad);
+        jXTaskPaneContainer1.add(nominas);
+        jXTaskPaneContainer1.add(configuracion);
 
     }
 
@@ -160,8 +122,6 @@ public class MainMenuView extends AbstractViewPanel {
 
         jXCollapsiblePane1.setLayout(new BorderLayout());
         jXCollapsiblePane1.add(jXTaskPaneContainer1);
-        jXCollapsiblePane1.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
-        jXCollapsiblePane1.setOpaque(true);
 
     }
 

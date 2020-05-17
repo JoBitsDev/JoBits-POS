@@ -12,58 +12,6 @@
           <Value id="VERTICAL_STRETCH"/>
         </Property>
       </Properties>
-      <SubComponents>
-        <Component class="org.jdesktop.swingx.JXTaskPane" name="jXTaskPanePDV">
-          <Properties>
-            <Property name="autoscrolls" type="boolean" value="true"/>
-            <Property name="collapsed" type="boolean" value="true"/>
-            <Property name="name" type="java.lang.String" value="" noResource="true"/>
-            <Property name="opaque" type="boolean" value="false"/>
-            <Property name="scrollOnExpand" type="boolean" value="true"/>
-            <Property name="title" type="java.lang.String" value="Productos "/>
-          </Properties>
-        </Component>
-        <Component class="org.jdesktop.swingx.JXTaskPane" name="jXTaskPaneAlmacen">
-          <Properties>
-            <Property name="autoscrolls" type="boolean" value="true"/>
-            <Property name="collapsed" type="boolean" value="true"/>
-            <Property name="name" type="java.lang.String" value="" noResource="true"/>
-            <Property name="opaque" type="boolean" value="false"/>
-            <Property name="scrollOnExpand" type="boolean" value="true"/>
-            <Property name="title" type="java.lang.String" value="Almacen"/>
-          </Properties>
-        </Component>
-        <Component class="org.jdesktop.swingx.JXTaskPane" name="jXTaskPaneContabilidad">
-          <Properties>
-            <Property name="autoscrolls" type="boolean" value="true"/>
-            <Property name="collapsed" type="boolean" value="true"/>
-            <Property name="name" type="java.lang.String" value="" noResource="true"/>
-            <Property name="opaque" type="boolean" value="false"/>
-            <Property name="scrollOnExpand" type="boolean" value="true"/>
-            <Property name="title" type="java.lang.String" value="Contabilidad"/>
-          </Properties>
-        </Component>
-        <Component class="org.jdesktop.swingx.JXTaskPane" name="jXTaskPaneNominas">
-          <Properties>
-            <Property name="autoscrolls" type="boolean" value="true"/>
-            <Property name="collapsed" type="boolean" value="true"/>
-            <Property name="name" type="java.lang.String" value="" noResource="true"/>
-            <Property name="opaque" type="boolean" value="false"/>
-            <Property name="scrollOnExpand" type="boolean" value="true"/>
-            <Property name="title" type="java.lang.String" value="Nominas"/>
-          </Properties>
-        </Component>
-        <Component class="org.jdesktop.swingx.JXTaskPane" name="jXTaskPaneConfiguracion">
-          <Properties>
-            <Property name="autoscrolls" type="boolean" value="true"/>
-            <Property name="collapsed" type="boolean" value="true"/>
-            <Property name="name" type="java.lang.String" value="" noResource="true"/>
-            <Property name="opaque" type="boolean" value="false"/>
-            <Property name="scrollOnExpand" type="boolean" value="true"/>
-            <Property name="title" type="java.lang.String" value="Configuracion"/>
-          </Properties>
-        </Component>
-      </SubComponents>
       <LayoutCode>
         <CodeStatement>
           <CodeExpression id="1_verticalLayout1">
@@ -107,86 +55,6 @@
             <CodeExpression id="1_verticalLayout1"/>
           </Parameters>
         </CodeStatement>
-        <CodeStatement>
-          <CodeExpression id="3_jXTaskPaneContainer1"/>
-          <StatementProvider type="CodeMethod">
-            <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component"/>
-          </StatementProvider>
-          <Parameters>
-            <CodeExpression id="4_jXTaskPanePDV">
-              <CodeVariable name="jXTaskPanePDV" type="8194" declaredType="org.jdesktop.swingx.JXTaskPane"/>
-              <ExpressionOrigin>
-                <ExpressionProvider type="ComponentRef">
-                  <ComponentRef name="jXTaskPanePDV"/>
-                </ExpressionProvider>
-              </ExpressionOrigin>
-            </CodeExpression>
-          </Parameters>
-        </CodeStatement>
-        <CodeStatement>
-          <CodeExpression id="3_jXTaskPaneContainer1"/>
-          <StatementProvider type="CodeMethod">
-            <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component"/>
-          </StatementProvider>
-          <Parameters>
-            <CodeExpression id="5_jXTaskPaneAlmacen">
-              <CodeVariable name="jXTaskPaneAlmacen" type="8194" declaredType="org.jdesktop.swingx.JXTaskPane"/>
-              <ExpressionOrigin>
-                <ExpressionProvider type="ComponentRef">
-                  <ComponentRef name="jXTaskPaneAlmacen"/>
-                </ExpressionProvider>
-              </ExpressionOrigin>
-            </CodeExpression>
-          </Parameters>
-        </CodeStatement>
-        <CodeStatement>
-          <CodeExpression id="3_jXTaskPaneContainer1"/>
-          <StatementProvider type="CodeMethod">
-            <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component"/>
-          </StatementProvider>
-          <Parameters>
-            <CodeExpression id="6_jXTaskPaneContabilidad">
-              <CodeVariable name="jXTaskPaneContabilidad" type="8194" declaredType="org.jdesktop.swingx.JXTaskPane"/>
-              <ExpressionOrigin>
-                <ExpressionProvider type="ComponentRef">
-                  <ComponentRef name="jXTaskPaneContabilidad"/>
-                </ExpressionProvider>
-              </ExpressionOrigin>
-            </CodeExpression>
-          </Parameters>
-        </CodeStatement>
-        <CodeStatement>
-          <CodeExpression id="3_jXTaskPaneContainer1"/>
-          <StatementProvider type="CodeMethod">
-            <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component"/>
-          </StatementProvider>
-          <Parameters>
-            <CodeExpression id="7_jXTaskPaneNominas">
-              <CodeVariable name="jXTaskPaneNominas" type="8194" declaredType="org.jdesktop.swingx.JXTaskPane"/>
-              <ExpressionOrigin>
-                <ExpressionProvider type="ComponentRef">
-                  <ComponentRef name="jXTaskPaneNominas"/>
-                </ExpressionProvider>
-              </ExpressionOrigin>
-            </CodeExpression>
-          </Parameters>
-        </CodeStatement>
-        <CodeStatement>
-          <CodeExpression id="3_jXTaskPaneContainer1"/>
-          <StatementProvider type="CodeMethod">
-            <CodeMethod name="add" class="java.awt.Container" parameterTypes="java.awt.Component"/>
-          </StatementProvider>
-          <Parameters>
-            <CodeExpression id="8_jXTaskPaneConfiguracion">
-              <CodeVariable name="jXTaskPaneConfiguracion" type="8194" declaredType="org.jdesktop.swingx.JXTaskPane"/>
-              <ExpressionOrigin>
-                <ExpressionProvider type="ComponentRef">
-                  <ComponentRef name="jXTaskPaneConfiguracion"/>
-                </ExpressionProvider>
-              </ExpressionOrigin>
-            </CodeExpression>
-          </Parameters>
-        </CodeStatement>
       </LayoutCode>
     </Container>
   </NonVisualComponents>
@@ -213,10 +81,12 @@
   <SubComponents>
     <Component class="org.jdesktop.swingx.JXCollapsiblePane" name="jXCollapsiblePane1">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="66" green="ff" red="66" type="rgb"/>
+        </Property>
         <Property name="direction" type="org.jdesktop.swingx.JXCollapsiblePane$Direction" editor="org.netbeans.modules.form.editors.EnumEditor">
           <Value id="LEFT"/>
         </Property>
-        <Property name="opaque" type="boolean" value="false"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
