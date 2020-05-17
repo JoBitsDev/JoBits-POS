@@ -55,7 +55,8 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
 
     @Override
     protected void setListToBean() {
-        getBean().setLista_elementos(new ArrayListModel<>(controller.getItems()));
+        getBean().getLista_elementos().clear();
+        getBean().getLista_elementos().addAll(controller.getItems());
     }
 
 }

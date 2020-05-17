@@ -5,9 +5,9 @@
  */
 package com.jobits.pos.adapters.repo;
 
-
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Personal;
+
 /**
  * FirstDream
  *
@@ -16,7 +16,7 @@ import com.jobits.pos.domain.models.Personal;
  */
 public class CocinaDAO extends AbstractRepository<Cocina> {
 
-    private static CocinaDAO INSTANCE = null;
+    private static CocinaDAO INSTANCE;
 
     private CocinaDAO() {
         super(Cocina.class);
@@ -25,12 +25,8 @@ public class CocinaDAO extends AbstractRepository<Cocina> {
     public static CocinaDAO getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new CocinaDAO();
-            return INSTANCE;
-        } else {
-            return INSTANCE;
         }
+        return INSTANCE;
     }
 
-   
-    
 }

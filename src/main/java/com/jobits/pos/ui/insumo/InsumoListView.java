@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.ui.insumo;
 
-import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
@@ -37,11 +36,11 @@ public class InsumoListView extends AbstractListViewPanel<Insumo> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((Insumo) getListModel().getElementAt(rowIndex)).getCodInsumo();
+                        return getRow(rowIndex).getCodInsumo();
                     case 1:
-                        return ((Insumo) getListModel().getElementAt(rowIndex)).getNombre();
+                        return getRow(rowIndex).getNombre();
                     case 2:
-                        return ((Insumo) getListModel().getElementAt(rowIndex)).getUm();
+                        return getRow(rowIndex).getUm();
                     default:
                         return null;
 

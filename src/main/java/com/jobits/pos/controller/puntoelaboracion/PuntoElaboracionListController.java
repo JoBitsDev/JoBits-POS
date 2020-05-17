@@ -5,12 +5,7 @@
  */
 package com.jobits.pos.controller.puntoelaboracion;
 
-import com.jobits.pos.ui.puntoelaboracion.CocinaListView;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
 import java.util.ArrayList;
-import javax.swing.JFrame;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
@@ -18,7 +13,6 @@ import com.jobits.pos.exceptions.DuplicatedException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.CocinaDAO;
 import com.jobits.pos.adapters.repo.ProductoVentaDAO;
 
@@ -32,11 +26,6 @@ public class PuntoElaboracionListController extends OldAbstractListController<Co
 
     public PuntoElaboracionListController() {
         super(CocinaDAO.getInstance());
-    }
-
-    public PuntoElaboracionListController(Window parent) {
-        super(CocinaDAO.getInstance());
-        constructView(parent);
     }
 
     @Override
@@ -102,9 +91,6 @@ public class PuntoElaboracionListController extends OldAbstractListController<Co
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new CocinaListView(this, (Dialog) parent, true));
-        getView().updateView();
-        getView().setVisible(true);
     }
 
 }

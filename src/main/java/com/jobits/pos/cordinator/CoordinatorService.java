@@ -11,6 +11,7 @@ import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
+import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class CoordinatorService implements Coordinator {
 
     @Override
     public boolean canNavigateTo(String currentViewUID, String toViewUniqueName) {
-        List<String> availablesViews = new ArrayList<>(navigationGraph.getOrDefault(currentViewUID,new ArrayList<>()));
+        List<String> availablesViews = new ArrayList<>(navigationGraph.getOrDefault(currentViewUID, new ArrayList<>()));
         for (String x : navigationGraph.get(AVAILABLE_EVERYWHERE)) {
             availablesViews.add(x);
         }
@@ -57,11 +58,12 @@ public class CoordinatorService implements Coordinator {
     private void populateNavigationGraph() {
         navigationGraph = new HashMap<>();
         navigationGraph.put(LogInView.VIEW_NAME, Arrays.asList(MainMenuView.VIEW_NAME, UbicacionView.VIEW_NAME));
-        navigationGraph.put(AVAILABLE_EVERYWHERE,Arrays.asList(
-                        ProductoVentaListView.VIEW_NAME,
-                        InsumoListView.VIEW_NAME,
-                        PersonalListView.VIEW_NAME,
-                        PuestoTrabajoListView.VIEW_NAME));
+        navigationGraph.put(AVAILABLE_EVERYWHERE, Arrays.asList(
+                ProductoVentaListView.VIEW_NAME,
+                InsumoListView.VIEW_NAME,
+                PersonalListView.VIEW_NAME,
+                PuestoTrabajoListView.VIEW_NAME,
+                PuntoElaboracionListView.VIEW_NAME));
         navigationGraph.put(ProductoVentaListView.VIEW_NAME, Arrays.asList(ProductoVentaDetailView.VIEW_NAME));
     }
 

@@ -5,12 +5,10 @@
  */
 package com.jobits.pos.ui.puntoelaboracion;
 
-import com.jobits.pos.ui.OldAbstractListView;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.util.List;
-import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.ui.AbstractListViewPanel;
+import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.utils.BindableTableModel;
 
 /**
  * FirstDream
@@ -18,19 +16,17 @@ import com.jobits.pos.domain.models.Cocina;
  * @author Jorge
  *
  */
-public class CocinaListView extends OldAbstractListView<Cocina> {
+public class PuntoElaboracionListView extends AbstractListViewPanel<Cocina> {
 
-    public CocinaListView(OldAbstractListController<Cocina> controller, Frame owner, boolean modal) {
-        super(controller, owner, modal);
-    }
+    public static final String VIEW_NAME = "Puntos elaboración";
 
-    public CocinaListView(OldAbstractListController<Cocina> controller, Dialog owner, boolean modal) {
-        super(controller, owner, modal);
+    public PuntoElaboracionListView(AbstractListViewPresenter presenter) {
+        super(presenter);
     }
 
     @Override
-    public MyJTableModel<Cocina> generateTableModel(List<Cocina> items) {
-        return new MyJTableModel<Cocina>(items) {
+    public BindableTableModel<Cocina> generateTableModel() {
+        return new BindableTableModel<Cocina>(jTableList) {
             @Override
             public int getColumnCount() {
                 return 5;
@@ -40,15 +36,15 @@ public class CocinaListView extends OldAbstractListView<Cocina> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return items.get(rowIndex).getCodCocina();
+                        return getRow(rowIndex).getCodCocina();
                     case 1:
-                        return items.get(rowIndex).getNombreCocina();
+                        return getRow(rowIndex).getNombreCocina();
                     case 2:
-                        return items.get(rowIndex).getProductoVentaList().size();
+                        return getRow(rowIndex).getProductoVentaList().size();
                     case 3:
-                        return items.get(rowIndex).getRecibirNotificacion();
+                        return getRow(rowIndex).getRecibirNotificacion();
                     case 4:
-                        return items.get(rowIndex).getLimitarVentaInsumoAgotado();
+                        return getRow(rowIndex).getLimitarVentaInsumoAgotado();
                     default:
                         return null;
                 }
@@ -72,14 +68,14 @@ public class CocinaListView extends OldAbstractListView<Cocina> {
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 if (columnIndex == 3) {
-                    items.get(rowIndex).setRecibirNotificacion((Boolean) aValue);
-                    getController().setSelected(items.get(rowIndex));
-                    getController().update();
+                    getRow(rowIndex).setRecibirNotificacion((Boolean) aValue);
+                    //getController().setSelected(items.get(rowIndex));
+                    //getController().update();//TODO: activar comportamiento
                 }
                 if (columnIndex == 4) {
-                    items.get(rowIndex).setLimitarVentaInsumoAgotado((Boolean) aValue);
-                    getController().setSelected(items.get(rowIndex));
-                    getController().update();
+                    getRow(rowIndex).setLimitarVentaInsumoAgotado((Boolean) aValue);
+                    // getController().setSelected(items.get(rowIndex));
+                    //getController().update();
                 }
             }
 
@@ -102,5 +98,10 @@ public class CocinaListView extends OldAbstractListView<Cocina> {
             }
         };
 
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
     }
 }

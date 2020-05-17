@@ -264,10 +264,7 @@ public abstract class AbstractController<T> implements Controller {
     // Getters n Setters
     //
     public List<T> getItems() {
-        if (items == null) {
-            items = getModel().findAll();
-        }
-        return items;
+        return getModel().findAll();
     }
 
     public T getSelected() {
@@ -323,7 +320,7 @@ public abstract class AbstractController<T> implements Controller {
                     break;
             }
             getModel().commitTransaction();
-          // getModel().getEntityManager().getEntityManagerFactory().getCache().evictAll();
+            // getModel().getEntityManager().getEntityManagerFactory().getCache().evictAll();
         }
     }
 

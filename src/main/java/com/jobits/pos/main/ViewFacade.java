@@ -16,6 +16,7 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
+import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import javax.swing.JPanel;
@@ -59,6 +60,8 @@ public class ViewFacade {
                 return new PersonalListView((AbstractListViewPresenter) p);
             case PuestoTrabajoListView.VIEW_NAME:
                 return new PuestoTrabajoListView((AbstractListViewPresenter) p);
+            case PuntoElaboracionListView.VIEW_NAME:
+                return new PuntoElaboracionListView((AbstractListViewPresenter) p);
            
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);
