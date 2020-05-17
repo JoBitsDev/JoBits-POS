@@ -91,6 +91,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         this.addAction = addAction;
         this.removeAction = removeAction;
         this.tableModel = tableModel;
+        this.tableModel.setTable(jTableCrossReference);
         uiInit();
         wireUp();
     }

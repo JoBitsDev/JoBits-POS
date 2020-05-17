@@ -26,7 +26,7 @@ public class PuestoTrabajoListView extends AbstractListViewPanel<PuestoTrabajo>{
 
     @Override
     public BindableTableModel<PuestoTrabajo> generateTableModel() {
-      model = new BindableTableModel<PuestoTrabajo>() {
+      model = new BindableTableModel<PuestoTrabajo>(jTableList) {
            @Override
            public int getColumnCount() {
                return 3;
