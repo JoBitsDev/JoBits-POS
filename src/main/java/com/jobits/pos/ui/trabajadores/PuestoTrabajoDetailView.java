@@ -16,7 +16,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.trabajadores.PersonalCreateEditController;
+import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;

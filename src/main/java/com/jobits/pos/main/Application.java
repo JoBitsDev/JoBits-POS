@@ -116,4 +116,8 @@ public class Application {
     private void calculateLicenceLeft() {
     }
 
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
+
 }

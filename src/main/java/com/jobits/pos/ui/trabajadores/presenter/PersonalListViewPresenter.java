@@ -5,8 +5,9 @@
  */
 package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jobits.pos.controller.trabajadores.PersonalCreateEditController;
+import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 
@@ -29,13 +30,13 @@ public class PersonalListViewPresenter extends AbstractListViewPresenter<Persona
 
     @Override
     protected void onAgregarClick() {
-        PersonalCreateEditController newController = new PersonalCreateEditController();
+        PersonalDetailController newController = new PersonalDetailController(Application.getInstance().getMainWindow());
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
-        PersonalCreateEditController newController = new PersonalCreateEditController(getBean().getElemento_seleccionado());
+        PersonalDetailController newController = new PersonalDetailController(getBean().getElemento_seleccionado(),Application.getInstance().getMainWindow());
         setListToBean();
 
     }

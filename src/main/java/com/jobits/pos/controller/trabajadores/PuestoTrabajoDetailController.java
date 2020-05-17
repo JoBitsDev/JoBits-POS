@@ -52,10 +52,10 @@ public class PuestoTrabajoDetailController extends AbstractDetailController<Pues
     @Override
     public void constructView(java.awt.Container parent) {
         if (parent instanceof JDialog) {
-            setView(new PuestoTrabajoDetailView(this, (JDialog) parent, true, instance));
+            setView(new PuestoTrabajoDetailView(this, (JDialog) parent, true, getInstance()));
 
         } else {
-            setView(new PuestoTrabajoDetailView(this, (JFrame) parent, true, instance));
+            setView(new PuestoTrabajoDetailView(this, (JFrame) parent, true, getInstance()));
         }
         getView().updateView();
         getView().setVisible(true);

@@ -19,6 +19,8 @@ import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.PuestoTrabajoDAO;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 /**
  * FirstDream
@@ -26,22 +28,22 @@ import com.jobits.pos.adapters.repo.PuestoTrabajoDAO;
  * @author Jorge
  *
  */
-public class PersonalCreateEditController extends AbstractDetailController<Personal> {
+public class PersonalDetailController extends AbstractDetailController<Personal> {
 
-    public PersonalCreateEditController() {
+    public PersonalDetailController() {
         super(PersonalDAO.getInstance());
         instance = createNewInstance();
     }
 
-    public PersonalCreateEditController(Personal instance) {
+    public PersonalDetailController(Personal instance) {
         super(instance, PersonalDAO.getInstance());
     }
 
-    public PersonalCreateEditController(Window parent) {
+    public PersonalDetailController(Window parent) {
         super(parent, PersonalDAO.getInstance());
     }
 
-    public PersonalCreateEditController(Personal instance, Window parent) {
+    public PersonalDetailController(Personal instance, Window parent) {
         super(instance, parent, PersonalDAO.getInstance());
     }
 
@@ -51,7 +53,12 @@ public class PersonalCreateEditController extends AbstractDetailController<Perso
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new PersonalDetailView(instance, this, (Dialog) parent, true));
+        if (parent instanceof JDialog) {
+            setView(new PersonalDetailView(instance, this, (Dialog) parent, true));
+        } else {
+            setView(new PersonalDetailView(instance, this, (JFrame) parent, true));
+
+        }
         getView().setVisible(true);
     }
 

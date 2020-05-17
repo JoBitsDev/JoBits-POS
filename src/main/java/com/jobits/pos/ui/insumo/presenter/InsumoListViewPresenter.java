@@ -5,10 +5,9 @@
  */
 package com.jobits.pos.ui.insumo.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.insumo.InsumoCreateEditController;
 import com.jobits.pos.controller.insumo.InsumoListController;
-import com.jobits.pos.ui.insumo.InsumoListView;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 
 /**
@@ -30,13 +29,14 @@ public class InsumoListViewPresenter extends AbstractListViewPresenter<InsumoLis
 
     @Override
     protected void onAgregarClick() {
-        InsumoCreateEditController newController = new InsumoCreateEditController();
+        InsumoCreateEditController newController = new InsumoCreateEditController(Application.getInstance().getMainWindow());
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
-        InsumoCreateEditController newController = new InsumoCreateEditController(getBean().getElemento_seleccionado());
+        InsumoCreateEditController newController = new InsumoCreateEditController(
+                getBean().getElemento_seleccionado(), Application.getInstance().getMainWindow());
         setListToBean();
 
     }

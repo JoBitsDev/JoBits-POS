@@ -22,6 +22,9 @@ import com.jobits.pos.adapters.repo.InsumoDAO;
 import com.jobits.pos.adapters.repo.ProductoInsumoDAO;
 import com.jobits.pos.adapters.repo.ProductoVentaDAO;
 import com.jobits.pos.recursos.R;
+import java.awt.Frame;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 
 /**
  * FirstDream
@@ -79,7 +82,12 @@ public class InsumoCreateEditController extends AbstractDetailController<Insumo>
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new InsumoCreateEditView(this, (Dialog) parent, true, getInstance()));
+        if (parent instanceof JDialog) {
+            setView(new InsumoCreateEditView(this, (JDialog) parent, true, getInstance()));
+
+        } else {
+            setView(new InsumoCreateEditView(this, (JFrame) parent, true, getInstance()));
+        }
         getView().updateView();
         getView().setVisible(true);
     }

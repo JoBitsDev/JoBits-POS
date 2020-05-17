@@ -7,6 +7,7 @@ package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 
@@ -29,14 +30,14 @@ public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<Pu
 
     @Override
     protected void onAgregarClick() {
-        PuestoTrabajoDetailController newController = new PuestoTrabajoDetailController();
+        PuestoTrabajoDetailController newController = new PuestoTrabajoDetailController(Application.getInstance().getMainWindow());
         setListToBean();
 
     }
 
     @Override
     protected void onEditarClick() {
-        PuestoTrabajoDetailController newController = new PuestoTrabajoDetailController(getBean().getElemento_seleccionado());
+        PuestoTrabajoDetailController newController = new PuestoTrabajoDetailController(getBean().getElemento_seleccionado(), Application.getInstance().getMainWindow());
         setListToBean();
     }
 

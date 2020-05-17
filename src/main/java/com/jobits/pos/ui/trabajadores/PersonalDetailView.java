@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Date;
 import javax.swing.border.LineBorder;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.trabajadores.PersonalCreateEditController;
+import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.PuestoTrabajo;
@@ -354,7 +354,7 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
 
     @Override
     public void fetchComponentData() {
-        jComboBoxPuestoTrabajo.setModel(new RestManagerComboBoxModel<>(((PersonalCreateEditController) getController()).getPuestoTrabajoList()));
+        jComboBoxPuestoTrabajo.setModel(new RestManagerComboBoxModel<>(((PersonalDetailController) getController()).getPuestoTrabajoList()));
         jTextFieldUsuario.setInputVerifier(new RestManagerInputVerifier(RegularExpressions.USER_NAME));
 
     }
