@@ -75,7 +75,7 @@ public class RootView extends MaterialPanel {
         jPanel1 = new javax.swing.JPanel();
         jButtonBack = MaterialComponentsFactory.Buttons.getBackButton();
         jLabel1 = new javax.swing.JLabel();
-        jPanelContent = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelContent = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanelMainMenu = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanelShinkButton = new javax.swing.JPanel();
         jButtonShrink = MaterialComponentsFactory.Buttons.getMenuButton();
@@ -113,15 +113,17 @@ public class RootView extends MaterialPanel {
 
         add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
 
+        jPanelContent.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
         jPanelContent.setLayout(jPanelContentLayout);
         jPanelContentLayout.setHorizontalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+            .addGap(0, 629, Short.MAX_VALUE)
         );
         jPanelContentLayout.setVerticalGroup(
             jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 316, Short.MAX_VALUE)
+            .addGap(0, 296, Short.MAX_VALUE)
         );
 
         add(jPanelContent, java.awt.BorderLayout.CENTER);

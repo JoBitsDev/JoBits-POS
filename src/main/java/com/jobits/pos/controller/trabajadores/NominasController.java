@@ -5,25 +5,17 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
-import com.jobits.pos.ui.trabajadores.NominasEstadisticasView;
 import java.awt.Container;
-import java.awt.Window;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import javax.swing.JDialog;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.NoSelectedException;
-import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.Personal;
-import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.AsistenciaPersonalDAO;
+import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.servicios.impresion.Impresion;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
 
 /**
@@ -39,9 +31,6 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
         instance = createNewInstance();
     }
 
-    public NominasController(Window parent) {
-        super(parent, AsistenciaPersonalDAO.getInstance());
-    }
 
     @Override
     public AsistenciaPersonal createNewInstance() {
@@ -50,9 +39,6 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
 
     @Override
     public void constructView(Container parent) {
-        setView(new NominasEstadisticasView(instance, this, (JDialog) parent, true));
-        getView().updateView();
-        getView().setVisible(true);
     }
 
     public List<AsistenciaPersonalEstadisticas> getPersonalActivo(Date del, Date al) {
@@ -92,136 +78,9 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
     public void imprimirEstadisticas(List<AsistenciaPersonalEstadisticas> items) {
         for (AsistenciaPersonalEstadisticas i : items) {
             if (i.isUse()) {
-                Impresion.getDefaultInstance().printComprobantePago(i);
+                Impresion.getDefaultInstance().printComprobantePago(i.getP());
             }
         }
-    }
-
-    public class AsistenciaPersonalEstadisticas {
-
-        private List<AsistenciaPersonal> asistencia;
-        private Personal p;
-        private boolean use;
-
-        public AsistenciaPersonalEstadisticas(List<AsistenciaPersonal> asistencia, Personal p) {
-            this.asistencia = asistencia;
-            Collections.sort(this.asistencia);
-            this.p = p;
-        }
-
-        public AsistenciaPersonalEstadisticas(AsistenciaPersonal asistencia, Personal p) {
-            this.asistencia = new ArrayList<>();
-            this.asistencia.add(asistencia);
-            this.p = p;
-        }
-
-        public AsistenciaPersonalEstadisticas(List<AsistenciaPersonal> asistencia) {
-            this.asistencia = asistencia;
-        }
-
-        public boolean isUse() {
-            return use;
-        }
-
-        public void setUse(boolean use) {
-            this.use = use;
-        }
-
-        public List<AsistenciaPersonal> getAsistencia() {
-            return asistencia;
-        }
-
-        public void setAsistencia(List<AsistenciaPersonal> asistencia) {
-            this.asistencia = asistencia;
-            Collections.sort(this.asistencia);
-
-        }
-
-        public Personal getP() {
-            return p;
-        }
-
-        public void setP(Personal p) {
-            this.p = p;
-        }
-
-        public int getCantidadDiasTrabajados() {
-            return asistencia.size();
-        }
-
-        public float getPromedioCobro() {
-            float ret = 0;
-            for (AsistenciaPersonal a : asistencia) {
-                ret += a.getPago();
-            }
-            return utils.setDosLugaresDecimalesFloat(ret / getCantidadDiasTrabajados());
-        }
-
-        public float getTotalPago() {
-            float ret = 0;
-            for (AsistenciaPersonal a : asistencia) {
-                if (a.getPago() != null) {
-                    ret += a.getPago();
-                }
-            }
-            return utils.setDosLugaresDecimalesFloat(ret);
-
-        }
-
-        public float getTotalPropina() {
-            float ret = 0;
-            for (AsistenciaPersonal a : asistencia) {
-                if (a.getPropina() != null) {
-                    ret += a.getPropina();
-                }
-            }
-            return utils.setDosLugaresDecimalesFloat(ret);
-        }
-
-        public List<?> getDiasTrabajados() {
-            List<Date> dias = new ArrayList<>();
-            for (AsistenciaPersonal a : asistencia) {
-                dias.add(a.getVenta().getFecha());
-            }
-            return dias;
-        }
-
-        public List< ? extends Number> getMontos() {
-            List<Float> ret = new ArrayList<>();
-            for (AsistenciaPersonal a : asistencia) {
-                ret.add(a.getPago());
-            }
-            return ret;
-        }
-
-        public void addDiaTrabajado(AsistenciaPersonal dia) {
-            getAsistencia().add(dia);
-            Collections.sort(this.asistencia);
-        }
-
-        @Override
-        public String toString() {
-            return p.toString();
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (obj instanceof AsistenciaPersonalEstadisticas) {
-                return p.equals(((AsistenciaPersonalEstadisticas) obj).getP());
-            }
-            if (obj instanceof AsistenciaPersonal) {
-                return p.equals(((AsistenciaPersonal) obj).getPersonal());
-            }
-            return false;
-        }
-
-        @Override
-        public int hashCode() {
-            int hash = 7;
-            hash = 83 * hash + Objects.hashCode(this.p.getUsuario());
-            return hash;
-        }
-
     }
 
 }

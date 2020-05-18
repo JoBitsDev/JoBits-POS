@@ -36,6 +36,7 @@ import com.jobits.pos.domain.models.Transaccion;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.CocinaDAO;
 import com.jobits.pos.adapters.repo.ProductovOrdenDAO;
+import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
 
@@ -1445,7 +1446,7 @@ public class Impresion {
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
     }
 
-    public void printComprobantePago(NominasController.AsistenciaPersonalEstadisticas i) {
+    public void printComprobantePago(AsistenciaPersonalEstadisticas i) {
         List<AsistenciaPersonal> lista = i.getAsistencia();
         Collections.sort(lista);
 

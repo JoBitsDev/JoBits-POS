@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import com.jobits.pos.controller.trabajadores.NominasController;
+import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
 
 /**
  * FirstDream
@@ -106,7 +107,7 @@ public class AsistenciaPersonal implements Serializable, Comparable<AsistenciaPe
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (object instanceof NominasController.AsistenciaPersonalEstadisticas) {
+        if (object instanceof AsistenciaPersonalEstadisticas) {
             return object.equals(this);
         }
 
