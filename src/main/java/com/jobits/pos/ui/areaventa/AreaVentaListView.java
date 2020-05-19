@@ -5,27 +5,28 @@
  */
 package com.jobits.pos.ui.areaventa;
 
-import com.jobits.pos.ui.OldAbstractListView;
-import com.jobits.pos.ui.OldAbstractView;
-import java.awt.Dialog;
-import java.util.List;
-import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.OldAbstractListController;
-import com.jobits.pos.controller.areaventa.AreaVentaController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Mesa;
-import com.jobits.pos.ui.utils.RestManagerListModel;
+import com.jobits.pos.ui.AbstractViewPanel;
+import static com.jobits.pos.ui.areaventa.presenter.AreaVentaViewModel.*;
+import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  *
  * @author Jorge
  */
-public class AreaVentaListView extends OldAbstractListView<Area> {
+public class AreaVentaListView extends AbstractViewPanel {
 
-    public AreaVentaListView(OldAbstractListController controller, OldAbstractView owner) {
-        super(DialogType.INPUT_LARGE, controller, owner);
-        initComponents();
+    public static final String VIEW_NAME = "Areas de Venta";
+
+    public AreaVentaListView(AbstractViewPresenter presenter) {
+        super(presenter);
     }
 
     /**
@@ -38,49 +39,32 @@ public class AreaVentaListView extends OldAbstractListView<Area> {
     private void initComponents() {
 
         jPanel5 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanelAreas = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jListAreas = new javax.swing.JList<>();
+        jListAreas = MaterialComponentsFactory.Displayers.getList();
         jPanel4 = new javax.swing.JPanel();
-        jButtonAgregarArea = new javax.swing.JButton();
-        jButtonEditarArea = new javax.swing.JButton();
-        jButtonEliminarArea = new javax.swing.JButton();
+        jButtonEliminarArea = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAgregarArea = MaterialComponentsFactory.Buttons.getMaterialButton()
+        ;
         jPanelMesas = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListVentas = new javax.swing.JList<>();
+        jListMesas = MaterialComponentsFactory.Displayers.getList();
         jPanel3 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonEliminarMesa = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAgregarMesa = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setMinimumSize(new java.awt.Dimension(559, 585));
-        setUndecorated(true);
-        getContentPane().setLayout(new java.awt.BorderLayout(0, 5));
+        setOpaque(false);
+        setLayout(new java.awt.BorderLayout(0, 5));
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 204));
-        org.jdesktop.swingx.border.DropShadowBorder dropShadowBorder1 = new org.jdesktop.swingx.border.DropShadowBorder();
-        dropShadowBorder1.setShadowColor(new java.awt.Color(102, 255, 204));
-        dropShadowBorder1.setShadowOpacity(1.0F);
-        dropShadowBorder1.setShowBottomShadow(false);
-        dropShadowBorder1.setShowLeftShadow(true);
-        dropShadowBorder1.setShowTopShadow(true);
-        jPanel5.setBorder(dropShadowBorder1);
+        jPanel5.setOpaque(false);
         jPanel5.setLayout(new java.awt.BorderLayout());
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jButton1, java.awt.BorderLayout.LINE_START);
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -88,15 +72,12 @@ public class AreaVentaListView extends OldAbstractListView<Area> {
         jLabel3.setText(bundle.getString("label_gestion_salon")); // NOI18N
         jPanel5.add(jLabel3, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanel5, java.awt.BorderLayout.PAGE_START);
+        add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
-        org.jdesktop.swingx.border.DropShadowBorder dropShadowBorder2 = new org.jdesktop.swingx.border.DropShadowBorder();
-        dropShadowBorder2.setShadowColor(new java.awt.Color(102, 255, 204));
-        dropShadowBorder2.setShadowOpacity(1.0F);
-        dropShadowBorder2.setShowLeftShadow(true);
-        jPanel1.setBorder(dropShadowBorder2);
+        jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.GridLayout(1, 1, 5, 0));
 
+        jPanelAreas.setOpaque(false);
         jPanelAreas.setLayout(new java.awt.BorderLayout(5, 5));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -105,48 +86,34 @@ public class AreaVentaListView extends OldAbstractListView<Area> {
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelAreas.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
+        jScrollPane2.setOpaque(false);
+
         jListAreas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListAreas.setOpaque(false);
         jListAreas.setPreferredSize(new java.awt.Dimension(100, 85));
-        jListAreas.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jListAreasValueChanged(evt);
-            }
-        });
         jScrollPane2.setViewportView(jListAreas);
 
         jPanelAreas.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel4.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
-
-        jButtonAgregarArea.setText(bundle.getString("label_agregar")); // NOI18N
-        jButtonAgregarArea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAgregarAreaActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButtonAgregarArea);
-
-        jButtonEditarArea.setText(bundle.getString("label_editar")); // NOI18N
-        jButtonEditarArea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditarAreaActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButtonEditarArea);
+        jPanel4.setOpaque(false);
+        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonEliminarArea.setText(bundle.getString("label_eliminar")); // NOI18N
-        jButtonEliminarArea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarAreaActionPerformed(evt);
-            }
-        });
+        jButtonEliminarArea.setMinimumSize(new java.awt.Dimension(130, 50));
+        jButtonEliminarArea.setPreferredSize(new java.awt.Dimension(130, 50));
         jPanel4.add(jButtonEliminarArea);
+
+        jButtonAgregarArea.setText(bundle.getString("label_agregar")); // NOI18N
+        jButtonAgregarArea.setMinimumSize(new java.awt.Dimension(130, 50));
+        jButtonAgregarArea.setPreferredSize(new java.awt.Dimension(130, 50));
+        jPanel4.add(jButtonAgregarArea);
 
         jPanelAreas.add(jPanel4, java.awt.BorderLayout.PAGE_END);
 
         jPanel1.add(jPanelAreas);
 
+        jPanelMesas.setOpaque(false);
         jPanelMesas.setLayout(new java.awt.BorderLayout(5, 5));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -154,87 +121,47 @@ public class AreaVentaListView extends OldAbstractListView<Area> {
         jLabel1.setText(bundle.getString("label_mesas")); // NOI18N
         jPanelMesas.add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
-        jListVentas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jListVentas.setPreferredSize(new java.awt.Dimension(100, 85));
-        jScrollPane1.setViewportView(jListVentas);
+        jScrollPane1.setOpaque(false);
+
+        jListMesas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListMesas.setOpaque(false);
+        jListMesas.setPreferredSize(new java.awt.Dimension(100, 85));
+        jScrollPane1.setViewportView(jListMesas);
 
         jPanelMesas.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jButton4.setText(bundle.getString("label_agregar")); // NOI18N
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton4);
+        jButtonEliminarMesa.setText(bundle.getString("label_eliminar")); // NOI18N
+        jButtonEliminarMesa.setMinimumSize(new java.awt.Dimension(130, 50));
+        jButtonEliminarMesa.setPreferredSize(new java.awt.Dimension(130, 50));
+        jPanel3.add(jButtonEliminarMesa);
 
-        jButton3.setText(bundle.getString("label_eliminar")); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton3);
+        jButtonAgregarMesa.setText(bundle.getString("label_agregar")); // NOI18N
+        jButtonAgregarMesa.setMinimumSize(new java.awt.Dimension(130, 50));
+        jButtonAgregarMesa.setPreferredSize(new java.awt.Dimension(130, 50));
+        jPanel3.add(jButtonAgregarMesa);
 
         jPanelMesas.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
         jPanel1.add(jPanelMesas);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
-
-        pack();
-        setLocationRelativeTo(null);
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jListAreasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListAreasValueChanged
-        updateListMesas(jListAreas.getSelectedValue());
-    }//GEN-LAST:event_jListAreasValueChanged
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButtonAgregarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarAreaActionPerformed
-        getController().createInstance();
-    }//GEN-LAST:event_jButtonAgregarAreaActionPerformed
-
-    private void jButtonEliminarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarAreaActionPerformed
-        getController().destroy(jListAreas.getSelectedValue());        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEliminarAreaActionPerformed
-
-    private void jButtonEditarAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarAreaActionPerformed
-        getController().update(jListAreas.getSelectedValue());
-    }//GEN-LAST:event_jButtonEditarAreaActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        getController().createMesa(jListAreas.getSelectedValue());
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        getController().removeMesa(jListVentas.getSelectedValue());        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    @Override
-    public void updateView() {
-        jListAreas.setModel(new RestManagerListModel<>(getController().getItems()));
-
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonAgregarArea;
-    private javax.swing.JButton jButtonEditarArea;
+    private javax.swing.JButton jButtonAgregarMesa;
     private javax.swing.JButton jButtonEliminarArea;
+    private javax.swing.JButton jButtonEliminarMesa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JList<Area> jListAreas;
-    private javax.swing.JList<Mesa> jListVentas;
+    private javax.swing.JList<Mesa> jListMesas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -245,20 +172,33 @@ public class AreaVentaListView extends OldAbstractListView<Area> {
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
-    private void updateListMesas(Area selected) {
-        if (selected != null) {
-            jListVentas.setModel(new RestManagerListModel<>(selected.getMesaList()));
-        }
+    @Override
+    public void wireUp() {
+        Bindings.bind(jListAreas, new SelectionInList<Area>(getPresenter().getModel(PROP_LISTA_AREA), getPresenter().getModel(PROP_AREA_SELECCIONADA)));
+        Bindings.bind(jListMesas, new SelectionInList<Area>(getPresenter().getModel(PROP_LISTA_MESAS), getPresenter().getModel(PROP_MESA_SELECCIONADA)));
+        jListAreas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    getPresenter().getOperation(AreaVentaViewPresenter.ACTION_EDITAR_AREA).doAction();
+                }
+            }
+        
+        });
+        jButtonAgregarArea.setAction(getPresenter().getOperation(AreaVentaViewPresenter.ACTION_AGREGAR_AREA));
+        jButtonEliminarArea.setAction(getPresenter().getOperation(AreaVentaViewPresenter.ACTION_ELIMINAR_AREA));
+        jButtonAgregarMesa.setAction(getPresenter().getOperation(AreaVentaViewPresenter.ACTION_AGREGAR_MESA));
+        jButtonEliminarMesa.setAction(getPresenter().getOperation(AreaVentaViewPresenter.ACTION_ELIMINAR_MESA));
     }
 
     @Override
-    public MyJTableModel<Area> generateTableModel(List<Area> items) {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    public void uiInit() {
+        initComponents();
     }
 
     @Override
-    public AreaVentaController getController() {
-        return (AreaVentaController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }

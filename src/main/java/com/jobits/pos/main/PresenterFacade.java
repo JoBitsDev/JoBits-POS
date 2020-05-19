@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
@@ -20,6 +21,8 @@ import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
 import com.jobits.pos.ui.MainMenuPresenter;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.areaventa.AreaVentaListView;
+import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
 import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.insumo.presenter.InsumoListViewPresenter;
 import com.jobits.pos.ui.login.LogInView;
@@ -32,8 +35,8 @@ import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaListViewPresenter;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
-import com.jobits.pos.ui.seccion.MenuSeccionView;
-import com.jobits.pos.ui.seccion.presenter.MenuSeccionViewPresenter;
+import com.jobits.pos.ui.menu.MenuSeccionView;
+import com.jobits.pos.ui.menu.presenter.MenuSeccionViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
@@ -76,6 +79,8 @@ public class PresenterFacade {
                 return new PuntoElaboracionListViewPresenter(new PuntoElaboracionListController());
             case MenuSeccionView.VIEW_NAME:
                 return new MenuSeccionViewPresenter(new MenuController());
+            case AreaVentaListView.VIEW_NAME:
+                return new AreaVentaViewPresenter(new AreaVentaController());
             default:
                 throw new IllegalArgumentException("No presenter register for " + viewUIDName);
         }

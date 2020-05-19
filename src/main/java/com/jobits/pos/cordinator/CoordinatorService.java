@@ -7,12 +7,13 @@ package com.jobits.pos.cordinator;
 
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
-import com.jobits.pos.ui.seccion.MenuSeccionView;
+import com.jobits.pos.ui.menu.MenuSeccionView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
@@ -66,7 +67,8 @@ public class CoordinatorService implements Coordinator {
                 PuestoTrabajoListView.VIEW_NAME,
                 PuntoElaboracionListView.VIEW_NAME,
                 NominasDetailView.VIEW_NAME,
-                MenuSeccionView.VIEW_NAME));
+                MenuSeccionView.VIEW_NAME,
+                AreaVentaListView.VIEW_NAME));
         navigationGraph.put(ProductoVentaListView.VIEW_NAME, Arrays.asList(ProductoVentaDetailView.VIEW_NAME));
     }
 

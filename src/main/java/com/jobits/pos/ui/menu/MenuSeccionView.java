@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.seccion;
+package com.jobits.pos.ui.menu;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.controller.seccion.CartaListController;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.RestManagerListModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import static com.jobits.pos.ui.seccion.presenter.MenuSeccionViewModel.*;
-import com.jobits.pos.ui.seccion.presenter.MenuSeccionViewPresenter;
+import static com.jobits.pos.ui.menu.presenter.MenuSeccionViewModel.*;
+import com.jobits.pos.ui.menu.presenter.MenuSeccionViewPresenter;
 
 /**
  *
@@ -44,14 +42,14 @@ public class MenuSeccionView extends AbstractViewPanel {
         jPanelAreas = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jListMenus = new javax.swing.JList<>();
+        jListMenus = MaterialComponentsFactory.Displayers.getList();
         jPanel4 = new javax.swing.JPanel();
         jButtonEliminarMenu = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonAgregarMenu = MaterialComponentsFactory.Buttons.getMaterialButton();
         jPanelMesas = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListSecciones = new javax.swing.JList<>();
+        jListSecciones = MaterialComponentsFactory.Displayers.getList();
         jPanel3 = new javax.swing.JPanel();
         jButtonEliminarSeccion = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonAgregarSeccion = MaterialComponentsFactory.Buttons.getMaterialButton();

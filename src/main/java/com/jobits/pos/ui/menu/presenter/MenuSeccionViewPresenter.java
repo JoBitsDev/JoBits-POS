@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.seccion.presenter;
+package com.jobits.pos.ui.menu.presenter;
 
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.domain.models.Carta;

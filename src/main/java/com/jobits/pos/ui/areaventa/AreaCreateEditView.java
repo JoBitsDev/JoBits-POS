@@ -52,8 +52,8 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         jSpinnerPorciento = new javax.swing.JSpinner();
         jPanel6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(267, 431));
@@ -67,7 +67,7 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_informacion"))); // NOI18N
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), bundle.getString("label_informacion"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 14))); // NOI18N
         jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -115,7 +115,7 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
 
         jPanel2.add(jPanel8);
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_carta"))); // NOI18N
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), bundle.getString("label_carta"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 14))); // NOI18N
         jPanel6.setLayout(new java.awt.BorderLayout());
         jPanel2.add(jPanel6);
 
@@ -124,14 +124,6 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
 
-        jButton2.setText(bundle.getString("label_aceptar")); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButton2);
-
         jButton1.setText(bundle.getString("label_cancelar")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,6 +131,14 @@ public class AreaCreateEditView extends AbstractDetailView<Area> {
             }
         });
         jPanel3.add(jButton1);
+
+        jButton2.setText(bundle.getString("label_aceptar")); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton2);
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
