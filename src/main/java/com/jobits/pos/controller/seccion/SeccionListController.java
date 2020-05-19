@@ -6,20 +6,14 @@
 package com.jobits.pos.controller.seccion;
 
 import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.seccion.SeccionListView;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Seccion;
-import com.jobits.pos.adapters.repo.AbstractRepository;
 import com.jobits.pos.adapters.repo.ProductoVentaDAO;
 import com.jobits.pos.adapters.repo.SeccionDAO;
 
@@ -40,11 +34,6 @@ public class SeccionListController extends OldAbstractListController<Seccion> {
 
     public SeccionListController() {
         super(SeccionDAO.getInstance());
-    }
-
-    public SeccionListController(Window parent) {
-        super(SeccionDAO.getInstance());
-        constructView(parent);
     }
 
     @Override
@@ -145,9 +134,6 @@ public class SeccionListController extends OldAbstractListController<Seccion> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new SeccionListView(this, (Dialog) parent, true));
-        getView().updateView();
-        getView().setVisible(true);
     }
 
     private boolean validate(Seccion newSeccion) {

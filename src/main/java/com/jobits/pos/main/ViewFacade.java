@@ -17,6 +17,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
+import com.jobits.pos.ui.seccion.MenuSeccionView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
@@ -66,6 +67,8 @@ public class ViewFacade {
                 return new NominasDetailView(p);
             case PuntoElaboracionListView.VIEW_NAME:
                 return new PuntoElaboracionListView((AbstractListViewPresenter) p);
+            case MenuSeccionView.VIEW_NAME:
+                return new MenuSeccionView(p);
            
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);

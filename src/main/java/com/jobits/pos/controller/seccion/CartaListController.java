@@ -5,10 +5,7 @@
  */
 package com.jobits.pos.controller.seccion;
 
-import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.seccion.CartaSeccionView;
 import java.awt.Container;
-import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.OldAbstractListController;
@@ -21,7 +18,6 @@ import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.adapters.repo.MenuDAO;
 import com.jobits.pos.adapters.repo.ProductoVentaDAO;
-import com.jobits.pos.adapters.repo.SeccionDAO;
 import com.jobits.pos.recursos.R;
 
 /**
@@ -36,17 +32,11 @@ public class CartaListController extends OldAbstractListController<Carta> {
         super(MenuDAO.getInstance());
     }
 
-    public CartaListController(OldAbstractView parent) {
-        super(MenuDAO.getInstance());
-        SeccionDAO.getInstance().addPropertyChangeListener(this);
-        constructView(parent);
-
-    }
 
     @Override
     public void createInstance() {
-        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la Carta a crear",
-                "Nueva Carta", JOptionPane.QUESTION_MESSAGE);
+        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre del menú a crear",
+                "Nuevo Menú", JOptionPane.QUESTION_MESSAGE);
         Carta c = new Carta();
         c.setAreaList(new ArrayList<>());
         c.setCodCarta(getModel().generateStringCode("Mnu-"));
@@ -74,9 +64,6 @@ public class CartaListController extends OldAbstractListController<Carta> {
 
     @Override
     public void constructView(Container parent) {
-        setView(new CartaSeccionView(this, (OldAbstractView) parent));
-        getView().updateView();
-        getView().setVisible(true);
     }
 
     public void createSeccion(Carta selectedValue) {

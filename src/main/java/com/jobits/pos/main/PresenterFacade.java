@@ -11,6 +11,7 @@ import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
+import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
@@ -31,6 +32,8 @@ import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaListViewPresenter;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
+import com.jobits.pos.ui.seccion.MenuSeccionView;
+import com.jobits.pos.ui.seccion.presenter.MenuSeccionViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
@@ -71,6 +74,8 @@ public class PresenterFacade {
                 return new NominasDetailPresenter(new NominasController());
             case PuntoElaboracionListView.VIEW_NAME:
                 return new PuntoElaboracionListViewPresenter(new PuntoElaboracionListController());
+            case MenuSeccionView.VIEW_NAME:
+                return new MenuSeccionViewPresenter(new MenuController());
             default:
                 throw new IllegalArgumentException("No presenter register for " + viewUIDName);
         }
