@@ -42,7 +42,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_CODIGO_PRODUCTO = "codigo_producto";
 
-    private ArrayListModel<Seccion> lista_categorias;
+    private ArrayListModel<Seccion> lista_categorias = new ArrayListModel<>();
 
     public static final String PROP_LISTA_CATEGORIAS = "lista_categorias";
 
@@ -51,7 +51,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_CATEGORIA_SELECCIONADA = "categoria_seleccionada";
 
-    private ArrayListModel<Cocina> lista_elaborado;
+    private ArrayListModel<Cocina> lista_elaborado = new ArrayListModel<>();
 
     public static final String PROP_LISTA_ELABORADO = "lista_elaborado";
 
@@ -76,7 +76,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_CHECKBOX_PRODUCTO_ELABORADO = "checkbox_producto_elaborado";
 
-    private List<Insumo> lista_insumos_disponibles;
+    private ArrayListModel<Insumo> lista_insumos_disponibles = new ArrayListModel<>();
 
     public static final String PROP_LISTA_INSUMOS_DISPONIBLES = "lista_insumos_disponibles";
 
@@ -84,7 +84,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_INSUMO_DISPONIBLE_SEL = "insumo_disponible_sel";
 
-    private ArrayListModel<ProductoInsumo> lista_insumos_contenidos;
+    private ArrayListModel<ProductoInsumo> lista_insumos_contenidos = new ArrayListModel<>();
 
     public static final String PROP_LISTA_INSUMOS_CONTENIDOS = "lista_insumos_contenidos";
 
@@ -165,7 +165,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_insumos_disponibles
      */
-    public List<Insumo> getLista_insumos_disponibles() {
+    public ArrayListModel<Insumo> getLista_insumos_disponibles() {
         return lista_insumos_disponibles;
     }
 
@@ -174,8 +174,8 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
      *
      * @param lista_insumos_disponibles new value of lista_insumos_disponibles
      */
-    public void setLista_insumos_disponibles(List<Insumo> lista_insumos_disponibles) {
-        List<Insumo> oldLista_insumos_disponibles = this.lista_insumos_disponibles;
+    public void setLista_insumos_disponibles(ArrayListModel<Insumo> lista_insumos_disponibles) {
+        ArrayListModel<Insumo> oldLista_insumos_disponibles = this.lista_insumos_disponibles;
         this.lista_insumos_disponibles = lista_insumos_disponibles;
         firePropertyChange(PROP_LISTA_INSUMOS_DISPONIBLES, oldLista_insumos_disponibles, lista_insumos_disponibles, false);
     }

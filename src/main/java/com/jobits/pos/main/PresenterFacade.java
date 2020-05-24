@@ -6,6 +6,7 @@
 package com.jobits.pos.main;
 
 import com.jobits.pos.controller.areaventa.AreaVentaController;
+import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
@@ -23,6 +24,8 @@ import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
+import com.jobits.pos.ui.configuracion.ConfiguracionView;
+import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.insumo.presenter.InsumoListViewPresenter;
 import com.jobits.pos.ui.login.LogInView;
@@ -81,6 +84,8 @@ public class PresenterFacade {
                 return new MenuSeccionViewPresenter(new MenuController());
             case AreaVentaListView.VIEW_NAME:
                 return new AreaVentaViewPresenter(new AreaVentaController());
+            case ConfiguracionView.VIEW_NAME:
+                return new ConfigurationViewPresenter(new ConfiguracionController());
             default:
                 throw new IllegalArgumentException("No presenter register for " + viewUIDName);
         }

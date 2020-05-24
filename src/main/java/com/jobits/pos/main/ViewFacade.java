@@ -9,6 +9,7 @@ import com.jobits.pos.main.PresenterFacade;
 import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
+import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.login.LogInView;
@@ -72,6 +73,8 @@ public class ViewFacade {
                 return new MenuSeccionView(p);
             case AreaVentaListView.VIEW_NAME:
                 return new AreaVentaListView(p);
+            case ConfiguracionView.VIEW_NAME:
+                return new ConfiguracionView(p);
            
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);

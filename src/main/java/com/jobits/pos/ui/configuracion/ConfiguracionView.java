@@ -5,35 +5,32 @@
  */
 package com.jobits.pos.ui.configuracion;
 
-import com.jobits.pos.ui.OldAbstractView;
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.adapter.ComboBoxAdapter;
+import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.ui.utils.ComboBoxWithList;
-import com.jobits.pos.ui.utils.TableWithComboBoxAutoComplete;
-import java.awt.Dialog;
-import java.util.Arrays;
-import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.licencia.Licence;
-import com.jobits.pos.controller.licencia.LicenceController;
-import com.jobits.pos.controller.configuracion.ConfiguracionController;
-import com.jobits.pos.controller.login.UbicacionConexionController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
-import com.jobits.pos.ui.utils.RestManagerListModel;
+import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Arrays;
+import javax.swing.JComboBox;
 
 /**
  *
  * @author Jorge
  */
-public class ConfiguracionView extends OldAbstractView {
+public class ConfiguracionView extends AbstractViewPanel {
 
-    private ComboBoxWithList<Seccion> bebida, excluir;
+    public static final String VIEW_NAME = "Configuración";
 
-    public ConfiguracionView(AbstractDialogController controller, Dialog owner) {
-        super(DialogType.INPUT, controller, owner);
-        initComponents();
-        fetchComponentData();
+    public ConfiguracionView(AbstractViewPresenter presenter) {
+        super(presenter);
     }
 
     /**
@@ -45,9 +42,16 @@ public class ConfiguracionView extends OldAbstractView {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelY = new javax.swing.JPanel();
+        jPanelPorcientoEstimado = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jSpinnerM = new javax.swing.JSpinner();
+        jLabel13 = new javax.swing.JLabel();
+        jSpinnerC = new javax.swing.JSpinner();
+        jPanel3 = new javax.swing.JPanel();
+        jPanelExcluir = new javax.swing.JPanel();
+        jPanelBebidas = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
-        jButtonCancelar = new javax.swing.JButton();
-        jButtonAplicar = new javax.swing.JButton();
         jButtonAceptar = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelGenerales = new javax.swing.JPanel();
@@ -67,8 +71,6 @@ public class ConfiguracionView extends OldAbstractView {
         jCheckBoxMesaFija = new javax.swing.JCheckBox();
         jPanelImpresion = new javax.swing.JPanel();
         jPanelGeneral = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
-        jCheckBoxTicketCocina = new javax.swing.JCheckBox();
         jPanel10 = new javax.swing.JPanel();
         jCheckBoxRounding = new javax.swing.JCheckBox();
         jPanel14 = new javax.swing.JPanel();
@@ -87,6 +89,7 @@ public class ConfiguracionView extends OldAbstractView {
         jPanelTamannoPapel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBoxTamannoTicket = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
         jPanelSincronizacion = new javax.swing.JPanel();
         jPanelNegocio1 = new javax.swing.JPanel();
         jPanel24HR1 = new javax.swing.JPanel();
@@ -98,38 +101,44 @@ public class ConfiguracionView extends OldAbstractView {
         jLabel7 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
-        jPanelY = new javax.swing.JPanel();
-        jPanelPorcientoEstimado = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jSpinnerM = new javax.swing.JSpinner();
-        jLabel13 = new javax.swing.JLabel();
-        jSpinnerC = new javax.swing.JSpinner();
-        jPanel3 = new javax.swing.JPanel();
-        jPanelExcluir = new javax.swing.JPanel();
-        jPanelBebidas = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jPanelY.setLayout(new java.awt.BorderLayout());
+
+        jPanelPorcientoEstimado.setOpaque(false);
+
+        jLabel12.setText("M");
+        jPanelPorcientoEstimado.add(jLabel12);
+
+        jSpinnerM.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 5));
+        jPanelPorcientoEstimado.add(jSpinnerM);
+
+        jLabel13.setText("C");
+        jPanelPorcientoEstimado.add(jLabel13);
+
+        jSpinnerC.setModel(new javax.swing.SpinnerNumberModel(0, 0, 50, 5));
+        jPanelPorcientoEstimado.add(jSpinnerC);
+
+        jPanelY.add(jPanelPorcientoEstimado, java.awt.BorderLayout.PAGE_START);
+
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanelExcluir.setBorder(javax.swing.BorderFactory.createTitledBorder("Excluir"));
+        jPanelExcluir.setPreferredSize(new java.awt.Dimension(0, 0));
+        jPanelExcluir.setLayout(new java.awt.BorderLayout());
+        jPanel3.add(jPanelExcluir);
+
+        jPanelBebidas.setBorder(javax.swing.BorderFactory.createTitledBorder("Bebidas"));
+        jPanelBebidas.setPreferredSize(new java.awt.Dimension(0, 0));
+        jPanelBebidas.setLayout(new java.awt.BorderLayout());
+        jPanel3.add(jPanelBebidas);
+
+        jPanelY.add(jPanel3, java.awt.BorderLayout.CENTER);
+
         setMinimumSize(getMinimumSize());
-        setUndecorated(true);
+        setLayout(new java.awt.BorderLayout());
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
-            }
-        });
-        jPanel12.add(jButtonCancelar);
-
-        jButtonAplicar.setText(bundle.getString("label_aplicar")); // NOI18N
-        jButtonAplicar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAplicarActionPerformed(evt);
-            }
-        });
-        jPanel12.add(jButtonAplicar);
-
-        jButtonAceptar.setText(bundle.getString("label_aceptar")); // NOI18N
+        jButtonAceptar.setText("Guardar cambios");
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(130, 50));
         jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAceptarActionPerformed(evt);
@@ -137,7 +146,7 @@ public class ConfiguracionView extends OldAbstractView {
         });
         jPanel12.add(jButtonAceptar);
 
-        getContentPane().add(jPanel12, java.awt.BorderLayout.PAGE_END);
+        add(jPanel12, java.awt.BorderLayout.PAGE_END);
 
         jPanelGenerales.setLayout(new javax.swing.BoxLayout(jPanelGenerales, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -203,14 +212,6 @@ public class ConfiguracionView extends OldAbstractView {
         jPanelGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder("Generales"));
         jPanelGeneral.setLayout(new javax.swing.BoxLayout(jPanelGeneral, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        jCheckBoxTicketCocina.setText("Imprimir ticket a elaboracion");
-        jCheckBoxTicketCocina.setToolTipText("");
-        jPanel11.add(jCheckBoxTicketCocina);
-
-        jPanelGeneral.add(jPanel11);
-
         jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jCheckBoxRounding.setText("Redondeo por exceso en tickets");
@@ -275,8 +276,12 @@ public class ConfiguracionView extends OldAbstractView {
         jLabel4.setToolTipText("");
         jPanelTamannoPapel.add(jLabel4);
 
-        jComboBoxTamannoTicket.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "58mm", "80mm" }));
+        jComboBoxTamannoTicket.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "32", "48" }));
         jPanelTamannoPapel.add(jComboBoxTamannoTicket);
+
+        jLabel9.setText("Caracteres");
+        jLabel9.setToolTipText("");
+        jPanelTamannoPapel.add(jLabel9);
 
         jPanelTickets.add(jPanelTamannoPapel);
 
@@ -327,107 +332,15 @@ public class ConfiguracionView extends OldAbstractView {
 
         jTabbedPane1.addTab("Sincronizacion", jPanelSincronizacion);
 
-        jPanelY.setLayout(new java.awt.BorderLayout());
-
-        jPanelPorcientoEstimado.setOpaque(false);
-
-        jLabel12.setText("M");
-        jPanelPorcientoEstimado.add(jLabel12);
-
-        jSpinnerM.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 5));
-        jPanelPorcientoEstimado.add(jSpinnerM);
-
-        jLabel13.setText("C");
-        jPanelPorcientoEstimado.add(jLabel13);
-
-        jSpinnerC.setModel(new javax.swing.SpinnerNumberModel(0, 0, 50, 5));
-        jPanelPorcientoEstimado.add(jSpinnerC);
-
-        jPanelY.add(jPanelPorcientoEstimado, java.awt.BorderLayout.PAGE_START);
-
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
-
-        jPanelExcluir.setBorder(javax.swing.BorderFactory.createTitledBorder("Excluir"));
-        jPanelExcluir.setPreferredSize(new java.awt.Dimension(0, 0));
-        jPanelExcluir.setLayout(new java.awt.BorderLayout());
-        jPanel3.add(jPanelExcluir);
-
-        jPanelBebidas.setBorder(javax.swing.BorderFactory.createTitledBorder("Bebidas"));
-        jPanelBebidas.setPreferredSize(new java.awt.Dimension(0, 0));
-        jPanelBebidas.setLayout(new java.awt.BorderLayout());
-        jPanel3.add(jPanelBebidas);
-
-        jPanelY.add(jPanel3, java.awt.BorderLayout.CENTER);
-
-        jTabbedPane1.addTab("Y", jPanelY);
-
-        getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
-
-        pack();
-        setLocationRelativeTo(null);
+        add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonCancelarActionPerformed
-
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
-        validateData();
-        dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
-    private void jButtonAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAplicarActionPerformed
-        validateData();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAplicarActionPerformed
-
-    @Override
-    public void fetchComponentData() {
-        UbicacionConexionController ubicacionController = new UbicacionConexionController();
-        jComboBoxSincronizacionUbicacion.setModel(new RestManagerComboBoxModel<>(Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
-    }
-
-    @Override
-    public void updateView() {
-        jCheckBoxMultiplesTurnos.setSelected((boolean) fetch(R.SettingID.GENERAL_TURNOS_VARIOS));
-        jComboBoxCambioMoneda.setSelectedItem(fetch(R.SettingID.GENERAL_CAMBIO_MONEDA));
-        jCheckBoxPermEsp.setSelected((boolean) fetch(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP));
-        jCheckBoxMesaFija.setSelected((boolean) fetch(R.SettingID.GENERAL_MESA_FIJA_CAJERO));
-        jCheckBoxTicketCocina.setSelected((boolean) fetch(R.SettingID.IMPRESION_IMPRIMIR_TICKET_EN_COCINA));
-        jCheckBoxRounding.setSelected((boolean) fetch(R.SettingID.IMPRESION_REDONDEO_EXCESO));
-        jComboBoxCantCopias.setSelectedItem(fetch(R.SettingID.IMPRESION_CANTIDAD_COPIAS));
-        jCheckBoxEncabezadoRestaurante.setSelected((boolean) fetch(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE));
-        jComboBoxCaracterSeparador.setSelectedItem(fetch(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR));
-        jComboBoxTipoNegocio.setSelectedItem(fetch(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO));
-        jCheckBoxSegundaMoneda.setSelected((boolean) fetch(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA));
-        jCheckBoxBuzzer.setSelected((boolean) fetch(R.SettingID.IMPRESION_BUZZER_ON));
-        jCheckBoxHabilitarSincronizacion.setSelected((boolean) fetch(R.SettingID.SINCRONIZACION_HABILITAR));
-        jComboBoxSincronizacionUbicacion.setSelectedIndex(Integer.valueOf(fetch(R.SettingID.SINCRONIZACION_UBICACION).toString()));
-        jSpinner1.setValue(Integer.parseInt(fetch(R.SettingID.SINCRONIZACION_TIEMPO_LOOP).toString())/60/1000);
-        int selected = 0;
-        if (fetch(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL).equals("48")) {
-            selected = 1;
-        }
-        jComboBoxTamannoTicket.setSelectedIndex(selected);
-
-        LicenceController controller = new LicenceController(Licence.TipoLicencia.SECUNDARIA);
-        if (!controller.getLicence().LICENCIA_ACTIVA || !controller.getLicence().LICENCIA_VALIDA) {
-            jTabbedPane1.remove(2);
-        }
-
-        getController().cargarConfiguracionY();
-        jSpinnerC.setValue(new Byte(getController().getConfiguracionY().getC()).intValue());
-        jSpinnerM.setValue(new Byte(getController().getConfiguracionY().getM()).intValue());
-
-        excluir = new ComboBoxWithList<>(getController().getSeccionList(), getController().getConfiguracionY().getExcluidos());
-        bebida = new ComboBoxWithList<>(getController().getSeccionList(), getController().getConfiguracionY().getBebidas());
-        jPanelBebidas.add(bebida);
-        jPanelExcluir.add(excluir);
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
-    private javax.swing.JButton jButtonAplicar;
-    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JCheckBox jCheckBoxBuzzer;
     private javax.swing.JCheckBox jCheckBoxEncabezadoRestaurante;
     private javax.swing.JCheckBox jCheckBoxHabilitarSincronizacion;
@@ -436,7 +349,6 @@ public class ConfiguracionView extends OldAbstractView {
     private javax.swing.JCheckBox jCheckBoxPermEsp;
     private javax.swing.JCheckBox jCheckBoxRounding;
     private javax.swing.JCheckBox jCheckBoxSegundaMoneda;
-    private javax.swing.JCheckBox jCheckBoxTicketCocina;
     private javax.swing.JComboBox<String> jComboBoxCambioMoneda;
     private javax.swing.JComboBox<String> jComboBoxCantCopias;
     private javax.swing.JComboBox<String> jComboBoxCaracterSeparador;
@@ -453,9 +365,9 @@ public class ConfiguracionView extends OldAbstractView {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
@@ -489,47 +401,59 @@ public class ConfiguracionView extends OldAbstractView {
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public ConfiguracionController getController() {
-        return (ConfiguracionController) super.getController(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private Object fetch(R.SettingID settingID) {
-        return getController().getConfiguracion(settingID);
-    }
-
-    private void save(R.SettingID settingID, Object update) {
-        getController().updateConfiguracion(settingID, update);
-    }
-
     private void validateData() {
-        save(R.SettingID.GENERAL_TURNOS_VARIOS, jCheckBoxMultiplesTurnos.isSelected());
-        save(R.SettingID.GENERAL_CAMBIO_MONEDA, jComboBoxCambioMoneda.getSelectedItem());
-        save(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP, jCheckBoxPermEsp.isSelected());
-        save(R.SettingID.GENERAL_MESA_FIJA_CAJERO, jCheckBoxMesaFija.isSelected());
-        save(R.SettingID.IMPRESION_IMPRIMIR_TICKET_EN_COCINA, jCheckBoxTicketCocina.isSelected());
-        save(R.SettingID.IMPRESION_REDONDEO_EXCESO, jCheckBoxRounding.isSelected());
-        save(R.SettingID.IMPRESION_CANTIDAD_COPIAS, jComboBoxCantCopias.getSelectedItem());
-        save(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE, jCheckBoxEncabezadoRestaurante.isSelected());
-        save(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR, jComboBoxCaracterSeparador.getSelectedItem());
-        save(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO, jComboBoxTipoNegocio.getSelectedItem());
-        save(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA, jCheckBoxSegundaMoneda.isSelected());
-        save(R.SettingID.IMPRESION_BUZZER_ON, jCheckBoxBuzzer.isSelected());
-        save(R.SettingID.SINCRONIZACION_HABILITAR,jCheckBoxHabilitarSincronizacion.isSelected());
-        save(R.SettingID.SINCRONIZACION_UBICACION, jComboBoxSincronizacionUbicacion.getSelectedIndex());
-        save(R.SettingID.SINCRONIZACION_TIEMPO_LOOP,((int) jSpinner1.getValue() * 60 * 1000));
-        String selected = "32";
-        if (jComboBoxTamannoTicket.getSelectedItem().equals("80mm")) {
-            selected = "48";
-        }
-        save(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL, selected);
+        //getController().getConfiguracionY().setC(new Integer((int) jSpinnerC.getValue()).byteValue());
+        //getController().getConfiguracionY().setM(new Integer((int) jSpinnerM.getValue()).byteValue());
+        //getController().getConfiguracionY().setBebidas(bebida.getListModel().getElements());
+        //getController().getConfiguracionY().setExcluidos(excluir.getListModel().getElements());
+        //getController().updateConfiguracionY(getController().getConfiguracionY());
 
-        getController().getConfiguracionY().setC(new Integer((int) jSpinnerC.getValue()).byteValue());
-        getController().getConfiguracionY().setM(new Integer((int) jSpinnerM.getValue()).byteValue());
-        getController().getConfiguracionY().setBebidas(bebida.getListModel().getElements());
-        getController().getConfiguracionY().setExcluidos(excluir.getListModel().getElements());
-        getController().updateConfiguracionY(getController().getConfiguracionY());
+    }
 
+    @Override
+    public void wireUp() {
+        Bindings.bind(jCheckBoxBuzzer, getPresenter().getModel(R.SettingID.IMPRESION_BUZZER_ON.toString()));
+        Bindings.bind(jCheckBoxMultiplesTurnos, getPresenter().getModel(R.SettingID.GENERAL_TURNOS_VARIOS.toString()));
+        Bindings.bind(jCheckBoxPermEsp, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
+        Bindings.bind(jCheckBoxMesaFija, getPresenter().getModel(R.SettingID.GENERAL_MESA_FIJA_CAJERO.toString()));
+        Bindings.bind(jCheckBoxRounding, getPresenter().getModel(R.SettingID.IMPRESION_REDONDEO_EXCESO.toString()));
+        Bindings.bind(jCheckBoxEncabezadoRestaurante, getPresenter().getModel(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE.toString()));
+        Bindings.bind(jCheckBoxSegundaMoneda, getPresenter().getModel(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA.toString()));
+        Bindings.bind(jCheckBoxHabilitarSincronizacion, getPresenter().getModel(R.SettingID.SINCRONIZACION_HABILITAR.toString()));
+
+        // Bindings.bind(jSpinner1, "value", getPresenter().getModel(R.SettingID.SINCRONIZACION_TIEMPO_LOOP.toString()));
+        SpinnerToValueModelConnector connector = new SpinnerToValueModelConnector(jSpinner1.getModel(), getPresenter().getModel(R.SettingID.SINCRONIZACION_TIEMPO_LOOP.toString()), 0);
+       
+        Bindings.bind(jComboBoxSincronizacionUbicacion,
+                new ComboBoxAdapter(Arrays.asList("0", "1", "2", "3"),
+                        getPresenter().getModel(R.SettingID.SINCRONIZACION_UBICACION.toString())));
+        Bindings.bind(jComboBoxCantCopias,
+                new ComboBoxAdapter(Arrays.asList("0", "1", "2", "3", "4"),
+                        getPresenter().getModel(R.SettingID.IMPRESION_CANTIDAD_COPIAS.toString())));
+        Bindings.bind(jComboBoxCaracterSeparador,
+                new ComboBoxAdapter(Arrays.asList("*", "-", "/", "+", "ˆ"),
+                        getPresenter().getModel(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR.toString())));
+        Bindings.bind(jComboBoxTipoNegocio, new ComboBoxAdapter(Arrays.asList(
+                "Restaurante", "Cafeteria", "Bar", "Carniceria", "Dulceria", "Tienda"),
+                getPresenter().getModel(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO.toString())));
+        Bindings.bind(jComboBoxCambioMoneda, new ComboBoxAdapter(Arrays.asList("24", "25"),
+                getPresenter().getModel(R.SettingID.GENERAL_CAMBIO_MONEDA.toString())));
+        Bindings.bind(jComboBoxTamannoTicket, new ComboBoxAdapter(Arrays.asList("32", "48"),
+                getPresenter().getModel(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL.toString())));
+
+        jButtonAceptar.setAction(getPresenter().getOperation(ConfigurationViewPresenter.ACTION_APPLY));
+
+    }
+
+    @Override
+    public void uiInit() {
+        initComponents();
+
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }

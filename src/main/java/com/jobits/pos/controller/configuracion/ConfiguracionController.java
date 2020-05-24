@@ -27,6 +27,8 @@ import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.Ticket;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.OldView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * FirstDream
@@ -40,11 +42,6 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
 
     public ConfiguracionController() {
         super(ConfiguracionDAO.getInstance());
-    }
-
-    public ConfiguracionController(OldView parentView) {
-        super(ConfiguracionDAO.getInstance());
-        constructView(parentView.getContainer());
     }
 
     public void cargarConfiguracion() {
@@ -97,9 +94,6 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
 
     @Override
     public void constructView(Container parent) {
-        setView(new ConfiguracionView(this, (Dialog) parent));
-        getView().updateView();
-        getView().setVisible(true);
     }
 
     public Object getConfiguracion(R.SettingID settingID) {
@@ -127,7 +121,8 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
             case IMPRESION_TICKET_VALOR_ENCABEZADO:
                 return c.getValorString();
             default:
-                throw new ValidatingException("Falta configurar para cargar " + settingID);
+                Logger.getLogger(ConfiguracionController.class.getName()).log(Level.WARNING, "Falta configurar para cargar " + settingID);
+                return null;
         }
     }
 
@@ -156,7 +151,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
                 break;
             case IMPRESION_TICKET_CARACTER_SEPARADOR:
             case IMPRESION_TICKET_VALOR_ENCABEZADO:
-            
+
                 c.setValorString(update.toString());
                 break;
             default:

@@ -5,14 +5,12 @@
  */
 package com.jobits.pos.controller.productos;
 
-import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.utils.LongProcessAction;
 import java.awt.Graphics;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.swing.JDialog;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.insumo.InsumoCreateEditController;
 

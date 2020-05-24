@@ -47,6 +47,9 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
+        jCheckBoxInventariarProducto = MaterialComponentsFactory.Input.getCheckBox();
+        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel4 = new javax.swing.JPanel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
@@ -68,9 +71,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jButtonAddSeccion = MaterialComponentsFactory.Buttons.getAddButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
         jPanelTable = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jCheckBoxInventariarProducto = MaterialComponentsFactory.Input.getCheckBox();
-        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanelInventario = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jCheckBoxProductoElaborado = MaterialComponentsFactory.Input.getCheckBox();
@@ -88,8 +88,16 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jButtonCancelar = MaterialComponentsFactory.Buttons.getCancelButton();
         jButtonCrear = MaterialComponentsFactory.Buttons.getAcceptButton();
 
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+
+        jCheckBoxInventariarProducto.setText("Inventariar Producto");
+        jCheckBoxInventariarProducto.setContentAreaFilled(false);
+        jPanel3.add(jCheckBoxInventariarProducto);
+        jPanel3.add(filler6);
+
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Crear/Editar Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 24))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(20, 15, 15, 15), "Crear/Editar Producto", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 24))); // NOI18N
         setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -116,12 +124,12 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel7.setOpaque(false);
         jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
 
-        jTextFieldNombre.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        jTextFieldNombre.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jTextFieldNombre.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
         jTextFieldNombre.setMaximumSize(new java.awt.Dimension(2147483647, 60));
         jTextFieldNombre.setMinimumSize(new java.awt.Dimension(250, 60));
-        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(400, 60));
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(600, 60));
         jPanel7.add(jTextFieldNombre);
 
         jPanelInputs.add(jPanel7);
@@ -191,16 +199,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanelTable.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Inventario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
         jPanelTable.setPreferredSize(new java.awt.Dimension(500, 500));
         jPanelTable.setLayout(new javax.swing.BoxLayout(jPanelTable, javax.swing.BoxLayout.PAGE_AXIS));
-
-        jPanel3.setOpaque(false);
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
-
-        jCheckBoxInventariarProducto.setText("Inventariar Producto");
-        jCheckBoxInventariarProducto.setContentAreaFilled(false);
-        jPanel3.add(jCheckBoxInventariarProducto);
-        jPanel3.add(filler6);
-
-        jPanelTable.add(jPanel3);
         jPanelTable.add(jPanelInventario);
 
         jPanel6.setOpaque(false);
@@ -462,6 +460,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
             }
         };
         builder.tableModel(tableModel);
+        
         crossReferencePanel = builder.build();
 
         jPanelCrossRef.add(crossReferencePanel,BorderLayout.CENTER);

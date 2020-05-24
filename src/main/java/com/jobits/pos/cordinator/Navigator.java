@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.cordinator;
 
-import java.util.Observer;
 
 /**
  *

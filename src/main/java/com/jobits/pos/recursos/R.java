@@ -135,11 +135,6 @@ public class R {
             return stringValue;
         }
 
-        @Override
-        public String toString() {
-            return getValue();
-        }
-
     }
 
     public static enum UM {

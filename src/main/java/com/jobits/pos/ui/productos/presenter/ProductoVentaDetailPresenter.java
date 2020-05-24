@@ -49,88 +49,13 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public ProductoVentaDetailPresenter(ProductoVentaDetailController controller, ProductoVenta productoSeleccionado) {
         super(new ProductoVentaDetailViewModel());
         this.controller = controller;
-        getBean().setLista_categorias(new ArrayListModel<>(controller.getSeccionList()));
-        getBean().setLista_elaborado(new ArrayListModel<>(controller.getCocinaList()));
+        getBean().getLista_categorias().addAll(new ArrayListModel<>(controller.getSeccionList()));
+        getBean().getLista_elaborado().addAll(new ArrayListModel<>(controller.getCocinaList()));
+        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(controller.getInsumoList()));
         if (productoSeleccionado != null) {
             fillForm(productoSeleccionado);
         }
         creatingMode = productoSeleccionado == null;
-    }
-
-    private void onAddIngredienteClick() {
-        controller.registrarNuevoInsumo();
-    }
-
-    private void onAceptarClick() {
-        if ((boolean) NotificationService.getInstance().
-                showDialog("Desea guardar los cambios",
-                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            ProductoVenta p;
-            if (creatingMode) {
-                p = controller.createNewInstance();
-            } else {
-                p = controller.getInstance();
-            }
-            p.setNombre(getBean().getNombre_producto());
-            p.setCocinacodCocina(getBean().getElaborado_seleccionado());
-            p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
-            p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
-            p.setGasto(Float.valueOf(getBean().getPrecio_costo()));
-            p.setProductoInsumoList(getBean().getLista_insumos_contenidos());
-            if (getBean().getComision_por_venta() != null) {
-                p.setPagoPorVenta(Float.parseFloat(getBean().getComision_por_venta()));
-            }
-            p.setVisible(true);
-            controller.create(p);
-            NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
-        }
-
-    }
-
-    private void onCancelarClick() {
-        if ((boolean) NotificationService.getInstance().
-                showDialog("Desea descartar los cambios?",
-                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            controller.discardChanges();
-            NavigationService.getInstance().navigateUp();
-        }
-
-    }
-
-    private void onAddCategoriaClick() {
-        new SeccionListController().getDetailControllerForNew();
-        getBean().setLista_categorias(new ArrayListModel<>(controller.getSeccionList()));
-
-    }
-
-    private void onAddElaboracionCLick() {
-        new PuntoElaboracionListController().createInstance();
-        getBean().setLista_elaborado(new ArrayListModel<>(controller.getCocinaList()));
-
-    }
-
-    private void onAgregarInsumoFichaClick() {
-        Optional<String> opt = NotificationService.getInstance().showDialog("Introduzca la cantidad de " + getBean().getInsumo_disponible_sel(), TipoNotificacion.DIALOG_INPUT);
-        if (opt.isPresent()) {
-            try {
-                float cantidad = Float.parseFloat(opt.get());
-                controller.agregarInsumoaProducto(getBean().getInsumo_disponible_sel(), cantidad);
-                getBean().setInsumo_disponible_sel(null);
-                getBean().getLista_insumos_contenidos().clear();
-                getBean().getLista_insumos_contenidos().addAll(controller.getInstance().getProductoInsumoList());
-            } catch (NumberFormatException ex) {
-                NotificationService.getInstance().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
-            }
-        }
-
-    }
-
-    private void onEliminarInsumoFichaClick() {
-        controller.eliminarInsumoProducto(getBean().getInsumo_contenido_seleccionado());
-        getBean().setInsumo_contenido_seleccionado(null);
-        getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(controller.getInstance().getProductoInsumoList());
-
     }
 
     @Override
@@ -195,10 +120,89 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setCodigo_producto(productoSeleccionado.getCodigoProducto());
         getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPagoPorVenta()));
         getBean().setElaborado_seleccionado(productoSeleccionado.getCocinacodCocina());
-        getBean().setLista_insumos_contenidos(new ArrayListModel<>(productoSeleccionado.getProductoInsumoList()));
+        getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoSeleccionado.getProductoInsumoList()));
+        getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
         getBean().setPrecio_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPrecioVenta()));
         getBean().setPrecio_costo("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getGasto()));
-        getBean().setLista_insumos_disponibles(new ArrayListModel<>(controller.getInsumoList()));
+        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(controller.getInsumoList()));
+
+    }
+
+    private void onAddIngredienteClick() {
+        controller.registrarNuevoInsumo();
+    }
+
+    private void onAceptarClick() {
+        if ((boolean) NotificationService.getInstance().
+                showDialog("Desea guardar los cambios",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            ProductoVenta p;
+            if (creatingMode) {
+                p = controller.createNewInstance();
+            } else {
+                p = controller.getInstance();
+            }
+            p.setNombre(getBean().getNombre_producto());
+            p.setCocinacodCocina(getBean().getElaborado_seleccionado());
+            p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
+            p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
+            p.setGasto(Float.valueOf(getBean().getPrecio_costo()));
+            p.setProductoInsumoList(getBean().getLista_insumos_contenidos());
+            if (getBean().getComision_por_venta() != null) {
+                p.setPagoPorVenta(Float.parseFloat(getBean().getComision_por_venta()));
+            } else {
+                p.setPagoPorVenta((float) 0);
+            }
+            p.setVisible(true);
+            controller.create(p);
+            NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
+        }
+
+    }
+
+    private void onCancelarClick() {
+        if ((boolean) NotificationService.getInstance().
+                showDialog("Desea descartar los cambios?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            controller.discardChanges();
+            NavigationService.getInstance().navigateUp();
+        }
+
+    }
+
+    private void onAddCategoriaClick() {
+        new SeccionListController().getDetailControllerForNew();
+        getBean().setLista_categorias(new ArrayListModel<>(controller.getSeccionList()));
+
+    }
+
+    private void onAddElaboracionCLick() {
+        new PuntoElaboracionListController().createInstance();
+        getBean().setLista_elaborado(new ArrayListModel<>(controller.getCocinaList()));
+
+    }
+
+    private void onAgregarInsumoFichaClick() {
+        Optional<String> opt = NotificationService.getInstance().showDialog("Introduzca la cantidad de " + getBean().getInsumo_disponible_sel(), TipoNotificacion.DIALOG_INPUT);
+        if (opt.isPresent()) {
+            try {
+                float cantidad = Float.parseFloat(opt.get());
+                controller.agregarInsumoaProducto(getBean().getInsumo_disponible_sel(), cantidad);
+                getBean().setInsumo_disponible_sel(null);
+                getBean().getLista_insumos_contenidos().clear();
+                getBean().getLista_insumos_contenidos().addAll(controller.getInstance().getProductoInsumoList());
+            } catch (NumberFormatException ex) {
+                NotificationService.getInstance().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
+            }
+        }
+
+    }
+
+    private void onEliminarInsumoFichaClick() {
+        controller.eliminarInsumoProducto(getBean().getInsumo_contenido_seleccionado());
+        getBean().setInsumo_contenido_seleccionado(null);
+        getBean().getLista_insumos_contenidos().clear();
+        getBean().getLista_insumos_contenidos().addAll(controller.getInstance().getProductoInsumoList());
 
     }
 
