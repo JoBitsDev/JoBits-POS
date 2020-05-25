@@ -5,24 +5,34 @@
  */
 package com.jobits.pos.ui.licencia;
 
-import com.jobits.pos.ui.OldAbstractView;
-import java.awt.Dialog;
-import java.awt.event.KeyEvent;
 import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.Controller;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jobits.pos.ui.View;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.Component;
+import java.awt.Frame;
+import javax.swing.JDialog;
 
 /**
  *
  * @author Jorge
  */
-public class LicenceDialogView extends OldAbstractView {
+public class LicenceDialogView extends JDialog implements View {
 
-    public LicenceDialogView(DialogType DIALOG_TYPE, AbstractDialogController controller, Dialog owner, boolean modal) {
-        super(DIALOG_TYPE, controller, owner, modal);
-        initComponents();
+    public static final String VIEW_NAME = "Licencia";
+
+    private LicenceController controller;
+
+    public LicenceDialogView(
+            LicenceController controller,
+            Frame owner, boolean modal) {
+        super(owner, modal);
+        this.controller = controller;
+        uiInit();
+        wireUp();
+        setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -30,11 +40,10 @@ public class LicenceDialogView extends OldAbstractView {
     private void initComponents() {
 
         jPanelTop = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanelInfo = new javax.swing.JPanel();
-        jideLabelIdentificador = new com.jidesoft.swing.JideLabel();
-        jideLabelEstadoLic = new com.jidesoft.swing.JideLabel();
+        jideLabelIdentificador = new javax.swing.JLabel();
+        jideLabelEstadoLic = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -52,25 +61,18 @@ public class LicenceDialogView extends OldAbstractView {
         jLabel4 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
         jPanelActions = new javax.swing.JPanel();
-        jButtonActivar = new javax.swing.JButton();
+        jButtonActivar = MaterialComponentsFactory.Buttons.getAcceptButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(614, 167));
-        setUndecorated(true);
+        setMaximumSize(new java.awt.Dimension(710, 210));
+        setMinimumSize(new java.awt.Dimension(710, 173));
+        setPreferredSize(new java.awt.Dimension(710, 210));
+        setSize(new java.awt.Dimension(710, 210));
 
         jPanelTop.setBackground(new java.awt.Color(204, 204, 204));
         jPanelTop.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jPanelTop.setFont(new java.awt.Font("Lucida Grande", 1, 36)); // NOI18N
         jPanelTop.setLayout(new java.awt.BorderLayout());
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanelTop.add(jButton1, java.awt.BorderLayout.LINE_START);
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -81,11 +83,10 @@ public class LicenceDialogView extends OldAbstractView {
 
         jPanelInfo.setLayout(new java.awt.BorderLayout());
 
+        jideLabelIdentificador.setFont(new java.awt.Font(".SF NS Text", 1, 14)); // NOI18N
         jideLabelIdentificador.setForeground(new java.awt.Color(204, 0, 0));
         jideLabelIdentificador.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jideLabelIdentificador.setText("R-XXXX-XXXX-XXXX");
-        jideLabelIdentificador.setToolTipText("identificador de la aplicacion");
-        jideLabelIdentificador.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jPanelInfo.add(jideLabelIdentificador, java.awt.BorderLayout.PAGE_END);
 
         jideLabelEstadoLic.setText("Estado de la licencia");
@@ -95,6 +96,8 @@ public class LicenceDialogView extends OldAbstractView {
 
         jTextField2.setColumns(4);
         jTextField2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField2.setMaximumSize(new java.awt.Dimension(80, 40));
+        jTextField2.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField2KeyTyped(evt);
@@ -109,6 +112,8 @@ public class LicenceDialogView extends OldAbstractView {
 
         jTextField3.setColumns(4);
         jTextField3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField3.setMaximumSize(new java.awt.Dimension(80, 40));
+        jTextField3.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField3KeyTyped(evt);
@@ -123,6 +128,8 @@ public class LicenceDialogView extends OldAbstractView {
 
         jTextField4.setColumns(4);
         jTextField4.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField4.setMaximumSize(new java.awt.Dimension(80, 40));
+        jTextField4.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField4KeyTyped(evt);
@@ -137,6 +144,8 @@ public class LicenceDialogView extends OldAbstractView {
 
         jTextField5.setColumns(4);
         jTextField5.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField5.setMaximumSize(new java.awt.Dimension(80, 40));
+        jTextField5.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField5KeyTyped(evt);
@@ -151,6 +160,8 @@ public class LicenceDialogView extends OldAbstractView {
 
         jTextField6.setColumns(4);
         jTextField6.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField6.setMaximumSize(new java.awt.Dimension(80, 40));
+        jTextField6.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField6KeyTyped(evt);
@@ -165,6 +176,8 @@ public class LicenceDialogView extends OldAbstractView {
 
         jTextField7.setColumns(4);
         jTextField7.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField7.setMaximumSize(new java.awt.Dimension(80, 40));
+        jTextField7.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField7KeyTyped(evt);
@@ -179,6 +192,8 @@ public class LicenceDialogView extends OldAbstractView {
 
         jTextField8.setColumns(4);
         jTextField8.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField8.setMaximumSize(new java.awt.Dimension(80, 40));
+        jTextField8.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField8KeyTyped(evt);
@@ -193,6 +208,8 @@ public class LicenceDialogView extends OldAbstractView {
 
         jTextField9.setColumns(4);
         jTextField9.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField9.setMaximumSize(new java.awt.Dimension(80, 40));
+        jTextField9.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField9.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField9KeyTyped(evt);
@@ -209,6 +226,7 @@ public class LicenceDialogView extends OldAbstractView {
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonActivar.setText(bundle.getString("label_activar")); // NOI18N
+        jButtonActivar.setPreferredSize(new java.awt.Dimension(130, 50));
         jButtonActivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonActivarActionPerformed(evt);
@@ -222,12 +240,8 @@ public class LicenceDialogView extends OldAbstractView {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
-        if (jTextField2.getText().length() > 2 ) {
+        if (jTextField2.getText().length() > 2) {
             jTextField2.transferFocus();
         }// TODO add your handling code here:
     }//GEN-LAST:event_jTextField2KeyTyped
@@ -283,18 +297,10 @@ public class LicenceDialogView extends OldAbstractView {
         key += jTextField7.getText();
         key += jTextField8.getText();
         key += jTextField9.getText();
-        getControl().validateAndSafe(key);
+        controller.validateAndSafe(key);
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
-    @Override
-    public void updateView() {
-        jideLabelEstadoLic.setText(getControl().getEstadoLicencia(Licence.TipoLicencia.APLICACION));
-        jideLabelIdentificador.setText(getControl().getSoftwareUID());
-    }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonActivar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -316,13 +322,35 @@ public class LicenceDialogView extends OldAbstractView {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
-    private com.jidesoft.swing.JideLabel jideLabelEstadoLic;
-    private com.jidesoft.swing.JideLabel jideLabelIdentificador;
+    private javax.swing.JLabel jideLabelEstadoLic;
+    private javax.swing.JLabel jideLabelIdentificador;
     // End of variables declaration//GEN-END:variables
 
-    
-    public LicenceController getControl() {
-        return (LicenceController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    @Override
+    public void wireUp() {
+        jideLabelEstadoLic.setText(controller.getEstadoLicencia(Licence.TipoLicencia.APLICACION));
+        jideLabelIdentificador.setText(controller.getSoftwareUID());
+
+    }
+
+    @Override
+    public void uiInit() {
+        initComponents();
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
+    }
+
+    @Override
+    public Component getViewComponent() {
+        return this;
+    }
+
+    @Override
+    public void setPresenter(AbstractViewPresenter presenter) {
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

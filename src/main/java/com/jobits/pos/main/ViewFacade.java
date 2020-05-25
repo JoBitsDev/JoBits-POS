@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.controller.licencia.Licencia;
 import com.jobits.pos.main.PresenterFacade;
 import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.View;
@@ -12,6 +13,7 @@ import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.insumo.InsumoListView;
+import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
@@ -61,7 +63,7 @@ public class ViewFacade {
                 return new ProductoVentaDetailView(p);
             case InsumoListView.VIEW_NAME:
                 return new InsumoListView((AbstractListViewPresenter) p);
-             case PersonalListView.VIEW_NAME:
+            case PersonalListView.VIEW_NAME:
                 return new PersonalListView((AbstractListViewPresenter) p);
             case PuestoTrabajoListView.VIEW_NAME:
                 return new PuestoTrabajoListView((AbstractListViewPresenter) p);
@@ -75,7 +77,12 @@ public class ViewFacade {
                 return new AreaVentaListView(p);
             case ConfiguracionView.VIEW_NAME:
                 return new ConfiguracionView(p);
-           
+            case LicenceDialogView.VIEW_NAME:
+                return new LicenceDialogView(
+                        Application.getInstance().getLicenceController(),
+                        Application.getInstance().getMainWindow(),
+                        true);
+
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);
         }

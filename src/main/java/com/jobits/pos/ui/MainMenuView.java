@@ -51,28 +51,10 @@ public class MainMenuView extends AbstractViewPanel {
 
         jXCollapsiblePane1.setBackground(new java.awt.Color(102, 255, 102));
         jXCollapsiblePane1.setDirection(org.jdesktop.swingx.JXCollapsiblePane.Direction.LEFT);
+        jXCollapsiblePane1.setMinimumSize(new java.awt.Dimension(90, 0));
+        jXCollapsiblePane1.setOpaque(false);
         add(jXCollapsiblePane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void updateLicenceStatus() {
-//        Licence l ;//= getController().getEstadoLicencia();
-//
-//        if (!l.LICENCIA_ACTIVA || !l.LICENCIA_VALIDA) {
-//            jButtonVentas.setEnabled(false);
-//            jButtonVender.setEnabled(false);
-//            jButtonIPVs.setEnabled(false);
-//            jButtonAlmacen.setEnabled(false);
-//            jideLabelLicencia.setForeground(Color.red);
-//            jideLabelLicencia.setText("Licencia vencida o faltante");
-//        } else {
-//            jButtonVender.setEnabled(true);
-//            jButtonVentas.setEnabled(true);
-//            jButtonIPVs.setEnabled(true);
-//            jButtonAlmacen.setEnabled(true);
-//            jideLabelLicencia.setForeground(Color.white);
-//            jideLabelLicencia.setText("Dias Restantes de licencia " + l.DIAS_RESTANTES);
-//        }
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

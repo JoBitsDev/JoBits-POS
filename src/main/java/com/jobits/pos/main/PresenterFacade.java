@@ -28,6 +28,7 @@ import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.insumo.presenter.InsumoListViewPresenter;
+import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
@@ -46,6 +47,8 @@ import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PersonalListViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoListViewPresenter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -86,6 +89,9 @@ public class PresenterFacade {
                 return new AreaVentaViewPresenter(new AreaVentaController());
             case ConfiguracionView.VIEW_NAME:
                 return new ConfigurationViewPresenter(new ConfiguracionController());
+            case LicenceDialogView.VIEW_NAME:
+                Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
+                return null;
             default:
                 throw new IllegalArgumentException("No presenter register for " + viewUIDName);
         }

@@ -51,6 +51,7 @@ public class RootView extends MaterialPanel {
         initComponents();
         jPanelContent.setLayout(cards);
         jPanelStatus.add(statusBar);
+        super.setElevation(3);
 
     }
 
@@ -184,12 +185,14 @@ public class RootView extends MaterialPanel {
         jPanelContent.add(view.getViewComponent(), view.getViewName());
     }
 
+    //TODO: asco de metodo. arreglar
     public void showView(String viewNameToDisplay, AbstractViewPresenter presenter, DisplayType displayType) {//TODO trabjar en los popup
         if (!views.containsKey(viewNameToDisplay)) {
             if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
                 if (dashboard == null) {
                     dashboard = (MainMenuView) ViewFacade.getView(viewNameToDisplay, presenter);
                     jPanelMenu.add(dashboard);
+                    setShrinked(true);
                     statusBar.refreshView();
                 }
                 viewNameToDisplay = DashBoardView.VIEW_NAME;//TODO: cuando se vuelva a la ventana de loggeo vaciar el usuario loggeado
@@ -217,7 +220,6 @@ public class RootView extends MaterialPanel {
 
     public void setShrinked(boolean shrink) {
         dashboard.getCollapse().setCollapsed(shrink);
-        //jPanelMenu.setVisible(shrink);
         shrinked = shrink;
     }
 

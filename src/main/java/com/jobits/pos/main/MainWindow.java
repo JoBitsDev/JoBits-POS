@@ -5,10 +5,13 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.ui.DefaultValues;
 import com.jobits.ui.components.swing.containers.MaterialFrame;
 import com.jobits.ui.components.swing.containers.MaterialFrameWrapper;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -19,11 +22,22 @@ public class MainWindow extends MaterialFrame {
     /**
      * Creates new form MainWindow
      */
-
     public MainWindow() {
         super();
         getContentPane().setLayout(new BorderLayout());
         initComponents();
+        setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
+        repaint();
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize());
+    }
+
+    @Override
+    public Dimension getMinimumSize() {
+        return new Dimension(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize());
     }
 
     /**
@@ -44,10 +58,9 @@ public class MainWindow extends MaterialFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     void setWelcomeHeader(boolean b) {
-        
+
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
 }
