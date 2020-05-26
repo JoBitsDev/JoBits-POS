@@ -1,0 +1,246 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.jobits.pos.ui.almacen.ipv.presenter;
+
+import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.almacen.IPVController;
+import com.jobits.pos.domain.models.IpvRegistro;
+import com.jobits.pos.domain.models.IpvVentaRegistro;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.ui.almacen.ipv.PedidoIpvVentasView;
+import com.jobits.pos.ui.presenters.AbstractViewAction;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
+import java.util.Optional;
+
+/**
+ *
+ * JoBits
+ *
+ * @author Jorge
+ *
+ */
+public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionViewModel> {
+
+    public static String ACTION_CAMBIAR_FECHA_IPV = "Fecha",
+            ACTION_CAMBIAR_FECHA_IPV_VENTA = "Fecha ipv",
+            ACTION_CAMBIAR_COCINA = "Punto de elaboracion",
+            ACTION_OCULTAR_PRODUCTOS_IPV = "Ocultar insumos no utilizados",
+            ACTION_OCULTAR_PRODUCTOS_IPV_VENTA = "Ocultar productos no utilizados",
+            ACTION_DAR_ENTRADA_IPV_REGISTROS = "Entrada Registro",
+            ACTION_DAR_ENTRADA_IPV_VENTA = "Entrada Ipv",
+            ACTION_IMPRIMIR_IPV = "Imprimir registros",
+            ACTION_IMPRIMIR_IPV_VENTA = "Imprimir Ipv venta",
+            ACTION_NUEVO_PEDIDO_IPV_VENTA = "Nuevo Pedido",
+            ACTION_AJUSTAR_IPV = "Ajustar consumo";
+
+    private IPVController controller;
+
+    public IpvGestionViewPresenter(IPVController controller) {
+        super(new IpvGestionViewModel());
+        this.controller = controller;
+        getBean().setLista_punto_elaboracion(new ArrayListModel<>(controller.getCocinaList()));
+        getBean().addPropertyChangeListener(IpvGestionViewModel.PROP_PUNTO_ELABORACION_SELECCIONADO,
+                (evt) -> {
+                    onCocinaStateChange();
+                });
+        getBean().addPropertyChangeListener(IpvGestionViewModel.PROP_FECHA_SELECCIONADA,
+                (evt) -> {
+                    onFechaCambiadaIpv();
+                });
+        getBean().addPropertyChangeListener(IpvGestionViewModel.PROP_FECHA_IPV_VENTAS_SELECCIONADA,
+                (evt) -> {
+                    onFechaCambiadaIpvVenta();
+                });
+    }
+
+    @Override
+    protected void registerOperations() {
+        registerOperation(new AbstractViewAction(ACTION_CAMBIAR_FECHA_IPV) {
+            @Override
+            public Optional doAction() {
+                onFechaCambiadaIpv();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_CAMBIAR_FECHA_IPV_VENTA) {
+            @Override
+            public Optional doAction() {
+                onFechaCambiadaIpvVenta();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_OCULTAR_PRODUCTOS_IPV) {
+            @Override
+            public Optional doAction() {
+                onOcultarProductosIpv();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_OCULTAR_PRODUCTOS_IPV_VENTA) {
+            @Override
+            public Optional doAction() {
+                onOcultarProductosIpvVentas();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_CAMBIAR_COCINA) {
+            @Override
+            public Optional doAction() {
+                new LongProcessActionServiceImpl("Cargando ipvs") {
+                    @Override
+                    protected void longProcessMethod() {
+                        onCocinaStateChange();
+                    }
+                }.performAction(null);
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_DAR_ENTRADA_IPV_REGISTROS) {
+            @Override
+            public Optional doAction() {
+                onDarEntradaIpv();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_DAR_ENTRADA_IPV_VENTA) {
+            @Override
+            public Optional doAction() {
+                onDarEntradaIpvVentas();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_IPV) {
+            @Override
+            public Optional doAction() {
+                onImprimirIpv();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_IPV_VENTA) {
+            @Override
+            public Optional doAction() {
+                onImprimirIpvVentas();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_NUEVO_PEDIDO_IPV_VENTA) {
+            @Override
+            public Optional doAction() {
+                onNuevoPedido();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_AJUSTAR_IPV) {
+            @Override
+            public Optional doAction() {
+                onAjustarIpv();
+                return Optional.empty();
+            }
+        });
+
+    }
+
+    private void onFechaCambiadaIpv() {
+        Application.getInstance().getBackgroundWorker().processInBackground(() -> {
+            if (getBean().getPunto_elaboracion_seleccionado() != null) {
+
+                getBean().setLista_ipv_registro(new ArrayListModel<>(
+                        controller.getIpvRegistroList(getBean().
+                                getPunto_elaboracion_seleccionado(),
+                                getBean().getFecha_ipv_seleccionada())));
+                getBean().setCheck_ocultar_productos_ipv(false);
+            }
+        });
+    }
+
+    private void onFechaCambiadaIpvVenta() {
+        Application.getInstance().getBackgroundWorker().processInBackground(() -> {
+            if (getBean().getPunto_elaboracion_seleccionado() != null) {
+                getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
+                        controller.getIpvRegistroVentaList(getBean().
+                                getPunto_elaboracion_seleccionado(),
+                                getBean().getFecha_ipv_ventas_seleccionada())));
+                getBean().setCheck_ocultar_productos_ipv_venta(false);
+            }
+        });
+    }
+
+    private void onCocinaStateChange() {
+        Application.getInstance().getBackgroundWorker().processInBackground(() -> {
+                if (getBean().getFecha_ipv_seleccionada() != null) {
+                    onFechaCambiadaIpv();
+                }
+                if (getBean().getFecha_ipv_ventas_seleccionada() != null) {
+                    onFechaCambiadaIpvVenta();
+                }
+            
+        });
+
+    }
+
+    private void onOcultarProductosIpv() {
+        if (getBean().isCheck_ocultar_productos_ipv()) {
+            for (int i = 0; i < getBean().getLista_ipv_registro().getSize();) {
+                IpvRegistro x = getBean().getLista_ipv_registro().get(i);
+                if (x.getConsumo() != 0 || x.getDisponible() != 0) {
+                    getBean().getLista_ipv_registro().remove(i);
+                } else {
+                    i++;
+                }
+            }
+        } else {
+            onFechaCambiadaIpv();
+        }
+
+    }
+
+    private void onOcultarProductosIpvVentas() {
+        if (getBean().isCheck_ocultar_productos_ipv_venta()) {
+            for (int i = 0; i < getBean().getLista_ipv_venta_registro().getSize();) {
+                IpvVentaRegistro x = getBean().getLista_ipv_venta_registro().get(i);
+                if (x.getVendidos() != 0 || x.getDisponible() != 0) {
+                    getBean().getLista_ipv_venta_registro().remove(i);
+                } else {
+                    i++;
+                }
+            }
+        } else {
+            onFechaCambiadaIpvVenta();
+        }
+    }
+
+    private void onDarEntradaIpv() {
+        controller.darEntradaExistencia(getBean().getIpv_registro_seleciconado());
+
+    }
+
+    private void onDarEntradaIpvVentas() {
+        controller.darEntradaIPV(getBean().getIpv_venta_registro_seleccionado());
+
+    }
+
+    private void onImprimirIpv() {//TODO:impresion donde y quien
+
+    }
+
+    private void onImprimirIpvVentas() {//TODO:impresion donde y quien
+
+    }
+
+    private void onNuevoPedido() {//TODO: mojon aqui
+        new PedidoIpvVentasView(
+                Application.getInstance().getMainWindow(),
+                getBean().getLista_ipv_venta_registro(), getBean().getPunto_elaboracion_seleccionado());
+        onCocinaStateChange();
+
+    }
+
+    private void onAjustarIpv() {
+        controller.ajustarConsumo(getBean().getIpv_registro_seleciconado());
+    }
+
+}

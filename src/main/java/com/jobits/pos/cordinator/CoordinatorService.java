@@ -7,6 +7,7 @@ package com.jobits.pos.cordinator;
 
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.insumo.InsumoListView;
@@ -71,7 +72,8 @@ public class CoordinatorService implements Coordinator {
                 NominasDetailView.VIEW_NAME,
                 MenuSeccionView.VIEW_NAME,
                 AreaVentaListView.VIEW_NAME,
-                ConfiguracionView.VIEW_NAME));
+                ConfiguracionView.VIEW_NAME,
+                IpvGestionView.VIEW_NAME));
     }
 
 }

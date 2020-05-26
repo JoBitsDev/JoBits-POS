@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.almacen;
+package com.jobits.pos.ui.almacen.ipv;
 
 import com.jobits.pos.domain.models.IpvVentaRegistro;
 import com.jobits.pos.domain.models.Almacen;
@@ -22,6 +22,7 @@ import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.domain.InsumoPedidoModel;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
+import javax.swing.JFrame;
 
 /**
  *
@@ -34,7 +35,7 @@ public class PedidoIpvVentasView extends OldAbstractView {
     private List<IpvVentaRegistro> ipvProductList;
     private Cocina elaboracion;
 
-    public PedidoIpvVentasView(Dialog owner, List<IpvVentaRegistro> productosIpv, Cocina elaboracion) {
+    public PedidoIpvVentasView(JFrame owner, List<IpvVentaRegistro> productosIpv, Cocina elaboracion) {
         super(DialogType.INPUT_LARGE, new PedidoIpvVentasController(), owner, true);
         this.elaboracion = elaboracion;
         ipvProductList = productosIpv;
@@ -106,12 +107,12 @@ public class PedidoIpvVentasView extends OldAbstractView {
 
         getContentPane().add(jPanelTop, java.awt.BorderLayout.PAGE_START);
 
-        jPanelAPedir.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "A pedir", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanelAPedir.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "A pedir", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
         jPanelAPedir.setPreferredSize(new java.awt.Dimension(100, 0));
         jPanelAPedir.setLayout(new java.awt.BorderLayout());
         getContentPane().add(jPanelAPedir, java.awt.BorderLayout.CENTER);
 
-        jPanelPedido.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanelPedido.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Pedido", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
         jPanelPedido.setPreferredSize(new java.awt.Dimension(300, 0));
         jPanelPedido.setLayout(new java.awt.BorderLayout());
 

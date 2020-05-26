@@ -7,7 +7,7 @@ package com.jobits.pos.controller;
 
 import com.jobits.pos.ui.AbstractDetailView;
 import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.utils.LongProcessAction;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import java.awt.Window;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
@@ -45,7 +45,7 @@ public abstract class AbstractDetailController<T> extends AbstractDialogControll
     public AbstractDetailController(Window parent, AbstractRepository<T> dataAccess) {
         super(dataAccess);
         this.parent = parent;
-        new LongProcessAction() {
+        new LongProcessActionServiceImpl() {
             @Override
             protected void longProcessMethod() {
                 instance = createNewInstance();

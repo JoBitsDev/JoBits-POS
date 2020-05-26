@@ -22,7 +22,7 @@ import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.ui.utils.CalcularCambioView;
-import com.jobits.pos.ui.utils.LongProcessAction;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.venta.VentasCreateEditView;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -78,7 +78,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         super(VentaDAO.getInstance());
         this.parent = parent;
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-        new LongProcessAction() {
+        new LongProcessActionServiceImpl() {
             @Override
             protected void longProcessMethod() {
                 instance = initDiaVentas(null);
@@ -92,7 +92,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         super(VentaDAO.getInstance());
         this.parent = parent;
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-        new LongProcessAction() {
+        new LongProcessActionServiceImpl() {
             @Override
             protected void longProcessMethod() {
                 instance = initDiaVentas(diaVentas);
@@ -240,7 +240,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public void initIPV(Venta v) {
-        new LongProcessAction("Creando IPVs.........") {
+        new LongProcessActionServiceImpl("Creando IPVs.........") {
             @Override
             protected void longProcessMethod() {
                 new IPVController().inicializarExistencias(v.getFecha());

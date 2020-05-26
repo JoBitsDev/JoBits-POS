@@ -9,6 +9,7 @@ import com.jobits.pos.controller.licencia.Licencia;
 import com.jobits.pos.main.PresenterFacade;
 import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.View;
+import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.dashboard.DashBoardView;
@@ -77,6 +78,8 @@ public class ViewFacade {
                 return new AreaVentaListView(p);
             case ConfiguracionView.VIEW_NAME:
                 return new ConfiguracionView(p);
+            case IpvGestionView.VIEW_NAME:
+                return new IpvGestionView(p);
             case LicenceDialogView.VIEW_NAME:
                 return new LicenceDialogView(
                         Application.getInstance().getLicenceController(),

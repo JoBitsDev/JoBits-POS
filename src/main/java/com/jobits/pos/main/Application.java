@@ -11,7 +11,9 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.LongProcessActionService;
 import com.jobits.pos.ui.RootView;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -45,6 +47,8 @@ public class Application {
     private CoordinatorService coordinator;
 
     private NavigationService navigator;
+    
+    private LongProcessActionService backgroundWorker;
 
     //
     // App
@@ -79,6 +83,7 @@ public class Application {
         mainWindow.getContentPane().add(rootView);
         mainWindow.pack();
         navigator = NavigationService.getInstance();
+        backgroundWorker = LongProcessActionServiceImpl.getInstance();
         mainWindow.setVisible(true);
 
     }
@@ -119,5 +124,19 @@ public class Application {
     public MainWindow getMainWindow() {
         return mainWindow;
     }
+
+    public CoordinatorService getCoordinator() {
+        return coordinator;
+    }
+
+    public NavigationService getNavigator() {
+        return navigator;
+    }
+
+    public LongProcessActionService getBackgroundWorker() {
+        return backgroundWorker;
+    }
+    
+    
 
 }

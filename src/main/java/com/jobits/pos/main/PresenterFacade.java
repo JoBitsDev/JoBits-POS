@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.insumo.InsumoListController;
@@ -22,6 +23,8 @@ import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
 import com.jobits.pos.ui.MainMenuPresenter;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
+import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
@@ -89,6 +92,8 @@ public class PresenterFacade {
                 return new AreaVentaViewPresenter(new AreaVentaController());
             case ConfiguracionView.VIEW_NAME:
                 return new ConfigurationViewPresenter(new ConfiguracionController());
+            case IpvGestionView.VIEW_NAME:
+                return new IpvGestionViewPresenter(new IPVController());
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;

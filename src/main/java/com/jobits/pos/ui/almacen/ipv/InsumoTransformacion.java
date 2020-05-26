@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.jobits.pos.ui.almacen;
+package com.jobits.pos.ui.almacen.ipv;
 
 import com.jobits.pos.domain.models.Insumo;
 

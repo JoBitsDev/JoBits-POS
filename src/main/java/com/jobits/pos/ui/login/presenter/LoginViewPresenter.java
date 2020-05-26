@@ -19,7 +19,7 @@ import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.LongProcessAction;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.Arrays;
@@ -68,7 +68,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     }
 
     private void onUbicacionSeleccionadaChanged() {
-        new LongProcessAction("Conectando a BD") {//TODO: internacionalizar
+        new LongProcessActionServiceImpl("Conectando a BD") {//TODO: internacionalizar
             @Override
             protected void longProcessMethod() {
                 try {

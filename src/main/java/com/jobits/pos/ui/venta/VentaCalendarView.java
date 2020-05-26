@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.venta;
 
 import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.utils.LongProcessAction;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.VentaCellRender;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -407,7 +407,7 @@ public class VentaCalendarView extends OldAbstractView {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new LongProcessAction() {
+        new LongProcessActionServiceImpl() {
             @Override
             public void longProcessMethod() {
                 createDetailResumenView();
@@ -442,7 +442,7 @@ public class VentaCalendarView extends OldAbstractView {
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonYActionPerformed
-        new LongProcessAction("Ejecutando Y") {
+        new LongProcessActionServiceImpl("Ejecutando Y") {
             @Override
             protected void longProcessMethod() {
                 ejecutarY();
@@ -660,7 +660,7 @@ public class VentaCalendarView extends OldAbstractView {
         JFileChooser file = new JFileChooser();
         int result = file.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
-            new LongProcessAction("Importando Venta") {
+            new LongProcessActionServiceImpl("Importando Venta") {
                 @Override
                 protected void longProcessMethod() {
                     control.importarVenta(file.getSelectedFile());

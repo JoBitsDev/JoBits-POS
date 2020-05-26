@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.productos;
 
-import com.jobits.pos.ui.utils.LongProcessAction;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import java.awt.Graphics;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -112,7 +112,7 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
 
         InsumoCreateEditController controller = new InsumoCreateEditController();
         controller.setParent(getView());
-        new LongProcessAction() {
+        new LongProcessActionServiceImpl() {
             @Override
             protected void longProcessMethod() {
                 controller.setInstance(controller.createNewInstance());
