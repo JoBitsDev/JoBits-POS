@@ -23,7 +23,7 @@ import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.ui.utils.CalcularCambioView;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
-import com.jobits.pos.ui.venta.VentasCreateEditView;
+import com.jobits.pos.ui.venta.VentaDetailView;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
@@ -61,7 +61,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     Date fechaFin = null;
     private OrdenController ordController;
-    private VentasCreateEditView vi;
+    private VentaDetailView vi;
     int turnoActivo = 0;
 
     public VentaDetailController() {
@@ -134,7 +134,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        vi = new VentasCreateEditView(getInstance(), this, (JDialog) parent, fechaFin);
+        vi = new VentaDetailView(getInstance(), this, (JDialog) parent, fechaFin);
         if (getInstance().getCambioTurno1() != null) {
             turnoActivo = 2;
         }

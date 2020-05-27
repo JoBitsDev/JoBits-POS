@@ -47,7 +47,7 @@ import com.jobits.pos.ui.utils.utils;
  *
  * @author Jorge
  */
-public class VentasCreateEditView extends AbstractDetailView<Venta> {
+public class VentaDetailView extends AbstractDetailView<Venta> {
 
     RestManagerAbstractTableModel<Orden> modelOrd;
     GastoOperacionController gastoController = new GastoOperacionController();
@@ -55,25 +55,25 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
 
     Date fechaFin;
 
-    public VentasCreateEditView(Venta instance, AbstractDialogController controller) {
+    public VentaDetailView(Venta instance, AbstractDialogController controller) {
         super(instance, DialogType.FULL_SCREEN, controller);
         initComponents();
         init();
     }
 
-    public VentasCreateEditView(Venta instance, AbstractDialogController controller, Frame owner) {
+    public VentaDetailView(Venta instance, AbstractDialogController controller, Frame owner) {
         super(instance, DialogType.FULL_SCREEN, controller, owner);
         initComponents();
         init();
     }
 
-    public VentasCreateEditView(Venta instance, AbstractDialogController controller, Dialog owner) {
+    public VentaDetailView(Venta instance, AbstractDialogController controller, Dialog owner) {
         super(instance, DialogType.FULL_SCREEN, controller, owner);
         initComponents();
         init();
     }
 
-    public VentasCreateEditView(Venta instance, AbstractDialogController controller, Dialog owner, Date fechaFin) {
+    public VentaDetailView(Venta instance, AbstractDialogController controller, Dialog owner, Date fechaFin) {
         super(instance, DialogType.FULL_SCREEN, controller, owner);
         this.fechaFin = fechaFin;
         initComponents();
