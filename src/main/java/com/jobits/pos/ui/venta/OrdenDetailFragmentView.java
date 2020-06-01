@@ -5,52 +5,33 @@
  */
 package com.jobits.pos.ui.venta;
 
-import com.jobits.pos.ui.AbstractFragmentView;
-import com.jobits.pos.ui.utils.OldAbstractCrossReferenePanel;
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.ui.utils.RestManagerCellRender;
-
-import java.awt.Container;
-import java.util.ArrayList;
-import java.util.Collections;
 import javax.swing.event.ListSelectionEvent;
-
-import com.jobits.pos.controller.Controller;
-import com.jobits.pos.controller.venta.OrdenController;
-
-import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.domain.models.Seccion;
-import com.jobits.pos.recursos.R;
-
-import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
-import com.jobits.pos.ui.utils.RestManagerListModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.AddFromPanel;
+import com.jobits.pos.ui.utils.BindableTableModel;
+ import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.venta.presenter.OrdenDetailViewModel;
+import com.jobits.pos.ui.venta.presenter.OrdenDetailViewPresenter;
 
 /**
  *
  * @author Jorge
  */
-public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
+public class OrdenDetailFragmentView extends AbstractViewPanel {
 
-    private OldAbstractCrossReferenePanel<ProductovOrden, ProductoVenta> crossReferencePanel;
-    private Orden instance;
-    private RestManagerAbstractTableModel<ProductoVenta> currentProductosModel;
-    private ButtonState state = ButtonState.ENVIAR_COCINA;
     private static boolean showMenu = true;
+    private AddFromPanel<ProductovOrden, ProductoVenta> crossReferencePanel;
+    public static final String VIEW_NAME = "Detalles de orden";
 
-    public OrdenDetailFragmentView(Controller controller, Orden instance) {
-        super(controller);
-        this.instance = instance;
-        initComponents();
-        initDefaults();
-    }
-
-    public OrdenDetailFragmentView(Orden instance, Controller controller, Container parentComponent) {
-        super(controller, parentComponent);
-        this.instance = instance;
-        initComponents();
-        initDefaults();
+    public OrdenDetailFragmentView(AbstractViewPresenter presenter) {
+        super(presenter);
     }
 
     /**
@@ -85,14 +66,15 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jLabelVALORTotal = new javax.swing.JLabel();
         jPanelCrossReference = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableProductos = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jListSecciones = new javax.swing.JList<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jListProductos = new javax.swing.JList<>();
         jXPanelBotones = new org.jdesktop.swingx.JXPanel();
         jPanel1 = new javax.swing.JPanel();
         jideButtonAgregarNota = new com.jidesoft.swing.JideButton();
-        jideButtonCerrarMesaEnviarCocina = new com.jidesoft.swing.JideButton();
+        jideButtonEnviarCocina = new com.jidesoft.swing.JideButton();
+        jideButtonCerrarMesa = new com.jidesoft.swing.JideButton();
 
         setBackground(new java.awt.Color(204, 204, 204));
         setLayout(new java.awt.BorderLayout());
@@ -188,39 +170,19 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
         jideButtonImpimirTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jideButtonImpimirTicket.setToolTipText(bundle.getString("label_imprimircuenta")); // NOI18N
-        jideButtonImpimirTicket.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jideButtonImpimirTicketActionPerformed(evt);
-            }
-        });
         jPanel2.add(jideButtonImpimirTicket);
 
         jCheckBoxPorciento.setBackground(new java.awt.Color(255, 255, 153));
         jCheckBoxPorciento.setSelected(true);
         jCheckBoxPorciento.setText("%");
         jCheckBoxPorciento.setEnabled(false);
-        jCheckBoxPorciento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxPorcientoActionPerformed(evt);
-            }
-        });
         jPanel2.add(jCheckBoxPorciento);
 
         jSpinnerPorciento.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(-100.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
-        jSpinnerPorciento.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinnerPorcientoStateChanged(evt);
-            }
-        });
         jPanel2.add(jSpinnerPorciento);
 
         jCheckBoxDELACASA.setBackground(new java.awt.Color(255, 255, 153));
         jCheckBoxDELACASA.setText("De la Casa");
-        jCheckBoxDELACASA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxDELACASAActionPerformed(evt);
-            }
-        });
         jPanel2.add(jCheckBoxDELACASA);
 
         jLabel2.setBackground(new java.awt.Color(153, 255, 255));
@@ -245,33 +207,19 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jPanel3.setPreferredSize(new java.awt.Dimension(522, 130));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane2.setColumnHeaderView(null);
-        jScrollPane2.setPreferredSize(new java.awt.Dimension(250, 0));
-
-        jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jTableProductos.setRowHeight(20);
-        jScrollPane2.setViewportView(jTableProductos);
-
-        jPanel3.add(jScrollPane2, java.awt.BorderLayout.CENTER);
-
         jListSecciones.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jListSecciones.setForeground(new java.awt.Color(0, 102, 102));
         jListSecciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jListSecciones.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jListSeccionesValueChanged(evt);
-            }
-        });
         jScrollPane3.setViewportView(jListSecciones);
 
         jPanel3.add(jScrollPane3, java.awt.BorderLayout.LINE_START);
+
+        jListProductos.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
+        jListProductos.setForeground(new java.awt.Color(0, 102, 102));
+        jListProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(jListProductos);
+
+        jPanel3.add(jScrollPane4, java.awt.BorderLayout.EAST);
 
         jPanelDetalles.add(jPanel3, java.awt.BorderLayout.WEST);
 
@@ -287,22 +235,17 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
         jideButtonAgregarNota.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/nota.png"))); // NOI18N
         jideButtonAgregarNota.setToolTipText(bundle.getString("label_agregarnota")); // NOI18N
-        jideButtonAgregarNota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jideButtonAgregarNotaActionPerformed(evt);
-            }
-        });
         jPanel1.add(jideButtonAgregarNota);
 
-        jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png"))); // NOI18N
-        jideButtonCerrarMesaEnviarCocina.setMnemonic('c');
-        jideButtonCerrarMesaEnviarCocina.setToolTipText(bundle.getString("label_cerrar_orden")); // NOI18N
-        jideButtonCerrarMesaEnviarCocina.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jideButtonCerrarMesaEnviarCocinaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jideButtonCerrarMesaEnviarCocina);
+        jideButtonEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png"))); // NOI18N
+        jideButtonEnviarCocina.setMnemonic('c');
+        jideButtonEnviarCocina.setToolTipText(bundle.getString("label_cerrar_orden")); // NOI18N
+        jPanel1.add(jideButtonEnviarCocina);
+
+        jideButtonCerrarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/cobrar.png"))); // NOI18N
+        jideButtonCerrarMesa.setMnemonic('c');
+        jideButtonCerrarMesa.setToolTipText(bundle.getString("label_cerrar_orden")); // NOI18N
+        jPanel1.add(jideButtonCerrarMesa);
 
         jXPanelBotones.add(jPanel1, java.awt.BorderLayout.SOUTH);
 
@@ -310,36 +253,6 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
         add(jPanelroot, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jCheckBoxDELACASAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDELACASAActionPerformed
-        getController().setDeLaCasa(jCheckBoxDELACASA.isSelected());
-    }//GEN-LAST:event_jCheckBoxDELACASAActionPerformed
-
-    private void jCheckBoxPorcientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPorcientoActionPerformed
-        //   addPorcientoToOrden(jCheckBoxPorciento.isSelected());
-    }//GEN-LAST:event_jCheckBoxPorcientoActionPerformed
-
-    private void jSpinnerPorcientoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerPorcientoStateChanged
-        getController().updatePorciento((float) jSpinnerPorciento.getValue());
-    }//GEN-LAST:event_jSpinnerPorcientoStateChanged
-
-    private void jideButtonAgregarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonAgregarNotaActionPerformed
-        getController().addNota(getModel().getObjectAtSelectedRow());
-    }//GEN-LAST:event_jideButtonAgregarNotaActionPerformed
-
-    private void jideButtonImpimirTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonImpimirTicketActionPerformed
-        getController().imprimirPreTicket();
-    }//GEN-LAST:event_jideButtonImpimirTicketActionPerformed
-
-    private void jideButtonCerrarMesaEnviarCocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jideButtonCerrarMesaEnviarCocinaActionPerformed
-        executeButtonState();
-    }//GEN-LAST:event_jideButtonCerrarMesaEnviarCocinaActionPerformed
-
-    private void jListSeccionesValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListSeccionesValueChanged
-        if (jListSecciones.getSelectedValue() != null) {
-            onSeccionClicked(jListSecciones.getSelectedValue());        // TODO add your handling code here:
-        }
-    }//GEN-LAST:event_jListSeccionesValueChanged
 
     private void jToggleButton1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton1ItemStateChanged
         showMenu = jToggleButton1.isSelected();
@@ -361,6 +274,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     private javax.swing.JLabel jLabelVALORNOORDEN;
     private javax.swing.JLabel jLabelVALORTotal;
     private javax.swing.JLabel jLabelVALORUsuario;
+    private javax.swing.JList<Seccion> jListProductos;
     private javax.swing.JList<Seccion> jListSecciones;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -370,257 +284,118 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     private javax.swing.JPanel jPanelDetalles;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelroot;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSpinner jSpinnerPorciento;
-    private javax.swing.JTable jTableProductos;
     private com.jidesoft.swing.JideToggleButton jToggleButton1;
     private org.jdesktop.swingx.JXPanel jXPanelBotones;
     private com.jidesoft.swing.JideButton jideButtonAgregarNota;
-    private com.jidesoft.swing.JideButton jideButtonCerrarMesaEnviarCocina;
+    private com.jidesoft.swing.JideButton jideButtonCerrarMesa;
+    private com.jidesoft.swing.JideButton jideButtonEnviarCocina;
     private com.jidesoft.swing.JideButton jideButtonImpimirTicket;
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void updateView() {
-        updateCrossReferencePanel();
-        jLabelVALORFecha.setText(R.DATE_FORMAT.format(getInstance().getVentafecha().getFecha()));
-        jLabelVALORHora.setText(R.TIME_FORMAT.format(getInstance().getHoraComenzada()));
-        jLabelVALORUsuario.setText(getInstance().getPersonalusuario().getUsuario());
-        jLabelVALORMesa.setText(getInstance().getMesacodMesa().getCodMesa());
-        jLabelVALORNOORDEN.setText(getInstance().getCodOrden());
-        jCheckBoxDELACASA.setSelected(getInstance().getDeLaCasa());
-        jSpinnerPorciento.setValue(getInstance().getPorciento());
-        updateValorTotal();
-        crossReferencePanel.getjTextFieldAutoComplete().requestFocus();
+    public void wireUp() {
 
-    }
+        Bindings.bind(jLabelVALORFecha, getPresenter().getModel(OrdenDetailViewModel.PROP_FECHA_ORDEN));
+        Bindings.bind(jLabelVALORHora, getPresenter().getModel(OrdenDetailViewModel.PROP_HORA_PEDIDO));
+        Bindings.bind(jLabelVALORNOORDEN, getPresenter().getModel(OrdenDetailViewModel.PROP_ID_ORDEN));
+        Bindings.bind(jLabelVALORTotal, getPresenter().getModel(OrdenDetailViewModel.PROP_TOTAL_ORDEN));
+        Bindings.bind(jLabelVALORUsuario, getPresenter().getModel(OrdenDetailViewModel.PROP_USUARIO));
+        Bindings.bind(jLabelVALORMesa, getPresenter().getModel(OrdenDetailViewModel.PROP_MESA_PEDIDO));
 
-    public RestManagerAbstractTableModel<ProductovOrden> getModel() {
-        return crossReferencePanel.getHandler().getTableModel();
-    }
+        Bindings.bind(jListSecciones, new SelectionInList<Seccion>(
+                getPresenter().getModel(OrdenDetailViewModel.PROP_LISTA_SECCIONES),
+                getPresenter().getModel(OrdenDetailViewModel.PROP_SECCION_SELECCIONADA)));
 
-    @Override
-    public void initDefaults() {
-        initTableSeleccionProducto();
-        initCrossReferencePanel();
-        jPanel3.setVisible(showMenu);
-
-    }
-
-    private void updateTableSeleccionProducto() {
-        jListSecciones.setModel(new RestManagerListModel<>(getController().getListaSecciones()));
-        if (currentProductosModel != null) {
-            currentProductosModel.setItems(new ArrayList<>());
-        }
-    }
-
-    private void initTableSeleccionProducto() {
-        updateTableSeleccionProducto();
-        jTableProductos.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+        Bindings.bind(jListProductos, new SelectionInList<ProductoVenta>(
+                getPresenter().getModel(OrdenDetailViewModel.PROP_LISTA_PRODUCTO_VENTA_SECCION),
+                getPresenter().getModel(OrdenDetailViewModel.PROP_PRODUCTO_VENTA_SELECCIONADO)));
+        jListProductos.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             if (e.getValueIsAdjusting()) {
                 return;
             }
-            if (jTableProductos.getSelectedRow() == -1) {
+            if (jListProductos.getSelectedIndex() == -1) {
                 return;
             }
-            getController().addProduct(currentProductosModel.getObjectAtSelectedRow());
-            state = ButtonState.ENVIAR_COCINA;
-            jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
-            updateCrossReferencePanel();
+            getPresenter().getOperation(OrdenDetailViewPresenter.ACTION_ADD_PRODUCTO);
         });
+
+        jideButtonAgregarNota.addActionListener(getPresenter().getOperation(OrdenDetailViewPresenter.ACTION_ADD_NOTA));
+        jideButtonCerrarMesa.addActionListener(getPresenter().getOperation(OrdenDetailViewPresenter.ACTION_CERRAR_ORDEN));
+        jideButtonEnviarCocina.addActionListener(getPresenter().getOperation(OrdenDetailViewPresenter.ACTION_ENVIAR_ELABORAR));
+        jideButtonImpimirTicket.addActionListener(getPresenter().getOperation(OrdenDetailViewPresenter.ACTION_IMPRIMIR_CIERRE_PARCIAL));
+
+        Bindings.bind(jSpinnerPorciento,"value", getPresenter().getModel(OrdenDetailViewModel.PROP_PORCIENTO_SERVICIO));
+        Bindings.bind(jCheckBoxDELACASA, getPresenter().getModel(OrdenDetailViewModel.PROP_ES_AUTORIZO));
+        
+    }
+
+    @Override
+    public void uiInit() {
+        initAddFromPanel();
+        jPanel3.setVisible(showMenu);
+        crossReferencePanel.getJTextFieldAutoComplete().requestFocus();
         jListSecciones.setVisibleRowCount(12);
-        currentProductosModel = new RestManagerAbstractTableModel<ProductoVenta>(new ArrayList<ProductoVenta>(), jTableProductos) {
+
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
+    }
+
+    private void initAddFromPanel() {
+
+        AddFromPanel.AddFromPanelBuilder<ProductovOrden, ProductoVenta> builder = AddFromPanel.builder();
+        builder.jTextFieldDataName("Productos de venta");
+        builder.addAction(getPresenter().getOperation(OrdenDetailViewPresenter.ACTION_ADD_PRODUCTO));
+        builder.autoCompletitionData(getPresenter().getModel(OrdenDetailViewModel.PROP_LISTA_PRODUCTOS_VENTA));
+        builder.autoCOmpletitionDataSelection(getPresenter().getModel(OrdenDetailViewModel.PROP_PRODUCTO_VENTA_SELECCIONADO));
+        builder.removeAction(getPresenter().getOperation(OrdenDetailViewPresenter.ACTION_REMOVE_PRODUCTO));
+        builder.tableDataHolder(getPresenter().getModel(OrdenDetailViewModel.PROP_LISTA_PRODUCTO_ORDEN));
+        builder.tableSelectionDataHolder(getPresenter().getModel(OrdenDetailViewModel.PROP_PRODUCTO_ORDEN_SELECCIONADO));
+        builder.tableModel(new BindableTableModel<ProductovOrden>() {
             @Override
             public int getColumnCount() {
-                return 1;
+                return 3;
             }
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                return items.get(rowIndex).toString();
+                switch (columnIndex) {
+                    case 0:
+                        return getRow(rowIndex).getProductoVenta().getNombre();
+                    case 1:
+                        return getRow(rowIndex).getCantidad();
+                    case 2:
+                        return utils.redondeoPorExceso(getRow(rowIndex).getCantidad()
+                                * getRow(rowIndex).getProductoVenta().getPrecioVenta());
+                    default:
+                        return null;
+                }
             }
 
             @Override
             public String getColumnName(int column) {
-                return "Productos Venta";
+                switch (column) {
+                    case 0:
+                        return "Nombre Producto";
+                    case 1:
+                        return "Cantidad";
+                    case 2:
+                        return "Precio Final";
+                    default:
+                        return null;
+                }
             }
-        };
-        jTableProductos.setModel(currentProductosModel);
-    }
+        });
+        crossReferencePanel = builder.build();
 
-    private void updateCrossReferencePanel() {
-        crossReferencePanel.getHandler().getTableModel().setItems(getInstance().getProductovOrdenList());
-    }
-
-    private void initCrossReferencePanel() {
-        crossReferencePanel = new OldAbstractCrossReferenePanel<ProductovOrden, ProductoVenta>("Productos de venta", getController().getPDVList()) {
-            @Override
-            public RestManagerAbstractTableModel<ProductovOrden> getTableModel() {
-                return new RestManagerAbstractTableModel<ProductovOrden>(getInstance().getProductovOrdenList(), getjTableCrossReference()) {
-
-                    @Override
-                    public int getColumnCount() {
-                        return 3;
-                    }
-
-                    @Override
-                    public int getRowCount() {
-                        return items.size();
-                    }
-
-                    @Override
-                    public Object getValueAt(int rowIndex, int columnIndex) {
-                        switch (columnIndex) {
-                            case 0:
-                                return items.get(rowIndex).getProductoVenta().getNombre();
-                            case 1:
-                                return items.get(rowIndex).getCantidad();
-                            case 2:
-                                return utils.redondeoPorExceso(items.get(rowIndex).getCantidad()
-                                        * items.get(rowIndex).getProductoVenta().getPrecioVenta());
-                            default:
-                                return null;
-                        }
-                    }
-
-                    @Override
-                    public String getColumnName(int column) {
-                        switch (column) {
-                            case 0:
-                                return "Nombre Producto";
-                            case 1:
-                                return "Cantidad";
-                            case 2:
-                                return "Precio Final";
-                            default:
-                                return null;
-                        }
-                    }
-
-                    @Override
-                    public boolean isCellEditable(int rowIndex, int columnIndex) {
-                        return columnIndex == 1;
-                    }
-
-                    @Override
-                    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                        switch (columnIndex) {
-                            case 1:
-                                if (getController().autorize()) {
-                                    float cantidadOld = items.get(rowIndex).getCantidad();
-                                    float diferencia = cantidadOld - (float) aValue;
-                                    if (diferencia > 0) {
-                                        getController().removeProduct(items.get(rowIndex), diferencia);
-                                    } else {
-                                        getController().addProduct(items.get(rowIndex), diferencia * -1);
-                                    }
-                                    fireTableRowsUpdated(rowIndex, rowIndex);
-                                    state = ButtonState.ENVIAR_COCINA;
-                                    jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
-                                    updateValorTotal();
-
-                                }
-                                break;
-                            default:
-                                super.setValueAt(aValue, rowIndex, columnIndex);
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public Class<?> getColumnClass(int columnIndex) {
-                        if (columnIndex == 1) {
-                            return Float.class;
-                        } else {
-                            return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
-                        }
-                    }
-
-                };
-            }
-
-            @Override
-            public ProductovOrden transformK_T(ProductoVenta selected) {
-                getController().addProduct(selected);
-                getModel().setItems(getInstance().getProductovOrdenList());
-                state = ButtonState.ENVIAR_COCINA;
-                jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
-                // getjTableCrossReference().repaint();
-                return null;
-            }
-
-            @Override
-            public void removeObjectSelected() {
-                ProductovOrden po = getModel().getObjectAtSelectedRow();
-                getController().removeProduct(po, po.getCantidad());
-                getModel().setItems(getInstance().getProductovOrdenList());
-                state = ButtonState.ENVIAR_COCINA;
-                jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
-                repaint();
-            }
-        };
         jPanelCrossReference.add(crossReferencePanel);
-        crossReferencePanel.getjTableCrossReference().getColumnModel().getColumn(1).setCellRenderer(new RestManagerCellRender());
+        crossReferencePanel.getJTableCrossReference().getColumnModel().getColumn(1).setCellRenderer(new RestManagerCellRender());
 
     }
 
-    private void onSeccionClicked(Seccion s) {
-        ArrayList<ProductoVenta> productos = new ArrayList<>(s.getProductoVentaList());
-        for (int i = 0; i < productos.size();) {
-            if (!productos.get(i).getVisible()) {
-                productos.remove(i);
-            } else {
-                i++;
-            }
-        }
-        Collections.sort(productos, (ProductoVenta o1, ProductoVenta o2) -> o1.toString().compareToIgnoreCase(o2.toString()));
-        currentProductosModel.setItems(productos);
-//jTableProductos.setModel(currentProductosModel);
-
-    }
-
-    @Override
-    public OrdenController getController() {
-        return (OrdenController) super.getController();
-
-    }
-
-    public Orden getInstance() {
-        return instance;
-
-    }
-
-    public void setInstance(Orden instance) {
-        this.instance = instance;
-        updateView();
-        updateTableSeleccionProducto();
-        updateCrossReferencePanel();
-        setVisible(true);
-
-    }
-
-    public void executeButtonState() {
-        switch (state) {
-            case DESPACHAR:
-                getController().despachar();
-                state = ButtonState.ENVIAR_COCINA;
-                jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
-                break;
-            case ENVIAR_COCINA:
-                getController().enviarACocina();
-                state = ButtonState.DESPACHAR;
-                jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/cobrar.png")));
-                break;
-        }
-
-    }
-
-    public void updateValorTotal() {
-        jLabelVALORTotal.setText(utils.setDosLugaresDecimales(getController().getValorTotal()));
-    }
-
-    private enum ButtonState {
-        DESPACHAR, ENVIAR_COCINA;
-    }
 }
