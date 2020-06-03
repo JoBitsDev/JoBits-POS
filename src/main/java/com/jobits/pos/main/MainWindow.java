@@ -26,7 +26,7 @@ public class MainWindow extends MaterialFrame {
         super();
         getContentPane().setLayout(new BorderLayout());
         initComponents();
-        setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
+        setBackground(DefaultValues.PRIMARY_COLOR);
         repaint();
     }
 

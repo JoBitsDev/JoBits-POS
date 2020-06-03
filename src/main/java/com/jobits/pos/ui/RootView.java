@@ -20,12 +20,13 @@ import components.dashboards.smoot.PanelDual;
 import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Jorge
  */
-public class RootView extends MaterialPanel {
+public class RootView extends JPanel {
 
     public static String VIEW_NAME = "Root View";
 
@@ -51,7 +52,6 @@ public class RootView extends MaterialPanel {
         initComponents();
         jPanelContent.setLayout(cards);
         jPanelStatus.add(statusBar);
-        super.setElevation(0);
 
     }
 
