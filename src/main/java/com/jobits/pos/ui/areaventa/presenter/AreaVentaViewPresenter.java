@@ -83,10 +83,10 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
     private void onNuevaAreaCLick() {//TODO: no actualiza correctamente nada en las vistas
         controller.createInstance();
-        Area menuSeleccionado = getBean().getArea_seleccionada();
+        Area areaSeleccionada = getBean().getArea_seleccionada();
         getBean().getLista_area().clear();
         getBean().getLista_area().addAll(controller.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
-        getBean().setArea_seleccionada(menuSeleccionado);
+        getBean().setArea_seleccionada(areaSeleccionada);
     }
 
     private void onEliminarAreaClick() {
@@ -96,8 +96,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
         }
         controller.destroy(getBean().getArea_seleccionada());
         getBean().setArea_seleccionada(null);
-        getBean().getLista_area().clear();
-        getBean().getLista_area().addAll(controller.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
+        getBean().setLista_area(controller.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
 
     }
 

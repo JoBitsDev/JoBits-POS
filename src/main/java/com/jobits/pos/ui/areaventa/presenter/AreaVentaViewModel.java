@@ -80,7 +80,9 @@ public class AreaVentaViewModel extends AbstractViewModel {
         firePropertyChange(PROP_AREA_SELECCIONADA, oldMenu_seleccionado, menu_seleccionado, false);
         setMesa_seleccionada(null);
         getLista_mesas().clear();
-        getLista_mesas().addAll(getArea_seleccionada().getMesaList());
+        if (menu_seleccionado != null) {
+            getLista_mesas().addAll(getArea_seleccionada().getMesaList());
+        }
     }
 
     /**
@@ -97,9 +99,10 @@ public class AreaVentaViewModel extends AbstractViewModel {
      *
      * @param lista_mesas new value of lista_mesas
      */
-    private void setLista_mesas(ArrayListModel<Mesa> lista_mesas) {
+    public void setLista_mesas(List<Mesa> lista_mesas) {
         ArrayListModel<Mesa> oldLista_secciones = this.lista_mesas;
-        this.lista_mesas = lista_mesas;
+        this.lista_mesas.clear();
+        this.lista_mesas.addAll(lista_mesas);
         firePropertyChange(PROP_LISTA_MESAS, oldLista_secciones, lista_mesas, false);
     }
 
@@ -117,9 +120,10 @@ public class AreaVentaViewModel extends AbstractViewModel {
      *
      * @param lista_area new value of lista_area
      */
-    private void setLista_area(ArrayListModel<Area> lista_area) {
+    public void setLista_area(List<Area> lista_area) {
         ArrayListModel<Area> oldLista_menu = this.lista_area;
-        this.lista_area = lista_area;
+        this.lista_area.clear();
+        this.lista_area.addAll(lista_area);
         firePropertyChange(PROP_LISTA_AREA, oldLista_menu, lista_area, false);
     }
 

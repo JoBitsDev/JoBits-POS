@@ -189,7 +189,7 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
         getBean().setLista_resumen_area_venta(controller.getResumenPorAreaVenta());
         getBean().setLista_resumen_pto_venta(controller.getResumenPorPtoVenta());
         getBean().setLista_resumen_usuario_venta(controller.getResumenPorUsuarioVenta());
-        getBean().setPropina_total(utils.setDosLugaresDecimales(controller.getTotalPropina()));
+        getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(controller.getTotalPropina()));
         getBean().setReabrir_ventas_enabled(controller.canReabrirVenta());
         getBean().setTotal_autorizos(controller.getTotalAutorizos());
         getBean().setTotal_gasto_insumos(controller.getTotalGastadoInsumos());

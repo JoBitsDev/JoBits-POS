@@ -294,9 +294,9 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         jPanelCrossReference = new javax.swing.JPanel();
         jPanelIngElab = new javax.swing.JPanel();
         jXPanelControles = new org.jdesktop.swingx.JXPanel();
-        jButtonAdd = new javax.swing.JButton();
         jToggleButtonCrossReference = new javax.swing.JToggleButton();
         jButtonCancelar = new javax.swing.JButton();
+        jButtonAdd = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
@@ -389,15 +389,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         jXPanelControles.setBackground(new java.awt.Color(204, 204, 204));
         jXPanelControles.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
 
-        jButtonAdd.setText(bundle.getString("label_crear")); // NOI18N
-        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddActionPerformed(evt);
-            }
-        });
-        jXPanelControles.add(jButtonAdd);
-
-        jToggleButtonCrossReference.setText(bundle.getString("label_ver_uso_de_insumo_en_platos")); // NOI18N
+        jToggleButtonCrossReference.setText("Mostrar el uso");
         jToggleButtonCrossReference.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jToggleButtonCrossReferenceStateChanged(evt);
@@ -417,6 +409,14 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
             }
         });
         jXPanelControles.add(jButtonCancelar);
+
+        jButtonAdd.setText(bundle.getString("label_crear")); // NOI18N
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
+        });
+        jXPanelControles.add(jButtonAdd);
 
         getContentPane().add(jXPanelControles, java.awt.BorderLayout.PAGE_END);
 

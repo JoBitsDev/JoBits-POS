@@ -65,6 +65,7 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Activar"/>
             <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="&#xa;MaterialComponentsFactory.Buttons.getIconButton(new javax.swing.ImageIcon(getClass().&#xa;getResource(&quot;/restManager/resources/images/key.png&quot;)))"/>

@@ -186,7 +186,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         if (getBean().isCheck_ocultar_productos_ipv()) {
             for (int i = 0; i < getBean().getLista_ipv_registro().getSize();) {
                 IpvRegistro x = getBean().getLista_ipv_registro().get(i);
-                if (x.getConsumo() != 0 || x.getDisponible() != 0) {
+                if (x.getConsumo() == 0 && x.getDisponible() == 0) {
                     getBean().getLista_ipv_registro().remove(i);
                 } else {
                     i++;
@@ -202,7 +202,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         if (getBean().isCheck_ocultar_productos_ipv_venta()) {
             for (int i = 0; i < getBean().getLista_ipv_venta_registro().getSize();) {
                 IpvVentaRegistro x = getBean().getLista_ipv_venta_registro().get(i);
-                if (x.getVendidos() != 0 || x.getDisponible() != 0) {
+                if (x.getVendidos() == 0 && x.getDisponible() == 0) {
                     getBean().getLista_ipv_venta_registro().remove(i);
                 } else {
                     i++;

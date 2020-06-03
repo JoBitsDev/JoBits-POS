@@ -57,6 +57,7 @@ public class StatusBarView extends AbstractViewPanel {
     jButtonLlave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/key.png"))); // NOI18N
     jButtonLlave.setToolTipText("Activar");
     jButtonLlave.setBorderPainted(false);
+    jButtonLlave.setEnabled(false);
     jPanel4.add(jButtonLlave);
 
     add(jPanel4, java.awt.BorderLayout.WEST);

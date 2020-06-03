@@ -77,7 +77,9 @@ public class MenuSeccionViewModel extends AbstractViewModel {
         firePropertyChange(PROP_MENU_SELECCIONADO, oldMenu_seleccionado, menu_seleccionado, false);
         setSeccion_seleccionada(null);
         getLista_secciones().clear();
-        getLista_secciones().addAll(getMenu_seleccionado().getSeccionList());
+        if (menu_seleccionado != null) {
+            getLista_secciones().addAll(getMenu_seleccionado().getSeccionList());
+        }
     }
 
     /**
@@ -94,9 +96,10 @@ public class MenuSeccionViewModel extends AbstractViewModel {
      *
      * @param lista_secciones new value of lista_secciones
      */
-    private void setLista_secciones(ArrayListModel<Seccion> lista_secciones) {
+    public void setLista_secciones(List<Seccion> lista_secciones) {
         ArrayListModel<Seccion> oldLista_secciones = this.lista_secciones;
-        this.lista_secciones = lista_secciones;
+        this.lista_secciones.clear();
+        this.lista_secciones.addAll(lista_secciones);
         firePropertyChange(PROP_LISTA_SECCIONES, oldLista_secciones, lista_secciones, false);
     }
 
@@ -114,9 +117,10 @@ public class MenuSeccionViewModel extends AbstractViewModel {
      *
      * @param lista_menu new value of lista_menu
      */
-    private void setLista_menu(ArrayListModel<Carta> lista_menu) {
+    public void setLista_menu(List<Carta> lista_menu) {
         ArrayListModel<Carta> oldLista_menu = this.lista_menu;
-        this.lista_menu = lista_menu;
+        this.lista_menu.clear();
+        this.lista_menu.addAll(lista_menu);
         firePropertyChange(PROP_LISTA_MENU, oldLista_menu, lista_menu, false);
     }
 
