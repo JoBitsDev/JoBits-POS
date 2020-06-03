@@ -15,6 +15,7 @@ import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.adapters.repo.CartaDAO;
 import com.jobits.pos.adapters.repo.ProductoVentaDAO;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -73,14 +74,14 @@ public class ProductoVentaListController extends OldAbstractListController<Produ
 
     private void validate(R.NivelAcceso nivel) {
         if (!new LogInController().constructoAuthorizationView(getView(), nivel)) {
-            NotificationService.getInstance().notify("Acceso denegado", TipoNotificacion.ERROR);
+            Application.getInstance().getNotificationService().notify("Acceso denegado", TipoNotificacion.ERROR);
             throw new IllegalAccessError("Access denied");
         }
     }
 
     public boolean canSetVisible(ProductoVenta get) {
         if (get.getCocinacodCocina() == null || get.getSeccionnombreSeccion() == null) {
-            NotificationService.getInstance().notify("El producto de venta no puede ponerse visible "
+            Application.getInstance().getNotificationService().notify("El producto de venta no puede ponerse visible "
                     + "\n si no se encuentra dentro de una seccion y un punto de elaboracion", TipoNotificacion.ERROR);
             return false;
         }

@@ -19,6 +19,9 @@ import com.jobits.pos.ui.menu.MenuSeccionView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
+import com.jobits.pos.ui.venta.OrdenDetailFragmentView;
+import com.jobits.pos.ui.venta.VentaDetailView;
+import com.jobits.pos.ui.venta.presenter.OrdenDetailViewModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -73,7 +76,9 @@ public class CoordinatorService implements Coordinator {
                 MenuSeccionView.VIEW_NAME,
                 AreaVentaListView.VIEW_NAME,
                 ConfiguracionView.VIEW_NAME,
-                IpvGestionView.VIEW_NAME));
+                IpvGestionView.VIEW_NAME,
+                VentaDetailView.VIEW_NAME));
+        navigationGraph.put(VentaDetailView.VIEW_NAME, Arrays.asList(OrdenDetailFragmentView.VIEW_NAME));
     }
 
 }

@@ -107,8 +107,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
 
         jPanelInsert = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextFieldAutoComplete = MaterialComponentsFactory.Input.getTextField("Buscar...", "");
+        jTextFieldAutoComplete = MaterialComponentsFactory.Input.getTextField("Buscar...", jTextFieldDataName);
         jButtonAgregarProd = MaterialComponentsFactory.Buttons.getAddButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPaneCrossReference = new javax.swing.JScrollPane();
@@ -122,16 +121,13 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         setLayout(new java.awt.BorderLayout());
 
         jPanelInsert.setBackground(new java.awt.Color(204, 204, 204));
+        jPanelInsert.setMaximumSize(new java.awt.Dimension(2147483647, 64));
         jPanelInsert.setMinimumSize(new java.awt.Dimension(100, 64));
         jPanelInsert.setOpaque(false);
         jPanelInsert.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setMinimumSize(new java.awt.Dimension(100, 38));
         jPanel1.setOpaque(false);
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jLabel1.setText(bundle.getString("label_producto_venta")); // NOI18N
-        jPanel1.add(jLabel1);
 
         jTextFieldAutoComplete.setMinimumSize(new java.awt.Dimension(250, 26));
         jTextFieldAutoComplete.setPreferredSize(new java.awt.Dimension(200, 50));
@@ -142,7 +138,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         jButtonAgregarProd.setPreferredSize(new java.awt.Dimension(130, 50));
         jPanel1.add(jButtonAgregarProd);
 
-        jPanelInsert.add(jPanel1, java.awt.BorderLayout.CENTER);
+        jPanelInsert.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         add(jPanelInsert, java.awt.BorderLayout.NORTH);
 
@@ -168,6 +164,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
 
+        jPanelOpciones.setMaximumSize(new java.awt.Dimension(32767, 60));
         jPanelOpciones.setOpaque(false);
         jPanelOpciones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
@@ -185,7 +182,6 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregarProd;
     private javax.swing.JButton jButtonDeleteProd;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelInsert;
@@ -213,11 +209,10 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
-        jLabel1.setText(jTextFieldDataName);
         BindableListIntelliHint<K> autoCompleteModel = new BindableListIntelliHint(
                 new SelectionInList<K>(autoCompletitionData, autoCompletitionDataSelection), jTextFieldAutoComplete);
-        jButtonAgregarProd.setAction(addAction);
-        jButtonDeleteProd.setAction(removeAction);
+        jButtonAgregarProd.addActionListener(addAction);
+        jButtonDeleteProd.addActionListener(removeAction);
 
         Bindings.bind(jTableCrossReference, new SelectionInList(tableDataHolder, tableSelectionDataHolder));
 

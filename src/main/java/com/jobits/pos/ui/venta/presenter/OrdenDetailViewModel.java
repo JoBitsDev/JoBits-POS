@@ -83,6 +83,8 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_ES_AUTORIZO = "es_autorizo";
 
+    public static final String PROP_ORDEN_STATUS_UPDATE = "status_update";
+
     /**
      * Get the value of es_autorizo
      *
@@ -101,6 +103,7 @@ public class OrdenDetailViewModel extends AbstractViewModel {
         boolean oldEs_autorizo = this.es_autorizo;
         this.es_autorizo = es_autorizo;
         firePropertyChange(PROP_ES_AUTORIZO, oldEs_autorizo, es_autorizo);
+        firePropertyChange(PROP_ORDEN_STATUS_UPDATE, oldEs_autorizo, es_autorizo);
     }
 
     /**
@@ -121,6 +124,7 @@ public class OrdenDetailViewModel extends AbstractViewModel {
         float oldPorciento_servicio = this.porciento_servicio;
         this.porciento_servicio = porciento_servicio;
         firePropertyChange(PROP_PORCIENTO_SERVICIO, oldPorciento_servicio, porciento_servicio);
+        firePropertyChange(PROP_ORDEN_STATUS_UPDATE, oldPorciento_servicio, porciento_servicio);
     }
 
     /**
@@ -161,6 +165,8 @@ public class OrdenDetailViewModel extends AbstractViewModel {
         String oldTotal_orden = this.total_orden;
         this.total_orden = total_orden;
         firePropertyChange(PROP_TOTAL_ORDEN, oldTotal_orden, total_orden);
+        firePropertyChange(PROP_ORDEN_STATUS_UPDATE, oldTotal_orden, total_orden);
+
     }
 
     /**

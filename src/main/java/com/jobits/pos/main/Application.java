@@ -35,7 +35,7 @@ public class Application {
     //
     // Name
     //
-    private final String APP_NAME = "APP";
+    private final String APP_NAME = "JoBits POS";
 
     //
     // UI
@@ -47,8 +47,10 @@ public class Application {
     private CoordinatorService coordinator;
 
     private NavigationService navigator;
-    
+
     private LongProcessActionService backgroundWorker;
+
+    private NotificationService notificationService = NotificationService.getInstance();
 
     //
     // App
@@ -75,7 +77,7 @@ public class Application {
         setNotificationChannel();
         calculateLicenceLeft();
         mainWindow = new MainWindow();
-        //mainWindow.setTitle(APP_NAME);
+        mainWindow.setTitle(APP_NAME);
         mainWindow.setWelcomeHeader(true);
         rootView = RootView.getInstance();
         mainWindow.setLocationRelativeTo(null);
@@ -102,7 +104,7 @@ public class Application {
     }
 
     private void setNotificationChannel() {
-        NotificationService.registerNotificationChannel(new NotificationHandler());
+        notificationService.registerNotificationChannel(new NotificationHandler());
     }
 
     public Personal getLoggedUser() {
@@ -136,7 +138,9 @@ public class Application {
     public LongProcessActionService getBackgroundWorker() {
         return backgroundWorker;
     }
-    
-    
+
+    public NotificationService getNotificationService() {
+        return notificationService;
+    }
 
 }

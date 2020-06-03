@@ -100,7 +100,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
                     v.setFecha(current);
                     initDateNotSet = false;
                 }
-                
+
                 if (ve.getAsistenciaPersonalList() != null) {
                     v.getAsistenciaPersonalList().addAll(ve.getAsistenciaPersonalList());
                 }
@@ -111,7 +111,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
         if (initDateNotSet) {
             throw new ValidatingException(getView());
         }
-        VentaDetailController controller = new VentaDetailController(v, getView(), al);
+        VentaDetailController controller = new VentaDetailController(v, al);
 
     }
 

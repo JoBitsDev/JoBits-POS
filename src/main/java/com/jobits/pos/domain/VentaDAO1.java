@@ -23,6 +23,9 @@ import com.jobits.pos.adapters.repo.AsistenciaPersonalDAO;
 
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.venta.presenter.ResumenVentaAreaTablaModel;
+import com.jobits.pos.ui.venta.presenter.ResumenVentaPtoElabTablaModel;
+import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
 
 /**
  * FirstDream
@@ -207,6 +210,38 @@ public class VentaDAO1 {
         }
     }
 
+    public static ResumenVentaAreaTablaModel getResumenVentaPorArea(Venta v, Area a) {
+        //inicializando los datos
+        ResumenVentaAreaTablaModel retu = null;
+        ArrayList[] rowData = utils.initArray(new ArrayList[4]);
+        ArrayList<ProductovOrden> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        float totalReal = 0;
+        for (Orden o : aux) {
+            if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
+                joinListsProductovOrdenByCocina(ret, new ArrayList<>(o.getProductovOrdenList()), null);
+                totalReal += o.getOrdenvalorMonetario();
+            }
+
+        }//nˆ3
+
+        //convirtiendo a rowData
+        float totalNeta = 0;
+        for (ProductovOrden x : ret) {
+            ProductoVenta pv = x.getProductoVenta();
+            totalNeta += pv.getPrecioVenta() * x.getCantidad();
+        }
+        if (totalNeta != 0) {
+            retu = new ResumenVentaAreaTablaModel(a,
+                    utils.setDosLugaresDecimalesFloat(totalNeta),
+                    utils.setDosLugaresDecimalesFloat(totalReal));
+
+        }
+        return retu;
+    }
+
     //******************************************************************************************************************
     //******************************************************************************************************************
     // ********************************Resumenes de gastos***********************************************************
@@ -378,7 +413,7 @@ public class VentaDAO1 {
         return ret;
     }
 
-    public static List<ProductovOrden> getResumenVentaPorArea(Venta v, Area a) {
+    public static List<ProductovOrden> getResumenVentaPorAreaOld(Venta v, Area a) {
         //inicializando los datos
         ArrayList<ProductovOrden> ret = new ArrayList<>();
         ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
@@ -391,6 +426,40 @@ public class VentaDAO1 {
 
         }//nˆ3
 
+        return ret;
+    }
+
+    public static ResumenVentaUsuarioTablaModel getResumenVentasCamareroB(Venta v, Personal p) {
+
+        //inicializando los datos
+        ResumenVentaUsuarioTablaModel ret = null;
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        float total = 0;
+        int totalOrdenes = 0;
+        float pago_por_ventas = 0;
+        //llenando l array
+        for (Orden o : aux) {
+            if (o.getPersonalusuario() != null) {
+                if (!o.getDeLaCasa() && o.getPersonalusuario().equals(p) && o.getHoraTerminada() != null) {
+                    total += o.getOrdenvalorMonetario();
+                    totalOrdenes++;
+                    for (ProductovOrden pv : o.getProductovOrdenList()) {
+                        if (pv.getProductoVenta().getPagoPorVenta() != null) {
+                            pago_por_ventas += pv.getCantidad() * pv.getProductoVenta().getPagoPorVenta();
+                        }
+                    }
+                }
+            }
+        }//n
+
+        //convirtiendo a rowData
+        if (total != 0) {
+            ret = new ResumenVentaUsuarioTablaModel(p,
+                    utils.setDosLugaresDecimales(total),
+                    "" + totalOrdenes,
+                    utils.setDosLugaresDecimales(pago_por_ventas));
+        }
         return ret;
     }
 
@@ -411,6 +480,30 @@ public class VentaDAO1 {
         }//nˆ3
 
         return ret;
+    }
+
+    public static ResumenVentaPtoElabTablaModel getResumenVentasCocinaOnTable(Venta v, Cocina c) {
+        //inicializando los datos
+        ResumenVentaPtoElabTablaModel resumen = null;
+        ArrayList<ProductovOrden> ret = new ArrayList<>();
+        ArrayList<Orden> aux = new ArrayList(v.getOrdenList());
+
+        //llenando l array
+        llenarArrayProductoVOrden(ret, aux, c, false, false);
+
+        //convirtiendo a rowData
+        float total = 0;
+        for (ProductovOrden x : ret) {
+            ProductoVenta pv = x.getProductoVenta();
+            total += pv.getPrecioVenta() * x.getCantidad();
+        }
+        if (total != 0) {
+            resumen = new ResumenVentaPtoElabTablaModel(c, utils.setDosLugaresDecimales(total));
+
+        }
+
+        return resumen;
+
     }
 
     public static List<ProductovOrden> getResumenVentasCocina(Venta v, Cocina c) {
@@ -612,9 +705,9 @@ public class VentaDAO1 {
         }
         return utils.setDosLugaresDecimalesFloat(ret);
     }
-    
+
     public static float getValorTotalPorcientoVenta(Venta v) {
-        return getValorTotalVentas(v)-getValorTotalVentasNeta(v);
+        return getValorTotalVentas(v) - getValorTotalVentasNeta(v);
     }
 
     //******************************************************************************************************************
@@ -622,7 +715,6 @@ public class VentaDAO1 {
     // ********************************Metodos privados de la clase **************************************************
     //******************************************************************************************************************
     //******************************************************************************************************************
-    
     /**
      * agrega a un arreglo de ProductosvOrdenes una nueva orden
      *
@@ -717,7 +809,5 @@ public class VentaDAO1 {
         }
 
     }
-
-    
 
 }

@@ -47,9 +47,14 @@ import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.domain.VentaDAO1;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.LongProcessMethod;
 import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.venta.presenter.ResumenVentaAreaTablaModel;
+import com.jobits.pos.ui.venta.presenter.ResumenVentaPtoElabTablaModel;
+import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
 
 /**
  * FirstDream
@@ -61,66 +66,55 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     Date fechaFin = null;
     private OrdenController ordController;
-    private VentaDetailView vi;
     int turnoActivo = 0;
 
     public VentaDetailController() {
         super(VentaDAO.getInstance());
-        OrdenDAO.getInstance().addPropertyChangeListener(this);
     }
 
-    public VentaDetailController(Venta instance) {
+    public VentaDetailController(OrdenController ordenController) {
+        super(VentaDAO.getInstance());
+        OrdenDAO.getInstance().addPropertyChangeListener(this);
+        this.ordController = ordenController;
+        Application.getInstance().getBackgroundWorker().processInBackground(() -> {
+            instance = initDiaVentas(null);
+        });
+
+    }
+
+    public VentaDetailController(OrdenController ordenController, Venta instance) {
         super(instance, VentaDAO.getInstance());
+        this.ordController = ordenController;
         OrdenDAO.getInstance().addPropertyChangeListener(this);
+        if (getInstance().getCambioTurno1() != null) {
+            turnoActivo = 2;
+        }
+
     }
 
-    public VentaDetailController(Window parent) {
-        super(VentaDAO.getInstance());
-        this.parent = parent;
-        OrdenDAO.getInstance().addPropertyChangeListener(this);
-        new LongProcessActionServiceImpl() {
-            @Override
-            protected void longProcessMethod() {
-                instance = initDiaVentas(null);
-            }
-        }.performAction(parent);
-        state = State.CREATING;
-        constructView(parent);
-    }
-
-    public VentaDetailController(Window parent, Date diaVentas) {
-        super(VentaDAO.getInstance());
-        this.parent = parent;
-        OrdenDAO.getInstance().addPropertyChangeListener(this);
-        new LongProcessActionServiceImpl() {
-            @Override
-            protected void longProcessMethod() {
-                instance = initDiaVentas(diaVentas);
-            }
-        }.performAction(parent);
-        state = State.CREATING;
-        constructView(parent);
-    }
-
-    public VentaDetailController(Venta instance, Window parent) {
-        super(instance, parent, VentaDAO.getInstance());
-        OrdenDAO.getInstance().addPropertyChangeListener(this);
-    }
-
-    public VentaDetailController(Date diaVentas) {
+    public VentaDetailController(OrdenController ordenController, Date diaVentas) {
         super(VentaDAO.getInstance());
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-        instance = initDiaVentas(diaVentas);
-        state = State.CREATING;
+        this.ordController = ordenController;
+        Application.getInstance().getBackgroundWorker().processInBackground(() -> {
+            instance = initDiaVentas(diaVentas);
+
+        });
+        if (getInstance().getCambioTurno1() != null) {
+            turnoActivo = 2;
+        }
+
     }
 
-    public VentaDetailController(Venta instance, Window parent, Date fechafin) {
+    public VentaDetailController(Venta instance, Date fechafin) {
         super(VentaDAO.getInstance());
-        setParent(parent);
         setInstance(instance);
         this.fechaFin = fechafin;
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-        constructView(parent);
+        if (getInstance().getCambioTurno1() != null) {
+            turnoActivo = 2;
+        }
+
     }
 
     @Override
@@ -134,19 +128,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        vi = new VentaDetailView(getInstance(), this, (JDialog) parent, fechaFin);
-        if (getInstance().getCambioTurno1() != null) {
-            turnoActivo = 2;
-        }
-        setView(vi);
-        getView().updateView();
-        getView().setVisible(true);
-
     }
 
     public void updateOrdenDialog(Orden objectAtSelectedRow) {
         if (ordController == null) {
-            ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
+            //  ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
 
         } else {
             ordController.setInstance(objectAtSelectedRow);
@@ -166,7 +152,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         getView().updateView();
         ordController.create(newOrden, true);
         if (nil) {
-            ordController = new OrdenController(newOrden, vi.getjPanelDetailOrdenes());
+            //   ordController = new OrdenController(newOrden, vi.getjPanelDetailOrdenes());
         } else {
             ordController.setInstance(newOrden);
         }
@@ -192,12 +178,12 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
                 ordController.setInstance(getOrdenesActivas().get(index));
             }
         }
-        vi.updateView();
+        //vi.updateView();
     }
 
-    public void terminarVentas() {
+    public boolean terminarVentas() {
 
-        if (showConfirmDialog(vi, "¿Desea terminar el día de trabajo?")) {
+        if (showConfirmDialog(null, "¿Desea terminar el día de trabajo?")) {
             float ventaTotal = 0,
                     ventasGastosEnInsumos = 0,
                     ventasGastosGastos = 0,
@@ -206,8 +192,8 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             getModel().getEntityManager().refresh(v);
             for (Orden x : super.getInstance().getOrdenList()) {
                 if (x.getHoraTerminada() == null) {
-                    showErrorDialog(vi, "Existen tickets sin cerrar (" + x + "). Cierre los tickets antes de terminar la venta");
-                    return;
+                    showErrorDialog(null, "Existen tickets sin cerrar (" + x + "). Cierre los tickets antes de terminar la venta");
+                    return false;
                 }
                 if (!x.getDeLaCasa()) {
                     ventaTotal += x.getOrdenvalorMonetario();
@@ -221,13 +207,16 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             for (AsistenciaPersonal x : super.getInstance().getAsistenciaPersonalList()) {
                 ventasPagoTrabajadores += x.getPago();
             }
+            super.getInstance().setCambioTurno1(super.getInstance().getOrdenList().get(super.getInstance().getOrdenList().size() - 1).getCodOrden());
             super.getInstance().setVentaTotal((double) ventaTotal);
             super.getInstance().setVentagastosEninsumos((double) ventasGastosEnInsumos);
             super.getInstance().setVentagastosGastos(ventasGastosGastos);
             super.getInstance().setVentagastosPagotrabajadores(ventasPagoTrabajadores);
             update(super.getInstance());
 
+            return true;
         }
+        return false;
     }
 
     public void calcularCambio(Orden objectAtSelectedRow) {
@@ -392,7 +381,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         if (ordController != null) {
             if (showConfirmDialog(getView(), "Desea enviar a cocina, cerrar y crear una nueva orden")) {
                 ordController.enviarACocina();
-                ordController.despachar();
+                ordController.cerrarOrden();
                 createNewOrden();
             }
         }
@@ -577,9 +566,8 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         return AreaDAO.getInstance().findAll();
     }
 
-    public void printAreaResumen(String string) {
-        Area a = AreaDAO.getInstance().find(string);
-        Impresion.getDefaultInstance().printResumenVentaArea(VentaDAO1.getResumenVentaPorArea(getInstance(), a), getInstance().getFecha());
+    public void printAreaResumen(Area a) {
+        Impresion.getDefaultInstance().printResumenVentaArea(VentaDAO1.getResumenVentaPorAreaOld(getInstance(), a), getInstance().getFecha());
     }
 
     public void setPropina(float value) {
@@ -659,6 +647,65 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             System.out.println(ex.getMessage());
             showErrorDialog(getView(), "Ocurrio un error importando la venta.");
             return false;
+        }
+    }
+
+    public List<ResumenVentaAreaTablaModel> getResumenPorAreaVenta() {
+        List<ResumenVentaAreaTablaModel> ret = new ArrayList<>();
+        for (Area a : getAreaList()) {
+            ResumenVentaAreaTablaModel newResumen = VentaDAO1.getResumenVentaPorArea(getInstance(), a);
+            if (newResumen != null) {
+                ret.add(newResumen);
+            }
+        }
+        return ret;
+    }
+
+    public List<ResumenVentaPtoElabTablaModel> getResumenPorPtoVenta() {
+        List<ResumenVentaPtoElabTablaModel> ret = new ArrayList<>();
+        for (Cocina c : getCocinaList()) {
+            ResumenVentaPtoElabTablaModel newResumen = VentaDAO1.getResumenVentasCocinaOnTable(getInstance(), c);
+            if (newResumen != null) {
+                ret.add(newResumen);
+            }
+        }
+        return ret;
+    }
+
+    public List<ResumenVentaUsuarioTablaModel> getResumenPorUsuarioVenta() {
+        List<ResumenVentaUsuarioTablaModel> ret = new ArrayList<>();
+        for (Personal p : getPersonalList()) {
+            ResumenVentaUsuarioTablaModel newResumen = VentaDAO1.getResumenVentasCamareroB(getInstance(), p);
+            if (newResumen != null) {
+                ret.add(newResumen);
+            }
+        }
+        return ret;
+    }
+
+    public boolean canReabrirVenta() {
+        return getInstance().getCambioTurno1() != null;
+
+    }
+
+    public String getTotalGastos() {
+        float total = 0;
+        for (GastoVenta g : getInstance().getGastoVentaList()) {
+            total+= g.getImporte();
+        }
+        return utils.setDosLugaresDecimales(total);
+    }
+
+    public boolean canCambiarTurno() {
+        return getInstance().getCambioTurno1() == null;
+
+    }
+
+    public float getTotalPropina() {
+        if (getInstance().getVentapropina() != null) {
+            return getInstance().getVentapropina();
+        } else {
+            return 0;
         }
     }
 

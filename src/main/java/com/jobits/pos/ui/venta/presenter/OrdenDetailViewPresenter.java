@@ -22,21 +22,20 @@ import java.util.Optional;
  */
 public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailViewModel> {
 
-    public static String ACTION_ADD_PRODUCTO;
-    public static String ACTION_REMOVE_PRODUCTO;
-    public static String ACTION_SET_PORCIENTO;
-    public static String ACTION_SET_AUTORIZO;
-    public static String ACTION_ENVIAR_ELABORAR;
-    public static String ACTION_CERRAR_ORDEN;
-    public static String ACTION_ADD_NOTA;
-    public static String ACTION_IMPRIMIR_CIERRE_PARCIAL;
+    public static String ACTION_ADD_PRODUCTO = "Agregar";
+    public static String ACTION_REMOVE_PRODUCTO = "Eliminar";
+    public static String ACTION_SET_PORCIENTO = "Porciento";
+    public static String ACTION_SET_AUTORIZO = "Autorizo";
+    public static String ACTION_ENVIAR_ELABORAR = "Enviar a elaborar";
+    public static String ACTION_CERRAR_ORDEN = "Cerrar Orden";
+    public static String ACTION_ADD_NOTA = "Agregar Nota";
+    public static String ACTION_IMPRIMIR_CIERRE_PARCIAL = "Cierre Parcial";
 
     private OrdenController controller;
 
     public OrdenDetailViewPresenter(OrdenController controller) {
         super(new OrdenDetailViewModel());
         this.controller = controller;
-        updateBean();
     }
 
     public void setOrden(com.jobits.pos.domain.models.Orden o) {

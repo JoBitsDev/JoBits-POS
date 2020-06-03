@@ -16,9 +16,13 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
- import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.presenter.OrdenDetailViewModel;
 import com.jobits.pos.ui.venta.presenter.OrdenDetailViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.BorderLayout;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
@@ -57,24 +61,23 @@ public class OrdenDetailFragmentView extends AbstractViewPanel {
         jLabelVALORNOORDEN = new javax.swing.JLabel();
         jPanelDetalles = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jToggleButton1 = new com.jidesoft.swing.JideToggleButton();
-        jideButtonImpimirTicket = new com.jidesoft.swing.JideButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jideButtonImpimirTicket = new javax.swing.JButton();
         jCheckBoxPorciento = new javax.swing.JCheckBox();
         jSpinnerPorciento = new javax.swing.JSpinner();
+        jideButtonAgregarNota = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jideButtonEnviarCocina = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jideButtonCerrarMesa = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jPanelCrossReference = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
         jCheckBoxDELACASA = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         jLabelVALORTotal = new javax.swing.JLabel();
-        jPanelCrossReference = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jListSecciones = new javax.swing.JList<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         jListProductos = new javax.swing.JList<>();
-        jXPanelBotones = new org.jdesktop.swingx.JXPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jideButtonAgregarNota = new com.jidesoft.swing.JideButton();
-        jideButtonEnviarCocina = new com.jidesoft.swing.JideButton();
-        jideButtonCerrarMesa = new com.jidesoft.swing.JideButton();
 
         setBackground(new java.awt.Color(204, 204, 204));
         setLayout(new java.awt.BorderLayout());
@@ -86,7 +89,7 @@ public class OrdenDetailFragmentView extends AbstractViewPanel {
         jPanelroot.setLayout(new java.awt.BorderLayout());
 
         jPanelInfo.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelInfo.setBorder(javax.swing.BorderFactory.createCompoundBorder(new org.jdesktop.swingx.border.DropShadowBorder(), javax.swing.BorderFactory.createTitledBorder("Información")));
+        jPanelInfo.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Información")));
         jPanelInfo.setOpaque(false);
         jPanelInfo.setLayout(new java.awt.BorderLayout());
 
@@ -94,7 +97,7 @@ public class OrdenDetailFragmentView extends AbstractViewPanel {
         jPanel4.setLayout(new java.awt.GridLayout(4, 2));
 
         jLabel3.setBackground(new java.awt.Color(153, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font(".SF NS Text", 1, 12)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jLabel3.setText(bundle.getString("label_fecha")); // NOI18N
@@ -102,50 +105,50 @@ public class OrdenDetailFragmentView extends AbstractViewPanel {
         jPanel4.add(jLabel3);
 
         jLabelVALORFecha.setBackground(new java.awt.Color(153, 255, 255));
-        jLabelVALORFecha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabelVALORFecha.setFont(new java.awt.Font(".SF NS Text", 0, 12)); // NOI18N
         jLabelVALORFecha.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelVALORFecha.setText("dd/mm/yy");
         jPanel4.add(jLabelVALORFecha);
 
         jLabel7.setBackground(new java.awt.Color(153, 255, 255));
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font(".SF NS Text", 1, 12)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel7.setText(bundle.getString("label_hora")); // NOI18N
         jPanel4.add(jLabel7);
 
         jLabelVALORHora.setBackground(new java.awt.Color(153, 255, 255));
-        jLabelVALORHora.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabelVALORHora.setFont(new java.awt.Font(".SF NS Text", 0, 12)); // NOI18N
         jLabelVALORHora.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelVALORHora.setText("hh:mm");
         jPanel4.add(jLabelVALORHora);
 
         jLabel5.setBackground(new java.awt.Color(153, 255, 255));
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font(".SF NS Text", 1, 12)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText(bundle.getString("label_dependiente")); // NOI18N
         jPanel4.add(jLabel5);
 
         jLabelVALORUsuario.setBackground(new java.awt.Color(153, 255, 255));
-        jLabelVALORUsuario.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabelVALORUsuario.setFont(new java.awt.Font(".SF NS Text", 0, 12)); // NOI18N
         jLabelVALORUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelVALORUsuario.setText("Nombre Apellido");
         jPanel4.add(jLabelVALORUsuario);
 
         jLabel6.setBackground(new java.awt.Color(153, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font(".SF NS Text", 1, 12)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel6.setText(bundle.getString("label_mesa")); // NOI18N
         jPanel4.add(jLabel6);
 
         jLabelVALORMesa.setBackground(new java.awt.Color(153, 255, 255));
-        jLabelVALORMesa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabelVALORMesa.setFont(new java.awt.Font(".SF NS Text", 0, 12)); // NOI18N
         jLabelVALORMesa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelVALORMesa.setText("M-xx");
         jPanel4.add(jLabelVALORMesa);
 
         jPanelInfo.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        jLabelVALORNOORDEN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelVALORNOORDEN.setFont(new java.awt.Font(".SF NS Text", 1, 18)); // NOI18N
         jLabelVALORNOORDEN.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelVALORNOORDEN.setText("No: 5534");
         jPanelInfo.add(jLabelVALORNOORDEN, java.awt.BorderLayout.EAST);
@@ -158,106 +161,98 @@ public class OrdenDetailFragmentView extends AbstractViewPanel {
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 15, 5));
 
+        jToggleButton1.setFont(jToggleButton1.getFont());
         jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/vista_menu.png"))); // NOI18N
-        jToggleButton1.setToolTipText("Mostrar/Ocultar menu lateral");
         jToggleButton1.setSelected(true);
-        jToggleButton1.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jToggleButton1ItemStateChanged(evt);
-            }
-        });
+        jToggleButton1.setMaximumSize(new java.awt.Dimension(40, 30));
+        jToggleButton1.setMinimumSize(new java.awt.Dimension(30, 30));
+        jToggleButton1.setPreferredSize(new java.awt.Dimension(30, 30));
         jPanel2.add(jToggleButton1);
 
+        jideButtonImpimirTicket.setFont(jideButtonImpimirTicket.getFont());
         jideButtonImpimirTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jideButtonImpimirTicket.setToolTipText(bundle.getString("label_imprimircuenta")); // NOI18N
+        jideButtonImpimirTicket.setBorderPainted(false);
         jPanel2.add(jideButtonImpimirTicket);
 
         jCheckBoxPorciento.setBackground(new java.awt.Color(255, 255, 153));
+        jCheckBoxPorciento.setFont(jCheckBoxPorciento.getFont());
         jCheckBoxPorciento.setSelected(true);
         jCheckBoxPorciento.setText("%");
         jCheckBoxPorciento.setEnabled(false);
         jPanel2.add(jCheckBoxPorciento);
 
+        jSpinnerPorciento.setFont(jSpinnerPorciento.getFont());
         jSpinnerPorciento.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(-100.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
         jPanel2.add(jSpinnerPorciento);
 
-        jCheckBoxDELACASA.setBackground(new java.awt.Color(255, 255, 153));
-        jCheckBoxDELACASA.setText("De la Casa");
-        jPanel2.add(jCheckBoxDELACASA);
+        jideButtonAgregarNota.setBackground(new java.awt.Color(204, 204, 204));
+        jideButtonAgregarNota.setText("Nota");
+        jideButtonAgregarNota.setBorderPainted(false);
+        jPanel2.add(jideButtonAgregarNota);
 
-        jLabel2.setBackground(new java.awt.Color(153, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel2.setText("Total: ");
-        jPanel2.add(jLabel2);
+        jideButtonEnviarCocina.setBackground(new java.awt.Color(204, 204, 204));
+        jideButtonEnviarCocina.setText("Cocina");
+        jideButtonEnviarCocina.setBorderPainted(false);
+        jPanel2.add(jideButtonEnviarCocina);
 
-        jLabelVALORTotal.setBackground(new java.awt.Color(153, 255, 255));
-        jLabelVALORTotal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelVALORTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelVALORTotal.setText("0.00 CUC");
-        jLabelVALORTotal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel2.add(jLabelVALORTotal);
+        jideButtonCerrarMesa.setBackground(new java.awt.Color(204, 204, 204));
+        jideButtonCerrarMesa.setText("Cerrar");
+        jideButtonCerrarMesa.setBorderPainted(false);
+        jPanel2.add(jideButtonCerrarMesa);
 
         jPanelDetalles.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
         jPanelCrossReference.setBorder(javax.swing.BorderFactory.createTitledBorder("Pedido"));
         jPanelCrossReference.setLayout(new java.awt.BorderLayout());
+
+        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jCheckBoxDELACASA.setBackground(new java.awt.Color(255, 255, 153));
+        jCheckBoxDELACASA.setFont(jCheckBoxDELACASA.getFont());
+        jCheckBoxDELACASA.setText("De la Casa");
+        jPanel5.add(jCheckBoxDELACASA);
+
+        jLabel2.setBackground(new java.awt.Color(153, 255, 255));
+        jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getStyle() | java.awt.Font.BOLD, jLabel2.getFont().getSize()+5));
+        jLabel2.setText("Total: ");
+        jPanel5.add(jLabel2);
+
+        jLabelVALORTotal.setBackground(new java.awt.Color(153, 255, 255));
+        jLabelVALORTotal.setFont(jLabelVALORTotal.getFont().deriveFont(jLabelVALORTotal.getFont().getStyle() | java.awt.Font.BOLD, jLabelVALORTotal.getFont().getSize()+5));
+        jLabelVALORTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelVALORTotal.setText("0.00 CUC");
+        jLabelVALORTotal.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel5.add(jLabelVALORTotal);
+
+        jPanelCrossReference.add(jPanel5, java.awt.BorderLayout.PAGE_END);
+
         jPanelDetalles.add(jPanelCrossReference, java.awt.BorderLayout.CENTER);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Selección de productos"));
-        jPanel3.setPreferredSize(new java.awt.Dimension(522, 130));
-        jPanel3.setLayout(new java.awt.BorderLayout());
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Selección de productos"));
+        jPanel3.setPreferredSize(new java.awt.Dimension(400, 130));
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
 
         jListSecciones.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jListSecciones.setForeground(new java.awt.Color(0, 102, 102));
         jListSecciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(jListSecciones);
 
-        jPanel3.add(jScrollPane3, java.awt.BorderLayout.LINE_START);
+        jPanel3.add(jScrollPane3);
 
+        jListProductos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 5, 1, 1));
         jListProductos.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jListProductos.setForeground(new java.awt.Color(0, 102, 102));
         jListProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(jListProductos);
 
-        jPanel3.add(jScrollPane4, java.awt.BorderLayout.EAST);
+        jPanel3.add(jScrollPane4);
 
         jPanelDetalles.add(jPanel3, java.awt.BorderLayout.WEST);
 
         jPanelroot.add(jPanelDetalles, java.awt.BorderLayout.CENTER);
 
-        jXPanelBotones.setBorder(javax.swing.BorderFactory.createCompoundBorder(new org.jdesktop.swingx.border.DropShadowBorder(), javax.swing.BorderFactory.createTitledBorder("Controles")));
-        jXPanelBotones.setOpaque(false);
-        jXPanelBotones.setLayout(new java.awt.BorderLayout());
-
-        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
-
-        jideButtonAgregarNota.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/nota.png"))); // NOI18N
-        jideButtonAgregarNota.setToolTipText(bundle.getString("label_agregarnota")); // NOI18N
-        jPanel1.add(jideButtonAgregarNota);
-
-        jideButtonEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png"))); // NOI18N
-        jideButtonEnviarCocina.setMnemonic('c');
-        jideButtonEnviarCocina.setToolTipText(bundle.getString("label_cerrar_orden")); // NOI18N
-        jPanel1.add(jideButtonEnviarCocina);
-
-        jideButtonCerrarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/cobrar.png"))); // NOI18N
-        jideButtonCerrarMesa.setMnemonic('c');
-        jideButtonCerrarMesa.setToolTipText(bundle.getString("label_cerrar_orden")); // NOI18N
-        jPanel1.add(jideButtonCerrarMesa);
-
-        jXPanelBotones.add(jPanel1, java.awt.BorderLayout.SOUTH);
-
-        jPanelroot.add(jXPanelBotones, java.awt.BorderLayout.SOUTH);
-
         add(jPanelroot, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jToggleButton1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jToggleButton1ItemStateChanged
-        showMenu = jToggleButton1.isSelected();
-        jPanel3.setVisible(showMenu);
-    }//GEN-LAST:event_jToggleButton1ItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -276,10 +271,10 @@ public class OrdenDetailFragmentView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelVALORUsuario;
     private javax.swing.JList<Seccion> jListProductos;
     private javax.swing.JList<Seccion> jListSecciones;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelCrossReference;
     private javax.swing.JPanel jPanelDetalles;
     private javax.swing.JPanel jPanelInfo;
@@ -287,12 +282,11 @@ public class OrdenDetailFragmentView extends AbstractViewPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSpinner jSpinnerPorciento;
-    private com.jidesoft.swing.JideToggleButton jToggleButton1;
-    private org.jdesktop.swingx.JXPanel jXPanelBotones;
-    private com.jidesoft.swing.JideButton jideButtonAgregarNota;
-    private com.jidesoft.swing.JideButton jideButtonCerrarMesa;
-    private com.jidesoft.swing.JideButton jideButtonEnviarCocina;
-    private com.jidesoft.swing.JideButton jideButtonImpimirTicket;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JButton jideButtonAgregarNota;
+    private javax.swing.JButton jideButtonCerrarMesa;
+    private javax.swing.JButton jideButtonEnviarCocina;
+    private javax.swing.JButton jideButtonImpimirTicket;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -327,17 +321,22 @@ public class OrdenDetailFragmentView extends AbstractViewPanel {
         jideButtonEnviarCocina.addActionListener(getPresenter().getOperation(OrdenDetailViewPresenter.ACTION_ENVIAR_ELABORAR));
         jideButtonImpimirTicket.addActionListener(getPresenter().getOperation(OrdenDetailViewPresenter.ACTION_IMPRIMIR_CIERRE_PARCIAL));
 
-        Bindings.bind(jSpinnerPorciento,"value", getPresenter().getModel(OrdenDetailViewModel.PROP_PORCIENTO_SERVICIO));
+        Bindings.bind(jSpinnerPorciento, "value", getPresenter().getModel(OrdenDetailViewModel.PROP_PORCIENTO_SERVICIO));
         Bindings.bind(jCheckBoxDELACASA, getPresenter().getModel(OrdenDetailViewModel.PROP_ES_AUTORIZO));
-        
+
     }
 
     @Override
     public void uiInit() {
+        initComponents();
         initAddFromPanel();
         jPanel3.setVisible(showMenu);
         crossReferencePanel.getJTextFieldAutoComplete().requestFocus();
         jListSecciones.setVisibleRowCount(12);
+        jToggleButton1.addChangeListener((ChangeEvent e) -> {
+            showMenu = jToggleButton1.isSelected();
+            jPanel3.setVisible(showMenu);
+        });
 
     }
 
@@ -393,8 +392,8 @@ public class OrdenDetailFragmentView extends AbstractViewPanel {
         });
         crossReferencePanel = builder.build();
 
-        jPanelCrossReference.add(crossReferencePanel);
-        crossReferencePanel.getJTableCrossReference().getColumnModel().getColumn(1).setCellRenderer(new RestManagerCellRender());
+        jPanelCrossReference.add(crossReferencePanel,BorderLayout.CENTER);
+        //crossReferencePanel.getJTableCrossReference().getColumnModel().getColumn(1).setCellRenderer(new RestManagerCellRender());
 
     }
 

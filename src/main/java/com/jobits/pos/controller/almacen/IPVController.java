@@ -40,6 +40,7 @@ import javax.persistence.PersistenceException;
 
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
@@ -450,7 +451,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
      * @param fecha
      */
     public void recalcularExistencias(Date fecha) {
-        VentaDetailController ventaController = new VentaDetailController(fecha);
+        VentaDetailController ventaController = new VentaDetailController(new OrdenController(VentaDAO.getInstance().find(fecha)),fecha);
         for (IpvRegistro x : IpvRegistroDAO.getInstance().getIpvRegistroList(fecha)) {
             x.setConsumo(ventaController.getGastoTotalDeInsumo(x));
             getModel().startTransaction();
@@ -460,7 +461,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public void recalcularIpvRegistros(Venta ret) {
-        VentaDetailController ventaController = new VentaDetailController(ret);
+        VentaDetailController ventaController = new VentaDetailController(new OrdenController(ret), ret);
         for (IpvVentaRegistro x : IpvRegistroVentaDAO.getInstance().getIpvVentaRegistroList(ret.getFecha())) {
             x.setVendidos(ventaController.getVentaTotalDelProducto(x.getProductoVenta()));
             x.setAutorizos(ventaController.getAutorizosTotalDelProducto(x.getProductoVenta()));

@@ -57,9 +57,11 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     Venta fechaOrden;
     private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
-    private OldView v;
-    private OrdenDetailFragmentView view;
     private IPVController ipvController = new IPVController();
+
+    public OrdenController() {
+        super(OrdenDAO.getInstance());
+    }
 
     public OrdenController(Venta fecha) {
         super(OrdenDAO.getInstance());
@@ -72,23 +74,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         super(instance, OrdenDAO.getInstance());
         init();
         fechaOrden = instance.getVentafecha();
-    }
-
-    public OrdenController(Container parent, Venta fecha) {
-        super(parent, OrdenDAO.getInstance());
-        init();
-        this.fechaOrden = fecha;
-        instance = createNewInstance();
-        view = new OrdenDetailFragmentView(instance, this, parent);
-        constructView(parent);
-    }
-
-    public OrdenController(Orden instance, Container parent) {
-        super(instance, parent, OrdenDAO.getInstance());
-        init();
-        fechaOrden = instance.getVentafecha();
-        view = new OrdenDetailFragmentView(getInstance(), this, parent);
-        constructView(parent);
     }
 
     private void init() {
@@ -146,9 +131,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(view);
-        getView().updateView();
-        getView().setVisible(true);
     }
 
     public void enviarACocina() {
@@ -192,7 +174,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     }
 
-    public void despachar() {
+    public void cerrarOrden() {
         if (autorize()) {
             Impresion i = new Impresion();
             setShowDialogs(true);
@@ -228,10 +210,9 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         }
     }
 
-    public void updatePorciento(float f) {
+    public void setPorciento(float f) {
         instance.setPorciento(f);
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, instance,f);
-        view.updateValorTotal();
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, instance, f);
         update(instance);
     }
 
@@ -257,7 +238,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
             fireWarningOnDeleting(objectAtSelectedRow, cantidadBorrada);
             update(instance);
-            view.updateValorTotal();
         }
     }
 
@@ -285,7 +265,9 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
 
         }
-        instance.setOrdenvalorMonetario(Impresion.REDONDEO_POR_EXCESO ? utils.redondeoPorExcesoFloat(total * (1 + (instance.getPorciento() / 100))) : utils.setDosLugaresDecimalesFloat(total * (1 + (instance.getPorciento() / 100))));
+        instance.setOrdenvalorMonetario(Impresion.REDONDEO_POR_EXCESO
+                ? utils.redondeoPorExcesoFloat(total * (1 + (instance.getPorciento() / 100)))
+                : utils.setDosLugaresDecimalesFloat(total * (1 + (instance.getPorciento() / 100))));
         update(instance, true);
         return instance.getOrdenvalorMonetario();
     }
@@ -298,7 +280,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             this.instance = instance;
 
         }
-        view.setInstance(this.instance);
     }
 
     @Override
@@ -366,7 +347,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             cantidadAgregada = founded.getCantidad() - cantidadAgregada;
             fireWarningOnAdding(founded, cantidadAgregada);
             update(instance);
-            view.updateValorTotal();
         }
 
     }
@@ -420,7 +400,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             ProductovOrdenDAO.getInstance().edit(selected);
             fireWarningOnAdding(selected, cantidad);
             update(instance);
-            view.updateValorTotal();
         }
     }
 
@@ -456,7 +435,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             fireWarningOnDeleting(selected, diferencia);
 
             update(instance);
-            view.updateValorTotal();
         }
     }
 

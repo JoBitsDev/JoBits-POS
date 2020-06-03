@@ -13,6 +13,7 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -133,7 +134,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAceptarClick() {
-        if ((boolean) NotificationService.getInstance().
+        if ((boolean)Application.getInstance().getNotificationService().
                 showDialog("Desea guardar los cambios",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             ProductoVenta p;
@@ -161,7 +162,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onCancelarClick() {
-        if ((boolean) NotificationService.getInstance().
+        if ((boolean)Application.getInstance().getNotificationService().
                 showDialog("Desea descartar los cambios?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             controller.discardChanges();
@@ -183,7 +184,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAgregarInsumoFichaClick() {
-        Optional<String> opt = NotificationService.getInstance().showDialog("Introduzca la cantidad de " + getBean().getInsumo_disponible_sel(), TipoNotificacion.DIALOG_INPUT);
+        Optional<String> opt =Application.getInstance().getNotificationService().showDialog("Introduzca la cantidad de " + getBean().getInsumo_disponible_sel(), TipoNotificacion.DIALOG_INPUT);
         if (opt.isPresent()) {
             try {
                 float cantidad = Float.parseFloat(opt.get());
@@ -192,7 +193,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 getBean().getLista_insumos_contenidos().clear();
                 getBean().getLista_insumos_contenidos().addAll(controller.getInstance().getProductoInsumoList());
             } catch (NumberFormatException ex) {
-                NotificationService.getInstance().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
+               Application.getInstance().getNotificationService().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
             }
         }
 

@@ -12,6 +12,8 @@ import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.venta.OrdenDetailFragmentView;
+import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import components.containers.MaterialPanel;
 import components.dashboards.smoot.PanelDual;
@@ -37,8 +39,6 @@ public class RootView extends MaterialPanel {
 
     private Map<String, View> views = new HashMap<>();
 
-    private PanelDual panelDual;
-
     private boolean shrinked;
 
     private static RootView instance;
@@ -51,7 +51,7 @@ public class RootView extends MaterialPanel {
         initComponents();
         jPanelContent.setLayout(cards);
         jPanelStatus.add(statusBar);
-        super.setElevation(3);
+        super.setElevation(0);
 
     }
 
@@ -74,16 +74,15 @@ public class RootView extends MaterialPanel {
 
         jPanelHeader = MaterialComponentsFactory.Containers.getHeaderPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButtonBack = MaterialComponentsFactory.Buttons.getBackButton();
         jLabel1 = new javax.swing.JLabel();
         jPanelContent = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanelMainMenu = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelBackButton = new javax.swing.JPanel();
+        jButtonBack = MaterialComponentsFactory.Buttons.getBackButton();
         jPanelShinkButton = new javax.swing.JPanel();
         jButtonShrink = MaterialComponentsFactory.Buttons.getMenuButton();
         jPanelMenu = new javax.swing.JPanel();
         jPanelStatus = MaterialComponentsFactory.Containers.getPrimaryPanel();
-
-        setLayout(new java.awt.BorderLayout());
 
         jPanelHeader.setOpaque(false);
         jPanelHeader.setPreferredSize(new java.awt.Dimension(120, 80));
@@ -91,6 +90,37 @@ public class RootView extends MaterialPanel {
 
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+        jPanelHeader.add(jPanel1, java.awt.BorderLayout.WEST);
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/logo/banner.png"))); // NOI18N
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel1.setMaximumSize(new java.awt.Dimension(180, 96));
+        jLabel1.setMinimumSize(new java.awt.Dimension(40, 40));
+        jLabel1.setPreferredSize(new java.awt.Dimension(20, 20));
+        jPanelHeader.add(jLabel1, java.awt.BorderLayout.CENTER);
+
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        setLayout(new java.awt.BorderLayout());
+
+        jPanelContent.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
+        jPanelContent.setLayout(jPanelContentLayout);
+        jPanelContentLayout.setHorizontalGroup(
+            jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 659, Short.MAX_VALUE)
+        );
+        jPanelContentLayout.setVerticalGroup(
+            jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 396, Short.MAX_VALUE)
+        );
+
+        add(jPanelContent, java.awt.BorderLayout.CENTER);
+
+        jPanelMainMenu.setLayout(new java.awt.BorderLayout());
+
+        jPanelBackButton.setOpaque(false);
 
         jButtonBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonBack.setMaximumSize(new java.awt.Dimension(40, 40));
@@ -101,35 +131,9 @@ public class RootView extends MaterialPanel {
                 jButtonBackActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonBack);
+        jPanelBackButton.add(jButtonBack);
 
-        jPanelHeader.add(jPanel1, java.awt.BorderLayout.WEST);
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/logo/banner.png"))); // NOI18N
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel1.setMinimumSize(new java.awt.Dimension(60, 40));
-        jLabel1.setPreferredSize(new java.awt.Dimension(40, 40));
-        jPanelHeader.add(jLabel1, java.awt.BorderLayout.CENTER);
-
-        add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
-
-        jPanelContent.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
-        jPanelContent.setLayout(jPanelContentLayout);
-        jPanelContentLayout.setHorizontalGroup(
-            jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 629, Short.MAX_VALUE)
-        );
-        jPanelContentLayout.setVerticalGroup(
-            jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
-        );
-
-        add(jPanelContent, java.awt.BorderLayout.CENTER);
-
-        jPanelMainMenu.setLayout(new java.awt.BorderLayout());
+        jPanelMainMenu.add(jPanelBackButton, java.awt.BorderLayout.PAGE_START);
 
         jPanelShinkButton.setOpaque(false);
         jPanelShinkButton.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -172,6 +176,7 @@ public class RootView extends MaterialPanel {
     private javax.swing.JButton jButtonShrink;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelBackButton;
     private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelHeader;
     private javax.swing.JPanel jPanelMainMenu;
@@ -187,7 +192,23 @@ public class RootView extends MaterialPanel {
 
     //TODO: asco de metodo. arreglar
     public void showView(String viewNameToDisplay, AbstractViewPresenter presenter, DisplayType displayType) {//TODO trabjar en los popup
+       //Caso especial para las ordenes
+        if (viewNameToDisplay.equals(OrdenDetailFragmentView.VIEW_NAME)) {
+            View v = views.get(currentDisplayedViewName);
+            if (v == null) {
+                throw new IllegalArgumentException("Bad call on OrdenView when there is none displayed view");
+            }
+            if (v instanceof VentaDetailView) {
+                ((VentaDetailView) v).addOrdenView((OrdenDetailFragmentView) ViewFacade.getView(OrdenDetailFragmentView.VIEW_NAME, presenter));
+                return;
+            }
+            throw new IllegalStateException("Bad call to ordenView when  " + v.getClass().getName() + " is active");
+
+        }
+
+//primero ver si esta guardada la vista para mostrar
         if (!views.containsKey(viewNameToDisplay)) {
+            //trAtamiento especial para el menu principal
             if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
                 if (dashboard == null) {
                     dashboard = (MainMenuView) ViewFacade.getView(viewNameToDisplay, presenter);
@@ -195,15 +216,19 @@ public class RootView extends MaterialPanel {
                     setShrinked(true);
                     statusBar.refreshView();
                 }
-                viewNameToDisplay = DashBoardView.VIEW_NAME;//TODO: cuando se vuelva a la ventana de loggeo vaciar el usuario loggeado
+                viewNameToDisplay = DashBoardView.VIEW_NAME;//TODO: cuando se vuelva a la ventana de loggeo vaciar el usuario loggeado en la app
 
             }
-
+            //tratamiento si la vista es nuevala vista es nueva
         } else {
+            // se borra la vista y se vuelve a crear porque 
+            //no hay todavia manera de actualizar las vistas creadas dinamicamente
             cards.removeLayoutComponent(views.get(viewNameToDisplay).getViewComponent());
         }
+        //se vuelve a agregar la vista
         addView(ViewFacade.getView(viewNameToDisplay, presenter));
         currentDisplayedViewName = viewNameToDisplay;
+        //se decide si agregar el header y footer
         boolean displayAggregatesViews = !(currentDisplayedViewName.equals(LogInView.VIEW_NAME)
                 || currentDisplayedViewName.equals(UbicacionView.VIEW_NAME));
         jPanelHeader.setVisible(!currentDisplayedViewName.equals(LogInView.VIEW_NAME));

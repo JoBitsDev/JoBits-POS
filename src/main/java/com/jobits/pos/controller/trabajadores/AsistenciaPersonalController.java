@@ -23,6 +23,7 @@ import com.jobits.pos.adapters.repo.GastoDAO;
 import com.jobits.pos.adapters.repo.GastoVentaDAO;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.TipoGastoDAO;
+import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 
@@ -72,7 +73,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     }
 
     public void calcularPagoTrabajador(AsistenciaPersonal ret) {
-        VentaDetailController controller = new VentaDetailController(ret.getVenta());
+        VentaDetailController controller = new VentaDetailController(new OrdenController(ret.getVenta()),ret.getVenta());
         ret.setPago(controller.getPagoTrabajador(ret.getPersonal()));
         ret.setPropina(controller.getPropinaTrabajador(ret.getPersonal()));
 
@@ -106,7 +107,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     public List<AsistenciaPersonal> updateSalaries() {
         if (!readOnlyData) {
         ArrayList<AsistenciaPersonal> ret = new ArrayList<>(getPersonalTrabajando(diaVenta));
-        VentaDetailController controller = new VentaDetailController(diaVenta);
+        VentaDetailController controller = new VentaDetailController(new OrdenController(diaVenta),diaVenta);
         for (AsistenciaPersonal a : ret) {
             a.setPago(controller.getPagoTrabajador(a.getPersonal()));
             a.setPropina(controller.getPropinaTrabajador(a.getPersonal()));

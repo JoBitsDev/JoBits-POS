@@ -18,6 +18,8 @@ import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
+import com.jobits.pos.controller.venta.OrdenController;
+import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
 import com.jobits.pos.ui.MainMenuPresenter;
@@ -50,6 +52,8 @@ import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PersonalListViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoListViewPresenter;
+import com.jobits.pos.ui.venta.VentaDetailView;
+import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -94,6 +98,8 @@ public class PresenterFacade {
                 return new ConfigurationViewPresenter(new ConfiguracionController());
             case IpvGestionView.VIEW_NAME:
                 return new IpvGestionViewPresenter(new IPVController());
+            case VentaDetailView.VIEW_NAME:
+                return new VentaResumenViewPresenter(new VentaDetailController(),new OrdenController());
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;

@@ -7,6 +7,7 @@ package com.jobits.pos.ui.menu.presenter;
 
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.domain.models.Carta;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -47,7 +48,7 @@ public class MenuSeccionViewPresenter extends AbstractViewPresenter<MenuSeccionV
 
     private void onEliminarMenuClick() {
         if (getBean().getMenu_seleccionado() == null) {
-            NotificationService.getInstance().notify("Debe seleccionar un Menu", TipoNotificacion.ERROR);
+           Application.getInstance().getNotificationService().notify("Debe seleccionar un Menu", TipoNotificacion.ERROR);
             return;
         }
         controller.getCartaListController().destroy(getBean().getMenu_seleccionado());
@@ -58,7 +59,7 @@ public class MenuSeccionViewPresenter extends AbstractViewPresenter<MenuSeccionV
 
     private void onNuevaSeccionClick() {
         if (getBean().getMenu_seleccionado() == null) {
-            NotificationService.getInstance().notify("Debe seleccionar un menú", TipoNotificacion.ERROR);
+           Application.getInstance().getNotificationService().notify("Debe seleccionar un menú", TipoNotificacion.ERROR);
             return;
         }
         controller.getCartaListController().createSeccion(getBean().getMenu_seleccionado());
@@ -69,7 +70,7 @@ public class MenuSeccionViewPresenter extends AbstractViewPresenter<MenuSeccionV
 
     private void onEliminarSeccionClick() {
         if (getBean().getSeccion_seleccionada() == null) {
-            NotificationService.getInstance().notify("Debe seleccionar una seccion", TipoNotificacion.ERROR);
+           Application.getInstance().getNotificationService().notify("Debe seleccionar una seccion", TipoNotificacion.ERROR);
             return;
         }
         controller.getCartaListController().removeSeccionFromCarta(getBean().getSeccion_seleccionada());

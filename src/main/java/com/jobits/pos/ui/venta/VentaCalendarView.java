@@ -36,6 +36,7 @@ import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.VentaDAO;
+import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.recursos.DBConnector;
 import com.jobits.pos.recursos.R;
@@ -621,7 +622,8 @@ public class VentaCalendarView extends OldAbstractView {
     }
 
     private void editSelected() {
-        VentaDetailController controller = new VentaDetailController(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), this);
+        Venta v = model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn());
+        VentaDetailController controller = new VentaDetailController(new OrdenController(v), v);
     }
 
     private void createDetailResumenView() {

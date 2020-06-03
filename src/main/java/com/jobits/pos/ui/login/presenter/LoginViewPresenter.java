@@ -10,9 +10,7 @@ import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.MainMenuPresenter;
 import com.jobits.pos.ui.MainMenuView;
@@ -58,12 +56,12 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         getBean().setContraseña("");
         try {
             if (controller.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
-                NotificationService.getInstance().notify("Bienvenido", TipoNotificacion.SUCCESS);
+               Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
                 NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
                         new MainMenuPresenter(new MainMenuController())); //TODO revisar eso codigo que no le pertenece a esta clse
             }
         } catch (IllegalArgumentException ex) {
-            NotificationService.getInstance().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion
+           Application.getInstance().getNotificationService().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion
         }
     }
 

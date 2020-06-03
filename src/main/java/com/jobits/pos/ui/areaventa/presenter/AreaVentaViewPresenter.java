@@ -10,6 +10,7 @@ import com.jobits.pos.ui.menu.presenter.*;
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Carta;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.areaventa.AreaCreateEditView;
@@ -90,7 +91,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
     private void onEliminarAreaClick() {
         if (getBean().getArea_seleccionada() == null) {
-            NotificationService.getInstance().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
+           Application.getInstance().getNotificationService().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
             return;
         }
         controller.destroy(getBean().getArea_seleccionada());
@@ -102,7 +103,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
     private void onEditarAreaClick() {
         if (getBean().getArea_seleccionada() == null) {
-            NotificationService.getInstance().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
+           Application.getInstance().getNotificationService().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
             return;
         }
         controller.getDetailControllerForEdit(getBean().getArea_seleccionada());
@@ -112,7 +113,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
     private void onNuevaMesaClick() {
         if (getBean().getArea_seleccionada() == null) {
-            NotificationService.getInstance().notify("Debe seleccionar un area", TipoNotificacion.ERROR);
+           Application.getInstance().getNotificationService().notify("Debe seleccionar un area", TipoNotificacion.ERROR);
             return;
         }
         controller.createMesa(getBean().getArea_seleccionada());
@@ -123,7 +124,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
     private void onEliminarMesaClick() {
         if (getBean().getMesa_seleccionada() == null) {
-            NotificationService.getInstance().notify("Debe seleccionar una seccion", TipoNotificacion.ERROR);
+           Application.getInstance().getNotificationService().notify("Debe seleccionar una seccion", TipoNotificacion.ERROR);
             return;
         }
         controller.removeMesa(getBean().getMesa_seleccionada());
