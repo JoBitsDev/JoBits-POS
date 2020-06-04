@@ -412,7 +412,7 @@ public class ConfiguracionView extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
-        Bindings.bind(jCheckBoxBuzzer, getPresenter().getModel(R.SettingID.IMPRESION_BUZZER_ON.toString()));
+        Bindings.bind(jCheckBoxBuzzer,getPresenter().getModel(R.SettingID.IMPRESION_BUZZER_ON.toString()));
         Bindings.bind(jCheckBoxMultiplesTurnos, getPresenter().getModel(R.SettingID.GENERAL_TURNOS_VARIOS.toString()));
         Bindings.bind(jCheckBoxPermEsp, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
         Bindings.bind(jCheckBoxMesaFija, getPresenter().getModel(R.SettingID.GENERAL_MESA_FIJA_CAJERO.toString()));

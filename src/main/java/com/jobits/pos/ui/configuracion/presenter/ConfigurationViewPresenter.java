@@ -54,9 +54,12 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
 
     private void onAplicarClick() {
         for (R.SettingID v : R.SettingID.values()) {
-            controller.updateConfiguracion(v, getBean().getConfiguration(v));
+            Object config = getBean().getConfiguration(v);
+            if (config != null) {
+                controller.updateConfiguracion(v, getBean().getConfiguration(v));
+            }
         }
-       Application.getInstance().getNotificationService().notify("Propiedades guardadas exitosamente", TipoNotificacion.SUCCESS);
+        Application.getInstance().getNotificationService().notify("Propiedades guardadas exitosamente", TipoNotificacion.SUCCESS);
         NavigationService.getInstance().navigateUp();
     }
 
@@ -64,7 +67,7 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
         for (R.SettingID v : R.SettingID.values()) {
             Object o = controller.getConfiguracion(v);
             if (o != null) {
-                getBean().setConfiguration(v, o.toString());
+                getBean().setConfiguration(v, o);
             }
         }
     }

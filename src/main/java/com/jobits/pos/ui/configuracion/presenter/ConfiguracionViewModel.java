@@ -20,38 +20,45 @@ import java.util.Map;
  */
 public class ConfiguracionViewModel extends AbstractViewModel {
 
-    Map<R.SettingID, Object> configurationMap = new HashMap<>();
+    private Map<R.SettingID, Object> configurationMap = new HashMap<>();
 
-    Map<R.SettingID, AbstractValueModel> valueModelMap = new HashMap<>();
+    private Map<R.SettingID, AbstractValueModel> valueModelMap = new HashMap<>();
 
     public ConfiguracionViewModel() {
     }
 
-    public void setConfiguration(R.SettingID settingId, String wrapper) {
+    public void setConfiguration(R.SettingID settingId, Object wrapper) {
+        Object oldValue = configurationMap.get(settingId);
         configurationMap.put(settingId, wrapper);
-        firePropertyChange(settingId.toString(), null, wrapper, false);
+        firePropertyChange(settingId.toString(), oldValue, wrapper, false);
     }
 
-    public String getConfiguration(R.SettingID settingId) {
-        return configurationMap.get(settingId).toString();
+    public Object getConfiguration(R.SettingID settingId) {
+        return configurationMap.get(settingId) != null
+                ? configurationMap.get(settingId)
+                : null;
     }
 
     public AbstractValueModel createValueModelFor(R.SettingID settingId) {
         if (valueModelMap.containsKey(settingId)) {
-            return valueModelMap.get(settingId);
-        } else {
-            return valueModelMap.put(settingId, new AbstractValueModel() {
-                @Override
-                public Object getValue() {
-                    return getConfiguration(settingId);
-                }
-
-                @Override
-                public void setValue(Object newValue) {
-                    setConfiguration(settingId, newValue.toString());
-                }
-            });
+            if (valueModelMap.get(settingId) != null) {
+                return valueModelMap.get(settingId);
+            }
         }
+        AbstractValueModel newValueModel = new AbstractValueModel() {
+            @Override
+            public Object getValue() {
+                return getConfiguration(settingId);
+            }
+
+            @Override
+            public void setValue(Object newValue) {
+                setConfiguration(settingId, newValue);
+            }
+        };
+        valueModelMap.put(settingId, newValueModel);
+        return newValueModel;
+
     }
 
 }
