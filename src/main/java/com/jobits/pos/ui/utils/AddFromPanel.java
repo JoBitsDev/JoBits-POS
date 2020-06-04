@@ -109,7 +109,6 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         jPanel1 = new javax.swing.JPanel();
         jTextFieldAutoComplete = MaterialComponentsFactory.Input.getTextField("Buscar...", jTextFieldDataName);
         jButtonAgregarProd = MaterialComponentsFactory.Buttons.getAddButton();
-        jPanel2 = new javax.swing.JPanel();
         jScrollPaneCrossReference = new javax.swing.JScrollPane();
         jTableCrossReference = new javax.swing.JTable();
         jPanelOpciones = new javax.swing.JPanel();
@@ -134,6 +133,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         jPanel1.add(jTextFieldAutoComplete);
 
         jButtonAgregarProd.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jButtonAgregarProd.setText("Agregar");
         jButtonAgregarProd.setMaximumSize(new java.awt.Dimension(130, 50));
         jButtonAgregarProd.setPreferredSize(new java.awt.Dimension(130, 50));
         jPanel1.add(jButtonAgregarProd);
@@ -142,13 +142,13 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
 
         add(jPanelInsert, java.awt.BorderLayout.NORTH);
 
-        jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
+        jScrollPaneCrossReference.setOpaque(false);
         jScrollPaneCrossReference.setPreferredSize(new java.awt.Dimension(500, 500));
 
         jTableCrossReference.setAutoCreateRowSorter(true);
         jTableCrossReference.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jTableCrossReference.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        jTableCrossReference.setOpaque(false);
         jTableCrossReference.setPreferredSize(new java.awt.Dimension(500, 128));
         jTableCrossReference.setRowHeight(32);
         jTableCrossReference.setRowMargin(4);
@@ -160,15 +160,14 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
             jTableCrossReference.getColumnModel().getColumn(3).setHeaderValue("Title 4");
         }
 
-        jPanel2.add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
-
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
 
         jPanelOpciones.setMaximumSize(new java.awt.Dimension(32767, 60));
         jPanelOpciones.setOpaque(false);
         jPanelOpciones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonDeleteProd.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jButtonDeleteProd.setText("Eliminar");
         jButtonDeleteProd.setToolTipText("Eliminar");
         jButtonDeleteProd.setMaximumSize(new java.awt.Dimension(130, 50));
         jButtonDeleteProd.setMinimumSize(new java.awt.Dimension(32, 50));
@@ -183,7 +182,6 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
     private javax.swing.JButton jButtonAgregarProd;
     private javax.swing.JButton jButtonDeleteProd;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelInsert;
     private javax.swing.JPanel jPanelOpciones;
     private javax.swing.JScrollPane jScrollPaneCrossReference;
@@ -205,6 +203,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         jTableCrossReference.setModel(tableModel);
+        jTextFieldAutoComplete.addActionListener(addAction);
     }
 
     @Override

@@ -11,7 +11,6 @@ import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
-import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

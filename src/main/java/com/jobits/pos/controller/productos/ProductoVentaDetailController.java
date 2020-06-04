@@ -145,7 +145,7 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
     }
 
     public void eliminarInsumoProducto(ProductoInsumo insumo_contenido_seleccionado) {
-        getInstance().getProductoInsumoList().remove(insumo_contenido_seleccionado);
+        getInstance().getProductoInsumoList().remove(insumo_contenido_seleccionado);//TODO donde se actualiza el valor total del insumo
     }
 
 }

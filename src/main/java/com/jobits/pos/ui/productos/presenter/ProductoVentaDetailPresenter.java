@@ -131,6 +131,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private void onAddIngredienteClick() {
         controller.registrarNuevoInsumo();
+        getBean().getLista_insumos_disponibles().clear();
+        getBean().getLista_insumos_disponibles().addAll(controller.getInsumoList());
     }
 
     private void onAceptarClick() {
@@ -192,6 +194,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 getBean().setInsumo_disponible_sel(null);
                 getBean().getLista_insumos_contenidos().clear();
                 getBean().getLista_insumos_contenidos().addAll(controller.getInstance().getProductoInsumoList());
+                getBean().setInsumo_disponible_sel(null);
             } catch (NumberFormatException ex) {
                Application.getInstance().getNotificationService().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
             }
