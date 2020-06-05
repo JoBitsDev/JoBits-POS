@@ -29,6 +29,8 @@ import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
+import com.jobits.pos.ui.backup.BackUpView;
+import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.insumo.InsumoListView;
@@ -100,6 +102,8 @@ public class PresenterFacade {
                 return new IpvGestionViewPresenter(new IPVController());
             case VentaDetailView.VIEW_NAME:
                 return new VentaResumenViewPresenter(new VentaDetailController(),new OrdenController());
+            case BackUpView.VIEW_NAME:
+                return new BackUpViewPresenter(new UbicacionConexionController());
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;

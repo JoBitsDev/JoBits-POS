@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.backup;
+package com.jobits.pos.controller.backup;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,17 +42,19 @@ public class SincronizacionController {
     private void cargarConfiguracion() throws IllegalArgumentException, NumberFormatException {
         ConfiguracionController config = new ConfiguracionController();
         habilitado = (boolean) config.getConfiguracion(R.SettingID.SINCRONIZACION_HABILITAR);
-        int ubicacionIndex = Integer.parseInt(config.getConfiguracion(R.SettingID.SINCRONIZACION_UBICACION).toString());
-        UbicacionConexionController ubicaciones = new UbicacionConexionController();
-        tiempoLoop = Integer.parseInt(config.getConfiguracion(R.SettingID.SINCRONIZACION_TIEMPO_LOOP).toString());
-        if (ubicacionIndex >= 0) {
-            ubicacion = ubicaciones.getUbicaciones().getUbicaciones()[ubicacionIndex];
-            if (ubicacion.getTipoUbicacion() != UbicacionConexionModel.TipoUbicacion.SINCRONIZACION) {
-                throw new IllegalArgumentException("La sincronizacion solo se puede"
-                        + " realizar a ubicaciones de tipo sincronizacion");
+        if (habilitado) {
+
+            int ubicacionIndex = Integer.parseInt(config.getConfiguracion(R.SettingID.SINCRONIZACION_UBICACION).toString());
+            UbicacionConexionController ubicaciones = new UbicacionConexionController();
+            tiempoLoop = Integer.parseInt(config.getConfiguracion(R.SettingID.SINCRONIZACION_TIEMPO_LOOP).toString());
+            if (ubicacionIndex >= 0) {
+                ubicacion = ubicaciones.getUbicaciones().getUbicaciones()[ubicacionIndex];
+                if (ubicacion.getTipoUbicacion() != UbicacionConexionModel.TipoUbicacion.SINCRONIZACION) {
+                    throw new IllegalArgumentException("La sincronizacion solo se puede"
+                            + " realizar a ubicaciones de tipo sincronizacion");
+                }
             }
         }
-
     }
 
     private void iniciarTask() {
@@ -66,11 +68,11 @@ public class SincronizacionController {
     }
 
     private void sincronizarDatosConServidor() {
-        BackUp backupService = new BackUp(ubicacion);
+        BackUpService backupService = new BackUpService(ubicacion);
         backupService.incluirDiaAbierto(true);
         Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, "Ejecutando sincronizacion con servidor");
         String logRespuesta = "Sincronizacion con servidor completada ";
-        if (backupService.EjecutarBackUpLineal(BackUp.TipoBackUp.VENTA)) {
+        if (backupService.EjecutarBackUpLineal(BackUpService.TipoBackUp.VENTA)) {
             logRespuesta += "exitosamente";
         } else {
             logRespuesta += "con errores";

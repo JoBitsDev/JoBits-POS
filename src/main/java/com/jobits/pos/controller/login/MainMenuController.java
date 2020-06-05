@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.login;
 
-import com.jobits.pos.backup.SincronizacionController;
+import com.jobits.pos.controller.backup.SincronizacionController;
 import com.jobits.pos.controller.AbstractController;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;

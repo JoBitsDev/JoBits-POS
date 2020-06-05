@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.backup;
+package com.jobits.pos.controller.backup;
 
 import com.jobits.pos.adapters.repo.IpvRegistroDAO;
 import com.jobits.pos.adapters.repo.AbstractRepository;
@@ -34,14 +34,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.exceptions.ExceptionHandler;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.recursos.DBConnector;
+import com.jobits.pos.ui.LongProcessMethod;
 import com.jobits.pos.ui.utils.LoadingWindow;
-import com.jobits.pos.ui.utils.utils;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  * FirstDream
@@ -50,33 +51,32 @@ import com.jobits.pos.ui.utils.utils;
  *
  *
  */
-public class BackUp extends SwingWorker<Boolean, Float> {
+public class BackUpService implements LongProcessMethod {//TODO separar los paquetes SWING de esta capa
 
     private final EntityManagerFactory emf;
     private final EntityManager em, localEm;
-    private JProgressBar barraDeProgreso;
     private TipoBackUp tipoBackUp;
     private boolean borradoRemoto = false;
     private boolean incluirDiaAbierto = false;
     private float progress = 0;
     private float topeProceso = 100;
 
+    private PropertyChangeSupport listeners = new PropertyChangeSupport(this);
+    
+    public static final String PROPERTY_PROGRESS_UPDATE = "progress";
+    
+
     //
     //Constructores
     //
-    public BackUp(UbicacionConexionModel ubicacion, TipoBackUp tipoBackUp) {
+    public BackUpService(UbicacionConexionModel ubicacion, TipoBackUp tipoBackUp) {
         this.tipoBackUp = tipoBackUp;
         emf = DBConnector.createEmfFrom(ubicacion);
         em = emf.createEntityManager();
         localEm = AbstractRepository.getEMF().createEntityManager();
     }
 
-    public BackUp(UbicacionConexionModel connector, JProgressBar barraProgreso, TipoBackUp tipoBackUp) {
-        this(connector, tipoBackUp);
-        this.barraDeProgreso = barraProgreso;
-    }
-
-    public BackUp(UbicacionConexionModel connector) {
+    public BackUpService(UbicacionConexionModel connector) {
         this(connector, TipoBackUp.NULO);
     }
 
@@ -90,14 +90,6 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     public TipoBackUp getTipoBackUp() {
         return tipoBackUp;
 
-    }
-
-    public JProgressBar getBarraDeProgreso() {
-        return barraDeProgreso;
-    }
-
-    public void setBarraDeProgreso(JProgressBar barraDeProgreso) {
-        this.barraDeProgreso = barraDeProgreso;
     }
 
     public boolean isBorradoRemoto() {
@@ -146,44 +138,32 @@ public class BackUp extends SwingWorker<Boolean, Float> {
 
             }
         } catch (Exception e) {
-            Logger.getLogger(BackUp.class.getName()).log(Level.SEVERE,  "Error en copia de seguridad: " + e.getMessage());
+            Logger.getLogger(BackUpService.class.getName()).log(Level.SEVERE, "Error en copia de seguridad: " + e.getMessage());
             return false;
         }
         return true;
+    }
+
+    public void addPropertyChangeListener(String property, PropertyChangeListener listener) {
+        listeners.addPropertyChangeListener(property, listener);
+    }
+
+    public void removePropertyCHangeListener(String propertyName, PropertyChangeListener listener) {
+        listeners.removePropertyChangeListener(propertyName, listener);
     }
 
     //
     // Metodos Heredados SwingWorker
     //
     @Override
-    protected Boolean doInBackground() throws Exception {
-
+    public void execute() {
         EjecutarBackUp(tipoBackUp);
-        return true;
     }
 
-    @Override
-    protected void done() {
-        LoadingWindow.hide();
-        super.done(); //To change body of generated methods, choose Tools | Templates.
-    }
 
-    @Override
-    protected void process(List<Float> chunks
-    ) {
-        for (Float chunk : chunks) {
-            if (barraDeProgreso != null) {
-                barraDeProgreso.setValue(chunk.intValue());
-                barraDeProgreso.setString(utils.setDosLugaresDecimalesFloat(chunk) + "%");
-            } else {
-                //TODO: implementar algo por los logs
-            }
-        }
-    }
     //
     //Metodos Privados
     //
-
     private boolean startBackupTransaction() {
         em.getTransaction().begin();
         return true;
@@ -473,8 +453,9 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private void incrementarProgreso(float i) {
+        float oldValue = progress;
         progress += i;
-        publish(progress);
+        listeners.firePropertyChange(PROPERTY_PROGRESS_UPDATE, oldValue, progress);
     }
 
     //
@@ -567,7 +548,7 @@ public class BackUp extends SwingWorker<Boolean, Float> {
     }
 
     private boolean EjecutarBackUp(TipoBackUp tipo) {
-        barraDeProgreso.setValue(0);
+        progress = 0;
         switch (tipo) {
             case PERSONAL:
                 topeProceso = 50;

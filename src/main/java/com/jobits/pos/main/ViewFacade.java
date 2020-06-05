@@ -11,6 +11,7 @@ import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
+import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.insumo.InsumoListView;
@@ -86,6 +87,8 @@ public class ViewFacade {
                 return new VentaDetailView(p);
             case OrdenDetailFragmentView.VIEW_NAME:
                 return new OrdenDetailFragmentView(p);
+            case BackUpView.VIEW_NAME:
+                return new BackUpView(p);
             case LicenceDialogView.VIEW_NAME:
                 return new LicenceDialogView(
                         Application.getInstance().getLicenceController(),

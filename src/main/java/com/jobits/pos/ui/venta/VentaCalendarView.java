@@ -21,7 +21,7 @@ import javax.persistence.NonUniqueResultException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import com.jobits.pos.algoritmo.Y;
-import com.jobits.pos.backup.BackUp;
+import com.jobits.pos.controller.backup.BackUpService;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
@@ -680,7 +680,7 @@ public class VentaCalendarView extends OldAbstractView {
         Y alg = new Y(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), getController());
         Venta old = alg.getVentaReal();
         Venta newVenta = new Venta();
-        // if (!new BackUp().ExisteVentaEnLocal(old)) {
+        // if (!new BackUpService().ExisteVentaEnLocal(old)) {
         //   throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
         // }
         try {
