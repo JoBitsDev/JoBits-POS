@@ -1,5 +1,0 @@
-DETALLADO: AGREGAR_O-18577_Arroz Frito Tres Delicias (45.0 MN )_2.0 [Usuario: admin] [2020/03/29 19:40:02]
-DETALLADO: AGREGAR_O-18576_Coctel Ron Collins (20.0 MN )_3.0 [Usuario: admin] [2020/03/29 19:40:22]
-DETALLADO: CREADO_O-18579 [Usuario: admin] [2020/03/29 23:31:09]
-DETALLADO: AGREGAR_O-18570_Refresco Limon 1500ml (35.0 MN )_4.0 [Usuario: admin] [2020/03/29 23:31:44]
-DETALLADO: AGREGAR_O-18570_Alitas Picositas (75.0 MN )_3.0 [Usuario: admin] [2020/03/29 23:44:53]
