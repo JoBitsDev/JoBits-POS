@@ -20,6 +20,8 @@ import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.VentaDAO;
+import com.jobits.pos.controller.licencia.Licence;
+import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.recursos.R;
 
 /**
@@ -34,20 +36,12 @@ public class VentaListController extends AbstractDialogController<Venta> {
         super(VentaDAO.getInstance());
     }
 
-    public VentaListController(OldAbstractView parentView) {
-        super(VentaDAO.getInstance());
-        constructView(parentView);
-    }
-
     public Venta createNewInstance() {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void constructView(Container parent) {
-        setView(new VentaCalendarView(this, (OldAbstractView) parent));
-        getView().updateView();
-        getView().setVisible(true);
     }
 
     @Override
@@ -63,7 +57,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
         }
     }
 
-    public void createDetailResumenView(Date del, Date al) {
+    public VentaDetailController createDetailResumenView(Date del, Date al) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, del.getYear());
         c.set(Calendar.MONTH, del.getMonth());
@@ -111,7 +105,7 @@ public class VentaListController extends AbstractDialogController<Venta> {
         if (initDateNotSet) {
             throw new ValidatingException(getView());
         }
-        VentaDetailController controller = new VentaDetailController(v, al);
+        return new VentaDetailController(v, al);
 
     }
 
@@ -126,6 +120,12 @@ public class VentaListController extends AbstractDialogController<Venta> {
             Collections.sort(ret, (Venta o1, Venta o2) -> o1.getFecha().compareTo(o2.getFecha()));
         });
         return ret;
+    }
+
+    public boolean isYVisible() {
+        LicenceController controller = new LicenceController(Licence.TipoLicencia.SECUNDARIA);
+        return controller.getLicence().LICENCIA_ACTIVA && controller.getLicence().LICENCIA_VALIDA;
+
     }
 
 }

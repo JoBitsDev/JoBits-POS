@@ -82,7 +82,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     }
 
-    public VentaDetailController(OrdenController ordenController, Venta instance) {
+    public VentaDetailController(OrdenController ordenController, Venta instance) {//TODO aqui se pudiera crear el constructor del orden controller sin pasarlo por parametro
         super(instance, VentaDAO.getInstance());
         this.ordController = ordenController;
         OrdenDAO.getInstance().addPropertyChangeListener(this);

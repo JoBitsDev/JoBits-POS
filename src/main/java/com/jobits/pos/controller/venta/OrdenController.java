@@ -67,7 +67,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         super(OrdenDAO.getInstance());
         init();
         this.fechaOrden = fecha;
-        instance = createNewInstance();
+     //   instance = createNewInstance();
     }
 
     public OrdenController(Orden instance) {

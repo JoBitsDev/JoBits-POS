@@ -20,6 +20,7 @@ import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
+import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
 import com.jobits.pos.ui.MainMenuPresenter;
@@ -54,7 +55,9 @@ import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PersonalListViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoListViewPresenter;
+import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
+import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -104,6 +107,8 @@ public class PresenterFacade {
                 return new VentaResumenViewPresenter(new VentaDetailController(),new OrdenController());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter(new UbicacionConexionController());
+            case VentaCalendarView.VIEW_NAME:
+                return new VentaCalendarViewPresenter(new VentaListController());
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;

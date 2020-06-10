@@ -29,6 +29,7 @@ import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.ui.venta.OrdenDetailFragmentView;
+import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import javax.swing.JPanel;
 
@@ -89,6 +90,8 @@ public class ViewFacade {
                 return new OrdenDetailFragmentView(p);
             case BackUpView.VIEW_NAME:
                 return new BackUpView(p);
+            case VentaCalendarView.VIEW_NAME:
+                return new VentaCalendarView(p);
             case LicenceDialogView.VIEW_NAME:
                 return new LicenceDialogView(
                         Application.getInstance().getLicenceController(),

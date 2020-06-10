@@ -5,70 +5,55 @@
  */
 package com.jobits.pos.ui.venta;
 
-import com.jobits.pos.ui.OldAbstractView;
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.VentaCellRender;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.NonUniqueResultException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import com.jobits.pos.algoritmo.Y;
-import com.jobits.pos.controller.backup.BackUpService;
-import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
-import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaListController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.NoSelectedException;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.VentaDAO1;
-import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.VentaDAO;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.domain.UbicacionConexionModel;
-import com.jobits.pos.recursos.DBConnector;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.utils.RestManagerAbstractTableCellModel;
-import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
+import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.venta.presenter.VentaCalendarViewModel;
+import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 
 /**
  *
  * @author Jorge
  */
-public class VentaCalendarView extends OldAbstractView {
+public class VentaCalendarView extends AbstractViewPanel {
 
-    private RestManagerAbstractTableCellModel<Venta> model;
-    Calendar cal = new GregorianCalendar();
-    int monthOffset = 0;
+    public static final String VIEW_NAME = "Ventas";
 
-    /**
-     * Creates new form VentasCalendarFragmentView
-     *
-     * @param controller
-     */
-    public VentaCalendarView(AbstractDialogController controller) {
-        super(DialogType.FULL_SCREEN, controller);
-        initComponents();
-        fetchComponentData();
-    }
+    private JFileChooser fileChooser;
 
-    public VentaCalendarView(AbstractDialogController<Venta> controller, OldAbstractView parentComponent) {
-        super(DialogType.FULL_SCREEN, controller, parentComponent);
-        initComponents();
-        fetchComponentData();
+    private BindableTableModel<Venta> model;
+
+    public VentaCalendarView(AbstractViewPresenter presenter) {
+        super(presenter);
     }
 
     /**
@@ -100,7 +85,6 @@ public class VentaCalendarView extends OldAbstractView {
         jButtonY = new javax.swing.JButton();
         jButtonImportarVentas = new javax.swing.JButton();
         jPanelSeleccion = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jYearChooser1 = new com.toedter.calendar.JYearChooser();
@@ -118,17 +102,15 @@ public class VentaCalendarView extends OldAbstractView {
         jPanelResumen = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jDateChooserDel = new com.toedter.calendar.JDateChooser();
+        jDateChooserDel = new org.jdesktop.swingx.JXDatePicker();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jDateChooserAl = new com.toedter.calendar.JDateChooser();
+        jDateChooserAl = new org.jdesktop.swingx.JXDatePicker();
         jButton3 = new javax.swing.JButton();
 
         jScrollPane2.setViewportView(jTree1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setUndecorated(true);
-        getContentPane().setLayout(new java.awt.BorderLayout(5, 5));
+        setLayout(new java.awt.BorderLayout(5, 5));
 
         jPanelDetalles.setLayout(new javax.swing.OverlayLayout(jPanelDetalles));
 
@@ -151,19 +133,8 @@ public class VentaCalendarView extends OldAbstractView {
         jTableCalendar.setColumnSelectionAllowed(true);
         jTableCalendar.setOpaque(false);
         jTableCalendar.setRowHeight(80);
-        jTableCalendar.setRowMargin(2);
         jTableCalendar.setShowGrid(false);
         jTableCalendar.setTableHeader(null);
-        jTableCalendar.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTableCalendarFocusLost(evt);
-            }
-        });
-        jTableCalendar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableCalendarMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTableCalendar);
 
         jPanelCalendario.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -210,58 +181,29 @@ public class VentaCalendarView extends OldAbstractView {
 
         jPanelDetalles.add(jPanelCalendario);
 
-        getContentPane().add(jPanelDetalles, java.awt.BorderLayout.CENTER);
+        add(jPanelDetalles, java.awt.BorderLayout.CENTER);
 
         jPanelControles.setBackground(new java.awt.Color(204, 204, 204));
         jPanelControles.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonEliminar.setText(bundle.getString("label_eliminar")); // NOI18N
-        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarActionPerformed(evt);
-            }
-        });
         jPanelControles.add(jButtonEliminar);
 
         jButtonEditar.setText(bundle.getString("label_editar")); // NOI18N
-        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditarActionPerformed(evt);
-            }
-        });
         jPanelControles.add(jButtonEditar);
 
         jButtonY.setText("Y");
-        jButtonY.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonYActionPerformed(evt);
-            }
-        });
         jPanelControles.add(jButtonY);
 
         jButtonImportarVentas.setText("Importar Ventas");
-        jButtonImportarVentas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImportarVentasActionPerformed(evt);
-            }
-        });
         jPanelControles.add(jButtonImportarVentas);
 
-        getContentPane().add(jPanelControles, java.awt.BorderLayout.PAGE_END);
+        add(jPanelControles, java.awt.BorderLayout.PAGE_END);
 
         jPanelSeleccion.setBackground(new java.awt.Color(204, 204, 204));
         jPanelSeleccion.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
         jPanelSeleccion.setLayout(new java.awt.BorderLayout());
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanelSeleccion.add(jButton1, java.awt.BorderLayout.LINE_START);
 
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -272,11 +214,6 @@ public class VentaCalendarView extends OldAbstractView {
 
         jYearChooser1.setOpaque(false);
         jYearChooser1.setPreferredSize(new java.awt.Dimension(80, 35));
-        jYearChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jYearChooser1PropertyChange(evt);
-            }
-        });
         jPanel3.add(jYearChooser1);
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 2, 18)); // NOI18N
@@ -287,16 +224,11 @@ public class VentaCalendarView extends OldAbstractView {
         jMonthChooser1.setMinimumSize(new java.awt.Dimension(176, 40));
         jMonthChooser1.setOpaque(false);
         jMonthChooser1.setPreferredSize(new java.awt.Dimension(176, 40));
-        jMonthChooser1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jMonthChooser1PropertyChange(evt);
-            }
-        });
         jPanel3.add(jMonthChooser1);
 
         jPanelSeleccion.add(jPanel3, java.awt.BorderLayout.EAST);
 
-        getContentPane().add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
+        add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
 
         jPanelEstadisticas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadisticas Generales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
         jPanelEstadisticas.setLayout(new java.awt.GridLayout(3, 0));
@@ -359,12 +291,6 @@ public class VentaCalendarView extends OldAbstractView {
         jLabel10.setText("Del");
         jLabel10.setToolTipText("");
         jPanel1.add(jLabel10);
-
-        jDateChooserDel.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jDateChooserDelPropertyChange(evt);
-            }
-        });
         jPanel1.add(jDateChooserDel);
 
         jPanelResumen.add(jPanel1);
@@ -379,91 +305,21 @@ public class VentaCalendarView extends OldAbstractView {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/detalles.png"))); // NOI18N
         jButton3.setToolTipText("Vista Detallada");
         jButton3.setBorderPainted(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
         jPanelResumen.add(jButton3);
 
         jPanelEstadisticas.add(jPanelResumen);
 
-        getContentPane().add(jPanelEstadisticas, java.awt.BorderLayout.EAST);
+        add(jPanelEstadisticas, java.awt.BorderLayout.EAST);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jYearChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jYearChooser1PropertyChange
-        if (evt.getPropertyName().equals("year")) {
-            updateView();
-        }
-    }//GEN-LAST:event_jYearChooser1PropertyChange
-
-    private void jMonthChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jMonthChooser1PropertyChange
-        if (evt.getPropertyName().equals("month")) {
-            updateView();
-        }
-    }//GEN-LAST:event_jMonthChooser1PropertyChange
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new LongProcessActionServiceImpl() {
-            @Override
-            public void longProcessMethod() {
-                createDetailResumenView();
-            }
-        }.performAction(this);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jTableCalendarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableCalendarFocusLost
-
-    }//GEN-LAST:event_jTableCalendarFocusLost
-
-    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        editSelected();
-    }//GEN-LAST:event_jButtonEditarActionPerformed
-
-    private void jTableCalendarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCalendarMouseClicked
-        if (evt.getClickCount() == 2 && evt.getButton() == 1) {
-            editSelected();
-        }
-
-    }//GEN-LAST:event_jTableCalendarMouseClicked
-
-    private void jDateChooserDelPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserDelPropertyChange
-        if (evt.getPropertyName().equals("date")) {
-            jDateChooserAl.setDate((Date) evt.getNewValue());
-        }
-//        jDateChooserAl.setDate((Date) evt.getNewValue());
-    }//GEN-LAST:event_jDateChooserDelPropertyChange
-
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        deleteSelected();// TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
-
-    private void jButtonYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonYActionPerformed
-        new LongProcessActionServiceImpl("Ejecutando Y") {
-            @Override
-            protected void longProcessMethod() {
-                ejecutarY();
-            }
-        }.performAction(this);
-    }//GEN-LAST:event_jButtonYActionPerformed
-
-    private void jButtonImportarVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportarVentasActionPerformed
-        importarVentas();
-    }//GEN-LAST:event_jButtonImportarVentasActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonImportarVentas;
     private javax.swing.JButton jButtonY;
-    private com.toedter.calendar.JDateChooser jDateChooserAl;
-    private com.toedter.calendar.JDateChooser jDateChooserDel;
+    private org.jdesktop.swingx.JXDatePicker jDateChooserAl;
+    private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -502,14 +358,48 @@ public class VentaCalendarView extends OldAbstractView {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void updateView() {
-        updateCalendar();
-        jScrollPane1.getViewport().setOpaque(false);
+    public void wireUp() {
+        Bindings.bind(jYearChooser1, "year", getPresenter().getModel(VentaCalendarViewModel.PROP_YEAR_SELECCIONADO));
+        Bindings.bind(jMonthChooser1, "month", getPresenter().getModel(VentaCalendarViewModel.PROP_MES_SELECCIONADO));
+        Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_HASTA));
+        Bindings.bind(jDateChooserDel, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_DESDE));
+        Bindings.bind(jLabelHoraPico, getPresenter().getModel(VentaCalendarViewModel.PROP_HORA_PICO_INTERVALOS));
+        Bindings.bind(jLabelInsumo, getPresenter().getModel(VentaCalendarViewModel.PROP_GASTO_INSUMO_INTERVALO));
+        Bindings.bind(jLabelOtros, getPresenter().getModel(VentaCalendarViewModel.PROP_GASTO_OTROS_INTERVALO));
+        Bindings.bind(jLabelPromedioVendido, getPresenter().getModel(VentaCalendarViewModel.PROP_PROMEDIO_VENTAS_INTERVALO));
+        Bindings.bind(jLabelTotalVendido, getPresenter().getModel(VentaCalendarViewModel.PROP_TOTAL_VENTAS_INTERVALO));
+        Bindings.bind(jLabelTrabajadores, getPresenter().getModel(VentaCalendarViewModel.PROP_GASTO_TRABAJADORES_INTERVALO));
+        Bindings.bind(fileChooser, "selectedFile", getPresenter().getModel(VentaCalendarViewModel.PROP_ARCHIVO_A_IMPORTAR));
+        Bindings.bind(jButtonY, "visible", getPresenter().getModel(VentaCalendarViewModel.PROP_Y_VISIBLE));
+        jButtonEditar.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_EDITAR));
+        jButtonEliminar.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_ELIMINAR));
+        jButtonImportarVentas.addActionListener((e) -> {
+            int result = fileChooser.showSaveDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_IMPORTAR_VENTA).doAction();
+            }
+        });
+        Bindings.bind(jTableCalendar, new SelectionInList(getPresenter().getModel(VentaCalendarViewModel.PROP_LISTA_ELEMENTOS),
+                getPresenter().getModel(VentaCalendarViewModel.PROP_ELEMENTO_SELECCIONADO)));
+        jButtonY.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_Y));
+        jButton3.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_RESUMEN_DETALLADO));
+        jTableCalendar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 2 && evt.getButton() == 1) {
+                    getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_EDITAR).doAction();
+                }
+            }
 
-        int month = jMonthChooser1.getMonth();
-        int year = jYearChooser1.getYear();
-        jDateChooserDel.setCalendar(cal);
-        model = new RestManagerAbstractTableCellModel<Venta>(findVentas(month, year), jTableCalendar) {
+        });
+    }
+
+    @Override
+    public void uiInit() {
+        initComponents();
+        jScrollPane1.getViewport().setOpaque(false);
+        fileChooser = new JFileChooser();
+        model = new BindableTableModel<Venta>(jTableCalendar) {//findVentas(month, year)
             @Override
             public int getColumnCount() {
                 return 7;
@@ -522,21 +412,31 @@ public class VentaCalendarView extends OldAbstractView {
 
             @Override
             public Venta getValueAt(int rowIndex, int columnIndex) {
-                int linearPos = rowIndex * getColumnCount() + columnIndex;
-                if (linearPos >= monthOffset) {
-                    for (Venta x : getItems()) {
-                        if ((x.getFecha().getDate() - 1) == (linearPos - monthOffset)) {
-                            return x;
-                        }
+                int linearPos = (rowIndex * getColumnCount() + columnIndex) - getPresenter().getModel(VentaCalendarViewModel.PROP_MONTH_OFFSET).intValue();
+                if (linearPos >= 0) {
+                    if (linearPos >= getRowSize()) {
+                        return null;
                     }
+                    Venta x = getObjectAt(linearPos);
+                    // if ((x.getFecha().getDate() - 1) == linearPos) {
+                    return x;
+                    // }
                 }
                 return null;
             }
 
             @Override
-            public int getRowCount() {
-                return 6;
+            public Venta getObjectAt(int rowIndex) {
+                for (int i = 0; i < getListModel().getSize(); i++) {
+                    if (super.getRow(i).getFecha().getDate()-1 == rowIndex) {
+                        return super.getRow(i);
+                    }
+                }
+                return null;
             }
+            
+            
+            
 
             @Override
             public String getColumnName(int column) {
@@ -561,154 +461,12 @@ public class VentaCalendarView extends OldAbstractView {
             }
         };
         jTableCalendar.setModel(model);
-        updatePanelEstaidisticas(model.getItems());
         jTableCalendar.setDefaultRenderer(Venta.class, new VentaCellRender());
     }
 
-    public List<Venta> findVentas(int month, int year) {
-        return getController().findVentas(month, year);
-    }
-
     @Override
-    public VentaListController getController() {
-        return (VentaListController) super.getController(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void updateCalendar() {
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.YEAR, jYearChooser1.getYear());
-        cal.set(Calendar.MONTH, jMonthChooser1.getMonth());
-        monthOffset = cal.get(Calendar.DAY_OF_WEEK) - 2;
-        if (monthOffset == -1) {
-            monthOffset = 6;
-        }
-
-    }
-
-    public List<Venta> getSelectedVentas() {
-        return model.getSelectedItems();
-    }
-
-    public void updatePanelEstaidisticas(List<Venta> ventas) {
-        double suma = 0;
-        double gInsumos = 0;
-        double gGastos = 0;
-        double gTrabajadores = 0;
-        int cantidad = 0;
-        for (Venta x : ventas) {
-            if (x.getVentaTotal() != null) {
-                suma += x.getVentaTotal();
-                if (x.getVentagastosEninsumos() != null) {
-                    gInsumos += x.getVentagastosEninsumos();
-                }
-                if (x.getVentagastosGastos() != null) {
-                    gGastos += x.getVentagastosGastos();
-                }
-                if (x.getVentagastosPagotrabajadores() != null) {
-                    gTrabajadores += x.getVentagastosPagotrabajadores();
-                }
-                cantidad++;
-            }
-        }
-        double promedio = suma / cantidad;
-
-        jLabelTotalVendido.setText(utils.setDosLugaresDecimales((float) suma));
-        jLabelPromedioVendido.setText(utils.setDosLugaresDecimales((float) promedio));
-        jLabelInsumo.setText(utils.setDosLugaresDecimales((float) gInsumos));
-        jLabelTrabajadores.setText(utils.setDosLugaresDecimales((float) (gTrabajadores)));
-        jLabelOtros.setText(utils.setDosLugaresDecimales((float) gGastos));
-        int hora_pico_promedio = VentaDAO1.getModalPickHour(ventas);
-        jLabelHoraPico.setText(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
-    }
-
-    private void editSelected() {
-        Venta v = model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn());
-        VentaDetailController controller = new VentaDetailController(new OrdenController(v), v);
-    }
-
-    private void createDetailResumenView() {
-        if (jDateChooserAl.getDate() == null || jDateChooserDel.getDate() == null) {
-            throw new NoSelectedException(jPanelResumen);
-        }
-        if (jDateChooserAl.getDate().compareTo(jDateChooserDel.getDate()) < 0) {
-            throw new ValidatingException(jPanelResumen);
-        }
-        getController().createDetailResumenView(jDateChooserDel.getDate(), jDateChooserAl.getDate());
-    }
-
-    private void deleteSelected() {
-        if (jTableCalendar.getSelectedColumnCount() > 1 || jTableCalendar.getSelectedRowCount() > 1) {
-            for (int selectedColumn : jTableCalendar.getSelectedColumns()) {
-                for (int selectedRow : jTableCalendar.getSelectedRows()) {
-                    Venta v = model.getValueAt(selectedRow, selectedColumn);
-                    if (v != null) {
-                        getController().destroy(model.getValueAt(selectedRow, selectedColumn));
-                    }
-                }
-            }
-        } else {
-            getController().destroy(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()));
-        }
-    }
-
-    @Override
-    public void fetchComponentData() {
-        LicenceController controller = new LicenceController(Licence.TipoLicencia.SECUNDARIA);
-        jButtonY.setVisible(controller.getLicence().LICENCIA_ACTIVA && controller.getLicence().LICENCIA_VALIDA);
-    }
-
-    private void importarVentas() {
-        VentaDetailController control = new VentaDetailController();
-        JFileChooser file = new JFileChooser();
-        int result = file.showOpenDialog(this);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            new LongProcessActionServiceImpl("Importando Venta") {
-                @Override
-                protected void longProcessMethod() {
-                    control.importarVenta(file.getSelectedFile());
-                    updateView();
-                }
-            }.performAction(this);
-        }
-
-    }
-
-    private void ejecutarY() {
-        if (R.CURRENT_CONNECTION.getTipoUbicacion() != UbicacionConexionModel.TipoUbicacion.MASTER) {
-            throw new UnauthorizedAccessException(this, "Esta operacion solo se puede ejecutar conectado a una ubicaion master");
-        }
-        Y alg = new Y(model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn()), getController());
-        Venta old = alg.getVentaReal();
-        Venta newVenta = new Venta();
-        // if (!new BackUpService().ExisteVentaEnLocal(old)) {
-        //   throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
-        // }
-        try {
-            getController().destroy(VentaDAO.getInstance().find(old.getFecha()), true);
-            newVenta.setAsistenciaPersonalList(new ArrayList<>());
-            newVenta.setFecha(old.getFecha());
-            newVenta.setOrdenList(alg.ejecutarAlgoritmo());
-            newVenta.setGastoVentaList(new ArrayList<>());
-            newVenta.setVentagastosPagotrabajadores(VentaDAO1.getValorTotalPagoTrabajadores(newVenta));
-            newVenta.setVentagastosGastos((float) 0.0);
-            newVenta.setVentaTotal((double) VentaDAO1.getValorTotalVentas(newVenta));
-            VentaDAO.getInstance().startTransaction();
-            VentaDAO.getInstance().create(newVenta);
-            VentaDAO.getInstance().commitTransaction();
-        } catch (Exception e) {
-            VentaDAO.getInstance().startTransaction();
-            VentaDAO.getInstance().create(old);
-            VentaDAO.getInstance().commitTransaction();
-            JOptionPane.showMessageDialog(this, "La operacion no se ha podido completar correctamente. Contacte con soporte");
-
-        }
-        if (VentaDAO.getInstance().find(old.getFecha()) == null) {
-            VentaDAO.getInstance().startTransaction();
-            VentaDAO.getInstance().create(old);
-            VentaDAO.getInstance().commitTransaction();
-            JOptionPane.showMessageDialog(this, "La operacion no se ha podido completar correctamente. Contacte con soporte");
-        }
-
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }
