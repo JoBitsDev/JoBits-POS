@@ -5,9 +5,6 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jobits.pos.ui.almacen.AlmacenListView;
-import java.awt.Dialog;
-import java.awt.Window;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.AbstractDetailController;
@@ -16,6 +13,7 @@ import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.NoSelectedException;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.adapters.repo.AlmacenDAO;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.RegularExpressions;
 
@@ -31,11 +29,6 @@ public class AlmacenListController extends OldAbstractListController<Almacen> {
 
     public AlmacenListController() {
         super(AlmacenDAO.getInstance());
-    }
-
-    public AlmacenListController(Window parent) {
-        this();
-        constructView(parent);
     }
 
     @Override
@@ -61,9 +54,6 @@ public class AlmacenListController extends OldAbstractListController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new AlmacenListView(this, (Dialog) parent, true));
-        getView().updateView();
-        getView().setVisible(true);
     }
 
     public void createNewStorage() {
@@ -79,8 +69,7 @@ public class AlmacenListController extends OldAbstractListController<Almacen> {
                 selected.setNombre(storageName);
 
                 create();
-                showSuccessDialog(getView());
-                getView().updateView();
+                showSuccessDialog(Application.getInstance().getMainWindow());
             } else {
                 //TODO: implementar exepciones
             }
@@ -94,8 +83,7 @@ public class AlmacenListController extends OldAbstractListController<Almacen> {
             int resp = JOptionPane.showConfirmDialog(getView(), R.RESOURCE_BUNDLE.getString("dialogo_borrar_almacen") + " " + selected.getNombre());
             if (resp == JOptionPane.YES_OPTION) {
                 destroy();
-                showSuccessDialog(getView());
-                getView().updateView();
+                showSuccessDialog(Application.getInstance().getMainWindow());
             }
         }
     }
@@ -104,7 +92,7 @@ public class AlmacenListController extends OldAbstractListController<Almacen> {
         if (selected == null) {
             throw new NoSelectedException();
         } else {
-            AlmacenManageController manageController = new AlmacenManageController(getView(), selected);
+            AlmacenManageController manageController = new AlmacenManageController(Application.getInstance().getMainWindow(), selected);
         }
 
     }

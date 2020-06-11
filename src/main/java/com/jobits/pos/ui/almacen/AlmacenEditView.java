@@ -42,6 +42,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
 import com.jobits.pos.ui.utils.utils;
+import java.awt.Frame;
 
 /**
  *
@@ -60,7 +61,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     final Color elaboracionColor = new Color(255, 255, 204);
     final String labelInsumoSleccionado = "<Seleccione un insumo en la tabla>";
 
-    public AlmacenEditView(AbstractDetailController<Almacen> controller, OldAbstractView owner, Almacen instance) {
+    public AlmacenEditView(AbstractDetailController<Almacen> controller, Frame owner, Almacen instance) {
         super(instance, DialogType.FULL_SCREEN, controller, owner);
         initComponents();
         buttonGroup1.add(jRadioButtonSalida);
@@ -228,7 +229,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         };
 
         jXLabelValorTotal.setText(utils.setDosLugaresDecimales(getController().getInstance().getValorMonetario()));
-        jTabbedPane1.setUI(new MaterialTabbedPaneUI());
+        jTabbedPane1.setUI(new ui.componentsui.tabbedpane.MaterialTabbedPaneUI());
     }
 
     @Override
@@ -363,14 +364,13 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Operaciones con", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Operaciones con", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
         jPanel6.setPreferredSize(new java.awt.Dimension(300, 463));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
         jTabbedPane1.setForeground(new java.awt.Color(0, 153, 153));
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(250, 443));
-        jTabbedPane1.setOpaque(true);
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(250, 435));
 
         jPanelTransaccion.setBackground(new java.awt.Color(204, 255, 255));
@@ -398,7 +398,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
         jPanelTransaccion.add(jPanel9, java.awt.BorderLayout.SOUTH);
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Cantidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Cantidad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
         jPanel7.setOpaque(false);
         jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -409,27 +409,34 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
         jPanelTransaccion.add(jPanel7, java.awt.BorderLayout.PAGE_START);
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Operaciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Operaciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
         jPanel8.setOpaque(false);
         jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.PAGE_AXIS));
 
+        jPanelEntrada.setMaximumSize(new java.awt.Dimension(2147483647, 80));
         jPanelEntrada.setOpaque(false);
-        jPanelEntrada.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelEntrada.setLayout(new java.awt.BorderLayout(5, 5));
 
         jRadioButtonEntrada.setSelected(true);
         jRadioButtonEntrada.setText(bundle.getString("label_entrada")); // NOI18N
         jRadioButtonEntrada.setToolTipText("");
+        jRadioButtonEntrada.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jRadioButtonEntrada.setMaximumSize(new java.awt.Dimension(20, 20));
+        jRadioButtonEntrada.setMinimumSize(new java.awt.Dimension(20, 25));
+        jRadioButtonEntrada.setPreferredSize(new java.awt.Dimension(20, 20));
         jRadioButtonEntrada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonEntradaActionPerformed(evt);
             }
         });
-        jPanelEntrada.add(jRadioButtonEntrada);
+        jPanelEntrada.add(jRadioButtonEntrada, java.awt.BorderLayout.PAGE_START);
 
+        jPanel10.setMaximumSize(new java.awt.Dimension(32767, 32));
         jPanel10.setOpaque(false);
 
         jSpinnerMonto.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1000000.0f), Float.valueOf(1.0f)));
         jSpinnerMonto.setToolTipText("Monto");
+        jSpinnerMonto.setMaximumSize(new java.awt.Dimension(32767, 22));
         jSpinnerMonto.setPreferredSize(new java.awt.Dimension(150, 26));
         jPanel10.add(jSpinnerMonto);
 
@@ -437,12 +444,13 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jLabel1.setText(R.COIN_SUFFIX);
         jPanel10.add(jLabel1);
 
-        jPanelEntrada.add(jPanel10);
+        jPanelEntrada.add(jPanel10, java.awt.BorderLayout.CENTER);
 
         jPanel8.add(jPanelEntrada);
 
+        jPanelTraspaso.setMaximumSize(new java.awt.Dimension(32767, 80));
         jPanelTraspaso.setOpaque(false);
-        jPanelTraspaso.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelTraspaso.setLayout(new java.awt.BorderLayout(5, 5));
 
         jRadioButtonTraspaso.setText(bundle.getString("label_traspaso")); // NOI18N
         jRadioButtonTraspaso.addActionListener(new java.awt.event.ActionListener() {
@@ -450,18 +458,19 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
                 jRadioButtonTraspasoActionPerformed(evt);
             }
         });
-        jPanelTraspaso.add(jRadioButtonTraspaso);
+        jPanelTraspaso.add(jRadioButtonTraspaso, java.awt.BorderLayout.PAGE_START);
 
         jComboBoxAlmacen.setEnabled(false);
         jComboBoxAlmacen.setMinimumSize(new java.awt.Dimension(150, 27));
         jComboBoxAlmacen.setPreferredSize(new java.awt.Dimension(150, 27));
-        jPanelTraspaso.add(jComboBoxAlmacen);
+        jPanelTraspaso.add(jComboBoxAlmacen, java.awt.BorderLayout.CENTER);
 
         jPanel8.add(jPanelTraspaso);
 
+        jPaneldestino.setMaximumSize(new java.awt.Dimension(2147483647, 80));
         jPaneldestino.setMinimumSize(new java.awt.Dimension(200, 61));
         jPaneldestino.setOpaque(false);
-        jPaneldestino.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPaneldestino.setLayout(new java.awt.BorderLayout(5, 5));
 
         jRadioButtonSalida.setText(bundle.getString("label_salida")); // NOI18N
         jRadioButtonSalida.addActionListener(new java.awt.event.ActionListener() {
@@ -469,17 +478,19 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
                 jRadioButtonSalidaActionPerformed(evt);
             }
         });
-        jPaneldestino.add(jRadioButtonSalida);
+        jPaneldestino.add(jRadioButtonSalida, java.awt.BorderLayout.PAGE_START);
 
         jComboBoxPuntoElab.setEnabled(false);
+        jComboBoxPuntoElab.setMaximumSize(new java.awt.Dimension(32767, 40));
         jComboBoxPuntoElab.setMinimumSize(new java.awt.Dimension(150, 27));
         jComboBoxPuntoElab.setPreferredSize(new java.awt.Dimension(150, 27));
-        jPaneldestino.add(jComboBoxPuntoElab);
+        jPaneldestino.add(jComboBoxPuntoElab, java.awt.BorderLayout.CENTER);
 
         jPanel8.add(jPaneldestino);
 
+        jPanelRazon.setMaximumSize(new java.awt.Dimension(2147483647, 80));
         jPanelRazon.setOpaque(false);
-        jPanelRazon.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelRazon.setLayout(new java.awt.BorderLayout(5, 5));
 
         jRadioButtonRebaja.setText(bundle.getString("label_rebaja")); // NOI18N
         jRadioButtonRebaja.addActionListener(new java.awt.event.ActionListener() {
@@ -487,13 +498,13 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
                 jRadioButtonRebajaActionPerformed(evt);
             }
         });
-        jPanelRazon.add(jRadioButtonRebaja);
+        jPanelRazon.add(jRadioButtonRebaja, java.awt.BorderLayout.PAGE_START);
 
         jTextFieldRebaja.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jTextFieldRebaja.setToolTipText("Razon de rebaja");
         jTextFieldRebaja.setEnabled(false);
         jTextFieldRebaja.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanelRazon.add(jTextFieldRebaja);
+        jPanelRazon.add(jTextFieldRebaja, java.awt.BorderLayout.CENTER);
 
         jPanel8.add(jPanelRazon);
 
@@ -504,7 +515,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanelTransformacion.setBackground(new java.awt.Color(204, 255, 255));
         jPanelTransformacion.setLayout(new java.awt.BorderLayout());
 
-        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Transformar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Transformar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
         jPanel13.setOpaque(false);
         jPanel13.setPreferredSize(new java.awt.Dimension(300, 70));
         jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -519,11 +530,11 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
         jPanelTransformacion.add(jPanel13, java.awt.BorderLayout.PAGE_START);
 
-        jPanelTransformarEn.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "En...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanelTransformarEn.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "En...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
         jPanelTransformarEn.setOpaque(false);
         jPanelTransformarEn.setLayout(new java.awt.BorderLayout());
 
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Hacia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Hacia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
         jPanel12.setOpaque(false);
 
         jComboBoxAlDestTransformacion.setMinimumSize(new java.awt.Dimension(150, 27));

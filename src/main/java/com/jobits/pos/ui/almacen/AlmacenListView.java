@@ -6,32 +6,28 @@
 
 package com.jobits.pos.ui.almacen;
 
-import com.jobits.pos.ui.OldAbstractListView;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.util.List;
-import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.ui.AbstractListViewPanel;
+import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.utils.BindableTableModel;
 
 /**
  * FirstDream
  * @author Jorge
  *
  */
-public class AlmacenListView extends OldAbstractListView<Almacen>{
+public class AlmacenListView extends AbstractListViewPanel<Almacen>{
 
-    public AlmacenListView(OldAbstractListController<Almacen> controller, Frame owner, boolean modal) {
-        super(controller, owner, modal);
-    }
-
-    public AlmacenListView(OldAbstractListController<Almacen> controller, Dialog owner, boolean modal) {
-        super(controller, owner, modal);
+    
+    public static final String VIEW_NAME = "Almacenes";
+    
+    public AlmacenListView(AbstractListViewPresenter presenter) {
+        super(presenter);
     }
 
     @Override
-    public MyJTableModel<Almacen> generateTableModel(List<Almacen> items) {
-        return new MyJTableModel<Almacen>(items) {
+    public BindableTableModel<Almacen> generateTableModel() {
+        return new BindableTableModel<Almacen>(jTableList) {
             @Override
             public int getColumnCount() {
                 return 2;
@@ -40,8 +36,8 @@ public class AlmacenListView extends OldAbstractListView<Almacen>{
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch(columnIndex){
-                    case 0: return items.get(rowIndex);
-                    case 1: return items.get(rowIndex).getValorMonetario();
+                    case 0: return getRow(rowIndex);
+                    case 1: return getRow(rowIndex).getValorMonetario();
                     default: return null;
                 }
             }
@@ -55,6 +51,11 @@ public class AlmacenListView extends OldAbstractListView<Almacen>{
                 }
             }
         };
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }

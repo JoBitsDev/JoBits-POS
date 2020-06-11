@@ -7,6 +7,7 @@ package com.jobits.pos.cordinator;
 
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.almacen.AlmacenListView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.backup.BackUpView;
@@ -69,19 +70,21 @@ public class CoordinatorService implements Coordinator {
         navigationGraph = new HashMap<>();
         navigationGraph.put(LogInView.VIEW_NAME, Arrays.asList(MainMenuView.VIEW_NAME, UbicacionView.VIEW_NAME));
         navigationGraph.put(ProductoVentaListView.VIEW_NAME, Arrays.asList(ProductoVentaDetailView.VIEW_NAME));
-        navigationGraph.put(AVAILABLE_EVERYWHERE, Arrays.asList(ProductoVentaListView.VIEW_NAME,
-                InsumoListView.VIEW_NAME,
-                PersonalListView.VIEW_NAME,
-                PuestoTrabajoListView.VIEW_NAME,
-                PuntoElaboracionListView.VIEW_NAME,
-                NominasDetailView.VIEW_NAME,
-                MenuSeccionView.VIEW_NAME,
-                AreaVentaListView.VIEW_NAME,
-                ConfiguracionView.VIEW_NAME,
-                IpvGestionView.VIEW_NAME,
-                VentaDetailView.VIEW_NAME,
-                BackUpView.VIEW_NAME,
-                VentaCalendarView.VIEW_NAME));
+        navigationGraph.put(AVAILABLE_EVERYWHERE,
+                Arrays.asList(ProductoVentaListView.VIEW_NAME,
+                        InsumoListView.VIEW_NAME,
+                        PersonalListView.VIEW_NAME,
+                        PuestoTrabajoListView.VIEW_NAME,
+                        PuntoElaboracionListView.VIEW_NAME,
+                        NominasDetailView.VIEW_NAME,
+                        MenuSeccionView.VIEW_NAME,
+                        AreaVentaListView.VIEW_NAME,
+                        ConfiguracionView.VIEW_NAME,
+                        IpvGestionView.VIEW_NAME,
+                        VentaDetailView.VIEW_NAME,
+                        BackUpView.VIEW_NAME,
+                        VentaCalendarView.VIEW_NAME,
+                        AlmacenListView.VIEW_NAME));
         navigationGraph.put(VentaDetailView.VIEW_NAME, Arrays.asList(OrdenDetailFragmentView.VIEW_NAME));
     }
 

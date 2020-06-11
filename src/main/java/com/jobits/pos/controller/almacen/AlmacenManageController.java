@@ -44,6 +44,7 @@ import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
+import java.awt.Frame;
 
 /**
  * FirstDream
@@ -76,7 +77,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new AlmacenEditView(this, (OldAbstractView) parent, getInstance()));
+        setView(new AlmacenEditView(this, (Frame) parent, getInstance()));
         getView().updateView();
         getView().fetchComponentData();
         getView().setVisible(true);

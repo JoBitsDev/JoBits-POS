@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
@@ -26,8 +27,10 @@ import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
 import com.jobits.pos.ui.MainMenuPresenter;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.almacen.AlmacenListView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
+import com.jobits.pos.ui.almacen.presenter.AlmacenListPresenter;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
 import com.jobits.pos.ui.backup.BackUpView;
@@ -109,6 +112,8 @@ public class PresenterFacade {
                 return new BackUpViewPresenter(new UbicacionConexionController());
             case VentaCalendarView.VIEW_NAME:
                 return new VentaCalendarViewPresenter(new VentaListController());
+            case AlmacenListView.VIEW_NAME:
+                return new AlmacenListPresenter(new AlmacenListController());
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;
