@@ -8,6 +8,7 @@ package com.jobits.pos.ui.puntoelaboracion;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 
 /**
@@ -68,14 +69,10 @@ public class PuntoElaboracionListView extends AbstractListViewPanel<Cocina> {
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 if (columnIndex == 3) {
-                    getRow(rowIndex).setRecibirNotificacion((Boolean) aValue);
-                    //getController().setSelected(items.get(rowIndex));
-                    //getController().update();//TODO: activar comportamiento
+                    getPresenter().getOperation(PuntoElaboracionListViewPresenter.ACTION_CHANGE_RECIBIR_NOTIFICACION).doAction();
                 }
                 if (columnIndex == 4) {
-                    getRow(rowIndex).setLimitarVentaInsumoAgotado((Boolean) aValue);
-                    // getController().setSelected(items.get(rowIndex));
-                    //getController().update();
+                    getPresenter().getOperation(PuntoElaboracionListViewPresenter.ACTION_CHANGE_LIMITAR_VENTA).doAction();
                 }
             }
 

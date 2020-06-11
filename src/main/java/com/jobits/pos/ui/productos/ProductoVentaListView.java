@@ -5,25 +5,12 @@
  */
 package com.jobits.pos.ui.productos;
 
-import com.jobits.pos.ui.OldAbstractListView;
-import com.jidesoft.swing.JideButton;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.util.List;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import com.jobits.pos.controller.OldAbstractListController;
-import com.jobits.pos.controller.login.MainMenuController;
-import com.jobits.pos.controller.productos.ProductoVentaListController;
-import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.productos.presenter.ProductoVentaListViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  * FirstDream
@@ -120,14 +107,8 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 if (columnIndex == 5) {
-                    ((ProductoVenta) getListModel().getElementAt(rowIndex)).setVisible((Boolean) aValue);
-                    fireTableCellUpdated(rowIndex, columnIndex);
+                    getPresenter().getOperation(ProductoVentaListViewPresenter.ACTION_CHANGE_VISIBLE).doAction();
                 }
-//                if (columnIndex == 5 && getController().canSetVisible(items.get(rowIndex))) {
-//                    items.get(rowIndex).setVisible((Boolean) aValue);
-//                    getController().setSelected(items.get(rowIndex));
-//                    getController().update();
-//                }
             }
         };
     }

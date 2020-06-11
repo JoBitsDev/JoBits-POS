@@ -105,6 +105,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     protected void onEliminarClick() {
         if (getBean().getElemento_seleccionado() != null) {
             controller.destroy(getBean().getElemento_seleccionado());
+            updateBeanData();
         }
     }
 
