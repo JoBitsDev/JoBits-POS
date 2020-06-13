@@ -8,7 +8,7 @@ package com.jobits.pos.controller;
 
 import com.jobits.pos.ui.OldAbstractListView;
 import java.beans.PropertyChangeEvent;
-import com.jobits.pos.adapters.repo.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 
 /**
  * FirstDream

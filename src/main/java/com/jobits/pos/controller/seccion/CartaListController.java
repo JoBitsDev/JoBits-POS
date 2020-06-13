@@ -16,8 +16,8 @@ import javax.swing.JOptionPane;
 import com.jobits.pos.exceptions.NoSelectedException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.adapters.repo.MenuDAO;
-import com.jobits.pos.adapters.repo.ProductoVentaDAO;
+import com.jobits.pos.adapters.repo.impl.MenuDAO;
+import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
 import com.jobits.pos.recursos.R;
 
 /**

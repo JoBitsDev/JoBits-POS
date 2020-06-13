@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import com.jobits.pos.exceptions.NoSelectedException;
-import com.jobits.pos.adapters.repo.PropertyName;
+import com.jobits.pos.adapters.repo.impl.PropertyName;
 
 /**
  * FirstDream

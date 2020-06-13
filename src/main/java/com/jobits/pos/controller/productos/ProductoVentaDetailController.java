@@ -19,10 +19,10 @@ import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Seccion;
-import com.jobits.pos.adapters.repo.CocinaDAO;
-import com.jobits.pos.adapters.repo.InsumoDAO;
-import com.jobits.pos.adapters.repo.ProductoVentaDAO;
-import com.jobits.pos.adapters.repo.SeccionDAO;
+import com.jobits.pos.adapters.repo.impl.CocinaDAO;
+import com.jobits.pos.adapters.repo.impl.InsumoDAO;
+import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
+import com.jobits.pos.adapters.repo.impl.SeccionDAO;
 import com.jobits.pos.domain.models.ProductoInsumoPK;
 import com.jobits.pos.ui.utils.utils;
 

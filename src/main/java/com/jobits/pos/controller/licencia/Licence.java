@@ -8,7 +8,7 @@ package com.jobits.pos.controller.licencia;
 import java.util.Date;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.adapters.repo.VentaDAO;
+import com.jobits.pos.adapters.repo.impl.VentaDAO;
 
 /**
  * FirstDream

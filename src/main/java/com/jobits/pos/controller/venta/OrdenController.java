@@ -1,5 +1,6 @@
 package com.jobits.pos.controller.venta;
 
+import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.utils.CalcularCambioView;
 import com.jobits.pos.ui.venta.OrdenDetailFragmentView;
 import java.awt.Container;
@@ -32,15 +33,16 @@ import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.adapters.repo.ConfigDAO;
-import com.jobits.pos.adapters.repo.ConfiguracionDAO;
-import com.jobits.pos.adapters.repo.IpvRegistroDAO;
-import com.jobits.pos.adapters.repo.MesaDAO;
-import com.jobits.pos.adapters.repo.NotaDAO;
-import com.jobits.pos.adapters.repo.OrdenDAO;
-import com.jobits.pos.adapters.repo.ProductoVentaDAO;
-import com.jobits.pos.adapters.repo.ProductovOrdenDAO;
-import com.jobits.pos.adapters.repo.SeccionDAO;
+import com.jobits.pos.adapters.repo.impl.ConfigDAO;
+import com.jobits.pos.adapters.repo.impl.ConfiguracionDAO;
+import com.jobits.pos.adapters.repo.impl.IpvRegistroDAO;
+import com.jobits.pos.adapters.repo.impl.MesaDAO;
+import com.jobits.pos.adapters.repo.impl.NotaDAO;
+import com.jobits.pos.adapters.repo.impl.OrdenDAO;
+import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
+import com.jobits.pos.adapters.repo.impl.ProductovOrdenDAO;
+import com.jobits.pos.adapters.repo.impl.SeccionDAO;
+import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.servicios.impresion.Impresion;
 
 import com.jobits.pos.recursos.R;
@@ -61,13 +63,23 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public OrdenController() {
         super(OrdenDAO.getInstance());
+        init();
+    }
+
+    public OrdenController(String ordenId) {
+        this();
+
+    }
+
+    public OrdenController(Mesa mesaParaAbrir) {
+        this();
+
     }
 
     public OrdenController(Venta fecha) {
-        super(OrdenDAO.getInstance());
-        init();
+        this();
         this.fechaOrden = fecha;
-     //   instance = createNewInstance();
+        //   instance = createNewInstance();
     }
 
     public OrdenController(Orden instance) {
@@ -456,5 +468,9 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         } else {
             ipvController.devolverPorLaCasa(instance.getProductovOrdenList());
         }
+    }
+
+    public ArrayListModel<Mesa> getListaMesas(Area area_seleccionada) {
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.controller.seccion;
 
-import com.jobits.pos.adapters.repo.AbstractRepository;
-import com.jobits.pos.adapters.repo.CartaDAO;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.CartaDAO;
 import com.jobits.pos.controller.AbstractController;
 import com.jobits.pos.domain.models.Carta;
 import java.awt.Container;

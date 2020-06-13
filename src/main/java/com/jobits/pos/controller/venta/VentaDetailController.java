@@ -5,10 +5,10 @@
  */
 package com.jobits.pos.controller.venta;
 
-import com.jobits.pos.adapters.repo.VentaDAO;
-import com.jobits.pos.adapters.repo.AreaDAO;
-import com.jobits.pos.adapters.repo.CocinaDAO;
-import com.jobits.pos.adapters.repo.OrdenDAO;
+import com.jobits.pos.adapters.repo.impl.VentaDAO;
+import com.jobits.pos.adapters.repo.impl.AreaDAO;
+import com.jobits.pos.adapters.repo.impl.CocinaDAO;
+import com.jobits.pos.adapters.repo.impl.OrdenDAO;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.AsistenciaPersonal;

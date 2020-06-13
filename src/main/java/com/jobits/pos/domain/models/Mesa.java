@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jobits.pos.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -25,14 +26,16 @@ import javax.persistence.Table;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "codMesa",scope = Mesa.class )
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codMesa", scope = Mesa.class)
 @Entity
 @Table(name = "mesa")
 @NamedQueries({
     @NamedQuery(name = "Mesa.findAll", query = "SELECT m FROM Mesa m"),
+    @NamedQuery(name = "Mesa.findFromArea", query = "SELECT m FROM Mesa m where m.areacodArea.codArea = :areaCod"),
     @NamedQuery(name = "Mesa.findByCodMesa", query = "SELECT m FROM Mesa m WHERE m.codMesa = :codMesa"),
     @NamedQuery(name = "Mesa.findByEstado", query = "SELECT m FROM Mesa m WHERE m.estado = :estado"),
     @NamedQuery(name = "Mesa.findByEstallena", query = "SELECT m FROM Mesa m WHERE m.estallena = :estallena"),
@@ -48,6 +51,7 @@ public class Mesa implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private String estado;
+    public static final String PROP_ESTADO = "estado";
     @Column(name = "estallena")
     private Boolean estallena;
     @Column(name = "capacidad_max")
@@ -87,7 +91,9 @@ public class Mesa implements Serializable {
     }
 
     public void setEstado(String estado) {
+        String oldEstado = this.estado;
         this.estado = estado;
+        propertyChangeSupport.firePropertyChange(PROP_ESTADO, oldEstado, estado);
     }
 
     public Boolean getEstallena() {
@@ -152,7 +158,31 @@ public class Mesa implements Serializable {
 
     @Override
     public String toString() {
-        return "Mesa: " + codMesa + " [ " + capacidadMax+" pax ]";
+        return "Mesa: " + codMesa + " [ " + capacidadMax + " pax ]";
+    }
+
+    public boolean isVacia() {
+        return getEstado().equals("vacia");
+    }
+
+    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+
+    /**
+     * Add PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * Remove PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
 }

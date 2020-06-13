@@ -14,9 +14,9 @@ import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.PuestoTrabajo;
-import com.jobits.pos.adapters.repo.AreaDAO;
-import com.jobits.pos.adapters.repo.CocinaDAO;
-import com.jobits.pos.adapters.repo.PuestoTrabajoDAO;
+import com.jobits.pos.adapters.repo.impl.AreaDAO;
+import com.jobits.pos.adapters.repo.impl.CocinaDAO;
+import com.jobits.pos.adapters.repo.impl.PuestoTrabajoDAO;
 
 /**
  * FirstDream

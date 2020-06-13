@@ -13,7 +13,7 @@ import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Insumo;
-import com.jobits.pos.adapters.repo.InsumoDAO;
+import com.jobits.pos.adapters.repo.impl.InsumoDAO;
 
 /**
  * FirstDream

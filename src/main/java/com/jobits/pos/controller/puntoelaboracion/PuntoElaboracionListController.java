@@ -13,8 +13,8 @@ import com.jobits.pos.exceptions.DuplicatedException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.adapters.repo.CocinaDAO;
-import com.jobits.pos.adapters.repo.ProductoVentaDAO;
+import com.jobits.pos.adapters.repo.impl.CocinaDAO;
+import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
 
 /**
  * FirstDream

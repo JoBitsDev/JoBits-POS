@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.controller.backup;
 
-import com.jobits.pos.adapters.repo.IpvRegistroDAO;
-import com.jobits.pos.adapters.repo.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.IpvRegistroDAO;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.ProductoVenta;

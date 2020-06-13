@@ -8,7 +8,7 @@ package com.jobits.pos.controller.trabajadores;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.domain.models.PuestoTrabajo;
-import com.jobits.pos.adapters.repo.PuestoTrabajoDAO;
+import com.jobits.pos.adapters.repo.impl.PuestoTrabajoDAO;
 
 /**
  * FirstDream

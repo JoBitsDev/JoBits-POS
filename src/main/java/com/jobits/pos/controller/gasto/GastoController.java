@@ -9,7 +9,7 @@ package com.jobits.pos.controller.gasto;
 import java.awt.Container;
 import com.jobits.pos.controller.AbstractController;
 import com.jobits.pos.domain.models.Gasto;
-import com.jobits.pos.adapters.repo.GastoDAO;
+import com.jobits.pos.adapters.repo.impl.GastoDAO;
 
 /**
  * FirstDream

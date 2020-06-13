@@ -16,9 +16,9 @@ import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.DatosPersonales;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.PuestoTrabajo;
-import com.jobits.pos.adapters.repo.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
-import com.jobits.pos.adapters.repo.PuestoTrabajoDAO;
+import com.jobits.pos.adapters.repo.impl.PuestoTrabajoDAO;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 

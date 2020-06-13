@@ -12,7 +12,7 @@ import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.NoSelectedException;
 import com.jobits.pos.domain.models.Almacen;
-import com.jobits.pos.adapters.repo.AlmacenDAO;
+import com.jobits.pos.adapters.repo.impl.AlmacenDAO;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.RegularExpressions;

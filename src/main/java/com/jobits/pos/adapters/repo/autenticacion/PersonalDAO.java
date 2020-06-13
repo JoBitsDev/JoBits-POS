@@ -6,7 +6,7 @@
 package com.jobits.pos.adapters.repo.autenticacion;
 
 
-import com.jobits.pos.adapters.repo.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.domain.models.Personal;
 /**
  * FirstDream

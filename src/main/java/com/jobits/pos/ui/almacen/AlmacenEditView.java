@@ -37,7 +37,7 @@ import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.domain.models.InsumoAlmacenPK;
 import com.jobits.pos.domain.models.TransaccionTransformacion;
-import com.jobits.pos.adapters.repo.InsumoAlmacenDAO;
+import com.jobits.pos.adapters.repo.impl.InsumoAlmacenDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;

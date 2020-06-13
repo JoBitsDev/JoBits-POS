@@ -13,8 +13,8 @@ import com.jobits.pos.exceptions.DuplicatedException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Mesa;
-import com.jobits.pos.adapters.repo.AreaDAO;
-import com.jobits.pos.adapters.repo.MesaDAO;
+import com.jobits.pos.adapters.repo.impl.AreaDAO;
+import com.jobits.pos.adapters.repo.impl.MesaDAO;
 
 /**
  * FirstDream

@@ -5,32 +5,37 @@
  */
 package com.jobits.pos.ui.venta;
 
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.ui.AbstractViewPanel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.venta.presenter.MesaListViewModel;
+import com.jobits.pos.ui.venta.presenter.MesaListViewPresenter;
+import java.awt.Component;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  *
  * @author Jorge
  */
-public class MesaListView extends AbstractViewPanel implements ActionListener{
+public class MesaListView extends AbstractViewPanel implements PropertyChangeListener {
 
     public static final String VIEW_NAME = "Distribución mesas";
 
-    
     private ArrayListModel<Mesa> listaMesas;
+    private Mesa mesaSeleccionada = null;
+    private ArrayListModel<FloorTableButton> listaMesasBotones;
 
-    public MesaListView(ArrayListModel<Mesa> listaMesas) {
+    public MesaListView(ArrayListModel<Mesa> listaMesas, AbstractViewPresenter presenter) {
+        super(presenter);
         this.listaMesas = listaMesas;
-        for (Mesa x : listaMesas) {
-            add(createAndAttachButton(x));
-        }
+
     }
-     
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,19 +46,57 @@ public class MesaListView extends AbstractViewPanel implements ActionListener{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
         setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         setOpaque(false);
-        setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
+        setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jComboBox1.setPreferredSize(new java.awt.Dimension(180, 40));
+        jPanel3.add(jComboBox1);
+
+        add(jPanel3, java.awt.BorderLayout.PAGE_START);
+
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
+        add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jButton1.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel2.add(jButton1);
+
+        jButton2.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel2.add(jButton2);
+
+        add(jPanel2, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
     public void wireUp() {
-       
+        Bindings.bind(jComboBox1,
+                new SelectionInList<Area>(
+                        getPresenter().getModel(MesaListViewModel.PROP_LISTA_AREAS),
+                        getPresenter().getModel(MesaListViewModel.PROP_AREA_SELECCIONADA)));
+
     }
 
     @Override
     public void uiInit() {
         initComponents();
+        for (Mesa x : listaMesas) {
+            jPanel1.add(createAndAttachButton(x));
+        }
     }
 
     @Override
@@ -62,30 +105,28 @@ public class MesaListView extends AbstractViewPanel implements ActionListener{
     }
 
 
-    private void fillPanel(){
-        removeAll();
-        for (Mesa x : listaMesas) {
-            
-        }
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<Area> jComboBox1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
-    
-    
-    private JButton createAndAttachButton(Mesa m){
-        FloorTableButton button =  new FloorTableButton(m);
-        button.addActionListener(this);
+
+    private Component createAndAttachButton(Mesa m) {
+        FloorTableButton button = new FloorTableButton(m);
+        listaMesasBotones.add(button);
+        button.addPropertyChangeListener(this);
         return button;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        firePropertyChange("click", e.getSource(),e.getSource());
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(FloorTableButton.PROP_CLICK_MESA)) {
+            mesaSeleccionada = (Mesa) evt.getNewValue();
+            getPresenter().getOperation(MesaListViewPresenter.ACTION_CAMBIAR_AREA).doAction();
+        }
     }
-
-    
-    
-    
 
 }

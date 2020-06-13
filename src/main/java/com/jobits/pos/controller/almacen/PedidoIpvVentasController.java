@@ -13,9 +13,9 @@ import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
-import com.jobits.pos.adapters.repo.AbstractRepository;
-import com.jobits.pos.adapters.repo.AlmacenDAO;
-import com.jobits.pos.adapters.repo.IpvRegistroVentaDAO;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.AlmacenDAO;
+import com.jobits.pos.adapters.repo.impl.IpvRegistroVentaDAO;
 import com.jobits.pos.domain.InsumoPedidoModel;
 import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
 

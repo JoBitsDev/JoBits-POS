@@ -13,7 +13,7 @@ import javax.persistence.PersistenceException;
 import javax.swing.JOptionPane;
 import com.jobits.pos.exceptions.HiddenException;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.adapters.repo.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.OldView;
 

@@ -1,0 +1,221 @@
+package com.jobits.pos.adapters.repo.impl;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
+import javax.swing.JOptionPane;
+import com.jobits.pos.controller.AbstractController.PersistAction;
+import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jobits.pos.exceptions.ExceptionHandler;
+import com.jobits.pos.exceptions.UnExpectedErrorException;
+import com.jobits.pos.domain.models.AsistenciaPersonal;
+import com.jobits.pos.recursos.DBConnector;
+import com.jobits.pos.recursos.R;
+
+/**
+ * FirstDream
+ *
+ * @author Jorge
+ * @param <T>
+ *
+ */
+public abstract class AbstractRepository<T> implements Model {
+
+    private final Class<T> entityClass;
+    private static EntityManagerFactory EMF;
+    private static EntityManager currentConnection;
+    protected PropertyChangeSupport propertyChangeSupport;
+
+    public AbstractRepository(Class<T> entityClass) {
+        this.entityClass = entityClass;
+        propertyChangeSupport = new PropertyChangeSupport(this);
+        DBConnector.init(R.CURRENT_CONNECTION);
+    }
+
+    public EntityManager getEntityManager() {
+        return currentConnection;
+    }
+
+    public void startTransaction() {
+        if (!getEntityManager().getTransaction().isActive()) {
+            getEntityManager().getTransaction().begin();
+        }
+    }
+
+    public void commitTransaction() {
+        if (getEntityManager().getTransaction().isActive()) {
+            try {
+                getEntityManager().flush();
+                getEntityManager().getTransaction().commit();
+            } catch (PersistenceException e) {
+                dbException(e);
+            }
+        }
+    }
+
+    public void refresh(T a) {
+        getEntityManager().refresh(a);
+    }
+
+    public void create(T entity) throws EntityExistsException {
+        persist(PersistAction.CREATE, entity);
+    }
+
+    public void edit(T entity) {
+        persist(PersistAction.UPDATE, entity);
+    }
+
+    public void remove(T entity) {
+        persist(PersistAction.DELETE, entity);
+    }
+
+    public T find(Object id) {
+        return getEntityManager().find(entityClass, id);
+    }
+
+    public List<T> findAll() {
+        try {
+            javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+            cq.select(cq.from(entityClass));
+            return new ArrayList<>(getEntityManager().createQuery(cq).getResultList());
+        } catch (Exception e) {
+            getEntityManager().getTransaction().rollback();
+            return new ArrayList<>(findAll());
+        }
+    }
+
+    public List<T> findRange(int[] range) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        javax.persistence.Query q = getEntityManager().createQuery(cq);
+        q.setMaxResults(range[1] - range[0] + 1);
+        q.setFirstResult(range[0]);
+        return q.getResultList();
+    }
+
+    public int count() {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
+        cq.select(getEntityManager().getCriteriaBuilder().count(rt));
+        javax.persistence.Query q = getEntityManager().createQuery(cq);
+        return ((Long) q.getSingleResult()).intValue();
+    }
+
+    /**
+     * Tu generate IDs for the relational model of the application
+     *
+     * @param prefix includign the '-' char ej: "P-"
+     * @return
+     */
+    public String generateStringCode(String prefix) {
+        int cont = 1;
+        T a = find(prefix + "" + cont);
+        while (a != null) {
+            cont++;
+            a = find(prefix + "" + cont);
+        }
+
+        return prefix + "" + cont;
+    }
+
+    /**
+     * Tu generate IDs for the relational model of the application
+     *
+     * @return
+     */
+    public int generateIDCode() {
+        int cont = 0;
+        T a = find(cont);
+        while (a != null) {
+            cont++;
+        }
+        return cont;
+    }
+
+    public int generate(String idName) {
+        return new ConfigDAO().generateNewId(idName);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
+
+    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    public static EntityManagerFactory getEMF() {
+        return EMF;
+    }
+
+    public static void setEMF(EntityManagerFactory EMF) {
+        AbstractRepository.EMF = EMF;
+    }
+
+    public static EntityManager getCurrentConnection() {
+        return currentConnection;
+    }
+
+    public static void setCurrentConnection(EntityManager currentConnection) {
+        AbstractRepository.currentConnection = currentConnection;
+    }
+
+    public PropertyChangeSupport getPropertyChangeSupport() {
+        return propertyChangeSupport;
+    }
+
+    public void setPropertyChangeSupport(PropertyChangeSupport propertyChangeSupport) {
+        this.propertyChangeSupport = propertyChangeSupport;
+    }
+
+    public Class<T> getEntityClass() {
+        return entityClass;
+    }
+
+    //
+    // Private Methods
+    //
+    private void persist(PersistAction persistAction, T entity) {
+
+        try {
+            switch (persistAction) {
+                case CREATE:
+                    getEntityManager().persist(entity);
+                    firePropertyChange(PropertyName.CREATE.toString(), null, entity);
+                    break;
+                case DELETE:
+                    getEntityManager().remove(getEntityManager().merge(entity));
+                    firePropertyChange(PropertyName.DELETE.toString(), entity, null);
+                    break;
+                case UPDATE:
+                    getEntityManager().merge(entity);
+                    firePropertyChange(PropertyName.UPDATE.toString(), entity, entity);
+                    break;
+            }
+        } catch (PersistenceException e) {
+            dbException(e);
+        }
+    }
+
+    private void dbException(PersistenceException e) {
+        ExceptionHandler.showExceptionToUser(e, "Error en base de datos. Reconectandose... \n " + e.getLocalizedMessage());
+        if (getEntityManager().getTransaction().isActive()) {
+            getEntityManager().getTransaction().rollback();
+        }
+        DBConnector.resetConnection(null);
+        e.printStackTrace();
+    }
+
+}

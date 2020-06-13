@@ -6,7 +6,7 @@
 package com.jobits.pos.controller;
 
 import java.beans.PropertyChangeListener;
-import com.jobits.pos.adapters.repo.Model;
+import com.jobits.pos.adapters.repo.impl.Model;
 import com.jobits.pos.ui.OldView;
 
 /**

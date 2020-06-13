@@ -27,13 +27,13 @@ import com.jobits.pos.domain.models.TransaccionSalida;
 import com.jobits.pos.domain.models.TransaccionTransformacion;
 import com.jobits.pos.domain.models.TransaccionTransformacionPK;
 import com.jobits.pos.domain.models.TransaccionTraspaso;
-import com.jobits.pos.adapters.repo.CocinaDAO;
-import com.jobits.pos.adapters.repo.InsumoDAO;
-import com.jobits.pos.adapters.repo.TransaccionDAO;
-import com.jobits.pos.adapters.repo.TransaccionEntradaDAO;
-import com.jobits.pos.adapters.repo.TransaccionMermaDAO;
-import com.jobits.pos.adapters.repo.TransaccionSalidaDAO;
-import com.jobits.pos.adapters.repo.TransaccionTraspasoDAO;
+import com.jobits.pos.adapters.repo.impl.CocinaDAO;
+import com.jobits.pos.adapters.repo.impl.InsumoDAO;
+import com.jobits.pos.adapters.repo.impl.TransaccionDAO;
+import com.jobits.pos.adapters.repo.impl.TransaccionEntradaDAO;
+import com.jobits.pos.adapters.repo.impl.TransaccionMermaDAO;
+import com.jobits.pos.adapters.repo.impl.TransaccionSalidaDAO;
+import com.jobits.pos.adapters.repo.impl.TransaccionTraspasoDAO;
 
 /**
  * FirstDream

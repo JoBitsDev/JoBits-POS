@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.venta.presenter;
 
-import com.jobits.pos.adapters.repo.VentaDAO;
+import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.algoritmo.Y;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;

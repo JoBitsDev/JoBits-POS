@@ -11,7 +11,7 @@ import com.jobits.pos.ui.OldAbstractListView;
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
-import com.jobits.pos.adapters.repo.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 
 /**
  * FirstDream

@@ -13,7 +13,7 @@ import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.exceptions.NoSelectedException;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.Personal;
-import com.jobits.pos.adapters.repo.AsistenciaPersonalDAO;
+import com.jobits.pos.adapters.repo.impl.AsistenciaPersonalDAO;
 import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.ui.utils.utils;

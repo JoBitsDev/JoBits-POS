@@ -19,7 +19,7 @@ import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.ContabilidadCuenta;
 import com.jobits.pos.domain.models.Factura;
 import com.jobits.pos.domain.models.Pago;
-import com.jobits.pos.adapters.repo.ContabilidadCuentaDAO;
+import com.jobits.pos.adapters.repo.impl.ContabilidadCuentaDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
 

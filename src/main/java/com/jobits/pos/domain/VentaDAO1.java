@@ -19,7 +19,7 @@ import javax.swing.JTable;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
-import com.jobits.pos.adapters.repo.AsistenciaPersonalDAO;
+import com.jobits.pos.adapters.repo.impl.AsistenciaPersonalDAO;
 
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;

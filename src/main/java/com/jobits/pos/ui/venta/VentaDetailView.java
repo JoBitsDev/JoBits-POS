@@ -30,7 +30,7 @@ import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Personal;
-import com.jobits.pos.adapters.repo.CocinaDAO;
+import com.jobits.pos.adapters.repo.impl.CocinaDAO;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.domain.models.Venta;

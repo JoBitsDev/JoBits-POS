@@ -9,7 +9,7 @@ package com.jobits.pos.controller.licencia;
 import java.beans.PropertyChangeEvent;
 import com.jobits.pos.controller.Controller;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.adapters.repo.Model;
+import com.jobits.pos.adapters.repo.impl.Model;
 import com.jobits.pos.ui.OldView;
 
 /**

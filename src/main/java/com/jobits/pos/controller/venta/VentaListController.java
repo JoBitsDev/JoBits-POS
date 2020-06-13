@@ -19,7 +19,7 @@ import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.adapters.repo.VentaDAO;
+import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.recursos.R;

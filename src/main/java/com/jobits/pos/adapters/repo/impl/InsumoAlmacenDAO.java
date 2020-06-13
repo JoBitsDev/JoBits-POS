@@ -1,0 +1,62 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.jobits.pos.adapters.repo.impl;
+
+import java.util.List;
+import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.domain.models.InsumoAlmacen;
+
+/**
+ * FirstDream
+ *
+ * @author Jorge
+ *
+ */
+public class InsumoAlmacenDAO extends AbstractRepository<InsumoAlmacen> {
+
+    private static InsumoAlmacenDAO INSTANCE = null;
+
+    private InsumoAlmacenDAO() {
+        super(InsumoAlmacen.class);
+    }
+
+    public static InsumoAlmacenDAO getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new InsumoAlmacenDAO();
+            return INSTANCE;
+        } else {
+            return INSTANCE;
+        }
+    }
+
+    @Override
+    public void create(InsumoAlmacen entity) {
+        startTransaction();
+        getEntityManager().persist(entity);
+        commitTransaction();
+    }
+
+    public List<InsumoAlmacen> getInsumoAlmacenList(Almacen a) {
+        return getEntityManager().createNamedQuery("InsumoAlmacen.findByAlmacencodAlmacen")
+                .setParameter("almacencodAlmacen", a.getCodAlmacen())
+                .getResultList();
+    }
+
+    public InsumoAlmacen getInsumoAlmacen(String i, String a) {
+        try {
+            return (InsumoAlmacen) getEntityManager().createNamedQuery("InsumoAlmacen.findByAlmacenInsumo")
+                    .setParameter("almacencodAlmacen", a)
+                    .setParameter("insumo", i)
+                    .getSingleResult();
+        }catch(Exception e){
+            return null;
+        }
+        
+    }
+
+}

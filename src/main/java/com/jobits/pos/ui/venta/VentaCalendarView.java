@@ -26,7 +26,7 @@ import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.adapters.repo.VentaDAO;
+import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.recursos.R;

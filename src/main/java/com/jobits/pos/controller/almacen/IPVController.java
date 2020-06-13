@@ -5,13 +5,13 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jobits.pos.adapters.repo.VentaDAO;
-import com.jobits.pos.adapters.repo.InsumoDAO;
-import com.jobits.pos.adapters.repo.IpvRegistroDAO;
-import com.jobits.pos.adapters.repo.IpvDAO;
-import com.jobits.pos.adapters.repo.CocinaDAO;
-import com.jobits.pos.adapters.repo.ProductoVentaDAO;
-import com.jobits.pos.adapters.repo.IpvRegistroVentaDAO;
+import com.jobits.pos.adapters.repo.impl.VentaDAO;
+import com.jobits.pos.adapters.repo.impl.InsumoDAO;
+import com.jobits.pos.adapters.repo.impl.IpvRegistroDAO;
+import com.jobits.pos.adapters.repo.impl.IpvDAO;
+import com.jobits.pos.adapters.repo.impl.CocinaDAO;
+import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
+import com.jobits.pos.adapters.repo.impl.IpvRegistroVentaDAO;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Ipv;

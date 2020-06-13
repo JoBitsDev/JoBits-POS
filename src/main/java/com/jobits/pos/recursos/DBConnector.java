@@ -11,7 +11,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.adapters.repo.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.OldView;
 

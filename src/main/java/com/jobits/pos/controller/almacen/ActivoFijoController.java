@@ -15,9 +15,9 @@ import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.ActivoFijo;
 import com.jobits.pos.domain.models.Ubicacion;
-import com.jobits.pos.adapters.repo.AbstractRepository;
-import com.jobits.pos.adapters.repo.ActivoFijoDAO;
-import com.jobits.pos.adapters.repo.UbicacionDAO;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.ActivoFijoDAO;
+import com.jobits.pos.adapters.repo.impl.UbicacionDAO;
 
 /**
  * FirstDream
