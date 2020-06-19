@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.domain.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -34,7 +33,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "mesa")
 @NamedQueries({
-    @NamedQuery(name = "Mesa.findAll", query = "SELECT m FROM Mesa m"),
+    @NamedQuery(name = "Mesa.findAll", query = "SELECT m FROM Mesa m ORDER BY m.codMesa ASC"),
     @NamedQuery(name = "Mesa.findFromArea", query = "SELECT m FROM Mesa m where m.areacodArea.codArea = :areaCod"),
     @NamedQuery(name = "Mesa.findByCodMesa", query = "SELECT m FROM Mesa m WHERE m.codMesa = :codMesa"),
     @NamedQuery(name = "Mesa.findByEstado", query = "SELECT m FROM Mesa m WHERE m.estado = :estado"),

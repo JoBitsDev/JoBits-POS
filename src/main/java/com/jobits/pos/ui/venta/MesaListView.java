@@ -17,6 +17,8 @@ import com.jobits.pos.ui.venta.presenter.MesaListViewPresenter;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 /**
  *
@@ -27,13 +29,10 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
     public static final String VIEW_NAME = "Distribución mesas";
 
     private ArrayListModel<Mesa> listaMesas;
-    private Mesa mesaSeleccionada = null;
-    private ArrayListModel<FloorTableButton> listaMesasBotones;
+    private ArrayListModel<FloorTableButton> listaMesasBotones = new ArrayListModel<>();
 
-    public MesaListView(ArrayListModel<Mesa> listaMesas, AbstractViewPresenter presenter) {
+    public MesaListView(AbstractViewPresenter presenter) {
         super(presenter);
-        this.listaMesas = listaMesas;
-
     }
 
     /**
@@ -50,10 +49,8 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
         jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Listado de mesas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 1, 24))); // NOI18N
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
@@ -61,7 +58,7 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jComboBox1.setPreferredSize(new java.awt.Dimension(180, 40));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(300, 40));
         jPanel3.add(jComboBox1);
 
         add(jPanel3, java.awt.BorderLayout.PAGE_START);
@@ -72,13 +69,6 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
 
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jButton1.setPreferredSize(new java.awt.Dimension(40, 40));
-        jPanel2.add(jButton1);
-
-        jButton2.setPreferredSize(new java.awt.Dimension(40, 40));
-        jPanel2.add(jButton2);
-
         add(jPanel2, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -87,16 +77,40 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
         Bindings.bind(jComboBox1,
                 new SelectionInList<Area>(
                         getPresenter().getModel(MesaListViewModel.PROP_LISTA_AREAS),
-                        getPresenter().getModel(MesaListViewModel.PROP_AREA_SELECCIONADA)));
-
+                        getPresenter().getModel(MesaListViewModel.PROP_AREA_SELECCIONADA)),"Seleccionar Area");
     }
 
     @Override
     public void uiInit() {
         initComponents();
+        listaMesas = ((MesaListViewModel) getPresenter().getBean()).getLista_elementos();
+        listaMesas.addListDataListener(new ListDataListener() {
+            @Override
+            public void intervalAdded(ListDataEvent e) {
+                listUpdate();
+            }
+
+            @Override
+            public void intervalRemoved(ListDataEvent e) {
+                listUpdate();
+            }
+
+            @Override
+            public void contentsChanged(ListDataEvent e) {
+                listUpdate();
+            }
+
+        });
+
+    }
+
+    private void listUpdate() {
+        jPanel1.removeAll();
         for (Mesa x : listaMesas) {
             jPanel1.add(createAndAttachButton(x));
         }
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }
 
     @Override
@@ -106,8 +120,6 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<Area> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -124,8 +136,9 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(FloorTableButton.PROP_CLICK_MESA)) {
-            mesaSeleccionada = (Mesa) evt.getNewValue();
-            getPresenter().getOperation(MesaListViewPresenter.ACTION_CAMBIAR_AREA).doAction();
+            firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+            getPresenter().setValue(MesaListViewModel.PROP_ELEMENTO_SELECCIONADO, evt.getNewValue());
+            getPresenter().getOperation(MesaListViewPresenter.ACTION_ABRIR_MESA).doAction();
         }
     }
 

@@ -34,6 +34,7 @@ import com.jobits.pos.adapters.repo.impl.CocinaDAO;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.main.PresenterFacade;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -64,6 +65,8 @@ public class VentaDetailView extends AbstractViewPanel {
     GastoOperacionController gastoController = new GastoOperacionController();
     AsistenciaPersonalController personalController = new AsistenciaPersonalController();
     Date fechaFin;
+    MesaListView mesaView;
+    OrdenDetailFragmentView ordenDetailView;
     private JFileChooser fileChooser;
 
     public VentaDetailView(AbstractViewPresenter presenter) {
@@ -76,6 +79,16 @@ public class VentaDetailView extends AbstractViewPanel {
 
         jPanelResumenDetallado = new javax.swing.JPanel();
         jTabbedPaneResumen = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jPanelDetailOrdenes = new javax.swing.JPanel();
+        jPanelOrdenesActivas = new javax.swing.JPanel();
+        jideLabel1 = new com.jidesoft.swing.JideLabel();
+        jXPanelOrdenControl = new org.jdesktop.swingx.JXPanel();
+        jButtonNuevaOrden = new javax.swing.JButton();
+        jButtonCalcCAmbio = new javax.swing.JButton();
+        jButtonEnviarCerrarCrearNueva = new javax.swing.JButton();
+        jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
+        jXTableOrdActivas = new org.jdesktop.swingx.JXTable();
         jPanelRoot = new javax.swing.JPanel();
         jPanelFooter = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -132,21 +145,59 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanel5 = new javax.swing.JPanel();
         jButtonImprimirResumenPto = new javax.swing.JButton();
         jPanelVentas = new javax.swing.JPanel();
-        jPanelDetailOrdenes = new javax.swing.JPanel();
-        jPanelOrdenesActivas = new javax.swing.JPanel();
-        jideLabel1 = new com.jidesoft.swing.JideLabel();
-        jXPanelOrdenControl = new org.jdesktop.swingx.JXPanel();
-        jButtonNuevaOrden = new javax.swing.JButton();
-        jButtonCalcCAmbio = new javax.swing.JButton();
-        jButtonEnviarCerrarCrearNueva = new javax.swing.JButton();
-        jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
-        jXTableOrdActivas = new org.jdesktop.swingx.JXTable();
         jPanelOperaciones = new javax.swing.JPanel();
         jPanelExtracciones = new javax.swing.JPanel();
         jPanelPagoTrabajadores = new javax.swing.JPanel();
 
         jPanelResumenDetallado.setLayout(new java.awt.BorderLayout());
         jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
+
+        jPanelDetailOrdenes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Detalles de orden"));
+        jPanelDetailOrdenes.setLayout(new java.awt.BorderLayout());
+        jPanel2.add(jPanelDetailOrdenes);
+
+        jPanelOrdenesActivas.setPreferredSize(new java.awt.Dimension(400, 438));
+        jPanelOrdenesActivas.setLayout(new java.awt.BorderLayout());
+
+        jideLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jideLabel1.setText(bundle.getString("label_ordenes_activas")); // NOI18N
+        jPanelOrdenesActivas.add(jideLabel1, java.awt.BorderLayout.PAGE_START);
+
+        jXPanelOrdenControl.setBackground(new java.awt.Color(204, 204, 204));
+        jXPanelOrdenControl.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
+        jXPanelOrdenControl.setLayout(new java.awt.GridLayout(2, 0, 4, 4));
+
+        jButtonNuevaOrden.setText(bundle.getString("label_agregar")); // NOI18N
+        jXPanelOrdenControl.add(jButtonNuevaOrden);
+
+        jButtonCalcCAmbio.setText(bundle.getString("label_calcular_cambio")); // NOI18N
+        jXPanelOrdenControl.add(jButtonCalcCAmbio);
+
+        jButtonEnviarCerrarCrearNueva.setMnemonic('r');
+        jButtonEnviarCerrarCrearNueva.setText("Cerrado Rapido");
+        jXPanelOrdenControl.add(jButtonEnviarCerrarCrearNueva);
+
+        jPanelOrdenesActivas.add(jXPanelOrdenControl, java.awt.BorderLayout.PAGE_END);
+
+        jXTableOrdActivas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jXTableOrdActivas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jXTableOrdActivas.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jScrollPane2.setViewportView(jXTableOrdActivas);
+
+        jPanelOrdenesActivas.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(jPanelOrdenesActivas);
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new java.awt.BorderLayout());
@@ -180,7 +231,6 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelTurnosTrabajo.setBorder(javax.swing.BorderFactory.createTitledBorder("Turnos de Trabajo"));
         jPanelTurnosTrabajo.setOpaque(false);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonCambiarTurno.setText(bundle.getString("label_cambiar_turno")); // NOI18N
         jPanelTurnosTrabajo.add(jButtonCambiarTurno);
 
@@ -281,8 +331,6 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelNumero.setPreferredSize(new java.awt.Dimension(190, 121));
         jPanelNumero.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 15));
 
-        jPanel9.setMaximumSize(null);
-        jPanel9.setMinimumSize(null);
         jPanel9.setOpaque(false);
         jPanel9.setSize(new java.awt.Dimension(0, 80));
         jPanel9.setLayout(new java.awt.BorderLayout());
@@ -496,53 +544,6 @@ public class VentaDetailView extends AbstractViewPanel {
         jTabbedPaneData.addTab("Resumen", jPanelResumen);
 
         jPanelVentas.setLayout(new java.awt.BorderLayout(20, 20));
-
-        jPanelDetailOrdenes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Detalles de orden"));
-        jPanelDetailOrdenes.setLayout(new java.awt.BorderLayout());
-        jPanelVentas.add(jPanelDetailOrdenes, java.awt.BorderLayout.CENTER);
-
-        jPanelOrdenesActivas.setPreferredSize(new java.awt.Dimension(400, 438));
-        jPanelOrdenesActivas.setLayout(new java.awt.BorderLayout());
-
-        jideLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jideLabel1.setText(bundle.getString("label_ordenes_activas")); // NOI18N
-        jPanelOrdenesActivas.add(jideLabel1, java.awt.BorderLayout.PAGE_START);
-
-        jXPanelOrdenControl.setBackground(new java.awt.Color(204, 204, 204));
-        jXPanelOrdenControl.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
-        jXPanelOrdenControl.setLayout(new java.awt.GridLayout(2, 0, 4, 4));
-
-        jButtonNuevaOrden.setText(bundle.getString("label_agregar")); // NOI18N
-        jXPanelOrdenControl.add(jButtonNuevaOrden);
-
-        jButtonCalcCAmbio.setText(bundle.getString("label_calcular_cambio")); // NOI18N
-        jXPanelOrdenControl.add(jButtonCalcCAmbio);
-
-        jButtonEnviarCerrarCrearNueva.setMnemonic('r');
-        jButtonEnviarCerrarCrearNueva.setText("Cerrado Rapido");
-        jXPanelOrdenControl.add(jButtonEnviarCerrarCrearNueva);
-
-        jPanelOrdenesActivas.add(jXPanelOrdenControl, java.awt.BorderLayout.PAGE_END);
-
-        jXTableOrdActivas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jXTableOrdActivas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jXTableOrdActivas.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        jScrollPane2.setViewportView(jXTableOrdActivas);
-
-        jPanelOrdenesActivas.add(jScrollPane2, java.awt.BorderLayout.CENTER);
-
-        jPanelVentas.add(jPanelOrdenesActivas, java.awt.BorderLayout.WEST);
-
         jTabbedPaneData.addTab("Ventas", jPanelVentas);
 
         jPanelOperaciones.setLayout(new java.awt.GridLayout(1, 0));
@@ -596,6 +597,7 @@ public class VentaDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -716,9 +718,11 @@ public class VentaDetailView extends AbstractViewPanel {
         if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
             jTabbedPaneData.remove(0);
         }//TODO autorizacion en el view
-        jPanelTurnosTrabajo.setVisible(R.VARIOS_TURNOS);
-        jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);
+        jPanelTurnosTrabajo.setVisible(R.VARIOS_TURNOS);//TODO:otro mojon
+        jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
+        mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
+        jPanelVentas.add(mesaView);
     }
 
     @Override
@@ -983,35 +987,11 @@ public class VentaDetailView extends AbstractViewPanel {
         }
     }
 
-    private void updateTableResumenGastos() {
-//        gastoController.setParent(jPanelExtracciones);
-//        gastoController.setDiaVenta(getController().getInstance());
-//        jLabelTotalGastos.setText(utils.setDosLugaresDecimales(gastoController.getValorTotalGastos()));
-//        gastoController.constructView(jPanelExtracciones);
-    }
-
-    private void updateTablePagoTrabajadores() {
-//        personalController.setParent(jPanelPagoTrabajadores);
-//        personalController.setDiaVenta(getController().getInstance());
-//        if (fechaFin != null) {
-//            personalController.setReadOnlyData(true);
-//        }
-//        personalController.constructView(jPanelPagoTrabajadores);
-    }
-
     public void addOrdenView(OrdenDetailFragmentView view) {
         if (jPanelDetailOrdenes.getComponentCount() == 0) {
             jPanelDetailOrdenes.add(view, BorderLayout.CENTER);
         }
-       // repaint();
-    }
-
-    //
-    // Borrar
-    //
-    void onSetPropina() {
-        //getController().setPropina((float) jSpinner1.getValue());
-        updateTablePagoTrabajadores();
+        // repaint();
     }
 
 }

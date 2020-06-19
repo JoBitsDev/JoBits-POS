@@ -11,6 +11,8 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.venta.OrdenDetailFragmentView;
 import com.jobits.pos.usecase.mesa.MesaUseCase;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Optional;
 
 /**
@@ -30,6 +32,16 @@ public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewMod
     public MesaListViewPresenter(MesaUseCase controller) {
         super(new MesaListViewModel());
         this.controller = controller;
+        getBean().setLista_areas(controller.getListaAreasDisponibles());
+        addBeanPropertyChangeListener(MesaListViewModel.PROP_AREA_SELECCIONADA, new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getNewValue() != null) {
+                    getBean().setLista_elementos(getBean().getArea_seleccionada().getMesaList());
+                }
+            }
+        });
+        
     }
 
     @Override
@@ -56,11 +68,11 @@ public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewMod
 
         if (getBean().getElemento_seleccionado().isVacia()) {
             ordenController = new OrdenController(getBean().getElemento_seleccionado());
-        }else{
+        } else {
             ordenController = new OrdenController(getBean().getElemento_seleccionado().getEstado().split(" ")[1]);
         }
-        Application.getInstance().getNavigator().navigateTo(OrdenDetailFragmentView.VIEW_NAME,new OrdenDetailViewPresenter(ordenController));
-        
+        Application.getInstance().getNavigator().navigateTo(OrdenDetailFragmentView.VIEW_NAME, new OrdenDetailViewPresenter(ordenController));
+
     }
 
     private void onCambiarAreaClick() {

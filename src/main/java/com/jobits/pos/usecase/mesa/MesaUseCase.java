@@ -16,5 +16,7 @@ import java.util.List;
 public interface MesaUseCase {
 
     public List<Mesa> getListaMesas(Area delArea);
+    
+    public List<Area> getListaAreasDisponibles();
 
 }

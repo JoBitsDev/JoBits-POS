@@ -10,6 +10,7 @@ import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+import java.util.List;
 
 /**
  *
@@ -20,11 +21,11 @@ import com.jobits.pos.ui.viewmodel.AbstractViewModel;
  */
 public class MesaListViewModel extends AbstractListViewModel<Mesa> {
 
-    private ArrayListModel<Area> lista_areas;
+    private ArrayListModel<Area> lista_areas = new ArrayListModel<>();
 
     public static final String PROP_LISTA_AREAS = "lista_areas";
 
-    private Area area_seleccionada;
+    private Area area_seleccionada = null;
 
     public static final String PROP_AREA_SELECCIONADA = "area_seleccionada";
 
@@ -62,9 +63,10 @@ public class MesaListViewModel extends AbstractListViewModel<Mesa> {
      *
      * @param lista_areas new value of lista_areas
      */
-    public void setLista_areas(ArrayListModel<Area> lista_areas) {
+    public void setLista_areas(List<Area> lista_areas) {
         ArrayListModel<Area> oldLista_areas = this.lista_areas;
-        this.lista_areas = lista_areas;
+        this.lista_areas.clear();
+        this.lista_areas.addAll(lista_areas);
         firePropertyChange(PROP_LISTA_AREAS, oldLista_areas, lista_areas);
     }
 

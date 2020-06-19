@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.adapters.repo.impl.MesaDAO;
 import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
@@ -58,10 +59,13 @@ import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PersonalListViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoListViewPresenter;
+import com.jobits.pos.ui.venta.MesaListView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
+import com.jobits.pos.ui.venta.presenter.MesaListViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
+import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,13 +111,15 @@ public class PresenterFacade {
             case IpvGestionView.VIEW_NAME:
                 return new IpvGestionViewPresenter(new IPVController());
             case VentaDetailView.VIEW_NAME:
-                return new VentaResumenViewPresenter(new VentaDetailController(),new OrdenController());
+                return new VentaResumenViewPresenter(new VentaDetailController(), new OrdenController());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter(new UbicacionConexionController());
             case VentaCalendarView.VIEW_NAME:
                 return new VentaCalendarViewPresenter(new VentaListController());
             case AlmacenListView.VIEW_NAME:
                 return new AlmacenListPresenter(new AlmacenListController());
+            case MesaListView.VIEW_NAME:
+                return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;
