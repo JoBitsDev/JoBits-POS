@@ -981,8 +981,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         }
         jButtonReabrirVentas.setEnabled(getInstance().getVentaTotal() != null);
 
-        jTabbedPaneResumenD.setUI(new MaterialTabbedPaneUI());
-        jTabbedPaneData.setUI(new MaterialTabbedPaneUI());
+        jTabbedPaneResumenD.setUI(new ui.componentsui.tabbedpane.MaterialTabbedPaneUI());
+        jTabbedPaneData.setUI(new ui.componentsui.tabbedpane.MaterialTabbedPaneUI());
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
