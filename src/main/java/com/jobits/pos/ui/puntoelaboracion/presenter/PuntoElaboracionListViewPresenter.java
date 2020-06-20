@@ -21,8 +21,8 @@ import java.util.Optional;
  */
 public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter<PuntoElaboracionListViewModel> {
 
-    public static String ACTION_CHANGE_RECIBIR_NOTIFICACION;
-    public static String ACTION_CHANGE_LIMITAR_VENTA;
+    public static String ACTION_CHANGE_RECIBIR_NOTIFICACION = "Recibir notificaciones";
+    public static String ACTION_CHANGE_LIMITAR_VENTA = "Limitar ventas";
 
     private PuntoElaboracionListController controller;
 
@@ -47,7 +47,7 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
                 return Optional.empty();
             }
         });
-        registerOperation(new AbstractViewAction(ACTION_CHANGE_RECIBIR_NOTIFICACION) {
+        registerOperation(new AbstractViewAction(ACTION_CHANGE_LIMITAR_VENTA) {
             @Override
             public Optional doAction() {
                 Cocina ptoSeleccionado = getBean().getElemento_seleccionado();
