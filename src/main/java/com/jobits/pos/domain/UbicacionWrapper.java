@@ -45,7 +45,7 @@ public class UbicacionWrapper {
     }
     
     @JsonIgnore
-    public void setSelectedUbicacion(UbicacionConexionModel selectedUbicacion) {
+    public void setUbicacionSeleccionada(UbicacionConexionModel selectedUbicacion) {
         for (int i = 0; i < ubicaciones.length; i++) {
             if (ubicaciones[i].equals(selectedUbicacion)) {
                 this.selectedUbicacion = i;

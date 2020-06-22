@@ -64,7 +64,7 @@ public class UbicacionConexionController {
         guardarUbicacionesAlmacenadas();
     }
     public void setSelectedUbicacion(UbicacionConexionModel ubicacionSeleccionada) throws IOException {
-        ubicaciones.setSelectedUbicacion(ubicacionSeleccionada);
+        ubicaciones.setUbicacionSeleccionada(ubicacionSeleccionada);
         guardarUbicacionesAlmacenadas();
     }
 
