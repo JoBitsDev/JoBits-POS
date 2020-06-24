@@ -207,7 +207,9 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             for (AsistenciaPersonal x : super.getInstance().getAsistenciaPersonalList()) {
                 ventasPagoTrabajadores += x.getPago();
             }
+            if (!super.getInstance().getOrdenList().isEmpty()) {
             super.getInstance().setCambioTurno1(super.getInstance().getOrdenList().get(super.getInstance().getOrdenList().size() - 1).getCodOrden());
+            }
             super.getInstance().setVentaTotal((double) ventaTotal);
             super.getInstance().setVentagastosEninsumos((double) ventasGastosEnInsumos);
             super.getInstance().setVentagastosGastos(ventasGastosGastos);
