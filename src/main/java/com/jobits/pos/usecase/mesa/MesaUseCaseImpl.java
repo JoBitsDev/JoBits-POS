@@ -9,6 +9,8 @@ import com.jobits.pos.adapters.repo.MesaRepo;
 import com.jobits.pos.adapters.repo.impl.AreaDAO;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Mesa;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MesaUseCaseImpl implements MesaUseCase {
@@ -21,7 +23,13 @@ public class MesaUseCaseImpl implements MesaUseCase {
 
     @Override
     public List<Mesa> getListaMesas(Area delArea) {
-        return repository.findFrom(delArea.getCodArea());
+        List<Mesa> ret = repository.findFrom(delArea.getCodArea());
+        Collections.sort(ret, (Mesa o1, Mesa o2) -> {
+            Integer cod1 = Integer.parseInt(o1.getCodMesa().substring(2));
+            Integer cod2 = Integer.parseInt(o2.getCodMesa().substring(2));
+            return cod1.compareTo(cod2);
+        });
+        return ret;
     }
 
     @Override
