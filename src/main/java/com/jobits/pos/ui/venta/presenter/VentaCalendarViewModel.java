@@ -26,7 +26,7 @@ public class VentaCalendarViewModel extends AbstractListViewModel<Venta> {
 
     public static final String PROP_YEAR_SELECCIONADO = "year_seleccionado";
 
-    private int mes_seleccionado = LocalDate.now().get(ChronoField.MONTH_OF_YEAR)-1;
+    private int mes_seleccionado = LocalDate.now().get(ChronoField.MONTH_OF_YEAR) - 1;
 
     public static final String PROP_MES_SELECCIONADO = "mes_seleccionado";
 
@@ -73,6 +73,30 @@ public class VentaCalendarViewModel extends AbstractListViewModel<Venta> {
     private int month_offset;
 
     public static final String PROP_MONTH_OFFSET = "month_offset";
+
+    private Venta dia_seleccionado;
+
+    public static final String PROP_DIA_SELECCIONADO = "dia_seleccionado";
+
+    /**
+     * Get the value of dia_seleccionado
+     *
+     * @return the value of dia_seleccionado
+     */
+    public Venta getDia_seleccionado() {
+        return dia_seleccionado;
+    }
+
+    /**
+     * Set the value of dia_seleccionado
+     *
+     * @param dia_seleccionado new value of dia_seleccionado
+     */
+    public void setDia_seleccionado(Venta dia_seleccionado) {
+        Venta oldDia_seleccionado = this.dia_seleccionado;
+        this.dia_seleccionado = dia_seleccionado;
+        firePropertyChange(PROP_DIA_SELECCIONADO, oldDia_seleccionado, dia_seleccionado);
+    }
 
     /**
      * Get the value of month_offset

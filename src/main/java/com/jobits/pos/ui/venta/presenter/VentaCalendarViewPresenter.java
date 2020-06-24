@@ -62,7 +62,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
                 boolean confirmed = (boolean) Application.getInstance().getNotificationService().showDialog("Confirme la operación", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
                 if (confirmed) {
                     Application.getInstance().getBackgroundWorker().processInBackground("Ejecutando Y", () -> {
-                        onEjecutarY(getBean().getElemento_seleccionado());
+                        onEjecutarY(getBean().getDia_seleccionado());
                     });
                 }
                 return Optional.empty();
@@ -91,9 +91,9 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void onEditarClick() {//TODO vista
-        if (getBean().getElemento_seleccionado() != null) {
+        if (getBean().getDia_seleccionado()!= null) {
             VentaDetailController ventaController = new VentaDetailController(
-                    new OrdenController(getBean().getElemento_seleccionado()), getBean().getElemento_seleccionado());
+                    new OrdenController(getBean().getDia_seleccionado()), getBean().getDia_seleccionado());
             VentaResumenViewPresenter presenter
                     = new VentaResumenViewPresenter(ventaController,
                             new OrdenController(ventaController.getInstance()));
@@ -103,8 +103,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void onEliminarClick() {
-        if (getBean().getElemento_seleccionado() != null) {
-            controller.destroy(getBean().getElemento_seleccionado());
+        if (getBean().getDia_seleccionado()!= null) {
+            controller.destroy(getBean().getDia_seleccionado());
             updateBeanData();
         }
     }
@@ -116,13 +116,10 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         if (getBean().getResumen_hasta().compareTo(getBean().getResumen_hasta()) < 0) {
             throw new ValidatingException();
         }
-        Application.getInstance().getBackgroundWorker().processInBackground(new LongProcessMethod() {
-            @Override
-            public void execute() {
-                VentaDetailController ventaController = controller.createDetailResumenView(getBean().getResumen_desde(), getBean().getResumen_hasta());//TODO devolver valor e invocar al navigator
-                VentaResumenViewPresenter presenter = new VentaResumenViewPresenter(ventaController, null);
-                Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
-            }
+        Application.getInstance().getBackgroundWorker().processInBackground(() -> {
+            VentaDetailController ventaController = controller.createDetailResumenView(getBean().getResumen_desde(), getBean().getResumen_hasta());//TODO devolver valor e invocar al navigator
+            VentaResumenViewPresenter presenter = new VentaResumenViewPresenter(ventaController, null);
+            Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         });
     }
 
@@ -184,6 +181,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     private void updateBeanData() {
         setListToBean();
         getBean().setElemento_seleccionado(null);
+        getBean().setDia_seleccionado(null);
         getBean().setMonth_offset(calculateMonthOffset());
         double suma = 0;
         double gInsumos = 0;
