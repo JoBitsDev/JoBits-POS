@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.venta;
+package com.jobits.pos.ui.venta.orden;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
@@ -17,8 +17,8 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.utils;
-import com.jobits.pos.ui.venta.presenter.OrdenDetailViewModel;
-import com.jobits.pos.ui.venta.presenter.OrdenDetailViewPresenter;
+import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel;
+import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import javax.swing.event.ChangeEvent;

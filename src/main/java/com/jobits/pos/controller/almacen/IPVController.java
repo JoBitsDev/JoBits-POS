@@ -451,7 +451,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
      * @param fecha
      */
     public void recalcularExistencias(Date fecha) {
-        VentaDetailController ventaController = new VentaDetailController(new OrdenController(VentaDAO.getInstance().find(fecha)),fecha);
+        VentaDetailController ventaController = new VentaDetailController(fecha);
         for (IpvRegistro x : IpvRegistroDAO.getInstance().getIpvRegistroList(fecha)) {
             x.setConsumo(ventaController.getGastoTotalDeInsumo(x));
             getModel().startTransaction();
@@ -461,7 +461,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public void recalcularIpvRegistros(Venta ret) {
-        VentaDetailController ventaController = new VentaDetailController(new OrdenController(ret), ret);
+        VentaDetailController ventaController = new VentaDetailController(ret);
         for (IpvVentaRegistro x : IpvRegistroVentaDAO.getInstance().getIpvVentaRegistroList(ret.getFecha())) {
             x.setVendidos(ventaController.getVentaTotalDelProducto(x.getProductoVenta()));
             x.setAutorizos(ventaController.getAutorizosTotalDelProducto(x.getProductoVenta()));
@@ -471,7 +471,7 @@ public class IPVController extends AbstractDialogController<Ipv> {
         }
 
     }
-    
+
     //
     // Metodos Privados
     //

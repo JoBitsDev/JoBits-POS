@@ -70,21 +70,17 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     public VentaDetailController() {
         super(VentaDAO.getInstance());
-    }
-
-    public VentaDetailController(OrdenController ordenController) {
-        super(VentaDAO.getInstance());
-        OrdenDAO.getInstance().addPropertyChangeListener(this);
-        this.ordController = ordenController;
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
             instance = initDiaVentas(null);
         });
+        OrdenDAO.getInstance().addPropertyChangeListener(this);
+        this.ordController = new OrdenController(getInstance());
 
     }
 
-    public VentaDetailController(OrdenController ordenController, Venta instance) {//TODO aqui se pudiera crear el constructor del orden controller sin pasarlo por parametro
+    public VentaDetailController(Venta instance) {//TODO aqui se pudiera crear el constructor del orden controller sin pasarlo por parametro
         super(instance, VentaDAO.getInstance());
-        this.ordController = ordenController;
+        this.ordController = new OrdenController(instance);
         OrdenDAO.getInstance().addPropertyChangeListener(this);
         if (getInstance().getCambioTurno1() != null) {
             turnoActivo = 2;
@@ -92,14 +88,14 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     }
 
-    public VentaDetailController(OrdenController ordenController, Date diaVentas) {
+    public VentaDetailController(Date diaVentas) {
         super(VentaDAO.getInstance());
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-        this.ordController = ordenController;
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
             instance = initDiaVentas(diaVentas);
 
         });
+        this.ordController = new OrdenController(getInstance());
         if (getInstance().getCambioTurno1() != null) {
             turnoActivo = 2;
         }
@@ -149,7 +145,6 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
             newOrden = ordController.createNewInstance();
         }
         super.getInstance().getOrdenList().add(newOrden);
-        getView().updateView();
         ordController.create(newOrden, true);
         if (nil) {
             //   ordController = new OrdenController(newOrden, vi.getjPanelDetailOrdenes());
@@ -208,7 +203,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
                 ventasPagoTrabajadores += x.getPago();
             }
             if (!super.getInstance().getOrdenList().isEmpty()) {
-            super.getInstance().setCambioTurno1(super.getInstance().getOrdenList().get(super.getInstance().getOrdenList().size() - 1).getCodOrden());
+                super.getInstance().setCambioTurno1(super.getInstance().getOrdenList().get(super.getInstance().getOrdenList().size() - 1).getCodOrden());
             }
             super.getInstance().setVentaTotal((double) ventaTotal);
             super.getInstance().setVentagastosEninsumos((double) ventasGastosEnInsumos);
@@ -693,7 +688,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     public String getTotalGastos() {
         float total = 0;
         for (GastoVenta g : getInstance().getGastoVentaList()) {
-            total+= g.getImporte();
+            total += g.getImporte();
         }
         return utils.setDosLugaresDecimales(total);
     }

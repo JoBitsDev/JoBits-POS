@@ -62,7 +62,7 @@ import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoListViewPresenter;
 import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
-import com.jobits.pos.ui.venta.presenter.MesaListViewPresenter;
+import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;

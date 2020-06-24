@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.venta.presenter;
+package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.main.Application;

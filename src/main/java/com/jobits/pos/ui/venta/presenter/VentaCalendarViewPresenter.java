@@ -91,9 +91,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void onEditarClick() {//TODO vista
-        if (getBean().getDia_seleccionado()!= null) {
-            VentaDetailController ventaController = new VentaDetailController(
-                    new OrdenController(getBean().getDia_seleccionado()), getBean().getDia_seleccionado());
+        if (getBean().getDia_seleccionado() != null) {
+            VentaDetailController ventaController = new VentaDetailController(getBean().getDia_seleccionado());
             VentaResumenViewPresenter presenter
                     = new VentaResumenViewPresenter(ventaController,
                             new OrdenController(ventaController.getInstance()));
@@ -103,7 +102,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void onEliminarClick() {
-        if (getBean().getDia_seleccionado()!= null) {
+        if (getBean().getDia_seleccionado() != null) {
             controller.destroy(getBean().getDia_seleccionado());
             updateBeanData();
         }

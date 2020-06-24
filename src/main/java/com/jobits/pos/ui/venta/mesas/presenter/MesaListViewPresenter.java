@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.venta.presenter;
+package com.jobits.pos.ui.venta.mesas.presenter;
 
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.venta.OrdenDetailFragmentView;
+import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
+import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter;
 import com.jobits.pos.usecase.mesa.MesaUseCase;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -33,15 +34,16 @@ public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewMod
         super(new MesaListViewModel());
         this.controller = controller;
         getBean().setLista_areas(controller.getListaAreasDisponibles());
-        addBeanPropertyChangeListener(MesaListViewModel.PROP_AREA_SELECCIONADA, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getNewValue() != null) {
-                    getBean().setLista_elementos(getBean().getArea_seleccionada().getMesaList());
-                }
+        if (!getBean().getLista_areas().isEmpty()) {
+            getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
+            onCambiarAreaClick();
+        }
+        addBeanPropertyChangeListener(MesaListViewModel.PROP_AREA_SELECCIONADA, (PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() != null) {
+                getBean().setLista_elementos(getBean().getArea_seleccionada().getMesaList());
             }
         });
-        
+
     }
 
     @Override

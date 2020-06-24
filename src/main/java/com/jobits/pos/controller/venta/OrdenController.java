@@ -2,7 +2,7 @@ package com.jobits.pos.controller.venta;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.utils.CalcularCambioView;
-import com.jobits.pos.ui.venta.OrdenDetailFragmentView;
+import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import java.awt.Container;
 
 import java.util.ArrayList;
@@ -217,7 +217,6 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 }
             }
             setShowDialogs(false);
-            getView().setVisible(false);
             CalcularCambioView cambio = new CalcularCambioView(null, true, getInstance());
         }
     }

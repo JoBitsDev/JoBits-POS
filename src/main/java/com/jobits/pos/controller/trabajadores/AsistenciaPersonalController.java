@@ -73,7 +73,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     }
 
     public void calcularPagoTrabajador(AsistenciaPersonal ret) {
-        VentaDetailController controller = new VentaDetailController(new OrdenController(ret.getVenta()),ret.getVenta());
+        VentaDetailController controller = new VentaDetailController(ret.getVenta());
         ret.setPago(controller.getPagoTrabajador(ret.getPersonal()));
         ret.setPropina(controller.getPropinaTrabajador(ret.getPersonal()));
 
@@ -107,7 +107,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     public List<AsistenciaPersonal> updateSalaries() {
         if (!readOnlyData) {
         ArrayList<AsistenciaPersonal> ret = new ArrayList<>(getPersonalTrabajando(diaVenta));
-        VentaDetailController controller = new VentaDetailController(new OrdenController(diaVenta),diaVenta);
+        VentaDetailController controller = new VentaDetailController(diaVenta);
         for (AsistenciaPersonal a : ret) {
             a.setPago(controller.getPagoTrabajador(a.getPersonal()));
             a.setPropina(controller.getPropinaTrabajador(a.getPersonal()));

@@ -58,13 +58,13 @@ public class MainMenuController {
             if (date == null) {
                 return new VentaDetailController();
             } else {
-                return new VentaDetailController(new OrdenController(), date);
+                return new VentaDetailController(date);
             }
         } else if (nivel >= R.NivelAcceso.CAJERO.getNivel()) {
             return new VentaDetailController();
         } else if (nivel >= R.NivelAcceso.DEPENDIENTE.getNivel()) {
             if (showConfirmDialog("Desea comenzar el dia de trabajo en el dia " + R.DATE_FORMAT.format(new Date()))) {
-                VentaDetailController controller = new VentaDetailController(new OrdenController(), new Date());
+                VentaDetailController controller = new VentaDetailController(new Date());
                 controller.initIPV(controller.getInstance());
                 Application.getInstance().getNotificationService().
                         notify("El dia de trabajo esta iniciado en la fecha: "
