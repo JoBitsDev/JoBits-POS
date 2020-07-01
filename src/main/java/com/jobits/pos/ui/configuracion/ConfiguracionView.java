@@ -45,6 +45,15 @@ public class ConfiguracionView extends AbstractView {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelY = new javax.swing.JPanel();
+        jPanelPorcientoEstimado = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jSpinnerM = new javax.swing.JSpinner();
+        jLabel13 = new javax.swing.JLabel();
+        jSpinnerC = new javax.swing.JSpinner();
+        jPanel3 = new javax.swing.JPanel();
+        jPanelExcluir = new javax.swing.JPanel();
+        jPanelBebidas = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
         jButtonCancelar = new javax.swing.JButton();
         jButtonAplicar = new javax.swing.JButton();
@@ -98,15 +107,38 @@ public class ConfiguracionView extends AbstractView {
         jLabel7 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
-        jPanelY = new javax.swing.JPanel();
-        jPanelPorcientoEstimado = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jSpinnerM = new javax.swing.JSpinner();
-        jLabel13 = new javax.swing.JLabel();
-        jSpinnerC = new javax.swing.JSpinner();
-        jPanel3 = new javax.swing.JPanel();
-        jPanelExcluir = new javax.swing.JPanel();
-        jPanelBebidas = new javax.swing.JPanel();
+
+        jPanelY.setLayout(new java.awt.BorderLayout());
+
+        jPanelPorcientoEstimado.setOpaque(false);
+
+        jLabel12.setText("M");
+        jPanelPorcientoEstimado.add(jLabel12);
+
+        jSpinnerM.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 5));
+        jPanelPorcientoEstimado.add(jSpinnerM);
+
+        jLabel13.setText("C");
+        jPanelPorcientoEstimado.add(jLabel13);
+
+        jSpinnerC.setModel(new javax.swing.SpinnerNumberModel(0, 0, 50, 5));
+        jPanelPorcientoEstimado.add(jSpinnerC);
+
+        jPanelY.add(jPanelPorcientoEstimado, java.awt.BorderLayout.PAGE_START);
+
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanelExcluir.setBorder(javax.swing.BorderFactory.createTitledBorder("Excluir"));
+        jPanelExcluir.setPreferredSize(new java.awt.Dimension(0, 0));
+        jPanelExcluir.setLayout(new java.awt.BorderLayout());
+        jPanel3.add(jPanelExcluir);
+
+        jPanelBebidas.setBorder(javax.swing.BorderFactory.createTitledBorder("Bebidas"));
+        jPanelBebidas.setPreferredSize(new java.awt.Dimension(0, 0));
+        jPanelBebidas.setLayout(new java.awt.BorderLayout());
+        jPanel3.add(jPanelBebidas);
+
+        jPanelY.add(jPanel3, java.awt.BorderLayout.CENTER);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(getMinimumSize());
@@ -327,41 +359,7 @@ public class ConfiguracionView extends AbstractView {
 
         jTabbedPane1.addTab("Sincronizacion", jPanelSincronizacion);
 
-        jPanelY.setLayout(new java.awt.BorderLayout());
-
-        jPanelPorcientoEstimado.setOpaque(false);
-
-        jLabel12.setText("M");
-        jPanelPorcientoEstimado.add(jLabel12);
-
-        jSpinnerM.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 5));
-        jPanelPorcientoEstimado.add(jSpinnerM);
-
-        jLabel13.setText("C");
-        jPanelPorcientoEstimado.add(jLabel13);
-
-        jSpinnerC.setModel(new javax.swing.SpinnerNumberModel(0, 0, 50, 5));
-        jPanelPorcientoEstimado.add(jSpinnerC);
-
-        jPanelY.add(jPanelPorcientoEstimado, java.awt.BorderLayout.PAGE_START);
-
-        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
-
-        jPanelExcluir.setBorder(javax.swing.BorderFactory.createTitledBorder("Excluir"));
-        jPanelExcluir.setPreferredSize(new java.awt.Dimension(0, 0));
-        jPanelExcluir.setLayout(new java.awt.BorderLayout());
-        jPanel3.add(jPanelExcluir);
-
-        jPanelBebidas.setBorder(javax.swing.BorderFactory.createTitledBorder("Bebidas"));
-        jPanelBebidas.setPreferredSize(new java.awt.Dimension(0, 0));
-        jPanelBebidas.setLayout(new java.awt.BorderLayout());
-        jPanel3.add(jPanelBebidas);
-
-        jPanelY.add(jPanel3, java.awt.BorderLayout.CENTER);
-
-        jTabbedPane1.addTab("Y", jPanelY);
-
-        getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
 
         pack();
         setLocationRelativeTo(null);
@@ -402,7 +400,7 @@ public class ConfiguracionView extends AbstractView {
         jCheckBoxBuzzer.setSelected((boolean) fetch(R.SettingID.IMPRESION_BUZZER_ON));
         jCheckBoxHabilitarSincronizacion.setSelected((boolean) fetch(R.SettingID.SINCRONIZACION_HABILITAR));
         jComboBoxSincronizacionUbicacion.setSelectedIndex(Integer.valueOf(fetch(R.SettingID.SINCRONIZACION_UBICACION).toString()));
-        jSpinner1.setValue(Integer.parseInt(fetch(R.SettingID.SINCRONIZACION_TIEMPO_LOOP).toString())/60/1000);
+        jSpinner1.setValue(Integer.parseInt(fetch(R.SettingID.SINCRONIZACION_TIEMPO_LOOP).toString()) / 60 / 1000);
         int selected = 0;
         if (fetch(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL).equals("48")) {
             selected = 1;
@@ -411,7 +409,7 @@ public class ConfiguracionView extends AbstractView {
 
         LicenceController controller = new LicenceController(Licence.TipoLicencia.SECUNDARIA);
         if (!controller.getLicence().LICENCIA_ACTIVA || !controller.getLicence().LICENCIA_VALIDA) {
-            jTabbedPane1.remove(2);
+            jTabbedPane1.addTab("Y", jPanelY);
         }
 
         getController().cargarConfiguracionY();
@@ -515,9 +513,9 @@ public class ConfiguracionView extends AbstractView {
         save(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO, jComboBoxTipoNegocio.getSelectedItem());
         save(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA, jCheckBoxSegundaMoneda.isSelected());
         save(R.SettingID.IMPRESION_BUZZER_ON, jCheckBoxBuzzer.isSelected());
-        save(R.SettingID.SINCRONIZACION_HABILITAR,jCheckBoxHabilitarSincronizacion.isSelected());
+        save(R.SettingID.SINCRONIZACION_HABILITAR, jCheckBoxHabilitarSincronizacion.isSelected());
         save(R.SettingID.SINCRONIZACION_UBICACION, jComboBoxSincronizacionUbicacion.getSelectedIndex());
-        save(R.SettingID.SINCRONIZACION_TIEMPO_LOOP,((int) jSpinner1.getValue() * 60 * 1000));
+        save(R.SettingID.SINCRONIZACION_TIEMPO_LOOP, ((int) jSpinner1.getValue() * 60 * 1000));
         String selected = "32";
         if (jComboBoxTamannoTicket.getSelectedItem().equals("80mm")) {
             selected = "48";
