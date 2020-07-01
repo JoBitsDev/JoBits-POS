@@ -65,7 +65,7 @@ public class Impresion {
     public static int cantidadCopias = 0;
     public static boolean REDONDEO_POR_EXCESO = true;
     public static String CABECERA = "Restaurante";
-    public static  boolean BUZZER_ON = true;
+    public static boolean BUZZER_ON = true;
 
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
 
@@ -776,9 +776,15 @@ public class Impresion {
 
         float porciento = VentaDAO1.getValorTotalPorcientoVenta(v);
         t.newLine();
-        t.setText("+ " + "Porciento: " + utils.setDosLugaresDecimalesFloat(porciento) + MONEDA);
+        t.setText("(+/-) " + "Porciento: " + utils.setDosLugaresDecimalesFloat(porciento) + MONEDA);
         t.newLine();
-        t.setText("Total Real: " + utils.setDosLugaresDecimales(total + porciento));
+        float totalExtracciones = 0;
+        for (GastoVenta extraccion : v.getGastoVentaList()) {
+            totalExtracciones += extraccion.getImporte();
+        }
+
+        t.setText("Total extracciones: " + utils.setDosLugaresDecimales(totalExtracciones));
+        t.setText("Total Real: " + utils.setDosLugaresDecimales(total + porciento - totalExtracciones));
         addFinal(t);
 
         sendToPrinterStatistics(t.finalCommandSet().getBytes(), DEFAULT_PRINT_LOCATION);
@@ -1015,7 +1021,7 @@ public class Impresion {
                     case COCINA:
                         if (IMPRIMIR_TICKET_COCINA) {
                             if (BUZZER_ON) {
-                            forceBell();
+                                forceBell();
                             }
                             job.print(doc, null);
                         }
