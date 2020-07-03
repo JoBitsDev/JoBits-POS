@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.puntoelaboracion.presenter;
 
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -24,11 +25,11 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
     public static String ACTION_CHANGE_RECIBIR_NOTIFICACION = "Recibir notificaciones";
     public static String ACTION_CHANGE_LIMITAR_VENTA = "Limitar ventas";
 
-    private PuntoElaboracionListController controller;
+    private PuntoElaboracionListService service;
 
-    public PuntoElaboracionListViewPresenter(PuntoElaboracionListController controller) {
+    public PuntoElaboracionListViewPresenter(PuntoElaboracionListService service) {
         super(new PuntoElaboracionListViewModel(), PuntoElaboracionListView.VIEW_NAME);
-        this.controller = controller;
+        this.service = service;
         setListToBean();
     }
 
@@ -41,8 +42,8 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
                 Cocina cocinaSeleccionada = getBean().getElemento_seleccionado();
                 cocinaSeleccionada.setRecibirNotificacion(
                         !getBean().getElemento_seleccionado().getRecibirNotificacion());//TODO: logica en presenter
-                controller.setSelected(cocinaSeleccionada);
-                controller.update();//TODO: activar comportamiento
+                service.setSelected(cocinaSeleccionada);
+                service.update();//TODO: activar comportamiento
                 getBean().getLista_elementos().fireContentsChanged(getBean().getLista_elementos().indexOf(cocinaSeleccionada));
                 return Optional.empty();
             }
@@ -53,8 +54,8 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
                 Cocina ptoSeleccionado = getBean().getElemento_seleccionado();
                 ptoSeleccionado.setLimitarVentaInsumoAgotado(
                         !getBean().getElemento_seleccionado().getLimitarVentaInsumoAgotado());//TODO: logica en presenter
-                controller.setSelected(ptoSeleccionado);
-                controller.update();//TODO: activar comportamiento
+                service.setSelected(ptoSeleccionado);
+                service.update();//TODO: activar comportamiento
                 getBean().getLista_elementos().fireContentsChanged(getBean().getLista_elementos().indexOf(ptoSeleccionado));
                 return Optional.empty();
             }
@@ -63,26 +64,26 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
 
     @Override
     protected void onAgregarClick() {
-        controller.createInstance();
+        service.createInstance();
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
-        controller.update(getBean().getElemento_seleccionado());
+        service.update(getBean().getElemento_seleccionado());
         setListToBean();
     }
 
     @Override
     protected void onEliminarClick() {
-        controller.destroy(getBean().getElemento_seleccionado());
+        service.destroy(getBean().getElemento_seleccionado());
         setListToBean();
     }
 
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(controller.getItems());
+        getBean().getLista_elementos().addAll(service.getItems());
     }
 
 }

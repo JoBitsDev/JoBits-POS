@@ -22,7 +22,7 @@ import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
  * @author Jorge
  *
  */
-public class PuntoElaboracionListController extends OldAbstractListController<Cocina> {
+public class PuntoElaboracionListController extends OldAbstractListController<Cocina> implements PuntoElaboracionListService{
 
     public PuntoElaboracionListController() {
         super(CocinaDAO.getInstance());
