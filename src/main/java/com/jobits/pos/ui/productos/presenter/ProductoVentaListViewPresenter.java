@@ -5,9 +5,8 @@
  */
 package com.jobits.pos.ui.productos.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.productos.ProductoVentaDetailController;
-import com.jobits.pos.controller.productos.ProductoVentaListController;
+import com.jobits.pos.controller.productos.ProductoVentaListService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
@@ -27,9 +26,9 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
 
     public static String ACTION_CHANGE_VISIBLE;
 
-    private ProductoVentaListController controller;
+    private ProductoVentaListService controller;
 
-    public ProductoVentaListViewPresenter(ProductoVentaListController controller) {
+    public ProductoVentaListViewPresenter(ProductoVentaListService controller) {
         super(new ProductoVentaListViewModel(), ProductoVentaListView.VIEW_NAME);
         this.controller = controller;
         setListToBean();

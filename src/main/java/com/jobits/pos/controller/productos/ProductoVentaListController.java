@@ -26,7 +26,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class ProductoVentaListController extends OldAbstractListController<ProductoVenta> {
+public class ProductoVentaListController extends OldAbstractListController<ProductoVenta> implements ProductoVentaListService{
 
     Carta selectedCarta = null;
 

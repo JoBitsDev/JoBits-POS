@@ -7,6 +7,7 @@ package com.jobits.pos.ui.insumo.presenter;
 
 import com.jobits.pos.controller.insumo.InsumoCreateEditController;
 import com.jobits.pos.controller.insumo.InsumoListController;
+import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 
@@ -19,9 +20,9 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
  */
 public class InsumoListViewPresenter extends AbstractListViewPresenter<InsumoListViewModel> {
 
-    InsumoListController controller;
+    private InsumoListService controller;
 
-    public InsumoListViewPresenter(InsumoListController controller) {
+    public InsumoListViewPresenter(InsumoListService controller) {
         super(new InsumoListViewModel(), "Insumos");
         this.controller = controller;
         setListToBean();

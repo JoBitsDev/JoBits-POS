@@ -32,7 +32,7 @@ import com.jobits.pos.ui.utils.utils;
  * @author Jorge
  *
  */
-public class ProductoVentaDetailController extends AbstractDetailController<ProductoVenta> {
+public class ProductoVentaDetailController extends AbstractDetailController<ProductoVenta> implements ProductoVentaDetailService{
 
     public ProductoVentaDetailController() {
         super(ProductoVentaDAO.getInstance());
@@ -84,6 +84,7 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
         return ret;
     }
 
+    @Override
     public List<Insumo> getInsumoList() {
         ArrayList<Insumo> ret = new ArrayList<>(InsumoDAO.getInstance().findAll());
         Collections.sort(ret, (Insumo o1, Insumo o2) -> o1.getNombre().compareTo(o2.getNombre()));
@@ -108,6 +109,7 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
         getInstance().setGasto(getCosto(getInstance()));
     }
 
+    @Override
     public void registrarNuevoInsumo() {
 
         InsumoCreateEditController controller = new InsumoCreateEditController();
@@ -129,6 +131,7 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
 
     }
 
+    @Override
     public void agregarInsumoaProducto(Insumo insumo_disponible_sel, float cantidad) {
         ProductoInsumo ret = new ProductoInsumo();
         ProductoInsumoPK pk = new ProductoInsumoPK(getInstance().getCodigoProducto(), insumo_disponible_sel.getCodInsumo());
@@ -140,10 +143,12 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
         getInstance().getProductoInsumoList().add(ret);
     }
 
+    @Override
     public void discardChanges() {
         instance = getModel().find(getInstance().getCodigoProducto());
     }
 
+    @Override
     public void eliminarInsumoProducto(ProductoInsumo insumo_contenido_seleccionado) {
         getInstance().getProductoInsumoList().remove(insumo_contenido_seleccionado);//TODO donde se actualiza el valor total del insumo
     }

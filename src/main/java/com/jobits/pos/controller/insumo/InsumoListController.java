@@ -21,7 +21,7 @@ import com.jobits.pos.adapters.repo.impl.InsumoDAO;
  * @author Jorge
  *
  */
-public class InsumoListController extends OldAbstractListController<Insumo> {
+public class InsumoListController extends OldAbstractListController<Insumo> implements InsumoListService{
 
     private final String PREFIX_FOR_ID = "In-";
 

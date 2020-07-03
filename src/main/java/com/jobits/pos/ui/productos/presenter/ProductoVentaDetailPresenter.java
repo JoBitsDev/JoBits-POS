@@ -7,6 +7,7 @@ package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.productos.ProductoVentaDetailController;
+import com.jobits.pos.controller.productos.ProductoVentaDetailService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.seccion.SeccionListController;
 import com.jobits.pos.cordinator.NavigationService;
@@ -38,7 +39,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public static String ACTION_AGREGAR_INSUMO_FICHA = "Registrar";
     public static String ACTION_ELIMINAR_INSUMO_FICHA = "Eliminar";
 
-    private ProductoVentaDetailController controller;
+    private ProductoVentaDetailService service;
     private boolean creatingMode = true;
 
     /**
@@ -47,12 +48,12 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
      * @param controller
      * @param productoSeleccionado
      */
-    public ProductoVentaDetailPresenter(ProductoVentaDetailController controller, ProductoVenta productoSeleccionado) {
+    public ProductoVentaDetailPresenter(ProductoVentaDetailService controller, ProductoVenta productoSeleccionado) {
         super(new ProductoVentaDetailViewModel());
-        this.controller = controller;
-        getBean().getLista_categorias().addAll(new ArrayListModel<>(controller.getSeccionList()));
-        getBean().getLista_elaborado().addAll(new ArrayListModel<>(controller.getCocinaList()));
-        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(controller.getInsumoList()));
+        this.service = controller;
+        getBean().getLista_categorias().addAll(new ArrayListModel<>(this.service.getSeccionList()));
+        getBean().getLista_elaborado().addAll(new ArrayListModel<>(this.service.getCocinaList()));
+        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(this.service.getInsumoList()));
         if (productoSeleccionado != null) {
             fillForm(productoSeleccionado);
         }
@@ -125,14 +126,14 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
         getBean().setPrecio_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPrecioVenta()));
         getBean().setPrecio_costo("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getGasto()));
-        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(controller.getInsumoList()));
+        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
 
     }
 
     private void onAddIngredienteClick() {
-        controller.registrarNuevoInsumo();
+        service.registrarNuevoInsumo();
         getBean().getLista_insumos_disponibles().clear();
-        getBean().getLista_insumos_disponibles().addAll(controller.getInsumoList());
+        getBean().getLista_insumos_disponibles().addAll(service.getInsumoList());
     }
 
     private void onAceptarClick() {
@@ -141,9 +142,9 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             ProductoVenta p;
             if (creatingMode) {
-                p = controller.createNewInstance();
+                p = service.createNewInstance();
             } else {
-                p = controller.getInstance();
+                p = service.getInstance();
             }
             p.setNombre(getBean().getNombre_producto());
             p.setCocinacodCocina(getBean().getElaborado_seleccionado());
@@ -157,7 +158,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 p.setPagoPorVenta((float) 0);
             }
             p.setVisible(true);
-            controller.create(p);
+            service.create(p);
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         }
 
@@ -167,7 +168,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if ((boolean)Application.getInstance().getNotificationService().
                 showDialog("Desea descartar los cambios?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            controller.discardChanges();
+            service.discardChanges(); 
             NavigationService.getInstance().navigateUp();
         }
 
@@ -175,13 +176,13 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private void onAddCategoriaClick() {
         new SeccionListController().getDetailControllerForNew();
-        getBean().setLista_categorias(new ArrayListModel<>(controller.getSeccionList()));
+        getBean().setLista_categorias(new ArrayListModel<>(service.getSeccionList()));
 
     }
 
     private void onAddElaboracionCLick() {
         new PuntoElaboracionListController().createInstance();
-        getBean().setLista_elaborado(new ArrayListModel<>(controller.getCocinaList()));
+        getBean().setLista_elaborado(new ArrayListModel<>(service.getCocinaList()));
 
     }
 
@@ -190,10 +191,10 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if (opt.isPresent()) {
             try {
                 float cantidad = Float.parseFloat(opt.get());
-                controller.agregarInsumoaProducto(getBean().getInsumo_disponible_sel(), cantidad);
+                service.agregarInsumoaProducto(getBean().getInsumo_disponible_sel(), cantidad);
                 getBean().setInsumo_disponible_sel(null);
                 getBean().getLista_insumos_contenidos().clear();
-                getBean().getLista_insumos_contenidos().addAll(controller.getInstance().getProductoInsumoList());
+                getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
                 getBean().setInsumo_disponible_sel(null);
             } catch (NumberFormatException ex) {
                Application.getInstance().getNotificationService().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
@@ -203,10 +204,10 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onEliminarInsumoFichaClick() {
-        controller.eliminarInsumoProducto(getBean().getInsumo_contenido_seleccionado());
+        service.eliminarInsumoProducto(getBean().getInsumo_contenido_seleccionado());
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(controller.getInstance().getProductoInsumoList());
+        getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
 
     }
 

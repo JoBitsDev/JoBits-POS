@@ -7,7 +7,6 @@ package com.jobits.pos.ui.productos;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.ProductoInsumo;
@@ -37,10 +36,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     public ProductoVentaDetailView(AbstractViewPresenter presenter) {
         super(presenter);
 
-    }
-
-    public ProductoVentaDetailController getController() {
-        return null;
     }
 
     @SuppressWarnings("unchecked")
