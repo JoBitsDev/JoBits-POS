@@ -7,6 +7,7 @@ package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.IPVController;
+import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.domain.models.IpvRegistro;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
 import com.jobits.pos.main.Application;
@@ -37,11 +38,11 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_NUEVO_PEDIDO_IPV_VENTA = "Nuevo Pedido",
             ACTION_AJUSTAR_IPV = "Ajustar consumo";
 
-    private IPVController controller;
+    private IPVService service;
 
     public IpvGestionViewPresenter(IPVController controller) {
         super(new IpvGestionViewModel());
-        this.controller = controller;
+        this.service = controller;
         getBean().setLista_punto_elaboracion(new ArrayListModel<>(controller.getCocinaList()));
         getBean().addPropertyChangeListener(IpvGestionViewModel.PROP_PUNTO_ELABORACION_SELECCIONADO,
                 (evt) -> {
@@ -149,7 +150,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             if (getBean().getPunto_elaboracion_seleccionado() != null) {
 
                 getBean().setLista_ipv_registro(new ArrayListModel<>(
-                        controller.getIpvRegistroList(getBean().
+                        service.getIpvRegistroList(getBean().
                                 getPunto_elaboracion_seleccionado(),
                                 getBean().getFecha_ipv_seleccionada())));
                 getBean().setCheck_ocultar_productos_ipv(false);
@@ -161,7 +162,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
             if (getBean().getPunto_elaboracion_seleccionado() != null) {
                 getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
-                        controller.getIpvRegistroVentaList(getBean().
+                        service.getIpvRegistroVentaList(getBean().
                                 getPunto_elaboracion_seleccionado(),
                                 getBean().getFecha_ipv_ventas_seleccionada())));
                 getBean().setCheck_ocultar_productos_ipv_venta(false);
@@ -214,12 +215,12 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private void onDarEntradaIpv() {
-        controller.darEntradaExistencia(getBean().getIpv_registro_seleciconado());
+        service.darEntradaExistencia(getBean().getIpv_registro_seleciconado());
 
     }
 
     private void onDarEntradaIpvVentas() {
-        controller.darEntradaIPV(getBean().getIpv_venta_registro_seleccionado());
+        service.darEntradaIPV(getBean().getIpv_venta_registro_seleccionado());
 
     }
 
@@ -240,7 +241,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private void onAjustarIpv() {
-        controller.ajustarConsumo(getBean().getIpv_registro_seleciconado());
+        service.ajustarConsumo(getBean().getIpv_registro_seleciconado());
     }
 
 }

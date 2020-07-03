@@ -55,7 +55,7 @@ import com.jobits.pos.ui.utils.utils;
  * @author Jorge
  *
  */
-public class IPVController extends AbstractDialogController<Ipv> {
+public class IPVController extends AbstractDialogController<Ipv> implements IPVService{
 
     //
     // Constructores
