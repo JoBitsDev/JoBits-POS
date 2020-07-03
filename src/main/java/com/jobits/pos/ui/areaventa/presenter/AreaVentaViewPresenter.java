@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 import com.jobits.pos.controller.areaventa.AreaVentaController;
+import com.jobits.pos.controller.areaventa.AreaVentaService;
 import com.jobits.pos.ui.menu.presenter.*;
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.domain.models.Area;
@@ -28,7 +29,7 @@ import java.util.Optional;
  */
 public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewModel> {
 
-    private AreaVentaController controller;
+    private AreaVentaService service;
 
     public static final String ACTION_AGREGAR_AREA = "Nueva area";
     public static final String ACTION_EDITAR_AREA = "Editar";
@@ -36,10 +37,10 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
     public static final String ACTION_AGREGAR_MESA = "Nueva mesa";
     public static final String ACTION_ELIMINAR_MESA = "Eliminar mesa";
 
-    public AreaVentaViewPresenter(AreaVentaController controller) {
+    public AreaVentaViewPresenter(AreaVentaService service) {
         super(new AreaVentaViewModel());
-        this.controller = controller;
-        getBean().getLista_area().addAll(controller.getItems());
+        this.service = service;
+        getBean().getLista_area().addAll(service.getItems());
     }
 
     @Override
@@ -82,10 +83,10 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
     }
 
     private void onNuevaAreaCLick() {//TODO: no actualiza correctamente nada en las vistas
-        controller.createInstance();
+        service.createInstance();
         Area areaSeleccionada = getBean().getArea_seleccionada();
         getBean().getLista_area().clear();
-        getBean().getLista_area().addAll(controller.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
+        getBean().getLista_area().addAll(service.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
         getBean().setArea_seleccionada(areaSeleccionada);
     }
 
@@ -94,9 +95,9 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
            Application.getInstance().getNotificationService().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
             return;
         }
-        controller.destroy(getBean().getArea_seleccionada());
+        service.destroy(getBean().getArea_seleccionada());
         getBean().setArea_seleccionada(null);
-        getBean().setLista_area(controller.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
+        getBean().setLista_area(service.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
 
     }
 
@@ -105,7 +106,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
            Application.getInstance().getNotificationService().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
             return;
         }
-        controller.getDetailControllerForEdit(getBean().getArea_seleccionada());
+        service.getDetailControllerForEdit(getBean().getArea_seleccionada());
         getBean().getLista_area().fireContentsChanged(0, getBean().getLista_area().getSize());
         
     }
@@ -115,7 +116,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
            Application.getInstance().getNotificationService().notify("Debe seleccionar un area", TipoNotificacion.ERROR);
             return;
         }
-        controller.createMesa(getBean().getArea_seleccionada());
+        service.createMesa(getBean().getArea_seleccionada());
         getBean().getLista_mesas().clear();
         getBean().setArea_seleccionada(getBean().getArea_seleccionada());
 
@@ -126,7 +127,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
            Application.getInstance().getNotificationService().notify("Debe seleccionar una seccion", TipoNotificacion.ERROR);
             return;
         }
-        controller.removeMesa(getBean().getMesa_seleccionada());
+        service.removeMesa(getBean().getMesa_seleccionada());
         getBean().setArea_seleccionada(getBean().getArea_seleccionada());
     }
 

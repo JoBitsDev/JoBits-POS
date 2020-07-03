@@ -22,7 +22,7 @@ import com.jobits.pos.adapters.repo.impl.MesaDAO;
  * @author Jorge
  *
  */
-public class AreaVentaController extends OldAbstractListController<Area> {
+public class AreaVentaController extends OldAbstractListController<Area> implements AreaVentaService{
 
     public AreaVentaController() {
         super(AreaDAO.getInstance());
@@ -38,6 +38,7 @@ public class AreaVentaController extends OldAbstractListController<Area> {
         return new AreaDetailController(getView());
     }
 
+   
     @Override
     public AbstractDetailController<Area> getDetailControllerForEdit(Area selected) {
         return new AreaDetailController(selected, getView());
