@@ -7,6 +7,7 @@ package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.binding.value.AbstractValueModel;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
+import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.NotificationService;
@@ -27,11 +28,11 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
 
     public static final String ACTION_APPLY = "Aplicar";
 
-    private ConfiguracionController controller;
+    private ConfiguracionService service;
 
-    public ConfigurationViewPresenter(ConfiguracionController controller) {
+    public ConfigurationViewPresenter(ConfiguracionService service) {
         super(new ConfiguracionViewModel());
-        this.controller = controller;
+        this.service = service;
         updateBeanConfig();
 
     }
@@ -56,7 +57,7 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
         for (R.SettingID v : R.SettingID.values()) {
             Object config = getBean().getConfiguration(v);
             if (config != null) {
-                controller.updateConfiguracion(v, getBean().getConfiguration(v));
+                service.updateConfiguracion(v, getBean().getConfiguration(v));
             }
         }
         Application.getInstance().getNotificationService().notify("Propiedades guardadas exitosamente", TipoNotificacion.SUCCESS);
@@ -65,7 +66,7 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
 
     private void updateBeanConfig() {
         for (R.SettingID v : R.SettingID.values()) {
-            Object o = controller.getConfiguracion(v);
+            Object o = service.getConfiguracion(v);
             if (o != null) {
                 getBean().setConfiguration(v, o);
             }

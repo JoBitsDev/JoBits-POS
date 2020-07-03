@@ -36,7 +36,7 @@ import java.util.logging.Logger;
  * @author Jorge
  *
  */
-public class ConfiguracionController extends AbstractDialogController<Configuracion> {
+public class ConfiguracionController extends AbstractDialogController<Configuracion> implements ConfiguracionService{
 
     private ParametrosConfiguracion configuracionY;
 
