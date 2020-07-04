@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  * @author Jorge
  *
  */
-public class MainMenuController {
+public class MainMenuController implements MainMenuService{
 
     private SincronizacionController sincronizacion = new SincronizacionController();
 

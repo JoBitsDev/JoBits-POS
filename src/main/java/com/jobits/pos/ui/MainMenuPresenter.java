@@ -6,6 +6,7 @@
 package com.jobits.pos.ui;
 
 import com.jobits.pos.controller.login.MainMenuController;
+import com.jobits.pos.controller.login.MainMenuService;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.cordinator.NavigationService;
@@ -32,11 +33,11 @@ import java.util.logging.Logger;
  */
 public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> {
 
-    MainMenuController controller;
+    MainMenuService service;
 
-    public MainMenuPresenter(MainMenuController controller) {
+    public MainMenuPresenter(MainMenuService service) {
         super(new MainMenuViewModel());
-        this.controller = controller;
+        this.service = service;
 
     }
 
@@ -62,7 +63,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                                         TipoNotificacion.DIALOG_INPUT);
                         if (ret.isPresent()) {
                             try {
-                                VentaDetailController control = controller.comenzarVentas(R.DATE_FORMAT.parse(ret.get()));
+                                VentaDetailController control = service.comenzarVentas(R.DATE_FORMAT.parse(ret.get()));
                                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
                                         new VentaResumenViewPresenter(control, new OrdenController()));
                             } catch (ParseException ex) {
