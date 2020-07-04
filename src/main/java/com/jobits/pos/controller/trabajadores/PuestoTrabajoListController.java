@@ -16,7 +16,7 @@ import com.jobits.pos.adapters.repo.impl.PuestoTrabajoDAO;
  * @author Jorge
  *
  */
-public class PuestoTrabajoListController extends OldAbstractListController<PuestoTrabajo> {
+public class PuestoTrabajoListController extends OldAbstractListController<PuestoTrabajo> implements PuestoTrabajoListService {
 
     //PuestoTrabajoListView getView();
     public PuestoTrabajoListController() {

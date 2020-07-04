@@ -7,6 +7,7 @@ package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
+import com.jobits.pos.controller.trabajadores.PuestoTrabajoListService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
@@ -20,11 +21,11 @@ import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
  */
 public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<PuestoTrabajoListViewModel> {
 
-    PuestoTrabajoListController controller;
+    PuestoTrabajoListService service;
 
     public PuestoTrabajoListViewPresenter(PuestoTrabajoListController controller) {
         super(new PuestoTrabajoListViewModel(), PuestoTrabajoListView.VIEW_NAME);
-        this.controller = controller;
+        this.service = controller;
         setListToBean();
     }
 
@@ -43,14 +44,14 @@ public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<Pu
 
     @Override
     protected void onEliminarClick() {
-        controller.destroy(getBean().getElemento_seleccionado());
+        service.destroy(getBean().getElemento_seleccionado());
         setListToBean();
     }
 
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(controller.getItems());
+        getBean().getLista_elementos().addAll(service.getItems());
     }
 
 }
