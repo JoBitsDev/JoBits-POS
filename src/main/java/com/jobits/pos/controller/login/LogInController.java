@@ -20,7 +20,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class LogInController {
+public class LogInController implements LogInService {
 
     private boolean AUTORIZADO = false;
     private int nivelMinimo = -1;

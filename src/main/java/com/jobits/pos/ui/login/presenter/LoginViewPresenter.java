@@ -8,6 +8,7 @@ package com.jobits.pos.ui.login.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
@@ -38,12 +39,12 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
 
     public static final String ACTION_EDITAR_UBICACION = "Editar ubicacion";
 
-    LogInController controller;
+    LogInService service;
     UbicacionConexionController ubicacionController;
 
-    public LoginViewPresenter(LogInController controller) {
+    public LoginViewPresenter(LogInService service) {
         super(new LoginViewModel());
-        this.controller = controller;
+        this.service = service;
         ubicacionController = new UbicacionConexionController();
         getBean().setListaUbicaciones(new ArrayListModel<>(
                 Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
@@ -55,7 +56,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         String password = getBean().getContraseña();
         getBean().setContraseña("");
         try {
-            if (controller.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
+            if (service.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
                Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
                 NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
                         new MainMenuPresenter(new MainMenuController())); //TODO revisar eso codigo que no le pertenece a esta clse
@@ -71,8 +72,8 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
             protected void longProcessMethod() {
                 try {
                     ubicacionController.setSelectedUbicacion(getBean().getUbicacionSeleccionada());
-                    controller.connect(ubicacionController.getUbicaciones().getUbicacionActiva());
-                    actualizarLabelConexionYBotonAutenticar(controller.isConnected());
+                    service.connect(ubicacionController.getUbicaciones().getUbicacionActiva());
+                    actualizarLabelConexionYBotonAutenticar(service.isConnected());
 
                 } catch (IOException ex) {
                     Logger.getLogger(LoginViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
