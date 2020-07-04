@@ -10,6 +10,7 @@ import com.jobits.pos.algoritmo.Y;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaListController;
+import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.domain.models.Venta;
@@ -39,7 +40,7 @@ import java.util.Optional;
  */
 public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaCalendarViewModel> {
 
-    private final VentaListController controller;
+    private final VentaListService service;
 
     public static final String ACTION_IMPORTAR_VENTA = "Importar venta",
             ACTION_Y = "Y",
@@ -47,7 +48,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     public VentaCalendarViewPresenter(VentaListController controller) {
         super(new VentaCalendarViewModel(), "Ventas");
-        this.controller = controller;
+        this.service = controller;
         updateBeanData();
         addListeners();
 
@@ -103,7 +104,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     @Override
     protected void onEliminarClick() {
         if (getBean().getDia_seleccionado() != null) {
-            controller.destroy(getBean().getDia_seleccionado());
+            service.destroy(getBean().getDia_seleccionado());
             updateBeanData();
         }
     }
@@ -116,7 +117,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             throw new ValidatingException();
         }
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
-            VentaDetailController ventaController = controller.createDetailResumenView(getBean().getResumen_desde(), getBean().getResumen_hasta());//TODO devolver valor e invocar al navigator
+            VentaDetailController ventaController = service.createDetailResumenView(getBean().getResumen_desde(), getBean().getResumen_hasta());//TODO devolver valor e invocar al navigator
             VentaResumenViewPresenter presenter = new VentaResumenViewPresenter(ventaController, null);
             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         });
@@ -133,7 +134,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         //   throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
         // }
         try {
-            controller.destroy(VentaDAO.getInstance().find(old.getFecha()), true);
+            service.destroy(VentaDAO.getInstance().find(old.getFecha()), true);
             newVenta.setAsistenciaPersonalList(new ArrayList<>());
             newVenta.setFecha(old.getFecha());
             newVenta.setOrdenList(alg.ejecutarAlgoritmo());
@@ -173,7 +174,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void setListToBean() {
-        getBean().setLista_elementos(controller.findVentas(getBean().getMes_seleccionado(), getBean().getYear_seleccionado()));
+        getBean().setLista_elementos(service.findVentas(getBean().getMes_seleccionado(), getBean().getYear_seleccionado()));
 
     }
 
@@ -212,7 +213,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         getBean().setGasto_otros_intervalo(utils.setDosLugaresDecimales((float) gGastos));
         int hora_pico_promedio = VentaDAO1.getModalPickHour(getBean().getLista_elementos());
         getBean().setHora_pico_intervalo(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
-        getBean().setY_visible(controller.isYVisible());
+        getBean().setY_visible(service.isYVisible());
     }
 
     private void addListeners() {

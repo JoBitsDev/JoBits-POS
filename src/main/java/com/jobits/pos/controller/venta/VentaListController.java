@@ -30,7 +30,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class VentaListController extends AbstractDialogController<Venta> {
+public class VentaListController extends AbstractDialogController<Venta> implements VentaListService{
 
     public VentaListController() {
         super(VentaDAO.getInstance());
