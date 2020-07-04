@@ -7,6 +7,7 @@ package com.jobits.pos.ui.backup.presenter;
 
 import com.jobits.pos.controller.backup.BackUpService;
 import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.controller.login.UbicacionConexionService;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -28,7 +29,7 @@ public class BackUpViewPresenter extends AbstractViewPresenter<BackUpViewModel> 
 
     public static final String ACTION_REALIZAR_COPIA_SEG = "Realizar copia de seguridad";
 
-    private UbicacionConexionController ubicacionController;
+    private UbicacionConexionService ubicacionController;
 
     public BackUpViewPresenter(UbicacionConexionController ubicacionController) {
         super(new BackUpViewModel());

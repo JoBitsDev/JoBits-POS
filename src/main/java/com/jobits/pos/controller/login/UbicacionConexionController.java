@@ -22,7 +22,7 @@ import com.jobits.pos.domain.models.Ubicacion;
  * @author Jorge
  *
  */
-public class UbicacionConexionController {
+public class UbicacionConexionController implements UbicacionConexionService{
 
     private UbicacionWrapper ubicaciones;
     private ObjectMapper om = new ObjectMapper();
