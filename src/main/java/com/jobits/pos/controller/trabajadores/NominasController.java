@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
+import com.jgoodies.common.collect.ArrayListModel;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,7 +25,7 @@ import com.jobits.pos.ui.utils.utils;
  * @author Jorge
  *
  */
-public class NominasController extends AbstractDetailController<AsistenciaPersonal> {
+public class NominasController extends AbstractDetailController<AsistenciaPersonal> implements NominasService {
 
     public NominasController() {
         super(AsistenciaPersonalDAO.getInstance());
@@ -81,6 +82,11 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
                 Impresion.getDefaultInstance().printComprobantePago(i.getP());
             }
         }
+    }
+
+    @Override
+    public void imprimirEstadisticas(ArrayListModel<AsistenciaPersonalEstadisticas> lista_personal) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

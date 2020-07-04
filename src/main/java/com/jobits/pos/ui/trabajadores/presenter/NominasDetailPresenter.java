@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jobits.pos.controller.trabajadores.NominasController;
+import com.jobits.pos.controller.trabajadores.NominasService;
 import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -25,11 +26,11 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
     public static final String ACTION_BUSCAR = "Buscar";
     public static String ACTION_SELECCIONAR_TODOS = "Seleccionar todos";
 
-    NominasController controller;
+    NominasService service;
 
-    public NominasDetailPresenter(NominasController controller) {
+    public NominasDetailPresenter(NominasService servicio) {
         super(new NominasDetailViewModel());
-        this.controller = controller;
+        this.service = servicio;
     }
 
     private void onBuscarClick() {
@@ -41,7 +42,7 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
             
         }
         getBean().getLista_personal().clear();
-        getBean().getLista_personal().addAll(controller.getPersonalActivo(getBean().getFecha_desde(), getBean().getFecha_hasta()));
+        getBean().getLista_personal().addAll(service.getPersonalActivo(getBean().getFecha_desde(), getBean().getFecha_hasta()));
         
 
     }
@@ -49,14 +50,14 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
     private void onPagarClick() {
         for (AsistenciaPersonalEstadisticas i : getBean().getLista_personal()) {
             if (i.isUse()) {
-                controller.pagar(i);
+                service.pagar(i);
             }
         }
         getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize());
     }
 
     private void onImprimirClick() {
-        controller.imprimirEstadisticas(getBean().getLista_personal());
+        service.imprimirEstadisticas(getBean().getLista_personal());
     }
 
     private void onSeleccionarTodosClick() {
