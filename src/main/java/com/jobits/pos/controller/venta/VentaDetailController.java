@@ -62,7 +62,7 @@ import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
  * @author Jorge
  *
  */
-public class VentaDetailController extends AbstractDetailController<Venta> {
+public class VentaDetailController extends AbstractDetailController<Venta> implements VentaDetailService{
 
     Date fechaFin = null;
     private OrdenController ordController;

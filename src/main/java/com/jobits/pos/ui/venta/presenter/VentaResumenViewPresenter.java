@@ -9,6 +9,7 @@ import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter;
 import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
+import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
@@ -43,12 +44,12 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
             ACTION_IMPRIMIR_RESUMEN_PTO = "Imprimir Pto elaboracion",
             ACTION_ABRIR_ORDEN = "Editar Orden";
 
-    private VentaDetailController controller;
+    private VentaDetailService service;
     private OrdenDetailViewPresenter ordenPresenter;
 
     public VentaResumenViewPresenter(VentaDetailController controller, OrdenController ordenController) {
         super(new VentaResumenViewModel());
-        this.controller = controller;
+        this.service = controller;
         ordenPresenter = new OrdenDetailViewPresenter(ordenController);
         ordenPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_ORDEN_STATUS_UPDATE, (PropertyChangeEvent evt) -> {
             updateBeanData();
@@ -137,8 +138,8 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
 
     private void onAbrirOrdenAction() {
         if (getBean().getOrden_seleccionada() == null) {
-            controller.createNewOrden();
-            getBean().setLista_orden(controller.getOrdenesActivas());
+            service.createNewOrden();
+            getBean().setLista_orden(service.getOrdenesActivas());
             //throw new IllegalArgumentException("No hay una orden seleccionada");
         }
 
@@ -147,40 +148,40 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
     }
 
     private void onImprimirZClick() {
-        controller.printZ();
+        service.printZ();
     }
 
     private void onImprimirAutorizosClick() {
-        controller.printGastosCasa();
+        service.printGastosCasa();
     }
 
     private void onTerminarClick() {
-        if (controller.terminarVentas()) {
+        if (service.terminarVentas()) {
             Application.getInstance().getNavigator().navigateUp();
         }
     }
 
     private void onTerminarYExportarClick() {
-        controller.terminarYExportar(getBean().getFile_for_export());
+        service.terminarYExportar(getBean().getFile_for_export());
         Application.getInstance().getNavigator().navigateUp();
     }
 
     private void onReabrirVentaCLick() {
-        controller.reabrirVentas();
+        service.reabrirVentas();
     }
 
     private void onImprimirResumenVentaAreaClick() {
-        controller.printAreaResumen(getBean().getResumem_area_seleccionada().getArea());
+        service.printAreaResumen(getBean().getResumem_area_seleccionada().getArea());
 
     }
 
     private void onImprimirResumenVentaUsuarioClick() {
-        controller.printPersonalResumenRow(getBean().getResumen_usuario_seleccionado().getPersonal());
+        service.printPersonalResumenRow(getBean().getResumen_usuario_seleccionado().getPersonal());
 
     }
 
     private void onImprimirResumenVentaUsuarioComisionClick() {
-        controller.printPagoPorVentaPersonal(getBean().getResumen_usuario_seleccionado().getPersonal());
+        service.printPagoPorVentaPersonal(getBean().getResumen_usuario_seleccionado().getPersonal());
 
     }
 
@@ -189,20 +190,20 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
     }
 
     private void updateBeanData() {
-        com.jobits.pos.domain.models.Venta v = controller.getInstance();
-        getBean().setLista_orden(controller.getOrdenesActivas());
-        getBean().setLista_resumen_area_venta(controller.getResumenPorAreaVenta());
-        getBean().setLista_resumen_pto_venta(controller.getResumenPorPtoVenta());
-        getBean().setLista_resumen_usuario_venta(controller.getResumenPorUsuarioVenta());
-        getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(controller.getTotalPropina()));
-        getBean().setReabrir_ventas_enabled(controller.canReabrirVenta());
-        getBean().setTotal_autorizos(controller.getTotalAutorizos());
-        getBean().setTotal_gasto_insumos(controller.getTotalGastadoInsumos());
-        getBean().setTotal_gasto_otros(controller.getTotalGastos());
-        getBean().setTotal_gasto_salario(controller.getTotalPagoTrabajadores());
-        getBean().setVenta_neta(controller.getTotalVendidoNeto());
-        getBean().setVenta_total(controller.getTotalVendido());
-        getBean().setCambiar_turno_enabled(controller.canCambiarTurno());
+        com.jobits.pos.domain.models.Venta v = service.getInstance();
+        getBean().setLista_orden(service.getOrdenesActivas());
+        getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta());
+        getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta());
+        getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta());
+        getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(service.getTotalPropina()));
+        getBean().setReabrir_ventas_enabled(service.canReabrirVenta());
+        getBean().setTotal_autorizos(service.getTotalAutorizos());
+        getBean().setTotal_gasto_insumos(service.getTotalGastadoInsumos());
+        getBean().setTotal_gasto_otros(service.getTotalGastos());
+        getBean().setTotal_gasto_salario(service.getTotalPagoTrabajadores());
+        getBean().setVenta_neta(service.getTotalVendidoNeto());
+        getBean().setVenta_total(service.getTotalVendido());
+        getBean().setCambiar_turno_enabled(service.canCambiarTurno());
         getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
     }
 
