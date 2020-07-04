@@ -17,7 +17,7 @@ import java.io.IOException;
  * @author Jorge
  *
  */
-public class LicenceController {
+public class LicenceController implements LicenceService {
 
     public static final String LICENCIA_INVALIDA = "Licencia invalida";
     public static final String ERROR_LECTURA_LICENCIA = "Error de lectura de la licencia";

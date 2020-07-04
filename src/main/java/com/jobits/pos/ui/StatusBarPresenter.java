@@ -7,6 +7,7 @@ package com.jobits.pos.ui;
 
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
+import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -22,7 +23,7 @@ import java.util.Optional;
  */
 public class StatusBarPresenter extends AbstractViewPresenter<StatusBarViewModel> {
 
-    private final LicenceController controller = Application.getInstance().getLicenceController();
+    private final LicenceService service = Application.getInstance().getLicenceController();
     public static final String ACTION_LICENCIA = "";
     public static final String ACTION_REFRESH_BEAN = "Refresh";
 
@@ -38,7 +39,7 @@ public class StatusBarPresenter extends AbstractViewPresenter<StatusBarViewModel
 
     private void refreshBean() {
         getBean().setBoton_licencia_habilitado(true);
-        getBean().setEstado_licencia(controller.getEstadoLicencia(Licence.TipoLicencia.APLICACION));
+        getBean().setEstado_licencia(service.getEstadoLicencia(Licence.TipoLicencia.APLICACION));
         if (Application.getInstance().getLoggedUser() != null) {
             getBean().setUsuario_registrado(Application.getInstance().getLoggedUser().getUsuario());
         }
