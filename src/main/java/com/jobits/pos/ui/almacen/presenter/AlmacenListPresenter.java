@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jobits.pos.controller.almacen.AlmacenListController;
+import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.ui.almacen.AlmacenListView;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 
@@ -18,7 +19,7 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
  */
 public class AlmacenListPresenter extends AbstractListViewPresenter<AlmacenListViewModel> {
 
-    private AlmacenListController controller;
+    private AlmacenListService controller;
 
     public AlmacenListPresenter(AlmacenListController controller) {
         super(new AlmacenListViewModel(), AlmacenListView.VIEW_NAME);

@@ -23,7 +23,7 @@ import com.jobits.pos.recursos.RegularExpressions;
  * @author Jorge
  *
  */
-public class AlmacenListController extends OldAbstractListController<Almacen> {
+public class AlmacenListController extends OldAbstractListController<Almacen> implements AlmacenListService {
 
     private final String PREFIX_FOR_ID = "A-";
 
