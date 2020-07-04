@@ -24,7 +24,7 @@ import com.jobits.pos.servicios.impresion.Impresion;
  * @author Jorge
  *
  */
-public class PersonalListController extends OldAbstractListController<Personal> {
+public class PersonalListController extends OldAbstractListController<Personal> implements PersonalListService{
 
     public PersonalListController() {
         super(PersonalDAO.getInstance());

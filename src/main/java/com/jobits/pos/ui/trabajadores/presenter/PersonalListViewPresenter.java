@@ -7,6 +7,7 @@ package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
+import com.jobits.pos.controller.trabajadores.PersonalListService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -20,7 +21,7 @@ import com.jobits.pos.ui.trabajadores.PersonalListView;
  */
 public class PersonalListViewPresenter extends AbstractListViewPresenter<PersonalListViewModel> {
 
-    PersonalListController controller;
+    PersonalListService controller;
 
     public PersonalListViewPresenter(PersonalListController controller) {
         super(new PersonalListViewModel(), PersonalListView.VIEW_NAME);
