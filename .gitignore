@@ -91,3 +91,9 @@ dist_ver/
 *.cfg
 
 ubicaciones.json
+
+impresoras.json
+
+lic.key
+
+lombok.config

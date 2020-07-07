@@ -37,8 +37,10 @@ import com.jobits.pos.persistencia.Venta;
 import com.jobits.pos.persistencia.modelos.CocinaDAO;
 import com.jobits.pos.persistencia.modelos.PersonalDAO;
 import com.jobits.pos.persistencia.modelos.ProductovOrdenDAO;
+import com.jobits.pos.persistencia.volatil.Impresora;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
+import java.awt.print.PrinterJob;
 
 /**
  *
@@ -68,12 +70,12 @@ public class Impresion {
     public static boolean BUZZER_ON = true;
 
     ArrayList<CopiaTicket> RAM = new ArrayList<>();
-
     /**
      * String referentes a la impresion de ordenes
      */
-    private final String COCINA = "Pto Elaboracion: ",
-            DELACASA = "(Pedido por la casa)",
+    public final String COCINA = "Pto Elaboracion: ";
+
+    private final String DELACASA = "(Pedido por la casa)",
             ORDEN = "Orden No: ",
             MESA = "Mesa: ",
             FECHA = "Fecha: ",
@@ -885,7 +887,7 @@ public class Impresion {
         }
     }
 
-    private void addFinal(Ticket t) {
+    public void addFinal(Ticket t) {
         t.feed((byte) 3);
         t.finit();
     }
@@ -906,11 +908,11 @@ public class Impresion {
 
     }
 
-    private void sendToPrinterStatistics(byte[] byteData, String printLocation) {
+    public void sendToPrinterStatistics(byte[] byteData, String printLocation) {
         feedPrinter(byteData, printLocation, TipoImpresion.RESUMEN);
     }
 
-    private void addHeader(Ticket t) {
+    public void addHeader(Ticket t) {
         t.resetAll();
         t.initialize();
         t.feedBack((byte) 2);
@@ -998,40 +1000,64 @@ public class Impresion {
     //
     //Private Methods
     //
-    private void feedPrinter(byte[] b, String printerName, TipoImpresion modo) {
+    public void feedPrinter(byte[] b, String mathWithCocina, TipoImpresion modo) {
 
-        PrintService[] prints = PrintServiceLookup.lookupPrintServices(null, null);
-        DocPrintJob job = PrintServiceLookup.lookupDefaultPrintService().createPrintJob();
-        job.addPrintJobListener(new JobListener());
-        if (printerName != null) {
-            for (int i = 0; i < prints.length; i++) {
-                if (prints[i].getName().contains(printerName)) {
-                    job = prints[i].createPrintJob();
-                    break;
+        ImpresoraUseCase impresoraUC = new ImpresoraUseCase();
+        PrintService[] systemPrinter = PrintServiceLookup.lookupPrintServices(null, null);
+        //job.addPrintJobListener(new JobListener());
+        List<DocPrintJob> jobs = new ArrayList();
+        
+        List<Impresora> impresoras;
+        if (mathWithCocina != null) {
+            impresoras = impresoraUC.impresoraMathCocina(mathWithCocina);
+            for (int i = 0; i < impresoras.size(); i++) {
+                for (int j = 0; j < systemPrinter.length; j++) {
+                    String nombreImpresora = impresoras.get(i).getNombreImpresoraSistema();
+                    if (systemPrinter[j].getName().equals(nombreImpresora)) {
+                        jobs.add(systemPrinter[i].createPrintJob());
+                    }
                 }
             }
+        } else {
+            impresoras = impresoraUC.impresorasDefault();
+            for (int i = 0; i < impresoras.size(); i++) {
+                for (int j = 0; j < systemPrinter.length; j++) {
+                    String nombreImpresora = impresoras.get(i).getNombreImpresoraSistema();
+                    if (systemPrinter[j].getName().equals(nombreImpresora)){
+                    jobs.add(systemPrinter[j].createPrintJob());}
+                }
+            }
+
         }
 
         DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
         Doc doc = new SimpleDoc(b, flavor, null);
 
         try {
-            if (printerName != null) {
+            if (mathWithCocina != null) {
                 switch (modo) {
                     case COCINA:
                         if (IMPRIMIR_TICKET_COCINA) {
                             if (BUZZER_ON) {
                                 forceBell();
                             }
-                            job.print(doc, null);
+                            for (int i = 0; i < jobs.size(); i++) {
+                                jobs.get(i).print(doc, null);
+                            }
                         }
                         break;
                     default:
-                        job.print(doc, null);
+                        for (int i = 0; i < jobs.size(); i++) {
+                            jobs.get(i).print(doc, null);
+                        }
                         break;
                 }
             } else {
-                job.print(doc, null);
+                for (int i = 0; i < jobs.size(); i++) {
+                   // Doc document = new SimpleDoc(b, flavor, null);
+                    jobs.get(i).print(doc, null);
+                    
+                }
 
             }
         } catch (PrintException ex) {
@@ -1553,7 +1579,7 @@ public class Impresion {
         }
     }
 
-    private enum TipoImpresion {
+    public enum TipoImpresion {
         COCINA, RESUMEN, ORDEN
 
     }
