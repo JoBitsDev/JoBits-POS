@@ -26,6 +26,8 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.RestManagerListModel;
 import com.jobits.pos.ui.utils.utils;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -38,6 +40,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
     private RestManagerAbstractTableModel<ProductoVenta> currentProductosModel;
     private ButtonState state = ButtonState.ENVIAR_COCINA;
     private static boolean showMenu = true;
+    private String idToSearch = "";
 
     public OrdenDetailFragmentView(Controller controller, Orden instance) {
         super(controller);
@@ -563,6 +566,36 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         jPanelCrossReference.add(crossReferencePanel);
         crossReferencePanel.getjTableCrossReference().getColumnModel().getColumn(1).setCellRenderer(new RestManagerCellRender());
 
+        crossReferencePanel.getjTextFieldAutoComplete().addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                onKeyTyped(e);
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                onKeyReleased(e);
+            }
+        });
+    }
+
+    private void onKeyTyped(KeyEvent e) {
+        if (e.isAltDown()) {
+            if(Character.isDigit(e.getKeyChar())){
+                idToSearch += e.getKeyChar();
+            }
+            else{
+                idToSearch = "";
+            }
+        }
+    }
+
+    private void onKeyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ALT) {
+            String idAux = idToSearch;
+            idToSearch = "";
+            getController().addRapidoProducto("Pl-" + idAux);
+        }
     }
 
     private void onSeccionClicked(Seccion s) {
