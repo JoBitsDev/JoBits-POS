@@ -230,7 +230,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public void updatePorciento(float f) {
         instance.setPorciento(f);
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, instance,f);
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, instance, f);
         view.updateValorTotal();
         update(instance);
     }
@@ -477,6 +477,13 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             ipvController.consumirPorLaCasa(instance.getProductovOrdenList());
         } else {
             ipvController.devolverPorLaCasa(instance.getProductovOrdenList());
+        }
+    }
+
+    public void addRapidoProducto(String idProducto) {
+        ProductoVenta productoABuscar = ProductoVentaDAO.getInstance().find(idProducto);
+        if (productoABuscar != null) {
+            addProduct(productoABuscar);
         }
     }
 }
