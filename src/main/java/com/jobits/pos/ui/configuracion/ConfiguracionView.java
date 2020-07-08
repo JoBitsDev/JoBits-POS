@@ -15,6 +15,7 @@ import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.persistencia.Seccion;
 import com.jobits.pos.persistencia.volatil.UbicacionConexionModel;
@@ -34,6 +35,8 @@ public class ConfiguracionView extends AbstractView {
         super(DialogType.INPUT, controller, owner);
         initComponents();
         fetchComponentData();
+        jTabbedPane1.add("Importar/Exportar", new ImportarExportar(new ProductoVentaListController()));
+        
     }
 
     /**
@@ -261,7 +264,7 @@ public class ConfiguracionView extends AbstractView {
 
         jPanelCaracterSeparador1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel5.setText("Cantidad de copias de impresiÃ³n");
+        jLabel5.setText("Cantidad de copias de impresión");
         jPanelCaracterSeparador1.add(jLabel5);
 
         jComboBoxCantCopias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5" }));
@@ -296,7 +299,7 @@ public class ConfiguracionView extends AbstractView {
         jLabel3.setText("Caracter separador");
         jPanelCaracterSeparador.add(jLabel3);
 
-        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", "Ë†" }));
+        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", "ˆ" }));
         jPanelCaracterSeparador.add(jComboBoxCaracterSeparador);
 
         jPanelTickets.add(jPanelCaracterSeparador);
@@ -377,7 +380,10 @@ public class ConfiguracionView extends AbstractView {
     private void jButtonAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAplicarActionPerformed
         validateData();        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAplicarActionPerformed
-
+    
+    
+    
+    
     @Override
     public void fetchComponentData() {
         UbicacionConexionController ubicacionController = new UbicacionConexionController();
