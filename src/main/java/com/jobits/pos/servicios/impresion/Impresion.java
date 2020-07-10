@@ -20,6 +20,7 @@ import javax.print.event.PrintJobListener;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jobits.pos.exceptions.ExceptionHandler;
 import com.jobits.pos.logs.RestManagerHandler;
 import com.jobits.pos.persistencia.Almacen;
 import com.jobits.pos.persistencia.AsistenciaPersonal;
@@ -1002,68 +1003,14 @@ public class Impresion {
     //
     public void feedPrinter(byte[] b, String mathWithCocina, TipoImpresion modo) {
 
-        ImpresoraUseCase impresoraUC = new ImpresoraUseCase();
-        PrintService[] systemPrinter = PrintServiceLookup.lookupPrintServices(null, null);
-        //job.addPrintJobListener(new JobListener());
-        List<DocPrintJob> jobs = new ArrayList();
-        
-        List<Impresora> impresoras;
-        if (mathWithCocina != null) {
-            impresoras = impresoraUC.impresoraMathCocina(mathWithCocina);
-            for (int i = 0; i < impresoras.size(); i++) {
-                for (int j = 0; j < systemPrinter.length; j++) {
-                    String nombreImpresora = impresoras.get(i).getNombreImpresoraSistema();
-                    if (systemPrinter[j].getName().equals(nombreImpresora)) {
-                        jobs.add(systemPrinter[i].createPrintJob());
-                    }
-                }
-            }
-        } else {
-            impresoras = impresoraUC.impresorasDefault();
-            for (int i = 0; i < impresoras.size(); i++) {
-                for (int j = 0; j < systemPrinter.length; j++) {
-                    String nombreImpresora = impresoras.get(i).getNombreImpresoraSistema();
-                    if (systemPrinter[j].getName().equals(nombreImpresora)){
-                    jobs.add(systemPrinter[j].createPrintJob());}
-                }
-            }
-
-        }
-
+        ImpresoraUseCase impresoraUC = new ImpresoraUseCase(new ImpresoraRepoImpl());
         DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
         Doc doc = new SimpleDoc(b, flavor, null);
-
         try {
-            if (mathWithCocina != null) {
-                switch (modo) {
-                    case COCINA:
-                        if (IMPRIMIR_TICKET_COCINA) {
-                            if (BUZZER_ON) {
-                                forceBell();
-                            }
-                            for (int i = 0; i < jobs.size(); i++) {
-                                jobs.get(i).print(doc, null);
-                            }
-                        }
-                        break;
-                    default:
-                        for (int i = 0; i < jobs.size(); i++) {
-                            jobs.get(i).print(doc, null);
-                        }
-                        break;
-                }
-            } else {
-                for (int i = 0; i < jobs.size(); i++) {
-                   // Doc document = new SimpleDoc(b, flavor, null);
-                    jobs.get(i).print(doc, null);
-                    
-                }
-
-            }
-        } catch (PrintException ex) {
-            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+            impresoraUC.imprimirEnGrupo(mathWithCocina, doc);
+        } catch (PrintException e) {
+            ExceptionHandler.showExceptionToUser(e);
         }
-
     }
 
     private boolean existPrinter(String printerName) {
