@@ -20,6 +20,8 @@ import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.persistencia.Seccion;
 import com.jobits.pos.persistencia.volatil.UbicacionConexionModel;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.ImpresoraRepoImpl;
+import com.jobits.pos.servicios.impresion.ImpresoraUseCase;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
 import com.jobits.pos.ui.utils.RestManagerListModel;
 
@@ -35,8 +37,10 @@ public class ConfiguracionView extends AbstractView {
         super(DialogType.INPUT, controller, owner);
         initComponents();
         fetchComponentData();
+        
         jTabbedPane1.add("Importar/Exportar", new ImportarExportar(new ProductoVentaListController()));
         
+        jPanelImpresionConfig.add(new ImpresionConfiguracionView(new ImpresoraUseCase(new ImpresoraRepoImpl())));
     }
 
     /**
@@ -99,6 +103,7 @@ public class ConfiguracionView extends AbstractView {
         jPanelTamannoPapel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBoxTamannoTicket = new javax.swing.JComboBox<>();
+        jPanelImpresionConfig = new javax.swing.JPanel();
         jPanelSincronizacion = new javax.swing.JPanel();
         jPanelNegocio1 = new javax.swing.JPanel();
         jPanel24HR1 = new javax.swing.JPanel();
@@ -110,6 +115,7 @@ public class ConfiguracionView extends AbstractView {
         jLabel7 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
         jPanelY.setLayout(new java.awt.BorderLayout());
 
@@ -233,7 +239,7 @@ public class ConfiguracionView extends AbstractView {
 
         jTabbedPane1.addTab("Generales", jPanelGenerales);
 
-        jPanelImpresion.setLayout(new javax.swing.BoxLayout(jPanelImpresion, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelImpresion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanelGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder("Generales"));
         jPanelGeneral.setLayout(new javax.swing.BoxLayout(jPanelGeneral, javax.swing.BoxLayout.PAGE_AXIS));
@@ -273,7 +279,7 @@ public class ConfiguracionView extends AbstractView {
 
         jPanelGeneral.add(jPanelCaracterSeparador1);
 
-        jPanelImpresion.add(jPanelGeneral);
+        jPanelImpresion.add(jPanelGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 409, -1));
 
         jPanelTickets.setBorder(javax.swing.BorderFactory.createTitledBorder("Tickets"));
         jPanelTickets.setLayout(new javax.swing.BoxLayout(jPanelTickets, javax.swing.BoxLayout.PAGE_AXIS));
@@ -315,7 +321,13 @@ public class ConfiguracionView extends AbstractView {
 
         jPanelTickets.add(jPanelTamannoPapel);
 
-        jPanelImpresion.add(jPanelTickets);
+        jPanelImpresion.add(jPanelTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 152, 409, -1));
+
+        jPanelImpresionConfig.setBorder(javax.swing.BorderFactory.createTitledBorder("Impresoras"));
+        jPanelImpresionConfig.setMaximumSize(new java.awt.Dimension(32779, 500));
+        jPanelImpresionConfig.setMinimumSize(new java.awt.Dimension(399, 126));
+        jPanelImpresionConfig.setLayout(new java.awt.BorderLayout());
+        jPanelImpresion.add(jPanelImpresionConfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 278, 400, 270));
 
         jTabbedPane1.addTab("Impresion", jPanelImpresion);
 
@@ -363,6 +375,7 @@ public class ConfiguracionView extends AbstractView {
         jTabbedPane1.addTab("Sincronizacion", jPanelSincronizacion);
 
         getContentPane().add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(filler1, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
@@ -429,6 +442,7 @@ public class ConfiguracionView extends AbstractView {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonAplicar;
     private javax.swing.JButton jButtonCancelar;
@@ -480,6 +494,7 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JPanel jPanelGenerales;
     private javax.swing.JPanel jPanelImpresion;
+    private javax.swing.JPanel jPanelImpresionConfig;
     private javax.swing.JPanel jPanelNegocio;
     private javax.swing.JPanel jPanelNegocio1;
     private javax.swing.JPanel jPanelPorcientoEstimado;
