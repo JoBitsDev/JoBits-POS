@@ -43,6 +43,8 @@ import com.jobits.pos.persistencia.volatil.InsumoPedidoModel;
 import com.jobits.pos.persistencia.volatil.TransaccionSimple;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.formatter.AlmacenFormatter;
+import com.jobits.pos.servicios.impresion.formatter.StockBalanceFormatter;
 import com.jobits.pos.ui.utils.utils;
 
 /**
@@ -108,7 +110,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
 
     public void imprimirResumenAlmacen(Almacen a) {
         Impresion i = new Impresion();
-        i.printResumenAlmacen(a);
+        i.print(new AlmacenFormatter(a), null);
 
     }
 
@@ -167,24 +169,24 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      * @param importe
      * @param causaRebaja
      */
-    public void crearTransaccion(Operacion o,InsumoAlmacen ins, int tipo, Cocina destino, Almacen destinoTraspaso, float cantidad, float importe, String causaRebaja, boolean showSuccesDialog) {
+    public void crearTransaccion(Operacion o, InsumoAlmacen ins, int tipo, Cocina destino, Almacen destinoTraspaso, float cantidad, float importe, String causaRebaja, boolean showSuccesDialog) {
         TransaccionDetailController controller = new TransaccionDetailController();
         controller.setView(getView());
         getModel().startTransaction();
         switch (tipo) {
             case 0:
                 if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " por " + importe + R.COIN_SUFFIX)) {
-                    controller.addTransaccionEntrada(o,ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, importe);
+                    controller.addTransaccionEntrada(o, ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, importe);
                 }
                 break;
             case 1:
                 if (showConfirmDialog(getView(), "Desea dar salida a " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " hacia " + destino)) {
-                    controller.addTransaccionSalida(o,ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad);
+                    controller.addTransaccionSalida(o, ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad);
                 }
                 break;
             case 2:
                 if (showConfirmDialog(getView(), "Desea rebajar  " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " debido a " + causaRebaja)) {
-                    controller.addTransaccionRebaja(o,ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, causaRebaja);
+                    controller.addTransaccionRebaja(o, ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), cantidad, causaRebaja);
                 }
                 break;
             case 3:
@@ -192,7 +194,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
                     throw new ValidatingException(getView(), "La cantidad a transferir tiene que ser mayor a la cantidad existente");
                 }
                 if (showConfirmDialog(getView(), "Desea traspasar " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " hacia " + destinoTraspaso)) {
-                    controller.addTransaccionTraspaso(o,ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destinoTraspaso, cantidad);
+                    controller.addTransaccionTraspaso(o, ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destinoTraspaso, cantidad);
                 }
                 break;
             default:
@@ -265,7 +267,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         controller.addTransaccionTransformacion(selected, new Date(), new Date(), items, cantidad, merma, destino);
     }
 
-    public InsumoAlmacen findInsumo(Insumo ins){
+    public InsumoAlmacen findInsumo(Insumo ins) {
         for (InsumoAlmacen i : getInsumoAlmacenList(getInstance())) {
             if (i.getInsumo().getCodInsumo().equals(ins.getCodInsumo())) {
                 return i;
@@ -273,7 +275,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         }
         return null;
     }
-    
+
     //
     //Accesibles por otros controladores
     //
@@ -369,7 +371,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
     }
 
     private void contructTicketAndPrint(Almacen a) {
-        Impresion.getDefaultInstance().printStockBalance(a);
+        Impresion.getDefaultInstance().print(new StockBalanceFormatter(a), null);
     }
 
     private void updateValorTotalAlmacen(Almacen instance) {
@@ -395,13 +397,17 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         for (TransaccionSimple t : transacciones) {
             switch (tipoOperacion) {
                 case ENTRADA:
-                    crearTransaccion(o,t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), t.getMonto(), null,false);break;
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), t.getMonto(), null, false);
+                    break;
                 case REBAJA:
-                    crearTransaccion(o,t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), -1, t.getCausa(),false);break;
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), -1, t.getCausa(), false);
+                    break;
                 case SALIDA:
-                    crearTransaccion(o,t.getInsumo(), tipoOperacion.getNumero(), t.getcDestino(), null, t.getCantidad(), -1, null,false);break;
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), t.getcDestino(), null, t.getCantidad(), -1, null, false);
+                    break;
                 case TRASPASO:
-                    crearTransaccion(o,t.getInsumo(), tipoOperacion.getNumero(), null, t.getaDestino(), t.getCantidad(), -1, null,false);break;
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, t.getaDestino(), t.getCantidad(), -1, null, false);
+                    break;
             }
         }
     }

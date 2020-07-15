@@ -13,8 +13,6 @@ import com.jobits.pos.persistencia.Cocina;
 import com.jobits.pos.recursos.DBConnector;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
-import static com.jobits.pos.servicios.impresion.Impresion.DEFAULT_PRINT_LOCATION;
-import static com.jobits.pos.servicios.impresion.Impresion.TipoImpresion.COCINA;
 import com.jobits.pos.servicios.impresion.ImpresoraUseCase;
 import com.jobits.pos.servicios.impresion.Ticket;
 import com.jobits.pos.ui.utils.LoadingWindow;
