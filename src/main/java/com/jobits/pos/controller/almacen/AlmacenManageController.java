@@ -102,7 +102,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         }
 
     }
-
+ 
     public void modificarStock(Insumo i) {
         InsumoCreateEditController insumoController = new InsumoCreateEditController(i, getView());
         getView().updateView();
