@@ -24,6 +24,7 @@ import com.jobits.pos.persistencia.modelos.AbstractModel;
 import com.jobits.pos.persistencia.modelos.AsistenciaPersonalDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.formatter.ComprobantePagoFormatter;
 import com.jobits.pos.ui.utils.utils;
 
 /**
@@ -80,7 +81,7 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
         Personal personal = objectAtSelectedRow.getP();
         if (showConfirmDialog(getView(), "Desea imprimir un comprobante de pago a" + personal)) {
             Impresion i = Impresion.getDefaultInstance();
-            i.printComprobantePago(personal);
+            i.print(new ComprobantePagoFormatter(personal), null);
         }
         if (showConfirmDialog(getView(), "Confirme el pago a " + personal.getDatosPersonales().getNombre() + " " + personal.getDatosPersonales().getApellidos())) {
             PersonalCreateEditController controller = new PersonalCreateEditController(personal);
@@ -92,7 +93,7 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
     public void imprimirEstadisticas(List<AsistenciaPersonalEstadisticas> items) {
         for (AsistenciaPersonalEstadisticas i : items) {
             if (i.isUse()) {
-                Impresion.getDefaultInstance().printComprobantePago(i);
+                Impresion.getDefaultInstance().print(new ComprobantePagoFormatter(i.getP()), null);
             }
         }
     }
