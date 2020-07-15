@@ -22,6 +22,7 @@ import com.jobits.pos.persistencia.modelos.AbstractModel;
 import com.jobits.pos.persistencia.modelos.TransaccionDAO;
 import com.jobits.pos.persistencia.modelos.TransaccionEntradaDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
+import com.jobits.pos.servicios.impresion.formatter.ComprobanteTransaccionFormatter;
 
 /**
  * FirstDream
@@ -78,7 +79,7 @@ public class TransaccionesListController extends AbstractListController<Transacc
     public void imprimirTransaccionesSeleccionadas(List<Transaccion> selectedsObjects) {
         if (!selectedsObjects.isEmpty()) {
         Impresion i = new Impresion();
-        i.printComprobanteTransaccion(selectedsObjects);
+        i.print(new ComprobanteTransaccionFormatter(selectedsObjects), null);
         }
     }
     
