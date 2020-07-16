@@ -32,7 +32,7 @@ public class DBConnector {
 
     private static List<EntityManagerFactoryCache> cachedEmf = new ArrayList<>();
 
-    private DBConnector(UbicacionConexionModel connectionProperties) {
+    public DBConnector(UbicacionConexionModel connectionProperties) {
         if (connectionProperties.equals(R.CURRENT_CONNECTION)) {
             return;
         }

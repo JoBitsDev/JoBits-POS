@@ -20,6 +20,7 @@ import com.jobits.pos.controller.seccion.SeccionListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.logs.RestManagerHandler;
+import com.jobits.pos.persistencia.Cocina;
 import com.jobits.pos.persistencia.Configuracion;
 import com.jobits.pos.persistencia.IpvRegistro;
 import com.jobits.pos.persistencia.IpvRegistroPK;
@@ -45,6 +46,11 @@ import com.jobits.pos.persistencia.modelos.SeccionDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.Ticket;
+import com.jobits.pos.servicios.impresion.formatter.AbstractTicketFormatter;
+import com.jobits.pos.servicios.impresion.formatter.CancelacionCocinaFormatter;
+import com.jobits.pos.servicios.impresion.formatter.OrdenFormatter;
+import com.jobits.pos.servicios.impresion.formatter.CocinaFormatter;
 import com.jobits.pos.ui.utils.utils;
 
 /**
@@ -60,6 +66,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     private View v;
     private OrdenDetailFragmentView view;
     private IPVController ipvController = new IPVController();
+    protected final String SYNC = "Sale con: ";
 
     public OrdenController(Venta fecha) {
         super(OrdenDAO.getInstance());
@@ -153,8 +160,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public void enviarACocina() {
         if (autorize()) {
-            Impresion i = new Impresion();
-            instance = i.printKitchen(instance);
+            instance = printKitchen(instance);
             RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINE, instance);
             update(instance);
             showSuccessDialog(getView(), "Productos enviados a cocina exitosamente");
@@ -163,7 +169,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public void imprimirPreTicket() {
         Impresion i = new Impresion();
-        i.print(instance, true);
+        i.print(new OrdenFormatter(instance, true), instance.getMesacodMesa().getAreacodArea().getNombre());
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIR_TICKET_PARCIAL, Level.FINE, instance);
     }
 
@@ -208,7 +214,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 if (enviar) {
                     if (showConfirmDialog(getView(), "Desea imprimir un ticket de la orden")) {
 
-                        i.print(instance, false);
+                        i.print(new OrdenFormatter(instance, false), instance.getMesacodMesa().getAreacodArea().getNombre());
                         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIRTICKET, Level.FINE, instance);
                     }
                     instance.setHoraTerminada(new Date());
@@ -230,7 +236,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
 
     public void updatePorciento(float f) {
         instance.setPorciento(f);
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, instance,f);
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, instance, f);
         view.updateValorTotal();
         update(instance);
     }
@@ -240,8 +246,8 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             int index = instance.getProductovOrdenList().indexOf(objectAtSelectedRow);
             float cantidadBorrada = instance.getProductovOrdenList().get(index).getCantidad();
             instance.getProductovOrdenList().get(index).setCantidad(0);
-            Impresion i = new Impresion();
-            i.printCancelationTicket(instance);
+            //Impresion i = new Impresion();
+            printCancelationTicket(instance);
             if (instance.getDeLaCasa()) {
                 ipvController.devolverPorLaCasa(objectAtSelectedRow, cantidadBorrada);
             } else {
@@ -285,7 +291,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
 
         }
-        instance.setOrdenvalorMonetario(Impresion.REDONDEO_POR_EXCESO ? utils.redondeoPorExcesoFloat(total * (1 + (instance.getPorciento() / 100))) : utils.setDosLugaresDecimalesFloat(total * (1 + (instance.getPorciento() / 100))));
+        instance.setOrdenvalorMonetario(AbstractTicketFormatter.REDONDEO_POR_EXCESO ? utils.redondeoPorExcesoFloat(total * (1 + (instance.getPorciento() / 100))) : utils.setDosLugaresDecimalesFloat(total * (1 + (instance.getPorciento() / 100))));
         update(instance, true);
         return instance.getOrdenvalorMonetario();
     }
@@ -433,8 +439,8 @@ public class OrdenController extends AbstractFragmentController<Orden> {
                 return;
             }
             instance.getProductovOrdenList().get(index).setCantidad(difer - diferencia);
-            Impresion i = new Impresion();
-            i.printCancelationTicket(instance);
+            //Impresion i = new Impresion();
+            printCancelationTicket(instance);
             if (instance.getDeLaCasa()) {
                 ipvController.devolverPorLaCasa(selected, diferencia);
             } else {
@@ -478,5 +484,81 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         } else {
             ipvController.devolverPorLaCasa(instance.getProductovOrdenList());
         }
+    }
+
+    public void addRapidoProducto(String idProducto) {
+        ProductoVenta productoABuscar = ProductoVentaDAO.getInstance().find(idProducto);
+        if (productoABuscar != null) {
+            addProduct(productoABuscar);
+        }
+    }
+
+    private Orden printKitchen(Orden o) {
+        printCancelationTicket(o);
+
+        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
+        for (ProductovOrden x : o.getProductovOrdenList()) {
+            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
+                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
+            }
+        }
+        if (cocinasExistentesEnLaOrden.size() > 1) {
+            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
+                String sync = SYNC;
+                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
+                    if (i == j) {
+                        continue;
+                    }
+                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
+                }
+                Impresion impresion = new Impresion();
+                impresion.print(new CocinaFormatter(o, cocinasExistentesEnLaOrden.get(i), sync), cocinasExistentesEnLaOrden.get(i).getNombreCocina());
+                //printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+            }
+        } else {
+            if (cocinasExistentesEnLaOrden.size() > 0) {
+                Impresion impresion = new Impresion();
+                impresion.print(new CocinaFormatter(o, cocinasExistentesEnLaOrden.get(0), ""), cocinasExistentesEnLaOrden.get(0).getNombreCocina());
+                //printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+            }
+        }
+
+        return o;
+
+    }
+
+    private Orden printCancelationTicket(Orden o) {
+
+        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
+        for (ProductovOrden x : o.getProductovOrdenList()) {
+            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
+                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
+            }
+        }
+        if (cocinasExistentesEnLaOrden.size() > 1) {
+            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
+                String sync = SYNC;
+                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
+                    if (i == j) {
+                        continue;
+                    }
+                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
+                }
+                Impresion impresion = new Impresion();
+                impresion.print(new CancelacionCocinaFormatter(o, cocinasExistentesEnLaOrden.get(i)), cocinasExistentesEnLaOrden.get(i).getNombreCocina());
+
+                //printCancelationKitchen(o, cocinasExistentesEnLaOrden.get(i));
+            }
+        } else {
+            if (cocinasExistentesEnLaOrden.size() > 0) {
+                Impresion impresion = new Impresion();
+                impresion.print(new CancelacionCocinaFormatter(o, cocinasExistentesEnLaOrden.get(0)), cocinasExistentesEnLaOrden.get(0).getNombreCocina());
+
+                //printCancelationKitchen(o, cocinasExistentesEnLaOrden.get(0));
+            }
+
+        }
+
+        return o;
     }
 }

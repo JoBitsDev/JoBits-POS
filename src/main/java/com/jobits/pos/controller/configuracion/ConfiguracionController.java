@@ -24,9 +24,9 @@ import com.jobits.pos.persistencia.Seccion;
 import com.jobits.pos.persistencia.modelos.ConfiguracionDAO;
 import com.jobits.pos.persistencia.modelos.NegocioDAO;
 import com.jobits.pos.persistencia.modelos.SeccionDAO;
-import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.Ticket;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.formatter.AbstractTicketFormatter;
 
 /**
  * FirstDream
@@ -59,16 +59,16 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
         R.CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = c.find(R.SettingID.GENERAL_CONSUMO_CASA_ESTADISTICAS).getValor() == 1;
         Ticket.PAPER_LENGHT = c.find(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL).getValor();
         Ticket.LINE_CHAR = c.find(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR).getValorString().charAt(0);
-        Impresion.SHOW_HEADER = c.find(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE).getValor() == 1;
-        Impresion.PRINT_IN_CENTRAL_KITCHEN = c.find(R.SettingID.IMPRESION_IMPRIMIR_COCINA_CENTRAL).getValor() == 1;
-        Impresion.PRINT_GASTOS_EN_AUTORIZOS = c.find(R.SettingID.IMPRESION_IMPRIMIR_GASTOS_AUTORIZOS).getValor() == 1;
-        Impresion.IMPRIMIR_TICKET_COCINA = c.find(R.SettingID.IMPRESION_IMPRIMIR_TICKET_EN_COCINA).getValor() == 1;
-        Impresion.cantidadCopias = c.find(R.SettingID.IMPRESION_CANTIDAD_COPIAS).getValor();
-        Impresion.REDONDEO_POR_EXCESO = c.find(R.SettingID.IMPRESION_REDONDEO_EXCESO).getValor() == 1;
-        Impresion.SHOW_SUBTOTAL = c.find(R.SettingID.IMPRESION_TICKET_SUBTOTAL).getValor() == 1;
-        Impresion.CABECERA = c.find(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO).getValorString();
-        Impresion.PRINT_SECOND_COIN = c.find(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA).getValor() == 1;
-        Impresion.BUZZER_ON = c.find(R.SettingID.IMPRESION_BUZZER_ON).getValor() == 1;
+        AbstractTicketFormatter.SHOW_HEADER = c.find(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE).getValor() == 1;
+        AbstractTicketFormatter.PRINT_IN_CENTRAL_KITCHEN = c.find(R.SettingID.IMPRESION_IMPRIMIR_COCINA_CENTRAL).getValor() == 1;
+        AbstractTicketFormatter.PRINT_GASTOS_EN_AUTORIZOS = c.find(R.SettingID.IMPRESION_IMPRIMIR_GASTOS_AUTORIZOS).getValor() == 1;
+        AbstractTicketFormatter.IMPRIMIR_TICKET_COCINA = c.find(R.SettingID.IMPRESION_IMPRIMIR_TICKET_EN_COCINA).getValor() == 1;
+        AbstractTicketFormatter.cantidadCopias = c.find(R.SettingID.IMPRESION_CANTIDAD_COPIAS).getValor();
+        AbstractTicketFormatter.REDONDEO_POR_EXCESO = c.find(R.SettingID.IMPRESION_REDONDEO_EXCESO).getValor() == 1;
+        AbstractTicketFormatter.SHOW_SUBTOTAL = c.find(R.SettingID.IMPRESION_TICKET_SUBTOTAL).getValor() == 1;
+        AbstractTicketFormatter.CABECERA = c.find(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO).getValorString();
+        AbstractTicketFormatter.PRINT_SECOND_COIN = c.find(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA).getValor() == 1;
+        AbstractTicketFormatter.BUZZER_ON = c.find(R.SettingID.IMPRESION_BUZZER_ON).getValor() == 1;
     }
 
     public ParametrosConfiguracion cargarConfiguracionY() {

@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.controller.productos;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.productos.ProductoVentaReadOnlyView;
 import java.awt.Dialog;
@@ -15,6 +16,7 @@ import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.AbstractListController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jobits.pos.exceptions.ExceptionHandler;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.persistencia.Carta;
 import com.jobits.pos.persistencia.ProductoVenta;
@@ -23,6 +25,10 @@ import com.jobits.pos.persistencia.modelos.CartaDAO;
 import com.jobits.pos.persistencia.modelos.ProductoVentaDAO;
 import com.jobits.pos.servicios.impresion.ComponentPrinter;
 import com.jobits.pos.recursos.R;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * FirstDream
@@ -129,4 +135,40 @@ public class ProductoVentaListController extends AbstractListController<Producto
         getView().updateView();
     }
 
-}
+    public void exportarToJson(File fileToExport,List list){
+        ObjectMapper om = new ObjectMapper();
+        try {
+            om.writeValue(fileToExport,list);
+        } catch (IOException ex) {
+            ExceptionHandler.showExceptionToUser(ex);
+        }
+    }
+    
+    public void importarFichadeCostoFromJson(File fileToRead){
+        ObjectMapper om = new ObjectMapper();
+        try {
+            List<ProductoVenta> importedList= om.readValue(fileToRead, om.getTypeFactory().constructCollectionLikeType(List.class,ProductoVenta.class));
+           
+            for (ProductoVenta item : getItems()) {
+                for (ProductoVenta importedListItem : importedList ) {
+                    if (item.getNombre().equals(importedListItem.getNombre())){
+                        if (item.getCodigoProducto().equals(importedListItem.getCodigoProducto())){
+                            item.setProductoInsumoList(importedListItem.getProductoInsumoList());  
+                           getModel().edit(item);
+                        }    
+                    }                
+                }    
+            }
+        } catch (IOException ex) {
+            ExceptionHandler.showExceptionToUser(ex);
+        }
+        
+
+
+        }
+        
+        
+        
+    }
+    
+

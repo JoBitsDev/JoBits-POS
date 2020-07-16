@@ -49,7 +49,14 @@ import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.persistencia.control.VentaDAO1;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.formatter.CasaFormatter;
+import com.jobits.pos.servicios.impresion.formatter.PagoPorVentaFormatter;
+import com.jobits.pos.servicios.impresion.formatter.PersonalResumenFormatter;
+import com.jobits.pos.servicios.impresion.formatter.PuntoElaboracionFormatter;
+import com.jobits.pos.servicios.impresion.formatter.ResumenVentaAreaFormatter;
+import com.jobits.pos.servicios.impresion.formatter.VentaZFormatter;
 import com.jobits.pos.ui.utils.utils;
+import javax.swing.JOptionPane;
 
 /**
  * FirstDream
@@ -322,12 +329,12 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         Collections.sort(aux, (o1, o2) -> {
             return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
         });
-        getImpresionInstance().printPersonalResumen(aux, p, getInstance().getFecha());
+        getImpresionInstance().print(new PersonalResumenFormatter(aux, p, getInstance().getFecha()), null);
 
     }
 
     public void printZ() {
-        Impresion.getDefaultInstance().printZ(getInstance());
+        Impresion.getDefaultInstance().print(new VentaZFormatter(getInstance()), null);
     }
 
     public void printCocinaResumen(String codCocina) {
@@ -336,7 +343,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
         Collections.sort(aux, (o1, o2) -> {
             return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
         });
-        getImpresionInstance().printResumenPuntoElab(aux, c, getInstance().getFecha());
+        getImpresionInstance().print(new PuntoElaboracionFormatter(aux, c, getInstance().getFecha()), c.getNombreCocina());
     }
 
     public Float getGastoTotalDeInsumo(IpvRegistro i) {
@@ -386,7 +393,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
     }
 
     public void printGastosCasa() {
-        Impresion.getDefaultInstance().printResumenCasa(VentaDAO1.getResumenVentasCasa(getInstance()), getInstance().getFecha());
+        Impresion.getDefaultInstance().print(new CasaFormatter(VentaDAO1.getResumenVentasCasa(getInstance()), getInstance().getFecha()), null);
     }
 
     public void cerrarOrdenRapido() {
@@ -509,14 +516,29 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     private Impresion getImpresionInstance() {
         Impresion i = Impresion.getDefaultInstance();
-        i.setSHOW_PRICES(showConfirmDialog(
-                getView(), "Presione SI para imprimir los valores,\nNo para imprimir solo las cantidades"));
+
+        int value = JOptionPane.showConfirmDialog(getView(), "Presione SI para imprimir los valores,\nNo para imprimir solo las cantidades",
+                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")));
+
+        switch (value) {
+            case JOptionPane.YES_OPTION:
+                i.setSHOW_PRICES(true);
+                break;
+            case JOptionPane.NO_OPTION:
+                i.setSHOW_PRICES(false);
+                break;
+            case JOptionPane.CLOSED_OPTION:
+                throw new RuntimeException();
+            default:
+                break;
+        }
         return i;
     }
 
     public void printPagoPorVentaPersonal(String user) {
         Impresion i = getImpresionInstance();
-        i.prinPagoPorVenta(getInstance(), user);
+        i.print(new PagoPorVentaFormatter(getInstance(), user), null);
     }
 
     public void mostrarVenta(int turnoVenta) {
@@ -580,7 +602,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> {
 
     public void printAreaResumen(String string) {
         Area a = AreaDAO.getInstance().find(string);
-        Impresion.getDefaultInstance().printResumenVentaArea(VentaDAO1.getResumenVentaPorArea(getInstance(), a), getInstance().getFecha());
+        Impresion.getDefaultInstance().print(new ResumenVentaAreaFormatter(VentaDAO1.getResumenVentaPorArea(getInstance(), a), getInstance().getFecha()), null);
     }
 
     public void setPropina(float value) {

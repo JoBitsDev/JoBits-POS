@@ -35,6 +35,7 @@ import com.jobits.pos.persistencia.IpvVentaRegistro;
 import com.jobits.pos.servicios.impresion.ComponentPrinter;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.formatter.IPVPuntoElaboracionFomatter;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
 import com.jobits.pos.ui.utils.RestManagerListModel;
@@ -406,7 +407,7 @@ public class IpvGestionView extends AbstractView {
                         ? ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getItems()
                         : registroList;
 
-                Impresion.getDefaultInstance().printResumenIPVDePuntoElaboracion(registros);
+                Impresion.getDefaultInstance().print(new IPVPuntoElaboracionFomatter(registros), registros.get(0).getIpv().getCocina().getNombreCocina() );
                 break;//impresion ticket
             default:
                 break;//cancelado
