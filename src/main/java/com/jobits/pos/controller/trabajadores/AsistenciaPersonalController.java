@@ -25,6 +25,7 @@ import com.jobits.pos.persistencia.modelos.PersonalDAO;
 import com.jobits.pos.persistencia.modelos.TipoGastoDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.formatter.PersonalTrabajandoFormatter;
 
 /**
  * FirstDream
@@ -51,7 +52,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     @Override
     public void constructView(Container parent) {
         if (getView() == null) {
-            setView(new AsistenciaTrabajadoresView(this, parent, diaVenta,readOnlyData));
+            setView(new AsistenciaTrabajadoresView(this, parent, diaVenta, readOnlyData));
         }
         getView().updateView();
         getView().setVisible(true);
@@ -102,24 +103,24 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     public void setReadOnlyData(boolean readOnlyData) {
         this.readOnlyData = readOnlyData;
     }
-    
+
     public List<AsistenciaPersonal> updateSalaries() {
         if (!readOnlyData) {
-        ArrayList<AsistenciaPersonal> ret = new ArrayList<>(getPersonalTrabajando(diaVenta));
-        VentaDetailController controller = new VentaDetailController(diaVenta);
-        for (AsistenciaPersonal a : ret) {
-            a.setPago(controller.getPagoTrabajador(a.getPersonal()));
-            a.setPropina(controller.getPropinaTrabajador(a.getPersonal()));
-            update(a, true);
-        }
-        return ret;
+            ArrayList<AsistenciaPersonal> ret = new ArrayList<>(getPersonalTrabajando(diaVenta));
+            VentaDetailController controller = new VentaDetailController(diaVenta);
+            for (AsistenciaPersonal a : ret) {
+                a.setPago(controller.getPagoTrabajador(a.getPersonal()));
+                a.setPropina(controller.getPropinaTrabajador(a.getPersonal()));
+                update(a, true);
+            }
+            return ret;
         }
         return diaVenta.getAsistenciaPersonalList();
-        
+
     }
 
     public void imprimirAsistencia() {
-        Impresion.getDefaultInstance().printPersonalTrabajando(getPersonalTrabajando(diaVenta));
+        Impresion.getDefaultInstance().print(new PersonalTrabajandoFormatter(getPersonalTrabajando(diaVenta)), null);
     }
 
 }
