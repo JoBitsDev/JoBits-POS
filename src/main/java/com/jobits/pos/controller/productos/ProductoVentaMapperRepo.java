@@ -11,10 +11,10 @@ import java.util.List;
  *
  * @author Home
  */
-public interface ProductoVentaService {
-    
-    public String buscarProductoVenta (String idPVBuscar);
-    
-    public boolean guardarIdProductoVenta (List <ProductoVentaMapper> listaProductoVenta);
-    
+public interface ProductoVentaMapperRepo {
+
+    public List<ProductoVentaMapper> cargarProductoVenta();
+
+    public boolean guardarProductoVenta(List<ProductoVentaMapper> listaPVMapper);
+
 }

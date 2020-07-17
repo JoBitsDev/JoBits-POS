@@ -12,11 +12,11 @@ import java.util.List;
  *
  * @author Home
  */
-public class ProductoVentaServiceImpl implements ProductoVentaService {
+public class ProductoVentaMapperServiceImpl implements ProductoVentaMapperService {
 
-    ProductoVentaRepo pvRepository;
+    ProductoVentaMapperRepo pvRepository;
 
-    public ProductoVentaServiceImpl(ProductoVentaRepo pvRepo) {
+    public ProductoVentaMapperServiceImpl(ProductoVentaMapperRepo pvRepo) {
         this.pvRepository = pvRepo;
     }
 

@@ -15,8 +15,8 @@ import java.util.Collections;
 import javax.swing.event.ListSelectionEvent;
 
 import com.jobits.pos.controller.Controller;
-import com.jobits.pos.controller.productos.ProductoVentaRepoImpl;
-import com.jobits.pos.controller.productos.ProductoVentaServiceImpl;
+import com.jobits.pos.controller.productos.ProductoVentaMapperRepoImpl;
+import com.jobits.pos.controller.productos.ProductoVentaMapperServiceImpl;
 import com.jobits.pos.controller.venta.OrdenController;
 
 import com.jobits.pos.persistencia.Orden;
@@ -596,7 +596,7 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
             String idAux = idToSearch;
             idToSearch = "";
 
-            ProductoVentaServiceImpl pvService = new ProductoVentaServiceImpl(new ProductoVentaRepoImpl());
+            ProductoVentaMapperServiceImpl pvService = new ProductoVentaMapperServiceImpl(new ProductoVentaMapperRepoImpl());
             String idProductoVenta = pvService.buscarProductoVenta(idAux);
 
             if (idProductoVenta != null) {
