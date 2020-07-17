@@ -407,7 +407,7 @@ public class IpvGestionView extends AbstractView {
                         ? ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getItems()
                         : registroList;
 
-                Impresion.getDefaultInstance().print(new IPVPuntoElaboracionFomatter(registros), registros.get(0).getIpv().getCocina().getNombreCocina() );
+                Impresion.getDefaultInstance().print(new IPVPuntoElaboracionFomatter(registros), registros.get(0).getIpv().getCocina().getNombreCocina());
                 break;//impresion ticket
             default:
                 break;//cancelado
@@ -662,9 +662,11 @@ public class IpvGestionView extends AbstractView {
                     case 3:
                         return items.get(rowIndex).getDisponible();
                     case 4:
-                        return items.get(rowIndex).getConsumo();
+                        return utils.setDosLugaresDecimalesFloat(
+                                items.get(rowIndex).getConsumo());
                     case 5:
-                        return items.get(rowIndex).getConsumoReal();
+                        return utils.setDosLugaresDecimalesFloat(
+                                items.get(rowIndex).getConsumoReal());
                     case 6:
                         return items.get(rowIndex).getFinalCalculado();
                     case 7:
@@ -763,8 +765,8 @@ public class IpvGestionView extends AbstractView {
         new LongProcessAction("Actualizando") {
             @Override
             protected void longProcessMethod() {
-        updatePanelIPV();
-        updateTableRegistroIpv();
+                updatePanelIPV();
+                updateTableRegistroIpv();
             }
         }.performAction(this);
     }
