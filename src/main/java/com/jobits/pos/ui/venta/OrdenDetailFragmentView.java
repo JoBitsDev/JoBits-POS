@@ -15,6 +15,8 @@ import java.util.Collections;
 import javax.swing.event.ListSelectionEvent;
 
 import com.jobits.pos.controller.Controller;
+import com.jobits.pos.controller.productos.ProductoVentaRepoImpl;
+import com.jobits.pos.controller.productos.ProductoVentaServiceImpl;
 import com.jobits.pos.controller.venta.OrdenController;
 
 import com.jobits.pos.persistencia.Orden;
@@ -581,10 +583,9 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
 
     private void onKeyTyped(KeyEvent e) {
         if (e.isAltDown()) {
-            if(Character.isDigit(e.getKeyChar())){
+            if (Character.isDigit(e.getKeyChar())) {
                 idToSearch += e.getKeyChar();
-            }
-            else{
+            } else {
                 idToSearch = "";
             }
         }
@@ -594,7 +595,13 @@ public class OrdenDetailFragmentView extends AbstractFragmentView<Orden> {
         if (e.getKeyCode() == KeyEvent.VK_ALT) {
             String idAux = idToSearch;
             idToSearch = "";
-            getController().addRapidoProducto("Pl-" + idAux);
+
+            ProductoVentaServiceImpl pvService = new ProductoVentaServiceImpl(new ProductoVentaRepoImpl());
+            String idProductoVenta = pvService.buscarProductoVenta(idAux);
+
+            if (idProductoVenta != null) {
+                getController().addRapidoProducto("Pl-" + idProductoVenta);
+            }
         }
     }
 
