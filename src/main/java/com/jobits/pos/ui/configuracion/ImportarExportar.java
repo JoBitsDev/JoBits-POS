@@ -122,7 +122,7 @@ public class ImportarExportar extends javax.swing.JPanel {
         int response = list.showOpenDialog(jPanel1);
         if (response == JFileChooser.APPROVE_OPTION) {
             prodVentaList.importarFichadeCostoFromJson(list.getSelectedFile());
-            showSuccessDialog(jPanel1, "El archivo se ha exportado con éxito");
+            showSuccessDialog(jPanel1, "El archivo se ha importado con éxito");
         }
 
     }
@@ -132,7 +132,7 @@ public class ImportarExportar extends javax.swing.JPanel {
         int response = list.showSaveDialog(jPanel1);
         if (response == JFileChooser.APPROVE_OPTION) {
             prodVentaList.exportarToJson(list.getSelectedFile(), prodVentaList.getItems());
-            showSuccessDialog(jPanel1, "El archivo se ha importado con éxito");
+            showSuccessDialog(jPanel1, "El archivo se ha exportado con éxito");
         }
 
     }
