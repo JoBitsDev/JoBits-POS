@@ -390,7 +390,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="jLabel5">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Cantidad de copias de impresi&#xf3;n"/>
+                        <Property name="text" type="java.lang.String" value="Cantidad de copias de impresion"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="jComboBoxCantCopias">

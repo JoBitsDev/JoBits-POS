@@ -270,7 +270,7 @@ public class ConfiguracionView extends AbstractView {
 
         jPanelCaracterSeparador1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel5.setText("Cantidad de copias de impresión");
+        jLabel5.setText("Cantidad de copias de impresion");
         jPanelCaracterSeparador1.add(jLabel5);
 
         jComboBoxCantCopias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5" }));
@@ -305,7 +305,7 @@ public class ConfiguracionView extends AbstractView {
         jLabel3.setText("Caracter separador");
         jPanelCaracterSeparador.add(jLabel3);
 
-        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", "ˆ" }));
+        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", "Ë†" }));
         jPanelCaracterSeparador.add(jComboBoxCaracterSeparador);
 
         jPanelTickets.add(jPanelCaracterSeparador);
