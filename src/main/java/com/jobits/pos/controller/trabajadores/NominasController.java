@@ -158,7 +158,7 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
             return utils.setDosLugaresDecimalesFloat(ret / getCantidadDiasTrabajados());
         }
 
-        public float getTotalPago() {
+        public float getTotalSalary() {
             float ret = 0;
             for (AsistenciaPersonal a : asistencia) {
                 if (a.getPago() != null) {
@@ -177,6 +177,20 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
                 }
             }
             return utils.setDosLugaresDecimalesFloat(ret);
+        }
+
+        public float getTotalAMayores() {
+            float ret = 0;
+            for (AsistenciaPersonal a : asistencia) {
+                if (a.getAMayores() != null) {
+                    ret += a.getAMayores();
+                }
+            }
+            return ret;
+        }
+
+        public float getTotalPago() {
+            return getTotalSalary() + getTotalAMayores();
         }
 
         public List<?> getDiasTrabajados() {
