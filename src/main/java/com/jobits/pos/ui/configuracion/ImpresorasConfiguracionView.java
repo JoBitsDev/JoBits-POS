@@ -275,7 +275,7 @@ public class ImpresorasConfiguracionView extends javax.swing.JPanel {
                 Impresora newImpresora = new Impresora(nombreVirtual, nombreSistema, grupos, isDefault);
 
                 if (impresoraService.crear(newImpresora) != null) {
-                    showSuccessDialog(jPanel5, "Se ha agregado la impresora con éxito");
+                    showSuccessDialog(jPanel5, "Se ha agregado la impresora con Ã©xito");
                     tableModel.addObject(newImpresora);
                     jTextNombreImpresora.setText("");
                     jComboBoxImpresorasSistema.setModel(new RestManagerComboBoxModel<>(impresoraService.getNombreImpresorasSistema()));
@@ -295,7 +295,7 @@ public class ImpresorasConfiguracionView extends javax.swing.JPanel {
         if (showConfirmDialog(jPanel5)) {
             if (impresoraService.delete(impresoraToDelete) != null) {
                 tableModel.setItems(impresoraService.findAll());
-                showSuccessDialog(jPanel5, "Se ha eliminado la impresora con éxito");
+                showSuccessDialog(jPanel5, "Se ha eliminado la impresora con Ã©xito");
             }
         }
     }
