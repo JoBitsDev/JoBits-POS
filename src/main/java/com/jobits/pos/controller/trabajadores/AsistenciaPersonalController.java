@@ -119,6 +119,11 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
 
     }
 
+    public void updateAMayores(AsistenciaPersonal personalABuscar,float aMayoresValor) {
+        personalABuscar.setAMayores(aMayoresValor);
+        AsistenciaPersonalDAO.getInstance().edit(personalABuscar);
+    }
+
     public void imprimirAsistencia() {
         Impresion.getDefaultInstance().print(new PersonalTrabajandoFormatter(getPersonalTrabajando(diaVenta)), null);
     }

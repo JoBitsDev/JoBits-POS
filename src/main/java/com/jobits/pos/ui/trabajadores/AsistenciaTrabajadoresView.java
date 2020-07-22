@@ -17,6 +17,9 @@ import com.jobits.pos.persistencia.Personal;
 import com.jobits.pos.persistencia.Venta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,7 +29,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
 
     AbstractCrossReferenePanel<AsistenciaPersonal, Personal> panel;
     Venta v;
-    private boolean  readOnly = false;
+    private boolean readOnly = false;
 
     public AsistenciaTrabajadoresView(Controller controller, Venta v) {
         super(controller);
@@ -35,7 +38,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
         initDefaults();
     }
 
-    public AsistenciaTrabajadoresView(Controller controller, Container parentComponent, Venta v,boolean readOnly) {
+    public AsistenciaTrabajadoresView(Controller controller, Container parentComponent, Venta v, boolean readOnly) {
         super(controller, parentComponent);
         this.v = v;
         this.readOnly = readOnly;
@@ -74,6 +77,13 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
         getController().imprimirAsistencia();
     }//GEN-LAST:event_jButtonImprimirActionPerformed
 
+    private void jButtonAMayoresActionPerformed(ActionEvent evt) {
+        float aMayores = Float.parseFloat(JOptionPane.showInputDialog("Introduzca el valor de A mayores"));
+        AsistenciaPersonal personal = panel.getHandler().getTableModel().getObjectAtSelectedRow();
+        getController().updateAMayores(personal, aMayores);
+        panel.getHandler().getTableModel().setItems(getController().getPersonalTrabajando(v));
+    }
+
     @Override
     public void updateView() {
         panel.getHandler().getTableModel().setItems(getController().updateSalaries());
@@ -87,7 +97,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
                 return new RestManagerAbstractTableModel<AsistenciaPersonal>(getController().getPersonalTrabajando(v), getjTableCrossReference()) {
                     @Override
                     public int getColumnCount() {
-                        return R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 ? 4 : 2;
+                        return R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 ? 5 : 2;
                     }
 
                     @Override
@@ -101,6 +111,8 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
                                 return getItems().get(rowIndex).getPago();
                             case 3:
                                 return getItems().get(rowIndex).getPropina();
+                            case 4:
+                                return getItems().get(rowIndex).getAMayores();
                             default:
                                 return null;
                         }
@@ -117,6 +129,9 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
                                 return "Estimado de pago";
                             case 3:
                                 return "Propina ";
+                            case 4:
+                                return "A Mayores";
+
                             default:
                                 return null;
                         }
@@ -136,6 +151,17 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
             }
 
         };
+
+        jButtonAMayores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAMayoresActionPerformed(evt);
+            }
+        });
+
+//        jButtonAMayores = new JButton();
+        jButtonAMayores.setText("A Mayores");
+        panel.getjPanelOpciones().add(jButtonAMayores);
+
         panel.getjPanelOpciones().add(jButtonImprimir);
         panel.setReadOnlyMode(readOnly);
         jPanelDetail.add(panel);
@@ -146,7 +172,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
         return (AsistenciaPersonalController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 
-
+    private javax.swing.JButton jButtonAMayores = new JButton();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonImprimir;
     private javax.swing.JPanel jPanelDetail;
