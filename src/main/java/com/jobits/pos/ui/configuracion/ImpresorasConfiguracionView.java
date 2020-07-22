@@ -233,11 +233,7 @@ public class ImpresorasConfiguracionView extends javax.swing.JPanel {
                     case 2:
                         return getItems().get(rowIndex).getGrupo();
                     case 3:
-                        if (getItems().get(rowIndex).isPorDefecto()) {
-                            return "X";
-                        } else if (!getItems().get(rowIndex).isPorDefecto()) {
-                            return " ";
-                        }
+                        return getItems().get(rowIndex).isPorDefecto();
                 }
                 return null;
             }
@@ -257,6 +253,12 @@ public class ImpresorasConfiguracionView extends javax.swing.JPanel {
                 }
                 return null;
             }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnIndex == 3 ? Boolean.class : super.getColumnClass(columnIndex);
+            }
+
         };
 
         jTableImpresoras.setModel(tableModel);
