@@ -22,6 +22,7 @@ import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.adapters.repo.impl.TransaccionDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionEntradaDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
+import com.jobits.pos.servicios.impresion.formatter.ComprobanteTransaccionFormatter;
 
 /**
  * FirstDream
@@ -78,7 +79,7 @@ public class TransaccionesListController extends OldAbstractListController<Trans
     public void imprimirTransaccionesSeleccionadas(List<Transaccion> selectedsObjects) {
         if (!selectedsObjects.isEmpty()) {
         Impresion i = new Impresion();
-        i.printComprobanteTransaccion(selectedsObjects);
+        i.print(new ComprobanteTransaccionFormatter(selectedsObjects), null);
         }
     }
     

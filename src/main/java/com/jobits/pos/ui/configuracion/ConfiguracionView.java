@@ -31,6 +31,8 @@ public class ConfiguracionView extends AbstractViewPanel {
 
     public ConfiguracionView(AbstractViewPresenter presenter) {
         super(presenter);
+        jTabbedPane1.add("Importar/Exportar", new ImportarExportar(new ProductoVentaListController()));
+        jTabbedPane1.add("Impresoras", new ImpresorasConfiguracionView(new ImpresoraUseCase(new ImpresoraRepoImpl())));
     }
 
     /**
@@ -101,6 +103,7 @@ public class ConfiguracionView extends AbstractViewPanel {
         jLabel7 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 32767));
 
         jPanelY.setLayout(new java.awt.BorderLayout());
 
@@ -147,6 +150,8 @@ public class ConfiguracionView extends AbstractViewPanel {
         jPanel12.add(jButtonAceptar);
 
         add(jPanel12, java.awt.BorderLayout.PAGE_END);
+
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(463, 550));
 
         jPanelGenerales.setLayout(new javax.swing.BoxLayout(jPanelGenerales, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -230,7 +235,7 @@ public class ConfiguracionView extends AbstractViewPanel {
 
         jPanelCaracterSeparador1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel5.setText("Cantidad de copias de impresión");
+        jLabel5.setText("Cantidad de copias de impresion");
         jPanelCaracterSeparador1.add(jLabel5);
 
         jComboBoxCantCopias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5" }));
@@ -250,15 +255,15 @@ public class ConfiguracionView extends AbstractViewPanel {
         jCheckBoxEncabezadoRestaurante.setToolTipText("");
         jPanel8.add(jCheckBoxEncabezadoRestaurante);
 
+        jPanelTickets.add(jPanel8);
+
         jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jCheckBoxSegundaMoneda.setText("Imprimir total en segunda moneda");
         jCheckBoxSegundaMoneda.setToolTipText("");
         jPanel13.add(jCheckBoxSegundaMoneda);
 
-        jPanel8.add(jPanel13);
-
-        jPanelTickets.add(jPanel8);
+        jPanelTickets.add(jPanel13);
 
         jPanelCaracterSeparador.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
@@ -340,6 +345,7 @@ public class ConfiguracionView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JCheckBox jCheckBoxBuzzer;
     private javax.swing.JCheckBox jCheckBoxEncabezadoRestaurante;

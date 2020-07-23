@@ -692,6 +692,9 @@ public class VentaDAO1 {
         float pagoTotal = 0;
         for (AsistenciaPersonal a : instance.getAsistenciaPersonalList()) {
             pagoTotal += a.getPago();
+            if (a.getAMayores() != null) {
+                pagoTotal += a.getAMayores();
+            }
         }
         return utils.setDosLugaresDecimalesFloat(pagoTotal);
     }

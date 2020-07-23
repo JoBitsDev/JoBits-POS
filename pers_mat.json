@@ -1,0 +1,109 @@
+{
+  "doBeep" : true,
+  "useAntialiasing" : true,
+  "useShadow" : true,
+  "collapse_slow" : true,
+  "colorButtonAdd_Edit" : {
+    "r" : "56",
+    "g" : "142",
+    "b" : "60",
+    "a" : "255"
+  },
+  "colorButtonView" : {
+    "r" : "69",
+    "g" : "90",
+    "b" : "100",
+    "a" : "255"
+  },
+  "colorButtonCancel" : {
+    "r" : "211",
+    "g" : "47",
+    "b" : "47",
+    "a" : "255"
+  },
+  "iconButtonAdd" : {
+    "ch" : "57669",
+    "size" : "24.0"
+  },
+  "iconButtonEdit" : {
+    "ch" : "58313",
+    "size" : "24.0"
+  },
+  "iconButtonView" : {
+    "ch" : "59632",
+    "size" : "24.0"
+  },
+  "colorMoneyPositive" : {
+    "r" : "0",
+    "g" : "64",
+    "b" : "2",
+    "a" : "255"
+  },
+  "colorMoneyNegative" : {
+    "r" : "213",
+    "g" : "0",
+    "b" : "0",
+    "a" : "255"
+  },
+  "colorAccent" : {
+    "r" : "41",
+    "g" : "121",
+    "b" : "255",
+    "a" : "255"
+  },
+  "colorWrong" : {
+    "r" : "198",
+    "g" : "40",
+    "b" : "40",
+    "a" : "255"
+  },
+  "colorBackgroundPanel" : {
+    "r" : "255",
+    "g" : "255",
+    "b" : "255",
+    "a" : "255"
+  },
+  "colorForegroundForDark" : {
+    "r" : "255",
+    "g" : "255",
+    "b" : "255",
+    "a" : "255"
+  },
+  "colorForegroundForWhite" : {
+    "r" : "0",
+    "g" : "0",
+    "b" : "0",
+    "a" : "222"
+  },
+  "colorPrincipal" : {
+    "r" : "68",
+    "g" : "138",
+    "b" : "255",
+    "a" : "255"
+  },
+  "colorSecundary" : {
+    "r" : "13",
+    "g" : "71",
+    "b" : "161",
+    "a" : "255"
+  },
+  "secondsActive" : 3,
+  "colorDone" : {
+    "r" : "56",
+    "g" : "142",
+    "b" : "60",
+    "a" : "255"
+  },
+  "colorError" : {
+    "r" : "213",
+    "g" : "0",
+    "b" : "0",
+    "a" : "255"
+  },
+  "colorInfo" : {
+    "r" : "25",
+    "g" : "118",
+    "b" : "210",
+    "a" : "255"
+  }
+}

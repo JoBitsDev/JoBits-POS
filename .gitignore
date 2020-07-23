@@ -92,6 +92,12 @@ dist_ver/
 
 ubicaciones.json
 
+impresoras.json
+
+*.key
+
+lombok.config
+
 lib/pers_mat.json
 
 pers_mat.json

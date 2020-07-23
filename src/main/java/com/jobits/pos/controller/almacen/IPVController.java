@@ -111,7 +111,14 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     }
 
     public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha) {
-        return IpvRegistroDAO.getInstance().getIpvRegistroList(cocina, fecha);
+        
+        List<IpvRegistro> lista = IpvRegistroDAO.getInstance().getIpvRegistroList(cocina, fecha);
+        VentaDetailController controller = new VentaDetailController(fecha);
+        for (IpvRegistro i : lista) {
+            i.setConsumo(controller.getGastoTotalDeInsumo(i));
+            updateInstance(i);
+        }
+        return lista;
     }
 
     public List<IpvVentaRegistro> getIpvRegistroVentaList(Cocina cocina, Date fecha) {
@@ -518,6 +525,11 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
         if (instance.getInicio() == null) {
             instance.setInicio((float) 0);
         }
+        if (instance.getDisponible() == null) {
+            instance.setDisponible((float) 0);
+        }else{
+            instance.setDisponible(instance.getInicio()+ instance.getEntrada());
+        }
         if (instance.getConsumo() == null) {
             instance.setConsumo((float) 0);
         }
@@ -526,12 +538,13 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
         }
         if (instance.getFinalCalculado() == null) {
             instance.setFinalCalculado((float) 0);
+        }else{
+            instance.setFinalCalculado(instance.getDisponible()-instance.getConsumo());
         }
         if (instance.getFinalAjustado() == null) {
             instance.setFinalAjustado((float) 0);
-        }
-        if (instance.getDisponible() == null) {
-            instance.setDisponible((float) 0);
+        }else{
+            instance.setFinalAjustado(instance.getDisponible() - instance.getConsumoReal());
         }
         IpvRegistroDAO.getInstance().startTransaction();
         IpvRegistroDAO.getInstance().edit(instance);

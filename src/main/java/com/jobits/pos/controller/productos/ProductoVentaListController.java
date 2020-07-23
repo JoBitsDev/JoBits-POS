@@ -19,6 +19,10 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * FirstDream
@@ -106,4 +110,40 @@ public class ProductoVentaListController extends OldAbstractListController<Produ
 //TODO fire change
     }
 
-}
+    public void exportarToJson(File fileToExport,List list){
+        ObjectMapper om = new ObjectMapper();
+        try {
+            om.writeValue(fileToExport,list);
+        } catch (IOException ex) {
+            ExceptionHandler.showExceptionToUser(ex);
+        }
+    }
+    
+    public void importarFichadeCostoFromJson(File fileToRead){
+        ObjectMapper om = new ObjectMapper();
+        try {
+            List<ProductoVenta> importedList= om.readValue(fileToRead, om.getTypeFactory().constructCollectionLikeType(List.class,ProductoVenta.class));
+           
+            for (ProductoVenta item : getItems()) {
+                for (ProductoVenta importedListItem : importedList ) {
+                    if (item.getNombre().equals(importedListItem.getNombre())){
+                        if (item.getCodigoProducto().equals(importedListItem.getCodigoProducto())){
+                            item.setProductoInsumoList(importedListItem.getProductoInsumoList());  
+                           getModel().edit(item);
+                        }    
+                    }                
+                }    
+            }
+        } catch (IOException ex) {
+            ExceptionHandler.showExceptionToUser(ex);
+        }
+        
+
+
+        }
+        
+        
+        
+    }
+    
+

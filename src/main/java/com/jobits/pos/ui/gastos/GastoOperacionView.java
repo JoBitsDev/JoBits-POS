@@ -20,6 +20,7 @@ import com.jobits.pos.domain.models.GastoVenta;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.R.TipoGasto;
+import com.jobits.pos.servicios.impresion.formatter.GastosFormatter;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.utils;
 
@@ -251,7 +252,7 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
 
     private void jButtonImprimirGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirGastosActionPerformed
         Impresion i = new Impresion();
-         i.printResumenGastos(getController().getLista()); // TODO add your handling code here:
+        i.print(new GastosFormatter(getController().getLista()), null);// TODO add your handling code here:
     }//GEN-LAST:event_jButtonImprimirGastosActionPerformed
 
     private void jButtonCrearEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearEActionPerformed
@@ -269,7 +270,7 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
     }//GEN-LAST:event_jSpinnerMontoStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    getController().removeGasto(((RestManagerAbstractTableModel<GastoVenta>)jTableInfo.getModel()).getObjectAtSelectedRow());        // TODO add your handling code here:
+        getController().removeGasto(((RestManagerAbstractTableModel<GastoVenta>) jTableInfo.getModel()).getObjectAtSelectedRow());        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextAreaDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaDescripcionKeyTyped
@@ -277,9 +278,9 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
         String s = jTextAreaDescripcion.getText();
         int l = s.length();
         jLabelleft.setText(String.valueOf(max - l));
-            if (l >= max) {
-                evt.consume();
-            }
+        if (l >= max) {
+            evt.consume();
+        }
     }//GEN-LAST:event_jTextAreaDescripcionKeyTyped
 
 
@@ -351,7 +352,6 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
         jLabelGast.setText(utils.setDosLugaresDecimales(utils.calcularSumaTabla(jTableInfo, 2)));
         jComboBoxCategoria.setModel(new DefaultComboBoxModel<>(R.TipoGasto.values()));
         jLabelMonto.setText(R.COIN_SUFFIX);
-     
 
     }
 
@@ -377,15 +377,14 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
 
     private void crear() {
         if (validarDatos()) {
-                getController().createNewGasto((R.TipoGasto) jComboBoxCategoria.getSelectedItem(),
-                        jTextFieldTipo.getText(), (float) jSpinnerMonto.getValue(), jTextAreaDescripcion.getText());
+            getController().createNewGasto((R.TipoGasto) jComboBoxCategoria.getSelectedItem(),
+                    jTextFieldTipo.getText(), (float) jSpinnerMonto.getValue(), jTextAreaDescripcion.getText());
             limpiarPanelCrear();
         } else {
             throw new ValidatingException(this);
         }
     }
 
-  
     private boolean validarDatos() {
         return !(jComboBoxCategoria.getSelectedIndex() == 0 || jTextFieldTipo.getText().isEmpty());
 
