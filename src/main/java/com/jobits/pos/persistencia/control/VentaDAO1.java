@@ -599,6 +599,9 @@ public class VentaDAO1 {
         float pagoTotal = 0;
         for (AsistenciaPersonal a : instance.getAsistenciaPersonalList()) {
             pagoTotal += a.getPago();
+            if (a.getAMayores() != null) {
+                pagoTotal += a.getAMayores();
+            }
         }
         return utils.setDosLugaresDecimalesFloat(pagoTotal);
     }
@@ -612,9 +615,9 @@ public class VentaDAO1 {
         }
         return utils.setDosLugaresDecimalesFloat(ret);
     }
-    
+
     public static float getValorTotalPorcientoVenta(Venta v) {
-        return getValorTotalVentas(v)-getValorTotalVentasNeta(v);
+        return getValorTotalVentas(v) - getValorTotalVentasNeta(v);
     }
 
     //******************************************************************************************************************
@@ -622,7 +625,6 @@ public class VentaDAO1 {
     // ********************************Metodos privados de la clase **************************************************
     //******************************************************************************************************************
     //******************************************************************************************************************
-    
     /**
      * agrega a un arreglo de ProductosvOrdenes una nueva orden
      *
@@ -717,7 +719,5 @@ public class VentaDAO1 {
         }
 
     }
-
-    
 
 }
