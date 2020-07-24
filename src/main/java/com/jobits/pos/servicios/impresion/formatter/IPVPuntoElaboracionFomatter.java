@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.servicios.impresion.formatter;
 
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.IpvRegistro;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.IpvRegistro;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Ticket;
 import java.util.Collections;

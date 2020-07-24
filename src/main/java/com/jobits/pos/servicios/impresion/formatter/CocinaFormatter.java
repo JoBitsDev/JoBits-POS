@@ -6,10 +6,10 @@
 package com.jobits.pos.servicios.impresion.formatter;
 
 import com.jobits.pos.logs.RestManagerHandler;
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.Orden;
-import com.jobits.pos.persistencia.ProductovOrden;
-import com.jobits.pos.persistencia.modelos.ProductovOrdenDAO;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.domain.models.ProductovOrden;
+import com.jobits.pos.adapters.repo.impl.ProductovOrdenDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.Ticket;
 import java.util.ArrayList;

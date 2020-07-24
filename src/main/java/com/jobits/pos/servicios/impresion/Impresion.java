@@ -1,5 +1,6 @@
 package com.jobits.pos.servicios.impresion;
 
+import com.jobits.pos.adapters.repo.impl.ConfiguracionDAO;
 import java.util.ArrayList;
 
 import javax.print.Doc;
@@ -11,7 +12,6 @@ import javax.print.event.PrintJobListener;
 
 import javax.swing.JOptionPane;
 import com.jobits.pos.exceptions.ExceptionHandler;
-import com.jobits.pos.persistencia.modelos.ConfiguracionDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.AbstractTicketFormatter;
 import com.jobits.pos.servicios.impresion.formatter.PrintFormatter;
@@ -39,6 +39,11 @@ public class Impresion {
     //
     //Getters And Setters
     //
+
+    /**
+     *
+     * @return
+     */
     public static EstadoImpresion getEstadoImpresion() {
         return estadoImpresion;
     }

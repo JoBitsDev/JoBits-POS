@@ -26,6 +26,7 @@ import com.jobits.pos.adapters.repo.impl.SeccionDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.Ticket;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.formatter.AbstractTicketFormatter;
 import com.jobits.pos.ui.OldView;
 import java.util.logging.Level;
 import java.util.logging.Logger;

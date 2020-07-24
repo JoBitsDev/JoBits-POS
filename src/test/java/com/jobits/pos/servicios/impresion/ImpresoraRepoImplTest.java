@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.servicios.impresion;
 
-import com.jobits.pos.persistencia.volatil.Impresora;
+import com.jobits.pos.domain.models.volatil.Impresora;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;

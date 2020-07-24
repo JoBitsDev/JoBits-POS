@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.servicios.impresion.formatter;
 
-import com.jobits.pos.persistencia.GastoVenta;
+import com.jobits.pos.domain.models.GastoVenta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Ticket;
 import java.util.Collections;

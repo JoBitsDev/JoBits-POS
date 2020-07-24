@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.servicios.impresion;
 
-import com.jobits.pos.persistencia.volatil.Impresora;
+import com.jobits.pos.domain.models.volatil.Impresora;
 import java.util.List;
 import javax.print.Doc;
 import javax.print.PrintException;

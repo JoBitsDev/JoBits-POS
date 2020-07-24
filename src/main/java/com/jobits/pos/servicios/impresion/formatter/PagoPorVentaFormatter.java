@@ -5,12 +5,12 @@
  */
 package com.jobits.pos.servicios.impresion.formatter;
 
-import com.jobits.pos.persistencia.Orden;
-import com.jobits.pos.persistencia.Personal;
-import com.jobits.pos.persistencia.ProductovOrden;
-import com.jobits.pos.persistencia.Venta;
-import com.jobits.pos.persistencia.control.VentaDAO1;
-import com.jobits.pos.persistencia.modelos.PersonalDAO;
+import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
+import com.jobits.pos.domain.VentaDAO1;
+import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.domain.models.ProductovOrden;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Ticket;
 import com.jobits.pos.ui.utils.utils;

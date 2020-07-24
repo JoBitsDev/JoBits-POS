@@ -5,9 +5,9 @@
  */
 package com.jobits.pos.servicios.impresion.formatter;
 
-import com.jobits.pos.persistencia.IpvRegistro;
-import com.jobits.pos.persistencia.Orden;
-import com.jobits.pos.persistencia.ProductovOrden;
+import com.jobits.pos.domain.models.IpvRegistro;
+import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.Ticket;

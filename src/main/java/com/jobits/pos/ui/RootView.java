@@ -199,7 +199,7 @@ public class RootView extends JPanel {
                 throw new IllegalArgumentException("Bad call on OrdenView when there is none displayed view");
             }
             if (v instanceof VentaDetailView) {
-                ((VentaDetailView) v).addOrdenView((OrdenDetailFragmentView) ViewFacade.getView(OrdenDetailFragmentView.VIEW_NAME, presenter));
+               // ((VentaDetailView) v).addOrdenView((OrdenDetailFragmentView) ViewFacade.getView(OrdenDetailFragmentView.VIEW_NAME, presenter));
                 return;
             }
             throw new IllegalStateException("Bad call to ordenView when  " + v.getClass().getName() + " is active");

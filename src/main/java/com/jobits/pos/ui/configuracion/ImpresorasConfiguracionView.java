@@ -9,7 +9,7 @@
  */
 package com.jobits.pos.ui.configuracion;
 
-import com.jobits.pos.persistencia.volatil.Impresora;
+import com.jobits.pos.domain.models.volatil.Impresora;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.ImpresoraService;
 import com.jobits.pos.servicios.impresion.ImpresoraUseCase;
@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  */
 public class ImpresorasConfiguracionView extends javax.swing.JPanel {
 
-    ImpresoraUseCase impresoraService;
+    ImpresoraService impresoraService;
 
     private RestManagerAbstractTableModel<Impresora> tableModel;
 
@@ -36,7 +36,7 @@ public class ImpresorasConfiguracionView extends javax.swing.JPanel {
      * Creates new form Impresion
      *
      */
-    public ImpresorasConfiguracionView(ImpresoraUseCase impresoraService) {
+    public ImpresorasConfiguracionView(ImpresoraService impresoraService) {
         initComponents();
         this.impresoraService = impresoraService;
         uiInit();

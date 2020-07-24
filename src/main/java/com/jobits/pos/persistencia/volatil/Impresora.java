@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.persistencia.volatil;
+package com.jobits.pos.domain.models.volatil;
 
 import java.util.Objects;
 import javax.print.Doc;

@@ -23,11 +23,9 @@ import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.ui.utils.CalcularCambioView;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
-import com.jobits.pos.ui.venta.VentaDetailView;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
-import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,26 +33,28 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JDialog;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.LongProcessMethod;
+import com.jobits.pos.servicios.impresion.formatter.CasaFormatter;
+import com.jobits.pos.servicios.impresion.formatter.PagoPorVentaFormatter;
+import com.jobits.pos.servicios.impresion.formatter.PersonalResumenFormatter;
+import com.jobits.pos.servicios.impresion.formatter.PuntoElaboracionFormatter;
+import com.jobits.pos.servicios.impresion.formatter.ResumenVentaAreaFormatter;
+import com.jobits.pos.servicios.impresion.formatter.VentaZFormatter;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaAreaTablaModel;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
+import javax.swing.JOptionPane;
 
 /**
  * FirstDream
@@ -62,7 +62,7 @@ import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
  * @author Jorge
  *
  */
-public class VentaDetailController extends AbstractDetailController<Venta> implements VentaDetailService{
+public class VentaDetailController extends AbstractDetailController<Venta> implements VentaDetailService {
 
     Date fechaFin = null;
     private OrdenController ordController;
@@ -135,6 +135,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         }
     }
 
+    @Override
     public void createNewOrden() {
         boolean nil = ordController == null;
         Orden newOrden;
@@ -302,6 +303,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         return CocinaDAO.getInstance().findAll();
     }
 
+    /**
+     *
+     * @param p
+     */
+    @Override
     public void printPersonalResumenRow(Personal p) {
         List<ProductovOrden> aux = VentaDAO1.getResumenVentasCamarero(getInstance(), p);
         Collections.sort(aux, (o1, o2) -> {
@@ -311,6 +317,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
 
     }
 
+    @Override
     public void printZ() {
         Impresion.getDefaultInstance().print(new VentaZFormatter(getInstance()), null);
     }
@@ -385,6 +392,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
 
     }
 
+    @Override
     public String getTotalVendidoNeto() {
         return utils.setDosLugaresDecimales(VentaDAO1.getValorTotalVentasNeta(getInstance()));
     }
@@ -514,9 +522,14 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         return i;
     }
 
+    /**
+     *
+     * @param user
+     */
+    @Override
     public void printPagoPorVentaPersonal(Personal user) {
         Impresion i = getImpresionInstance();
-        i.print(new PagoPorVentaFormatter(getInstance(), user), null);
+        i.print(new PagoPorVentaFormatter(getInstance(), user.getUsuario()), null);
     }
 
     public void mostrarVenta(int turnoVenta) {
@@ -578,9 +591,10 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         return AreaDAO.getInstance().findAll();
     }
 
-    public void printAreaResumen(String string) {
-        Area a = AreaDAO.getInstance().find(string);
-        Impresion.getDefaultInstance().print(new ResumenVentaAreaFormatter(VentaDAO1.getResumenVentaPorArea(getInstance(), a), getInstance().getFecha()), null);
+    @Override
+    public void printAreaResumen(Area a) {
+        Impresion.getDefaultInstance().print(new ResumenVentaAreaFormatter(
+                VentaDAO1.getResumenVentaPorAreaOld(getInstance(), a), getInstance().getFecha()), null);
     }
 
     public void setPropina(float value) {
@@ -609,6 +623,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         return utils.setDosLugaresDecimalesFloat(ret);
     }
 
+    @Override
     public void reabrirVentas() {
         if (new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ECONOMICO)) {
             Calendar limitTime = Calendar.getInstance();

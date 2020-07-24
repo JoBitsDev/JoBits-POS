@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.servicios.impresion.formatter;
 
-import com.jobits.pos.persistencia.AsistenciaPersonal;
-import com.jobits.pos.persistencia.Personal;
+import com.jobits.pos.domain.models.AsistenciaPersonal;
+import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Ticket;
 import com.jobits.pos.ui.utils.utils;

@@ -6,22 +6,16 @@
 package com.jobits.pos.servicios.impresion;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jobits.pos.persistencia.Area;
-import com.jobits.pos.persistencia.Cocina;
-import com.jobits.pos.persistencia.modelos.AreaDAO;
-import com.jobits.pos.persistencia.modelos.CocinaDAO;
-import com.jobits.pos.persistencia.volatil.Impresora;
-import com.jobits.pos.persistencia.volatil.UbicacionConexionModel;
-import com.jobits.pos.persistencia.volatil.UbicacionWrapper;
+import com.jobits.pos.adapters.repo.impl.AreaDAO;
+import com.jobits.pos.adapters.repo.impl.CocinaDAO;
+import com.jobits.pos.domain.models.Area;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.volatil.Impresora;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.print.Doc;
-import javax.print.DocPrintJob;
 import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;

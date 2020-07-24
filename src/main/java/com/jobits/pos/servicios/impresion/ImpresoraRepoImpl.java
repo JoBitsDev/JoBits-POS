@@ -7,7 +7,7 @@ package com.jobits.pos.servicios.impresion;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jobits.pos.exceptions.ExceptionHandler;
-import com.jobits.pos.persistencia.volatil.Impresora;
+import com.jobits.pos.domain.models.volatil.Impresora;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

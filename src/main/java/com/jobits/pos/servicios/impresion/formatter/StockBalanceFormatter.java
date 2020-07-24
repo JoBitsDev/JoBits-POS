@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.servicios.impresion.formatter;
 
-import com.jobits.pos.persistencia.Almacen;
-import com.jobits.pos.persistencia.InsumoAlmacen;
+import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.servicios.impresion.Ticket;
 import com.jobits.pos.ui.utils.utils;
 import java.util.ArrayList;

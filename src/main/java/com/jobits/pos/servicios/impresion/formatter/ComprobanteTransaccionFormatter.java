@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.servicios.impresion.formatter;
 
-import com.jobits.pos.persistencia.Transaccion;
+import com.jobits.pos.domain.models.Transaccion;
 import com.jobits.pos.servicios.impresion.Ticket;
 import java.util.Collections;
 import java.util.Date;

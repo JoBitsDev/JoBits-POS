@@ -43,6 +43,7 @@ import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
 import com.jobits.pos.adapters.repo.impl.ProductovOrdenDAO;
 import com.jobits.pos.adapters.repo.impl.SeccionDAO;
 import com.jobits.pos.domain.models.Area;
+import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.servicios.impresion.Impresion;
 
 import com.jobits.pos.recursos.R;
@@ -229,7 +230,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
     public void setPorciento(float f) {
         instance.setPorciento(f);
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, instance, f);
-        view.updateValorTotal();
+        //view.updateValorTotal();
         update(instance);
     }
 
@@ -282,7 +283,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
             total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
 
         }
-        instance.setOrdenvalorMonetario(Impresion.REDONDEO_POR_EXCESO
+        instance.setOrdenvalorMonetario(AbstractTicketFormatter.REDONDEO_POR_EXCESO
                 ? utils.redondeoPorExcesoFloat(total * (1 + (instance.getPorciento() / 100)))
                 : utils.setDosLugaresDecimalesFloat(total * (1 + (instance.getPorciento() / 100))));
         update(instance, true);
