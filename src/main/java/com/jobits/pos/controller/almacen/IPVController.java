@@ -114,7 +114,14 @@ public class IPVController extends AbstractDialogController<Ipv> {
     }
 
     public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha) {
-        return IpvRegistroDAO.getInstance().getIpvRegistroList(cocina, fecha);
+        
+        List<IpvRegistro> lista = IpvRegistroDAO.getInstance().getIpvRegistroList(cocina, fecha);
+        VentaDetailController controller = new VentaDetailController(fecha);
+        for (IpvRegistro i : lista) {
+            i.setConsumo(controller.getGastoTotalDeInsumo(i));
+            updateInstance(i);
+        }
+        return lista;
     }
 
     public List<IpvVentaRegistro> getIpvRegistroVentaList(Cocina cocina, Date fecha) {

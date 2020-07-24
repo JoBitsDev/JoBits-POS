@@ -55,7 +55,7 @@ public class ComprobantePagoFormatter extends AbstractTicketFormatter {
         t.addLineSeperator();
         t.newLine();
 
-        float total = 0, propina = 0;
+        float total = 0, propina = 0, aMayores = 0, salario = 0;
         for (AsistenciaPersonal a : lista) {
             if (a.getVenta().getFecha().compareTo(personal.getUltimodiaPago()) >= 0) {
                 if (a.getVenta().getVentaTotal() != null) {
@@ -71,15 +71,19 @@ public class ComprobantePagoFormatter extends AbstractTicketFormatter {
                         }
                     }
                     propina += a.getPropina();
-                    total += a.getPago();
+                    salario += a.getPago();
+                    aMayores += a.getAMayores();
                 }
             }
         }
+        total = aMayores + salario;
         t.addLineSeperator();
         t.alignRight();
         if (propina > 0) {
             t.setText("Total Propina: " + utils.setDosLugaresDecimales(propina));
         }
+        t.newLine();
+        t.setText("'Total A Mayores: " + utils.setDosLugaresDecimales(aMayores));
         t.newLine();
         t.setText("'Total a Pagar: " + utils.setDosLugaresDecimales(total));
         t.newLine();

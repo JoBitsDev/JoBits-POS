@@ -106,7 +106,7 @@ public class LogInView extends javax.swing.JFrame implements View {
         getContentPane().add(jPanel2, java.awt.BorderLayout.NORTH);
 
         jPanelCenter.setBackground(new java.awt.Color(0, 153, 153));
-        jPanelCenter.setBorder(javax.swing.BorderFactory.createTitledBorder("Inicio Sesión"));
+        jPanelCenter.setBorder(javax.swing.BorderFactory.createTitledBorder("Inicio Sesion"));
         jPanelCenter.setMaximumSize(new java.awt.Dimension(417, 146));
         jPanelCenter.setLayout(new javax.swing.BoxLayout(jPanelCenter, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -129,7 +129,7 @@ public class LogInView extends javax.swing.JFrame implements View {
         jideLabel2.setText(bundle.getString("label_contrasena")); // NOI18N
         jPanelPass.add(jideLabel2);
 
-        jPasswordField.setToolTipText("Contraseña");
+        jPasswordField.setToolTipText("ContraseÃ±a");
         jPasswordField.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         jPasswordField.setMinimumSize(new java.awt.Dimension(200, 26));
         jPasswordField.setPreferredSize(new java.awt.Dimension(300, 22));

@@ -92,6 +92,7 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
         jLabelAcumulado = new javax.swing.JLabel();
         jLabelMedia = new javax.swing.JLabel();
         jLabelPropina = new javax.swing.JLabel();
+        jLabelAMayores = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -275,8 +276,13 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
 
         jLabelPropina.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabelPropina.setText("           --               ");
-        jLabelPropina.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 153), 3), "Propina"));
+        jLabelPropina.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 0), 3), "Propina"));
         jPanelEstadisticaGeneral.add(jLabelPropina);
+
+        jLabelAMayores.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabelAMayores.setText("           --               ");
+        jLabelAMayores.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 153), 3), "A Mayores"));
+        jPanelEstadisticaGeneral.add(jLabelAMayores);
 
         jPanelData.add(jPanelEstadisticaGeneral, java.awt.BorderLayout.PAGE_START);
 
@@ -323,11 +329,11 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
 
     private void jButtonPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPagarActionPerformed
         if (model != null) {
-        for (NominasController.AsistenciaPersonalEstadisticas i : model.getItems()) {
-            if (i.isUse()) {
-                getController().pagar(i);
+            for (NominasController.AsistenciaPersonalEstadisticas i : model.getItems()) {
+                if (i.isUse()) {
+                    getController().pagar(i);
+                }
             }
-        }
         }
     }//GEN-LAST:event_jButtonPagarActionPerformed
 
@@ -461,6 +467,7 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
     private com.toedter.calendar.JDateChooser jDateChooserDel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelAMayores;
     private javax.swing.JLabel jLabelAcumulado;
     private javax.swing.JLabel jLabelMedia;
     private javax.swing.JLabel jLabelPropina;
@@ -495,14 +502,15 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
 
         chartPie.getStyler().setAnnotationType(PieStyler.AnnotationType.Percentage);
 
-        float acumulado = 0, propina = 0;
+        float acumulado = 0, propina = 0, aMayores = 0;
 
         for (NominasController.AsistenciaPersonalEstadisticas a : displayList) {
             String label = a.getP().getUsuario() + "(" + a.getCantidadDiasTrabajados() + " Dias) ( " + utils.setDosLugaresDecimales(a.getTotalPago()) + ")";
             XYSeries serie = chart.addSeries(label, a.getDiasTrabajados(), a.getMontos());
-            chartPie.addSeries(label, a.getTotalPago());
-            acumulado += a.getTotalPago();
+            chartPie.addSeries(label, a.getTotalSalary());
+            acumulado += a.getTotalSalary();
             propina += a.getTotalPropina();
+            aMayores += a.getTotalAMayores();
 
         }
 
@@ -524,6 +532,7 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
         jLabelPropina.setText(utils.setDosLugaresDecimales(propina));
         jLabelMedia.setText(utils.setDosLugaresDecimales(acumulado / displayList.size()));
         pack();
+        jLabelAMayores.setText(utils.setDosLugaresDecimales(aMayores));
     }
 
     private void seleccionarTodos(boolean selected) {

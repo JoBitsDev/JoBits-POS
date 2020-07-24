@@ -37,10 +37,9 @@ public class ConfiguracionView extends AbstractView {
         super(DialogType.INPUT, controller, owner);
         initComponents();
         fetchComponentData();
-        
+
         jTabbedPane1.add("Importar/Exportar", new ImportarExportar(new ProductoVentaListController()));
-        
-        jPanelImpresionConfig.add(new ImpresionConfiguracionView(new ImpresoraUseCase(new ImpresoraRepoImpl())));
+        jTabbedPane1.add("Impresoras", new ImpresorasConfiguracionView(new ImpresoraUseCase(new ImpresoraRepoImpl())));
     }
 
     /**
@@ -103,7 +102,6 @@ public class ConfiguracionView extends AbstractView {
         jPanelTamannoPapel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jComboBoxTamannoTicket = new javax.swing.JComboBox<>();
-        jPanelImpresionConfig = new javax.swing.JPanel();
         jPanelSincronizacion = new javax.swing.JPanel();
         jPanelNegocio1 = new javax.swing.JPanel();
         jPanel24HR1 = new javax.swing.JPanel();
@@ -115,7 +113,7 @@ public class ConfiguracionView extends AbstractView {
         jLabel7 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 32767));
 
         jPanelY.setLayout(new java.awt.BorderLayout());
 
@@ -180,6 +178,8 @@ public class ConfiguracionView extends AbstractView {
 
         getContentPane().add(jPanel12, java.awt.BorderLayout.PAGE_END);
 
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(463, 550));
+
         jPanelGenerales.setLayout(new javax.swing.BoxLayout(jPanelGenerales, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelNegocio.setBorder(javax.swing.BorderFactory.createTitledBorder("Negocio"));
@@ -239,7 +239,7 @@ public class ConfiguracionView extends AbstractView {
 
         jTabbedPane1.addTab("Generales", jPanelGenerales);
 
-        jPanelImpresion.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelImpresion.setLayout(new javax.swing.BoxLayout(jPanelImpresion, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder("Generales"));
         jPanelGeneral.setLayout(new javax.swing.BoxLayout(jPanelGeneral, javax.swing.BoxLayout.PAGE_AXIS));
@@ -270,7 +270,7 @@ public class ConfiguracionView extends AbstractView {
 
         jPanelCaracterSeparador1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel5.setText("Cantidad de copias de impresión");
+        jLabel5.setText("Cantidad de copias de impresion");
         jPanelCaracterSeparador1.add(jLabel5);
 
         jComboBoxCantCopias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5" }));
@@ -279,7 +279,7 @@ public class ConfiguracionView extends AbstractView {
 
         jPanelGeneral.add(jPanelCaracterSeparador1);
 
-        jPanelImpresion.add(jPanelGeneral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 409, -1));
+        jPanelImpresion.add(jPanelGeneral);
 
         jPanelTickets.setBorder(javax.swing.BorderFactory.createTitledBorder("Tickets"));
         jPanelTickets.setLayout(new javax.swing.BoxLayout(jPanelTickets, javax.swing.BoxLayout.PAGE_AXIS));
@@ -290,22 +290,22 @@ public class ConfiguracionView extends AbstractView {
         jCheckBoxEncabezadoRestaurante.setToolTipText("");
         jPanel8.add(jCheckBoxEncabezadoRestaurante);
 
+        jPanelTickets.add(jPanel8);
+
         jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jCheckBoxSegundaMoneda.setText("Imprimir total en segunda moneda");
         jCheckBoxSegundaMoneda.setToolTipText("");
         jPanel13.add(jCheckBoxSegundaMoneda);
 
-        jPanel8.add(jPanel13);
-
-        jPanelTickets.add(jPanel8);
+        jPanelTickets.add(jPanel13);
 
         jPanelCaracterSeparador.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel3.setText("Caracter separador");
         jPanelCaracterSeparador.add(jLabel3);
 
-        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", "ˆ" }));
+        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", "Ë†" }));
         jPanelCaracterSeparador.add(jComboBoxCaracterSeparador);
 
         jPanelTickets.add(jPanelCaracterSeparador);
@@ -321,13 +321,7 @@ public class ConfiguracionView extends AbstractView {
 
         jPanelTickets.add(jPanelTamannoPapel);
 
-        jPanelImpresion.add(jPanelTickets, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 152, 409, -1));
-
-        jPanelImpresionConfig.setBorder(javax.swing.BorderFactory.createTitledBorder("Impresoras"));
-        jPanelImpresionConfig.setMaximumSize(new java.awt.Dimension(32779, 500));
-        jPanelImpresionConfig.setMinimumSize(new java.awt.Dimension(399, 126));
-        jPanelImpresionConfig.setLayout(new java.awt.BorderLayout());
-        jPanelImpresion.add(jPanelImpresionConfig, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 278, 400, 270));
+        jPanelImpresion.add(jPanelTickets);
 
         jTabbedPane1.addTab("Impresion", jPanelImpresion);
 
@@ -393,10 +387,7 @@ public class ConfiguracionView extends AbstractView {
     private void jButtonAplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAplicarActionPerformed
         validateData();        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAplicarActionPerformed
-    
-    
-    
-    
+
     @Override
     public void fetchComponentData() {
         UbicacionConexionController ubicacionController = new UbicacionConexionController();
@@ -494,7 +485,6 @@ public class ConfiguracionView extends AbstractView {
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JPanel jPanelGenerales;
     private javax.swing.JPanel jPanelImpresion;
-    private javax.swing.JPanel jPanelImpresionConfig;
     private javax.swing.JPanel jPanelNegocio;
     private javax.swing.JPanel jPanelNegocio1;
     private javax.swing.JPanel jPanelPorcientoEstimado;
