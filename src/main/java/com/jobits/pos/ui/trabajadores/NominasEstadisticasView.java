@@ -174,7 +174,7 @@ public class NominasEstadisticasView extends AbstractDetailView<AsistenciaPerson
 
         jLabelUltimoPago.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabelUltimoPago.setText("--/--/--  ");
-        jLabelUltimoPago.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 0), 3), "Último Pago"));
+        jLabelUltimoPago.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 0), 3), "Ãšltimo Pago"));
         jPanelDetalles.add(jLabelUltimoPago, java.awt.BorderLayout.WEST);
 
         jPanelChoice.setBorder(javax.swing.BorderFactory.createTitledBorder("Visualizar como"));
