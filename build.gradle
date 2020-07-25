@@ -62,11 +62,13 @@ dependencies {
     // https://mvnrepository.com/artifact/com.jidesoft/jide-oss
     compile group: 'com.jidesoft', name: 'jide-oss', version: '3.6.18'
 
+  //  implementation fileTree(dir: 'lib',include: '*.jar')
+
     implementation project(':UIcomponents')
     implementation project(':core')
     implementation project(':autenticacion')
+    implementation project(':Material')
 
-    implementation fileTree(dir: 'lib',include: '*.jar')
 
     
 }

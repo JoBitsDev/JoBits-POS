@@ -10,6 +10,7 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.domain.UbicacionConexionModel.TipoUbicacion;
 import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 
 import static com.jobits.pos.ui.login.presenter.UbicacionViewModel.*;
@@ -18,7 +19,6 @@ import com.jobits.ui.components.MaterialComponentsFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
-import util.materials.MaterialColors;
 
 /**
  *
@@ -52,7 +52,7 @@ public class UbicacionView extends AbstractViewPanel {
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("","Usuario");
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-        jPasswordFielContrasena = MaterialComponentsFactory.Input.getPasswordField("","ContraseÃ±a");
+        jPasswordFielContrasena = MaterialComponentsFactory.Input.getPasswordField("","Contraseña");
         filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jTextFieldDriver = MaterialComponentsFactory.Input.getTextField("","Driver");
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
@@ -65,7 +65,7 @@ public class UbicacionView extends AbstractViewPanel {
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
         add(filler2);
 
-        jPanel1.setBackground(MaterialColors.BLUEGREY_100);
+        jPanel1.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         jPanel1.setMaximumSize(new java.awt.Dimension(400, 500));
         jPanel1.setMinimumSize(new java.awt.Dimension(400, 400));
@@ -81,7 +81,6 @@ public class UbicacionView extends AbstractViewPanel {
         jTextFieldNombre.setMaximumSize(new java.awt.Dimension(2147483647, 60));
         jTextFieldNombre.setMinimumSize(new java.awt.Dimension(10, 30));
         jTextFieldNombre.setPreferredSize(new java.awt.Dimension(10, 60));
-        jTextFieldNombre.setSize(new java.awt.Dimension(0, 60));
         jPanel1.add(jTextFieldNombre);
         jPanel1.add(filler3);
 
@@ -89,7 +88,6 @@ public class UbicacionView extends AbstractViewPanel {
         jTextFieldUrl.setMaximumSize(new java.awt.Dimension(2147483647, 60));
         jTextFieldUrl.setMinimumSize(new java.awt.Dimension(10, 16));
         jTextFieldUrl.setPreferredSize(new java.awt.Dimension(0, 60));
-        jTextFieldUrl.setSize(new java.awt.Dimension(0, 60));
         jPanel1.add(jTextFieldUrl);
         jPanel1.add(filler4);
 

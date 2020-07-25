@@ -42,6 +42,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
 import com.jobits.pos.ui.utils.utils;
+import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Frame;
 
 /**
@@ -229,7 +230,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         };
 
         jXLabelValorTotal.setText(utils.setDosLugaresDecimales(getController().getInstance().getValorMonetario()));
-        jTabbedPane1.setUI(new ui.componentsui.tabbedpane.MaterialTabbedPaneUI());
+        jTabbedPane1.setUI(MaterialComponentsFactory.UI.getTabbedPaneUI());
     }
 
     @Override

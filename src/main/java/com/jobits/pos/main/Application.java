@@ -14,6 +14,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.LongProcessActionService;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
+import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
 import java.util.Locale;
 import java.util.logging.Level;
@@ -21,7 +22,6 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import ui.MaterialLookAndFeel;
 
 /**
  *
@@ -92,7 +92,7 @@ public class Application {
 
     private void setApplicationLooks() {
         try {
-            UIManager.setLookAndFeel(new MaterialLookAndFeel());
+            UIManager.setLookAndFeel(MaterialComponentsFactory.UI.getLooks());
         } catch (UnsupportedLookAndFeelException ex) {
             Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
         }

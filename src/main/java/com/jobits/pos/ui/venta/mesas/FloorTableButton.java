@@ -17,7 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import util.materials.MaterialIcons;
 
 /**
  *
@@ -36,9 +35,9 @@ public class FloorTableButton extends JPanel {
     private final Color COLOR_OCUPADA = Color.YELLOW;
     private final Color COLOR_OCUPADA_PERSONAL = Color.RED;
     private final Icon 
-            ICONO_VACIA = MaterialIcons.ADD_CIRCLE_OUTLINE.deriveIconTTF(40f),
-            ICONO_OCUPADA = MaterialIcons.BLOCK.deriveIconTTF(40f),
-            ICONO_OCUPADA_PERSONAL = MaterialIcons.DETAILS.deriveIconTTF(40f);
+            ICONO_VACIA =null,// MaterialIcons.ADD_CIRCLE_OUTLINE.deriveIconTTF(40f),
+            ICONO_OCUPADA = null,//MaterialIcons.BLOCK.deriveIconTTF(40f),
+            ICONO_OCUPADA_PERSONAL = null;//MaterialIcons.DETAILS.deriveIconTTF(40f);
 
     public FloorTableButton(Mesa m) {
         super();

@@ -23,6 +23,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Arrays;
 import javax.swing.JComboBox;
+import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  *
@@ -57,7 +58,7 @@ public class ConfiguracionView extends AbstractViewPanel {
         jPanelExcluir = new javax.swing.JPanel();
         jPanelBebidas = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
-        jButtonAceptar = new javax.swing.JButton();
+        jButtonAceptar = MaterialComponentsFactory.Buttons.getAcceptButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelGenerales = new javax.swing.JPanel();
         jPanelNegocio = new javax.swing.JPanel();
@@ -158,7 +159,7 @@ public class ConfiguracionView extends AbstractViewPanel {
 
         jPanelGenerales.setLayout(new javax.swing.BoxLayout(jPanelGenerales, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanelNegocio.setBorder(javax.swing.BorderFactory.createTitledBorder("Negocio"));
+        jPanelNegocio.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Negocio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
         jPanelNegocio.setLayout(new java.awt.GridLayout(3, 1, 0, 3));
 
         jPanel24HR.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -273,7 +274,7 @@ public class ConfiguracionView extends AbstractViewPanel {
         jLabel3.setText("Caracter separador");
         jPanelCaracterSeparador.add(jLabel3);
 
-        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", "Ë†" }));
+        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", "ˆ" }));
         jPanelCaracterSeparador.add(jComboBoxCaracterSeparador);
 
         jPanelTickets.add(jPanelCaracterSeparador);
@@ -341,6 +342,7 @@ public class ConfiguracionView extends AbstractViewPanel {
         jTabbedPane1.addTab("Sincronizacion", jPanelSincronizacion);
 
         add(jTabbedPane1, java.awt.BorderLayout.PAGE_START);
+        add(filler1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed

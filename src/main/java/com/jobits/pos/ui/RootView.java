@@ -16,7 +16,6 @@ import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import components.containers.MaterialPanel;
-import components.dashboards.smoot.PanelDual;
 import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Map;

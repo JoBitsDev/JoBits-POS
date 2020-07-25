@@ -2,11 +2,19 @@
   "doBeep" : true,
   "useAntialiasing" : true,
   "useShadow" : true,
-  "collapse_slow" : true,
-  "colorButtonAdd_Edit" : {
+  "useAnimations" : true,
+  "useAnimationsNotifications" : true,
+  "double_delete_check" : false,
+  "colorButtonAdd" : {
     "r" : "56",
     "g" : "142",
     "b" : "60",
+    "a" : "255"
+  },
+  "colorButtonEdit" : {
+    "r" : "21",
+    "g" : "101",
+    "b" : "192",
     "a" : "255"
   },
   "colorButtonView" : {
@@ -104,6 +112,12 @@
     "r" : "25",
     "g" : "118",
     "b" : "210",
+    "a" : "255"
+  },
+  "colorWarning" : {
+    "r" : "255",
+    "g" : "214",
+    "b" : "0",
     "a" : "255"
   }
 }
