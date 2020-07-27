@@ -25,6 +25,7 @@ import com.jobits.pos.domain.models.ProductoInsumoPK;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
+import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  *
@@ -58,7 +59,6 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         updateTable(getInstance().getInsumoDerivadoList());
         updateComboBoxes();
         updatePanelInputs();
-
     }
 
     @Override
@@ -67,6 +67,9 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     }
 
     private void updateTable(List<InsumoElaborado> items) {
+        jToggleButtonElaborado.setEnabled(false);
+        jSpinnerCantidadCreada.setEnabled(false);
+
         tableIngElab = new OldAbstractCrossReferenePanel<InsumoElaborado, Insumo>("Ingredientes", getController().getItems()) {
             @Override
             public RestManagerAbstractTableModel<InsumoElaborado> getTableModel() {
@@ -252,7 +255,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         jSpinnerEstimacionStock.setValue(instance.getStockEstimation());
         jComboBoxUM.setSelectedItem(R.UM.valueOf(instance.getUm()));
         if (instance.getElaborado()) {
-            jCheckBoxElaborado.setSelected(true);
+            jToggleButtonElaborado.setSelected(true);
             jPanelCrossReference.setEnabled(true);
             jSpinnerCantidadCreada.setValue(instance.getCantidadCreada());
         }
@@ -274,122 +277,144 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jXPanelInputs = new org.jdesktop.swingx.JXPanel();
-        jXLabelNombre = new org.jdesktop.swingx.JXLabel();
+        jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelInputs = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jLabelNombre = MaterialComponentsFactory.Displayers.getLabel();
         jTextFieldNombre = new GUI.Components.JTextField();
-        jXLabelUM = new org.jdesktop.swingx.JXLabel();
-        jComboBoxUM = new javax.swing.JComboBox<>();
-        jXLabelCostoU = new org.jdesktop.swingx.JXLabel();
+        jLabelUM = MaterialComponentsFactory.Displayers.getLabel();
+        jComboBoxUM = MaterialComponentsFactory.Displayers.getComboBox();
+        jLabelCostoU = MaterialComponentsFactory.Displayers.getLabel();
         jSpinnerCosto = new javax.swing.JSpinner();
-        jXLabelNombre4 = new org.jdesktop.swingx.JXLabel();
+        jLabelNombre4 = MaterialComponentsFactory.Displayers.getLabel();
         jSpinnerEstimacionStock = new javax.swing.JSpinner();
-        jXPanelTabla = new org.jdesktop.swingx.JXPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jCheckBoxElaborado = new javax.swing.JCheckBox();
-        jXLabelNombreCantCreada = new org.jdesktop.swingx.JXLabel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
+        jPanelTabla = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jLabelNombreCantCreada = MaterialComponentsFactory.Displayers.getLabel();
         jSpinnerCantidadCreada = new JSpinner();
-        jXLabelNombreCosto = new org.jdesktop.swingx.JXLabel();
-        jXLabelNombreValorCosto = new org.jdesktop.swingx.JXLabel();
-        jLayeredPane1 = new javax.swing.JLayeredPane();
-        jPanelCrossReference = new javax.swing.JPanel();
-        jPanelIngElab = new javax.swing.JPanel();
-        jXPanelControles = new org.jdesktop.swingx.JXPanel();
+        jLabelNombreCosto = MaterialComponentsFactory.Displayers.getLabel();
+        jLabelNombreValorCosto = MaterialComponentsFactory.Displayers.getLabel();
         jToggleButtonCrossReference = new javax.swing.JToggleButton();
-        jButtonCancelar = new javax.swing.JButton();
-        jButtonAdd = new javax.swing.JButton();
+        jToggleButtonElaborado = new javax.swing.JToggleButton();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jPanelCrossReference = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelIngElab = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelControles = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAdd = MaterialComponentsFactory.Buttons.getAcceptButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         setTitle(bundle.getString("label_crear_insumo")); // NOI18N
-        setMinimumSize(new java.awt.Dimension(590, 242));
+        setBackground(new java.awt.Color(0, 0, 0));
+        setMinimumSize(new java.awt.Dimension(590, 400));
         setUndecorated(true);
-        getContentPane().setLayout(new java.awt.BorderLayout(0, 5));
 
-        jXPanelInputs.setBackground(new java.awt.Color(204, 204, 204));
-        jXPanelInputs.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
-        jXPanelInputs.setForeground(new java.awt.Color(204, 255, 255));
-        jXPanelInputs.setLayout(new java.awt.GridLayout(4, 2, 5, 5));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nuevo Insumo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
+        jPanel2.setPreferredSize(new java.awt.Dimension(502, 900));
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jXLabelNombre.setText(bundle.getString("label_nombre")); // NOI18N
-        jXPanelInputs.add(jXLabelNombre);
+        jPanelInputs.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelInputs.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
+        jPanelInputs.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelInputs.setLayout(new java.awt.GridLayout(4, 2, 150, 10));
 
+        jLabelNombre.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelNombre.setText(bundle.getString("label_nombre")); // NOI18N
+        jLabelNombre.setMinimumSize(new java.awt.Dimension(24, 20));
+        jLabelNombre.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelInputs.add(jLabelNombre);
+
+        jTextFieldNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jTextFieldNombre.setBorder(null);
         jTextFieldNombre.setMaximumSize(new java.awt.Dimension(120, 16));
-        jTextFieldNombre.setMinimumSize(new java.awt.Dimension(120, 16));
-        jXPanelInputs.add(jTextFieldNombre);
+        jTextFieldNombre.setMinimumSize(new java.awt.Dimension(24, 20));
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelInputs.add(jTextFieldNombre);
 
-        jXLabelUM.setText(bundle.getString("label_um")); // NOI18N
-        jXPanelInputs.add(jXLabelUM);
+        jLabelUM.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelUM.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelUM.setText(bundle.getString("label_um")); // NOI18N
+        jLabelUM.setMinimumSize(new java.awt.Dimension(24, 20));
+        jLabelUM.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelInputs.add(jLabelUM);
 
-        jXPanelInputs.add(jComboBoxUM);
+        jComboBoxUM.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jComboBoxUM.setMinimumSize(new java.awt.Dimension(24, 20));
+        jComboBoxUM.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelInputs.add(jComboBoxUM);
 
-        jXLabelCostoU.setText(bundle.getString("label_costo_unidad")); // NOI18N
-        jXPanelInputs.add(jXLabelCostoU);
+        jLabelCostoU.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelCostoU.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelCostoU.setText(bundle.getString("label_costo_unidad")); // NOI18N
+        jLabelCostoU.setMinimumSize(new java.awt.Dimension(24, 20));
+        jLabelCostoU.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelInputs.add(jLabelCostoU);
 
+        jSpinnerCosto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jSpinnerCosto.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
-        jXPanelInputs.add(jSpinnerCosto);
+        jSpinnerCosto.setMinimumSize(new java.awt.Dimension(24, 20));
+        jSpinnerCosto.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelInputs.add(jSpinnerCosto);
 
-        jXLabelNombre4.setText(bundle.getString("label_est_stock")); // NOI18N
-        jXPanelInputs.add(jXLabelNombre4);
+        jLabelNombre4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNombre4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelNombre4.setText(bundle.getString("label_est_stock")); // NOI18N
+        jLabelNombre4.setMinimumSize(new java.awt.Dimension(24, 20));
+        jLabelNombre4.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelInputs.add(jLabelNombre4);
 
+        jSpinnerEstimacionStock.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jSpinnerEstimacionStock.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
-        jXPanelInputs.add(jSpinnerEstimacionStock);
+        jSpinnerEstimacionStock.setMinimumSize(new java.awt.Dimension(24, 20));
+        jSpinnerEstimacionStock.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelInputs.add(jSpinnerEstimacionStock);
 
-        getContentPane().add(jXPanelInputs, java.awt.BorderLayout.PAGE_START);
+        jPanel2.add(jPanelInputs, java.awt.BorderLayout.NORTH);
+        jPanel2.add(filler1, java.awt.BorderLayout.LINE_END);
 
-        jXPanelTabla.setLayout(new java.awt.BorderLayout());
+        jPanelTabla.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelTabla.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanelTabla.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelTabla.setPreferredSize(new java.awt.Dimension(456, 2));
+        jPanelTabla.setLayout(new java.awt.BorderLayout());
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 1, 20));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setMinimumSize(new java.awt.Dimension(454, 0));
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
+        jPanel1.setLayout(new java.awt.GridLayout(3, 2, 150, 10));
 
-        jCheckBoxElaborado.setText(bundle.getString("label_derivados")); // NOI18N
-        jCheckBoxElaborado.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBoxElaboradoStateChanged(evt);
-            }
-        });
-        jCheckBoxElaborado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxElaboradoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jCheckBoxElaborado);
+        jLabelNombreCantCreada.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelNombreCantCreada.setText(bundle.getString("label_cantidad_creada")); // NOI18N
+        jLabelNombreCantCreada.setMinimumSize(new java.awt.Dimension(24, 20));
+        jLabelNombreCantCreada.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanel1.add(jLabelNombreCantCreada);
 
-        jXLabelNombreCantCreada.setText(bundle.getString("label_cantidad_creada")); // NOI18N
-        jPanel1.add(jXLabelNombreCantCreada);
-
+        jSpinnerCantidadCreada.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jSpinnerCantidadCreada.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
-        jSpinnerCantidadCreada.setPreferredSize(new java.awt.Dimension(150, 26));
+        jSpinnerCantidadCreada.setMinimumSize(new java.awt.Dimension(24, 20));
+        jSpinnerCantidadCreada.setPreferredSize(new java.awt.Dimension(0, 26));
         jPanel1.add(jSpinnerCantidadCreada);
 
-        jXLabelNombreCosto.setText(bundle.getString("label_costo")); // NOI18N
-        jPanel1.add(jXLabelNombreCosto);
+        jLabelNombreCosto.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelNombreCosto.setText(bundle.getString("label_costo")); // NOI18N
+        jLabelNombreCosto.setMinimumSize(new java.awt.Dimension(24, 20));
+        jLabelNombreCosto.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanel1.add(jLabelNombreCosto);
 
-        jXLabelNombreValorCosto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jXLabelNombreValorCosto.setText(bundle.getString("label_lista_ingredientes")); // NOI18N
-        jPanel1.add(jXLabelNombreValorCosto);
+        jLabelNombreValorCosto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jLabelNombreValorCosto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelNombreValorCosto.setText(bundle.getString("label_lista_ingredientes")); // NOI18N
+        jLabelNombreValorCosto.setMinimumSize(new java.awt.Dimension(24, 20));
+        jLabelNombreValorCosto.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanel1.add(jLabelNombreValorCosto);
 
-        jXPanelTabla.add(jPanel1, java.awt.BorderLayout.PAGE_START);
-
-        jLayeredPane1.setPreferredSize(new java.awt.Dimension(454, 404));
-        jLayeredPane1.setLayout(new javax.swing.OverlayLayout(jLayeredPane1));
-
-        jPanelCrossReference.setMinimumSize(new java.awt.Dimension(454, 0));
-        jPanelCrossReference.setPreferredSize(new java.awt.Dimension(454, 40));
-        jPanelCrossReference.setLayout(new java.awt.BorderLayout());
-        jLayeredPane1.add(jPanelCrossReference);
-
-        jPanelIngElab.setLayout(new java.awt.BorderLayout());
-        jLayeredPane1.add(jPanelIngElab);
-
-        jXPanelTabla.add(jLayeredPane1, java.awt.BorderLayout.CENTER);
-
-        getContentPane().add(jXPanelTabla, java.awt.BorderLayout.CENTER);
-
-        jXPanelControles.setBackground(new java.awt.Color(204, 204, 204));
-        jXPanelControles.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
-
-        jToggleButtonCrossReference.setText("Mostrar el uso");
+        jToggleButtonCrossReference.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jToggleButtonCrossReference.setText("Usos");
+        jToggleButtonCrossReference.setMinimumSize(new java.awt.Dimension(24, 20));
+        jToggleButtonCrossReference.setPreferredSize(new java.awt.Dimension(0, 26));
         jToggleButtonCrossReference.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jToggleButtonCrossReferenceStateChanged(evt);
@@ -400,25 +425,71 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
                 jToggleButtonCrossReferenceActionPerformed(evt);
             }
         });
-        jXPanelControles.add(jToggleButtonCrossReference);
+        jPanel1.add(jToggleButtonCrossReference);
 
+        jToggleButtonElaborado.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jToggleButtonElaborado.setText("Derivados");
+        jToggleButtonElaborado.setMinimumSize(new java.awt.Dimension(24, 20));
+        jToggleButtonElaborado.setPreferredSize(new java.awt.Dimension(0, 26));
+        jToggleButtonElaborado.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jToggleButtonElaboradoStateChanged(evt);
+            }
+        });
+        jToggleButtonElaborado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonElaboradoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jToggleButtonElaborado);
+
+        jPanelTabla.add(jPanel1, java.awt.BorderLayout.PAGE_START);
+
+        jLayeredPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jLayeredPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jLayeredPane1.setMinimumSize(new java.awt.Dimension(454, 300));
+        jLayeredPane1.setPreferredSize(new java.awt.Dimension(454, 404));
+        jLayeredPane1.setLayout(new javax.swing.OverlayLayout(jLayeredPane1));
+
+        jPanelCrossReference.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelCrossReference.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelCrossReference.setMinimumSize(new java.awt.Dimension(454, 0));
+        jPanelCrossReference.setPreferredSize(new java.awt.Dimension(454, 40));
+        jPanelCrossReference.setLayout(new java.awt.BorderLayout());
+        jLayeredPane1.add(jPanelCrossReference);
+
+        jPanelIngElab.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelIngElab.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelIngElab.setLayout(new java.awt.BorderLayout());
+        jLayeredPane1.add(jPanelIngElab);
+
+        jPanelTabla.add(jLayeredPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(jPanelTabla, java.awt.BorderLayout.CENTER);
+
+        jPanelControles.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        jButtonCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarActionPerformed(evt);
             }
         });
-        jXPanelControles.add(jButtonCancelar);
+        jPanelControles.add(jButtonCancelar);
 
+        jButtonAdd.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButtonAdd.setText(bundle.getString("label_crear")); // NOI18N
         jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddActionPerformed(evt);
             }
         });
-        jXPanelControles.add(jButtonAdd);
+        jPanelControles.add(jButtonAdd);
 
-        getContentPane().add(jXPanelControles, java.awt.BorderLayout.PAGE_END);
+        jPanel2.add(jPanelControles, java.awt.BorderLayout.SOUTH);
+
+        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
@@ -427,15 +498,6 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         getController().createUpdateInstance();
     }//GEN-LAST:event_jButtonAddActionPerformed
-
-    private void jCheckBoxElaboradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxElaboradoActionPerformed
-
-    }//GEN-LAST:event_jCheckBoxElaboradoActionPerformed
-
-    private void jCheckBoxElaboradoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxElaboradoStateChanged
-        instance.setElaborado(jCheckBoxElaborado.isSelected());
-        setElaboradoTable();
-    }//GEN-LAST:event_jCheckBoxElaboradoStateChanged
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         dispose();
@@ -448,49 +510,72 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     private void jToggleButtonCrossReferenceStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButtonCrossReferenceStateChanged
         if (jToggleButtonCrossReference.isSelected()) {
             showCrossReferenceDialog(instance.getProductoInsumoList());
+            jToggleButtonElaborado.setEnabled(true);
         } else {
             hideCrossReferenceDialog();
+            jToggleButtonElaborado.setSelected(false);
+            jToggleButtonElaborado.setEnabled(false);
+
         }
         setLocationRelativeTo(null);
     }//GEN-LAST:event_jToggleButtonCrossReferenceStateChanged
 
+    private void jToggleButtonElaboradoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButtonElaboradoStateChanged
+        instance.setElaborado(jToggleButtonElaborado.isSelected());
+        setElaboradoTable();
+
+        if (jToggleButtonElaborado.isSelected()) {
+            jSpinnerCantidadCreada.setEnabled(true);
+        } else {
+            jSpinnerCantidadCreada.setEnabled(false);
+
+        }
+
+    }//GEN-LAST:event_jToggleButtonElaboradoStateChanged
+
+    private void jToggleButtonElaboradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonElaboradoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButtonElaboradoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JCheckBox jCheckBoxElaborado;
     private javax.swing.JComboBox<R.UM> jComboBoxUM;
+    private javax.swing.JLabel jLabelCostoU;
+    private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JLabel jLabelNombre4;
+    private javax.swing.JLabel jLabelNombreCantCreada;
+    private javax.swing.JLabel jLabelNombreCosto;
+    private javax.swing.JLabel jLabelNombreValorCosto;
+    private javax.swing.JLabel jLabelUM;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelControles;
     private javax.swing.JPanel jPanelCrossReference;
     private javax.swing.JPanel jPanelIngElab;
+    private javax.swing.JPanel jPanelInputs;
+    private javax.swing.JPanel jPanelTabla;
     private javax.swing.JSpinner jSpinnerCantidadCreada;
     private javax.swing.JSpinner jSpinnerCosto;
     private javax.swing.JSpinner jSpinnerEstimacionStock;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JToggleButton jToggleButtonCrossReference;
-    private org.jdesktop.swingx.JXLabel jXLabelCostoU;
-    private org.jdesktop.swingx.JXLabel jXLabelNombre;
-    private org.jdesktop.swingx.JXLabel jXLabelNombre4;
-    private org.jdesktop.swingx.JXLabel jXLabelNombreCantCreada;
-    private org.jdesktop.swingx.JXLabel jXLabelNombreCosto;
-    private org.jdesktop.swingx.JXLabel jXLabelNombreValorCosto;
-    private org.jdesktop.swingx.JXLabel jXLabelUM;
-    private org.jdesktop.swingx.JXPanel jXPanelControles;
-    private org.jdesktop.swingx.JXPanel jXPanelInputs;
-    private org.jdesktop.swingx.JXPanel jXPanelTabla;
+    private javax.swing.JToggleButton jToggleButtonElaborado;
     // End of variables declaration//GEN-END:variables
 
     public void showCrossReferenceDialog(List<ProductoInsumo> insList) {
         jPanelCrossReference.setVisible(true);
         jLayeredPane1.moveToFront(jPanelCrossReference);
-        setSize(getWidth(), 610);
+        setSize(getWidth(), 680);
     }
 
     public void hideCrossReferenceDialog() {
         jPanelCrossReference.setVisible(false);
         jLayeredPane1.moveToBack(jPanelCrossReference);
-        if (!jCheckBoxElaborado.isSelected()) {
+        if (!jToggleButtonElaborado.isSelected()) {
             setSize(getMinimumSize());
         }
 
@@ -498,12 +583,12 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
 
     public void setElaboradoTable() {
         if (instance.getElaborado()) {
-            jCheckBoxElaborado.setSelected(true);
+            jToggleButtonElaborado.setSelected(true);
         }
 
-        jPanelIngElab.setVisible(jCheckBoxElaborado.isSelected());
-        if (jCheckBoxElaborado.isSelected()) {
-            setSize(getWidth(), 610);
+        jPanelIngElab.setVisible(jToggleButtonElaborado.isSelected());
+        if (jToggleButtonElaborado.isSelected()) {
+            setSize(getWidth(), 680);
             jLayeredPane1.moveToFront(jPanelIngElab);
         } else {
             if (!jToggleButtonCrossReference.isSelected()) {
@@ -511,7 +596,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
             }
             jLayeredPane1.moveToBack(jPanelIngElab);
         }
-        jSpinnerCosto.setEnabled(!jCheckBoxElaborado.isSelected());
+        jSpinnerCosto.setEnabled(!jToggleButtonElaborado.isSelected());
 
     }
 
@@ -532,7 +617,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
         }
         instance.setCantidadCreada((Float) jSpinnerCantidadCreada.getValue());
         instance.setCostoPorUnidad((Float) jSpinnerCosto.getValue());
-        instance.setElaborado(jCheckBoxElaborado.isSelected());
+        instance.setElaborado(jToggleButtonElaborado.isSelected());
         instance.setNombre(jTextFieldNombre.getText());
         instance.setUm(jComboBoxUM.getSelectedItem().toString());
         instance.setProductoInsumoList(tableCrossReference.getHandler().getTableModel().getItems());
@@ -551,6 +636,6 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     public void updateLabelCost() {
         float total = 0;
         total = tableIngElab.getHandler().getTableModel().getItems().stream().map((x) -> x.getCosto()).reduce(total, (accumulator, _item) -> accumulator + _item);
-        jXLabelNombreValorCosto.setText(R.formatoMoneda.format(total));
+        jLabelNombreValorCosto.setText(R.formatoMoneda.format(total));
     }
 }
