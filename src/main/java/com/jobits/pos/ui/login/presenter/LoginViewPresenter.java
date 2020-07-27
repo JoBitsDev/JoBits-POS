@@ -53,8 +53,8 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     }
 
     private void onAutenticarClick() {
-        String password = getBean().getContraseña();
-        getBean().setContraseña("");
+        String password = getBean().getContrasena();
+        getBean().setContrasena("");
         try {
             if (service.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
                Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);

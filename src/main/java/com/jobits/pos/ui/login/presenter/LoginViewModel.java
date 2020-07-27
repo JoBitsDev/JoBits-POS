@@ -24,9 +24,9 @@ public class LoginViewModel extends AbstractViewModel {
 
     public static final String PROP_NOMBREUSUARIO = "nombreUsuario";
 
-    private String contraseña = "";
+    private String contrasena = "";
 
-    public static final String PROP_CONTRASENA = "contraseña";
+    public static final String PROP_CONTRASENA = "contrasena";
 
     private String estadoConexion;
 
@@ -172,23 +172,23 @@ public class LoginViewModel extends AbstractViewModel {
     }
 
     /**
-     * Get the value of contraseña
+     * Get the value of contraseï¿½a
      *
-     * @return the value of contraseña
+     * @return the value of contraseï¿½a
      */
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
 
     /**
-     * Set the value of contraseña
+     * Set the value of contraseï¿½a
      *
-     * @param contraseña new value of contraseña
+     * @param contraseï¿½a new value of contraseï¿½a
      */
-    public void setContraseña(String contraseña) {
-        String oldContraseña = this.contraseña;
-        this.contraseña = contraseña;
-        firePropertyChange(PROP_CONTRASENA, oldContraseña, contraseña, false);
+    public void setContrasena(String contrasena) {
+        String oldContrasena = this.contrasena;
+        this.contrasena = contrasena;
+        firePropertyChange(PROP_CONTRASENA, oldContrasena, contrasena, false);
     }
 
 }
