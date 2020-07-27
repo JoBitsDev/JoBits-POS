@@ -22,13 +22,7 @@ public class ConfiguracionView extends AbstractViewPanel {
 
     public ConfiguracionView(AbstractViewPresenter presenter) {
         super(presenter);
-        jTabbedPane1.add("Generales", new Generales(presenter));
-        jTabbedPane1.add("Sync", new Sincronizacion(presenter));
-        jTabbedPane1.add("Impresión", new Impresion(presenter));
-        jTabbedPane1.add("ImportarExportar", new ImportarExportar(presenter));
-        jTabbedPane1.add("Impresoras", new Impresoras(presenter, new ImpresoraUseCase(new ImpresoraRepoImpl())));
-
-        //jTabbedPane1.add("Impresoras", new Impresoras(new ImpresoraUseCase(new ImpresoraRepoImpl())));
+        
     }
 
     /**
@@ -147,6 +141,13 @@ public class ConfiguracionView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
+        jTabbedPane1.add("Generales", new Generales(presenter));
+        jTabbedPane1.add("Sync", new Sincronizacion(presenter));
+        jTabbedPane1.add("ImpresiÃ³n", new Impresion(presenter));
+        jTabbedPane1.add("ImportarExportar", new ImportarExportar(presenter));
+        jTabbedPane1.add("Impresoras", new Impresoras(presenter, new ImpresoraUseCase(new ImpresoraRepoImpl())));
+
+        //jTabbedPane1.add("Impresoras", new Impresoras(new ImpresoraUseCase(new ImpresoraRepoImpl())));
 
     }
 
