@@ -9,26 +9,14 @@ import com.jobits.pos.ui.AbstractDetailView;
 import com.jobits.pos.ui.AbstractView;
 import com.jobits.pos.ui.utils.AbstractCrossReferenePanel;
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dialog;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JTable;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.AbstractTableModel;
-import javax.xml.ws.handler.MessageContext;
-import mdlaf.components.tabbedpane.MaterialTabbedPaneUI;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.Controller;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
-import com.jobits.pos.controller.almacen.TransaccionDetailController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.persistencia.Almacen;
@@ -42,6 +30,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
 import com.jobits.pos.ui.utils.utils;
+import org.pushingpixels.substance.internal.ui.SubstanceTabbedPaneUI;
 
 /**
  *
@@ -228,7 +217,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         };
 
         jXLabelValorTotal.setText(utils.setDosLugaresDecimales(getController().getInstance().getValorMonetario()));
-        jTabbedPane1.setUI(new MaterialTabbedPaneUI());
+        //jTabbedPane1.setUI(new SubstanceTabbedPaneUI());
     }
 
     @Override
