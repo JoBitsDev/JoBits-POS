@@ -85,7 +85,7 @@ public class ConfiguracionView extends AbstractViewPanel {
         setMinimumSize(getMinimumSize());
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jTabbedPane1.setPreferredSize(screenHeight());
+        jTabbedPane1.setPreferredSize(screenHeight(0.75));
         add(jTabbedPane1);
 
         jPanel12.setLayout(new java.awt.BorderLayout());
@@ -157,9 +157,9 @@ public class ConfiguracionView extends AbstractViewPanel {
         return VIEW_NAME;
     }
 
-    private Dimension screenHeight() {
+    private Dimension screenHeight(Double x) {
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
-        int i = (int) (height * 0.90);
+        int i = (int) (height * x);
         
         return new Dimension(0, i);
     }
