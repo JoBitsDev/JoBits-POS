@@ -50,17 +50,21 @@ public class IpvGestionView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelOpciones = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jComboBoxPtoElabSelec = new javax.swing.JComboBox<>();
+        jButtonRefrescar = new com.jidesoft.swing.JideButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanelRegistros = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableRegistro = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        jButtonimprimirIpv = new javax.swing.JButton();
-        jButtonDarEntradaIpv = new javax.swing.JButton();
-        jButtonAjustarConsumo = new javax.swing.JButton();
+        jPanel1 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonimprimirIpv = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonDarEntradaIpv = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAjustarConsumo = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel4 = new javax.swing.JPanel();
-        jCheckBoxIpv = new javax.swing.JCheckBox();
+        jToggleButtonIpv = new javax.swing.JToggleButton();
         jLabel3 = new javax.swing.JLabel();
         jDateChooserIpv = MaterialComponentsFactory.Input.getDatePicker();
         jPanel3 = new javax.swing.JPanel();
@@ -68,22 +72,38 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel5 = new javax.swing.JPanel();
         jScrollPane4 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableIPV = new javax.swing.JTable();
-        jPanel6 = new javax.swing.JPanel();
-        jButtonImprimirIpvVenta = new javax.swing.JButton();
-        jButtonDarEntradaIpvVenta = new javax.swing.JButton();
-        jButtonPedido = new javax.swing.JButton();
+        jPanel6 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonImprimirIpvVenta = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonDarEntradaIpvVenta = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonPedido = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jCheckBoxIpvVenta = new javax.swing.JCheckBox();
+        jToggleButtonIpvVenta = new javax.swing.JToggleButton();
         jDateChooserIpvVentas = MaterialComponentsFactory.Input.getDatePicker();
-        jPanelOptions = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel8 = new javax.swing.JPanel();
-        jComboBoxPtoElabSelec = new javax.swing.JComboBox<>();
-        jButtonRefrescar = new com.jidesoft.swing.JideButton();
 
         setLayout(new java.awt.BorderLayout());
 
-        jPanelRegistros.setOpaque(false);
+        jPanelOpciones.setLayout(new java.awt.BorderLayout());
+
+        jPanel8.setOpaque(false);
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 10, 5));
+
+        jComboBoxPtoElabSelec.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jComboBoxPtoElabSelec.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jComboBoxPtoElabSelec.setMinimumSize(new java.awt.Dimension(150, 70));
+        jComboBoxPtoElabSelec.setPreferredSize(new java.awt.Dimension(250, 50));
+        jPanel8.add(jComboBoxPtoElabSelec);
+
+        jButtonRefrescar.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jButtonRefrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
+        jPanel8.add(jButtonRefrescar);
+
+        jPanelOpciones.add(jPanel8, java.awt.BorderLayout.EAST);
+
+        add(jPanelOpciones, java.awt.BorderLayout.PAGE_START);
+
+        jTabbedPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 40, 40, 40));
+
         jPanelRegistros.setLayout(new java.awt.BorderLayout(5, 0));
 
         jPanel2.setOpaque(false);
@@ -110,9 +130,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanelRegistros.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
         jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.GridLayout(1, 0));
 
         jButtonimprimirIpv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jButtonimprimirIpv.setMnemonic('i');
@@ -139,13 +157,14 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel4.setOpaque(false);
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        jCheckBoxIpv.setText(bundle.getString("label_ocultar_insumos_no_utilizados")); // NOI18N
-        jPanel4.add(jCheckBoxIpv, java.awt.BorderLayout.WEST);
+        jToggleButtonIpv.setText(bundle.getString("label_ocultar_insumos_no_utilizados")); // NOI18N
+        jPanel4.add(jToggleButtonIpv, java.awt.BorderLayout.WEST);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel3.setText("Fecha");
         jPanel4.add(jLabel3, java.awt.BorderLayout.CENTER);
 
+        jDateChooserIpv.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         jDateChooserIpv.setPreferredSize(new java.awt.Dimension(155, 40));
         jPanel4.add(jDateChooserIpv, java.awt.BorderLayout.LINE_END);
 
@@ -189,8 +208,6 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanelIPV.add(jPanel5, java.awt.BorderLayout.CENTER);
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel6.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
-        jPanel6.setLayout(new java.awt.GridLayout(1, 0));
 
         jButtonImprimirIpvVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jButtonImprimirIpvVenta.setMnemonic('i');
@@ -219,8 +236,8 @@ public class IpvGestionView extends AbstractViewPanel {
         jLabel2.setText("Fecha");
         jPanel7.add(jLabel2, java.awt.BorderLayout.CENTER);
 
-        jCheckBoxIpvVenta.setText(bundle.getString("label_productos_no_utilizados")); // NOI18N
-        jPanel7.add(jCheckBoxIpvVenta, java.awt.BorderLayout.WEST);
+        jToggleButtonIpvVenta.setText(bundle.getString("label_productos_no_utilizados")); // NOI18N
+        jPanel7.add(jToggleButtonIpvVenta, java.awt.BorderLayout.WEST);
 
         jDateChooserIpvVentas.setPreferredSize(new java.awt.Dimension(155, 40));
         jPanel7.add(jDateChooserIpvVentas, java.awt.BorderLayout.LINE_END);
@@ -232,23 +249,6 @@ public class IpvGestionView extends AbstractViewPanel {
         jTabbedPane2.addTab("IPV", jPanel3);
 
         add(jTabbedPane2, java.awt.BorderLayout.CENTER);
-
-        jPanelOptions.setLayout(new java.awt.BorderLayout());
-
-        jPanel8.setOpaque(false);
-        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jComboBoxPtoElabSelec.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jComboBoxPtoElabSelec.setMinimumSize(new java.awt.Dimension(150, 70));
-        jComboBoxPtoElabSelec.setPreferredSize(new java.awt.Dimension(250, 50));
-        jPanel8.add(jComboBoxPtoElabSelec);
-
-        jButtonRefrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
-        jPanel8.add(jButtonRefrescar);
-
-        jPanelOptions.add(jPanel8, java.awt.BorderLayout.EAST);
-
-        add(jPanelOptions, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -259,8 +259,6 @@ public class IpvGestionView extends AbstractViewPanel {
     private javax.swing.JButton jButtonPedido;
     private com.jidesoft.swing.JideButton jButtonRefrescar;
     private javax.swing.JButton jButtonimprimirIpv;
-    private javax.swing.JCheckBox jCheckBoxIpv;
-    private javax.swing.JCheckBox jCheckBoxIpvVenta;
     private javax.swing.JComboBox<Cocina> jComboBoxPtoElabSelec;
     private org.jdesktop.swingx.JXDatePicker jDateChooserIpv;
     private org.jdesktop.swingx.JXDatePicker jDateChooserIpvVentas;
@@ -275,19 +273,21 @@ public class IpvGestionView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelIPV;
-    private javax.swing.JPanel jPanelOptions;
+    private javax.swing.JPanel jPanelOpciones;
     private javax.swing.JPanel jPanelRegistros;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTableIPV;
     private javax.swing.JTable jTableRegistro;
+    private javax.swing.JToggleButton jToggleButtonIpv;
+    private javax.swing.JToggleButton jToggleButtonIpvVenta;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void wireUp() {
-        Bindings.bind(jCheckBoxIpv, getPresenter().getModel(PROP_CHECK_OCULTAR_PRODUCTOS));
-        Bindings.bind(jCheckBoxIpvVenta, getPresenter().getModel(PROP_CHECK_OCULTAR_PRODUCTOS_IPV_VENTA));
+        Bindings.bind(jToggleButtonIpv, getPresenter().getModel(PROP_CHECK_OCULTAR_PRODUCTOS));
+        Bindings.bind(jToggleButtonIpvVenta, getPresenter().getModel(PROP_CHECK_OCULTAR_PRODUCTOS_IPV_VENTA));
         Bindings.bind(jComboBoxPtoElabSelec,new SelectionInList<Cocina>(
                 getPresenter().getModel(PROP_LISTA_PUNTO_ELABORACION), 
                 getPresenter().getModel(PROP_PUNTO_ELABORACION_SELECCIONADO)),
@@ -308,8 +308,8 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonImprimirIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_VENTA));
         jButtonPedido.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_NUEVO_PEDIDO_IPV_VENTA));
         jButtonimprimirIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_VENTA));
-        jCheckBoxIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV));
-        jCheckBoxIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV_VENTA));
+        jToggleButtonIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV));
+        jToggleButtonIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV_VENTA));
         jButtonRefrescar.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_CAMBIAR_COCINA));
     }
 
@@ -525,7 +525,7 @@ public class IpvGestionView extends AbstractViewPanel {
                 imprimirTabla();
                 break;//impresion normal
             case 1:
-//                List<IpvRegistro> registros = jCheckBox1.isSelected()
+//                List<IpvRegistro> registros = jToggleButton1.isSelected()
 //                        ? ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getItems()
 //                        : registroList;
 
