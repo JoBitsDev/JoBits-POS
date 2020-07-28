@@ -11,6 +11,8 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 /**
  *
@@ -22,7 +24,7 @@ public class ConfiguracionView extends AbstractViewPanel {
 
     public ConfiguracionView(AbstractViewPresenter presenter) {
         super(presenter);
-        
+
     }
 
     /**
@@ -83,7 +85,7 @@ public class ConfiguracionView extends AbstractViewPanel {
         setMinimumSize(getMinimumSize());
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jTabbedPane1.setPreferredSize(new java.awt.Dimension(800, 800));
+        jTabbedPane1.setPreferredSize(screenHeight());
         add(jTabbedPane1);
 
         jPanel12.setLayout(new java.awt.BorderLayout());
@@ -148,12 +150,18 @@ public class ConfiguracionView extends AbstractViewPanel {
         jTabbedPane1.add("Impresoras", new Impresoras(presenter, new ImpresoraUseCase(new ImpresoraRepoImpl())));
 
         //jTabbedPane1.add("Impresoras", new Impresoras(new ImpresoraUseCase(new ImpresoraRepoImpl())));
-
     }
 
     @Override
     public String getViewName() {
         return VIEW_NAME;
+    }
+
+    private Dimension screenHeight() {
+        int height = Toolkit.getDefaultToolkit().getScreenSize().height;
+        int i = (int) (height * 0.90);
+        
+        return new Dimension(0, i);
     }
 
 }
