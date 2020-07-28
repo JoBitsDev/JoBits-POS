@@ -26,6 +26,7 @@ import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.RegularExpressions;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
+import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  *
@@ -74,237 +75,217 @@ public class PuestoTrabajoDetailView extends AbstractDetailView<PuestoTrabajo> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel10 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabelNombre = new org.jdesktop.swingx.JXLabel();
-        jTextFieldNombre = new JTextField();
-        jXLabel1 = new org.jdesktop.swingx.JXLabel();
-        jLabelMoneda = new org.jdesktop.swingx.JXLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jPanelNombre = new javax.swing.JPanel();
+        jTextFieldNombre = MaterialComponentsFactory.Input.getTextField(" ", "Nombre de Puesto");
         jPanelcentro = new javax.swing.JPanel();
         jPanelpuesto = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabelNivelDeAcceso1 = new org.jdesktop.swingx.JXLabel();
+        jLabelNivelDeAcceso1 = new javax.swing.JLabel();
         jComboBoxAreaTrabajo = new javax.swing.JComboBox<>();
-        jPanel8 = new javax.swing.JPanel();
-        jLabelPuestosDisponibles = new org.jdesktop.swingx.JXLabel();
+        jLabelPuestosDisponibles = new javax.swing.JLabel();
         jSpinnerPuestosDisponibles = new JSpinner();
-        jPanel7 = new javax.swing.JPanel();
-        jLabelNivelDeAcceso = new org.jdesktop.swingx.JXLabel();
+        jLabelNivelDeAcceso = new javax.swing.JLabel();
         jComboBoxNivelAccesso = new javax.swing.JComboBox<>();
         jPanelbasico = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabelSalarioFijo = new org.jdesktop.swingx.JXLabel();
+        jLabelSalarioFijo = new javax.swing.JLabel();
         jSpinnerSalarioFijo = new JSpinner();
-        jPanel3 = new javax.swing.JPanel();
-        jLabelSalarioFijo1 = new org.jdesktop.swingx.JXLabel();
+        jLabelSalarioFijo1 = new javax.swing.JLabel();
         jSpinnerPorcientoVenta = new JSpinner();
-        jPanel11 = new javax.swing.JPanel();
-        jCheckBoxPagoPorVentas = new javax.swing.JCheckBox();
+        jToggleButtonPagoPorVentas = new javax.swing.JToggleButton();
         jPanelvanzado = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabelSalarioFijo3 = new org.jdesktop.swingx.JXLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelSalarioFijo3 = new javax.swing.JLabel();
         jComboBoxAreaPago = new javax.swing.JComboBox<>();
-        jPanel5 = new javax.swing.JPanel();
-        jLabelSalarioFijo4 = new org.jdesktop.swingx.JXLabel();
+        jLabelSalarioFijo4 = new javax.swing.JLabel();
         jSpinnerAPartir = new JSpinner();
-        jPanel4 = new javax.swing.JPanel();
-        jLabelSalarioFijo2 = new org.jdesktop.swingx.JXLabel();
+        jLabelSalarioFijo2 = new javax.swing.JLabel();
         jSpinnerPorcientoAPartirDe = new JSpinner();
         jPanelOtros = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
-        jCheckBoxPropina = new javax.swing.JCheckBox();
+        jToggleButtonPropina = new javax.swing.JToggleButton();
         jPanelopciones = new javax.swing.JPanel();
-        jButtonCrear = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonCrear = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Puesto de Trabajo");
         setBackground(new java.awt.Color(153, 153, 153));
-        setMinimumSize(new java.awt.Dimension(500, 444));
+        setMinimumSize(new java.awt.Dimension(500, 700));
         setUndecorated(true);
-        setSize(new java.awt.Dimension(500, 444));
+        setPreferredSize(new java.awt.Dimension(500, 700));
+        setSize(new java.awt.Dimension(500, 700));
 
-        jPanel10.setBackground(getBackground());
-        jPanel10.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nuevo Puesto de Trabajo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 24))); // NOI18N
+        jPanel12.setMinimumSize(new java.awt.Dimension(500, 500));
+        jPanel12.setLayout(new javax.swing.BoxLayout(jPanel12, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelNombre.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 50, 10, 50));
+        jPanelNombre.setPreferredSize(new java.awt.Dimension(100, 70));
+        jPanelNombre.setLayout(new java.awt.BorderLayout());
 
-        jLabelNombre.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelNombre.setText("Nombre Puesto");
-        jPanel1.add(jLabelNombre);
+        jTextFieldNombre.setMinimumSize(new java.awt.Dimension(150, 50));
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(200, 60));
+        jPanelNombre.add(jTextFieldNombre, java.awt.BorderLayout.CENTER);
 
-        jTextFieldNombre.setMinimumSize(new java.awt.Dimension(150, 25));
-        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(150, 25));
-        jPanel1.add(jTextFieldNombre);
+        jPanel12.add(jPanelNombre);
 
-        jPanel10.add(jPanel1);
-
-        jXLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jXLabel1.setText(bundle.getString("label_moneda")); // NOI18N
-        jPanel10.add(jXLabel1);
-
-        jLabelMoneda.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelMoneda.setText(R.COIN_SUFFIX);
-        jPanel10.add(jLabelMoneda);
-
-        getContentPane().add(jPanel10, java.awt.BorderLayout.PAGE_START);
-
-        jPanelcentro.setBackground(new java.awt.Color(0, 153, 153));
         jPanelcentro.setLayout(new javax.swing.BoxLayout(jPanelcentro, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanelpuesto.setLayout(new java.awt.GridLayout(0, 3));
+        jPanelpuesto.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 30, 10, 20));
+        jPanelpuesto.setMaximumSize(new java.awt.Dimension(32767, 130));
+        jPanelpuesto.setMinimumSize(new java.awt.Dimension(270, 140));
+        jPanelpuesto.setPreferredSize(new java.awt.Dimension(340, 130));
+        jPanelpuesto.setLayout(new java.awt.GridLayout(3, 2, 0, 12));
 
-        jPanel9.setOpaque(false);
-        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
+        jLabelNivelDeAcceso1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jLabelNivelDeAcceso1.setText("Area de trabajo");
-        jPanel9.add(jLabelNivelDeAcceso1);
+        jLabelNivelDeAcceso1.setMinimumSize(new java.awt.Dimension(87, 16));
+        jLabelNivelDeAcceso1.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelpuesto.add(jLabelNivelDeAcceso1);
 
-        jComboBoxAreaTrabajo.setPreferredSize(new java.awt.Dimension(150, 27));
-        jPanel9.add(jComboBoxAreaTrabajo);
+        jComboBoxAreaTrabajo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jComboBoxAreaTrabajo.setMaximumSize(new java.awt.Dimension(32767, 26));
+        jComboBoxAreaTrabajo.setMinimumSize(new java.awt.Dimension(34, 26));
+        jComboBoxAreaTrabajo.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanelpuesto.add(jComboBoxAreaTrabajo);
 
-        jPanelpuesto.add(jPanel9);
-
-        jPanel8.setOpaque(false);
-        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
+        jLabelPuestosDisponibles.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jLabelPuestosDisponibles.setText("Puestos disponibles");
-        jPanel8.add(jLabelPuestosDisponibles);
+        jLabelPuestosDisponibles.setMinimumSize(new java.awt.Dimension(87, 16));
+        jLabelPuestosDisponibles.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelpuesto.add(jLabelPuestosDisponibles);
 
+        jSpinnerPuestosDisponibles.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jSpinnerPuestosDisponibles.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        jSpinnerPuestosDisponibles.setMaximumSize(new java.awt.Dimension(32767, 26));
+        jSpinnerPuestosDisponibles.setMinimumSize(new java.awt.Dimension(34, 26));
         jSpinnerPuestosDisponibles.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel8.add(jSpinnerPuestosDisponibles);
+        jPanelpuesto.add(jSpinnerPuestosDisponibles);
 
-        jPanelpuesto.add(jPanel8);
-
-        jPanel7.setOpaque(false);
-        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
+        jLabelNivelDeAcceso.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jLabelNivelDeAcceso.setText("Nivel de acceso");
-        jPanel7.add(jLabelNivelDeAcceso);
+        jLabelNivelDeAcceso.setMinimumSize(new java.awt.Dimension(87, 16));
+        jLabelNivelDeAcceso.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelpuesto.add(jLabelNivelDeAcceso);
 
-        jComboBoxNivelAccesso.setPreferredSize(new java.awt.Dimension(150, 27));
-        jPanel7.add(jComboBoxNivelAccesso);
-
-        jPanelpuesto.add(jPanel7);
+        jComboBoxNivelAccesso.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jComboBoxNivelAccesso.setMaximumSize(new java.awt.Dimension(32767, 26));
+        jComboBoxNivelAccesso.setMinimumSize(new java.awt.Dimension(34, 26));
+        jComboBoxNivelAccesso.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanelpuesto.add(jComboBoxNivelAccesso);
 
         jPanelcentro.add(jPanelpuesto);
 
-        jPanelbasico.setBackground(new java.awt.Color(0, 153, 153));
-        jPanelbasico.setBorder(javax.swing.BorderFactory.createTitledBorder("Salario Basico"));
-        jPanelbasico.setLayout(new javax.swing.BoxLayout(jPanelbasico, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelbasico.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Salario Basico (" + R.COIN_SUFFIX + ")", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 16))); // NOI18N
+        jPanelbasico.setMaximumSize(new java.awt.Dimension(2147483647, 150));
+        jPanelbasico.setMinimumSize(new java.awt.Dimension(132, 150));
+        jPanelbasico.setPreferredSize(new java.awt.Dimension(390, 150));
+        jPanelbasico.setLayout(new java.awt.BorderLayout());
 
+        jPanel16.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 30, 10, 20));
         jPanel16.setMinimumSize(new java.awt.Dimension(100, 36));
         jPanel16.setOpaque(false);
-        jPanel16.setLayout(new javax.swing.BoxLayout(jPanel16, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel16.setLayout(new java.awt.GridLayout(2, 2, 0, 10));
 
-        jPanel2.setBackground(jPanelbasico.getBackground());
-        jPanel2.setOpaque(false);
-
-        jLabelSalarioFijo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelSalarioFijo.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        jLabelSalarioFijo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelSalarioFijo.setText("Salario fijo");
-        jPanel2.add(jLabelSalarioFijo);
+        jPanel16.add(jLabelSalarioFijo);
 
+        jSpinnerSalarioFijo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jSpinnerSalarioFijo.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
         jSpinnerSalarioFijo.setMaximumSize(new java.awt.Dimension(32767, 26));
         jSpinnerSalarioFijo.setPreferredSize(new java.awt.Dimension(120, 26));
-        jPanel2.add(jSpinnerSalarioFijo);
+        jPanel16.add(jSpinnerSalarioFijo);
 
-        jPanel16.add(jPanel2);
+        jLabelSalarioFijo1.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        jLabelSalarioFijo1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelSalarioFijo1.setText("Salario por % de venta");
+        jPanel16.add(jLabelSalarioFijo1);
 
-        jPanel3.setBackground(jPanelbasico.getBackground());
-        jPanel3.setOpaque(false);
-
-        jLabelSalarioFijo1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelSalarioFijo1.setText("Salario por porciento de venta");
-        jPanel3.add(jLabelSalarioFijo1);
-
+        jSpinnerPorcientoVenta.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jSpinnerPorcientoVenta.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
         jSpinnerPorcientoVenta.setPreferredSize(new java.awt.Dimension(120, 26));
-        jPanel3.add(jSpinnerPorcientoVenta);
+        jPanel16.add(jSpinnerPorcientoVenta);
 
-        jPanel16.add(jPanel3);
+        jPanelbasico.add(jPanel16, java.awt.BorderLayout.CENTER);
 
-        jPanel11.setBackground(jPanelbasico.getBackground());
-        jPanel11.setOpaque(false);
-        jPanel11.setLayout(new java.awt.GridLayout(1, 0));
-
-        jCheckBoxPagoPorVentas.setText("Pago por ventas");
-        jCheckBoxPagoPorVentas.setToolTipText("");
-        jCheckBoxPagoPorVentas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jCheckBoxPagoPorVentas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jCheckBoxPagoPorVentas.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-        jPanel11.add(jCheckBoxPagoPorVentas);
-
-        jPanel16.add(jPanel11);
-
-        jPanelbasico.add(jPanel16);
+        jToggleButtonPagoPorVentas.setText("Pago por ventas");
+        jToggleButtonPagoPorVentas.setToolTipText("");
+        jToggleButtonPagoPorVentas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jPanelbasico.add(jToggleButtonPagoPorVentas, java.awt.BorderLayout.PAGE_END);
 
         jPanelcentro.add(jPanelbasico);
 
-        jPanelvanzado.setBackground(new java.awt.Color(0, 153, 153));
-        jPanelvanzado.setBorder(javax.swing.BorderFactory.createTitledBorder("Salario Avanzado"));
-        jPanelvanzado.setLayout(new javax.swing.BoxLayout(jPanelvanzado, javax.swing.BoxLayout.LINE_AXIS));
+        jPanelvanzado.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Salario Avanzado (" + R.COIN_SUFFIX + ")", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 16))); // NOI18N
+        jPanelvanzado.setMinimumSize(new java.awt.Dimension(350, 150));
+        jPanelvanzado.setPreferredSize(new java.awt.Dimension(110, 150));
+        jPanelvanzado.setLayout(new java.awt.BorderLayout());
 
-        jPanel6.setBackground(jPanelbasico.getBackground());
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 30, 10, 20));
+        jPanel1.setLayout(new java.awt.GridLayout(3, 2, 0, 10));
 
+        jLabelSalarioFijo3.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jLabelSalarioFijo3.setText("Area de Pago");
-        jPanel6.add(jLabelSalarioFijo3);
+        jPanel1.add(jLabelSalarioFijo3);
 
-        jComboBoxAreaPago.setPreferredSize(new java.awt.Dimension(150, 27));
-        jPanel6.add(jComboBoxAreaPago);
+        jComboBoxAreaPago.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jComboBoxAreaPago.setMaximumSize(new java.awt.Dimension(32767, 26));
+        jComboBoxAreaPago.setMinimumSize(new java.awt.Dimension(150, 26));
+        jComboBoxAreaPago.setPreferredSize(new java.awt.Dimension(100, 26));
+        jPanel1.add(jComboBoxAreaPago);
 
-        jPanelvanzado.add(jPanel6);
-
-        jPanel5.setBackground(jPanelbasico.getBackground());
-
+        jLabelSalarioFijo4.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jLabelSalarioFijo4.setText("A partir de");
-        jPanel5.add(jLabelSalarioFijo4);
+        jPanel1.add(jLabelSalarioFijo4);
 
+        jSpinnerAPartir.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jSpinnerAPartir.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
         jSpinnerAPartir.setMaximumSize(new java.awt.Dimension(32767, 26));
+        jSpinnerAPartir.setMinimumSize(new java.awt.Dimension(150, 26));
         jSpinnerAPartir.setPreferredSize(new java.awt.Dimension(100, 26));
-        jPanel5.add(jSpinnerAPartir);
+        jPanel1.add(jSpinnerAPartir);
 
-        jPanelvanzado.add(jPanel5);
-
-        jPanel4.setBackground(jPanelbasico.getBackground());
-
+        jLabelSalarioFijo2.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         jLabelSalarioFijo2.setText("% a partir de");
-        jPanel4.add(jLabelSalarioFijo2);
+        jPanel1.add(jLabelSalarioFijo2);
 
+        jSpinnerPorcientoAPartirDe.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jSpinnerPorcientoAPartirDe.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
+        jSpinnerPorcientoAPartirDe.setMaximumSize(new java.awt.Dimension(32767, 26));
+        jSpinnerPorcientoAPartirDe.setMinimumSize(new java.awt.Dimension(150, 26));
         jSpinnerPorcientoAPartirDe.setPreferredSize(new java.awt.Dimension(100, 26));
-        jPanel4.add(jSpinnerPorcientoAPartirDe);
+        jPanel1.add(jSpinnerPorcientoAPartirDe);
 
-        jPanelvanzado.add(jPanel4);
+        jPanelvanzado.add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jPanelcentro.add(jPanelvanzado);
 
-        jPanelOtros.setBackground(new java.awt.Color(0, 153, 153));
-        jPanelOtros.setBorder(javax.swing.BorderFactory.createTitledBorder("Otros"));
+        jPanelOtros.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Otros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 16))); // NOI18N
         jPanelOtros.setLayout(new javax.swing.BoxLayout(jPanelOtros, javax.swing.BoxLayout.LINE_AXIS));
 
-        jPanel14.setBackground(jPanelbasico.getBackground());
+        jPanel14.setLayout(new java.awt.BorderLayout());
 
-        jCheckBoxPropina.setText("Propina");
-        jCheckBoxPropina.setToolTipText("");
-        jCheckBoxPropina.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jCheckBoxPropina.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jPanel14.add(jCheckBoxPropina);
+        jToggleButtonPropina.setText("Propina");
+        jToggleButtonPropina.setToolTipText("");
+        jToggleButtonPropina.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jPanel14.add(jToggleButtonPropina, java.awt.BorderLayout.CENTER);
 
         jPanelOtros.add(jPanel14);
 
         jPanelcentro.add(jPanelOtros);
 
-        getContentPane().add(jPanelcentro, java.awt.BorderLayout.CENTER);
+        jPanel12.add(jPanelcentro);
 
-        jPanelopciones.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelopciones.setBorder(new org.edisoncor.gui.util.DropShadowBorder());
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
+        jPanelopciones.add(jButtonCancelar);
 
         jButtonCrear.setText(bundle.getString("label_aceptar")); // NOI18N
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -314,15 +295,9 @@ public class PuestoTrabajoDetailView extends AbstractDetailView<PuestoTrabajo> {
         });
         jPanelopciones.add(jButtonCrear);
 
-        jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
-            }
-        });
-        jPanelopciones.add(jButtonCancelar);
+        jPanel12.add(jPanelopciones);
 
-        getContentPane().add(jPanelopciones, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(jPanel12, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
@@ -344,8 +319,8 @@ public class PuestoTrabajoDetailView extends AbstractDetailView<PuestoTrabajo> {
         jSpinnerPorcientoVenta.setValue(instance.getSalarioPorcientoVentaTotal());
         jSpinnerPorcientoAPartirDe.setValue(instance.getSalarioPorcientoDeArea());
         jSpinnerAPartir.setValue(instance.getAPartirDe());
-        jCheckBoxPagoPorVentas.setSelected(instance.getPagoPorVentas() == null ? false : instance.getPagoPorVentas());
-        jCheckBoxPropina.setSelected(instance.getPropina() == null ? false : instance.getPropina());
+        jToggleButtonPagoPorVentas.setSelected(instance.getPagoPorVentas() == null ? false : instance.getPagoPorVentas());
+        jToggleButtonPropina.setSelected(instance.getPropina() == null ? false : instance.getPropina());
 
         if (instance.getNivelAcceso() != null) {
             jComboBoxNivelAccesso.setSelectedIndex(instance.getNivelAcceso());
@@ -371,34 +346,22 @@ public class PuestoTrabajoDetailView extends AbstractDetailView<PuestoTrabajo> {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCrear;
-    private javax.swing.JCheckBox jCheckBoxPagoPorVentas;
-    private javax.swing.JCheckBox jCheckBoxPropina;
     private javax.swing.JComboBox<Cocina> jComboBoxAreaPago;
     private javax.swing.JComboBox<Area> jComboBoxAreaTrabajo;
     private javax.swing.JComboBox<R.NivelAcceso> jComboBoxNivelAccesso;
-    private org.jdesktop.swingx.JXLabel jLabelMoneda;
-    private org.jdesktop.swingx.JXLabel jLabelNivelDeAcceso;
-    private org.jdesktop.swingx.JXLabel jLabelNivelDeAcceso1;
-    private org.jdesktop.swingx.JXLabel jLabelNombre;
-    private org.jdesktop.swingx.JXLabel jLabelPuestosDisponibles;
-    private org.jdesktop.swingx.JXLabel jLabelSalarioFijo;
-    private org.jdesktop.swingx.JXLabel jLabelSalarioFijo1;
-    private org.jdesktop.swingx.JXLabel jLabelSalarioFijo2;
-    private org.jdesktop.swingx.JXLabel jLabelSalarioFijo3;
-    private org.jdesktop.swingx.JXLabel jLabelSalarioFijo4;
+    private javax.swing.JLabel jLabelNivelDeAcceso;
+    private javax.swing.JLabel jLabelNivelDeAcceso1;
+    private javax.swing.JLabel jLabelPuestosDisponibles;
+    private javax.swing.JLabel jLabelSalarioFijo;
+    private javax.swing.JLabel jLabelSalarioFijo1;
+    private javax.swing.JLabel jLabelSalarioFijo2;
+    private javax.swing.JLabel jLabelSalarioFijo3;
+    private javax.swing.JLabel jLabelSalarioFijo4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelNombre;
     private javax.swing.JPanel jPanelOtros;
     private javax.swing.JPanel jPanelbasico;
     private javax.swing.JPanel jPanelcentro;
@@ -411,7 +374,8 @@ public class PuestoTrabajoDetailView extends AbstractDetailView<PuestoTrabajo> {
     private javax.swing.JSpinner jSpinnerPuestosDisponibles;
     private javax.swing.JSpinner jSpinnerSalarioFijo;
     private javax.swing.JTextField jTextFieldNombre;
-    private org.jdesktop.swingx.JXLabel jXLabel1;
+    private javax.swing.JToggleButton jToggleButtonPagoPorVentas;
+    private javax.swing.JToggleButton jToggleButtonPropina;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -447,8 +411,8 @@ public class PuestoTrabajoDetailView extends AbstractDetailView<PuestoTrabajo> {
         } else {
             instance.setAreacodArea((Area) jComboBoxAreaTrabajo.getSelectedItem());
         }
-        instance.setPagoPorVentas(jCheckBoxPagoPorVentas.isSelected());
-        instance.setPropina(jCheckBoxPropina.isSelected());
+        instance.setPagoPorVentas(jToggleButtonPagoPorVentas.isSelected());
+        instance.setPropina(jToggleButtonPropina.isSelected());
         instance.setNivelAcceso(jComboBoxNivelAccesso.getItemAt(jComboBoxNivelAccesso.getSelectedIndex()).getNivel());
         instance.setPuestosDisponibles((Integer) jSpinnerPuestosDisponibles.getValue());
         instance.setAPartirDe(Float.parseFloat(jSpinnerAPartir.getValue().toString()));
