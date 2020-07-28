@@ -28,6 +28,7 @@ import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
 import com.jobits.pos.ui.utils.utils;
+import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  *
@@ -109,58 +110,58 @@ public class OperacionView extends OldAbstractView {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jButtonConfirmar = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jPaneloperaciones = new javax.swing.JPanel();
         jRadioButtonEntrada = new javax.swing.JRadioButton();
         jRadioButtonTraspaso = new javax.swing.JRadioButton();
         jRadioButtonSalida = new javax.swing.JRadioButton();
         jRadioButtonRebaja = new javax.swing.JRadioButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10), new java.awt.Dimension(32767, 10));
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextFieldInsumo = new javax.swing.JTextField();
+        jPanel9 = new javax.swing.JPanel();
+        jTextFieldInsumo = MaterialComponentsFactory.Input.getTextField("", "Insumo");
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 32767));
         jLabel3 = new javax.swing.JLabel();
         jSpinnerCantidad = new javax.swing.JSpinner();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 32767));
         jLabel4 = new javax.swing.JLabel();
         jSpinnerMonto = new javax.swing.JSpinner();
         jComboBoxAlmacenExistencias = new javax.swing.JComboBox<>();
-        jTextFieldCausa = new javax.swing.JTextField();
+        jTextFieldCausa = MaterialComponentsFactory.Input.getTextField("", "Causa de Rebaja");
+        jPanel5 = new javax.swing.JPanel();
         jButtonAdd = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextFieldRecibo = new javax.swing.JTextField();
+        jTextFieldRecibo = MaterialComponentsFactory.Input.getTextField("", "No. Recibo");
+        jPanel6 = new javax.swing.JPanel();
+        jButtonClose = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonConfirmar = MaterialComponentsFactory.Buttons.getAcceptButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(730, 500));
+        setMinimumSize(new java.awt.Dimension(730, 650));
         setUndecorated(true);
 
-        jButtonConfirmar.setForeground(new java.awt.Color(0, 153, 153));
-        jButtonConfirmar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/confirmar.png"))); // NOI18N
-        jButtonConfirmar.setText("Confirmar");
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButtonConfirmar.setToolTipText(bundle.getString("label_confirmar")); // NOI18N
-        jButtonConfirmar.setBorderPainted(false);
-        jButtonConfirmar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonConfirmar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonConfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonConfirmarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButtonConfirmar, java.awt.BorderLayout.PAGE_END);
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nueva Factura", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 24))); // NOI18N
+        jPanel7.setLayout(new java.awt.BorderLayout());
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 0, 20));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Operaciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
-        jPanel8.setOpaque(false);
+        jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Fecha", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        jPanel8.add(jDateChooser1);
+
+        jPanel1.add(jPanel8, java.awt.BorderLayout.PAGE_START);
+
+        jPaneloperaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Operaciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        jPaneloperaciones.setOpaque(false);
 
         jRadioButtonEntrada.setSelected(true);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jRadioButtonEntrada.setText(bundle.getString("label_entrada")); // NOI18N
         jRadioButtonEntrada.setToolTipText("");
         jRadioButtonEntrada.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -173,7 +174,7 @@ public class OperacionView extends OldAbstractView {
                 jRadioButtonEntradaActionPerformed(evt);
             }
         });
-        jPanel8.add(jRadioButtonEntrada);
+        jPaneloperaciones.add(jRadioButtonEntrada);
 
         jRadioButtonTraspaso.setText(bundle.getString("label_traspaso")); // NOI18N
         jRadioButtonTraspaso.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -186,7 +187,7 @@ public class OperacionView extends OldAbstractView {
                 jRadioButtonTraspasoActionPerformed(evt);
             }
         });
-        jPanel8.add(jRadioButtonTraspaso);
+        jPaneloperaciones.add(jRadioButtonTraspaso);
 
         jRadioButtonSalida.setText(bundle.getString("label_salida")); // NOI18N
         jRadioButtonSalida.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -199,7 +200,7 @@ public class OperacionView extends OldAbstractView {
                 jRadioButtonSalidaActionPerformed(evt);
             }
         });
-        jPanel8.add(jRadioButtonSalida);
+        jPaneloperaciones.add(jRadioButtonSalida);
 
         jRadioButtonRebaja.setText(bundle.getString("label_rebaja")); // NOI18N
         jRadioButtonRebaja.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -212,25 +213,80 @@ public class OperacionView extends OldAbstractView {
                 jRadioButtonRebajaActionPerformed(evt);
             }
         });
-        jPanel8.add(jRadioButtonRebaja);
+        jPaneloperaciones.add(jRadioButtonRebaja);
 
-        jPanel1.add(jPanel8, java.awt.BorderLayout.CENTER);
+        jPanel1.add(jPaneloperaciones, java.awt.BorderLayout.PAGE_END);
+        jPanel1.add(filler1, java.awt.BorderLayout.CENTER);
 
-        jDateChooser1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Fecha", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
-        jPanel1.add(jDateChooser1, java.awt.BorderLayout.EAST);
+        jPanel7.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/logout40.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 20, 20, 20));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Agregar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        jPanel3.setPreferredSize(new java.awt.Dimension(783, 140));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jTextFieldInsumo.setToolTipText("Insumo");
+        jTextFieldInsumo.setMinimumSize(new java.awt.Dimension(150, 26));
+        jTextFieldInsumo.setPreferredSize(new java.awt.Dimension(150, 50));
+        jTextFieldInsumo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jTextFieldInsumoActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, java.awt.BorderLayout.WEST);
+        jPanel9.add(jTextFieldInsumo);
+        jPanel9.add(filler2);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        jLabel3.setText("Cantidad");
+        jPanel9.add(jLabel3);
 
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
+        jSpinnerCantidad.setPreferredSize(new java.awt.Dimension(80, 26));
+        jPanel9.add(jSpinnerCantidad);
+        jPanel9.add(filler3);
+
+        jLabel4.setText("Monto");
+        jPanel9.add(jLabel4);
+
+        jSpinnerMonto.setMinimumSize(new java.awt.Dimension(70, 26));
+        jSpinnerMonto.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanel9.add(jSpinnerMonto);
+
+        jComboBoxAlmacenExistencias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxAlmacenExistencias.setPreferredSize(new java.awt.Dimension(150, 26));
+        jComboBoxAlmacenExistencias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxAlmacenExistenciasActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jComboBoxAlmacenExistencias);
+
+        jTextFieldCausa.setPreferredSize(new java.awt.Dimension(150, 50));
+        jTextFieldCausa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCausaActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jTextFieldCausa);
+
+        jPanel3.add(jPanel9, java.awt.BorderLayout.NORTH);
+
+        jPanel5.setMinimumSize(new java.awt.Dimension(512, 20));
+        jPanel5.setPreferredSize(new java.awt.Dimension(697, 20));
+        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jButtonAdd.setText("Agregar");
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButtonAdd);
+
+        jPanel3.add(jPanel5, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -252,78 +308,37 @@ public class OperacionView extends OldAbstractView {
 
         jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Agregar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 13), new java.awt.Color(0, 153, 153))); // NOI18N
-        jPanel3.setLayout(new java.awt.BorderLayout());
-
-        jLabel2.setText("Insumo");
-        jPanel5.add(jLabel2);
-
-        jTextFieldInsumo.setToolTipText("Insumo");
-        jTextFieldInsumo.setMinimumSize(new java.awt.Dimension(150, 26));
-        jTextFieldInsumo.setPreferredSize(new java.awt.Dimension(150, 26));
-        jTextFieldInsumo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldInsumoActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jTextFieldInsumo);
-
-        jLabel3.setText("Cantidad");
-        jPanel5.add(jLabel3);
-
-        jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
-        jSpinnerCantidad.setPreferredSize(new java.awt.Dimension(80, 26));
-        jPanel5.add(jSpinnerCantidad);
-
-        jLabel4.setText("Monto");
-        jPanel5.add(jLabel4);
-
-        jSpinnerMonto.setMinimumSize(new java.awt.Dimension(70, 26));
-        jSpinnerMonto.setPreferredSize(new java.awt.Dimension(80, 26));
-        jPanel5.add(jSpinnerMonto);
-
-        jComboBoxAlmacenExistencias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxAlmacenExistencias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxAlmacenExistenciasActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jComboBoxAlmacenExistencias);
-
-        jTextFieldCausa.setText("Causa");
-        jTextFieldCausa.setPreferredSize(new java.awt.Dimension(150, 26));
-        jTextFieldCausa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldCausaActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jTextFieldCausa);
-
-        jPanel3.add(jPanel5, java.awt.BorderLayout.CENTER);
-
-        jButtonAdd.setText("Agregar");
-        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButtonAdd, java.awt.BorderLayout.EAST);
-
-        jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
-
+        jPanel4.setMinimumSize(new java.awt.Dimension(89, 50));
+        jPanel4.setPreferredSize(new java.awt.Dimension(225, 50));
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jLabel1.setText("No. Recibo");
-        jPanel4.add(jLabel1);
-
         jTextFieldRecibo.setToolTipText("");
-        jTextFieldRecibo.setPreferredSize(new java.awt.Dimension(150, 26));
-        jTextFieldRecibo.setSize(new java.awt.Dimension(150, 26));
+        jTextFieldRecibo.setPreferredSize(new java.awt.Dimension(150, 50));
         jPanel4.add(jTextFieldRecibo);
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.PAGE_END);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+        jPanel7.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jButtonClose.setText("Cancelar");
+        jButtonClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCloseActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonClose);
+
+        jButtonConfirmar.setText("Confirmar");
+        jButtonConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfirmarActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonConfirmar);
+
+        jPanel7.add(jPanel6, java.awt.BorderLayout.PAGE_END);
+
+        getContentPane().add(jPanel7, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
@@ -349,9 +364,9 @@ public class OperacionView extends OldAbstractView {
 
     }//GEN-LAST:event_jRadioButtonEntradaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
         dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonCloseActionPerformed
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
         lockTipoOp(false);
@@ -400,13 +415,14 @@ public class OperacionView extends OldAbstractView {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
     private javax.swing.JButton jButtonAdd;
+    private javax.swing.JButton jButtonClose;
     private javax.swing.JButton jButtonConfirmar;
     private javax.swing.JComboBox<Object> jComboBoxAlmacenExistencias;
     private com.toedter.calendar.JDateChooser jDateChooser1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -414,7 +430,11 @@ public class OperacionView extends OldAbstractView {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPaneloperaciones;
     private javax.swing.JRadioButton jRadioButtonEntrada;
     private javax.swing.JRadioButton jRadioButtonRebaja;
     private javax.swing.JRadioButton jRadioButtonSalida;
@@ -450,7 +470,7 @@ public class OperacionView extends OldAbstractView {
                 columnName = "Monto";
                 break;
             case REBAJA:
-                columnName = "Causa Rebaja";
+                columnName = "";
                 break;
             case TRASPASO:
                 columnName = "Destino";
@@ -518,7 +538,7 @@ public class OperacionView extends OldAbstractView {
     }
 
     private void lockTipoOp(boolean enabled) {
-        for (Component c : jPanel8.getComponents()) {
+        for (Component c : jPaneloperaciones.getComponents()) {
             c.setEnabled(enabled);
         }
     }
