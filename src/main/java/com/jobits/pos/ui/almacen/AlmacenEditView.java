@@ -306,31 +306,28 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
         jPanelOperaciones = new javax.swing.JPanel();
-        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
         jPanelEntrada = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jRadioButtonEntrada = new javax.swing.JRadioButton();
         jSpinnerMonto = new javax.swing.JSpinner();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
         jPanelTraspaso = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jRadioButtonTraspaso = new javax.swing.JRadioButton();
         jComboBoxAlmacen = new javax.swing.JComboBox<>();
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
         jPaneldestino = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jRadioButtonSalida = new javax.swing.JRadioButton();
         jComboBoxPuntoElab = new javax.swing.JComboBox<>();
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 20), new java.awt.Dimension(0, 20), new java.awt.Dimension(32767, 20));
         jPanelRazon = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jRadioButtonRebaja = new javax.swing.JRadioButton();
         jTextFieldRebaja = MaterialComponentsFactory.Input.getTextField("", "Razon de rebaja");
         jPanelConfirmar = new javax.swing.JPanel();
         jButtonConfirmar = MaterialComponentsFactory.Buttons.getAcceptButton();
         jPanelTransformacion = new javax.swing.JPanel();
-        jPanel13 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jPanelTransformar = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jSpinnerTransformar = new javax.swing.JSpinner();
         jLabelUMTransformacion = new javax.swing.JLabel();
-        jPanelTransformarEn = new javax.swing.JPanel();
-        jPanel12 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelHacia = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jComboBoxAlDestTransformacion = new javax.swing.JComboBox<>();
+        jPanelTransformarEn = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jButtonConfirmarTransformacion = MaterialComponentsFactory.Buttons.getAcceptButton();
         jPanelTabla = new javax.swing.JPanel();
@@ -372,7 +369,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(40, 20, 40, 40));
+        jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 20));
         jPanel6.setPreferredSize(new java.awt.Dimension(400, 463));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
@@ -413,8 +410,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
         jPanelOperaciones.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Operaciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
         jPanelOperaciones.setOpaque(false);
-        jPanelOperaciones.setLayout(new javax.swing.BoxLayout(jPanelOperaciones, javax.swing.BoxLayout.PAGE_AXIS));
-        jPanelOperaciones.add(filler8);
+        jPanelOperaciones.setLayout(new java.awt.GridLayout(4, 1));
 
         jPanelEntrada.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 1, 20), "Entrada (" + R.COIN_SUFFIX + ")"));
         jPanelEntrada.setMaximumSize(new java.awt.Dimension(2147483647, 80));
@@ -439,7 +435,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanelEntrada.add(jSpinnerMonto, java.awt.BorderLayout.CENTER);
 
         jPanelOperaciones.add(jPanelEntrada);
-        jPanelOperaciones.add(filler3);
 
         jPanelTraspaso.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20), "Traspaso"));
         jPanelTraspaso.setMaximumSize(new java.awt.Dimension(32767, 80));
@@ -460,7 +455,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanelTraspaso.add(jComboBoxAlmacen, java.awt.BorderLayout.CENTER);
 
         jPanelOperaciones.add(jPanelTraspaso);
-        jPanelOperaciones.add(filler4);
 
         jPaneldestino.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20), "Salida"));
         jPaneldestino.setMaximumSize(new java.awt.Dimension(2147483647, 80));
@@ -482,7 +476,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPaneldestino.add(jComboBoxPuntoElab, java.awt.BorderLayout.CENTER);
 
         jPanelOperaciones.add(jPaneldestino);
-        jPanelOperaciones.add(filler5);
 
         jPanelRazon.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20), "Rebaja"));
         jPanelRazon.setMaximumSize(new java.awt.Dimension(2147483647, 80));
@@ -530,33 +523,41 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
         jPanelTransformacion.setLayout(new java.awt.BorderLayout());
 
-        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Transformar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
-        jPanel13.setOpaque(false);
-        jPanel13.setPreferredSize(new java.awt.Dimension(300, 70));
+        jPanel8.setLayout(new java.awt.GridLayout());
+
+        jPanelTransformar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Transformar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jPanelTransformar.setMinimumSize(new java.awt.Dimension(0, 60));
+        jPanelTransformar.setOpaque(false);
+        jPanelTransformar.setPreferredSize(new java.awt.Dimension(100, 60));
+        jPanelTransformar.setLayout(new java.awt.BorderLayout());
 
         jSpinnerTransformar.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
-        jSpinnerTransformar.setMinimumSize(new java.awt.Dimension(150, 26));
+        jSpinnerTransformar.setMaximumSize(new java.awt.Dimension(150, 26));
+        jSpinnerTransformar.setMinimumSize(new java.awt.Dimension(50, 26));
         jSpinnerTransformar.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel13.add(jSpinnerTransformar);
+        jPanelTransformar.add(jSpinnerTransformar, java.awt.BorderLayout.CENTER);
 
         jLabelUMTransformacion.setText("<U/M>");
-        jPanel13.add(jLabelUMTransformacion);
+        jPanelTransformar.add(jLabelUMTransformacion, java.awt.BorderLayout.EAST);
 
-        jPanelTransformacion.add(jPanel13, java.awt.BorderLayout.PAGE_START);
+        jPanel8.add(jPanelTransformar);
 
-        jPanelTransformarEn.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "En...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        jPanelHacia.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Hacia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jPanelHacia.setOpaque(false);
+        jPanelHacia.setPreferredSize(new java.awt.Dimension(170, 60));
+
+        jComboBoxAlDestTransformacion.setMaximumSize(new java.awt.Dimension(150, 26));
+        jComboBoxAlDestTransformacion.setMinimumSize(new java.awt.Dimension(150, 26));
+        jComboBoxAlDestTransformacion.setPreferredSize(new java.awt.Dimension(150, 27));
+        jPanelHacia.add(jComboBoxAlDestTransformacion);
+
+        jPanel8.add(jPanelHacia);
+
+        jPanelTransformacion.add(jPanel8, java.awt.BorderLayout.PAGE_START);
+
+        jPanelTransformarEn.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "En...", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         jPanelTransformarEn.setOpaque(false);
         jPanelTransformarEn.setLayout(new java.awt.BorderLayout());
-
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Hacia", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
-        jPanel12.setOpaque(false);
-
-        jComboBoxAlDestTransformacion.setMinimumSize(new java.awt.Dimension(150, 27));
-        jComboBoxAlDestTransformacion.setPreferredSize(new java.awt.Dimension(150, 27));
-        jPanel12.add(jComboBoxAlDestTransformacion);
-
-        jPanelTransformarEn.add(jPanel12, java.awt.BorderLayout.PAGE_END);
-
         jPanelTransformacion.add(jPanelTransformarEn, java.awt.BorderLayout.CENTER);
 
         jPanel11.setOpaque(false);
@@ -587,30 +588,33 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         jPanel5.add(jPanel6, java.awt.BorderLayout.EAST);
 
         jPanelTabla.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelTabla.setBorder(javax.swing.BorderFactory.createEmptyBorder(40, 40, 40, 20));
+        jPanelTabla.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 10));
         jPanelTabla.setLayout(new java.awt.BorderLayout());
         jPanel5.add(jPanelTabla, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
         jXPanelControles.setBackground(new java.awt.Color(204, 204, 204));
-        jXPanelControles.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 40, 40, 40));
+        jXPanelControles.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 20, 20));
         jXPanelControles.setLayout(new javax.swing.BoxLayout(jXPanelControles, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Valor total en almacen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
-        jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Valor total en almacen", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        jPanel7.setMinimumSize(new java.awt.Dimension(690, 90));
+        jPanel7.setPreferredSize(new java.awt.Dimension(690, 100));
+        jPanel7.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setOpaque(false);
         jPanel1.setPreferredSize(new java.awt.Dimension(406, 40));
         jPanel1.setLayout(new java.awt.BorderLayout(5, 5));
 
-        jXLabelValorTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jXLabelValorTotal.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jXLabelValorTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jXLabelValorTotal.setText("0.00 CUC");
         jXLabelValorTotal.setFocusable(false);
         jXLabelValorTotal.setFont(new java.awt.Font("Apple Braille", 0, 24)); // NOI18N
         jPanel1.add(jXLabelValorTotal, java.awt.BorderLayout.CENTER);
 
-        jPanel7.add(jPanel1);
+        jPanel7.add(jPanel1, java.awt.BorderLayout.EAST);
 
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
@@ -657,7 +661,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
         });
         jPanel2.add(jButtonResumen);
 
-        jPanel7.add(jPanel2);
+        jPanel7.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jXPanelControles.add(jPanel7);
 
@@ -723,12 +727,8 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
-    private javax.swing.Box.Filler filler3;
-    private javax.swing.Box.Filler filler4;
-    private javax.swing.Box.Filler filler5;
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
-    private javax.swing.Box.Filler filler8;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonConfirmar;
     private javax.swing.JButton jButtonConfirmarTransformacion;
@@ -745,8 +745,6 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private javax.swing.JLabel jLabelUMTransformacion;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -754,14 +752,17 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelCantidad;
     private javax.swing.JPanel jPanelConfirmar;
     private javax.swing.JPanel jPanelEntrada;
+    private javax.swing.JPanel jPanelHacia;
     private javax.swing.JPanel jPanelOperaciones;
     private javax.swing.JPanel jPanelRazon;
     private javax.swing.JPanel jPanelTabla;
     private javax.swing.JPanel jPanelTransaccion;
     private javax.swing.JPanel jPanelTransformacion;
+    private javax.swing.JPanel jPanelTransformar;
     private javax.swing.JPanel jPanelTransformarEn;
     private javax.swing.JPanel jPanelTraspaso;
     private javax.swing.JPanel jPaneldestino;

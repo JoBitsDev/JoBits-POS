@@ -102,8 +102,6 @@ public class IpvGestionView extends AbstractViewPanel {
 
         add(jPanelOpciones, java.awt.BorderLayout.PAGE_START);
 
-        jTabbedPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 40, 40, 40));
-
         jPanelRegistros.setLayout(new java.awt.BorderLayout(5, 0));
 
         jPanel2.setOpaque(false);
@@ -208,6 +206,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanelIPV.add(jPanel5, java.awt.BorderLayout.CENTER);
 
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel6.setMinimumSize(new java.awt.Dimension(207, 58));
 
         jButtonImprimirIpvVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
         jButtonImprimirIpvVenta.setMnemonic('i');
@@ -239,6 +238,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jToggleButtonIpvVenta.setText(bundle.getString("label_productos_no_utilizados")); // NOI18N
         jPanel7.add(jToggleButtonIpvVenta, java.awt.BorderLayout.WEST);
 
+        jDateChooserIpvVentas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         jDateChooserIpvVentas.setPreferredSize(new java.awt.Dimension(155, 40));
         jPanel7.add(jDateChooserIpvVentas, java.awt.BorderLayout.LINE_END);
 
