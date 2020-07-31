@@ -5,12 +5,20 @@
  */
 package com.jobits.pos.ui;
 
+import com.jhw.swing.material.components.dashboard.taskpane.DashBoardTaskPane;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.ui.components.swing.containers.CollapseMenu;
+import com.jhw.swing.material.components.taskpane.CollapseMenu;
+import com.jhw.swing.material.components.taskpane.TaskButton;
+import com.jhw.swing.material.components.taskpane.TaskPaneMainContainer;
+import com.jhw.swing.material.standars.MaterialColors;
 import com.jhw.swing.material.standars.MaterialIcons;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.function.Consumer;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import org.jdesktop.swingx.JXCollapsiblePane;
 
 /**
@@ -20,6 +28,8 @@ import org.jdesktop.swingx.JXCollapsiblePane;
 public class MainMenuView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Menu View";
+
+    private DashBoardTaskPane taskPane;
 
     public MainMenuView(AbstractViewPresenter presenter) {
         super(presenter);
@@ -45,15 +55,14 @@ public class MainMenuView extends AbstractViewPanel {
         verticalLayout1.setGap(14);
         jXTaskPaneContainer1.setLayout(verticalLayout1);
 
-        setMinimumSize(new java.awt.Dimension(840, 720));
-        setOpaque(false);
-        setLayout(new java.awt.BorderLayout());
-
         jXCollapsiblePane1.setBackground(new java.awt.Color(102, 255, 102));
         jXCollapsiblePane1.setDirection(org.jdesktop.swingx.JXCollapsiblePane.Direction.LEFT);
         jXCollapsiblePane1.setMinimumSize(new java.awt.Dimension(90, 0));
         jXCollapsiblePane1.setOpaque(false);
-        add(jXCollapsiblePane1, java.awt.BorderLayout.CENTER);
+
+        setMinimumSize(new java.awt.Dimension(840, 720));
+        setOpaque(false);
+        setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -65,46 +74,84 @@ public class MainMenuView extends AbstractViewPanel {
     @Override
     public void wireUp() {
 
-        CollapseMenu productoVenta = new CollapseMenu(MaterialIcons.BUSINESS.deriveIcon(35f).deriveIcon(DefaultValues.PRIMARY_COLOR), "Productos");
+        CollapseMenu productoVenta = new CollapseMenu(MaterialIcons.BUSINESS.deriveIcon(35f).deriveIcon(Color.WHITE), "Productos");
         productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.MENU.toString()));
         productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.INSUMO.toString()));
         productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COCINA.toString()));
         productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.SECCION.toString()));
         productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.SALON.toString()));
 
-        CollapseMenu almacen = new CollapseMenu(MaterialIcons.STORAGE.deriveIcon(35f).deriveIcon(DefaultValues.PRIMARY_COLOR), "Almacén");
+        CollapseMenu almacen = new CollapseMenu(MaterialIcons.STORAGE.deriveIcon(35f).deriveIcon(Color.WHITE), "Almacén");
         almacen.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.ALMACEN.toString()));
         almacen.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.IPV.toString()));
 
-        CollapseMenu contabilidad = new CollapseMenu(MaterialIcons.MONETIZATION_ON.deriveIcon(35f).deriveIcon(DefaultValues.PRIMARY_COLOR), "Ventas");
+        CollapseMenu contabilidad = new CollapseMenu(MaterialIcons.MONETIZATION_ON.deriveIcon(35f).deriveIcon(Color.WHITE), "Ventas");
         contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COMENZAR_VENTAS.toString()));
         contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.VENTAS.toString()));
 
-        CollapseMenu nominas = new CollapseMenu(MaterialIcons.ACCOUNT_BOX.deriveIcon(35f).deriveIcon(DefaultValues.PRIMARY_COLOR), "Nóminas");
+        CollapseMenu nominas = new CollapseMenu(MaterialIcons.ACCOUNT_BOX.deriveIcon(35f).deriveIcon(Color.WHITE), "Nóminas");
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.NOMINAS.toString()));
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.TRABAJADORES.toString()));
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.PUESTOS_TRABAJO.toString()));
 
-        CollapseMenu configuracion = new CollapseMenu(MaterialIcons.SETTINGS.deriveIcon(35f).deriveIcon(DefaultValues.PRIMARY_COLOR), "Configuración");
+        CollapseMenu configuracion = new CollapseMenu(MaterialIcons.SETTINGS.deriveIcon(35f).deriveIcon(Color.WHITE), "Configuración");
         configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.CONFIGURACION.toString()));
         configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
         configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
 
-        jXTaskPaneContainer1.add(productoVenta);
-        jXTaskPaneContainer1.add(almacen);
-        jXTaskPaneContainer1.add(contabilidad);
-        jXTaskPaneContainer1.add(nominas);
-        jXTaskPaneContainer1.add(configuracion);
+        taskPane.addMainElement(productoVenta);
+        taskPane.addMainElement(almacen);
+        taskPane.addMainElement(contabilidad);
+        taskPane.addMainElement(nominas);
+        taskPane.addMainElement(configuracion);
+
+        taskPane.format();
 
     }
 
     @Override
     public void uiInit() {
         initComponents();
+        taskPane = new DashBoardTaskPane();
+        taskPane.setPanelSideMenuColor(MaterialColors.WHITE);
+        add(taskPane, BorderLayout.CENTER);
+        ((JPanel)taskPane.getComponent(1)).setBorder(new MatteBorder(0, 0, 0, 3, DefaultValues.SECONDARY_COLOR_LIGHT));
+        taskPane.setButtonFormatter(new Consumer<TaskButton>() {
+            @Override
+            public void accept(TaskButton t) {
+                t.setDeselectedColor(MaterialColors.WHITE);
+                t.setSelectedColor(DefaultValues.SECONDARY_COLOR);
+                t.setMauseOverColor(DefaultValues.SECONDARY_COLOR_LIGHT);
+                t.setForeground(MaterialColors.BLACK);
+                t.setFont(DefaultValues.DEFAULT_FONT);
+                t.repaint();
+            }
+        });
+        taskPane.setCollapseMenuFormatter(new Consumer<CollapseMenu>() {
+            @Override
+            public void accept(CollapseMenu t) {
+                t.setSelectedColor(DefaultValues.PRIMARY_COLOR);
+                t.setDeselectedColor(MaterialColors.WHITE);
+                t.setMainPanelForeground(MaterialColors.BLACK);
+                t.setBorder(new LineBorder(DefaultValues.SECONDARY_COLOR_LIGHT, 1, false));
+                t.setFont(DefaultValues.DEFAULT_FONT);
 
-        jXCollapsiblePane1.setLayout(new BorderLayout());
-        jXCollapsiblePane1.add(jXTaskPaneContainer1);
+            }
+        });
 
+        taskPane.setMenuFormatter(new Consumer<CollapseMenu>() {
+            @Override
+            public void accept(CollapseMenu t) {
+                t.setSelectedColor(DefaultValues.PRIMARY_COLOR);
+                t.setDeselectedColor(MaterialColors.WHITE);
+                t.setMainPanelForeground(MaterialColors.BLACK);
+                t.setBorder(new LineBorder(DefaultValues.SECONDARY_COLOR_LIGHT, 1, false));
+                t.setFont(DefaultValues.DEFAULT_FONT);
+            }
+        });
+
+        taskPane.setIconShrink(MaterialIcons.ARROW_FORWARD.deriveIcon(Color.white));
+        taskPane.setIconUnShrink(MaterialIcons.ARROW_BACK.deriveIcon(Color.white));
     }
 
     @Override
@@ -114,6 +161,10 @@ public class MainMenuView extends AbstractViewPanel {
 
     public JXCollapsiblePane getCollapse() {
         return jXCollapsiblePane1;
+    }
+
+    public DashBoardTaskPane getTaskPane() {
+        return taskPane;
     }
 
 }

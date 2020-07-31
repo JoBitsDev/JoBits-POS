@@ -68,6 +68,7 @@ dependencies {
     implementation project(':core')
     implementation project(':autenticacion')
     implementation project(':Material')
+    implementation project(':clean-swing')
 
 
     

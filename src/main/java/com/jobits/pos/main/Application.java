@@ -7,12 +7,15 @@ package com.jobits.pos.main;
 
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.cordinator.CoordinatorService;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.LongProcessActionService;
 import com.jobits.pos.ui.RootView;
+import com.jobits.pos.ui.login.LogInView;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
@@ -41,8 +44,6 @@ public class Application {
     // UI
     //
     private MainWindow mainWindow;
-
-    private RootView rootView;
 
     private CoordinatorService coordinator;
 
@@ -79,10 +80,8 @@ public class Application {
         mainWindow = new MainWindow();
         mainWindow.setTitle(APP_NAME);
         mainWindow.setWelcomeHeader(true);
-        rootView = RootView.getInstance();
         mainWindow.setLocationRelativeTo(null);
         mainWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        mainWindow.getContentPane().add(rootView);
         mainWindow.pack();
         navigator = NavigationService.getInstance();
         backgroundWorker = LongProcessActionServiceImpl.getInstance();
@@ -141,6 +140,10 @@ public class Application {
 
     public NotificationService getNotificationService() {
         return notificationService;
+    }
+
+    public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
+        return mainWindow.showView(viewUIDName, presenter, displayType);
     }
 
 }

@@ -7,12 +7,14 @@ package com.jobits.pos.ui.login;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.utils.ComponentMover;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.login.presenter.LoginViewModel.*;
+import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import static com.jobits.pos.ui.login.presenter.LoginViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import javax.swing.JButton;
@@ -25,12 +27,16 @@ public class LogInView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "AutenticaciÃ³n";
 
+    public static LogInView getInstance() {
+        return new LogInView(new LoginViewPresenter(new LogInController()));
+    }
+
     /**
      * Creates new form LogInView
      *
      * @param presenter
      */
-    public LogInView(AbstractViewPresenter presenter) {
+    private LogInView(AbstractViewPresenter presenter) {
         super(presenter);
     }
 
@@ -52,7 +58,7 @@ public class LogInView extends AbstractViewPanel {
         jLabelEstadoConexion = new javax.swing.JLabel();
         jButtonAutenticar = MaterialComponentsFactory.Buttons.getAcceptButton();
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("Usuario","Introduzca el nombre de usuario");
-        jPasswordField = MaterialComponentsFactory.Input.getPasswordField("Contraseña", "Introduzca la contraseña");
+        jPasswordField = MaterialComponentsFactory.Input.getPasswordField("Contraseï¿½a", "Introduzca la contraseï¿½a");
 
         setMinimumSize(new java.awt.Dimension(483, 285));
         setName("main"); // NOI18N
