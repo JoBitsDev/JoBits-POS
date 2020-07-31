@@ -140,7 +140,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jComboBoxCOCINA.setPreferredSize(new java.awt.Dimension(250, 60));
         jPanel10.add(jComboBoxCOCINA);
 
-        jButtonAddCocina.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
+        jButtonAddCocina.setText(bundle.getString("label_nuevo_pto_elaboracion")); // NOI18N
         jButtonAddCocina.setMaximumSize(new java.awt.Dimension(300, 60));
         jButtonAddCocina.setMinimumSize(new java.awt.Dimension(60, 50));
         jButtonAddCocina.addActionListener(new java.awt.event.ActionListener() {
@@ -155,7 +155,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jComboBoxSECCION.setPreferredSize(new java.awt.Dimension(250, 60));
         jPanel10.add(jComboBoxSECCION);
 
-        jButtonAddSeccion.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
+        jButtonAddSeccion.setText(bundle.getString("label_nueva_categoria")); // NOI18N
         jButtonAddSeccion.setMaximumSize(new java.awt.Dimension(300, 60));
         jButtonAddSeccion.setMinimumSize(new java.awt.Dimension(60, 50));
         jButtonAddSeccion.addActionListener(new java.awt.event.ActionListener() {
