@@ -9,11 +9,13 @@ import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaListService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import java.util.Optional;
+import com.jobits.pos.ui.productos.ProductoVentaDetailView2;
 
 /**
  *
@@ -52,19 +54,31 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
 
     @Override
     protected void onAgregarClick() {
-        NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
+
+        new ProductoVentaDetailView2(Application.getInstance().getMainWindow(), true,
                 new ProductoVentaDetailPresenter(
                         new ProductoVentaDetailController(), null));
-        setListToBean();
+
+//        NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
+//                new ProductoVentaDetailPresenter(
+//                        new ProductoVentaDetailController(), null));
+//        setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
-        NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
+        
+        new ProductoVentaDetailView2(Application.getInstance().getMainWindow(), true,
                 new ProductoVentaDetailPresenter(
                         new ProductoVentaDetailController(
                                 getBean().getElemento_seleccionado()),
                         getBean().getElemento_seleccionado()));
+
+//        NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
+//                new ProductoVentaDetailPresenter(
+//                        new ProductoVentaDetailController(
+//                                getBean().getElemento_seleccionado()),
+//                        getBean().getElemento_seleccionado()));
     }
 
     @Override
