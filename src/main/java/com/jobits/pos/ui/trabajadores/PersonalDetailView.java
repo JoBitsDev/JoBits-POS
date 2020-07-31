@@ -68,7 +68,7 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
         jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField(" ", "Usuario*");
         jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPasswordFieldPassAntigua = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena_nueva"));
+        jPasswordFieldPassAntigua = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena_antigua"));
         jToggleButtonMostrarPass = new javax.swing.JToggleButton();
         jPasswordFieldPassNueva = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena_nueva"));
         jPasswordFieldPassRepetir = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_repetir_contrasena_nueva"));
