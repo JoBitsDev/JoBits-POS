@@ -192,7 +192,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getPasswordField(&quot;&quot;,&quot;Contrase&#xf1;a&quot;)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getPasswordField(&quot;&quot;,java.util.ResourceBundle.getBundle(&quot;Strings&quot;).getString(&quot;label_contrasena&quot;))"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.Box$Filler" name="filler6">

@@ -96,6 +96,7 @@
                       <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                         <EmptyBorder bottom="15" left="15" right="15" top="15"/>
                       </Border>
+                      <ResourceString PropertyName="titleX" bundle="Strings.properties" key="label_basico" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                       <Font PropertyName="font" name="Lucida Grande" size="24" style="0"/>
                     </TitledBorder>
                   </Border>
@@ -313,6 +314,7 @@
                               <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                                 <EmptyBorder bottom="3" left="3" right="3" top="3"/>
                               </Border>
+                              <ResourceString PropertyName="titleX" bundle="Strings.properties" key="label_categoria" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </TitledBorder>
                           </Border>
                         </Property>
@@ -557,7 +559,7 @@
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getTextFielPrecioVenta(&quot;&quot;, &quot;Comisi&#xf3;n por venta&quot;,R.COIN_SUFFIX)"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getTextFielPrecioVenta(&quot;&quot;, java.util.ResourceBundle.getBundle(&quot;Strings&quot;).getString(&quot;label_comision_por_venta&quot;),R.COIN_SUFFIX)"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

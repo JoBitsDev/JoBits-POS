@@ -58,7 +58,7 @@ public class LogInView extends AbstractViewPanel {
         jLabelEstadoConexion = new javax.swing.JLabel();
         jButtonAutenticar = MaterialComponentsFactory.Buttons.getAcceptButton();
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("Usuario","Introduzca el nombre de usuario");
-        jPasswordField = MaterialComponentsFactory.Input.getPasswordField("Contraseï¿½a", "Introduzca la contraseï¿½a");
+        jPasswordField = MaterialComponentsFactory.Input.getPasswordField("Contraseña", "Introduzca la contraseña");
 
         setMinimumSize(new java.awt.Dimension(483, 285));
         setName("main"); // NOI18N
@@ -74,7 +74,8 @@ public class LogInView extends AbstractViewPanel {
         jXLabelUser1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/logo/banner.png"))); // NOI18N
         jXLabelUser1.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
 
-        jPanelConn.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Ubicacion"));
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jPanelConn.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), bundle.getString("label_ubicacion"))); // NOI18N
         jPanelConn.setMaximumSize(new java.awt.Dimension(405, 23));
         jPanelConn.setOpaque(false);
         jPanelConn.setLayout(new java.awt.BorderLayout());
@@ -93,7 +94,6 @@ public class LogInView extends AbstractViewPanel {
         jLabelEstadoConexion.setPreferredSize(new java.awt.Dimension(45, 30));
         jPanelConn.add(jLabelEstadoConexion, java.awt.BorderLayout.PAGE_END);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonAutenticar.setText(bundle.getString("label_autenticar")); // NOI18N
         jButtonAutenticar.setEnabled(false);
         jButtonAutenticar.setPreferredSize(new java.awt.Dimension(180, 60));

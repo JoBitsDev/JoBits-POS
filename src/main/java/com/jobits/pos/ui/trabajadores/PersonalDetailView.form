@@ -206,6 +206,9 @@
                 <TitledBorder title="Seguridad"/>
               </Border>
             </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[310, 290]"/>
+            </Property>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getSecondaryPanel()"/>
@@ -221,7 +224,7 @@
                   </Border>
                 </Property>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[300, 220]"/>
+                  <Dimension value="[300, 260]"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -244,7 +247,7 @@
                       <Font name="Dialog" size="14" style="0"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[150, 60]"/>
+                      <Dimension value="[150, 70]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -273,11 +276,11 @@
                           <Font name="Dialog" size="14" style="0"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[150, 60]"/>
+                          <Dimension value="[150, 70]"/>
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getPasswordField(&quot;&quot;, &quot;Contrase&#xf1;a antigua&quot;)"/>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getPasswordField(&quot;&quot;, java.util.ResourceBundle.getBundle(&quot;Strings&quot;).getString(&quot;label_contrasena_nueva&quot;))"/>
                       </AuxValues>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -309,11 +312,11 @@
                       <Font name="Dialog" size="14" style="0"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[150, 60]"/>
+                      <Dimension value="[150, 70]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getPasswordField(&quot;&quot;, &quot;Contrase&#xf1;a nueva&quot;)"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getPasswordField(&quot;&quot;, java.util.ResourceBundle.getBundle(&quot;Strings&quot;).getString(&quot;label_contrasena_nueva&quot;))"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JPasswordField" name="jPasswordFieldPassRepetir">
@@ -322,11 +325,11 @@
                       <Font name="Dialog" size="14" style="0"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[150, 60]"/>
+                      <Dimension value="[150, 70]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getPasswordField(&quot;&quot;, &quot;Repetir contrase&#xf1;a antigua&quot;)"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getPasswordField(&quot;&quot;, java.util.ResourceBundle.getBundle(&quot;Strings&quot;).getString(&quot;label_repetir_contrasena_nueva&quot;))"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -472,7 +475,9 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Telefono M&#xf3;vil"/>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="Strings.properties" key="label_telefono_movil" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -522,7 +527,9 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Telefono Fijo"/>
+                        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                          <ResourceString bundle="Strings.properties" key="label_telefono_fijo" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                        </Property>
                       </Properties>
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">

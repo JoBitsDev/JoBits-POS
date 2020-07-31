@@ -68,10 +68,10 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
         jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField(" ", "Usuario*");
         jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPasswordFieldPassAntigua = MaterialComponentsFactory.Input.getPasswordField("", "Contraseña antigua");
+        jPasswordFieldPassAntigua = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena_nueva"));
         jToggleButtonMostrarPass = new javax.swing.JToggleButton();
-        jPasswordFieldPassNueva = MaterialComponentsFactory.Input.getPasswordField("", "Contraseña nueva");
-        jPasswordFieldPassRepetir = MaterialComponentsFactory.Input.getPasswordField("", "Repetir contraseña antigua");
+        jPasswordFieldPassNueva = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena_nueva"));
+        jPasswordFieldPassRepetir = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_repetir_contrasena_nueva"));
         jPanel10 = new javax.swing.JPanel();
         jPanel6 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel4 = MaterialComponentsFactory.Containers.getSecondaryPanel();
@@ -142,14 +142,15 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
         jPanel7.add(jPanel2);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Seguridad"));
+        jPanel3.setPreferredSize(new java.awt.Dimension(310, 290));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        jPanel1.setPreferredSize(new java.awt.Dimension(300, 220));
+        jPanel1.setPreferredSize(new java.awt.Dimension(300, 260));
         jPanel1.setLayout(new java.awt.GridLayout(4, 1));
 
         jTextFieldUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jTextFieldUsuario.setPreferredSize(new java.awt.Dimension(150, 60));
+        jTextFieldUsuario.setPreferredSize(new java.awt.Dimension(150, 70));
         jPanel1.add(jTextFieldUsuario);
 
         jPanel5.setMaximumSize(new java.awt.Dimension(150, 50));
@@ -158,7 +159,7 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
         jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPasswordFieldPassAntigua.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jPasswordFieldPassAntigua.setPreferredSize(new java.awt.Dimension(150, 60));
+        jPasswordFieldPassAntigua.setPreferredSize(new java.awt.Dimension(150, 70));
         jPanel5.add(jPasswordFieldPassAntigua, java.awt.BorderLayout.CENTER);
 
         jToggleButtonMostrarPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/visualizar.PNG"))); // NOI18N
@@ -173,11 +174,11 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
         jPanel1.add(jPanel5);
 
         jPasswordFieldPassNueva.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jPasswordFieldPassNueva.setPreferredSize(new java.awt.Dimension(150, 60));
+        jPasswordFieldPassNueva.setPreferredSize(new java.awt.Dimension(150, 70));
         jPanel1.add(jPasswordFieldPassNueva);
 
         jPasswordFieldPassRepetir.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jPasswordFieldPassRepetir.setPreferredSize(new java.awt.Dimension(150, 60));
+        jPasswordFieldPassRepetir.setPreferredSize(new java.awt.Dimension(150, 70));
         jPanel1.add(jPasswordFieldPassRepetir);
 
         jPanel3.add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -219,7 +220,8 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
         jPanel13.setLayout(new java.awt.BorderLayout());
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel6.setText("Telefono Móvil");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jLabel6.setText(bundle.getString("label_telefono_movil")); // NOI18N
         jPanel13.add(jLabel6, java.awt.BorderLayout.CENTER);
 
         jFormattedTextFieldMovil.setBorder(null);
@@ -237,7 +239,7 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
         jPanel9.setLayout(new java.awt.BorderLayout());
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText("Telefono Fijo");
+        jLabel7.setText(bundle.getString("label_telefono_fijo")); // NOI18N
         jPanel9.add(jLabel7, java.awt.BorderLayout.CENTER);
 
         jFormattedTextFieldFijo.setBorder(null);

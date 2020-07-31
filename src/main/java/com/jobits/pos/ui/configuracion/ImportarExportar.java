@@ -68,7 +68,8 @@ public class ImportarExportar extends AbstractViewPanel {
         jPanel3.add(filler5);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setText("Opción");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jLabel2.setText(bundle.getString("label_opcion")); // NOI18N
         jPanel3.add(jLabel2);
         jPanel3.add(filler7);
 
