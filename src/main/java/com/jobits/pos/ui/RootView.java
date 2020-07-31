@@ -5,18 +5,19 @@
  */
 package com.jobits.pos.ui;
 
+import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.ViewFacade;
-import com.jobits.pos.cordinator.NavigationService;
+
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import com.jobits.pos.ui.venta.VentaDetailView;
+
 import com.jobits.ui.components.MaterialComponentsFactory;
-import components.containers.MaterialPanel;
-import java.awt.CardLayout;
+import java.awt.BorderLayout;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JPanel;
@@ -25,11 +26,9 @@ import javax.swing.JPanel;
  *
  * @author Jorge
  */
-public class RootView extends JPanel {
+ public class RootView extends JPanel {
 
     public static String VIEW_NAME = "Root View";
-
-    private final CardLayout cards = new CardLayout();
 
     private MainMenuView dashboard;
 
@@ -39,8 +38,6 @@ public class RootView extends JPanel {
 
     private Map<String, View> views = new HashMap<>();
 
-    private boolean shrinked;
-
     private static RootView instance;
 
     /**
@@ -49,8 +46,12 @@ public class RootView extends JPanel {
     private RootView() {
         super();
         initComponents();
-        jPanelContent.setLayout(cards);
+        // jPanelContent.setLayout(cards);
         jPanelStatus.add(statusBar);
+        dashboard = new MainMenuView(new MainMenuPresenter(new MainMenuController()));
+        add(dashboard, BorderLayout.CENTER);
+        setShrinked(true);
+        statusBar.refreshView();
 
     }
 
@@ -74,13 +75,6 @@ public class RootView extends JPanel {
         jPanelHeader = MaterialComponentsFactory.Containers.getHeaderPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanelContent = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanelMainMenu = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanelBackButton = new javax.swing.JPanel();
-        jButtonBack = MaterialComponentsFactory.Buttons.getBackButton();
-        jPanelShinkButton = new javax.swing.JPanel();
-        jButtonShrink = MaterialComponentsFactory.Buttons.getMenuButton();
-        jPanelMenu = new javax.swing.JPanel();
         jPanelStatus = MaterialComponentsFactory.Containers.getPrimaryPanel();
 
         jPanelHeader.setOpaque(false);
@@ -102,104 +96,35 @@ public class RootView extends JPanel {
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new java.awt.BorderLayout());
 
-        jPanelContent.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        javax.swing.GroupLayout jPanelContentLayout = new javax.swing.GroupLayout(jPanelContent);
-        jPanelContent.setLayout(jPanelContentLayout);
-        jPanelContentLayout.setHorizontalGroup(
-            jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
-        );
-        jPanelContentLayout.setVerticalGroup(
-            jPanelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
-        );
-
-        add(jPanelContent, java.awt.BorderLayout.CENTER);
-
-        jPanelMainMenu.setLayout(new java.awt.BorderLayout());
-
-        jPanelBackButton.setOpaque(false);
-
-        jButtonBack.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonBack.setMaximumSize(new java.awt.Dimension(40, 40));
-        jButtonBack.setMinimumSize(new java.awt.Dimension(40, 40));
-        jButtonBack.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButtonBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBackActionPerformed(evt);
-            }
-        });
-        jPanelBackButton.add(jButtonBack);
-
-        jPanelMainMenu.add(jPanelBackButton, java.awt.BorderLayout.PAGE_START);
-
-        jPanelShinkButton.setOpaque(false);
-        jPanelShinkButton.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jButtonShrink.setMaximumSize(new java.awt.Dimension(60, 40));
-        jButtonShrink.setMinimumSize(new java.awt.Dimension(60, 40));
-        jButtonShrink.setPreferredSize(new java.awt.Dimension(60, 40));
-        jButtonShrink.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonShrinkActionPerformed(evt);
-            }
-        });
-        jPanelShinkButton.add(jButtonShrink);
-
-        jPanelMainMenu.add(jPanelShinkButton, java.awt.BorderLayout.PAGE_END);
-
-        jPanelMenu.setOpaque(false);
-        jPanelMenu.setLayout(new java.awt.BorderLayout());
-        jPanelMainMenu.add(jPanelMenu, java.awt.BorderLayout.CENTER);
-
-        add(jPanelMainMenu, java.awt.BorderLayout.WEST);
-
-        jPanelStatus.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jPanelStatus.setMinimumSize(new java.awt.Dimension(5, 40));
         jPanelStatus.setPreferredSize(new java.awt.Dimension(5, 60));
         jPanelStatus.setLayout(new java.awt.BorderLayout());
         add(jPanelStatus, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
-        NavigationService.getInstance().navigateUp();
-    }//GEN-LAST:event_jButtonBackActionPerformed
-
-    private void jButtonShrinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShrinkActionPerformed
-        setShrinked(!shrinked);
-    }//GEN-LAST:event_jButtonShrinkActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonBack;
-    private javax.swing.JButton jButtonShrink;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanelBackButton;
-    private javax.swing.JPanel jPanelContent;
     private javax.swing.JPanel jPanelHeader;
-    private javax.swing.JPanel jPanelMainMenu;
-    private javax.swing.JPanel jPanelMenu;
-    private javax.swing.JPanel jPanelShinkButton;
     private javax.swing.JPanel jPanelStatus;
     // End of variables declaration//GEN-END:variables
 
     private void addView(View view) {
         views.put(view.getViewName(), view);
-        jPanelContent.add(view.getViewComponent(), view.getViewName());
+        dashboard.getTaskPane().addView(view.getViewName(), view.getViewComponent());
     }
 
     //TODO: asco de metodo. arreglar
-    public void showView(String viewNameToDisplay, AbstractViewPresenter presenter, DisplayType displayType) {//TODO trabjar en los popup
-       //Caso especial para las ordenes
+    public boolean showView(String viewNameToDisplay, AbstractViewPresenter presenter, DisplayType displayType) {//TODO trabjar en los popup
+        //Caso especial para las ordenes
         if (viewNameToDisplay.equals(OrdenDetailFragmentView.VIEW_NAME)) {
             View v = views.get(currentDisplayedViewName);
             if (v == null) {
                 throw new IllegalArgumentException("Bad call on OrdenView when there is none displayed view");
             }
             if (v instanceof VentaDetailView) {
-               // ((VentaDetailView) v).addOrdenView((OrdenDetailFragmentView) ViewFacade.getView(OrdenDetailFragmentView.VIEW_NAME, presenter));
-                return;
+                // ((VentaDetailView) v).addOrdenView((OrdenDetailFragmentView) ViewFacade.getView(OrdenDetailFragmentView.VIEW_NAME, presenter));
+                return false;
             }
             throw new IllegalStateException("Bad call to ordenView when  " + v.getClass().getName() + " is active");
 
@@ -209,32 +134,24 @@ public class RootView extends JPanel {
         if (!views.containsKey(viewNameToDisplay)) {
             //trAtamiento especial para el menu principal
             if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
-                if (dashboard == null) {
-                    dashboard = (MainMenuView) ViewFacade.getView(viewNameToDisplay, presenter);
-                    jPanelMenu.add(dashboard);
-                    setShrinked(true);
-                    statusBar.refreshView();
-                }
                 viewNameToDisplay = DashBoardView.VIEW_NAME;//TODO: cuando se vuelva a la ventana de loggeo vaciar el usuario loggeado en la app
-
+            } else {
+                addView(ViewFacade.getView(viewNameToDisplay, presenter));
             }
             //tratamiento si la vista es nuevala vista es nueva
-        } else {
-            // se borra la vista y se vuelve a crear porque 
-            //no hay todavia manera de actualizar las vistas creadas dinamicamente
-            cards.removeLayoutComponent(views.get(viewNameToDisplay).getViewComponent());
         }
         //se vuelve a agregar la vista
-        addView(ViewFacade.getView(viewNameToDisplay, presenter));
         currentDisplayedViewName = viewNameToDisplay;
         //se decide si agregar el header y footer
         boolean displayAggregatesViews = !(currentDisplayedViewName.equals(LogInView.VIEW_NAME)
                 || currentDisplayedViewName.equals(UbicacionView.VIEW_NAME));
-        jPanelHeader.setVisible(!currentDisplayedViewName.equals(LogInView.VIEW_NAME));
-        jPanelMainMenu.setVisible(displayAggregatesViews);
+        //jPanelHeader.setVisible(!currentDisplayedViewName.equals(LogInView.VIEW_NAME));
         jPanelStatus.setVisible(displayAggregatesViews);
-        cards.show(jPanelContent, currentDisplayedViewName);
+        dashboard.setVisible(displayAggregatesViews);
+        dashboard.getTaskPane().showView(currentDisplayedViewName);
         repaint();
+
+        return true;
 
     }
 
@@ -244,7 +161,6 @@ public class RootView extends JPanel {
 
     public void setShrinked(boolean shrink) {
         dashboard.getCollapse().setCollapsed(shrink);
-        shrinked = shrink;
     }
 
 }

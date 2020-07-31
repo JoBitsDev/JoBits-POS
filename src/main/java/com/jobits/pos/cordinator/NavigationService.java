@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.cordinator;
 
+import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.main.ViewFacade;
@@ -78,7 +79,7 @@ public class NavigationService implements Navigator {
     }
 
     private void showView(AbstractViewPresenter presenter,DisplayType displayType) {
-        RootView.getInstance().showView(activeNode.getViewUIDName(), presenter,displayType);
+        Application.getInstance().showView(activeNode.getViewUIDName(), presenter,displayType);
     }
     
 }

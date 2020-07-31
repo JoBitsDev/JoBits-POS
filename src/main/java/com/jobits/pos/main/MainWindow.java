@@ -5,11 +5,15 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.ui.DefaultValues;
+import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.RootView;
+import com.jobits.pos.ui.login.LogInView;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.swing.containers.MaterialFrame;
-import com.jobits.ui.components.swing.containers.MaterialFrameWrapper;
 import java.awt.BorderLayout;
-import java.awt.Container;
+import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 
@@ -22,11 +26,18 @@ public class MainWindow extends MaterialFrame {
     /**
      * Creates new form MainWindow
      */
+    private CardLayout cards = new CardLayout();
+    private RootView rootView;
+    private LogInView loginView;
+
     public MainWindow() {
         super();
-        getContentPane().setLayout(new BorderLayout());
         initComponents();
+        getContentPane().setLayout(new BorderLayout());
         setBackground(DefaultValues.PRIMARY_COLOR);
+        setLayout(cards);
+        loginView = LogInView.getInstance();
+        add(loginView, LogInView.VIEW_NAME);
         repaint();
     }
 
@@ -59,6 +70,21 @@ public class MainWindow extends MaterialFrame {
 
     void setWelcomeHeader(boolean b) {
 
+    }
+
+    public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
+        boolean ret = false;
+        if (ret = viewUIDName.equals(LogInView.VIEW_NAME)) {
+            cards.show(getContentPane(), viewUIDName);
+        } else if (viewUIDName.equals(MainMenuView.VIEW_NAME)) {
+            rootView = RootView.getInstance();
+            add(rootView, RootView.VIEW_NAME);
+            cards.show(getContentPane(), RootView.VIEW_NAME);
+        } else if (rootView != null) {
+            ret = rootView.showView(viewUIDName, presenter, displayType);
+        }
+
+        return ret;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
