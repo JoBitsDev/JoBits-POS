@@ -58,7 +58,7 @@ public class LogInView extends AbstractViewPanel {
         jLabelEstadoConexion = new javax.swing.JLabel();
         jButtonAutenticar = MaterialComponentsFactory.Buttons.getAcceptButton();
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("Usuario","Introduzca el nombre de usuario");
-        jPasswordField = MaterialComponentsFactory.Input.getPasswordField("Contraseña", "Introduzca la contraseña");
+        jPasswordField = MaterialComponentsFactory.Input.getPasswordField(java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena"), java.util.ResourceBundle.getBundle("Strings").getString("label_introduzca_contrasena"));
 
         setMinimumSize(new java.awt.Dimension(483, 285));
         setName("main"); // NOI18N

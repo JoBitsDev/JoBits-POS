@@ -219,7 +219,7 @@
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPasswordField">
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getPasswordField(&quot;Contrase&#xf1;a&quot;, &quot;Introduzca la contrase&#xf1;a&quot;)"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getPasswordField(java.util.ResourceBundle.getBundle(&quot;Strings&quot;).getString(&quot;label_contrasena&quot;), java.util.ResourceBundle.getBundle(&quot;Strings&quot;).getString(&quot;label_introduzca_contrasena&quot;))"/>
           </AuxValues>
         </Component>
       </SubComponents>
