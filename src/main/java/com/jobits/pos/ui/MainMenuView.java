@@ -16,7 +16,9 @@ import com.jhw.swing.material.standars.MaterialIcons;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.function.Consumer;
+import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 import org.jdesktop.swingx.JXCollapsiblePane;
 
 /**
@@ -112,8 +114,8 @@ public class MainMenuView extends AbstractViewPanel {
         initComponents();
         taskPane = new DashBoardTaskPane();
         taskPane.setPanelSideMenuColor(MaterialColors.WHITE);
-        //taskPane.setBackground(DefaultValues.PRIMARY_COLOR);
         add(taskPane, BorderLayout.CENTER);
+        ((JPanel)taskPane.getComponent(1)).setBorder(new MatteBorder(0, 0, 0, 3, DefaultValues.SECONDARY_COLOR_LIGHT));
         taskPane.setButtonFormatter(new Consumer<TaskButton>() {
             @Override
             public void accept(TaskButton t) {
