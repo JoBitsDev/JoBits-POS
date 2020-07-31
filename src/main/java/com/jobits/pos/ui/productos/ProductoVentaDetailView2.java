@@ -48,9 +48,9 @@ public class ProductoVentaDetailView2 extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Crear/EditarProductoVenta");
-        setMinimumSize(new java.awt.Dimension(849, 600));
+        setMinimumSize(new java.awt.Dimension(600, 700));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(900, 900));
+        setPreferredSize(new java.awt.Dimension(658, 720));
         setSize(new java.awt.Dimension(0, 0));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crear/Editar Producto", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
