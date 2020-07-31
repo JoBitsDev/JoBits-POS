@@ -44,7 +44,7 @@ import javax.swing.JPanel;
 public class ViewFacade {
 
     public static View getRootView(AbstractViewPresenter presenter) {
-        return new LogInView(PresenterFacade.getPresenterFor(LogInView.VIEW_NAME));
+        return LogInView.getInstance();
     }
 
     public static View getView(String viewUniqueName, AbstractViewPresenter presenter) {
