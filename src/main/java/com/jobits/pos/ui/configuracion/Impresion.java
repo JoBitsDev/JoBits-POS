@@ -144,7 +144,7 @@ public class Impresion extends AbstractViewPanel {
         jPanelCaracterSeparador.add(filler12);
 
         jComboBoxCaracterSeparador.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", "ˆ" }));
+        jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", java.util.ResourceBundle.getBundle("Strings").getString("character_comilla")}));
         jComboBoxCaracterSeparador.setMinimumSize(new java.awt.Dimension(150, 26));
         jComboBoxCaracterSeparador.setPreferredSize(new java.awt.Dimension(150, 26));
         jPanelCaracterSeparador.add(jComboBoxCaracterSeparador);
@@ -155,7 +155,8 @@ public class Impresion extends AbstractViewPanel {
         jPanelTamannoPapel.add(filler11);
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel4.setText("Tamaño Papel");
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jLabel4.setText(bundle.getString("label_tamano_papel")); // NOI18N
         jLabel4.setToolTipText("");
         jPanelTamannoPapel.add(jLabel4);
         jPanelTamannoPapel.add(filler14);
