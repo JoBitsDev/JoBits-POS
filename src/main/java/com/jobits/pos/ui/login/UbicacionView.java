@@ -52,7 +52,7 @@ public class UbicacionView extends AbstractViewPanel {
         filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("","Usuario");
         filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-        jPasswordFielContrasena = MaterialComponentsFactory.Input.getPasswordField("","Contraseña");
+        jPasswordFielContrasena = MaterialComponentsFactory.Input.getPasswordField("",java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena"));
         filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jTextFieldDriver = MaterialComponentsFactory.Input.getTextField("","Driver");
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));

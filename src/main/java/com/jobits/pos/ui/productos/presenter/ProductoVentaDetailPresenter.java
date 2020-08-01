@@ -120,7 +120,9 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setCategoria_seleccionada(productoSeleccionado.getSeccionnombreSeccion());
         getBean().setNombre_producto(productoSeleccionado.getNombre());
         getBean().setCodigo_producto(productoSeleccionado.getCodigoProducto());
-        getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPagoPorVenta()));
+        if (productoSeleccionado.getPagoPorVenta() != null) {
+            getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPagoPorVenta()));
+        }
         getBean().setElaborado_seleccionado(productoSeleccionado.getCocinacodCocina());
         getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoSeleccionado.getProductoInsumoList()));
         getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
@@ -137,7 +139,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAceptarClick() {
-        if ((boolean)Application.getInstance().getNotificationService().
+        if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea guardar los cambios",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             ProductoVenta p;
@@ -159,16 +161,16 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             }
             p.setVisible(true);
             service.create(p);
-           // NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
+            // NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         }
 
     }
 
     private void onCancelarClick() {
-        if ((boolean)Application.getInstance().getNotificationService().
+        if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea descartar los cambios?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            service.discardChanges(); 
+            service.discardChanges();
             //NavigationService.getInstance().navigateUp();
         }
 
@@ -187,7 +189,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAgregarInsumoFichaClick() {
-        Optional<String> opt =Application.getInstance().getNotificationService().showDialog("Introduzca la cantidad de " + getBean().getInsumo_disponible_sel(), TipoNotificacion.DIALOG_INPUT);
+        Optional<String> opt = Application.getInstance().getNotificationService().showDialog("Introduzca la cantidad de " + getBean().getInsumo_disponible_sel(), TipoNotificacion.DIALOG_INPUT);
         if (opt.isPresent()) {
             try {
                 float cantidad = Float.parseFloat(opt.get());
@@ -197,7 +199,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
                 getBean().setInsumo_disponible_sel(null);
             } catch (NumberFormatException ex) {
-               Application.getInstance().getNotificationService().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
+                Application.getInstance().getNotificationService().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
             }
         }
 

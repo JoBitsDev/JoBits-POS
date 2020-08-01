@@ -10,6 +10,7 @@ import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaDetailPresenter;
 import com.jobits.pos.ui.utils.AddFromPanel;
+import com.jobits.pos.ui.utils.ComponentMover;
 import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
@@ -48,6 +49,7 @@ public class ProductoVentaDetailView2 extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Crear/EditarProductoVenta");
         setMinimumSize(new java.awt.Dimension(849, 600));
+        setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(900, 900));
         setSize(new java.awt.Dimension(0, 0));
 
@@ -100,6 +102,8 @@ public class ProductoVentaDetailView2 extends javax.swing.JDialog {
         jButtonCancelar.setAction(p.getOperation(ProductoVentaDetailPresenter.ACTION_CANCELAR));
         jButtonCrear.setAction(p.getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR));
 
+        ComponentMover cm = new ComponentMover(this, this);
+        setLocationRelativeTo(null);
         setVisible(true);
 
     }
