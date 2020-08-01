@@ -74,27 +74,29 @@ public class MainMenuView extends AbstractViewPanel {
     @Override
     public void wireUp() {
 
-        CollapseMenu productoVenta = new CollapseMenu(MaterialIcons.BUSINESS.deriveIcon(35f).deriveIcon(Color.WHITE), "Productos");
+        float iconSize = 25f;
+        
+        CollapseMenu productoVenta = new CollapseMenu(MaterialIcons.BUSINESS.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Productos");
         productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.MENU.toString()));
         productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.INSUMO.toString()));
         productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COCINA.toString()));
         productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.SECCION.toString()));
         productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.SALON.toString()));
 
-        CollapseMenu almacen = new CollapseMenu(MaterialIcons.STORAGE.deriveIcon(35f).deriveIcon(Color.WHITE), "Almacén");
+        CollapseMenu almacen = new CollapseMenu(MaterialIcons.STORAGE.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Almacén");
         almacen.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.ALMACEN.toString()));
         almacen.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.IPV.toString()));
 
-        CollapseMenu contabilidad = new CollapseMenu(MaterialIcons.MONETIZATION_ON.deriveIcon(35f).deriveIcon(Color.WHITE), "Ventas");
+        CollapseMenu contabilidad = new CollapseMenu(MaterialIcons.MONETIZATION_ON.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Ventas");
         contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COMENZAR_VENTAS.toString()));
         contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.VENTAS.toString()));
 
-        CollapseMenu nominas = new CollapseMenu(MaterialIcons.ACCOUNT_BOX.deriveIcon(35f).deriveIcon(Color.WHITE), "Nóminas");
+        CollapseMenu nominas = new CollapseMenu(MaterialIcons.ACCOUNT_BOX.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Nóminas");
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.NOMINAS.toString()));
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.TRABAJADORES.toString()));
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.PUESTOS_TRABAJO.toString()));
 
-        CollapseMenu configuracion = new CollapseMenu(MaterialIcons.SETTINGS.deriveIcon(35f).deriveIcon(Color.WHITE), "Configuración");
+        CollapseMenu configuracion = new CollapseMenu(MaterialIcons.SETTINGS.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Configuración");
         configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.CONFIGURACION.toString()));
         configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
         configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
@@ -104,9 +106,16 @@ public class MainMenuView extends AbstractViewPanel {
         taskPane.addMainElement(contabilidad);
         taskPane.addMainElement(nominas);
         taskPane.addMainElement(configuracion);
+        
+        productoVenta.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
+        almacen.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
+        contabilidad.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
+        nominas.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
+        configuracion.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
+        
 
-        taskPane.format();
-
+        taskPane.deselectAll();
+        
     }
 
     @Override
@@ -138,7 +147,6 @@ public class MainMenuView extends AbstractViewPanel {
 
             }
         });
-
         taskPane.setMenuFormatter(new Consumer<CollapseMenu>() {
             @Override
             public void accept(CollapseMenu t) {
@@ -149,9 +157,10 @@ public class MainMenuView extends AbstractViewPanel {
                 t.setFont(DefaultValues.DEFAULT_FONT);
             }
         });
-
         taskPane.setIconShrink(MaterialIcons.ARROW_FORWARD.deriveIcon(Color.white));
         taskPane.setIconUnShrink(MaterialIcons.ARROW_BACK.deriveIcon(Color.white));
+        taskPane.removeUpButton();
+
     }
 
     @Override
