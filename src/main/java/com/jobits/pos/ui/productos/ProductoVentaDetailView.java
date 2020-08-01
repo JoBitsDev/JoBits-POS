@@ -49,18 +49,14 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel4 = new javax.swing.JPanel();
         jPanelInputs = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel8 = new javax.swing.JPanel();
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jXLabelPCod = new org.jdesktop.swingx.JXLabel();
         jPanel7 = new javax.swing.JPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanel9 = new javax.swing.JPanel();
-        jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio venta",R.COIN_SUFFIX);
-        filler9 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
-        jTextFieldPrecioCosto = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio de costo",R.COIN_SUFFIX);
         jPanel10 = new javax.swing.JPanel();
+        jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio venta",R.COIN_SUFFIX);
+        jTextFieldPrecioCosto = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio de costo",R.COIN_SUFFIX);
         jComboBoxCOCINA = MaterialComponentsFactory.Displayers.getComboBox();
         jButtonAddCocina = MaterialComponentsFactory.Buttons.getAddButton();
-        jPanel2 = new javax.swing.JPanel();
         jComboBoxSECCION = MaterialComponentsFactory.Displayers.getComboBox();
         jButtonAddSeccion = MaterialComponentsFactory.Buttons.getAddButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
@@ -96,6 +92,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jScrollPane1.setWheelScrollingEnabled(false);
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setMinimumSize(new java.awt.Dimension(20, 20));
         jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.PAGE_AXIS));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
@@ -104,54 +101,48 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         jPanel8.setOpaque(false);
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-        jPanel8.add(filler4);
 
         jXLabelPCod.setText("P-Cod");
         jPanel8.add(jXLabelPCod);
 
         jPanelInputs.add(jPanel8);
 
+        jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        jPanel7.setMaximumSize(new java.awt.Dimension(2147483647, 80));
+        jPanel7.setMinimumSize(new java.awt.Dimension(14, 70));
         jPanel7.setOpaque(false);
-        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+        jPanel7.setPreferredSize(new java.awt.Dimension(14, 70));
+        jPanel7.setLayout(new java.awt.BorderLayout());
 
-        jTextFieldNombre.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        jTextFieldNombre.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jTextFieldNombre.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
-        jTextFieldNombre.setMaximumSize(new java.awt.Dimension(2147483647, 60));
-        jTextFieldNombre.setMinimumSize(new java.awt.Dimension(250, 60));
-        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(600, 60));
-        jPanel7.add(jTextFieldNombre);
+        jPanel7.add(jTextFieldNombre, java.awt.BorderLayout.CENTER);
 
         jPanelInputs.add(jPanel7);
 
-        jPanel9.setOpaque(false);
-        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+        jPanel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        jPanel10.setOpaque(false);
+        jPanel10.setLayout(new java.awt.GridLayout(3, 2, 10, 10));
 
         jTextFieldPrecioVenta.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
         jTextFieldPrecioVenta.setMinimumSize(new java.awt.Dimension(250, 60));
         jTextFieldPrecioVenta.setPreferredSize(new java.awt.Dimension(250, 60));
-        jPanel9.add(jTextFieldPrecioVenta);
-        jPanel9.add(filler9);
+        jPanel10.add(jTextFieldPrecioVenta);
 
         jTextFieldPrecioCosto.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
         jTextFieldPrecioCosto.setMaximumSize(new java.awt.Dimension(250, 60));
         jTextFieldPrecioCosto.setMinimumSize(new java.awt.Dimension(250, 60));
         jTextFieldPrecioCosto.setPreferredSize(new java.awt.Dimension(250, 60));
-        jPanel9.add(jTextFieldPrecioCosto);
-
-        jPanelInputs.add(jPanel9);
-
-        jPanel10.setOpaque(false);
-        jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+        jPanel10.add(jTextFieldPrecioCosto);
 
         jComboBoxCOCINA.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3), "Elaborado en"));
         jComboBoxCOCINA.setMinimumSize(new java.awt.Dimension(250, 60));
         jComboBoxCOCINA.setPreferredSize(new java.awt.Dimension(250, 60));
         jPanel10.add(jComboBoxCOCINA);
 
-        jButtonAddCocina.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
+        jButtonAddCocina.setText(bundle.getString("label_nuevo_pto_elaboracion")); // NOI18N
         jButtonAddCocina.setMaximumSize(new java.awt.Dimension(300, 60));
         jButtonAddCocina.setMinimumSize(new java.awt.Dimension(60, 50));
-        jButtonAddCocina.setPreferredSize(new java.awt.Dimension(180, 50));
         jButtonAddCocina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddCocinaActionPerformed(evt);
@@ -159,28 +150,22 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         });
         jPanel10.add(jButtonAddCocina);
 
-        jPanelInputs.add(jPanel10);
-
-        jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
-
         jComboBoxSECCION.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3), bundle.getString("label_categoria"))); // NOI18N
         jComboBoxSECCION.setMinimumSize(new java.awt.Dimension(250, 40));
         jComboBoxSECCION.setPreferredSize(new java.awt.Dimension(250, 60));
-        jPanel2.add(jComboBoxSECCION);
+        jPanel10.add(jComboBoxSECCION);
 
-        jButtonAddSeccion.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
+        jButtonAddSeccion.setText(bundle.getString("label_nueva_categoria")); // NOI18N
         jButtonAddSeccion.setMaximumSize(new java.awt.Dimension(300, 60));
         jButtonAddSeccion.setMinimumSize(new java.awt.Dimension(60, 50));
-        jButtonAddSeccion.setPreferredSize(new java.awt.Dimension(180, 50));
         jButtonAddSeccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddSeccionActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonAddSeccion);
+        jPanel10.add(jButtonAddSeccion);
 
-        jPanelInputs.add(jPanel2);
+        jPanelInputs.add(jPanel10);
 
         jPanel4.add(jPanelInputs);
         jPanel4.add(filler1);
@@ -269,11 +254,9 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler4;
     private javax.swing.Box.Filler filler5;
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
-    private javax.swing.Box.Filler filler9;
     private javax.swing.JButton jButtonAddCocina;
     private javax.swing.JButton jButtonAddInsumo;
     private javax.swing.JButton jButtonAddSeccion;
@@ -283,14 +266,12 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JComboBox<Seccion> jComboBoxSECCION;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelCrossRef;
     private javax.swing.JPanel jPanelInputs;
     private javax.swing.JPanel jPanelInventario;
