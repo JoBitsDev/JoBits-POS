@@ -113,7 +113,7 @@ public class MainMenuView extends AbstractViewPanel {
         nominas.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
         configuracion.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
         
-
+        taskPane.format();
         taskPane.deselectAll();
         
     }
