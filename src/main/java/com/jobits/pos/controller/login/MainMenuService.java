@@ -14,6 +14,10 @@ import java.util.Date;
  */
 public interface MainMenuService {
 
-    public VentaDetailController comenzarVentas(Date parse);
+    public VentaDetailController comenzarVentasEconomico(Date parse);
+    
+    public VentaDetailController comenzarVentasDependiente();
+    
+    public VentaDetailController comenzarVentasCajero();
     
 }

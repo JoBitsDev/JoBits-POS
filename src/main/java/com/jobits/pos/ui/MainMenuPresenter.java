@@ -11,7 +11,6 @@ import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.main.ViewFacade;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
@@ -21,8 +20,6 @@ import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 import java.text.ParseException;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -34,10 +31,13 @@ import java.util.logging.Logger;
 public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> {
 
     MainMenuService service;
+    private int nivelDeAccesoAutenticado = 0;
 
     public MainMenuPresenter(MainMenuService service) {
         super(new MainMenuViewModel());
         this.service = service;
+        nivelDeAccesoAutenticado = Application.getInstance().getLoggedUser()
+                .getPuestoTrabajonombrePuesto().getNivelAcceso();
 
     }
 
@@ -45,46 +45,79 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
     protected void registerOperations() {
         for (MainMenuController.MenuButtons v : MainMenuController.MenuButtons.values()) {
             if (v == MainMenuController.MenuButtons.LICENCIA) {
-                registerOperation(new AbstractViewAction(v.toString()) {
-                    @Override
-                    public Optional doAction() {
-                        ViewFacade.getView(LicenceDialogView.VIEW_NAME, null);
-                        return Optional.empty();
-                    }
-                });
+                registerOperation(onLicenciaClick(v.toString()));
                 continue;
             }
             if (v == MainMenuController.MenuButtons.COMENZAR_VENTAS) {
-                registerOperation(new AbstractViewAction(v.toString()) {
-                    @Override
-                    public Optional doAction() {
-                        Optional<String> ret = Application.getInstance().getNotificationService().
-                                showDialog("Introduzca el dia para abrir las ventas en el formato dd/mm/aa",
-                                        TipoNotificacion.DIALOG_INPUT);
-                        if (ret.isPresent()) {
-                            try {
-                                VentaDetailController control = service.comenzarVentas(R.DATE_FORMAT.parse(ret.get()));
-                                Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                        new VentaResumenViewPresenter(control, new OrdenController()));
-                            } catch (ParseException ex) {
-                                Application.getInstance().getNotificationService().showDialog("Formato incorrecto", TipoNotificacion.ERROR);
-                            }
-
-                        }
-                        return Optional.empty();
-                    }
-                });
+                registerOperation(onComenzarVentaClick(v.toString()));
                 continue;
             }
-            registerOperation(new AbstractViewAction(v.toString()) {
-                @Override
-                public Optional doAction() {
-                    NavigationService.getInstance().navigateTo(v.toString());
-                    return Optional.empty();
-                }
-            });
+            registerOperation(onMenuClick(v.toString(), v.getNivelMinimoAcceso()));
 
         }
+    }
+
+    private AbstractViewAction onLicenciaClick(String actionName) {
+        return new AbstractViewAction(actionName) {
+            @Override
+            public Optional doAction() {
+                NavigationService.getInstance().navigateTo(LicenceDialogView.VIEW_NAME);
+//                        ViewFacade.getView(LicenceDialogView.VIEW_NAME, null);
+                return Optional.empty();
+            }
+        };
+    }
+
+    private AbstractViewAction onComenzarVentaClick(String actionName) {
+        return new AbstractViewAction(actionName) {
+            @Override
+            public Optional doAction() {
+                Optional<String> ret = Optional.empty();
+                VentaDetailController control = null;
+                if (nivelDeAccesoAutenticado >= R.NivelAcceso.ECONOMICO.getNivel()) {
+                    ret = Application.getInstance().getNotificationService().
+                            showDialog("Introduzca el dia para abrir las ventas en el formato dd/mm/aa",
+                                    TipoNotificacion.DIALOG_INPUT);
+                    try {
+                        control = service.comenzarVentasEconomico(R.DATE_FORMAT.parse(ret.get()));
+                    } catch (ParseException ex) {
+                        Application.getInstance().getNotificationService().showDialog("Formato incorrecto", TipoNotificacion.ERROR);
+                        return Optional.empty();
+                    }
+                } else if (nivelDeAccesoAutenticado >= R.NivelAcceso.CAJERO.getNivel()) {
+                    control = service.comenzarVentasCajero();
+                } else {
+                    control = service.comenzarVentasDependiente();
+
+                }
+                Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
+                        new VentaResumenViewPresenter(control, new OrdenController()));
+                return Optional.empty();
+            }
+        };
+    }
+
+    private AbstractViewAction onMenuClick(String actionName, int nivelDeAcceso) {
+        return new AbstractViewAction(actionName) {
+            @Override
+            public Optional doAction() {
+                if (nivelDeAccesoAutenticado >= nivelDeAcceso) {
+                    NavigationService.getInstance().navigateTo(actionName);//TODO: pifia
+                } else {
+                    Application.getInstance().getNotificationService().
+                            showDialog("El usuario no tiene permisos",
+                                    TipoNotificacion.ERROR);
+                }
+                return Optional.empty();
+            }
+        };
+    }
+
+    @Override
+    protected Optional refreshState() {
+        nivelDeAccesoAutenticado = Application.getInstance().getLoggedUser()
+                .getPuestoTrabajonombrePuesto().getNivelAcceso();
+        return Optional.empty();
     }
 
 }

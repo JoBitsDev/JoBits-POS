@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  * @author Jorge
  *
  */
-public class MainMenuController implements MainMenuService{
+public class MainMenuController implements MainMenuService {
 
     private SincronizacionController sincronizacion = new SincronizacionController();
 
@@ -52,28 +52,12 @@ public class MainMenuController implements MainMenuService{
         return licence.getLicence();
     }
 
-    public VentaDetailController comenzarVentas(Date date) throws IllegalArgumentException {
-        int nivel = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso();
-        if (nivel > R.NivelAcceso.ECONOMICO.getNivel()) {
-            if (date == null) {
-                return new VentaDetailController();
-            } else {
-                return new VentaDetailController(date);
-            }
-        } else if (nivel >= R.NivelAcceso.CAJERO.getNivel()) {
+    public VentaDetailController comenzarVentasEconomico(Date date) throws IllegalArgumentException {
+        if (date == null) {
             return new VentaDetailController();
-        } else if (nivel >= R.NivelAcceso.DEPENDIENTE.getNivel()) {
-            if (showConfirmDialog("Desea comenzar el dia de trabajo en el dia " + R.DATE_FORMAT.format(new Date()))) {
-                VentaDetailController controller = new VentaDetailController(new Date());
-                controller.initIPV(controller.getInstance());
-                Application.getInstance().getNotificationService().
-                        notify("El dia de trabajo esta iniciado en la fecha: "
-                                + R.DATE_FORMAT.format(controller.getInstance().getFecha()),
-                                TipoNotificacion.SUCCESS);
-                return controller;
-            }
+        } else {
+            return new VentaDetailController(date);
         }
-        return null;
     }
 
     private boolean showConfirmDialog(String string) {
@@ -81,6 +65,25 @@ public class MainMenuController implements MainMenuService{
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION;
+    }
+
+    @Override
+    public VentaDetailController comenzarVentasDependiente() {
+        if (showConfirmDialog("Desea comenzar el dia de trabajo en el dia " + R.DATE_FORMAT.format(new Date()))) {
+            VentaDetailController controller = new VentaDetailController(new Date());
+            controller.initIPV(controller.getInstance());
+            Application.getInstance().getNotificationService().
+                    notify("El dia de trabajo esta iniciado en la fecha: "
+                            + R.DATE_FORMAT.format(controller.getInstance().getFecha()),
+                            TipoNotificacion.SUCCESS);
+            return controller;
+        }
+        return null;
+    }
+
+    @Override
+    public VentaDetailController comenzarVentasCajero() {
+        return new VentaDetailController();
     }
 
     public enum MenuButtons {
