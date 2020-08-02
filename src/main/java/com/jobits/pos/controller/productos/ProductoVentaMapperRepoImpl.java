@@ -37,7 +37,12 @@ public class ProductoVentaMapperRepoImpl implements ProductoVentaMapperRepo {
     public List<ProductoVentaMapper> cargarProductoVenta() {
         List<ProductoVentaMapper> listaPV = new ArrayList<>();
         try {
-            br = new BufferedReader(new FileReader(new File(FILE_NAME)));
+            File f = new File(FILE_NAME);
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+
+            br = new BufferedReader(new FileReader(f));
 
             List<String> fileReaded = CsvReader.readFile(br);
 
@@ -50,6 +55,8 @@ public class ProductoVentaMapperRepoImpl implements ProductoVentaMapperRepo {
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ProductoVentaMapperRepoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ProductoVentaMapperRepoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listaPV;
     }
@@ -57,7 +64,13 @@ public class ProductoVentaMapperRepoImpl implements ProductoVentaMapperRepo {
     @Override
     public boolean guardarProductoVenta(List<ProductoVentaMapper> listaPVMapper) {
         try {
-            bw = new BufferedWriter(new FileWriter(new File(FILE_NAME)));
+            File f = new File(FILE_NAME);
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+
+            bw = new BufferedWriter(new FileWriter(f));
+
             List<String> listaIdProductoVenta;
             String idProductoVenta, idBusqueda;
 

@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui.venta;
 
+import com.jidesoft.plaf.aqua.AquaJideTabbedPaneUI;
 import com.jobits.pos.ui.AbstractDetailView;
 import com.jobits.pos.ui.utils.StateCellRender;
 import com.jobits.pos.ui.utils.TableColumnAdjuster;
@@ -41,6 +42,7 @@ import com.jobits.pos.persistencia.modelos.CocinaDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.utils;
+import org.pushingpixels.substance.internal.ui.SubstanceTabbedPaneUI;
 
 /**
  *
@@ -981,8 +983,8 @@ public class VentasCreateEditView extends AbstractDetailView<Venta> {
         }
         jButtonReabrirVentas.setEnabled(getInstance().getVentaTotal() != null);
 
-        jTabbedPaneResumenD.setUI(new ui.componentsui.tabbedpane.MaterialTabbedPaneUI());
-        jTabbedPaneData.setUI(new ui.componentsui.tabbedpane.MaterialTabbedPaneUI());
+//        jTabbedPaneResumenD.setUI(new SubstanceTabbedPaneUI());
+  //      jTabbedPaneData.setUI(new SubstanceTabbedPaneUI());
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
