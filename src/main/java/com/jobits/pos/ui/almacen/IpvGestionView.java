@@ -656,11 +656,14 @@ public class IpvGestionView extends AbstractView {
                     case 0:
                         return getController().getInsumo(items.get(rowIndex).getIpvRegistroPK().getIpvinsumocodInsumo());
                     case 1:
-                        return items.get(rowIndex).getInicio();
+                        return utils.setDosLugaresDecimalesFloat(
+                                items.get(rowIndex).getInicio());
                     case 2:
-                        return items.get(rowIndex).getEntrada();
+                        return utils.setDosLugaresDecimalesFloat(
+                                items.get(rowIndex).getEntrada());
                     case 3:
-                        return items.get(rowIndex).getDisponible();
+                        return utils.setDosLugaresDecimalesFloat(
+                                items.get(rowIndex).getDisponible());
                     case 4:
                         return utils.setDosLugaresDecimalesFloat(
                                 items.get(rowIndex).getConsumo());
@@ -668,7 +671,8 @@ public class IpvGestionView extends AbstractView {
                         return utils.setDosLugaresDecimalesFloat(
                                 items.get(rowIndex).getConsumoReal());
                     case 6:
-                        return items.get(rowIndex).getFinalCalculado();
+                        return utils.setDosLugaresDecimalesFloat(
+                                items.get(rowIndex).getFinalCalculado());
                     case 7:
                         return utils.setDosLugaresDecimales(
                                 items.get(rowIndex).getFinalCalculado() * items.get(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
