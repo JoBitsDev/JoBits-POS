@@ -15,7 +15,11 @@ repositories {
     mavenCentral()
 }
 
+compileJava.options.encoding = 'UTF-8'
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 dependencies {
     
@@ -62,7 +66,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.jidesoft/jide-oss
     compile group: 'com.jidesoft', name: 'jide-oss', version: '3.6.18'
 
-  //  implementation fileTree(dir: 'lib',include: '*.jar')
+    //  implementation fileTree(dir: 'lib',include: '*.jar')
 
     implementation project(':UIcomponents')
     implementation project(':core')
