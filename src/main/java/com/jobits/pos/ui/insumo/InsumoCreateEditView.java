@@ -67,7 +67,6 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     }
 
     private void updateTable(List<InsumoElaborado> items) {
-        jToggleButtonElaborado.setEnabled(false);
         jSpinnerCantidadCreada.setEnabled(false);
 
         tableIngElab = new OldAbstractCrossReferenePanel<InsumoElaborado, Insumo>("Ingredientes", getController().getItems()) {
@@ -510,11 +509,8 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     private void jToggleButtonCrossReferenceStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButtonCrossReferenceStateChanged
         if (jToggleButtonCrossReference.isSelected()) {
             showCrossReferenceDialog(instance.getProductoInsumoList());
-            jToggleButtonElaborado.setEnabled(true);
         } else {
             hideCrossReferenceDialog();
-            jToggleButtonElaborado.setSelected(false);
-            jToggleButtonElaborado.setEnabled(false);
 
         }
         setLocationRelativeTo(null);
