@@ -81,7 +81,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
         float aMayores = Float.parseFloat(JOptionPane.showInputDialog("Introduzca el valor de A mayores"));
         AsistenciaPersonal personal = panel.getHandler().getTableModel().getObjectAtSelectedRow();
         getController().updateAMayores(personal, aMayores);
-        panel.getHandler().getTableModel().setItems(getController().getPersonalTrabajando(v));
+        updateView();
     }
 
     @Override
