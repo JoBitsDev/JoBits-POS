@@ -72,7 +72,9 @@ public class ComprobantePagoFormatter extends AbstractTicketFormatter {
                     }
                     propina += a.getPropina();
                     salario += a.getPago();
-                    aMayores += a.getAMayores();
+                    if (a.getAMayores() != null) {
+                        aMayores += a.getAMayores();
+                    }
                 }
             }
         }
