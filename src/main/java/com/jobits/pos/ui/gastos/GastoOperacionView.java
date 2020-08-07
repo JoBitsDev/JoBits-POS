@@ -23,7 +23,7 @@ import com.jobits.pos.recursos.R.TipoGasto;
 import com.jobits.pos.servicios.impresion.formatter.GastosFormatter;
 import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.utils;
-
+import com.jobits.ui.components.MaterialComponentsFactory;
 /**
  *
  * @author Jorge
@@ -55,11 +55,15 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
         jPanelInfo = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTableInfo = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jButtonImprimirGastos = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButton1 = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanelContainer = new javax.swing.JPanel();
         jLabelGast = new javax.swing.JLabel();
-        jButtonImprimirGastos = new javax.swing.JButton();
-        jPanelAgregar = new javax.swing.JPanel();
+        jPanelAgregar1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jButtonLimpiar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonCrearE = MaterialComponentsFactory.Buttons.getMaterialButton();
         jPanel8 = new javax.swing.JPanel();
         jComboBoxCategoria = new javax.swing.JComboBox<>();
         jTextFieldTipo = new javax.swing.JTextField();
@@ -70,8 +74,6 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
         jLabelleft = new javax.swing.JLabel();
-        jButtonCrearE = new javax.swing.JButton();
-        jButtonLimpiar = new javax.swing.JButton();
 
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
@@ -91,6 +93,19 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
 
         jPanelInfo.add(jScrollPane4, java.awt.BorderLayout.CENTER);
 
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        jButtonImprimirGastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonImprimirGastos.setText("Gastos");
+        jButtonImprimirGastos.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonImprimirGastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirGastosActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButtonImprimirGastos, java.awt.BorderLayout.WEST);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/borrar16.png"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButton1.setText(bundle.getString("label_eliminar")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -98,36 +113,52 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanelInfo.add(jButton1, java.awt.BorderLayout.SOUTH);
+        jPanel4.add(jButton1, java.awt.BorderLayout.EAST);
 
-        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanelInfo.add(jPanel4, java.awt.BorderLayout.SOUTH);
+
+        add(jPanelInfo, java.awt.BorderLayout.CENTER);
+
+        jPanelContainer.setMaximumSize(new java.awt.Dimension(181, 2147483647));
+        jPanelContainer.setMinimumSize(new java.awt.Dimension(181, 85));
+        jPanelContainer.setPreferredSize(new java.awt.Dimension(182, 100));
+        jPanelContainer.setLayout(new java.awt.BorderLayout());
 
         jLabelGast.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabelGast.setForeground(new java.awt.Color(153, 0, 0));
         jLabelGast.setText("XXXX.XX CUC");
-        jLabelGast.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true), "Total"));
-        jPanel4.add(jLabelGast);
+        jLabelGast.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Total"));
+        jPanelContainer.add(jLabelGast, java.awt.BorderLayout.SOUTH);
 
-        jButtonImprimirGastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jButtonImprimirGastos.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jButtonImprimirGastos.addActionListener(new java.awt.event.ActionListener() {
+        jPanelAgregar1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Nuevo/Editar Gasto"));
+        jPanelAgregar1.setMaximumSize(new java.awt.Dimension(181, 2147483647));
+        jPanelAgregar1.setMinimumSize(new java.awt.Dimension(181, 85));
+        jPanelAgregar1.setPreferredSize(new java.awt.Dimension(182, 100));
+        jPanelAgregar1.setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setLayout(new java.awt.GridLayout(2, 1));
+
+        jButtonLimpiar.setText(bundle.getString("label_limpiar")); // NOI18N
+        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImprimirGastosActionPerformed(evt);
+                jButtonLimpiarActionPerformed(evt);
             }
         });
-        jPanel4.add(jButtonImprimirGastos);
+        jPanel3.add(jButtonLimpiar);
 
-        jPanelInfo.add(jPanel4, java.awt.BorderLayout.PAGE_START);
+        jButtonCrearE.setText("Crear");
+        jButtonCrearE.setEnabled(false);
+        jButtonCrearE.setPreferredSize(new java.awt.Dimension(164, 28));
+        jButtonCrearE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCrearEActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButtonCrearE);
 
-        add(jPanelInfo, java.awt.BorderLayout.CENTER);
+        jPanelAgregar1.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
-        jPanelAgregar.setBorder(javax.swing.BorderFactory.createTitledBorder("Nuevo/Editar Gasto"));
-        jPanelAgregar.setMaximumSize(new java.awt.Dimension(181, 2147483647));
-        jPanelAgregar.setMinimumSize(new java.awt.Dimension(181, 85));
-        jPanelAgregar.setPreferredSize(new java.awt.Dimension(182, 100));
-        jPanelAgregar.setLayout(new java.awt.BorderLayout());
-
-        jComboBoxCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoría"));
+        jComboBoxCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_categoria"))); // NOI18N
         jComboBoxCategoria.setPreferredSize(new java.awt.Dimension(140, 51));
         jComboBoxCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,7 +203,7 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Descripción"));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_descripcion"))); // NOI18N
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane1.setMaximumSize(new java.awt.Dimension(150, 32767));
@@ -186,7 +217,6 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
         jTextAreaDescripcion.setEnabled(false);
         jTextAreaDescripcion.setMinimumSize(new java.awt.Dimension(140, 140));
         jTextAreaDescripcion.setPreferredSize(new java.awt.Dimension(240, 140));
-        jTextAreaDescripcion.setSize(new java.awt.Dimension(240, 140));
         jTextAreaDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextAreaDescripcionKeyTyped(evt);
@@ -202,28 +232,11 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
 
         jPanel8.add(jPanel1);
 
-        jPanelAgregar.add(jPanel8, java.awt.BorderLayout.CENTER);
+        jPanelAgregar1.add(jPanel8, java.awt.BorderLayout.CENTER);
 
-        jButtonCrearE.setBackground(new java.awt.Color(204, 255, 255));
-        jButtonCrearE.setText("Crear");
-        jButtonCrearE.setEnabled(false);
-        jButtonCrearE.setPreferredSize(new java.awt.Dimension(164, 28));
-        jButtonCrearE.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCrearEActionPerformed(evt);
-            }
-        });
-        jPanelAgregar.add(jButtonCrearE, java.awt.BorderLayout.PAGE_END);
+        jPanelContainer.add(jPanelAgregar1, java.awt.BorderLayout.CENTER);
 
-        jButtonLimpiar.setText(bundle.getString("label_limpiar")); // NOI18N
-        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLimpiarActionPerformed(evt);
-            }
-        });
-        jPanelAgregar.add(jButtonLimpiar, java.awt.BorderLayout.PAGE_START);
-
-        add(jPanelAgregar, java.awt.BorderLayout.WEST);
+        add(jPanelContainer, java.awt.BorderLayout.WEST);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -294,10 +307,12 @@ public class GastoOperacionView extends AbstractFragmentView<Gasto> {
     private javax.swing.JLabel jLabelMonto;
     private javax.swing.JLabel jLabelleft;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanelAgregar;
+    private javax.swing.JPanel jPanelAgregar1;
+    private javax.swing.JPanel jPanelContainer;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
