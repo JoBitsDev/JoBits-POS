@@ -31,7 +31,7 @@ import java.util.Optional;
 public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResumenViewModel> {
 
     public static final String ACTION_IMPRIMIR_Z = "Imprimir z",
-            ACTION_IMPRIMIR_AUTORIZOS = "Imprmimir Autorizo",
+            ACTION_IMPRIMIR_AUTORIZOS = "Imprimir Autorizo",
             ACTION_TERMINAR_EXPORTAR = "Terminar y exportar",
             ACTION_TERMINAR_VENTAS = "Terminar Ventas",
             ACTION_REABRIR_VENTA = "Reabrir Venta",
