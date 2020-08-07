@@ -9,6 +9,7 @@ import com.jidesoft.hints.ListDataIntelliHints;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -87,6 +88,16 @@ public abstract class OldAbstractCrossReferenePanel<T, K> extends javax.swing.JP
     public JPanel getjPanelOpciones() {
         return jPanelOpciones;
     }
+    
+    public JButton getEliminarButton(){
+        return jButtonDeleteProd;
+    }
+    
+    public JPanel getjPanelBusqueda() {
+        return jPanel1;
+    }
+    
+    
 
     public void setReadOnlyMode(boolean readOnlyMode) {
         this.readOnlyMode = readOnlyMode;
