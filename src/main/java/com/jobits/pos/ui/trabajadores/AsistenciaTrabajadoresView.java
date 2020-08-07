@@ -20,6 +20,7 @@ import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  *
@@ -55,17 +56,8 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButtonImprimir = new javax.swing.JButton();
         jPanelDetail = new javax.swing.JPanel();
-
-        jButtonImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jButtonImprimir.setText("Imprimir");
-        jButtonImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jButtonImprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImprimirActionPerformed(evt);
-            }
-        });
+        jPanel5 = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -82,6 +74,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
         AsistenciaPersonal personal = panel.getHandler().getTableModel().getObjectAtSelectedRow();
         getController().updateAMayores(personal, aMayores);
         panel.getHandler().getTableModel().setItems(getController().getPersonalTrabajando(v));
+        updateView();
     }
 
     @Override
@@ -158,13 +151,27 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
             }
         });
 
-//        jButtonAMayores = new JButton();
-        jButtonAMayores.setText("A Mayores");
-        panel.getjPanelOpciones().add(jButtonAMayores);
+        jButtonImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirActionPerformed(evt);
+            }
+        });
 
-        panel.getjPanelOpciones().add(jButtonImprimir);
+        panel.getjPanelOpciones().setLayout(new java.awt.BorderLayout());
+
+        jButtonImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonImprimir.setText("Asistencia");
+        jButtonImprimir.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        panel.getjPanelOpciones().add(jButtonImprimir, java.awt.BorderLayout.WEST);
+        
+        panel.getjPanelBusqueda().add(panel.getEliminarButton());
+
+        jButtonAMayores.setText("A Mayores");
+        panel.getjPanelOpciones().add(jButtonAMayores, java.awt.BorderLayout.EAST);
+
         panel.setReadOnlyMode(readOnly);
         jPanelDetail.add(panel);
+
     }
 
     @Override
@@ -172,9 +179,10 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
         return (AsistenciaPersonalController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private javax.swing.JButton jButtonAMayores = new JButton();
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonImprimir;
+    private javax.swing.JButton jButtonImprimir = MaterialComponentsFactory.Buttons.getOutlinedButton();
+    private javax.swing.JButton jButtonAMayores = MaterialComponentsFactory.Buttons.getOutlinedButton();
     private javax.swing.JPanel jPanelDetail;
+    private javax.swing.JPanel jPanel5;
     // End of variables declaration//GEN-END:variables
 }
