@@ -7,6 +7,7 @@ package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.ui.utils.StringsTreatment;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -377,9 +378,10 @@ public class VentaResumenViewModel extends AbstractViewModel {
      * @param total_autorizos new value of total_autorizos
      */
     public void setTotal_autorizos(String total_autorizos) {
+        String totalAutorizosEspaciado = StringsTreatment.stringFiller(total_autorizos, 9, 7);
         String oldTotal_autorizos = this.total_autorizos;
-        this.total_autorizos = total_autorizos;
-        firePropertyChange(PROP_TOTAL_AUTORIZOS, oldTotal_autorizos, total_autorizos);
+        this.total_autorizos = totalAutorizosEspaciado;
+        firePropertyChange(PROP_TOTAL_AUTORIZOS, oldTotal_autorizos, totalAutorizosEspaciado);
     }
 
     /**
@@ -397,9 +399,10 @@ public class VentaResumenViewModel extends AbstractViewModel {
      * @param total_gasto_salario new value of total_gasto_salario
      */
     public void setTotal_gasto_salario(String total_gasto_salario) {
+        String totalGastoSalarioEspaciado = StringsTreatment.stringFiller(total_gasto_salario, 9, 7);
         String oldTotal_gasto_salario = this.total_gasto_salario;
-        this.total_gasto_salario = total_gasto_salario;
-        firePropertyChange(PROP_TOTAL_GASTO_SALARIO, oldTotal_gasto_salario, total_gasto_salario);
+        this.total_gasto_salario = totalGastoSalarioEspaciado;
+        firePropertyChange(PROP_TOTAL_GASTO_SALARIO, oldTotal_gasto_salario, totalGastoSalarioEspaciado);
     }
 
     /**
@@ -417,9 +420,10 @@ public class VentaResumenViewModel extends AbstractViewModel {
      * @param total_gasto_otros new value of total_gasto_otros
      */
     public void setTotal_gasto_otros(String total_gasto_otros) {
+        String totalGastoOtrosEspaciado = StringsTreatment.stringFiller(total_gasto_otros, 9, 7);
         String oldTotal_gasto_otros = this.total_gasto_otros;
-        this.total_gasto_otros = total_gasto_otros;
-        firePropertyChange(PROP_TOTAL_GASTO_OTROS, oldTotal_gasto_otros, total_gasto_otros);
+        this.total_gasto_otros = totalGastoOtrosEspaciado;
+        firePropertyChange(PROP_TOTAL_GASTO_OTROS, oldTotal_gasto_otros, totalGastoOtrosEspaciado);
     }
 
     /**
@@ -437,9 +441,10 @@ public class VentaResumenViewModel extends AbstractViewModel {
      * @param total_gasto_insumos new value of total_gasto_insumos
      */
     public void setTotal_gasto_insumos(String total_gasto_insumos) {
+        String totalGastoInsumosEspaciado = StringsTreatment.stringFiller(total_gasto_insumos, 9, 7);
         String oldTotal_gasto_insumos = this.total_gasto_insumos;
-        this.total_gasto_insumos = total_gasto_insumos;
-        firePropertyChange(PROP_TOTAL_GASTO_INSUMOS, oldTotal_gasto_insumos, total_gasto_insumos);
+        this.total_gasto_insumos = totalGastoInsumosEspaciado;
+        firePropertyChange(PROP_TOTAL_GASTO_INSUMOS, oldTotal_gasto_insumos, totalGastoInsumosEspaciado);
     }
 
     /**
@@ -477,9 +482,10 @@ public class VentaResumenViewModel extends AbstractViewModel {
      * @param venta_total new value of venta_total
      */
     public void setVenta_total(String venta_total) {
+        String ventaTotalEspaciada = StringsTreatment.stringFiller(venta_total, 9, 7);
         String oldVenta_total = this.venta_total;
-        this.venta_total = venta_total;
-        firePropertyChange(PROP_VENTA_TOTAL, oldVenta_total, venta_total);
+        this.venta_total = ventaTotalEspaciada;
+        firePropertyChange(PROP_VENTA_TOTAL, oldVenta_total, ventaTotalEspaciada);
     }
 
     /**
@@ -497,9 +503,10 @@ public class VentaResumenViewModel extends AbstractViewModel {
      * @param venta_neta new value of venta_neta
      */
     public void setVenta_neta(String venta_neta) {
+        String ventaNetaEspaciada = StringsTreatment.stringFiller(venta_neta, 9, 7);
         String oldVenta_neta = this.venta_neta;
-        this.venta_neta = venta_neta;
-        firePropertyChange(PROP_VENTA_NETA, oldVenta_neta, venta_neta);
+        this.venta_neta = ventaNetaEspaciada;
+        firePropertyChange(PROP_VENTA_NETA, oldVenta_neta, ventaNetaEspaciada);
     }
 
 }
