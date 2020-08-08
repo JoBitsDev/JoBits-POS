@@ -11,35 +11,27 @@ package com.jobits.pos.ui.utils;
  */
 public class StringsTreatment {
 
-    public static String stringFiller(String string, int splitIndex, int dotPosition) {
+    public static String stringFiller(String string) {
         if (string == null) {
             return "";
         }
-        if (string.length() > splitIndex + 1) {
-            if (dotPosition != -1) {
-                String a = String.valueOf(string.charAt(string.length() - dotPosition));
-                if (a.equals(".")) {
-                    splitIndex++;
-                }
-            }
-            StringBuilder aux = new StringBuilder();
-            String rightSide = string.substring(string.length() - splitIndex),
-                    leftSide = string.substring(0, string.length() - splitIndex),
-                    leftSideInverted = invertString(leftSide);
+        String[] parts = string.split("[.]");
 
-            for (int i = 0; i < leftSideInverted.length(); i++) {
-                if (i % 3 == 0) {
-                    aux = aux.append(" ");
-                    aux = aux.append(leftSideInverted.charAt(i));
-                } else {
-                    aux = aux.append(leftSideInverted.charAt(i));
-                }
+        String leftSide = parts[0],
+                rightSide = parts[1],
+                leftSideInverted = invertString(leftSide);
+
+        StringBuilder aux = new StringBuilder();
+        for (int i = 0; i < leftSideInverted.length(); i++) {
+            if (i % 3 == 0 && i != 0) {
+                aux = aux.append(" ");
+                aux = aux.append(leftSideInverted.charAt(i));
+            } else {
+                aux = aux.append(leftSideInverted.charAt(i));
             }
-            leftSide = invertString(aux.toString());
-            return leftSide + rightSide;
         }
-
-        return string;
+        leftSide = invertString(aux.toString());
+        return leftSide + "." + rightSide;
     }
 
     public static String invertString(String stringToInvert) {
