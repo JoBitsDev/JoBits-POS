@@ -13,6 +13,8 @@ import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import com.jobits.pos.ui.utils.LoadingWindow;
 import java.awt.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -26,8 +28,12 @@ public class Main {
     public static void main(String[] args) {
 
         java.awt.EventQueue.invokeLater(() -> {
-            Application app = Application.getInstance();
-            app.start();
+            Application app = Application.createApplication(true);
+            try {
+                app.start();
+            } catch (Exception ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
        
        /*
