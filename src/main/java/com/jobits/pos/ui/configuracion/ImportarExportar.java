@@ -40,18 +40,12 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelImportarExportar = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jPanel3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
         jLabel2 = MaterialComponentsFactory.Displayers.getLabel();
-        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(260, 0), new java.awt.Dimension(260, 0), new java.awt.Dimension(200, 32767));
         impExpSwitch = MaterialComponentsFactory.Displayers.getComboBox();
         jPanel4 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
         jLabel1 = MaterialComponentsFactory.Displayers.getLabel();
-        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(250, 0), new java.awt.Dimension(255, 0), new java.awt.Dimension(200, 32767));
         itemSelector = MaterialComponentsFactory.Displayers.getComboBox();
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         openSaveButton = MaterialComponentsFactory.Buttons.getOutlinedButton();
 
@@ -61,17 +55,16 @@ public class ImportarExportar extends AbstractViewPanel {
         jPanelImportarExportar.setPreferredSize(new java.awt.Dimension(730, 525));
         jPanelImportarExportar.setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
-        jPanel2.add(filler3);
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(150, 1, 1, 1));
+        jPanel2.setLayout(new java.awt.GridLayout(2, 1));
 
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        jPanel3.add(filler5);
+        jPanel3.setMaximumSize(new java.awt.Dimension(32767, 200));
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 200, 5));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jLabel2.setText(bundle.getString("label_opcion")); // NOI18N
         jPanel3.add(jLabel2);
-        jPanel3.add(filler7);
 
         impExpSwitch.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         impExpSwitch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Importar", "Exportar" }));
@@ -84,20 +77,18 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanel2.add(jPanel3);
 
-        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        jPanel4.add(filler6);
+        jPanel4.setMaximumSize(new java.awt.Dimension(32767, 200));
+        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 200, 5));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Archivo");
         jPanel4.add(jLabel1);
-        jPanel4.add(filler8);
 
         itemSelector.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         itemSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ficha de Costo" }));
         jPanel4.add(itemSelector);
 
         jPanel2.add(jPanel4);
-        jPanel2.add(filler4);
 
         jPanelImportarExportar.add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -203,12 +194,6 @@ public class ImportarExportar extends AbstractViewPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler3;
-    private javax.swing.Box.Filler filler4;
-    private javax.swing.Box.Filler filler5;
-    private javax.swing.Box.Filler filler6;
-    private javax.swing.Box.Filler filler7;
-    private javax.swing.Box.Filler filler8;
     private javax.swing.JComboBox<String> impExpSwitch;
     private javax.swing.JComboBox<String> itemSelector;
     private javax.swing.JLabel jLabel1;
