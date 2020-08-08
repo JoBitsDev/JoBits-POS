@@ -160,18 +160,21 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanel15.setPreferredSize(new java.awt.Dimension(200, 78));
         jPanel15.setLayout(new java.awt.BorderLayout());
 
+        jPanel14.setToolTipText(null);
         jPanel14.setMaximumSize(new java.awt.Dimension(32767, 100));
         jPanel14.setMinimumSize(new java.awt.Dimension(200, 20));
         jPanel14.setPreferredSize(new java.awt.Dimension(200, 78));
         jPanel14.setLayout(new javax.swing.BoxLayout(jPanel14, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelVentasCards.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Ventas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        jPanelVentasCards.setToolTipText(null);
         jPanelVentasCards.setMaximumSize(new java.awt.Dimension(32767, 170));
         jPanelVentasCards.setMinimumSize(new java.awt.Dimension(170, 49));
         jPanelVentasCards.setPreferredSize(new java.awt.Dimension(170, 170));
         jPanel14.add(jPanelVentasCards);
 
         jPanelGastosCards.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Gastos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
+        jPanelGastosCards.setToolTipText(null);
         jPanel14.add(jPanelGastosCards);
 
         jPanel15.add(jPanel14, java.awt.BorderLayout.CENTER);
@@ -516,12 +519,12 @@ public class VentaDetailView extends AbstractViewPanel {
         Action imprimirZ = getPresenter().getOperation(ACTION_IMPRIMIR_Z),
                 imprimirAutorizos = getPresenter().getOperation(ACTION_IMPRIMIR_AUTORIZOS);
 
-        addCard(null, "Venta Neta", dimension, jPanelVentasCards, getPresenter().getModel(PROP_VENTA_NETA), imprimirZ, imprimirAutorizos);
-        ventasTotal = addCard(null, "Total", dimension, jPanelVentasCards, getPresenter().getModel(PROP_VENTA_TOTAL), imprimirZ, imprimirAutorizos).getjLabelCardTitle().getText();
-        addCard(null, "Autorizos", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_AUTORIZOS), imprimirZ, imprimirAutorizos);
-        insumos = addCard(null, "Insumos", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_INSUMOS), imprimirZ, imprimirAutorizos).getjLabelCardTitle().getText();
-        salarios = addCard(null, "Salarios", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_SALARIO), imprimirZ, imprimirAutorizos).getjLabelCardTitle().getText();
-        otro = addCard(null, "Otros", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_OTROS), imprimirZ, imprimirAutorizos).getjLabelCardTitle().getText();
+        addCard(null, "Venta Neta", dimension, jPanelVentasCards, getPresenter().getModel(PROP_VENTA_NETA));
+        ventasTotal = addCard(null, "Total", dimension, jPanelVentasCards, getPresenter().getModel(PROP_VENTA_TOTAL), imprimirZ).getjLabelCardTitle().getText();
+        addCard(null, "Autorizos", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_AUTORIZOS), imprimirAutorizos);
+        insumos = addCard(null, "Insumos", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_INSUMOS)).getjLabelCardTitle().getText();
+        salarios = addCard(null, "Salarios", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_SALARIO)).getjLabelCardTitle().getText();
+        otro = addCard(null, "Otros", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_OTROS)).getjLabelCardTitle().getText();
 
         Bindings.bind(jTextFieldPropina, getPresenter().getModel(PROP_PROPINA_TOTAL));//TODO: manejar enabled
         Bindings.bind(fileChooser, "selectedFile", getPresenter().getModel(PROP_FILE_FOR_EXPORT));
