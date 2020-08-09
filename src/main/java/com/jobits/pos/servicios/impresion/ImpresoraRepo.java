@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.servicios.impresion;
 
-import com.jobits.pos.domain.models.volatil.Impresora;
 import java.util.List;
 
 /**

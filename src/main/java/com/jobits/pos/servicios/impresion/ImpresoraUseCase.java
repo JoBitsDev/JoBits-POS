@@ -10,8 +10,6 @@ import com.jobits.pos.adapters.repo.impl.AreaDAO;
 import com.jobits.pos.adapters.repo.impl.CocinaDAO;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Cocina;
-import com.jobits.pos.domain.models.volatil.Impresora;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -70,26 +68,32 @@ public class ImpresoraUseCase implements ImpresoraService {
     }
 
     @Override
-    public Impresora crear(Impresora impresora) {
+    public Impresora agregarImpresora(Impresora impresora) {
         impresoras = getImpresorasAlmacenadas();
+        if (impresoras.isEmpty()) {
+            impresora.setIdImpresora(0);
+        } else {
+            impresora.setIdImpresora(impresoras.get(impresoras.size()-1).getIdImpresora() + 1);
+        }
         impresoras.add(impresora);
         guardarImpresorasAlmacenadas();
         return impresora;
     }
 
     @Override
-    public void update(Impresora impresora) {
+    public void updateImpresora(Impresora impresora) {
         impresoras = getImpresorasAlmacenadas();
-        for (Impresora listaImpresoras : impresoras) {
-            if (listaImpresoras.equals(impresora)) {
-                listaImpresoras = impresora;
+        for (int i = 0; i < impresoras.size(); i++) {
+            if (impresoras.get(i).getIdImpresora() == impresora.getIdImpresora()) {
+                impresoras.set(i, impresora);
                 guardarImpresorasAlmacenadas();
+                break;
             }
         }
     }
 
     @Override
-    public Impresora delete(Impresora impresora) {
+    public Impresora deleteImpresora(Impresora impresora) {
 
         if (repository.eliminarImpresora(impresora)) {
             return impresora;

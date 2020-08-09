@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.servicios.impresion;
 
-import com.jobits.pos.domain.models.volatil.Impresora;
 import java.util.List;
 import javax.print.Doc;
 import javax.print.PrintException;
@@ -16,11 +15,11 @@ import javax.print.PrintException;
  */
 public interface ImpresoraService {
 
-    public Impresora crear(Impresora impresora);
+    public Impresora agregarImpresora(Impresora impresora);
 
-    public void update(Impresora impresora);
+    public void updateImpresora(Impresora impresora);
 
-    public Impresora delete(Impresora impresora);
+    public Impresora deleteImpresora(Impresora impresora);
 
     public Impresora findBy(String nombreVirtualImpresora);
 

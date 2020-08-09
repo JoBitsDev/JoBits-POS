@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.configuracion;
 
-import com.jobits.pos.domain.models.volatil.Impresora;
+import com.jobits.pos.servicios.impresion.Impresora;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.ImpresoraService;
 import com.jobits.pos.ui.AbstractViewPanel;
@@ -58,7 +58,7 @@ public class Impresoras extends AbstractViewPanel {
         jPanel9 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelNombre = new javax.swing.JPanel();
         jTextNombreImpresora = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jToggleButtonPorDefecto = new javax.swing.JToggleButton();
+        jPanel4 = new javax.swing.JPanel();
         jPanelSysPrinter = new javax.swing.JPanel();
         jLabel5 = MaterialComponentsFactory.Displayers.getLabel();
         jComboBoxImpresorasSistema = MaterialComponentsFactory.Displayers.getComboBox();
@@ -81,10 +81,11 @@ public class Impresoras extends AbstractViewPanel {
         jPanelImpresoras.setLayout(new java.awt.BorderLayout());
 
         jPanelListaImpresoras.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        jPanelListaImpresoras.setMinimumSize(new java.awt.Dimension(200, 200));
-        jPanelListaImpresoras.setPreferredSize(new java.awt.Dimension(200, 200));
+        jPanelListaImpresoras.setMinimumSize(new java.awt.Dimension(200, 250));
+        jPanelListaImpresoras.setPreferredSize(new java.awt.Dimension(200, 250));
         jPanelListaImpresoras.setLayout(new java.awt.BorderLayout());
 
+        jScrollPane1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jScrollPane1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jScrollPane1.setPreferredSize(new java.awt.Dimension(700, 270));
 
@@ -100,6 +101,8 @@ public class Impresoras extends AbstractViewPanel {
 
         jPanelListaImpresoras.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jPanelEliminar.setMinimumSize(new java.awt.Dimension(112, 40));
+
         jButtonEliminar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButtonEliminar.setText("Eliminar");
         jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -113,28 +116,25 @@ public class Impresoras extends AbstractViewPanel {
 
         jPanelImpresoras.add(jPanelListaImpresoras, java.awt.BorderLayout.CENTER);
 
-        jPanelNuevaImpresora.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), "Nueva", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
+        jPanelNuevaImpresora.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 10, 10), "Nueva", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
+        jPanelNuevaImpresora.setPreferredSize(new java.awt.Dimension(498, 220));
         jPanelNuevaImpresora.setLayout(new java.awt.BorderLayout());
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 10, 10));
         jPanel9.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
 
-        jPanelNombre.setLayout(new java.awt.GridLayout());
+        jPanelNombre.setLayout(new java.awt.GridLayout(1, 0));
 
         jTextNombreImpresora.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jTextNombreImpresora.setMaximumSize(new java.awt.Dimension(999999, 30));
+        jTextNombreImpresora.setMaximumSize(new java.awt.Dimension(999999, 60));
         jTextNombreImpresora.setMinimumSize(new java.awt.Dimension(150, 26));
-        jTextNombreImpresora.setPreferredSize(new java.awt.Dimension(150, 50));
+        jTextNombreImpresora.setPreferredSize(new java.awt.Dimension(150, 60));
         jPanelNombre.add(jTextNombreImpresora);
-
-        jToggleButtonPorDefecto.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jToggleButtonPorDefecto.setText("Por Defecto");
-        jToggleButtonPorDefecto.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanelNombre.add(jToggleButtonPorDefecto);
+        jPanelNombre.add(jPanel4);
 
         jPanel9.add(jPanelNombre);
 
-        jPanelSysPrinter.setLayout(new java.awt.GridLayout());
+        jPanelSysPrinter.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setText("Impresoras Sistema");
@@ -147,7 +147,7 @@ public class Impresoras extends AbstractViewPanel {
 
         jPanel9.add(jPanelSysPrinter);
 
-        jPanelArea.setLayout(new java.awt.GridLayout());
+        jPanelArea.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel6.setText("Areas");
@@ -205,6 +205,7 @@ public class Impresoras extends AbstractViewPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelArea;
     private javax.swing.JPanel jPanelEliminar;
@@ -216,7 +217,6 @@ public class Impresoras extends AbstractViewPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableImpresoras;
     private javax.swing.JTextField jTextNombreImpresora;
-    private javax.swing.JToggleButton jToggleButtonPorDefecto;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -267,8 +267,22 @@ public class Impresoras extends AbstractViewPanel {
             }
 
             @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return columnIndex == 3;
+            }
+
+            @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return columnIndex == 3 ? Boolean.class : super.getColumnClass(columnIndex);
+            }
+
+            @Override
+            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+                if (columnIndex == 3) {
+                    Impresora impresora = tableModel.getObjectAtSelectedRow();
+                    impresora.setPorDefecto(!impresora.isPorDefecto());
+                    impresoraService.updateImpresora(impresora);
+                }
             }
 
         };
@@ -284,16 +298,14 @@ public class Impresoras extends AbstractViewPanel {
                 String nombreVirtual = jTextNombreImpresora.getText();
                 String nombreSistema = jComboBoxImpresorasSistema.getSelectedItem().toString();
                 String grupos = jComboBoxGrupos.getSelectedItem().toString();
-                boolean isDefault = jToggleButtonPorDefecto.isEnabled();
-                Impresora newImpresora = new Impresora(nombreVirtual, nombreSistema, grupos, isDefault);
+                Impresora newImpresora = new Impresora(nombreVirtual, nombreSistema, grupos, false);
 
-                if (impresoraService.crear(newImpresora) != null) {
+                if (impresoraService.agregarImpresora(newImpresora) != null) {
                     showSuccessDialog(jPanelNombre, "Se ha agregado la impresora con éxito");
                     tableModel.addObject(newImpresora);
                     jTextNombreImpresora.setText("");
                     jComboBoxImpresorasSistema.setModel(new RestManagerComboBoxModel<>(impresoraService.getNombreImpresorasSistema()));
                     jComboBoxGrupos.setModel(new RestManagerComboBoxModel<>(impresoraService.getNombreGrupos()));
-                    jToggleButtonPorDefecto.setSelected(false);
                 }
             }
 
@@ -306,7 +318,7 @@ public class Impresoras extends AbstractViewPanel {
     private void onBottonEliminar() {
         Impresora impresoraToDelete = tableModel.getObjectAtSelectedRow();
         if (showConfirmDialog(jPanelNombre)) {
-            if (impresoraService.delete(impresoraToDelete) != null) {
+            if (impresoraService.deleteImpresora(impresoraToDelete) != null) {
                 tableModel.setItems(impresoraService.findAll());
                 showSuccessDialog(jPanelNombre, "Se ha eliminado la impresora con éxito");
             }

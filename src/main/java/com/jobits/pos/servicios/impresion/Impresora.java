@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.domain.models.volatil;
+package com.jobits.pos.servicios.impresion;
 
 import java.util.Objects;
 import javax.print.Doc;
@@ -17,6 +17,7 @@ import javax.print.PrintServiceLookup;
  */
 public class Impresora {
 
+    private int idImpresora;
     private String nombreImpresoraVirtual;
     private String nombreImpresoraSistema;
     private String grupo;
@@ -30,6 +31,22 @@ public class Impresora {
         this.nombreImpresoraSistema = nombreImpresoraSistema;
         this.grupo = grupo;
         this.porDefecto = porDefecto;
+    }
+
+    public Impresora(int idImpresora, String nombreImpresoraVirtual, String nombreImpresoraSistema, String grupo, boolean porDefecto) {
+        this.idImpresora = idImpresora;
+        this.nombreImpresoraVirtual = nombreImpresoraVirtual;
+        this.nombreImpresoraSistema = nombreImpresoraSistema;
+        this.grupo = grupo;
+        this.porDefecto = porDefecto;
+    }
+
+    public int getIdImpresora() {
+        return idImpresora;
+    }
+
+    public void setIdImpresora(int idImpresora) {
+        this.idImpresora = idImpresora;
     }
 
     public String getNombreImpresoraVirtual() {
@@ -92,6 +109,9 @@ public class Impresora {
             return false;
         }
         final Impresora other = (Impresora) obj;
+        if (this.idImpresora != other.getIdImpresora()) {
+            return false;
+        }
         if (this.porDefecto != other.porDefecto) {
             return false;
         }
@@ -106,7 +126,5 @@ public class Impresora {
         }
         return true;
     }
-    
-    
 
 }
