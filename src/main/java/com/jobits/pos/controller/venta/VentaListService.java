@@ -6,6 +6,7 @@
 package com.jobits.pos.controller.venta;
 
 import com.jobits.pos.domain.models.Venta;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -20,9 +21,15 @@ public interface VentaListService {
     public VentaDetailController createDetailResumenView(Date resumen_desde, Date resumen_hasta);
 
     public void destroy(Venta find, boolean b);
-    
+
     public List<Venta> findVentas(int month, int year);
-    
+
+    public List<Venta> findVentasInRange(Calendar start, Calendar end);
+
+    public List<Double> getTotalVentas(List<Venta> ventas);
+
+    public List<Date> getFechaVentas(List<Venta> ventas);
+
     public boolean isYVisible();
-    
+
 }

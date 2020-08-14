@@ -23,6 +23,7 @@ import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.utils.utils;
 
 /**
  * FirstDream
@@ -30,7 +31,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class VentaListController extends AbstractDialogController<Venta> implements VentaListService{
+public class VentaListController extends AbstractDialogController<Venta> implements VentaListService {
 
     public VentaListController() {
         super(VentaDAO.getInstance());
@@ -119,6 +120,55 @@ public class VentaListController extends AbstractDialogController<Venta> impleme
         }).forEachOrdered((Venta _item) -> {
             Collections.sort(ret, (Venta o1, Venta o2) -> o1.getFecha().compareTo(o2.getFecha()));
         });
+        return ret;
+    }
+
+    public List<Venta> findVentasInRange(Calendar start, Calendar end) {
+        ArrayList<Venta> ret = new ArrayList<>();
+
+        getModel().findAll().stream().map((x) -> {
+            int dia = x.getFecha().getDate();
+            int mes = x.getFecha().getMonth();
+            int anno = x.getFecha().getYear() + 1900;
+            int startDia = start.get(Calendar.DAY_OF_MONTH);
+            int startMes = start.get(Calendar.MONTH);
+            int startAnno = start.get(Calendar.YEAR);
+            int endDia = end.get(Calendar.DAY_OF_MONTH);
+            int endMes = end.get(Calendar.MONTH);
+            int endAnno = end.get(Calendar.YEAR);
+
+            if ((dia >= startDia && mes >= startMes && anno >= startAnno)
+                    && (dia <= endDia && mes <= endMes && anno <= endAnno)) {
+                x.setFecha(utils.getZeroTimeDate(x.getFecha()));
+                if (x.getVentaTotal() != null) {
+                    x.setVentaTotal(utils.setDosLugaresDecimalesDouble(x.getVentaTotal()));
+                }
+                ret.add(x);
+            }
+            return x;
+        }
+        ).forEachOrdered(
+                (Venta _item) -> {
+                    Collections.sort(ret, (Venta o1, Venta o2) -> o1.getFecha().compareTo(o2.getFecha()));
+                }
+        );
+        return ret;
+
+    }
+
+    public List<Date> getFechaVentas(List<Venta> ventas) {
+        List<Date> ret = new ArrayList<Date>();
+        for (int i = 0; i < ventas.size(); i++) {
+            ret.add(ventas.get(i).getFecha());
+        }
+        return ret;
+    }
+
+    public List<Double> getTotalVentas(List<Venta> ventas) {
+        List<Double> ret = new ArrayList<Double>();
+        for (int i = 0; i < ventas.size(); i++) {
+            ret.add(ventas.get(i).getVentaTotal());
+        }
         return ret;
     }
 

@@ -230,6 +230,10 @@ public class utils {
         return (float) (Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2));
     }
 
+    public static double setDosLugaresDecimalesDouble(Double valorARedondear) {
+        return (double) (Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2));
+    }
+
     public static int cantidadARedondearPorExceso(int valorARedondear) {
         return valorARedondear % 5 != 0 ? 5 - (valorARedondear % 5) : 0;
     }
@@ -263,13 +267,13 @@ public class utils {
         return compareDate.getTime() >= fDate.getTime() && compareDate.getTime() <= tDate.getTime();
     }
 
-    private static Date getZeroTimeDate(Date date) {
+    public static Date getZeroTimeDate(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        //calendar.set(Calendar.MILLISECOND, 0);
         date = calendar.getTime();
         return date;
     }
