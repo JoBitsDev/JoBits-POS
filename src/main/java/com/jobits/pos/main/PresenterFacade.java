@@ -62,9 +62,11 @@ import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoListViewPresenter;
 import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
+import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
+import com.jobits.pos.ui.venta.presenter.VentaStatisticsViewPresenter;
 import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -116,6 +118,8 @@ public class PresenterFacade {
                 return new BackUpViewPresenter(new UbicacionConexionController());
             case VentaCalendarView.VIEW_NAME:
                 return new VentaCalendarViewPresenter(new VentaListController());
+            case VentaStatisticsView.VIEW_NAME:
+                return new VentaStatisticsViewPresenter(new VentaListController());
             case AlmacenListView.VIEW_NAME:
                 return new AlmacenListPresenter(new AlmacenListController());
             case MesaListView.VIEW_NAME:
