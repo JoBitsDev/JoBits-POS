@@ -6,28 +6,17 @@
 package com.jobits.pos.ui.venta;
 
 import com.jgoodies.binding.adapter.Bindings;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import com.jobits.pos.controller.venta.VentaListController;
-import com.jobits.pos.domain.VentaDAO1;
-import com.jobits.pos.domain.models.Venta;
+import com.jgoodies.binding.value.ValueModel;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewModel;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.controller.venta.VentaListService;
+import com.jobits.pos.ui.venta.presenter.VentaStatisticsViewModel;
+import com.jobits.pos.ui.venta.presenter.VentaStatisticsViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.displayers.Card;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
@@ -41,28 +30,8 @@ public class VentaStatisticsView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Estadisticas";
 
-    private String actualTotal, actualPromedio, actualHoraPico, actualInsumo, actualTrabajadores, actualOtros,
-            anteriorTotal = null, anteriorPromedio = null, anteriorHoraPico = null, anteriorInsumo = null, anteriorTrabajadores = null, anteriorOtros = null;
-
-    private final String[] months = {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"};
-
-    int periodDays = 0;
-
-    private final Calendar actualDel = Calendar.getInstance(),
-            actualAl = Calendar.getInstance(),
-            anteriorDel = Calendar.getInstance(),
-            anteriorAl = Calendar.getInstance();
-
-    private final VentaListService ventaService = new VentaListController();
-
-    List<Venta> ventasActualesList = new ArrayList<>(),
-            ventasAnterioresList = new ArrayList<>(),
-            ventasListAux = new ArrayList<>(),
-            ventasListAux2 = new ArrayList<>();
-
     public VentaStatisticsView(AbstractViewPresenter presenter) {
         super(presenter);
-        updateCards();
         updateDetallesGrafica();
     }
 
@@ -81,13 +50,10 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jPanelHeader = new javax.swing.JPanel();
         jPanelSeleccion = new javax.swing.JPanel();
         jPanelPeriodo = new javax.swing.JPanel();
+        jButtonPeriodoSelector = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        jPanelSinglePeriod = new javax.swing.JPanel();
-        jLabelPeriodoActual1 = new javax.swing.JLabel();
-        jPanelTwoPeriods = new javax.swing.JPanel();
         jLabelPeriodoActual = new javax.swing.JLabel();
         jLabelPeriodoAnterior = new javax.swing.JLabel();
-        jButtonPeriodoSelector = new javax.swing.JButton();
         jPanelPeriodChooser = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jDateChooserDel = new org.jdesktop.swingx.JXDatePicker();
@@ -98,8 +64,7 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jRadioButtonPeriodoAnterior = new javax.swing.JRadioButton();
         jRadioButtonAnnoAnterior = new javax.swing.JRadioButton();
         jPanelOpciones = new javax.swing.JPanel();
-        jButtonRestablecer = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonActualizar = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jButtonRestablecer = MaterialComponentsFactory.Buttons.getMaterialButton();
         jPanelCardsStats = new javax.swing.JPanel();
         jPanelGrafica = new javax.swing.JPanel();
 
@@ -119,50 +84,33 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jPanelPeriodo.setPreferredSize(new java.awt.Dimension(280, 50));
         jPanelPeriodo.setLayout(new java.awt.BorderLayout());
 
+        jButtonPeriodoSelector.setIcon(MaterialIcons.ARROW_DROP_RIGHT);
+        jButtonPeriodoSelector.setPreferredSize(new java.awt.Dimension(40, 32));
+        jPanelPeriodo.add(jButtonPeriodoSelector, java.awt.BorderLayout.EAST);
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 0, 0, 0));
         jPanel5.setPreferredSize(new java.awt.Dimension(200, 40));
-        jPanel5.setLayout(new java.awt.CardLayout());
-
-        jPanelSinglePeriod.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
-        jPanelSinglePeriod.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        jLabelPeriodoActual1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabelPeriodoActual1.setText("De :");
-        jPanelSinglePeriod.add(jLabelPeriodoActual1);
-
-        jPanel5.add(jPanelSinglePeriod, "card2");
-
-        jPanelTwoPeriods.setLayout(new java.awt.GridLayout(2, 1));
+        jPanel5.setLayout(new java.awt.GridLayout(2, 1));
 
         jLabelPeriodoActual.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabelPeriodoActual.setText("De :");
-        jPanelTwoPeriods.add(jLabelPeriodoActual);
+        jLabelPeriodoActual.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jLabelPeriodoActualPropertyChange(evt);
+            }
+        });
+        jPanel5.add(jLabelPeriodoActual);
 
         jLabelPeriodoAnterior.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabelPeriodoAnterior.setText("Contra:");
-        jPanelTwoPeriods.add(jLabelPeriodoAnterior);
-
-        jPanel5.add(jPanelTwoPeriods, "card3");
-        jPanelTwoPeriods.getAccessibleContext().setAccessibleName("TwoPeriods");
+        jLabelPeriodoAnterior.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jLabelPeriodoAnteriorPropertyChange(evt);
+            }
+        });
+        jPanel5.add(jLabelPeriodoAnterior);
 
         jPanelPeriodo.add(jPanel5, java.awt.BorderLayout.CENTER);
         jPanel5.getAccessibleContext().setAccessibleName("SinglePeriod");
-
-        jButtonPeriodoSelector.setIcon(MaterialIcons.ARROW_DROP_RIGHT);
-        jButtonPeriodoSelector.setHideActionText(true);
-        jButtonPeriodoSelector.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jButtonPeriodoSelector.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButtonPeriodoSelector.setPreferredSize(new java.awt.Dimension(40, 32));
-        jButtonPeriodoSelector.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jButtonPeriodoSelectorStateChanged(evt);
-            }
-        });
-        jButtonPeriodoSelector.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPeriodoSelectorActionPerformed(evt);
-            }
-        });
-        jPanelPeriodo.add(jButtonPeriodoSelector, java.awt.BorderLayout.EAST);
 
         jPanelSeleccion.add(jPanelPeriodo, java.awt.BorderLayout.WEST);
 
@@ -174,6 +122,12 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jPanel7.setMinimumSize(new java.awt.Dimension(254, 20));
         jPanel7.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel7.setLayout(new java.awt.GridLayout(1, 0));
+
+        jDateChooserDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDateChooserDelActionPerformed(evt);
+            }
+        });
         jPanel7.add(jDateChooserDel);
 
         jPanel6.setMinimumSize(new java.awt.Dimension(20, 26));
@@ -185,6 +139,12 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jPanel6.add(jLabel14);
 
         jPanel7.add(jPanel6);
+
+        jDateChooserAl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDateChooserAlActionPerformed(evt);
+            }
+        });
         jPanel7.add(jDateChooserAl);
 
         jPanelPeriodChooser.add(jPanel7);
@@ -218,7 +178,7 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jPanelSeleccion.add(jPanelPeriodChooser, java.awt.BorderLayout.CENTER);
 
         jPanelOpciones.setMinimumSize(new java.awt.Dimension(100, 100));
-        jPanelOpciones.setPreferredSize(new java.awt.Dimension(220, 50));
+        jPanelOpciones.setPreferredSize(new java.awt.Dimension(110, 50));
         jPanelOpciones.setLayout(new java.awt.GridLayout(1, 2, 5, 1));
 
         jButtonRestablecer.setText("Restablecer");
@@ -228,14 +188,6 @@ public class VentaStatisticsView extends AbstractViewPanel {
             }
         });
         jPanelOpciones.add(jButtonRestablecer);
-
-        jButtonActualizar.setText("Actualizar");
-        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonActualizarActionPerformed(evt);
-            }
-        });
-        jPanelOpciones.add(jButtonActualizar);
 
         jPanelSeleccion.add(jPanelOpciones, java.awt.BorderLayout.EAST);
 
@@ -252,43 +204,41 @@ public class VentaStatisticsView extends AbstractViewPanel {
         add(jPanelGrafica, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonPeriodoSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPeriodoSelectorActionPerformed
-        jPanelPeriodChooser.setVisible(!jPanelPeriodChooser.isVisible());
-        jPanelOpciones.setVisible(!jPanelOpciones.isVisible());
-    }//GEN-LAST:event_jButtonPeriodoSelectorActionPerformed
-
-    private void jButtonPeriodoSelectorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jButtonPeriodoSelectorStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonPeriodoSelectorStateChanged
-
-    private void jRadioButtonPeriodoAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPeriodoAnteriorActionPerformed
-    }//GEN-LAST:event_jRadioButtonPeriodoAnteriorActionPerformed
-
     private void jButtonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestablecerActionPerformed
-        reiniciarPeriodo();
-        changePeriods();
-        updateCards();
+        buttonGroupPeriodoChooser.clearSelection();
+        updateDetallesGrafica();
     }//GEN-LAST:event_jButtonRestablecerActionPerformed
 
+    private void jRadioButtonPeriodoAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPeriodoAnteriorActionPerformed
+        updateDetallesGrafica();
+    }//GEN-LAST:event_jRadioButtonPeriodoAnteriorActionPerformed
+
     private void jRadioButtonAnnoAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonAnnoAnteriorActionPerformed
-        // TODO add your handling code here:
+        updateDetallesGrafica();
     }//GEN-LAST:event_jRadioButtonAnnoAnteriorActionPerformed
 
-    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-        changePeriods();
-        updateCards();
+    private void jLabelPeriodoActualPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jLabelPeriodoActualPropertyChange
+    }//GEN-LAST:event_jLabelPeriodoActualPropertyChange
+
+    private void jLabelPeriodoAnteriorPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jLabelPeriodoAnteriorPropertyChange
+    }//GEN-LAST:event_jLabelPeriodoAnteriorPropertyChange
+
+    private void jDateChooserDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserDelActionPerformed
         updateDetallesGrafica();
-    }//GEN-LAST:event_jButtonActualizarActionPerformed
+    }//GEN-LAST:event_jDateChooserDelActionPerformed
+
+    private void jDateChooserAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserAlActionPerformed
+        updateDetallesGrafica();
+    }//GEN-LAST:event_jDateChooserAlActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupPeriodoChooser;
-    private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonPeriodoSelector;
     private javax.swing.JButton jButtonRestablecer;
     private org.jdesktop.swingx.JXDatePicker jDateChooserAl;
     private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabelPeriodoActual;
-    private javax.swing.JLabel jLabelPeriodoActual1;
     private javax.swing.JLabel jLabelPeriodoAnterior;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -301,8 +251,6 @@ public class VentaStatisticsView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelPeriodChooser;
     private javax.swing.JPanel jPanelPeriodo;
     private javax.swing.JPanel jPanelSeleccion;
-    private javax.swing.JPanel jPanelSinglePeriod;
-    private javax.swing.JPanel jPanelTwoPeriods;
     private javax.swing.JRadioButton jRadioButtonAnnoAnterior;
     private javax.swing.JRadioButton jRadioButtonPeriodoAnterior;
     private javax.swing.JScrollPane jScrollPane2;
@@ -311,15 +259,45 @@ public class VentaStatisticsView extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
-        Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_HASTA));
+        Bindings.bind(jPanelPeriodChooser, "visible", getPresenter().getModel(VentaStatisticsViewModel.PROP_PANEL_OPCIONES_VISIBLE));
+        Bindings.bind(jPanelOpciones, "visible", getPresenter().getModel(VentaStatisticsViewModel.PROP_PANEL_OPCIONES_VISIBLE));
         Bindings.bind(jDateChooserDel, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_DESDE));
+        Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_HASTA));
+        Bindings.bind(jLabelPeriodoActual, "text", getPresenter().getModel(VentaStatisticsViewModel.PROP_RANGO_FECHAS_TEXT));
+        Bindings.bind(jLabelPeriodoAnterior, "text", getPresenter().getModel(VentaStatisticsViewModel.PROP_RANGO_FECHAS_ANTERIOR_TEXT));
+
+        jRadioButtonPeriodoAnterior.addActionListener(getPresenter().getOperation(VentaStatisticsViewPresenter.ACTION_SET_PERIODO));
+        jRadioButtonAnnoAnterior.addActionListener(getPresenter().getOperation(VentaStatisticsViewPresenter.ACTION_SET_ANNO));
+        jButtonPeriodoSelector.addActionListener(getPresenter().getOperation(VentaStatisticsViewPresenter.ACTION_DESPLEGAR_OPCIONES));
+        jButtonRestablecer.addActionListener(getPresenter().getOperation(VentaStatisticsViewPresenter.ACTION_RESTABLECER));
+
     }
 
     @Override
     public void uiInit() {
         initComponents();
-        jPanelPeriodChooser.setVisible(false);
-        jPanelOpciones.setVisible(false);
+
+        jPanelCardsStats.removeAll();
+        Dimension dimension = new Dimension(20, 20);
+
+        addCard(getPresenter().getModel(VentaStatisticsViewModel.PROP_TOTAL_VENTAS_INTERVALO_ACTUAL),
+                getPresenter().getModel(VentaStatisticsViewModel.PROP_TOTAL_VENTAS_INTERVALO_ANTERIOR),
+                "Total", dimension, jPanelCardsStats);
+        addCard(getPresenter().getModel(VentaStatisticsViewModel.PROP_PROMEDIO_VENTAS_INTERVALO_ACTUAL),
+                getPresenter().getModel(VentaStatisticsViewModel.PROP_PROMEDIO_VENTAS_INTERVALO_ANTERIOR),
+                "Promedio", dimension, jPanelCardsStats);
+        addCard(getPresenter().getModel(VentaStatisticsViewModel.PROP_HORA_PICO_INTERVALO_ACTUAL),
+                getPresenter().getModel(VentaStatisticsViewModel.PROP_HORA_PICO_INTERVALO_ANTERIOR),
+                "Hora Pico", dimension, jPanelCardsStats);
+        addCard(getPresenter().getModel(VentaStatisticsViewModel.PROP_GASTO_INSUMO_INTERVALO_ACTUAL),
+                getPresenter().getModel(VentaStatisticsViewModel.PROP_GASTO_INSUMO_INTERVALO_ANTERIOR),
+                "Insumo", dimension, jPanelCardsStats);
+        addCard(getPresenter().getModel(VentaStatisticsViewModel.PROP_GASTO_TRABAJADORES_INTERVALO_ACTUAL),
+                getPresenter().getModel(VentaStatisticsViewModel.PROP_GASTO_TRABAJADORES_INTERVALO_ANTERIOR),
+                "Trabajadores", dimension, jPanelCardsStats);
+        addCard(getPresenter().getModel(VentaStatisticsViewModel.PROP_GASTO_OTROS_INTERVALO_ACTUAL),
+                getPresenter().getModel(VentaStatisticsViewModel.PROP_GASTO_OTROS_INTERVALO_ANTERIOR),
+                "Otros", dimension, jPanelCardsStats);
     }
 
     @Override
@@ -327,170 +305,24 @@ public class VentaStatisticsView extends AbstractViewPanel {
         return VIEW_NAME;
     }
 
-    private void updateCards() {
-        updateDataCards(actualDel, actualAl, "actual");
-        if (jRadioButtonAnnoAnterior.isSelected() || jRadioButtonPeriodoAnterior.isSelected()) {
-            updateDataCards(anteriorDel, anteriorAl, "anterior");
-        }
-
-        jPanelCardsStats.removeAll();
-        Dimension dimension = new Dimension(20, 20);
-
-        addCard(actualTotal, anteriorTotal, "Total", dimension, jPanelCardsStats);
-        addCard(actualPromedio, anteriorPromedio, "Promedio", dimension, jPanelCardsStats);
-        addCard(actualHoraPico, anteriorHoraPico, "Hora Pico", dimension, jPanelCardsStats);
-        addCard(actualInsumo, anteriorInsumo, "Insumo", dimension, jPanelCardsStats);
-        addCard(actualTrabajadores, anteriorTrabajadores, "Trabajadores", dimension, jPanelCardsStats);
-        addCard(actualOtros, anteriorOtros, "Otros", dimension, jPanelCardsStats);
-    }
-
-    private void updateDataCards(Calendar del, Calendar al, String choice) {
-        double suma = 0;
-        double gInsumos = 0;
-        double gGastos = 0;
-        double gTrabajadores = 0;
-        int cantidad = 0;
-        List<Venta> ventasList = ventaService.findVentasInRange(del, al);
-        for (Venta venta : ventasList) {
-            if (venta.getVentaTotal() != null) {
-                suma += venta.getVentaTotal();
-                if (venta.getVentagastosEninsumos() != null) {
-                    gInsumos += venta.getVentagastosEninsumos();
-                }
-                if (venta.getVentagastosGastos() != null) {
-                    gGastos += venta.getVentagastosGastos();
-                }
-                if (venta.getVentagastosPagotrabajadores() != null) {
-                    gTrabajadores += venta.getVentagastosPagotrabajadores();
-                }
-                cantidad++;
-            }
-        }
-        double promedio = suma / cantidad;
-        int hora_pico_promedio = VentaDAO1.getModalPickHour(ventasActualesList);
-
-        switch (choice) {
-            case "actual":
-                ventasActualesList = ventasList;
-                actualHoraPico = (hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
-                actualTotal = utils.setDosLugaresDecimales((float) suma);
-                actualInsumo = utils.setDosLugaresDecimales((float) gInsumos);
-                actualTrabajadores = utils.setDosLugaresDecimales((float) (gTrabajadores));
-                actualPromedio = utils.setDosLugaresDecimales((float) promedio);
-                actualOtros = utils.setDosLugaresDecimales((float) gGastos);
-                break;
-            case "anterior":
-                ventasAnterioresList = ventasList;
-                anteriorHoraPico = (hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
-                anteriorTotal = utils.setDosLugaresDecimales((float) suma);
-                anteriorInsumo = utils.setDosLugaresDecimales((float) gInsumos);
-                anteriorTrabajadores = utils.setDosLugaresDecimales((float) (gTrabajadores));
-                anteriorPromedio = utils.setDosLugaresDecimales((float) promedio);
-                anteriorOtros = utils.setDosLugaresDecimales((float) gGastos);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private Card addCard(String title, String subtitle, String supportText, Dimension dimension, JPanel panel) {
+    private Card addCard(ValueModel title, ValueModel subtitle, String supportText, Dimension dimension, JPanel panel) {
         Card c = MaterialComponentsFactory.Displayers.getLongCard(
                 null,
-                title,
-                subtitle,
+                null,
+                null,
                 null,
                 supportText,
                 null,
                 null,
-                null);
+                title,
+                subtitle);
         c.setPreferredSize(dimension);
         c.setMaximumSize(dimension);
         c.setSecondaryTextColor(Color.red);
         panel.add(c);
         return c;
     }
-
-    private void setPeriodoActual(JLabel fieldToDisplay) {
-        int dia = jDateChooserDel.getDate().getDate(),
-                mes = jDateChooserDel.getDate().getMonth(),
-                anno = jDateChooserDel.getDate().getYear() + 1900;
-
-        actualDel.set(anno, mes, dia);
-        anteriorDel.set(anno, mes, dia);
-        String dateToDisplay = "De: " + dia + "-" + months[mes] + "-" + anno + " / ";
-
-        dia = jDateChooserAl.getDate().getDate();
-        mes = jDateChooserAl.getDate().getMonth();
-        anno = jDateChooserAl.getDate().getYear() + 1900;
-
-        actualAl.set(anno, mes, dia);
-        anteriorAl.set(anno, mes, dia);
-        dateToDisplay += dia + "-" + months[mes] + "-" + anno;
-
-        fieldToDisplay.setText(dateToDisplay);
-    }
-
-    private void setPeriodoAnterior(String tipoPeriodo) {
-        LocalDate fechaDel = actualDel.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fechaAl = actualAl.getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-        periodDays = (int) ChronoUnit.DAYS.between(fechaDel, fechaAl);
-
-        switch (tipoPeriodo) {
-            case "periodo":
-                anteriorDel.add(Calendar.DAY_OF_MONTH, -(periodDays + 1));
-                anteriorAl.add(Calendar.DAY_OF_MONTH, -(periodDays + 1));
-                break;
-            case "anno":
-                anteriorDel.add(Calendar.YEAR, -1);
-                anteriorAl.add(Calendar.YEAR, -1);
-                break;
-            default:
-                break;
-        }
-        int dia = anteriorDel.get(Calendar.DAY_OF_MONTH),
-                mes = anteriorDel.get(Calendar.MONTH),
-                anno = anteriorDel.get(Calendar.YEAR);
-        String dateToDisplay = "Contra: " + dia + "-" + months[mes] + "-" + anno + " / ";
-
-        dia = anteriorAl.get(Calendar.DAY_OF_MONTH);
-        mes = anteriorAl.get(Calendar.MONTH);
-        anno = anteriorAl.get(Calendar.YEAR);
-        dateToDisplay += dia + "-" + months[mes] + "-" + anno;
-
-        jLabelPeriodoAnterior.setText(dateToDisplay);
-
-    }
-
-    private void reiniciarPeriodo() {
-        jDateChooserDel.setDate(new Date());// getEditor().setValue(null);//=new JXDatePicker();
-        jDateChooserAl.setDate(new Date());//getEditor().setValue(null);//=new JXDatePicker();
-        buttonGroupPeriodoChooser.clearSelection();
-        anteriorTotal = null;
-        anteriorPromedio = null;
-        anteriorHoraPico = null;
-        anteriorInsumo = null;
-        anteriorTrabajadores = null;
-        anteriorOtros = null;
-        jPanelGrafica.removeAll();
-        jPanelGrafica.repaint();
-    }
-
-    private void cambiarPanel(int panelnumber) {
-        if (panelnumber == 1) {
-            CardLayout cardLayout = (CardLayout) jPanel5.getLayout();
-            cardLayout.show(jPanel5, "card2");
-            jLabelPeriodoActual.setText("De: ");
-            jLabelPeriodoAnterior.setText("Contra: ");
-
-        } else if (panelnumber == 2) {
-            CardLayout cardLayout = (CardLayout) jPanel5.getLayout();
-            cardLayout.show(jPanel5, "card3");
-            jLabelPeriodoActual1.setText("De: ");
-
-        }
-    }
-
+    
     private void updateDetallesGrafica() {
         if (jPanelGrafica.getComponentCount() > 0) {
             jPanelGrafica.removeAll();
@@ -500,104 +332,18 @@ public class VentaStatisticsView extends AbstractViewPanel {
 
         XYChart chart = new XYChartBuilder().xAxisTitle("Dias").yAxisTitle("Monto").build();
         chart.getStyler().setDatePattern("dd'/'MM'/'yy");
-        chart.getStyler().setPlotGridLinesVisible(false);
+        chart.getStyler().setPlotGridLinesVisible(true);
         Color[] seriesColors = {Color.BLACK, Color.RED};
         chart.getStyler().setSeriesColors(seriesColors);
 
-        ventasListAux = cambiarVentasNull(ventasActualesList, actualDel, actualAl);
-        List< Date> diasVenta = ventaService.getFechaVentas(ventasListAux);
-        List<Double> totalListActual = ventaService.getTotalVentas(ventasListAux);
-
-        chart.addSeries(actual, diasVenta, totalListActual);
-
+        chart.addSeries(actual, VentaStatisticsViewModel.getLista_dias_actual(), VentaStatisticsViewModel.getLista_total_actual());
         if ((jRadioButtonPeriodoAnterior.isSelected()) || (jRadioButtonAnnoAnterior.isSelected())) {
-            List<Date> auxListDiasVenta = new ArrayList<>();
-            ventasListAux = cambiarVentasNull(ventasAnterioresList, anteriorDel, anteriorAl);
-            List<Double> totalListAnterior = ventaService.getTotalVentas(ventasListAux);
-            List< Date> diasListAnterior = ventaService.getFechaVentas(ventasListAux);
-
-            if (jRadioButtonPeriodoAnterior.isSelected()) {
-                for (Date date : diasListAnterior) {
-                    Calendar a = Calendar.getInstance();
-                    a.clear();
-                    a.setTime(date);
-                    a.add(Calendar.DAY_OF_MONTH, (periodDays + 1));
-                    date = a.getTime();
-                    auxListDiasVenta.add(date);
-                }
-            } else if (jRadioButtonAnnoAnterior.isSelected()) {
-                for (Date date : diasListAnterior) {
-                    Calendar a = Calendar.getInstance();
-                    a.clear();
-                    a.setTime(date);
-                    a.add(Calendar.YEAR, 1);
-                    date = a.getTime();
-                    auxListDiasVenta.add(date);
-                }
-            }
-            chart.addSeries(anterior, auxListDiasVenta, totalListAnterior);
+            chart.addSeries(anterior, VentaStatisticsViewModel.getLista_dias_anterior(), VentaStatisticsViewModel.getLista_total_anterior());
         }
+
         XChartPanel wrapper = new XChartPanel(chart);
         jPanelGrafica.add(wrapper);
         wrapper.repaint();
         wrapper.revalidate();
-    }
-
-    private void changePeriods() {
-        if (jRadioButtonPeriodoAnterior.isSelected() || jRadioButtonAnnoAnterior.isSelected()) {
-            cambiarPanel(2);
-            if (jRadioButtonPeriodoAnterior.isSelected()) {
-                setPeriodoActual(jLabelPeriodoActual);
-                setPeriodoAnterior("periodo");
-            } else if (jRadioButtonAnnoAnterior.isSelected()) {
-                setPeriodoActual(jLabelPeriodoActual);
-                setPeriodoAnterior("anno");
-            }
-        } else {
-            cambiarPanel(1);
-            setPeriodoActual(jLabelPeriodoActual1);
-        }
-    }
-
-    private List<Venta> cambiarVentasNull(List<Venta> ventasList, Calendar startDate, Calendar endDate) {
-        List<Venta> ret = new ArrayList<>();
-        Calendar fechaPuntero = startDate;
-        int i = 0;
-        int dia = -1, mes = -1, anno = -1,
-                punteroDia, punteroMes, punteroAnno;
-
-        while (fechaPuntero.compareTo(endDate) <= 0) {
-            if (!ventasList.isEmpty()) {
-                if (i < ventasList.size()) {
-                    dia = ventasList.get(i).getFecha().getDate();
-                    mes = ventasList.get(i).getFecha().getMonth();
-                    anno = ventasList.get(i).getFecha().getYear() + 1900;
-                }
-            }
-            punteroDia = fechaPuntero.get(Calendar.DAY_OF_MONTH);
-            punteroMes = fechaPuntero.get(Calendar.MONTH);
-            punteroAnno = fechaPuntero.get(Calendar.YEAR);
-
-            if ((dia > punteroDia && mes >= punteroMes && anno >= punteroAnno)
-                    || (dia < punteroDia && mes >= punteroMes && anno >= punteroAnno)
-                    || (dia < punteroDia && mes <= punteroMes && anno <= punteroAnno)
-                    || (dia > punteroDia && mes <= punteroMes && anno <= punteroAnno)) {
-                Venta a = new Venta();
-                a.setVentaTotal(0.0);
-                a.setFecha(fechaPuntero.getTime());
-                ret.add(a);
-            } else if (dia == punteroDia && mes == punteroMes && anno == punteroAnno) {
-                if ((ventasList.get(i).getVentaTotal() == null) || (ventasList.get(i).getVentaTotal() == 0.0)) {
-                    Venta a = ventasList.get(i);
-                    a.setVentaTotal(0.0);
-                    ret.add(a);
-                } else {
-                    ret.add(ventasList.get(i));
-                }
-                i++;
-            }
-            fechaPuntero.add(Calendar.DAY_OF_MONTH, 1);
-        }
-        return ret;
     }
 }
