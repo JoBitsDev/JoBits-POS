@@ -6,43 +6,18 @@
 package com.jobits.pos.ui.venta;
 
 import com.jgoodies.binding.adapter.Bindings;
-import com.jgoodies.binding.adapter.SingleListSelectionAdapter;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.VentaCellRender;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import com.jobits.pos.algoritmo.Y;
-import com.jobits.pos.controller.licencia.Licence;
-import com.jobits.pos.controller.licencia.LicenceController;
-import com.jobits.pos.controller.venta.VentaDetailController;
-import com.jobits.pos.controller.venta.VentaListController;
-import com.jobits.pos.exceptions.NoSelectedException;
-import com.jobits.pos.exceptions.UnauthorizedAccessException;
-import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.adapters.repo.impl.VentaDAO;
-import com.jobits.pos.controller.venta.OrdenController;
-import com.jobits.pos.domain.UbicacionConexionModel;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewModel;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
