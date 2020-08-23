@@ -5,10 +5,13 @@
  */
 package com.jobits.pos.ui.configuracion;
 
+import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.servicios.impresion.ImpresoraRepoImpl;
 import com.jobits.pos.servicios.impresion.ImpresoraUseCase;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
+import com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewPresenter;
+import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Dimension;
@@ -146,10 +149,8 @@ public class ConfiguracionView extends AbstractViewPanel {
         jTabbedPane1.add("Generales", new Generales(presenter));
         jTabbedPane1.add("Sync", new Sincronizacion(presenter));
         jTabbedPane1.add("Impresión", new Impresion(presenter));
-        jTabbedPane1.add("ImportarExportar", new ImportarExportar(presenter));
-        jTabbedPane1.add("Impresoras", new Impresoras(presenter, new ImpresoraUseCase(new ImpresoraRepoImpl())));
-
-        //jTabbedPane1.add("Impresoras", new Impresoras(new ImpresoraUseCase(new ImpresoraRepoImpl())));
+        jTabbedPane1.add("ImportarExportar", new ImportarExportar(new ImportarExportarViewPresenter(new ProductoVentaListController())));
+        jTabbedPane1.add("Impresoras", new Impresoras(new ImpresorasViewPresenter(new ImpresoraUseCase(new ImpresoraRepoImpl()))));
     }
 
     @Override
@@ -160,7 +161,7 @@ public class ConfiguracionView extends AbstractViewPanel {
     private Dimension screenHeight(Double x) {
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
         int i = (int) (height * x);
-        
+
         return new Dimension(0, i);
     }
 

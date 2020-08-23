@@ -5,14 +5,21 @@
  */
 package com.jobits.pos.ui.configuracion;
 
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
+import com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewModel;
+import com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewPresenter;
+import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewModel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.awt.Container;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -24,6 +31,8 @@ public class ImportarExportar extends AbstractViewPanel {
 
     /**
      * Creates new form ImportarExportar2
+     *
+     * @param presenter
      */
     public ImportarExportar(AbstractViewPresenter presenter) {
         super(presenter);
@@ -40,14 +49,12 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelImportarExportar = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jComboBoxImportarExportar = MaterialComponentsFactory.Displayers.getComboBox();
+        jComboBoxDatosAGuardar = MaterialComponentsFactory.Displayers.getComboBox();
         jPanel3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jLabel2 = MaterialComponentsFactory.Displayers.getLabel();
-        impExpSwitch = MaterialComponentsFactory.Displayers.getComboBox();
-        jPanel4 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jLabel1 = MaterialComponentsFactory.Displayers.getLabel();
-        itemSelector = MaterialComponentsFactory.Displayers.getComboBox();
         jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        openSaveButton = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAbrirGuardar = MaterialComponentsFactory.Buttons.getOutlinedButton();
 
         setPreferredSize(new java.awt.Dimension(730, 525));
 
@@ -56,53 +63,51 @@ public class ImportarExportar extends AbstractViewPanel {
         jPanelImportarExportar.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(150, 1, 1, 1));
-        jPanel2.setLayout(new java.awt.GridLayout(2, 1));
 
-        jPanel3.setMaximumSize(new java.awt.Dimension(32767, 200));
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 200, 5));
+        jPanel5.setLayout(new java.awt.GridLayout(2, 1, 20, 100));
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jLabel2.setText(bundle.getString("label_opcion")); // NOI18N
-        jPanel3.add(jLabel2);
-
-        impExpSwitch.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        impExpSwitch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Importar", "Exportar" }));
-        impExpSwitch.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxImportarExportar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jComboBoxImportarExportar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jComboBoxImportarExportar.setPreferredSize(new java.awt.Dimension(200, 50));
+        jComboBoxImportarExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                impExpSwitchActionPerformed(evt);
+                jComboBoxImportarExportarActionPerformed(evt);
             }
         });
-        jPanel3.add(impExpSwitch);
+        jPanel5.add(jComboBoxImportarExportar);
 
-        jPanel2.add(jPanel3);
+        jComboBoxDatosAGuardar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jComboBoxDatosAGuardar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jComboBoxDatosAGuardar.setPreferredSize(new java.awt.Dimension(200, 50));
+        jComboBoxDatosAGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxDatosAGuardarActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jComboBoxDatosAGuardar);
 
-        jPanel4.setMaximumSize(new java.awt.Dimension(32767, 200));
-        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 200, 5));
-
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setText("Archivo");
-        jPanel4.add(jLabel1);
-
-        itemSelector.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        itemSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ficha de Costo" }));
-        jPanel4.add(itemSelector);
-
-        jPanel2.add(jPanel4);
+        jPanel2.add(jPanel5);
 
         jPanelImportarExportar.add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        openSaveButton.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        openSaveButton.setText("Abrir");
-        openSaveButton.setAutoscrolls(true);
-        openSaveButton.addActionListener(new java.awt.event.ActionListener() {
+        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 5, 20));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 0, 0, 0, DefaultValues.SECONDARY_COLOR_LIGHT));
+
+        jButtonAbrirGuardar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jButtonAbrirGuardar.setText("---");
+        jButtonAbrirGuardar.setAutoscrolls(true);
+        jButtonAbrirGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openSaveButtonActionPerformed(evt);
+                jButtonAbrirGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(openSaveButton);
+        jPanel1.add(jButtonAbrirGuardar);
 
-        jPanelImportarExportar.add(jPanel1, java.awt.BorderLayout.SOUTH);
+        jPanel3.add(jPanel1, java.awt.BorderLayout.SOUTH);
+
+        jPanelImportarExportar.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -126,61 +131,29 @@ public class ImportarExportar extends AbstractViewPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void openSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openSaveButtonActionPerformed
-        importarExportar(new ProductoVentaListController());
+    private void jButtonAbrirGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirGuardarActionPerformed
+    }//GEN-LAST:event_jButtonAbrirGuardarActionPerformed
+
+    private void jComboBoxImportarExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxImportarExportarActionPerformed
+    }//GEN-LAST:event_jComboBoxImportarExportarActionPerformed
+
+    private void jComboBoxDatosAGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDatosAGuardarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_openSaveButtonActionPerformed
-
-    private void impExpSwitchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_impExpSwitchActionPerformed
-        if (impExpSwitch.getSelectedItem().toString().equals("Importar")) {
-            openSaveButton.setText("Abrir");
-        } else if (impExpSwitch.getSelectedItem().toString().equals("Exportar")) {
-            openSaveButton.setText("Guardar");
-        }
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_impExpSwitchActionPerformed
-
-    private void importarExportar(ProductoVentaListController prodVentaList) {
-
-        if (itemSelector.getSelectedItem().toString().equals("Ficha de Costo")) {
-            if (impExpSwitch.getSelectedItem().toString().equals("Importar")) {
-                importProdVentaList(prodVentaList);
-            } else if (impExpSwitch.getSelectedItem().toString().equals("Exportar")) {
-                exportarProdVentaList(prodVentaList);
-            }
-        }
-    }
-
-    private void importProdVentaList(ProductoVentaListController prodVentaList) {
-        JFileChooser list = new JFileChooser();
-        int response = list.showOpenDialog(jPanel2);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            prodVentaList.importarFichadeCostoFromJson(list.getSelectedFile());
-            showSuccessDialog(jPanel2, "El archivo se ha exportado con éxito");
-        }
-
-    }
-
-    private void exportarProdVentaList(ProductoVentaListController prodVentaList) {
-        JFileChooser list = new JFileChooser();
-        int response = list.showSaveDialog(jPanel2);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            prodVentaList.exportarToJson(list.getSelectedFile(), prodVentaList.getItems());
-            showSuccessDialog(jPanel2, "El archivo se ha importado con éxito");
-        }
-
-    }
-
-    public void showSuccessDialog(Container view, String text) {
-        JOptionPane.showMessageDialog(view, text,
-                R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
-                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
-
-    }
-
+    }//GEN-LAST:event_jComboBoxDatosAGuardarActionPerformed
     @Override
     public void wireUp() {
+        Bindings.bind(jComboBoxImportarExportar, new SelectionInList<String>(
+                getPresenter().getModel(ImportarExportarViewModel.PROP_IMPORTAR_EXPORTAR_OPCIONES),
+                getPresenter().getModel(ImportarExportarViewModel.PROP_IMPORTAR_EXPORTAR_OPCION_SELECCIONADA)),
+                ResourceBundle.getBundle("Strings").getString("label_opcion"));
+        Bindings.bind(jComboBoxDatosAGuardar, new SelectionInList<String>(
+                getPresenter().getModel(ImportarExportarViewModel.PROP_LISTA_TIPO_DATOS),
+                getPresenter().getModel(ImportarExportarViewModel.PROP_TIPO_DATO_SELECCIONADO)),
+                "Archivo");
+        Bindings.bind(jButtonAbrirGuardar, "text", getPresenter().getModel(ImportarExportarViewModel.PROP_BUTTON_TEXT));
+        Bindings.bind(jButtonAbrirGuardar, "enabled", getPresenter().getModel(ImportarExportarViewModel.PROP_BUTTON_ENABLED));
+        Bindings.bind(jComboBoxDatosAGuardar, "enabled", getPresenter().getModel(ImportarExportarViewModel.PROP_TIPO_DATO_ENABLED));
+        jButtonAbrirGuardar.addActionListener(getPresenter().getOperation(ImportarExportarViewPresenter.ACTION_IMPORTAR_EXPORTAR));
     }
 
     @Override
@@ -194,15 +167,13 @@ public class ImportarExportar extends AbstractViewPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> impExpSwitch;
-    private javax.swing.JComboBox<String> itemSelector;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jButtonAbrirGuardar;
+    private javax.swing.JComboBox<String> jComboBoxDatosAGuardar;
+    private javax.swing.JComboBox<String> jComboBoxImportarExportar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelImportarExportar;
-    private javax.swing.JButton openSaveButton;
     // End of variables declaration//GEN-END:variables
 }
