@@ -30,6 +30,10 @@ public interface VentaListService {
 
     public List<Date> getFechaVentas(List<Venta> ventas);
 
+    public List<Float> getTotalGastos(List<Venta> ventas);
+
+    public List<Integer> getTotalOrden(List<Venta> ventas);
+
     public boolean isYVisible();
 
 }

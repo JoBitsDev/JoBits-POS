@@ -156,22 +156,51 @@ public class VentaListController extends AbstractDialogController<Venta> impleme
 
     }
 
+    @Override
     public List<Date> getFechaVentas(List<Venta> ventas) {
-        List<Date> ret = new ArrayList<Date>();
+        List<Date> ret = new ArrayList<>();
         for (int i = 0; i < ventas.size(); i++) {
             ret.add(ventas.get(i).getFecha());
         }
         return ret;
     }
 
+    @Override
     public List<Double> getTotalVentas(List<Venta> ventas) {
-        List<Double> ret = new ArrayList<Double>();
+        List<Double> ret = new ArrayList<>();
         for (int i = 0; i < ventas.size(); i++) {
             ret.add(ventas.get(i).getVentaTotal());
         }
         return ret;
     }
 
+    @Override
+    public List<Float> getTotalGastos(List<Venta> ventas) {
+        List<Float> ret = new ArrayList<>();
+        for (int i = 0; i < ventas.size(); i++) {
+            if (ventas.get(i).getVentagastosGastos() == null) {
+                ret.add((float) 0.0);
+            } else {
+                ret.add(ventas.get(i).getVentagastosGastos());
+            }
+        }
+        return ret;
+    }
+
+    @Override
+    public List<Integer> getTotalOrden(List<Venta> ventas) {
+        List<Integer> ret = new ArrayList<>();
+        for (int i = 0; i < ventas.size(); i++) {
+            if (ventas.get(i).getOrdenList() == null) {
+                ret.add(0);
+            } else {
+                ret.add(ventas.get(i).getOrdenList().size());
+            }
+        }
+        return ret;
+    }
+
+    @Override
     public boolean isYVisible() {
         LicenceController controller = new LicenceController(Licence.TipoLicencia.SECUNDARIA);
         return controller.getLicence().LICENCIA_ACTIVA && controller.getLicence().LICENCIA_VALIDA;

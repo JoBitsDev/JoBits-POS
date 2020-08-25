@@ -104,13 +104,109 @@ public class VentaStatisticsViewModel extends AbstractListViewModel<Venta> {
 
     public static final String PROP_LISTA_TOTAL_ANTERIOR = "lista_dias_actual";
 
-    private boolean periodo_selected;
+    private boolean periodo_selected = false;
 
     public static final String PROP_PERIODO_SELECTED = "periodo_selected";
 
-    private boolean anno_selected;
+    private boolean anno_selected = false;
 
     public static final String PROP_ANNO_SELECTED = "anno_selected";
+
+    private static ArrayListModel<Float> lista_gastos_actual;
+
+    public static final String PROP_LISTA_GASTOS_ACTUAL = "lista_gastos_actual";
+
+    private static ArrayListModel<Float> list_gastos_anterior;
+
+    public static final String PROP_LIST_GASTOS_ANTERIOR = "list_gastos_anterior";
+
+    private static ArrayListModel<Integer> list_ordenes_actual;
+
+    public static final String PROP_LIST_ORDENES_ACTUAL = "list_ordenes_actual";
+
+    private static ArrayListModel<Integer> lista_ordenes_anterior;
+
+    public static final String PROP_LISTA_ORDENES_ANTERIOR = "lista_ordenes_anterior";
+
+    /**
+     * Get the value of lista_ordenes_anterior
+     *
+     * @return the value of lista_ordenes_anterior
+     */
+    public static ArrayListModel<Integer> getLista_ordenes_anterior() {
+        return lista_ordenes_anterior;
+    }
+
+    /**
+     * Set the value of lista_ordenes_anterior
+     *
+     * @param lista_ordenes_anterior new value of lista_ordenes_anterior
+     */
+    public void setLista_ordenes_anterior(ArrayListModel<Integer> lista_ordenes_anterior) {
+        ArrayListModel<Integer> oldLista_ordenes_anterior = VentaStatisticsViewModel.lista_ordenes_anterior;
+        VentaStatisticsViewModel.lista_ordenes_anterior = lista_ordenes_anterior;
+        firePropertyChange(PROP_LISTA_ORDENES_ANTERIOR, oldLista_ordenes_anterior, lista_ordenes_anterior);
+    }
+
+    /**
+     * Get the value of list_ordenes_actual
+     *
+     * @return the value of list_ordenes_actual
+     */
+    public static ArrayListModel<Integer> getList_ordenes_actual() {
+        return list_ordenes_actual;
+    }
+
+    /**
+     * Set the value of list_ordenes_actual
+     *
+     * @param list_ordenes_actual new value of list_ordenes_actual
+     */
+    public void setList_ordenes_actual(ArrayListModel<Integer> list_ordenes_actual) {
+        ArrayListModel<Integer> oldList_ordenes_actual = VentaStatisticsViewModel.list_ordenes_actual;
+        VentaStatisticsViewModel.list_ordenes_actual = list_ordenes_actual;
+        firePropertyChange(PROP_LIST_ORDENES_ACTUAL, oldList_ordenes_actual, list_ordenes_actual);
+    }
+
+    /**
+     * Get the value of list_gastos_anterior
+     *
+     * @return the value of list_gastos_anterior
+     */
+    public static ArrayListModel<Float> getList_gastos_anterior() {
+        return list_gastos_anterior;
+    }
+
+    /**
+     * Set the value of list_gastos_anterior
+     *
+     * @param list_gastos_anterior new value of list_gastos_anterior
+     */
+    public void setList_gastos_anterior(ArrayListModel<Float> list_gastos_anterior) {
+        ArrayListModel<Float> oldList_gastos_anterior = VentaStatisticsViewModel.list_gastos_anterior;
+        VentaStatisticsViewModel.list_gastos_anterior = list_gastos_anterior;
+        firePropertyChange(PROP_LIST_GASTOS_ANTERIOR, oldList_gastos_anterior, list_gastos_anterior);
+    }
+
+    /**
+     * Get the value of lista_gastos_actual
+     *
+     * @return the value of lista_gastos_actual
+     */
+    public static ArrayListModel<Float> getLista_gastos_actual() {
+        return lista_gastos_actual;
+    }
+
+    /**
+     * Set the value of lista_gastos_actual
+     *
+     * @param lista_gastos_actual new value of lista_gastos_actual
+     */
+    public void setLista_gastos_actual(ArrayListModel<Float> lista_gastos_actual) {
+        ArrayListModel<Float> oldLista_gastos_actual = VentaStatisticsViewModel.lista_gastos_actual;
+        VentaStatisticsViewModel.lista_gastos_actual = lista_gastos_actual;
+        firePropertyChange(PROP_LISTA_GASTOS_ACTUAL, oldLista_gastos_actual, lista_gastos_actual);
+    }
 
     /**
      * Get the value of periodo_selected

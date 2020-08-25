@@ -67,11 +67,15 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jButtonRestablecer = MaterialComponentsFactory.Buttons.getMaterialButton();
         jPanelCardsStats = new javax.swing.JPanel();
         jPanelGrafica = new javax.swing.JPanel();
+        jPanelTotalVenta = new javax.swing.JPanel();
+        jPanelTotalGastos = new javax.swing.JPanel();
+        jPanelTotalOrdenes = new javax.swing.JPanel();
+        jPanelPorDesarrollar = new javax.swing.JPanel();
 
         jScrollPane2.setViewportView(jTree1);
 
-        buttonGroupPeriodoChooser.add(jRadioButtonPeriodoAnterior);
-        buttonGroupPeriodoChooser.add(jRadioButtonAnnoAnterior);
+        //buttonGroupPeriodoChooser.add(jRadioButtonPeriodoAnterior);
+        //buttonGroupPeriodoChooser.add(jRadioButtonAnnoAnterior);
 
         setLayout(new java.awt.BorderLayout(5, 5));
 
@@ -200,7 +204,24 @@ public class VentaStatisticsView extends AbstractViewPanel {
 
         add(jPanelHeader, java.awt.BorderLayout.NORTH);
 
-        jPanelGrafica.setLayout(new java.awt.BorderLayout());
+        jPanelGrafica.setLayout(new java.awt.GridLayout(2, 2));
+
+        jPanelTotalVenta.setBorder(javax.swing.BorderFactory.createTitledBorder("Total Venta\n"));
+        jPanelTotalVenta.setLayout(new java.awt.BorderLayout());
+        jPanelGrafica.add(jPanelTotalVenta);
+
+        jPanelTotalGastos.setBorder(javax.swing.BorderFactory.createTitledBorder("Total Gastos"));
+        jPanelTotalGastos.setLayout(new java.awt.BorderLayout());
+        jPanelGrafica.add(jPanelTotalGastos);
+
+        jPanelTotalOrdenes.setBorder(javax.swing.BorderFactory.createTitledBorder("Total Ordenes"));
+        jPanelTotalOrdenes.setLayout(new java.awt.BorderLayout());
+        jPanelGrafica.add(jPanelTotalOrdenes);
+
+        jPanelPorDesarrollar.setBorder(javax.swing.BorderFactory.createTitledBorder("POR DESARROLLAR"));
+        jPanelPorDesarrollar.setLayout(new javax.swing.BoxLayout(jPanelPorDesarrollar, javax.swing.BoxLayout.LINE_AXIS));
+        jPanelGrafica.add(jPanelPorDesarrollar);
+
         add(jPanelGrafica, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -250,7 +271,11 @@ public class VentaStatisticsView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelOpciones;
     private javax.swing.JPanel jPanelPeriodChooser;
     private javax.swing.JPanel jPanelPeriodo;
+    private javax.swing.JPanel jPanelPorDesarrollar;
     private javax.swing.JPanel jPanelSeleccion;
+    private javax.swing.JPanel jPanelTotalGastos;
+    private javax.swing.JPanel jPanelTotalOrdenes;
+    private javax.swing.JPanel jPanelTotalVenta;
     private javax.swing.JRadioButton jRadioButtonAnnoAnterior;
     private javax.swing.JRadioButton jRadioButtonPeriodoAnterior;
     private javax.swing.JScrollPane jScrollPane2;
@@ -265,6 +290,8 @@ public class VentaStatisticsView extends AbstractViewPanel {
         Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_HASTA));
         Bindings.bind(jLabelPeriodoActual, "text", getPresenter().getModel(VentaStatisticsViewModel.PROP_RANGO_FECHAS_TEXT));
         Bindings.bind(jLabelPeriodoAnterior, "text", getPresenter().getModel(VentaStatisticsViewModel.PROP_RANGO_FECHAS_ANTERIOR_TEXT));
+        Bindings.bind(jRadioButtonPeriodoAnterior, getPresenter().getModel(VentaStatisticsViewModel.PROP_PERIODO_SELECTED));
+        Bindings.bind(jRadioButtonAnnoAnterior, getPresenter().getModel(VentaStatisticsViewModel.PROP_ANNO_SELECTED));
 
         jRadioButtonPeriodoAnterior.addActionListener(getPresenter().getOperation(VentaStatisticsViewPresenter.ACTION_SET_PERIODO));
         jRadioButtonAnnoAnterior.addActionListener(getPresenter().getOperation(VentaStatisticsViewPresenter.ACTION_SET_ANNO));
@@ -322,28 +349,65 @@ public class VentaStatisticsView extends AbstractViewPanel {
         panel.add(c);
         return c;
     }
-    
+
     private void updateDetallesGrafica() {
-        if (jPanelGrafica.getComponentCount() > 0) {
-            jPanelGrafica.removeAll();
-            jPanelGrafica.repaint();
+        if (jPanelTotalVenta.getComponentCount() > 0) {
+            jPanelTotalVenta.removeAll();
+            jPanelTotalVenta.repaint();
+        }
+        if (jPanelTotalGastos.getComponentCount() > 0) {
+            jPanelTotalGastos.removeAll();
+            jPanelTotalGastos.repaint();
+        }
+        if (jPanelTotalOrdenes.getComponentCount() > 0) {
+            jPanelTotalOrdenes.removeAll();
+            jPanelTotalOrdenes.repaint();
+        }
+        if (jPanelPorDesarrollar.getComponentCount() > 0) {
+            jPanelPorDesarrollar.removeAll();
+            jPanelPorDesarrollar.repaint();
         }
         String actual = "Periodo actual", anterior = "Periodo anterior";
+        XChartPanel wrapper;
 
+        //*GRAFICA TOTAL VENTAS*//
+        XYChart chart = setChartStyle();
+        chart.addSeries(actual, VentaStatisticsViewModel.getLista_dias_actual(), VentaStatisticsViewModel.getLista_total_actual());
+        if ((jRadioButtonPeriodoAnterior.isSelected()) || (jRadioButtonAnnoAnterior.isSelected())) {
+            chart.addSeries(anterior, VentaStatisticsViewModel.getLista_dias_anterior(), VentaStatisticsViewModel.getLista_total_anterior());
+        }
+        wrapper = new XChartPanel(chart);
+
+        jPanelTotalVenta.add(wrapper);
+
+        //*GRAFICA TOTAL GASTOS*//
+        chart = setChartStyle();
+        chart.addSeries(actual, VentaStatisticsViewModel.getLista_dias_actual(), VentaStatisticsViewModel.getLista_gastos_actual());
+        if ((jRadioButtonPeriodoAnterior.isSelected()) || (jRadioButtonAnnoAnterior.isSelected())) {
+            chart.addSeries(anterior, VentaStatisticsViewModel.getLista_dias_anterior(), VentaStatisticsViewModel.getList_gastos_anterior());
+        }
+        wrapper = new XChartPanel(chart);
+
+        jPanelTotalGastos.add(wrapper);
+
+        //*GRAFICA TOTAL ORDENES*//
+        chart = setChartStyle();
+        chart.addSeries(actual, VentaStatisticsViewModel.getLista_dias_actual(), VentaStatisticsViewModel.getList_ordenes_actual());
+        if ((jRadioButtonPeriodoAnterior.isSelected()) || (jRadioButtonAnnoAnterior.isSelected())) {
+            chart.addSeries(anterior, VentaStatisticsViewModel.getLista_dias_anterior(), VentaStatisticsViewModel.getLista_ordenes_anterior());
+        }
+        wrapper = new XChartPanel(chart);
+
+        jPanelTotalOrdenes.add(wrapper);
+
+    }
+
+    private XYChart setChartStyle() {
         XYChart chart = new XYChartBuilder().xAxisTitle("Dias").yAxisTitle("Monto").build();
         chart.getStyler().setDatePattern("dd'/'MM'/'yy");
         chart.getStyler().setPlotGridLinesVisible(true);
         Color[] seriesColors = {Color.BLACK, Color.RED};
         chart.getStyler().setSeriesColors(seriesColors);
-
-        chart.addSeries(actual, VentaStatisticsViewModel.getLista_dias_actual(), VentaStatisticsViewModel.getLista_total_actual());
-        if ((jRadioButtonPeriodoAnterior.isSelected()) || (jRadioButtonAnnoAnterior.isSelected())) {
-            chart.addSeries(anterior, VentaStatisticsViewModel.getLista_dias_anterior(), VentaStatisticsViewModel.getLista_total_anterior());
-        }
-
-        XChartPanel wrapper = new XChartPanel(chart);
-        jPanelGrafica.add(wrapper);
-        wrapper.repaint();
-        wrapper.revalidate();
+        return chart;
     }
 }
