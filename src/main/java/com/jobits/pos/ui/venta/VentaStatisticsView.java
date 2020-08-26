@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.style.Styler;
 
 /**
  *
@@ -392,6 +393,7 @@ public class VentaStatisticsView extends AbstractViewPanel {
 
         //*GRAFICA TOTAL ORDENES*//
         chart = setChartStyle();
+        chart.setYAxisTitle("Ordenes");
         chart.addSeries(actual, VentaStatisticsViewModel.getLista_dias_actual(), VentaStatisticsViewModel.getList_ordenes_actual());
         if ((jRadioButtonPeriodoAnterior.isSelected()) || (jRadioButtonAnnoAnterior.isSelected())) {
             chart.addSeries(anterior, VentaStatisticsViewModel.getLista_dias_anterior(), VentaStatisticsViewModel.getLista_ordenes_anterior());
@@ -406,6 +408,8 @@ public class VentaStatisticsView extends AbstractViewPanel {
         XYChart chart = new XYChartBuilder().xAxisTitle("Dias").yAxisTitle("Monto").build();
         chart.getStyler().setDatePattern("dd'/'MM'/'yy");
         chart.getStyler().setPlotGridLinesVisible(true);
+        chart.getStyler().setLegendLayout(Styler.LegendLayout.Horizontal);
+        chart.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
         Color[] seriesColors = {Color.BLACK, Color.RED};
         chart.getStyler().setSeriesColors(seriesColors);
         return chart;
