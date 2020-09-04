@@ -57,6 +57,7 @@ public class UbicacionView extends AbstractViewPanel {
         jTextFieldDriver = MaterialComponentsFactory.Input.getTextField("","Driver");
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jPanel2 = new javax.swing.JPanel();
+        jButton2 = MaterialComponentsFactory.Buttons.getCancelButton();
         jButton1 = MaterialComponentsFactory.Buttons.getAcceptButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
 
@@ -118,6 +119,9 @@ public class UbicacionView extends AbstractViewPanel {
 
         jPanel2.setOpaque(false);
 
+        jButton2.setText("Cancelar");
+        jPanel2.add(jButton2);
+
         jButton1.setText("Aceptar");
         jPanel2.add(jButton1);
 
@@ -142,6 +146,7 @@ public class UbicacionView extends AbstractViewPanel {
     private javax.swing.Box.Filler filler7;
     private javax.swing.Box.Filler filler8;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<TipoUbicacion> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -167,6 +172,8 @@ public class UbicacionView extends AbstractViewPanel {
                         getPresenter().getModel(PROP_TIPO_SERVIDOR_SELECCIONADO)));
         
         jButton1.setAction(getPresenter().getOperation(UbicacionViewPresenter.ACTION_ACEPTAR_EDICION));
+        jButton2.setAction(getPresenter().getOperation(UbicacionViewPresenter.ACTION_CANCELAR_EDICION));
+        
     }
 
     @Override
