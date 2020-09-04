@@ -161,7 +161,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             }
             p.setVisible(true);
             service.create(p);
-            // NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
+             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         }
 
     }
@@ -171,7 +171,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 showDialog("Desea descartar los cambios?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             service.discardChanges();
-            //NavigationService.getInstance().navigateUp();
+            NavigationService.getInstance().navigateUp();
         }
 
     }

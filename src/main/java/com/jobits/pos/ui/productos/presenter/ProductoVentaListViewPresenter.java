@@ -7,6 +7,7 @@ package com.jobits.pos.ui.productos.presenter;
 
 import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaListService;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.main.Application;
@@ -15,7 +16,6 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import java.util.Optional;
-import com.jobits.pos.ui.productos.ProductoVentaDetailView2;
 
 /**
  *
@@ -54,31 +54,21 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
 
     @Override
     protected void onAgregarClick() {
-
-        new ProductoVentaDetailView2(Application.getInstance().getMainWindow(), true,
+        NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
                 new ProductoVentaDetailPresenter(
-                        new ProductoVentaDetailController(), null));
-
-//        NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
-//                new ProductoVentaDetailPresenter(
-//                        new ProductoVentaDetailController(), null));
-//        setListToBean();
+                        new ProductoVentaDetailController(), null),DisplayType.POPUP);
+        setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
-        
-        new ProductoVentaDetailView2(Application.getInstance().getMainWindow(), true,
+
+        NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
                 new ProductoVentaDetailPresenter(
                         new ProductoVentaDetailController(
                                 getBean().getElemento_seleccionado()),
-                        getBean().getElemento_seleccionado()));
-
-//        NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
-//                new ProductoVentaDetailPresenter(
-//                        new ProductoVentaDetailController(
-//                                getBean().getElemento_seleccionado()),
-//                        getBean().getElemento_seleccionado()));
+                        getBean().getElemento_seleccionado()),DisplayType.POPUP);
+        setListToBean();
     }
 
     @Override
