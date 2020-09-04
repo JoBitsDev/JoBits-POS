@@ -44,10 +44,6 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
     @Override
     protected void registerOperations() {
         for (MainMenuController.MenuButtons v : MainMenuController.MenuButtons.values()) {
-            if (v == MainMenuController.MenuButtons.LICENCIA) {
-                registerOperation(onLicenciaClick(v.toString()));
-                continue;
-            }
             if (v == MainMenuController.MenuButtons.COMENZAR_VENTAS) {
                 registerOperation(onComenzarVentaClick(v.toString()));
                 continue;
@@ -55,17 +51,6 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
             registerOperation(onMenuClick(v.toString(), v.getNivelMinimoAcceso()));
 
         }
-    }
-
-    private AbstractViewAction onLicenciaClick(String actionName) {
-        return new AbstractViewAction(actionName) {
-            @Override
-            public Optional doAction() {
-                NavigationService.getInstance().navigateTo(LicenceDialogView.VIEW_NAME);
-//                        ViewFacade.getView(LicenceDialogView.VIEW_NAME, null);
-                return Optional.empty();
-            }
-        };
     }
 
     private AbstractViewAction onComenzarVentaClick(String actionName) {

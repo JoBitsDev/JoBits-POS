@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewModel> {
 
     public static final String ACTION_ACEPTAR_EDICION = "Editar ubicación";
+    public static String ACTION_CANCELAR_EDICION = "Cancelar";
     private final UbicacionConexionController controller;
 
     public UbicacionViewPresenter(UbicacionConexionController controller) {
@@ -49,6 +50,10 @@ public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewM
         }
     }
 
+    private void onCancelar() {
+        NavigationService.getInstance().navigateUp();
+    }
+
     @Override
     protected void registerOperations() {
         registerOperation(new AbstractViewAction(ACTION_ACEPTAR_EDICION) {
@@ -58,6 +63,15 @@ public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewM
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_CANCELAR_EDICION) {
+            @Override
+            public Optional doAction() {
+                onCancelar();
+                return Optional.empty();
+            }
+
+        });
+
     }
 
     private void loadFormData(UbicacionConexionModel ubicacionActiva) {
