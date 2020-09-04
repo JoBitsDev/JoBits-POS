@@ -9,13 +9,24 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.RootView;
+import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.login.LogInView;
+import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.swing.containers.MaterialFrame;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 /**
  *
@@ -38,6 +49,36 @@ public class MainWindow extends MaterialFrame {
         setLayout(cards);
         loginView = LogInView.getInstance();
         add(loginView, LogInView.VIEW_NAME);
+//        addWindowListener(new WindowAdapter() {//TODO: buscar un listener para cuando se crea un popup y se pierde el focus
+//            @Override
+//            public void windowDeactivated(WindowEvent e) {
+//                super.windowDeactivated(e); //To change body of generated methods, choose Tools | Templates.
+//                System.out.println("deactivated");
+//            }
+//
+//            @Override
+//            public void windowActivated(WindowEvent e) {
+//                super.windowActivated(e); //To change body of generated methods, choose Tools | Templates.
+//                System.out.println("activated");
+//            }
+//
+//            @Override
+//            public void windowLostFocus(WindowEvent e) {
+//                super.windowLostFocus(e); //To change body of generated methods, choose Tools | Templates.
+//                System.out.println("focus Lost");
+//            }
+//
+//            @Override
+//            public void windowGainedFocus(WindowEvent e) {
+//                super.windowGainedFocus(e); //To change body of generated methods, choose Tools | Templates.
+//                System.out.println("focus gained");
+//            }
+//            
+//            
+//
+//            
+//        });
+        setGlassPane(new TransparentWhiteGlassPane());
         repaint();
     }
 
@@ -73,20 +114,45 @@ public class MainWindow extends MaterialFrame {
     }
 
     public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
-        boolean ret = false;
-        if (ret = viewUIDName.equals(LogInView.VIEW_NAME)) {
+        if (viewUIDName.equals(LogInView.VIEW_NAME)) {
             cards.show(getContentPane(), viewUIDName);
-        } else if (viewUIDName.equals(MainMenuView.VIEW_NAME)) {
+            return true;
+        }
+
+        if (viewUIDName.equals(UbicacionView.VIEW_NAME)) {
+            PopUpDialog.showPopUP(true, ViewFacade.getView(viewUIDName, presenter));
+            return true;
+        }
+
+        if (viewUIDName.equals(LicenceDialogView.VIEW_NAME)) {
+            PopUpDialog.showPopUP(true, ViewFacade.getView(viewUIDName, presenter));
+            return true;
+        }
+
+        if (viewUIDName.equals(MainMenuView.VIEW_NAME)) {
             rootView = RootView.getInstance();
             add(rootView, RootView.VIEW_NAME);
             cards.show(getContentPane(), RootView.VIEW_NAME);
-        } else if (rootView != null) {
-            ret = rootView.showView(viewUIDName, presenter, displayType);
+            return true;
+        }
+        if (rootView != null) {
+            return rootView.showView(viewUIDName, presenter, displayType);
         }
 
-        return ret;
+        return false;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    private class TransparentWhiteGlassPane extends JComponent {
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Rectangle clip = g.getClipBounds();
+            Color alphaWhite = new Color(1.0f, 1.0f, 1.0f, 0.65f);
+            g.setColor(alphaWhite);
+            g.fillRect(clip.x, clip.y, clip.width, clip.height);
+        }
+
+    }
 }
