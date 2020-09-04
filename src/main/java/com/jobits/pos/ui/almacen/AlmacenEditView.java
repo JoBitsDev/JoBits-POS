@@ -30,20 +30,6 @@ import com.jobits.pos.ui.utils.RestManagerAbstractTableModel;
 import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
 import com.jobits.pos.ui.utils.utils;
 import java.awt.Frame;
-import java.util.List;
-import javax.swing.JTable;
-import javax.swing.SpinnerNumberModel;
-import java.awt.Dialog;
-import javax.swing.table.AbstractTableModel;
-import java.awt.event.MouseListener;
-import javax.xml.ws.handler.MessageContext;
-import mdlaf.components.tabbedpane.MaterialTabbedPaneUI;
-import java.awt.Container;
-import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.controller.Controller;
-import com.jobits.pos.controller.almacen.TransaccionDetailController;
-import com.jobits.ui.components.MaterialComponentsFactory;
 
 import com.jobits.ui.components.MaterialComponentsFactory;
 
