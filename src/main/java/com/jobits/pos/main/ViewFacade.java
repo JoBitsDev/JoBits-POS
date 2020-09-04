@@ -100,9 +100,7 @@ public class ViewFacade {
                 return new AlmacenListView((AbstractListViewPresenter) p);
             case LicenceDialogView.VIEW_NAME:
                 return new LicenceDialogView(
-                        Application.getInstance().getLicenceController(),
-                        Application.getInstance().getMainWindow(),
-                        true);
+                        Application.getInstance().getLicenceController());
 
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);
