@@ -8,31 +8,31 @@ package com.jobits.pos.ui.licencia;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Component;
 import java.awt.Frame;
 import javax.swing.JDialog;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Jorge
  */
-public class LicenceDialogView extends JDialog implements View {
+public class LicenceDialogView extends JPanel implements View {
 
     public static final String VIEW_NAME = "Licencia";
 
     private LicenceController controller;
 
-    public LicenceDialogView(
-            LicenceController controller,
-            Frame owner, boolean modal) {
-        super(owner, modal);
+    //TODO: falta presenter en esta clase
+    public LicenceDialogView(LicenceController controller) {
+        super();
         this.controller = controller;
         uiInit();
         wireUp();
-        setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -61,13 +61,14 @@ public class LicenceDialogView extends JDialog implements View {
         jLabel4 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
         jPanelActions = new javax.swing.JPanel();
+        jButtonActivar1 = MaterialComponentsFactory.Buttons.getCancelButton();
         jButtonActivar = MaterialComponentsFactory.Buttons.getAcceptButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(710, 210));
         setMinimumSize(new java.awt.Dimension(710, 173));
         setPreferredSize(new java.awt.Dimension(710, 210));
         setSize(new java.awt.Dimension(710, 210));
+        setLayout(new java.awt.BorderLayout());
 
         jPanelTop.setBackground(new java.awt.Color(204, 204, 204));
         jPanelTop.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
@@ -79,7 +80,7 @@ public class LicenceDialogView extends JDialog implements View {
         jLabel1.setText("Licencia");
         jPanelTop.add(jLabel1, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanelTop, java.awt.BorderLayout.PAGE_START);
+        add(jPanelTop, java.awt.BorderLayout.PAGE_START);
 
         jPanelInfo.setLayout(new java.awt.BorderLayout());
 
@@ -219,12 +220,21 @@ public class LicenceDialogView extends JDialog implements View {
 
         jPanelInfo.add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(jPanelInfo, java.awt.BorderLayout.CENTER);
+        add(jPanelInfo, java.awt.BorderLayout.CENTER);
 
         jPanelActions.setBackground(new java.awt.Color(204, 204, 204));
         jPanelActions.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButtonActivar1.setText(bundle.getString("label_cancelar")); // NOI18N
+        jButtonActivar1.setPreferredSize(new java.awt.Dimension(130, 50));
+        jButtonActivar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActivar1ActionPerformed(evt);
+            }
+        });
+        jPanelActions.add(jButtonActivar1);
+
         jButtonActivar.setText(bundle.getString("label_activar")); // NOI18N
         jButtonActivar.setPreferredSize(new java.awt.Dimension(130, 50));
         jButtonActivar.addActionListener(new java.awt.event.ActionListener() {
@@ -234,10 +244,7 @@ public class LicenceDialogView extends JDialog implements View {
         });
         jPanelActions.add(jButtonActivar);
 
-        getContentPane().add(jPanelActions, java.awt.BorderLayout.PAGE_END);
-
-        pack();
-        setLocationRelativeTo(null);
+        add(jPanelActions, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
@@ -300,8 +307,13 @@ public class LicenceDialogView extends JDialog implements View {
         controller.validateAndSafe(key);
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
+    private void jButtonActivar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivar1ActionPerformed
+        NavigationService.getInstance().navigateUp();
+    }//GEN-LAST:event_jButtonActivar1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActivar;
+    private javax.swing.JButton jButtonActivar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
