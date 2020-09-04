@@ -13,6 +13,8 @@ import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.productos.ProductoVentaDetailView;
+import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 
@@ -26,7 +28,7 @@ import javax.swing.JPanel;
  *
  * @author Jorge
  */
- public class RootView extends JPanel {
+public class RootView extends JPanel {
 
     public static String VIEW_NAME = "Root View";
 
@@ -117,6 +119,12 @@ import javax.swing.JPanel;
     //TODO: asco de metodo. arreglar
     public boolean showView(String viewNameToDisplay, AbstractViewPresenter presenter, DisplayType displayType) {//TODO trabjar en los popup
         //Caso especial para las ordenes
+
+        if (viewNameToDisplay.equals(ProductoVentaDetailView.VIEW_NAME)) {
+            PopUpDialog.showPopUP(true, ViewFacade.getView(viewNameToDisplay, presenter));
+            return true;
+        }
+
         if (viewNameToDisplay.equals(OrdenDetailFragmentView.VIEW_NAME)) {
             View v = views.get(currentDisplayedViewName);
             if (v == null) {
@@ -130,7 +138,7 @@ import javax.swing.JPanel;
 
         }
 
-//primero ver si esta guardada la vista para mostrar
+        //primero ver si esta guardada la vista para mostrar
         if (!views.containsKey(viewNameToDisplay)) {
             //trAtamiento especial para el menu principal
             if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
@@ -149,7 +157,7 @@ import javax.swing.JPanel;
         jPanelStatus.setVisible(displayAggregatesViews);
         dashboard.setVisible(displayAggregatesViews);
         dashboard.getTaskPane().showView(currentDisplayedViewName);
-        repaint();
+        dashboard.getTaskPane().repaint();
 
         return true;
 
