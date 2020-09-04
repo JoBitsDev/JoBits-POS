@@ -15,6 +15,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.LongProcessActionService;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
+import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
 import java.io.FileOutputStream;
@@ -164,6 +165,7 @@ public class Application {
     }
 
     public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
+        PopUpDialog.disposeCurrentDisplayingPopUp();
         return mainWindow.showView(viewUIDName, presenter, displayType);
     }
 
