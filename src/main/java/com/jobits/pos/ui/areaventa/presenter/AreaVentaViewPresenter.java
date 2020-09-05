@@ -5,10 +5,13 @@
  */
 package com.jobits.pos.ui.areaventa.presenter;
 
+import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.areaventa.AreaVentaService;
 import com.jobits.pos.ui.menu.presenter.*;
 import com.jobits.pos.controller.seccion.MenuController;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.main.Application;
@@ -82,17 +85,28 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
         });
     }
 
+    @Override
+    protected Optional refreshState() {
+        if (getBean().getArea_seleccionada() == null) {
+            getBean().getLista_area().clear();
+            getBean().getLista_area().addAll(new ArrayListModel<>(service.getItems()));
+            getBean().getLista_mesas().clear();
+        } else if (getBean().getArea_seleccionada() != null) {
+            getBean().getLista_area().clear();
+            getBean().getLista_area().addAll(new ArrayListModel<>(service.getItems()));
+            getBean().getLista_mesas().clear();
+            getBean().getLista_mesas().addAll(new ArrayListModel<>(getBean().getArea_seleccionada().getMesaList()));
+        }
+        return Optional.empty();
+    }
+
     private void onNuevaAreaCLick() {//TODO: no actualiza correctamente nada en las vistas
-        service.createInstance();
-        Area areaSeleccionada = getBean().getArea_seleccionada();
-        getBean().getLista_area().clear();
-        getBean().getLista_area().addAll(service.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
-        getBean().setArea_seleccionada(areaSeleccionada);
+        Application.getInstance().getNavigator().navigateTo("Crear Area", null, DisplayType.POPUP);
     }
 
     private void onEliminarAreaClick() {
         if (getBean().getArea_seleccionada() == null) {
-           Application.getInstance().getNotificationService().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
+            Application.getInstance().getNotificationService().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
             return;
         }
         service.destroy(getBean().getArea_seleccionada());
@@ -103,17 +117,23 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
     private void onEditarAreaClick() {
         if (getBean().getArea_seleccionada() == null) {
-           Application.getInstance().getNotificationService().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
+            Application.getInstance().getNotificationService().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
             return;
         }
-        service.getDetailControllerForEdit(getBean().getArea_seleccionada());
+        Application.getInstance().getNavigator().navigateTo(
+                "Crear Area",
+                new AreaDetailViewPresenter(
+                        new AreaDetailController(
+                                getBean().getArea_seleccionada())),
+                DisplayType.POPUP);
+
+//        service.getDetailControllerForEdit(getBean().getArea_seleccionada());
         getBean().getLista_area().fireContentsChanged(0, getBean().getLista_area().getSize());
-        
     }
 
     private void onNuevaMesaClick() {
         if (getBean().getArea_seleccionada() == null) {
-           Application.getInstance().getNotificationService().notify("Debe seleccionar un area", TipoNotificacion.ERROR);
+            Application.getInstance().getNotificationService().notify("Debe seleccionar un area", TipoNotificacion.ERROR);
             return;
         }
         service.createMesa(getBean().getArea_seleccionada());
@@ -124,7 +144,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
     private void onEliminarMesaClick() {
         if (getBean().getMesa_seleccionada() == null) {
-           Application.getInstance().getNotificationService().notify("Debe seleccionar una seccion", TipoNotificacion.ERROR);
+            Application.getInstance().getNotificationService().notify("Debe seleccionar una seccion", TipoNotificacion.ERROR);
             return;
         }
         service.removeMesa(getBean().getMesa_seleccionada());
