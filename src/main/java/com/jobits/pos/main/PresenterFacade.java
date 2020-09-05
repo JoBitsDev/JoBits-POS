@@ -8,6 +8,7 @@ package com.jobits.pos.main;
 import com.jobits.pos.adapters.repo.impl.MesaDAO;
 import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.IPVController;
+import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.insumo.InsumoListController;
@@ -32,7 +33,9 @@ import com.jobits.pos.ui.almacen.AlmacenListView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.almacen.presenter.AlmacenListPresenter;
+import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
+import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewPresenter;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
@@ -108,6 +111,8 @@ public class PresenterFacade {
                 return new MenuSeccionViewPresenter(new MenuController());
             case AreaVentaListView.VIEW_NAME:
                 return new AreaVentaViewPresenter(new AreaVentaController());
+            case AreaDetailView.VIEW_NAME:
+                return new AreaDetailViewPresenter(new AreaDetailController());
             case ConfiguracionView.VIEW_NAME:
                 return new ConfigurationViewPresenter(new ConfiguracionController());
             case IpvGestionView.VIEW_NAME:
