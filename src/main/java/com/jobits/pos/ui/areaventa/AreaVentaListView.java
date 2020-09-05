@@ -14,6 +14,8 @@ import static com.jobits.pos.ui.areaventa.presenter.AreaVentaViewModel.*;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -183,7 +185,24 @@ public class AreaVentaListView extends AbstractViewPanel {
                     getPresenter().getOperation(AreaVentaViewPresenter.ACTION_EDITAR_AREA).doAction();
                 }
             }
-        
+
+        });
+        jListAreas.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    getPresenter().getOperation(AreaVentaViewPresenter.ACTION_ELIMINAR_AREA).doAction();
+                }
+            }
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
         });
         jButtonAgregarArea.setAction(getPresenter().getOperation(AreaVentaViewPresenter.ACTION_AGREGAR_AREA));
         jButtonEliminarArea.setAction(getPresenter().getOperation(AreaVentaViewPresenter.ACTION_ELIMINAR_AREA));
