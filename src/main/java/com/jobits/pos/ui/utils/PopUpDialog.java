@@ -38,8 +38,9 @@ public class PopUpDialog extends javax.swing.JDialog {
         addWindowListener(new WindowAdapter() {//TODO: Esto no va aqui. esto tiene que ir en el mainwindows pero no se como hacerlo. o no pincha lo que estoy haciendo
             @Override
             public void windowClosed(WindowEvent e) {
-                super.windowClosed(e);
                 parentFrame.setEnabled(true);
+                super.windowClosed(e);
+                parentFrame.requestFocus();
             }
 
         });
