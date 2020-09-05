@@ -35,6 +35,8 @@ public interface VentaDetailService {
     
     public void reabrirVentas();
     
+    public void printCocinaResumen(String codCocina);
+    
     public void printAreaResumen(Area a);
 
     public void printPersonalResumenRow(Personal personal);

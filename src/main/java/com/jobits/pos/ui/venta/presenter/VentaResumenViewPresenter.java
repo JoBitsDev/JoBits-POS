@@ -186,7 +186,7 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
     }
 
     private void onImprimirResumenPtoElabClick() {
-        throw new UnsupportedOperationException();
+        service.printCocinaResumen(getBean().getResumen_pto_seleccionado().getCodigoPto());
     }
 
     private void updateBeanData() {
