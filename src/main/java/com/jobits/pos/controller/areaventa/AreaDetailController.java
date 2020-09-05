@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jobits.pos.controller.areaventa;
 
 import com.jobits.pos.ui.AbstractDetailView;
@@ -23,23 +22,35 @@ import com.jobits.pos.adapters.repo.impl.CartaDAO;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-public class AreaDetailController extends AbstractDetailController<Area>{
+public class AreaDetailController extends AbstractDetailController<Area> {
 
-    public AreaDetailController(Area instance, AbstractRepository<Area> model) {
+    private boolean creatingMode = true;
+
+    public AreaDetailController() {
+        super(AreaDAO.getInstance());
+        instance = createNewInstance();
+    }
+
+    public AreaDetailController(Area instance) {
         super(instance, AreaDAO.getInstance());
+        creatingMode = false;
     }
 
-    public AreaDetailController(Window parent) {
-        super(parent, AreaDAO.getInstance());
-    }
-
-    public AreaDetailController(Area instance, Window parent) {
-        super(instance, parent, AreaDAO.getInstance());
-    }
-    
+//    public AreaDetailController(Area instance, AbstractRepository<Area> model) {
+//        super(instance, AreaDAO.getInstance());
+//    }
+//
+//    public AreaDetailController(Window parent) {
+//        super(parent, AreaDAO.getInstance());
+//    }
+//
+//    public AreaDetailController(Area instance, Window parent) {
+//        super(instance, parent, AreaDAO.getInstance());
+//    }
     @Override
     public Area createNewInstance() {
         Area ret = new Area();
@@ -47,45 +58,46 @@ public class AreaDetailController extends AbstractDetailController<Area>{
         ret.setCartaList(new ArrayList<>());
         ret.setCodArea(getModel().generateStringCode("A-"));
         ret.setMesaList(new ArrayList<>());
-        ret.setNombre("Nueva Area");
+        ret.setNombre("");
         ret.setPorcientoPorServicio(0);
         return ret;
     }
 
-    @Override
-    public void createUpdateInstance() {
-         if (getView().validateData()) {
-            switch (state) {
-                case CREATING:
-                    create(instance);
-                    break;
-                case EDITING:
-                    
-                    update(instance);
-                    break;
-            }
-        }else{
-            throw new ValidatingException();
-        }
-    }
+//    @Override
+//    public void createUpdateInstance() {
+//        if (getView().validateData()) {
+//            switch (state) {
+//                case CREATING:
+//                    create(instance);
+//                    break;
+//                case EDITING:
+//
+//                    update(instance);
+//                    break;
+//            }
+//        } else {
+//            throw new ValidatingException();
+//        }
+//    }
 
-    
-    
     @Override
     public void constructView(Container parent) {
-        setView(new AreaCreateEditView(getInstance(), this, (OldAbstractView) parent));
-        getView().updateView();
-        getView().setVisible(true);
+//        setView(new AreaCreateEditView(getInstance(), this, (OldAbstractView) parent));
+//        getView().updateView();
+//        getView().setVisible(true);
     }
 
-    public List<Carta> getCartaList(){
+    public List<Carta> getCartaList() {
         return CartaDAO.getInstance().findAll();
     }
 
-    @Override
-    public AbstractDetailView<Area> getView() {
-        return (AbstractDetailView<Area>) super.getView(); //To change body of generated methods, choose Tools | Templates.
+//    @Override
+//    public AbstractDetailView<Area> getView() {
+//        return (AbstractDetailView<Area>) super.getView(); //To change body of generated methods, choose Tools | Templates.
+//    }
+
+    public boolean isCreatingMode() {
+        return creatingMode;
     }
-    
-    
+
 }

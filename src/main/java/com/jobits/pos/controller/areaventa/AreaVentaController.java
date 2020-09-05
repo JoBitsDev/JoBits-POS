@@ -15,6 +15,7 @@ import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.adapters.repo.impl.AreaDAO;
 import com.jobits.pos.adapters.repo.impl.MesaDAO;
+import java.util.List;
 
 /**
  * FirstDream
@@ -22,12 +23,11 @@ import com.jobits.pos.adapters.repo.impl.MesaDAO;
  * @author Jorge
  *
  */
-public class AreaVentaController extends OldAbstractListController<Area> implements AreaVentaService{
+public class AreaVentaController extends OldAbstractListController<Area> implements AreaVentaService {
 
     public AreaVentaController() {
         super(AreaDAO.getInstance());
     }
-
 
     @Override
     public void constructView(Container parent) {
@@ -35,15 +35,20 @@ public class AreaVentaController extends OldAbstractListController<Area> impleme
 
     @Override
     public AbstractDetailController<Area> getDetailControllerForNew() {
-        return new AreaDetailController(getView());
+        return new AreaDetailController();
     }
 
-   
     @Override
     public AbstractDetailController<Area> getDetailControllerForEdit(Area selected) {
-        return new AreaDetailController(selected, getView());
+        return new AreaDetailController(selected);
     }
 
+    @Override
+    public List<Area> getItems() {
+        return getModel().findAll();
+    }
+
+    @Override
     public void createMesa(Area a) {
         String id = showInputDialog(getView(), "Introduzca el numero de la mesa a agregar ");
         try {
