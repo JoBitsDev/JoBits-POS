@@ -7,6 +7,7 @@ package com.jobits.pos.ui.login;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.AbstractViewPanel;
@@ -58,7 +59,7 @@ public class LogInView extends AbstractViewPanel {
         jPasswordField = MaterialComponentsFactory.Input.getPasswordField(java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena"), java.util.ResourceBundle.getBundle("Strings").getString("label_introduzca_contrasena"));
         jPanelConn = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jButtonEdit = MaterialComponentsFactory.Buttons.getEditButton();
+        jButtonEdit = new javax.swing.JButton();
         jLabelEstadoConexion = new javax.swing.JLabel();
         jPanelAutenticar = new javax.swing.JPanel();
         jButtonAutenticar = MaterialComponentsFactory.Buttons.getAcceptButton();
@@ -104,6 +105,7 @@ public class LogInView extends AbstractViewPanel {
         jComboBox1.setPreferredSize(new java.awt.Dimension(52, 48));
         jPanelConn.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
+        jButtonEdit.setIcon(MaterialIcons.LOCATION_ON);
         jButtonEdit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonEdit.setMaximumSize(new java.awt.Dimension(60, 60));
         jButtonEdit.setMinimumSize(new java.awt.Dimension(40, 40));
@@ -179,7 +181,7 @@ public class LogInView extends AbstractViewPanel {
         jButtonAutenticar.setAction(getPresenter().getOperation(ACTION_AUTENTICAR));
         jButtonEdit.setAction(getPresenter().getOperation(ACTION_EDITAR_UBICACION));
         jButtonEdit.setText("");//TODO mal manejo de los actions que hay que poner aqui las cosas manuales
-       // jButtonEdit.setIcon(MaterialIcons.EDIT.deriveIconTTF(jButtonEdit.getForeground()));
+        jButtonEdit.setIcon(MaterialIcons.LOCATION_ON);
 
     }
 
