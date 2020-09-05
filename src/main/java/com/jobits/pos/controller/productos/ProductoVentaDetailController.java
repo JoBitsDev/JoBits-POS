@@ -44,13 +44,6 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
         super(instance, ProductoVentaDAO.getInstance());
     }
 
-    public ProductoVentaDetailController(Window parent) {
-        super(parent, ProductoVentaDAO.getInstance());
-    }
-
-    public ProductoVentaDetailController(ProductoVenta instance, Window parent) {
-        super(instance, parent, ProductoVentaDAO.getInstance());
-    }
 
     @Override
     public ProductoVenta createNewInstance() {

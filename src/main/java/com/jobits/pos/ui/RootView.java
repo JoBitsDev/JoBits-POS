@@ -98,8 +98,9 @@ public class RootView extends JPanel {
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new java.awt.BorderLayout());
 
-        jPanelStatus.setMinimumSize(new java.awt.Dimension(5, 40));
-        jPanelStatus.setPreferredSize(new java.awt.Dimension(5, 60));
+        jPanelStatus.setMaximumSize(new java.awt.Dimension(2147483647, 15));
+        jPanelStatus.setMinimumSize(new java.awt.Dimension(5, 15));
+        jPanelStatus.setPreferredSize(new java.awt.Dimension(5, 15));
         jPanelStatus.setLayout(new java.awt.BorderLayout());
         add(jPanelStatus, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
@@ -118,13 +119,8 @@ public class RootView extends JPanel {
 
     //TODO: asco de metodo. arreglar
     public boolean showView(String viewNameToDisplay, AbstractViewPresenter presenter, DisplayType displayType) {//TODO trabjar en los popup
+        
         //Caso especial para las ordenes
-
-        if (viewNameToDisplay.equals(ProductoVentaDetailView.VIEW_NAME)) {
-            PopUpDialog.showPopUP(true, ViewFacade.getView(viewNameToDisplay, presenter));
-            return true;
-        }
-
         if (viewNameToDisplay.equals(OrdenDetailFragmentView.VIEW_NAME)) {
             View v = views.get(currentDisplayedViewName);
             if (v == null) {

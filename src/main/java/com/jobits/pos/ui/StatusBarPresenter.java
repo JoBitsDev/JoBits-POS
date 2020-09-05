@@ -8,8 +8,10 @@ package com.jobits.pos.ui;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.controller.licencia.LicenceService;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
@@ -34,7 +36,7 @@ public class StatusBarPresenter extends AbstractViewPresenter<StatusBarViewModel
     }
 
     private void onLicenciaButtonClick() {
-
+        Application.getInstance().getNavigator().navigateTo(LicenceDialogView.VIEW_NAME, null, DisplayType.POPUP);
     }
 
     private void refreshBean() {

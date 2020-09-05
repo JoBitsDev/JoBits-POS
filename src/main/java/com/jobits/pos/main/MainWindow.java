@@ -15,6 +15,7 @@ import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.swing.containers.MaterialFrame;
+import com.jobits.ui.components.swing.containers.MaterialWindow;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -32,7 +33,7 @@ import javax.swing.JFrame;
  *
  * @author Jorge
  */
-public class MainWindow extends MaterialFrame {
+public class MainWindow extends JFrame {
 
     /**
      * Creates new form MainWindow
@@ -46,6 +47,7 @@ public class MainWindow extends MaterialFrame {
         initComponents();
         getContentPane().setLayout(new BorderLayout());
         setBackground(DefaultValues.PRIMARY_COLOR);
+       // setResizable(false);
         setLayout(cards);
         loginView = LogInView.getInstance();
         add(loginView, LogInView.VIEW_NAME);
@@ -118,17 +120,12 @@ public class MainWindow extends MaterialFrame {
             cards.show(getContentPane(), viewUIDName);
             return true;
         }
-
-        if (viewUIDName.equals(UbicacionView.VIEW_NAME)) {
+    
+        if (displayType == DisplayType.POPUP) {
             PopUpDialog.showPopUP(true, ViewFacade.getView(viewUIDName, presenter));
             return true;
         }
-
-        if (viewUIDName.equals(LicenceDialogView.VIEW_NAME)) {
-            PopUpDialog.showPopUP(true, ViewFacade.getView(viewUIDName, presenter));
-            return true;
-        }
-
+        
         if (viewUIDName.equals(MainMenuView.VIEW_NAME)) {
             rootView = RootView.getInstance();
             add(rootView, RootView.VIEW_NAME);

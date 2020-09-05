@@ -9,6 +9,7 @@ import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.MainMenuService;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -48,9 +49,23 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                 registerOperation(onComenzarVentaClick(v.toString()));
                 continue;
             }
+            if (v == MainMenuController.MenuButtons.LICENCIA) {
+                registerOperation(onLicenciaClick(v.toString()));
+                continue;
+            }
             registerOperation(onMenuClick(v.toString(), v.getNivelMinimoAcceso()));
 
         }
+    }
+
+    private AbstractViewAction onLicenciaClick(String actionName) {
+        return new AbstractViewAction(actionName) {
+            @Override
+            public Optional doAction() {
+                NavigationService.getInstance().navigateTo(actionName, null, DisplayType.POPUP);
+                return Optional.empty();//TODO: pifia
+            }
+        };
     }
 
     private AbstractViewAction onComenzarVentaClick(String actionName) {

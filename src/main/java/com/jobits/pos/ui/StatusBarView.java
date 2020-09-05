@@ -32,57 +32,54 @@ public class StatusBarView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel4 = new javax.swing.JPanel();
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
-        jLabelEstadoLicencia = MaterialComponentsFactory.Displayers.getLabel();
         jButtonLlave =
         MaterialComponentsFactory.Buttons.getIconButton(new javax.swing.ImageIcon(getClass().
             getResource("/restManager/resources/images/key.png")));
+    jPanel4 = new javax.swing.JPanel();
+    filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
+    jLabelEstadoLicencia = MaterialComponentsFactory.Displayers.getLabel();
     jLabelUsuarioRegistrado = MaterialComponentsFactory.Displayers.getLabel();
     jPanel1 = new javax.swing.JPanel();
     jLabelVersion = MaterialComponentsFactory.Displayers.getLabel();
-    filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
-
-    setOpaque(false);
-    setLayout(new java.awt.BorderLayout());
-
-    jPanel4.setOpaque(false);
-    jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.LINE_AXIS));
-    jPanel4.add(filler4);
-
-    jLabelEstadoLicencia.setForeground(new java.awt.Color(102, 102, 102));
-    jLabelEstadoLicencia.setText("<Estado licencia>");
-    jPanel4.add(jLabelEstadoLicencia);
 
     jButtonLlave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/key.png"))); // NOI18N
     jButtonLlave.setToolTipText("Activar");
     jButtonLlave.setBorderPainted(false);
     jButtonLlave.setEnabled(false);
-    jPanel4.add(jButtonLlave);
 
-    add(jPanel4, java.awt.BorderLayout.WEST);
+    setMaximumSize(new java.awt.Dimension(2147483647, 30));
+    setOpaque(false);
+    setLayout(new java.awt.GridLayout(1, 3));
+
+    jPanel4.setOpaque(false);
+    jPanel4.setLayout(new java.awt.BorderLayout());
+    jPanel4.add(filler1, java.awt.BorderLayout.WEST);
+
+    jLabelEstadoLicencia.setForeground(new java.awt.Color(102, 102, 102));
+    jLabelEstadoLicencia.setText("<Estado licencia>");
+    jPanel4.add(jLabelEstadoLicencia, java.awt.BorderLayout.CENTER);
+
+    add(jPanel4);
 
     jLabelUsuarioRegistrado.setForeground(new java.awt.Color(102, 102, 102));
     jLabelUsuarioRegistrado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabelUsuarioRegistrado.setText("<Usuario registrado>");
-    add(jLabelUsuarioRegistrado, java.awt.BorderLayout.CENTER);
+    add(jLabelUsuarioRegistrado);
 
     jPanel1.setOpaque(false);
-    jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+    jPanel1.setLayout(new java.awt.BorderLayout());
 
     jLabelVersion.setForeground(new java.awt.Color(102, 102, 102));
     jLabelVersion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabelVersion.setText("<Version x.x.x>");
-    jPanel1.add(jLabelVersion);
-    jPanel1.add(filler3);
+    jPanel1.add(jLabelVersion, java.awt.BorderLayout.EAST);
 
-    add(jPanel1, java.awt.BorderLayout.EAST);
+    add(jPanel1);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler3;
-    private javax.swing.Box.Filler filler4;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonLlave;
     private javax.swing.JLabel jLabelEstadoLicencia;
     private javax.swing.JLabel jLabelUsuarioRegistrado;

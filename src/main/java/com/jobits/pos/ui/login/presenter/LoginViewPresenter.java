@@ -10,6 +10,7 @@ import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -85,7 +86,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     }
 
     private void onEditarUbicacionClick() {
-        NavigationService.getInstance().navigateTo(UbicacionView.VIEW_NAME, new UbicacionViewPresenter(ubicacionController));//TODO codigo de ubicaciones
+        NavigationService.getInstance().navigateTo(UbicacionView.VIEW_NAME, new UbicacionViewPresenter(ubicacionController),DisplayType.POPUP);//TODO codigo de ubicaciones
 
     }
 
