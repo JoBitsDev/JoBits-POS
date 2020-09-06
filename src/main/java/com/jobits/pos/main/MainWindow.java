@@ -47,39 +47,23 @@ public class MainWindow extends JFrame {
         initComponents();
         getContentPane().setLayout(new BorderLayout());
         setBackground(DefaultValues.PRIMARY_COLOR);
-       // setResizable(false);
+        // setResizable(false);
         setLayout(cards);
         loginView = LogInView.getInstance();
         add(loginView, LogInView.VIEW_NAME);
-//        addWindowListener(new WindowAdapter() {//TODO: buscar un listener para cuando se crea un popup y se pierde el focus
-//            @Override
-//            public void windowDeactivated(WindowEvent e) {
-//                super.windowDeactivated(e); //To change body of generated methods, choose Tools | Templates.
-//                System.out.println("deactivated");
-//            }
-//
-//            @Override
-//            public void windowActivated(WindowEvent e) {
-//                super.windowActivated(e); //To change body of generated methods, choose Tools | Templates.
-//                System.out.println("activated");
-//            }
-//
-//            @Override
-//            public void windowLostFocus(WindowEvent e) {
-//                super.windowLostFocus(e); //To change body of generated methods, choose Tools | Templates.
-//                System.out.println("focus Lost");
-//            }
-//
-//            @Override
-//            public void windowGainedFocus(WindowEvent e) {
-//                super.windowGainedFocus(e); //To change body of generated methods, choose Tools | Templates.
-//                System.out.println("focus gained");
-//            }
-//            
-//            
-//
-//            
-//        });
+        addWindowListener(new WindowAdapter() {//TODO: buscar un listener para cuando se crea un popup y se pierde el focus
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+                super.windowDeactivated(e); //To change body of generated methods, choose Tools | Templates.
+                getGlassPane().setVisible(true);
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+                super.windowActivated(e); //To change body of generated methods, choose Tools | Templates.
+                getGlassPane().setVisible(false);
+            }
+        });
         setGlassPane(new TransparentWhiteGlassPane());
         repaint();
     }
@@ -120,12 +104,12 @@ public class MainWindow extends JFrame {
             cards.show(getContentPane(), viewUIDName);
             return true;
         }
-    
+
         if (displayType == DisplayType.POPUP) {
-            PopUpDialog.showPopUP(true, ViewFacade.getView(viewUIDName, presenter));
+            PopUpDialog.showPopUP(ViewFacade.getView(viewUIDName, presenter));
             return true;
         }
-        
+
         if (viewUIDName.equals(MainMenuView.VIEW_NAME)) {
             rootView = RootView.getInstance();
             add(rootView, RootView.VIEW_NAME);

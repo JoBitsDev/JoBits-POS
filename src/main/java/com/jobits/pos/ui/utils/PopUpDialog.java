@@ -30,16 +30,16 @@ public class PopUpDialog extends javax.swing.JDialog {
      * @param modal
      * @param contentPane
      */
-    private PopUpDialog(JFrame parent, boolean modal, Component contentPane) {
-        super(parent, modal);
+    private PopUpDialog(JFrame parent, Component contentPane) {
+        super(parent, true);
         initComponents();
         this.parentFrame = parent;
-        parentFrame.getGlassPane().setVisible(modal);
+        parentFrame.setEnabled(false);
         addWindowListener(new WindowAdapter() {//TODO: Esto no va aqui. esto tiene que ir en el mainwindows pero no se como hacerlo. o no pincha lo que estoy haciendo
             @Override
             public void windowClosed(WindowEvent e) {
                 super.windowClosed(e);
-                parentFrame.getGlassPane().setVisible(false);
+                parentFrame.setEnabled(true);
             }
 
         });
@@ -57,13 +57,13 @@ public class PopUpDialog extends javax.swing.JDialog {
 //        INSTANCE = new PopUpDialog(parent, modal, contentPane);
 //        INSTANCE.setVisible(true);
 //    }
-    public static void showPopUP(boolean modal, View contentPane) {
+    public static void showPopUP(View contentPane) {
         if (INSTANCE != null) {
             if (INSTANCE.isVisible()) {
                 INSTANCE.dispose();
             }
         }
-        INSTANCE = new PopUpDialog(Application.getInstance().getMainWindow(),modal, contentPane.getViewComponent());
+        INSTANCE = new PopUpDialog(Application.getInstance().getMainWindow(), contentPane.getViewComponent());
         INSTANCE.setVisible(true);
     }
 
