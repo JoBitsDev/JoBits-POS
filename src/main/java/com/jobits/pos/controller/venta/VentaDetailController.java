@@ -136,7 +136,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
     }
 
     @Override
-    public void createNewOrden() {
+    public Orden createNewOrden() {
         boolean nil = ordController == null;
         Orden newOrden;
         if (nil) {
@@ -152,8 +152,10 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         } else {
             ordController.setInstance(newOrden);
         }
+        return newOrden;
     }
 
+    @Override
     public List<Orden> getOrdenesActivas() {
         ArrayList<Orden> ret;
         if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() <= 2) {

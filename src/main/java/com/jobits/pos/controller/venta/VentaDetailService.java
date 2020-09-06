@@ -21,7 +21,7 @@ import java.util.List;
  */
 public interface VentaDetailService {
 
-    public void createNewOrden();
+    public Orden createNewOrden();
 
     public List<Orden> getOrdenesActivas();
 
