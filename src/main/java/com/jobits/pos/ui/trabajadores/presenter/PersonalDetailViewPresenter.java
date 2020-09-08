@@ -167,7 +167,7 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
     private void fillForm() {
         getBean().getSexo_list().clear();
         getBean().getSexo_list().addAll(new ArrayListModel<>(Arrays.asList("Masculino", "Femenino")));
-        getBean().getPuestos_trabajo_list();
+        getBean().getPuestos_trabajo_list().clear();
         getBean().getPuestos_trabajo_list().addAll(new ArrayListModel<>(service.getPuestoTrabajoList()));
 
         if (personal.getDatosPersonales() != null) {

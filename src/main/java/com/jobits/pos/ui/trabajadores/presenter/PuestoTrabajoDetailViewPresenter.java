@@ -122,7 +122,7 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
 
         getBean().setNombre_puesto_trabajo(puesto.getNombrePuesto());
         getBean().setPuestos_disponibles(puesto.getPuestosDisponibles());
-        
+
         if (!service.isCreatingMode()) {
             getBean().setNombre_enabled(false);
         }
@@ -154,10 +154,10 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
         getBean().setPago_por_ventas(puesto.getPagoPorVentas() == null ? false : puesto.getPagoPorVentas());
         getBean().setPropina(puesto.getPropina() == null ? false : puesto.getPropina());
 
-        if (puesto.getNivelAcceso() != null) {
-            getBean().setNivel_acceso_seleccionado(getBean().getNivel_acceso_list().get(puesto.getNivelAcceso()));
+        if (puesto.getNivelAcceso() == null) {
+            getBean().setNivel_acceso_seleccionado(null);
         } else {
-            getBean().setNivel_acceso_seleccionado(getBean().getNivel_acceso_list().get(0));
+            getBean().setNivel_acceso_seleccionado(getBean().getNivel_acceso_list().get(puesto.getNivelAcceso()));
         }
         if (puesto.getAreaPago() == null) {
             getBean().setArea_pago_seleccionada(null);

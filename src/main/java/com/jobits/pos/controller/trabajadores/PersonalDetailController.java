@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
-import com.jobits.pos.ui.trabajadores.OLDPersonalDetailView;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.util.ArrayList;

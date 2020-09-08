@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
-import com.jobits.pos.ui.trabajadores.OLDPuestoTrabajoDetailView;
 import java.awt.Window;
 import java.util.List;
 import javax.swing.JDialog;
