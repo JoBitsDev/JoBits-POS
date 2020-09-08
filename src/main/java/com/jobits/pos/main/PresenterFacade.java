@@ -19,6 +19,7 @@ import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.trabajadores.NominasController;
+import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
 import com.jobits.pos.controller.venta.OrdenController;
@@ -57,9 +58,11 @@ import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPres
 import com.jobits.pos.ui.menu.MenuSeccionView;
 import com.jobits.pos.ui.menu.presenter.MenuSeccionViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
+import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
+import com.jobits.pos.ui.trabajadores.presenter.PersonalDetailViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PersonalListViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoListViewPresenter;
 import com.jobits.pos.ui.venta.mesas.MesaListView;
@@ -101,6 +104,8 @@ public class PresenterFacade {
                 return new InsumoListViewPresenter(new InsumoListController());
             case PersonalListView.VIEW_NAME:
                 return new PersonalListViewPresenter(new PersonalListController());
+            case PersonalDetailView.VIEW_NAME:
+                return new PersonalDetailViewPresenter(new PersonalDetailController());
             case PuestoTrabajoListView.VIEW_NAME:
                 return new PuestoTrabajoListViewPresenter(new PuestoTrabajoListController());
             case NominasDetailView.VIEW_NAME:

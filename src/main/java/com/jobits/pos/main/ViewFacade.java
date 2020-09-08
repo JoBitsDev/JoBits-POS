@@ -27,6 +27,7 @@ import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.menu.MenuSeccionView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
+import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
@@ -73,6 +74,8 @@ public class ViewFacade {
                 return new InsumoListView((AbstractListViewPresenter) p);
             case PersonalListView.VIEW_NAME:
                 return new PersonalListView((AbstractListViewPresenter) p);
+            case PersonalDetailView.VIEW_NAME:
+                return new PersonalDetailView(p);
             case PuestoTrabajoListView.VIEW_NAME:
                 return new PuestoTrabajoListView((AbstractListViewPresenter) p);
             case NominasDetailView.VIEW_NAME:
