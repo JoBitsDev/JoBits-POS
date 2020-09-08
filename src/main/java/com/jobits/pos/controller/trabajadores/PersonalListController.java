@@ -65,12 +65,12 @@ public class PersonalListController extends OldAbstractListController<Personal> 
 
     @Override
     public AbstractDetailController<Personal> getDetailControllerForNew() {
-        return new PersonalDetailController(getView());
+        return new PersonalDetailController();
     }
 
     @Override
     public AbstractDetailController<Personal> getDetailControllerForEdit(Personal selected) {
-        return new PersonalDetailController(selected, getView());
+        return new PersonalDetailController();
     }
 
     @Override

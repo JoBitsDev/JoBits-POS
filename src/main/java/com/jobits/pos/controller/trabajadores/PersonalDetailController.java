@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
-import com.jobits.pos.ui.trabajadores.PersonalDetailView;
+import com.jobits.pos.ui.trabajadores.OLDPersonalDetailView;
 import java.awt.Dialog;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -30,22 +30,34 @@ import javax.swing.JFrame;
  */
 public class PersonalDetailController extends AbstractDetailController<Personal> {
 
-    public PersonalDetailController() {
+    private boolean creatingMode = true;
+    
+     public PersonalDetailController() {
         super(PersonalDAO.getInstance());
         instance = createNewInstance();
     }
 
     public PersonalDetailController(Personal instance) {
         super(instance, PersonalDAO.getInstance());
+        creatingMode = false;
     }
-
-    public PersonalDetailController(Window parent) {
-        super(parent, PersonalDAO.getInstance());
-    }
-
-    public PersonalDetailController(Personal instance, Window parent) {
-        super(instance, parent, PersonalDAO.getInstance());
-    }
+//
+//    public PersonalDetailController() {
+//        super(PersonalDAO.getInstance());
+//        instance = createNewInstance();
+//    }
+//
+//    public PersonalDetailController(Personal instance) {
+//        super(instance, PersonalDAO.getInstance());
+//    }
+//
+//    public PersonalDetailController(Window parent) {
+//        super(parent, PersonalDAO.getInstance());
+//    }
+//
+//    public PersonalDetailController(Personal instance, Window parent) {
+//        super(instance, parent, PersonalDAO.getInstance());
+//    }
 
     /**
      *
@@ -53,13 +65,13 @@ public class PersonalDetailController extends AbstractDetailController<Personal>
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        if (parent instanceof JDialog) {
-            setView(new PersonalDetailView(instance, this, (Dialog) parent, true));
-        } else {
-            setView(new PersonalDetailView(instance, this, (JFrame) parent, true));
-
-        }
-        getView().setVisible(true);
+//        if (parent instanceof JDialog) {
+//            setView(new OLDPersonalDetailView(instance, this, (Dialog) parent, true));
+//        } else {
+//            setView(new OLDPersonalDetailView(instance, this, (JFrame) parent, true));
+//
+//        }
+//        getView().setVisible(true);
     }
 
     @Override
@@ -84,6 +96,10 @@ public class PersonalDetailController extends AbstractDetailController<Personal>
     public void acumularSalarioTrabajador(float salarioAcumular) {
         instance.setPagoPendiente(instance.getPagoPendiente() + salarioAcumular);
         update(instance, true);
+    }
+
+    public boolean isCreatingMode() {
+        return creatingMode;
     }
 
 }
