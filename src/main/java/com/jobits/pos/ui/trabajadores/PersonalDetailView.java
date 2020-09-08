@@ -5,45 +5,28 @@
  */
 package com.jobits.pos.ui.trabajadores;
 
-import com.jobits.pos.ui.AbstractDetailView;
-import GUI.Components.JTextField;
-import com.jobits.pos.ui.utils.RestManagerInputVerifier;
-import java.awt.Color;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.util.Arrays;
-import java.util.Date;
-import javax.swing.border.LineBorder;
-import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.trabajadores.PersonalDetailController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.domain.models.Personal;
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.domain.models.PuestoTrabajo;
-import com.jobits.pos.recursos.R;
-import com.jobits.pos.recursos.RegularExpressions;
-import com.jobits.pos.ui.utils.RestManagerComboBoxModel;
+import com.jobits.pos.ui.AbstractViewPanel;
+import static com.jobits.pos.ui.trabajadores.presenter.PersonalDetailViewModel.*;
+import static com.jobits.pos.ui.trabajadores.presenter.PersonalDetailViewPresenter.*;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
-
 
 /**
  *
- * @author Jorge
+ * @author Home
  */
-public class PersonalDetailView extends AbstractDetailView<Personal> {
+public class PersonalDetailView extends AbstractViewPanel {
 
-    public PersonalDetailView(Personal instance, AbstractDetailController controller, Frame owner, boolean modal) {
-        super(instance, DialogType.LIST, controller, owner, modal);
-        initComponents();
-        fetchComponentData();
-        updateView();
-    }
+    public static final String VIEW_NAME = "Crear Personal";
 
-    public PersonalDetailView(Personal instance, AbstractDetailController controller, Dialog owner, boolean modal) {
-        super(instance, DialogType.LIST, controller, owner, modal);
-        initComponents();
-        fetchComponentData();
-        updateView();
-
+    /**
+     * Creates new form NEWPersonalDetailView
+     */
+    public PersonalDetailView(AbstractViewPresenter presenter) {
+        super(presenter);
     }
 
     /**
@@ -55,51 +38,50 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel7 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel8 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanelDatosPrincipales = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField(" ", "Nombre*");
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
         jTextFieldApellidos = MaterialComponentsFactory.Input.getTextField(" ", "Apellidos*");
-        jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jLabel9 = MaterialComponentsFactory.Displayers.getLabel();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
+        jPanel7 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jComboBoxPuestoTrabajo = new javax.swing.JComboBox<>();
-        jPanel3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelSeguridad = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField(" ", "Usuario*");
-        jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPasswordFieldPassAntigua = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena_antigua"));
         jToggleButtonMostrarPass = new javax.swing.JToggleButton();
         jPasswordFieldPassNueva = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena_nueva"));
         jPasswordFieldPassRepetir = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_repetir_contrasena_nueva"));
-        jPanel10 = new javax.swing.JPanel();
-        jPanel6 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel4 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBoxSexo = new javax.swing.JComboBox();
-        jPanel14 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelDatosPersonales = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel10 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jTextFieldTelefonoMovil = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono_movil"));
+        jTextFieldTelefonoFijo = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono_fijo"));
+        jPanel9 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jLabel8 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jPanel13 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jFormattedTextFieldMovil = MaterialComponentsFactory.Input.getFormattedTextField("", "");
-        jPanel9 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jFormattedTextFieldFijo = MaterialComponentsFactory.Input.getFormattedTextField("", "");
-        jPanel12 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jComboBoxSexo = new javax.swing.JComboBox();
+        jPanelBotones = new javax.swing.JPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonCrear = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Planilla Trabajador");
-        setBackground(new java.awt.Color(204, 204, 204));
-        setMinimumSize(new java.awt.Dimension(334, 700));
-        setUndecorated(true);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(400, 700));
+        setLayout(new java.awt.BorderLayout());
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nuevo Trabajador", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 24))); // NOI18N
-        jPanel7.setMinimumSize(new java.awt.Dimension(334, 700));
-        jPanel7.setPreferredSize(new java.awt.Dimension(334, 700));
-        jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanelDatosPrincipales.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanelDatosPrincipales.setLayout(new javax.swing.BoxLayout(jPanelDatosPrincipales, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
+
+        jPanel6.setPreferredSize(new java.awt.Dimension(100, 50));
+        jPanel6.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
         jTextFieldNombre.setToolTipText("El nombre no debe exceder de 30 caracteres");
         jTextFieldNombre.setBorder(null);
@@ -107,51 +89,45 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
         jTextFieldNombre.setMinimumSize(new java.awt.Dimension(100, 50));
         jTextFieldNombre.setName(""); // NOI18N
         jTextFieldNombre.setPreferredSize(new java.awt.Dimension(150, 50));
-        jPanel8.add(jTextFieldNombre);
-        jTextFieldNombre.getAccessibleContext().setAccessibleName("");
-
-        jPanel8.add(filler1);
+        jPanel6.add(jTextFieldNombre);
 
         jTextFieldApellidos.setBorder(null);
         jTextFieldApellidos.setMaximumSize(new java.awt.Dimension(150, 50));
         jTextFieldApellidos.setMinimumSize(new java.awt.Dimension(150, 50));
         jTextFieldApellidos.setPreferredSize(new java.awt.Dimension(170, 50));
-        jPanel8.add(jTextFieldApellidos);
+        jPanel6.add(jTextFieldApellidos);
 
-        jPanel7.add(jPanel8);
+        jPanel2.add(jPanel6);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 10, 1));
+        jPanel7.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        jLabel9.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel9.setText("Puesto de Trabajo");
-        jLabel9.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel2.add(jLabel9);
-        jPanel2.add(filler2);
-
-        jComboBoxPuestoTrabajo.setBackground(getBackground());
         jComboBoxPuestoTrabajo.setMaximumSize(new java.awt.Dimension(200, 27));
-        jComboBoxPuestoTrabajo.setMinimumSize(new java.awt.Dimension(100, 27));
-        jComboBoxPuestoTrabajo.setPreferredSize(new java.awt.Dimension(150, 26));
+        jComboBoxPuestoTrabajo.setMinimumSize(new java.awt.Dimension(120, 27));
+        jComboBoxPuestoTrabajo.setOpaque(false);
+        jComboBoxPuestoTrabajo.setPreferredSize(new java.awt.Dimension(200, 26));
         jComboBoxPuestoTrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxPuestoTrabajoActionPerformed(evt);
             }
         });
-        jPanel2.add(jComboBoxPuestoTrabajo);
+        jPanel7.add(jComboBoxPuestoTrabajo);
 
-        jPanel7.add(jPanel2);
+        jPanel2.add(jPanel7);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Seguridad"));
-        jPanel3.setPreferredSize(new java.awt.Dimension(310, 290));
-        jPanel3.setLayout(new java.awt.BorderLayout());
+        jPanelDatosPrincipales.add(jPanel2);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        jPanel1.setPreferredSize(new java.awt.Dimension(300, 260));
-        jPanel1.setLayout(new java.awt.GridLayout(4, 1));
+        jPanel1.add(jPanelDatosPrincipales);
+
+        jPanelSeguridad.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Seguridad"));
+        jPanelSeguridad.setPreferredSize(new java.awt.Dimension(310, 290));
+        jPanelSeguridad.setLayout(new javax.swing.BoxLayout(jPanelSeguridad, javax.swing.BoxLayout.LINE_AXIS));
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        jPanel3.setLayout(new java.awt.GridLayout(4, 1, 0, 10));
 
         jTextFieldUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jTextFieldUsuario.setPreferredSize(new java.awt.Dimension(150, 70));
-        jPanel1.add(jTextFieldUsuario);
+        jTextFieldUsuario.setPreferredSize(new java.awt.Dimension(150, 80));
+        jPanel3.add(jTextFieldUsuario);
 
         jPanel5.setMaximumSize(new java.awt.Dimension(150, 50));
         jPanel5.setOpaque(false);
@@ -159,11 +135,13 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
         jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPasswordFieldPassAntigua.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jPasswordFieldPassAntigua.setPreferredSize(new java.awt.Dimension(150, 70));
+        jPasswordFieldPassAntigua.setOpaque(false);
+        jPasswordFieldPassAntigua.setPreferredSize(new java.awt.Dimension(150, 80));
         jPanel5.add(jPasswordFieldPassAntigua, java.awt.BorderLayout.CENTER);
 
         jToggleButtonMostrarPass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/visualizar.PNG"))); // NOI18N
         jToggleButtonMostrarPass.setBorderPainted(false);
+        jToggleButtonMostrarPass.setOpaque(false);
         jToggleButtonMostrarPass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButtonMostrarPassActionPerformed(evt);
@@ -171,95 +149,75 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
         });
         jPanel5.add(jToggleButtonMostrarPass, java.awt.BorderLayout.EAST);
 
-        jPanel1.add(jPanel5);
+        jPanel3.add(jPanel5);
 
         jPasswordFieldPassNueva.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jPasswordFieldPassNueva.setPreferredSize(new java.awt.Dimension(150, 70));
-        jPanel1.add(jPasswordFieldPassNueva);
+        jPasswordFieldPassNueva.setPreferredSize(new java.awt.Dimension(150, 80));
+        jPanel3.add(jPasswordFieldPassNueva);
 
         jPasswordFieldPassRepetir.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jPasswordFieldPassRepetir.setPreferredSize(new java.awt.Dimension(150, 70));
-        jPanel1.add(jPasswordFieldPassRepetir);
+        jPasswordFieldPassRepetir.setPreferredSize(new java.awt.Dimension(150, 80));
+        jPanel3.add(jPasswordFieldPassRepetir);
 
-        jPanel3.add(jPanel1, java.awt.BorderLayout.CENTER);
+        jPanelSeguridad.add(jPanel3);
 
-        jPanel7.add(jPanel3);
+        jPanel1.add(jPanelSeguridad);
 
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Personales"));
-        jPanel10.setLayout(new java.awt.BorderLayout());
+        jPanelDatosPersonales.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Datos Personales"));
+        jPanelDatosPersonales.setLayout(new javax.swing.BoxLayout(jPanelDatosPersonales, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        jPanel4.setPreferredSize(new java.awt.Dimension(140, 200));
+        jPanel4.setLayout(new java.awt.GridLayout(3, 1, 0, 10));
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 5, 1));
-        jPanel4.setLayout(new java.awt.BorderLayout());
+        jPanel10.setLayout(new java.awt.GridLayout(1, 2, 10, 20));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Sexo");
-        jPanel4.add(jLabel4, java.awt.BorderLayout.CENTER);
+        jTextFieldTelefonoMovil.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jTextFieldTelefonoMovil.setPreferredSize(new java.awt.Dimension(150, 80));
+        jTextFieldTelefonoMovil.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldTelefonoMovilKeyTyped(evt);
+            }
+        });
+        jPanel10.add(jTextFieldTelefonoMovil);
 
-        jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Femenino" }));
-        jComboBoxSexo.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel4.add(jComboBoxSexo, java.awt.BorderLayout.EAST);
+        jTextFieldTelefonoFijo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jTextFieldTelefonoFijo.setPreferredSize(new java.awt.Dimension(150, 80));
+        jTextFieldTelefonoFijo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldTelefonoFijoKeyTyped(evt);
+            }
+        });
+        jPanel10.add(jTextFieldTelefonoFijo);
 
-        jPanel6.add(jPanel4);
+        jPanel4.add(jPanel10);
 
-        jPanel14.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 5, 1));
-        jPanel14.setLayout(new java.awt.BorderLayout());
+        jPanel9.setLayout(new java.awt.GridLayout(1, 0, 0, 10));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Fecha Nacimiento");
-        jPanel14.add(jLabel8, java.awt.BorderLayout.CENTER);
+        jPanel9.add(jLabel8);
 
+        jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
         jDateChooser1.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel14.add(jDateChooser1, java.awt.BorderLayout.EAST);
+        jPanel9.add(jDateChooser1);
 
-        jPanel6.add(jPanel14);
+        jPanel4.add(jPanel9);
 
-        jPanel13.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 5, 1));
-        jPanel13.setLayout(new java.awt.BorderLayout());
+        jPanel8.setPreferredSize(new java.awt.Dimension(100, 40));
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jLabel6.setText(bundle.getString("label_telefono_movil")); // NOI18N
-        jPanel13.add(jLabel6, java.awt.BorderLayout.CENTER);
+        jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Femenino" }));
+        jComboBoxSexo.setOpaque(false);
+        jComboBoxSexo.setPreferredSize(new java.awt.Dimension(150, 26));
+        jPanel8.add(jComboBoxSexo);
 
-        jFormattedTextFieldMovil.setBorder(null);
-        try {
-            jFormattedTextFieldMovil.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextFieldMovil.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel13.add(jFormattedTextFieldMovil, java.awt.BorderLayout.EAST);
+        jPanel4.add(jPanel8);
 
-        jPanel6.add(jPanel13);
+        jPanelDatosPersonales.add(jPanel4);
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 5, 1));
-        jPanel9.setLayout(new java.awt.BorderLayout());
+        jPanel1.add(jPanelDatosPersonales);
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText(bundle.getString("label_telefono_fijo")); // NOI18N
-        jPanel9.add(jLabel7, java.awt.BorderLayout.CENTER);
-
-        jFormattedTextFieldFijo.setBorder(null);
-        try {
-            jFormattedTextFieldFijo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextFieldFijo.setText("");
-        jFormattedTextFieldFijo.setToolTipText("");
-        jFormattedTextFieldFijo.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel9.add(jFormattedTextFieldFijo, java.awt.BorderLayout.EAST);
-
-        jPanel6.add(jPanel9);
-
-        jPanel10.add(jPanel6, java.awt.BorderLayout.CENTER);
-
-        jPanel7.add(jPanel10);
-
-        jPanel12.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 5));
+        jPanelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 5));
 
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setPreferredSize(new java.awt.Dimension(107, 50));
@@ -268,7 +226,7 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
                 jButtonCancelarActionPerformed(evt);
             }
         });
-        jPanel12.add(jButtonCancelar);
+        jPanelBotones.add(jButtonCancelar);
 
         jButtonCrear.setText("Crear");
         jButtonCrear.setPreferredSize(new java.awt.Dimension(107, 50));
@@ -277,53 +235,52 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
                 jButtonCrearActionPerformed(evt);
             }
         });
-        jPanel12.add(jButtonCrear);
+        jPanelBotones.add(jButtonCrear);
 
-        jPanel7.add(jPanel12);
+        jPanel1.add(jPanelBotones);
 
-        getContentPane().add(jPanel7, java.awt.BorderLayout.CENTER);
-
-        pack();
-        setLocationRelativeTo(null);
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBoxPuestoTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPuestoTrabajoActionPerformed
-        System.out.println(evt.getActionCommand());
     }//GEN-LAST:event_jComboBoxPuestoTrabajoActionPerformed
-
-    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-        getController().createUpdateInstance();
-    }//GEN-LAST:event_jButtonCrearActionPerformed
-
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jToggleButtonMostrarPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonMostrarPassActionPerformed
         jPasswordFieldPassAntigua.setEchoChar(!jToggleButtonMostrarPass.isSelected() ? '*' : (char) 0);
     }//GEN-LAST:event_jToggleButtonMostrarPassActionPerformed
 
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+    }//GEN-LAST:event_jButtonCrearActionPerformed
+
+    private void jTextFieldTelefonoMovilKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoMovilKeyTyped
+        char c = evt.getKeyChar();
+        int l = jTextFieldTelefonoMovil.getText().length();
+        if (((l >= 8) || (c < '0') || (c > '9')) && (c != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldTelefonoMovilKeyTyped
+
+    private void jTextFieldTelefonoFijoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoFijoKeyTyped
+        char c = evt.getKeyChar();
+        int l = jTextFieldTelefonoMovil.getText().length();
+        if (((l >= 8) || (c < '0') || (c > '9')) && (c != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldTelefonoFijoKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JComboBox<PuestoTrabajo> jComboBoxPuestoTrabajo;
     private javax.swing.JComboBox jComboBoxSexo;
     private com.toedter.calendar.JDateChooser jDateChooser1;
-    private javax.swing.JFormattedTextField jFormattedTextFieldFijo;
-    private javax.swing.JFormattedTextField jFormattedTextFieldMovil;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -332,91 +289,56 @@ public class PersonalDetailView extends AbstractDetailView<Personal> {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelBotones;
+    private javax.swing.JPanel jPanelDatosPersonales;
+    private javax.swing.JPanel jPanelDatosPrincipales;
+    private javax.swing.JPanel jPanelSeguridad;
     private javax.swing.JPasswordField jPasswordFieldPassAntigua;
     private javax.swing.JPasswordField jPasswordFieldPassNueva;
     private javax.swing.JPasswordField jPasswordFieldPassRepetir;
     private javax.swing.JTextField jTextFieldApellidos;
     private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldTelefonoFijo;
+    private javax.swing.JTextField jTextFieldTelefonoMovil;
     private javax.swing.JTextField jTextFieldUsuario;
     private javax.swing.JToggleButton jToggleButtonMostrarPass;
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void updateView() {
-        if (instance.getDatosPersonales() != null) {
-            jTextFieldNombre.setText(instance.getDatosPersonales().getNombre());
-            jTextFieldApellidos.setText(instance.getDatosPersonales().getApellidos());
-            jDateChooser1.setDate(instance.getDatosPersonales().getFechaNacimineto());
-            jFormattedTextFieldMovil.setText("" + instance.getDatosPersonales().getTelefonoMovil());
-            jFormattedTextFieldFijo.setText("" + instance.getDatosPersonales().getTelefonoFijo());
-            jTextFieldUsuario.setText(instance.getUsuario());
-            jPasswordFieldPassAntigua.setText(instance.getContrasenna());
-            if (instance.getDatosPersonales().getSexo() != null) {
-                if (instance.getDatosPersonales().getSexo() == 'M') {
-                    jComboBoxSexo.setSelectedIndex(0);
-                } else {
-                    jComboBoxSexo.setSelectedIndex(1);
-                }
-            }
-            jComboBoxPuestoTrabajo.setSelectedItem(instance.getPuestoTrabajonombrePuesto());
-        }
+    public void wireUp() {
+        Bindings.bind(jTextFieldNombre, getPresenter().getModel(PROP_NOMBRE_TRABAJADOR));
+        Bindings.bind(jTextFieldApellidos, getPresenter().getModel(PROP_APELLIDOS_TRABAJADOR));
+        Bindings.bind(jTextFieldUsuario, getPresenter().getModel(PROP_USUARIO_TRABAJADOR));
+
+        Bindings.bind(jComboBoxPuestoTrabajo, new SelectionInList<PuestoTrabajo>(
+                getPresenter().getModel(PROP_PUESTOS_TRABAJO_LIST),
+                getPresenter().getModel(PROP_PUESTO_TRABAJO_SELECCIONADO)), "Puesto de Trabajo*");
+
+        Bindings.bind(jPasswordFieldPassAntigua, getPresenter().getModel(PROP_CONTRASENA_ANTIGUA));
+        Bindings.bind(jPasswordFieldPassNueva, getPresenter().getModel(PROP_CONTRASENA_NUEVA));
+        Bindings.bind(jPasswordFieldPassRepetir, getPresenter().getModel(PROP_CONTRASENA_NUEVA_REPETIDA));
+
+        Bindings.bind(jComboBoxSexo, new SelectionInList<String>(
+                getPresenter().getModel(PROP_SEXO_LIST),
+                getPresenter().getModel(PROP_SEXO_SELECCIONADO)), "Sexo");
+
+        Bindings.bind(jDateChooser1, "date", getPresenter().getModel(PROP_FECHA_NACIMIENTO));
+        Bindings.bind(jTextFieldTelefonoFijo, getPresenter().getModel(PROP_TELEFONO_FIJO));
+        Bindings.bind(jTextFieldTelefonoMovil, getPresenter().getModel(PROP_TELEFONO_MOVIL));
+
+        jButtonCancelar.setAction(getPresenter().getOperation(ACTION_CANCELAR));
+        jButtonCrear.setAction(getPresenter().getOperation(ACTION_AGREGAR));
+        Bindings.bind(jButtonCrear, "text", getPresenter().getModel(PROP_CREAR_EDITAR_BUTTON_TEXT));
+
     }
 
     @Override
-    public void fetchComponentData() {
-        jComboBoxPuestoTrabajo.setModel(new RestManagerComboBoxModel<>(((PersonalDetailController) getController()).getPuestoTrabajoList()));
-        jTextFieldUsuario.setInputVerifier(new RestManagerInputVerifier(RegularExpressions.USER_NAME));
-
+    public void uiInit() {
+        initComponents();
     }
 
     @Override
-    public void setEditingMode() {
-        jButtonCrear.setText(R.RESOURCE_BUNDLE.getString("label_editar"));
+    public String getViewName() {
+        return VIEW_NAME;
     }
-
-    @Override
-    public void setCreatingMode() {
-        jButtonCrear.setText(R.RESOURCE_BUNDLE.getString("label_crear"));
-    }
-
-    @Override
-    public boolean validateData() {
-        if (jPasswordFieldPassNueva.getPassword().length > 0) {
-            if (!Arrays.equals(jPasswordFieldPassNueva.getPassword(), (jPasswordFieldPassRepetir.getPassword()))) {
-                jPasswordFieldPassRepetir.setBorder(new LineBorder(Color.red));
-                return false;
-            } else {
-                jPasswordFieldPassRepetir.setBorder(null);
-                instance.setContrasenna(jPasswordFieldPassNueva.getText());
-            }
-
-        }
-        instance.getDatosPersonales().setNombre(jTextFieldNombre.getText());
-        instance.getDatosPersonales().setApellidos(jTextFieldApellidos.getText());
-        instance.getDatosPersonales().setFechaNacimineto(jDateChooser1.getDate());
-        if (jFormattedTextFieldMovil.getValue() == null) {
-            instance.getDatosPersonales().setTelefonoMovil(null);
-        } else {
-            instance.getDatosPersonales().setTelefonoMovil(Integer.parseInt((String) jFormattedTextFieldMovil.getValue()));
-        }
-        if (jFormattedTextFieldFijo.getValue() == null) {
-            instance.getDatosPersonales().setTelefonoFijo(null);
-        } else {
-            instance.getDatosPersonales().setTelefonoFijo(Integer.parseInt((String) jFormattedTextFieldFijo.getValue()));
-
-        }
-        instance.setUsuario(jTextFieldUsuario.getText());
-        instance.getDatosPersonales().setPersonalusuario(instance.getUsuario());
-        if (jComboBoxSexo.getSelectedIndex() == 0) {
-            instance.getDatosPersonales().setSexo('M');
-        } else {
-            instance.getDatosPersonales().setSexo('F');
-        }
-        instance.setUltimodiaPago(new Date());
-        instance.setPagoPendiente((float) 0);
-        instance.setPuestoTrabajonombrePuesto((PuestoTrabajo) jComboBoxPuestoTrabajo.getSelectedItem());
-        instance.setOnline(false);
-        return true;
-    }
-
 }
