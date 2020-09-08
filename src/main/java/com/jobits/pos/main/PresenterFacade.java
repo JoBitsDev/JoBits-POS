@@ -21,6 +21,7 @@ import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
+import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
@@ -60,10 +61,12 @@ import com.jobits.pos.ui.menu.presenter.MenuSeccionViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
+import com.jobits.pos.ui.trabajadores.PuestoTrabajoDetailView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PersonalDetailViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PersonalListViewPresenter;
+import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoDetailViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoListViewPresenter;
 import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
@@ -108,6 +111,8 @@ public class PresenterFacade {
                 return new PersonalDetailViewPresenter(new PersonalDetailController());
             case PuestoTrabajoListView.VIEW_NAME:
                 return new PuestoTrabajoListViewPresenter(new PuestoTrabajoListController());
+            case PuestoTrabajoDetailView.VIEW_NAME:
+                return new PuestoTrabajoDetailViewPresenter(new PuestoTrabajoDetailController());
             case NominasDetailView.VIEW_NAME:
                 return new NominasDetailPresenter(new NominasController());
             case PuntoElaboracionListView.VIEW_NAME:
