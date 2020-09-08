@@ -5,10 +5,14 @@
  */
 package com.jobits.pos.ui.trabajadores.presenter;
 
+import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.controller.trabajadores.PersonalListService;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 
@@ -31,13 +35,25 @@ public class PersonalListViewPresenter extends AbstractListViewPresenter<Persona
 
     @Override
     protected void onAgregarClick() {
-        PersonalDetailController newController = new PersonalDetailController(Application.getInstance().getMainWindow());
+        Application.getInstance().getNavigator().navigateTo("Crear Personal", null, DisplayType.POPUP);
+        //    PersonalDetailController newController = new PersonalDetailController(Application.getInstance().getMainWindow());
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
-        PersonalDetailController newController = new PersonalDetailController(getBean().getElemento_seleccionado(),Application.getInstance().getMainWindow());
+        if (getBean().getElemento_seleccionado() == null) {
+            Application.getInstance().getNotificationService().notify("Debe seleccionar una trabajador", TipoNotificacion.ERROR);
+            return;
+        }
+        Application.getInstance().getNavigator().navigateTo(
+                "Crear Personal",
+                new PersonalDetailViewPresenter(
+                        new PersonalDetailController(
+                                getBean().getElemento_seleccionado())),
+                DisplayType.POPUP);
+
+        //PersonalDetailController newController = new PersonalDetailController(getBean().getElemento_seleccionado(), Application.getInstance().getMainWindow());
         setListToBean();
 
     }
