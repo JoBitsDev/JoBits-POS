@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
-import com.jobits.pos.ui.trabajadores.PuestoTrabajoDetailView;
+import com.jobits.pos.ui.trabajadores.OLDPuestoTrabajoDetailView;
 import java.awt.Window;
 import java.util.List;
 import javax.swing.JDialog;
@@ -26,24 +26,36 @@ import com.jobits.pos.adapters.repo.impl.PuestoTrabajoDAO;
  */
 public class PuestoTrabajoDetailController extends AbstractDetailController<PuestoTrabajo> {
 
+    private boolean creatingMode = true;
+
     public PuestoTrabajoDetailController() {
         super(PuestoTrabajoDAO.getInstance());
         instance = createNewInstance();
-
     }
 
     public PuestoTrabajoDetailController(PuestoTrabajo instance) {
         super(instance, PuestoTrabajoDAO.getInstance());
-
+        creatingMode = false;
     }
-
-    public PuestoTrabajoDetailController(Window parent) {
-        super(parent, PuestoTrabajoDAO.getInstance());
-    }
-
-    public PuestoTrabajoDetailController(PuestoTrabajo instance, Window parent) {
-        super(instance, parent, PuestoTrabajoDAO.getInstance());
-    }
+//    
+//    public PuestoTrabajoDetailController() {
+//        super(PuestoTrabajoDAO.getInstance());
+//        instance = createNewInstance();
+//
+//    }
+//
+//    public PuestoTrabajoDetailController(PuestoTrabajo instance) {
+//        super(instance, PuestoTrabajoDAO.getInstance());
+//
+//    }
+//
+//    public PuestoTrabajoDetailController(Window parent) {
+//        super(parent, PuestoTrabajoDAO.getInstance());
+//    }
+//
+//    public PuestoTrabajoDetailController(PuestoTrabajo instance, Window parent) {
+//        super(instance, parent, PuestoTrabajoDAO.getInstance());
+//    }
 
     /**
      *
@@ -51,14 +63,14 @@ public class PuestoTrabajoDetailController extends AbstractDetailController<Pues
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        if (parent instanceof JDialog) {
-            setView(new PuestoTrabajoDetailView(this, (JDialog) parent, true, getInstance()));
-
-        } else {
-            setView(new PuestoTrabajoDetailView(this, (JFrame) parent, true, getInstance()));
-        }
-        getView().updateView();
-        getView().setVisible(true);
+//        if (parent instanceof JDialog) {
+//            setView(new OLDPuestoTrabajoDetailView(this, (JDialog) parent, true, getInstance()));
+//
+//        } else {
+//            setView(new OLDPuestoTrabajoDetailView(this, (JFrame) parent, true, getInstance()));
+//        }
+//        getView().updateView();
+//        getView().setVisible(true);
     }
 
     @Override
@@ -73,6 +85,10 @@ public class PuestoTrabajoDetailController extends AbstractDetailController<Pues
     public List<Cocina> getAreasPago() {
         return CocinaDAO.getInstance().findAll();
 
+    }
+
+    public boolean isCreatingMode() {
+        return creatingMode;
     }
 
 }

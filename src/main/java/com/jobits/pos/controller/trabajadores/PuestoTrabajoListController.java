@@ -35,12 +35,12 @@ public class PuestoTrabajoListController extends OldAbstractListController<Puest
 
     @Override
     public AbstractDetailController<PuestoTrabajo> getDetailControllerForNew() {
-        return new PuestoTrabajoDetailController(getView());
+        return new PuestoTrabajoDetailController();
     }
 
     @Override
     public AbstractDetailController<PuestoTrabajo> getDetailControllerForEdit(PuestoTrabajo selected) {
-        return new PuestoTrabajoDetailController(selected, getView());
+        return new PuestoTrabajoDetailController();
     }
 
 }
