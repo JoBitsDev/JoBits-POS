@@ -66,31 +66,44 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
         });
     }
 
-    private boolean onAgregarClick() {
-        String nombre = getBean().getNombre_puesto_trabajo();
-        if (nombre.length() > 30 || !nombre.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
-            return false;
+    private void onAgregarClick() {
+        if (getBean().getNombre_puesto_trabajo() == null || getBean().getNombre_puesto_trabajo().equals("")) {
+            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "El campo nombre es obligatorio");
+            return;
+        } else {
+            String nombre = getBean().getNombre_puesto_trabajo();
+            if (nombre.length() > 30 || !nombre.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
+                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Nombre no permitido");
+                return;
+            } else {
+                puesto.setNombrePuesto(nombre);
+            }
         }
-        puesto.setNombrePuesto(nombre);
-
+        if (getBean().getArea_trabajo_seleccionada() == null) {
+            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un area de trabajo");
+            return;
+        } else {
+            puesto.setAreacodArea(getBean().getArea_trabajo_seleccionada());
+        }
         if (getBean().getArea_pago_seleccionada() == null) {
             puesto.setAreaPago(null);
         } else {
             puesto.setAreaPago(getBean().getArea_pago_seleccionada().getCodCocina());
         }
-        if (getBean().getArea_trabajo_seleccionada() == null) {
-            puesto.setAreacodArea(null);
+        if (getBean().getNivel_acceso_seleccionado() == null) {
+            puesto.setNivelAcceso(0);
         } else {
-            puesto.setAreacodArea(getBean().getArea_trabajo_seleccionada());
+            puesto.setNivelAcceso(getBean().getNivel_acceso_seleccionado().getNivel());
         }
+
         puesto.setPagoPorVentas(getBean().isPago_por_ventas());
         puesto.setPropina(getBean().isPropina());
-        puesto.setNivelAcceso(getBean().getNivel_acceso_seleccionado().getNivel());
         puesto.setPuestosDisponibles(getBean().getPuestos_disponibles());
         puesto.setAPartirDe(getBean().getPago_a_partir());
         puesto.setSalarioFijo(getBean().getSalario_fijo());
         puesto.setSalarioPorcientoDeArea(getBean().getPago_porciento_a_partir());
         puesto.setSalarioPorcientoVentaTotal(getBean().getSalario_venta());
+
         if (puesto.getPersonalList() == null) {
             puesto.setPersonalList(new ArrayList<>());
         }
@@ -101,7 +114,6 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
             service.update(puesto);
         }
         NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
-        return true;
     }
 
     private void onCancelarClick() {
