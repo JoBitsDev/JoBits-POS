@@ -11,6 +11,7 @@ import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
+import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
@@ -43,7 +44,9 @@ import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
+import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.InsumoListView;
+import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
 import com.jobits.pos.ui.insumo.presenter.InsumoListViewPresenter;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.login.LogInView;
@@ -105,6 +108,8 @@ public class PresenterFacade {
                 throw new IllegalStateException("Bad call on view: " + viewUIDName);
             case InsumoListView.VIEW_NAME:
                 return new InsumoListViewPresenter(new InsumoListController());
+            case InsumoDetailView.VIEW_NAME:
+                return new InsumoDetailViewPresenter(new InsumoDetailController());
             case PersonalListView.VIEW_NAME:
                 return new PersonalListViewPresenter(new PersonalListController());
             case PersonalDetailView.VIEW_NAME:
