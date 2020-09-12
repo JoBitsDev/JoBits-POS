@@ -9,6 +9,9 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.View;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.GraphicsEnvironment;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
@@ -44,8 +47,18 @@ public class PopUpDialog extends javax.swing.JDialog {
             }
 
         });
+        contentPane.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                setSize(contentPane.getSize());
+                setLocationRelativeTo(null);
+            }
+
+        });
         setLayout(new BorderLayout());
-        setPreferredSize(contentPane.getPreferredSize());
+        setSize(contentPane.getSize());
+        setMaximumSize(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize());
         add(contentPane, BorderLayout.CENTER);
         pack();
         setLocationRelativeTo(null);
