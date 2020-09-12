@@ -15,7 +15,7 @@ import java.util.List;
 import javax.swing.JSpinner;
 
 import com.jobits.pos.controller.AbstractDialogController;
-import com.jobits.pos.controller.insumo.InsumoCreateEditController;
+import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoElaborado;
@@ -31,12 +31,12 @@ import com.jobits.ui.components.MaterialComponentsFactory;
  *
  * @author Jorge
  */
-public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
+public class OLDInsumoCreateEditView extends AbstractDetailView<Insumo> {
 
     private OldAbstractCrossReferenePanel<InsumoElaborado, Insumo> tableIngElab;
     private OldAbstractCrossReferenePanel<ProductoInsumo, ProductoVenta> tableCrossReference;
 
-    public InsumoCreateEditView(AbstractDialogController controller, Frame owner, boolean modal, Insumo ins) {
+    public OLDInsumoCreateEditView(AbstractDialogController controller, Frame owner, boolean modal, Insumo ins) {
         super(ins, DialogType.DEFINED, controller, owner, modal);
         initComponents();
         hideCrossReferenceDialog();
@@ -44,7 +44,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
 
     }
 
-    public InsumoCreateEditView(AbstractDialogController controller, Dialog owner, boolean modal, Insumo ins) {
+    public OLDInsumoCreateEditView(AbstractDialogController controller, Dialog owner, boolean modal, Insumo ins) {
         super(ins, DialogType.DEFINED, controller, owner, modal);
         initComponents();
         hideCrossReferenceDialog();
@@ -62,8 +62,8 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
     }
 
     @Override
-    public InsumoCreateEditController getController() {
-        return (InsumoCreateEditController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    public InsumoDetailController getController() {
+        return (InsumoDetailController) super.getController(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void updateTable(List<InsumoElaborado> items) {
@@ -526,7 +526,7 @@ public class InsumoCreateEditView extends AbstractDetailView<Insumo> {
             jSpinnerCantidadCreada.setEnabled(false);
 
         }
-
+        setLocationRelativeTo(null);
     }//GEN-LAST:event_jToggleButtonElaboradoStateChanged
 
     private void jToggleButtonElaboradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonElaboradoActionPerformed
