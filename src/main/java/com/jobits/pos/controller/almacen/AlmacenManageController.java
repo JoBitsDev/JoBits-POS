@@ -15,7 +15,7 @@ import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.insumo.InsumoCreateEditController;
+import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
@@ -105,7 +105,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
     }
  
     public void modificarStock(Insumo i) {
-        InsumoCreateEditController insumoController = new InsumoCreateEditController(i, getView());
+        //InsumoDetailController insumoController = new InsumoDetailController(i, getView());
         getView().updateView();
     }
 
@@ -293,7 +293,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
             if (showConfirmDialog(getView(), "Actualizar el costo del insumo " + i + " \n de "
                     + i.getCostoPorUnidad() + R.COIN_SUFFIX + " a " + utils.setDosLugaresDecimales(ins.getValorMonetario() / ins.getCantidad()))) {
                 i.setCostoPorUnidad(utils.setDosLugaresDecimalesFloat(ins.getValorMonetario() / ins.getCantidad()));
-                InsumoCreateEditController controller = new InsumoCreateEditController();
+                InsumoDetailController controller = new InsumoDetailController();
                 controller.setView(getView());
                 controller.setShowDialogs(false);
                 controller.update(i, true);

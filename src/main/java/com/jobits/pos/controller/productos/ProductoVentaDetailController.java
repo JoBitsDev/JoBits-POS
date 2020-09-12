@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.controller.insumo.InsumoCreateEditController;
+import com.jobits.pos.controller.insumo.InsumoDetailController;
 
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Insumo;
@@ -104,8 +104,7 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
 
     @Override
     public void registrarNuevoInsumo() {
-
-        InsumoCreateEditController controller = new InsumoCreateEditController();
+        InsumoDetailController controller = new InsumoDetailController();
         controller.setParent(getView());
         new LongProcessActionServiceImpl() {
             @Override

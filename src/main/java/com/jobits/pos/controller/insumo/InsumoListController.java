@@ -48,12 +48,14 @@ public class InsumoListController extends OldAbstractListController<Insumo> impl
 
     @Override
     public AbstractDetailController<Insumo> getDetailControllerForNew() {
-        return new InsumoCreateEditController(getView());
+        return new InsumoDetailController();
+     //   return new InsumoDetailController(getView());
     }
 
     @Override
     public AbstractDetailController<Insumo> getDetailControllerForEdit(Insumo selected) {
-        return new InsumoCreateEditController(getSelected(), getView());
+        return new InsumoDetailController();
+       // return new InsumoDetailController(getSelected(), getView());
     }
 
 }
