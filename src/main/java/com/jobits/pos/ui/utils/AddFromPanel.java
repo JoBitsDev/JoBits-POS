@@ -143,7 +143,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         add(jPanelInsert, java.awt.BorderLayout.NORTH);
 
         jScrollPaneCrossReference.setOpaque(false);
-        jScrollPaneCrossReference.setPreferredSize(new java.awt.Dimension(500, 500));
+        jScrollPaneCrossReference.setPreferredSize(new java.awt.Dimension(500, 180));
 
         jTableCrossReference.setAutoCreateRowSorter(true);
         jTableCrossReference.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
