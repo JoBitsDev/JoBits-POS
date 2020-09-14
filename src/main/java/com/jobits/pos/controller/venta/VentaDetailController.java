@@ -65,7 +65,7 @@ import javax.swing.JOptionPane;
 public class VentaDetailController extends AbstractDetailController<Venta> implements VentaDetailService {
 
     Date fechaFin = null;
-    private OrdenController ordController;
+    private OrdenService ordController;
     int turnoActivo = 0;
 
     public VentaDetailController() {
@@ -74,13 +74,13 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
             instance = initDiaVentas(null);
         });
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-        this.ordController = new OrdenController(getInstance());
+        this.ordController = new OrdenController();
 
     }
 
     public VentaDetailController(Venta instance) {//TODO aqui se pudiera crear el constructor del orden controller sin pasarlo por parametro
         super(instance, VentaDAO.getInstance());
-        this.ordController = new OrdenController(instance);
+        this.ordController = new OrdenController();
         OrdenDAO.getInstance().addPropertyChangeListener(this);
         if (getInstance().getCambioTurno1() != null) {
             turnoActivo = 2;
@@ -95,7 +95,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
             instance = initDiaVentas(diaVentas);
 
         });
-        this.ordController = new OrdenController(getInstance());
+        this.ordController = new OrdenController();
         if (getInstance().getCambioTurno1() != null) {
             turnoActivo = 2;
         }
@@ -126,31 +126,31 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
     public void constructView(java.awt.Container parent) {
     }
 
-    public void updateOrdenDialog(Orden objectAtSelectedRow) {
-        if (ordController == null) {
-            //  ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
-
-        } else {
-            ordController.setInstance(objectAtSelectedRow);
-        }
-    }
-
+    //TODO: borrar despues de verificar
+//    public void updateOrdenDialog(Orden objectAtSelectedRow) {
+//        if (ordController == null) {
+//            //  ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
+//
+//        } else {
+//          //  ordController.setInstance(objectAtSelectedRow);
+//        }
+//    }
     @Override
     public Orden createNewOrden() {
         boolean nil = ordController == null;
         Orden newOrden;
         if (nil) {
-            ordController = new OrdenController(getInstance());
+            ordController = new OrdenController();
             newOrden = ordController.getInstance();
         } else {
-            newOrden = ordController.createNewInstance();
+            newOrden = ordController.createNewInstance();//TODO: ver que parametros hacen falta para la nueva orden
         }
         super.getInstance().getOrdenList().add(newOrden);
         ordController.create(newOrden, true);
         if (nil) {
             //   ordController = new OrdenController(newOrden, vi.getjPanelDetailOrdenes());
         } else {
-            ordController.setInstance(newOrden);
+            //ordController.setInstance(newOrden);//TODO: revisar antes de borrar
         }
         return newOrden;
     }
@@ -173,7 +173,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         if (ordController != null) {
             if (ordController.getInstance() != null) {
                 int index = getOrdenesActivas().indexOf(ordController.getInstance());
-                ordController.setInstance(getOrdenesActivas().get(index));
+                //   ordController.setInstance(getOrdenesActivas().get(index));TODO: borrar despues de verificar
             }
         }
         //vi.updateView();
