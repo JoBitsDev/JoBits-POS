@@ -61,7 +61,7 @@ import com.jobits.pos.ui.OldView;
  * @author Jorge
  *
  */
-public class OrdenController extends AbstractFragmentController<Orden> implements OrdenService{
+public class OrdenController extends AbstractFragmentController<Orden> implements OrdenService {
 
     Venta fechaOrden;
     private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
@@ -73,27 +73,6 @@ public class OrdenController extends AbstractFragmentController<Orden> implement
         init();
     }
 
-    public OrdenController(String ordenId) {
-        this();
-
-    }
-
-    public OrdenController(Mesa mesaParaAbrir) {
-        this();
-
-    }
-
-    public OrdenController(Venta fecha) {
-        this();
-        this.fechaOrden = fecha;
-        //   instance = createNewInstance();
-    }
-
-    public OrdenController(Orden instance) {
-        super(instance, OrdenDAO.getInstance());
-        init();
-        fechaOrden = instance.getVentafecha();
-    }
 
     private void init() {
         setDismissOnAction(false);
@@ -318,7 +297,7 @@ public class OrdenController extends AbstractFragmentController<Orden> implement
         return ProductoVentaDAO.getInstance().findAllVisible(getInstance().getMesacodMesa());
     }
 
-    public void addProduct(String codOrden,ProductoVenta selected) {
+    public void addProduct(String codOrden, ProductoVenta selected) {
         if (autorize()) {
 
             boolean found = false;
@@ -476,10 +455,10 @@ public class OrdenController extends AbstractFragmentController<Orden> implement
         }
     }
 
-    public void addRapidoProducto(String idProducto) {
+    public void addRapidoProducto(String codOrden, String idProducto) {
         ProductoVenta productoABuscar = ProductoVentaDAO.getInstance().find(idProducto);
         if (productoABuscar != null) {
-            addProduct(productoABuscar);
+            addProduct(codOrden, productoABuscar);
         }
     }
 
