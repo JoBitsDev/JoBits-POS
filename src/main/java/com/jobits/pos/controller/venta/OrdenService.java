@@ -41,6 +41,10 @@ public interface OrdenService {
     public List<ProductoVenta> getPDVList();
 
     public Orden getInstance();
+
+    public void create(Orden newOrden, boolean b);
+
+    public Orden createNewInstance();
     
     
     
