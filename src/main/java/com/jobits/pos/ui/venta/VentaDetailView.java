@@ -583,7 +583,7 @@ public class VentaDetailView extends AbstractViewPanel {
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
         VentaDetailService ventaService = ((VentaResumenViewPresenter)getPresenter()).getService();
-        VentaOrdenListViewPresenter ventaOrdenPresenter = new VentaOrdenListViewPresenter(ventaService, new OrdenController(ventaService.getInstance()));
+        VentaOrdenListViewPresenter ventaOrdenPresenter = new VentaOrdenListViewPresenter(ventaService, new OrdenController());
         jPanelVentas.add(new VentaListOrdenesView(ventaOrdenPresenter));
 
         jPanelExtracciones.add(new GastoOperacionView(new GastoOperacionController()));

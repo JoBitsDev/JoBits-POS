@@ -31,7 +31,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     private VentaDetailService ventaService;
     private OrdenService ordenService;
 
-    public VentaOrdenListViewPresenter(VentaDetailService ventaService) {
+    private VentaOrdenListViewPresenter(VentaDetailService ventaService) {
         super(new VentaOrdenListViewModel());
         this.ventaService = ventaService;
 
@@ -40,6 +40,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     public VentaOrdenListViewPresenter(VentaDetailService ventaService, OrdenController ordenService) {
         this(ventaService);
         this.ordenService = ordenService;
+        refreshState();
     }
 
     @Override
@@ -73,7 +74,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     private List<OrdenDetailViewPresenter> createPresentersFrom(List<Orden> pedidos) {
         ArrayListModel<OrdenDetailViewPresenter> ret = new ArrayListModel<>();
         for (Orden x : pedidos) {
-            OrdenDetailViewPresenter newPresenter = new OrdenDetailViewPresenter(ordenService);
+            OrdenDetailViewPresenter newPresenter = new OrdenDetailViewPresenter(x.getCodOrden(), ordenService);
             ret.add(newPresenter);
             newPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_ORDEN_STATUS_UPDATE, this);
         }

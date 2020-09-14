@@ -69,11 +69,11 @@ public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewMod
         OrdenController ordenController;
 
         if (getBean().getElemento_seleccionado().isVacia()) {
-            ordenController = new OrdenController(getBean().getElemento_seleccionado());
+            //ordenController = new OrdenController(getBean().getElemento_seleccionado());
         } else {
-            ordenController = new OrdenController(getBean().getElemento_seleccionado().getEstado().split(" ")[1]);
+            //ordenController = new OrdenController(getBean().getElemento_seleccionado().getEstado().split(" ")[1]);
         }
-        Application.getInstance().getNavigator().navigateTo(OrdenDetailFragmentView.VIEW_NAME, new OrdenDetailViewPresenter(ordenController));
+     //   Application.getInstance().getNavigator().navigateTo(OrdenDetailFragmentView.VIEW_NAME, new OrdenDetailViewPresenter(ordenController));
 
     }
 

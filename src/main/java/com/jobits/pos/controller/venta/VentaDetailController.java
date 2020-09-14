@@ -141,10 +141,10 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         Orden newOrden;
         if (nil) {
             ordController = new OrdenController();
-            newOrden = ordController.getInstance();
-        } else {
-            newOrden = ordController.createNewInstance();//TODO: ver que parametros hacen falta para la nueva orden
         }
+
+        //TODO: aqui se sigue sin manejar el numero de la mesa en los controllers y no en las vistas
+        newOrden = ordController.createNewInstance(null, R.DATE_FORMAT.format(getInstance().getFecha()));//TODO: ver que parametros hacen falta para la nueva orden
         super.getInstance().getOrdenList().add(newOrden);
         ordController.create(newOrden, true);
         if (nil) {
@@ -170,12 +170,12 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
     public void fetchNewDataFromServer(int turnoTrabajo) {
         turnoActivo = turnoTrabajo;
         getModel().getEntityManager().refresh(getModel().find(getInstance().getFecha()));
-        if (ordController != null) {
-            if (ordController.getInstance() != null) {
-                int index = getOrdenesActivas().indexOf(ordController.getInstance());
-                //   ordController.setInstance(getOrdenesActivas().get(index));TODO: borrar despues de verificar
-            }
-        }
+//        if (ordController != null) { //TODO: borrar luego de verificar
+//            if (ordController.getInstance() != null) {
+//                int index = getOrdenesActivas().indexOf(ordController.getInstance());
+//                //   ordController.setInstance(getOrdenesActivas().get(index));TODO: borrar despues de verificar
+//            }
+//        }
         //vi.updateView();
     }
 

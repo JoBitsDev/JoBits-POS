@@ -96,7 +96,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             VentaDetailController ventaController = new VentaDetailController(getBean().getDia_seleccionado());
             VentaResumenViewPresenter presenter
                     = new VentaResumenViewPresenter(ventaController,
-                            new OrdenController(ventaController.getInstance()));
+                            new OrdenController());
             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         }
     }
