@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jobits.pos.controller.venta.OrdenController;
+import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -31,18 +32,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_ADD_NOTA = "Agregar Nota";
     public static String ACTION_IMPRIMIR_CIERRE_PARCIAL = "Cierre Parcial";
 
-    private OrdenController controller;
+    private OrdenService controller;
 
-    public OrdenDetailViewPresenter(OrdenController controller) {
+    public OrdenDetailViewPresenter(OrdenService controller) {
         super(new OrdenDetailViewModel());
         this.controller = controller;
     }
 
-    public void setOrden(com.jobits.pos.domain.models.Orden o) {
-        controller.setInstance(o);
-        updateBean();
-
-    }
 
     @Override
     protected void registerOperations() {
@@ -50,6 +46,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onAddNotaLCick();
+                updateBean();
                 return Optional.empty();
             }
         });
@@ -57,6 +54,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onAddProductoClick();
+                updateBean();
                 return Optional.empty();
             }
         });
@@ -64,6 +62,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onCerrarOrdenClick();
+                updateBean();
                 return Optional.empty();
             }
         });
@@ -71,6 +70,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onEnviarAElaborarCLick();
+                updateBean();
                 return Optional.empty();
             }
         });
@@ -78,6 +78,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onImprimirCierreParcial();
+                updateBean();
                 return Optional.empty();
             }
         });
@@ -85,6 +86,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onRemoveProductoCLick();
+                updateBean();
                 return Optional.empty();
             }
         });
@@ -92,6 +94,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onSetAutorizoClick();
+                updateBean();
                 return Optional.empty();
             }
         });
@@ -99,13 +102,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onSetPorcientoClick();
+                updateBean();
                 return Optional.empty();
             }
         });
     }
 
     private void onAddProductoClick() {
-        controller.addProduct(getBean().getProducto_venta_seleccionado());
+        controller.addProduct(getBean().getId_orden(), getBean().getProducto_venta_seleccionado());
         getBean().setLista_producto_orden((controller.getInstance().getProductovOrdenList()));
     }
 
@@ -131,7 +135,6 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     private void onCerrarOrdenClick() {
         controller.cerrarOrden();
-        Application.getInstance().getNavigator().navigateUp();
     }
 
     private void onAddNotaLCick() {
@@ -182,6 +185,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setEs_autorizo(instance.getDeLaCasa());
         getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha().getFecha()));
         getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
+        getBean().setOrden_terminada(instance.getHoraTerminada() != null);
         getBean().setId_orden(instance.getCodOrden());
         getBean().setLista_general_productos_venta(controller.getPDVList());
         getBean().setLista_producto_orden(instance.getProductovOrdenList());

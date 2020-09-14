@@ -27,7 +27,7 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_PRODUCTOS_VENTA = "lista_general_productos_venta";
 
-    private ProductoVenta producto_venta_seleccionado;
+    private ProductoVenta producto_venta_seleccionado = null;
 
     public static final String PROP_PRODUCTO_VENTA_SELECCIONADO = "producto_venta_seleccionado";
 
@@ -35,7 +35,7 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_PRODUCTO_ORDEN = "lista_producto_orden";
 
-    private ProductovOrden producto_orden_seleccionado;
+    private ProductovOrden producto_orden_seleccionado = null;
 
     public static final String PROP_PRODUCTO_ORDEN_SELECCIONADO = "producto_orden_seleccionado";
 
@@ -43,7 +43,7 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_SECCIONES = "lista_secciones";
 
-    private Seccion seccion_seleccionada;
+    private Seccion seccion_seleccionada = null;
 
     public static final String PROP_SECCION_SELECCIONADA = "seccion_seleccionada";
 
@@ -71,19 +71,67 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_TOTAL_ORDEN = "total_orden";
 
-    private String mesa_pedido;
+    private String mesa_pedido = "M-";
 
     public static final String PROP_MESA_PEDIDO = "mesa_pedido";
 
-    private float porciento_servicio;
+    private float porciento_servicio = 0;
 
     public static final String PROP_PORCIENTO_SERVICIO = "porciento_servicio";
 
-    private boolean es_autorizo;
+    private boolean es_autorizo = false;
 
     public static final String PROP_ES_AUTORIZO = "es_autorizo";
 
+    private boolean tiene_porciento = false;
+
+    public static final String PROP_TIENE_PORCIENTO = "tiene_porciento";
+
     public static final String PROP_ORDEN_STATUS_UPDATE = "status_update";
+
+    private boolean orden_terminada = false;
+
+    public static final String PROP_ORDEN_TERMINADA = "orden_terminada";
+
+    /**
+     * Get the value of orden_terminada
+     *
+     * @return the value of orden_terminada
+     */
+    public boolean isOrden_terminada() {
+        return orden_terminada;
+    }
+
+    /**
+     * Set the value of orden_terminada
+     *
+     * @param orden_terminada new value of orden_terminada
+     */
+    public void setOrden_terminada(boolean orden_terminada) {
+        boolean oldOrden_terminada = this.orden_terminada;
+        this.orden_terminada = orden_terminada;
+        firePropertyChange(PROP_ORDEN_TERMINADA, oldOrden_terminada, orden_terminada);
+    }
+
+    /**
+     * Get the value of tiene_porciento
+     *
+     * @return the value of tiene_porciento
+     */
+    public boolean isTiene_porciento() {
+        return tiene_porciento;
+    }
+
+    /**
+     * Set the value of tiene_porciento
+     *
+     * @param tiene_porciento new value of tiene_porciento
+     */
+    private void setTiene_porciento(boolean tiene_porciento) {
+        boolean oldTiene_porciento = this.tiene_porciento;
+        this.tiene_porciento = tiene_porciento;
+        firePropertyChange(PROP_TIENE_PORCIENTO, oldTiene_porciento, tiene_porciento);
+    }
 
     /**
      * Get the value of es_autorizo
@@ -123,6 +171,7 @@ public class OrdenDetailViewModel extends AbstractViewModel {
     public void setPorciento_servicio(float porciento_servicio) {
         float oldPorciento_servicio = this.porciento_servicio;
         this.porciento_servicio = porciento_servicio;
+        setTiene_porciento(this.porciento_servicio != 0);
         firePropertyChange(PROP_PORCIENTO_SERVICIO, oldPorciento_servicio, porciento_servicio);
         firePropertyChange(PROP_ORDEN_STATUS_UPDATE, oldPorciento_servicio, porciento_servicio);
     }
