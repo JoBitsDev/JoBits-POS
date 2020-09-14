@@ -61,7 +61,7 @@ import com.jobits.pos.ui.OldView;
  * @author Jorge
  *
  */
-public class OrdenController extends AbstractFragmentController<Orden> {
+public class OrdenController extends AbstractFragmentController<Orden> implements OrdenService{
 
     Venta fechaOrden;
     private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
@@ -318,7 +318,7 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         return ProductoVentaDAO.getInstance().findAllVisible(getInstance().getMesacodMesa());
     }
 
-    public void addProduct(ProductoVenta selected) {
+    public void addProduct(String codOrden,ProductoVenta selected) {
         if (autorize()) {
 
             boolean found = false;
