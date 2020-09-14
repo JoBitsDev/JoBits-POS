@@ -5,34 +5,24 @@
  */
 package com.jobits.pos.ui.venta.orden;
 
-import com.jgoodies.binding.adapter.Bindings;
-import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.domain.models.Orden;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.StateCellRender;
-import com.jobits.pos.ui.utils.TableColumnAdjuster;
-import static com.jobits.pos.ui.venta.presenter.VentaResumenViewModel.*;
-import static com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter.*;
-import com.jobits.ui.components.MaterialComponentsFactory;
-import java.awt.BorderLayout;
-import java.awt.Container;
-import javax.swing.event.ListSelectionEvent;
+import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter;
+import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter.*;
+import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
+import javax.swing.event.ListDataEvent;
+import javax.swing.event.ListDataListener;
 
 /**
  *
  * @author Jorge
  */
-public class VentaListOrdenesView extends AbstractViewPanel {
+public class VentaListOrdenesView extends AbstractViewPanel implements ListDataListener {
 
     public static final String VIEW_NAME = "Lista Ordenes";
 
-    OrdenDetailFragmentView ordenDetailView;
+    public VentaListOrdenesView(VentaOrdenListViewPresenter ventaPresenter) {
+        super(ventaPresenter);
 
-    public VentaListOrdenesView(AbstractViewPresenter presenter) {
-        super(presenter);
     }
 
     /**
@@ -46,14 +36,12 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanelOrdenesActivas = new javax.swing.JPanel();
-        jideLabel1 = new com.jidesoft.swing.JideLabel();
         jXPanelOrdenControl = new org.jdesktop.swingx.JXPanel();
         jButtonNuevaOrden = new javax.swing.JButton();
         jButtonCalcCAmbio = new javax.swing.JButton();
         jButtonEnviarCerrarCrearNueva = new javax.swing.JButton();
-        jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
-        jXTableOrdActivas = new org.jdesktop.swingx.JXTable();
-        jPanelDetailOrdenes = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -61,16 +49,12 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         jPanelOrdenesActivas.setPreferredSize(new java.awt.Dimension(300, 438));
         jPanelOrdenesActivas.setLayout(new java.awt.BorderLayout());
 
-        jideLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jideLabel1.setText(bundle.getString("label_ordenes_activas")); // NOI18N
-        jPanelOrdenesActivas.add(jideLabel1, java.awt.BorderLayout.PAGE_START);
-
         jXPanelOrdenControl.setBackground(new java.awt.Color(204, 204, 204));
         jXPanelOrdenControl.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
         jXPanelOrdenControl.setMaximumSize(new java.awt.Dimension(300, 300));
         jXPanelOrdenControl.setLayout(new java.awt.GridBagLayout());
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonNuevaOrden.setText(bundle.getString("label_agregar")); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -96,29 +80,11 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
         jPanelOrdenesActivas.add(jXPanelOrdenControl, java.awt.BorderLayout.PAGE_END);
 
-        jScrollPane2.setMaximumSize(new java.awt.Dimension(300, 32767));
-
-        jXTableOrdActivas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jXTableOrdActivas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jXTableOrdActivas.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        jScrollPane2.setViewportView(jXTableOrdActivas);
+        jScrollPane2.setViewportView(jPanel2);
 
         jPanelOrdenesActivas.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        add(jPanelOrdenesActivas, java.awt.BorderLayout.WEST);
-
-        jPanelDetailOrdenes.setLayout(new java.awt.BorderLayout());
-        add(jPanelDetailOrdenes, java.awt.BorderLayout.CENTER);
+        add(jPanelOrdenesActivas, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -126,91 +92,27 @@ public class VentaListOrdenesView extends AbstractViewPanel {
     private javax.swing.JButton jButtonCalcCAmbio;
     private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
     private javax.swing.JButton jButtonNuevaOrden;
-    private javax.swing.JPanel jPanelDetailOrdenes;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelOrdenesActivas;
     private javax.swing.JScrollPane jScrollPane2;
     private org.jdesktop.swingx.JXPanel jXPanelOrdenControl;
-    private org.jdesktop.swingx.JXTable jXTableOrdActivas;
-    private com.jidesoft.swing.JideLabel jideLabel1;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void wireUp() {
-        //Ventas
-        Bindings.bind(jXTableOrdActivas,
-                new SelectionInList<Orden>(
-                        getPresenter().getModel(PROP_LISTA_ORDEN),
-                        getPresenter().getModel(PROP_ORDEN_SELECCIONADA)));
-        jXTableOrdActivas.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            if (!e.getValueIsAdjusting() && jXTableOrdActivas.getSelectedRow() != -1) {
-                getPresenter().getOperation(ACTION_ABRIR_ORDEN).doAction();
-            }
-        });
+        getPresenter().getBean().getLista_elementos().addListDataListener(this);
         jButtonNuevaOrden.addActionListener(getPresenter().getOperation(ACTION_ABRIR_ORDEN));
+    }
+
+    @Override
+    public VentaOrdenListViewPresenter getPresenter() {
+        return (VentaOrdenListViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void uiInit() {
         initComponents();
-        TableColumnAdjuster adj = new TableColumnAdjuster(jXTableOrdActivas);
-        adj.setDynamicAdjustment(true);
-        BindableTableModel<Orden> modelOrd
-                = new BindableTableModel<Orden>(jXTableOrdActivas) {
-            @Override
-            public int getColumnCount() {
-                return 4;
-            }
-
-            @Override
-            public Object getValueAt(int rowIndex, int columnIndex) {
-                switch (columnIndex) {
-                    case 0:
-                        return getRow(rowIndex).getCodOrden();
-                    case 1:
-                        return getRow(rowIndex).getMesacodMesa().getCodMesa();
-                    case 2:
-                        return getRow(rowIndex).getOrdenvalorMonetario() + R.COIN_SUFFIX;
-                    case 3:
-                        return getRow(rowIndex);
-                    default:
-                        return null;
-                }
-            }
-
-            @Override
-            public String getColumnName(int column) {
-                switch (column) {
-                    case 0:
-                        return "Codigo Orden";
-                    case 1:
-                        return "Mesa";
-                    case 2:
-                        return "Valor Total";
-                    case 3:
-                        return "Estados";
-                    default:
-                        return null;
-
-                }
-            }
-        };
-        jXTableOrdActivas.setModel(modelOrd);
-        jXTableOrdActivas.getColumn(3).setCellRenderer(new StateCellRender<Orden>() {
-            @Override
-            public void processData(Orden object, Container root) {
-                if (object.getDeLaCasa()) {
-                    root.add(getjState1());
-                }
-                if (object.getHoraTerminada() != null) {
-                    root.add(getjState2());
-                }
-                if (object.getPorciento() != 0) {
-                    root.add(getJstate3());
-                }
-            }
-        });
-        jXTableOrdActivas.setRowHeight(40);
-        adj.adjustColumns();
+        populatePedidosPanel();
     }
 
     @Override
@@ -218,10 +120,30 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         return VIEW_NAME;
     }
 
-    public void addOrdenView(OrdenDetailFragmentView view) {
-        if (jPanelDetailOrdenes.getComponentCount() == 0) {
-            jPanelDetailOrdenes.add(view, BorderLayout.CENTER);
+    private void populatePedidosPanel() {
+        clearPedidosPanel();
+        for (OrdenDetailViewPresenter x : getPresenter().getOrdenPresenter()) {
+            PedidoCardView newView = new PedidoCardView(x);
+            jPanel2.add(newView);
         }
-        // repaint();
+    }
+
+    private void clearPedidosPanel() {
+        jPanel2.removeAll();
+    }
+
+    @Override
+    public void intervalAdded(ListDataEvent e) {
+        populatePedidosPanel();
+    }
+
+    @Override
+    public void intervalRemoved(ListDataEvent e) {
+        populatePedidosPanel();
+    }
+
+    @Override
+    public void contentsChanged(ListDataEvent e) {
+        populatePedidosPanel();
     }
 }

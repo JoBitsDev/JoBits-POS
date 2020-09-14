@@ -19,6 +19,8 @@ import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
 import com.jobits.pos.controller.gasto.GastoOperacionController;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
+import com.jobits.pos.controller.venta.OrdenController;
+import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
@@ -28,11 +30,14 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.trabajadores.AsistenciaTrabajadoresView;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.venta.orden.OldVentaListOrdenesView;
 import com.jobits.pos.ui.venta.orden.VentaListOrdenesView;
+import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaAreaTablaModel;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
 import static com.jobits.pos.ui.venta.presenter.VentaResumenViewModel.*;
+import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.displayers.Card;
@@ -52,9 +57,6 @@ public class VentaDetailView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Comenzar Turno";
     String insumos, salarios, otro, ventasTotal;
-
-    GastoOperacionController gastoController = new GastoOperacionController();
-    AsistenciaPersonalController personalController = new AsistenciaPersonalController();
     Date fechaFin;
     MesaListView mesaView;
     private JFileChooser fileChooser;
@@ -120,7 +122,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelRefresh = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabelFecha = new javax.swing.JLabel();
-        jButtonRefrescar = new com.jidesoft.swing.JideButton();
+        jButton1 = new javax.swing.JButton();
 
         jPanelResumenDetallado.setLayout(new java.awt.BorderLayout());
         jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
@@ -419,10 +421,11 @@ public class VentaDetailView extends AbstractViewPanel {
         jLabelFecha.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha"));
         jPanel1.add(jLabelFecha);
 
-        jPanelRefresh.add(jPanel1);
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
+        jButton1.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel1.add(jButton1);
 
-        jButtonRefrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
-        jPanelRefresh.add(jButtonRefrescar);
+        jPanelRefresh.add(jPanel1);
 
         jPanel8.add(jPanelRefresh, java.awt.BorderLayout.EAST);
 
@@ -457,13 +460,13 @@ public class VentaDetailView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCambiarTurno;
     private javax.swing.JButton jButtonImpPagoVentas;
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirResumenArea;
     private javax.swing.JButton jButtonImprimirResumenPto;
     private javax.swing.JButton jButtonReabrirVentas;
-    private com.jidesoft.swing.JideButton jButtonRefrescar;
     private javax.swing.JButton jButtonTerminar;
     private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
     private javax.swing.JLabel jLabelFecha;
@@ -579,7 +582,9 @@ public class VentaDetailView extends AbstractViewPanel {
         jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
-        jPanelVentas.add(new VentaListOrdenesView(getPresenter()));
+        VentaDetailService ventaService = ((VentaResumenViewPresenter)getPresenter()).getService();
+        VentaOrdenListViewPresenter ventaOrdenPresenter = new VentaOrdenListViewPresenter(ventaService, new OrdenController(ventaService.getInstance()));
+        jPanelVentas.add(new VentaListOrdenesView(ventaOrdenPresenter));
 
         jPanelExtracciones.add(new GastoOperacionView(new GastoOperacionController()));
 
