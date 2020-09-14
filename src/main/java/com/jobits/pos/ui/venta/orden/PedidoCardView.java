@@ -30,13 +30,14 @@ import java.util.List;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.ListCellRenderPedido;
+import com.jobits.pos.ui.utils.CellRenderPedido;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel.*;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter.*;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 
 /**
@@ -458,38 +459,12 @@ public class PedidoCardView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         setMenuUI();
-        jList1 = new JList() {
-            //Subclass JList to workaround bug 4832765, which can cause the
-            //scroll pane to not let the user easily scroll up to the beginning
-            //of the list.  An alternative would be to set the unitIncrement
-            //of the JScrollBar to a fixed value. You wouldn't get the nice
-            //aligned scrolling, but it should work.
+        jList1.setCellRenderer(new ListCellRenderer<ProductovOrden>() {
             @Override
-            public int getScrollableUnitIncrement(Rectangle visibleRect,
-                    int orientation,
-                    int direction) {
-                int row;
-                if (orientation == SwingConstants.VERTICAL
-                        && direction < 0 && (row = getFirstVisibleIndex()) != -1) {
-                    Rectangle r = getCellBounds(row, row);
-                    if ((r.y == visibleRect.y) && (row != 0)) {
-                        Point loc = r.getLocation();
-                        loc.y--;
-                        int prevIndex = locationToIndex(loc);
-                        Rectangle prevR = getCellBounds(prevIndex, prevIndex);
-
-                        if (prevR == null || prevR.y >= r.y) {
-                            return 0;
-                        }
-                        return prevR.height;
-                    }
-                }
-                return super.getScrollableUnitIncrement(
-                        visibleRect, orientation, direction);
+            public Component getListCellRendererComponent(JList<? extends ProductovOrden> list, ProductovOrden value, int index, boolean isSelected, boolean cellHasFocus) {
+                return new CellRenderPedido(value);
             }
-
-        };
-        jList1.setCellRenderer(new ListCellRenderPedido());
+        });
 
     }
 
