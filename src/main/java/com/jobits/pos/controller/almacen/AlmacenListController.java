@@ -71,6 +71,7 @@ public class AlmacenListController extends OldAbstractListController<Almacen> im
                 create();
                 showSuccessDialog(Application.getInstance().getMainWindow());
             } else {
+                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Nombre no permitido");
                 //TODO: implementar exepciones
             }
         }
