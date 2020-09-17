@@ -138,8 +138,8 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         service.getInstance().setStockEstimation(getBean().getEstimacion_de_stock());
         service.getInstance().setUm(getBean().getUnidad_medida_selected().getValor());
         service.getInstance().setCantidadCreada(getBean().getCantidad_creada());
-        service.getInstance().setInsumoDerivadoList(getBean().getLista_insumos_contenidos());
-        service.getInstance().setProductoInsumoList(getBean().getLista_productos_contenidos());
+//        service.getInstance().setInsumoDerivadoList(getBean().getLista_insumos_contenidos());
+//        service.getInstance().setProductoInsumoList(getBean().getLista_productos_contenidos());
         if (!service.getInstance().getInsumoDerivadoList().isEmpty()) {
             service.getInstance().setElaborado(true);
         } else {
