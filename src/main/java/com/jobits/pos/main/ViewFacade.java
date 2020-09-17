@@ -10,6 +10,8 @@ import com.jobits.pos.main.PresenterFacade;
 import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.almacen.AlmacenListView;
+import com.jobits.pos.ui.almacen.FacturaView;
+import com.jobits.pos.ui.almacen.AlmacenMainView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
@@ -108,8 +110,10 @@ public class ViewFacade {
                 return new VentaCalendarView(p);
             case VentaStatisticsView.VIEW_NAME:
                 return new VentaStatisticsView(p);
-            case AlmacenListView.VIEW_NAME:
-                return new AlmacenListView((AbstractListViewPresenter) p);
+            case AlmacenMainView.VIEW_NAME:
+                return new AlmacenMainView(p);
+            case FacturaView.VIEW_NAME:
+                return new FacturaView(p);
             case LicenceDialogView.VIEW_NAME:
                 return new LicenceDialogView(
                         Application.getInstance().getLicenceController());
