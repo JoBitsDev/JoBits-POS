@@ -19,6 +19,7 @@ import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.adapters.repo.impl.AlmacenDAO;
 import com.jobits.pos.adapters.repo.impl.InsumoDAO;
+import com.jobits.pos.adapters.repo.impl.InsumoElaboradoDAO;
 import com.jobits.pos.adapters.repo.impl.ProductoInsumoDAO;
 import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
 import com.jobits.pos.domain.models.InsumoElaborado;
@@ -86,8 +87,11 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
         //super.createUpdateInstance(); //To change body of generated methods, choose Tools | Templates.
         if (!instance.getProductoInsumoList().isEmpty()) {
             if (showConfirmDialog(getView(), "Desea actualizar el costo en los productos de venta")) {
-                updateInsumoOnFichas(getInstance());
+                updateProductoOnInsumo(getInstance());
             }
+        }
+        if (!instance.getInsumoDerivadoList().isEmpty()) {
+            updateInsumoOnInsumo(getInstance());
         }
     }
 
@@ -119,7 +123,7 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
         return ret;
     }
 
-    public void updateInsumoOnFichas(Insumo insumo) {
+    public void updateProductoOnInsumo(Insumo insumo) {
         getModel().startTransaction();
         ProductoVentaDetailController controller = new ProductoVentaDetailController();
         for (ProductoInsumo p : insumo.getProductoInsumoList()) {
@@ -129,7 +133,19 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
             getModel().getEntityManager().merge(p.getProductoVenta());
         }
         getModel().commitTransaction();
-    }
+    }//TODO: Problemas de persistencia de datos
+
+    private void updateInsumoOnInsumo(Insumo instance) {
+        getModel().startTransaction();
+//        ProductoVentaDetailController controller = new ProductoVentaDetailController();
+        for (InsumoElaborado p : instance.getInsumoDerivadoList()) {
+//            p.setCosto(instance.getCostoPorUnidad() * p.getCantidad());
+//            p.getProductoVenta().setGasto(controller.getCosto(p.getProductoVenta()));
+            getModel().getEntityManager().persist(p);
+            getModel().getEntityManager().persist(p.getInsumo());
+        }
+        getModel().commitTransaction();
+    }//TODO: Problemas de persistencia de datos
 
     @Override
     public void agregarInsumoElaboradoaInsumo(Insumo insumo_disponible_seleccionado, float cantidad) {
@@ -164,4 +180,5 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
     public void eliminarProductoVentaDeInsumo(ProductoInsumo producto_contenido_seleccionado) {
         getInstance().getProductoInsumoList().remove(producto_contenido_seleccionado);
     }
+
 }
