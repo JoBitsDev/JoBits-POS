@@ -96,6 +96,10 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         wireUp();
     }
 
+    public JTable getjTableCrossReference() {
+        return jTableCrossReference;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -143,13 +147,14 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         add(jPanelInsert, java.awt.BorderLayout.NORTH);
 
         jScrollPaneCrossReference.setOpaque(false);
-        jScrollPaneCrossReference.setPreferredSize(new java.awt.Dimension(500, 180));
+        jScrollPaneCrossReference.setPreferredSize(new java.awt.Dimension(500, 130));
 
         jTableCrossReference.setAutoCreateRowSorter(true);
         jTableCrossReference.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         jTableCrossReference.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        jTableCrossReference.setMinimumSize(new java.awt.Dimension(500, 130));
         jTableCrossReference.setOpaque(false);
-        jTableCrossReference.setPreferredSize(new java.awt.Dimension(500, 128));
+        jTableCrossReference.setPreferredSize(new java.awt.Dimension(500, 130));
         jTableCrossReference.setRowHeight(32);
         jTableCrossReference.setRowMargin(4);
         jScrollPaneCrossReference.setViewportView(jTableCrossReference);
