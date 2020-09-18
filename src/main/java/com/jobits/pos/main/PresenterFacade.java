@@ -9,6 +9,7 @@ import com.jobits.pos.adapters.repo.impl.MesaDAO;
 import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.IPVController;
+import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
@@ -34,14 +35,16 @@ import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
 import com.jobits.pos.ui.MainMenuPresenter;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.MainMenuView;
-import com.jobits.pos.ui.almacen.AlmacenListView;
+import com.jobits.pos.ui.almacen.OldAlmacenListView;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
+import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
-import com.jobits.pos.ui.almacen.presenter.AlmacenListPresenter;
+import com.jobits.pos.ui.almacen.presenter.OldAlmacenListPresenter;
 import com.jobits.pos.ui.almacen.presenter.AlmacenViewPresenter;
 import com.jobits.pos.ui.almacen.presenter.FacturaViewPresenter;
+import com.jobits.pos.ui.almacen.presenter.TransaccionListPresenter;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewPresenter;
@@ -150,6 +153,8 @@ public class PresenterFacade {
                 return new AlmacenViewPresenter(new AlmacenListController());
             case FacturaView.VIEW_NAME:
                 return new FacturaViewPresenter(new AlmacenManageController(new Almacen()));
+            case TransaccionListView.VIEW_NAME:
+                return new TransaccionListPresenter(new TransaccionesListController(new Almacen()));
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
             case LicenceDialogView.VIEW_NAME:

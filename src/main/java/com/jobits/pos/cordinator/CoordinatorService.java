@@ -7,9 +7,10 @@ package com.jobits.pos.cordinator;
 
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.MainMenuView;
-import com.jobits.pos.ui.almacen.AlmacenListView;
+import com.jobits.pos.ui.almacen.OldAlmacenListView;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
+import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
@@ -82,7 +83,10 @@ public class CoordinatorService implements Coordinator {
         navigationGraph.put(PersonalListView.VIEW_NAME, Arrays.asList(PersonalDetailView.VIEW_NAME));
         navigationGraph.put(PuestoTrabajoListView.VIEW_NAME, Arrays.asList(PuestoTrabajoDetailView.VIEW_NAME));
         navigationGraph.put(InsumoListView.VIEW_NAME, Arrays.asList(InsumoDetailView.VIEW_NAME));
-        navigationGraph.put(AlmacenMainView.VIEW_NAME, Arrays.asList(InsumoDetailView.VIEW_NAME, FacturaView.VIEW_NAME));
+        navigationGraph.put(AlmacenMainView.VIEW_NAME,
+                Arrays.asList(InsumoDetailView.VIEW_NAME,
+                        FacturaView.VIEW_NAME,
+                        TransaccionListView.VIEW_NAME));
         navigationGraph.put(AVAILABLE_EVERYWHERE,
                 Arrays.asList(ProductoVentaListView.VIEW_NAME,
                         InsumoListView.VIEW_NAME,
