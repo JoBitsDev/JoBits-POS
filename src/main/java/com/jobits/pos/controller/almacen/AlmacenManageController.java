@@ -6,7 +6,7 @@
 package com.jobits.pos.controller.almacen;
 
 import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.almacen.AlmacenEditView;
+import com.jobits.pos.ui.almacen.OldAlmacenEditView;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Date;
@@ -84,7 +84,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new AlmacenEditView(this, (Frame) parent, getInstance()));
+        setView(new OldAlmacenEditView(this, (Frame) parent, getInstance()));
         getView().updateView();
         getView().fetchComponentData();
         getView().setVisible(true);
@@ -111,7 +111,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
 
     public void modificarStock(Insumo i) {
         //InsumoDetailController insumoController = new InsumoDetailController(i, getView());
-        getView().updateView();
+       // getView().updateView();
     }
 
     public void imprimirResumenAlmacen(Almacen a) {
@@ -129,7 +129,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
     }
 
     public void verTransacciones(Almacen a) {
-        TransaccionesListController controller = new TransaccionesListController(getView(), a);
+//        TransaccionesListController controller = new TransaccionesListController(getView(), a);
     }
 
     @Override
