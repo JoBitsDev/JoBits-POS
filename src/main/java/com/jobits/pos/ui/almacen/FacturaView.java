@@ -9,6 +9,8 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jhw.swing.material.standars.MaterialIcons;
+import com.jobits.pos.controller.almacen.AlmacenManageController;
+import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
 import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoAlmacen;
@@ -26,12 +28,16 @@ import com.jobits.pos.ui.utils.RestaurantManagerListIntelliHint;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import org.checkerframework.checker.units.qual.K;
@@ -55,6 +61,7 @@ public class FacturaView extends AbstractViewPanel {
      */
     public FacturaView(AbstractViewPresenter presenter) {
         super(presenter);
+        jTextFieldInsumo.requestFocusInWindow();
     }
 
     /**
@@ -78,13 +85,14 @@ public class FacturaView extends AbstractViewPanel {
         jPanelInputs = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanelInsumo = new javax.swing.JPanel();
-        jTextFieldInsumoEntrada = MaterialComponentsFactory.Input.getTextField("", "Insumo");
-        jButtonAgregarInsumoEntrada = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jTextFieldInsumo = MaterialComponentsFactory.Input.getTextField("", "Insumo");
         jPanelCantidad = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jSpinnerCantidad = new javax.swing.JSpinner();
         jLabelUM = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jButtonAgregarInsumoEntrada = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel3 = new javax.swing.JPanel();
         jPanelMontoEntrada = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -130,6 +138,11 @@ public class FacturaView extends AbstractViewPanel {
         jComboBoxOperationSelector.setMinimumSize(new java.awt.Dimension(170, 30));
         jComboBoxOperationSelector.setOpaque(false);
         jComboBoxOperationSelector.setPreferredSize(new java.awt.Dimension(170, 30));
+        jComboBoxOperationSelector.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxOperationSelectorActionPerformed(evt);
+            }
+        });
         jPanel1.add(jComboBoxOperationSelector);
 
         jPanelHeader.add(jPanel1);
@@ -140,7 +153,7 @@ public class FacturaView extends AbstractViewPanel {
         jPaneloperaciones.setOpaque(false);
         jPaneloperaciones.setLayout(new java.awt.BorderLayout());
 
-        jPanelInputs.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jPanelInputs.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 20, 5, 20));
         jPanelInputs.setMinimumSize(new java.awt.Dimension(750, 130));
         jPanelInputs.setPreferredSize(new java.awt.Dimension(833, 130));
         jPanelInputs.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
@@ -151,10 +164,13 @@ public class FacturaView extends AbstractViewPanel {
         jPanelInsumo.setMinimumSize(new java.awt.Dimension(350, 60));
         jPanelInsumo.setPreferredSize(new java.awt.Dimension(350, 60));
         jPanelInsumo.setLayout(new java.awt.BorderLayout());
-        jPanelInsumo.add(jTextFieldInsumoEntrada, java.awt.BorderLayout.CENTER);
 
-        jButtonAgregarInsumoEntrada.setPreferredSize(new java.awt.Dimension(50, 32));
-        jPanelInsumo.add(jButtonAgregarInsumoEntrada, java.awt.BorderLayout.LINE_START);
+        jTextFieldInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldInsumoActionPerformed(evt);
+            }
+        });
+        jPanelInsumo.add(jTextFieldInsumo, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(jPanelInsumo);
 
@@ -182,6 +198,18 @@ public class FacturaView extends AbstractViewPanel {
 
         jPanelInputs.add(jPanel2);
 
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jButtonAgregarInsumoEntrada.setMaximumSize(new java.awt.Dimension(50, 50));
+        jButtonAgregarInsumoEntrada.setMinimumSize(new java.awt.Dimension(50, 50));
+        jButtonAgregarInsumoEntrada.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonAgregarInsumoEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarInsumoEntradaActionPerformed(evt);
+            }
+        });
+        jPanel5.add(jButtonAgregarInsumoEntrada, java.awt.BorderLayout.EAST);
+
         jPanelMontoEntrada.setMaximumSize(new java.awt.Dimension(240, 60));
         jPanelMontoEntrada.setMinimumSize(new java.awt.Dimension(240, 60));
         jPanelMontoEntrada.setPreferredSize(new java.awt.Dimension(240, 50));
@@ -206,6 +234,11 @@ public class FacturaView extends AbstractViewPanel {
 
         jComboBoxDestino.setMinimumSize(new java.awt.Dimension(250, 26));
         jComboBoxDestino.setPreferredSize(new java.awt.Dimension(250, 26));
+        jComboBoxDestino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxDestinoActionPerformed(evt);
+            }
+        });
         jPanelDestino.add(jComboBoxDestino);
 
         jPanel3.add(jPanelDestino);
@@ -214,11 +247,19 @@ public class FacturaView extends AbstractViewPanel {
         jPanelRazonRebaja.setMinimumSize(new java.awt.Dimension(300, 50));
         jPanelRazonRebaja.setPreferredSize(new java.awt.Dimension(300, 60));
         jPanelRazonRebaja.setLayout(new java.awt.BorderLayout());
+
+        jTextFieldCausaRebaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCausaRebajaActionPerformed(evt);
+            }
+        });
         jPanelRazonRebaja.add(jTextFieldCausaRebaja, java.awt.BorderLayout.CENTER);
 
         jPanel3.add(jPanelRazonRebaja);
 
-        jPanelInputs.add(jPanel3);
+        jPanel5.add(jPanel3, java.awt.BorderLayout.CENTER);
+
+        jPanelInputs.add(jPanel5);
 
         jPaneloperaciones.add(jPanelInputs, java.awt.BorderLayout.NORTH);
 
@@ -283,8 +324,28 @@ public class FacturaView extends AbstractViewPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
-//        dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCloseActionPerformed
+
+    private void jTextFieldInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldInsumoActionPerformed
+        jTextFieldInsumo.transferFocus();
+    }//GEN-LAST:event_jTextFieldInsumoActionPerformed
+
+    private void jComboBoxDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDestinoActionPerformed
+        jButtonAgregarInsumoEntrada.requestFocus();
+    }//GEN-LAST:event_jComboBoxDestinoActionPerformed
+
+    private void jTextFieldCausaRebajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCausaRebajaActionPerformed
+        jButtonAgregarInsumoEntrada.requestFocus();
+    }//GEN-LAST:event_jTextFieldCausaRebajaActionPerformed
+
+    private void jButtonAgregarInsumoEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarInsumoEntradaActionPerformed
+        jTextFieldInsumo.requestFocusInWindow();
+    }//GEN-LAST:event_jButtonAgregarInsumoEntradaActionPerformed
+
+    private void jComboBoxOperationSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOperationSelectorActionPerformed
+        jTextFieldInsumo.requestFocusInWindow();
+
+    }//GEN-LAST:event_jComboBoxOperationSelectorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -305,6 +366,7 @@ public class FacturaView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanelCancelarConfirmar;
     private javax.swing.JPanel jPanelCantidad;
@@ -324,7 +386,7 @@ public class FacturaView extends AbstractViewPanel {
     private javax.swing.JSpinner jSpinnerMonto;
     private javax.swing.JTable jTableEntrada;
     private javax.swing.JTextField jTextFieldCausaRebaja;
-    private javax.swing.JTextField jTextFieldInsumoEntrada;
+    private javax.swing.JTextField jTextFieldInsumo;
     private javax.swing.JTextField jTextFieldRecibo;
     // End of variables declaration//GEN-END:variables
 
@@ -338,10 +400,10 @@ public class FacturaView extends AbstractViewPanel {
         //INPUTS
         autoCompleteModel = new BindableListIntelliHint(
                 new SelectionInList<>(getPresenter().getModel(PROP_LISTA_INSUMOS_DISPONIBLES),
-                        getPresenter().getModel(PROP_INSUMO_SELECIONADO)), jTextFieldInsumoEntrada);
+                        getPresenter().getModel(PROP_INSUMO_SELECIONADO)), jTextFieldInsumo);
         getPresenter().addBeanPropertyChangeListener(PROP_INSUMO_SELECIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() == null) {
-                jTextFieldInsumoEntrada.setText("");
+                jTextFieldInsumo.setText("");
             }
         });
         SpinnerToValueModelConnector spinnerCantEntrada = new SpinnerToValueModelConnector(jSpinnerCantidad.getModel(),
@@ -383,6 +445,43 @@ public class FacturaView extends AbstractViewPanel {
         Bindings.bind(jComboBoxOperationSelector, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_OPERACIONES), getPresenter().getModel(PROP_OPERACION_SELECTED)));
 
+        //FOCUS EVENTS
+        jSpinnerCantidad.addChangeListener((ChangeEvent e) -> {
+            CheckBoxType operationSelected = (CheckBoxType) jComboBoxOperationSelector.getSelectedItem();
+            switch (operationSelected) {
+                case ENTRADA:
+                    jSpinnerMonto.requestFocusInWindow();
+                    break;
+                case REBAJA:
+                    jTextFieldCausaRebaja.requestFocusInWindow();
+                    break;
+                case SALIDA:
+                    jComboBoxDestino.showPopup();
+                    jComboBoxDestino.requestFocusInWindow();
+                    break;
+                case TRANSFORMAR:
+                    jComboBoxDestino.showPopup();
+                    jComboBoxDestino.requestFocusInWindow();
+                    break;
+                case TRASPASO:
+                    jComboBoxDestino.showPopup();
+                    jComboBoxDestino.requestFocusInWindow();
+                    break;
+                default:
+                    break;
+            }
+        });
+        JSpinner.DefaultEditor def = (JSpinner.DefaultEditor) jSpinnerCantidad.getEditor();
+        def.getTextField().addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                def.getTextField().setText(null);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+            }
+        });
     }
 
     @Override

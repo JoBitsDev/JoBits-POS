@@ -19,7 +19,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,112,0,0,3,-52"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,112,0,0,4,-30"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -117,6 +117,9 @@
                       <Dimension value="[170, 30]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxOperationSelectorActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
@@ -151,7 +154,7 @@
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-                    <EmptyBorder bottom="5" left="5" right="5" top="5"/>
+                    <EmptyBorder bottom="5" left="20" right="20" top="5"/>
                   </Border>
                 </Property>
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -192,28 +195,16 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTextField" name="jTextFieldInsumoEntrada">
+                        <Component class="javax.swing.JTextField" name="jTextFieldInsumo">
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldInsumoActionPerformed"/>
+                          </Events>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getTextField(&quot;&quot;, &quot;Insumo&quot;)"/>
                           </AuxValues>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                               <BorderConstraints direction="Center"/>
-                            </Constraint>
-                          </Constraints>
-                        </Component>
-                        <Component class="javax.swing.JButton" name="jButtonAgregarInsumoEntrada">
-                          <Properties>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[50, 32]"/>
-                            </Property>
-                          </Properties>
-                          <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getOutlinedButton()"/>
-                          </AuxValues>
-                          <Constraints>
-                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                              <BorderConstraints direction="Before"/>
                             </Constraint>
                           </Constraints>
                         </Component>
@@ -282,106 +273,147 @@
                     </Container>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="jPanel3">
+                <Container class="javax.swing.JPanel" name="jPanel5">
 
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JPanel" name="jPanelMontoEntrada">
+                    <Component class="javax.swing.JButton" name="jButtonAgregarInsumoEntrada">
                       <Properties>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[240, 60]"/>
+                          <Dimension value="[50, 50]"/>
                         </Property>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[240, 60]"/>
+                          <Dimension value="[50, 50]"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[240, 50]"/>
+                          <Dimension value="[50, 50]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAgregarInsumoEntradaActionPerformed"/>
+                      </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getOutlinedButton()"/>
+                      </AuxValues>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                          <BorderConstraints direction="East"/>
+                        </Constraint>
+                      </Constraints>
+                    </Component>
+                    <Container class="javax.swing.JPanel" name="jPanel3">
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                          <BorderConstraints direction="Center"/>
+                        </Constraint>
+                      </Constraints>
 
-                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
-                        <Property name="verticalGap" type="int" value="15"/>
-                      </Layout>
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JLabel" name="jLabel2">
+                        <Container class="javax.swing.JPanel" name="jPanelMontoEntrada">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="Monto"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JSpinner" name="jSpinnerMonto">
-                          <Properties>
-                            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                              <SpinnerModel initial="0.0" minimum="0.0" numberType="java.lang.Float" stepSize="1.0" type="number"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[240, 60]"/>
                             </Property>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[100, 26]"/>
-                            </Property>
-                          </Properties>
-                        </Component>
-                      </SubComponents>
-                    </Container>
-                    <Container class="javax.swing.JPanel" name="jPanelDestino">
-                      <Properties>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[300, 50]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[300, 50]"/>
-                        </Property>
-                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[350, 50]"/>
-                        </Property>
-                      </Properties>
-
-                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
-                        <Property name="verticalGap" type="int" value="15"/>
-                      </Layout>
-                      <SubComponents>
-                        <Component class="javax.swing.JLabel" name="jLabel6">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="Destino"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JComboBox" name="jComboBoxDestino">
-                          <Properties>
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[250, 26]"/>
+                              <Dimension value="[240, 60]"/>
                             </Property>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[250, 26]"/>
+                              <Dimension value="[240, 50]"/>
                             </Property>
                           </Properties>
-                          <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                          </AuxValues>
-                        </Component>
-                      </SubComponents>
-                    </Container>
-                    <Container class="javax.swing.JPanel" name="jPanelRazonRebaja">
-                      <Properties>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[300, 50]"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[300, 50]"/>
-                        </Property>
-                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[300, 60]"/>
-                        </Property>
-                      </Properties>
 
-                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
-                      <SubComponents>
-                        <Component class="javax.swing.JTextField" name="jTextFieldCausaRebaja">
-                          <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getTextField(&quot;&quot;, &quot;Causa de Rebaja&quot;)"/>
-                          </AuxValues>
-                          <Constraints>
-                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                              <BorderConstraints direction="Center"/>
-                            </Constraint>
-                          </Constraints>
-                        </Component>
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                            <Property name="verticalGap" type="int" value="15"/>
+                          </Layout>
+                          <SubComponents>
+                            <Component class="javax.swing.JLabel" name="jLabel2">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Monto"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JSpinner" name="jSpinnerMonto">
+                              <Properties>
+                                <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+                                  <SpinnerModel initial="0.0" minimum="0.0" numberType="java.lang.Float" stepSize="1.0" type="number"/>
+                                </Property>
+                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                  <Dimension value="[100, 26]"/>
+                                </Property>
+                              </Properties>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                        <Container class="javax.swing.JPanel" name="jPanelDestino">
+                          <Properties>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[300, 50]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[300, 50]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[350, 50]"/>
+                            </Property>
+                          </Properties>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                            <Property name="verticalGap" type="int" value="15"/>
+                          </Layout>
+                          <SubComponents>
+                            <Component class="javax.swing.JLabel" name="jLabel6">
+                              <Properties>
+                                <Property name="text" type="java.lang.String" value="Destino"/>
+                              </Properties>
+                            </Component>
+                            <Component class="javax.swing.JComboBox" name="jComboBoxDestino">
+                              <Properties>
+                                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                  <Dimension value="[250, 26]"/>
+                                </Property>
+                                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                  <Dimension value="[250, 26]"/>
+                                </Property>
+                              </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxDestinoActionPerformed"/>
+                              </Events>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                              </AuxValues>
+                            </Component>
+                          </SubComponents>
+                        </Container>
+                        <Container class="javax.swing.JPanel" name="jPanelRazonRebaja">
+                          <Properties>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[300, 50]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[300, 50]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[300, 60]"/>
+                            </Property>
+                          </Properties>
+
+                          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+                          <SubComponents>
+                            <Component class="javax.swing.JTextField" name="jTextFieldCausaRebaja">
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldCausaRebajaActionPerformed"/>
+                              </Events>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getTextField(&quot;&quot;, &quot;Causa de Rebaja&quot;)"/>
+                              </AuxValues>
+                              <Constraints>
+                                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                  <BorderConstraints direction="Center"/>
+                                </Constraint>
+                              </Constraints>
+                            </Component>
+                          </SubComponents>
+                        </Container>
                       </SubComponents>
                     </Container>
                   </SubComponents>
