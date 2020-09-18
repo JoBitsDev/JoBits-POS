@@ -127,14 +127,16 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 
     private void addListeners() {
         getBean().addPropertyChangeListener(PROP_CANTIDAD_ENTRADA, (PropertyChangeEvent evt) -> {
-            if (getBean().getOperacion_selected() == CheckBoxType.ENTRADA) {
-                if (getBean().getCantidad_entrada() != 0) {
-                    if (getBean().getInsumo_selecionado().getValorMonetario() != 0) {
-                        getBean().setMonto_entrada(getBean().getCantidad_entrada() * utils.setDosLugaresDecimalesFloat(
-                                getBean().getInsumo_selecionado().getValorMonetario() / getBean().getInsumo_selecionado().getCantidad()));
+            if (getBean().getInsumo_selecionado() != null) {
+                if (getBean().getOperacion_selected() == CheckBoxType.ENTRADA) {
+                    if (getBean().getCantidad_entrada() != 0) {
+                        if (getBean().getInsumo_selecionado().getValorMonetario() != 0) {
+                            getBean().setMonto_entrada(getBean().getCantidad_entrada() * utils.setDosLugaresDecimalesFloat(
+                                    getBean().getInsumo_selecionado().getValorMonetario() / getBean().getInsumo_selecionado().getCantidad()));
+                        }
                     }
                 }
-            }
+            } 
         });
         getBean().addPropertyChangeListener(PROP_INSUMO_SELECIONADO, (PropertyChangeEvent evt) -> {
             InsumoAlmacen insumo = getBean().getInsumo_selecionado();
@@ -211,7 +213,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 throw new UnExpectedErrorException("Tipo de operacion no soportada");
         }
     }
-    
+
     private void setDefaultValues(CheckBoxType aux, boolean newOp) {
         getBean().setInsumo_selecionado(null);
         switch (aux) {
