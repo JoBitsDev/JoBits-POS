@@ -6,7 +6,7 @@
 package com.jobits.pos.controller.almacen;
 
 import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.almacen.TransaccionListView;
+import com.jobits.pos.ui.almacen.OldTransaccionListView;
 import com.jidesoft.swing.JideButton;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -34,12 +34,12 @@ public class TransaccionesListController extends OldAbstractListController<Trans
 
     Almacen a;
 
-    public TransaccionesListController(OldAbstractView parent, Almacen a) {
+    public TransaccionesListController(/*OldAbstractView parent, */Almacen a) {
         super(TransaccionDAO.getInstance());
         this.a = a;
         TransaccionDAO.getInstance().addPropertyChangeListener(this);
         TransaccionEntradaDAO.getInstance().addPropertyChangeListener(this);
-        constructView(parent);
+        // constructView(parent);
     }
 
     @Override
@@ -54,35 +54,30 @@ public class TransaccionesListController extends OldAbstractListController<Trans
 
     @Override
     public void constructView(Container parent) {
-        setView(new TransaccionListView(this, (OldAbstractView) parent, true));
-        getView().getjButtonAdd().setVisible(false);
-        getView().getjButtonEdit().setVisible(false);       
-
-        getView().updateView();
-        getView().setVisible(true);
+//        setView(new OldTransaccionListView(this, (OldAbstractView) parent, true));
+//        getView().getjButtonAdd().setVisible(false);
+//        getView().getjButtonEdit().setVisible(false);
+//
+//        getView().updateView();
+//        getView().setVisible(true);
     }
-
 
     @Override
     public void destroy(Transaccion selected) {
         super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
         //getModel().getEntityManager().refresh(selected.getAlmacencodAlmacen());
-        getView().updateView();
-   //     selected.getAlmacen().getTransaccionList().remove(selected);
+ //       getView().updateView();
+        //     selected.getAlmacen().getTransaccionList().remove(selected);
 //        getModel().startTransaction();
 //        getModel().getEntityManager().merge(selected);
 //        getModel().commitTransaction();
     }
-    
-    
-    
+
     public void imprimirTransaccionesSeleccionadas(List<Transaccion> selectedsObjects) {
         if (!selectedsObjects.isEmpty()) {
-        Impresion i = new Impresion();
-        i.print(new ComprobanteTransaccionFormatter(selectedsObjects), null);
+            Impresion i = new Impresion();
+            i.print(new ComprobanteTransaccionFormatter(selectedsObjects), null);
         }
     }
-    
-    
 
 }
