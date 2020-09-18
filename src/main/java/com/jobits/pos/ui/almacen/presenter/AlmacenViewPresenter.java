@@ -9,13 +9,15 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
+import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.FacturaView;
-import com.jobits.pos.ui.almacen.OperacionView;
+import com.jobits.pos.ui.almacen.OldOperacionView;
+import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -119,7 +121,11 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_TRANSACCIONES) {
             @Override
             public Optional doAction() {
-                detailService.verTransacciones(getBean().getElemento_seleccionado());
+                NavigationService.getInstance().navigateTo(TransaccionListView.VIEW_NAME,
+                        new TransaccionListPresenter(
+                                new TransaccionesListController(
+                                        detailService.getInstance())), DisplayType.POPUP);
+                //detailService.verTransacciones(getBean().getElemento_seleccionado());
                 return Optional.empty();
             }
         });
@@ -157,14 +163,16 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onAgregarInsumoFichaClick() {
-        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          throw new UnsupportedOperationException("Operacion no disponible"); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void onEliminarInsumoFichaClick() {
-        //  throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          throw new UnsupportedOperationException("Operacion no disponible"); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void fillDetailList() {
+        System.out.println(detailService.getInstance().getValorMonetario());
+        
         getBean().setValor_monetario_text(utils.setDosLugaresDecimales(detailService.getInstance().getValorMonetario()));
 
         getBean().getLista_insumos_contenidos().clear();
