@@ -16,12 +16,12 @@ import com.jobits.pos.ui.utils.BindableTableModel;
  * @author Jorge
  *
  */
-public class AlmacenListView extends AbstractListViewPanel<Almacen>{
+public class OldAlmacenListView extends AbstractListViewPanel<Almacen>{
 
     
     public static final String VIEW_NAME = "OLDAlmacenes";
     
-    public AlmacenListView(AbstractListViewPresenter presenter) {
+    public OldAlmacenListView(AbstractListViewPresenter presenter) {
         super(presenter);
     }
 

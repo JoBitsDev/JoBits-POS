@@ -16,9 +16,9 @@ import com.jobits.pos.ui.viewmodel.AbstractViewModel;
  * @author Jorge
  *
  */
-public class AlmacenListViewModel extends AbstractListViewModel<Almacen> {
+public class OldAlmacenListViewModel extends AbstractListViewModel<Almacen> {
 
-    public AlmacenListViewModel() {
+    public OldAlmacenListViewModel() {
     }
 
 }

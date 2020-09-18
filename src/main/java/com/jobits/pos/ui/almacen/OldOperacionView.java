@@ -34,14 +34,14 @@ import com.jobits.ui.components.MaterialComponentsFactory;
  *
  * @author Jorge
  */
-public class OperacionView extends OldAbstractView {
+public class OldOperacionView extends OldAbstractView {
 
     private AlmacenManageController controller;
     private CheckBoxType tipoOperacion = CheckBoxType.ENTRADA;
     private ArrayList<TransaccionSimple> transacciones = new ArrayList<>();
     private RestaurantManagerListIntelliHint<InsumoAlmacen> list;
 
-    public OperacionView(AbstractDialogController controller) {
+    public OldOperacionView(AbstractDialogController controller) {
 
         super(DialogType.DEFINED, controller);
         this.controller = (AlmacenManageController) controller;
@@ -64,7 +64,7 @@ public class OperacionView extends OldAbstractView {
      * @param owner
      * @param modal
      */
-    public OperacionView(AbstractDialogController controller, Dialog owner, boolean modal) {
+    public OldOperacionView(AbstractDialogController controller, Dialog owner, boolean modal) {
         super(DialogType.DEFINED, controller, owner, modal);
         this.controller = (AlmacenManageController) controller;
         this.controller.setParent(owner);
