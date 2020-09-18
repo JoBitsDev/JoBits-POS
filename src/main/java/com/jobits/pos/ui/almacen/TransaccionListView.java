@@ -5,40 +5,59 @@
  */
 package com.jobits.pos.ui.almacen;
 
-import com.jobits.pos.ui.OldAbstractListView;
-import com.jobits.pos.ui.OldAbstractView;
-import com.jidesoft.swing.JideButton;
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.util.List;
-import com.jobits.pos.controller.OldAbstractListController;
-import com.jobits.pos.controller.almacen.TransaccionesListController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.domain.models.Transaccion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.AbstractListViewPanel;
+import static com.jobits.pos.ui.almacen.presenter.TransaccionListPresenter.*;
+import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 /**
- * FirstDream
  *
- * @author Jorge
- *
+ * @author Home
  */
-public class TransaccionListView extends OldAbstractListView<Transaccion> {
+public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
 
-    public TransaccionListView(OldAbstractListController<Transaccion> controller, OldAbstractView parent, boolean modal) {
-        super(controller, parent, modal);
-        JideButton jideButton1 = new com.jidesoft.swing.JideButton();
-        jideButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jideButton1.setToolTipText("Imprimir Recibo");
-        jideButton1.addActionListener((ActionEvent e) -> {
-            getController().imprimirTransaccionesSeleccionadas(model.getSelectedsObjects());
-        });
-        getjXPanelControles().add(jideButton1);
+    public static final String VIEW_NAME = "Transacciones";
+    public javax.swing.JPanel jPanelOptionsButtons = MaterialComponentsFactory.Containers.getPrimaryPanel();
+    protected javax.swing.JButton jButtonCerrar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+    protected javax.swing.JButton jButtonPrint = MaterialComponentsFactory.Buttons.getOutlinedButton();
+
+    public TransaccionListView(AbstractListViewPresenter presenter) {
+        super(presenter);
+        
+        jButtonEdit.setVisible(false);
+        jButtonAdd.setVisible(false);
+        jButtonDelete.setVisible(false);
+        setPreferredSize(new Dimension(1000, 600));
+
+        jPanelOptionsButtons.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        jButtonCerrar.setPreferredSize(new java.awt.Dimension(125, 50));
+        jButtonCerrar.setAction(getPresenter().getOperation(ACTION_CERRAR_POPUP));
+        jPanelOptionsButtons.add(jButtonCerrar);
+
+        jButtonPrint.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonPrint.setAction(getPresenter().getOperation(ACTION_IMPRIMIR_TRANSACCIONES));
+        jButtonPrint.setIcon(MaterialIcons.PRINT);
+        jXPanelControles.add(jButtonPrint);
+        
+        add(jPanelOptionsButtons, BorderLayout.SOUTH);
+        
+        jTableList.getColumnModel().getColumn(1).setPreferredWidth(50);
+        jTableList.getColumnModel().getColumn(2).setPreferredWidth(50);
+        jTableList.getColumnModel().getColumn(3).setPreferredWidth(50);
+
     }
 
     @Override
-    public MyJTableModel<Transaccion> generateTableModel(List<Transaccion> items) {
-        return new MyJTableModel<Transaccion>(items) {
+    public BindableTableModel<Transaccion> generateTableModel() {
+        return new BindableTableModel<Transaccion>(jTableList) {
             @Override
             public int getColumnCount() {
                 return 5;
@@ -48,15 +67,15 @@ public class TransaccionListView extends OldAbstractListView<Transaccion> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return items.get(rowIndex).getInsumocodInsumo();
+                        return ((Transaccion) getListModel().getElementAt(rowIndex)).getInsumocodInsumo().getNombre();
                     case 1:
-                        return R.DATE_FORMAT.format(items.get(rowIndex).getFecha());
+                        return R.DATE_FORMAT.format(((Transaccion) getListModel().getElementAt(rowIndex)).getFecha());
                     case 2:
-                        return R.TIME_FORMAT.format(items.get(rowIndex).getHora());
+                        return R.TIME_FORMAT.format(((Transaccion) getListModel().getElementAt(rowIndex)).getHora());
                     case 3:
-                        return items.get(rowIndex).getCantidad();
+                        return ((Transaccion) getListModel().getElementAt(rowIndex)).getCantidad();
                     case 4:
-                        Transaccion t = items.get(rowIndex);
+                        Transaccion t = ((Transaccion) getListModel().getElementAt(rowIndex));
                         if (t.getTransaccionEntrada() != null) {
                             return "ENTRADA (Total: " + t.getTransaccionEntrada().getValorTotal() + R.COIN_SUFFIX + ")";
                         }
@@ -70,11 +89,10 @@ public class TransaccionListView extends OldAbstractListView<Transaccion> {
                             return "TRASPASO: ";
                         }
                         if (t.getTransaccionTransformacionList() != null) {
-                           if(!t.getTransaccionTransformacionList().isEmpty()){
-                            return "TRANSFORMACION: ";
-                           }
+                            if (!t.getTransaccionTransformacionList().isEmpty()) {
+                                return "TRANSFORMACION: ";
+                            }
                         }
-                        
                     default:
                         return null;
                 }
@@ -97,19 +115,13 @@ public class TransaccionListView extends OldAbstractListView<Transaccion> {
                         return null;
                 }
             }
+
         };
     }
 
     @Override
-
-    public void updateView() {
-        super.updateView(); //To change body of generated methods, choose Tools | Templates.
-        getjTableList().getRowSorter().toggleSortOrder(1);
-    }
-
-    @Override
-    public TransaccionesListController getController() {
-        return (TransaccionesListController) super.getController(); //To change body of generated methods, choose Tools | Templates.
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }
