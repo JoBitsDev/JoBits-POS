@@ -90,9 +90,6 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
                 updateProductoOnInsumo(getInstance());
             }
         }
-        if (!instance.getInsumoDerivadoList().isEmpty()) {
-            updateInsumoOnInsumo(getInstance());
-        }
     }
 
     /**
@@ -135,17 +132,6 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
         getModel().commitTransaction();
     }//TODO: Problemas de persistencia de datos
 
-    private void updateInsumoOnInsumo(Insumo instance) {
-        getModel().startTransaction();
-//        ProductoVentaDetailController controller = new ProductoVentaDetailController();
-        for (InsumoElaborado p : instance.getInsumoDerivadoList()) {
-//            p.setCosto(instance.getCostoPorUnidad() * p.getCantidad());
-//            p.getProductoVenta().setGasto(controller.getCosto(p.getProductoVenta()));
-            getModel().getEntityManager().persist(p);
-            getModel().getEntityManager().persist(p.getInsumo());
-        }
-        getModel().commitTransaction();
-    }//TODO: Problemas de persistencia de datos
 
     @Override
     public void agregarInsumoElaboradoaInsumo(Insumo insumo_disponible_seleccionado, float cantidad) {
