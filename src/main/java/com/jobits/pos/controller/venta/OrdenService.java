@@ -17,36 +17,35 @@ import java.util.List;
  */
 public interface OrdenService {
 
+    public void addNota(String codOrden, ProductovOrden producto_orden_seleccionado);
 
-    public void addProduct(String noOrden,ProductoVenta producto_venta_seleccionado);
+    public void addProduct(String codOrden, ProductoVenta producto_venta_seleccionado);
 
-    public void removeProduct(ProductovOrden producto_orden_seleccionado, float cantidad);
+    public void cerrarOrden(String codOrden);
 
-    public void setPorciento(float porciento_servicio);
-
-    public void setDeLaCasa(boolean es_autorizo);
+    /**
+     *
+     * @param codMesa ej. M-114
+     * @param fechaPedido en el formato dd/mm/yy ej. 20/09/18
+     * @return
+     */
+    public Orden createNewInstance(String codMesa, String fechaPedido);
 
     public void enviarACocina();
 
-    public void cerrarOrden();
+    public void setDeLaCasa(boolean es_autorizo);
 
-    public void addNota(ProductovOrden producto_orden_seleccionado);
-
-    public void imprimirPreTicket();
+    public Orden getInstance(String codOrden);
 
     public List<Seccion> getListaSecciones();
 
-    public float getValorTotal();
-
     public List<ProductoVenta> getPDVList();
 
-    public Orden getInstance();
+    public float getValorTotal(String codOrden);
 
-    public void create(Orden newOrden, boolean b);
+    public void imprimirPreTicket();
 
-    public Orden createNewInstance();
-    
-    
-    
-    
+    public void removeProduct(String codOrden, ProductovOrden producto_orden_seleccionado, float cantidad);
+
+    public void setPorciento(String codOrden, float porciento_servicio);
 }

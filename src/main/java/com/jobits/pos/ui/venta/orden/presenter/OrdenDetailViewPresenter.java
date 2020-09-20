@@ -5,9 +5,7 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.OrdenService;
-import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -33,12 +31,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_IMPRIMIR_CIERRE_PARCIAL = "Cierre Parcial";
 
     private OrdenService controller;
+    private String codOrden;
 
-    public OrdenDetailViewPresenter(OrdenService controller) {
+    public OrdenDetailViewPresenter(String cod_orden, OrdenService controller) {
         super(new OrdenDetailViewModel());
         this.controller = controller;
+        this.codOrden = cod_orden;
+        updateBean();
     }
-
 
     @Override
     protected void registerOperations() {
@@ -110,18 +110,18 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     private void onAddProductoClick() {
         controller.addProduct(getBean().getId_orden(), getBean().getProducto_venta_seleccionado());
-        getBean().setLista_producto_orden((controller.getInstance().getProductovOrdenList()));
+        getBean().setLista_producto_orden((controller.getInstance(codOrden).getProductovOrdenList()));
     }
 
     private void onRemoveProductoCLick() {
-        controller.removeProduct(getBean().getProducto_orden_seleccionado(),
+        controller.removeProduct(codOrden, getBean().getProducto_orden_seleccionado(),
                 getBean().getProducto_orden_seleccionado().getCantidad());
-        getBean().setLista_producto_orden((controller.getInstance().getProductovOrdenList()));
+        getBean().setLista_producto_orden((controller.getInstance(codOrden).getProductovOrdenList()));
     }
 
     private void onSetPorcientoClick() {
-        controller.setPorciento(getBean().getPorciento_servicio());
-        getBean().setTotal_orden(utils.setDosLugaresDecimales(controller.getValorTotal()));
+        controller.setPorciento(codOrden, getBean().getPorciento_servicio());
+        getBean().setTotal_orden(utils.setDosLugaresDecimales(controller.getValorTotal(codOrden)));
     }
 
     private void onSetAutorizoClick() {
@@ -130,15 +130,15 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     private void onEnviarAElaborarCLick() {
         controller.enviarACocina();
-        getBean().setLista_producto_orden(controller.getInstance().getProductovOrdenList());
+        getBean().setLista_producto_orden(controller.getInstance(codOrden).getProductovOrdenList());
     }
 
     private void onCerrarOrdenClick() {
-        controller.cerrarOrden();
+        controller.cerrarOrden(codOrden);
     }
 
     private void onAddNotaLCick() {
-        controller.addNota(getBean().getProducto_orden_seleccionado());
+        controller.addNota(codOrden, getBean().getProducto_orden_seleccionado());
     }
 
     private void onImprimirCierreParcial() {
@@ -181,18 +181,18 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void updateBean() {
-        com.jobits.pos.domain.models.Orden instance = controller.getInstance();
+        com.jobits.pos.domain.models.Orden instance = controller.getInstance(codOrden);
         getBean().setEs_autorizo(instance.getDeLaCasa());
         getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha().getFecha()));
         getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
         getBean().setOrden_terminada(instance.getHoraTerminada() != null);
         getBean().setId_orden(instance.getCodOrden());
-        getBean().setLista_general_productos_venta(controller.getPDVList());
+        //getBean().setLista_general_productos_venta(controller.getPDVList());
         getBean().setLista_producto_orden(instance.getProductovOrdenList());
-        getBean().setLista_secciones(controller.getListaSecciones());
+        //getBean().setLista_secciones(controller.getListaSecciones());
         getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
         getBean().setPorciento_servicio(instance.getPorciento());
-        getBean().setTotal_orden(utils.setDosLugaresDecimales(controller.getValorTotal()));
+        getBean().setTotal_orden(utils.setDosLugaresDecimales(controller.getValorTotal(codOrden)));
         getBean().setUsuario(instance.getPersonalusuario().getUsuario());
     }
 

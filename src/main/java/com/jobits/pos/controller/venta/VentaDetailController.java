@@ -62,7 +62,8 @@ import javax.swing.JOptionPane;
  * @author Jorge
  *
  */
-public class VentaDetailController extends AbstractDetailController<Venta> implements VentaDetailService {
+public class VentaDetailController extends AbstractDetailController<Venta>
+        implements VentaDetailService {
 
     Date fechaFin = null;
     private OrdenService ordController;
@@ -142,16 +143,9 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         if (nil) {
             ordController = new OrdenController();
         }
-
         //TODO: aqui se sigue sin manejar el numero de la mesa en los controllers y no en las vistas
         newOrden = ordController.createNewInstance(null, R.DATE_FORMAT.format(getInstance().getFecha()));//TODO: ver que parametros hacen falta para la nueva orden
         super.getInstance().getOrdenList().add(newOrden);
-        ordController.create(newOrden, true);
-        if (nil) {
-            //   ordController = new OrdenController(newOrden, vi.getjPanelDetailOrdenes());
-        } else {
-            //ordController.setInstance(newOrden);//TODO: revisar antes de borrar
-        }
         return newOrden;
     }
 
@@ -383,11 +377,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         Impresion.getDefaultInstance().print(new CasaFormatter(VentaDAO1.getResumenVentasCasa(getInstance()), getInstance().getFecha()), null);
     }
 
-    public void cerrarOrdenRapido() {
+    public void cerrarOrdenRapido(String codOrden) {
         if (ordController != null) {
             if (showConfirmDialog(getView(), "Desea enviar a cocina, cerrar y crear una nueva orden")) {
                 ordController.enviarACocina();
-                ordController.cerrarOrden();
+                ordController.cerrarOrden(codOrden);
                 createNewOrden();
             }
         }
