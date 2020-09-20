@@ -16,11 +16,12 @@ public class CellRenderPedido extends javax.swing.JPanel {
     /**
      * Creates new form CellRenderPedido
      */
-    public CellRenderPedido(ProductovOrden o) {
+    public CellRenderPedido(ProductovOrden o, boolean selected) {
         initComponents();
         jLabelProducto.setText(o.getProductoVenta().toString());
         jLabelCantidad.setText("x" + o.getCantidad());
         jLabelPrecio.setText(utils.setDosLugaresDecimales(o.getCantidad()*o.getProductoVenta().getPrecioVenta()));
+        setOpaque(selected);
     }
 
     /**
@@ -31,12 +32,12 @@ public class CellRenderPedido extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabelPrecio = new javax.swing.JLabel();
         jLabelProducto = new javax.swing.JLabel();
         jLabelCantidad = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 5, 3, 5));
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
