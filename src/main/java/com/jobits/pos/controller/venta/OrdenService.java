@@ -39,7 +39,7 @@ public interface OrdenService {
 
     public List<Seccion> getListaSecciones();
 
-    public List<ProductoVenta> getPDVList();
+    public List<ProductoVenta> getPDVList(String codOrden);
 
     public float getValorTotal(String codOrden);
 

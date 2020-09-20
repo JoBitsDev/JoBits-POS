@@ -341,8 +341,8 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
     @Override
-    public List<ProductoVenta> getPDVList() {
-        return ProductoVentaDAO.getInstance().findAllVisible(getInstance().getMesacodMesa());
+    public List<ProductoVenta> getPDVList(String codOrden) {
+        return ProductoVentaDAO.getInstance().findAllVisible(getInstance(codOrden).getMesacodMesa());
     }
 
     @Override

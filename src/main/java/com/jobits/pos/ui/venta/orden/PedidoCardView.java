@@ -24,6 +24,7 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import com.jhw.swing.material.standars.MaterialIcons;
+import com.jobits.pos.domain.models.ProductoVenta;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,9 @@ public class PedidoCardView extends AbstractViewPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>()
         ;
+        jPanel1 = new javax.swing.JPanel();
+        jComboBox1 = MaterialComponentsFactory.Input.getComboBoxEditable();
+        jButton1 = new javax.swing.JButton();
         jPanelSupportText = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -199,6 +203,15 @@ public class PedidoCardView extends AbstractViewPanel {
         jScrollPane1.setViewportView(jList1);
 
         jPanelMedia.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.add(jComboBox1, java.awt.BorderLayout.CENTER);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/mas.png"))); // NOI18N
+        jPanel1.add(jButton1, java.awt.BorderLayout.EAST);
+
+        jPanelMedia.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         add(jPanelMedia);
 
@@ -339,7 +352,9 @@ public class PedidoCardView extends AbstractViewPanel {
     private org.jdesktop.swingx.JXTaskPaneContainer jPanelSubActions;
     private javax.swing.JPopupMenu jPopupMenu1;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonMenu;
+    private javax.swing.JComboBox<ProductoVenta> jComboBox1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
@@ -352,6 +367,7 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelVALORTotal;
     private javax.swing.JLabel jLabelVALORUsuario;
     private javax.swing.JList<ProductovOrden> jList1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelActionButtons;
@@ -381,49 +397,6 @@ public class PedidoCardView extends AbstractViewPanel {
         jPopupMenu1.show(jButtonMenu, jButtonMenu.getBounds().x - jPopupMenu1.getWidth(), jButtonMenu.getBounds().y + jButtonMenu.getHeight());
     }
 
-    public ImageIcon circlarShape(String image) {
-
-        try {
-            BufferedImage master = ImageIO.read(new File(image));
-
-            int diameter = Math.min(master.getWidth(), master.getHeight());
-            BufferedImage mask = new BufferedImage(master.getWidth(), master.getHeight(), BufferedImage.TYPE_INT_ARGB);
-
-            Graphics2D g2d = mask.createGraphics();
-            applyQualityRenderingHints(g2d);
-            g2d.fillOval(0, 0, diameter - 1, diameter - 1);
-            g2d.dispose();
-
-            BufferedImage masked = new BufferedImage(diameter, diameter, BufferedImage.TYPE_INT_ARGB);
-            g2d = masked.createGraphics();
-            applyQualityRenderingHints(g2d);
-            int x = (diameter - master.getWidth()) / 2;
-            int y = (diameter - master.getHeight()) / 2;
-            g2d.drawImage(master, x, y, null);
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_IN));
-            g2d.drawImage(mask, 0, 0, null);
-            g2d.dispose();
-
-            return new ImageIcon(masked);
-        } catch (IOException ex) {
-            Logger.getLogger(PedidoCardView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    public static void applyQualityRenderingHints(Graphics2D g2d) {
-
-        g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        g2d.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
-        g2d.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-
-    }
-
     @Override
     public void wireUp() {
         Bindings.bind(jLabelOrdenNo, getPresenter().getModel(PROP_ID_ORDEN));
@@ -437,6 +410,7 @@ public class PedidoCardView extends AbstractViewPanel {
 
         jideButtonCerrarMesa.addActionListener(getPresenter().getOperation(ACTION_CERRAR_ORDEN));
         jideButtonEnviarCocina.addActionListener(getPresenter().getOperation(ACTION_ENVIAR_ELABORAR));
+        jButton1.addActionListener(getPresenter().getOperation(ACTION_ADD_PRODUCTO));
 
         jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_ADD_NOTA)));
         jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_IMPRIMIR_CIERRE_PARCIAL)));
@@ -453,6 +427,10 @@ public class PedidoCardView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_LISTA_PRODUCTO_ORDEN),
                 getPresenter().getModel(PROP_PRODUCTO_ORDEN_SELECCIONADO)));
 
+        Bindings.bind(jComboBox1, new SelectionInList<ProductoVenta>(
+                getPresenter().getModel(PROP_LISTA_PRODUCTOS_VENTA),
+                getPresenter().getModel(PROP_PRODUCTO_VENTA_SELECCIONADO)));
+
     }
 
     @Override
@@ -463,7 +441,7 @@ public class PedidoCardView extends AbstractViewPanel {
             @Override
             public Component getListCellRendererComponent(JList<? extends ProductovOrden> list,
                     ProductovOrden value, int index, boolean isSelected, boolean cellHasFocus) {
-                return new CellRenderPedido(value,isSelected);
+                return new CellRenderPedido(value, isSelected);
             }
         });
 

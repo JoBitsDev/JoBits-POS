@@ -152,7 +152,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
         getBean().setOrden_terminada(instance.getHoraTerminada() != null);
         getBean().setId_orden(instance.getCodOrden());
-        //getBean().setLista_general_productos_venta(controller.getPDVList());
+        getBean().setLista_general_productos_venta(controller.getPDVList(codOrden));
         getBean().setLista_producto_orden(instance.getProductovOrdenList());
         //getBean().setLista_secciones(controller.getListaSecciones());
         getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
