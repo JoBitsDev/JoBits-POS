@@ -33,7 +33,7 @@ public interface OrdenService {
 
     public void enviarACocina(String codOrden);
 
-    public void setDeLaCasa(String codOrden,boolean es_autorizo);
+    public void setDeLaCasa(String codOrden, boolean es_autorizo);
 
     public Orden getInstance(String codOrden);
 
@@ -43,7 +43,7 @@ public interface OrdenService {
 
     public float getValorTotal(String codOrden);
 
-    public void imprimirPreTicket();
+    public void imprimirPreTicket(String codOrden);
 
     public void removeProduct(String codOrden, ProductovOrden producto_orden_seleccionado, float cantidad);
 

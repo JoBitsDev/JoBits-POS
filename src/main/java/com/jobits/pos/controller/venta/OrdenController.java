@@ -374,10 +374,11 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
     @Override
-    public void imprimirPreTicket() {
+    public void imprimirPreTicket(String codOrden) {
         Impresion i = new Impresion();
-        i.print(new OrdenFormatter(instance, true), getInstance().getMesacodMesa().getAreacodArea().getNombre());
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIR_TICKET_PARCIAL, Level.FINE, instance);
+        Orden o = getInstance(codOrden);
+        i.print(new OrdenFormatter(o, true), o.getMesacodMesa().getAreacodArea().getNombre());
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIR_TICKET_PARCIAL, Level.FINE, o);
     }
 
     @Override

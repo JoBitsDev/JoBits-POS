@@ -125,7 +125,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onSetAutorizoClick() {
-        controller.setDeLaCasa(codOrden,getBean().isEs_autorizo());
+        controller.setDeLaCasa(codOrden, getBean().isEs_autorizo());
     }
 
     private void onEnviarAElaborarCLick() {
@@ -142,44 +142,9 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onImprimirCierreParcial() {
-        controller.imprimirPreTicket();
+        controller.imprimirPreTicket(codOrden);
     }
-
-    public void old() {
-
-//    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-//        switch (columnIndex) {
-//            case 1:
-//                if (getController().autorize()) {
-//                    float cantidadOld = items.get(rowIndex).getCantidad();
-//                    float diferencia = cantidadOld - (float) aValue;
-//                    if (diferencia > 0) {
-//                        getController().removeProduct(items.get(rowIndex), diferencia);
-//                    } else {
-//                        getController().addProduct(items.get(rowIndex), diferencia * -1);
-//                    }
-//                    fireTableRowsUpdated(rowIndex, rowIndex);
-//                    state = ButtonState.ENVIAR_COCINA;
-//                    jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
-//                    updateValorTotal();
-//
-//                }
-//                break;
-//            default:
-//                super.setValueAt(aValue, rowIndex, columnIndex);
-//                break;
-//        }
-//    }
-//
-//    public Class<?> getColumnClass(int columnIndex) {
-//        if (columnIndex == 1) {
-//            return Float.class;
-//        } else {
-//            return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
-//        }
-//    }
-    }
-
+    
     private void updateBean() {
         com.jobits.pos.domain.models.Orden instance = controller.getInstance(codOrden);
         getBean().setEs_autorizo(instance.getDeLaCasa());
