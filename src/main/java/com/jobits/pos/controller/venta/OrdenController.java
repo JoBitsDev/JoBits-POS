@@ -190,7 +190,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
                     o.setHoraTerminada(new Date());
                     o.setOrdengastoEninsumos(getGastosInsumos(o));
                     RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.CERRAR, Level.FINE, o);
-                    Mesa m = getInstance().getMesacodMesa();
+                    Mesa m = o.getMesacodMesa();
                     m.setEstado("vacia");
                     o.setMesacodMesa(m);
                     MesaDAO.getInstance().edit(m);
@@ -285,7 +285,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     public float getGastosInsumos(Orden instance) {
         float ret = 0;
-        for (ProductovOrden x : getInstance().getProductovOrdenList()) {
+        for (ProductovOrden x : instance.getProductovOrdenList()) {
             float check = 0;
             for (ProductoInsumo pi : x.getProductoVenta().getProductoInsumoList()) {
                 check += pi.getCosto();
@@ -352,10 +352,10 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     @Override
     public void setPorciento(String codOrden, float f) {
-        getInstance().setPorciento(f);
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, instance, f);
-        //view.updateValorTotal();
-        update(instance);
+        Orden o = getInstance(codOrden);
+        o.setPorciento(f);
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, o, f);
+        update(o);
     }
 
     @Override
@@ -382,25 +382,26 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
     @Override
-    public void removeProduct(String codOrden, ProductovOrden selected, float diferencia) {
+    public void removeProduct(String codOrden, ProductovOrden selected, float cantidad) {
         if (autorize(codOrden)) {
-            int index = getInstance().getProductovOrdenList().indexOf(selected);
-            float difer = getInstance().getProductovOrdenList().get(index).getCantidad();
-            if (difer - diferencia == 0) {
+            Orden o = getInstance(codOrden);
+            int index = o.getProductovOrdenList().indexOf(selected);
+            float difer = o.getProductovOrdenList().get(index).getCantidad();
+            if (difer - cantidad == 0) {
                 removeProduct(codOrden, selected);
                 return;
             }
-            getInstance().getProductovOrdenList().get(index).setCantidad(difer - diferencia);
+            o.getProductovOrdenList().get(index).setCantidad(difer - cantidad);
             //Impresion i = new Impresion();
-            printCancelationTicket(instance);
-            if (getInstance().getDeLaCasa()) {
-                ipvController.devolverPorLaCasa(selected, diferencia);
+            printCancelationTicket(o);
+            if (o.getDeLaCasa()) {
+                ipvController.devolverPorLaCasa(selected, cantidad);
             } else {
-                ipvController.devolver(selected, diferencia);
+                ipvController.devolver(selected, cantidad);
             }
             getModel().startTransaction();
-            for (NotificacionEnvioCocina x : getInstance().getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
-                float dif = x.getCantidad() - diferencia;
+            for (NotificacionEnvioCocina x : o.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
+                float dif = x.getCantidad() - cantidad;
                 if (dif <= 0) {
                     getModel().getEntityManager().remove(x);
                 } else {
@@ -411,9 +412,9 @@ public class OrdenController extends AbstractFragmentController<Orden>
             getModel().commitTransaction();
 
             ProductovOrdenDAO.getInstance().edit(selected);
-            fireWarningOnDeleting(selected, diferencia);
+            fireWarningOnDeleting(codOrden,selected, cantidad);
 
-            update(instance);
+            update(o);
         }
     }
 
@@ -436,8 +437,8 @@ public class OrdenController extends AbstractFragmentController<Orden>
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR, Level.FINE, producto, cantidad);
     }
 
-    private void fireWarningOnDeleting(ProductovOrden producto, float cantidad) {
-        Level l = getInstance().getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
+    private void fireWarningOnDeleting(String codOrden,ProductovOrden producto, float cantidad) {
+        Level l = getInstance(codOrden).getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.BORRAR, l, producto, cantidad);
 
     }
@@ -537,7 +538,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
         Orden o = getInstance(codOrden);
         if (autorize(codOrden)) {
             int index = o.getProductovOrdenList().indexOf(objectAtSelectedRow);
-            float cantidadBorrada = getInstance().getProductovOrdenList().get(index).getCantidad();
+            float cantidadBorrada = o.getProductovOrdenList().get(index).getCantidad();
             o.getProductovOrdenList().get(index).setCantidad(0);
             //Impresion i = new Impresion();
             printCancelationTicket(o);
@@ -554,7 +555,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
             ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
             o.getProductovOrdenList().remove(objectAtSelectedRow);
 
-            fireWarningOnDeleting(objectAtSelectedRow, cantidadBorrada);
+            fireWarningOnDeleting(codOrden,objectAtSelectedRow, cantidadBorrada);
             update(o);
         }
     }
