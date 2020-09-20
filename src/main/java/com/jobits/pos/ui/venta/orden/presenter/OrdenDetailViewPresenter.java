@@ -125,7 +125,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onSetAutorizoClick() {
-        controller.setDeLaCasa(getBean().isEs_autorizo());
+        controller.setDeLaCasa(codOrden,getBean().isEs_autorizo());
     }
 
     private void onEnviarAElaborarCLick() {

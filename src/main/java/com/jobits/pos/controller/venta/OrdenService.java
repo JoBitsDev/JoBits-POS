@@ -33,7 +33,7 @@ public interface OrdenService {
 
     public void enviarACocina(String codOrden);
 
-    public void setDeLaCasa(boolean es_autorizo);
+    public void setDeLaCasa(String codOrden,boolean es_autorizo);
 
     public Orden getInstance(String codOrden);
 

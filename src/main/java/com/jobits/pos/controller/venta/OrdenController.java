@@ -273,12 +273,13 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
     @Override
-    public void setDeLaCasa(boolean selected) {
-        getInstance().setDeLaCasa(selected);
+    public void setDeLaCasa(String codOrden, boolean selected) {
+        Orden o = getInstance(codOrden);
+        o.setDeLaCasa(selected);
         if (selected) {
-            ipvController.consumirPorLaCasa(getInstance().getProductovOrdenList());
+            ipvController.consumirPorLaCasa(o.getProductovOrdenList());
         } else {
-            ipvController.devolverPorLaCasa(getInstance().getProductovOrdenList());
+            ipvController.devolverPorLaCasa(o.getProductovOrdenList());
         }
     }
 
