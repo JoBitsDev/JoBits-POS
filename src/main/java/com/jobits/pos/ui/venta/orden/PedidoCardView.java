@@ -89,8 +89,8 @@ public class PedidoCardView extends AbstractViewPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabelVALORTotal = new javax.swing.JLabel();
         jPanelActionButtons = new javax.swing.JPanel();
-        jideButtonEnviarCocina = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jideButtonCerrarMesa = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jideButtonEnviarCocina = new javax.swing.JButton();
+        jideButtonCerrarMesa = new javax.swing.JButton();
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
         setToolTipText(null);
@@ -284,17 +284,17 @@ public class PedidoCardView extends AbstractViewPanel {
         jPanelActionButtons.setMaximumSize(new java.awt.Dimension(32767, 50));
         jPanelActionButtons.setMinimumSize(new java.awt.Dimension(0, 25));
         jPanelActionButtons.setPreferredSize(new java.awt.Dimension(0, 50));
-        jPanelActionButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanelActionButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 15, 5));
 
         jideButtonEnviarCocina.setBackground(new java.awt.Color(204, 204, 204));
-        jideButtonEnviarCocina.setText("Cocina");
+        jideButtonEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/icons8-notification.png"))); // NOI18N
         jideButtonEnviarCocina.setToolTipText("Enviar a cocina");
         jideButtonEnviarCocina.setBorderPainted(false);
         jideButtonEnviarCocina.setFocusable(false);
         jPanelActionButtons.add(jideButtonEnviarCocina);
 
         jideButtonCerrarMesa.setBackground(new java.awt.Color(204, 204, 204));
-        jideButtonCerrarMesa.setText("Cerrar");
+        jideButtonCerrarMesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/icons8-money.png"))); // NOI18N
         jideButtonCerrarMesa.setToolTipText("Cobrar orden");
         jideButtonCerrarMesa.setBorderPainted(false);
         jideButtonCerrarMesa.setFocusable(false);
@@ -461,8 +461,9 @@ public class PedidoCardView extends AbstractViewPanel {
         setMenuUI();
         jList1.setCellRenderer(new ListCellRenderer<ProductovOrden>() {
             @Override
-            public Component getListCellRendererComponent(JList<? extends ProductovOrden> list, ProductovOrden value, int index, boolean isSelected, boolean cellHasFocus) {
-                return new CellRenderPedido(value);
+            public Component getListCellRendererComponent(JList<? extends ProductovOrden> list,
+                    ProductovOrden value, int index, boolean isSelected, boolean cellHasFocus) {
+                return new CellRenderPedido(value,isSelected);
             }
         });
 
