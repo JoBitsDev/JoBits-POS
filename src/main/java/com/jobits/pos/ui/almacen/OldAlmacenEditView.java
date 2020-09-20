@@ -37,7 +37,7 @@ import com.jobits.ui.components.MaterialComponentsFactory;
  *
  * @author Jorge
  */
-public class AlmacenEditView extends AbstractDetailView<Almacen> {
+public class OldAlmacenEditView extends AbstractDetailView<Almacen> {
 
     /**
      * Creates new form AlmacenMain
@@ -50,7 +50,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     final Color elaboracionColor = new Color(255, 255, 204);
     final String labelInsumoSleccionado = "<Seleccione un insumo en la tabla>";
 
-    public AlmacenEditView(AbstractDetailController<Almacen> controller, Frame owner, Almacen instance) {
+    public OldAlmacenEditView(AbstractDetailController<Almacen> controller, Frame owner, Almacen instance) {
         super(instance, DialogType.FULL_SCREEN, controller, owner);
         initComponents();
         buttonGroup1.add(jRadioButtonSalida);
@@ -509,7 +509,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
 
         jPanelTransformacion.setLayout(new java.awt.BorderLayout());
 
-        jPanel8.setLayout(new java.awt.GridLayout());
+        jPanel8.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanelTransformar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Transformar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
         jPanelTransformar.setMinimumSize(new java.awt.Dimension(0, 60));
@@ -689,7 +689,7 @@ public class AlmacenEditView extends AbstractDetailView<Almacen> {
     }//GEN-LAST:event_jButtonConfirmarTransformacionActionPerformed
 
     private void jButtonNuevaFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaFacturaActionPerformed
-        OperacionView view = new OperacionView(new AlmacenManageController(getInstance()), this, true);
+        OldOperacionView view = new OldOperacionView(new AlmacenManageController(getInstance()), this, true);
     }//GEN-LAST:event_jButtonNuevaFacturaActionPerformed
 
     private void jButtonModificarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarStockActionPerformed

@@ -28,7 +28,7 @@ import javax.persistence.Table;
  * @author Jorge
  *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "codInsumo",scope = Insumo.class )
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codInsumo", scope = Insumo.class)
 @Entity
 @Table(name = "insumo")
 @NamedQueries({
@@ -41,7 +41,6 @@ import javax.persistence.Table;
     @NamedQuery(name = "Insumo.findByStockEstimation", query = "SELECT i FROM Insumo i WHERE i.stockEstimation = :stockEstimation"),
     @NamedQuery(name = "Insumo.findByCantidadCreada", query = "SELECT i FROM Insumo i WHERE i.cantidadCreada = :cantidadCreada")})
 public class Insumo implements Serializable {
-
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,7 +62,7 @@ public class Insumo implements Serializable {
     @Column(name = "cantidad_creada")
     private Float cantidadCreada;
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo", orphanRemoval = true)
     private List<ProductoInsumo> productoInsumoList;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumocodInsumo")
@@ -74,7 +73,7 @@ public class Insumo implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")
     private List<Ipv> ipvList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo_derivado_nombre")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo", orphanRemoval = true)
     private List<InsumoElaborado> insumoDerivadoList;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "insumo")

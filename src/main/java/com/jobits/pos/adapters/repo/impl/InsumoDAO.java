@@ -33,26 +33,6 @@ public class InsumoDAO extends AbstractRepository<Insumo> {
     }
 
     @Override
-    public void edit(Insumo entity) {
-        Insumo oldInsumo = find(entity.getCodInsumo());
-        startTransaction();
-        for (InsumoElaborado x : oldInsumo.getInsumoDerivadoList()) {
-            getEntityManager().remove(x);
-        }
-        commitTransaction();
-
-        startTransaction();
-
-        for (InsumoElaborado x : entity.getInsumoDerivadoList()) {
-            getEntityManager().persist(x);
-        }
-
-        super.edit(entity);
-        commitTransaction();
-
-    }
-
-    @Override
     public void create(Insumo insumo) {
         if (insumo.getProductoInsumoList() == null) {
             insumo.setProductoInsumoList(new ArrayList<>());

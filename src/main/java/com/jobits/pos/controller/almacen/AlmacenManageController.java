@@ -6,7 +6,7 @@
 package com.jobits.pos.controller.almacen;
 
 import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.almacen.AlmacenEditView;
+import com.jobits.pos.ui.almacen.OldAlmacenEditView;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,12 +39,17 @@ import com.jobits.pos.adapters.repo.impl.OperacionDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionEntradaDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionMermaDAO;
+import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.InsumoPedidoModel;
 import com.jobits.pos.domain.TransaccionSimple;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.AlmacenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.StockBalanceFormatter;
+import com.jobits.pos.ui.insumo.InsumoDetailView;
+import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
 import com.jobits.pos.ui.utils.utils;
 import java.awt.Frame;
 
@@ -79,7 +84,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new AlmacenEditView(this, (Frame) parent, getInstance()));
+        setView(new OldAlmacenEditView(this, (Frame) parent, getInstance()));
         getView().updateView();
         getView().fetchComponentData();
         getView().setVisible(true);
@@ -103,10 +108,10 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         }
 
     }
- 
+
     public void modificarStock(Insumo i) {
         //InsumoDetailController insumoController = new InsumoDetailController(i, getView());
-        getView().updateView();
+       // getView().updateView();
     }
 
     public void imprimirResumenAlmacen(Almacen a) {
@@ -124,7 +129,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
     }
 
     public void verTransacciones(Almacen a) {
-        TransaccionesListController controller = new TransaccionesListController(getView(), a);
+//        TransaccionesListController controller = new TransaccionesListController(getView(), a);
     }
 
     @Override
@@ -203,8 +208,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         }
         getModel().commitTransaction();
         updateValorTotalAlmacen(getInstance());
-        getView().updateView();
-        showSuccessDialog(getView());
+//        getView().updateView();
+        showSuccessDialog(Application.getInstance().getMainWindow());
     }
 
     public void createInsumo(InsumoAlmacen newInsumo) {
@@ -297,7 +302,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
                 controller.setView(getView());
                 controller.setShowDialogs(false);
                 controller.update(i, true);
-                controller.updateInsumoOnFichas(i);
+                controller.updateProductoOnInsumo(i);
             }
         }
         updateValorTotalAlmacen(instance);
@@ -417,7 +422,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         ENTRADA(0),
         REBAJA(2),
         SALIDA(1),
-        TRASPASO(3);
+        TRASPASO(3),
+        TRANSFORMAR(4);
 
         final int numero;
 

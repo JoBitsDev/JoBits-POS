@@ -92,8 +92,11 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         this.removeAction = removeAction;
         this.tableModel = tableModel;
         uiInit();
-        this.tableModel.setTable(jTableCrossReference);
         wireUp();
+    }
+
+    public JTable getjTableCrossReference() {
+        return jTableCrossReference;
     }
 
     /**
@@ -110,7 +113,6 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         jTextFieldAutoComplete = MaterialComponentsFactory.Input.getTextField("Buscar...", jTextFieldDataName);
         jButtonAgregarProd = MaterialComponentsFactory.Buttons.getAddButton();
         jScrollPaneCrossReference = new javax.swing.JScrollPane();
-        jTableCrossReference = new javax.swing.JTable();
         jPanelOpciones = new javax.swing.JPanel();
         jButtonDeleteProd = MaterialComponentsFactory.Buttons.getCancelButton();
 
@@ -143,23 +145,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         add(jPanelInsert, java.awt.BorderLayout.NORTH);
 
         jScrollPaneCrossReference.setOpaque(false);
-        jScrollPaneCrossReference.setPreferredSize(new java.awt.Dimension(500, 180));
-
-        jTableCrossReference.setAutoCreateRowSorter(true);
-        jTableCrossReference.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        jTableCrossReference.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        jTableCrossReference.setOpaque(false);
-        jTableCrossReference.setPreferredSize(new java.awt.Dimension(500, 128));
-        jTableCrossReference.setRowHeight(32);
-        jTableCrossReference.setRowMargin(4);
-        jScrollPaneCrossReference.setViewportView(jTableCrossReference);
-        if (jTableCrossReference.getColumnModel().getColumnCount() > 0) {
-            jTableCrossReference.getColumnModel().getColumn(0).setHeaderValue("Title 1");
-            jTableCrossReference.getColumnModel().getColumn(1).setHeaderValue("Title 2");
-            jTableCrossReference.getColumnModel().getColumn(2).setHeaderValue("Title 3");
-            jTableCrossReference.getColumnModel().getColumn(3).setHeaderValue("Title 4");
-        }
-
+        jScrollPaneCrossReference.setPreferredSize(new java.awt.Dimension(500, 130));
         add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
 
         jPanelOpciones.setMaximumSize(new java.awt.Dimension(32767, 60));
@@ -177,7 +163,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         add(jPanelOpciones, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
-
+    protected javax.swing.JTable jTableCrossReference;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregarProd;
     private javax.swing.JButton jButtonDeleteProd;
@@ -185,7 +171,6 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
     private javax.swing.JPanel jPanelInsert;
     private javax.swing.JPanel jPanelOpciones;
     private javax.swing.JScrollPane jScrollPaneCrossReference;
-    protected javax.swing.JTable jTableCrossReference;
     private javax.swing.JTextField jTextFieldAutoComplete;
     // End of variables declaration//GEN-END:variables
 
@@ -202,7 +187,9 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
-        jTableCrossReference.setModel(tableModel);
+        jTableCrossReference = new JTable(tableModel);
+        jScrollPaneCrossReference.setViewportView(jTableCrossReference);
+        tableModel.setTable(jTableCrossReference);
         jTextFieldAutoComplete.addActionListener(addAction);
     }
 
