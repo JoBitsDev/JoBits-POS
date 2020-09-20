@@ -93,7 +93,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
     //TODO:quitar los popups de aqui
     @Override
     public void addProduct(String codOrden, ProductoVenta selected) {
-        if (autorize()) {
+        if (autorize(codOrden)) {
             Orden o = getInstance(codOrden);
             boolean found = false;
             ProductovOrden founded = null;
@@ -144,7 +144,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
 //    private void addProduct(String codOrden, ProductovOrden selected, float cantidad) {
-//        if (autorize()) {
+//        if (autorize(codOrden)) {
 //            if (!esDespachable(selected.getProductoVenta(), selected.getOrden(), cantidad)) {
 //                throw new ValidatingException(getView(), "No hay existencias de " + selected + " para elaborar");
 //            }
@@ -169,7 +169,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     @Override
     public void cerrarOrden(String codOrden) {
-        if (autorize()) {
+        if (autorize(codOrden)) {
             Orden o = getInstance(codOrden);
             Impresion i = new Impresion();
             setShowDialogs(true);
@@ -263,7 +263,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     @Override
     public void enviarACocina(String codOrden) {
-        if (autorize()) {
+        if (autorize(codOrden)) {
             Orden o = getInstance(codOrden);
             o = printKitchen(o);
             RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINE, o);
@@ -382,12 +382,12 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
     @Override
-    public void removeProduct(String codProducto, ProductovOrden selected, float diferencia) {
-        if (autorize()) {
+    public void removeProduct(String codOrden, ProductovOrden selected, float diferencia) {
+        if (autorize(codOrden)) {
             int index = getInstance().getProductovOrdenList().indexOf(selected);
             float difer = getInstance().getProductovOrdenList().get(index).getCantidad();
             if (difer - diferencia == 0) {
-                removeProduct(codProducto, selected);
+                removeProduct(codOrden, selected);
                 return;
             }
             getInstance().getProductovOrdenList().get(index).setCantidad(difer - diferencia);
@@ -420,8 +420,8 @@ public class OrdenController extends AbstractFragmentController<Orden>
     //
     //Metodos privados
     //
-    private boolean autorize() {
-        return new LogInController().constructoAuthorizationView(null, getInstance().getPersonalusuario().getUsuario());
+    private boolean autorize(String codOrden) {
+        return new LogInController().constructoAuthorizationView(null, getInstance(codOrden).getPersonalusuario().getUsuario());
     }
 
     private boolean esDespachable(ProductoVenta selected, Orden ordenVenta, float cantidad) {
@@ -535,7 +535,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     private void removeProduct(String codOrden, ProductovOrden objectAtSelectedRow) {
         Orden o = getInstance(codOrden);
-        if (autorize()) {
+        if (autorize(codOrden)) {
             int index = o.getProductovOrdenList().indexOf(objectAtSelectedRow);
             float cantidadBorrada = getInstance().getProductovOrdenList().get(index).getCantidad();
             o.getProductovOrdenList().get(index).setCantidad(0);
