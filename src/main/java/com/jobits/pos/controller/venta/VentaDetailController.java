@@ -380,7 +380,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
     public void cerrarOrdenRapido(String codOrden) {
         if (ordController != null) {
             if (showConfirmDialog(getView(), "Desea enviar a cocina, cerrar y crear una nueva orden")) {
-                ordController.enviarACocina();
+                ordController.enviarACocina(codOrden);
                 ordController.cerrarOrden(codOrden);
                 createNewOrden();
             }

@@ -31,7 +31,7 @@ public interface OrdenService {
      */
     public Orden createNewInstance(String codMesa, String fechaPedido);
 
-    public void enviarACocina();
+    public void enviarACocina(String codOrden);
 
     public void setDeLaCasa(boolean es_autorizo);
 

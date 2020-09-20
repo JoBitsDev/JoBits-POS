@@ -129,7 +129,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onEnviarAElaborarCLick() {
-        controller.enviarACocina();
+        controller.enviarACocina(codOrden);
         getBean().setLista_producto_orden(controller.getInstance(codOrden).getProductovOrdenList());
     }
 

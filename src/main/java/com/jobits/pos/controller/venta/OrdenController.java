@@ -262,11 +262,12 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
     @Override
-    public void enviarACocina() {
+    public void enviarACocina(String codOrden) {
         if (autorize()) {
-            instance = printKitchen(instance);
-            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINE, instance);
-            update(instance);
+            Orden o = getInstance(codOrden);
+            o = printKitchen(o);
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINE, o);
+            update(o);
             showSuccessDialog(getView(), "Productos enviados a cocina exitosamente");
         }
     }
