@@ -9,15 +9,13 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
 import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoAlmacen;
-import com.jobits.pos.domain.models.InsumoElaborado;
 import com.jobits.pos.domain.models.TransaccionTransformacion;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
 import static com.jobits.pos.ui.almacen.presenter.FacturaViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -28,18 +26,12 @@ import com.jobits.pos.ui.utils.RestaurantManagerListIntelliHint;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import org.checkerframework.checker.units.qual.K;
 
 /**
@@ -187,6 +179,14 @@ public class FacturaView extends AbstractViewPanel {
         jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
         jSpinnerCantidad.setMinimumSize(new java.awt.Dimension(100, 26));
         jSpinnerCantidad.setPreferredSize(new java.awt.Dimension(100, 26));
+        jSpinnerCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jSpinnerCantidadKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jSpinnerCantidadKeyTyped(evt);
+            }
+        });
         jPanel4.add(jSpinnerCantidad, java.awt.BorderLayout.CENTER);
 
         jLabelUM.setText("<U/M>");
@@ -273,17 +273,9 @@ public class FacturaView extends AbstractViewPanel {
 
             },
             new String [] {
-                "Insumo", "Cantidad", "Monto"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane1.setViewportView(jTableEntrada);
 
         jPanelTablaGeneral.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -331,11 +323,11 @@ public class FacturaView extends AbstractViewPanel {
     }//GEN-LAST:event_jTextFieldInsumoActionPerformed
 
     private void jComboBoxDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDestinoActionPerformed
-        jButtonAgregarInsumoEntrada.requestFocus();
+        executeAction();
     }//GEN-LAST:event_jComboBoxDestinoActionPerformed
 
     private void jTextFieldCausaRebajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCausaRebajaActionPerformed
-        jButtonAgregarInsumoEntrada.requestFocus();
+        executeAction();
     }//GEN-LAST:event_jTextFieldCausaRebajaActionPerformed
 
     private void jButtonAgregarInsumoEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarInsumoEntradaActionPerformed
@@ -344,8 +336,15 @@ public class FacturaView extends AbstractViewPanel {
 
     private void jComboBoxOperationSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOperationSelectorActionPerformed
         jTextFieldInsumo.requestFocusInWindow();
-
     }//GEN-LAST:event_jComboBoxOperationSelectorActionPerformed
+
+    private void jSpinnerCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSpinnerCantidadKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSpinnerCantidadKeyTyped
+
+    private void jSpinnerCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jSpinnerCantidadKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jSpinnerCantidadKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -446,40 +445,84 @@ public class FacturaView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_LISTA_OPERACIONES), getPresenter().getModel(PROP_OPERACION_SELECTED)));
 
         //FOCUS EVENTS
-        jSpinnerCantidad.addChangeListener((ChangeEvent e) -> {
-            CheckBoxType operationSelected = (CheckBoxType) jComboBoxOperationSelector.getSelectedItem();
-            switch (operationSelected) {
-                case ENTRADA:
-                    jSpinnerMonto.requestFocusInWindow();
-                    break;
-                case REBAJA:
-                    jTextFieldCausaRebaja.requestFocusInWindow();
-                    break;
-                case SALIDA:
-                    jComboBoxDestino.showPopup();
-                    jComboBoxDestino.requestFocusInWindow();
-                    break;
-                case TRANSFORMAR:
-                    jComboBoxDestino.showPopup();
-                    jComboBoxDestino.requestFocusInWindow();
-                    break;
-                case TRASPASO:
-                    jComboBoxDestino.showPopup();
-                    jComboBoxDestino.requestFocusInWindow();
-                    break;
-                default:
-                    break;
-            }
-        });
-        JSpinner.DefaultEditor def = (JSpinner.DefaultEditor) jSpinnerCantidad.getEditor();
-        def.getTextField().addFocusListener(new FocusListener() {
+        JSpinner.DefaultEditor defCantidad = (JSpinner.DefaultEditor) jSpinnerCantidad.getEditor();
+        JSpinner.DefaultEditor defMonto = (JSpinner.DefaultEditor) jSpinnerMonto.getEditor();
+
+        defCantidad.getTextField().addKeyListener(new KeyListener() {
             @Override
-            public void focusGained(FocusEvent e) {
-                def.getTextField().setText(null);
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    switch ((CheckBoxType) jComboBoxOperationSelector.getSelectedItem()) {
+                        case ENTRADA:
+                            defMonto.getTextField().requestFocusInWindow();
+                            break;
+                        case REBAJA:
+                            if (jTextFieldCausaRebaja.isEnabled()) {
+                                jTextFieldCausaRebaja.requestFocusInWindow();
+                            } else {
+                                executeAction();
+                            }
+                            break;
+                        case SALIDA:
+                            if (jComboBoxDestino.isEnabled()) {
+                                jComboBoxDestino.showPopup();
+                                jComboBoxDestino.requestFocusInWindow();
+                            } else {
+                                executeAction();
+                            }
+                            break;
+                        case TRANSFORMAR:
+                            if (jComboBoxDestino.isEnabled()) {
+                                jComboBoxDestino.showPopup();
+                                jComboBoxDestino.requestFocusInWindow();
+                            } else {
+                                executeAction();
+                            }
+                            break;
+                        case TRASPASO:
+                            if (jComboBoxDestino.isEnabled()) {
+                                jComboBoxDestino.showPopup();
+                                jComboBoxDestino.requestFocusInWindow();
+                            } else {
+                                executeAction();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
 
             @Override
-            public void focusLost(FocusEvent e) {
+            public void keyTyped(KeyEvent e) {
+                if (defCantidad.getTextField().getText().equals("0")) {
+                    defCantidad.getTextField().setText(null);
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        defMonto.getTextField().addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    executeAction();
+                }
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (defMonto.getTextField().getText().equals("0")) {
+                    defMonto.getTextField().setText(null);
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
     }
@@ -583,7 +626,8 @@ public class FacturaView extends AbstractViewPanel {
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                return columnIndex > 0 ? Float.class : super.getColumnClass(columnIndex);
+                return columnIndex > 0 ? Float.class
+                        : super.getColumnClass(columnIndex);
 
             }
 
@@ -610,5 +654,27 @@ public class FacturaView extends AbstractViewPanel {
     @Override
     public String getViewName() {
         return VIEW_NAME;
+    }
+
+    private void executeAction() {
+        if (confirm()) {
+            getPresenter().getOperation(ACTION_AGREGAR_INSUMO).doAction();
+            jTextFieldInsumo.requestFocusInWindow();
+        }
+    }
+
+    private boolean confirm() {
+        Object[] options = {"Si", "No"};
+        int confirm = JOptionPane.showOptionDialog(
+                Application.getInstance().getMainWindow(),
+                "Desea agregar el insumo seleccionado",
+                null,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+
+        return confirm == JOptionPane.YES_OPTION;
     }
 }
