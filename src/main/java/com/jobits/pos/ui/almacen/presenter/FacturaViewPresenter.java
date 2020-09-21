@@ -8,30 +8,23 @@ package com.jobits.pos.ui.almacen.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
-import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoAlmacen;
-import com.jobits.pos.domain.models.InsumoElaborado;
 import com.jobits.pos.domain.models.TransaccionTransformacion;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.recursos.RegularExpressions;
-import com.jobits.pos.ui.almacen.FacturaView;
-import static com.jobits.pos.ui.almacen.presenter.AlmacenViewPresenter.ACTION_ACTUALIZAR_LISTA_ALMACEN;
 import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.utils.utils;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import org.checkerframework.checker.units.qual.K;
 
 /**
  *
@@ -55,8 +48,6 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         addListeners();
         getBean().getLista_insumos_disponibles().clear();
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(controller.getInsumoAlmacenList(controller.getInstance())));
-//        getBean().getLista_insumo_elaborado_disponible().clear();
-//        getBean().getLista_insumo_elaborado_disponible().addAll(controller.getInsumoList());
         setVisiblePanels(getBean().getOperacion_selected());
     }
 

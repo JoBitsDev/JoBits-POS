@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.almacen.OldAlmacenEditView;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -39,17 +38,12 @@ import com.jobits.pos.adapters.repo.impl.OperacionDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionEntradaDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionMermaDAO;
-import com.jobits.pos.cordinator.DisplayType;
-import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.InsumoPedidoModel;
 import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.AlmacenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.StockBalanceFormatter;
-import com.jobits.pos.ui.insumo.InsumoDetailView;
-import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
 import com.jobits.pos.ui.utils.utils;
 import java.awt.Frame;
 
@@ -147,7 +141,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         try {
             hasta = AlmacenDAO.getInstance().findInsumo(x.getAlmacenDestino().getCodAlmacen(), x.getTransaccion().getInsumocodInsumo().getCodInsumo());
         } catch (NoResultException ex) {
-            throw new ValidatingException(getView(), "NO existe " + x.getTransaccion().getInsumocodInsumo() + " en " + x.getAlmacenDestino());
+            throw new ValidatingException(Application.getInstance().getMainWindow()
+                    , "NO existe " + x.getTransaccion().getInsumocodInsumo() + " en " + x.getAlmacenDestino());
         }
         float precioMedio = utils.redondeoPorExcesoFloat(desde.getValorMonetario() / desde.getCantidad());
         desde.setCantidad(desde.getCantidad() - x.getTransaccion().getCantidad());
