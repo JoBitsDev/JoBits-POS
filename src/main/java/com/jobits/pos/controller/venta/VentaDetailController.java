@@ -75,7 +75,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
             instance = initDiaVentas(null);
         });
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-        this.ordController = new OrdenController();
+        this.ordController = new OrdenController();//TODO:esto hay que pasarlo por parametro
 
     }
 
