@@ -19,13 +19,15 @@ import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
 import com.jobits.pos.controller.gasto.GastoOperacionController;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
-import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.gastos.GastoOperacionView;
+import com.jobits.pos.ui.gastos.GastosView;
+import com.jobits.pos.ui.gastos.presenter.GastosViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.trabajadores.AsistenciaTrabajadoresView;
+import com.jobits.pos.ui.trabajadores.AsistenciaPersonalView;
+import com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.orden.VentaListOrdenesView;
@@ -36,9 +38,7 @@ import static com.jobits.pos.ui.venta.presenter.VentaResumenViewModel.*;
 import static com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.displayers.Card;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JOptionPane;
@@ -139,7 +139,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelResumen.setLayout(new java.awt.BorderLayout());
 
         jTabbedPaneResumenD.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        jTabbedPaneResumenD.setToolTipText("");
+        jTabbedPaneResumenD.setToolTipText(null);
         jTabbedPaneResumenD.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
 
         jPanelGeneral.setLayout(new java.awt.BorderLayout());
@@ -532,7 +532,6 @@ public class VentaDetailView extends AbstractViewPanel {
 
 //        jButtonImprimirZ.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_Z));
 //        jButtonImprimirAutorizos.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_AUTORIZOS));
-
         Bindings.bind(jButtonReabrirVentas, "enabled", getPresenter().getModel(PROP_REABRIR_VENTAS_ENABLED));
         jButtonReabrirVentas.addActionListener(getPresenter().getOperation(ACTION_REABRIR_VENTA));
 
@@ -560,7 +559,7 @@ public class VentaDetailView extends AbstractViewPanel {
 
         Bindings.bind(jButtonCambiarTurno, "enabled", getPresenter().getModel(PROP_CAMBIAR_TURNO_ENABLED));
         updateGraficasResumenGeneralVentas();
-
+        
     }
 
     @Override
@@ -581,9 +580,8 @@ public class VentaDetailView extends AbstractViewPanel {
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
         jPanelVentas.add(new VentaListOrdenesView(getPresenter()));
 
-        jPanelExtracciones.add(new GastoOperacionView(new GastoOperacionController()));
-
-        jPanelPagoTrabajadores.add(new AsistenciaTrabajadoresView(new AsistenciaPersonalController(), new Venta(fechaFin)));
+        jPanelPagoTrabajadores.add(new AsistenciaPersonalView(new AsistenciaPersonalPresenter(ventaInstance)));
+        jPanelExtracciones.add(new GastosView(new GastosViewPresenter(new GastoOperacionController(ventaInstance))));
     }
 
     @Override
@@ -727,7 +725,7 @@ public class VentaDetailView extends AbstractViewPanel {
         }
     }
 
-    //TODO: agregar listener al bean para nada mas cambien los datos se actualize la tabla p mejor agregar los listener a los jtextfield
+//TODO: agregar listener al bean para nada mas cambien los datos se actualize la tabla p mejor agregar los listener a los jtextfield
     private void updateGraficasResumenGeneralVentas() {
         PieChart chartPie = new PieChartBuilder().theme(Styler.ChartTheme.XChart).title("Ventas/Gastos ").build();
         chartPie.getStyler().setAnnotationType(PieStyler.AnnotationType.Percentage);
