@@ -30,6 +30,8 @@ import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.ui.AcercaDeView;
+import com.jobits.pos.ui.AcercaDeViewPresenter;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
 import com.jobits.pos.ui.MainMenuPresenter;
@@ -105,6 +107,8 @@ public class PresenterFacade {
         switch (viewUIDName) {
             case LogInView.VIEW_NAME:
                 return new LoginViewPresenter(new LogInController());
+            case AcercaDeView.VIEW_NAME:
+                return new AcercaDeViewPresenter();
             case UbicacionView.VIEW_NAME:
                 return new UbicacionViewPresenter(new UbicacionConexionController());
             case MainMenuView.VIEW_NAME:

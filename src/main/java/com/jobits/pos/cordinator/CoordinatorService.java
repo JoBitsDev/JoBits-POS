@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.cordinator;
 
+import com.jobits.pos.ui.AcercaDeView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.almacen.OldAlmacenListView;
@@ -103,6 +104,7 @@ public class CoordinatorService implements Coordinator {
                         VentaCalendarView.VIEW_NAME,
                         AlmacenMainView.VIEW_NAME,
                         VentaStatisticsView.VIEW_NAME,
+                        AcercaDeView.VIEW_NAME,
                         LicenceDialogView.VIEW_NAME));
         navigationGraph.put(VentaDetailView.VIEW_NAME, Arrays.asList(OrdenDetailFragmentView.VIEW_NAME));
     }

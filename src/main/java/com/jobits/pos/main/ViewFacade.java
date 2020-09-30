@@ -7,6 +7,7 @@ package com.jobits.pos.main;
 
 import com.jobits.pos.controller.licencia.Licencia;
 import com.jobits.pos.main.PresenterFacade;
+import com.jobits.pos.ui.AcercaDeView;
 import com.jobits.pos.ui.MainMenuView;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.almacen.OldAlmacenListView;
@@ -65,6 +66,8 @@ public class ViewFacade {
         switch (viewUniqueName) {
             case UbicacionView.VIEW_NAME:
                 return new UbicacionView(p);
+            case AcercaDeView.VIEW_NAME:
+                return new AcercaDeView(p);
             case LogInView.VIEW_NAME:
                 return getRootView(p);
             case MainMenuView.VIEW_NAME:
