@@ -24,9 +24,11 @@ import com.jobits.pos.adapters.repo.impl.GastoVentaDAO;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.impl.TipoGastoDAO;
 import com.jobits.pos.controller.venta.OrdenController;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.PersonalTrabajandoFormatter;
+import javax.swing.JOptionPane;
 
 /**
  * FirstDream
@@ -43,20 +45,20 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
         super(AsistenciaPersonalDAO.getInstance());
     }
 
-    public AsistenciaPersonalController(Container parent, Venta fecha) {
+    public AsistenciaPersonalController(/*Container parent*/Venta fecha) {
         this();
-        setParent(parent);
+        //setParent(parent);
         this.diaVenta = fecha;
 
     }
 
     @Override
     public void constructView(Container parent) {
-        if (getView() == null) {
-            setView(new AsistenciaTrabajadoresView(this, parent, diaVenta, readOnlyData));
-        }
-        getView().updateView();
-        getView().setVisible(true);
+//        if (getView() == null) {
+//            setView(new AsistenciaTrabajadoresView(this, parent, diaVenta, readOnlyData));
+//        }
+//        getView().updateView();
+//        getView().setVisible(true);
     }
 
     @Override
@@ -120,13 +122,17 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
 
     }
 
-    public void updateAMayores(AsistenciaPersonal personalABuscar,float aMayoresValor) {
+    public void updateAMayores(AsistenciaPersonal personalABuscar, float aMayoresValor) {
         personalABuscar.setAMayores(aMayoresValor);
         AsistenciaPersonalDAO.getInstance().edit(personalABuscar);
     }
 
     public void imprimirAsistencia() {
-        Impresion.getDefaultInstance().print(new PersonalTrabajandoFormatter(getPersonalTrabajando(diaVenta)), null);
+        if (getPersonalTrabajando(diaVenta).isEmpty()) {
+            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "No hay trabajadores registrados en esta fecha");
+        } else {
+            Impresion.getDefaultInstance().print(new PersonalTrabajandoFormatter(getPersonalTrabajando(diaVenta)), null);
+        }
     }
 
 }
