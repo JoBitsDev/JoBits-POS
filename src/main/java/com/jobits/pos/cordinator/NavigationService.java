@@ -41,14 +41,24 @@ public class NavigationService implements Navigator {
 
     private NavigationService() {
         this.activeNode = NavigationNode.of(null, ViewFacade.getView(LogInView.VIEW_NAME, null).getViewName());
-        showView(null,DisplayType.NORMAL);
+        showView(null, DisplayType.NORMAL);
 
     }
 
     public void navigateTo(String viewUniqueName) {
         if (coordinator.canNavigateTo(activeNode.getViewUIDName(), viewUniqueName)) {
             this.activeNode = NavigationNode.of(activeNode, viewUniqueName);
-            showView(null,DisplayType.NORMAL);
+            showView(null, DisplayType.NORMAL);
+
+        } else {
+            Logger.getLogger(getClass()).log(Logger.Level.WARN, "No route to " + viewUniqueName + " defined in the main coordinator");
+        }
+    }
+
+    public void navigateTo(String viewUniqueName, DisplayType displayType) {
+        if (coordinator.canNavigateTo(activeNode.getViewUIDName(), viewUniqueName)) {
+            this.activeNode = NavigationNode.of(activeNode, viewUniqueName);
+            showView(null, displayType);
 
         } else {
             Logger.getLogger(getClass()).log(Logger.Level.WARN, "No route to " + viewUniqueName + " defined in the main coordinator");
@@ -58,28 +68,28 @@ public class NavigationService implements Navigator {
     public void navigateTo(String viewUniqueName, AbstractViewPresenter presenter) {
         if (coordinator.canNavigateTo(activeNode.getViewUIDName(), viewUniqueName)) {
             this.activeNode = NavigationNode.of(activeNode, viewUniqueName);
-            showView(presenter,DisplayType.NORMAL);
+            showView(presenter, DisplayType.NORMAL);
 
         }
     }
-    
-    public void navigateTo(String viewUniqueName, AbstractViewPresenter presenter,DisplayType displayType) {
+
+    public void navigateTo(String viewUniqueName, AbstractViewPresenter presenter, DisplayType displayType) {
         if (coordinator.canNavigateTo(activeNode.getViewUIDName(), viewUniqueName)) {
             this.activeNode = NavigationNode.of(activeNode, viewUniqueName);
-            showView(presenter,displayType);
+            showView(presenter, displayType);
 
         }
     }
-    
+
     public void navigateUp() {
         if (activeNode.getParentNode() != null) {
             activeNode = activeNode.getParentNode();
-            showView(null,DisplayType.NORMAL);
+            showView(null, DisplayType.NORMAL);
         }
     }
 
-    private void showView(AbstractViewPresenter presenter,DisplayType displayType) {
-        Application.getInstance().showView(activeNode.getViewUIDName(), presenter,displayType);
+    private void showView(AbstractViewPresenter presenter, DisplayType displayType) {
+        Application.getInstance().showView(activeNode.getViewUIDName(), presenter, displayType);
     }
-    
+
 }
