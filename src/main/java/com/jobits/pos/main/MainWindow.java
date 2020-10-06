@@ -13,6 +13,8 @@ import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.MenuBar;
+import com.jobits.pos.ui.MenuBarClass;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.swing.containers.MaterialFrame;
 import com.jobits.ui.components.swing.containers.MaterialWindow;
@@ -28,6 +30,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 /**
  *
@@ -114,6 +118,7 @@ public class MainWindow extends JFrame {
             rootView = RootView.getInstance();
             add(rootView, RootView.VIEW_NAME);
             cards.show(getContentPane(), RootView.VIEW_NAME);
+            setJMenuBar(MenuBarClass.getInstance().getMainManuBar());
             return true;
         }
         if (rootView != null) {
