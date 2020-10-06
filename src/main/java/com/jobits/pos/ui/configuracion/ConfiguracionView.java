@@ -85,13 +85,15 @@ public class ConfiguracionView extends AbstractViewPanel {
 
         jPanelY.add(jPanel3, java.awt.BorderLayout.CENTER);
 
-        setMinimumSize(getMinimumSize());
+        setPreferredSize(new java.awt.Dimension(750, 650));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
         jTabbedPane1.setPreferredSize(screenHeight(0.75));
         add(jTabbedPane1);
 
         jPanel12.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setMinimumSize(new java.awt.Dimension(138, 60));
 
         jButtonAceptar.setText("Guardar cambios");
         jButtonAceptar.setPreferredSize(new java.awt.Dimension(130, 50));
