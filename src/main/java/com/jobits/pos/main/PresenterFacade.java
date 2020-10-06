@@ -20,6 +20,7 @@ import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
+import com.jobits.pos.controller.reportes.ReportarBugController;
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.controller.trabajadores.PersonalDetailController;
@@ -72,6 +73,8 @@ import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
 import com.jobits.pos.ui.menu.MenuSeccionView;
 import com.jobits.pos.ui.menu.presenter.MenuSeccionViewPresenter;
+import com.jobits.pos.ui.reportes.ReportarBugView;
+import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -157,6 +160,8 @@ public class PresenterFacade {
                 return new AlmacenViewPresenter(new AlmacenListController());
             case FacturaView.VIEW_NAME:
                 return new FacturaViewPresenter(new AlmacenManageController(new Almacen()));
+            case ReportarBugView.VIEW_NAME:
+                return new ReportarBugViewPresenter(new ReportarBugController());
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListPresenter(new TransaccionesListController(new Almacen()));
             case MesaListView.VIEW_NAME:
