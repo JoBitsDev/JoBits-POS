@@ -103,3 +103,7 @@ lib/pers_mat.json
 pers_mat.json
 
 logs/Venta/
+
+src/main/java/com/jobits/pos/ui/MenuBar.form
+
+src/main/java/com/jobits/pos/ui/MenuBar.java
