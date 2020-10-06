@@ -16,6 +16,7 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.MainMenuPresenter;
 import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -58,13 +59,14 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         getBean().setContrasena("");
         try {
             if (service.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
-               Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
+                Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
                 NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
                         new MainMenuPresenter(new MainMenuController())); //TODO revisar eso codigo que no le pertenece a esta clse
             }
         } catch (IllegalArgumentException ex) {
-           Application.getInstance().getNotificationService().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion
+            Application.getInstance().getNotificationService().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion
         }
+        RootView.getInstance().getStatusBar().refreshView();
     }
 
     private void onUbicacionSeleccionadaChanged() {
@@ -86,7 +88,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     }
 
     private void onEditarUbicacionClick() {
-        NavigationService.getInstance().navigateTo(UbicacionView.VIEW_NAME, new UbicacionViewPresenter(ubicacionController),DisplayType.POPUP);//TODO codigo de ubicaciones
+        NavigationService.getInstance().navigateTo(UbicacionView.VIEW_NAME, new UbicacionViewPresenter(ubicacionController), DisplayType.POPUP);//TODO codigo de ubicaciones
 
     }
 
@@ -110,7 +112,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                 return Optional.empty();
             }
         });
-        registerOperation(new AbstractViewAction(ACTION_EDITAR_UBICACION,false) {
+        registerOperation(new AbstractViewAction(ACTION_EDITAR_UBICACION, false) {
             @Override
             public Optional doAction() {
                 onEditarUbicacionClick();
