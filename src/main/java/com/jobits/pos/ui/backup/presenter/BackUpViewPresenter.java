@@ -28,6 +28,7 @@ import java.util.Optional;
 public class BackUpViewPresenter extends AbstractViewPresenter<BackUpViewModel> {
 
     public static final String ACTION_REALIZAR_COPIA_SEG = "Realizar copia de seguridad";
+    public static final String ACTION_CERRAR = "Cerrar";
 
     private UbicacionConexionService ubicacionController;
 
@@ -44,6 +45,13 @@ public class BackUpViewPresenter extends AbstractViewPresenter<BackUpViewModel> 
             @Override
             public Optional doAction() {
                 onRealizarCopiaDeSeguridad();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_CERRAR) {
+            @Override
+            public Optional doAction() {
+                Application.getInstance().getNavigator().navigateUp();
                 return Optional.empty();
             }
         });

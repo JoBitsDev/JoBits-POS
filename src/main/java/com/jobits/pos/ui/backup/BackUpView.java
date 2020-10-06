@@ -7,11 +7,15 @@ package com.jobits.pos.ui.backup;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.backup.presenter.BackUpViewModel;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
+import static com.jobits.pos.ui.backup.presenter.BackUpViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  *
@@ -34,7 +38,8 @@ public class BackUpView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jPanel3 = new javax.swing.JPanel();
+        jButtonClose = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -48,12 +53,20 @@ public class BackUpView extends AbstractViewPanel {
         jCheckBoxBorrado = new javax.swing.JCheckBox();
         botonRealizarCopia = new org.pushingpixels.substance.internal.utils.SubstanceTitleButton();
         jProgressBar1 = new javax.swing.JProgressBar();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Copias de seguridad", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 0, 24))); // NOI18N
+        setBorder(javax.swing.BorderFactory.createLineBorder(DefaultValues.PRIMARY_COLOR_LIGHT));
         setOpaque(false);
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
-        add(filler1);
+        setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jButtonClose.setIcon(MaterialIcons.CLOSE);
+        jButtonClose.setMaximumSize(new java.awt.Dimension(40, 40));
+        jButtonClose.setMinimumSize(new java.awt.Dimension(40, 40));
+        jButtonClose.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel3.add(jButtonClose);
+
+        add(jPanel3, java.awt.BorderLayout.NORTH);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         jPanel2.setMaximumSize(new java.awt.Dimension(400, 400));
@@ -115,8 +128,7 @@ public class BackUpView extends AbstractViewPanel {
         jProgressBar1.setStringPainted(true);
         jPanel2.add(jProgressBar1, java.awt.BorderLayout.PAGE_END);
 
-        add(jPanel2);
-        add(filler2);
+        add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonRealizarCopiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRealizarCopiaActionPerformed
@@ -131,8 +143,7 @@ public class BackUpView extends AbstractViewPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.pushingpixels.substance.internal.utils.SubstanceTitleButton botonRealizarCopia;
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
+    private javax.swing.JButton jButtonClose;
     private javax.swing.JCheckBox jCheckBoxBorrado;
     private javax.swing.JCheckBox jCheckBoxPersonal;
     private javax.swing.JCheckBox jCheckBoxProductos;
@@ -141,6 +152,7 @@ public class BackUpView extends AbstractViewPanel {
     private javax.swing.JComboBox<UbicacionConexionModel> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JProgressBar jProgressBar1;
     private org.jdesktop.swingx.JXLabel jXLabel1;
     private org.jdesktop.swingx.JXPanel jXPanel1;
@@ -159,6 +171,7 @@ public class BackUpView extends AbstractViewPanel {
         Bindings.bind(jCheckBoxVentas, getPresenter().getModel(BackUpViewModel.PROP_CHECKBOX_VENTAS));
         this.botonRealizarCopia.addActionListener(getPresenter().getOperation(BackUpViewPresenter.ACTION_REALIZAR_COPIA_SEG));
         Bindings.bind(jProgressBar1, "value", getPresenter().getModel(BackUpViewModel.PROP_PROGRESS_INDICATOR));
+        jButtonClose.addActionListener(getPresenter().getOperation(ACTION_CERRAR));
     }
 
     @Override
