@@ -97,22 +97,22 @@ public class MainMenuView extends AbstractViewPanel {
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.TRABAJADORES.toString()));
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.PUESTOS_TRABAJO.toString()));
 
-        CollapseMenu configuracion = new CollapseMenu(MaterialIcons.SETTINGS.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Configuración");
-        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.CONFIGURACION.toString()));
-        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
-        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
+//        CollapseMenu configuracion = new CollapseMenu(MaterialIcons.SETTINGS.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Configuración");
+//        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.CONFIGURACION.toString()));
+//        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
+//        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
 
         taskPane.addMainElement(productoVenta);
         taskPane.addMainElement(almacen);
         taskPane.addMainElement(contabilidad);
         taskPane.addMainElement(nominas);
-        taskPane.addMainElement(configuracion);
+//        taskPane.addMainElement(configuracion);
         
         productoVenta.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
         almacen.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
         contabilidad.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
         nominas.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
-        configuracion.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
+//        configuracion.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
         
         taskPane.format();
         taskPane.deselectAll();
