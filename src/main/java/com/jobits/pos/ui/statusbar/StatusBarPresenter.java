@@ -9,11 +9,14 @@ import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Optional;
 
 /**
@@ -45,6 +48,13 @@ public class StatusBarPresenter extends AbstractViewPresenter<StatusBarViewModel
         if (Application.getInstance().getLoggedUser() != null) {
             getBean().setUsuario_registrado(Application.getInstance().getLoggedUser().getUsuario());
         }
+        Application.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                getBean().setUsuario_registrado(((Personal) evt.getNewValue()).getUsuario());
+            }
+        });
+
         getBean().setVersion_software(R.RELEASE_VERSION);
     }
 
