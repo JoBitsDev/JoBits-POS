@@ -7,8 +7,8 @@ package com.jobits.pos.main;
 
 import com.jobits.pos.controller.licencia.Licencia;
 import com.jobits.pos.main.PresenterFacade;
-import com.jobits.pos.ui.AcercaDeView;
-import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.about.AcercaDeView;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.almacen.OldAlmacenListView;
 import com.jobits.pos.ui.almacen.FacturaView;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui;
+package com.jobits.pos.ui.mainmenu;
 
 import com.jhw.swing.material.components.dashboard.taskpane.DashBoardTaskPane;
 import com.jobits.pos.controller.login.MainMenuController;
@@ -13,6 +13,8 @@ import com.jhw.swing.material.components.taskpane.TaskButton;
 import com.jhw.swing.material.components.taskpane.TaskPaneMainContainer;
 import com.jhw.swing.material.standars.MaterialColors;
 import com.jhw.swing.material.standars.MaterialIcons;
+import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.function.Consumer;

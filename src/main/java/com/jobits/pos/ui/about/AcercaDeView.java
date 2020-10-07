@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui;
+package com.jobits.pos.ui.about;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jhw.swing.material.standars.MaterialIcons;
-import static com.jobits.pos.ui.AcercaDeViewModel.*;
-import static com.jobits.pos.ui.AcercaDeViewPresenter.*;
+import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
+import static com.jobits.pos.ui.about.AcercaDeViewModel.*;
+import static com.jobits.pos.ui.about.AcercaDeViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 

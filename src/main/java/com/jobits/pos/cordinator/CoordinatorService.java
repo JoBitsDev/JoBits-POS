@@ -5,9 +5,9 @@
  */
 package com.jobits.pos.cordinator;
 
-import com.jobits.pos.ui.AcercaDeView;
+import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.login.LogInView;
-import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.almacen.OldAlmacenListView;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;

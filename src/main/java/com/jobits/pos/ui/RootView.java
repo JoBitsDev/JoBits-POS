@@ -5,6 +5,10 @@
  */
 package com.jobits.pos.ui;
 
+import com.jobits.pos.ui.statusbar.StatusBarView;
+import com.jobits.pos.ui.statusbar.StatusBarPresenter;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
+import com.jobits.pos.ui.mainmenu.MainMenuPresenter;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.ViewFacade;

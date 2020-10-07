@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui;
+package com.jobits.pos.ui.about;
 
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
-import static com.jobits.pos.ui.StatusBarPresenter.ACTION_LICENCIA;
+import static com.jobits.pos.ui.statusbar.StatusBarPresenter.ACTION_LICENCIA;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Calendar;

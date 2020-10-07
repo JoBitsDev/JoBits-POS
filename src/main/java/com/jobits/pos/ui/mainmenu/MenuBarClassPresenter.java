@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui;
+package com.jobits.pos.ui.mainmenu;
 
+import com.jobits.pos.ui.about.AcercaDeViewPresenter;
+import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.controller.login.LogInController;
@@ -14,7 +16,8 @@ import com.jobits.pos.controller.reportes.ReportarBugService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
-import static com.jobits.pos.ui.AcercaDeViewPresenter.ACTION_CLOSE;
+import com.jobits.pos.ui.RootView;
+import static com.jobits.pos.ui.about.AcercaDeViewPresenter.ACTION_CLOSE;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;

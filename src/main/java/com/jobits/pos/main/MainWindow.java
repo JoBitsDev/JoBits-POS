@@ -7,14 +7,13 @@ package com.jobits.pos.main;
 
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.ui.DefaultValues;
-import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.MenuBar;
-import com.jobits.pos.ui.MenuBarClass;
+import com.jobits.pos.ui.mainmenu.MenuBarClass;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.swing.containers.MaterialFrame;
 import com.jobits.ui.components.swing.containers.MaterialWindow;
