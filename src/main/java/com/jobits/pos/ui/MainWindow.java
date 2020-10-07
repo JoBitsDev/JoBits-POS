@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.main;
+package com.jobits.pos.ui;
 
 import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.main.ViewFacade;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.RootView;
@@ -92,13 +93,12 @@ public class MainWindow extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 300));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    void setWelcomeHeader(boolean b) {
+    public void setWelcomeHeader(boolean b) {
 
     }
 

@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
