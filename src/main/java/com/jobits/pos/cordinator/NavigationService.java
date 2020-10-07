@@ -41,8 +41,10 @@ public class NavigationService implements Navigator {
 
     private NavigationService() {
         this.activeNode = NavigationNode.of(null, ViewFacade.getView(LogInView.VIEW_NAME, null).getViewName());
-        showView(null, DisplayType.NORMAL);
+    }
 
+    public void startNavigation() {
+        showView(null, DisplayType.NORMAL);
     }
 
     public void navigateTo(String viewUniqueName) {

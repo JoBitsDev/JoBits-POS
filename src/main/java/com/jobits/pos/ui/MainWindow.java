@@ -54,7 +54,6 @@ public class MainWindow extends JFrame {
         // setResizable(false);
         setLayout(cards);
         loginView = LogInView.getInstance();
-        add(loginView, LogInView.VIEW_NAME);
         addWindowListener(new WindowAdapter() {//TODO: buscar un listener para cuando se crea un popup y se pierde el focus
             @Override
             public void windowDeactivated(WindowEvent e) {
@@ -104,7 +103,7 @@ public class MainWindow extends JFrame {
 
     public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
         if (viewUIDName.equals(LogInView.VIEW_NAME)) {
-            cards.show(getContentPane(), viewUIDName);
+            PopUpDialog.showPopUP(ViewFacade.getView(viewUIDName, presenter));
             return true;
         }
 
