@@ -51,7 +51,6 @@ public class LogInView extends AbstractViewPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanelLogo = new javax.swing.JPanel();
         jXLabelUser1 = new org.jdesktop.swingx.JXLabel();
         jPanelInput = new javax.swing.JPanel();
@@ -64,18 +63,16 @@ public class LogInView extends AbstractViewPanel {
         jPanelAutenticar = new javax.swing.JPanel();
         jButtonAutenticar = MaterialComponentsFactory.Buttons.getAcceptButton();
 
-        setMinimumSize(new java.awt.Dimension(483, 285));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        setMaximumSize(new java.awt.Dimension(483, 588));
+        setMinimumSize(new java.awt.Dimension(483, 588));
         setName("main"); // NOI18N
         setOpaque(false);
-
-        jPanel3.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
-        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 40, 10, 40));
-        jPanel3.setMaximumSize(new java.awt.Dimension(400, 600));
-        jPanel3.setMinimumSize(new java.awt.Dimension(400, 600));
-        jPanel3.setPreferredSize(new java.awt.Dimension(400, 600));
-        jPanel3.setLayout(new java.awt.GridLayout(4, 1));
+        setPreferredSize(new java.awt.Dimension(483, 588));
+        setLayout(new java.awt.GridLayout(4, 1));
 
         jPanelLogo.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
+        jPanelLogo.setOpaque(false);
         jPanelLogo.setPreferredSize(new java.awt.Dimension(220, 96));
         jPanelLogo.setLayout(new java.awt.BorderLayout());
 
@@ -85,14 +82,15 @@ public class LogInView extends AbstractViewPanel {
         jXLabelUser1.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         jPanelLogo.add(jXLabelUser1, java.awt.BorderLayout.CENTER);
 
-        jPanel3.add(jPanelLogo);
+        add(jPanelLogo);
 
         jPanelInput.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
+        jPanelInput.setOpaque(false);
         jPanelInput.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
         jPanelInput.add(jTextFieldUsuario);
         jPanelInput.add(jPasswordField);
 
-        jPanel3.add(jPanelInput);
+        add(jPanelInput);
 
         jPanelConn.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
@@ -116,33 +114,17 @@ public class LogInView extends AbstractViewPanel {
         jLabelEstadoConexion.setPreferredSize(new java.awt.Dimension(45, 30));
         jPanelConn.add(jLabelEstadoConexion, java.awt.BorderLayout.PAGE_END);
 
-        jPanel3.add(jPanelConn);
+        add(jPanelConn);
 
         jPanelAutenticar.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
+        jPanelAutenticar.setOpaque(false);
 
         jButtonAutenticar.setText(bundle.getString("label_autenticar")); // NOI18N
         jButtonAutenticar.setEnabled(false);
         jButtonAutenticar.setPreferredSize(new java.awt.Dimension(180, 60));
         jPanelAutenticar.add(jButtonAutenticar);
 
-        jPanel3.add(jPanelAutenticar);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(162, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(178, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(64, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
-        );
+        add(jPanelAutenticar);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -151,7 +133,6 @@ public class LogInView extends AbstractViewPanel {
     private javax.swing.JButton jButtonEdit;
     private javax.swing.JComboBox<UbicacionConexionModel> jComboBox1;
     private javax.swing.JLabel jLabelEstadoConexion;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelAutenticar;
     private javax.swing.JPanel jPanelConn;
     private javax.swing.JPanel jPanelInput;
@@ -189,7 +170,6 @@ public class LogInView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         ComponentMover cr = new ComponentMover(this, this.getComponents());
-        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
 
     }
 
