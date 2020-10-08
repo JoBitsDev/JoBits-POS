@@ -33,11 +33,15 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private String codOrden;
     private OrdenService controller;
 
-    public OrdenDetailViewPresenter(String cod_orden, OrdenService controller) {
+    public OrdenDetailViewPresenter(OrdenService controller) {
         super(new OrdenDetailViewModel());
         this.controller = controller;
+    }
+
+    public OrdenDetailViewPresenter(String cod_orden, OrdenService controller) {
+        this(controller);
         this.codOrden = cod_orden;
-        updateBean();
+        refreshState();
     }
 
     public String getCodOrden() {
@@ -49,12 +53,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     public void setCodOrden(String codOrden) {
         this.codOrden = codOrden;
+        refreshState();
     }
 
     public OrdenService getController() {
         if (controller == null) {
             throw new IllegalStateException("El controlador no puede ser nulo");
-        
+
         }
         return controller;
     }
@@ -96,7 +101,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
     }
 
-    private void updateBean() {
+    @Override
+    protected Optional refreshState() {
         com.jobits.pos.domain.models.Orden instance = getController().getInstance(getCodOrden());
         getBean().setEs_autorizo(instance.getDeLaCasa());
         getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha().getFecha()));
@@ -110,6 +116,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setPorciento_servicio(instance.getPorciento());
         getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
         getBean().setUsuario(instance.getPersonalusuario().getUsuario());
+        return Optional.empty();
     }
 
     @Override
@@ -118,7 +125,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onAddNotaLCick();
-                updateBean();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -126,7 +133,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onAddProductoClick();
-                updateBean();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -134,7 +141,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onCerrarOrdenClick();
-                updateBean();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -142,7 +149,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onEnviarAElaborarCLick();
-                updateBean();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -150,7 +157,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onImprimirCierreParcial();
-                updateBean();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -158,7 +165,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onRemoveProductoCLick();
-                updateBean();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -166,7 +173,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onSetAutorizoClick();
-                updateBean();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -174,7 +181,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onSetPorcientoClick();
-                updateBean();
+                refreshState();
                 return Optional.empty();
             }
         });
