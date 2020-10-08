@@ -24,12 +24,15 @@ import java.util.Optional;
  * @author Jorge
  *
  */
-public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrdenListViewModel> implements PropertyChangeListener {
+public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrdenListViewModel>
+        implements PropertyChangeListener {
 
-    public static final String ACTION_ABRIR_ORDEN = "Editar Orden";
+    public static final String ACTION_CREAR_ORDEN = "Nueva Orden";
+    public static final String ACTION_ABRIR_ORDEN = "Abrir Orden";
 
     private VentaDetailService ventaService;
     private OrdenService ordenService;
+    private OrdenDetailViewPresenter newPresenter;
 
     private VentaOrdenListViewPresenter(VentaDetailService ventaService) {
         super(new VentaOrdenListViewModel());
@@ -37,9 +40,14 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
 
     }
 
+    public OrdenDetailViewPresenter getNewPresenter() {
+        return newPresenter;
+    }
+
     public VentaOrdenListViewPresenter(VentaDetailService ventaService, OrdenController ordenService) {
         this(ventaService);
         this.ordenService = ordenService;
+        newPresenter = new OrdenDetailViewPresenter(ordenService);
         refreshState();
     }
 
@@ -53,36 +61,28 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
             }
 
         });
+        registerOperation(new AbstractViewAction(ACTION_CREAR_ORDEN) {
+            @Override
+            public Optional doAction() {
+                onCrearOrdenAction();
+                return Optional.empty();
+            }
+
+        });
     }
 
-    private void onAbrirOrdenAction() {
-        if (getBean().getElemento_seleccionado() == null) {
-            //Orden newOrden =
-            ventaService.createNewOrden();
-            refreshState();
-            //throw new IllegalArgumentException("No hay una orden seleccionada");
-        }
-        //Application.getInstance().getNavigator().navigateTo(OrdenDetailFragmentView.VIEW_NAME, ordenPresenter);
+    private void onCrearOrdenAction() {
+        ventaService.createNewOrden();
+        refreshState();
+    }
+    private void onAbrirOrdenAction(){
+        newPresenter.setCodOrden(getBean().getElemento_seleccionado().getCodOrden());;
     }
 
     @Override
     protected Optional refreshState() {
-        getBean().setLista_elementos(createPresentersFrom(ventaService.getOrdenesActivas()));
+        getBean().setLista_elementos(ventaService.getOrdenesActivas());
         return Optional.empty();
-    }
-
-    private List<OrdenDetailViewPresenter> createPresentersFrom(List<Orden> pedidos) {
-        ArrayListModel<OrdenDetailViewPresenter> ret = new ArrayListModel<>();
-        for (Orden x : pedidos) {
-            OrdenDetailViewPresenter newPresenter = new OrdenDetailViewPresenter(x.getCodOrden(), ordenService);
-            ret.add(newPresenter);
-            newPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_ORDEN_STATUS_UPDATE, this);
-        }
-        return ret;
-    }
-
-    public ArrayListModel<OrdenDetailViewPresenter> getOrdenPresenter() {
-        return getBean().getLista_elementos();
     }
 
     @Override

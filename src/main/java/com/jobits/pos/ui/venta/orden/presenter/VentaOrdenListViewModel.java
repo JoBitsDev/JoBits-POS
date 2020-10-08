@@ -16,7 +16,7 @@ import com.jobits.pos.ui.viewmodel.AbstractViewModel;
  * @author Jorge
  * 
  */
-public class VentaOrdenListViewModel extends AbstractListViewModel<OrdenDetailViewPresenter>{
+public class VentaOrdenListViewModel extends AbstractListViewModel<Orden>{
 
     
     
