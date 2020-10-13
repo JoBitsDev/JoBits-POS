@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.main;
+package com.jobits.pos.ui;
 
 import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.main.ViewFacade;
 import com.jobits.pos.ui.DefaultValues;
-import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.mainmenu.MenuBarClass;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.swing.containers.MaterialFrame;
 import com.jobits.ui.components.swing.containers.MaterialWindow;
@@ -28,6 +30,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 /**
  *
@@ -50,7 +54,6 @@ public class MainWindow extends JFrame {
         // setResizable(false);
         setLayout(cards);
         loginView = LogInView.getInstance();
-        add(loginView, LogInView.VIEW_NAME);
         addWindowListener(new WindowAdapter() {//TODO: buscar un listener para cuando se crea un popup y se pierde el focus
             @Override
             public void windowDeactivated(WindowEvent e) {
@@ -89,19 +92,18 @@ public class MainWindow extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 300));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    void setWelcomeHeader(boolean b) {
+    public void setWelcomeHeader(boolean b) {
 
     }
 
     public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
         if (viewUIDName.equals(LogInView.VIEW_NAME)) {
-            cards.show(getContentPane(), viewUIDName);
+            PopUpDialog.showPopUP(ViewFacade.getView(viewUIDName, presenter));
             return true;
         }
 
@@ -114,6 +116,7 @@ public class MainWindow extends JFrame {
             rootView = RootView.getInstance();
             add(rootView, RootView.VIEW_NAME);
             cards.show(getContentPane(), RootView.VIEW_NAME);
+            setJMenuBar(MenuBarClass.getInstance().getMainManuBar());
             return true;
         }
         if (rootView != null) {

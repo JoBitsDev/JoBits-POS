@@ -7,10 +7,9 @@ package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.ui.utils.StringsTreatment;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.util.List;
 
@@ -116,6 +115,17 @@ public class VentaResumenViewModel extends AbstractViewModel {
     private String fecha;
 
     public static final String PROP_FECHA = "fecha";
+
+    //Venta Instance
+    public static Venta ventaInstance;
+
+    public static Venta getVentaInstance() {
+        return ventaInstance;
+    }
+
+    public static void setVentaInstance(Venta ventaInstance) {
+        VentaResumenViewModel.ventaInstance = ventaInstance;
+    }
 
     /**
      * Get the value of fecha

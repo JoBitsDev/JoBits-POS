@@ -59,7 +59,6 @@ public class AlmacenMainView extends AbstractViewPanel {
         jLabelValorTotal = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jButtonNuevaFactura = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonModificarStock = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonTransacciones = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonDarReporte = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonResumen = MaterialComponentsFactory.Buttons.getOutlinedButton();
@@ -83,6 +82,11 @@ public class AlmacenMainView extends AbstractViewPanel {
 
         jComboBoxAlmacenList.setMaximumRowCount(20);
         jComboBoxAlmacenList.setOpaque(false);
+        jComboBoxAlmacenList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxAlmacenListActionPerformed(evt);
+            }
+        });
         jPanel1.add(jComboBoxAlmacenList, java.awt.BorderLayout.CENTER);
 
         jPanelPeriodo.add(jPanel1);
@@ -134,14 +138,6 @@ public class AlmacenMainView extends AbstractViewPanel {
         });
         jPanel3.add(jButtonNuevaFactura);
 
-        jButtonModificarStock.setText("Modificar Stock");
-        jButtonModificarStock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonModificarStockActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButtonModificarStock);
-
         jButtonTransacciones.setText("Transacciones");
         jButtonTransacciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,10 +176,6 @@ public class AlmacenMainView extends AbstractViewPanel {
         // OperacionView view = new OperacionView(new AlmacenManageController(getInstance()), this, true);
     }//GEN-LAST:event_jButtonNuevaFacturaActionPerformed
 
-    private void jButtonModificarStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarStockActionPerformed
-        // getController().modificarStock(model.getHandler().getTableModel().getObjectAtSelectedRow().getInsumo());
-    }//GEN-LAST:event_jButtonModificarStockActionPerformed
-
     private void jButtonTransaccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTransaccionesActionPerformed
         //getController().verTransacciones(getInstance());
     }//GEN-LAST:event_jButtonTransaccionesActionPerformed
@@ -196,12 +188,15 @@ public class AlmacenMainView extends AbstractViewPanel {
         // getController().imprimirResumenAlmacen(getInstance());
     }//GEN-LAST:event_jButtonResumenActionPerformed
 
+    private void jComboBoxAlmacenListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxAlmacenListActionPerformed
+        tableInsumos.getjTableCrossReference().revalidate();
+    }//GEN-LAST:event_jComboBoxAlmacenListActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonEliminarAlmacen;
-    private javax.swing.JButton jButtonModificarStock;
     private javax.swing.JButton jButtonNuevaFactura;
     private javax.swing.JButton jButtonNuevoAlmacen;
     private javax.swing.JButton jButtonResumen;
@@ -230,7 +225,7 @@ public class AlmacenMainView extends AbstractViewPanel {
         jButtonEliminarAlmacen.setAction(getPresenter().getOperation(ACTION_ELIMINAR_ALMACEN));
         jButtonEliminarAlmacen.setIcon(MaterialIcons.DELETE);
         jButtonEliminarAlmacen.setText("");
-        
+
         Bindings.bind(jLabelValorTotal, getPresenter().getModel(PROP_VALOR_MONETARIO_TEXT));
 
         jComboBoxAlmacenList.addItemListener((ItemEvent e) -> {
@@ -240,10 +235,8 @@ public class AlmacenMainView extends AbstractViewPanel {
         jButtonResumen.setIcon(MaterialIcons.PRINT);
         jButtonDarReporte.setAction(getPresenter().getOperation(ACTION_IMPRIMIR_REPORTE));
         jButtonDarReporte.setIcon(MaterialIcons.PRINT);
-        
-        
+
         jButtonTransacciones.setAction(getPresenter().getOperation(ACTION_TRANSACCIONES));
-        jButtonModificarStock.setAction(getPresenter().getOperation(ACTION_MODIFICAR_STOCK));
         jButtonNuevaFactura.setAction(getPresenter().getOperation(ACTION_NUEVA_FACTURA));
 
         tableInsumos.getjTableCrossReference().addMouseListener(new MouseAdapter() {
@@ -287,7 +280,7 @@ public class AlmacenMainView extends AbstractViewPanel {
                     case 1:
                         return getRow(rowIndex).getInsumo().getUm();
                     case 3:
-                        return getRow(rowIndex).getCantidad();
+                        return utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getCantidad());
                     case 4:
                         return getRow(rowIndex).getCantidad() != 0
                                 ? utils.setDosLugaresDecimales(getRow(rowIndex).getValorMonetario() / getRow(rowIndex).getCantidad()) : 0;

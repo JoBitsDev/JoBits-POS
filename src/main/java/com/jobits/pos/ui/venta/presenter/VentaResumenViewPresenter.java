@@ -10,7 +10,6 @@ import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -18,7 +17,6 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Optional;
 
 /**
@@ -184,6 +182,7 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
         getBean().setVenta_total(service.getTotalVendido());
         getBean().setCambiar_turno_enabled(service.canCambiarTurno());
         getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
+        getBean().setVentaInstance(v);
     }
 
 }

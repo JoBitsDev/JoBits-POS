@@ -20,6 +20,7 @@ import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
+import com.jobits.pos.controller.reportes.ReportarBugController;
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.controller.trabajadores.PersonalDetailController;
@@ -30,11 +31,13 @@ import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.ui.about.AcercaDeView;
+import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
-import com.jobits.pos.ui.MainMenuPresenter;
+import com.jobits.pos.ui.mainmenu.MainMenuPresenter;
 import com.jobits.pos.ui.dashboard.DashBoardView;
-import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.almacen.OldAlmacenListView;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
@@ -70,6 +73,8 @@ import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
 import com.jobits.pos.ui.menu.MenuSeccionView;
 import com.jobits.pos.ui.menu.presenter.MenuSeccionViewPresenter;
+import com.jobits.pos.ui.reportes.ReportarBugView;
+import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -105,6 +110,8 @@ public class PresenterFacade {
         switch (viewUIDName) {
             case LogInView.VIEW_NAME:
                 return new LoginViewPresenter(new LogInController());
+            case AcercaDeView.VIEW_NAME:
+                return new AcercaDeViewPresenter();
             case UbicacionView.VIEW_NAME:
                 return new UbicacionViewPresenter(new UbicacionConexionController());
             case MainMenuView.VIEW_NAME:
@@ -153,6 +160,8 @@ public class PresenterFacade {
                 return new AlmacenViewPresenter(new AlmacenListController());
             case FacturaView.VIEW_NAME:
                 return new FacturaViewPresenter(new AlmacenManageController(new Almacen()));
+            case ReportarBugView.VIEW_NAME:
+                return new ReportarBugViewPresenter(new ReportarBugController());
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListPresenter(new TransaccionesListController(new Almacen()));
             case MesaListView.VIEW_NAME:

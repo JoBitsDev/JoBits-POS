@@ -22,6 +22,7 @@ import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.adapters.repo.impl.GastoDAO;
 import com.jobits.pos.adapters.repo.impl.GastoVentaDAO;
 import com.jobits.pos.adapters.repo.impl.TipoGastoDAO;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 
 /**
@@ -38,9 +39,9 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
         super(GastoDAO.getInstance());
     }
 
-    public GastoOperacionController(Container parent, Venta fecha) {
+    public GastoOperacionController(/*Container parent,*/ Venta fecha) {
         this();
-        setParent(parent);
+//        setParent(parent);
         this.diaVenta = fecha;
 
     }
@@ -83,15 +84,15 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
 
     @Override
     public void constructView(Container parent) {
-        if (getView() == null) {
-            setView(new GastoOperacionView(this, parent));
-        }
-        getView().updateView();
-        getView().setVisible(true);
+//        if (getView() == null) {
+//            setView(new GastoOperacionView(this, parent));
+//        }
+//        getView().updateView();
+//        getView().setVisible(true);
     }
 
     public void createNewGasto(R.TipoGasto cat, String nombre, float monto, String descripcion) {
-        if (showConfirmDialog(getView(), "Desea confirmar la accion")) {
+    //    if (showConfirmDialog(getView(), "Desea confirmar la accion")) {
             int idCat = -1;
             for (TipoGasto x : TipoGastoDAO.getInstance().findAll()) {
                 if (x.getNombre().equals(cat.getNombre())) {
@@ -135,8 +136,8 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
                     getModel().startTransaction();
                     GastoVentaDAO.getInstance().edit(li);
                     getModel().commitTransaction();
-                    showSuccessDialog(getView());
-                    getView().updateView();
+//                    showSuccessDialog(getView());
+//                    getView().updateView();
                     return;
                 }
             }
@@ -150,10 +151,9 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
             GastoVentaDAO.getInstance().create(v);
             getModel().commitTransaction();
             diaVenta.getGastoVentaList().add(v);
-            showSuccessDialog(getView());
-            getView().updateView();
-
-        }
+ //           showSuccessDialog(Application.getInstance().getMainWindow());
+//            getView().updateView();
+   //     }
 
     }
 
@@ -171,8 +171,8 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
             getModel().startTransaction();
             GastoVentaDAO.getInstance().remove(objectAtSelectedRow);
             getModel().commitTransaction();
-            getView().updateView();
-            showSuccessDialog(getView());
+//            getView().updateView();
+ //           showSuccessDialog(Application.getInstance().getMainWindow());
         }
     }
 

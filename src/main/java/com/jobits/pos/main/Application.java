@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
@@ -18,6 +19,8 @@ import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Locale;
@@ -57,7 +60,8 @@ public class Application {
     //
     //Log
     //
-    private static String LOG_FILE_PATH = "D:/LOGS/AppLogs";
+    private static String LOG_FILE_PATH = "LOGS/AppLogs";
+    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     //
     // App
@@ -65,6 +69,8 @@ public class Application {
     private LicenceController licenceController = new LicenceController();
 
     private Personal loggedUser;
+    
+    public static String PROP_LOGGED_USER = "Logged User";
 
     private static Application application;
 
@@ -108,6 +114,7 @@ public class Application {
         navigator = NavigationService.getInstance();
         backgroundWorker = LongProcessActionServiceImpl.getInstance();
         mainWindow.setVisible(true);
+        navigator.startNavigation();
 
     }
 
@@ -135,6 +142,7 @@ public class Application {
     public void setLoggedUser(Personal loggedUser) {
         this.loggedUser = loggedUser;
         R.loggedUser = loggedUser;
+        propertyChangeSupport.firePropertyChange(PROP_LOGGED_USER, null, this.loggedUser);
     }
 
     public LicenceController getLicenceController() {
@@ -175,6 +183,24 @@ public class Application {
         System.setOut(out);
         System.setErr(out);
 
+    }
+
+    /**
+     * Add PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
+    }
+
+    /**
+     * Remove PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
 }

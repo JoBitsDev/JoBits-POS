@@ -5,8 +5,9 @@
  */
 package com.jobits.pos.cordinator;
 
+import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.login.LogInView;
-import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.almacen.OldAlmacenListView;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
@@ -24,6 +25,7 @@ import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.menu.MenuSeccionView;
+import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -77,7 +79,7 @@ public class CoordinatorService implements Coordinator {
 
     private void populateNavigationGraph() {
         navigationGraph = new HashMap<>();
-        navigationGraph.put(LogInView.VIEW_NAME, Arrays.asList(MainMenuView.VIEW_NAME, UbicacionView.VIEW_NAME));
+        navigationGraph.put(LogInView.VIEW_NAME, Arrays.asList(MainMenuView.VIEW_NAME));
         navigationGraph.put(ProductoVentaListView.VIEW_NAME, Arrays.asList(ProductoVentaDetailView.VIEW_NAME));
         navigationGraph.put(AreaVentaListView.VIEW_NAME, Arrays.asList(AreaDetailView.VIEW_NAME));
         navigationGraph.put(PersonalListView.VIEW_NAME, Arrays.asList(PersonalDetailView.VIEW_NAME));
@@ -89,6 +91,7 @@ public class CoordinatorService implements Coordinator {
                         TransaccionListView.VIEW_NAME));
         navigationGraph.put(AVAILABLE_EVERYWHERE,
                 Arrays.asList(ProductoVentaListView.VIEW_NAME,
+                        UbicacionView.VIEW_NAME,
                         InsumoListView.VIEW_NAME,
                         PersonalListView.VIEW_NAME,
                         PuestoTrabajoListView.VIEW_NAME,
@@ -103,7 +106,11 @@ public class CoordinatorService implements Coordinator {
                         VentaCalendarView.VIEW_NAME,
                         AlmacenMainView.VIEW_NAME,
                         VentaStatisticsView.VIEW_NAME,
-                        LicenceDialogView.VIEW_NAME));
+                        AcercaDeView.VIEW_NAME,
+                        ReportarBugView.VIEW_NAME,
+                        LogInView.VIEW_NAME,
+                        LicenceDialogView.VIEW_NAME
+                ));
         navigationGraph.put(VentaDetailView.VIEW_NAME, Arrays.asList(OrdenDetailFragmentView.VIEW_NAME));
     }
 

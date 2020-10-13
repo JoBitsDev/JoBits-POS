@@ -7,7 +7,8 @@ package com.jobits.pos.main;
 
 import com.jobits.pos.controller.licencia.Licencia;
 import com.jobits.pos.main.PresenterFacade;
-import com.jobits.pos.ui.MainMenuView;
+import com.jobits.pos.ui.about.AcercaDeView;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.almacen.OldAlmacenListView;
 import com.jobits.pos.ui.almacen.FacturaView;
@@ -30,6 +31,7 @@ import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.menu.MenuSeccionView;
+import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -65,6 +67,8 @@ public class ViewFacade {
         switch (viewUniqueName) {
             case UbicacionView.VIEW_NAME:
                 return new UbicacionView(p);
+            case AcercaDeView.VIEW_NAME:
+                return new AcercaDeView(p);
             case LogInView.VIEW_NAME:
                 return getRootView(p);
             case MainMenuView.VIEW_NAME:
@@ -115,6 +119,8 @@ public class ViewFacade {
                 return new AlmacenMainView(p);
             case FacturaView.VIEW_NAME:
                 return new FacturaView(p);
+            case ReportarBugView.VIEW_NAME:
+                return new ReportarBugView(p);
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListView((AbstractListViewPresenter) p);
             case LicenceDialogView.VIEW_NAME:

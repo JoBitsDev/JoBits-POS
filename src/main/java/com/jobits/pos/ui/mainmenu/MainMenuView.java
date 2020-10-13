@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui;
+package com.jobits.pos.ui.mainmenu;
 
 import com.jhw.swing.material.components.dashboard.taskpane.DashBoardTaskPane;
 import com.jobits.pos.controller.login.MainMenuController;
@@ -13,6 +13,8 @@ import com.jhw.swing.material.components.taskpane.TaskButton;
 import com.jhw.swing.material.components.taskpane.TaskPaneMainContainer;
 import com.jhw.swing.material.standars.MaterialColors;
 import com.jhw.swing.material.standars.MaterialIcons;
+import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.function.Consumer;
@@ -97,22 +99,22 @@ public class MainMenuView extends AbstractViewPanel {
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.TRABAJADORES.toString()));
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.PUESTOS_TRABAJO.toString()));
 
-        CollapseMenu configuracion = new CollapseMenu(MaterialIcons.SETTINGS.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Configuración");
-        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.CONFIGURACION.toString()));
-        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
-        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
+//        CollapseMenu configuracion = new CollapseMenu(MaterialIcons.SETTINGS.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Configuración");
+//        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.CONFIGURACION.toString()));
+//        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
+//        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
 
         taskPane.addMainElement(productoVenta);
         taskPane.addMainElement(almacen);
         taskPane.addMainElement(contabilidad);
         taskPane.addMainElement(nominas);
-        taskPane.addMainElement(configuracion);
+//        taskPane.addMainElement(configuracion);
         
         productoVenta.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
         almacen.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
         contabilidad.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
         nominas.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
-        configuracion.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
+//        configuracion.getjPanelCollapsible().getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(null);
         
         taskPane.format();
         taskPane.deselectAll();

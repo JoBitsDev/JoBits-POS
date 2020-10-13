@@ -13,17 +13,14 @@ import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.FacturaView;
-import com.jobits.pos.ui.almacen.OldOperacionView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.utils;
-import static com.jobits.pos.ui.venta.presenter.VentaStatisticsViewPresenter.ACTION_DESPLEGAR_OPCIONES;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -125,7 +122,6 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                         new TransaccionListPresenter(
                                 new TransaccionesListController(
                                         detailService.getInstance())), DisplayType.POPUP);
-                //detailService.verTransacciones(getBean().getElemento_seleccionado());
                 return Optional.empty();
             }
         });
@@ -171,8 +167,6 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void fillDetailList() {
-        System.out.println(detailService.getInstance().getValorMonetario());
-        
         getBean().setValor_monetario_text(utils.setDosLugaresDecimales(detailService.getInstance().getValorMonetario()));
 
         getBean().getLista_insumos_contenidos().clear();

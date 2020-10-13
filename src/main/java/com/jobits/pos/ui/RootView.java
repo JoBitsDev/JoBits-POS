@@ -5,6 +5,10 @@
  */
 package com.jobits.pos.ui;
 
+import com.jobits.pos.ui.statusbar.StatusBarView;
+import com.jobits.pos.ui.statusbar.StatusBarPresenter;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
+import com.jobits.pos.ui.mainmenu.MainMenuPresenter;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.ViewFacade;
@@ -41,6 +45,8 @@ public class RootView extends JPanel {
     private Map<String, View> views = new HashMap<>();
 
     private static RootView instance;
+
+    private boolean statusBarVisibility = true;
 
     /**
      * Creates new form RootView
@@ -119,7 +125,7 @@ public class RootView extends JPanel {
 
     //TODO: asco de metodo. arreglar
     public boolean showView(String viewNameToDisplay, AbstractViewPresenter presenter, DisplayType displayType) {//TODO trabjar en los popup
-        
+
         //Caso especial para las ordenes
         if (viewNameToDisplay.equals(OrdenDetailFragmentView.VIEW_NAME)) {
             View v = views.get(currentDisplayedViewName);
@@ -151,7 +157,7 @@ public class RootView extends JPanel {
                 || currentDisplayedViewName.equals(UbicacionView.VIEW_NAME));
         //jPanelHeader.setVisible(!currentDisplayedViewName.equals(LogInView.VIEW_NAME));
         jPanelStatus.setVisible(displayAggregatesViews);
-        dashboard.setVisible(displayAggregatesViews);
+        jPanelStatus.setVisible(statusBarVisibility);
         dashboard.getTaskPane().showView(currentDisplayedViewName);
         dashboard.getTaskPane().repaint();
 
@@ -167,4 +173,24 @@ public class RootView extends JPanel {
         dashboard.getCollapse().setCollapsed(shrink);
     }
 
+    public MainMenuView getDashboard() {
+        return dashboard;
+    }
+
+    public JPanel getjPanelStatus() {
+        return jPanelStatus;
+    }
+
+    public boolean isStatusBarVisibility() {
+        return statusBarVisibility;
+    }
+
+    public void setStatusBarVisibility(boolean statusBarVisibility) {
+        this.statusBarVisibility = statusBarVisibility;
+    }
+
+    public StatusBarView getStatusBar() {
+        return statusBar;
+    }
+    
 }
