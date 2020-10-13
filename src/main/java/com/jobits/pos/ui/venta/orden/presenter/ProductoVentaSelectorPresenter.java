@@ -39,12 +39,11 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
 
     @Override
     protected void registerOperations() {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     protected Optional refreshState() {
-        getBean().setLista_elementos(SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada));
+        getBean().setLista_elementos(SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada));//TODO: pifia logica en los presenters
         return Optional.empty();
     }
 

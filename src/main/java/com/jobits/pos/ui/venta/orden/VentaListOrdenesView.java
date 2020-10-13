@@ -5,18 +5,25 @@
  */
 package com.jobits.pos.ui.venta.orden;
 
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
+import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter;
 import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter.*;
+import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewModel.*;
 import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author Jorge
  */
-public class VentaListOrdenesView extends AbstractViewPanel implements ListDataListener {
+public class VentaListOrdenesView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Lista Ordenes";
 
@@ -36,6 +43,8 @@ public class VentaListOrdenesView extends AbstractViewPanel implements ListDataL
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanelOrdenesActivas = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListOrdenesActivas = new javax.swing.JList<>();
         jXPanelOrdenControl = new org.jdesktop.swingx.JXPanel();
         jButtonNuevaOrden = new javax.swing.JButton();
         jButtonCalcCAmbio = new javax.swing.JButton();
@@ -48,6 +57,11 @@ public class VentaListOrdenesView extends AbstractViewPanel implements ListDataL
         jPanelOrdenesActivas.setMaximumSize(new java.awt.Dimension(300, 300));
         jPanelOrdenesActivas.setPreferredSize(new java.awt.Dimension(300, 438));
         jPanelOrdenesActivas.setLayout(new java.awt.BorderLayout());
+
+        jListOrdenesActivas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jListOrdenesActivas);
+
+        jPanelOrdenesActivas.add(jScrollPane1, java.awt.BorderLayout.LINE_START);
 
         jXPanelOrdenControl.setBackground(new java.awt.Color(204, 204, 204));
         jXPanelOrdenControl.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -82,7 +96,7 @@ public class VentaListOrdenesView extends AbstractViewPanel implements ListDataL
 
         jScrollPane2.setViewportView(jPanel2);
 
-        jPanelOrdenesActivas.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        jPanelOrdenesActivas.add(jScrollPane2, java.awt.BorderLayout.EAST);
 
         add(jPanelOrdenesActivas, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -92,16 +106,26 @@ public class VentaListOrdenesView extends AbstractViewPanel implements ListDataL
     private javax.swing.JButton jButtonCalcCAmbio;
     private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
     private javax.swing.JButton jButtonNuevaOrden;
+    private javax.swing.JList<Orden> jListOrdenesActivas;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelOrdenesActivas;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private org.jdesktop.swingx.JXPanel jXPanelOrdenControl;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void wireUp() {
-        getPresenter().getBean().getLista_elementos().addListDataListener(this);
-        jButtonNuevaOrden.addActionListener(getPresenter().getOperation(ACTION_ABRIR_ORDEN));
+        jButtonNuevaOrden.addActionListener(getPresenter().getOperation(ACTION_CREAR_ORDEN));
+        Bindings.bind(jListOrdenesActivas, new SelectionInList<Orden>(getPresenter().getModel(PROP_LISTA_ELEMENTOS), getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)));
+        jListOrdenesActivas.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    getPresenter().getOperation(ACTION_ABRIR_ORDEN).doAction();
+                }
+            }
+        });
     }
 
     @Override
@@ -112,7 +136,15 @@ public class VentaListOrdenesView extends AbstractViewPanel implements ListDataL
     @Override
     public void uiInit() {
         initComponents();
-        populatePedidosPanel();
+        jListOrdenesActivas.setCellRenderer(new ListCellRenderer<Orden>() {
+            @Override
+            public Component getListCellRendererComponent(JList<? extends Orden> list, Orden value, int index, boolean isSelected, boolean cellHasFocus) {
+                return new CellRenderOrden(value, isSelected);
+            }
+
+        });
+        jPanel2.add(new PedidoCardView(getPresenter().getOrdenPresenter()), BorderLayout.EAST);
+        jPanelOrdenesActivas.add(new ProductoVentaSelectorView(getPresenter().getMenuPresenter()),BorderLayout.CENTER);
     }
 
     @Override
@@ -120,30 +152,10 @@ public class VentaListOrdenesView extends AbstractViewPanel implements ListDataL
         return VIEW_NAME;
     }
 
-    private void populatePedidosPanel() {
-        clearPedidosPanel();
-        for (OrdenDetailViewPresenter x : getPresenter().getOrdenPresenter()) {
-            PedidoCardView newView = new PedidoCardView(x);
-            jPanel2.add(newView);
-        }
-    }
-
-    private void clearPedidosPanel() {
-        jPanel2.removeAll();
-    }
-
-    @Override
-    public void intervalAdded(ListDataEvent e) {
-        populatePedidosPanel();
-    }
-
-    @Override
-    public void intervalRemoved(ListDataEvent e) {
-        populatePedidosPanel();
-    }
-
-    @Override
-    public void contentsChanged(ListDataEvent e) {
-        populatePedidosPanel();
-    }
+//    private void populatePedidosPanel() {
+//        for (OrdenDetailViewPresenter x : getPresenter().getOrdenPresenter()) {
+//            PedidoCardView newView = new PedidoCardView(x);
+//            jPanel2.add(newView);
+//        }
+//    }
 }

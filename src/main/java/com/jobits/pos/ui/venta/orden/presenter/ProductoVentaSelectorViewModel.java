@@ -27,6 +27,8 @@ public class ProductoVentaSelectorViewModel extends AbstractListViewModel<Seccio
 
     public static final String PROP_PRODUCTOVENTASELECCIONADO = "productoVentaSeleccionado";
 
+    
+    
     /**
      * Get the value of productoVentaSeleccionado
      *
@@ -54,6 +56,12 @@ public class ProductoVentaSelectorViewModel extends AbstractListViewModel<Seccio
      */
     public List<ProductoVenta> getListaProductos() {
         return listaProductos;
+    }
+
+    @Override
+    public void setElemento_seleccionado(Seccion elemento_seleccionado) {
+        super.setElemento_seleccionado(elemento_seleccionado); //To change body of generated methods, choose Tools | Templates.
+        this.setListaProductos(getElemento_seleccionado().getProductoVentaList());//TODO: logica de la vista fuera del presenter
     }
 
     /**

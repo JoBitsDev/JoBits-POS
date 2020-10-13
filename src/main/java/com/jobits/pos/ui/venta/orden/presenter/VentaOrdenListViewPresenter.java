@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
@@ -14,7 +13,6 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,8 +29,8 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     public static final String ACTION_ABRIR_ORDEN = "Abrir Orden";
 
     private VentaDetailService ventaService;
-    private OrdenService ordenService;
-    private OrdenDetailViewPresenter newPresenter;
+    private OrdenDetailViewPresenter ordenPresenter;
+    private ProductoVentaSelectorPresenter menuPresenter;
 
     private VentaOrdenListViewPresenter(VentaDetailService ventaService) {
         super(new VentaOrdenListViewModel());
@@ -40,14 +38,19 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
 
     }
 
-    public OrdenDetailViewPresenter getNewPresenter() {
-        return newPresenter;
+    public OrdenDetailViewPresenter getOrdenPresenter() {
+        return ordenPresenter;
     }
 
-    public VentaOrdenListViewPresenter(VentaDetailService ventaService, OrdenController ordenService) {
+    public ProductoVentaSelectorPresenter getMenuPresenter() {
+        return menuPresenter;
+    }
+
+    public VentaOrdenListViewPresenter(VentaDetailService ventaService,
+            OrdenService ordenService) {
         this(ventaService);
-        this.ordenService = ordenService;
-        newPresenter = new OrdenDetailViewPresenter(ordenService);
+        ordenPresenter = new OrdenDetailViewPresenter(ordenService);
+        menuPresenter = new ProductoVentaSelectorPresenter();
         refreshState();
     }
 
@@ -72,16 +75,21 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     private void onCrearOrdenAction() {
-        ventaService.createNewOrden();
+        Orden newOrden = ventaService.createNewOrden();
+        getBean().setElemento_seleccionado(newOrden);
         refreshState();
     }
-    private void onAbrirOrdenAction(){
-        newPresenter.setCodOrden(getBean().getElemento_seleccionado().getCodOrden());;
+
+    private void onAbrirOrdenAction() {
+        ordenPresenter.setCodOrden(getBean().getElemento_seleccionado().getCodOrden());
+        menuPresenter.setMesaSeleccionada(getBean().getElemento_seleccionado().getMesacodMesa());
     }
 
     @Override
     protected Optional refreshState() {
+        Orden o = getBean().getElemento_seleccionado();
         getBean().setLista_elementos(ventaService.getOrdenesActivas());
+        getBean().setElemento_seleccionado(o);
         return Optional.empty();
     }
 

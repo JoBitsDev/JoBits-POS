@@ -10,18 +10,8 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.containers.TaskButton;
-import java.awt.AlphaComposite;
 import java.awt.Component;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.Action;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.domain.models.ProductoVenta;
@@ -34,12 +24,9 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.CellRenderPedido;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel.*;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter.*;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
-import javax.swing.SwingConstants;
 
 /**
  *
@@ -209,6 +196,7 @@ public class PedidoCardView extends AbstractViewPanel {
         jPanel1.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/mas.png"))); // NOI18N
+        jButton1.setSize(new java.awt.Dimension(30, 30));
         jPanel1.add(jButton1, java.awt.BorderLayout.EAST);
 
         jPanelMedia.add(jPanel1, java.awt.BorderLayout.PAGE_START);

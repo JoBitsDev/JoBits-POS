@@ -12,7 +12,12 @@ import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.RestManagerListModel;
+import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel;
+import java.awt.Component;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 
 /**
  *
@@ -33,6 +38,18 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         jListSecciones.setVisibleRowCount(-1);
+        jListSecciones.setCellRenderer(new ListCellRenderer<Seccion>() {
+            @Override
+            public Component getListCellRendererComponent(JList<? extends Seccion> list, Seccion value, int index, boolean isSelected, boolean cellHasFocus) {
+                return new CellRenderLabel(value.getNombreSeccion(), null, isSelected);
+            }
+        });
+        jList2.setCellRenderer(new ListCellRenderer<ProductoVenta>() {
+            @Override
+            public Component getListCellRendererComponent(JList<? extends ProductoVenta> list, ProductoVenta value, int index, boolean isSelected, boolean cellHasFocus) {
+                return new CellRenderLabel(value.getNombre(), utils.setDosLugaresDecimales(value.getPrecioVenta()), isSelected);
+            }
+        });
     }
 
     @Override
@@ -40,6 +57,10 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         Bindings.bind(jListSecciones, new SelectionInList<Seccion>(
                 getPresenter().getModel(ProductoVentaSelectorViewModel.PROP_LISTA_ELEMENTOS),
                 getPresenter().getModel(ProductoVentaSelectorViewModel.PROP_ELEMENTO_SELECCIONADO)));
+
+        Bindings.bind(jList2, new SelectionInList<Seccion>(
+                getPresenter().getModel(ProductoVentaSelectorViewModel.PROP_LISTAPRODUCTOS),
+                getPresenter().getModel(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO)));
 
     }
 
@@ -54,6 +75,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListSecciones = new javax.swing.JList<>();
         jPanel1 = new javax.swing.JPanel();
@@ -69,27 +91,38 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jTextField1.setText("Buscar...");
         jPanel2.add(jTextField1, java.awt.BorderLayout.PAGE_START);
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(8, 0, 0, 0), "Secciones"));
+        jPanel3.setFocusable(false);
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 1));
         jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane1.setFocusable(false);
 
         jListSecciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListSecciones.setFocusable(false);
         jListSecciones.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         jListSecciones.setMaximumSize(new java.awt.Dimension(52, 100));
         jListSecciones.setMinimumSize(new java.awt.Dimension(52, 100));
         jListSecciones.setPreferredSize(new java.awt.Dimension(52, 100));
         jScrollPane1.setViewportView(jListSecciones);
 
-        jPanel2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
         add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(8, 0, 0, 0), "Productos"));
+        jPanel1.setFocusable(false);
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jScrollPane2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane2.setFocusable(false);
 
         jList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jList2.setFixedCellWidth(100);
+        jList2.setFocusable(false);
         jList2.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         jList2.setVisibleRowCount(-1);
         jScrollPane2.setViewportView(jList2);
@@ -105,6 +138,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     private javax.swing.JList<Seccion> jListSecciones;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
