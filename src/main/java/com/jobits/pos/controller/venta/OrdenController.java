@@ -95,6 +95,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
     public void addProduct(String codOrden, ProductoVenta selected) {
         if (autorize(codOrden)) {
             Orden o = getInstance(codOrden);
+            checkIfProductIsValid(selected, o);
             boolean found = false;
             ProductovOrden founded = null;
             float cantidadAgregada = 0;
@@ -412,7 +413,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
             getModel().commitTransaction();
 
             ProductovOrdenDAO.getInstance().edit(selected);
-            fireWarningOnDeleting(codOrden,selected, cantidad);
+            fireWarningOnDeleting(codOrden, selected, cantidad);
 
             update(o);
         }
@@ -423,6 +424,21 @@ public class OrdenController extends AbstractFragmentController<Orden>
     //
     private boolean autorize(String codOrden) {
         return new LogInController().constructoAuthorizationView(null, getInstance(codOrden).getPersonalusuario().getUsuario());
+    }
+
+    private void checkIfProductIsValid(ProductoVenta producto, Orden o) {
+        List<Area> areas = producto.getSeccionnombreSeccion().getCartacodCarta().getAreaList();
+
+        for (Area a : areas) {
+            for (Mesa m : a.getMesaList()) {
+                if (m.getCodMesa().equals(o.getMesacodMesa().getCodMesa())) {
+                    return;
+                }
+            }
+        }
+        throw new IllegalArgumentException("El Producto " + producto 
+                + " no se puede agregar a la orden " + o 
+                + "debido a que este no esta disponible en el area de la orden");
     }
 
     private boolean esDespachable(ProductoVenta selected, Orden ordenVenta, float cantidad) {
@@ -437,7 +453,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR, Level.FINE, producto, cantidad);
     }
 
-    private void fireWarningOnDeleting(String codOrden,ProductovOrden producto, float cantidad) {
+    private void fireWarningOnDeleting(String codOrden, ProductovOrden producto, float cantidad) {
         Level l = getInstance(codOrden).getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.BORRAR, l, producto, cantidad);
 
@@ -555,7 +571,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
             ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
             o.getProductovOrdenList().remove(objectAtSelectedRow);
 
-            fireWarningOnDeleting(codOrden,objectAtSelectedRow, cantidadBorrada);
+            fireWarningOnDeleting(codOrden, objectAtSelectedRow, cantidadBorrada);
             update(o);
         }
     }
