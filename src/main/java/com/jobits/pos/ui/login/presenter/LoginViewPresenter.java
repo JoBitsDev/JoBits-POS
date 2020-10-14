@@ -99,10 +99,10 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         JComboBox<UbicacionConexionModel> jComboBox1 = new JComboBox<>();
         jComboBox1.setModel(new DefaultComboBoxModel<>(ubicacionController.getUbicaciones().getUbicaciones()));
         jComboBox1.setSelectedItem(getBean().getUbicacionSeleccionada());
-        Object[] options = {"Aceptar", "Editar", "Cancelar"};
+        Object[] options = {"Seleccionar", "Editar", "Cancelar"};
         //                     yes        no       cancel
         int confirm = JOptionPane.showOptionDialog(
-                Application.getInstance().getMainWindow(),
+                null,
                 jComboBox1,
                 "Ubicaciones",
                 JOptionPane.YES_NO_CANCEL_OPTION,
