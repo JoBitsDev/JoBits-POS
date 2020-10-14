@@ -23,7 +23,7 @@ import com.jobits.pos.adapters.repo.impl.SeccionDAO;
  * @author Jorge
  *
  */
-public class SeccionListController extends OldAbstractListController<Seccion> {
+public class SeccionListController extends OldAbstractListController<Seccion> implements SeccionListService{
 
     public Carta owner;
 

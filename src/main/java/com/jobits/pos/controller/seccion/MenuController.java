@@ -18,7 +18,7 @@ import java.awt.Container;
  * @author Jorge
  *
  */
-public class MenuController extends AbstractController<Carta> {
+public class MenuController extends AbstractController<Carta> implements MenuService{
 
     CartaListController cartaListController = new CartaListController();
     SeccionListController seccionListController = new SeccionListController();
