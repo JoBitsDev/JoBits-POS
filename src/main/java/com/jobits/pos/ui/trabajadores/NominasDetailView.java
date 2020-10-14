@@ -7,6 +7,7 @@ package com.jobits.pos.ui.trabajadores;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jhw.swing.material.standars.MaterialIcons;
 import java.util.ArrayList;
 import java.util.List;
 import org.knowm.xchart.PieChart;
@@ -20,6 +21,7 @@ import org.knowm.xchart.style.Styler;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
@@ -27,25 +29,17 @@ import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import static com.jobits.pos.ui.trabajadores.presenter.NominasDetailViewModel.*;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.ListModel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 
 /**
  *
  * @author Jorge
  */
-
 //TODO: cuando cambias de redio button no actualiza
 //TODO: paneles de colores distintos
 //
-
 public class NominasDetailView extends AbstractViewPanel {
 
     BindableTableModel<AsistenciaPersonalEstadisticas> model;
@@ -66,98 +60,150 @@ public class NominasDetailView extends AbstractViewPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanelTop = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jXDatePickerDesde = MaterialComponentsFactory.Input.getDatePicker();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
-        jLabel2 = new javax.swing.JLabel();
-        jXDatePickerHasta = MaterialComponentsFactory.Input.getDatePicker();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        jButtonBuscar = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanelIzq = new javax.swing.JPanel();
-        jPanelDetalles = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jButtonAcumulado = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonPagar = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableUsuariosActivos = new javax.swing.JTable();
-        jCheckBoxseleccionarTodos = new javax.swing.JCheckBox();
-        jPanelData = new javax.swing.JPanel();
-        jPanelGrafica = new javax.swing.JPanel();
-        jPanelChoice = new javax.swing.JPanel();
+        jPanelSeleccion = new javax.swing.JPanel();
+        jPanelPeriodo = new javax.swing.JPanel();
+        jButtonPeriodoSelector = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabelPeriodoActual = new javax.swing.JLabel();
+        jPanelPeriodChooser = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jDateChooserDel = new org.jdesktop.swingx.JXDatePicker();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jDateChooserAl = new org.jdesktop.swingx.JXDatePicker();
+        jPanel8 = new javax.swing.JPanel();
         jRadioButtonXY = new javax.swing.JRadioButton();
         jRadioButtonPie = new javax.swing.JRadioButton();
-        jPanelEstadisticaGeneral = new javax.swing.JPanel();
+        jPanelData = new javax.swing.JPanel();
+        jPanelIzq = new javax.swing.JPanel();
         jLabelAcumulado = MaterialComponentsFactory.Displayers.getLabel();
+        jCheckBoxseleccionarTodos = new javax.swing.JCheckBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableUsuariosActivos = new javax.swing.JTable();
+        jPanelGrafica = new javax.swing.JPanel();
+        jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonAcumulado = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonPagar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setOpaque(false);
         setLayout(new java.awt.BorderLayout(5, 5));
 
-        jPanelTop.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelTop.setOpaque(false);
-        jPanelTop.setPreferredSize(new java.awt.Dimension(274, 60));
-        jPanelTop.setLayout(new java.awt.BorderLayout());
+        jPanelSeleccion.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
+        jPanelSeleccion.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+        jPanelPeriodo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        jPanelPeriodo.setPreferredSize(new java.awt.Dimension(375, 50));
+        jPanelPeriodo.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setText("Desde");
-        jPanel1.add(jLabel1);
+        jButtonPeriodoSelector.setIcon(MaterialIcons.ARROW_DROP_RIGHT);
+        jButtonPeriodoSelector.setPreferredSize(new java.awt.Dimension(40, 32));
+        jPanelPeriodo.add(jButtonPeriodoSelector, java.awt.BorderLayout.EAST);
 
-        jXDatePickerDesde.setMaximumSize(new java.awt.Dimension(250, 40));
-        jXDatePickerDesde.setMinimumSize(new java.awt.Dimension(130, 40));
-        jXDatePickerDesde.setPreferredSize(new java.awt.Dimension(250, 40));
-        jPanel1.add(jXDatePickerDesde);
-        jPanel1.add(filler3);
+        jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 0, 0, 0));
+        jPanel5.setPreferredSize(new java.awt.Dimension(200, 40));
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jLabel2.setText("Hasta");
-        jPanel1.add(jLabel2);
+        jLabelPeriodoActual.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabelPeriodoActual.setText("De :");
+        jLabelPeriodoActual.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jLabelPeriodoActualPropertyChange(evt);
+            }
+        });
+        jPanel5.add(jLabelPeriodoActual, java.awt.BorderLayout.CENTER);
 
-        jXDatePickerHasta.setMaximumSize(new java.awt.Dimension(250, 40));
-        jXDatePickerHasta.setMinimumSize(new java.awt.Dimension(130, 40));
-        jXDatePickerHasta.setPreferredSize(new java.awt.Dimension(250, 40));
-        jPanel1.add(jXDatePickerHasta);
-        jPanel1.add(filler1);
+        jPanelPeriodo.add(jPanel5, java.awt.BorderLayout.CENTER);
 
-        jButtonBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/detalles.png"))); // NOI18N
-        jButtonBuscar.setText("Buscar");
-        jButtonBuscar.setToolTipText("Vista Detallada");
-        jButtonBuscar.setMaximumSize(new java.awt.Dimension(150, 60));
-        jButtonBuscar.setMinimumSize(new java.awt.Dimension(100, 60));
-        jButtonBuscar.setPreferredSize(new java.awt.Dimension(130, 50));
-        jPanel1.add(jButtonBuscar);
+        jPanelSeleccion.add(jPanelPeriodo, java.awt.BorderLayout.WEST);
 
-        jPanelTop.add(jPanel1, java.awt.BorderLayout.CENTER);
+        jPanelPeriodChooser.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 5, 10, 0));
+        jPanelPeriodChooser.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanelPeriodChooser.setLayout(new java.awt.GridLayout(1, 3));
 
-        add(jPanelTop, java.awt.BorderLayout.PAGE_START);
+        jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        jPanel7.setMinimumSize(new java.awt.Dimension(254, 20));
+        jPanel7.setPreferredSize(new java.awt.Dimension(100, 20));
+        jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
+        jDateChooserDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDateChooserDelActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jDateChooserDel);
+
+        jPanel6.setMinimumSize(new java.awt.Dimension(20, 26));
+        jPanel6.setPreferredSize(new java.awt.Dimension(20, 100));
+
+        jLabel14.setText("hasta");
+        jLabel14.setToolTipText("");
+        jLabel14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel6.add(jLabel14);
+
+        jPanel7.add(jPanel6);
+
+        jDateChooserAl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDateChooserAlActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jDateChooserAl);
+
+        jPanelPeriodChooser.add(jPanel7);
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        jPanel8.setLayout(new java.awt.GridLayout(1, 2));
+
+        jRadioButtonXY.setText("Dias Trabajados");
+        jRadioButtonXY.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jRadioButtonXY.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jRadioButtonXY.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonXYActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jRadioButtonXY);
+
+        jRadioButtonPie.setText("Ventas Generales");
+        jRadioButtonPie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jRadioButtonPie.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jRadioButtonPie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonPieActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jRadioButtonPie);
+
+        jPanelPeriodChooser.add(jPanel8);
+
+        jPanelSeleccion.add(jPanelPeriodChooser, java.awt.BorderLayout.CENTER);
+
+        add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
+
+        jPanelData.setOpaque(false);
+        jPanelData.setLayout(new java.awt.BorderLayout());
+
+        jPanelIzq.setBorder(javax.swing.BorderFactory.createLineBorder(DefaultValues.SECONDARY_COLOR));
         jPanelIzq.setMaximumSize(new java.awt.Dimension(2147483647, 100));
         jPanelIzq.setMinimumSize(new java.awt.Dimension(375, 510));
         jPanelIzq.setOpaque(false);
         jPanelIzq.setPreferredSize(new java.awt.Dimension(375, 510));
         jPanelIzq.setLayout(new java.awt.BorderLayout(5, 5));
 
-        jPanelDetalles.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelDetalles.setOpaque(false);
-        jPanelDetalles.setLayout(new java.awt.BorderLayout());
+        jLabelAcumulado.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabelAcumulado.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelAcumulado.setText("           --               ");
+        jLabelAcumulado.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 18)))); // NOI18N
+        jLabelAcumulado.setMaximumSize(new java.awt.Dimension(300, 50));
+        jLabelAcumulado.setMinimumSize(new java.awt.Dimension(193, 40));
+        jLabelAcumulado.setPreferredSize(new java.awt.Dimension(300, 50));
+        jPanelIzq.add(jLabelAcumulado, java.awt.BorderLayout.SOUTH);
 
-        jPanel2.setOpaque(false);
-
-        jButtonAcumulado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jButtonAcumulado.setText("Imprimir");
-        jButtonAcumulado.setPreferredSize(new java.awt.Dimension(130, 50));
-        jPanel2.add(jButtonAcumulado);
-
-        jButtonPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/banknote.png"))); // NOI18N
-        jButtonPagar.setText("Pagar");
-        jButtonPagar.setPreferredSize(new java.awt.Dimension(130, 50));
-        jPanel2.add(jButtonPagar);
-
-        jPanelDetalles.add(jPanel2, java.awt.BorderLayout.EAST);
-
-        jPanelIzq.add(jPanelDetalles, java.awt.BorderLayout.PAGE_END);
+        jCheckBoxseleccionarTodos.setText("Seleccionar Todos");
+        jCheckBoxseleccionarTodos.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jCheckBoxseleccionarTodos.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jPanelIzq.add(jCheckBoxseleccionarTodos, java.awt.BorderLayout.PAGE_START);
 
         jScrollPane2.setOpaque(false);
 
@@ -170,7 +216,15 @@ public class NominasDetailView extends AbstractViewPanel {
             new String [] {
                 "Usuario", "Dias", "Promedio", ""
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTableUsuariosActivos);
         if (jTableUsuariosActivos.getColumnModel().getColumnCount() > 0) {
             jTableUsuariosActivos.getColumnModel().getColumn(0).setMinWidth(100);
@@ -189,56 +243,47 @@ public class NominasDetailView extends AbstractViewPanel {
 
         jPanelIzq.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        jCheckBoxseleccionarTodos.setText("Seleccionar Todos");
-        jCheckBoxseleccionarTodos.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jPanelIzq.add(jCheckBoxseleccionarTodos, java.awt.BorderLayout.PAGE_START);
-
-        add(jPanelIzq, java.awt.BorderLayout.WEST);
-
-        jPanelData.setOpaque(false);
-        jPanelData.setLayout(new java.awt.BorderLayout());
+        jPanelData.add(jPanelIzq, java.awt.BorderLayout.WEST);
 
         jPanelGrafica.setOpaque(false);
         jPanelGrafica.setLayout(new java.awt.BorderLayout());
-
-        jPanelChoice.setOpaque(false);
-        jPanelChoice.setPreferredSize(new java.awt.Dimension(244, 60));
-        jPanelChoice.setLayout(new java.awt.GridLayout(1, 0));
-
-        jRadioButtonXY.setSelected(true);
-        jRadioButtonXY.setText("Dias Trabajados");
-        jRadioButtonXY.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jRadioButtonXY.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jRadioButtonXY.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanelChoice.add(jRadioButtonXY);
-
-        jRadioButtonPie.setText("Ventas Generales");
-        jRadioButtonPie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jRadioButtonPie.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jRadioButtonPie.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanelChoice.add(jRadioButtonPie);
-
-        jPanelGrafica.add(jPanelChoice, java.awt.BorderLayout.PAGE_END);
-
         jPanelData.add(jPanelGrafica, java.awt.BorderLayout.CENTER);
 
-        jPanelEstadisticaGeneral.setOpaque(false);
-        jPanelEstadisticaGeneral.setPreferredSize(new java.awt.Dimension(300, 60));
-        jPanelEstadisticaGeneral.setLayout(new java.awt.GridLayout(1, 0, 20, 0));
-
-        jLabelAcumulado.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabelAcumulado.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelAcumulado.setText("           --               ");
-        jLabelAcumulado.setBorder(javax.swing.BorderFactory.createCompoundBorder(new org.jdesktop.swingx.border.DropShadowBorder(), javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 18)))); // NOI18N
-        jLabelAcumulado.setMaximumSize(new java.awt.Dimension(300, 50));
-        jLabelAcumulado.setMinimumSize(new java.awt.Dimension(193, 40));
-        jLabelAcumulado.setPreferredSize(new java.awt.Dimension(300, 50));
-        jPanelEstadisticaGeneral.add(jLabelAcumulado);
-
-        jPanelData.add(jPanelEstadisticaGeneral, java.awt.BorderLayout.PAGE_START);
-
         add(jPanelData, java.awt.BorderLayout.CENTER);
+
+        jPanelBotones.setOpaque(false);
+        jPanelBotones.setPreferredSize(new java.awt.Dimension(300, 60));
+
+        jButtonAcumulado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonAcumulado.setText("Imprimir");
+        jButtonAcumulado.setPreferredSize(new java.awt.Dimension(130, 50));
+        jPanelBotones.add(jButtonAcumulado);
+
+        jButtonPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/banknote.png"))); // NOI18N
+        jButtonPagar.setText("Pagar");
+        jButtonPagar.setPreferredSize(new java.awt.Dimension(130, 50));
+        jPanelBotones.add(jButtonPagar);
+
+        add(jPanelBotones, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabelPeriodoActualPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jLabelPeriodoActualPropertyChange
+
+    }//GEN-LAST:event_jLabelPeriodoActualPropertyChange
+
+    private void jDateChooserDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserDelActionPerformed
+        getPresenter().getOperation(NominasDetailPresenter.ACTION_BUSCAR).doAction();
+    }//GEN-LAST:event_jDateChooserDelActionPerformed
+
+    private void jDateChooserAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserAlActionPerformed
+        getPresenter().getOperation(NominasDetailPresenter.ACTION_BUSCAR).doAction();
+    }//GEN-LAST:event_jDateChooserAlActionPerformed
+
+    private void jRadioButtonXYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonXYActionPerformed
+    }//GEN-LAST:event_jRadioButtonXYActionPerformed
+
+    private void jRadioButtonPieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPieActionPerformed
+    }//GEN-LAST:event_jRadioButtonPieActionPerformed
 
     public NominasController getController() {
         return null;
@@ -247,38 +292,38 @@ public class NominasDetailView extends AbstractViewPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler3;
     private javax.swing.JButton jButtonAcumulado;
-    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonPagar;
+    private javax.swing.JButton jButtonPeriodoSelector;
     private javax.swing.JCheckBox jCheckBoxseleccionarTodos;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private org.jdesktop.swingx.JXDatePicker jDateChooserAl;
+    private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabelAcumulado;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanelChoice;
+    private javax.swing.JLabel jLabelPeriodoActual;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelData;
-    private javax.swing.JPanel jPanelDetalles;
-    private javax.swing.JPanel jPanelEstadisticaGeneral;
     private javax.swing.JPanel jPanelGrafica;
     private javax.swing.JPanel jPanelIzq;
-    private javax.swing.JPanel jPanelTop;
+    private javax.swing.JPanel jPanelPeriodChooser;
+    private javax.swing.JPanel jPanelPeriodo;
+    private javax.swing.JPanel jPanelSeleccion;
     private javax.swing.JRadioButton jRadioButtonPie;
     private javax.swing.JRadioButton jRadioButtonXY;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableUsuariosActivos;
-    private org.jdesktop.swingx.JXDatePicker jXDatePickerDesde;
-    private org.jdesktop.swingx.JXDatePicker jXDatePickerHasta;
     // End of variables declaration//GEN-END:variables
 
     private void updateDetallesPanel(List<AsistenciaPersonalEstadisticas> displayList, Choice choice) {
-        if (jPanelGrafica.getComponentCount() > 1) {
-            jPanelGrafica.remove(1);
+        if (jPanelGrafica.getComponentCount() > 0) {
+            jPanelGrafica.removeAll();
         }
         XYChart chart = new XYChartBuilder().xAxisTitle("Dias").yAxisTitle("Monto").build();
-        PieChart chartPie = new PieChartBuilder().theme(Styler.ChartTheme.XChart).title("Total Pago").build();
+        PieChart chartPie = new PieChartBuilder().theme(Styler.ChartTheme.XChart).build();
 
         chart.getStyler().setDatePattern("dd'/'MM'/'yy");
         chart.getStyler().setPlotGridLinesVisible(false);
@@ -320,16 +365,20 @@ public class NominasDetailView extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
+        Bindings.bind(jPanelPeriodChooser, "visible", getPresenter().getModel(PROP_PANEL_OPCIONES_VISIBLE));
+
+        jButtonPeriodoSelector.addActionListener(getPresenter().getOperation(NominasDetailPresenter.ACTION_DESPLEGAR_OPCIONES));
+        Bindings.bind(jLabelPeriodoActual, "text", getPresenter().getModel(PROP_RANGO_FECHAS_TEXT));
+
         Bindings.bind(jTableUsuariosActivos, new SelectionInList(
                 getPresenter().getModel(PROP_LISTA_PERSONAL),
                 getPresenter().getModel(PROP_PERSONAL_SELECCIONADO)));
-        jButtonBuscar.setAction(getPresenter().getOperation(NominasDetailPresenter.ACTION_BUSCAR));
         jButtonPagar.setAction(getPresenter().getOperation(NominasDetailPresenter.ACTION_PAGAR));
         jButtonAcumulado.setAction(getPresenter().getOperation(NominasDetailPresenter.ACTION_IMPRIMIR));
         jCheckBoxseleccionarTodos.setAction(getPresenter().getOperation(NominasDetailPresenter.ACTION_SELECCIONAR_TODOS));
         Bindings.bind(jCheckBoxseleccionarTodos, getPresenter().getModel(PROP_SELECCIONAR_TODO_SELECCIONADO));
-        Bindings.bind(jXDatePickerHasta, "date", getPresenter().getModel(PROP_FECHA_HASTA));
-        Bindings.bind(jXDatePickerDesde, "date", getPresenter().getModel(PROP_FECHA_DESDE));
+        Bindings.bind(jDateChooserDel, "date", getPresenter().getModel(PROP_FECHA_DESDE));
+        Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(PROP_FECHA_HASTA));
     }
 
     @Override
@@ -404,6 +453,7 @@ public class NominasDetailView extends AbstractViewPanel {
         jRadioButtonXY.addChangeListener((ChangeEvent e) -> {
             onDetallesClick();
         });
+        jRadioButtonXY.setSelected(true);
 
     }
 
@@ -428,6 +478,7 @@ public class NominasDetailView extends AbstractViewPanel {
 
             updateDetallesPanel(use, choice);
         }
+        jPanelGrafica.revalidate();
 
     }
 
