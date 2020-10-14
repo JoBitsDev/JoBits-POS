@@ -8,9 +8,17 @@ package com.jobits.pos.ui.trabajadores.presenter;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.controller.trabajadores.NominasService;
 import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import java.beans.PropertyChangeEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,39 +29,47 @@ import java.util.Optional;
  */
 public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailViewModel> {
 
+    private final String[] months = {"Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"};
+
     public static final String ACTION_IMPRIMIR = "Imprimir";
     public static final String ACTION_PAGAR = "Pagar";
     public static final String ACTION_BUSCAR = "Buscar";
     public static String ACTION_SELECCIONAR_TODOS = "Seleccionar todos";
+    public static final String ACTION_DESPLEGAR_OPCIONES = "Desplegar opciones";
 
     NominasService service;
 
     public NominasDetailPresenter(NominasService servicio) {
         super(new NominasDetailViewModel());
         this.service = servicio;
+        addListeners();
+        setPeriodo();
     }
 
     private void onBuscarClick() {
         if (getBean().getDesde() == null || getBean().getHasta() == null) {
-            fireToast("Campos de fechas vacios");return;
+            fireToast("Campos de fechas vacios");
+            return;
         }
         if (getBean().getDesde().isAfter(getBean().getHasta())) {
-            fireToast("Fechas incorrectas");return;
-            
+            fireToast("Fechas incorrectas");
+            return;
+
         }
         getBean().getLista_personal().clear();
         getBean().getLista_personal().addAll(service.getPersonalActivo(getBean().getFecha_desde(), getBean().getFecha_hasta()));
-        
 
     }
 
     private void onPagarClick() {
-        for (AsistenciaPersonalEstadisticas i : getBean().getLista_personal()) {
-            if (i.isUse()) {
-                service.pagar(i);
+        if (!getBean().getLista_personal().isEmpty()) {
+            for (AsistenciaPersonalEstadisticas i : getBean().getLista_personal()) {
+                if (i.isUse()) {
+                    service.pagar(i);
+                }
             }
+            getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize());
         }
-        getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize());
     }
 
     private void onImprimirClick() {
@@ -61,10 +77,14 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
     }
 
     private void onSeleccionarTodosClick() {
-        for (AsistenciaPersonalEstadisticas x : getBean().getLista_personal()) {
-            x.setUse(getBean().isSeleccionar_todo_seleccionado());
+        if (!getBean().getLista_personal().isEmpty()) {
+            for (AsistenciaPersonalEstadisticas x : getBean().getLista_personal()) {
+                x.setUse(getBean().isSeleccionar_todo_seleccionado());
+            }
+            getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize() - 1);
+        } else {
+            getBean().setSeleccionar_todo_seleccionado(false);
         }
-        getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize());
     }
 
     @Override
@@ -98,6 +118,50 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_DESPLEGAR_OPCIONES) {
+            @Override
+            public Optional doAction() {
+                getBean().setPanel_opciones_visible(!getBean().isPanel_opciones_visible());
+                return Optional.empty();
+            }
+        });
+    }
+
+    private void addListeners() {
+        getBean().addPropertyChangeListener(NominasDetailViewModel.PROP_FECHA_DESDE, (PropertyChangeEvent evt) -> {
+            getBean().setFecha_hasta((Date) evt.getNewValue());
+            setPeriodo();
+        });
+
+        getBean().addPropertyChangeListener(NominasDetailViewModel.PROP_FECHA_HASTA, (PropertyChangeEvent evt) -> {
+            LocalDate inicio = getBean().getDesde();
+            LocalDate fin = ((Date) evt.getNewValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            int diff = (int) ChronoUnit.DAYS.between(inicio, fin);
+            if (diff < 0) {
+                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "La fecha de inicio no puede ser mayor a la fecha final", "Error", JOptionPane.ERROR_MESSAGE);
+                getBean().setFecha_hasta(getBean().getFecha_desde());
+            } else {
+                setPeriodo();
+            }
+
+        });
+    }
+
+    private void setPeriodo() {
+        int dia = getBean().getFecha_desde().getDate(),
+                mes = getBean().getFecha_desde().getMonth(),
+                anno = getBean().getFecha_desde().getYear() + 1900;
+
+        String inicio = dia + "-" + months[mes] + "-" + anno;
+
+        dia = getBean().getFecha_hasta().getDate();
+        mes = getBean().getFecha_hasta().getMonth();
+        anno = getBean().getFecha_hasta().getYear() + 1900;
+
+        String fin = dia + "-" + months[mes] + "-" + anno;
+
+        getBean().setRango_fechas_text("De: " + inicio + " / " + fin);
     }
 
 }

@@ -26,7 +26,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class CartaListController extends OldAbstractListController<Carta> {
+public class CartaListController extends OldAbstractListController<Carta> implements CartaListService{
 
     public CartaListController() {
         super(MenuDAO.getInstance());

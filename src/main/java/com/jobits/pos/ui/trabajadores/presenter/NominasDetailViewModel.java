@@ -40,6 +40,54 @@ public class NominasDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_SELECCIONAR_TODO_SELECCIONADO = "seleccionar_todo_seleccionado";
 
+    private boolean panel_opciones_visible;
+
+    public static final String PROP_PANEL_OPCIONES_VISIBLE = "panel_opciones_visible";
+
+    private String rango_fechas_text;
+
+    public static final String PROP_RANGO_FECHAS_TEXT = "rango_fechas_text";
+
+    /**
+     * Get the value of rango_fechas_text
+     *
+     * @return the value of rango_fechas_text
+     */
+    public String getRango_fechas_text() {
+        return rango_fechas_text;
+    }
+
+    /**
+     * Set the value of rango_fechas_text
+     *
+     * @param rango_fechas_text new value of rango_fechas_text
+     */
+    public void setRango_fechas_text(String rango_fechas_text) {
+        String oldRango_fechas_text = this.rango_fechas_text;
+        this.rango_fechas_text = rango_fechas_text;
+        firePropertyChange(PROP_RANGO_FECHAS_TEXT, oldRango_fechas_text, rango_fechas_text);
+    }
+
+    /**
+     * Get the value of panel_opciones_visible
+     *
+     * @return the value of panel_opciones_visible
+     */
+    public boolean isPanel_opciones_visible() {
+        return panel_opciones_visible;
+    }
+
+    /**
+     * Set the value of panel_opciones_visible
+     *
+     * @param panel_opciones_visible new value of panel_opciones_visible
+     */
+    public void setPanel_opciones_visible(boolean panel_opciones_visible) {
+        boolean oldPanel_opciones_visible = this.panel_opciones_visible;
+        this.panel_opciones_visible = panel_opciones_visible;
+        firePropertyChange(PROP_PANEL_OPCIONES_VISIBLE, oldPanel_opciones_visible, panel_opciones_visible);
+    }
+
     /**
      * Get the value of seleccionar_todo_seleccionado
      *
@@ -152,5 +200,5 @@ public class NominasDetailViewModel extends AbstractViewModel {
     public LocalDate getHasta() {
         return this.fecha_hasta;
     }
-    
+
 }

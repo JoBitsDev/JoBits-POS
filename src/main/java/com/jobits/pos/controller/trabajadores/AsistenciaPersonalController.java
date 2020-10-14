@@ -83,7 +83,10 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     }
 
     public List<AsistenciaPersonal> getPersonalTrabajando(Venta v) {
-        return AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(v.getFecha());
+        if (AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(v.getFecha()) != null) {
+            return AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(v.getFecha());
+        }
+        return new ArrayList<>();
     }
 
     public AsistenciaPersonal createNewInstance(Personal selected, Venta v) {
