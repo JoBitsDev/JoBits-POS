@@ -91,7 +91,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     }
 
     private void onAgregarClick() {
-        if (getBean().getTipo_gasto_seleccionado() != null && getBean().getCategoria_gasto_seleccionada() != null) {
+        if (getBean().getCategoria_gasto_seleccionada() != null && getBean().getTipo_gasto_seleccionado() != null) {
             service.createNewGasto(
                     getBean().getCategoria_gasto_seleccionada(),
                     getBean().getTipo_gasto_seleccionado(),
@@ -121,11 +121,11 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     }
 
     private void onImprimirClick() {
-        
+
         if (!getBean().getLista_gasto_venta().isEmpty()) {
             Impresion i = new Impresion();
             i.print(new GastosFormatter(getBean().getLista_gasto_venta()), null);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "No hay gastos para imprimir");
         }
     }
