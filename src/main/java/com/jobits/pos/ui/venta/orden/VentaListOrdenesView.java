@@ -65,8 +65,6 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         jPanel3.setLayout(new java.awt.GridLayout(1, 3));
 
         jButtonCalcCAmbio.setIcon(MaterialIcons.REPEAT);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButtonCalcCAmbio.setText(bundle.getString("label_calcular_cambio")); // NOI18N
         jButtonCalcCAmbio.setToolTipText("Calcular Cambio");
         jButtonCalcCAmbio.setEnabled(false);
         jButtonCalcCAmbio.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -80,7 +78,6 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         jPanel3.add(jButtonEnviarCerrarCrearNueva);
 
         jButtonNuevaOrden.setIcon(MaterialIcons.ADD_CIRCLE);
-        jButtonNuevaOrden.setText(bundle.getString("label_agregar")); // NOI18N
         jButtonNuevaOrden.setToolTipText("Agregar");
         jButtonNuevaOrden.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel3.add(jButtonNuevaOrden);
