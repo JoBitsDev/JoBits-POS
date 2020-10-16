@@ -47,7 +47,7 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
         super(new VentaResumenViewModel());
         this.service = controller;
 
-        // updateBeanData();
+         updateBeanData();
         controller.initIPV(controller.getInstance());
     }
 
