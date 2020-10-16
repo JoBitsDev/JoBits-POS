@@ -93,6 +93,7 @@ public class StatusBarView extends AbstractViewPanel {
     public void wireUp() {
         Bindings.bind(jLabelVersion, getPresenter().getModel(PROP_VERSION_SOFTWARE));
         Bindings.bind(jLabelUsuarioRegistrado, getPresenter().getModel(PROP_USUARIO_REGISTRADO));
+        Bindings.bind(jLabelUsuarioRegistrado,"foreground", getPresenter().getModel(PROP_USUARIO_REGISTRADO_COLOR));
         Bindings.bind(jLabelEstadoLicencia, getPresenter().getModel(PROP_ESTADO_LICENCIA));
         jButtonLlave.setAction(getPresenter().getOperation(StatusBarPresenter.ACTION_LICENCIA));
         jButtonLlave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/key.png")));
