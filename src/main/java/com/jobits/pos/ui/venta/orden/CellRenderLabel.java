@@ -5,6 +5,10 @@
  */
 package com.jobits.pos.ui.venta.orden;
 
+import com.jobits.pos.ui.DefaultValues;
+import javax.swing.ImageIcon;
+import javax.swing.border.LineBorder;
+
 /**
  *
  * @author Jorge
@@ -13,13 +17,21 @@ public class CellRenderLabel extends javax.swing.JPanel {
 
     /**
      * Creates new form CellRenderLabel
+     *
+     * @param nombre
+     * @param precio
+     * @param selected
      */
     public CellRenderLabel(String nombre, String precio, boolean selected) {
         initComponents();
         jTextArea1.setText(nombre);
         jLabel2.setText(precio);
-        jTextArea1.setOpaque(selected);
         setOpaque(selected);
+        if (precio == null) {
+            setIcon(selected, nombre);
+        } else {
+            jLabelIcon.setVisible(false);
+        }
     }
 
     /**
@@ -31,45 +43,134 @@ public class CellRenderLabel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabelIcon = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
-        setBackground(new java.awt.Color(153, 153, 153));
+        setBackground(DefaultValues.PRIMARY_COLOR);
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        setMaximumSize(new java.awt.Dimension(138, 87));
-        setMinimumSize(new java.awt.Dimension(138, 87));
+        setMaximumSize(new java.awt.Dimension(150, 90));
+        setMinimumSize(new java.awt.Dimension(150, 90));
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(138, 87));
+        setPreferredSize(new java.awt.Dimension(150, 90));
         setLayout(new java.awt.BorderLayout());
 
-        jLabel2.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
+        jPanel1.setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 1, true));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jLabelIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(jLabelIcon, java.awt.BorderLayout.PAGE_START);
+
+        jLabel2.setFont(new java.awt.Font(".SF NS Text", 1, 14)); // NOI18N
+        jLabel2.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Precio");
-        add(jLabel2, java.awt.BorderLayout.PAGE_END);
+        jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        jPanel1.add(jLabel2, java.awt.BorderLayout.PAGE_END);
 
-        jScrollPane1.setBackground(new java.awt.Color(153, 153, 153));
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane1.setFont(new java.awt.Font(".SF NS Text", 0, 16)); // NOI18N
 
-        jTextArea1.setBackground(new java.awt.Color(153, 153, 153));
+        jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea1.setColumns(15);
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
         jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jTextArea1.setEnabled(false);
         jTextArea1.setMaximumSize(new java.awt.Dimension(138, 2147483647));
-        jTextArea1.setOpaque(false);
         jScrollPane1.setViewportView(jTextArea1);
 
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelIcon;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon(boolean selected, String name) {
+        String resPath = "/restManager/resources/food & drinks/";
+        String nombre = name.toLowerCase();
+        if (selected) {
+            if (nombre.contains("coctel") || nombre.contains("cocktail")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "cocktail" + "_color.png")));
+            } else if (nombre.contains("jugo")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "jugo" + "_color.png")));
+            } else if (nombre.contains("cerveza")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "beer" + "_color.png")));
+            } else if (nombre.contains("bebida")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "bebida" + "_color.png")));
+            } else if (nombre.contains("wiskey") || nombre.contains("whiskey")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "whiskey" + "_color.png")));
+            } else if (nombre.contains("vino")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "vino" + "_color.png")));
+            } else if (nombre.contains("entrante")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "entrante" + "_color.png")));
+            } else if (nombre.contains("postre") || nombre.contains("dulce")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "postre" + "_color.png")));
+            } else if (nombre.contains("huevo")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "huevo" + "_color.png")));
+            } else if (nombre.contains("pizza")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pizza" + "_color.png")));
+            } else if (nombre.contains("carne") || nombre.contains("res")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "carne" + "_color.png")));
+            } else if (nombre.contains("pollo")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pollo" + "_color.png")));
+            } else if (nombre.contains("hamburguesa") || nombre.contains("pan")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "burger" + "_color.png")));
+            } else if (nombre.contains("pescado") || nombre.contains("marisco")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pescado" + "_color.png")));
+            } else if (nombre.contains("entremes") || nombre.contains("plato")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "plato" + "_color.png")));
+            } else {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "varios" + "_color.png")));
+            }
+        } else {
+            if (nombre.contains("coctel") || nombre.contains("cocktail")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "cocktail" + "_gray.png")));
+            } else if (nombre.contains("jugo")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "jugo" + "_gray.png")));
+            } else if (nombre.contains("cerveza")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "beer" + "_gray.png")));
+            } else if (nombre.contains("bebida")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "bebida" + "_gray.png")));
+            } else if (nombre.contains("wiskey") || nombre.contains("whiskey")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "whiskey" + "_gray.png")));
+            } else if (nombre.contains("vino")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "vino" + "_gray.png")));
+            } else if (nombre.contains("entrante")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "entrante" + "_gray.png")));
+            } else if (nombre.contains("postre") || nombre.contains("dulce")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "postre" + "_gray.png")));
+            } else if (nombre.contains("huevo")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "huevo" + "_gray.png")));
+            } else if (nombre.contains("pizza")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pizza" + "_gray.png")));
+            } else if (nombre.contains("carne") || nombre.contains("res")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "carne" + "_gray.png")));
+            } else if (nombre.contains("pollo")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pollo" + "_gray.png")));
+            } else if (nombre.contains("hamburguesa") || nombre.contains("pan")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "burger" + "_gray.png")));
+            } else if (nombre.contains("pescado") || nombre.contains("marisco")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pescado" + "_gray.png")));
+            } else if (nombre.contains("entremes") || nombre.contains("plato")) {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "plato" + "_gray.png")));
+            } else {
+                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "varios" + "_gray.png")));
+            }
+        }
+    }
+
 }
