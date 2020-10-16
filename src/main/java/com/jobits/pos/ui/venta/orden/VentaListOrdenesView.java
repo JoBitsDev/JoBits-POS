@@ -7,11 +7,13 @@ package com.jobits.pos.ui.venta.orden;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter.*;
 import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewModel.*;
 import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import javax.swing.JList;
@@ -40,15 +42,15 @@ public class VentaListOrdenesView extends AbstractViewPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanelOrdenesActivas = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jButtonCalcCAmbio = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonEnviarCerrarCrearNueva = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonNuevaOrden = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListOrdenesActivas = new javax.swing.JList<>();
-        jXPanelOrdenControl = new org.jdesktop.swingx.JXPanel();
-        jButtonNuevaOrden = new javax.swing.JButton();
-        jButtonCalcCAmbio = new javax.swing.JButton();
-        jButtonEnviarCerrarCrearNueva = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
 
@@ -58,41 +60,39 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         jPanelOrdenesActivas.setPreferredSize(new java.awt.Dimension(300, 438));
         jPanelOrdenesActivas.setLayout(new java.awt.BorderLayout());
 
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setLayout(new java.awt.GridLayout(1, 3));
+
+        jButtonCalcCAmbio.setIcon(MaterialIcons.REPEAT);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButtonCalcCAmbio.setText(bundle.getString("label_calcular_cambio")); // NOI18N
+        jButtonCalcCAmbio.setToolTipText("Calcular Cambio");
+        jButtonCalcCAmbio.setEnabled(false);
+        jButtonCalcCAmbio.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel3.add(jButtonCalcCAmbio);
+
+        jButtonEnviarCerrarCrearNueva.setIcon(MaterialIcons.SHOPPING_CART);
+        jButtonEnviarCerrarCrearNueva.setMnemonic('r');
+        jButtonEnviarCerrarCrearNueva.setToolTipText("Cerrado Rapido");
+        jButtonEnviarCerrarCrearNueva.setEnabled(false);
+        jButtonEnviarCerrarCrearNueva.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel3.add(jButtonEnviarCerrarCrearNueva);
+
+        jButtonNuevaOrden.setIcon(MaterialIcons.ADD_CIRCLE);
+        jButtonNuevaOrden.setText(bundle.getString("label_agregar")); // NOI18N
+        jButtonNuevaOrden.setToolTipText("Agregar");
+        jButtonNuevaOrden.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel3.add(jButtonNuevaOrden);
+
+        jPanel1.add(jPanel3, java.awt.BorderLayout.SOUTH);
+
         jListOrdenesActivas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jListOrdenesActivas);
 
-        jPanelOrdenesActivas.add(jScrollPane1, java.awt.BorderLayout.LINE_START);
+        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jXPanelOrdenControl.setBackground(new java.awt.Color(204, 204, 204));
-        jXPanelOrdenControl.setBorder(javax.swing.BorderFactory.createEmptyBorder(2, 2, 2, 2));
-        jXPanelOrdenControl.setMaximumSize(new java.awt.Dimension(300, 300));
-        jXPanelOrdenControl.setLayout(new java.awt.GridBagLayout());
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButtonNuevaOrden.setText(bundle.getString("label_agregar")); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jXPanelOrdenControl.add(jButtonNuevaOrden, gridBagConstraints);
-
-        jButtonCalcCAmbio.setText(bundle.getString("label_calcular_cambio")); // NOI18N
-        jButtonCalcCAmbio.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        jXPanelOrdenControl.add(jButtonCalcCAmbio, gridBagConstraints);
-
-        jButtonEnviarCerrarCrearNueva.setMnemonic('r');
-        jButtonEnviarCerrarCrearNueva.setText("Cerrado Rapido");
-        jButtonEnviarCerrarCrearNueva.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        jXPanelOrdenControl.add(jButtonEnviarCerrarCrearNueva, gridBagConstraints);
-
-        jPanelOrdenesActivas.add(jXPanelOrdenControl, java.awt.BorderLayout.PAGE_END);
+        jPanelOrdenesActivas.add(jPanel1, java.awt.BorderLayout.WEST);
 
         jScrollPane2.setViewportView(jPanel2);
 
@@ -107,11 +107,12 @@ public class VentaListOrdenesView extends AbstractViewPanel {
     private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
     private javax.swing.JButton jButtonNuevaOrden;
     private javax.swing.JList<Orden> jListOrdenesActivas;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelOrdenesActivas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private org.jdesktop.swingx.JXPanel jXPanelOrdenControl;
     // End of variables declaration//GEN-END:variables
 
     @Override
