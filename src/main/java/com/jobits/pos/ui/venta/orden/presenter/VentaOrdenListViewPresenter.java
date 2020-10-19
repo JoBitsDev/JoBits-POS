@@ -50,7 +50,13 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
             OrdenService ordenService) {
         this(ventaService);
         ordenPresenter = new OrdenDetailViewPresenter(ordenService);
-        menuPresenter = new ProductoVentaSelectorPresenter();
+        menuPresenter = new ProductoVentaSelectorPresenter(ordenService);
+        menuPresenter.addPropertyChangeListener(ProductoVentaSelectorPresenter.PROP_PRODUCTO_SELECCIONADO, new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                ordenPresenter.refreshState();
+            }
+        });
         refreshState();
     }
 
@@ -77,12 +83,15 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     private void onCrearOrdenAction() {
         Orden newOrden = ventaService.createNewOrden();
         getBean().setElemento_seleccionado(newOrden);
+        onAbrirOrdenAction();
         refreshState();
     }
 
     private void onAbrirOrdenAction() {
         ordenPresenter.setCodOrden(getBean().getElemento_seleccionado().getCodOrden());
+        
         menuPresenter.setMesaSeleccionada(getBean().getElemento_seleccionado().getMesacodMesa());
+        menuPresenter.setCodOrdenEnlazada(getBean().getElemento_seleccionado().getCodOrden());
     }
 
     @Override

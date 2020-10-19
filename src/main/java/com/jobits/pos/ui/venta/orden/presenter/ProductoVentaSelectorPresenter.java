@@ -7,8 +7,12 @@ package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jobits.pos.adapters.repo.impl.SeccionDAO;
 import com.jobits.pos.controller.productos.ProductoVentaListService;
+import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.domain.models.Mesa;
+import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Optional;
 
 /**
@@ -20,12 +24,25 @@ import java.util.Optional;
  */
 public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<ProductoVentaSelectorViewModel> {
 
-    private ProductoVentaListService service;
+    private OrdenService service;
     private Mesa mesaSeleccionada;
+    private String codOrdenEnlazada;
 
-    public ProductoVentaSelectorPresenter() {//TODO: pifia la logica esta metida en esta clase
+    public static final String PROP_PRODUCTO_SELECCIONADO = "PROP_PRODUCTO_SELECCIONADO";
+
+    ProductoVentaSelectorPresenter(OrdenService ordenService) {
         super(new ProductoVentaSelectorViewModel());
-        // this.service = productoVentaService;
+        this.service = ordenService;
+        addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if (evt.getNewValue() != null && codOrdenEnlazada != null) {
+                    service.addProduct(codOrdenEnlazada, (ProductoVenta) evt.getNewValue());
+                    getBean().setProductoVentaSeleccionado(null);
+                    firePropertyChange(PROP_PRODUCTO_SELECCIONADO, null, null);
+                }
+            }
+        });
     }
 
     public Mesa getMesaSeleccionada() {
@@ -35,6 +52,14 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     public void setMesaSeleccionada(Mesa mesaSeleccionada) {
         this.mesaSeleccionada = mesaSeleccionada;
         refreshState();
+    }
+
+    public String getCodOrdenEnlazada() {
+        return codOrdenEnlazada;
+    }
+
+    public void setCodOrdenEnlazada(String codOrdenEnlazada) {
+        this.codOrdenEnlazada = codOrdenEnlazada;
     }
 
     @Override

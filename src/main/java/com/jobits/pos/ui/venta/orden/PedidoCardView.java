@@ -438,7 +438,7 @@ public class PedidoCardView extends AbstractViewPanel {
                 return new CellRenderPedido(value, isSelected);
             }
         });
-
+        
     }
 
     @Override
