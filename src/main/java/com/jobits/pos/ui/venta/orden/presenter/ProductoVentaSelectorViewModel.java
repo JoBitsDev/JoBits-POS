@@ -23,7 +23,7 @@ public class ProductoVentaSelectorViewModel extends AbstractListViewModel<Seccio
 
     public static final String PROP_LISTAPRODUCTOS = "listaProductos";
 
-    private String productoVentaSeleccionado;
+    private ProductoVenta productoVentaSeleccionado;
 
     public static final String PROP_PRODUCTOVENTASELECCIONADO = "productoVentaSeleccionado";
 
@@ -34,7 +34,7 @@ public class ProductoVentaSelectorViewModel extends AbstractListViewModel<Seccio
      *
      * @return the value of productoVentaSeleccionado
      */
-    public String getProductoVentaSeleccionado() {
+    public ProductoVenta getProductoVentaSeleccionado() {
         return productoVentaSeleccionado;
     }
 
@@ -43,8 +43,8 @@ public class ProductoVentaSelectorViewModel extends AbstractListViewModel<Seccio
      *
      * @param productoVentaSeleccionado new value of productoVentaSeleccionado
      */
-    public void setProductoVentaSeleccionado(String productoVentaSeleccionado) {
-        String oldProductoVentaSeleccionado = this.productoVentaSeleccionado;
+    public void setProductoVentaSeleccionado(ProductoVenta productoVentaSeleccionado) {
+        ProductoVenta oldProductoVentaSeleccionado = this.productoVentaSeleccionado;
         this.productoVentaSeleccionado = productoVentaSeleccionado;
         firePropertyChange(PROP_PRODUCTOVENTASELECCIONADO, oldProductoVentaSeleccionado, productoVentaSeleccionado);
     }
