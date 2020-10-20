@@ -72,8 +72,8 @@ public class PedidoCardView extends AbstractViewPanel {
         jList1 = new javax.swing.JList<>()
         ;
         jPanel1 = new javax.swing.JPanel();
-        jComboBox1 = MaterialComponentsFactory.Input.getComboBoxEditable();
         jButton1 = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButton2 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelSupportText = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -202,15 +202,17 @@ public class PedidoCardView extends AbstractViewPanel {
 
         jPanelMedia.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
-
-        jPanel1.add(jComboBox1);
-
         jButton1.setIcon(MaterialIcons.ADD_CIRCLE);
         jButton1.setMaximumSize(new java.awt.Dimension(50, 50));
         jButton1.setMinimumSize(new java.awt.Dimension(50, 50));
         jButton1.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel1.add(jButton1);
+
+        jButton2.setIcon(MaterialIcons.REMOVE_CIRCLE);
+        jButton2.setMaximumSize(new java.awt.Dimension(50, 50));
+        jButton2.setMinimumSize(new java.awt.Dimension(50, 50));
+        jButton2.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jButton2);
 
         jPanelMedia.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
@@ -347,8 +349,8 @@ public class PedidoCardView extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Main;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonMenu;
-    private javax.swing.JComboBox<ProductoVenta> jComboBox1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelGratis;
@@ -405,6 +407,7 @@ public class PedidoCardView extends AbstractViewPanel {
         jideButtonCerrarMesa.addActionListener(getPresenter().getOperation(ACTION_CERRAR_ORDEN));
         jideButtonEnviarCocina.addActionListener(getPresenter().getOperation(ACTION_ENVIAR_ELABORAR));
         jButton1.addActionListener(getPresenter().getOperation(ACTION_ADD_PRODUCTO));
+        jButton2.addActionListener(getPresenter().getOperation(ACTION_REMOVE_PRODUCTO));
 
         jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_ADD_NOTA)));
         jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_IMPRIMIR_CIERRE_PARCIAL)));
@@ -421,9 +424,6 @@ public class PedidoCardView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_LISTA_PRODUCTO_ORDEN),
                 getPresenter().getModel(PROP_PRODUCTO_ORDEN_SELECCIONADO)));
 
-        Bindings.bind(jComboBox1, new SelectionInList<ProductoVenta>(
-                getPresenter().getModel(PROP_LISTA_PRODUCTOS_VENTA),
-                getPresenter().getModel(PROP_PRODUCTO_VENTA_SELECCIONADO)));
 
     }
 
