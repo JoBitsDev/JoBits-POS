@@ -38,7 +38,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
        // jListSecciones.setVisibleRowCount(5);
-       jScrollPane1.getVerticalScrollBar().setUnitIncrement(90);
+       jScrollPane1.getVerticalScrollBar().setUnitIncrement(80);
        jListSecciones.setCellRenderer(new ListCellRenderer<Seccion>() {
             @Override
             public Component getListCellRendererComponent(JList<? extends Seccion> list, Seccion value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -97,11 +97,10 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(200, 100));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(200, 120));
 
         jListSecciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListSecciones.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
-        jListSecciones.setSize(new java.awt.Dimension(0, 0));
         jListSecciones.setVisibleRowCount(-1);
         jScrollPane1.setViewportView(jListSecciones);
 

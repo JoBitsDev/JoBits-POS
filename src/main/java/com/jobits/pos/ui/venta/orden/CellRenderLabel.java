@@ -25,7 +25,7 @@ public class CellRenderLabel extends javax.swing.JPanel {
     public CellRenderLabel(String nombre, String precio, boolean selected) {
         initComponents();
         jTextArea1.setText(nombre);
-        jLabel2.setText(precio);
+        jLabelPrecio.setText(precio);
         setOpaque(selected);
         if (precio == null) {
             setIcon(selected, nombre);
@@ -45,16 +45,16 @@ public class CellRenderLabel extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabelIcon = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelPrecio = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
         setBackground(DefaultValues.PRIMARY_COLOR);
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        setMaximumSize(new java.awt.Dimension(150, 90));
-        setMinimumSize(new java.awt.Dimension(150, 90));
+        setMaximumSize(new java.awt.Dimension(170, 140));
+        setMinimumSize(new java.awt.Dimension(170, 90));
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(150, 90));
+        setPreferredSize(new java.awt.Dimension(170, 90));
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 1, true));
@@ -63,12 +63,12 @@ public class CellRenderLabel extends javax.swing.JPanel {
         jLabelIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel1.add(jLabelIcon, java.awt.BorderLayout.PAGE_START);
 
-        jLabel2.setFont(new java.awt.Font(".SF NS Text", 1, 14)); // NOI18N
-        jLabel2.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel2.setText("Precio");
-        jLabel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
-        jPanel1.add(jLabel2, java.awt.BorderLayout.PAGE_END);
+        jLabelPrecio.setFont(new java.awt.Font(".SF NS Text", 1, 14)); // NOI18N
+        jLabelPrecio.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
+        jLabelPrecio.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelPrecio.setText("Precio");
+        jLabelPrecio.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        jPanel1.add(jLabelPrecio, java.awt.BorderLayout.PAGE_END);
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
@@ -78,9 +78,11 @@ public class CellRenderLabel extends javax.swing.JPanel {
 
         jTextArea1.setEditable(false);
         jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(15);
+        jTextArea1.setColumns(18);
         jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
+        jTextArea1.setRows(3);
+        jTextArea1.setToolTipText("");
+        jTextArea1.setWrapStyleWord(true);
         jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jTextArea1.setMaximumSize(new java.awt.Dimension(138, 2147483647));
         jScrollPane1.setViewportView(jTextArea1);
@@ -92,8 +94,8 @@ public class CellRenderLabel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelIcon;
+    private javax.swing.JLabel jLabelPrecio;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
