@@ -69,7 +69,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onAddProductoClick() {
-        getController().addProduct(getBean().getId_orden(), getBean().getProducto_venta_seleccionado());
+        getController().addProduct(getBean().getId_orden(), getBean().getProducto_orden_seleccionado().getProductoVenta());
         getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
     }
 
