@@ -37,8 +37,9 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
-        jListSecciones.setVisibleRowCount(-1);
-        jListSecciones.setCellRenderer(new ListCellRenderer<Seccion>() {
+       // jListSecciones.setVisibleRowCount(5);
+       jScrollPane1.getVerticalScrollBar().setUnitIncrement(90);
+       jListSecciones.setCellRenderer(new ListCellRenderer<Seccion>() {
             @Override
             public Component getListCellRendererComponent(JList<? extends Seccion> list, Seccion value, int index, boolean isSelected, boolean cellHasFocus) {
                 return new CellRenderLabel(value.getNombreSeccion(), null, isSelected);
@@ -95,16 +96,13 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jPanel3.setFocusable(false);
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 1));
-        jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setFocusable(false);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(200, 100));
 
         jListSecciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jListSecciones.setFocusable(false);
         jListSecciones.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
-        jListSecciones.setMaximumSize(new java.awt.Dimension(52, 100));
-        jListSecciones.setMinimumSize(new java.awt.Dimension(52, 100));
-        jListSecciones.setPreferredSize(new java.awt.Dimension(52, 100));
+        jListSecciones.setSize(new java.awt.Dimension(0, 0));
+        jListSecciones.setVisibleRowCount(-1);
         jScrollPane1.setViewportView(jListSecciones);
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
