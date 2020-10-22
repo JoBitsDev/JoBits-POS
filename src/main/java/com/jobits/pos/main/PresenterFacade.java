@@ -35,7 +35,7 @@ import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
-import com.jobits.pos.ui.mainmenu.MainMenuPresenter;
+import com.jobits.pos.ui.mainmenu.presenter.MainMenuPresenter;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.almacen.OldAlmacenListView;

@@ -12,7 +12,7 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
-import static com.jobits.pos.ui.mainmenu.MenuBarClassPresenter.ACTION_SHOW_ACERCA_DE;
+import static com.jobits.pos.ui.mainmenu.presenter.MenuBarClassPresenter.ACTION_SHOW_ACERCA_DE;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Calendar;

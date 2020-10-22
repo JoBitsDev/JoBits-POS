@@ -17,7 +17,7 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
-import com.jobits.pos.ui.mainmenu.MainMenuPresenter;
+import com.jobits.pos.ui.mainmenu.presenter.MainMenuPresenter;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.login.UbicacionView;
