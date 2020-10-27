@@ -8,7 +8,6 @@ package com.jobits.pos.adapters.repo.impl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Configuracion;
