@@ -27,6 +27,7 @@ import java.util.Optional;
 public class ConfigurationViewPresenter extends AbstractViewPresenter<ConfiguracionViewModel> {
 
     public static final String ACTION_APPLY = "Aplicar";
+    public static final String ACTION_CANCEL = "Cancelar";
 
     private ConfiguracionService service;
 
@@ -43,6 +44,13 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
             @Override
             public Optional doAction() {
                 onAplicarClick();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_CANCEL) {
+            @Override
+            public Optional doAction() {
+                Application.getInstance().getNavigator().navigateUp();
                 return Optional.empty();
             }
         });
