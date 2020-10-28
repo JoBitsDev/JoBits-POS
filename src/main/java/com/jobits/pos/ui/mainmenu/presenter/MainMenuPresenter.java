@@ -9,12 +9,10 @@ import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.MainMenuService;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
-import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.venta.VentaDetailView;
@@ -49,27 +47,14 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                 registerOperation(onComenzarVentaClick(v.toString()));
                 continue;
             }
-            if (v == MainMenuController.MenuButtons.LICENCIA) {
-                registerOperation(onLicenciaClick(v.toString()));
-                continue;
-            }
             registerOperation(onMenuClick(v.toString(), v.getNivelMinimoAcceso()));
 
         }
     }
 
-    private AbstractViewAction onLicenciaClick(String actionName) {
-        return new AbstractViewAction(actionName) {
-            @Override
-            public Optional doAction() {
-                NavigationService.getInstance().navigateTo(actionName, null, DisplayType.POPUP);
-                return Optional.empty();//TODO: pifia
-            }
-        };
-    }
 
     private AbstractViewAction onComenzarVentaClick(String actionName) {
-        return new AbstractViewAction(actionName) {
+        return new LicencedViewAction(actionName) {
             @Override
             public Optional doAction() {
                 Optional<String> ret = Optional.empty();
@@ -98,7 +83,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
     }
 
     private AbstractViewAction onMenuClick(String actionName, int nivelDeAcceso) {
-        return new AbstractViewAction(actionName) {
+        return new LicencedViewAction(actionName) {
             @Override
             public Optional doAction() {
                 if (nivelDeAccesoAutenticado >= nivelDeAcceso) {
@@ -120,4 +105,16 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
         return Optional.empty();
     }
 
+    private abstract class LicencedViewAction extends AbstractViewAction {//TODO: falta actualizar la licencia en tiempo real
+
+        public LicencedViewAction(String actionName) {
+            super(actionName);
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return service.estaActivaLaLicencia();
+        }
+
+    }
 }
