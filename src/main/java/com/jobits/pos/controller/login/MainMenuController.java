@@ -6,16 +6,13 @@
 package com.jobits.pos.controller.login;
 
 import com.jobits.pos.controller.backup.SincronizacionController;
-import com.jobits.pos.controller.AbstractController;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
-import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import java.util.Date;
@@ -45,6 +42,11 @@ public class MainMenuController implements MainMenuService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean estaActivaLaLicencia() {
+        return getEstadoLicencia().LICENCIA_ACTIVA;
     }
 
     public Licence getEstadoLicencia() {
@@ -106,7 +108,7 @@ public class MainMenuController implements MainMenuService {
         //Contabilidad
         //
         VENTAS(3, "Ventas"),
-        ESTADISTICAS(3,"Estadisticas"),
+        ESTADISTICAS(3, "Estadisticas"),
         CUENTAS_CONTABLES(4),
         PRESUPUESTO(4),
         COMENZAR_VENTAS(0, "Comenzar Turno"),
