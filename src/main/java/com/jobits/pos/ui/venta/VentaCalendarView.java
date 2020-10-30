@@ -401,9 +401,6 @@ public class VentaCalendarView extends AbstractViewPanel {
                 int relativePos = linearPos - getPresenter().getModel(VentaCalendarViewModel.PROP_MONTH_OFFSET).intValue();
 
                 if (relativePos > 0) {
-                    if (relativePos >= getItemsSize()) {
-                        return null;
-                    }
                     return getObjectAt(relativePos);
                 }
                 return null;

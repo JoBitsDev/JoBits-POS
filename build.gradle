@@ -65,6 +65,10 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.jidesoft/jide-oss
     compile group: 'com.jidesoft', name: 'jide-oss', version: '3.6.18'
+    
+    // JAX-B dependencies for JDK 9+
+    implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
 
     //  implementation fileTree(dir: 'lib',include: '*.jar')
 

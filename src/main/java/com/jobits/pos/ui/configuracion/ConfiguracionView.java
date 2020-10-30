@@ -51,6 +51,7 @@ public class ConfiguracionView extends AbstractViewPanel {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel12 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getAcceptButton();
 
         jPanelY.setLayout(new java.awt.BorderLayout());
@@ -95,6 +96,10 @@ public class ConfiguracionView extends AbstractViewPanel {
 
         jPanel1.setMinimumSize(new java.awt.Dimension(138, 60));
 
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(130, 50));
+        jPanel1.add(jButtonCancelar);
+
         jButtonAceptar.setText("Guardar cambios");
         jButtonAceptar.setPreferredSize(new java.awt.Dimension(130, 50));
         jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -115,6 +120,7 @@ public class ConfiguracionView extends AbstractViewPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JPanel jPanel1;
@@ -142,6 +148,7 @@ public class ConfiguracionView extends AbstractViewPanel {
     public void wireUp() {
         // Bindings.bind(jSpinner1, "value", getPresenter().getModel(R.SettingID.SINCRONIZACION_TIEMPO_LOOP.toString()));
         jButtonAceptar.setAction(getPresenter().getOperation(ConfigurationViewPresenter.ACTION_APPLY));
+        jButtonCancelar.setAction(getPresenter().getOperation(ConfigurationViewPresenter.ACTION_CANCEL));
 
     }
 

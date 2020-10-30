@@ -5,9 +5,10 @@
  */
 package com.jobits.pos.ui.mainmenu;
 
+import com.jobits.pos.ui.mainmenu.presenter.MenuBarClassPresenter;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
-import static com.jobits.pos.ui.mainmenu.MenuBarClassPresenter.*;
+import static com.jobits.pos.ui.mainmenu.presenter.MenuBarClassPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import javax.swing.JMenuBar;
 
