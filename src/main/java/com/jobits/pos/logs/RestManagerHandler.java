@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.logs;
 
+import com.jobits.pos.adapters.repo.impl.OrdenLogRepo;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -57,6 +58,9 @@ public class RestManagerHandler extends Handler {
         String sms = act + "";
         for (Object o : actedOn) {
             sms += R.SEPARADOR + o;
+        }
+        if (act.equals(Action.AGREGAR)||act.equals(Action.BORRAR)) {
+            OrdenLogRepo.saveToLogFile(sms);
         }
         l.log(lv, sms);
     }
