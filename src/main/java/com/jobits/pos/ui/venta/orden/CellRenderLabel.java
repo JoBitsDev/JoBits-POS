@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.venta.orden;
 
 import com.jobits.pos.ui.DefaultValues;
+import com.jobits.pos.ui.utils.IconFinder;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
@@ -28,7 +29,7 @@ public class CellRenderLabel extends javax.swing.JPanel {
         jLabelPrecio.setText(precio);
         setOpaque(selected);
         if (precio == null) {
-            setIcon(selected, nombre);
+            jLabelIcon.setIcon(new IconFinder().setIcon(selected, nombre));
         } else {
             jLabelIcon.setVisible(false);
         }
@@ -100,79 +101,5 @@ public class CellRenderLabel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
-
-    private void setIcon(boolean selected, String name) {
-        String resPath = "/restManager/resources/food & drinks/";
-        String nombre = name.toLowerCase();
-        if (selected) {
-            if (nombre.contains("coctel") || nombre.contains("cocktail")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "cocktail" + "_color.png")));
-            } else if (nombre.contains("jugo")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "jugo" + "_color.png")));
-            } else if (nombre.contains("cerveza")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "beer" + "_color.png")));
-            } else if (nombre.contains("bebida")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "bebida" + "_color.png")));
-            } else if (nombre.contains("wiskey") || nombre.contains("whiskey")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "whiskey" + "_color.png")));
-            } else if (nombre.contains("vino")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "vino" + "_color.png")));
-            } else if (nombre.contains("entrante")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "entrante" + "_color.png")));
-            } else if (nombre.contains("postre") || nombre.contains("dulce")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "postre" + "_color.png")));
-            } else if (nombre.contains("huevo")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "huevo" + "_color.png")));
-            } else if (nombre.contains("pizza")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pizza" + "_color.png")));
-            } else if (nombre.contains("carne") || nombre.contains("res")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "carne" + "_color.png")));
-            } else if (nombre.contains("pollo")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pollo" + "_color.png")));
-            } else if (nombre.contains("hamburguesa") || nombre.contains("pan")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "burger" + "_color.png")));
-            } else if (nombre.contains("pescado") || nombre.contains("marisco")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pescado" + "_color.png")));
-            } else if (nombre.contains("entremes") || nombre.contains("plato")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "plato" + "_color.png")));
-            } else {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "varios" + "_color.png")));
-            }
-        } else {
-            if (nombre.contains("coctel") || nombre.contains("cocktail")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "cocktail" + "_gray.png")));
-            } else if (nombre.contains("jugo")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "jugo" + "_gray.png")));
-            } else if (nombre.contains("cerveza")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "beer" + "_gray.png")));
-            } else if (nombre.contains("bebida")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "bebida" + "_gray.png")));
-            } else if (nombre.contains("wiskey") || nombre.contains("whiskey")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "whiskey" + "_gray.png")));
-            } else if (nombre.contains("vino")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "vino" + "_gray.png")));
-            } else if (nombre.contains("entrante")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "entrante" + "_gray.png")));
-            } else if (nombre.contains("postre") || nombre.contains("dulce")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "postre" + "_gray.png")));
-            } else if (nombre.contains("huevo")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "huevo" + "_gray.png")));
-            } else if (nombre.contains("pizza")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pizza" + "_gray.png")));
-            } else if (nombre.contains("carne") || nombre.contains("res")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "carne" + "_gray.png")));
-            } else if (nombre.contains("pollo")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pollo" + "_gray.png")));
-            } else if (nombre.contains("hamburguesa") || nombre.contains("pan")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "burger" + "_gray.png")));
-            } else if (nombre.contains("pescado") || nombre.contains("marisco")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "pescado" + "_gray.png")));
-            } else if (nombre.contains("entremes") || nombre.contains("plato")) {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "plato" + "_gray.png")));
-            } else {
-                jLabelIcon.setIcon(new ImageIcon(getClass().getResource(resPath + "varios" + "_gray.png")));
-            }
-        }
-    }
 
 }
