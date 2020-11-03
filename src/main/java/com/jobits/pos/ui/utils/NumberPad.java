@@ -28,9 +28,10 @@ public class NumberPad extends javax.swing.JDialog {
 
     public void init() {
         setUndecorated(true);
-        setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
         ComponentMover cr = new ComponentMover(this, jPanel1);
+        jTextFieldEntrada.setText("");
     }
 
     public String showView() {
