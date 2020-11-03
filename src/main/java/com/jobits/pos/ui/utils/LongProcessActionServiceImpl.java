@@ -57,7 +57,7 @@ public abstract class LongProcessActionServiceImpl implements LongProcessActionS
 
     /**
      *
-     * @deprecated
+     * @Deprecated 
      */
     protected abstract void longProcessMethod();
 
