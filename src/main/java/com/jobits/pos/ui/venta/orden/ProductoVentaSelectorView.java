@@ -7,15 +7,18 @@ package com.jobits.pos.ui.venta.orden;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.RestManagerListModel;
+import com.jobits.pos.ui.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel;
+import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel.*;
 import java.awt.Component;
-import javax.swing.JButton;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
@@ -24,6 +27,8 @@ import javax.swing.ListCellRenderer;
  * @author Jorge
  */
 public class ProductoVentaSelectorView extends AbstractViewPanel {
+
+    BindableListIntelliHint<ProductoVenta> autoCompleteModel;
 
     public ProductoVentaSelectorView(AbstractViewPresenter presenter) {
         super(presenter);
@@ -37,9 +42,9 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
-       // jListSecciones.setVisibleRowCount(5);
-       jScrollPane1.getVerticalScrollBar().setUnitIncrement(80);
-       jListSecciones.setCellRenderer(new ListCellRenderer<Seccion>() {
+        // jListSecciones.setVisibleRowCount(5);
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(80);
+        jListSecciones.setCellRenderer(new ListCellRenderer<Seccion>() {
             @Override
             public Component getListCellRendererComponent(JList<? extends Seccion> list, Seccion value, int index, boolean isSelected, boolean cellHasFocus) {
                 return new CellRenderLabel(value.getNombreSeccion(), null, isSelected);
@@ -63,6 +68,24 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
                 getPresenter().getModel(ProductoVentaSelectorViewModel.PROP_LISTAPRODUCTOS),
                 getPresenter().getModel(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO)));
 
+        Bindings.bind(jTextFieldSearch, getPresenter().getModel(PROP_PV_FILTRADO));
+        Bindings.bind(jTextFieldSearch, "enabled", getPresenter().getModel(PROP_CAMPO_BUSQUEDA_ENABLED));
+
+        getPresenter().addBeanPropertyChangeListener(PROP_PV_FILTRADO, (PropertyChangeEvent evt) -> {
+            jList2.revalidate();
+            jList2.repaint();
+            jListSecciones.revalidate();
+            jListSecciones.repaint();
+        });
+        getPresenter().addBeanPropertyChangeListener(PROP_CAMPO_BUSQUEDA_ENABLED, (PropertyChangeEvent evt) -> {
+            if ((boolean) evt.getNewValue()) {
+                jTextFieldSearch.requestFocusInWindow();
+            }
+        });
+        getPresenter().addBeanPropertyChangeListener(PROP_LISTAPRODUCTOS, (PropertyChangeEvent evt) -> {
+            jList2.revalidate();
+            jList2.repaint();
+        });
     }
 
     /**
@@ -75,7 +98,9 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        jPanelBusqueda = new javax.swing.JPanel();
+        jTextFieldSearch = new javax.swing.JTextField();
+        jLabelBuscarIcon = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListSecciones = new javax.swing.JList<>();
@@ -88,9 +113,31 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-        jTextField1.setText("Buscar...");
-        jPanel2.add(jTextField1, java.awt.BorderLayout.PAGE_START);
+        jPanelBusqueda.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 200, 10, 200));
+        jPanelBusqueda.setPreferredSize(new java.awt.Dimension(100, 50));
+        jPanelBusqueda.setLayout(new java.awt.BorderLayout());
+
+        jTextFieldSearch.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jTextFieldSearch.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldSearchFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldSearchFocusLost(evt);
+            }
+        });
+        jTextFieldSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldSearchKeyTyped(evt);
+            }
+        });
+        jPanelBusqueda.add(jTextFieldSearch, java.awt.BorderLayout.CENTER);
+
+        jLabelBuscarIcon.setIcon(MaterialIcons.SEARCH);
+        jPanelBusqueda.add(jLabelBuscarIcon, java.awt.BorderLayout.LINE_END);
+
+        jPanel2.add(jPanelBusqueda, java.awt.BorderLayout.NORTH);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(8, 0, 0, 0), "Secciones"));
         jPanel3.setFocusable(false);
@@ -129,15 +176,23 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-
+    private void jTextFieldSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldSearchKeyTyped
+    }//GEN-LAST:event_jTextFieldSearchKeyTyped
+    private void jTextFieldSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSearchFocusGained
+        jTextFieldSearch.setText("");
+    }//GEN-LAST:event_jTextFieldSearchFocusGained
+    private void jTextFieldSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSearchFocusLost
+    }//GEN-LAST:event_jTextFieldSearchFocusLost
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelBuscarIcon;
     private javax.swing.JList<ProductoVenta> jList2;
     private javax.swing.JList<Seccion> jListSecciones;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelBusqueda;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldSearch;
     // End of variables declaration//GEN-END:variables
 }
