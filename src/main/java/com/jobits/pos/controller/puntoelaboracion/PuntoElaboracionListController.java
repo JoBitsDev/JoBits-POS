@@ -22,7 +22,7 @@ import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
  * @author Jorge
  *
  */
-public class PuntoElaboracionListController extends OldAbstractListController<Cocina> implements PuntoElaboracionListService{
+public class PuntoElaboracionListController extends OldAbstractListController<Cocina> implements PuntoElaboracionListService {
 
     public PuntoElaboracionListController() {
         super(CocinaDAO.getInstance());
@@ -47,28 +47,30 @@ public class PuntoElaboracionListController extends OldAbstractListController<Co
     @Override
     public void update(Cocina selected) {
         String editCocina = showInputDialog(getView(), "Introduzca el nuevo nombre al punto de elaboracion", selected.getNombreCocina());
-        getItems().stream().filter((x)
-                -> (x.getNombreCocina().toLowerCase().equals(editCocina.toLowerCase()))).forEachOrdered((_item) -> {
-            throw new ValidatingException(getView());
-        });
-        selected.setNombreCocina(editCocina);
-        setSelected(selected);
-        super.update();
+        if (editCocina != null) {
+            getItems().stream().filter((x)
+                    -> (x.getNombreCocina().toLowerCase().equals(editCocina.toLowerCase()))).forEachOrdered((_item) -> {
+                throw new ValidatingException(getView());
+            });
+            selected.setNombreCocina(editCocina);
+            setSelected(selected);
+            super.update();
+        }
 
     }
 
     @Override
     public void destroy(Cocina selected) {
         if (!selected.getProductoVentaList().isEmpty()) {
-            if (showConfirmDialog(getView(),"El punto de elaboracion " + selected
-                        + " contiene " + selected.getProductoVentaList().size() 
+            if (showConfirmDialog(getView(), "El punto de elaboracion " + selected
+                    + " contiene " + selected.getProductoVentaList().size()
                     + " productos de venta enlazados \n" + "presione si para borrar los productos de venta, no para cancelar")) {
                 for (ProductoVenta p : selected.getProductoVentaList()) {
                     p.setCocinacodCocina(null);
                     p.setVisible(false);
                     ProductoVentaDAO.getInstance().edit(p);
                 }
-            }else{
+            } else {
                 return;
             }
         }

@@ -162,7 +162,7 @@ public abstract class AbstractController<T> implements Controller {
         if (ret != null) {
             return ret;
         } else {
-            throw new HiddenException();
+            return "";
         }
     }
 
@@ -171,7 +171,7 @@ public abstract class AbstractController<T> implements Controller {
         if (ret != null) {
             return ret;
         } else {
-            throw new HiddenException();
+            return "";
         }
     }
 
@@ -183,7 +183,7 @@ public abstract class AbstractController<T> implements Controller {
         if (ret != null) {
             return ret;
         } else {
-            throw new HiddenException();
+            return "";
         }
     }
 
