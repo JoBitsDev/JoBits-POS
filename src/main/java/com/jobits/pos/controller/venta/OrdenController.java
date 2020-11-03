@@ -1,6 +1,7 @@
 package com.jobits.pos.controller.venta;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jidesoft.dialog.JideOptionPane;
 import com.jobits.pos.adapters.repo.impl.ConfigDAO;
 import com.jobits.pos.adapters.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.adapters.repo.impl.MesaDAO;
@@ -35,6 +36,7 @@ import com.jobits.pos.servicios.impresion.formatter.CancelacionCocinaFormatter;
 import com.jobits.pos.servicios.impresion.formatter.CocinaFormatter;
 import com.jobits.pos.servicios.impresion.formatter.OrdenFormatter;
 import com.jobits.pos.ui.utils.CalcularCambioView;
+import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
 import java.awt.Container;
 import java.text.ParseException;
@@ -45,6 +47,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * FirstDream
@@ -66,26 +69,34 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     @Override
     public void addNota(String codOrden, ProductovOrden prod) {
-        Nota nota = prod.getNota();
-        if (nota == null) {
-            String nuevanota = showInputDialog(getView(), "Introduzca la nota a adjuntar");
-            NotaPK pk = new NotaPK(
-                    prod.getProductovOrdenPK().getProductoVentapCod(), prod.getProductovOrdenPK().getOrdencodOrden());
-            Nota n = new Nota(pk);
-            n.setDescripcion(nuevanota);
-            n.setProductovOrden(prod);
+        if (prod != null) {
+            Nota nota = prod.getNota();
+            if (nota == null) {
+                String nuevanota = showInputDialog(getView(), "Introduzca la nota a adjuntar");
+                NotaPK pk = new NotaPK(
+                        prod.getProductovOrdenPK().getProductoVentapCod(), prod.getProductovOrdenPK().getOrdencodOrden());
+                Nota n = new Nota(pk);
+                n.setDescripcion(nuevanota);
+                n.setProductovOrden(prod);
 
-            prod.setNota(n);
-            NotaDAO.getInstance().create(n);
-            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, codOrden, n.getDescripcion());
-            ProductovOrdenDAO.getInstance().edit(prod);
+                prod.setNota(n);
+                NotaDAO.getInstance().create(n);
+                RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, codOrden, n.getDescripcion());
+                ProductovOrdenDAO.getInstance().edit(prod);
 
+            } else {
+                String notaAntigua = nota.getDescripcion();
+                String nuevaNota = showInputDialog(getView(), "Edite la nota anterior", notaAntigua);
+                if (nuevaNota.equals("")) {
+                    nota.setDescripcion(notaAntigua);
+                } else {
+                    nota.setDescripcion(nuevaNota);
+                }
+                NotaDAO.getInstance().edit(nota);
+                RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, codOrden, nota.getDescripcion());
+            }
         } else {
-            String notaAntigua = nota.getDescripcion();
-            String nuevaNota = showInputDialog(getView(), "Edite la nota anterior", notaAntigua);
-            nota.setDescripcion(nuevaNota);
-            NotaDAO.getInstance().edit(nota);
-            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, codOrden, nota.getDescripcion());
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -108,7 +119,11 @@ public class OrdenController extends AbstractFragmentController<Orden>
             }
             if (found) {
                 cantidadAgregada = founded.getCantidad();
-                float cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta()));
+                float cantidad = 0;
+                String value = new NumberPad(null).showView();
+                if (!value.equals("")) {
+                    cantidad = Float.parseFloat(value);
+                }
                 if (!esDespachable(selected, o, cantidad)) {
                     throw new ValidatingException(getView(), "No hay existencias de" + selected + " para elaborar");
                 }
@@ -118,7 +133,12 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 founded = new ProductovOrden(selected.getCodigoProducto(), o.getCodOrden());
                 founded.setOrden(o);
                 founded.setProductoVenta(selected);
-                founded.setCantidad(Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta())));
+                String value = new NumberPad(null).showView();
+                if (!value.equals("")) {
+                    founded.setCantidad(Float.parseFloat(value));
+                } else {
+                    founded.setCantidad(0);
+                }
                 founded.setEnviadosacocina((float) 0);
                 founded.setNumeroComensal(0);
                 if (!esDespachable(selected, o, founded.getCantidad())) {
@@ -436,8 +456,8 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 }
             }
         }
-        throw new IllegalArgumentException("El Producto " + producto 
-                + " no se puede agregar a la orden " + o 
+        throw new IllegalArgumentException("El Producto " + producto
+                + " no se puede agregar a la orden " + o
                 + "debido a que este no esta disponible en el area de la orden");
     }
 
