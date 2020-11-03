@@ -48,13 +48,15 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel2 = new javax.swing.JPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonCrear = MaterialComponentsFactory.Buttons.getAcceptButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel4 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelInputs = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jXLabelPCod = new org.jdesktop.swingx.JXLabel();
-        jPanel7 = new javax.swing.JPanel();
+        jPanel12 = new javax.swing.JPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
+        jPanel1 = new javax.swing.JPanel();
+        jLabelIProductImage = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio venta",R.COIN_SUFFIX);
         jTextFieldPrecioCosto = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio de costo",R.COIN_SUFFIX);
@@ -62,7 +64,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jButtonAddCocina = MaterialComponentsFactory.Buttons.getAddButton();
         jComboBoxSECCION = MaterialComponentsFactory.Displayers.getComboBox();
         jButtonAddSeccion = MaterialComponentsFactory.Buttons.getAddButton();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
         jPanelTable = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel6 = new javax.swing.JPanel();
         jCheckBoxProductoElaborado = MaterialComponentsFactory.Input.getCheckBox();
@@ -71,7 +72,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel5 = new javax.swing.JPanel();
         jButtonAddInsumo = MaterialComponentsFactory.Buttons.getAddButton();
         jXLabelGasto = new org.jdesktop.swingx.JXLabel();
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
         jPanel11 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jTextFieldPagoPorVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", java.util.ResourceBundle.getBundle("Strings").getString("label_comision_por_venta"),R.COIN_SUFFIX);
 
@@ -85,6 +85,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(570, 550));
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setMinimumSize(new java.awt.Dimension(239, 70));
@@ -101,38 +102,51 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setToolTipText("");
-        jScrollPane1.setAutoscrolls(true);
-        jScrollPane1.setOpaque(false);
-        jScrollPane1.setWheelScrollingEnabled(false);
-
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setMinimumSize(new java.awt.Dimension(20, 20));
-        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.PAGE_AXIS));
-
-        jPanelInputs.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), bundle.getString("label_basico"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
+        jPanelInputs.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanelInputs.setLayout(new javax.swing.BoxLayout(jPanelInputs, javax.swing.BoxLayout.PAGE_AXIS));
-
-        jPanel8.setOpaque(false);
-        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jXLabelPCod.setText("P-Cod");
-        jPanel8.add(jXLabelPCod);
-
-        jPanelInputs.add(jPanel8);
 
         jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         jPanel7.setMaximumSize(new java.awt.Dimension(2147483647, 80));
         jPanel7.setMinimumSize(new java.awt.Dimension(14, 70));
         jPanel7.setOpaque(false);
-        jPanel7.setPreferredSize(new java.awt.Dimension(14, 70));
+        jPanel7.setPreferredSize(new java.awt.Dimension(14, 120));
         jPanel7.setLayout(new java.awt.BorderLayout());
+
+        jPanel8.setOpaque(false);
+        jPanel8.setPreferredSize(new java.awt.Dimension(44, 25));
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jXLabelPCod.setText("P-Cod");
+        jPanel8.add(jXLabelPCod);
+
+        jPanel7.add(jPanel8, java.awt.BorderLayout.NORTH);
+
+        jPanel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0));
+        jPanel12.setOpaque(false);
+        jPanel12.setLayout(new java.awt.BorderLayout());
 
         jTextFieldNombre.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jTextFieldNombre.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
-        jPanel7.add(jTextFieldNombre, java.awt.BorderLayout.CENTER);
+        jPanel12.add(jTextFieldNombre, java.awt.BorderLayout.CENTER);
+
+        jPanel7.add(jPanel12, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setOpaque(false);
+        jPanel1.setPreferredSize(new java.awt.Dimension(70, 70));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jLabelIProductImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelIProductImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/pregunta_color.png"))); // NOI18N
+        jLabelIProductImage.setToolTipText(null);
+        jLabelIProductImage.setPreferredSize(new java.awt.Dimension(70, 70));
+        jLabelIProductImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelIProductImageMouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabelIProductImage, java.awt.BorderLayout.CENTER);
+
+        jPanel7.add(jPanel1, java.awt.BorderLayout.WEST);
 
         jPanelInputs.add(jPanel7);
 
@@ -183,10 +197,9 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         jPanelInputs.add(jPanel10);
 
-        jPanel4.add(jPanelInputs);
-        jPanel4.add(filler1);
+        jTabbedPane1.addTab(bundle.getString("label_basico"), jPanelInputs); // NOI18N
 
-        jPanelTable.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Inventario", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
+        jPanelTable.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanelTable.setMaximumSize(new java.awt.Dimension(2147483647, 500));
         jPanelTable.setMinimumSize(new java.awt.Dimension(438, 100));
         jPanelTable.setLayout(new java.awt.BorderLayout());
@@ -225,7 +238,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         });
         jPanel5.add(jButtonAddInsumo);
 
-        jPanelCrossRef.add(jPanel5, java.awt.BorderLayout.NORTH);
+        jPanelCrossRef.add(jPanel5, java.awt.BorderLayout.PAGE_END);
 
         jXLabelGasto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jXLabelGasto.setText("0.00"); // NOI18N
@@ -233,12 +246,11 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         jPanelTable.add(jPanelCrossRef, java.awt.BorderLayout.CENTER);
 
-        jPanel4.add(jPanelTable);
-        jPanel4.add(filler5);
+        jTabbedPane1.addTab("Inventario", jPanelTable);
 
-        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Otros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
+        jPanel11.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanel11.setMaximumSize(new java.awt.Dimension(32767, 121));
-        jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+        jPanel11.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 100));
 
         jTextFieldPagoPorVenta.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
         jTextFieldPagoPorVenta.setMaximumSize(new java.awt.Dimension(250, 60));
@@ -246,31 +258,34 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jTextFieldPagoPorVenta.setPreferredSize(new java.awt.Dimension(250, 60));
         jPanel11.add(jTextFieldPagoPorVenta);
 
-        jPanel4.add(jPanel11);
+        jTabbedPane1.addTab("Otros", jPanel11);
 
-        jScrollPane1.setViewportView(jPanel4);
-
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        add(jTabbedPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddInsumoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddInsumoActionPerformed
+
     }//GEN-LAST:event_jButtonAddInsumoActionPerformed
-
-    private void jButtonAddCocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCocinaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAddCocinaActionPerformed
-
-    private void jButtonAddSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddSeccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAddSeccionActionPerformed
 
     private void jCheckBoxProductoElaboradoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxProductoElaboradoStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxProductoElaboradoStateChanged
 
+    private void jButtonAddSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddSeccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAddSeccionActionPerformed
+
+    private void jButtonAddCocinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCocinaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAddCocinaActionPerformed
+
+    private void jLabelIProductImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelIProductImageMouseClicked
+        if (evt.getClickCount() == 2) {
+            getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_EDITAR_IMAGEN).doAction();
+        }
+    }//GEN-LAST:event_jLabelIProductImageMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler5;
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
     private javax.swing.JButton jButtonAddCocina;
@@ -282,11 +297,13 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JCheckBox jCheckBoxProductoElaborado;
     private javax.swing.JComboBox<Cocina> jComboBoxCOCINA;
     private javax.swing.JComboBox<Seccion> jComboBoxSECCION;
+    private javax.swing.JLabel jLabelIProductImage;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -295,7 +312,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelInputs;
     private javax.swing.JPanel jPanelInventario;
     private javax.swing.JPanel jPanelTable;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPagoPorVenta;
     private javax.swing.JTextField jTextFieldPrecioCosto;
@@ -337,16 +354,17 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jButtonCancelar.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_CANCELAR));
         jButtonCrear.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR));
 
+        Bindings.bind(jLabelIProductImage, "icon", getPresenter().getModel(PROP_IMAGEN_PRODUCTO));
         //jButtonCrear.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR));
     }
 
     @Override
     public void uiInit() {
         initComponents();
+
         jComboBoxCOCINA.setOpaque(false);
         jComboBoxSECCION.setOpaque(false);
         jButtonAddCocina.setBorderPainted(true);
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(50);
 
         AddFromPanel.AddFromPanelBuilder<ProductoInsumo, Insumo> builder = AddFromPanel.builder();
         builder.addAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR_INSUMO_FICHA));
@@ -427,6 +445,8 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         builder.tableModel(tableModel);
 
         crossReferencePanel = builder.build();
+        
+        crossReferencePanel.getjPanelOpciones().add(jButtonAddInsumo, 0);
 
         jPanelCrossRef.add(crossReferencePanel, BorderLayout.CENTER);
 

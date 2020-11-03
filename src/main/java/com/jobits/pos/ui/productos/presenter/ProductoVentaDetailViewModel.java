@@ -11,6 +11,8 @@ import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+import java.awt.Dimension;
+import javax.swing.ImageIcon;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -108,7 +110,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
     public void setInsumo_disponible_sel(Insumo insumo_disponible_sel) {
         Insumo oldInsumo_disponible_sel = this.insumo_disponible_sel;
         this.insumo_disponible_sel = insumo_disponible_sel;
-        firePropertyChange(PROP_INSUMO_DISPONIBLE_SEL, oldInsumo_disponible_sel, insumo_disponible_sel,false);
+        firePropertyChange(PROP_INSUMO_DISPONIBLE_SEL, oldInsumo_disponible_sel, insumo_disponible_sel, false);
     }
 
     /**
@@ -129,7 +131,7 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
     public void setInsumo_contenido_seleccionado(ProductoInsumo insumo_contenido_seleccionado) {
         ProductoInsumo oldInsumo_seleccionado = this.insumo_contenido_seleccionado;
         this.insumo_contenido_seleccionado = insumo_contenido_seleccionado;
-        firePropertyChange(PROP_INSUMO_SELECCIONADO, oldInsumo_seleccionado, insumo_contenido_seleccionado,false);
+        firePropertyChange(PROP_INSUMO_SELECCIONADO, oldInsumo_seleccionado, insumo_contenido_seleccionado, false);
     }
 
     //
@@ -138,6 +140,30 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
     private String comision_por_venta;
 
     public static final String PROP_COMISION_POR_VENTA = "comision_por_venta";
+
+    private ImageIcon imagen_producto;
+
+    public static final String PROP_IMAGEN_PRODUCTO = "imagen_producto";
+
+    /**
+     * Get the value of imagen_producto
+     *
+     * @return the value of imagen_producto
+     */
+    public ImageIcon getImagen_producto() {
+        return imagen_producto;
+    }
+
+    /**
+     * Set the value of imagen_producto
+     *
+     * @param imagen_producto new value of imagen_producto
+     */
+    public void setImagen_producto(ImageIcon imagen_producto) {
+        ImageIcon oldImagen_producto = this.imagen_producto;
+        this.imagen_producto = imagen_producto;
+        firePropertyChange(PROP_IMAGEN_PRODUCTO, oldImagen_producto, imagen_producto);
+    }
 
     /**
      * Get the value of lista_insumos_contenidos
