@@ -28,6 +28,8 @@ public class R {
 
     public static String logFilePath = "logs/";
 
+    public static String mediaFilePath = "Media/";
+
     public static String COIN_SUFFIX;
 
     public static Personal loggedUser = null;
@@ -56,7 +58,7 @@ public class R {
 
     public static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("Strings");
 
-    public static UbicacionConexionModel CURRENT_CONNECTION; 
+    public static UbicacionConexionModel CURRENT_CONNECTION;
 
     public static final int MAJOR_VERSION = 2;
 
@@ -103,14 +105,13 @@ public class R {
         IMPRESION_CANTIDAD_COPIAS("PRINTING_COPIES", 0, null),
         IMPRESION_REDONDEO_EXCESO("PRINTING_ROUNDING", 1, null),
         IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA("PRINTING_SECOND_COIN", 1, null),
-        IMPRESION_BUZZER_ON("PRINTING_BUZZER_ON",1,null),
-        
+        IMPRESION_BUZZER_ON("PRINTING_BUZZER_ON", 1, null),
         //
         //Sincronizacion
         //
-        SINCRONIZACION_HABILITAR("SINCRONIZACION_HABILITAR",0,null),
-        SINCRONIZACION_UBICACION("SINCRONIZACION_UBICACION",-1,null),
-        SINCRONIZACION_TIEMPO_LOOP("SINCRONIZACION_TIEMPO_LOOP",60 * 1000,null);
+        SINCRONIZACION_HABILITAR("SINCRONIZACION_HABILITAR", 0, null),
+        SINCRONIZACION_UBICACION("SINCRONIZACION_UBICACION", -1, null),
+        SINCRONIZACION_TIEMPO_LOOP("SINCRONIZACION_TIEMPO_LOOP", 60 * 1000, null);
 
         private final String value;
         private final int integerValue;
