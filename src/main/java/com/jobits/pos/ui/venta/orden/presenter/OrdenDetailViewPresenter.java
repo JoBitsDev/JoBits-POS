@@ -5,12 +5,25 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
+import com.jhw.swing.material.standars.MaterialIcons;
+//import com.jobits.pos.adapters.repo.impl.OrdenTemporalRepo;
 import com.jobits.pos.controller.venta.OrdenService;
+import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.venta.orden.OrdenLogView;
+//import com.jobits.pos.ui.venta.orden.OrdenLogsDetailView;
+import java.beans.PropertyChangeEvent;
+import java.io.File;
+import java.util.List;
 import java.util.Optional;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -28,6 +41,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_ENVIAR_ELABORAR = "Enviar a elaborar";
     public static String ACTION_IMPRIMIR_CIERRE_PARCIAL = "Cierre Parcial";
     public static String ACTION_REMOVE_PRODUCTO = "Eliminar";
+    public static String ACTION_SHOW_LOGS = "Ver Detalles";
     public static String ACTION_SET_AUTORIZO = "Autorizo";
     public static String ACTION_SET_PORCIENTO = "Porciento";
     private String codOrden;
@@ -36,11 +50,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public OrdenDetailViewPresenter(OrdenService controller) {
         super(new OrdenDetailViewModel());
         this.controller = controller;
+        addListeners();
     }
 
     public OrdenDetailViewPresenter(String cod_orden, OrdenService controller) {
         this(controller);
         this.codOrden = cod_orden;
+        addListeners();
         refreshState();
     }
 
@@ -69,8 +85,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onAddProductoClick() {
-        getController().addProduct(getBean().getId_orden(), getBean().getProducto_orden_seleccionado().getProductoVenta());
-        getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        if (getBean().getProducto_orden_seleccionado() != null) {
+            getController().addProduct(getBean().getId_orden(), getBean().getProducto_orden_seleccionado().getProductoVenta());
+            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
     private void onCerrarOrdenClick() {
@@ -87,18 +108,36 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onRemoveProductoCLick() {
-        getController().removeProduct(getCodOrden(), getBean().getProducto_orden_seleccionado(),
-                getBean().getProducto_orden_seleccionado().getCantidad());
-        getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        if (getBean().getProducto_orden_seleccionado() != null) {
+            getController().removeProduct(getCodOrden(), getBean().getProducto_orden_seleccionado(),
+                    getBean().getProducto_orden_seleccionado().getCantidad());
+            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
     }
 
     private void onSetAutorizoClick() {
+        getBean().setEs_autorizo(!getBean().isEs_autorizo());
         getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
+        refreshState();
+//        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
     }
 
-    private void onSetPorcientoClick() {
-        getController().setPorciento(getCodOrden(), getBean().getPorciento_servicio());
-        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
+//    private void onSetPorcientoClick() {
+//        getController().setPorciento(getCodOrden(), getBean().getPorciento_servicio());
+//        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
+//    }
+    private void onVerDetallesClick() {
+        File temporalFile = new File(R.logFilePath + "/Ordenes" + "/" + codOrden + ".txt");
+        if (temporalFile.exists()) {
+            Application.getInstance().getNavigator().navigateTo(
+                    OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay registros de orden: " + codOrden, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override
@@ -116,6 +155,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setPorciento_servicio(instance.getPorciento());
         getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
         getBean().setUsuario(instance.getPersonalusuario().getUsuario());
+        if (getBean().getPorciento_servicio() == 0) {
+            getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                    "/restManager/resources/icons pack/porciento_gris.png")));
+        } else {
+            getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                    "/restManager/resources/icons pack/porciento_indigo.png")));
+        }
         return Optional.empty();
     }
 
@@ -180,11 +226,41 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         registerOperation(new AbstractViewAction(ACTION_SET_PORCIENTO) {
             @Override
             public Optional doAction() {
-                onSetPorcientoClick();
-                refreshState();
+//                onSetPorcientoClick();
+//                refreshState();
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_SHOW_LOGS) {
+            @Override
+            public Optional doAction() {
+                onVerDetallesClick();
+                return Optional.empty();
+            }
+        }
+        );
+    }
+
+    private void addListeners() {
+        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_PORCIENTO_SERVICIO, (PropertyChangeEvent evt) -> {
+            float value = (float) evt.getNewValue();
+            if (value == 0) {
+                getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                        "/restManager/resources/icons pack/porciento_gris.png")));
+            } else {
+                getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                        "/restManager/resources/icons pack/porciento_indigo.png")));
+            }
+            getController().setPorciento(getCodOrden(), value);
+            getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
+            refreshState();
+        }
+        );
+        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_ES_AUTORIZO, (PropertyChangeEvent evt) -> {
+//            System.out.println("Its Happ");
+
+        }
+        );
     }
 
 }

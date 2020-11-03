@@ -13,6 +13,7 @@ import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -79,7 +80,7 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_PORCIENTO_SERVICIO = "porciento_servicio";
 
-    private boolean es_autorizo = false;
+    private boolean es_autorizo = true;
 
     public static final String PROP_ES_AUTORIZO = "es_autorizo";
 
@@ -92,6 +93,30 @@ public class OrdenDetailViewModel extends AbstractViewModel {
     private boolean orden_terminada = false;
 
     public static final String PROP_ORDEN_TERMINADA = "orden_terminada";
+
+    private ImageIcon icono_porciento;
+
+    public static final String PROP_ICONO_PORCIENTO = "icono_porciento";
+
+    /**
+     * Get the value of icono_porciento
+     *
+     * @return the value of icono_porciento
+     */
+    public ImageIcon getIcono_porciento() {
+        return icono_porciento;
+    }
+
+    /**
+     * Set the value of icono_porciento
+     *
+     * @param icono_porciento new value of icono_porciento
+     */
+    public void setIcono_porciento(ImageIcon icono_porciento) {
+        ImageIcon oldIcono_porciento = this.icono_porciento;
+        this.icono_porciento = icono_porciento;
+        firePropertyChange(PROP_ICONO_PORCIENTO, oldIcono_porciento, icono_porciento);
+    }
 
     /**
      * Get the value of orden_terminada
