@@ -6,6 +6,7 @@
 package com.jobits.pos.controller.login;
 
 import com.jobits.pos.controller.venta.VentaDetailController;
+import java.beans.PropertyChangeListener;
 import java.util.Date;
 
 /**
@@ -19,5 +20,6 @@ public interface MainMenuService {
     public VentaDetailController comenzarVentasDependiente();
     
     public VentaDetailController comenzarVentasCajero();
-    
+
+    public boolean estaActivaLaLicencia();
 }
