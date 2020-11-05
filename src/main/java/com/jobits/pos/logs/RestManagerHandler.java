@@ -36,12 +36,12 @@ public class RestManagerHandler extends Handler {
     public RestManagerHandler(Class modelClassLog) {
         setFormatter(new RestManagerFormatter());
         try {
-            logFolder = new File(R.logFilePath + "/" + modelClassLog.getSimpleName());
+            logFolder = new File(R.LOGS_FILE_PATH + "/" + modelClassLog.getSimpleName());
             if (!logFolder.exists()) {
                 logFolder.mkdirs();
             }
 
-            logFile = new File(R.logFilePath + "/" + modelClassLog.getSimpleName()
+            logFile = new File(R.LOGS_FILE_PATH + "/" + modelClassLog.getSimpleName()
                     + "/" + modelClassLog.getSimpleName() + "-" + R.DATE_FORMAT_FOR_LOGS.format(new Date()) + ".txt");
             logFileWriter = new FileWriter(logFile,true);
             logBuffer = new BufferedWriter(logFileWriter);

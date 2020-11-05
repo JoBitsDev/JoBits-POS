@@ -26,9 +26,11 @@ public class R {
 
     public static String REST_NAME = null;
 
-    public static String logFilePath = "logs/";
+    public static String LOGS_FILE_PATH = "logs/";
 
-    public static String mediaFilePath = "Media/";
+    public static String MEDIA_FILE_PATH = "Media/";
+    
+    public static String DEFAULT_IMAGE_PRODUCT = "Media/default_image_product.png";
 
     public static String COIN_SUFFIX;
 

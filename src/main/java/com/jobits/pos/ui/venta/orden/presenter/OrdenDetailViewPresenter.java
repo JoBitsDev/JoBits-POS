@@ -131,7 +131,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 //        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
 //    }
     private void onVerDetallesClick() {
-        File temporalFile = new File(R.logFilePath + "/Ordenes" + "/" + codOrden + ".txt");
+        File temporalFile = new File(R.LOGS_FILE_PATH + "/Ordenes" + "/" + codOrden + ".txt");
         if (temporalFile.exists()) {
             Application.getInstance().getNavigator().navigateTo(
                     OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);

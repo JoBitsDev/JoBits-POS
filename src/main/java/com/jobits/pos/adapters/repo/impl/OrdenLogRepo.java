@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class OrdenLogRepo {
 
-    private static final String LOGS_FILE_PATH = R.logFilePath + "Ordenes/";
+    private static final String LOGS_FILE_PATH = R.LOGS_FILE_PATH + "Ordenes/";
 
     public static void saveToLogFile(String value) {
         try {
