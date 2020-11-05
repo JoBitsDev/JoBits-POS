@@ -5,8 +5,10 @@
  */
 package com.jobits.pos.ui.venta.orden;
 
+import com.jobits.pos.controller.imagemanager.ImageManagerController;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.utils.IconFinder;
+import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 
@@ -22,8 +24,9 @@ public class CellRenderLabel extends javax.swing.JPanel {
      * @param nombre
      * @param precio
      * @param selected
+     * @param rutaImagenProducto
      */
-    public CellRenderLabel(String nombre, String precio, boolean selected) {
+    public CellRenderLabel(String nombre, String precio, boolean selected, String rutaImagenProducto) {
         initComponents();
         jTextArea1.setText(nombre);
         jLabelPrecio.setText(precio);
@@ -31,7 +34,7 @@ public class CellRenderLabel extends javax.swing.JPanel {
         if (precio == null) {
             jLabelIcon.setIcon(new IconFinder().setIcon(selected, nombre));
         } else {
-            jLabelIcon.setVisible(false);
+            jLabelIcon.setIcon(ImageManagerController.loadImageIcon(rutaImagenProducto, new Dimension(50, 50)));//Hacer la dimension generica
         }
     }
 
@@ -52,7 +55,7 @@ public class CellRenderLabel extends javax.swing.JPanel {
 
         setBackground(DefaultValues.PRIMARY_COLOR);
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        setMaximumSize(new java.awt.Dimension(170, 140));
+        setMaximumSize(new java.awt.Dimension(170, 120));
         setMinimumSize(new java.awt.Dimension(170, 90));
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(170, 90));
@@ -62,6 +65,7 @@ public class CellRenderLabel extends javax.swing.JPanel {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabelIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelIcon.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel1.add(jLabelIcon, java.awt.BorderLayout.PAGE_START);
 
         jLabelPrecio.setFont(new java.awt.Font(".SF NS Text", 1, 14)); // NOI18N

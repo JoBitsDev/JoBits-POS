@@ -47,13 +47,13 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jListSecciones.setCellRenderer(new ListCellRenderer<Seccion>() {
             @Override
             public Component getListCellRendererComponent(JList<? extends Seccion> list, Seccion value, int index, boolean isSelected, boolean cellHasFocus) {
-                return new CellRenderLabel(value.getNombreSeccion(), null, isSelected);
+                return new CellRenderLabel(value.getNombreSeccion(), null, isSelected, null);
             }
         });
         jList2.setCellRenderer(new ListCellRenderer<ProductoVenta>() {
             @Override
             public Component getListCellRendererComponent(JList<? extends ProductoVenta> list, ProductoVenta value, int index, boolean isSelected, boolean cellHasFocus) {
-                return new CellRenderLabel(value.getNombre(), utils.setDosLugaresDecimales(value.getPrecioVenta()), isSelected);
+                return new CellRenderLabel(value.getNombre(), utils.setDosLugaresDecimales(value.getPrecioVenta()), isSelected, value.getDescripcion());
             }
         });
     }
@@ -165,7 +165,8 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jScrollPane2.setFocusable(false);
 
         jList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList2.setFixedCellWidth(100);
+        jList2.setFixedCellHeight(120);
+        jList2.setFixedCellWidth(140);
         jList2.setFocusable(false);
         jList2.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         jList2.setVisibleRowCount(-1);
