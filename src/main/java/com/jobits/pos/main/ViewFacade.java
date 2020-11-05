@@ -20,6 +20,7 @@ import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.dashboard.DashBoardView;
+import com.jobits.pos.ui.imagemanager.ImageManagerView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
@@ -124,6 +125,8 @@ public class ViewFacade {
                 return new ReportarBugView(p);
             case OrdenLogView.VIEW_NAME:
                 return new OrdenLogView(p);
+            case ImageManagerView.VIEW_NAME:
+                return new ImageManagerView(p);
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListView((AbstractListViewPresenter) p);
             case LicenceDialogView.VIEW_NAME:
