@@ -145,6 +145,55 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_IMAGEN_PRODUCTO = "imagen_producto";
 
+    private String ruta_imagen_producto;
+
+    public static final String PROP_RUTA_IMAGEN_PRODUCTO = "ruta_imagen_producto";
+
+    private boolean image_product_visible = true;
+
+    public static final String PROP_IMAGE_PRODUCT_VISIBLE = "image_product_visible";
+    
+
+    /**
+     * Get the value of image_product_visible
+     *
+     * @return the value of image_product_visible
+     */
+    public boolean isImage_product_visible() {
+        return image_product_visible;
+    }
+
+    /**
+     * Set the value of image_product_visible
+     *
+     * @param image_product_visible new value of image_product_visible
+     */
+    public void setImage_product_visible(boolean image_product_visible) {
+        boolean oldImage_product_visible = this.image_product_visible;
+        this.image_product_visible = image_product_visible;
+        firePropertyChange(PROP_IMAGE_PRODUCT_VISIBLE, oldImage_product_visible, image_product_visible);
+    }
+
+    /**
+     * Get the value of ruta_imagen_producto
+     *
+     * @return the value of ruta_imagen_producto
+     */
+    public String getRuta_imagen_producto() {
+        return ruta_imagen_producto;
+    }
+
+    /**
+     * Set the value of ruta_imagen_producto
+     *
+     * @param ruta_imagen_producto new value of ruta_imagen_producto
+     */
+    public void setRuta_imagen_producto(String ruta_imagen_producto) {
+        String oldRuta_imagen_producto = this.ruta_imagen_producto;
+        this.ruta_imagen_producto = ruta_imagen_producto;
+        firePropertyChange(PROP_RUTA_IMAGEN_PRODUCTO, oldRuta_imagen_producto, ruta_imagen_producto);
+    }
+
     /**
      * Get the value of imagen_producto
      *

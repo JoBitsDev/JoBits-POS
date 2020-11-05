@@ -6,20 +6,31 @@
 package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.imagemanager.ImageManagerController;
+import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaDetailService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.seccion.SeccionListController;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
+import com.jobits.pos.ui.imagemanager.ImageManagerView;
+import com.jobits.pos.ui.imagemanager.presenter.ImageManagerViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.productos.ProductoVentaDetailView;
+import com.jobits.pos.ui.utils.ComponentMover;
 import com.jobits.pos.ui.utils.ImageManager;
 import com.jobits.pos.ui.utils.utils;
 import java.awt.Dimension;
+import java.io.File;
 import java.util.Optional;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 
 /**
  *
@@ -41,6 +52,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private ProductoVentaDetailService service;
     private boolean creatingMode = true;
+    ProductoVenta p;
 
     /**
      * Si es nulo es que el producto que se va a crear es nuevo
@@ -58,6 +70,13 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             fillForm(productoSeleccionado);
         }
         creatingMode = productoSeleccionado == null;
+        if (creatingMode) {
+            p = service.createNewInstance();
+        } else {
+            p = service.getInstance();
+        }
+        getBean().setCodigo_producto(p.getCodigoProducto());
+        refreshProductImage();
     }
 
     @Override
@@ -118,6 +137,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             @Override
             public Optional doAction() {
                 onEditarImagenClick();
+                refreshProductImage();
                 return Optional.empty();
             }
         });
@@ -136,7 +156,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setPrecio_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPrecioVenta()));
         getBean().setPrecio_costo("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getGasto()));
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
-        refreshProductImage();
+        getBean().setRuta_imagen_producto(productoSeleccionado.getDescripcion());
     }
 
     private void onAddIngredienteClick() {
@@ -149,18 +169,18 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea guardar los cambios",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            ProductoVenta p;
-            if (creatingMode) {
-                p = service.createNewInstance();
-            } else {
-                p = service.getInstance();
-            }
-            p.setNombre(getBean().getNombre_producto());
+//            ProductoVenta p;
+//            if (creatingMode) {
+//                p = service.createNewInstance();
+//            } else {
+//                p = service.getInstance();
+//            }
             p.setCocinacodCocina(getBean().getElaborado_seleccionado());
             p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
             p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
             p.setGasto(Float.valueOf(getBean().getPrecio_costo()));
             p.setProductoInsumoList(getBean().getLista_insumos_contenidos());
+            p.setDescripcion(getBean().getRuta_imagen_producto());
             if (getBean().getComision_por_venta() != null) {
                 p.setPagoPorVenta(Float.parseFloat(getBean().getComision_por_venta()));
             } else {
@@ -221,25 +241,15 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onEditarImagenClick() {
-        ImageManager imageEditor = new ImageManager(null);
-        String keyWord = getBean().getCodigo_producto() + "_" + getBean().getNombre_producto();
-//        File mediaFile = new File(R.mediaFilePath + keyWord + ".jpg");
-        imageEditor.showView(keyWord, getBean().getImagen_producto());
-
-        refreshProductImage();
+        new ImageManagerPopUpContainer(null, p.getCodigoProducto());
+//        TODO: Arreglar Navegacion al ImageManagerPopup
+        getBean().setRuta_imagen_producto(R.MEDIA_FILE_PATH + p.getCodigoProducto() + ".jpg");
     }
 
     private void refreshProductImage() {
-        String cod = getBean().getCodigo_producto();
-        String nombre = getBean().getNombre_producto();
-        ImageIcon image = ImageManager.loadImageIcon(cod + "_" + nombre, new Dimension(70, 70));
-        if (image != null) {
-            getBean().setImagen_producto(image);
-        } else {
-            getBean().setImagen_producto(new ImageIcon(getClass().getResource(
-                    "/restManager/resources/icons pack/pregunta_color.png")));
-        }
-
+        String path = getBean().getRuta_imagen_producto();
+        ImageIcon image = ImageManagerController.loadImageIcon(path, new Dimension(70, 70));
+        getBean().setImagen_producto(image);
     }
 
 }

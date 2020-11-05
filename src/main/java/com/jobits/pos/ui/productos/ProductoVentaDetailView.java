@@ -55,7 +55,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jXLabelPCod = new org.jdesktop.swingx.JXLabel();
         jPanel12 = new javax.swing.JPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanel1 = new javax.swing.JPanel();
+        jPanelImage = new javax.swing.JPanel();
         jLabelIProductImage = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio venta",R.COIN_SUFFIX);
@@ -121,7 +121,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         jPanel7.add(jPanel8, java.awt.BorderLayout.NORTH);
 
-        jPanel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0));
         jPanel12.setOpaque(false);
         jPanel12.setLayout(new java.awt.BorderLayout());
 
@@ -131,9 +130,10 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         jPanel7.add(jPanel12, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setOpaque(false);
-        jPanel1.setPreferredSize(new java.awt.Dimension(70, 70));
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanelImage.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 30));
+        jPanelImage.setOpaque(false);
+        jPanelImage.setPreferredSize(new java.awt.Dimension(100, 70));
+        jPanelImage.setLayout(new java.awt.BorderLayout());
 
         jLabelIProductImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelIProductImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/pregunta_color.png"))); // NOI18N
@@ -144,9 +144,9 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
                 jLabelIProductImageMouseClicked(evt);
             }
         });
-        jPanel1.add(jLabelIProductImage, java.awt.BorderLayout.CENTER);
+        jPanelImage.add(jLabelIProductImage, java.awt.BorderLayout.CENTER);
 
-        jPanel7.add(jPanel1, java.awt.BorderLayout.WEST);
+        jPanel7.add(jPanelImage, java.awt.BorderLayout.WEST);
 
         jPanelInputs.add(jPanel7);
 
@@ -298,7 +298,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JComboBox<Cocina> jComboBoxCOCINA;
     private javax.swing.JComboBox<Seccion> jComboBoxSECCION;
     private javax.swing.JLabel jLabelIProductImage;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -309,6 +308,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelCrossRef;
+    private javax.swing.JPanel jPanelImage;
     private javax.swing.JPanel jPanelInputs;
     private javax.swing.JPanel jPanelInventario;
     private javax.swing.JPanel jPanelTable;
@@ -355,7 +355,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jButtonCrear.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR));
 
         Bindings.bind(jLabelIProductImage, "icon", getPresenter().getModel(PROP_IMAGEN_PRODUCTO));
-        //jButtonCrear.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR));
     }
 
     @Override
