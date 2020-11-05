@@ -7,30 +7,21 @@ package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.imagemanager.ImageManagerController;
-import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaDetailService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.seccion.SeccionListController;
-import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
-import com.jobits.pos.ui.imagemanager.ImageManagerView;
-import com.jobits.pos.ui.imagemanager.presenter.ImageManagerViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.productos.ProductoVentaDetailView;
-import com.jobits.pos.ui.utils.ComponentMover;
-import com.jobits.pos.ui.utils.ImageManager;
 import com.jobits.pos.ui.utils.utils;
 import java.awt.Dimension;
-import java.io.File;
 import java.util.Optional;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 
 /**
  *
