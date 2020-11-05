@@ -312,10 +312,7 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         for (Orden ord : ordCompletadas) {
             ord.setCodOrden(actualizarUltimoCodOrden());
             for (ProductovOrden pv : ord.getProductovOrdenList()) {
-                pv.getProductovOrdenPK().setOrdencodOrden(ord.getCodOrden());
-                if (pv.getNota() != null) {
-                    pv.getNota().getNotaPK().setProductovOrdenordencodOrden(ord.getCodOrden());
-                }
+                pv.setOrden(ord);
             }
         }
 

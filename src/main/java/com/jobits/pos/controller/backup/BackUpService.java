@@ -315,7 +315,7 @@ public class BackUpService implements LongProcessMethod {//TODO separar los paqu
 
     private boolean BackUpProdvOrden(List<ProductovOrden> productovOrdenList) {
         for (ProductovOrden po : productovOrdenList) {
-            if (EntityExist(po, po.getProductovOrdenPK())) {
+            if (EntityExist(po, po.getId())) {
                 em.merge(po);
             } else {
                 em.persist(po);

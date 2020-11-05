@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jobits.pos.domain.models;
-
+ 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.awt.Desktop;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -21,6 +21,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -28,35 +29,49 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "productovOrdenPK",scope = ProductovOrden.class )
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "productovOrdenPK", scope = ProductovOrden.class)
 @Entity
 @Table(name = "productov_orden")
 @NamedQueries({
     @NamedQuery(name = "ProductovOrden.findAll", query = "SELECT p FROM ProductovOrden p"),
-    @NamedQuery(name = "ProductovOrden.findByProductoVentapCod", query = "SELECT p FROM ProductovOrden p WHERE p.productovOrdenPK.productoVentapCod = :productoVentapCod"),
-    @NamedQuery(name = "ProductovOrden.findByOrdencodOrden", query = "SELECT p FROM ProductovOrden p WHERE p.productovOrdenPK.ordencodOrden = :ordencodOrden"),
     @NamedQuery(name = "ProductovOrden.findByCantidad", query = "SELECT p FROM ProductovOrden p WHERE p.cantidad = :cantidad"),
     @NamedQuery(name = "ProductovOrden.findByEnviadosacocina", query = "SELECT p FROM ProductovOrden p WHERE p.enviadosacocina = :enviadosacocina"),
     @NamedQuery(name = "ProductovOrden.findByNumeroComensal", query = "SELECT p FROM ProductovOrden p WHERE p.numeroComensal = :numeroComensal"),
     @NamedQuery(name = "ProductovOrden.findByListoParaRecoger", query = "SELECT p FROM ProductovOrden p WHERE p.listoParaRecoger = :listoParaRecoger")})
 public class ProductovOrden implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "precio_vendido")
+    private float precioVendido;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "nombre_producto_vendido")
+    private String nombreProductoVendido;
+
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "enviadosacocina")
     private Float enviadosacocina;
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ProductovOrdenPK productovOrdenPK;
     @Basic(optional = false)
     @Column(name = "cantidad")
     private float cantidad;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id")
+    private Integer id;
     @Column(name = "numero_comensal")
     private Integer numeroComensal;
     @Column(name = "listo_para_recoger")
@@ -72,31 +87,22 @@ public class ProductovOrden implements Serializable {
     @JoinColumn(name = "producto_ventap_cod", referencedColumnName = "p_cod", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private ProductoVenta productoVenta;
-
+    
     public ProductovOrden() {
     }
 
-    public ProductovOrden(ProductovOrdenPK productovOrdenPK) {
-        this.productovOrdenPK = productovOrdenPK;
+     public ProductovOrden(Integer id) {
+        this.id = id;
     }
 
-    public ProductovOrden(ProductovOrdenPK productovOrdenPK, int cantidad) {
-        this.productovOrdenPK = productovOrdenPK;
+    public ProductovOrden(Integer id, float cantidad, float precioVendido, String nombreProductoVendido) {
+        this.id = id;
         this.cantidad = cantidad;
+        this.precioVendido = precioVendido;
+        this.nombreProductoVendido = nombreProductoVendido;
     }
-
-    public ProductovOrden(String productoVentapCod, String ordencodOrden) {
-        this.productovOrdenPK = new ProductovOrdenPK(productoVentapCod, ordencodOrden);
-    }
-
-    public ProductovOrdenPK getProductovOrdenPK() {
-        return productovOrdenPK;
-    }
-
-    public void setProductovOrdenPK(ProductovOrdenPK productovOrdenPK) {
-        this.productovOrdenPK = productovOrdenPK;
-    }
-
+    
+   
     public float getCantidad() {
         return cantidad;
     }
@@ -105,7 +111,30 @@ public class ProductovOrden implements Serializable {
         this.cantidad = cantidad;
     }
 
+    public float getPrecioVendido() {
+        return precioVendido;
+    }
 
+    public void setPrecioVendido(float precioVendido) {
+        this.precioVendido = precioVendido;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombreProductoVendido() {
+        return nombreProductoVendido;
+    }
+
+    public void setNombreProductoVendido(String nombreProductoVendido) {
+        this.nombreProductoVendido = nombreProductoVendido;
+    }
+    
     public Integer getNumeroComensal() {
         return numeroComensal;
     }
@@ -154,10 +183,10 @@ public class ProductovOrden implements Serializable {
         this.productoVenta = productoVenta;
     }
 
-    @Override
+     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (productovOrdenPK != null ? productovOrdenPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -168,7 +197,7 @@ public class ProductovOrden implements Serializable {
             return false;
         }
         ProductovOrden other = (ProductovOrden) object;
-        if ((this.productovOrdenPK == null && other.productovOrdenPK != null) || (this.productovOrdenPK != null && !this.productovOrdenPK.equals(other.productovOrdenPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -176,7 +205,7 @@ public class ProductovOrden implements Serializable {
 
     @Override
     public String toString() {
-        return  getOrden() +"_"+ getProductoVenta();
+        return getOrden() + "_" + getProductoVenta();
     }
 
     public Float getEnviadosacocina() {
@@ -186,5 +215,4 @@ public class ProductovOrden implements Serializable {
     public void setEnviadosacocina(Float enviadosacocina) {
         this.enviadosacocina = enviadosacocina;
     }
-
 }

@@ -764,7 +764,7 @@ public class VentaDAO1 {
                 }
             }
             if (!founded && (c == null || b.get(0).getProductoVenta().getCocinacodCocina().equals(c))) {
-                ProductovOrden po = new ProductovOrden(b.get(0).getProductovOrdenPK());
+                ProductovOrden po = new ProductovOrden(b.get(0).getId());
                 po.setCantidad(b.get(0).getCantidad());
                 po.setEnviadosacocina(b.get(0).getEnviadosacocina());
                 po.setOrden(b.get(0).getOrden());
