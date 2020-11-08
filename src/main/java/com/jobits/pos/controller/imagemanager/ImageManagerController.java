@@ -7,7 +7,6 @@ package com.jobits.pos.controller.imagemanager;
 
 import com.jobits.pos.logs.RestManagerHandler;
 import com.jobits.pos.recursos.R;
-import static com.jobits.pos.ui.utils.ImageManager.resizeImage;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
