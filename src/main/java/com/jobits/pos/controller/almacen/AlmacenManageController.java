@@ -44,6 +44,7 @@ import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.AlmacenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.StockBalanceFormatter;
+import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
 import java.awt.Frame;
 
@@ -105,7 +106,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
 
     public void modificarStock(Insumo i) {
         //InsumoDetailController insumoController = new InsumoDetailController(i, getView());
-       // getView().updateView();
+        // getView().updateView();
     }
 
     public void imprimirResumenAlmacen(Almacen a) {
@@ -141,8 +142,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         try {
             hasta = AlmacenDAO.getInstance().findInsumo(x.getAlmacenDestino().getCodAlmacen(), x.getTransaccion().getInsumocodInsumo().getCodInsumo());
         } catch (NoResultException ex) {
-            throw new ValidatingException(Application.getInstance().getMainWindow()
-                    , "NO existe " + x.getTransaccion().getInsumocodInsumo() + " en " + x.getAlmacenDestino());
+            throw new ValidatingException(Application.getInstance().getMainWindow(),
+                    "NO existe " + x.getTransaccion().getInsumocodInsumo() + " en " + x.getAlmacenDestino());
         }
         float precioMedio = utils.redondeoPorExcesoFloat(desde.getValorMonetario() / desde.getCantidad());
         desde.setCantidad(desde.getCantidad() - x.getTransaccion().getCantidad());
@@ -277,6 +278,21 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         return null;
     }
 
+    public void agregarInsumoAlmacen(Insumo i) {
+        if (findInsumo(i) == null) {
+            InsumoAlmacen insumoAlmacen = new InsumoAlmacen(
+                    i.getCodInsumo(), getInstance().getCodAlmacen());
+            insumoAlmacen.setInsumo(i);
+            insumoAlmacen.setCantidad(0f);
+            insumoAlmacen.setValorMonetario(0f);
+            getModel().startTransaction();
+            getInsumoAlmacenList(getInstance()).add(insumoAlmacen);
+            getModel().commitTransaction();
+        } else {
+            JOptionPane.showMessageDialog(null, "El Insumo ya se encuentra registrado en " + getInstance().getNombre());
+        }
+    }
+
     //
     //Accesibles por otros controladores
     //
@@ -383,7 +399,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         }
         instance.setValorMonetario(total);
         update(instance, true);
-        getModel().getEntityManager().getEntityManagerFactory().getCache().evict(Almacen.class);
+        getModel().getEntityManager().getEntityManagerFactory().getCache().evict(Almacen.class
+        );
     }
 
     public void crearOperacion(ArrayList<TransaccionSimple> transacciones, CheckBoxType tipoOperacion, Date date, String recibo) {
@@ -409,6 +426,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
                 case TRASPASO:
                     crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, t.getaDestino(), t.getCantidad(), -1, null, false);
                     break;
+
             }
         }
     }
