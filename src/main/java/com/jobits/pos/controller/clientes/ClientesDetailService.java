@@ -6,6 +6,7 @@
 package com.jobits.pos.controller.clientes;
 
 import com.jobits.pos.domain.models.Cliente;
+import com.jobits.pos.domain.models.Orden;
 import java.util.Collection;
 
 /**
@@ -18,7 +19,7 @@ public interface ClientesDetailService {
 
     public void editarCliente(Cliente clienteEditado);
 
-    public void addOrdenToClientOrdenList(Cliente elemento_seleccionado);
+    public void addOrdenToClientOrdenList(Cliente elemento_seleccionado, Orden ordenToAdd);
 
     public Collection<? extends Cliente> getListaClientes();
 
