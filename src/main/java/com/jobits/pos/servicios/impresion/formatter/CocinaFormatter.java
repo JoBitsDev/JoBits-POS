@@ -69,9 +69,9 @@ public class CocinaFormatter extends AbstractTicketFormatter {
                     t.setText(x.getNota().getDescripcion().replace('%', ' '));
                     t.newLine();
                     t.alignLeft();
-                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getProductoVenta().getNombre());
+                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getNombreProductoVendido());
                 } else {
-                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
+                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getNombreProductoVendido());
                 }
                 t.newLine();
                 t.alignRight();
@@ -177,9 +177,9 @@ public class CocinaFormatter extends AbstractTicketFormatter {
                     t.setText(x.getNota().getDescripcion().replace('%', ' '));
                     t.newLine();
                     t.alignLeft();
-                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getProductoVenta().getNombre());
+                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getNombreProductoVendido());
                 } else {
-                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
+                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getNombreProductoVendido());
                 }
                 t.newLine();
                 t.alignRight();

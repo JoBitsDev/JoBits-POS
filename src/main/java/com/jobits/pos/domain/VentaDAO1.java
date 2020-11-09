@@ -408,7 +408,7 @@ public class VentaDAO1 {
         llenarArrayProductoVOrden(ret, aux, null, false, false);
 
         Collections.sort(ret, (o1, o2) -> {
-            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
+            return o1.getNombreProductoVendido().compareTo(o2.getNombreProductoVendido());
         });
         return ret;
     }
@@ -738,7 +738,7 @@ public class VentaDAO1 {
 
     private static float convertProductoOrdenToRowData(ArrayList[] rowData, ArrayList<ProductovOrden> ret) {
         float total = 0;
-        Collections.sort(ret, (ProductovOrden o1, ProductovOrden o2) -> o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre()));
+        Collections.sort(ret, (ProductovOrden o1, ProductovOrden o2) -> o1.getNombreProductoVendido().compareTo(o2.getNombreProductoVendido()));
         for (ProductovOrden x : ret) {
             rowData[0].add(x.getNombreProductoVendido());
             rowData[1].add(x.getPrecioVendido());

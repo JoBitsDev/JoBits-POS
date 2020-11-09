@@ -230,7 +230,7 @@ public abstract class AbstractTicketFormatter implements PrintFormatter {
         float total = 0;
         for (ProductovOrden x : prods) {
             t.alignLeft();
-            t.setText(x.getCantidad() + " " + x.getProductoVenta().getNombre());
+            t.setText(x.getCantidad() + " " + x.getNombreProductoVendido());
             t.newLine();
             t.alignRight();
             if (this.SHOW_PRICES) {
