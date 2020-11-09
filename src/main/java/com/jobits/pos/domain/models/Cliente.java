@@ -47,7 +47,7 @@ public class Cliente implements Serializable {
 
     @Id
     @Basic(optional = false)
-    @Column(name = "cod_cliente")
+    @Column(name = "id_cliente")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_cliente")
     @SequenceGenerator(name = "id_cliente" ,allocationSize = 1)
     private Integer idCliente;
