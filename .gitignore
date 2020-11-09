@@ -109,3 +109,5 @@ src/main/java/com/jobits/pos/ui/MenuBar.form
 src/main/java/com/jobits/pos/ui/MenuBar.java
 
 nbproject/
+
+*.txt
