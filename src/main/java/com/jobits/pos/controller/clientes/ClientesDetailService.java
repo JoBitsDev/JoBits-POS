@@ -14,6 +14,12 @@ import java.util.Collection;
  * @author Home
  */
 public interface ClientesDetailService {
+    
+    public Cliente createNewInstance();
+    
+    public Cliente getInstance();
+    
+    public boolean isCreatingMode();
 
     public void crearCliente(Cliente nuevoCliente);
 
