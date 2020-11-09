@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -22,13 +23,16 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * FirstDream
+ *
  * @author Jorge
  *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "codCarta",scope = Carta.class )
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codCarta", scope = Carta.class)
 @Entity
 @Table(name = "carta")
 @NamedQueries({
@@ -39,6 +43,19 @@ import javax.persistence.Table;
 public class Carta implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @Column(name = "disponible_desde")
+    @Temporal(TemporalType.TIME)
+    private Date disponibleDesde;
+    @Column(name = "disponible_hasta")
+    @Temporal(TemporalType.TIME)
+    private Date disponibleHasta;
+    @JoinTable(name = "carta_area", joinColumns = {
+        @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")}, inverseJoinColumns = {
+        @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")})
+    @ManyToMany
+    private List<Area> areaList;
+
     @Id
     @Basic(optional = false)
     @Column(name = "cod_carta")
@@ -48,8 +65,6 @@ public class Carta implements Serializable {
     private String nombreCarta;
     @Column(name = "moneda_principal")
     private String monedaPrincipal;
-    @ManyToMany(mappedBy = "cartaList")
-    private List<Area> areaList;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartacodCarta")
     private List<Seccion> seccionList;
@@ -131,4 +146,19 @@ public class Carta implements Serializable {
         return "(" + getMonedaPrincipal() + ")-" + getNombreCarta() + "[" + getCodCarta() + "]";
     }
 
+    public Date getDisponibleDesde() {
+        return disponibleDesde;
+    }
+
+    public void setDisponibleDesde(Date disponibleDesde) {
+        this.disponibleDesde = disponibleDesde;
+    }
+
+    public Date getDisponibleHasta() {
+        return disponibleHasta;
+    }
+
+    public void setDisponibleHasta(Date disponibleHasta) {
+        this.disponibleHasta = disponibleHasta;
+    }
 }
