@@ -186,12 +186,12 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         List<ProductovOrden> liquidos = filter.getLiquidos(get);
         List<ProductovOrden> comidas = filter.getComida(get);
         Collections.sort(comidas, (ProductovOrden o1, ProductovOrden o2) -> {
-            return Float.compare(o1.getCantidad() * o1.getProductoVenta().getPrecioVenta(),
-                    o2.getCantidad() * o2.getProductoVenta().getPrecioVenta());
+            return Float.compare(o1.getCantidad() * o1.getPrecioVendido(),
+                    o2.getCantidad() * o2.getPrecioVendido());
         });
         Collections.sort(liquidos, (ProductovOrden o1, ProductovOrden o2) -> {
-            return Float.compare(o1.getCantidad() * o1.getProductoVenta().getPrecioVenta(),
-                    o2.getCantidad() * o2.getProductoVenta().getPrecioVenta());
+            return Float.compare(o1.getCantidad() * o1.getPrecioVendido(),
+                    o2.getCantidad() * o2.getPrecioVendido());
         });
 
         float valorMaxAjustado = (float) (valorMaximo * (1.1));
@@ -237,11 +237,11 @@ public class Y extends SwingWorker<List<Orden>, Integer> {
         float totalVenta = 0;
         float totalGasto = 0;
         for (ProductovOrden x : liquidos) {
-            totalVenta += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            totalVenta += x.getCantidad() * x.getPrecioVendido();
             totalGasto += x.getCantidad() * x.getProductoVenta().getGasto();
         }
         for (ProductovOrden x : comidas) {
-            totalVenta += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            totalVenta += x.getCantidad() * x.getPrecioVendido();
             totalGasto += x.getCantidad() * x.getProductoVenta().getGasto();
         }
 

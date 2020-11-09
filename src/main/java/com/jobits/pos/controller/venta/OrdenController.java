@@ -99,7 +99,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     //TODO:quitar los popups de aqui
     @Override
-    public void addProduct(String codOrden, ProductoVenta selected) {
+    public void addProduct(String codOrden, ProductoVenta selected) {//TODO: la cantidad se pasa por parametro
         if (autorize(codOrden)) {
             Orden o = getInstance(codOrden);
             checkIfProductIsValid(selected, o);
@@ -130,8 +130,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 founded.setProductoVenta(selected);
                 founded.setOrden(o);
                 founded.setPrecioVendido(selected.getPrecioVenta());
-                founded.setNombreProductoVendido(selected.getNombre());
-                //founded = new ProductovOrden(selected.getCodigoProducto(), o.getCodOrden()); Depracated
+                founded.setNombreProductoVendido(selected.toString());
                 founded.setOrden(o);
                 founded.setProductoVenta(selected);
                 String value = new NumberPad(null).showView();//TODO: Porque null???
@@ -385,7 +384,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
         float total = 0;
         Orden o = getInstance(codOrden);
         for (ProductovOrden x : o.getProductovOrdenList()) {
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            total += x.getCantidad() * x.getPrecioVendido();
 
         }
         o.setOrdenvalorMonetario(AbstractTicketFormatter.REDONDEO_POR_EXCESO

@@ -66,7 +66,7 @@ public class CancelacionCocinaFormatter extends AbstractTicketFormatter {
                 t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
                 t.newLine();
                 t.alignRight();
-                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
+                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getPrecioVendido() + " " + MONEDA);
                 t.newLine();
                 t.alignLeft();
 
@@ -171,7 +171,7 @@ public class CancelacionCocinaFormatter extends AbstractTicketFormatter {
                 }
                 t.newLine();
                 t.alignRight();
-                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
+                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getPrecioVendido() + " " + MONEDA);
                 t.newLine();
                 t.alignLeft();
                 x.setEnviadosacocina(x.getCantidad());

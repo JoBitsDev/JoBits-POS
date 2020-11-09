@@ -580,7 +580,7 @@ public class VentaDAO1 {
 
         float valor = 0;
         for (ProductovOrden x : ret) {
-            valor += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            valor += x.getCantidad() * x.getPrecioVendido();
         }
 
         return valor;
@@ -681,7 +681,7 @@ public class VentaDAO1 {
         for (Orden x : v.getOrdenList()) {
             if (!x.getDeLaCasa() && x.getHoraTerminada() != null) {
                 for (ProductovOrden p : x.getProductovOrdenList()) {
-                    total += p.getCantidad() * p.getProductoVenta().getPrecioVenta();
+                    total += p.getCantidad() * p.getPrecioVendido();
                 }
             }
         }
@@ -740,12 +740,12 @@ public class VentaDAO1 {
         float total = 0;
         Collections.sort(ret, (ProductovOrden o1, ProductovOrden o2) -> o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre()));
         for (ProductovOrden x : ret) {
-            rowData[0].add(x.getProductoVenta().getNombre());
-            rowData[1].add(x.getProductoVenta().getPrecioVenta());
+            rowData[0].add(x.getNombreProductoVendido());
+            rowData[1].add(x.getPrecioVendido());
             rowData[2].add(utils.setDosLugaresDecimalesFloat(x.getCantidad()));
-            rowData[3].add(utils.setDosLugaresDecimalesFloat(x.getProductoVenta().getPrecioVenta() * x.getCantidad()));
+            rowData[3].add(utils.setDosLugaresDecimalesFloat(x.getPrecioVendido() * x.getCantidad()));
 
-            total += x.getProductoVenta().getPrecioVenta() * x.getCantidad();
+            total += x.getPrecioVendido() * x.getCantidad();
         }
 
         return total;

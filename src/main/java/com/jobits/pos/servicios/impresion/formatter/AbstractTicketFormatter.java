@@ -238,10 +238,10 @@ public abstract class AbstractTicketFormatter implements PrintFormatter {
                     if (this.PRINT_GASTOS_EN_AUTORIZOS) {
                         t.setText(utils.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getGasto()));
                     } else {
-                        t.setText(utils.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                        t.setText(utils.setDosLugaresDecimales(x.getCantidad() * x.getPrecioVendido()));
                     }
                 } else {
-                    t.setText(utils.setDosLugaresDecimales(x.getCantidad() * x.getProductoVenta().getPrecioVenta()));
+                    t.setText(utils.setDosLugaresDecimales(x.getCantidad() * x.getPrecioVendido()));
                 }
                 t.newLine();
             }
@@ -249,10 +249,10 @@ public abstract class AbstractTicketFormatter implements PrintFormatter {
                 if (this.PRINT_GASTOS_EN_AUTORIZOS) {
                     total += x.getCantidad() * x.getProductoVenta().getGasto();
                 } else {
-                    total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+                    total += x.getCantidad() * x.getPrecioVendido();
                 }
             } else {
-                total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+                total += x.getCantidad() * x.getPrecioVendido();
             }
         }
         return total;

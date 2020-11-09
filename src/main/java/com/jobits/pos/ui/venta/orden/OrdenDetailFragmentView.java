@@ -412,7 +412,7 @@ public class OrdenDetailFragmentView extends AbstractViewPanel {
                         return getRow(rowIndex).getCantidad();
                     case 2:
                         return utils.redondeoPorExceso(getRow(rowIndex).getCantidad()
-                                * getRow(rowIndex).getProductoVenta().getPrecioVenta());
+                                * getRow(rowIndex).getPrecioVendido());
                     default:
                         return null;
                 }
