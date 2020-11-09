@@ -91,6 +91,9 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
         jPanelOrdenesActivas.add(jPanel1, java.awt.BorderLayout.WEST);
 
+        jScrollPane2.setHorizontalScrollBar(null);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
         jScrollPane2.setViewportView(jPanel2);
 
         jPanelOrdenesActivas.add(jScrollPane2, java.awt.BorderLayout.EAST);
