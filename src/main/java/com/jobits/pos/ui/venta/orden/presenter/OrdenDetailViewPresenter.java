@@ -5,10 +5,13 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
+import com.jgoodies.common.collect.ArrayListModel;
 import com.jhw.swing.material.standars.MaterialIcons;
+import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
 //import com.jobits.pos.adapters.repo.impl.OrdenTemporalRepo;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.domain.models.Cliente;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -162,6 +165,12 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
                     "/restManager/resources/icons pack/porciento_indigo.png")));
         }
+        getBean().setLista_clientes(new ArrayListModel<>(new ClientesDetailServiceImpl().getListaClientes()));
+        if (instance.getClientecodCliente() != null) {
+            getBean().setCliente_seleccionado(instance.getClientecodCliente());
+        } else {
+            getBean().setCliente_seleccionado(null);
+        }
         return Optional.empty();
     }
 
@@ -256,7 +265,12 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             refreshState();
         }
         );
-        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_ES_AUTORIZO, (PropertyChangeEvent evt) -> {
+        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_CLIENTE_SELECCIONADO, (PropertyChangeEvent evt) -> {
+            Cliente newValue = (Cliente) evt.getNewValue();
+            if (newValue != null) {
+                ClientesDetailServiceImpl clienteservice = new ClientesDetailServiceImpl();
+                clienteservice.addOrdenToClientOrdenList(newValue, getController().getInstance(codOrden));
+            }
 //            System.out.println("Its Happ");
 
         }
