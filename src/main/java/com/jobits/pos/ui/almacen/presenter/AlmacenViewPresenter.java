@@ -14,7 +14,9 @@ import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoAlmacen;
+import com.jobits.pos.domain.models.InsumoAlmacenPK;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.main.Application;
@@ -24,6 +26,7 @@ import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel;
@@ -70,7 +73,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             @Override
             public Optional doAction() {
                 detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
-                fillDetailList();
+                refreshView();
                 getBean().setSearch_keyWord(null);
                 return Optional.empty();
             }
@@ -167,24 +170,21 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         getBean().getLista_elementos().addAll(new ArrayListModel<>(listService.getItems()));
         getBean().setElemento_seleccionado(listService.getItems().get(0));
         detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
-        fillDetailList();
+        refreshView();
     }
 
     private void onAgregarInsumoFichaClick() {
-        throw new UnsupportedOperationException("Operacion no disponible"); //To change body of generated methods, choose Tools | Templates.
+        detailService.agregarInsumoAlmacen(getBean().getInsumo_disponible_seleccionado());
+        refreshView();
     }
 
     private void onEliminarInsumoFichaClick() {
-        throw new UnsupportedOperationException("Operacion no disponible"); //To change body of generated methods, choose Tools | Templates.
+        detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado());
+        refreshView();
     }
 
-    private void fillDetailList() {
+    private void refreshView() {
         getBean().setValor_monetario_text(utils.setDosLugaresDecimales(detailService.getInstance().getValorMonetario()));
-
-//        getBean().getLista_insumos_contenidos().clear();
-//        getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(detailService.getInsumoAlmacenList(detailService.getInstance())));
-//        getBean().getLista_insumos_disponibles().clear();
-//        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(detailService.getInsumoList()));
         getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(detailService.getInstance())));
         getBean().setLista_insumos_disponibles(new ArrayListModel<>(detailService.getInsumoList()));
 

@@ -13,6 +13,7 @@ import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
+import com.jobits.pos.controller.imagemanager.ImageManagerController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.controller.login.MainMenuController;
@@ -56,6 +57,8 @@ import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
+import com.jobits.pos.ui.imagemanager.ImageManagerView;
+import com.jobits.pos.ui.imagemanager.presenter.ImageManagerViewPresenter;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
@@ -167,6 +170,8 @@ public class PresenterFacade {
                 return new ReportarBugViewPresenter(new ReportarBugController());
             case OrdenLogView.VIEW_NAME:
                 return new OrdenLogViewPresenter(null);
+            case ImageManagerView.VIEW_NAME:
+                return new ImageManagerViewPresenter(new ImageManagerController(null));
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListPresenter(new TransaccionesListController(new Almacen()));
             case MesaListView.VIEW_NAME:
