@@ -6,8 +6,7 @@
 
 package com.jobits.pos.ui.clientes.presenter;
 
-import com.jobits.pos.ui.productos.presenter.*;
-import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.domain.models.Cliente;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 
 /**
@@ -16,6 +15,6 @@ import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
  * @author Home
  * 
  */
-public class ClientesListViewModel extends AbstractListViewModel<ProductoVenta> {
+public class ClientesListViewModel extends AbstractListViewModel<Cliente> {
 
 }

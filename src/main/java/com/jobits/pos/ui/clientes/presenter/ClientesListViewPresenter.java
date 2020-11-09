@@ -5,20 +5,13 @@
  */
 package com.jobits.pos.ui.clientes.presenter;
 
-import com.jobits.pos.ui.productos.presenter.*;
-import com.jobits.pos.controller.productos.ProductoVentaDetailController;
-import com.jobits.pos.controller.productos.ProductoVentaListService;
+import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
+import com.jobits.pos.controller.clientes.ClientesListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
 import com.jobits.pos.ui.clientes.ClientesListView;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
-import com.jobits.pos.ui.presenters.AbstractViewAction;
-import com.jobits.pos.ui.productos.ProductoVentaDetailView;
-import com.jobits.pos.ui.productos.ProductoVentaListView;
-import java.util.Optional;
 
 /**
  *
@@ -29,8 +22,11 @@ import java.util.Optional;
  */
 public class ClientesListViewPresenter extends AbstractListViewPresenter<ClientesListViewModel> {
 
-    public ClientesListViewPresenter() {
+    private final ClientesListService service;
+
+    public ClientesListViewPresenter(ClientesListService service) {
         super(new ClientesListViewModel(), ClientesListView.VIEW_NAME);
+        this.service = service;
         setListToBean();
     }
 
@@ -42,27 +38,27 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
     @Override
     protected void onAgregarClick() {
         NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
-                new ClientesDetailViewPresenter(), DisplayType.POPUP);
+                new ClientesDetailViewPresenter(new ClientesDetailServiceImpl()), DisplayType.POPUP);
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
         NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
-                new ClientesDetailViewPresenter(), DisplayType.POPUP);
+                new ClientesDetailViewPresenter(new ClientesDetailServiceImpl(getBean().getElemento_seleccionado())), DisplayType.POPUP);
         setListToBean();
     }
 
     @Override
     protected void onEliminarClick() {
-//        controller.destroy(getBean().getElemento_seleccionado());
+        service.eliminar(getBean().getElemento_seleccionado());
         setListToBean();
     }
 
     @Override
     protected void setListToBean() {
-//        getBean().getLista_elementos().clear();
-//        getBean().getLista_elementos().addAll(controller.getItems());
+        getBean().getLista_elementos().clear();
+        getBean().getLista_elementos().addAll(service.getListaClientes());
     }
 
 }
