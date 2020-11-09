@@ -12,6 +12,8 @@ import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
+import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
+import com.jobits.pos.controller.clientes.ClientesListServiceImpl;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.imagemanager.ImageManagerController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
@@ -183,9 +185,9 @@ public class PresenterFacade {
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
             case ClientesListView.VIEW_NAME:
-                return new ClientesListViewPresenter();
+                return new ClientesListViewPresenter(new ClientesListServiceImpl());
             case ClientesDetailView.VIEW_NAME:
-                return new ClientesDetailViewPresenter();
+                return new ClientesDetailViewPresenter(new ClientesDetailServiceImpl());
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;
