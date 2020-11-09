@@ -307,7 +307,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
     public void printPersonalResumenRow(Personal p) {
         List<ProductovOrden> aux = VentaDAO1.getResumenVentasCamarero(getInstance(), p);
         Collections.sort(aux, (o1, o2) -> {
-            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
+            return o1.getNombreProductoVendido().compareTo(o2.getNombreProductoVendido());
         });
         getImpresionInstance().print(new PersonalResumenFormatter(aux, p, getInstance().getFecha()), null);
 
@@ -322,7 +322,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         Cocina c = CocinaDAO.getInstance().find(codCocina);
         List<ProductovOrden> aux = VentaDAO1.getResumenVentasCocina(getInstance(), c);
         Collections.sort(aux, (o1, o2) -> {
-            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
+            return o1.getNombreProductoVendido().compareTo(o2.getNombreProductoVendido());
         });
         getImpresionInstance().print(new PuntoElaboracionFormatter(aux, c, getInstance().getFecha()), c.getNombreCocina());
     }

@@ -18,9 +18,9 @@ public class CellRenderPedido extends javax.swing.JPanel {
      */
     public CellRenderPedido(ProductovOrden o, boolean selected) {
         initComponents();
-        jLabelProducto.setText(o.getProductoVenta().toString());
+        jLabelProducto.setText(o.getNombreProductoVendido());
         jLabelCantidad.setText("x" + o.getCantidad());
-        jLabelPrecio.setText(utils.setDosLugaresDecimales(o.getCantidad()*o.getProductoVenta().getPrecioVenta()));
+        jLabelPrecio.setText(utils.setDosLugaresDecimales(o.getCantidad()*o.getPrecioVendido()));
         setOpaque(selected);
     }
 

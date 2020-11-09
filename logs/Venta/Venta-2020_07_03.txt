@@ -1,8 +1,0 @@
-FINE: CREADO_O-18587 [Usuario: prueba] [2020/07/03 00:51:08]
-FINE: AGREGAR_O-18587_Vino Tinto Importado Botella (175.0 MN )_1.0 [Usuario: prueba] [2020/07/03 00:51:45]
-FINE: ENVIAR_COCINA_O-18587 [Usuario: prueba] [2020/07/03 00:51:53]
-FINE: ENVIAR_COCINA_O-18587 [Usuario: prueba] [2020/07/03 01:23:59]
-FINE: AGREGAR_O-18587_Bocadito Bistec Cerdo (12.0 MN )_2.0 [Usuario: prueba] [2020/07/03 01:24:16]
-FINE: ENVIAR_COCINA_O-18587 [Usuario: prueba] [2020/07/03 01:28:14]
-FINE: ENVIAR_COCINA_O-18587 [Usuario: prueba] [2020/07/03 01:33:05]
-FINE: ENVIAR_COCINA_O-18587 [Usuario: prueba] [2020/07/03 01:34:41]

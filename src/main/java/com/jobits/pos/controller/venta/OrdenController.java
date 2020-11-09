@@ -19,7 +19,6 @@ import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Configuracion;
 import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.domain.models.Nota;
-import com.jobits.pos.domain.models.NotaPK;
 import com.jobits.pos.domain.models.NotificacionEnvioCocina;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.ProductoInsumo;
@@ -73,11 +72,8 @@ public class OrdenController extends AbstractFragmentController<Orden>
             Nota nota = prod.getNota();
             if (nota == null) {
                 String nuevanota = showInputDialog(getView(), "Introduzca la nota a adjuntar");
-                NotaPK pk = new NotaPK(
-                        prod.getProductovOrdenPK().getProductoVentapCod(), prod.getProductovOrdenPK().getOrdencodOrden());
-                Nota n = new Nota(pk);
+                Nota n = new Nota();
                 n.setDescripcion(nuevanota);
-                n.setProductovOrden(prod);
 
                 prod.setNota(n);
                 NotaDAO.getInstance().create(n);
@@ -103,7 +99,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     //TODO:quitar los popups de aqui
     @Override
-    public void addProduct(String codOrden, ProductoVenta selected) {
+    public void addProduct(String codOrden, ProductoVenta selected) {//TODO: la cantidad se pasa por parametro
         if (autorize(codOrden)) {
             Orden o = getInstance(codOrden);
             checkIfProductIsValid(selected, o);
@@ -130,10 +126,14 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 founded.setCantidad(founded.getCantidad() + cantidad);
 
             } else {
-                founded = new ProductovOrden(selected.getCodigoProducto(), o.getCodOrden());
+                founded = new ProductovOrden();
+                founded.setProductoVenta(selected);
+                founded.setOrden(o);
+                founded.setPrecioVendido(selected.getPrecioVenta());
+                founded.setNombreProductoVendido(selected.toString());
                 founded.setOrden(o);
                 founded.setProductoVenta(selected);
-                String value = new NumberPad(null).showView();
+                String value = new NumberPad(null).showView();//TODO: Porque null???
                 if (!value.equals("")) {
                     founded.setCantidad(Float.parseFloat(value));
                 } else {
@@ -384,7 +384,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
         float total = 0;
         Orden o = getInstance(codOrden);
         for (ProductovOrden x : o.getProductovOrdenList()) {
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
+            total += x.getCantidad() * x.getPrecioVendido();
 
         }
         o.setOrdenvalorMonetario(AbstractTicketFormatter.REDONDEO_POR_EXCESO

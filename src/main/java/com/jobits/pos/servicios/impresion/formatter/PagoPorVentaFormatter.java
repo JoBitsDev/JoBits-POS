@@ -67,7 +67,7 @@ public class PagoPorVentaFormatter extends AbstractTicketFormatter {
             if (pv.getProductoVenta().getPagoPorVenta() != null) {
                 if (pv.getProductoVenta().getPagoPorVenta() != 0) {
                     t.alignLeft();
-                    t.setText(pv.getCantidad() + " " + pv.getProductoVenta().getNombre());
+                    t.setText(pv.getCantidad() + " " + pv.getNombreProductoVendido());
                     t.newLine();
                     t.alignRight();
                     if (SHOW_PRICES) {
