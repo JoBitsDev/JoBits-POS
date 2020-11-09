@@ -19,6 +19,7 @@ import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.reportes.ReportarBugController;
@@ -32,6 +33,7 @@ import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.View;
@@ -55,6 +57,10 @@ import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewPresenter;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
+import com.jobits.pos.ui.clientes.ClientesDetailView;
+import com.jobits.pos.ui.clientes.ClientesListView;
+import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
+import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.imagemanager.ImageManagerView;
@@ -176,6 +182,10 @@ public class PresenterFacade {
                 return new TransaccionListPresenter(new TransaccionesListController(new Almacen()));
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
+            case ClientesListView.VIEW_NAME:
+                return new ClientesListViewPresenter();
+            case ClientesDetailView.VIEW_NAME:
+                return new ClientesDetailViewPresenter();
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;

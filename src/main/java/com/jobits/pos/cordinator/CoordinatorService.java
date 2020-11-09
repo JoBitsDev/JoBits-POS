@@ -16,6 +16,8 @@ import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.backup.BackUpView;
+import com.jobits.pos.ui.clientes.ClientesDetailView;
+import com.jobits.pos.ui.clientes.ClientesListView;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.imagemanager.ImageManagerView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
@@ -87,6 +89,7 @@ public class CoordinatorService implements Coordinator {
         navigationGraph.put(PersonalListView.VIEW_NAME, Arrays.asList(PersonalDetailView.VIEW_NAME));
         navigationGraph.put(PuestoTrabajoListView.VIEW_NAME, Arrays.asList(PuestoTrabajoDetailView.VIEW_NAME));
         navigationGraph.put(InsumoListView.VIEW_NAME, Arrays.asList(InsumoDetailView.VIEW_NAME));
+        navigationGraph.put(ClientesListView.VIEW_NAME, Arrays.asList(ClientesDetailView.VIEW_NAME));
         navigationGraph.put(AlmacenMainView.VIEW_NAME,
                 Arrays.asList(InsumoDetailView.VIEW_NAME,
                         FacturaView.VIEW_NAME,
@@ -113,6 +116,8 @@ public class CoordinatorService implements Coordinator {
                         OrdenLogView.VIEW_NAME,
                         ReportarBugView.VIEW_NAME,
                         ImageManagerView.VIEW_NAME,
+                        LogInView.VIEW_NAME,
+                        ClientesListView.VIEW_NAME,
                         LicenceDialogView.VIEW_NAME
                 ));
         navigationGraph.put(VentaDetailView.VIEW_NAME, Arrays.asList(OrdenDetailFragmentView.VIEW_NAME));
