@@ -5,28 +5,14 @@
  */
 package com.jobits.pos.ui.clientes.presenter;
 
-import com.jobits.pos.ui.productos.presenter.*;
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.productos.ProductoVentaDetailController;
-import com.jobits.pos.controller.productos.ProductoVentaDetailService;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
-import com.jobits.pos.controller.seccion.SeccionListController;
-import com.jobits.pos.controller.trabajadores.PersonalDetailController;
+import com.jobits.pos.controller.clientes.ClientesDetailService;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Personal;
-import com.jobits.pos.domain.models.ProductoInsumo;
-import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.domain.models.PuestoTrabajo;
-import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jobits.pos.domain.models.Cliente;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.trabajadores.presenter.PersonalDetailViewModel;
-import com.jobits.pos.ui.utils.utils;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -41,16 +27,17 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
+    private final ClientesDetailService service;
+    private Cliente cliente;
 
-
-    public ClientesDetailViewPresenter() {
+    public ClientesDetailViewPresenter(ClientesDetailService service) {
         super(new ClientesDetailViewModel());
-
-//        if (service.isCreatingMode()) {
-//            personal = service.createNewInstance();
-//        } else {
-//            personal = service.getInstance();
-//        }
+        this.service = service;
+        if (service.isCreatingMode()) {
+            cliente = service.createNewInstance();
+        } else {
+            cliente = service.getInstance();
+        }
         fillForm();
         addListeners();
     }
@@ -77,7 +64,23 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
     }
 
     private void onAgregarClick() {
-
+        if (getBean().getNombre() != null
+                && getBean().getApellidos() != null
+                && getBean().getTelefono() != null) {
+            cliente.setNombreCliente(getBean().getNombre());
+            cliente.setApellidosCliente(getBean().getApellidos());
+            cliente.setAliasCliente(getBean().getAlias());
+            cliente.setTelefonoCliente(getBean().getTelefono());
+            cliente.setFechanacCliente(getBean().getCumpleanos());
+            cliente.setDireccionCliente(getBean().getDireccion());
+            cliente.setMunicipioCliente(getBean().getMunicipio());
+            cliente.setPrivinciaCliente(getBean().getCiudad());
+            cliente.setOrdenList(getBean().getLista_ordenes());
+            service.crearCliente(cliente);
+            NavigationService.getInstance().navigateUp();
+        } else {
+            JOptionPane.showMessageDialog(null, "Faltan campos obligarios por llenar");
+        }
     }
 
     private void onCancelarClick() {
@@ -89,5 +92,14 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
     }
 
     private void fillForm() {
+        getBean().setNombre(cliente.getNombreCliente());
+        getBean().setApellidos(cliente.getApellidosCliente());
+        getBean().setAlias(cliente.getAliasCliente());
+        getBean().setTelefono(cliente.getTelefonoCliente());
+        getBean().setCumpleanos(cliente.getFechanacCliente());
+        getBean().setDireccion(cliente.getDireccionCliente());
+        getBean().setMunicipio(cliente.getMunicipioCliente());
+        getBean().setCiudad(cliente.getPrivinciaCliente());
+        getBean().setLista_ordenes(new ArrayListModel<>(cliente.getOrdenList()));
     }
 }

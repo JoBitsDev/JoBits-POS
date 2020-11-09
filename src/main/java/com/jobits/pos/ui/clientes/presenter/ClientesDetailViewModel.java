@@ -5,18 +5,10 @@
  */
 package com.jobits.pos.ui.clientes.presenter;
 
-import com.jobits.pos.ui.productos.presenter.*;
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Cocina;
-import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.Orden;
-import com.jobits.pos.domain.models.ProductoInsumo;
-import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Date;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -66,6 +58,30 @@ public class ClientesDetailViewModel extends AbstractViewModel {
     private ArrayListModel<Orden> lista_ordenes = new ArrayListModel<>();
 
     public static final String PROP_LISTA_ORDENES = "lista_ordenes";
+
+    private Orden orden_seleccionada;
+
+    public static final String PROP_ORDEN_SELECCIONADA = "orden_seleccionada";
+
+    /**
+     * Get the value of orden_seleccionada
+     *
+     * @return the value of orden_seleccionada
+     */
+    public Orden getOrden_seleccionada() {
+        return orden_seleccionada;
+    }
+
+    /**
+     * Set the value of orden_seleccionada
+     *
+     * @param orden_seleccionada new value of orden_seleccionada
+     */
+    public void setOrden_seleccionada(Orden orden_seleccionada) {
+        Orden oldOrden_seleccionada = this.orden_seleccionada;
+        this.orden_seleccionada = orden_seleccionada;
+        firePropertyChange(PROP_ORDEN_SELECCIONADA, oldOrden_seleccionada, orden_seleccionada);
+    }
 
     /**
      * Get the value of lista_ordenes
