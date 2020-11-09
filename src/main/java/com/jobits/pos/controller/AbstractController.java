@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import com.jobits.pos.exceptions.HiddenException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.adapters.repo.impl.AbstractRepository;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.OldView;
 
@@ -106,7 +107,7 @@ public abstract class AbstractController<T> implements Controller {
     //
     protected void showSuccessDialog(Container view) {
         if (showDialogs) {
-            JOptionPane.showMessageDialog(view, R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"),
+            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"),
                     R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
                     new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
         }
@@ -114,28 +115,28 @@ public abstract class AbstractController<T> implements Controller {
 
     protected void showSuccessDialog(Container view, String text) {
         if (showDialogs) {
-            JOptionPane.showMessageDialog(view, text,
+            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), text,
                     R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
                     new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
         }
     }
 
     protected boolean showConfirmDialog(Container view) {
-        return showDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
+        return showDialogs ? JOptionPane.showConfirmDialog(Application.getInstance().getMainWindow(), R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION : true;
     }
 
     protected boolean showConfirmDialog(Container view, String text) {
-        return showDialogs ? JOptionPane.showConfirmDialog(view, text,
+        return showDialogs ? JOptionPane.showConfirmDialog(Application.getInstance().getMainWindow(), text,
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION : true;
     }
 
     protected boolean showEditingDialog(Container view, Object obj) {
-        return showDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_editar_datos") + obj.toString(),
+        return showDialogs ? JOptionPane.showConfirmDialog(Application.getInstance().getMainWindow(), R.RESOURCE_BUNDLE.getString("desea_editar_datos") + obj.toString(),
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION : true;
@@ -150,39 +151,39 @@ public abstract class AbstractController<T> implements Controller {
     }
 
     protected boolean showDeleteDialog(Container view, Object obj) {
-        return showDialogs ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_borrar_datos") + obj.toString(),
+        return showDialogs ? JOptionPane.showConfirmDialog(Application.getInstance().getMainWindow(), R.RESOURCE_BUNDLE.getString("desea_borrar_datos") + obj.toString(),
                 R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/eliminar.png")))
                 == JOptionPane.YES_OPTION : true;
     }
 
     protected String showInputDialog(Container view, String text) {
-        String ret = JOptionPane.showInputDialog(view, text, "Entrada", JOptionPane.QUESTION_MESSAGE);
+        String ret = JOptionPane.showInputDialog(Application.getInstance().getMainWindow(), text, "Entrada", JOptionPane.QUESTION_MESSAGE);
         if (ret != null) {
             return ret;
         } else {
-            throw new HiddenException();
+            return "";
         }
     }
 
     protected String showInputDialog(Container view, String text, Object defaultValue) {
-        String ret = JOptionPane.showInputDialog(view, text, defaultValue);
+        String ret = JOptionPane.showInputDialog(Application.getInstance().getMainWindow(), text, defaultValue);
         if (ret != null) {
             return ret;
         } else {
-            throw new HiddenException();
+            return "";
         }
     }
 
     protected Object showInputDialog(Container view, String msg, String title, Object[] selections, Object initialValue) {
-        Object ret = JOptionPane.showInputDialog(view, msg, title,
+        Object ret = JOptionPane.showInputDialog(Application.getInstance().getMainWindow(), msg, title,
                 JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")),
                 selections, initialValue);
         if (ret != null) {
             return ret;
         } else {
-            throw new HiddenException();
+            return "";
         }
     }
 

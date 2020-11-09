@@ -39,21 +39,20 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
             ACTION_IMPRIMIR_RESUMEN_USUARIO = "Imprimir resumen dependiente",
             ACTION_IMPRIMIR_RESUMEN_USUARIO_COMISION = "Imprimir comision dependiente",
             //pto elab
-            ACTION_IMPRIMIR_RESUMEN_PTO = "Imprimir Pto elaboracion",
-            ACTION_ABRIR_ORDEN = "Editar Orden";
+            ACTION_IMPRIMIR_RESUMEN_PTO = "Imprimir Pto elaboracion";
 
     private VentaDetailService service;
-    private OrdenDetailViewPresenter ordenPresenter;
 
     public VentaResumenViewPresenter(VentaDetailController controller, OrdenController ordenController) {
         super(new VentaResumenViewModel());
         this.service = controller;
-        ordenPresenter = new OrdenDetailViewPresenter(ordenController);
-        ordenPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_ORDEN_STATUS_UPDATE, (PropertyChangeEvent evt) -> {
-            updateBeanData();
-        });
-        updateBeanData();
+
+         updateBeanData();
         controller.initIPV(controller.getInstance());
+    }
+
+    public VentaDetailService getService() {
+        return service;
     }
 
     @Override
@@ -123,26 +122,7 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
             }
 
         });
-        registerOperation(new AbstractViewAction(ACTION_ABRIR_ORDEN) {
-            @Override
-            public Optional doAction() {
-                onAbrirOrdenAction();
-                return Optional.empty();
-            }
 
-        });
-
-    }
-
-    private void onAbrirOrdenAction() {
-        if (getBean().getOrden_seleccionada() == null) {
-            service.createNewOrden();
-            getBean().setLista_orden(service.getOrdenesActivas());
-            //throw new IllegalArgumentException("No hay una orden seleccionada");
-        }
-
-        ordenPresenter.setOrden(getBean().getOrden_seleccionada());
-        Application.getInstance().getNavigator().navigateTo(OrdenDetailFragmentView.VIEW_NAME, ordenPresenter);
     }
 
     private void onImprimirZClick() {
@@ -189,7 +169,6 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
 
     private void updateBeanData() {
         com.jobits.pos.domain.models.Venta v = service.getInstance();
-        getBean().setLista_orden(service.getOrdenesActivas());
         getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta());
         getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta());
         getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta());

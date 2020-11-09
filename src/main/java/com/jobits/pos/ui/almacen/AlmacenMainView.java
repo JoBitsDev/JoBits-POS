@@ -47,6 +47,10 @@ public class AlmacenMainView extends AbstractViewPanel {
     private void initComponents() {
 
         jPanelSeleccion = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jTextFieldBusqueda = MaterialComponentsFactory.Input.getTextField("Buscar insumo", "");
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
+        jLabel1 = new javax.swing.JLabel();
         jPanelPeriodo = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jComboBoxAlmacenList = new javax.swing.JComboBox<>();
@@ -70,6 +74,25 @@ public class AlmacenMainView extends AbstractViewPanel {
         jPanelSeleccion.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jPanelSeleccion.setPreferredSize(new java.awt.Dimension(400, 70));
         jPanelSeleccion.setLayout(new java.awt.BorderLayout());
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 1, 15, 1));
+        jPanel4.setOpaque(false);
+        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.LINE_AXIS));
+
+        jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(300, 24));
+        jTextFieldBusqueda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldBusquedaFocusLost(evt);
+            }
+        });
+        jPanel4.add(jTextFieldBusqueda);
+        jPanel4.add(filler3);
+
+        jLabel1.setIcon(MaterialIcons.SEARCH);
+        jLabel1.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel4.add(jLabel1);
+
+        jPanelSeleccion.add(jPanel4, java.awt.BorderLayout.EAST);
 
         jPanelPeriodo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
         jPanelPeriodo.setOpaque(false);
@@ -192,9 +215,14 @@ public class AlmacenMainView extends AbstractViewPanel {
         tableInsumos.getjTableCrossReference().revalidate();
     }//GEN-LAST:event_jComboBoxAlmacenListActionPerformed
 
+    private void jTextFieldBusquedaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldBusquedaFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldBusquedaFocusLost
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonEliminarAlmacen;
     private javax.swing.JButton jButtonNuevaFactura;
@@ -202,14 +230,17 @@ public class AlmacenMainView extends AbstractViewPanel {
     private javax.swing.JButton jButtonResumen;
     private javax.swing.JButton jButtonTransacciones;
     private javax.swing.JComboBox<String> jComboBoxAlmacenList;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelValorTotal;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelOpciones;
     private javax.swing.JPanel jPanelPeriodo;
     private javax.swing.JPanel jPanelSeleccion;
     private javax.swing.JPanel jPanelTabla;
+    private javax.swing.JTextField jTextFieldBusqueda;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -230,6 +261,7 @@ public class AlmacenMainView extends AbstractViewPanel {
 
         jComboBoxAlmacenList.addItemListener((ItemEvent e) -> {
             getPresenter().getOperation(ACTION_ACTUALIZAR_LISTA_ALMACEN).doAction();
+            jTextFieldBusqueda.requestFocusInWindow();
         });
         jButtonResumen.setAction(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN));
         jButtonResumen.setIcon(MaterialIcons.PRINT);
@@ -247,6 +279,8 @@ public class AlmacenMainView extends AbstractViewPanel {
                 }
             }
         });
+
+        Bindings.bind(jTextFieldBusqueda, getPresenter().getModel(PROP_SEARCH_KEYWORD));
     }
 
     @Override

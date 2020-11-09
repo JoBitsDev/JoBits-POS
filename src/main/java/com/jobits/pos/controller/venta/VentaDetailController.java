@@ -62,10 +62,11 @@ import javax.swing.JOptionPane;
  * @author Jorge
  *
  */
-public class VentaDetailController extends AbstractDetailController<Venta> implements VentaDetailService {
+public class VentaDetailController extends AbstractDetailController<Venta>
+        implements VentaDetailService {
 
     Date fechaFin = null;
-    private OrdenController ordController;
+    private OrdenService ordController;
     int turnoActivo = 0;
 
     public VentaDetailController() {
@@ -74,13 +75,13 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
             instance = initDiaVentas(null);
         });
         OrdenDAO.getInstance().addPropertyChangeListener(this);
-        this.ordController = new OrdenController(getInstance());
+        this.ordController = new OrdenController();//TODO:esto hay que pasarlo por parametro
 
     }
 
     public VentaDetailController(Venta instance) {//TODO aqui se pudiera crear el constructor del orden controller sin pasarlo por parametro
         super(instance, VentaDAO.getInstance());
-        this.ordController = new OrdenController(instance);
+        this.ordController = new OrdenController();
         OrdenDAO.getInstance().addPropertyChangeListener(this);
         if (getInstance().getCambioTurno1() != null) {
             turnoActivo = 2;
@@ -95,7 +96,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
             instance = initDiaVentas(diaVentas);
 
         });
-        this.ordController = new OrdenController(getInstance());
+        this.ordController = new OrdenController();
         if (getInstance().getCambioTurno1() != null) {
             turnoActivo = 2;
         }
@@ -126,32 +127,25 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
     public void constructView(java.awt.Container parent) {
     }
 
-    public void updateOrdenDialog(Orden objectAtSelectedRow) {
-        if (ordController == null) {
-            //  ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
-
-        } else {
-            ordController.setInstance(objectAtSelectedRow);
-        }
-    }
-
+    //TODO: borrar despues de verificar
+//    public void updateOrdenDialog(Orden objectAtSelectedRow) {
+//        if (ordController == null) {
+//            //  ordController = new OrdenController(objectAtSelectedRow, vi.getjPanelDetailOrdenes());
+//
+//        } else {
+//          //  ordController.setInstance(objectAtSelectedRow);
+//        }
+//    }
     @Override
     public Orden createNewOrden() {
         boolean nil = ordController == null;
         Orden newOrden;
         if (nil) {
-            ordController = new OrdenController(getInstance());
-            newOrden = ordController.getInstance();
-        } else {
-            newOrden = ordController.createNewInstance();
+            ordController = new OrdenController();
         }
+        //TODO: aqui se sigue sin manejar el numero de la mesa en los controllers y no en las vistas
+        newOrden = ordController.createNewInstance(null, R.DATE_FORMAT.format(getInstance().getFecha()));//TODO: ver que parametros hacen falta para la nueva orden
         super.getInstance().getOrdenList().add(newOrden);
-        ordController.create(newOrden, true);
-        if (nil) {
-            //   ordController = new OrdenController(newOrden, vi.getjPanelDetailOrdenes());
-        } else {
-            ordController.setInstance(newOrden);
-        }
         return newOrden;
     }
 
@@ -170,12 +164,12 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
     public void fetchNewDataFromServer(int turnoTrabajo) {
         turnoActivo = turnoTrabajo;
         getModel().getEntityManager().refresh(getModel().find(getInstance().getFecha()));
-        if (ordController != null) {
-            if (ordController.getInstance() != null) {
-                int index = getOrdenesActivas().indexOf(ordController.getInstance());
-                ordController.setInstance(getOrdenesActivas().get(index));
-            }
-        }
+//        if (ordController != null) { //TODO: borrar luego de verificar
+//            if (ordController.getInstance() != null) {
+//                int index = getOrdenesActivas().indexOf(ordController.getInstance());
+//                //   ordController.setInstance(getOrdenesActivas().get(index));TODO: borrar despues de verificar
+//            }
+//        }
         //vi.updateView();
     }
 
@@ -313,7 +307,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
     public void printPersonalResumenRow(Personal p) {
         List<ProductovOrden> aux = VentaDAO1.getResumenVentasCamarero(getInstance(), p);
         Collections.sort(aux, (o1, o2) -> {
-            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
+            return o1.getNombreProductoVendido().compareTo(o2.getNombreProductoVendido());
         });
         getImpresionInstance().print(new PersonalResumenFormatter(aux, p, getInstance().getFecha()), null);
 
@@ -328,7 +322,7 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         Cocina c = CocinaDAO.getInstance().find(codCocina);
         List<ProductovOrden> aux = VentaDAO1.getResumenVentasCocina(getInstance(), c);
         Collections.sort(aux, (o1, o2) -> {
-            return o1.getProductoVenta().getNombre().compareTo(o2.getProductoVenta().getNombre());
+            return o1.getNombreProductoVendido().compareTo(o2.getNombreProductoVendido());
         });
         getImpresionInstance().print(new PuntoElaboracionFormatter(aux, c, getInstance().getFecha()), c.getNombreCocina());
     }
@@ -383,11 +377,11 @@ public class VentaDetailController extends AbstractDetailController<Venta> imple
         Impresion.getDefaultInstance().print(new CasaFormatter(VentaDAO1.getResumenVentasCasa(getInstance()), getInstance().getFecha()), null);
     }
 
-    public void cerrarOrdenRapido() {
+    public void cerrarOrdenRapido(String codOrden) {
         if (ordController != null) {
             if (showConfirmDialog(getView(), "Desea enviar a cocina, cerrar y crear una nueva orden")) {
-                ordController.enviarACocina();
-                ordController.cerrarOrden();
+                ordController.enviarACocina(codOrden);
+                ordController.cerrarOrden(codOrden);
                 createNewOrden();
             }
         }

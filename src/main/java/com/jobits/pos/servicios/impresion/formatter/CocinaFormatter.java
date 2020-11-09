@@ -69,13 +69,13 @@ public class CocinaFormatter extends AbstractTicketFormatter {
                     t.setText(x.getNota().getDescripcion().replace('%', ' '));
                     t.newLine();
                     t.alignLeft();
-                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getProductoVenta().getNombre());
+                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getNombreProductoVendido());
                 } else {
-                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
+                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getNombreProductoVendido());
                 }
                 t.newLine();
                 t.alignRight();
-                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
+                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getPrecioVendido() + " " + MONEDA);
                 t.newLine();
                 t.alignLeft();
 
@@ -177,13 +177,13 @@ public class CocinaFormatter extends AbstractTicketFormatter {
                     t.setText(x.getNota().getDescripcion().replace('%', ' '));
                     t.newLine();
                     t.alignLeft();
-                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getProductoVenta().getNombre());
+                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getNombreProductoVendido());
                 } else {
-                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getProductoVenta().getNombre());
+                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getNombreProductoVendido());
                 }
                 t.newLine();
                 t.alignRight();
-                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getProductoVenta().getPrecioVenta() + " " + MONEDA);
+                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getPrecioVendido() + " " + MONEDA);
                 t.newLine();
                 t.alignLeft();
                 x.setEnviadosacocina(x.getCantidad());

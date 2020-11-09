@@ -16,8 +16,7 @@ import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
  * @author Home
  */
 public class AlmacenViewModel extends AbstractListViewModel<Almacen> {
-    
-    
+
     private ArrayListModel<Insumo> lista_insumos_disponibles = new ArrayListModel();
 
     public static final String PROP_LISTA_INSUMOS_DISPONIBLES = "lista_insumos_disponibles";
@@ -38,8 +37,30 @@ public class AlmacenViewModel extends AbstractListViewModel<Almacen> {
 
     public static final String PROP_INSUMO_CONTENIDO_SELECCIONADO = "insumo_contenido_seleccionado";
 
-    
-    
+    private String search_keyWord;
+
+    public static final String PROP_SEARCH_KEYWORD = "search_keyWord";
+
+    /**
+     * Get the value of search_keyWord
+     *
+     * @return the value of search_keyWord
+     */
+    public String getSearch_keyWord() {
+        return search_keyWord;
+    }
+
+    /**
+     * Set the value of search_keyWord
+     *
+     * @param search_keyWord new value of search_keyWord
+     */
+    public void setSearch_keyWord(String search_keyWord) {
+        String oldSearch_keyWord = this.search_keyWord;
+        this.search_keyWord = search_keyWord;
+        firePropertyChange(PROP_SEARCH_KEYWORD, oldSearch_keyWord, search_keyWord);
+    }
+
     /**
      * Get the value of insumo_contenido_seleccionado
      *
@@ -141,6 +162,5 @@ public class AlmacenViewModel extends AbstractListViewModel<Almacen> {
         this.lista_insumos_disponibles = lista_insumos;
         firePropertyChange(PROP_LISTA_INSUMOS_DISPONIBLES, oldLista_insumos, lista_insumos);
     }
-
 
 }

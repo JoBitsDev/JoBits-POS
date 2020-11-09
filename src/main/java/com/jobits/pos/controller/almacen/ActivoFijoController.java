@@ -58,7 +58,12 @@ public class ActivoFijoController extends AbstractDetailController<ActivoFijo> {
     public Ubicacion createNewUbicacion() {
         Ubicacion u = new Ubicacion();
         u.setActivoFijoList(new ArrayList<>());
-        u.setNombre(showInputDialog(getView(), "Introduzca el nombre de la ubiicación"));
+        String nombre = showInputDialog(getView(), "Introduzca el nombre de la ubiicación");
+        if (nombre != null) {
+            u.setNombre(nombre);
+        } else {
+            u.setNombre("");
+        }
         getModel().startTransaction();
         UbicacionDAO.getInstance().create(u);
         getModel().commitTransaction();

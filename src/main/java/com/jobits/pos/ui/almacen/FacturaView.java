@@ -117,6 +117,9 @@ public class FacturaView extends AbstractViewPanel {
 
         jPanel12.setOpaque(false);
         jPanel12.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jDateChooser1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jDateChooser1.setPreferredSize(new java.awt.Dimension(170, 35));
         jPanel12.add(jDateChooser1);
 
         jPanelHeader.add(jPanel12);

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jobits.pos.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -23,20 +22,20 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "notificacionEnvioCocinaPK",scope = NotificacionEnvioCocina.class )
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "notificacionEnvioCocinaPK", scope = NotificacionEnvioCocina.class)
 @Entity
 @Table(name = "notificacion_envio_cocina")
 @NamedQueries({
     @NamedQuery(name = "NotificacionEnvioCocina.findAll", query = "SELECT n FROM NotificacionEnvioCocina n"),
     @NamedQuery(name = "NotificacionEnvioCocina.findByCocinacodCocina", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.notificacionEnvioCocinaPK.cocinacodCocina = :cocinacodCocina"),
-    @NamedQuery(name = "NotificacionEnvioCocina.findByProductovOrdenproductoVentapCod", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.notificacionEnvioCocinaPK.productovOrdenproductoVentapCod = :productovOrdenproductoVentapCod"),
-    @NamedQuery(name = "NotificacionEnvioCocina.findByProductovOrdenordencodOrden", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.notificacionEnvioCocinaPK.productovOrdenordencodOrden = :productovOrdenordencodOrden"),
     @NamedQuery(name = "NotificacionEnvioCocina.findByCantidad", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.cantidad = :cantidad"),
     @NamedQuery(name = "NotificacionEnvioCocina.findByHoraNotificacion", query = "SELECT n FROM NotificacionEnvioCocina n WHERE n.horaNotificacion = :horaNotificacion")})
 public class NotificacionEnvioCocina implements Serializable {
@@ -54,15 +53,13 @@ public class NotificacionEnvioCocina implements Serializable {
     @JoinColumn(name = "cocinacod_cocina", referencedColumnName = "cod_cocina", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Cocina cocina;
-    @JoinColumns({
-        @JoinColumn(name = "productov_ordenproducto_ventap_cod", referencedColumnName = "producto_ventap_cod", insertable = false, updatable = false),
-        @JoinColumn(name = "productov_ordenordencod_orden", referencedColumnName = "ordencod_orden", insertable = false, updatable = false)})
+    @JoinColumn(name = "productov_ordenid", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private ProductovOrden productovOrden;
 
     @Column(name = "ip_dependiente")
     private String ip_dependiente;
-    
+
     public NotificacionEnvioCocina() {
     }
 
@@ -70,8 +67,8 @@ public class NotificacionEnvioCocina implements Serializable {
         this.notificacionEnvioCocinaPK = notificacionEnvioCocinaPK;
     }
 
-    public NotificacionEnvioCocina(String cocinacodCocina, String productovOrdenproductoVentapCod, String productovOrdenordencodOrden) {
-        this.notificacionEnvioCocinaPK = new NotificacionEnvioCocinaPK(cocinacodCocina, productovOrdenproductoVentapCod, productovOrdenordencodOrden);
+    public NotificacionEnvioCocina(String cocinacodCocina, int productovOrdenId) {
+        this.notificacionEnvioCocinaPK = new NotificacionEnvioCocinaPK(cocinacodCocina, productovOrdenId);
     }
 
     public NotificacionEnvioCocinaPK getNotificacionEnvioCocinaPK() {
@@ -81,7 +78,6 @@ public class NotificacionEnvioCocina implements Serializable {
     public void setNotificacionEnvioCocinaPK(NotificacionEnvioCocinaPK notificacionEnvioCocinaPK) {
         this.notificacionEnvioCocinaPK = notificacionEnvioCocinaPK;
     }
-
 
     public Date getHoraNotificacion() {
         return horaNotificacion;
@@ -115,8 +111,6 @@ public class NotificacionEnvioCocina implements Serializable {
         this.ip_dependiente = ip_dependiente;
     }
 
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;

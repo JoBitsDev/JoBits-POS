@@ -6,21 +6,20 @@
 package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaDetailService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.seccion.SeccionListController;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.ImageManager;
 import com.jobits.pos.ui.utils.utils;
+import java.awt.Dimension;
 import java.util.Optional;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -38,6 +37,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR_INSUMO_FICHA = "Registrar";
     public static String ACTION_ELIMINAR_INSUMO_FICHA = "Eliminar";
+    public static String ACTION_EDITAR_IMAGEN = "Editar Imagen";
 
     private ProductoVentaDetailService service;
     private boolean creatingMode = true;
@@ -114,6 +114,13 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_EDITAR_IMAGEN) {
+            @Override
+            public Optional doAction() {
+                onEditarImagenClick();
+                return Optional.empty();
+            }
+        });
     }
 
     private void fillForm(ProductoVenta productoSeleccionado) {
@@ -129,7 +136,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setPrecio_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPrecioVenta()));
         getBean().setPrecio_costo("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getGasto()));
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
-
+        refreshProductImage();
     }
 
     private void onAddIngredienteClick() {
@@ -161,7 +168,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             }
             p.setVisible(true);
             service.create(p);
-             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
+            NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         }
 
     }
@@ -210,6 +217,28 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
+
+    }
+
+    private void onEditarImagenClick() {
+        ImageManager imageEditor = new ImageManager(null);
+        String keyWord = getBean().getCodigo_producto() + "_" + getBean().getNombre_producto();
+//        File mediaFile = new File(R.mediaFilePath + keyWord + ".jpg");
+        imageEditor.showView(keyWord, getBean().getImagen_producto());
+
+        refreshProductImage();
+    }
+
+    private void refreshProductImage() {
+        String cod = getBean().getCodigo_producto();
+        String nombre = getBean().getNombre_producto();
+        ImageIcon image = ImageManager.loadImageIcon(cod + "_" + nombre, new Dimension(70, 70));
+        if (image != null) {
+            getBean().setImagen_producto(image);
+        } else {
+            getBean().setImagen_producto(new ImageIcon(getClass().getResource(
+                    "/restManager/resources/icons pack/pregunta_color.png")));
+        }
 
     }
 

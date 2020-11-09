@@ -1,31 +1,24 @@
 package com.jobits.pos.controller.venta;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.ui.utils.CalcularCambioView;
-import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
-import java.awt.Container;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.jidesoft.dialog.JideOptionPane;
+import com.jobits.pos.adapters.repo.impl.ConfigDAO;
+import com.jobits.pos.adapters.repo.impl.ConfiguracionDAO;
+import com.jobits.pos.adapters.repo.impl.MesaDAO;
+import com.jobits.pos.adapters.repo.impl.NotaDAO;
+import com.jobits.pos.adapters.repo.impl.OrdenDAO;
+import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
+import com.jobits.pos.adapters.repo.impl.ProductovOrdenDAO;
+import com.jobits.pos.adapters.repo.impl.SeccionDAO;
+import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.controller.AbstractFragmentController;
 import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.login.LogInController;
-import com.jobits.pos.controller.seccion.SeccionListController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.logs.RestManagerHandler;
+import com.jobits.pos.domain.models.Area;
+import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Configuracion;
-import com.jobits.pos.domain.models.IpvRegistro;
-import com.jobits.pos.domain.models.IpvRegistroPK;
 import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.domain.models.Nota;
-import com.jobits.pos.domain.models.NotaPK;
 import com.jobits.pos.domain.models.NotificacionEnvioCocina;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.ProductoInsumo;
@@ -33,27 +26,27 @@ import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.adapters.repo.impl.ConfigDAO;
-import com.jobits.pos.adapters.repo.impl.ConfiguracionDAO;
-import com.jobits.pos.adapters.repo.impl.IpvRegistroDAO;
-import com.jobits.pos.adapters.repo.impl.MesaDAO;
-import com.jobits.pos.adapters.repo.impl.NotaDAO;
-import com.jobits.pos.adapters.repo.impl.OrdenDAO;
-import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
-import com.jobits.pos.adapters.repo.impl.ProductovOrdenDAO;
-import com.jobits.pos.adapters.repo.impl.SeccionDAO;
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.Cocina;
-import com.jobits.pos.servicios.impresion.Impresion;
-
+import com.jobits.pos.exceptions.ValidatingException;
+import com.jobits.pos.logs.RestManagerHandler;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.servicios.impresion.Ticket;
+import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.AbstractTicketFormatter;
 import com.jobits.pos.servicios.impresion.formatter.CancelacionCocinaFormatter;
-import com.jobits.pos.servicios.impresion.formatter.OrdenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.CocinaFormatter;
+import com.jobits.pos.servicios.impresion.formatter.OrdenFormatter;
+import com.jobits.pos.ui.utils.CalcularCambioView;
+import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
-import com.jobits.pos.ui.OldView;
+import java.awt.Container;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * FirstDream
@@ -61,9 +54,9 @@ import com.jobits.pos.ui.OldView;
  * @author Jorge
  *
  */
-public class OrdenController extends AbstractFragmentController<Orden> {
+public class OrdenController extends AbstractFragmentController<Orden>
+        implements OrdenService {
 
-    Venta fechaOrden;
     private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
     private IPVController ipvController = new IPVController();
     protected final String SYNC = "Sale con: ";
@@ -73,39 +66,176 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         init();
     }
 
-    public OrdenController(String ordenId) {
-        this();
+    @Override
+    public void addNota(String codOrden, ProductovOrden prod) {
+        if (prod != null) {
+            Nota nota = prod.getNota();
+            if (nota == null) {
+                String nuevanota = showInputDialog(getView(), "Introduzca la nota a adjuntar");
+                Nota n = new Nota();
+                n.setDescripcion(nuevanota);
+
+                prod.setNota(n);
+                NotaDAO.getInstance().create(n);
+                RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, codOrden, n.getDescripcion());
+                ProductovOrdenDAO.getInstance().edit(prod);
+
+            } else {
+                String notaAntigua = nota.getDescripcion();
+                String nuevaNota = showInputDialog(getView(), "Edite la nota anterior", notaAntigua);
+                if (nuevaNota.equals("")) {
+                    nota.setDescripcion(notaAntigua);
+                } else {
+                    nota.setDescripcion(nuevaNota);
+                }
+                NotaDAO.getInstance().edit(nota);
+                RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, codOrden, nota.getDescripcion());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 
-    public OrdenController(Mesa mesaParaAbrir) {
-        this();
+    //TODO:quitar los popups de aqui
+    @Override
+    public void addProduct(String codOrden, ProductoVenta selected) {//TODO: la cantidad se pasa por parametro
+        if (autorize(codOrden)) {
+            Orden o = getInstance(codOrden);
+            checkIfProductIsValid(selected, o);
+            boolean found = false;
+            ProductovOrden founded = null;
+            float cantidadAgregada = 0;
+            for (ProductovOrden x : new ArrayList<>(o.getProductovOrdenList())) {
+                if (x.getProductoVenta().getCodigoProducto().equals(selected.getCodigoProducto())) {
+                    founded = x;
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                cantidadAgregada = founded.getCantidad();
+                float cantidad = 0;
+                String value = new NumberPad(null).showView();
+                if (!value.equals("")) {
+                    cantidad = Float.parseFloat(value);
+                }
+                if (!esDespachable(selected, o, cantidad)) {
+                    throw new ValidatingException(getView(), "No hay existencias de" + selected + " para elaborar");
+                }
+                founded.setCantidad(founded.getCantidad() + cantidad);
+
+            } else {
+                founded = new ProductovOrden();
+                founded.setProductoVenta(selected);
+                founded.setOrden(o);
+                founded.setPrecioVendido(selected.getPrecioVenta());
+                founded.setNombreProductoVendido(selected.toString());
+                founded.setOrden(o);
+                founded.setProductoVenta(selected);
+                String value = new NumberPad(null).showView();//TODO: Porque null???
+                if (!value.equals("")) {
+                    founded.setCantidad(Float.parseFloat(value));
+                } else {
+                    founded.setCantidad(0);
+                }
+                founded.setEnviadosacocina((float) 0);
+                founded.setNumeroComensal(0);
+                if (!esDespachable(selected, o, founded.getCantidad())) {
+                    throw new ValidatingException(getView(), "No hay existencias de" + selected + " para elaborar. "
+                            + "\n el producto se cambiará a no visible");
+                }
+                ProductovOrdenDAO.getInstance().create(founded);
+            }
+            if (getInstance(codOrden).getDeLaCasa()) {
+                ipvController.consumirPorLaCasa(founded, founded.getCantidad());
+            } else {
+                ipvController.consumir(founded, founded.getCantidad());
+            }
+            if (found) {
+                ProductovOrdenDAO.getInstance().edit(founded);
+            } else {
+                o.getProductovOrdenList().add(founded);
+            }
+            cantidadAgregada = founded.getCantidad() - cantidadAgregada;
+            fireWarningOnAdding(founded, cantidadAgregada);
+            update(getInstance(codOrden));
+        }
 
     }
 
-    public OrdenController(Venta fecha) {
-        this();
-        this.fechaOrden = fecha;
-        //   instance = createNewInstance();
-    }
-
-    public OrdenController(Orden instance) {
-        super(instance, OrdenDAO.getInstance());
-        init();
-        fechaOrden = instance.getVentafecha();
-    }
-
-    private void init() {
-        setDismissOnAction(false);
-        setShowDialogs(false);
-        if (LOGGER.getHandlers().length == 0) {
-            LOGGER.addHandler(new RestManagerHandler(Venta.class));
-            LOGGER.setLevel(Level.FINE);
+//    private void addProduct(String codOrden, ProductovOrden selected, float cantidad) {
+//        if (autorize(codOrden)) {
+//            if (!esDespachable(selected.getProductoVenta(), selected.getOrden(), cantidad)) {
+//                throw new ValidatingException(getView(), "No hay existencias de " + selected + " para elaborar");
+//            }
+//            selected.setCantidad(selected.getCantidad() + cantidad);
+//            if (getInstance(codOrden).getDeLaCasa()) {
+//                ipvController.consumirPorLaCasa(selected, cantidad);
+//            } else {
+//                ipvController.consumir(selected, cantidad);
+//            }
+//            ProductovOrdenDAO.getInstance().edit(selected);
+//            fireWarningOnAdding(selected, cantidad);
+//            update(instance);
+//        }
+//    }
+//    
+    public void addRapidoProducto(String codOrden, String idProducto) {
+        ProductoVenta productoABuscar = ProductoVentaDAO.getInstance().find(idProducto);
+        if (productoABuscar != null) {
+            addProduct(codOrden, productoABuscar);
         }
     }
 
     @Override
+    public void cerrarOrden(String codOrden) {
+        if (autorize(codOrden)) {
+            Orden o = getInstance(codOrden);
+            Impresion i = new Impresion();
+            setShowDialogs(true);
+            if (showConfirmDialog(getView(), "Desea cerrar la orden " + o.getCodOrden())) {
+                setShowDialogs(false);
+                boolean enviar = true;
+                for (ProductovOrden x : o.getProductovOrdenList()) {
+                    if (x.getCantidad() != x.getEnviadosacocina()) {
+                        showErrorDialog(getView(), "Existen productos que no han sido enviados a elaborar. Envie a elaborar antes de cerrar la orden");
+                        return;
+                    }
+                }
+                if (enviar) {
+                    if (showConfirmDialog(getView(), "Desea imprimir un ticket de la orden")) {
+                        i.print(new OrdenFormatter(o, false), o.getMesacodMesa().getAreacodArea().getNombre());
+                        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIRTICKET, Level.FINE, o);
+                    }
+                    o.setHoraTerminada(new Date());
+                    o.setOrdengastoEninsumos(getGastosInsumos(o));
+                    RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.CERRAR, Level.FINE, o);
+                    Mesa m = o.getMesacodMesa();
+                    m.setEstado("vacia");
+                    o.setMesacodMesa(m);
+                    MesaDAO.getInstance().edit(m);
+                    setDismissOnAction(true);
+                    update(o, true);
+                }
+            }
+            setShowDialogs(false);
+            CalcularCambioView cambio = new CalcularCambioView(null, true, o);
+        }
+    }
+
+    @Override
+    public void constructView(java.awt.Container parent) {
+        throw new IllegalStateException("Bad call");
+    }
+
+    @Override
     public Orden createNewInstance() {
+        throw new IllegalStateException("Depracated");
+    }
+
+    @Override
+    public Orden createNewInstance(String codMesa, String fechaPedido) {
         Orden ret = new Orden();
         Mesa m;
         if (ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_MESA_FIJA_CAJERO.getValue()).getValor() == 0) {
@@ -142,120 +272,35 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         ret.setOrdengastoEninsumos((float) 0);
         ret.setOrdenvalorMonetario((float) 0);
         ret.setProductovOrdenList(new ArrayList<>());
-        ret.setVentafecha(fechaOrden);
+        try {
+            ret.setVentafecha(VentaDAO.getInstance().find(R.DATE_FORMAT.parse(fechaPedido)));
+        } catch (ParseException ex) {
+            throw new IllegalArgumentException("Fecha de pedido en formato incorrecto " + fechaPedido + " formato correcto (dd/mm/yy)");
+        }
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.CREADO, Level.FINE, ret);
+        create(ret);
         return ret;
-
     }
 
     @Override
-    public void constructView(java.awt.Container parent) {
-    }
-
-    public void enviarACocina() {
-        if (autorize()) {
-            instance = printKitchen(instance);
-            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINE, instance);
-            update(instance);
+    public void enviarACocina(String codOrden) {
+        if (autorize(codOrden)) {
+            Orden o = getInstance(codOrden);
+            o = printKitchen(o);
+            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.ENVIAR_COCINA, Level.FINE, o);
+            update(o);
             showSuccessDialog(getView(), "Productos enviados a cocina exitosamente");
         }
     }
 
-    public void imprimirPreTicket() {
-        Impresion i = new Impresion();
-        i.print(new OrdenFormatter(instance, true), instance.getMesacodMesa().getAreacodArea().getNombre());
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIR_TICKET_PARCIAL, Level.FINE, instance);
-    }
-
-    public void addNota(ProductovOrden prod) {
-        Nota nota = prod.getNota();
-        if (nota == null) {
-            String nuevanota = showInputDialog(getView(), "Introduzca la nota a adjuntar");
-            NotaPK pk = new NotaPK(
-                    prod.getProductovOrdenPK().getProductoVentapCod(), prod.getProductovOrdenPK().getOrdencodOrden());
-            Nota n = new Nota(pk);
-            n.setDescripcion(nuevanota);
-            n.setProductovOrden(prod);
-
-            prod.setNota(n);
-            NotaDAO.getInstance().create(n);
-            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, instance.getCodOrden(), n.getDescripcion());
-            ProductovOrdenDAO.getInstance().edit(prod);
-
+    @Override
+    public void setDeLaCasa(String codOrden, boolean selected) {
+        Orden o = getInstance(codOrden);
+        o.setDeLaCasa(selected);
+        if (selected) {
+            ipvController.consumirPorLaCasa(o.getProductovOrdenList());
         } else {
-            String notaAntigua = nota.getDescripcion();
-            String nuevaNota = showInputDialog(getView(), "Edite la nota anterior", notaAntigua);
-            nota.setDescripcion(nuevaNota);
-            NotaDAO.getInstance().edit(nota);
-            RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, instance.getCodOrden(), nota.getDescripcion());
-        }
-
-    }
-
-    public void cerrarOrden() {
-        if (autorize()) {
-            Impresion i = new Impresion();
-            setShowDialogs(true);
-            if (showConfirmDialog(getView(), "Desea cerrar la orden " + instance.getCodOrden())) {
-                setShowDialogs(false);
-                boolean enviar = true;
-                for (ProductovOrden x : instance.getProductovOrdenList()) {
-                    if (x.getCantidad() != x.getEnviadosacocina()) {
-                        showErrorDialog(getView(), "Existen productos que no han sido enviados a elaborar. Envie a elaborar antes de cerrar la orden");
-                        return;
-                    }
-                }
-                if (enviar) {
-                    if (showConfirmDialog(getView(), "Desea imprimir un ticket de la orden")) {
-
-                        i.print(new OrdenFormatter(instance, false), instance.getMesacodMesa().getAreacodArea().getNombre());
-                        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIRTICKET, Level.FINE, instance);
-                    }
-                    instance.setHoraTerminada(new Date());
-                    instance.setOrdengastoEninsumos(getGastosInsumos(instance));
-                    RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.CERRAR, Level.FINE, instance);
-                    Mesa m = instance.getMesacodMesa();
-                    m.setEstado("vacia");
-                    instance.setMesacodMesa(m);
-                    MesaDAO.getInstance().edit(m);
-                    setDismissOnAction(true);
-                    update(instance, true);
-                }
-            }
-            setShowDialogs(false);
-            CalcularCambioView cambio = new CalcularCambioView(null, true, getInstance());
-        }
-    }
-
-    public void setPorciento(float f) {
-        instance.setPorciento(f);
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, instance, f);
-        //view.updateValorTotal();
-        update(instance);
-    }
-
-    private void removeProduct(ProductovOrden objectAtSelectedRow) {
-        if (autorize()) {
-            int index = instance.getProductovOrdenList().indexOf(objectAtSelectedRow);
-            float cantidadBorrada = instance.getProductovOrdenList().get(index).getCantidad();
-            instance.getProductovOrdenList().get(index).setCantidad(0);
-            //Impresion i = new Impresion();
-            printCancelationTicket(instance);
-            if (instance.getDeLaCasa()) {
-                ipvController.devolverPorLaCasa(objectAtSelectedRow, cantidadBorrada);
-            } else {
-                ipvController.devolver(objectAtSelectedRow, cantidadBorrada);
-            }
-            getModel().startTransaction();
-            for (NotificacionEnvioCocina x : instance.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
-                getModel().getEntityManager().remove(x);
-            }
-            getModel().commitTransaction();
-            ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
-            instance.getProductovOrdenList().remove(objectAtSelectedRow);
-
-            fireWarningOnDeleting(objectAtSelectedRow, cantidadBorrada);
-            update(instance);
+            ipvController.devolverPorLaCasa(o.getProductovOrdenList());
         }
     }
 
@@ -277,95 +322,160 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         return ret;
     }
 
-    public float getValorTotal() {
-        float total = 0;
-        for (ProductovOrden x : getInstance().getProductovOrdenList()) {
-            total += x.getCantidad() * x.getProductoVenta().getPrecioVenta();
-
-        }
-        instance.setOrdenvalorMonetario(AbstractTicketFormatter.REDONDEO_POR_EXCESO
-                ? utils.redondeoPorExcesoFloat(total * (1 + (instance.getPorciento() / 100)))
-                : utils.setDosLugaresDecimalesFloat(total * (1 + (instance.getPorciento() / 100))));
-        update(instance, true);
-        return instance.getOrdenvalorMonetario();
-    }
-
     @Override
-    public void setInstance(Orden instance) {
-        if (instance == null) {
-            this.instance = createNewInstance();
-        } else {
-            this.instance = instance;
-
+    public Orden getInstance(String codOrden) {
+        Orden ret = OrdenDAO.getInstance().find(codOrden);
+        if (ret == null) {
+            throw new IllegalArgumentException("La orden " + codOrden + " no existe en el sistema");
         }
-    }
-
-    @Override
-    public void setParent(Container parent) {
-        super.setParent(parent); //To change body of generated methods, choose Tools | Templates.
-        constructView(parent);
+        return ret;
     }
 
     @Override
     public Orden getInstance() {
-        if (instance == null) {
-            instance = createNewInstance();
-        }
-        return instance;
+        throw new IllegalStateException("Depracated");
+//        if (instance == null) {//TODO: borrar
+//            instance = createNewInstance();
+//        }
+//        return instance;
     }
 
-    public List<ProductoVenta> getPDVList() {
-        return ProductoVentaDAO.getInstance().findAllVisible(getInstance().getMesacodMesa());
+    @Override
+    public void setInstance(Orden instance) {
+        throw new IllegalStateException("Depracated");
     }
 
-    public void addProduct(ProductoVenta selected) {
-        if (autorize()) {
+    public ArrayListModel<Mesa> getListaMesas(Area area_seleccionada) {
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
 
-            boolean found = false;
-            ProductovOrden founded = null;
-            float cantidadAgregada = 0;
-            for (ProductovOrden x : new ArrayList<>(getInstance().getProductovOrdenList())) {
-                if (x.getProductoVenta().getCodigoProducto().equals(selected.getCodigoProducto())) {
-                    founded = x;
-                    found = true;
-                    break;
-                }
+    @Override
+    public List<Seccion> getListaSecciones() {
+        List<Seccion> secciones = SeccionDAO.getInstance().findVisibleSecciones(getInstance().getMesacodMesa());
+        Collections.sort(secciones, new Comparator<Seccion>() {
+            @Override
+            public int compare(Seccion o1, Seccion o2) {
+                return o1.toString().compareTo(o2.toString());
             }
-            if (found) {
-                cantidadAgregada = founded.getCantidad();
-                float cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta()));
-                if (!esDespachable(selected, getInstance(), cantidad)) {
-                    throw new ValidatingException(getView(), "No hay existencias de" + selected + " para elaborar");
-                }
-                founded.setCantidad(founded.getCantidad() + cantidad);
+        });
+        return secciones;
+    }
 
-            } else {
-                founded = new ProductovOrden(selected.getCodigoProducto(), getInstance().getCodOrden());
-                founded.setOrden(getInstance());
-                founded.setProductoVenta(selected);
-                founded.setCantidad(Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad de " + founded.getProductoVenta())));
-                founded.setEnviadosacocina((float) 0);
-                founded.setNumeroComensal(0);
-                if (!esDespachable(selected, getInstance(), founded.getCantidad())) {
-                    throw new ValidatingException(getView(), "No hay existencias de" + selected + " para elaborar. "
-                            + "\n el producto se cambiará a no visible");
-                }
-                ProductovOrdenDAO.getInstance().create(founded);
-            }
-            if (instance.getDeLaCasa()) {
-                ipvController.consumirPorLaCasa(founded, founded.getCantidad());
-            } else {
-                ipvController.consumir(founded, founded.getCantidad());
-            }
-            if (found) {
-                ProductovOrdenDAO.getInstance().edit(founded);
-            } else {
-                getInstance().getProductovOrdenList().add(founded);
-            }
-            cantidadAgregada = founded.getCantidad() - cantidadAgregada;
-            fireWarningOnAdding(founded, cantidadAgregada);
-            update(instance);
+    @Override
+    public List<ProductoVenta> getPDVList(String codOrden) {
+        return ProductoVentaDAO.getInstance().findAllVisible(getInstance(codOrden).getMesacodMesa());
+    }
+
+    @Override
+    public void setParent(Container parent) {
+        throw new IllegalStateException("Bad call");
+    }
+
+    @Override
+    public void setPorciento(String codOrden, float f) {
+        Orden o = getInstance(codOrden);
+        o.setPorciento(f);
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.PORCIENTO_ACTUALIZADO, Level.WARNING, o, f);
+        update(o);
+    }
+
+    @Override
+    public float getValorTotal(String codOrden) {
+        float total = 0;
+        Orden o = getInstance(codOrden);
+        for (ProductovOrden x : o.getProductovOrdenList()) {
+            total += x.getCantidad() * x.getPrecioVendido();
+
         }
+        o.setOrdenvalorMonetario(AbstractTicketFormatter.REDONDEO_POR_EXCESO
+                ? utils.redondeoPorExcesoFloat(total * (1 + (o.getPorciento() / 100)))
+                : utils.setDosLugaresDecimalesFloat(total * (1 + (o.getPorciento() / 100))));
+        update(o, true);
+        return o.getOrdenvalorMonetario();
+    }
+
+    @Override
+    public void imprimirPreTicket(String codOrden) {
+        Impresion i = new Impresion();
+        Orden o = getInstance(codOrden);
+        i.print(new OrdenFormatter(o, true), o.getMesacodMesa().getAreacodArea().getNombre());
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIR_TICKET_PARCIAL, Level.FINE, o);
+    }
+
+    @Override
+    public void removeProduct(String codOrden, ProductovOrden selected, float cantidad) {
+        if (autorize(codOrden)) {
+            Orden o = getInstance(codOrden);
+            int index = o.getProductovOrdenList().indexOf(selected);
+            float difer = o.getProductovOrdenList().get(index).getCantidad();
+            if (difer - cantidad == 0) {
+                removeProduct(codOrden, selected);
+                return;
+            }
+            o.getProductovOrdenList().get(index).setCantidad(difer - cantidad);
+            //Impresion i = new Impresion();
+            printCancelationTicket(o);
+            if (o.getDeLaCasa()) {
+                ipvController.devolverPorLaCasa(selected, cantidad);
+            } else {
+                ipvController.devolver(selected, cantidad);
+            }
+            getModel().startTransaction();
+            for (NotificacionEnvioCocina x : o.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
+                float dif = x.getCantidad() - cantidad;
+                if (dif <= 0) {
+                    getModel().getEntityManager().remove(x);
+                } else {
+                    x.setCantidad(x.getCantidad());
+                    getModel().getEntityManager().merge(x);
+                }
+            }
+            getModel().commitTransaction();
+
+            ProductovOrdenDAO.getInstance().edit(selected);
+            fireWarningOnDeleting(codOrden, selected, cantidad);
+
+            update(o);
+        }
+    }
+
+    //
+    //Metodos privados
+    //
+    private boolean autorize(String codOrden) {
+        return new LogInController().constructoAuthorizationView(null, getInstance(codOrden).getPersonalusuario().getUsuario());
+    }
+
+    private void checkIfProductIsValid(ProductoVenta producto, Orden o) {
+        List<Area> areas = producto.getSeccionnombreSeccion().getCartacodCarta().getAreaList();
+
+        for (Area a : areas) {
+            for (Mesa m : a.getMesaList()) {
+                if (m.getCodMesa().equals(o.getMesacodMesa().getCodMesa())) {
+                    return;
+                }
+            }
+        }
+        throw new IllegalArgumentException("El Producto " + producto
+                + " no se puede agregar a la orden " + o
+                + "debido a que este no esta disponible en el area de la orden");
+    }
+
+    private boolean esDespachable(ProductoVenta selected, Orden ordenVenta, float cantidad) {
+        return selected.getCocinacodCocina().getLimitarVentaInsumoAgotado()
+                ? new IPVController().hayDisponibilidad(selected, ordenVenta.getVentafecha().getFecha(), cantidad)
+                : true;
+
+    }
+
+    private void fireWarningOnAdding(ProductovOrden producto, float cantidad) {
+        //   Level l = getInstance().getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR, Level.FINE, producto, cantidad);
+    }
+
+    private void fireWarningOnDeleting(String codOrden, ProductovOrden producto, float cantidad) {
+        Level l = getInstance(codOrden).getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
+        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.BORRAR, l, producto, cantidad);
 
     }
 
@@ -382,139 +492,13 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         return "O-" + orden;
     }
 
-    public boolean autorize() {
-        return new LogInController().constructoAuthorizationView(null, instance.getPersonalusuario().getUsuario());
-    }
-
-    public void fireWarningOnDeleting(ProductovOrden producto, float cantidad) {
-        Level l = getInstance().getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.BORRAR, l, producto, cantidad);
-
-    }
-
-    public void fireWarningOnAdding(ProductovOrden producto, float cantidad) {
-        //   Level l = getInstance().getHoraTerminada() != null ? Level.SEVERE : Level.WARNING;
-        RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.AGREGAR, Level.FINE, producto, cantidad);
-    }
-
-    private boolean esDespachable(ProductoVenta selected, Orden ordenVenta, float cantidad) {
-        return selected.getCocinacodCocina().getLimitarVentaInsumoAgotado()
-                ? new IPVController().hayDisponibilidad(selected, ordenVenta.getVentafecha().getFecha(), cantidad)
-                : true;
-
-    }
-
-    public void addProduct(ProductovOrden selected, float cantidad) {
-        if (autorize()) {
-            if (!esDespachable(selected.getProductoVenta(), selected.getOrden(), cantidad)) {
-                throw new ValidatingException(getView(), "No hay existencias de " + selected + " para elaborar");
-            }
-            selected.setCantidad(selected.getCantidad() + cantidad);
-            if (instance.getDeLaCasa()) {
-                ipvController.consumirPorLaCasa(selected, cantidad);
-            } else {
-                ipvController.consumir(selected, cantidad);
-            }
-            ProductovOrdenDAO.getInstance().edit(selected);
-            fireWarningOnAdding(selected, cantidad);
-            update(instance);
+    private void init() {
+        setDismissOnAction(false);
+        setShowDialogs(false);
+        if (LOGGER.getHandlers().length == 0) {
+            LOGGER.addHandler(new RestManagerHandler(Venta.class));
+            LOGGER.setLevel(Level.FINE);
         }
-    }
-
-    public void removeProduct(ProductovOrden selected, float diferencia) {
-        if (autorize()) {
-            int index = instance.getProductovOrdenList().indexOf(selected);
-            float difer = instance.getProductovOrdenList().get(index).getCantidad();
-            if (difer - diferencia == 0) {
-                removeProduct(selected);
-                return;
-            }
-            instance.getProductovOrdenList().get(index).setCantidad(difer - diferencia);
-            //Impresion i = new Impresion();
-            printCancelationTicket(instance);
-            if (instance.getDeLaCasa()) {
-                ipvController.devolverPorLaCasa(selected, diferencia);
-            } else {
-                ipvController.devolver(selected, diferencia);
-            }
-            getModel().startTransaction();
-            for (NotificacionEnvioCocina x : instance.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
-                float dif = x.getCantidad() - diferencia;
-                if (dif <= 0) {
-                    getModel().getEntityManager().remove(x);
-                } else {
-                    x.setCantidad(x.getCantidad());
-                    getModel().getEntityManager().merge(x);
-                }
-            }
-            getModel().commitTransaction();
-
-            ProductovOrdenDAO.getInstance().edit(selected);
-            fireWarningOnDeleting(selected, diferencia);
-
-            update(instance);
-        }
-    }
-
-    public List<Seccion> getListaSecciones() {
-        List<Seccion> secciones = SeccionDAO.getInstance().findVisibleSecciones(instance.getMesacodMesa());
-        Collections.sort(secciones, new Comparator<Seccion>() {
-            @Override
-            public int compare(Seccion o1, Seccion o2) {
-                return o1.toString().compareTo(o2.toString());
-            }
-        });
-        return secciones;
-    }
-
-    public void setDeLaCasa(boolean selected) {
-        instance.setDeLaCasa(selected);
-        if (selected) {
-            ipvController.consumirPorLaCasa(instance.getProductovOrdenList());
-        } else {
-            ipvController.devolverPorLaCasa(instance.getProductovOrdenList());
-        }
-    }
-
-    public void addRapidoProducto(String idProducto) {
-        ProductoVenta productoABuscar = ProductoVentaDAO.getInstance().find(idProducto);
-        if (productoABuscar != null) {
-            addProduct(productoABuscar);
-        }
-    }
-
-    private Orden printKitchen(Orden o) {
-        printCancelationTicket(o);
-
-        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
-        for (ProductovOrden x : o.getProductovOrdenList()) {
-            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
-                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
-            }
-        }
-        if (cocinasExistentesEnLaOrden.size() > 1) {
-            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
-                String sync = SYNC;
-                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
-                    if (i == j) {
-                        continue;
-                    }
-                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
-                }
-                Impresion impresion = new Impresion();
-                impresion.print(new CocinaFormatter(o, cocinasExistentesEnLaOrden.get(i), sync), cocinasExistentesEnLaOrden.get(i).getNombreCocina());
-                //printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
-            }
-        } else {
-            if (cocinasExistentesEnLaOrden.size() > 0) {
-                Impresion impresion = new Impresion();
-                impresion.print(new CocinaFormatter(o, cocinasExistentesEnLaOrden.get(0), ""), cocinasExistentesEnLaOrden.get(0).getNombreCocina());
-                //printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
-            }
-        }
-
-        return o;
-
     }
 
     private Orden printCancelationTicket(Orden o) {
@@ -552,7 +536,64 @@ public class OrdenController extends AbstractFragmentController<Orden> {
         return o;
     }
 
-    public ArrayListModel<Mesa> getListaMesas(Area area_seleccionada) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+    private Orden printKitchen(Orden o) {
+        printCancelationTicket(o);
+
+        List<Cocina> cocinasExistentesEnLaOrden = new ArrayList<>();
+        for (ProductovOrden x : o.getProductovOrdenList()) {
+            if (!cocinasExistentesEnLaOrden.contains(x.getProductoVenta().getCocinacodCocina())) {
+                cocinasExistentesEnLaOrden.add(x.getProductoVenta().getCocinacodCocina());
+            }
+        }
+        if (cocinasExistentesEnLaOrden.size() > 1) {
+            for (int i = 0; i < cocinasExistentesEnLaOrden.size(); i++) {
+                String sync = SYNC;
+                for (int j = 0; j < cocinasExistentesEnLaOrden.size(); j++) {
+                    if (i == j) {
+                        continue;
+                    }
+                    sync += cocinasExistentesEnLaOrden.get(j).getNombreCocina() + " ";
+                }
+                Impresion impresion = new Impresion();
+                impresion.print(new CocinaFormatter(o, cocinasExistentesEnLaOrden.get(i), sync), cocinasExistentesEnLaOrden.get(i).getNombreCocina());
+                //printKitchen(o, cocinasExistentesEnLaOrden.get(i), sync);
+            }
+        } else {
+            if (cocinasExistentesEnLaOrden.size() > 0) {
+                Impresion impresion = new Impresion();
+                impresion.print(new CocinaFormatter(o, cocinasExistentesEnLaOrden.get(0), ""), cocinasExistentesEnLaOrden.get(0).getNombreCocina());
+                //printKitchen(o, cocinasExistentesEnLaOrden.get(0), "");
+            }
+        }
+
+        return o;
+
     }
+
+    private void removeProduct(String codOrden, ProductovOrden objectAtSelectedRow) {
+        Orden o = getInstance(codOrden);
+        if (autorize(codOrden)) {
+            int index = o.getProductovOrdenList().indexOf(objectAtSelectedRow);
+            float cantidadBorrada = o.getProductovOrdenList().get(index).getCantidad();
+            o.getProductovOrdenList().get(index).setCantidad(0);
+            //Impresion i = new Impresion();
+            printCancelationTicket(o);
+            if (o.getDeLaCasa()) {
+                ipvController.devolverPorLaCasa(objectAtSelectedRow, cantidadBorrada);
+            } else {
+                ipvController.devolver(objectAtSelectedRow, cantidadBorrada);
+            }
+            getModel().startTransaction();
+            for (NotificacionEnvioCocina x : o.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
+                getModel().getEntityManager().remove(x);
+            }
+            getModel().commitTransaction();
+            ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
+            o.getProductovOrdenList().remove(objectAtSelectedRow);
+
+            fireWarningOnDeleting(codOrden, objectAtSelectedRow, cantidadBorrada);
+            update(o);
+        }
+    }
+
 }

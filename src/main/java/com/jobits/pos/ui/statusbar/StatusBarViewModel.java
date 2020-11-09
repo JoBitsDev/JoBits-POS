@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.statusbar;
 
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -33,7 +34,30 @@ public class StatusBarViewModel extends AbstractViewModel {
     private boolean boton_licencia_habilitado;
 
     public static final String PROP_BOTON_LICENCIA_HABILITADO = "boton_licencia_habilitado";
-    
+
+    private Color usuario_registrado_color;
+
+    public static final String PROP_USUARIO_REGISTRADO_COLOR = "usuario_registrado_color";
+
+    /**
+     * Get the value of usuario_registrado_color
+     *
+     * @return the value of usuario_registrado_color
+     */
+    public Color getUsuario_registrado_color() {
+        return usuario_registrado_color;
+    }
+
+    /**
+     * Set the value of usuario_registrado_color
+     *
+     * @param usuario_registrado_color new value of usuario_registrado_color
+     */
+    public void setUsuario_registrado_color(Color usuario_registrado_color) {
+        Color oldUsuario_registrado_color = this.usuario_registrado_color;
+        this.usuario_registrado_color = usuario_registrado_color;
+        firePropertyChange(PROP_USUARIO_REGISTRADO_COLOR, oldUsuario_registrado_color, usuario_registrado_color);
+    }
 
     /**
      * Get the value of boton_licencia_habilitado
@@ -52,7 +76,7 @@ public class StatusBarViewModel extends AbstractViewModel {
     public void setBoton_licencia_habilitado(boolean boton_licencia_habilitado) {
         boolean oldBoton_licencia_habilitado = this.boton_licencia_habilitado;
         this.boton_licencia_habilitado = boton_licencia_habilitado;
-        firePropertyChange(PROP_BOTON_LICENCIA_HABILITADO, oldBoton_licencia_habilitado, boton_licencia_habilitado,true);
+        firePropertyChange(PROP_BOTON_LICENCIA_HABILITADO, oldBoton_licencia_habilitado, boton_licencia_habilitado, true);
     }
 
     /**
@@ -72,7 +96,7 @@ public class StatusBarViewModel extends AbstractViewModel {
     public void setVersion_software(String version_software) {
         String oldVersion_software = this.version_software;
         this.version_software = version_software;
-        firePropertyChange(PROP_VERSION_SOFTWARE, oldVersion_software, version_software,false);
+        firePropertyChange(PROP_VERSION_SOFTWARE, oldVersion_software, version_software, false);
     }
 
     /**
@@ -92,7 +116,7 @@ public class StatusBarViewModel extends AbstractViewModel {
     public void setUsuario_registrado(String usuario_registrado) {
         String oldUsuario_registrado = this.usuario_registrado;
         this.usuario_registrado = usuario_registrado;
-        firePropertyChange(PROP_USUARIO_REGISTRADO, oldUsuario_registrado, usuario_registrado,false);
+        firePropertyChange(PROP_USUARIO_REGISTRADO, oldUsuario_registrado, usuario_registrado, false);
     }
 
     /**
@@ -112,7 +136,7 @@ public class StatusBarViewModel extends AbstractViewModel {
     public void setEstado_licencia(String estado_licencia) {
         String oldEstado_licencia = this.estado_licencia;
         this.estado_licencia = estado_licencia;
-        firePropertyChange(PROP_ESTADO_LICENCIA, oldEstado_licencia, estado_licencia,false);
+        firePropertyChange(PROP_ESTADO_LICENCIA, oldEstado_licencia, estado_licencia, false);
     }
 
 }

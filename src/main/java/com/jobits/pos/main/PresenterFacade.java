@@ -90,10 +90,13 @@ import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
+import com.jobits.pos.ui.venta.orden.OrdenLogView;
+import com.jobits.pos.ui.venta.orden.presenter.OrdenLogViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaStatisticsViewPresenter;
 import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -162,6 +165,8 @@ public class PresenterFacade {
                 return new FacturaViewPresenter(new AlmacenManageController(new Almacen()));
             case ReportarBugView.VIEW_NAME:
                 return new ReportarBugViewPresenter(new ReportarBugController());
+            case OrdenLogView.VIEW_NAME:
+                return new OrdenLogViewPresenter(null);
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListPresenter(new TransaccionesListController(new Almacen()));
             case MesaListView.VIEW_NAME:

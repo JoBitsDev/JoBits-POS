@@ -5,13 +5,25 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jobits.pos.controller.venta.OrdenController;
+import com.jhw.swing.material.standars.MaterialIcons;
+//import com.jobits.pos.adapters.repo.impl.OrdenTemporalRepo;
+import com.jobits.pos.controller.venta.OrdenService;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.venta.orden.OrdenLogView;
+//import com.jobits.pos.ui.venta.orden.OrdenLogsDetailView;
+import java.beans.PropertyChangeEvent;
+import java.io.File;
+import java.util.List;
 import java.util.Optional;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -22,26 +34,135 @@ import java.util.Optional;
  */
 public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailViewModel> {
 
-    public static String ACTION_ADD_PRODUCTO = "Agregar";
-    public static String ACTION_REMOVE_PRODUCTO = "Eliminar";
-    public static String ACTION_SET_PORCIENTO = "Porciento";
-    public static String ACTION_SET_AUTORIZO = "Autorizo";
-    public static String ACTION_ENVIAR_ELABORAR = "Enviar a elaborar";
-    public static String ACTION_CERRAR_ORDEN = "Cerrar Orden";
     public static String ACTION_ADD_NOTA = "Agregar Nota";
+
+    public static String ACTION_ADD_PRODUCTO = "Agregar";
+    public static String ACTION_CERRAR_ORDEN = "Cerrar Orden";
+    public static String ACTION_ENVIAR_ELABORAR = "Enviar a elaborar";
     public static String ACTION_IMPRIMIR_CIERRE_PARCIAL = "Cierre Parcial";
+    public static String ACTION_REMOVE_PRODUCTO = "Eliminar";
+    public static String ACTION_SHOW_LOGS = "Ver Detalles";
+    public static String ACTION_SET_AUTORIZO = "Autorizo";
+    public static String ACTION_SET_PORCIENTO = "Porciento";
+    private String codOrden;
+    private OrdenService controller;
 
-    private OrdenController controller;
-
-    public OrdenDetailViewPresenter(OrdenController controller) {
+    public OrdenDetailViewPresenter(OrdenService controller) {
         super(new OrdenDetailViewModel());
         this.controller = controller;
+        addListeners();
     }
 
-    public void setOrden(com.jobits.pos.domain.models.Orden o) {
-        controller.setInstance(o);
-        updateBean();
+    public OrdenDetailViewPresenter(String cod_orden, OrdenService controller) {
+        this(controller);
+        this.codOrden = cod_orden;
+        addListeners();
+        refreshState();
+    }
 
+    public String getCodOrden() {
+        if (codOrden == null) {
+            throw new IllegalStateException("El codigo de la orden no puede ser nulo.");
+        }
+        return codOrden;
+    }
+
+    public void setCodOrden(String codOrden) {
+        this.codOrden = codOrden;
+        refreshState();
+    }
+
+    public OrdenService getController() {
+        if (controller == null) {
+            throw new IllegalStateException("El controlador no puede ser nulo");
+
+        }
+        return controller;
+    }
+
+    private void onAddNotaLCick() {
+        getController().addNota(getCodOrden(), getBean().getProducto_orden_seleccionado());
+    }
+
+    private void onAddProductoClick() {
+        if (getBean().getProducto_orden_seleccionado() != null) {
+            getController().addProduct(getBean().getId_orden(), getBean().getProducto_orden_seleccionado().getProductoVenta());
+            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }
+
+    private void onCerrarOrdenClick() {
+        getController().cerrarOrden(getCodOrden());
+    }
+
+    private void onEnviarAElaborarCLick() {
+        getController().enviarACocina(getCodOrden());
+        getBean().setLista_producto_orden(getController().getInstance(getCodOrden()).getProductovOrdenList());
+    }
+
+    private void onImprimirCierreParcial() {
+        getController().imprimirPreTicket(getCodOrden());
+    }
+
+    private void onRemoveProductoCLick() {
+        if (getBean().getProducto_orden_seleccionado() != null) {
+            getController().removeProduct(getCodOrden(), getBean().getProducto_orden_seleccionado(),
+                    getBean().getProducto_orden_seleccionado().getCantidad());
+            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+    }
+
+    private void onSetAutorizoClick() {
+        getBean().setEs_autorizo(!getBean().isEs_autorizo());
+        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
+        refreshState();
+//        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
+    }
+
+//    private void onSetPorcientoClick() {
+//        getController().setPorciento(getCodOrden(), getBean().getPorciento_servicio());
+//        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
+//    }
+    private void onVerDetallesClick() {
+        File temporalFile = new File(R.logFilePath + "/Ordenes" + "/" + codOrden + ".txt");
+        if (temporalFile.exists()) {
+            Application.getInstance().getNavigator().navigateTo(
+                    OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay registros de orden: " + codOrden, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @Override
+    protected Optional refreshState() {
+        com.jobits.pos.domain.models.Orden instance = getController().getInstance(getCodOrden());
+        getBean().setEs_autorizo(instance.getDeLaCasa());
+        getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha().getFecha()));
+        getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
+        getBean().setOrden_terminada(instance.getHoraTerminada() != null);
+        getBean().setId_orden(instance.getCodOrden());
+        getBean().setLista_general_productos_venta(getController().getPDVList(getCodOrden()));
+        getBean().setLista_producto_orden(instance.getProductovOrdenList());
+        //getBean().setLista_secciones(getController().getListaSecciones());
+        getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
+        getBean().setPorciento_servicio(instance.getPorciento());
+        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
+        getBean().setUsuario(instance.getPersonalusuario().getUsuario());
+        if (getBean().getPorciento_servicio() == 0) {
+            getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                    "/restManager/resources/icons pack/porciento_gris.png")));
+        } else {
+            getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                    "/restManager/resources/icons pack/porciento_indigo.png")));
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -50,6 +171,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onAddNotaLCick();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -57,6 +179,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onAddProductoClick();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -64,6 +187,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onCerrarOrdenClick();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -71,6 +195,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onEnviarAElaborarCLick();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -78,6 +203,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onImprimirCierreParcial();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -85,6 +211,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onRemoveProductoCLick();
+                refreshState();
                 return Optional.empty();
             }
         });
@@ -92,104 +219,48 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onSetAutorizoClick();
+                refreshState();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_SET_PORCIENTO) {
             @Override
             public Optional doAction() {
-                onSetPorcientoClick();
+//                onSetPorcientoClick();
+//                refreshState();
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_SHOW_LOGS) {
+            @Override
+            public Optional doAction() {
+                onVerDetallesClick();
+                return Optional.empty();
+            }
+        }
+        );
     }
 
-    private void onAddProductoClick() {
-        controller.addProduct(getBean().getProducto_venta_seleccionado());
-        getBean().setLista_producto_orden((controller.getInstance().getProductovOrdenList()));
-    }
+    private void addListeners() {
+        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_PORCIENTO_SERVICIO, (PropertyChangeEvent evt) -> {
+            float value = (float) evt.getNewValue();
+            if (value == 0) {
+                getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                        "/restManager/resources/icons pack/porciento_gris.png")));
+            } else {
+                getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                        "/restManager/resources/icons pack/porciento_indigo.png")));
+            }
+            getController().setPorciento(getCodOrden(), value);
+            getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
+            refreshState();
+        }
+        );
+        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_ES_AUTORIZO, (PropertyChangeEvent evt) -> {
+//            System.out.println("Its Happ");
 
-    private void onRemoveProductoCLick() {
-        controller.removeProduct(getBean().getProducto_orden_seleccionado(),
-                getBean().getProducto_orden_seleccionado().getCantidad());
-        getBean().setLista_producto_orden((controller.getInstance().getProductovOrdenList()));
-    }
-
-    private void onSetPorcientoClick() {
-        controller.setPorciento(getBean().getPorciento_servicio());
-        getBean().setTotal_orden(utils.setDosLugaresDecimales(controller.getValorTotal()));
-    }
-
-    private void onSetAutorizoClick() {
-        controller.setDeLaCasa(getBean().isEs_autorizo());
-    }
-
-    private void onEnviarAElaborarCLick() {
-        controller.enviarACocina();
-        getBean().setLista_producto_orden(controller.getInstance().getProductovOrdenList());
-    }
-
-    private void onCerrarOrdenClick() {
-        controller.cerrarOrden();
-        Application.getInstance().getNavigator().navigateUp();
-    }
-
-    private void onAddNotaLCick() {
-        controller.addNota(getBean().getProducto_orden_seleccionado());
-    }
-
-    private void onImprimirCierreParcial() {
-        controller.imprimirPreTicket();
-    }
-
-    public void old() {
-
-//    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-//        switch (columnIndex) {
-//            case 1:
-//                if (getController().autorize()) {
-//                    float cantidadOld = items.get(rowIndex).getCantidad();
-//                    float diferencia = cantidadOld - (float) aValue;
-//                    if (diferencia > 0) {
-//                        getController().removeProduct(items.get(rowIndex), diferencia);
-//                    } else {
-//                        getController().addProduct(items.get(rowIndex), diferencia * -1);
-//                    }
-//                    fireTableRowsUpdated(rowIndex, rowIndex);
-//                    state = ButtonState.ENVIAR_COCINA;
-//                    jideButtonCerrarMesaEnviarCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/enviar_cocina.png")));
-//                    updateValorTotal();
-//
-//                }
-//                break;
-//            default:
-//                super.setValueAt(aValue, rowIndex, columnIndex);
-//                break;
-//        }
-//    }
-//
-//    public Class<?> getColumnClass(int columnIndex) {
-//        if (columnIndex == 1) {
-//            return Float.class;
-//        } else {
-//            return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
-//        }
-//    }
-    }
-
-    private void updateBean() {
-        com.jobits.pos.domain.models.Orden instance = controller.getInstance();
-        getBean().setEs_autorizo(instance.getDeLaCasa());
-        getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha().getFecha()));
-        getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
-        getBean().setId_orden(instance.getCodOrden());
-        getBean().setLista_general_productos_venta(controller.getPDVList());
-        getBean().setLista_producto_orden(instance.getProductovOrdenList());
-        getBean().setLista_secciones(controller.getListaSecciones());
-        getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
-        getBean().setPorciento_servicio(instance.getPorciento());
-        getBean().setTotal_orden(utils.setDosLugaresDecimales(controller.getValorTotal()));
-        getBean().setUsuario(instance.getPersonalusuario().getUsuario());
+        }
+        );
     }
 
 }

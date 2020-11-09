@@ -35,6 +35,7 @@ import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
+import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,8 +108,9 @@ public class CoordinatorService implements Coordinator {
                         AlmacenMainView.VIEW_NAME,
                         VentaStatisticsView.VIEW_NAME,
                         AcercaDeView.VIEW_NAME,
-                        ReportarBugView.VIEW_NAME,
                         LogInView.VIEW_NAME,
+                        OrdenLogView.VIEW_NAME,
+                        ReportarBugView.VIEW_NAME,
                         LicenceDialogView.VIEW_NAME
                 ));
         navigationGraph.put(VentaDetailView.VIEW_NAME, Arrays.asList(OrdenDetailFragmentView.VIEW_NAME));

@@ -312,8 +312,9 @@ public class GastosView extends AbstractViewPanel {
         autoCompleteModel = new BindableListIntelliHint(
                 new SelectionInList<>(getPresenter().getModel(PROP_LISTA_TIPO_GASTO),
                         getPresenter().getModel(PROP_TIPO_GASTO_SELECCIONADO)), jTextFieldTipo);
-
+        Bindings.bind(jTextFieldTipo, getPresenter().getModel(PROP_TIPO_GASTO_SELECCIONADO));
         jButtonCrearGasto.addActionListener(getPresenter().getOperation(ACTION_AGREGAR_GASTO));
+        
         jButtonEliminarGasto.addActionListener(getPresenter().getOperation(ACTION_ELIMINAR_GASTO));
         jButtonImprimirGastos.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_GASTOS));
         jButtonLimpiarEntradas.addActionListener(getPresenter().getOperation(ACTION_LIMPIAR));
@@ -323,7 +324,7 @@ public class GastosView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
-        jButtonLimpiarEntradas.setIcon(MaterialIcons.CLEAR_ALL);
+        jButtonLimpiarEntradas.setIcon(MaterialIcons.LOOP);
         jButtonImprimirGastos.setIcon(MaterialIcons.PRINT);
         jButtonEliminarGasto.setIcon(MaterialIcons.DELETE);
         jLabelMonto.setText(R.COIN_SUFFIX);

@@ -6,6 +6,8 @@
 
 package com.jobits.pos.ui.venta.orden.presenter;
 
+import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 
 /**
@@ -14,6 +16,8 @@ import com.jobits.pos.ui.viewmodel.AbstractViewModel;
  * @author Jorge
  * 
  */
-public class VentaOrdenListViewModel extends AbstractViewModel{
+public class VentaOrdenListViewModel extends AbstractListViewModel<Orden>{
 
+    
+    
 }

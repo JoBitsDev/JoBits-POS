@@ -3,66 +3,54 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jobits.pos.domain.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * FirstDream
+ *
+ * JoBits
+ *
  * @author Jorge
- * 
+ *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "notaPK",scope = Nota.class )
 @Entity
 @Table(name = "nota")
 @NamedQueries({
     @NamedQuery(name = "Nota.findAll", query = "SELECT n FROM Nota n"),
-    @NamedQuery(name = "Nota.findByProductovOrdenproductoVentapCod", query = "SELECT n FROM Nota n WHERE n.notaPK.productovOrdenproductoVentapCod = :productovOrdenproductoVentapCod"),
-    @NamedQuery(name = "Nota.findByProductovOrdenordencodOrden", query = "SELECT n FROM Nota n WHERE n.notaPK.productovOrdenordencodOrden = :productovOrdenordencodOrden"),
-    @NamedQuery(name = "Nota.findByDescripcion", query = "SELECT n FROM Nota n WHERE n.descripcion = :descripcion")})
+    @NamedQuery(name = "Nota.findByDescripcion", query = "SELECT n FROM Nota n WHERE n.descripcion = :descripcion"),
+    @NamedQuery(name = "Nota.findByProductovOrdenid", query = "SELECT n FROM Nota n WHERE n.productovOrdenid = :productovOrdenid")})
 public class Nota implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected NotaPK notaPK;
+    @Size(max = 255)
     @Column(name = "descripcion")
     private String descripcion;
-    @JoinColumns({
-        @JoinColumn(name = "productov_ordenproducto_ventap_cod", referencedColumnName = "producto_ventap_cod", insertable = false, updatable = false),
-        @JoinColumn(name = "productov_ordenordencod_orden", referencedColumnName = "ordencod_orden", insertable = false, updatable = false)})
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "productov_ordenid")
+    private Integer productovOrdenid;
+    @JoinColumn(name = "productov_ordenid", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private ProductovOrden productovOrden;
 
     public Nota() {
     }
 
-    public Nota(NotaPK notaPK) {
-        this.notaPK = notaPK;
-    }
-
-    public Nota(String productovOrdenproductoVentapCod, String productovOrdenordencodOrden) {
-        this.notaPK = new NotaPK(productovOrdenproductoVentapCod, productovOrdenordencodOrden);
-    }
-
-    public NotaPK getNotaPK() {
-        return notaPK;
-    }
-
-    public void setNotaPK(NotaPK notaPK) {
-        this.notaPK = notaPK;
+    public Nota(Integer productovOrdenid) {
+        this.productovOrdenid = productovOrdenid;
     }
 
     public String getDescripcion() {
@@ -71,6 +59,14 @@ public class Nota implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Integer getProductovOrdenid() {
+        return productovOrdenid;
+    }
+
+    public void setProductovOrdenid(Integer productovOrdenid) {
+        this.productovOrdenid = productovOrdenid;
     }
 
     public ProductovOrden getProductovOrden() {
@@ -84,7 +80,7 @@ public class Nota implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (notaPK != null ? notaPK.hashCode() : 0);
+        hash += (productovOrdenid != null ? productovOrdenid.hashCode() : 0);
         return hash;
     }
 
@@ -95,7 +91,7 @@ public class Nota implements Serializable {
             return false;
         }
         Nota other = (Nota) object;
-        if ((this.notaPK == null && other.notaPK != null) || (this.notaPK != null && !this.notaPK.equals(other.notaPK))) {
+        if ((this.productovOrdenid == null && other.productovOrdenid != null) || (this.productovOrdenid != null && !this.productovOrdenid.equals(other.productovOrdenid))) {
             return false;
         }
         return true;
@@ -103,7 +99,7 @@ public class Nota implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.Nota[ notaPK=" + notaPK + " ]";
+        return "com.jobits.pos.domain.models.Nota[ productovOrdenid=" + productovOrdenid + " ]";
     }
 
 }
