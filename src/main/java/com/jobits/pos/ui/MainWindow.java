@@ -103,7 +103,10 @@ public class MainWindow extends JFrame {
 
     public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
         if (viewUIDName.equals(LogInView.VIEW_NAME)) {
-            PopUpDialog.showPopUP(ViewFacade.getView(viewUIDName, presenter));
+//            PopUpDialog.showPopUP(ViewFacade.getView(viewUIDName, presenter));
+            loginView = LogInView.getInstance();
+            add(loginView, LogInView.VIEW_NAME);
+            cards.show(getContentPane(), LogInView.VIEW_NAME);
             return true;
         }
 
