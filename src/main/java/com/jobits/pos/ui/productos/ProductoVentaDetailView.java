@@ -21,6 +21,8 @@ import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import java.awt.BorderLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 /**
  *
@@ -51,10 +53,9 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelInputs = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel7 = new javax.swing.JPanel();
+        jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
         jPanel8 = new javax.swing.JPanel();
         jXLabelPCod = new org.jdesktop.swingx.JXLabel();
-        jPanel12 = new javax.swing.JPanel();
-        jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
         jPanelImage = new javax.swing.JPanel();
         jLabelIProductImage = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
@@ -112,6 +113,10 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel7.setPreferredSize(new java.awt.Dimension(14, 120));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
+        jTextFieldNombre.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextFieldNombre.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
+        jPanel7.add(jTextFieldNombre, java.awt.BorderLayout.CENTER);
+
         jPanel8.setOpaque(false);
         jPanel8.setPreferredSize(new java.awt.Dimension(44, 25));
         jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -120,15 +125,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel8.add(jXLabelPCod);
 
         jPanel7.add(jPanel8, java.awt.BorderLayout.NORTH);
-
-        jPanel12.setOpaque(false);
-        jPanel12.setLayout(new java.awt.BorderLayout());
-
-        jTextFieldNombre.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jTextFieldNombre.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
-        jPanel12.add(jTextFieldNombre, java.awt.BorderLayout.CENTER);
-
-        jPanel7.add(jPanel12, java.awt.BorderLayout.CENTER);
 
         jPanelImage.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 30));
         jPanelImage.setOpaque(false);
@@ -300,7 +296,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelIProductImage;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
@@ -444,11 +439,20 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         builder.tableModel(tableModel);
 
         crossReferencePanel = builder.build();
-        
+
         crossReferencePanel.getjPanelOpciones().add(jButtonAddInsumo, 0);
 
         jPanelCrossRef.add(crossReferencePanel, BorderLayout.CENTER);
 
+        jTabbedPane1.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                jTextFieldNombre.requestFocusInWindow();
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+            }
+        });
     }
 
     @Override
