@@ -160,12 +160,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea guardar los cambios",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-//            ProductoVenta p;
-//            if (creatingMode) {
-//                p = service.createNewInstance();
-//            } else {
-//                p = service.getInstance();
-//            }
+            p.setNombre(getBean().getNombre_producto());
             p.setCocinacodCocina(getBean().getElaborado_seleccionado());
             p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
             p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
