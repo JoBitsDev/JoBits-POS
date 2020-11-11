@@ -85,6 +85,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             @Override
             public Optional doAction() {
                 confirmarTransaccion(getBean().getOperacion_selected());
+                Application.getInstance().getNavigator().navigateUp();
                 return Optional.empty();
             }
         });
@@ -127,7 +128,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                         }
                     }
                 }
-            } 
+            }
         });
         getBean().addPropertyChangeListener(PROP_INSUMO_SELECIONADO, (PropertyChangeEvent evt) -> {
             InsumoAlmacen insumo = getBean().getInsumo_selecionado();
@@ -359,7 +360,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         if (getBean().getLista_elementos().isEmpty()) {
             JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "La lista de transacciones esta vacia");
             return false;
-        } 
+        }
         return true;
     }
 
