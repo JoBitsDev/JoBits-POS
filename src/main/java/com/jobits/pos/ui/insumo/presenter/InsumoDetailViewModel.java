@@ -45,7 +45,7 @@ public class InsumoDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_CANTIDAD_CREADA = "cantidad_creada";
 
-    private String valor_del_costo_text;
+    private String valor_del_costo_text = "0.00";
 
     public static final String PROP_VALOR_DEL_COSTO_TEXT = "valor_del_costo_text";
 
@@ -311,7 +311,7 @@ public class InsumoDetailViewModel extends AbstractViewModel {
     public void setValor_del_costo_text(String valor_del_costo_text) {
         String oldValor_del_costo_text = this.valor_del_costo_text;
         this.valor_del_costo_text = valor_del_costo_text;
-        firePropertyChange(PROP_CANTIDAD_CREADA, oldValor_del_costo_text, cantidad_creada);
+        firePropertyChange(PROP_VALOR_DEL_COSTO_TEXT, oldValor_del_costo_text, valor_del_costo_text);
     }
 
     /**

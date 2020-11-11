@@ -14,6 +14,7 @@ import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.insumo.presenter.InsumoDetailViewModel.*;
 import static com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -72,9 +73,9 @@ public class InsumoDetailView extends AbstractViewPanel {
         jPanelUsos = new javax.swing.JPanel();
         jPanelDerivados = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabelNombreCantCreada = MaterialComponentsFactory.Displayers.getLabel();
-        jSpinnerCantidadCreada = new JSpinner();
-        jLabelNombreValorCosto = MaterialComponentsFactory.Displayers.getLabel();
+        jPanelCosto = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jXLabelGasto = new org.jdesktop.swingx.JXLabel();
         jPanelControles = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonAdd = MaterialComponentsFactory.Buttons.getAcceptButton();
@@ -176,30 +177,26 @@ public class InsumoDetailView extends AbstractViewPanel {
         jPanelDerivados.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 20, 5, 20));
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.BorderLayout());
+        //jPanel2.setVisible(false);
 
-        jLabelNombreCantCreada.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jLabelNombreCantCreada.setText(bundle.getString("label_cantidad_creada")); // NOI18N
-        jLabelNombreCantCreada.setMinimumSize(new java.awt.Dimension(24, 20));
-        jLabelNombreCantCreada.setPreferredSize(new java.awt.Dimension(0, 26));
-        jPanel2.add(jLabelNombreCantCreada);
+        jPanelCosto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 1));
+        jPanelCosto.setOpaque(false);
+        jPanelCosto.setLayout(new java.awt.BorderLayout());
 
-        jSpinnerCantidadCreada.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jSpinnerCantidadCreada.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
-        jSpinnerCantidadCreada.setMinimumSize(new java.awt.Dimension(24, 20));
-        jSpinnerCantidadCreada.setPreferredSize(new java.awt.Dimension(0, 26));
-        jPanel2.add(jSpinnerCantidadCreada);
+        jLabel1.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
+        jLabel1.setText(":   ");
+        jPanelCosto.add(jLabel1, java.awt.BorderLayout.WEST);
 
-        jLabelNombreValorCosto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabelNombreValorCosto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelNombreValorCosto.setText(bundle.getString("label_lista_ingredientes")); // NOI18N
-        jLabelNombreValorCosto.setToolTipText(null);
-        jLabelNombreValorCosto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
-        jLabelNombreValorCosto.setMinimumSize(new java.awt.Dimension(24, 20));
-        jLabelNombreValorCosto.setPreferredSize(new java.awt.Dimension(0, 26));
-        jPanel2.add(jLabelNombreValorCosto);
+        jXLabelGasto.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
+        jXLabelGasto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jXLabelGasto.setText("0.00"); // NOI18N
+        jPanelCosto.add(jXLabelGasto, java.awt.BorderLayout.CENTER);
 
-        jPanelDerivados.add(jPanel2, java.awt.BorderLayout.PAGE_END);
+        jPanel2.add(jPanelCosto, java.awt.BorderLayout.LINE_END);
+
+        jPanelDerivados.add(jPanel2, java.awt.BorderLayout.SOUTH);
 
         jTabbedPane1.addTab("Derivados", jPanelDerivados);
 
@@ -247,13 +244,13 @@ public class InsumoDetailView extends AbstractViewPanel {
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JComboBox<R.UM> jComboBoxUM;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelCostoU;
     private javax.swing.JLabel jLabelNombre4;
-    private javax.swing.JLabel jLabelNombreCantCreada;
-    private javax.swing.JLabel jLabelNombreValorCosto;
     private javax.swing.JLabel jLabelUM;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelControles;
+    private javax.swing.JPanel jPanelCosto;
     private javax.swing.JPanel jPanelDerivados;
     private javax.swing.JPanel jPanelInputs;
     private javax.swing.JPanel jPanelMain;
@@ -261,11 +258,11 @@ public class InsumoDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelTabla;
     private javax.swing.JPanel jPanelUsos;
     private javax.swing.JScrollPane jScrollPaneTablas;
-    private javax.swing.JSpinner jSpinnerCantidadCreada;
     private javax.swing.JSpinner jSpinnerCosto;
     private javax.swing.JSpinner jSpinnerEstimacionStock;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldNombre;
+    private org.jdesktop.swingx.JXLabel jXLabelGasto;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -286,10 +283,9 @@ public class InsumoDetailView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_ESTIMACION_DE_STOCK), 0);
         Bindings.bind(jSpinnerEstimacionStock, "value", getPresenter().getModel(PROP_ESTIMACION_DE_STOCK));
 
-        SpinnerToValueModelConnector connector3 = new SpinnerToValueModelConnector(jSpinnerCantidadCreada.getModel(),
-                getPresenter().getModel(PROP_CANTIDAD_CREADA), 0);
-        Bindings.bind(jSpinnerCantidadCreada, "value", getPresenter().getModel(PROP_CANTIDAD_CREADA));
-
+//        SpinnerToValueModelConnector connector3 = new SpinnerToValueModelConnector(jSpinnerCantidadCreada.getModel(),
+//                getPresenter().getModel(PROP_CANTIDAD_CREADA), 0);
+//        Bindings.bind(jSpinnerCantidadCreada, "value", getPresenter().getModel(PROP_CANTIDAD_CREADA));
         //BUTTONS
         jButtonAdd.setAction(getPresenter().getOperation(ACTION_AGREGAR));
         jButtonCancelar.setAction(getPresenter().getOperation(ACTION_CANCELAR));
@@ -297,9 +293,8 @@ public class InsumoDetailView extends AbstractViewPanel {
         Bindings.bind(jButtonAdd, "text", getPresenter().getModel(PROP_CREAR_EDITAR_BUTTON_TEXT));
 
         //DISPLAYERS
-        Bindings.bind(jLabelNombreValorCosto, getPresenter().getModel(PROP_VALOR_DEL_COSTO_TEXT));
+        Bindings.bind(jXLabelGasto, getPresenter().getModel(PROP_VALOR_DEL_COSTO_TEXT));
         //Bindings.bind(jPanelTabla, "visible", getPresenter().getModel(PROP_TABBED_PANE_ENABLED));
-
     }
 
     @Override
@@ -401,6 +396,14 @@ public class InsumoDetailView extends AbstractViewPanel {
         tableInsumoElab = builder.build();
         jPanelDerivados.add(tableInsumoElab, BorderLayout.CENTER);
 
+        tableInsumoElab.getjPanelOpcionesContainer().add(jPanelCosto, java.awt.BorderLayout.WEST);
+
+//        getPresenter().addBeanPropertyChangeListener(PROP_INSUMO_DISPONIBLE_SEL, (PropertyChangeEvent evt) -> {
+//            if (evt.getNewValue() == null) {
+//                crossReferencePanel.getJTextFieldAutoComplete().setText("");
+//            }
+//        });
+
         AddFromPanel.AddFromPanelBuilder<ProductoInsumo, ProductoVenta> builder2 = AddFromPanel.builder();
 
         builder2.addAction(getPresenter().getOperation(ACTION_AGREGAR_PRODUCTO));
@@ -490,12 +493,11 @@ public class InsumoDetailView extends AbstractViewPanel {
         jTabbedPane1.setTitleAt(0, "Usos (" + tableProductoInsumo.getTableModel().getItemsSize() + ")");
         jTabbedPane1.setTitleAt(1, "Derivados (" + tableInsumoElab.getTableModel().getItemsSize() + ")");
 
-        if (tableInsumoElab.getTableModel().getItemsSize() == 0) {
-            jSpinnerCantidadCreada.setEnabled(false);
-        } else {
-            jSpinnerCantidadCreada.setEnabled(true);
-        }
-
+//        if (tableInsumoElab.getTableModel().getItemsSize() == 0) {
+//            jSpinnerCantidadCreada.setEnabled(false);
+//        } else {
+//            jSpinnerCantidadCreada.setEnabled(true);
+//        }
         tableInsumoElab.getTableModel().addTableModelListener((e) -> {
             jTabbedPane1.setTitleAt(1, "Derivados (" + tableInsumoElab.getTableModel().getItemsSize() + ")");
 //            if (tableInsumoElab.getTableModel().getItemsSize() == 0) {
@@ -514,10 +516,4 @@ public class InsumoDetailView extends AbstractViewPanel {
     public String getViewName() {
         return VIEW_NAME;
     }
-
-//    public void updateLabelCost() {
-//        float total = 0;
-//        total = tableIngElab.getHandler().getTableModel().getItems().stream().map((x) -> x.getCosto()).reduce(total, (accumulator, _item) -> accumulator + _item);
-//        jLabelNombreValorCosto.setText(R.formatoMoneda.format(total));
-//    }
 }

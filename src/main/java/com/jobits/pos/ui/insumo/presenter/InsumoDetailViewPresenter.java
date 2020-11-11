@@ -9,10 +9,13 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.controller.insumo.InsumoDetailService;
+import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.domain.models.InsumoElaborado;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
+import com.jobits.pos.ui.utils.utils;
 import java.util.Arrays;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -115,11 +118,11 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         }
         updateCostoValue();
 
-        if (getBean().getLista_insumos_contenidos().isEmpty() && getBean().getLista_productos_contenidos().isEmpty()) {
-            getBean().setTabbed_pane_enabled(false);
-        } else {
-            getBean().setTabbed_pane_enabled(true);
-        }
+//        if (getBean().getLista_insumos_contenidos().isEmpty() && getBean().getLista_productos_contenidos().isEmpty()) {
+//            getBean().setTabbed_pane_enabled(false);
+//        } else {
+//            getBean().setTabbed_pane_enabled(true);
+//        }
     }
 
     private void updateCostoValue() {
@@ -128,7 +131,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
             total = getBean().getLista_insumos_contenidos().stream().map((x) -> x.getCosto()).reduce(total, (accumulator, _item) -> accumulator + _item);
             getBean().setValor_del_costo_text(R.formatoMoneda.format(total));
         } else {
-            getBean().setValor_del_costo_text(R.formatoMoneda.format(0.0));
+            getBean().setValor_del_costo_text("0.00");
         }
     }
 
@@ -161,7 +164,11 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
             if (opt.isPresent()) {
                 try {
                     float cantidad = Float.parseFloat(opt.get());
-                    service.agregarInsumoElaboradoaInsumo(getBean().getInsumo_disponible_selecionado(), cantidad);
+                    Insumo inSel = getBean().getInsumo_disponible_selecionado();
+                    service.agregarInsumoElaboradoaInsumo(inSel, cantidad);
+//                    float nuevoPrecio = utils.setDosLugaresDecimalesFloat(
+//                            Float.parseFloat(getBean().getValor_del_costo_text()) + (inSel.getCostoPorUnidad() * cantidad));
+//                    getBean().setValor_del_costo_text(String.valueOf(nuevoPrecio));
                     getBean().setInsumo_disponible_selecionado(null);
                     getBean().getLista_insumos_contenidos().clear();
                     getBean().getLista_insumos_contenidos().addAll(service.getInstance().getInsumoDerivadoList());
@@ -171,17 +178,24 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
                 }
             }
         }
+        updateCostoValue();
     }
 
     private void onEliminarInsumoFichaClick() {
         if (getBean().getInsumo_contenido_seleccionado() == null) {
             JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Selecione el insumo a eliminar primero");
         } else {
+            InsumoElaborado inSel = getBean().getInsumo_contenido_seleccionado();
+
             service.eliminarInsumoElaboradoDeInsumo(getBean().getInsumo_contenido_seleccionado());
+//            float nuevoPrecio = utils.setDosLugaresDecimalesFloat(
+//                    Float.parseFloat(getBean().getValor_del_costo_text()) - inSel.getCosto());
+//            getBean().setValor_del_costo_text(String.valueOf(nuevoPrecio));
             getBean().setInsumo_contenido_seleccionado(null);
             getBean().getLista_insumos_contenidos().clear();
             getBean().getLista_insumos_contenidos().addAll(service.getInstance().getInsumoDerivadoList());
         }
+        updateCostoValue();
     }
 
     private void onAgregarProductoFichaClick() {
