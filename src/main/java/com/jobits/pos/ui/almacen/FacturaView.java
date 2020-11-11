@@ -242,6 +242,14 @@ public class FacturaView extends AbstractViewPanel {
                 jComboBoxDestinoActionPerformed(evt);
             }
         });
+        jComboBoxDestino.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jComboBoxDestinoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jComboBoxDestinoKeyTyped(evt);
+            }
+        });
         jPanelDestino.add(jComboBoxDestino);
 
         jPanel3.add(jPanelDestino);
@@ -350,7 +358,7 @@ public class FacturaView extends AbstractViewPanel {
     }//GEN-LAST:event_jTextFieldInsumoActionPerformed
 
     private void jComboBoxDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDestinoActionPerformed
-        executeAction();
+//        executeAction();
     }//GEN-LAST:event_jComboBoxDestinoActionPerformed
 
     private void jTextFieldCausaRebajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCausaRebajaActionPerformed
@@ -395,6 +403,19 @@ public class FacturaView extends AbstractViewPanel {
     private void jButtonEliminarInsumoEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarInsumoEntradaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEliminarInsumoEntradaActionPerformed
+
+    private void jComboBoxDestinoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxDestinoKeyTyped
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxDestinoKeyTyped
+
+    private void jComboBoxDestinoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBoxDestinoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            executeAction();
+        }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxDestinoKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -460,9 +481,6 @@ public class FacturaView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_CANTIDAD_ENTRADA), 0);
         Bindings.bind(jSpinnerCantidad, "value", getPresenter().getModel(PROP_CANTIDAD_ENTRADA));
 
-//        SpinnerToValueModelConnector spinnerMontoEntrada = new SpinnerToValueModelConnector(jSpinnerMonto.getModel(),
-//                getPresenter().getModel(PROP_MONTO_ENTRADA), 0);
-//        Bindings.bind(jSpinnerMonto, "value", getPresenter().getModel(PROP_MONTO_ENTRADA));
         Bindings.bind(jTextFieldMonto, getPresenter().getModel(PROP_MONTO_ENTRADA));
 
         Bindings.bind(jTextFieldCausaRebaja, getPresenter().getModel(PROP_CAUSA_REBAJA));
@@ -479,8 +497,6 @@ public class FacturaView extends AbstractViewPanel {
         //BUTTONS
         jButtonAgregarInsumoEntrada.addActionListener(getPresenter().getOperation(ACTION_AGREGAR_INSUMO));
         jButtonEliminarInsumoEntrada.addActionListener(getPresenter().getOperation(ACTION_ELIMINAR_INSUMO));
-//        jButtonAgregarInsumoEntrada.setIcon(MaterialIcons.ADD);
-//        jButtonAgregarInsumoEntrada.setText("");
         jButtonConfirmarEntrada.setAction(getPresenter().getOperation(ACTION_CONFIRMAR_TRANSACCION));
         jButtonClose.setAction(getPresenter().getOperation(ACTION_CERRAR_POPUP));
         jButtonClose.setText("Cancelar");
@@ -499,7 +515,6 @@ public class FacturaView extends AbstractViewPanel {
 
         //FOCUS EVENTS
         JSpinner.DefaultEditor defCantidad = (JSpinner.DefaultEditor) jSpinnerCantidad.getEditor();
-//        JSpinner.DefaultEditor defMonto = (JSpinner.DefaultEditor) jSpinnerMonto.getEditor();
 
         defCantidad.getTextField().addKeyListener(new KeyListener() {
             @Override
@@ -522,7 +537,7 @@ public class FacturaView extends AbstractViewPanel {
                             break;
                         case SALIDA:
                             if (jComboBoxDestino.isEnabled()) {
-                                jComboBoxDestino.showPopup();
+//                                jComboBoxDestino.showPopup();
                                 jComboBoxDestino.requestFocusInWindow();
                             } else {
                                 executeAction();
@@ -530,7 +545,7 @@ public class FacturaView extends AbstractViewPanel {
                             break;
                         case TRANSFORMAR:
                             if (jComboBoxDestino.isEnabled()) {
-                                jComboBoxDestino.showPopup();
+//                                jComboBoxDestino.showPopup();
                                 jComboBoxDestino.requestFocusInWindow();
                             } else {
                                 executeAction();
@@ -538,7 +553,7 @@ public class FacturaView extends AbstractViewPanel {
                             break;
                         case TRASPASO:
                             if (jComboBoxDestino.isEnabled()) {
-                                jComboBoxDestino.showPopup();
+//                                jComboBoxDestino.showPopup();
                                 jComboBoxDestino.requestFocusInWindow();
                             } else {
                                 executeAction();
@@ -562,26 +577,6 @@ public class FacturaView extends AbstractViewPanel {
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-//        defMonto.getTextField().addKeyListener(new KeyListener() {
-//            @Override
-//            public void keyPressed(KeyEvent e) {
-//                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-//                    executeAction();
-//                }
-//            }
-//
-//            @Override
-//            public void keyTyped(KeyEvent e) {
-//                if (defMonto.getTextField().getText().equals("0")) {
-//                    defMonto.getTextField().setText(null);
-//                }
-//            }
-//
-//            @Override
-//            public void keyReleased(KeyEvent e) {
-//                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//            }
-//        });
     }
 
     @Override

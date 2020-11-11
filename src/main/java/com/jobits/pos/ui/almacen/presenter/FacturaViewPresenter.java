@@ -86,7 +86,6 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             @Override
             public Optional doAction() {
                 confirmarTransaccion(getBean().getOperacion_selected());
-                Application.getInstance().getNavigator().navigateUp();
                 return Optional.empty();
             }
         });
@@ -287,7 +286,6 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 case REBAJA:
                     if (getBean().getCausa_rebaja() == null || getBean().getCausa_rebaja().equals("")) {
                         JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Introduca la Causa de Rebaja");
-                        System.out.println(getBean().getCausa_rebaja());
                     } else {
                         TransaccionSimple transaccionRebaja = new TransaccionSimple(
                                 getBean().getInsumo_selecionado(),
@@ -327,6 +325,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                         getBean().getCantidad_entrada(),
                         getBean().getLista_insumos_transformados_contenidos(),
                         (Almacen) getBean().getDestino_seleccionado());
+                Application.getInstance().getNavigator().navigateUp();
             }
         } else {
             if (validateInputs()) {
@@ -334,7 +333,8 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                         currentOperation,
                         getBean().getFecha_factura(),
                         getBean().getNumero_recibo());
-                setDefaultValues(currentOperation, true);
+                Application.getInstance().getNavigator().navigateUp();
+//                setDefaultValues(currentOperation, true);
             }
         }
     }
@@ -359,7 +359,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 
     private boolean validateInputs() {
         if (getBean().getLista_elementos().isEmpty()) {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "La lista de transacciones esta vacia");
+            JOptionPane.showMessageDialog(null, "La lista de transacciones esta vacia");
             return false;
         }
         return true;
