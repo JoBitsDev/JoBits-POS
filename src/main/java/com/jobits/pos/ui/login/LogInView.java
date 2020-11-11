@@ -16,6 +16,7 @@ import static com.jobits.pos.ui.login.presenter.LoginViewModel.*;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import static com.jobits.pos.ui.login.presenter.LoginViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.Component;
 
 /**
  *
@@ -48,6 +49,7 @@ public class LogInView extends AbstractViewPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanelLogo = new javax.swing.JPanel();
         jXLabelUser1 = new org.jdesktop.swingx.JXLabel();
@@ -67,9 +69,15 @@ public class LogInView extends AbstractViewPanel {
         setName("main"); // NOI18N
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(400, 400));
-        setLayout(new java.awt.BorderLayout());
+        setLayout(new java.awt.GridBagLayout());
+
+        jPanel2.setAlignmentX(Component.CENTER_ALIGNMENT);
+        jPanel2.setAlignmentY(Component.CENTER_ALIGNMENT);
+        jPanel2.setPreferredSize(new java.awt.Dimension(400, 400));
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 40, 10, 40));
+        jPanel1.setMaximumSize(new java.awt.Dimension(400, 400));
         jPanel1.setMinimumSize(new java.awt.Dimension(270, 300));
         jPanel1.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
 
@@ -88,9 +96,14 @@ public class LogInView extends AbstractViewPanel {
         jPanel1.add(jPanelLogo);
 
         jPanelInput.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
+        jPanelInput.setMaximumSize(new java.awt.Dimension(220, 32767));
         jPanelInput.setOpaque(false);
         jPanelInput.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
+
+        jTextFieldUsuario.setMaximumSize(new java.awt.Dimension(220, 2147483647));
         jPanelInput.add(jTextFieldUsuario);
+
+        jPasswordField.setMaximumSize(new java.awt.Dimension(220, 2147483647));
         jPanelInput.add(jPasswordField);
 
         jPanel1.add(jPanelInput);
@@ -114,7 +127,7 @@ public class LogInView extends AbstractViewPanel {
 
         jPanel1.add(jPanelAutenticar);
 
-        add(jPanel1, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jPanelConn.setMaximumSize(new java.awt.Dimension(405, 23));
         jPanelConn.setOpaque(false);
@@ -133,7 +146,9 @@ public class LogInView extends AbstractViewPanel {
         jLabelUbicacionSeleccionada.setText("Ubicacion");
         jPanelConn.add(jLabelUbicacionSeleccionada);
 
-        add(jPanelConn, java.awt.BorderLayout.SOUTH);
+        jPanel2.add(jPanelConn, java.awt.BorderLayout.SOUTH);
+
+        add(jPanel2, new java.awt.GridBagConstraints());
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -143,6 +158,7 @@ public class LogInView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelEstadoConexion;
     private javax.swing.JLabel jLabelUbicacionSeleccionada;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelAutenticar;
     private javax.swing.JPanel jPanelConn;
     private javax.swing.JPanel jPanelInput;

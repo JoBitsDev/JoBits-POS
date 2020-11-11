@@ -102,8 +102,10 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
     public JPanel getjPanelOpciones() {
         return jPanelOpciones;
     }
-    
 
+    public JPanel getjPanelOpcionesContainer() {
+        return jPanelOpcionesContainer;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,6 +120,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         jTextFieldAutoComplete = MaterialComponentsFactory.Input.getTextField("Buscar...", jTextFieldDataName);
         jButtonAgregarProd = MaterialComponentsFactory.Buttons.getAddButton();
         jScrollPaneCrossReference = new javax.swing.JScrollPane();
+        jPanelOpcionesContainer = new javax.swing.JPanel();
         jPanelOpciones = new javax.swing.JPanel();
         jButtonDeleteProd = MaterialComponentsFactory.Buttons.getCancelButton();
 
@@ -153,6 +156,9 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         jScrollPaneCrossReference.setPreferredSize(new java.awt.Dimension(500, 130));
         add(jScrollPaneCrossReference, java.awt.BorderLayout.CENTER);
 
+        jPanelOpcionesContainer.setOpaque(false);
+        jPanelOpcionesContainer.setLayout(new java.awt.BorderLayout());
+
         jPanelOpciones.setMaximumSize(new java.awt.Dimension(32767, 60));
         jPanelOpciones.setOpaque(false);
         jPanelOpciones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -165,7 +171,9 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         jButtonDeleteProd.setPreferredSize(new java.awt.Dimension(130, 50));
         jPanelOpciones.add(jButtonDeleteProd);
 
-        add(jPanelOpciones, java.awt.BorderLayout.PAGE_END);
+        jPanelOpcionesContainer.add(jPanelOpciones, java.awt.BorderLayout.CENTER);
+
+        add(jPanelOpcionesContainer, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     protected javax.swing.JTable jTableCrossReference;
@@ -175,6 +183,7 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelInsert;
     private javax.swing.JPanel jPanelOpciones;
+    private javax.swing.JPanel jPanelOpcionesContainer;
     private javax.swing.JScrollPane jScrollPaneCrossReference;
     private javax.swing.JTextField jTextFieldAutoComplete;
     // End of variables declaration//GEN-END:variables

@@ -44,7 +44,7 @@ public class FacturaViewModel extends AbstractListViewModel {
 
     public static final String PROP_CANTIDAD_ENTRADA = "cantidad_entrada";
 
-    private float monto_entrada;
+    private String monto_entrada;
 
     public static final String PROP_MONTO_ENTRADA = "monto_entrada";
 
@@ -525,7 +525,7 @@ public class FacturaViewModel extends AbstractListViewModel {
      *
      * @return the value of monto_entrada
      */
-    public float getMonto_entrada() {
+    public String getMonto_entrada() {
         return monto_entrada;
     }
 
@@ -534,8 +534,8 @@ public class FacturaViewModel extends AbstractListViewModel {
      *
      * @param monto_entrada new value of monto_entrada
      */
-    public void setMonto_entrada(float monto_entrada) {
-        float oldMonto_entrada = this.monto_entrada;
+    public void setMonto_entrada(String monto_entrada) {
+        String oldMonto_entrada = this.monto_entrada;
         this.monto_entrada = monto_entrada;
         firePropertyChange(PROP_MONTO_ENTRADA, oldMonto_entrada, monto_entrada);
     }

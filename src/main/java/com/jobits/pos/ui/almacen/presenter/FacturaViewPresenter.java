@@ -16,6 +16,7 @@ import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.domain.models.TransaccionTransformacion;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.recursos.R;
 import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -122,18 +123,18 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 if (getBean().getOperacion_selected() == CheckBoxType.ENTRADA) {
                     if (getBean().getCantidad_entrada() != 0) {
                         if (getBean().getInsumo_selecionado().getValorMonetario() != 0) {
-                            getBean().setMonto_entrada(getBean().getCantidad_entrada() * utils.setDosLugaresDecimalesFloat(
-                                    getBean().getInsumo_selecionado().getValorMonetario() / getBean().getInsumo_selecionado().getCantidad()));
+                            getBean().setMonto_entrada(R.formatoMoneda.format(getBean().getCantidad_entrada() * utils.setDosLugaresDecimalesFloat(
+                                    getBean().getInsumo_selecionado().getValorMonetario() / getBean().getInsumo_selecionado().getCantidad())));
                         }
                     }
                 }
-            } 
+            }
         });
         getBean().addPropertyChangeListener(PROP_INSUMO_SELECIONADO, (PropertyChangeEvent evt) -> {
             InsumoAlmacen insumo = getBean().getInsumo_selecionado();
 
             getBean().setCantidad_entrada(0);
-            getBean().setMonto_entrada(0);
+            getBean().setMonto_entrada(R.formatoMoneda.format(0));
 
             if (insumo == null) {
                 getBean().setUnidad_medida_insumo("<U/M>");
@@ -265,7 +266,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                     TransaccionSimple transaccionEntrada = new TransaccionSimple(
                             getBean().getInsumo_selecionado(),
                             getBean().getCantidad_entrada(),
-                            getBean().getMonto_entrada());
+                            Float.parseFloat(getBean().getMonto_entrada()));
                     getBean().getLista_elementos().add(transaccionEntrada);
                     setDefaultValues(currentOperation, false);
                     break;
@@ -285,7 +286,6 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 case REBAJA:
                     if (getBean().getCausa_rebaja() == null || getBean().getCausa_rebaja().equals("")) {
                         JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Introduca la Causa de Rebaja");
-                        System.out.println(getBean().getCausa_rebaja());
                     } else {
                         TransaccionSimple transaccionRebaja = new TransaccionSimple(
                                 getBean().getInsumo_selecionado(),
@@ -325,6 +325,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                         getBean().getCantidad_entrada(),
                         getBean().getLista_insumos_transformados_contenidos(),
                         (Almacen) getBean().getDestino_seleccionado());
+                Application.getInstance().getNavigator().navigateUp();
             }
         } else {
             if (validateInputs()) {
@@ -332,7 +333,8 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                         currentOperation,
                         getBean().getFecha_factura(),
                         getBean().getNumero_recibo());
-                setDefaultValues(currentOperation, true);
+                Application.getInstance().getNavigator().navigateUp();
+//                setDefaultValues(currentOperation, true);
             }
         }
     }
@@ -357,10 +359,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 
     private boolean validateInputs() {
         if (getBean().getLista_elementos().isEmpty()) {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "La lista de transacciones esta vacia");
-            return false;
-        } else if (getBean().getNumero_recibo() == null) {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Introduzca un numero de recibo");
+            JOptionPane.showMessageDialog(null, "La lista de transacciones esta vacia");
             return false;
         }
         return true;

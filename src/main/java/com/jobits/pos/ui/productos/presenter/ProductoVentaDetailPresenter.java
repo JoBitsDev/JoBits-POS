@@ -11,6 +11,8 @@ import com.jobits.pos.controller.productos.ProductoVentaDetailService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.seccion.SeccionListController;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -144,8 +146,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setElaborado_seleccionado(productoSeleccionado.getCocinacodCocina());
         getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoSeleccionado.getProductoInsumoList()));
         getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
-        getBean().setPrecio_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPrecioVenta()));
-        getBean().setPrecio_costo("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getGasto()));
+        getBean().setPrecio_venta("" + R.formatoMoneda.format(productoSeleccionado.getPrecioVenta()));
+        getBean().setPrecio_costo("" + R.formatoMoneda.format(productoSeleccionado.getGasto()));
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
         getBean().setRuta_imagen_producto(productoSeleccionado.getDescripcion());
     }
@@ -160,12 +162,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea guardar los cambios",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-//            ProductoVenta p;
-//            if (creatingMode) {
-//                p = service.createNewInstance();
-//            } else {
-//                p = service.getInstance();
-//            }
+            p.setNombre(getBean().getNombre_producto());
             p.setCocinacodCocina(getBean().getElaborado_seleccionado());
             p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
             p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
@@ -211,7 +208,11 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if (opt.isPresent()) {
             try {
                 float cantidad = Float.parseFloat(opt.get());
-                service.agregarInsumoaProducto(getBean().getInsumo_disponible_sel(), cantidad);
+                Insumo inSel = getBean().getInsumo_disponible_sel();
+                service.agregarInsumoaProducto(inSel, cantidad);
+                float nuevoPrecio = utils.setDosLugaresDecimalesFloat(
+                        Float.parseFloat(getBean().getPrecio_costo()) + (inSel.getCostoPorUnidad() * cantidad));
+                getBean().setPrecio_costo(R.formatoMoneda.format(nuevoPrecio));
                 getBean().setInsumo_disponible_sel(null);
                 getBean().getLista_insumos_contenidos().clear();
                 getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
@@ -224,7 +225,11 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onEliminarInsumoFichaClick() {
-        service.eliminarInsumoProducto(getBean().getInsumo_contenido_seleccionado());
+        ProductoInsumo inSel = getBean().getInsumo_contenido_seleccionado();
+        service.eliminarInsumoProducto(inSel);
+        float nuevoPrecio = utils.setDosLugaresDecimalesFloat(
+                Float.parseFloat(getBean().getPrecio_costo()) - inSel.getCosto());
+        getBean().setPrecio_costo(R.formatoMoneda.format(nuevoPrecio));
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
