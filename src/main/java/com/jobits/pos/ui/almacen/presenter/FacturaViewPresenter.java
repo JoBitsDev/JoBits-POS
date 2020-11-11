@@ -359,10 +359,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         if (getBean().getLista_elementos().isEmpty()) {
             JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "La lista de transacciones esta vacia");
             return false;
-        } else if (getBean().getNumero_recibo() == null) {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Introduzca un numero de recibo");
-            return false;
-        }
+        } 
         return true;
     }
 
