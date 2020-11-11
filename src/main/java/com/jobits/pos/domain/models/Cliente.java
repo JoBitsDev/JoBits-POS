@@ -46,10 +46,9 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_cliente")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_cliente")
-    @SequenceGenerator(name = "id_cliente" ,allocationSize = 1)
     private Integer idCliente;
     @Basic(optional = false)
     @Column(name = "nombre_cliente")
@@ -77,7 +76,7 @@ public class Cliente implements Serializable {
     private Date fechanacCliente;
     @Column(name = "observaciones_cliente")
     private String observacionesCliente;
-    @OneToMany(mappedBy = "clientecodCliente")
+    @OneToMany(mappedBy = "clienteIdCliente")
     private List<Orden> ordenList;
 
     public Cliente() {

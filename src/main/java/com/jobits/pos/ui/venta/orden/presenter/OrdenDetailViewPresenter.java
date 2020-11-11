@@ -166,8 +166,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                     "/restManager/resources/icons pack/porciento_indigo.png")));
         }
         getBean().setLista_clientes(new ArrayListModel<>(new ClientesDetailServiceImpl().getListaClientes()));
-        if (instance.getClientecodCliente() != null) {
-            getBean().setCliente_seleccionado(instance.getClientecodCliente());
+        if (instance.getClienteIdCliente() != null) {
+            getBean().setCliente_seleccionado(instance.getClienteIdCliente());
         } else {
             getBean().setCliente_seleccionado(null);
         }
