@@ -84,16 +84,17 @@ public class FacturaView extends AbstractViewPanel {
         jSpinnerCantidad = new javax.swing.JSpinner();
         jLabelUM = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jButtonAgregarInsumoEntrada = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel3 = new javax.swing.JPanel();
         jPanelMontoEntrada = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jSpinnerMonto = new javax.swing.JSpinner();
+        jTextFieldMonto = MaterialComponentsFactory.Input.getTextField("", "Monto");
         jPanelDestino = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jComboBoxDestino = new javax.swing.JComboBox<>();
         jPanelRazonRebaja = new javax.swing.JPanel();
         jTextFieldCausaRebaja = MaterialComponentsFactory.Input.getTextField("", "Causa de Rebaja");
+        jPanel6 = new javax.swing.JPanel();
+        jButtonAgregarInsumoEntrada = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonEliminarInsumoEntrada = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelTablas = new javax.swing.JPanel();
         jPanelTablaGeneral = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -203,27 +204,26 @@ public class FacturaView extends AbstractViewPanel {
 
         jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jButtonAgregarInsumoEntrada.setMaximumSize(new java.awt.Dimension(50, 50));
-        jButtonAgregarInsumoEntrada.setMinimumSize(new java.awt.Dimension(50, 50));
-        jButtonAgregarInsumoEntrada.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonAgregarInsumoEntrada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAgregarInsumoEntradaActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jButtonAgregarInsumoEntrada, java.awt.BorderLayout.EAST);
-
         jPanelMontoEntrada.setMaximumSize(new java.awt.Dimension(240, 60));
         jPanelMontoEntrada.setMinimumSize(new java.awt.Dimension(240, 60));
         jPanelMontoEntrada.setPreferredSize(new java.awt.Dimension(240, 50));
-        jPanelMontoEntrada.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 15));
 
-        jLabel2.setText("Monto");
-        jPanelMontoEntrada.add(jLabel2);
-
-        jSpinnerMonto.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 1.0f));
-        jSpinnerMonto.setPreferredSize(new java.awt.Dimension(100, 26));
-        jPanelMontoEntrada.add(jSpinnerMonto);
+        jTextFieldMonto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldMontoFocusGained(evt);
+            }
+        });
+        jTextFieldMonto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldMontoActionPerformed(evt);
+            }
+        });
+        jTextFieldMonto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldMontoKeyTyped(evt);
+            }
+        });
+        jPanelMontoEntrada.add(jTextFieldMonto);
 
         jPanel3.add(jPanelMontoEntrada);
 
@@ -261,6 +261,30 @@ public class FacturaView extends AbstractViewPanel {
         jPanel3.add(jPanelRazonRebaja);
 
         jPanel5.add(jPanel3, java.awt.BorderLayout.CENTER);
+
+        jButtonAgregarInsumoEntrada.setIcon(MaterialIcons.ADD_CIRCLE_OUTLINE);
+        jButtonAgregarInsumoEntrada.setMaximumSize(new java.awt.Dimension(50, 50));
+        jButtonAgregarInsumoEntrada.setMinimumSize(new java.awt.Dimension(50, 50));
+        jButtonAgregarInsumoEntrada.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonAgregarInsumoEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarInsumoEntradaActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonAgregarInsumoEntrada);
+
+        jButtonEliminarInsumoEntrada.setIcon(MaterialIcons.REMOVE_CIRCLE_OUTLINE);
+        jButtonEliminarInsumoEntrada.setMaximumSize(new java.awt.Dimension(50, 50));
+        jButtonEliminarInsumoEntrada.setMinimumSize(new java.awt.Dimension(50, 50));
+        jButtonEliminarInsumoEntrada.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonEliminarInsumoEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarInsumoEntradaActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonEliminarInsumoEntrada);
+
+        jPanel5.add(jPanel6, java.awt.BorderLayout.EAST);
 
         jPanelInputs.add(jPanel5);
 
@@ -349,6 +373,29 @@ public class FacturaView extends AbstractViewPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jSpinnerCantidadKeyPressed
 
+    private void jTextFieldMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMontoActionPerformed
+        executeAction();
+    }//GEN-LAST:event_jTextFieldMontoActionPerformed
+
+    private void jTextFieldMontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldMontoFocusGained
+        jTextFieldMonto.setText("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldMontoFocusGained
+
+    private void jTextFieldMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoKeyTyped
+        char c = evt.getKeyChar();
+        if (((c < '0') || (c > '9')) && (c != '\b') && (c != '.')) {
+            evt.consume();
+        }
+        if ((c == '.') && (jTextFieldMonto.getText().contains("."))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldMontoKeyTyped
+
+    private void jButtonEliminarInsumoEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarInsumoEntradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEliminarInsumoEntradaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler4;
@@ -356,11 +403,11 @@ public class FacturaView extends AbstractViewPanel {
     private javax.swing.JButton jButtonAgregarInsumoEntrada;
     private javax.swing.JButton jButtonClose;
     private javax.swing.JButton jButtonConfirmarEntrada;
+    private javax.swing.JButton jButtonEliminarInsumoEntrada;
     private javax.swing.JComboBox<String> jComboBoxDestino;
     private javax.swing.JComboBox<String> jComboBoxOperationSelector;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelUM;
     private javax.swing.JPanel jPanel1;
@@ -369,6 +416,7 @@ public class FacturaView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanelCancelarConfirmar;
     private javax.swing.JPanel jPanelCantidad;
@@ -385,10 +433,10 @@ public class FacturaView extends AbstractViewPanel {
     private javax.swing.JPanel jPaneloperaciones;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinnerCantidad;
-    private javax.swing.JSpinner jSpinnerMonto;
     private javax.swing.JTable jTableEntrada;
     private javax.swing.JTextField jTextFieldCausaRebaja;
     private javax.swing.JTextField jTextFieldInsumo;
+    private javax.swing.JTextField jTextFieldMonto;
     private javax.swing.JTextField jTextFieldRecibo;
     // End of variables declaration//GEN-END:variables
 
@@ -412,9 +460,10 @@ public class FacturaView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_CANTIDAD_ENTRADA), 0);
         Bindings.bind(jSpinnerCantidad, "value", getPresenter().getModel(PROP_CANTIDAD_ENTRADA));
 
-        SpinnerToValueModelConnector spinnerMontoEntrada = new SpinnerToValueModelConnector(jSpinnerMonto.getModel(),
-                getPresenter().getModel(PROP_MONTO_ENTRADA), 0);
-        Bindings.bind(jSpinnerMonto, "value", getPresenter().getModel(PROP_MONTO_ENTRADA));
+//        SpinnerToValueModelConnector spinnerMontoEntrada = new SpinnerToValueModelConnector(jSpinnerMonto.getModel(),
+//                getPresenter().getModel(PROP_MONTO_ENTRADA), 0);
+//        Bindings.bind(jSpinnerMonto, "value", getPresenter().getModel(PROP_MONTO_ENTRADA));
+        Bindings.bind(jTextFieldMonto, getPresenter().getModel(PROP_MONTO_ENTRADA));
 
         Bindings.bind(jTextFieldCausaRebaja, getPresenter().getModel(PROP_CAUSA_REBAJA));
         Bindings.bind(jTextFieldCausaRebaja, "enabled", getPresenter().getModel(PROP_COMPONENT_LOCKED));
@@ -428,9 +477,10 @@ public class FacturaView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)));
 
         //BUTTONS
-        jButtonAgregarInsumoEntrada.setAction(getPresenter().getOperation(ACTION_AGREGAR_INSUMO));
-        jButtonAgregarInsumoEntrada.setIcon(MaterialIcons.ADD);
-        jButtonAgregarInsumoEntrada.setText("");
+        jButtonAgregarInsumoEntrada.addActionListener(getPresenter().getOperation(ACTION_AGREGAR_INSUMO));
+        jButtonEliminarInsumoEntrada.addActionListener(getPresenter().getOperation(ACTION_ELIMINAR_INSUMO));
+//        jButtonAgregarInsumoEntrada.setIcon(MaterialIcons.ADD);
+//        jButtonAgregarInsumoEntrada.setText("");
         jButtonConfirmarEntrada.setAction(getPresenter().getOperation(ACTION_CONFIRMAR_TRANSACCION));
         jButtonClose.setAction(getPresenter().getOperation(ACTION_CERRAR_POPUP));
         jButtonClose.setText("Cancelar");
@@ -449,7 +499,7 @@ public class FacturaView extends AbstractViewPanel {
 
         //FOCUS EVENTS
         JSpinner.DefaultEditor defCantidad = (JSpinner.DefaultEditor) jSpinnerCantidad.getEditor();
-        JSpinner.DefaultEditor defMonto = (JSpinner.DefaultEditor) jSpinnerMonto.getEditor();
+//        JSpinner.DefaultEditor defMonto = (JSpinner.DefaultEditor) jSpinnerMonto.getEditor();
 
         defCantidad.getTextField().addKeyListener(new KeyListener() {
             @Override
@@ -457,7 +507,11 @@ public class FacturaView extends AbstractViewPanel {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     switch ((CheckBoxType) jComboBoxOperationSelector.getSelectedItem()) {
                         case ENTRADA:
-                            defMonto.getTextField().requestFocusInWindow();
+                            if (jTextFieldMonto.isEnabled()) {
+                                jTextFieldMonto.requestFocusInWindow();
+                            } else {
+                                executeAction();
+                            }
                             break;
                         case REBAJA:
                             if (jTextFieldCausaRebaja.isEnabled()) {
@@ -508,26 +562,26 @@ public class FacturaView extends AbstractViewPanel {
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-        defMonto.getTextField().addKeyListener(new KeyListener() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    executeAction();
-                }
-            }
-
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (defMonto.getTextField().getText().equals("0")) {
-                    defMonto.getTextField().setText(null);
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        });
+//        defMonto.getTextField().addKeyListener(new KeyListener() {
+//            @Override
+//            public void keyPressed(KeyEvent e) {
+//                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+//                    executeAction();
+//                }
+//            }
+//
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//                if (defMonto.getTextField().getText().equals("0")) {
+//                    defMonto.getTextField().setText(null);
+//                }
+//            }
+//
+//            @Override
+//            public void keyReleased(KeyEvent e) {
+//                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//            }
+//        });
     }
 
     @Override

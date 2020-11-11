@@ -16,6 +16,7 @@ import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.domain.models.TransaccionTransformacion;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.recursos.R;
 import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -123,8 +124,8 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 if (getBean().getOperacion_selected() == CheckBoxType.ENTRADA) {
                     if (getBean().getCantidad_entrada() != 0) {
                         if (getBean().getInsumo_selecionado().getValorMonetario() != 0) {
-                            getBean().setMonto_entrada(getBean().getCantidad_entrada() * utils.setDosLugaresDecimalesFloat(
-                                    getBean().getInsumo_selecionado().getValorMonetario() / getBean().getInsumo_selecionado().getCantidad()));
+                            getBean().setMonto_entrada(R.formatoMoneda.format(getBean().getCantidad_entrada() * utils.setDosLugaresDecimalesFloat(
+                                    getBean().getInsumo_selecionado().getValorMonetario() / getBean().getInsumo_selecionado().getCantidad())));
                         }
                     }
                 }
@@ -134,7 +135,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             InsumoAlmacen insumo = getBean().getInsumo_selecionado();
 
             getBean().setCantidad_entrada(0);
-            getBean().setMonto_entrada(0);
+            getBean().setMonto_entrada(R.formatoMoneda.format(0));
 
             if (insumo == null) {
                 getBean().setUnidad_medida_insumo("<U/M>");
@@ -266,7 +267,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                     TransaccionSimple transaccionEntrada = new TransaccionSimple(
                             getBean().getInsumo_selecionado(),
                             getBean().getCantidad_entrada(),
-                            getBean().getMonto_entrada());
+                            Float.parseFloat(getBean().getMonto_entrada()));
                     getBean().getLista_elementos().add(transaccionEntrada);
                     setDefaultValues(currentOperation, false);
                     break;
