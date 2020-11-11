@@ -33,7 +33,7 @@ import javax.validation.constraints.Size;
 @Table(name = "cliente")
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
-    @NamedQuery(name = "Cliente.findByCodCliente", query = "SELECT c FROM Cliente c WHERE c.codCliente = :codCliente"),
+    @NamedQuery(name = "Cliente.findByIdCliente", query = "SELECT c FROM Cliente c WHERE c.idCliente = :idCLiente"),
     @NamedQuery(name = "Cliente.findByNombreCliente", query = "SELECT c FROM Cliente c WHERE c.nombreCliente = :nombreCliente"),
     @NamedQuery(name = "Cliente.findByApellidosCliente", query = "SELECT c FROM Cliente c WHERE c.apellidosCliente = :apellidosCliente"),
     @NamedQuery(name = "Cliente.findByDireccionCliente", query = "SELECT c FROM Cliente c WHERE c.direccionCliente = :direccionCliente"),
@@ -46,10 +46,9 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "cod_cliente")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "id_cliente")
-    @SequenceGenerator(name = "id_cliente" ,allocationSize = 1)
+    @Column(name = "id_cliente")
     private Integer idCliente;
     @Basic(optional = false)
     @Column(name = "nombre_cliente")
@@ -77,7 +76,7 @@ public class Cliente implements Serializable {
     private Date fechanacCliente;
     @Column(name = "observaciones_cliente")
     private String observacionesCliente;
-    @OneToMany(mappedBy = "clientecodCliente")
+    @OneToMany(mappedBy = "clienteIdCliente")
     private List<Orden> ordenList;
 
     public Cliente() {

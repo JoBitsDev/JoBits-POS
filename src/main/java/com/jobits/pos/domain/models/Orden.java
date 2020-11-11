@@ -69,9 +69,9 @@ public class Orden implements Serializable, Comparable<Orden> {
     private Float ordenvalorMonetario;
     @Column(name = "ordengasto_eninsumos")
     private Float ordengastoEninsumos;
-    @JoinColumn(name = "clientecod_cliente", referencedColumnName = "cod_cliente")
+    @JoinColumn(name = "clienteid_cliente", referencedColumnName = "id_cliente")
     @ManyToOne
-    private Cliente clientecodCliente;
+    private Cliente clienteIdCliente;
     @JoinColumn(name = "mesacod_mesa", referencedColumnName = "cod_mesa")
     @ManyToOne
     private Mesa mesacodMesa;
@@ -160,12 +160,12 @@ public class Orden implements Serializable, Comparable<Orden> {
         this.ordengastoEninsumos = ordengastoEninsumos;
     }
 
-    public Cliente getClientecodCliente() {
-        return clientecodCliente;
+    public Cliente getClienteIdCliente() {
+        return clienteIdCliente;
     }
 
-    public void setClientecodCliente(Cliente clientecodCliente) {
-        this.clientecodCliente = clientecodCliente;
+    public void setClienteIdCliente(Cliente clienteIdCliente) {
+        this.clienteIdCliente = clienteIdCliente;
     }
 
     public Mesa getMesacodMesa() {

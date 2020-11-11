@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.domain.models.Cliente;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.domain.models.Seccion;
@@ -97,6 +98,54 @@ public class OrdenDetailViewModel extends AbstractViewModel {
     private ImageIcon icono_porciento;
 
     public static final String PROP_ICONO_PORCIENTO = "icono_porciento";
+
+    private ArrayListModel<Cliente> lista_clientes = new ArrayListModel<>();
+
+    public static final String PROP_LISTA_CLIENTES = "lista_clientes";
+
+    private Cliente cliente_seleccionado;
+
+    public static final String PROP_CLIENTE_SELECCIONADO = "cliente_seleccionado";
+
+    /**
+     * Get the value of cliente_seleccionado
+     *
+     * @return the value of cliente_seleccionado
+     */
+    public Cliente getCliente_seleccionado() {
+        return cliente_seleccionado;
+    }
+
+    /**
+     * Set the value of cliente_seleccionado
+     *
+     * @param cliente_seleccionado new value of cliente_seleccionado
+     */
+    public void setCliente_seleccionado(Cliente cliente_seleccionado) {
+        Cliente oldCliente_seleccionado = this.cliente_seleccionado;
+        this.cliente_seleccionado = cliente_seleccionado;
+        firePropertyChange(PROP_CLIENTE_SELECCIONADO, oldCliente_seleccionado, cliente_seleccionado);
+    }
+
+    /**
+     * Get the value of lista_clientes
+     *
+     * @return the value of lista_clientes
+     */
+    public ArrayListModel<Cliente> getLista_clientes() {
+        return lista_clientes;
+    }
+
+    /**
+     * Set the value of lista_clientes
+     *
+     * @param lista_clientes new value of lista_clientes
+     */
+    public void setLista_clientes(ArrayListModel<Cliente> lista_clientes) {
+        ArrayListModel<Cliente> oldLista_clientes = this.lista_clientes;
+        this.lista_clientes = lista_clientes;
+        firePropertyChange(PROP_LISTA_CLIENTES, oldLista_clientes, lista_clientes);
+    }
 
     /**
      * Get the value of icono_porciento
