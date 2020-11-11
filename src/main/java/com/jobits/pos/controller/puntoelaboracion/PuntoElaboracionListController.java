@@ -31,23 +31,25 @@ public class PuntoElaboracionListController extends OldAbstractListController<Co
     @Override
     public void createInstance() {
         String newCocina = showInputDialog(getView(), "Introduzca el nombre del nuevo punto de elaboracion");
-        Cocina c = new Cocina(getModel().generateStringCode("C-"));
-        c.setImpresoraList(new ArrayList<>());
-        c.setIpvList(new ArrayList<>());
-        c.setNombreCocina(newCocina);
-        c.setProductoVentaList(new ArrayList<>());
-        getItems().stream().filter((x)
-                -> (x.getNombreCocina().toLowerCase().equals(newCocina.toLowerCase()))).forEachOrdered((_item) -> {
-            throw new DuplicatedException();
-        });
-        create(c);
+        if (newCocina != null && !newCocina.equals("")) {
+            Cocina c = new Cocina(getModel().generateStringCode("C-"));
+            c.setImpresoraList(new ArrayList<>());
+            c.setIpvList(new ArrayList<>());
+            c.setNombreCocina(newCocina);
+            c.setProductoVentaList(new ArrayList<>());
+            getItems().stream().filter((x)
+                    -> (x.getNombreCocina().toLowerCase().equals(newCocina.toLowerCase()))).forEachOrdered((_item) -> {
+                throw new DuplicatedException();
+            });
+            create(c);
+        }
 
     }
 
     @Override
     public void update(Cocina selected) {
         String editCocina = showInputDialog(getView(), "Introduzca el nuevo nombre al punto de elaboracion", selected.getNombreCocina());
-        if (editCocina != null) {
+        if (editCocina != null && !editCocina.equals("")) {
             getItems().stream().filter((x)
                     -> (x.getNombreCocina().toLowerCase().equals(editCocina.toLowerCase()))).forEachOrdered((_item) -> {
                 throw new ValidatingException(getView());
