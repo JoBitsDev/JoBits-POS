@@ -181,7 +181,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel13.setLayout(new java.awt.GridLayout(2, 1, 0, 20));
 
         jButtonAddCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/olla_indigo.png"))); // NOI18N
-        jButtonAddCocina.setText(bundle.getString("label_nuevo_pto_elaboracion")); // NOI18N
         jButtonAddCocina.setToolTipText("Nuevo Punto de Elaboracion");
         jButtonAddCocina.setMaximumSize(new java.awt.Dimension(300, 60));
         jButtonAddCocina.setMinimumSize(new java.awt.Dimension(60, 50));
@@ -194,7 +193,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel13.add(jButtonAddCocina);
 
         jButtonAddSeccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/categoria_indigo.png"))); // NOI18N
-        jButtonAddSeccion.setText(bundle.getString("label_nueva_categoria")); // NOI18N
         jButtonAddSeccion.setToolTipText("Nueva Categoria");
         jButtonAddSeccion.setMaximumSize(new java.awt.Dimension(300, 60));
         jButtonAddSeccion.setMinimumSize(new java.awt.Dimension(60, 50));
