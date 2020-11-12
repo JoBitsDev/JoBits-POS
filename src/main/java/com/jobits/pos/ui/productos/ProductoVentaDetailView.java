@@ -33,16 +33,16 @@ import java.beans.PropertyChangeListener;
  * @author Jorge
  */
 public class ProductoVentaDetailView extends AbstractViewPanel {
-    
+
     public static final String VIEW_NAME = "Crear Producto";
-    
+
     private AddFromPanel<ProductoInsumo, Insumo> crossReferencePanel;
     private ProductoVenta instance;
-    
+
     public ProductoVentaDetailView(AbstractViewPresenter presenter) {
         super(presenter);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -395,18 +395,19 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         Bindings.bind(jTextFieldPagoPorVenta, getPresenter().getModel(PROP_COMISION_POR_VENTA));
         jButtonCancelar.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_CANCELAR));
         jButtonCrear.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR));
-        
+       
+        Bindings.bind(jButtonCrear, "text", getPresenter().getModel(PROP_CREAR_EDITAR_BUTTON_TEXT));
         Bindings.bind(jLabelIProductImage, "icon", getPresenter().getModel(PROP_IMAGEN_PRODUCTO));
     }
-    
+
     @Override
     public void uiInit() {
         initComponents();
-        
+
         jComboBoxCOCINA.setOpaque(false);
         jComboBoxSECCION.setOpaque(false);
         jButtonAddCocina.setBorderPainted(true);
-        
+
         AddFromPanel.AddFromPanelBuilder<ProductoInsumo, Insumo> builder = AddFromPanel.builder();
         builder.addAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR_INSUMO_FICHA));
         builder.autoCOmpletitionDataSelection(getPresenter().getModel(PROP_INSUMO_DISPONIBLE_SEL));
@@ -415,14 +416,14 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         builder.removeAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_ELIMINAR_INSUMO_FICHA));
         builder.tableDataHolder(getPresenter().getModel(PROP_LISTA_INSUMOS_CONTENIDOS));
         builder.tableSelectionDataHolder(getPresenter().getModel(PROP_INSUMO_SELECCIONADO));
-        
+
         BindableTableModel<ProductoInsumo> tableModel
                 = new BindableTableModel<ProductoInsumo>() {
             @Override
             public int getColumnCount() {
                 return 5;
             }
-            
+
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
@@ -440,7 +441,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
                         return null;
                 }
             }
-            
+
             @Override
             public String getColumnName(int column) {
                 switch (column) {
@@ -458,12 +459,12 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
                         return null;
                 }
             }
-            
+
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return columnIndex == 3;
             }
-            
+
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 if (columnIndex == 3) {
@@ -471,7 +472,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
                 }
                 return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
             }
-            
+
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 switch (columnIndex) {
@@ -484,33 +485,33 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
             }
         };
         builder.tableModel(tableModel);
-        
+
         crossReferencePanel = builder.build();
-        
+
         crossReferencePanel.getjPanelOpciones().add(jButtonAddInsumo, 0);
-        
+
         jPanelCrossRef.add(crossReferencePanel, BorderLayout.CENTER);
-        
+
         jTabbedPane1.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
                 jTextFieldNombre.requestFocusInWindow();
             }
-            
+
             @Override
             public void focusLost(FocusEvent e) {
             }
         });
-        
+
         getPresenter().addBeanPropertyChangeListener(PROP_INSUMO_DISPONIBLE_SEL, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() == null) {
                 crossReferencePanel.getJTextFieldAutoComplete().setText("");
             }
         });
-        
+
         crossReferencePanel.getjPanelOpcionesContainer().add(jPanelCosto, java.awt.BorderLayout.WEST);
     }
-    
+
     @Override
     public String getViewName() {
         return VIEW_NAME;

@@ -34,6 +34,8 @@ public interface ProductoVentaDetailService {
     public void discardChanges();
 
     public void create(ProductoVenta p);
+    
+    public void update(ProductoVenta p);
 
     public List<Seccion> getSeccionList();
 
