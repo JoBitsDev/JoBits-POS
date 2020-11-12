@@ -168,9 +168,13 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     private void setListToBean() {
         getBean().getLista_elementos().clear();
         getBean().getLista_elementos().addAll(new ArrayListModel<>(listService.getItems()));
-        getBean().setElemento_seleccionado(listService.getItems().get(0));
-        detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
-        refreshView();
+        if (!listService.getItems().isEmpty()) {
+            getBean().setElemento_seleccionado(listService.getItems().get(0));
+            if (getBean().getElemento_seleccionado() != null) {
+                detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
+                refreshView();
+            }
+        }
     }
 
     private void onAgregarInsumoFichaClick() {
