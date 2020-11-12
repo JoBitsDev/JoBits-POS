@@ -225,12 +225,10 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 float cantidad = Float.parseFloat(opt.get());
                 Insumo inSel = getBean().getInsumo_disponible_sel();
                 service.agregarInsumoaProducto(inSel, cantidad);
-                float nuevoPrecio = utils.setDosLugaresDecimalesFloat(
-                        Float.parseFloat(getBean().getPrecio_costo()) + (inSel.getCostoPorUnidad() * cantidad));
-                getBean().setPrecio_costo(R.formatoMoneda.format(nuevoPrecio));
                 getBean().setInsumo_disponible_sel(null);
                 getBean().getLista_insumos_contenidos().clear();
                 getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
+                updateCostoValue();
                 getBean().setInsumo_disponible_sel(null);
             } catch (NumberFormatException ex) {
                 Application.getInstance().getNotificationService().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
@@ -239,16 +237,23 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     }
 
+    private void updateCostoValue() {
+        if (!getBean().getLista_insumos_contenidos().isEmpty()) {
+            float total = 0;
+            total = getBean().getLista_insumos_contenidos().stream().map(x -> x.getCosto()).reduce(total, (accumulator, _item) -> accumulator + _item);
+            getBean().setPrecio_costo(R.formatoMoneda.format(total));
+        } else {
+            getBean().setPrecio_costo(R.formatoMoneda.format(0));
+        }
+    }
+
     private void onEliminarInsumoFichaClick() {
         ProductoInsumo inSel = getBean().getInsumo_contenido_seleccionado();
         service.eliminarInsumoProducto(inSel);
-        float nuevoPrecio = utils.setDosLugaresDecimalesFloat(
-                Float.parseFloat(getBean().getPrecio_costo()) - inSel.getCosto());
-        getBean().setPrecio_costo(R.formatoMoneda.format(nuevoPrecio));
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
-
+        updateCostoValue();
     }
 
     private void onEditarImagenClick() {
