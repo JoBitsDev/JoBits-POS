@@ -151,7 +151,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoSeleccionado.getProductoInsumoList()));
         getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
         getBean().setPrecio_venta("" + R.formatoMoneda.format(productoSeleccionado.getPrecioVenta()));
-        getBean().setPrecio_costo("" + R.formatoMoneda.format(productoSeleccionado.getGasto()));
+        updateCostoValue();
         getBean().getLista_insumos_disponibles().clear();
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
         getBean().setRuta_imagen_producto(productoSeleccionado.getDescripcion());
