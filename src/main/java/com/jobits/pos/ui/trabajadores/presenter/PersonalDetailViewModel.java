@@ -71,8 +71,54 @@ public class PersonalDetailViewModel extends AbstractViewModel {
     private String crear_editar_button_text;
 
     public static final String PROP_CREAR_EDITAR_BUTTON_TEXT = "crear_editar_button_text";
-    
-    
+
+    private String direccion;
+
+    public static final String PROP_DIRECCION = "direccion";
+
+    private String carnet_identidad;
+
+    public static final String PROP_CARNET_IDENTIDAD = "carnet_identidad";
+
+    /**
+     * Get the value of carnet_identidad
+     *
+     * @return the value of carnet_identidad
+     */
+    public String getCarnet_identidad() {
+        return carnet_identidad;
+    }
+
+    /**
+     * Set the value of carnet_identidad
+     *
+     * @param carnet_identidad new value of carnet_identidad
+     */
+    public void setCarnet_identidad(String carnet_identidad) {
+        String oldCarnet_identidad = this.carnet_identidad;
+        this.carnet_identidad = carnet_identidad;
+        firePropertyChange(PROP_CARNET_IDENTIDAD, oldCarnet_identidad, carnet_identidad);
+    }
+
+    /**
+     * Get the value of direccion
+     *
+     * @return the value of direccion
+     */
+    public String getDireccion() {
+        return direccion;
+    }
+
+    /**
+     * Set the value of direccion
+     *
+     * @param direccion new value of direccion
+     */
+    public void setDireccion(String direccion) {
+        String oldDireccion = this.direccion;
+        this.direccion = direccion;
+        firePropertyChange(PROP_DIRECCION, oldDireccion, direccion);
+    }
 
     /**
      * Get the value of crear_editar_button_text

@@ -137,6 +137,16 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
             } else {
                 personal.getDatosPersonales().setTelefonoFijo(Integer.parseInt(getBean().getTelefono_fijo()));
             }
+            if (getBean().getDireccion() == null) {
+                personal.getDatosPersonales().setDireccion(null);
+            } else {
+                personal.getDatosPersonales().setDireccion(getBean().getDireccion());
+            }
+            if (getBean().getCarnet_identidad() == null) {
+                personal.getDatosPersonales().setCarnet(null);
+            } else {
+                personal.getDatosPersonales().setCarnet(getBean().getCarnet_identidad());
+            }
             if (getBean().getSexo_seleccionado() != null) {
                 if (getBean().getSexo_seleccionado().equals("Masculino")) {
                     personal.getDatosPersonales().setSexo('M');
@@ -187,6 +197,16 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
                 getBean().setTelefono_fijo(null);
             } else {
                 getBean().setTelefono_fijo(personal.getDatosPersonales().getTelefonoFijo().toString());
+            }
+            if (personal.getDatosPersonales().getCarnet() == null) {
+                getBean().setCarnet_identidad(null);
+            } else {
+                getBean().setCarnet_identidad(personal.getDatosPersonales().getCarnet());
+            }
+            if (personal.getDatosPersonales().getDireccion() == null) {
+                getBean().setDireccion(null);
+            } else {
+                getBean().setDireccion(personal.getDatosPersonales().getDireccion());
             }
 
             if (personal.getDatosPersonales().getSexo() != null) {

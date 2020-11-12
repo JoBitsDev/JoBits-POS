@@ -102,6 +102,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
     private void onNuevaAreaCLick() {//TODO: no actualiza correctamente nada en las vistas
         Application.getInstance().getNavigator().navigateTo("Crear Area", null, DisplayType.POPUP);
+        refreshState();
     }
 
     private void onEliminarAreaClick() {
@@ -129,6 +130,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
 //        service.getDetailControllerForEdit(getBean().getArea_seleccionada());
         getBean().getLista_area().fireContentsChanged(0, getBean().getLista_area().getSize());
+        refreshState();
     }
 
     private void onNuevaMesaClick() {

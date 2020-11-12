@@ -120,7 +120,7 @@ public class AreaDetailView extends AbstractViewPanel {
         jLabel3.setText(bundle.getString("label_porciento")); // NOI18N
         jPanel9.add(jLabel3);
 
-        jSpinnerPorciento.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        jSpinnerPorciento.setModel(new javax.swing.SpinnerNumberModel(0, -100, 100, 1));
         jSpinnerPorciento.setPreferredSize(new java.awt.Dimension(60, 26));
         jPanel9.add(jSpinnerPorciento);
 
