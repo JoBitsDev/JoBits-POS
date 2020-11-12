@@ -24,6 +24,7 @@ import com.jobits.pos.ui.utils.utils;
 import java.awt.Dimension;
 import java.util.Optional;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -162,11 +163,25 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea guardar los cambios",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            p.setNombre(getBean().getNombre_producto());
-            p.setCocinacodCocina(getBean().getElaborado_seleccionado());
-            p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
-            p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
-            p.setGasto(Float.valueOf(getBean().getPrecio_costo()));
+            if (getBean().getNombre_producto() != null) {
+                p.setNombre(getBean().getNombre_producto());
+            } else {
+                JOptionPane.showMessageDialog(null, "Introduzca el nombre del producto");
+            }
+            if (getBean().getPrecio_venta() != null) {
+                p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
+            }
+            if (getBean().getElaborado_seleccionado() != null) {
+                p.setCocinacodCocina(getBean().getElaborado_seleccionado());
+            }
+            if (getBean().getCategoria_seleccionada() != null) {
+                p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
+            }
+            if (getBean().getPrecio_costo() == null || getBean().getPrecio_costo().equals("")) {
+                p.setGasto(0f);
+            } else {
+                p.setGasto(Float.valueOf(getBean().getPrecio_costo()));
+            }
             p.setProductoInsumoList(getBean().getLista_insumos_contenidos());
             p.setDescripcion(getBean().getRuta_imagen_producto());
             if (getBean().getComision_por_venta() != null) {
