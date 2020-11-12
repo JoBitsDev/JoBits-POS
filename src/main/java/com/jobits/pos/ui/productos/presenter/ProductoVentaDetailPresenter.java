@@ -61,13 +61,15 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().getLista_elaborado().addAll(new ArrayListModel<>(this.service.getCocinaList()));
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(this.service.getInsumoList()));
         if (productoSeleccionado != null) {
-            fillForm(productoSeleccionado);
+            refreshState(productoSeleccionado);
         }
         creatingMode = productoSeleccionado == null;
         if (creatingMode) {
             p = service.createNewInstance();
+            getBean().setCrear_editar_button_text("Crear");
         } else {
             p = service.getInstance();
+            getBean().setCrear_editar_button_text("Editar");
         }
         getBean().setCodigo_producto(p.getCodigoProducto());
         refreshProductImage();
@@ -137,7 +139,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         });
     }
 
-    private void fillForm(ProductoVenta productoSeleccionado) {
+    private void refreshState(ProductoVenta productoSeleccionado) {
         getBean().setCategoria_seleccionada(productoSeleccionado.getSeccionnombreSeccion());
         getBean().setNombre_producto(productoSeleccionado.getNombre());
         getBean().setCodigo_producto(productoSeleccionado.getCodigoProducto());
@@ -145,10 +147,12 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoSeleccionado.getPagoPorVenta()));
         }
         getBean().setElaborado_seleccionado(productoSeleccionado.getCocinacodCocina());
+        getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoSeleccionado.getProductoInsumoList()));
         getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
         getBean().setPrecio_venta("" + R.formatoMoneda.format(productoSeleccionado.getPrecioVenta()));
         getBean().setPrecio_costo("" + R.formatoMoneda.format(productoSeleccionado.getGasto()));
+        getBean().getLista_insumos_disponibles().clear();
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
         getBean().setRuta_imagen_producto(productoSeleccionado.getDescripcion());
     }
@@ -168,29 +172,27 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             } else {
                 JOptionPane.showMessageDialog(null, "Introduzca el nombre del producto");
             }
-            if (getBean().getPrecio_venta() != null) {
-                p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
-            }
-            if (getBean().getElaborado_seleccionado() != null) {
-                p.setCocinacodCocina(getBean().getElaborado_seleccionado());
-            }
-            if (getBean().getCategoria_seleccionada() != null) {
-                p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
-            }
             if (getBean().getPrecio_costo() == null || getBean().getPrecio_costo().equals("")) {
                 p.setGasto(0f);
             } else {
                 p.setGasto(Float.valueOf(getBean().getPrecio_costo()));
             }
-            p.setProductoInsumoList(getBean().getLista_insumos_contenidos());
-            p.setDescripcion(getBean().getRuta_imagen_producto());
             if (getBean().getComision_por_venta() != null) {
                 p.setPagoPorVenta(Float.parseFloat(getBean().getComision_por_venta()));
             } else {
                 p.setPagoPorVenta((float) 0);
             }
+            p.setPrecioVenta(Float.parseFloat(getBean().getPrecio_venta()));
+            p.setCocinacodCocina(getBean().getElaborado_seleccionado());
+            p.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
+            p.setProductoInsumoList(getBean().getLista_insumos_contenidos());
+            p.setDescripcion(getBean().getRuta_imagen_producto());
             p.setVisible(true);
-            service.create(p);
+            if (creatingMode) {
+                service.create(p);
+            } else {
+                service.update(p);
+            }
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         }
 

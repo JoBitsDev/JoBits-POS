@@ -152,7 +152,30 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
     private boolean image_product_visible = true;
 
     public static final String PROP_IMAGE_PRODUCT_VISIBLE = "image_product_visible";
-    
+
+    private String crear_editar_button_text;
+
+    public static final String PROP_CREAR_EDITAR_BUTTON_TEXT = "crear_editar_button_text";
+
+    /**
+     * Get the value of crear_editar_button_text
+     *
+     * @return the value of crear_editar_button_text
+     */
+    public String getCrear_editar_button_text() {
+        return crear_editar_button_text;
+    }
+
+    /**
+     * Set the value of crear_editar_button_text
+     *
+     * @param crear_editar_button_text new value of crear_editar_button_text
+     */
+    public void setCrear_editar_button_text(String crear_editar_button_text) {
+        String oldCrear_editar_button_text = this.crear_editar_button_text;
+        this.crear_editar_button_text = crear_editar_button_text;
+        firePropertyChange(PROP_CREAR_EDITAR_BUTTON_TEXT, oldCrear_editar_button_text, crear_editar_button_text);
+    }
 
     /**
      * Get the value of image_product_visible
