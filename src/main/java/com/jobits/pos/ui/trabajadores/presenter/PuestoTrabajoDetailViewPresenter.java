@@ -79,12 +79,9 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
                 puesto.setNombrePuesto(nombre);
             }
         }
-        if (getBean().getArea_trabajo_seleccionada() == null) {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un area de trabajo");
-            return;
-        } else {
-            puesto.setAreacodArea(getBean().getArea_trabajo_seleccionada());
-        }
+
+        puesto.setAreacodArea(getBean().getArea_trabajo_seleccionada());
+
         if (getBean().getArea_pago_seleccionada() == null) {
             puesto.setAreaPago(null);
         } else {
