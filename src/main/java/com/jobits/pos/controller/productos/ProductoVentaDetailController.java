@@ -32,7 +32,7 @@ import com.jobits.pos.ui.utils.utils;
  * @author Jorge
  *
  */
-public class ProductoVentaDetailController extends AbstractDetailController<ProductoVenta> implements ProductoVentaDetailService{
+public class ProductoVentaDetailController extends AbstractDetailController<ProductoVenta> implements ProductoVentaDetailService {
 
     public ProductoVentaDetailController() {
         super(ProductoVentaDAO.getInstance());
@@ -43,7 +43,6 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
     public ProductoVentaDetailController(ProductoVenta instance) {
         super(instance, ProductoVentaDAO.getInstance());
     }
-
 
     @Override
     public ProductoVenta createNewInstance() {
