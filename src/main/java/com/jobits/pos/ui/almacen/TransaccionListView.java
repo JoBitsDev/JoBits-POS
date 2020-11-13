@@ -34,7 +34,7 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
         jButtonEdit.setVisible(false);
         jButtonAdd.setVisible(false);
         jButtonDelete.setVisible(false);
-        setPreferredSize(new Dimension(1000, 600));
+        setPreferredSize(new Dimension(1200, 650));
 
         jPanelOptionsButtons.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -49,9 +49,16 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
         
         add(jPanelOptionsButtons, BorderLayout.SOUTH);
         
-        jTableList.getColumnModel().getColumn(1).setPreferredWidth(50);
-        jTableList.getColumnModel().getColumn(2).setPreferredWidth(50);
-        jTableList.getColumnModel().getColumn(3).setPreferredWidth(50);
+        jTableList.getColumnModel().getColumn(0).setMaxWidth(250);
+        jTableList.getColumnModel().getColumn(0).setPreferredWidth(250);
+        jTableList.getColumnModel().getColumn(1).setMaxWidth(150);
+        jTableList.getColumnModel().getColumn(1).setPreferredWidth(100);
+        jTableList.getColumnModel().getColumn(2).setMaxWidth(150);
+        jTableList.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTableList.getColumnModel().getColumn(3).setMaxWidth(150);
+        jTableList.getColumnModel().getColumn(3).setPreferredWidth(100);
+        jTableList.getColumnModel().getColumn(4).setMaxWidth(150);
+        jTableList.getColumnModel().getColumn(4).setPreferredWidth(150);
 
     }
 
@@ -60,7 +67,7 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
         return new BindableTableModel<Transaccion>(jTableList) {
             @Override
             public int getColumnCount() {
-                return 5;
+                return 6;
             }
 
             @Override
@@ -75,6 +82,8 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
                     case 3:
                         return ((Transaccion) getListModel().getElementAt(rowIndex)).getCantidad();
                     case 4:
+                        return ((Transaccion) getListModel().getElementAt(rowIndex)).getDescripcion();
+                    case 5:
                         Transaccion t = ((Transaccion) getListModel().getElementAt(rowIndex));
                         if (t.getTransaccionEntrada() != null) {
                             return "ENTRADA (Total: " + t.getTransaccionEntrada().getValorTotal() + R.COIN_SUFFIX + ")";
@@ -110,6 +119,8 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
                     case 3:
                         return "Cantidad";
                     case 4:
+                        return java.util.ResourceBundle.getBundle("Strings").getString("label_descripcion");
+                    case 5:
                         return "Tipo";
                     default:
                         return null;
