@@ -33,6 +33,7 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
             ACTION_TERMINAR_EXPORTAR = "Terminar y exportar",
             ACTION_TERMINAR_VENTAS = "Terminar Ventas",
             ACTION_REABRIR_VENTA = "Reabrir Venta",
+            ACTION_REFRESCAR_VENTA = "Refrescar Venta",
             //Area
             ACTION_IMPRIMIR_RESUMEN_AREA = "Imprimir resumen area",
             //Dpte
@@ -46,8 +47,8 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
     public VentaResumenViewPresenter(VentaDetailController controller, OrdenController ordenController) {
         super(new VentaResumenViewModel());
         this.service = controller;
-
-         updateBeanData();
+        service.fetchNewDataFromServer(0);
+        updateBeanData();
         controller.initIPV(controller.getInstance());
     }
 
@@ -61,6 +62,14 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
             @Override
             public Optional doAction() {
                 onImprimirZClick();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_REFRESCAR_VENTA) {
+            @Override
+            public Optional doAction() {
+                service.fetchNewDataFromServer(0);
+                updateBeanData();
                 return Optional.empty();
             }
         });

@@ -161,6 +161,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return ret;
     }
 
+    @Override
     public void fetchNewDataFromServer(int turnoTrabajo) {
         turnoActivo = turnoTrabajo;
         getModel().getEntityManager().refresh(getModel().find(getInstance().getFecha()));
