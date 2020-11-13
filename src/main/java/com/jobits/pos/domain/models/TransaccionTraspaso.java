@@ -8,6 +8,7 @@ package com.jobits.pos.domain.models;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -39,7 +40,7 @@ public class TransaccionTraspaso implements Serializable {
     @ManyToOne(optional = false)
     private Almacen almacenDestino;
     @JoinColumn(name = "transaccionno_transaccion", referencedColumnName = "no_transaccion", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false,cascade = CascadeType.ALL)
     private Transaccion transaccion;
 
     public TransaccionTraspaso() {

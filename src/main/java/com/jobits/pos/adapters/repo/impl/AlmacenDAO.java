@@ -5,9 +5,11 @@
  */
 package com.jobits.pos.adapters.repo.impl;
 
-
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.InsumoAlmacen;
+import com.jobits.pos.domain.models.Operacion;
+import com.jobits.pos.domain.models.TransaccionTraspaso;
+
 /**
  * FirstDream
  *
@@ -35,6 +37,10 @@ public class AlmacenDAO extends AbstractRepository<Almacen> {
         return InsumoAlmacenDAO.getInstance().getInsumoAlmacen(codInsumo, codAlmacen);
     }
 
-   
-    
+    @Override
+    public void remove(Almacen entity) {
+        getEntityManager().refresh(entity);
+        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

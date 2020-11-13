@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Operacion.findByNoRecibo", query = "SELECT o FROM Operacion o WHERE o.noRecibo = :noRecibo")})
 public class Operacion implements Serializable {
 
-    @OneToMany(mappedBy = "operacionnoOperacion")
+    @OneToMany(mappedBy = "operacionnoOperacion", cascade = CascadeType.REMOVE)
     private List<Transaccion> transaccionList;
 
     private static final long serialVersionUID = 1L;
