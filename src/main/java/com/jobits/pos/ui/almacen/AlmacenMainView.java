@@ -24,6 +24,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  *
@@ -42,7 +44,7 @@ public class AlmacenMainView extends AbstractViewPanel {
             public void componentShown(ComponentEvent e) {
                 jTextFieldBusqueda.requestFocus();
             }
-        
+
         });
     }
 
@@ -67,6 +69,7 @@ public class AlmacenMainView extends AbstractViewPanel {
         jButtonNuevoAlmacen = MaterialComponentsFactory.Buttons.getOutlinedButton();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
         jButtonEliminarAlmacen = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanelTabla = new javax.swing.JPanel();
         jPanelOpciones = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabelValorTotal = new javax.swing.JLabel();
@@ -75,7 +78,6 @@ public class AlmacenMainView extends AbstractViewPanel {
         jButtonTransacciones = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonDarReporte = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonResumen = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelTabla = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout(5, 5));
@@ -113,7 +115,6 @@ public class AlmacenMainView extends AbstractViewPanel {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jComboBoxAlmacenList.setMaximumRowCount(20);
-        jComboBoxAlmacenList.setOpaque(false);
         jComboBoxAlmacenList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxAlmacenListActionPerformed(evt);
@@ -140,6 +141,11 @@ public class AlmacenMainView extends AbstractViewPanel {
         jPanelSeleccion.add(jPanelPeriodo, java.awt.BorderLayout.WEST);
 
         add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
+
+        jPanelTabla.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelTabla.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelTabla.setLayout(new java.awt.BorderLayout());
+        add(jPanelTabla, java.awt.BorderLayout.CENTER);
 
         jPanelOpciones.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Valor total en almacen", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 18))); // NOI18N
         jPanelOpciones.setMinimumSize(new java.awt.Dimension(690, 90));
@@ -197,11 +203,6 @@ public class AlmacenMainView extends AbstractViewPanel {
         jPanelOpciones.add(jPanel3, java.awt.BorderLayout.CENTER);
 
         add(jPanelOpciones, java.awt.BorderLayout.SOUTH);
-
-        jPanelTabla.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelTabla.setForeground(new java.awt.Color(255, 255, 255));
-        jPanelTabla.setLayout(new java.awt.BorderLayout());
-        add(jPanelTabla, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonNuevaFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaFacturaActionPerformed
@@ -289,6 +290,8 @@ public class AlmacenMainView extends AbstractViewPanel {
             }
         });
 
+        Bindings.bind(jPanelTabla, "visible", getPresenter().getModel(PROP_PANEL_VISIBLE));
+        Bindings.bind(jPanelOpciones, "visible", getPresenter().getModel(PROP_PANEL_VISIBLE));
         Bindings.bind(jTextFieldBusqueda, getPresenter().getModel(PROP_SEARCH_KEYWORD));
     }
 

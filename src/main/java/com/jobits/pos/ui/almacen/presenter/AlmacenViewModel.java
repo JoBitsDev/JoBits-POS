@@ -41,6 +41,30 @@ public class AlmacenViewModel extends AbstractListViewModel<Almacen> {
 
     public static final String PROP_SEARCH_KEYWORD = "search_keyWord";
 
+    private boolean panel_visible = true;
+
+    public static final String PROP_PANEL_VISIBLE = "panel_visible";
+
+    /**
+     * Get the value of panel_visible
+     *
+     * @return the value of panel_visible
+     */
+    public boolean isPanel_visible() {
+        return panel_visible;
+    }
+
+    /**
+     * Set the value of panel_visible
+     *
+     * @param panel_visible new value of panel_visible
+     */
+    public void setPanel_visible(boolean panel_visible) {
+        boolean oldPanel_visible = this.panel_visible;
+        this.panel_visible = panel_visible;
+        firePropertyChange(PROP_PANEL_VISIBLE, oldPanel_visible, panel_visible);
+    }
+
     /**
      * Get the value of search_keyWord
      *

@@ -173,7 +173,10 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             if (getBean().getElemento_seleccionado() != null) {
                 detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
                 refreshView();
+                getBean().setPanel_visible(true);
             }
+        } else {
+            getBean().setPanel_visible(false);
         }
     }
 
