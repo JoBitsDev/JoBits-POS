@@ -578,6 +578,9 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     private void actualizarIPVs() {
         for (Insumo i : InsumoDAO.getInstance().findAll()) {
             for (ProductoInsumo pv : i.getProductoInsumoList()) {
+                if (pv.getProductoVenta().getCocinacodCocina() == null) {
+                    continue;
+                }
                 IpvPK pk = new IpvPK(i.getCodInsumo(), pv.getProductoVenta().getCocinacodCocina().getCodCocina());
                 Ipv ipv = IpvDAO.getInstance().find(pk);
                 if (ipv == null) {
