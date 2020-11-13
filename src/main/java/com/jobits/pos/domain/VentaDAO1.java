@@ -185,11 +185,12 @@ public class VentaDAO1 {
         //llenando l array
         float totalReal = 0;
         for (Orden o : aux) {
-            if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
-                joinListsProductovOrdenByCocina(ret, new ArrayList<>(o.getProductovOrdenList()), null);
-                totalReal += o.getOrdenvalorMonetario();
+            if (o.getMesacodMesa() != null) {
+                if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
+                    joinListsProductovOrdenByCocina(ret, new ArrayList<>(o.getProductovOrdenList()), null);
+                    totalReal += o.getOrdenvalorMonetario();
+                }
             }
-
         }//nˆ3
 
         //convirtiendo a rowData
@@ -220,9 +221,11 @@ public class VentaDAO1 {
         //llenando l array
         float totalReal = 0;
         for (Orden o : aux) {
-            if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
-                joinListsProductovOrdenByCocina(ret, new ArrayList<>(o.getProductovOrdenList()), null);
-                totalReal += o.getOrdenvalorMonetario();
+            if (o.getMesacodMesa() != null) {
+                if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
+                    joinListsProductovOrdenByCocina(ret, new ArrayList<>(o.getProductovOrdenList()), null);
+                    totalReal += o.getOrdenvalorMonetario();
+                }
             }
 
         }//nˆ3
@@ -420,8 +423,10 @@ public class VentaDAO1 {
 
         //llenando l array
         for (Orden o : aux) {
-            if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
-                joinListsProductovOrdenByCocina(ret, new ArrayList<>(o.getProductovOrdenList()), null);
+            if (o.getMesacodMesa() != null) {
+                if (o.getMesacodMesa().getAreacodArea().equals(a) && !o.getDeLaCasa()) {
+                    joinListsProductovOrdenByCocina(ret, new ArrayList<>(o.getProductovOrdenList()), null);
+                }
             }
 
         }//nˆ3
@@ -601,17 +606,19 @@ public class VentaDAO1 {
         List<String> existingMesasName = new ArrayList<>();
 
         ordenes.forEach((o) -> {
-            String codMesa = o.getMesacodMesa().getCodMesa();
+            if (o.getMesacodMesa() != null) {
+                String codMesa = o.getMesacodMesa().getCodMesa();
 
-            if (o.getHoraTerminada() == null) {
-                retOrd.add(o);
-                existingMesasName.add(codMesa);
-
-            } else {
-                if (!existingMesasName.contains(codMesa)) {
-                    //if(o.getHoraTerminada().)
+                if (o.getHoraTerminada() == null) {
                     retOrd.add(o);
                     existingMesasName.add(codMesa);
+
+                } else {
+                    if (!existingMesasName.contains(codMesa)) {
+                        //if(o.getHoraTerminada().)
+                        retOrd.add(o);
+                        existingMesasName.add(codMesa);
+                    }
                 }
             }
         });

@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -43,7 +44,7 @@ public class Seccion implements Serializable {
     private String nombreSeccion;
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(mappedBy = "seccionnombreSeccion")
+    @OneToMany(mappedBy = "seccionnombreSeccion",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ProductoVenta> productoVentaList;
     @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")

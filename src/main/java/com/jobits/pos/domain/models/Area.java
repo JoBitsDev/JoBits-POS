@@ -59,7 +59,7 @@ public class Area implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @JsonIgnore
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany()
     @JoinTable(name = "carta_area", joinColumns = {
         @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")}, inverseJoinColumns = {
         @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")})

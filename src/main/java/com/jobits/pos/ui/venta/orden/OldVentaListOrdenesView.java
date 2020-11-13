@@ -35,7 +35,7 @@ public class OldVentaListOrdenesView extends AbstractViewPanel {
 
     public OldVentaListOrdenesView(VentaOrdenListViewPresenter ventaPresenter) {
         super(ventaPresenter);
-      //  addOrdenView(new OrdenDetailFragmentView(ventaPresenter.getOrdenPresenter()));
+        //  addOrdenView(new OrdenDetailFragmentView(ventaPresenter.getOrdenPresenter()));
     }
 
     /**
@@ -164,7 +164,10 @@ public class OldVentaListOrdenesView extends AbstractViewPanel {
                     case 0:
                         return getRow(rowIndex).getCodOrden();
                     case 1:
-                        return getRow(rowIndex).getMesacodMesa().getCodMesa();
+                        if (getRow(rowIndex).getMesacodMesa() != null) {
+                            return getRow(rowIndex).getMesacodMesa().getCodMesa();
+                        }
+                        return "-";
                     case 2:
                         return getRow(rowIndex).getOrdenvalorMonetario() + R.COIN_SUFFIX;
                     case 3:

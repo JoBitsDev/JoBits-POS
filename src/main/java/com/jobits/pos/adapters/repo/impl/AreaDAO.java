@@ -12,6 +12,7 @@ import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.domain.models.Mesa;
+import com.jobits.pos.domain.models.Orden;
 
 /**
  * FirstDream
@@ -35,49 +36,16 @@ public class AreaDAO extends AbstractRepository<Area> {
             return INSTANCE;
         }
     }
-//
-//    @Override
-//    public void edit(Area area) {
-//        EntityManager em = null;
-//        try {
-//            em = getEntityManager();
-//            Area persistentArea = em.find(Area.class, area.getCodArea());
-//            List<Mesa> mesaListOld = persistentArea.getMesaList();
-//            List<Mesa> mesaListNew = area.getMesaList();
-//            List<Mesa> attachedMesaListNew = new ArrayList<>();
-//            for (Mesa mesaListNewMesaToAttach : mesaListNew) {
-//                mesaListNewMesaToAttach = em.getReference(mesaListNewMesaToAttach.getClass(), mesaListNewMesaToAttach.getCodMesa());
-//                attachedMesaListNew.add(mesaListNewMesaToAttach);
-//            }
-//            mesaListNew = attachedMesaListNew;
-//            area.setMesaList(mesaListNew);
-//            area = em.merge(area);
-//            for (Mesa mesaListOldMesa : mesaListOld) {
-//                if (!mesaListNew.contains(mesaListOldMesa)) {
-//                    mesaListOldMesa.setAreacodArea(null);
-//                    mesaListOldMesa = em.merge(mesaListOldMesa);
-//                }
-//            }
-//            for (Mesa mesaListNewMesa : mesaListNew) {
-//                if (!mesaListOld.contains(mesaListNewMesa)) {
-//                    Area oldAreacodAreaOfMesaListNewMesa = mesaListNewMesa.getAreacodArea();
-//                    mesaListNewMesa.setAreacodArea(area);
-//                    mesaListNewMesa = em.merge(mesaListNewMesa);
-//                    if (oldAreacodAreaOfMesaListNewMesa != null && !oldAreacodAreaOfMesaListNewMesa.equals(area)) {
-//                        oldAreacodAreaOfMesaListNewMesa.getMesaList().remove(mesaListNewMesa);
-//                        oldAreacodAreaOfMesaListNewMesa = em.merge(oldAreacodAreaOfMesaListNewMesa);
-//                    }
-//                }
-//            }
-//        } catch (Exception ex) {
-//            String msg = ex.getLocalizedMessage();
-//            if (msg == null || msg.length() == 0) {
-//                String id = area.getCodArea();
-//            
-//            }
-//            throw ex;
-//        } 
-//        
-//    }
 
+    @Override
+    public void remove(Area entity) {
+        for (Mesa m : entity.getMesaList()) {
+            for (Orden o : m.getOrdenList()) {
+                o.setMesacodMesa(null);
+            }
+        }
+        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 }

@@ -24,7 +24,7 @@ import javax.print.SimpleDoc;
  * @author Javier
  */
 public abstract class AbstractTicketFormatter implements PrintFormatter {
-    
+
     protected static final Logger LOGGER = Logger.getLogger(Impresion.class.getSimpleName());
 
     private boolean monedaCUC;
@@ -139,8 +139,10 @@ public abstract class AbstractTicketFormatter implements PrintFormatter {
         t.newLine();
         t.setText(this.ORDEN + o.getCodOrden());
         t.newLine();
-        t.setText(this.MESA + o.getMesacodMesa().getCodMesa());
-        t.newLine();
+        if (o.getMesacodMesa() != null) {
+            t.setText(this.MESA + o.getMesacodMesa());
+            t.newLine();
+        }
         t.alignLeft();
         t.setText(this.CAMARERO);
         t.newLine();

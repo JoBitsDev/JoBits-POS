@@ -154,7 +154,9 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setLista_general_productos_venta(getController().getPDVList(getCodOrden()));
         getBean().setLista_producto_orden(instance.getProductovOrdenList());
         //getBean().setLista_secciones(getController().getListaSecciones());
-        getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
+        if (instance.getMesacodMesa() != null) {
+            getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
+        }
         getBean().setPorciento_servicio(instance.getPorciento());
         getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
         getBean().setUsuario(instance.getPersonalusuario().getUsuario());

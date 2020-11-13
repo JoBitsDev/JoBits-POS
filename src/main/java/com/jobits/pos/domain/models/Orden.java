@@ -72,11 +72,11 @@ public class Orden implements Serializable, Comparable<Orden> {
     @JoinColumn(name = "clienteid_cliente", referencedColumnName = "id_cliente")
     @ManyToOne
     private Cliente clienteIdCliente;
-    @JoinColumn(name = "mesacod_mesa", referencedColumnName = "cod_mesa")
-    @ManyToOne
+    @JoinColumn(name = "mesacod_mesa", referencedColumnName = "cod_mesa", nullable = true)
+    @ManyToOne(optional = true)
     private Mesa mesacodMesa;
-    @JoinColumn(name = "personalusuario", referencedColumnName = "usuario")
-    @ManyToOne(optional = false)
+    @JoinColumn(name = "personalusuario", referencedColumnName = "usuario", nullable = true)
+    @ManyToOne(optional = true)
     private Personal personalusuario;
     @JoinColumn(name = "ventafecha", referencedColumnName = "fecha")
     @ManyToOne(optional = false)

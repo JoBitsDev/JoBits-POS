@@ -73,12 +73,6 @@ public class OrdenFormatter extends AbstractTicketFormatter {
 
         addFinal(t);
 
-//        for (int i = 0; i < cantidadCopias; i++) {
-//            RAM.add(new Impresion.CopiaTicket(orden.getMesacodMesa().getAreacodArea().getNombre(), t.finalCommandSet().getBytes()));
-//        }
-//        feedPrinter(t.finalCommandSet().getBytes(), orden.getMesacodMesa().getAreacodArea().getNombre(), Impresion.TipoImpresion.ORDEN);
-//
-//        cleanAndPrintRAM();
         return createDoc(t.finalCommandSet().getBytes());
     }
 

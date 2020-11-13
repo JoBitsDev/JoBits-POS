@@ -23,7 +23,9 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
     public CellRenderOrden(Orden o, boolean selected) {
         initComponents();
         this.o = o;
+        if (o.getMesacodMesa() != null) {
         jLabelMesa.setText(o.getMesacodMesa().getCodMesa());
+        }
         jLabelPrecio.setText(utils.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
         jLabelOrden.setText(o.getCodOrden());
         jLabelGratis.setVisible(o.getDeLaCasa());

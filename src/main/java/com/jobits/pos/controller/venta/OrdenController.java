@@ -205,7 +205,11 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 }
                 if (enviar) {
                     if (showConfirmDialog(getView(), "Desea imprimir un ticket de la orden")) {
-                        i.print(new OrdenFormatter(o, false), o.getMesacodMesa().getAreacodArea().getNombre());
+                        String puntoElab = null;
+                        if (o.getMesacodMesa() != null) {
+                            puntoElab = o.getMesacodMesa().getAreacodArea().getNombre();
+                        }
+                        i.print(new OrdenFormatter(o, false), puntoElab);
                         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIRTICKET, Level.FINE, o);
                     }
                     o.setHoraTerminada(new Date());
@@ -351,7 +355,10 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     @Override
     public List<Seccion> getListaSecciones() {
-        List<Seccion> secciones = SeccionDAO.getInstance().findVisibleSecciones(getInstance().getMesacodMesa());
+        List<Seccion> secciones = SeccionDAO.getInstance().findAll();
+        if (getInstance().getMesacodMesa() != null) {
+            SeccionDAO.getInstance().findVisibleSecciones(getInstance().getMesacodMesa());
+        }
         Collections.sort(secciones, new Comparator<Seccion>() {
             @Override
             public int compare(Seccion o1, Seccion o2) {
@@ -363,7 +370,11 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     @Override
     public List<ProductoVenta> getPDVList(String codOrden) {
-        return ProductoVentaDAO.getInstance().findAllVisible(getInstance(codOrden).getMesacodMesa());
+        if (getInstance(codOrden).getMesacodMesa() == null) {
+            return ProductoVentaDAO.getInstance().findAllVisible();
+        } else {
+            return ProductoVentaDAO.getInstance().findAllVisible(getInstance(codOrden).getMesacodMesa());
+        }
     }
 
     @Override
@@ -398,7 +409,11 @@ public class OrdenController extends AbstractFragmentController<Orden>
     public void imprimirPreTicket(String codOrden) {
         Impresion i = new Impresion();
         Orden o = getInstance(codOrden);
-        i.print(new OrdenFormatter(o, true), o.getMesacodMesa().getAreacodArea().getNombre());
+        String codArea = null;
+        if (o.getMesacodMesa() != null) {
+            codArea = o.getMesacodMesa().getAreacodArea().getNombre();
+        }
+        i.print(new OrdenFormatter(o, true), codArea);
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIR_TICKET_PARCIAL, Level.FINE, o);
     }
 
@@ -451,6 +466,12 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
         for (Area a : areas) {
             for (Mesa m : a.getMesaList()) {
+                if (o.getMesacodMesa() == null) {
+                    throw new IllegalArgumentException("El Producto " + producto
+                            + " no se puede agregar a la orden " + o
+                            + "debido a que este no esta no esta asignada a ninguna mesa");
+
+                }
                 if (m.getCodMesa().equals(o.getMesacodMesa().getCodMesa())) {
                     return;
                 }

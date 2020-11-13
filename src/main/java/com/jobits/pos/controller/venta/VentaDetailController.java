@@ -404,9 +404,11 @@ public class VentaDetailController extends AbstractDetailController<Venta>
             if (vent.getCambioTurno1() == null) {
                 if (R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea() != null) {
                     for (int i = 0; i < vent.getOrdenList().size();) {
-                        if (!vent.getOrdenList().get(i).getMesacodMesa().getAreacodArea().
-                                equals(R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea())) {
-                            vent.getOrdenList().remove(i);
+                        if (vent.getOrdenList().get(i).getMesacodMesa() != null) {
+                            if (!vent.getOrdenList().get(i).getMesacodMesa().getAreacodArea().
+                                    equals(R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea())) {
+                                vent.getOrdenList().remove(i);
+                            }
                         } else {
                             i++;
                         }
@@ -460,10 +462,12 @@ public class VentaDetailController extends AbstractDetailController<Venta>
             vent.setOrdenList(ord.subList(cod_orden_low_pos, cod_orden_high_pos));
             if (R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea() != null) {
                 for (int i = 0; i < vent.getOrdenList().size();) {
-                    if (!vent.getOrdenList().get(i).getMesacodMesa().getAreacodArea().
-                            equals(R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea())
-                            && R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea() != null) {
-                        vent.getOrdenList().remove(i);
+                    if (vent.getOrdenList().get(i).getMesacodMesa() != null) {
+                        if (!vent.getOrdenList().get(i).getMesacodMesa().getAreacodArea().
+                                equals(R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea())
+                                && R.loggedUser.getPuestoTrabajonombrePuesto().getAreacodArea() != null) {
+                            vent.getOrdenList().remove(i);
+                        }
                     } else {
                         i++;
                     }
