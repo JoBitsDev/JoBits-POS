@@ -117,8 +117,15 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 cantidadAgregada = founded.getCantidad();
                 float cantidad = 0;
                 String value = new NumberPad(null).showView();
-                if (!value.equals("")) {
+                if (!value.equals("") && !value.equals(".")) {
                     cantidad = Float.parseFloat(value);
+                    if (cantidad == 0f) {
+                        JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
+                        return;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
+                    return;
                 }
                 if (!esDespachable(selected, o, cantidad)) {
                     throw new ValidatingException(getView(), "No hay existencias de" + selected + " para elaborar");
@@ -133,11 +140,18 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 founded.setNombreProductoVendido(selected.toString());
                 founded.setOrden(o);
                 founded.setProductoVenta(selected);
+                
                 String value = new NumberPad(null).showView();//TODO: Porque null???
-                if (!value.equals("")) {
-                    founded.setCantidad(Float.parseFloat(value));
+                if (!value.equals("") && !value.equals(".")) {
+                    float cantidad = Float.parseFloat(value);
+                    if (cantidad == 0f) {
+                        JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
+                        return;
+                    }
+                    founded.setCantidad(cantidad);
                 } else {
-                    founded.setCantidad(0);
+                    JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
+                    return;
                 }
                 founded.setEnviadosacocina((float) 0);
                 founded.setNumeroComensal(0);
