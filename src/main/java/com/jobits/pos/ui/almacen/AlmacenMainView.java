@@ -19,6 +19,8 @@ import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,6 +37,13 @@ public class AlmacenMainView extends AbstractViewPanel {
 
     public AlmacenMainView(AbstractViewPresenter presenter) {
         super(presenter);
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                jTextFieldBusqueda.requestFocus();
+            }
+        
+        });
     }
 
     /**
