@@ -170,6 +170,11 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jList2.setFocusable(false);
         jList2.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
         jList2.setVisibleRowCount(-1);
+        jList2.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList2ValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(jList2);
 
         jPanel1.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -184,6 +189,13 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     }//GEN-LAST:event_jTextFieldSearchFocusGained
     private void jTextFieldSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSearchFocusLost
     }//GEN-LAST:event_jTextFieldSearchFocusLost
+
+    private void jList2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList2ValueChanged
+        jList2.clearSelection();
+        jList2.revalidate();
+        jList2.repaint();
+    }//GEN-LAST:event_jList2ValueChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelBuscarIcon;
     private javax.swing.JList<ProductoVenta> jList2;
