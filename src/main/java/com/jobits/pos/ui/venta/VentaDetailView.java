@@ -123,7 +123,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelRefresh = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabelFecha = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonRefresh = new javax.swing.JButton();
 
         jPanelResumenDetallado.setLayout(new java.awt.BorderLayout());
         jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
@@ -422,9 +422,9 @@ public class VentaDetailView extends AbstractViewPanel {
         jLabelFecha.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha"));
         jPanel1.add(jLabelFecha);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
-        jButton1.setPreferredSize(new java.awt.Dimension(40, 40));
-        jPanel1.add(jButton1);
+        jButtonRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/refrescar_indigo.png"))); // NOI18N
+        jButtonRefresh.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel1.add(jButtonRefresh);
 
         jPanelRefresh.add(jPanel1);
 
@@ -461,13 +461,13 @@ public class VentaDetailView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCambiarTurno;
     private javax.swing.JButton jButtonImpPagoVentas;
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirResumenArea;
     private javax.swing.JButton jButtonImprimirResumenPto;
     private javax.swing.JButton jButtonReabrirVentas;
+    private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonTerminar;
     private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
     private javax.swing.JLabel jLabelFecha;
@@ -561,6 +561,8 @@ public class VentaDetailView extends AbstractViewPanel {
                         getPresenter().getModel(PROP_RESUMEN_PTO_SELECCIONADO)));
         jButtonImprimirResumenPto.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_PTO));
 
+        jButtonRefresh.addActionListener(getPresenter().getOperation(ACTION_REFRESCAR_VENTA));
+        
         Bindings.bind(jButtonCambiarTurno, "enabled", getPresenter().getModel(PROP_CAMBIAR_TURNO_ENABLED));
         updateGraficasResumenGeneralVentas();
         

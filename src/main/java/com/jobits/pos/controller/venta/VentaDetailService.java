@@ -25,22 +25,24 @@ public interface VentaDetailService {
 
     public List<Orden> getOrdenesActivas();
 
+    public void fetchNewDataFromServer(int turnoTrabajo);
+
     public void printZ();
 
     public void printGastosCasa();
-    
+
     public boolean terminarVentas();
-    
+
     public boolean terminarYExportar(File file);
-    
+
     public void reabrirVentas();
-    
+
     public void printCocinaResumen(String codCocina);
-    
+
     public void printAreaResumen(Area a);
 
     public void printPersonalResumenRow(Personal personal);
-    
+
     public void printPagoPorVentaPersonal(Personal user);
 
     public List<ResumenVentaAreaTablaModel> getResumenPorAreaVenta();
@@ -48,29 +50,25 @@ public interface VentaDetailService {
     public List<ResumenVentaPtoElabTablaModel> getResumenPorPtoVenta();
 
     public List<ResumenVentaUsuarioTablaModel> getResumenPorUsuarioVenta();
-    
+
     public float getTotalPropina();
-    
+
     public boolean canReabrirVenta();
-    
+
     public String getTotalAutorizos();
-    
+
     public String getTotalGastadoInsumos();
-    
+
     public String getTotalGastos();
-    
+
     public String getTotalPagoTrabajadores();
-    
+
     public String getTotalVendidoNeto();
-    
+
     public String getTotalVendido();
-    
+
     public boolean canCambiarTurno();
-    
+
     public Venta getInstance();
-    
-    
-    
-    
-    
+
 }

@@ -34,6 +34,7 @@ import com.jobits.pos.adapters.repo.impl.TransaccionEntradaDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionMermaDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionSalidaDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionTraspasoDAO;
+import com.jobits.pos.recursos.R;
 
 /**
  * FirstDream
@@ -189,6 +190,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         if (o != null) {
             t.setOperacionnoOperacion(o);
         }
+        t.setDescripcion(R.loggedUser.getUsuario());
         t.setCantidad(cantidad);
         t.setInsumocodInsumo(insumo);
         t.setFecha(fecha);
