@@ -23,6 +23,7 @@ import com.jobits.pos.adapters.repo.impl.TransaccionDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionEntradaDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.ComprobanteTransaccionFormatter;
+import java.util.ArrayList;
 
 /**
  * FirstDream
@@ -32,11 +33,11 @@ import com.jobits.pos.servicios.impresion.formatter.ComprobanteTransaccionFormat
  */
 public class TransaccionesListController extends OldAbstractListController<Transaccion> {
 
-    Almacen a;
+    Almacen almacen;
 
     public TransaccionesListController(/*OldAbstractView parent, */Almacen a) {
         super(TransaccionDAO.getInstance());
-        this.a = a;
+        this.almacen = a;
         TransaccionDAO.getInstance().addPropertyChangeListener(this);
         TransaccionEntradaDAO.getInstance().addPropertyChangeListener(this);
         // constructView(parent);
@@ -44,7 +45,7 @@ public class TransaccionesListController extends OldAbstractListController<Trans
 
     @Override
     public AbstractDetailController<Transaccion> getDetailControllerForNew() {
-        return new TransaccionDetailController(getView(), a);
+        return new TransaccionDetailController(getView(), almacen);
     }
 
     @Override
@@ -66,7 +67,7 @@ public class TransaccionesListController extends OldAbstractListController<Trans
     public void destroy(Transaccion selected) {
         super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
         //getModel().getEntityManager().refresh(selected.getAlmacencodAlmacen());
- //       getView().updateView();
+        //       getView().updateView();
         //     selected.getAlmacen().getTransaccionList().remove(selected);
 //        getModel().startTransaction();
 //        getModel().getEntityManager().merge(selected);
@@ -78,6 +79,21 @@ public class TransaccionesListController extends OldAbstractListController<Trans
             Impresion i = new Impresion();
             i.print(new ComprobanteTransaccionFormatter(selectedsObjects), null);
         }
+    }
+
+    @Override
+    public List<Transaccion> getItems() {
+        List<Transaccion> ret = new ArrayList<>();
+        for (Transaccion x : getModel().findAll()) {
+            if (x.getOperacionnoOperacion() != null) {
+                if (x.getOperacionnoOperacion().getAlmacen() != null) {
+                    if (x.getOperacionnoOperacion().getAlmacen().equals(almacen)) {
+                        ret.add(x);
+                    }
+                }
+            }
+        }
+        return ret;
     }
 
 }

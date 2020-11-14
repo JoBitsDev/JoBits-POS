@@ -360,6 +360,7 @@ public class AlmacenMainView extends AbstractViewPanel {
         builder.tableModel(tableModel);
 
         tableInsumos = builder.build();
+        tableInsumos.getjButtonAgregarProd().setText("Registrar");
         jPanelTabla.add(tableInsumos, BorderLayout.CENTER);
     }
 
