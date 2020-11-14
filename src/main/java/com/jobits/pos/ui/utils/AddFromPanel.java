@@ -18,6 +18,7 @@ import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.Action;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -106,6 +107,11 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
     public JPanel getjPanelOpcionesContainer() {
         return jPanelOpcionesContainer;
     }
+
+    public JButton getjButtonAgregarProd() {
+        return jButtonAgregarProd;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
