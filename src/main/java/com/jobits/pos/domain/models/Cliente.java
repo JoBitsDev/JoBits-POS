@@ -204,7 +204,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jobits.pos.domain.models.Cliente[ idCliente=" + idCliente + " ]";
+        return nombreCliente;
     }
 
 }
