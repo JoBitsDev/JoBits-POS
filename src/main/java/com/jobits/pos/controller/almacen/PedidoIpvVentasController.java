@@ -25,15 +25,27 @@ import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
  * @author Jorge
  *
  */
-public class PedidoIpvVentasController extends AbstractDialogController<IpvVentaRegistro> {
+public class PedidoIpvVentasController extends AbstractDialogController<IpvVentaRegistro> implements PedidoIpvVentasService {
 
-    public PedidoIpvVentasController() {
+    private List<IpvVentaRegistro> ipvProductList;
+    private Cocina elaboracion;
+
+    public PedidoIpvVentasController(List<IpvVentaRegistro> ipvProductList, Cocina elaboracion) {
         super(IpvRegistroVentaDAO.getInstance());
+        this.ipvProductList = ipvProductList;
+        this.elaboracion = elaboracion;
+    }
+
+    public List<IpvVentaRegistro> getIpvProductList() {
+        return ipvProductList;
+    }
+
+    public Cocina getElaboracion() {
+        return elaboracion;
     }
 
     @Override
     public void constructView(Container parent) {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     public boolean realizarPedidoDeIpv(List<InsumoPedidoModel> insumosARebajar, List<ProdcutoVentaPedidoModel> pedido, Cocina puntoDestino, Almacen almacenOrigen) {
