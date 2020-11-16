@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui.almacen.ipv;
 
+import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Cocina;
@@ -35,14 +36,18 @@ public class PedidoIpvVentasView extends OldAbstractView {
     private List<IpvVentaRegistro> ipvProductList;
     private Cocina elaboracion;
 
-    public PedidoIpvVentasView(JFrame owner, List<IpvVentaRegistro> productosIpv, Cocina elaboracion) {
-        super(DialogType.INPUT_LARGE, new PedidoIpvVentasController(), owner, true);
-        this.elaboracion = elaboracion;
-        ipvProductList = productosIpv;
-        initComponents();
-        initVariables();
-        setVisible(true);
+    public PedidoIpvVentasView(DialogType DIALOG_TYPE, AbstractDialogController controller) {
+        super(DIALOG_TYPE, controller);
     }
+
+//    public PedidoIpvVentasView(JFrame owner, List<IpvVentaRegistro> productosIpv, Cocina elaboracion) {
+//        super(DialogType.INPUT_LARGE, new PedidoIpvVentasController(), owner, true);
+//        this.elaboracion = elaboracion;
+//        ipvProductList = productosIpv;
+//        initComponents();
+//        initVariables();
+//        setVisible(true);
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
