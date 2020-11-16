@@ -130,20 +130,20 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setOpaque(false);
 
-        jButtonimprimirIpv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonimprimirIpv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/imprimir_detallado_indigo.png"))); // NOI18N
         jButtonimprimirIpv.setMnemonic('i');
         jButtonimprimirIpv.setToolTipText("Imprimir");
         jButtonimprimirIpv.setBorderPainted(false);
         jPanel1.add(jButtonimprimirIpv);
 
-        jButtonDarEntradaIpv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/agregar_circular.png"))); // NOI18N
+        jButtonDarEntradaIpv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/entrada_detallado_indigo.png"))); // NOI18N
         jButtonDarEntradaIpv.setMnemonic('e');
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonDarEntradaIpv.setToolTipText(bundle.getString("label_dar_entada")); // NOI18N
         jButtonDarEntradaIpv.setBorderPainted(false);
         jPanel1.add(jButtonDarEntradaIpv);
 
-        jButtonAjustarConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/analitica.png"))); // NOI18N
+        jButtonAjustarConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/estadisticas_indigo.png"))); // NOI18N
         jButtonAjustarConsumo.setMnemonic('a');
         jButtonAjustarConsumo.setToolTipText(bundle.getString("label_ajustar_consumo")); // NOI18N
         jButtonAjustarConsumo.setBorderPainted(false);
@@ -208,19 +208,19 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
         jPanel6.setMinimumSize(new java.awt.Dimension(207, 58));
 
-        jButtonImprimirIpvVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonImprimirIpvVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/imprimir_detallado_indigo.png"))); // NOI18N
         jButtonImprimirIpvVenta.setMnemonic('i');
         jButtonImprimirIpvVenta.setToolTipText("Imprimir");
         jButtonImprimirIpvVenta.setBorderPainted(false);
         jPanel6.add(jButtonImprimirIpvVenta);
 
-        jButtonDarEntradaIpvVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/agregar_circular.png"))); // NOI18N
+        jButtonDarEntradaIpvVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/entrada_detallado_indigo.png"))); // NOI18N
         jButtonDarEntradaIpvVenta.setMnemonic('e');
         jButtonDarEntradaIpvVenta.setToolTipText(bundle.getString("label_dar_entada")); // NOI18N
         jButtonDarEntradaIpvVenta.setBorderPainted(false);
         jPanel6.add(jButtonDarEntradaIpvVenta);
 
-        jButtonPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pedido.png"))); // NOI18N
+        jButtonPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/flechas_indigo.png"))); // NOI18N
         jButtonPedido.setMnemonic('a');
         jButtonPedido.setToolTipText(bundle.getString("label_pedido")); // NOI18N
         jButtonPedido.setBorderPainted(false);

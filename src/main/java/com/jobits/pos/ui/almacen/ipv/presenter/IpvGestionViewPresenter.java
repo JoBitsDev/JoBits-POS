@@ -8,10 +8,18 @@ package com.jobits.pos.ui.almacen.ipv.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.almacen.IPVService;
+import com.jobits.pos.controller.almacen.PedidoIpvVentasController;
+import com.jobits.pos.controller.insumo.InsumoDetailController;
+import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.IpvRegistro;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.PedidoIpvVentasView;
+import com.jobits.pos.ui.insumo.InsumoDetailView;
+import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
@@ -44,6 +52,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         super(new IpvGestionViewModel());
         this.service = controller;
         getBean().setLista_punto_elaboracion(new ArrayListModel<>(controller.getCocinaList()));
+        getBean().setPunto_elaboracion_seleccionado(getBean().getLista_punto_elaboracion().get(0));
         getBean().addPropertyChangeListener(IpvGestionViewModel.PROP_PUNTO_ELABORACION_SELECCIONADO,
                 (evt) -> {
                     onCocinaStateChange();
@@ -172,13 +181,13 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onCocinaStateChange() {
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
-                if (getBean().getFecha_ipv_seleccionada() != null) {
-                    onFechaCambiadaIpv();
-                }
-                if (getBean().getFecha_ipv_ventas_seleccionada() != null) {
-                    onFechaCambiadaIpvVenta();
-                }
-            
+            if (getBean().getFecha_ipv_seleccionada() != null) {
+                onFechaCambiadaIpv();
+            }
+            if (getBean().getFecha_ipv_ventas_seleccionada() != null) {
+                onFechaCambiadaIpvVenta();
+            }
+
         });
 
     }
@@ -233,9 +242,17 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private void onNuevoPedido() {//TODO: mojon aqui
-        new PedidoIpvVentasView(
-                Application.getInstance().getMainWindow(),
-                getBean().getLista_ipv_venta_registro(), getBean().getPunto_elaboracion_seleccionado());
+
+        Cocina cocina = getBean().getPunto_elaboracion_seleccionado();
+        NavigationService.getInstance().navigateTo(IPVPedidoVentasView.VIEW_NAME,
+                new IPVPedidoVentasViewPresenter(
+                        new PedidoIpvVentasController(
+                                getBean().getLista_ipv_venta_registro(), cocina)),
+                DisplayType.POPUP);
+
+//        new PedidoIpvVentasView(
+//                Application.getInstance().getMainWindow(),
+//                getBean().getLista_ipv_venta_registro(), getBean().getPunto_elaboracion_seleccionado());
         onCocinaStateChange();
 
     }

@@ -175,7 +175,7 @@
                 <Component class="javax.swing.JButton" name="jButtonimprimirIpv">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
+                      <Image iconType="3" name="/restManager/resources/icons pack/imprimir_detallado_indigo.png"/>
                     </Property>
                     <Property name="mnemonic" type="int" value="105"/>
                     <Property name="toolTipText" type="java.lang.String" value="Imprimir"/>
@@ -188,7 +188,7 @@
                 <Component class="javax.swing.JButton" name="jButtonDarEntradaIpv">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/restManager/resources/images/agregar_circular.png"/>
+                      <Image iconType="3" name="/restManager/resources/icons pack/entrada_detallado_indigo.png"/>
                     </Property>
                     <Property name="mnemonic" type="int" value="101"/>
                     <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -203,7 +203,7 @@
                 <Component class="javax.swing.JButton" name="jButtonAjustarConsumo">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/restManager/resources/images/analitica.png"/>
+                      <Image iconType="3" name="/restManager/resources/icons pack/estadisticas_indigo.png"/>
                     </Property>
                     <Property name="mnemonic" type="int" value="97"/>
                     <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -387,7 +387,7 @@
                     <Component class="javax.swing.JButton" name="jButtonImprimirIpvVenta">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
+                          <Image iconType="3" name="/restManager/resources/icons pack/imprimir_detallado_indigo.png"/>
                         </Property>
                         <Property name="mnemonic" type="int" value="105"/>
                         <Property name="toolTipText" type="java.lang.String" value="Imprimir"/>
@@ -400,7 +400,7 @@
                     <Component class="javax.swing.JButton" name="jButtonDarEntradaIpvVenta">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/restManager/resources/images/agregar_circular.png"/>
+                          <Image iconType="3" name="/restManager/resources/icons pack/entrada_detallado_indigo.png"/>
                         </Property>
                         <Property name="mnemonic" type="int" value="101"/>
                         <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
@@ -415,7 +415,7 @@
                     <Component class="javax.swing.JButton" name="jButtonPedido">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/restManager/resources/images/pedido.png"/>
+                          <Image iconType="3" name="/restManager/resources/icons pack/flechas_indigo.png"/>
                         </Property>
                         <Property name="mnemonic" type="int" value="97"/>
                         <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
