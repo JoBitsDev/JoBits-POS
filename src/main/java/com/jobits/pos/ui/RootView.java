@@ -140,12 +140,14 @@ public class RootView extends JPanel {
 
         }
 
+        views.clear();//TODO: Usar otra via para actulizar las vistas
         //primero ver si esta guardada la vista para mostrar
         if (!views.containsKey(viewNameToDisplay)) {
             //trAtamiento especial para el menu principal
             if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
                 viewNameToDisplay = DashBoardView.VIEW_NAME;//TODO: cuando se vuelva a la ventana de loggeo vaciar el usuario loggeado en la app
             } else {
+                views.clear();//TODO: Usar otra via para actulizar las vistas
                 addView(ViewFacade.getView(viewNameToDisplay, presenter));
             }
             //tratamiento si la vista es nuevala vista es nueva
@@ -192,5 +194,5 @@ public class RootView extends JPanel {
     public StatusBarView getStatusBar() {
         return statusBar;
     }
-    
+
 }
