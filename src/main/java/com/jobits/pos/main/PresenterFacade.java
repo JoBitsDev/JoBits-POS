@@ -9,6 +9,7 @@ import com.jobits.pos.adapters.repo.impl.MesaDAO;
 import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.IPVController;
+import com.jobits.pos.controller.almacen.PedidoIpvVentasController;
 import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
@@ -35,6 +36,8 @@ import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.IpvVentaRegistro;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
@@ -47,7 +50,9 @@ import com.jobits.pos.ui.almacen.OldAlmacenListView;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
+import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
+import com.jobits.pos.ui.almacen.ipv.presenter.IPVPedidoVentasViewPresenter;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.almacen.presenter.OldAlmacenListPresenter;
 import com.jobits.pos.ui.almacen.presenter.AlmacenViewPresenter;
@@ -188,6 +193,8 @@ public class PresenterFacade {
                 return new ClientesListViewPresenter(new ClientesListServiceImpl());
             case ClientesDetailView.VIEW_NAME:
                 return new ClientesDetailViewPresenter(new ClientesDetailServiceImpl());
+            case IPVPedidoVentasView.VIEW_NAME:
+                return new IPVPedidoVentasViewPresenter(new PedidoIpvVentasController(new ArrayList<>(), new Cocina()));
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;
