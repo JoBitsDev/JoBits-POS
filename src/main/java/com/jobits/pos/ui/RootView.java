@@ -127,27 +127,37 @@ public class RootView extends JPanel {
     public boolean showView(String viewNameToDisplay, AbstractViewPresenter presenter, DisplayType displayType) {//TODO trabjar en los popup
 
         //Caso especial para las ordenes
-        if (viewNameToDisplay.equals(OrdenDetailFragmentView.VIEW_NAME)) {
-            View v = views.get(currentDisplayedViewName);
-            if (v == null) {
-                throw new IllegalArgumentException("Bad call on OrdenView when there is none displayed view");
-            }
-            if (v instanceof VentaDetailView) {
-                // ((VentaDetailView) v).addOrdenView((OrdenDetailFragmentView) ViewFacade.getView(OrdenDetailFragmentView.VIEW_NAME, presenter));
-                return false;
-            }
-            throw new IllegalStateException("Bad call to ordenView when  " + v.getClass().getName() + " is active");
-
+//        if (viewNameToDisplay.equals(OrdenDetailFragmentView.VIEW_NAME)) {
+//            View v = views.get(currentDisplayedViewName);
+//            if (v == null) {
+//                throw new IllegalArgumentException("Bad call on OrdenView when there is none displayed view");
+//            }
+//            if (v instanceof VentaDetailView) {
+//                // ((VentaDetailView) v).addOrdenView((OrdenDetailFragmentView) ViewFacade.getView(OrdenDetailFragmentView.VIEW_NAME, presenter));
+//                return false;
+//            }
+//            throw new IllegalStateException("Bad call to ordenView when  " + v.getClass().getName() + " is active");
+//
+//        }
+//        View v = views.get(viewNameToDisplay);
+//        if (v instanceof VentaDetailView) {
+        if (viewNameToDisplay.equals(VentaDetailView.VIEW_NAME)) {
+            views.remove(viewNameToDisplay);
         }
+//        }
 
-        views.clear();//TODO: Usar otra via para actulizar las vistas
+//        views.clear();//TODO: Usar otra via para actulizar las vistas
         //primero ver si esta guardada la vista para mostrar
         if (!views.containsKey(viewNameToDisplay)) {
             //trAtamiento especial para el menu principal
             if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
                 viewNameToDisplay = DashBoardView.VIEW_NAME;//TODO: cuando se vuelva a la ventana de loggeo vaciar el usuario loggeado en la app
             } else {
-                views.clear();//TODO: Usar otra via para actulizar las vistas
+//                views.clear();//TODO: Usar otra via para actulizar las vistas
+//                v = views.get(viewNameToDisplay);
+                if (viewNameToDisplay.equals(VentaDetailView.VIEW_NAME)) {
+                    views.remove(viewNameToDisplay);
+                }
                 addView(ViewFacade.getView(viewNameToDisplay, presenter));
             }
             //tratamiento si la vista es nuevala vista es nueva
