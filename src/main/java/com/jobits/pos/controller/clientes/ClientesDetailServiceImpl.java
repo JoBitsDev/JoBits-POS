@@ -33,6 +33,11 @@ public class ClientesDetailServiceImpl extends AbstractDetailController<Cliente>
         if (ordenToAdd == null || elemento_seleccionado == null) {
             throw new IllegalArgumentException("Elemento nulo pasado por parametro");
         }
+        for (Orden orden : elemento_seleccionado.getOrdenList()) {
+            if (orden.getCodOrden().equals(ordenToAdd.getCodOrden())) {
+                elemento_seleccionado.getOrdenList().remove(orden);
+            }
+        }
         elemento_seleccionado.getOrdenList().add(ordenToAdd);
         ordenToAdd.setClienteIdCliente(elemento_seleccionado);
         ClienteDAO.getInstance().startTransaction();
