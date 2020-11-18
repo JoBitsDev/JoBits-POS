@@ -209,11 +209,11 @@ public class OrdenController extends AbstractFragmentController<Orden>
             Impresion i = new Impresion();
             setShowDialogs(true);
             if (showConfirmDialog(getView(), "Desea cerrar la orden " + o.getCodOrden())) {
-                setShowDialogs(false);
+ //               setShowDialogs(false);
                 boolean enviar = true;
                 for (ProductovOrden x : o.getProductovOrdenList()) {
                     if (x.getCantidad() != x.getEnviadosacocina()) {
-                        showErrorDialog(getView(), "Existen productos que no han sido enviados a elaborar. Envie a elaborar antes de cerrar la orden");
+                        showErrorDialog(null, "Existen productos que no han sido enviados a elaborar. Envie a elaborar antes de cerrar la orden");
                         return;
                     }
                 }
