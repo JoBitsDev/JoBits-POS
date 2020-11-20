@@ -35,11 +35,11 @@ public class CartaListController extends OldAbstractListController<Carta> implem
 
     @Override
     public void createInstance() {
-        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre del menú a crear",
-                "Nuevo Menú", JOptionPane.QUESTION_MESSAGE);
+        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la Carta a crear",
+                "Nueva Carta", JOptionPane.QUESTION_MESSAGE);
         Carta c = new Carta();
         c.setAreaList(new ArrayList<>());
-        c.setCodCarta(getModel().generateStringCode("Mnu-"));
+        c.setCodCarta(getModel().generateStringCode("Cta-"));
         c.setMonedaPrincipal(R.COIN_SUFFIX.trim());
         c.setNombreCarta(nombre);
         c.setSeccionList(new ArrayList<>());

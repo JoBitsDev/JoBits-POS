@@ -21,7 +21,7 @@ import com.jobits.pos.ui.menu.presenter.MenuSeccionViewPresenter;
  */
 public class MenuSeccionView extends AbstractViewPanel {
 
-    public static final String VIEW_NAME = "Menú";
+    public static final String VIEW_NAME = "Cartas";
 
     public MenuSeccionView(AbstractViewPresenter presenter) {
         super(presenter);

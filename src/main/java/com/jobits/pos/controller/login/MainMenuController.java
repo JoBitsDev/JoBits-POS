@@ -96,7 +96,7 @@ public class MainMenuController implements MainMenuService {
         MENU(1, "Productos"),
         INSUMO(3, "Insumos"),
         COCINA(3, "Puntos elaboración"),
-        SECCION(3, "Menú"),
+        SECCION(3, "Cartas"),
         SALON(3, "Areas de Venta"),
         //
         // Almacen

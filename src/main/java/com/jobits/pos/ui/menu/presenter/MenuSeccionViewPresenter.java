@@ -25,9 +25,9 @@ public class MenuSeccionViewPresenter extends AbstractViewPresenter<MenuSeccionV
 
     private MenuController controller;
 
-    public static final String ACTION_AGREGAR_MENU = "Nuevo Menú";
-    public static final String ACTION_EDITAR_MENU = "Editar Menú";
-    public static final String ACTION_ELIMINAR_MENU = "Eliminar Menú";
+    public static final String ACTION_AGREGAR_MENU = "Nueva Carta";
+    public static final String ACTION_EDITAR_MENU = "Editar Carta";
+    public static final String ACTION_ELIMINAR_MENU = "Eliminar Carta";
     public static final String ACTION_AGREGAR_SECCION = "Nueva Seccion";
     public static final String ACTION_EDITAR_SECCION = "Editar sección";
     public static final String ACTION_ELIMINAR_SECCION = "Eliminar Seccion";
@@ -48,7 +48,7 @@ public class MenuSeccionViewPresenter extends AbstractViewPresenter<MenuSeccionV
 
     private void onEliminarMenuClick() {
         if (getBean().getMenu_seleccionado() == null) {
-            Application.getInstance().getNotificationService().notify("Debe seleccionar un Menu", TipoNotificacion.ERROR);
+            Application.getInstance().getNotificationService().notify("Debe seleccionar una Carta", TipoNotificacion.ERROR);
             return;
         }
         controller.getCartaListController().destroy(getBean().getMenu_seleccionado());
@@ -59,7 +59,7 @@ public class MenuSeccionViewPresenter extends AbstractViewPresenter<MenuSeccionV
 
     private void onNuevaSeccionClick() {
         if (getBean().getMenu_seleccionado() == null) {
-            Application.getInstance().getNotificationService().notify("Debe seleccionar un menú", TipoNotificacion.ERROR);
+            Application.getInstance().getNotificationService().notify("Debe seleccionar una Carta", TipoNotificacion.ERROR);
             return;
         }
         controller.getCartaListController().createSeccion(getBean().getMenu_seleccionado());
