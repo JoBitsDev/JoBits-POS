@@ -107,6 +107,30 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_CLIENTE_SELECCIONADO = "cliente_seleccionado";
 
+    private boolean envio_cocina;
+
+    public static final String PROP_ENVIO_COCINA = "envio_cocina";
+
+    /**
+     * Get the value of envio_cocina
+     *
+     * @return the value of envio_cocina
+     */
+    public boolean isEnvio_cocina() {
+        return envio_cocina;
+    }
+
+    /**
+     * Set the value of envio_cocina
+     *
+     * @param envio_cocina new value of envio_cocina
+     */
+    public void setEnvio_cocina(boolean envio_cocina) {
+        boolean oldEnvio_cocina = this.envio_cocina;
+        this.envio_cocina = envio_cocina;
+        firePropertyChange(PROP_ENVIO_COCINA, oldEnvio_cocina, envio_cocina);
+    }
+
     /**
      * Get the value of cliente_seleccionado
      *

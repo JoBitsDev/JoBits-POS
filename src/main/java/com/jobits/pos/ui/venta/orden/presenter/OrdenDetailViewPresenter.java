@@ -12,6 +12,7 @@ import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.domain.models.Cliente;
+import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -172,6 +173,18 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             getBean().setCliente_seleccionado(instance.getClienteIdCliente());
         } else {
             getBean().setCliente_seleccionado(null);
+        }
+        if (getBean().getLista_producto_orden().isEmpty()) {
+            getBean().setEnvio_cocina(false);
+        } else {
+            boolean flag = false;
+            for (ProductovOrden x : getBean().getLista_producto_orden()) {
+                if (x.getCantidad() != x.getEnviadosacocina()) {
+                    flag = true;
+                    break;
+                }
+            }
+            getBean().setEnvio_cocina(flag);
         }
         return Optional.empty();
     }
