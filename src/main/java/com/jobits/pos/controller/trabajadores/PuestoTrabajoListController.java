@@ -9,6 +9,9 @@ import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.adapters.repo.impl.PuestoTrabajoDAO;
+import com.jobits.pos.domain.models.Insumo;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * FirstDream
@@ -22,7 +25,6 @@ public class PuestoTrabajoListController extends OldAbstractListController<Puest
     public PuestoTrabajoListController() {
         super(PuestoTrabajoDAO.getInstance());
     }
-
 
     /**
      *
@@ -41,6 +43,13 @@ public class PuestoTrabajoListController extends OldAbstractListController<Puest
     @Override
     public AbstractDetailController<PuestoTrabajo> getDetailControllerForEdit(PuestoTrabajo selected) {
         return new PuestoTrabajoDetailController();
+    }
+
+    @Override
+    public List<PuestoTrabajo> getItems() {
+        List<PuestoTrabajo> retSorted = super.getItems();
+        Collections.sort(retSorted);
+        return retSorted;
     }
 
 }

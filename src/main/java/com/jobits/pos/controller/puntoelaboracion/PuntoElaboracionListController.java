@@ -15,6 +15,9 @@ import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.adapters.repo.impl.CocinaDAO;
 import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
+import com.jobits.pos.domain.models.Insumo;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * FirstDream
@@ -95,6 +98,13 @@ public class PuntoElaboracionListController extends OldAbstractListController<Co
      */
     @Override
     public void constructView(java.awt.Container parent) {
+    }
+    
+    @Override
+    public List<Cocina> getItems() {
+        List<Cocina> retSorted = super.getItems();
+        Collections.sort(retSorted);
+        return retSorted;
     }
 
 }

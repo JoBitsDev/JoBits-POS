@@ -31,7 +31,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Cocina.findAll", query = "SELECT c FROM Cocina c"),
     @NamedQuery(name = "Cocina.findByCodCocina", query = "SELECT c FROM Cocina c WHERE c.codCocina = :codCocina"),
     @NamedQuery(name = "Cocina.findByNombreCocina", query = "SELECT c FROM Cocina c WHERE c.nombreCocina = :nombreCocina")})
-public class Cocina implements Serializable {
+public class Cocina implements Serializable, Comparable<Cocina> {
 
     @Column(name = "limitar_venta_insumo_agotado")
     private Boolean limitarVentaInsumoAgotado = false;
@@ -169,6 +169,11 @@ public class Cocina implements Serializable {
 
     public void setTransaccionSalidaList(List<TransaccionSalida> transaccionSalidaList) {
         this.transaccionSalidaList = transaccionSalidaList;
+    }
+
+    @Override
+    public int compareTo(Cocina o) {
+        return this.nombreCocina.compareTo(o.getNombreCocina());
     }
 
 }

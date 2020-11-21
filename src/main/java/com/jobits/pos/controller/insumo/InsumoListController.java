@@ -14,6 +14,8 @@ import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.adapters.repo.impl.InsumoDAO;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * FirstDream
@@ -21,7 +23,7 @@ import com.jobits.pos.adapters.repo.impl.InsumoDAO;
  * @author Jorge
  *
  */
-public class InsumoListController extends OldAbstractListController<Insumo> implements InsumoListService{
+public class InsumoListController extends OldAbstractListController<Insumo> implements InsumoListService {
 
     private final String PREFIX_FOR_ID = "In-";
 
@@ -29,33 +31,39 @@ public class InsumoListController extends OldAbstractListController<Insumo> impl
         super(InsumoDAO.getInstance());
     }
 
-
     /**
      *
      * @param parent the value of parent
      */
     @Override
     public void constructView(java.awt.Container parent) {
-  
+
     }
 
     @Override
     public void createInstance() {
         detailController = getDetailControllerForNew();
         items = null;
-      //  getView().updateView();//TODO:metodo forzado
+        //  getView().updateView();//TODO:metodo forzado
     }
 
     @Override
     public AbstractDetailController<Insumo> getDetailControllerForNew() {
         return new InsumoDetailController();
-     //   return new InsumoDetailController(getView());
+        //   return new InsumoDetailController(getView());
     }
 
     @Override
     public AbstractDetailController<Insumo> getDetailControllerForEdit(Insumo selected) {
         return new InsumoDetailController();
-       // return new InsumoDetailController(getSelected(), getView());
+        // return new InsumoDetailController(getSelected(), getView());
+    }
+
+    @Override
+    public List<Insumo> getItems() {
+        List<Insumo> retSorted = super.getItems();
+        Collections.sort(retSorted);
+        return retSorted;
     }
 
 }

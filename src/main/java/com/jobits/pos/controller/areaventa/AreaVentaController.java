@@ -15,6 +15,8 @@ import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.adapters.repo.impl.AreaDAO;
 import com.jobits.pos.adapters.repo.impl.MesaDAO;
+import com.jobits.pos.domain.models.Insumo;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,7 +47,9 @@ public class AreaVentaController extends OldAbstractListController<Area> impleme
 
     @Override
     public List<Area> getItems() {
-        return getModel().findAll();
+        List<Area> retSorted = getModel().findAll();
+        Collections.sort(retSorted);
+        return retSorted;
     }
 
     @Override

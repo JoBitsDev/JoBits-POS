@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jobits.pos.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -34,10 +33,11 @@ import com.jobits.pos.exceptions.DevelopingOperationException;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class ,property = "usuario",scope = Personal.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "usuario", scope = Personal.class)
 @Entity
 @Table(name = "personal")
 @NamedQueries({
@@ -46,7 +46,7 @@ import com.jobits.pos.exceptions.DevelopingOperationException;
     @NamedQuery(name = "Personal.findByContrasenna", query = "SELECT p FROM Personal p WHERE p.contrasenna = :contrasenna"),
     @NamedQuery(name = "Personal.findByOnline", query = "SELECT p FROM Personal p WHERE p.online = :online"),
     @NamedQuery(name = "Personal.findByFrecuencia", query = "SELECT p FROM Personal p WHERE p.frecuencia = :frecuencia"),})
-public class Personal implements Serializable {
+public class Personal implements Serializable, Comparable<Personal> {
 
     @Lob
     @Column(name = "foto")
@@ -179,9 +179,8 @@ public class Personal implements Serializable {
 
     @Override
     public String toString() {
-        return usuario ;
+        return usuario;
     }
-
 
     public List<AsistenciaPersonal> getAsistenciaPersonalList() {
         return asistenciaPersonalList;
@@ -190,7 +189,6 @@ public class Personal implements Serializable {
     public void setAsistenciaPersonalList(List<AsistenciaPersonal> asistenciaPersonalList) {
         this.asistenciaPersonalList = asistenciaPersonalList;
     }
-
 
     public Float getPagoPendiente() {
         return pagoPendiente;
@@ -206,6 +204,11 @@ public class Personal implements Serializable {
 
     public void setFoto(byte[] foto) {
         this.foto = foto;
+    }
+
+    @Override
+    public int compareTo(Personal o) {
+        return this.usuario.compareTo(o.getUsuario());
     }
 
 }

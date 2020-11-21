@@ -10,8 +10,10 @@ import com.jobits.pos.adapters.repo.impl.AreaDAO;
 import com.jobits.pos.adapters.repo.impl.CocinaDAO;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.Insumo;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javax.print.Doc;
 import javax.print.PrintException;
@@ -73,7 +75,7 @@ public class ImpresoraUseCase implements ImpresoraService {
         if (impresoras.isEmpty()) {
             impresora.setIdImpresora(0);
         } else {
-            impresora.setIdImpresora(impresoras.get(impresoras.size()-1).getIdImpresora() + 1);
+            impresora.setIdImpresora(impresoras.get(impresoras.size() - 1).getIdImpresora() + 1);
         }
         impresoras.add(impresora);
         guardarImpresorasAlmacenadas();
@@ -118,7 +120,9 @@ public class ImpresoraUseCase implements ImpresoraService {
 
     @Override
     public List<Impresora> findAll() {
-        return getImpresorasAlmacenadas();
+        List<Impresora> retSorted = getImpresorasAlmacenadas();
+        Collections.sort(retSorted);
+        return retSorted;
     }
 
     @Override

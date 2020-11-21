@@ -7,7 +7,10 @@ package com.jobits.pos.controller.clientes;
 
 import com.jobits.pos.adapters.repo.impl.ClienteDAO;
 import com.jobits.pos.domain.models.Cliente;
+import com.jobits.pos.domain.models.Insumo;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class ClientesListServiceImpl implements ClientesListService {
 
@@ -23,7 +26,9 @@ public class ClientesListServiceImpl implements ClientesListService {
 
     @Override
     public Collection<? extends Cliente> getListaClientes() {
-        return ClienteDAO.getInstance().findAll();
+        List<Cliente> retSorted = ClienteDAO.getInstance().findAll();
+        Collections.sort(retSorted);
+        return retSorted;
     }
 
 }

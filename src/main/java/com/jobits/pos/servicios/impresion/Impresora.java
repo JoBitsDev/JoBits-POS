@@ -15,7 +15,7 @@ import javax.print.PrintServiceLookup;
  *
  * @author ERIK QUESADA
  */
-public class Impresora {
+public class Impresora implements Comparable<Impresora> {
 
     private int idImpresora;
     private String nombreImpresoraVirtual;
@@ -125,6 +125,11 @@ public class Impresora {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(Impresora o) {
+        return this.nombreImpresoraVirtual.compareTo(o.getNombreImpresoraVirtual());
     }
 
 }

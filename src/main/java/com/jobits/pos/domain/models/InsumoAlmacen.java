@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jobits.pos.domain.models;
 
 import java.io.Serializable;
@@ -18,8 +17,9 @@ import javax.persistence.Table;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "insumo_almacen")
@@ -31,7 +31,7 @@ import javax.persistence.Table;
             + "WHERE i.insumoAlmacenPK.almacencodAlmacen = :almacencodAlmacen AND i.insumoAlmacenPK.insumocodInsumo = :insumo"),
     @NamedQuery(name = "InsumoAlmacen.findByCantidad", query = "SELECT i FROM InsumoAlmacen i WHERE i.cantidad = :cantidad"),
     @NamedQuery(name = "InsumoAlmacen.findByValorMonetario", query = "SELECT i FROM InsumoAlmacen i WHERE i.valorMonetario = :valorMonetario")})
-public class InsumoAlmacen implements Serializable {
+public class InsumoAlmacen implements Serializable, Comparable<InsumoAlmacen> {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -121,7 +121,12 @@ public class InsumoAlmacen implements Serializable {
 
     @Override
     public String toString() {
-       return getInsumo().toString();
+        return getInsumo().toString();
+    }
+
+    @Override
+    public int compareTo(InsumoAlmacen o) {
+        return this.getInsumo().getNombre().compareTo(o.getInsumo().getNombre());
     }
 
 }

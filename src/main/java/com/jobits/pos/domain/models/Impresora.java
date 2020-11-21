@@ -30,7 +30,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Impresora.findByIpImpresora", query = "SELECT i FROM Impresora i WHERE i.ipImpresora = :ipImpresora"),
     @NamedQuery(name = "Impresora.findByEstaactiva", query = "SELECT i FROM Impresora i WHERE i.estaactiva = :estaactiva"),
     @NamedQuery(name = "Impresora.findByNombreImpresora", query = "SELECT i FROM Impresora i WHERE i.nombreImpresora = :nombreImpresora")})
-public class Impresora implements Serializable {
+public class Impresora implements Serializable, Comparable<Impresora> {
 
     @JoinColumn(name = "areacod_area", referencedColumnName = "cod_area")
     @ManyToOne
@@ -135,6 +135,11 @@ public class Impresora implements Serializable {
 
     public void setAreacodArea(Area areacodArea) {
         this.areacodArea = areacodArea;
+    }
+
+    @Override
+    public int compareTo(Impresora o) {
+        return this.nombreImpresora.compareTo(o.getNombreImpresora());
     }
 
 }

@@ -26,6 +26,7 @@ import javax.validation.constraints.Size;
 
 /**
  * FirstDream
+ *
  * @author Jorge
  *
  */
@@ -41,7 +42,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Cliente.findByTipoCliente", query = "SELECT c FROM Cliente c WHERE c.tipoCliente = :tipoCliente"),
     @NamedQuery(name = "Cliente.findByFechanacCliente", query = "SELECT c FROM Cliente c WHERE c.fechanacCliente = :fechanacCliente"),
     @NamedQuery(name = "Cliente.findByObservacionesCliente", query = "SELECT c FROM Cliente c WHERE c.observacionesCliente = :observacionesCliente")})
-public class Cliente implements Serializable {
+public class Cliente implements Serializable, Comparable<Cliente> {
 
     private static final long serialVersionUID = 1L;
 
@@ -205,6 +206,11 @@ public class Cliente implements Serializable {
     @Override
     public String toString() {
         return nombreCliente;
+    }
+
+    @Override
+    public int compareTo(Cliente o) {
+        return this.nombreCliente.compareTo(o.getNombreCliente());
     }
 
 }

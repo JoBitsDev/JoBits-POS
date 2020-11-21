@@ -41,7 +41,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "PuestoTrabajo.findBySalarioPorcientoDeArea", query = "SELECT p FROM PuestoTrabajo p WHERE p.salarioPorcientoDeArea = :salarioPorcientoDeArea"),
     @NamedQuery(name = "PuestoTrabajo.findByAPartirDe", query = "SELECT p FROM PuestoTrabajo p WHERE p.aPartirDe = :aPartirDe"),
     @NamedQuery(name = "PuestoTrabajo.findByIdPuesto", query = "SELECT p FROM PuestoTrabajo p WHERE p.idPuesto = :idPuesto")})
-public class PuestoTrabajo implements Serializable {
+public class PuestoTrabajo implements Serializable, Comparable<PuestoTrabajo> {
 
     @Column(name = "a_partir_de")
     private Float aPartirDe;
@@ -75,7 +75,7 @@ public class PuestoTrabajo implements Serializable {
     @Column(name = "salario_porciento_venta_total")
     private Float salarioPorcientoVentaTotal = (float) 0.0;
     @Column(name = "salario_porciento_de_area")
-    private Float salarioPorcientoDeArea = (float)0.0;
+    private Float salarioPorcientoDeArea = (float) 0.0;
     @Column(name = "id_puesto")
     private String idPuesto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "puestoTrabajonombrePuesto")
@@ -223,6 +223,11 @@ public class PuestoTrabajo implements Serializable {
 
     public void setAPartirDe(Float aPartirDe) {
         this.aPartirDe = aPartirDe;
+    }
+
+    @Override
+    public int compareTo(PuestoTrabajo o) {
+        return this.nombrePuesto.compareTo(o.getNombrePuesto());
     }
 
 }

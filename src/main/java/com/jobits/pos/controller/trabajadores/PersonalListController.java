@@ -17,6 +17,7 @@ import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.servicios.impresion.Impresion;
+import java.util.Collections;
 
 /**
  * FirstDream
@@ -24,7 +25,7 @@ import com.jobits.pos.servicios.impresion.Impresion;
  * @author Jorge
  *
  */
-public class PersonalListController extends OldAbstractListController<Personal> implements PersonalListService{
+public class PersonalListController extends OldAbstractListController<Personal> implements PersonalListService {
 
     public PersonalListController() {
         super(PersonalDAO.getInstance());
@@ -60,6 +61,7 @@ public class PersonalListController extends OldAbstractListController<Personal> 
             getModel().edit(pe);
             getModel().commitTransaction();
         }
+        Collections.sort(p);
         return p;
     }
 

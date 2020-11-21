@@ -40,7 +40,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Insumo.findByCostoPorUnidad", query = "SELECT i FROM Insumo i WHERE i.costoPorUnidad = :costoPorUnidad"),
     @NamedQuery(name = "Insumo.findByStockEstimation", query = "SELECT i FROM Insumo i WHERE i.stockEstimation = :stockEstimation"),
     @NamedQuery(name = "Insumo.findByCantidadCreada", query = "SELECT i FROM Insumo i WHERE i.cantidadCreada = :cantidadCreada")})
-public class Insumo implements Serializable {
+public class Insumo implements Serializable, Comparable<Insumo> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -222,6 +222,11 @@ public class Insumo implements Serializable {
 
     public void setTransaccionTransformacionList(List<TransaccionTransformacion> transaccionTransformacionList) {
         this.transaccionTransformacionList = transaccionTransformacionList;
+    }
+
+    @Override
+    public int compareTo(Insumo o) {
+        return this.nombre.compareTo(o.getNombre());
     }
 
 }

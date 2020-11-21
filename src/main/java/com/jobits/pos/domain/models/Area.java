@@ -29,7 +29,7 @@ import javax.persistence.Table;
  * @author Jorge
  *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "codArea",scope = Area.class )
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "codArea", scope = Area.class)
 @Entity
 @Table(name = "area")
 @NamedQueries({
@@ -37,7 +37,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Area.findByCodArea", query = "SELECT a FROM Area a WHERE a.codArea = :codArea"),
     @NamedQuery(name = "Area.findByCapacidad", query = "SELECT a FROM Area a WHERE a.capacidad = :capacidad"),
     @NamedQuery(name = "Area.findByNombre", query = "SELECT a FROM Area a WHERE a.nombre = :nombre")})
-public class Area implements Serializable {
+public class Area implements Serializable, Comparable<Area> {
 
     @JsonIgnore
     @OneToMany(mappedBy = "areacodArea")
@@ -164,4 +164,8 @@ public class Area implements Serializable {
         this.impresoraList = impresoraList;
     }
 
+    @Override
+    public int compareTo(Area o) {
+        return this.nombre.compareTo(o.getNombre());
+    }
 }

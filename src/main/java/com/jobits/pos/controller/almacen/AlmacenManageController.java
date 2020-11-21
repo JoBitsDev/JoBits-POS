@@ -47,6 +47,7 @@ import com.jobits.pos.servicios.impresion.formatter.StockBalanceFormatter;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
 import java.awt.Frame;
+import java.util.Collections;
 
 /**
  * FirstDream
@@ -116,6 +117,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
     }
 
     public List<InsumoAlmacen> getInsumoAlmacenList(Almacen a) {
+        List<InsumoAlmacen> retSorted = a.getInsumoAlmacenList();
+        Collections.sort(retSorted);
         return a.getInsumoAlmacenList();
     }
 

@@ -43,7 +43,7 @@ import com.jobits.pos.recursos.R;
     @NamedQuery(name = "ProductoVenta.findByGasto", query = "SELECT p FROM ProductoVenta p WHERE p.gasto = :gasto"),
     @NamedQuery(name = "ProductoVenta.findByDescripcion", query = "SELECT p FROM ProductoVenta p WHERE p.descripcion = :descripcion"),
     @NamedQuery(name = "ProductoVenta.findByVisible", query = "SELECT p FROM ProductoVenta p WHERE p.visible = :visible")})
-public class ProductoVenta implements Serializable {
+public class ProductoVenta implements Serializable,Comparable<ProductoVenta>{
 
 
     private static final long serialVersionUID = 1L;
@@ -209,7 +209,7 @@ public class ProductoVenta implements Serializable {
     public String toString() {
         return nombre + " (" + precioVenta + R.COIN_SUFFIX + " )";
     }
-
+    
     public Float getPagoPorVenta() {
         return pagoPorVenta;
     }
@@ -226,4 +226,8 @@ public class ProductoVenta implements Serializable {
         this.ipvVentaRegistroList = ipvVentaRegistroList;
     }
 
+    @Override
+    public int compareTo(ProductoVenta o) {
+        return this.nombre.compareTo(o.getNombre());
+    }
 }
