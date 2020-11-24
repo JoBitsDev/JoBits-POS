@@ -209,7 +209,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAddCategoriaClick() {
-        new SeccionListController().getDetailControllerForNew();
+        new SeccionListController().createInstance();
         getBean().setLista_categorias(new ArrayListModel<>(service.getSeccionList()));
 
     }
