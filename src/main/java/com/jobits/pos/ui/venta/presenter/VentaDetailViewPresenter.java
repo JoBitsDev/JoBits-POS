@@ -26,7 +26,7 @@ import java.util.Optional;
  * @author Jorge
  *
  */
-public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResumenViewModel> {
+public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailViewModel> {
 
     public static final String ACTION_IMPRIMIR_Z = "Imprimir z",
             ACTION_IMPRIMIR_AUTORIZOS = "Imprimir Autorizo",
@@ -44,8 +44,8 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
 
     private VentaDetailService service;
 
-    public VentaResumenViewPresenter(VentaDetailController controller, OrdenController ordenController) {
-        super(new VentaResumenViewModel());
+    public VentaDetailViewPresenter(VentaDetailController controller, OrdenController ordenController) {
+        super(new VentaDetailViewModel());
         this.service = controller;
         service.fetchNewDataFromServer(0);
         updateBeanData();

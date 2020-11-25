@@ -39,9 +39,9 @@ import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaAreaTablaModel;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
-import static com.jobits.pos.ui.venta.presenter.VentaResumenViewModel.*;
-import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
-import static com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter.*;
+import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
+import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
+import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.displayers.Card;
 import java.awt.Dimension;
@@ -584,7 +584,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
-        VentaDetailService ventaService = ((VentaResumenViewPresenter)getPresenter()).getService();
+        VentaDetailService ventaService = ((VentaDetailViewPresenter)getPresenter()).getService();
         VentaOrdenListViewPresenter ventaOrdenPresenter = new VentaOrdenListViewPresenter(ventaService, new OrdenController());
         jPanelVentas.add(new VentaListOrdenesView(ventaOrdenPresenter));
 

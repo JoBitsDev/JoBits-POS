@@ -94,8 +94,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     protected void onEditarClick() {//TODO vista
         if (getBean().getDia_seleccionado() != null) {
             VentaDetailController ventaController = new VentaDetailController(getBean().getDia_seleccionado());
-            VentaResumenViewPresenter presenter
-                    = new VentaResumenViewPresenter(ventaController,
+            VentaDetailViewPresenter presenter
+                    = new VentaDetailViewPresenter(ventaController,
                             new OrdenController());
             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         }
@@ -118,7 +118,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         }
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
             VentaDetailController ventaController = service.createDetailResumenView(getBean().getResumen_desde(), getBean().getResumen_hasta());//TODO devolver valor e invocar al navigator
-            VentaResumenViewPresenter presenter = new VentaResumenViewPresenter(ventaController, null);
+            VentaDetailViewPresenter presenter = new VentaDetailViewPresenter(ventaController, null);
             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         });
     }

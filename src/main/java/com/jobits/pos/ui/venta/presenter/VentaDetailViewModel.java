@@ -20,7 +20,7 @@ import java.util.List;
  * @author Jorge
  *
  */
-public class VentaResumenViewModel extends AbstractViewModel {
+public class VentaDetailViewModel extends AbstractViewModel {
 
     //
     // DashBoard
@@ -124,7 +124,7 @@ public class VentaResumenViewModel extends AbstractViewModel {
     }
 
     public static void setVentaInstance(Venta ventaInstance) {
-        VentaResumenViewModel.ventaInstance = ventaInstance;
+        VentaDetailViewModel.ventaInstance = ventaInstance;
     }
 
     /**
