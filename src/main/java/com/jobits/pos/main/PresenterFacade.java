@@ -62,6 +62,8 @@ import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewPresenter;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
+import com.jobits.pos.ui.autorizo.AutorizoView;
+import com.jobits.pos.ui.autorizo.presenter.AutorizoViewPresenter;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
@@ -183,6 +185,8 @@ public class PresenterFacade {
                 return new ReportarBugViewPresenter(new ReportarBugController());
             case OrdenLogView.VIEW_NAME:
                 return new OrdenLogViewPresenter(null);
+            case AutorizoView.VIEW_NAME:
+                return new AutorizoViewPresenter(new LogInController(), null);
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(new ImageManagerController(null));
             case TransaccionListView.VIEW_NAME:

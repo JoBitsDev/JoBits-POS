@@ -99,7 +99,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     //TODO:quitar los popups de aqui
     @Override
-    public void addProduct(String codOrden, ProductoVenta selected) {//TODO: la cantidad se pasa por parametro
+    public boolean addProduct(String codOrden, ProductoVenta selected) {//TODO: la cantidad se pasa por parametro
         if (autorize(codOrden)) {
             Orden o = getInstance(codOrden);
             checkIfProductIsValid(selected, o);
@@ -121,11 +121,11 @@ public class OrdenController extends AbstractFragmentController<Orden>
                     cantidad = Float.parseFloat(value);
                     if (cantidad == 0f) {
                         JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
-                        return;
+                        return false;
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
-                    return;
+                    return false;
                 }
                 if (!esDespachable(selected, o, cantidad)) {
                     throw new ValidatingException(getView(), "No hay existencias de" + selected + " para elaborar");
@@ -140,18 +140,18 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 founded.setNombreProductoVendido(selected.toString());
                 founded.setOrden(o);
                 founded.setProductoVenta(selected);
-                
+
                 String value = new NumberPad(null).showView();//TODO: Porque null???
                 if (!value.equals("") && !value.equals(".")) {
                     float cantidad = Float.parseFloat(value);
                     if (cantidad == 0f) {
                         JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
-                        return;
+                        return false;
                     }
                     founded.setCantidad(cantidad);
                 } else {
                     JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
-                    return;
+                    return false;
                 }
                 founded.setEnviadosacocina((float) 0);
                 founded.setNumeroComensal(0);
@@ -174,8 +174,9 @@ public class OrdenController extends AbstractFragmentController<Orden>
             cantidadAgregada = founded.getCantidad() - cantidadAgregada;
             fireWarningOnAdding(founded, cantidadAgregada);
             update(getInstance(codOrden));
+            return true;
         }
-
+        return false;
     }
 
 //    private void addProduct(String codOrden, ProductovOrden selected, float cantidad) {
@@ -209,7 +210,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
             Impresion i = new Impresion();
             setShowDialogs(true);
             if (showConfirmDialog(getView(), "Desea cerrar la orden " + o.getCodOrden())) {
- //               setShowDialogs(false);
+                //               setShowDialogs(false);
                 boolean enviar = true;
                 for (ProductovOrden x : o.getProductovOrdenList()) {
                     if (x.getCantidad() != x.getEnviadosacocina()) {
@@ -607,28 +608,26 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     private void removeProduct(String codOrden, ProductovOrden objectAtSelectedRow) {
         Orden o = getInstance(codOrden);
-        if (autorize(codOrden)) {
-            int index = o.getProductovOrdenList().indexOf(objectAtSelectedRow);
-            float cantidadBorrada = o.getProductovOrdenList().get(index).getCantidad();
-            o.getProductovOrdenList().get(index).setCantidad(0);
-            //Impresion i = new Impresion();
-            printCancelationTicket(o);
-            if (o.getDeLaCasa()) {
-                ipvController.devolverPorLaCasa(objectAtSelectedRow, cantidadBorrada);
-            } else {
-                ipvController.devolver(objectAtSelectedRow, cantidadBorrada);
-            }
-            getModel().startTransaction();
-            for (NotificacionEnvioCocina x : o.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
-                getModel().getEntityManager().remove(x);
-            }
-            getModel().commitTransaction();
-            ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
-            o.getProductovOrdenList().remove(objectAtSelectedRow);
-
-            fireWarningOnDeleting(codOrden, objectAtSelectedRow, cantidadBorrada);
-            update(o);
+        int index = o.getProductovOrdenList().indexOf(objectAtSelectedRow);
+        float cantidadBorrada = o.getProductovOrdenList().get(index).getCantidad();
+        o.getProductovOrdenList().get(index).setCantidad(0);
+        //Impresion i = new Impresion();
+        printCancelationTicket(o);
+        if (o.getDeLaCasa()) {
+            ipvController.devolverPorLaCasa(objectAtSelectedRow, cantidadBorrada);
+        } else {
+            ipvController.devolver(objectAtSelectedRow, cantidadBorrada);
         }
+        getModel().startTransaction();
+        for (NotificacionEnvioCocina x : o.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
+            getModel().getEntityManager().remove(x);
+        }
+        getModel().commitTransaction();
+        ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
+        o.getProductovOrdenList().remove(objectAtSelectedRow);
+
+        fireWarningOnDeleting(codOrden, objectAtSelectedRow, cantidadBorrada);
+        update(o);
     }
 
 }

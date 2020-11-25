@@ -10,9 +10,13 @@ import java.util.Arrays;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.recursos.DBConnector;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
+import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.autorizo.AutorizoView;
+import com.jobits.pos.ui.autorizo.presenter.AutorizoViewPresenter;
 
 /**
  * FirstDream
@@ -72,8 +76,10 @@ public class LogInController implements LogInService {
     //Metodos para la ventana de autorizacion
     //
     private void constructLoginPanel(Container Parent, String title) {
-        //  setView(new AutenticacionFragmentView(Parent, this, true, title));
+        NavigationService.getInstance().navigateTo(AutorizoView.VIEW_NAME,
+                new AutorizoViewPresenter(this, title), DisplayType.POPUP);
 
+//          setView(new AutenticacionFragmentView(Parent, this, true, title));
     }
 
     public boolean constructoAuthorizationViewForConfirm(Container parent) {
@@ -102,8 +108,8 @@ public class LogInController implements LogInService {
         if (R.loggedUser.getUsuario().equals(usuario)) {
             return true;
         }
-        constructLoginPanel(parent, "Usuario Requerido (" + usuario + ")");
         this.usuarioRequerido = usuario;
+        constructLoginPanel(parent, "Usuario Requerido (" + usuario + ")");
         //getView().setVisible(true); //TODO Cordinator
         return AUTORIZADO;
     }
@@ -127,6 +133,7 @@ public class LogInController implements LogInService {
                         AUTORIZADO = p.getPuestoTrabajonombrePuesto().getNivelAcceso() >= nivelMinimo;
                     }
                     if (!usuarioRequerido.isEmpty()) {
+                        System.out.println(usuarioRequerido);
                         AUTORIZADO = p.getUsuario().equals(usuarioRequerido);
                     }
                     // return "Autenticación correcta";
