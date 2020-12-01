@@ -55,7 +55,7 @@ import com.jobits.pos.ui.utils.utils;
  * @author Jorge
  *
  */
-public class IPVController extends AbstractDialogController<Ipv> implements IPVService{
+public class IPVController extends AbstractDialogController<Ipv> implements IPVService {
 
     //
     // Constructores
@@ -111,7 +111,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     }
 
     public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha) {
-        
+
         List<IpvRegistro> lista = IpvRegistroDAO.getInstance().getIpvRegistroList(cocina, fecha);
         VentaDetailController controller = new VentaDetailController(fecha);
         for (IpvRegistro i : lista) {
@@ -125,8 +125,12 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
         List<IpvVentaRegistro> list = IpvRegistroVentaDAO.getInstance().getIpvVentaRegistroList(fecha);
         List<IpvVentaRegistro> ret = new ArrayList<>();
         for (IpvVentaRegistro x : list) {
-            if (x.getProductoVenta().getCocinacodCocina().equals(cocina)) {
-                ret.add(x);
+            if (x.getProductoVenta() != null) {
+                if (x.getProductoVenta().getCocinacodCocina() != null) {
+                    if (x.getProductoVenta().getCocinacodCocina().equals(cocina)) {
+                        ret.add(x);
+                    }
+                }
             }
         }
         Collections.sort(ret, (IpvVentaRegistro o1, IpvVentaRegistro o2) -> o1.getProductoVenta().getNombre().compareToIgnoreCase(o2.getProductoVenta().getNombre()));
@@ -527,8 +531,8 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
         }
         if (instance.getDisponible() == null) {
             instance.setDisponible((float) 0);
-        }else{
-            instance.setDisponible(instance.getInicio()+ instance.getEntrada());
+        } else {
+            instance.setDisponible(instance.getInicio() + instance.getEntrada());
         }
         if (instance.getConsumo() == null) {
             instance.setConsumo((float) 0);
@@ -538,12 +542,12 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
         }
         if (instance.getFinalCalculado() == null) {
             instance.setFinalCalculado((float) 0);
-        }else{
-            instance.setFinalCalculado(instance.getDisponible()-instance.getConsumo());
+        } else {
+            instance.setFinalCalculado(instance.getDisponible() - instance.getConsumo());
         }
         if (instance.getFinalAjustado() == null) {
             instance.setFinalAjustado((float) 0);
-        }else{
+        } else {
             instance.setFinalAjustado(instance.getDisponible() - instance.getConsumoReal());
         }
         IpvRegistroDAO.getInstance().startTransaction();

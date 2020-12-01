@@ -288,20 +288,20 @@ public class IpvGestionView extends AbstractViewPanel {
     public void wireUp() {
         Bindings.bind(jToggleButtonIpv, getPresenter().getModel(PROP_CHECK_OCULTAR_PRODUCTOS));
         Bindings.bind(jToggleButtonIpvVenta, getPresenter().getModel(PROP_CHECK_OCULTAR_PRODUCTOS_IPV_VENTA));
-        Bindings.bind(jComboBoxPtoElabSelec,new SelectionInList<Cocina>(
-                getPresenter().getModel(PROP_LISTA_PUNTO_ELABORACION), 
+        Bindings.bind(jComboBoxPtoElabSelec, new SelectionInList<Cocina>(
+                getPresenter().getModel(PROP_LISTA_PUNTO_ELABORACION),
                 getPresenter().getModel(PROP_PUNTO_ELABORACION_SELECCIONADO)),
                 "Punto Elaboración");
-        Bindings.bind(jDateChooserIpv,"date", getPresenter().getModel(PROP_FECHA_SELECCIONADA));
-        Bindings.bind(jDateChooserIpvVentas,"date", getPresenter().getModel(PROP_FECHA_IPV_VENTAS_SELECCIONADA));
-        
-        Bindings.bind(jTableRegistro,new SelectionInList(
-                getPresenter().getModel(PROP_LISTA_IPV_REGISTRO), 
+        Bindings.bind(jDateChooserIpv, "date", getPresenter().getModel(PROP_FECHA_SELECCIONADA));
+        Bindings.bind(jDateChooserIpvVentas, "date", getPresenter().getModel(PROP_FECHA_IPV_VENTAS_SELECCIONADA));
+
+        Bindings.bind(jTableRegistro, new SelectionInList(
+                getPresenter().getModel(PROP_LISTA_IPV_REGISTRO),
                 getPresenter().getModel(PROP_IPV_REGISTRO_SELECICONADO)));
-        Bindings.bind(jTableIPV,new SelectionInList(
-                getPresenter().getModel(PROP_LISTA_IPV_VENTA_REGISTRO), 
+        Bindings.bind(jTableIPV, new SelectionInList(
+                getPresenter().getModel(PROP_LISTA_IPV_VENTA_REGISTRO),
                 getPresenter().getModel(PROP_IPV_VENTA_REGISTRO_SELECCIONADO)));
-        
+
         jButtonAjustarConsumo.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_AJUSTAR_IPV));
         jButtonDarEntradaIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_DAR_ENTRADA_IPV_REGISTROS));
         jButtonDarEntradaIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_DAR_ENTRADA_IPV_VENTA));
@@ -329,6 +329,7 @@ public class IpvGestionView extends AbstractViewPanel {
             public int getColumnCount() {
                 return 9;
             }
+
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 //TODO: calcular el total de la tabla y mostrarlo al final
@@ -513,7 +514,7 @@ public class IpvGestionView extends AbstractViewPanel {
         }
 
     }
- 
+
     private void onImprimirClick() {
         String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
         int selection = JOptionPane.showOptionDialog(this,
@@ -529,7 +530,7 @@ public class IpvGestionView extends AbstractViewPanel {
 //                        ? ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getItems()
 //                        : registroList;
 
-             //   Impresion.getDefaultInstance().printResumenIPVDePuntoElaboracion(registros);
+                //   Impresion.getDefaultInstance().printResumenIPVDePuntoElaboracion(registros);
                 break;//impresion ticket
             default:
                 break;//cancelado
