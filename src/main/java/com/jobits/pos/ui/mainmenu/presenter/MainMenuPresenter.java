@@ -16,7 +16,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.venta.VentaDetailView;
-import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
+import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import java.text.ParseException;
 import java.util.Optional;
 
@@ -52,13 +52,13 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
         }
     }
 
-
     private AbstractViewAction onComenzarVentaClick(String actionName) {
         return new LicencedViewAction(actionName) {
             @Override
             public Optional doAction() {
                 Optional<String> ret = Optional.empty();
                 VentaDetailController control = null;
+                refreshState();
                 if (nivelDeAccesoAutenticado >= R.NivelAcceso.ECONOMICO.getNivel()) {
                     ret = Application.getInstance().getNotificationService().
                             showDialog("Introduzca el dia para abrir las ventas en el formato dd/mm/aa",
@@ -76,7 +76,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
 
                 }
                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                        new VentaResumenViewPresenter(control, new OrdenController()));
+                        new VentaDetailViewPresenter(control, new OrdenController()));
                 return Optional.empty();
             }
         };
@@ -86,6 +86,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
         return new LicencedViewAction(actionName) {
             @Override
             public Optional doAction() {
+                refreshState();
                 if (nivelDeAccesoAutenticado >= nivelDeAcceso) {
                     NavigationService.getInstance().navigateTo(actionName);//TODO: pifia
                 } else {
