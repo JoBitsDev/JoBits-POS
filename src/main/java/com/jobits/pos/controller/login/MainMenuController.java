@@ -113,6 +113,7 @@ public class MainMenuController implements MainMenuService {
         PRESUPUESTO(4),
         COMENZAR_VENTAS(0, "Comenzar Turno"),
         CLIENTES(3, "Clientes"),
+        RESUMEN(3, "Resumen"),
         //
         //TRABAJADORES
         //
