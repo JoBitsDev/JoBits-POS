@@ -441,6 +441,7 @@ public class VentaCalendarView extends AbstractViewPanel {
         };
         jTableCalendar.setModel(model);
         jTableCalendar.setDefaultRenderer(Venta.class, new VentaCellRender());
+        jPanelResumen.setVisible(false);
     }
 
     @Override
