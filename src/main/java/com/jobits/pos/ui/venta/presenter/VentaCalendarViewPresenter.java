@@ -11,6 +11,7 @@ import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaListService;
+import com.jobits.pos.controller.venta.VentaResumenController;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.domain.models.Venta;
@@ -25,6 +26,7 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.VentaDetailView;
+import com.jobits.pos.ui.venta.VentaResumenView;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -110,16 +112,16 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     }
 
     private void onResumenDetalladoClick() {
-        if (getBean().getResumen_desde() == null || getBean().getResumen_hasta() == null) {
-            throw new NoSelectedException();
-        }
-        if (getBean().getResumen_hasta().compareTo(getBean().getResumen_hasta()) < 0) {
-            throw new ValidatingException();
-        }
+//        if (getBean().getResumen_desde() == null || getBean().getResumen_hasta() == null) {
+//            throw new NoSelectedException();
+//        }
+//        if (getBean().getResumen_hasta().compareTo(getBean().getResumen_hasta()) < 0) {
+//            throw new ValidatingException();
+//        }
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
-            VentaDetailController ventaController = service.createDetailResumenView(getBean().getResumen_desde(), getBean().getResumen_hasta());//TODO devolver valor e invocar al navigator
-            VentaDetailViewPresenter presenter = new VentaDetailViewPresenter(ventaController, null);
-            Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
+//            VentaDetailController ventaController = service.createDetailResumenView(getBean().getResumen_desde(), getBean().getResumen_hasta());//TODO devolver valor e invocar al navigator
+            VentaResumenViewPresenter presenter = new VentaResumenViewPresenter(new VentaResumenController());
+            Application.getInstance().getNavigator().navigateTo(VentaResumenView.VIEW_NAME, presenter);
         });
     }
 

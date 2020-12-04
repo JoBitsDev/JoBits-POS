@@ -35,6 +35,8 @@ import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaListController;
+import com.jobits.pos.controller.venta.VentaResumenController;
+import com.jobits.pos.controller.venta.VentaResumenService;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
@@ -106,11 +108,13 @@ import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoListViewPresenter;
 import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
+import com.jobits.pos.ui.venta.VentaResumenView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.presenter.OrdenLogViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
+import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaStatisticsViewPresenter;
 import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
@@ -170,7 +174,7 @@ public class PresenterFacade {
             case IpvGestionView.VIEW_NAME:
                 return new IpvGestionViewPresenter(new IPVController());
             case VentaDetailView.VIEW_NAME:
-                return new VentaResumenViewPresenter(new VentaDetailController(), new OrdenController());
+                return new VentaDetailViewPresenter(new VentaDetailController(), new OrdenController());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter(new UbicacionConexionController());
             case VentaCalendarView.VIEW_NAME:
@@ -185,6 +189,8 @@ public class PresenterFacade {
                 return new ReportarBugViewPresenter(new ReportarBugController());
             case OrdenLogView.VIEW_NAME:
                 return new OrdenLogViewPresenter(null);
+            case VentaResumenView.VIEW_NAME:
+                return new VentaResumenViewPresenter(new VentaResumenController());
             case AutorizoView.VIEW_NAME:
                 return new AutorizoViewPresenter(new LogInController(), null);
             case ImageManagerView.VIEW_NAME:

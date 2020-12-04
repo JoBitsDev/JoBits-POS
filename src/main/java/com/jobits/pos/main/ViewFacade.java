@@ -46,6 +46,7 @@ import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
+import com.jobits.pos.ui.venta.VentaResumenView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import javax.swing.JPanel;
@@ -135,6 +136,8 @@ public class ViewFacade {
                 return new OrdenLogView(p);
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerView(p);
+            case VentaResumenView.VIEW_NAME:
+                return new VentaResumenView(p);
             case AutorizoView.VIEW_NAME:
                 return new AutorizoView(p);
             case IPVPedidoVentasView.VIEW_NAME:
