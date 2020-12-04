@@ -732,7 +732,7 @@ public class VentaDAO1 {
      * @param b - la orden a agregar
      *
      */
-    private static void llenarArrayProductoVOrden(ArrayList<ProductovOrden> ret, ArrayList<Orden> aux, Cocina c, boolean condicionAutorizo, boolean aceptarOrdenesAbiertas) {
+    public static void llenarArrayProductoVOrden(ArrayList<ProductovOrden> ret, ArrayList<Orden> aux, Cocina c, boolean condicionAutorizo, boolean aceptarOrdenesAbiertas) {
         for (Orden o : aux) {
             if (o.getDeLaCasa() == condicionAutorizo) {
                 if (aceptarOrdenesAbiertas || o.getHoraTerminada() != null) {
@@ -758,7 +758,7 @@ public class VentaDAO1 {
         return total;
     }
 
-    private static void joinListsProductovOrdenByCocina(ArrayList<ProductovOrden> pivot,
+    public static void joinListsProductovOrdenByCocina(ArrayList<ProductovOrden> pivot,
             ArrayList<ProductovOrden> b, Cocina c) {
 
         while (!b.isEmpty()) {
@@ -776,6 +776,8 @@ public class VentaDAO1 {
                 po.setEnviadosacocina(b.get(0).getEnviadosacocina());
                 po.setOrden(b.get(0).getOrden());
                 po.setProductoVenta(b.get(0).getProductoVenta());
+                po.setNombreProductoVendido(b.get(0).getNombreProductoVendido());
+                po.setPrecioVendido(b.get(0).getPrecioVendido());
                 pivot.add(po);
             }
             b.remove(0);
