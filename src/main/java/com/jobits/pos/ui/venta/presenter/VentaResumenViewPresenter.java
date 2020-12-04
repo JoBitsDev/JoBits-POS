@@ -51,8 +51,8 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
         registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_RESUMEN) {
             @Override
             public Optional doAction() {
-                Impresion i = new Impresion();
-                i.print(new PvOrdenResumenFormatter(getBean().getLista_ventas(), "Prueba"), null);
+//                Impresion i = new Impresion();
+//                i.print(new PvOrdenResumenFormatter(getBean().getLista_ventas(), "Prueba"), null);
                 return Optional.empty();
             }
         });
