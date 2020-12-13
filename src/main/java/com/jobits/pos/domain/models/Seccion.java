@@ -17,6 +17,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,6 +38,14 @@ import javax.persistence.Table;
     @NamedQuery(name = "Seccion.findByNombreSeccion", query = "SELECT s FROM Seccion s WHERE s.nombreSeccion = :nombreSeccion"),
     @NamedQuery(name = "Seccion.findByDescripcion", query = "SELECT s FROM Seccion s WHERE s.descripcion = :descripcion")})
 public class Seccion implements Serializable {
+
+    @JoinTable(name = "seccion_agregada", joinColumns = {
+        @JoinColumn(name = "agregada_en", referencedColumnName = "nombre_seccion")}, inverseJoinColumns = {
+        @JoinColumn(name = "seccionnombre_seccion", referencedColumnName = "nombre_seccion")})
+    @ManyToMany
+    private List<Seccion> agregadoEn;
+    @ManyToMany(mappedBy = "agregadoEn")
+    private List<Seccion> agregos;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -114,6 +124,22 @@ public class Seccion implements Serializable {
     @Override
     public String toString() {
         return  nombreSeccion ;
+    }
+
+    public List<Seccion> getAgregadoEn() {
+        return agregadoEn;
+    }
+
+    public void setAgregadoEn(List<Seccion> agregadoEn) {
+        this.agregadoEn = agregadoEn;
+    }
+
+    public List<Seccion> getAgregos() {
+        return agregos;
+    }
+
+    public void setAgregos(List<Seccion> agregos) {
+        this.agregos = agregos;
     }
 
 }

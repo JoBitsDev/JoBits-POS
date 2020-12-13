@@ -58,9 +58,14 @@ public class ProductovOrden implements Serializable {
     private float precioVendido;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 255)
     @Column(name = "nombre_producto_vendido")
     private String nombreProductoVendido;
+    @OneToMany(mappedBy = "agregadoA")
+    private List<ProductovOrden> agregos;
+    @JoinColumn(name = "agregado_a", referencedColumnName = "id")
+    @ManyToOne
+    private ProductovOrden agregadoA;
 
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "enviadosacocina")
@@ -217,5 +222,21 @@ public class ProductovOrden implements Serializable {
 
     public void setEnviadosacocina(Float enviadosacocina) {
         this.enviadosacocina = enviadosacocina;
+    }
+
+    public List<ProductovOrden> getAgregos() {
+        return agregos;
+    }
+
+    public void setAgregos(List<ProductovOrden> agregos) {
+        this.agregos = agregos;
+    }
+
+    public ProductovOrden getAgregadoA() {
+        return agregadoA;
+    }
+
+    public void setAgregadoA(ProductovOrden agregadoA) {
+        this.agregadoA = agregadoA;
     }
 }
