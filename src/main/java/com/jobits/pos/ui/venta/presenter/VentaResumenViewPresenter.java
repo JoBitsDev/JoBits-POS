@@ -10,8 +10,6 @@ import com.jobits.pos.controller.venta.VentaResumenService;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.servicios.impresion.Impresion;
-import com.jobits.pos.servicios.impresion.formatter.PvOrdenResumenFormatter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaResumenViewModel.*;

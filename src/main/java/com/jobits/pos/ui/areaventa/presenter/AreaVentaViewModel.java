@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.ui.areaventa.presenter;
 
-import com.jobits.pos.ui.menu.presenter.*;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Carta;
