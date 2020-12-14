@@ -102,8 +102,7 @@ public class SeccionDetailView extends AbstractViewPanel {
 
         add(jPanelInfo, java.awt.BorderLayout.NORTH);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jPanelMenus.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), bundle.getString("label_carta"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
+        jPanelMenus.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Secciones Agregadas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
         jPanelMenus.setLayout(new java.awt.BorderLayout());
 
         jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));

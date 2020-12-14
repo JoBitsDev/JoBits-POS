@@ -91,7 +91,6 @@
               <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                 <EmptyBorder bottom="15" left="15" right="15" top="15"/>
               </Border>
-              <ResourceString PropertyName="titleX" bundle="Strings.properties" key="label_carta" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
               <Font PropertyName="font" name="Lucida Grande" size="24" style="0"/>
             </TitledBorder>
           </Border>
