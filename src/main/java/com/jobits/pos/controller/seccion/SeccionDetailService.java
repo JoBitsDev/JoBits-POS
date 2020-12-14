@@ -17,6 +17,8 @@ public interface SeccionDetailService {
     
     public Seccion getSeccion();
     
+    public void setSeccion(Seccion seccion);
+    
     public void crearSeccion(Seccion seccion);
     
     public void editarSeccion(Seccion seccion);
