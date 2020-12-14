@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.menu;
+package com.jobits.pos.ui.cartas;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
@@ -12,18 +12,18 @@ import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import static com.jobits.pos.ui.menu.presenter.MenuSeccionViewModel.*;
-import com.jobits.pos.ui.menu.presenter.MenuSeccionViewPresenter;
+import static com.jobits.pos.ui.cartas.presenter.CartasSeccionViewModel.*;
+import com.jobits.pos.ui.cartas.presenter.CartasSeccionViewPresenter;
 
 /**
  *
  * @author Jorge
  */
-public class MenuSeccionView extends AbstractViewPanel {
+public class CartasSeccionView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Cartas";
 
-    public MenuSeccionView(AbstractViewPresenter presenter) {
+    public CartasSeccionView(AbstractViewPresenter presenter) {
         super(presenter);
     }
 
@@ -164,10 +164,10 @@ public class MenuSeccionView extends AbstractViewPanel {
         Bindings.bind(jListMenus, new SelectionInList<Carta>(getPresenter().getModel(PROP_LISTA_MENU), getPresenter().getModel(PROP_MENU_SELECCIONADO)));
         Bindings.bind(jListSecciones, new SelectionInList<Carta>(getPresenter().getModel(PROP_LISTA_SECCIONES), getPresenter().getModel(PROP_SECCION_SELECCIONADA)));
         
-        jButtonAgregarMenu.setAction(getPresenter().getOperation(MenuSeccionViewPresenter.ACTION_AGREGAR_MENU));
-        jButtonAgregarSeccion.setAction(getPresenter().getOperation(MenuSeccionViewPresenter.ACTION_AGREGAR_SECCION));
-        jButtonEliminarMenu.setAction(getPresenter().getOperation(MenuSeccionViewPresenter.ACTION_ELIMINAR_MENU));
-        jButtonEliminarSeccion.setAction(getPresenter().getOperation(MenuSeccionViewPresenter.ACTION_ELIMINAR_SECCION));
+        jButtonAgregarMenu.setAction(getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_AGREGAR_MENU));
+        jButtonAgregarSeccion.setAction(getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_AGREGAR_SECCION));
+        jButtonEliminarMenu.setAction(getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_ELIMINAR_MENU));
+        jButtonEliminarSeccion.setAction(getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_ELIMINAR_SECCION));
     }
 
     @Override

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.menu.presenter;
+package com.jobits.pos.ui.cartas.presenter;
 
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.domain.models.Carta;
@@ -21,7 +21,7 @@ import java.util.Optional;
  * @author Jorge
  *
  */
-public class MenuSeccionViewPresenter extends AbstractViewPresenter<MenuSeccionViewModel> {
+public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSeccionViewModel> {
 
     private MenuController controller;
 
@@ -32,8 +32,8 @@ public class MenuSeccionViewPresenter extends AbstractViewPresenter<MenuSeccionV
     public static final String ACTION_EDITAR_SECCION = "Editar sección";
     public static final String ACTION_ELIMINAR_SECCION = "Eliminar Seccion";
 
-    public MenuSeccionViewPresenter(MenuController controller) {
-        super(new MenuSeccionViewModel());
+    public CartasSeccionViewPresenter(MenuController controller) {
+        super(new CartasSeccionViewModel());
         this.controller = controller;
         getBean().getLista_menu().addAll(controller.getCartaListController().getItems());
     }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.menu.presenter;
+package com.jobits.pos.ui.cartas.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.domain.models.Carta;
@@ -18,7 +18,7 @@ import java.util.List;
  * @author Jorge
  *
  */
-public class MenuSeccionViewModel extends AbstractViewModel {
+public class CartasSeccionViewModel extends AbstractViewModel {
 
     private ArrayListModel<Carta> lista_menu = new ArrayListModel<>();
 
