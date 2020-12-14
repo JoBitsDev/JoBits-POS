@@ -74,8 +74,8 @@ public class PedidoCardView extends AbstractViewPanel {
         jButton1 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButton2 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButton3 = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jToggleButtonAgregos = new javax.swing.JToggleButton();
         jButton4 = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jToggleButtonAgregos = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>()
         ;
@@ -210,16 +210,16 @@ public class PedidoCardView extends AbstractViewPanel {
         jButton3.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel1.add(jButton3, new java.awt.GridBagConstraints());
 
-        jToggleButtonAgregos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_gris.png"))); // NOI18N
-        jToggleButtonAgregos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_indigo.png"))); // NOI18N
-        jPanel1.add(jToggleButtonAgregos, new java.awt.GridBagConstraints());
-
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/informacion_indigo_ligth.png"))); // NOI18N
         jButton4.setToolTipText("Ver Detalles");
         jButton4.setMaximumSize(new java.awt.Dimension(50, 50));
         jButton4.setMinimumSize(new java.awt.Dimension(50, 50));
         jButton4.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel1.add(jButton4, new java.awt.GridBagConstraints());
+
+        jToggleButtonAgregos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_gris.png"))); // NOI18N
+        jToggleButtonAgregos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_indigo.png"))); // NOI18N
+        jPanel1.add(jToggleButtonAgregos, new java.awt.GridBagConstraints());
 
         jPanelMedia.add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -450,7 +450,8 @@ public class PedidoCardView extends AbstractViewPanel {
         Bindings.bind(jToggleButtonAutorizo, "selected", getPresenter().getModel(PROP_ES_AUTORIZO));
         Bindings.bind(jideButtonEnviarCocina, "enabled", getPresenter().getModel(PROP_ENVIO_COCINA));
         jToggleButtonAutorizo.addActionListener(getPresenter().getOperation(ACTION_SET_AUTORIZO));
-        
+        jToggleButtonAgregos.addActionListener(getPresenter().getOperation(ACTION_SET_AGREGO));
+
         Bindings.bind(jComboBoxClientes, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
                 getPresenter().getModel(PROP_CLIENTE_SELECCIONADO)));

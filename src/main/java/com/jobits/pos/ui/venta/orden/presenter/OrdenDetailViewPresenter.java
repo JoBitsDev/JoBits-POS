@@ -49,6 +49,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_REMOVE_PRODUCTO = "Eliminar";
     public static String ACTION_SHOW_LOGS = "Ver Detalles";
     public static String ACTION_SET_AUTORIZO = "Autorizo";
+    public static String ACTION_SET_AGREGO = "Agrego";
     public static String ACTION_SET_PORCIENTO = "Porciento";
     private String codOrden;
     private OrdenService controller;
@@ -130,6 +131,12 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private void onSetAutorizoClick() {
         getBean().setEs_autorizo(!getBean().isEs_autorizo());
         getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
+        refreshState();
+//        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
+    }
+    private void onSetAgregoClick() {
+        System.out.println("Its Happ");
+        getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
         refreshState();
 //        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
     }
@@ -247,6 +254,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onSetAutorizoClick();
+                refreshState();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_SET_AGREGO) {
+            @Override
+            public Optional doAction() {
+                onSetAgregoClick();
                 refreshState();
                 return Optional.empty();
             }

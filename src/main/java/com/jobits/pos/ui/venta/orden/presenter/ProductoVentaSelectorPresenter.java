@@ -116,7 +116,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
         List<Seccion> listaSecciones = SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada);
         List<Seccion> aux = new ArrayList();
         for (Seccion x : listaSecciones) {
-            if (!x.getAgregos().isEmpty()) {
+            if (!x.getAgregadoEn().isEmpty()) {
                 aux.add(x);
             }
         }
