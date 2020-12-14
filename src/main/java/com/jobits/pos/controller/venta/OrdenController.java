@@ -99,7 +99,10 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     //TODO:quitar los popups de aqui
     @Override
-    public boolean addProduct(String codOrden, ProductoVenta selected) {//TODO: la cantidad se pasa por parametro
+    public boolean addProduct(String codOrden, ProductoVenta selected,float cantidad) {//TODO: la cantidad se pasa por parametro
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("Cantidad igual a 0 o negativa");
+        }
         if (autorize(codOrden)) {
             Orden o = getInstance(codOrden);
             checkIfProductIsValid(selected, o);
@@ -115,21 +118,6 @@ public class OrdenController extends AbstractFragmentController<Orden>
             }
             if (found) {
                 cantidadAgregada = founded.getCantidad();
-                float cantidad = 0;
-                String value = new NumberPad(null).showView();
-                if (!value.equals("") && !value.equals(".")) {
-                    cantidad = Float.parseFloat(value);
-                    if (cantidad == 0f) {
-                        JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
-                        return false;
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
-                    return false;
-                }
-                if (!esDespachable(selected, o, cantidad)) {
-                    throw new ValidatingException(getView(), "No hay existencias de" + selected + " para elaborar");
-                }
                 founded.setCantidad(founded.getCantidad() + cantidad);
 
             } else {
@@ -141,18 +129,6 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 founded.setOrden(o);
                 founded.setProductoVenta(selected);
 
-                String value = new NumberPad(null).showView();//TODO: Porque null???
-                if (!value.equals("") && !value.equals(".")) {
-                    float cantidad = Float.parseFloat(value);
-                    if (cantidad == 0f) {
-                        JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
-                        return false;
-                    }
-                    founded.setCantidad(cantidad);
-                } else {
-                    JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
-                    return false;
-                }
                 founded.setEnviadosacocina((float) 0);
                 founded.setNumeroComensal(0);
                 if (!esDespachable(selected, o, founded.getCantidad())) {
@@ -196,10 +172,10 @@ public class OrdenController extends AbstractFragmentController<Orden>
 //        }
 //    }
 //    
-    public void addRapidoProducto(String codOrden, String idProducto) {
+    public void addRapidoProducto(String codOrden, String idProducto,float cantidad) {
         ProductoVenta productoABuscar = ProductoVentaDAO.getInstance().find(idProducto);
         if (productoABuscar != null) {
-            addProduct(codOrden, productoABuscar);
+            addProduct(codOrden, productoABuscar,cantidad);
         }
     }
 

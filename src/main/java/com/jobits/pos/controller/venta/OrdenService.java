@@ -19,7 +19,7 @@ public interface OrdenService {
 
     public void addNota(String codOrden, ProductovOrden producto_orden_seleccionado);
 
-    public boolean addProduct(String codOrden, ProductoVenta producto_venta_seleccionado);
+    public boolean addProduct(String codOrden, ProductoVenta producto_venta_seleccionado, float cantidad);
 
     public void cerrarOrden(String codOrden);
 

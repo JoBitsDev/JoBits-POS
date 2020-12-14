@@ -13,6 +13,7 @@ import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.NumberPad;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
         this.service = ordenService;
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null && codOrdenEnlazada != null) {
-                service.addProduct(codOrdenEnlazada, (ProductoVenta) evt.getNewValue());
+                service.addProduct(codOrdenEnlazada, (ProductoVenta) evt.getNewValue(),new NumberPad(null).showView());
                 getBean().setProductoVentaSeleccionado(null);
                 firePropertyChange(PROP_PRODUCTO_SELECCIONADO, null, null);
             }

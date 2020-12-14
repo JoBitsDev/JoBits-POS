@@ -7,6 +7,9 @@ package com.jobits.pos.ui.utils;
 
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,12 +34,21 @@ public class NumberPad extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         ComponentMover cr = new ComponentMover(this, jPanel1);
-        jTextFieldEntrada.setText("");
     }
 
-    public String showView() {
+    public float showView() {
         this.setVisible(true);
-        return jTextFieldEntrada.getText();
+        float cantidad = 0;
+        String value = jTextFieldEntrada.getText();
+        if (!value.equals("") && !value.equals(".")) {
+            cantidad = Float.parseFloat(value);
+            if (cantidad == 0f) {
+                throw new IllegalArgumentException("El valor introducido no es una cantidad valida");
+            }
+        } else {
+            throw new IllegalArgumentException("El valor introducido no es una cantidad valida");
+        }
+        return cantidad;
     }
 
     /**
@@ -65,8 +77,7 @@ public class NumberPad extends javax.swing.JDialog {
         jButtonCero = new javax.swing.JButton();
         jButtonPunto = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jButtonCancela = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonEnter = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -221,9 +232,17 @@ public class NumberPad extends javax.swing.JDialog {
     jPanelMain.add(jPanel1, java.awt.BorderLayout.CENTER);
 
     jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 10, 10));
-    jPanel2.setLayout(new java.awt.GridLayout(1, 3));
-    jPanel2.add(filler1);
-    jPanel2.add(filler2);
+    jPanel2.setLayout(new java.awt.BorderLayout());
+
+    jButtonCancela.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+    jButtonCancela.setText("Cancelar");
+    jButtonCancela.setPreferredSize(new java.awt.Dimension(112, 60));
+    jButtonCancela.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButtonCancelaActionPerformed(evt);
+        }
+    });
+    jPanel2.add(jButtonCancela, java.awt.BorderLayout.WEST);
 
     jButtonEnter.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
     jButtonEnter.setText("Enter");
@@ -233,7 +252,7 @@ public class NumberPad extends javax.swing.JDialog {
             jButtonEnterActionPerformed(evt);
         }
     });
-    jPanel2.add(jButtonEnter);
+    jPanel2.add(jButtonEnter, java.awt.BorderLayout.EAST);
 
     jPanelMain.add(jPanel2, java.awt.BorderLayout.SOUTH);
 
@@ -323,13 +342,16 @@ public class NumberPad extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jTextFieldEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEntradaActionPerformed
-        setVisible(false);
+        this.setVisible(false);
         dispose();
     }//GEN-LAST:event_jTextFieldEntradaActionPerformed
 
+    private void jButtonCancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelaActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCancelaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
+    private javax.swing.JButton jButtonCancela;
     private javax.swing.JButton jButtonCero;
     private javax.swing.JButton jButtonCinco;
     private javax.swing.JButton jButtonCuatro;

@@ -13,10 +13,12 @@ import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.domain.models.Cliente;
 import com.jobits.pos.domain.models.ProductovOrden;
+import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 //import com.jobits.pos.ui.venta.orden.OrdenLogsDetailView;
@@ -90,7 +92,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     private void onAddProductoClick() {
         if (getBean().getProducto_orden_seleccionado() != null) {
-            getController().addProduct(getBean().getId_orden(), getBean().getProducto_orden_seleccionado().getProductoVenta());
+            
+            getController().addProduct(getBean().getId_orden(), getBean().getProducto_orden_seleccionado().getProductoVenta(),new NumberPad(null).showView());
             getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);

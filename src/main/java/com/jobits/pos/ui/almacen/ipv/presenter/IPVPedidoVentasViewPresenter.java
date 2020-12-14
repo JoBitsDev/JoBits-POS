@@ -96,19 +96,9 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     private void onAgregarIPVClick() {
         IpvVentaRegistro selected = getBean().getSeleccionado_ipv_ventas();
         if (selected != null) {
-            float cantidad;
-            String value = new NumberPad(null).showView();
-            if (!value.equals("") && !value.equals(".")) {
-                cantidad = Float.parseFloat(value);
-                if (cantidad != 0f) {
-                    getBean().getLista_producto_venta_model().add(
-                            new ProdcutoVentaPedidoModel(selected, cantidad));
-                } else {
-                    JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "El valor introducido no es una cantidad valida");
-            }
+            float cantidad = new NumberPad(null).showView();
+            getBean().getLista_producto_venta_model().add(
+                    new ProdcutoVentaPedidoModel(selected, cantidad));
         } else {
             JOptionPane.showMessageDialog(null, "Seleccione un Producto de IPV primero");
         }
