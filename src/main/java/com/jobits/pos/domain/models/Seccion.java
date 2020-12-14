@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jobits.pos.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -27,17 +26,18 @@ import javax.persistence.Table;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "nombreSeccion" ,scope = Seccion.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "nombreSeccion", scope = Seccion.class)
 @Entity
 @Table(name = "seccion")
 @NamedQueries({
     @NamedQuery(name = "Seccion.findAll", query = "SELECT s FROM Seccion s"),
     @NamedQuery(name = "Seccion.findByNombreSeccion", query = "SELECT s FROM Seccion s WHERE s.nombreSeccion = :nombreSeccion"),
     @NamedQuery(name = "Seccion.findByDescripcion", query = "SELECT s FROM Seccion s WHERE s.descripcion = :descripcion")})
-public class Seccion implements Serializable {
+public class Seccion implements Serializable, Comparable<Seccion> {
 
     @JoinTable(name = "seccion_agregada", joinColumns = {
         @JoinColumn(name = "agregada_en", referencedColumnName = "nombre_seccion")}, inverseJoinColumns = {
@@ -54,7 +54,7 @@ public class Seccion implements Serializable {
     private String nombreSeccion;
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(mappedBy = "seccionnombreSeccion",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "seccionnombreSeccion", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<ProductoVenta> productoVentaList;
     @JoinColumn(name = "cartacod_carta", referencedColumnName = "cod_carta")
@@ -123,7 +123,7 @@ public class Seccion implements Serializable {
 
     @Override
     public String toString() {
-        return  nombreSeccion ;
+        return nombreSeccion;
     }
 
     public List<Seccion> getAgregadoEn() {
@@ -140,6 +140,11 @@ public class Seccion implements Serializable {
 
     public void setAgregos(List<Seccion> agregos) {
         this.agregos = agregos;
+    }
+
+    @Override
+    public int compareTo(Seccion o) {
+        return this.nombreSeccion.compareTo(o.getNombreSeccion());
     }
 
 }

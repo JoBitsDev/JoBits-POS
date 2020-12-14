@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.controller.seccion;
 
+import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Seccion;
 
 /**
@@ -12,20 +13,15 @@ import com.jobits.pos.domain.models.Seccion;
  * @author Jorge
  */
 public interface SeccionDetailService {
-    
-    public Seccion crearNuevaInstancia();
-    
-    public Seccion getSeccion();
-    
-    public void setSeccion(Seccion seccion);
-    
-    public void crearSeccion(Seccion seccion);
-    
+
+    public Seccion getSeccion(Object id_seccion);
+
+    public void crearSeccion(Carta carta, Seccion seccion);
+
     public void editarSeccion(Seccion seccion);
-    
+
     public boolean isCreatingMode();
-    
-    
-    
-    
+
+    public void setCreatingMode(boolean flag);
+
 }

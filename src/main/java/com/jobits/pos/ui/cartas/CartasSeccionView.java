@@ -10,10 +10,15 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import static com.jobits.pos.ui.cartas.presenter.CartasSeccionViewModel.*;
 import com.jobits.pos.ui.cartas.presenter.CartasSeccionViewPresenter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -52,6 +57,7 @@ public class CartasSeccionView extends AbstractViewPanel {
         jListSecciones = MaterialComponentsFactory.Displayers.getList();
         jPanel3 = new javax.swing.JPanel();
         jButtonEliminarSeccion = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonEditarSeccion = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonAgregarSeccion = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -128,6 +134,10 @@ public class CartasSeccionView extends AbstractViewPanel {
         jButtonEliminarSeccion.setPreferredSize(new java.awt.Dimension(130, 50));
         jPanel3.add(jButtonEliminarSeccion);
 
+        jButtonEditarSeccion.setText(bundle.getString("label_eliminar")); // NOI18N
+        jButtonEditarSeccion.setPreferredSize(new java.awt.Dimension(130, 50));
+        jPanel3.add(jButtonEditarSeccion);
+
         jButtonAgregarSeccion.setText(bundle.getString("label_agregar")); // NOI18N
         jButtonAgregarSeccion.setPreferredSize(new java.awt.Dimension(130, 50));
         jPanel3.add(jButtonAgregarSeccion);
@@ -142,6 +152,7 @@ public class CartasSeccionView extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregarMenu;
     private javax.swing.JButton jButtonAgregarSeccion;
+    private javax.swing.JButton jButtonEditarSeccion;
     private javax.swing.JButton jButtonEliminarMenu;
     private javax.swing.JButton jButtonEliminarSeccion;
     private javax.swing.JLabel jLabel1;
@@ -163,9 +174,35 @@ public class CartasSeccionView extends AbstractViewPanel {
     public void wireUp() {
         Bindings.bind(jListMenus, new SelectionInList<Carta>(getPresenter().getModel(PROP_LISTA_MENU), getPresenter().getModel(PROP_MENU_SELECCIONADO)));
         Bindings.bind(jListSecciones, new SelectionInList<Carta>(getPresenter().getModel(PROP_LISTA_SECCIONES), getPresenter().getModel(PROP_SECCION_SELECCIONADA)));
-        
+        jListSecciones.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_EDITAR_SECCION).doAction();
+                }
+            }
+
+        });
+        jListSecciones.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_ELIMINAR_SECCION).doAction();
+                }
+            }
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
         jButtonAgregarMenu.setAction(getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_AGREGAR_MENU));
         jButtonAgregarSeccion.setAction(getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_AGREGAR_SECCION));
+        jButtonEditarSeccion.setAction(getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_EDITAR_SECCION));
         jButtonEliminarMenu.setAction(getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_ELIMINAR_MENU));
         jButtonEliminarSeccion.setAction(getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_ELIMINAR_SECCION));
     }

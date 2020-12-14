@@ -30,6 +30,7 @@ import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.cartas.CartasSeccionView;
+import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
@@ -106,6 +107,7 @@ public class CoordinatorService implements Coordinator {
                         PuntoElaboracionListView.VIEW_NAME,
                         NominasDetailView.VIEW_NAME,
                         CartasSeccionView.VIEW_NAME,
+                        SeccionDetailView.VIEW_NAME,
                         AreaVentaListView.VIEW_NAME,
                         ConfiguracionView.VIEW_NAME,
                         IpvGestionView.VIEW_NAME,

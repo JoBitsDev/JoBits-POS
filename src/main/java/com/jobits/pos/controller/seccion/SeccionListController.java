@@ -23,7 +23,7 @@ import com.jobits.pos.adapters.repo.impl.SeccionDAO;
  * @author Jorge
  *
  */
-public class SeccionListController extends OldAbstractListController<Seccion> implements SeccionListService{
+public class SeccionListController extends OldAbstractListController<Seccion> implements SeccionListService {
 
     public Carta owner;
 
@@ -59,30 +59,30 @@ public class SeccionListController extends OldAbstractListController<Seccion> im
         }
     }
 
-    public void createInstanceOffline(Carta a, OldAbstractView view) {
-        setView(view);
-        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la sección a crear",
-                "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
+    public void createInstanceOffline(Seccion newSeccion, Carta a) {
+//        setView(view);
+//        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la sección a crear",
+//                "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
         getModel().removePropertyChangeListener(this);
-        Seccion newSeccion = new Seccion();
+//        Seccion newSeccion = new Seccion();
         newSeccion.setDescripcion("");
-        newSeccion.setNombreSeccion(nombre);
+//        newSeccion.setNombreSeccion(nombre);
         newSeccion.setProductoVentaList(new ArrayList<>());
         newSeccion.setCartacodCarta(a);
         if (owner != null) {
             newSeccion.setCartacodCarta(owner);
         }
 
-        if (nombre != null && !nombre.isEmpty()) {
-            if (validate(newSeccion)) {
-                getModel().startTransaction();
-                create(newSeccion);
-                getModel().commitTransaction();
-                a.getSeccionList().add(newSeccion);
-            } else {
-                showErrorDialog(getView(), "La sección a crear ya existe");
-            }
+//        if (nombre != null && !nombre.isEmpty()) {
+        if (validate(newSeccion)) {
+            getModel().startTransaction();
+            create(newSeccion);
+            getModel().commitTransaction();
+            a.getSeccionList().add(newSeccion);
+        } else {
+            showErrorDialog(getView(), "La sección a crear ya existe");
         }
+//        }
     }
 
     @Override

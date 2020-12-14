@@ -18,7 +18,7 @@ public interface SeccionListService {
 
     public void createInstance();
 
-    public void createInstanceOffline(Carta a, OldAbstractView view);
+    public void createInstanceOffline(Seccion seccion, Carta a);
 
     public void update(Seccion selected);
 

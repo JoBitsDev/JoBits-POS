@@ -27,6 +27,7 @@ import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.reportes.ReportarBugController;
 import com.jobits.pos.controller.seccion.MenuController;
+import com.jobits.pos.controller.seccion.SeccionDetailServiceImpl;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
@@ -38,9 +39,11 @@ import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaResumenController;
 import com.jobits.pos.controller.venta.VentaResumenService;
 import com.jobits.pos.domain.models.Almacen;
+import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
 import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.View;
@@ -92,7 +95,9 @@ import com.jobits.pos.ui.productos.presenter.ProductoVentaListViewPresenter;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
 import com.jobits.pos.ui.cartas.CartasSeccionView;
+import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.cartas.presenter.CartasSeccionViewPresenter;
+import com.jobits.pos.ui.cartas.presenter.SeccionDetailViewPresenter;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
@@ -165,6 +170,8 @@ public class PresenterFacade {
                 return new PuntoElaboracionListViewPresenter(new PuntoElaboracionListController());
             case CartasSeccionView.VIEW_NAME:
                 return new CartasSeccionViewPresenter(new MenuController());
+            case SeccionDetailView.VIEW_NAME:
+                return new SeccionDetailViewPresenter(new SeccionDetailServiceImpl(), new Seccion(), new Carta());
             case AreaVentaListView.VIEW_NAME:
                 return new AreaVentaViewPresenter(new AreaVentaController());
             case AreaDetailView.VIEW_NAME:

@@ -5,37 +5,58 @@
  */
 package com.jobits.pos.ui.cartas;
 
+import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
+import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
+import static com.jobits.pos.ui.cartas.presenter.SeccionDetailViewModel.*;
+import static com.jobits.pos.ui.cartas.presenter.SeccionDetailViewPresenter.*;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  *
  * @author Jorge
  */
-public class SeccionEditView extends AbstractViewPanel {
+public class SeccionDetailView extends AbstractViewPanel {
 
-    
-    
+    public static final String VIEW_NAME = "Seccion Detail";
+
     /**
      * Creates new form SeccionEditView
      */
-    public SeccionEditView() {
-        initComponents();
+    public SeccionDetailView(AbstractViewPresenter presenter) {
+        super(presenter);
     }
 
     @Override
     public String getViewName() {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return VIEW_NAME;
     }
 
     @Override
     public void uiInit() {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        initComponents();
     }
 
     @Override
     public void wireUp() {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        Bindings.bind(jTextFieldNombre, getPresenter().getModel(PROP_NOMBRE_SECCION));
+        Bindings.bind(jTextFieldNombre, "enabled", getPresenter().getModel(PROP_NOMBRE_HABILITADO));
+        Bindings.bind(jButtonAceptar, "text", getPresenter().getModel(PROP_CREAR_EDITAR_BUTTON_TEXT));
+
+        Bindings.bind(jComboBoxSecciones, new SelectionInList<String>(
+                getPresenter().getModel(PROP_LISTA_SECCIONES),
+                getPresenter().getModel(PROP_SECCION_SELECCIONADA)));
+        Bindings.bind(jListSeccionesAgregadas, new SelectionInList<String>(
+                getPresenter().getModel(PROP_LISTA_SECCIONES_AGREGADAS),
+                getPresenter().getModel(PROP_SECCION_AGREGADA_SELECCIONADA)));
+
+        jButtonAceptar.addActionListener(getPresenter().getOperation(ACTION_ACEPTAR));
+        jButtonAgregar.addActionListener(getPresenter().getOperation(ACTION_AGREGAR));
+        jButtonCancelar.addActionListener(getPresenter().getOperation(ACTION_CANCELAR));
+        jButtonEliminar.addActionListener(getPresenter().getOperation(ACTION_ELIMINAR));
     }
 
     /**
@@ -47,18 +68,23 @@ public class SeccionEditView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelInfo = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelInfo = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel1 = new javax.swing.JPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanelMenus = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelMenus = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel7 = new javax.swing.JPanel();
-        jComboBoxMenuList = new javax.swing.JComboBox<>();
+        jComboBoxSecciones = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListAreaMenus = new javax.swing.JList<>();
+        jListSeccionesAgregadas = new javax.swing.JList<>();
         jPanel6 = new javax.swing.JPanel();
         jButtonEliminar = new javax.swing.JButton();
         jButtonAgregar = new javax.swing.JButton();
+        jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
         setLayout(new java.awt.BorderLayout());
 
         jPanelInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
@@ -83,18 +109,20 @@ public class SeccionEditView extends AbstractViewPanel {
         jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         jPanel7.setOpaque(false);
         jPanel7.setLayout(new java.awt.BorderLayout());
-        jPanel7.add(jComboBoxMenuList, java.awt.BorderLayout.PAGE_START);
+        jPanel7.add(jComboBoxSecciones, java.awt.BorderLayout.PAGE_START);
 
-        jScrollPane1.setViewportView(jListAreaMenus);
+        jScrollPane1.setViewportView(jListSeccionesAgregadas);
 
         jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel6.setOpaque(false);
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
+        jButtonEliminar.setIcon(MaterialIcons.DELETE);
         jButtonEliminar.setPreferredSize(new java.awt.Dimension(40, 30));
         jPanel6.add(jButtonEliminar);
 
+        jButtonAgregar.setIcon(MaterialIcons.ADD);
         jButtonAgregar.setPreferredSize(new java.awt.Dimension(40, 30));
         jPanel6.add(jButtonAgregar);
 
@@ -103,17 +131,28 @@ public class SeccionEditView extends AbstractViewPanel {
         jPanelMenus.add(jPanel7, java.awt.BorderLayout.CENTER);
 
         add(jPanelMenus, java.awt.BorderLayout.CENTER);
+
+        jButtonCancelar.setText("Cancelar");
+        jPanelBotones.add(jButtonCancelar);
+
+        jButtonAceptar.setText("Aceptar");
+        jPanelBotones.add(jButtonAceptar);
+
+        add(jPanelBotones, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonAgregar;
+    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEliminar;
-    private javax.swing.JComboBox<String> jComboBoxMenuList;
-    private javax.swing.JList<String> jListAreaMenus;
+    private javax.swing.JComboBox<String> jComboBoxSecciones;
+    private javax.swing.JList<String> jListSeccionesAgregadas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelMenus;
     private javax.swing.JScrollPane jScrollPane1;

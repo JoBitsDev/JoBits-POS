@@ -5,12 +5,9 @@
  */
 package com.jobits.pos.main;
 
-import com.jobits.pos.controller.licencia.Licencia;
-import com.jobits.pos.main.PresenterFacade;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.View;
-import com.jobits.pos.ui.almacen.OldAlmacenListView;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
@@ -36,20 +33,19 @@ import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.cartas.CartasSeccionView;
+import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoDetailView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
-import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
 import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaResumenView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
-import javax.swing.JPanel;
 
 /**
  *
@@ -104,6 +100,8 @@ public class ViewFacade {
                 return new PuntoElaboracionListView((AbstractListViewPresenter) p);
             case CartasSeccionView.VIEW_NAME:
                 return new CartasSeccionView(p);
+            case SeccionDetailView.VIEW_NAME:
+                return new SeccionDetailView(p);
             case AreaVentaListView.VIEW_NAME:
                 return new AreaVentaListView(p);
             case AreaDetailView.VIEW_NAME:

@@ -6,13 +6,18 @@
 package com.jobits.pos.ui.cartas.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.seccion.SeccionDetailService;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -23,30 +28,47 @@ import javax.swing.JOptionPane;
  * @author Jorge
  *
  */
-public class SeccionEditViewPresenter extends AbstractViewPresenter<SeccionEditViewModel> {
+public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDetailViewModel> {
 
     private SeccionDetailService service;
     Seccion seccion;
+    Carta carta;
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_ACEPTAR = "Aceptar";
     public static final String ACTION_AGREGAR = "Agregar";
     public static final String ACTION_ELIMINAR = "Eliminar";
 
-    public SeccionEditViewPresenter(SeccionDetailService controller) {
-        super(new SeccionEditViewModel());
+    public SeccionDetailViewPresenter(SeccionDetailService controller, Seccion seccion, Carta carta) {
+        super(new SeccionDetailViewModel());
         this.service = controller;
-        if (service.isCreatingMode()) {
-            seccion = service.crearNuevaInstancia();
+        this.carta = carta;
+        if (seccion == null) {
+            this.seccion = new Seccion();
+            service.setCreatingMode(true);
+            getBean().setCrear_editar_button_text("Crear");
         } else {
-            seccion = service.getSeccion();
+            this.seccion = seccion;
+            getBean().setCrear_editar_button_text("Editar");
         }
+        refreshState();
     }
 
     @Override
     protected Optional refreshState() {
-        getBean().setNombre_seccion(service.getSeccion().getNombreSeccion());
-        getBean().setLista_secciones_agregadas(new ArrayListModel<>(service.getSeccion().getAgregos()));
+        if (seccion.getNombreSeccion() != null) {
+            getBean().setNombre_habilitado(false);
+            getBean().setNombre_seccion(service.getSeccion(seccion.getNombreSeccion()).getNombreSeccion());
+            getBean().setLista_secciones_agregadas(
+                    new ArrayListModel<>(service.getSeccion(seccion.getNombreSeccion()).getAgregadoEn()));
+        }
+        List<Seccion> aux = new ArrayList();
+        List<Carta> listaCartas = new MenuController().getCartaListController().getItems();
+        for (Carta x : listaCartas) {
+            aux.addAll(x.getSeccionList());
+        }
+        Collections.sort(aux);
+        getBean().setLista_secciones(new ArrayListModel<>(aux));
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -98,10 +120,15 @@ public class SeccionEditViewPresenter extends AbstractViewPresenter<SeccionEditV
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea guardar los cambios",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            seccion.setNombreSeccion(getBean().getNombre_seccion());
-            seccion.setAgregos(getBean().getLista_secciones_agregadas());
+            if (getBean().getNombre_seccion() != null || getBean().getNombre_seccion().isEmpty()) {
+                seccion.setNombreSeccion(getBean().getNombre_seccion());
+            } else {
+                JOptionPane.showMessageDialog(null, "Nombre no permitido");
+                return;
+            }
+            seccion.setAgregadoEn(getBean().getLista_secciones_agregadas());
             if (service.isCreatingMode()) {
-                service.crearSeccion(seccion);
+                service.crearSeccion(carta, seccion);
             } else {
                 service.editarSeccion(seccion);
             }
@@ -117,7 +144,7 @@ public class SeccionEditViewPresenter extends AbstractViewPresenter<SeccionEditV
                 getBean().setSeccion_seleccionada(null);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una Seccion primero");
+            JOptionPane.showMessageDialog(null, "Seleccione una seccion primero");
         }
     }
 

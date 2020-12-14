@@ -67,10 +67,10 @@ public class CartaListController extends OldAbstractListController<Carta> implem
     }
 
     public void createSeccion(Carta selectedValue) {
-        if (selectedValue == null) {
-            throw new NoSelectedException(getView());
-        }
-        new SeccionListController().createInstanceOffline(selectedValue, getView());
+//        if (selectedValue == null) {
+//            throw new NoSelectedException(getView());
+//        }
+//        new SeccionListController().createInstanceOffline(selectedValue, getView());
     }
 
     public void removeSeccionFromCarta(Seccion selectedValue) {

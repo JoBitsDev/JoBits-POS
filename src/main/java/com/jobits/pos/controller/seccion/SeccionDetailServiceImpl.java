@@ -6,26 +6,20 @@
 package com.jobits.pos.controller.seccion;
 
 import com.jobits.pos.adapters.repo.impl.SeccionDAO;
+import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Seccion;
 
 public class SeccionDetailServiceImpl implements SeccionDetailService {
 
     private SeccionDAO model = SeccionDAO.getInstance();
-    private Seccion instance = null;
+    private boolean creatingMode = false;
 
     public SeccionDetailServiceImpl() {
     }
 
     @Override
-    public Seccion crearNuevaInstancia() {
-        return new Seccion();
-    }
-
-    @Override
-    public void crearSeccion(Seccion seccion) {
-        model.startTransaction();
-        model.create(seccion);
-        model.commitTransaction();
+    public void crearSeccion(Carta carta, Seccion seccion) {
+        new SeccionListController().createInstanceOffline(seccion, carta);
     }
 
     @Override
@@ -36,21 +30,22 @@ public class SeccionDetailServiceImpl implements SeccionDetailService {
     }
 
     @Override
-    public Seccion getSeccion() {
-        if (instance == null) {
-            throw new IllegalStateException("La seccion del controller es nula");
+    public Seccion getSeccion(Object id_seccion) {
+        Seccion seccion = model.find(id_seccion);
+        if (seccion == null) {
+            throw new IllegalStateException("No se ha econtrado la seccion");
         }
-        return instance;
-    }
-
-    @Override
-    public void setSeccion(Seccion seccion) {
-        instance = seccion;
+        return seccion;
     }
 
     @Override
     public boolean isCreatingMode() {
-        return instance == null;
+        return creatingMode;
+    }
+
+    @Override
+    public void setCreatingMode(boolean flag) {
+        creatingMode = flag;
     }
 
 }

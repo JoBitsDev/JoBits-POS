@@ -5,11 +5,16 @@
  */
 package com.jobits.pos.ui.cartas.presenter;
 
+import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.seccion.MenuController;
+import com.jobits.pos.controller.seccion.SeccionDetailServiceImpl;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewPresenter;
+import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
@@ -62,10 +67,31 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
             Application.getInstance().getNotificationService().notify("Debe seleccionar una Carta", TipoNotificacion.ERROR);
             return;
         }
-        controller.getCartaListController().createSeccion(getBean().getMenu_seleccionado());
+        Application.getInstance().getNavigator().navigateTo(
+                SeccionDetailView.VIEW_NAME,
+                new SeccionDetailViewPresenter(new SeccionDetailServiceImpl(), null, getBean().getMenu_seleccionado()),
+                DisplayType.POPUP);
         getBean().getLista_secciones().clear();
         getBean().setMenu_seleccionado(getBean().getMenu_seleccionado());
 
+    }
+
+    private void onEditarSeccionClick() {
+        if (getBean().getMenu_seleccionado() == null) {
+            Application.getInstance().getNotificationService().notify("Debe seleccionar una Carta", TipoNotificacion.ERROR);
+            return;
+        }
+        if (getBean().getSeccion_seleccionada() == null) {
+            Application.getInstance().getNotificationService().notify("Debe seleccionar una Seccion", TipoNotificacion.ERROR);
+            return;
+        }
+        Application.getInstance().getNavigator().navigateTo(
+                SeccionDetailView.VIEW_NAME,
+                new SeccionDetailViewPresenter(
+                        new SeccionDetailServiceImpl(), getBean().getSeccion_seleccionada(), getBean().getMenu_seleccionado()),
+                DisplayType.POPUP);
+        getBean().getLista_secciones().clear();
+        getBean().setMenu_seleccionado(getBean().getMenu_seleccionado());
     }
 
     private void onEliminarSeccionClick() {
@@ -97,6 +123,13 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
             @Override
             public Optional doAction() {
                 onNuevaSeccionClick();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_EDITAR_SECCION) {
+            @Override
+            public Optional doAction() {
+                onEditarSeccionClick();
                 return Optional.empty();
             }
         });
