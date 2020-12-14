@@ -60,6 +60,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
     private static final Logger LOGGER = Logger.getLogger(Venta.class.getSimpleName());
     private IPVController ipvController = new IPVController();
     protected final String SYNC = "Sale con: ";
+    private ProductovOrden productoOrdenAgregar = null;
 
     public OrdenController() {
         super(OrdenDAO.getInstance());
@@ -99,9 +100,21 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     //TODO:quitar los popups de aqui
     @Override
-    public boolean addProduct(String codOrden, ProductoVenta selected,float cantidad) {//TODO: la cantidad se pasa por parametro
+    public boolean addProduct(String codOrden, ProductoVenta selected, float cantidad) {//TODO: la cantidad se pasa por parametro
         if (cantidad <= 0) {
             throw new IllegalArgumentException("Cantidad igual a 0 o negativa");
+        }
+        if (productoOrdenAgregar != null) {
+            if (productoOrdenAgregar.getProductoVenta() == null
+                    || productoOrdenAgregar.getProductoVenta().getSeccionnombreSeccion() == null) {
+                throw new IllegalArgumentException("Seccion o producto de venta nulos");
+            }
+            for (Seccion a : productoOrdenAgregar.getProductoVenta().getSeccionnombreSeccion().getAgregos()) {
+                if (a.equals(selected.getSeccionnombreSeccion())) {
+                    throw new IllegalArgumentException("Producto a introducir invalido. "
+                            + "La Seccion a la que pertenece no es un agrego del producto a agregar");
+                }
+            }
         }
         if (autorize(codOrden)) {
             Orden o = getInstance(codOrden);
@@ -116,7 +129,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
                     break;
                 }
             }
-            if (found) {
+            if (found && founded.getAgregos().isEmpty()) {
                 cantidadAgregada = founded.getCantidad();
                 founded.setCantidad(founded.getCantidad() + cantidad);
 
@@ -128,8 +141,10 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 founded.setNombreProductoVendido(selected.toString());
                 founded.setOrden(o);
                 founded.setProductoVenta(selected);
-                founded.setAgregadoA(founded);
-
+                if (productoOrdenAgregar != null) {
+                    founded.setAgregadoA(productoOrdenAgregar);
+                }
+                founded.setCantidad(cantidad);
                 founded.setEnviadosacocina((float) 0);
                 founded.setNumeroComensal(0);
                 if (!esDespachable(selected, o, founded.getCantidad())) {
@@ -173,10 +188,10 @@ public class OrdenController extends AbstractFragmentController<Orden>
 //        }
 //    }
 //    
-    public void addRapidoProducto(String codOrden, String idProducto,float cantidad) {
+    public void addRapidoProducto(String codOrden, String idProducto, float cantidad) {
         ProductoVenta productoABuscar = ProductoVentaDAO.getInstance().find(idProducto);
         if (productoABuscar != null) {
-            addProduct(codOrden, productoABuscar,cantidad);
+            addProduct(codOrden, productoABuscar, cantidad);
         }
     }
 
@@ -609,7 +624,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     @Override
     public void setModoAgrego(ProductovOrden producto_orden_seleccionado) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        productoOrdenAgregar = producto_orden_seleccionado;
     }
 
 }

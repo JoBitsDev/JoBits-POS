@@ -450,7 +450,7 @@ public class PedidoCardView extends AbstractViewPanel {
         Bindings.bind(jToggleButtonAutorizo, "selected", getPresenter().getModel(PROP_ES_AUTORIZO));
         Bindings.bind(jideButtonEnviarCocina, "enabled", getPresenter().getModel(PROP_ENVIO_COCINA));
         jToggleButtonAutorizo.addActionListener(getPresenter().getOperation(ACTION_SET_AUTORIZO));
-
+        
         Bindings.bind(jComboBoxClientes, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
                 getPresenter().getModel(PROP_CLIENTE_SELECCIONADO)));
