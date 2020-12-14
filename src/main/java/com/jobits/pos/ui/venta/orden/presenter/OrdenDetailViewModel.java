@@ -111,6 +111,30 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_ENVIO_COCINA = "envio_cocina";
 
+    private boolean modo_agrego_activado;
+
+    public static final String PROP_MODO_AGREGO_ACTIVADO = "modo_agrego_activado";
+
+    /**
+     * Get the value of modo_agrego_activado
+     *
+     * @return the value of modo_agrego_activado
+     */
+    public boolean isModo_agrego_activado() {
+        return modo_agrego_activado;
+    }
+
+    /**
+     * Set the value of modo_agrego_activado
+     *
+     * @param modo_agrego_activado new value of modo_agrego_activado
+     */
+    public void setModo_agrego_activado(boolean modo_agrego_activado) {
+        boolean oldModo_agrego_activado = this.modo_agrego_activado;
+        this.modo_agrego_activado = modo_agrego_activado;
+        firePropertyChange(PROP_MODO_AGREGO_ACTIVADO, oldModo_agrego_activado, modo_agrego_activado);
+    }
+
     /**
      * Get the value of envio_cocina
      *

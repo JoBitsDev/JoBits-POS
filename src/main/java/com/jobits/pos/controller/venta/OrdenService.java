@@ -48,4 +48,6 @@ public interface OrdenService {
     public void removeProduct(String codOrden, ProductovOrden producto_orden_seleccionado, float cantidad);
 
     public void setPorciento(String codOrden, float porciento_servicio);
+
+    public void setModoAgrego(ProductovOrden producto_orden_seleccionado);
 }

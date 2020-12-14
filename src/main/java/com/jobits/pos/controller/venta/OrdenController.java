@@ -128,6 +128,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 founded.setNombreProductoVendido(selected.toString());
                 founded.setOrden(o);
                 founded.setProductoVenta(selected);
+                founded.setAgregadoA(founded);
 
                 founded.setEnviadosacocina((float) 0);
                 founded.setNumeroComensal(0);
@@ -604,6 +605,11 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
         fireWarningOnDeleting(codOrden, objectAtSelectedRow, cantidadBorrada);
         update(o);
+    }
+
+    @Override
+    public void setModoAgrego(ProductovOrden producto_orden_seleccionado) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

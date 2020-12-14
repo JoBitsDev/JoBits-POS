@@ -40,9 +40,15 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
         this.service = ordenService;
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null && codOrdenEnlazada != null) {
-                service.addProduct(codOrdenEnlazada, (ProductoVenta) evt.getNewValue(),new NumberPad(null).showView());
+                service.addProduct(codOrdenEnlazada, (ProductoVenta) evt.getNewValue(), new NumberPad(null).showView());
                 getBean().setProductoVentaSeleccionado(null);
                 firePropertyChange(PROP_PRODUCTO_SELECCIONADO, null, null);
+//                addBeanPropertyChangeListener(PROPERTY_BEAN, new PropertyChangeListener() {
+//                    @Override
+//                    public void propertyChange(PropertyChangeEvent evt) {
+//                        firePropertyChange(evt);
+//                    }
+//                });
             }
         });
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PV_FILTRADO, (PropertyChangeEvent evt) -> {
@@ -104,6 +110,17 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     protected Optional refreshState() {
         getBean().setLista_elementos(SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada));//TODO: pifia logica en los presenters
         return Optional.empty();
+    }
+
+    public void showSeccionesAgregadas() {
+        List<Seccion> listaSecciones = SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada);
+        List<Seccion> aux = new ArrayList();
+        for (Seccion x : listaSecciones) {
+            if (!x.getAgregos().isEmpty()) {
+                aux.add(x);
+            }
+        }
+        getBean().setLista_elementos(aux);//TODO: pifia logica en los presenters
     }
 
 }

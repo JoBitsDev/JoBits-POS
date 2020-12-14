@@ -58,6 +58,7 @@ public class PedidoCardView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToggleButton1 = new javax.swing.JToggleButton();
         jPanelHeader = new javax.swing.JPanel();
         jPanelEstado = new javax.swing.JPanel();
         jLabelTest = new javax.swing.JLabel();
@@ -73,6 +74,7 @@ public class PedidoCardView extends AbstractViewPanel {
         jButton1 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButton2 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButton3 = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jToggleButtonAgregos = new javax.swing.JToggleButton();
         jButton4 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>()
@@ -95,11 +97,13 @@ public class PedidoCardView extends AbstractViewPanel {
         jSpinner1 = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
 
+        jToggleButton1.setText("jToggleButton1");
+
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
         setToolTipText(null);
         setMaximumSize(new java.awt.Dimension(32773, 7500));
-        setMinimumSize(new java.awt.Dimension(250, 400));
-        setPreferredSize(new java.awt.Dimension(250, 490));
+        setMinimumSize(new java.awt.Dimension(280, 400));
+        setPreferredSize(new java.awt.Dimension(280, 490));
         setLayout(new java.awt.BorderLayout());
 
         jPanelHeader.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, DefaultValues.SECONDARY_COLOR));
@@ -205,6 +209,10 @@ public class PedidoCardView extends AbstractViewPanel {
         jButton3.setMinimumSize(new java.awt.Dimension(50, 50));
         jButton3.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel1.add(jButton3, new java.awt.GridBagConstraints());
+
+        jToggleButtonAgregos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_gris.png"))); // NOI18N
+        jToggleButtonAgregos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_indigo.png"))); // NOI18N
+        jPanel1.add(jToggleButtonAgregos, new java.awt.GridBagConstraints());
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/informacion_indigo_ligth.png"))); // NOI18N
         jButton4.setToolTipText("Ver Detalles");
@@ -383,6 +391,8 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelSupportText;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButtonAgregos;
     private javax.swing.JToggleButton jToggleButtonAutorizo;
     private javax.swing.JButton jideButtonCerrarMesa;
     private javax.swing.JButton jideButtonCierreParcial;
@@ -436,6 +446,7 @@ public class PedidoCardView extends AbstractViewPanel {
 
         Bindings.bind(jLabelTest, "icon", getPresenter().getModel(PROP_ICONO_PORCIENTO));
 
+        Bindings.bind(jToggleButtonAgregos, "selected", getPresenter().getModel(PROP_MODO_AGREGO_ACTIVADO));
         Bindings.bind(jToggleButtonAutorizo, "selected", getPresenter().getModel(PROP_ES_AUTORIZO));
         Bindings.bind(jideButtonEnviarCocina, "enabled", getPresenter().getModel(PROP_ENVIO_COCINA));
         jToggleButtonAutorizo.addActionListener(getPresenter().getOperation(ACTION_SET_AUTORIZO));

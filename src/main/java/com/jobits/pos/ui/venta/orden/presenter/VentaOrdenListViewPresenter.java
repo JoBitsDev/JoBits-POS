@@ -31,6 +31,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     private VentaDetailService ventaService;
     private OrdenDetailViewPresenter ordenPresenter;
     private ProductoVentaSelectorPresenter menuPresenter;
+    private OrdenService ordenService;
 
     private VentaOrdenListViewPresenter(VentaDetailService ventaService) {
         super(new VentaOrdenListViewModel());
@@ -49,12 +50,26 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     public VentaOrdenListViewPresenter(VentaDetailService ventaService,
             OrdenService ordenService) {
         this(ventaService);
+        this.ordenService = ordenService;
         ordenPresenter = new OrdenDetailViewPresenter(ordenService);
         menuPresenter = new ProductoVentaSelectorPresenter(ordenService);
         menuPresenter.addPropertyChangeListener(ProductoVentaSelectorPresenter.PROP_PRODUCTO_SELECCIONADO, new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 ordenPresenter.refreshState();
+            }
+        });
+        ordenPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_MODO_AGREGO_ACTIVADO, new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                if ((boolean) evt.getNewValue()) {
+                    menuPresenter.showSeccionesAgregadas();
+                    ordenService.setModoAgrego(ordenPresenter.getBean().getProducto_orden_seleccionado());
+                    System.out.println("True");
+                } else {
+                    System.out.println("Falso");
+                    menuPresenter.refreshState();
+                }
             }
         });
         refreshState();
@@ -89,7 +104,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
 
     private void onAbrirOrdenAction() {
         ordenPresenter.setCodOrden(getBean().getElemento_seleccionado().getCodOrden());
-        
+
         menuPresenter.setMesaSeleccionada(getBean().getElemento_seleccionado().getMesacodMesa());
         menuPresenter.setCodOrdenEnlazada(getBean().getElemento_seleccionado().getCodOrden());
     }

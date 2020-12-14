@@ -57,6 +57,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         super(new OrdenDetailViewModel());
         this.controller = controller;
         addListeners();
+        
     }
 
     public OrdenDetailViewPresenter(String cod_orden, OrdenService controller) {
@@ -293,6 +294,10 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
         }
         );
+//        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_MODO_AGREGO_ACTIVADO, (PropertyChangeEvent evt) -> {
+//            firePropertyChange(evt);
+//        }
+//        );
     }
 
 }
