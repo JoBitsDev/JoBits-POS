@@ -91,8 +91,8 @@ import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaListViewPresenter;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
-import com.jobits.pos.ui.menu.MenuSeccionView;
-import com.jobits.pos.ui.menu.presenter.MenuSeccionViewPresenter;
+import com.jobits.pos.ui.cartas.CartasSeccionView;
+import com.jobits.pos.ui.cartas.presenter.CartasSeccionViewPresenter;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
@@ -163,8 +163,8 @@ public class PresenterFacade {
                 return new NominasDetailPresenter(new NominasController());
             case PuntoElaboracionListView.VIEW_NAME:
                 return new PuntoElaboracionListViewPresenter(new PuntoElaboracionListController());
-            case MenuSeccionView.VIEW_NAME:
-                return new MenuSeccionViewPresenter(new MenuController());
+            case CartasSeccionView.VIEW_NAME:
+                return new CartasSeccionViewPresenter(new MenuController());
             case AreaVentaListView.VIEW_NAME:
                 return new AreaVentaViewPresenter(new AreaVentaController());
             case AreaDetailView.VIEW_NAME:
