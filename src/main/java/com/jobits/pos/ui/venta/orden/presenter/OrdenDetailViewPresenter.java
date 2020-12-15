@@ -174,8 +174,10 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setModo_agrego_activado(false);
         List<ProductovOrden> aux = new ArrayList<>();
         for (ProductovOrden productovOrden : instance.getProductovOrdenList()) {
-            aux.add(productovOrden);
-            aux.addAll(productovOrden.getAgregos());
+            if (productovOrden.getAgregadoA() == null) {
+                aux.add(productovOrden);
+                aux.addAll(productovOrden.getAgregos());
+            }
         }
         getBean().setLista_producto_orden(aux);
 //        getBean().setLista_producto_orden(instance.getProductovOrdenList());
