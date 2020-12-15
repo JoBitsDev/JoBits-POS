@@ -24,6 +24,7 @@ import com.jobits.pos.ui.venta.orden.OrdenLogView;
 //import com.jobits.pos.ui.venta.orden.OrdenLogsDetailView;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.ImageIcon;
@@ -170,8 +171,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setOrden_terminada(instance.getHoraTerminada() != null);
         getBean().setId_orden(instance.getCodOrden());
         getBean().setLista_general_productos_venta(getController().getPDVList(getCodOrden()));
-        getBean().setLista_producto_orden(instance.getProductovOrdenList());
         getBean().setModo_agrego_activado(false);
+        List<ProductovOrden> aux = new ArrayList<>();
+        for (ProductovOrden productovOrden : instance.getProductovOrdenList()) {
+            aux.add(productovOrden);
+            aux.addAll(productovOrden.getAgregos());
+        }
+        getBean().setLista_producto_orden(aux);
+//        getBean().setLista_producto_orden(instance.getProductovOrdenList());
         //getBean().setLista_secciones(getController().getListaSecciones());
         if (instance.getMesacodMesa() != null) {
             getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
