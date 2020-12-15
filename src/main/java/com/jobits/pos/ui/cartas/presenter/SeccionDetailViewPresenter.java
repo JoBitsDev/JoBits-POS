@@ -138,7 +138,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
 
     private void onEliminarClick() {
 
-        if (getBean().getSeccion_seleccionada() != null) {
+        if (getBean().getSeccion_agregada_seleccionada() != null) {
             getBean().getLista_secciones_agregadas().remove(getBean().getSeccion_seleccionada());
             if (!getBean().getLista_secciones_agregadas().isEmpty()) {
                 getBean().setSeccion_seleccionada(null);
