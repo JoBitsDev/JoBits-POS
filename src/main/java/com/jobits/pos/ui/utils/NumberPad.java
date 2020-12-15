@@ -347,6 +347,7 @@ public class NumberPad extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldEntradaActionPerformed
 
     private void jButtonCancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelaActionPerformed
+        jTextFieldEntrada.setText("");
         dispose();
     }//GEN-LAST:event_jButtonCancelaActionPerformed
 

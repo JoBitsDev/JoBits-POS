@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.jobits.pos.exceptions.DevelopingOperationException;
+import java.util.ArrayList;
 
 /**
  * FirstDream
@@ -193,7 +194,14 @@ public class Orden implements Serializable, Comparable<Orden> {
     }
 
     public List<ProductovOrden> getProductovOrdenList() {
-        return productovOrdenList;
+        List<ProductovOrden> aux = new ArrayList<>();
+        for (ProductovOrden productovOrden : productovOrdenList) {
+            if (productovOrden.getAgregadoA() == null) {
+                aux.add(productovOrden);
+                aux.addAll(productovOrden.getAgregos());
+            }
+        }
+        return aux;
     }
 
     public void setProductovOrdenList(List<ProductovOrden> productovOrdenList) {

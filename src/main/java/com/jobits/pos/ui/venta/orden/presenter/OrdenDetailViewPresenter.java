@@ -142,6 +142,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
             } else {
                 JOptionPane.showMessageDialog(null, "Seleccione un Producto primero");
+                getBean().setModo_agrego_activado(false);
             }
         } else {
             getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
@@ -172,16 +173,10 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setId_orden(instance.getCodOrden());
         getBean().setLista_general_productos_venta(getController().getPDVList(getCodOrden()));
         getBean().setModo_agrego_activado(false);
-        List<ProductovOrden> aux = new ArrayList<>();
-        for (ProductovOrden productovOrden : instance.getProductovOrdenList()) {
-            if (productovOrden.getAgregadoA() == null) {
-                aux.add(productovOrden);
-                aux.addAll(productovOrden.getAgregos());
-            }
-        }
-        getBean().setLista_producto_orden(aux);
-//        getBean().setLista_producto_orden(instance.getProductovOrdenList());
-        //getBean().setLista_secciones(getController().getListaSecciones());
+//        getBean().setLista_producto_orden(aux);
+
+        getBean().setLista_producto_orden(instance.getProductovOrdenList());
+//        getBean().setLista_secciones(getController().getListaSecciones());
         if (instance.getMesacodMesa() != null) {
             getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
         }
