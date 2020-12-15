@@ -95,7 +95,6 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     private void onAddProductoClick() {
         if (getBean().getProducto_orden_seleccionado() != null) {
-
             getController().addProduct(getBean().getId_orden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), new NumberPad(null).showView());
             getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
         } else {
@@ -137,16 +136,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onSetAgregoClick() {
-        if (!getBean().isModo_agrego_activado()) {
-            if (getBean().getProducto_orden_seleccionado() != null) {
-                getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
-            } else {
-                JOptionPane.showMessageDialog(null, "Seleccione un Producto primero");
-                getBean().setModo_agrego_activado(false);
-            }
-        } else {
-            getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
-        }
+        getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
     }
 
 //    private void onSetPorcientoClick() {
@@ -207,6 +197,12 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 }
             }
             getBean().setEnvio_cocina(flag);
+        }
+        ProductovOrden p = getBean().getProducto_orden_seleccionado();
+        if (p != null && p.getAgregadoA() == null) {
+            getBean().setBotton_agrego_enabled(true);
+        } else {
+            getBean().setBotton_agrego_enabled(false);
         }
         return Optional.empty();
     }
@@ -315,8 +311,15 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 ClientesDetailServiceImpl clienteservice = new ClientesDetailServiceImpl();
                 clienteservice.addOrdenToClientOrdenList(newValue, getController().getInstance(codOrden));
             }
-//            System.out.println("Its Happ");
-
+        }
+        );
+        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_PRODUCTO_ORDEN_SELECCIONADO, (PropertyChangeEvent evt) -> {
+            ProductovOrden p = (ProductovOrden) evt.getNewValue();
+            if (p != null && p.getAgregadoA() == null) {
+                getBean().setBotton_agrego_enabled(true);
+            } else {
+                getBean().setBotton_agrego_enabled(false);
+            }
         }
         );
 //        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_MODO_AGREGO_ACTIVADO, (PropertyChangeEvent evt) -> {

@@ -30,6 +30,7 @@ import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter.*
 import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel.PROP_PV_FILTRADO;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -313,7 +314,6 @@ public class PedidoCardView extends AbstractViewPanel {
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
         jSpinner1.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(-100.0f), Float.valueOf(100.0f), Float.valueOf(1.0f)));
-        jSpinner1.setOpaque(false);
         jSpinner1.setPreferredSize(new java.awt.Dimension(60, 26));
         jPanel5.add(jSpinner1, new java.awt.GridBagConstraints());
 
@@ -433,6 +433,9 @@ public class PedidoCardView extends AbstractViewPanel {
         jButton4.addActionListener(getPresenter().getOperation(ACTION_SHOW_LOGS));
         jideButtonCierreParcial.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_CIERRE_PARCIAL));
 
+//        jToggleButtonExpand.addActionListener((ActionEvent e) -> {
+//            jPanelMedia.setVisible(jToggleButtonExpand.isSelected());
+//        });
 //        jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_ADD_NOTA)));
 //        jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_ADD_PRODUCTO)));
 //        jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_REMOVE_PRODUCTO)));
@@ -446,9 +449,12 @@ public class PedidoCardView extends AbstractViewPanel {
 
         Bindings.bind(jLabelTest, "icon", getPresenter().getModel(PROP_ICONO_PORCIENTO));
 
+        Bindings.bind(jideButtonEnviarCocina, "enabled", getPresenter().getModel(PROP_ENVIO_COCINA));
+        Bindings.bind(jToggleButtonAgregos, "enabled", getPresenter().getModel(PROP_BOTTON_AGREGO_ENABLED));
+        
         Bindings.bind(jToggleButtonAgregos, "selected", getPresenter().getModel(PROP_MODO_AGREGO_ACTIVADO));
         Bindings.bind(jToggleButtonAutorizo, "selected", getPresenter().getModel(PROP_ES_AUTORIZO));
-        Bindings.bind(jideButtonEnviarCocina, "enabled", getPresenter().getModel(PROP_ENVIO_COCINA));
+        
         jToggleButtonAutorizo.addActionListener(getPresenter().getOperation(ACTION_SET_AUTORIZO));
         jToggleButtonAgregos.addActionListener(getPresenter().getOperation(ACTION_SET_AGREGO));
 
@@ -456,13 +462,9 @@ public class PedidoCardView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
                 getPresenter().getModel(PROP_CLIENTE_SELECCIONADO)));
 
-//        jToggleButtonExpand.addActionListener((ActionEvent e) -> {
-//            jPanelMedia.setVisible(jToggleButtonExpand.isSelected());
-//        });
         Bindings.bind(jList1, new SelectionInList<ProductovOrden>(
                 getPresenter().getModel(PROP_LISTA_PRODUCTO_ORDEN),
                 getPresenter().getModel(PROP_PRODUCTO_ORDEN_SELECCIONADO)));
-
     }
 
     @Override
