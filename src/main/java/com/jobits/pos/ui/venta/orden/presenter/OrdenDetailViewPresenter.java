@@ -135,10 +135,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 //        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
     }
     private void onSetAgregoClick() {
-        System.out.println("Its Happ");
         getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
-        refreshState();
-//        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
     }
 
 //    private void onSetPorcientoClick() {
@@ -165,6 +162,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setId_orden(instance.getCodOrden());
         getBean().setLista_general_productos_venta(getController().getPDVList(getCodOrden()));
         getBean().setLista_producto_orden(instance.getProductovOrdenList());
+        getBean().setModo_agrego_activado(false);
         //getBean().setLista_secciones(getController().getListaSecciones());
         if (instance.getMesacodMesa() != null) {
             getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
@@ -262,7 +260,6 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onSetAgregoClick();
-                refreshState();
                 return Optional.empty();
             }
         });
