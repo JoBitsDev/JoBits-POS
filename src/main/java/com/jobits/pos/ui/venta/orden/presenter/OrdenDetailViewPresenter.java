@@ -58,7 +58,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         super(new OrdenDetailViewModel());
         this.controller = controller;
         addListeners();
-        
+
     }
 
     public OrdenDetailViewPresenter(String cod_orden, OrdenService controller) {
@@ -94,8 +94,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     private void onAddProductoClick() {
         if (getBean().getProducto_orden_seleccionado() != null) {
-            
-            getController().addProduct(getBean().getId_orden(), getBean().getProducto_orden_seleccionado().getProductoVenta(),new NumberPad(null).showView());
+
+            getController().addProduct(getBean().getId_orden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), new NumberPad(null).showView());
             getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
@@ -134,8 +134,17 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         refreshState();
 //        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
     }
+
     private void onSetAgregoClick() {
-        getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
+        if (!getBean().isModo_agrego_activado()) {
+            if (getBean().getProducto_orden_seleccionado() != null) {
+                getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione un Producto primero");
+            }
+        } else {
+            getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
+        }
     }
 
 //    private void onSetPorcientoClick() {

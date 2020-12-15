@@ -18,9 +18,20 @@ public class CellRenderPedido extends javax.swing.JPanel {
      */
     public CellRenderPedido(ProductovOrden o, boolean selected) {
         initComponents();
+        if (o.getAgregadoA() != null) {
+            jLabelProducto.setFont(jLabelProducto.getFont().deriveFont(10));
+            jLabelAgrego.setFont(jLabelProducto.getFont().deriveFont(10));
+        }
+        jLabelAgrego.setVisible(o.getAgregadoA() != null);
+        jLabelAgrego1.setVisible(o.getAgregadoA() != null);
         jLabelProducto.setText(o.getNombreProductoVendido());
         jLabelCantidad.setText("x" + o.getCantidad());
-        jLabelPrecio.setText(utils.setDosLugaresDecimales(o.getCantidad()*o.getPrecioVendido()));
+        jLabelCantidadEnviada.setVisible(false);
+        if (o.getCantidad() > o.getEnviadosacocina()) {
+            jLabelCantidadEnviada.setVisible(true);
+            jLabelCantidadEnviada.setText("x" + (o.getCantidad() - o.getEnviadosacocina()));
+        }
+        jLabelPrecio.setText(utils.setDosLugaresDecimales(o.getCantidad() * o.getPrecioVendido()));
         setOpaque(selected);
     }
 
@@ -33,36 +44,73 @@ public class CellRenderPedido extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelPrecio = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jLabelProducto = new javax.swing.JLabel();
+        jLabelAgrego = new javax.swing.JLabel();
+        jLabelPrecio = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelAgrego1 = new javax.swing.JLabel();
         jLabelCantidad = new javax.swing.JLabel();
+        jLabelCantidadEnviada = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 5, 3, 5));
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jLabelProducto.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
+        jLabelProducto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelProducto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelProducto.setText("<Producto>");
+        jPanel2.add(jLabelProducto, java.awt.BorderLayout.CENTER);
+
+        jLabelAgrego.setForeground(new java.awt.Color(0, 153, 204));
+        jLabelAgrego.setText("-->");
+        jLabelAgrego.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 3));
+        jPanel2.add(jLabelAgrego, java.awt.BorderLayout.WEST);
+
+        add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
         jLabelPrecio.setFont(new java.awt.Font(".SF NS Text", 1, 12)); // NOI18N
         jLabelPrecio.setForeground(new java.awt.Color(0, 102, 51));
         jLabelPrecio.setText("1200 MN");
         add(jLabelPrecio, java.awt.BorderLayout.LINE_END);
 
-        jLabelProducto.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
-        jLabelProducto.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelProducto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelProducto.setText("<Producto>");
-        add(jLabelProducto, java.awt.BorderLayout.PAGE_START);
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabelAgrego1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelAgrego1.setText("     ");
+        jLabelAgrego1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 3));
+        jPanel1.add(jLabelAgrego1);
 
         jLabelCantidad.setFont(new java.awt.Font(".SF NS Text", 0, 12)); // NOI18N
         jLabelCantidad.setForeground(new java.awt.Color(153, 0, 153));
         jLabelCantidad.setText("x3");
-        add(jLabelCantidad, java.awt.BorderLayout.LINE_START);
+        jLabelCantidad.setToolTipText("total");
+        jPanel1.add(jLabelCantidad);
+
+        jLabelCantidadEnviada.setFont(new java.awt.Font(".SF NS Text", 0, 12)); // NOI18N
+        jLabelCantidadEnviada.setForeground(new java.awt.Color(255, 102, 102));
+        jLabelCantidadEnviada.setText("x3");
+        jLabelCantidadEnviada.setToolTipText("por enviar");
+        jPanel1.add(jLabelCantidadEnviada);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelAgrego;
+    private javax.swing.JLabel jLabelAgrego1;
     private javax.swing.JLabel jLabelCantidad;
+    private javax.swing.JLabel jLabelCantidadEnviada;
     private javax.swing.JLabel jLabelPrecio;
     private javax.swing.JLabel jLabelProducto;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

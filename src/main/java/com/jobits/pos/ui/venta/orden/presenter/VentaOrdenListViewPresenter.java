@@ -14,6 +14,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -63,8 +64,8 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if ((boolean) evt.getNewValue()) {
-                    menuPresenter.showSeccionesAgregadas();
                     ordenService.setModoAgrego(ordenPresenter.getBean().getProducto_orden_seleccionado());
+                    menuPresenter.showSeccionesAgregadas();
                 } else {
                     ordenService.setModoAgrego(null);
                     menuPresenter.refreshState();
