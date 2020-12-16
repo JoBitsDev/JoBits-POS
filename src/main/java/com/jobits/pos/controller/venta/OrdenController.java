@@ -1,7 +1,6 @@
 package com.jobits.pos.controller.venta;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jidesoft.dialog.JideOptionPane;
 import com.jobits.pos.adapters.repo.impl.ConfigDAO;
 import com.jobits.pos.adapters.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.adapters.repo.impl.MesaDAO;
@@ -14,6 +13,8 @@ import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.controller.AbstractFragmentController;
 import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Configuracion;
@@ -34,9 +35,9 @@ import com.jobits.pos.servicios.impresion.formatter.AbstractTicketFormatter;
 import com.jobits.pos.servicios.impresion.formatter.CancelacionCocinaFormatter;
 import com.jobits.pos.servicios.impresion.formatter.CocinaFormatter;
 import com.jobits.pos.servicios.impresion.formatter.OrdenFormatter;
-import com.jobits.pos.ui.utils.CalcularCambioView;
-import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.venta.orden.CalcularCambioView;
+import com.jobits.pos.ui.venta.orden.presenter.CalcularCambioViewPresenter;
 import java.awt.Container;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -231,7 +232,9 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 }
             }
             setShowDialogs(false);
-            CalcularCambioView cambio = new CalcularCambioView(null, true, o);
+            NavigationService.getInstance().navigateTo(CalcularCambioView.VIEW_NAME,
+                        new CalcularCambioViewPresenter(o), DisplayType.POPUP);
+//            CalcularCambioViewDialog cambio = new CalcularCambioViewDialog(null, true, o);
         }
     }
 

@@ -8,7 +8,6 @@ package com.jobits.pos.cordinator;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
-import com.jobits.pos.ui.almacen.OldAlmacenListView;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
@@ -42,8 +41,8 @@ import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaResumenView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
+import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
-import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -106,6 +105,7 @@ public class CoordinatorService implements Coordinator {
                         PuestoTrabajoListView.VIEW_NAME,
                         PuntoElaboracionListView.VIEW_NAME,
                         NominasDetailView.VIEW_NAME,
+                        CalcularCambioView.VIEW_NAME,
                         CartasSeccionView.VIEW_NAME,
                         SeccionDetailView.VIEW_NAME,
                         AreaVentaListView.VIEW_NAME,

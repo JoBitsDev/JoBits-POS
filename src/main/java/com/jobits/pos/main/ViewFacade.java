@@ -45,6 +45,7 @@ import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaResumenView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
+import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 
 /**
@@ -134,6 +135,8 @@ public class ViewFacade {
                 return new OrdenLogView(p);
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerView(p);
+            case CalcularCambioView.VIEW_NAME:
+                return new CalcularCambioView(p);
             case VentaResumenView.VIEW_NAME:
                 return new VentaResumenView(p);
             case AutorizoView.VIEW_NAME:

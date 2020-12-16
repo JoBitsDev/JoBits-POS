@@ -20,14 +20,14 @@ import com.jobits.pos.recursos.R;
  *
  * @author Jorge
  */
-public class CalcularCambioView extends javax.swing.JDialog {
+public class CalcularCambioViewDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form PuestoTrabajoCrear
      */
     private Orden o;
 
-    public CalcularCambioView(OldAbstractView parent, boolean modal, Orden o) {
+    public CalcularCambioViewDialog(OldAbstractView parent, boolean modal, Orden o) {
         super(parent, modal);
         this.o = o;
         init(o);
@@ -110,7 +110,6 @@ public class CalcularCambioView extends javax.swing.JDialog {
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonSalir.setText(bundle.getString("label_salir")); // NOI18N
-        jButtonSalir.setOpaque(true);
         jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSalirActionPerformed(evt);
@@ -119,7 +118,6 @@ public class CalcularCambioView extends javax.swing.JDialog {
         jPanel2.add(jButtonSalir, java.awt.BorderLayout.EAST);
 
         jButtonAbirCajon.setText(bundle.getString("label_abrir_cajon")); // NOI18N
-        jButtonAbirCajon.setOpaque(true);
         jButtonAbirCajon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAbirCajonActionPerformed(evt);
@@ -196,15 +194,15 @@ public class CalcularCambioView extends javax.swing.JDialog {
     }//GEN-LAST:event_jSpinnerMNStateChanged
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
-        dispose();        // TODO add your handling code here:
+//        dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
     private void jSpinnerMNFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSpinnerMNFocusGained
     }//GEN-LAST:event_jSpinnerMNFocusGained
 
     private void jButtonAbirCajonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbirCajonActionPerformed
-        Impresion.getDefaultInstance().forceDrawerKick();
-        jButtonAbirCajon.transferFocus();
+//        Impresion.getDefaultInstance().forceDrawerKick();
+//        jButtonAbirCajon.transferFocus();
     }//GEN-LAST:event_jButtonAbirCajonActionPerformed
 
 

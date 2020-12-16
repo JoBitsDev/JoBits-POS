@@ -21,7 +21,7 @@ import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.domain.models.ProductovOrden;
-import com.jobits.pos.ui.utils.CalcularCambioView;
+import com.jobits.pos.ui.utils.CalcularCambioViewDialog;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -215,7 +215,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
     }
 
     public void calcularCambio(Orden objectAtSelectedRow) {
-        CalcularCambioView cc = new CalcularCambioView(getView(), true, objectAtSelectedRow);
+        CalcularCambioViewDialog cc = new CalcularCambioViewDialog(getView(), true, objectAtSelectedRow);
     }
 
     public Venta initDiaVentas(Date fecha) {
