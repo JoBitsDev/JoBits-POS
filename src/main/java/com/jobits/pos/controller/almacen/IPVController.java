@@ -47,6 +47,7 @@ import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.exceptions.ValidatingException;
 
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
 
 /**
@@ -219,7 +220,8 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     public void ajustarConsumo(IpvRegistro instance) {
         float cantidad;
         try {
-            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a ajustar"));
+//            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a ajustar"));
+            cantidad =  new NumberPad(null).showView();
         } catch (NumberFormatException e) {
             showErrorDialog(getView(), "El valor introducido no es correcto");
             return;
@@ -337,7 +339,8 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     public void darEntradaExistencia(IpvRegistro instance) {
         float cantidad;
         try {
-            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
+//            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
+            cantidad =  new NumberPad(null).showView();
         } catch (NumberFormatException e) {
             showErrorDialog(getView(), "El valor introducido no es correcto");
             return;
@@ -358,7 +361,8 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     public void darEntradaIPV(IpvVentaRegistro instance) {
         float cantidad;
         try {
-            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
+//            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
+            cantidad =  new NumberPad(null).showView();
         } catch (NumberFormatException e) {
             showErrorDialog(getView(), "El valor introducido no es correcto");
             return;
