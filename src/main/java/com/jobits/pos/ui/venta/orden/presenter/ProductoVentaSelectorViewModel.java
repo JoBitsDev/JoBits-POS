@@ -38,6 +38,31 @@ public class ProductoVentaSelectorViewModel extends AbstractListViewModel<Seccio
 
     public static final String PROP_CAMPO_BUSQUEDA_ENABLED = "campo_busqueda_enabled";
 
+    //Navegacion
+    private boolean mostrar_seccion;
+
+    public static final String PROP_MOSTRAR_SECCION = "mostrar_seccion";
+
+    /**
+     * Get the value of mostrar_seccion
+     *
+     * @return the value of mostrar_seccion
+     */
+    public boolean isMostrar_seccion() {
+        return mostrar_seccion;
+    }
+
+    /**
+     * Set the value of mostrar_seccion
+     *
+     * @param mostrar_seccion new value of mostrar_seccion
+     */
+    public void setMostrar_seccion(boolean mostrar_seccion) {
+        boolean oldMostrar_seccion = this.mostrar_seccion;
+        this.mostrar_seccion = mostrar_seccion;
+        firePropertyChange(PROP_MOSTRAR_SECCION, oldMostrar_seccion, mostrar_seccion);
+    }
+
     /**
      * Get the value of campo_busqueda_enabled
      *

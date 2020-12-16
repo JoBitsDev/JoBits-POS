@@ -14,6 +14,7 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.utils.utils;
+import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorPresenter.*;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel;
 import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
@@ -50,6 +51,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
 
         jListSecciones.addListSelectionListener((ListSelectionEvent e) -> {
             changeToProductos();
+            getPresenter().getOperation(ACTION_OCULTAR_SECCION).doAction();
         });
         jScrollPaneSecciones.getVerticalScrollBar().setUnitIncrement(80);
         jListSecciones.setCellRenderer(new ListCellRenderer<Seccion>() {
@@ -100,6 +102,13 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
             jList2.revalidate();
             jList2.repaint();
         });
+        getPresenter().addBeanPropertyChangeListener(PROP_MOSTRAR_SECCION, (PropertyChangeEvent evt) -> {
+            if ((boolean) evt.getNewValue()) {
+                changeToSecciones();
+            }
+        });
+
+        jButtonAtras.addActionListener(getPresenter().getOperation(ACTION_MOSTRAR_SECCION));
     }
 
     /**
@@ -112,7 +121,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAtras = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelBusqueda = new javax.swing.JPanel();
         jTextFieldSearch = new javax.swing.JTextField();
         jLabelBuscarIcon = new javax.swing.JLabel();
@@ -127,14 +136,14 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setIcon(MaterialIcons.ARROW_BACK);
-        jButton1.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAtras.setIcon(MaterialIcons.ARROW_BACK);
+        jButtonAtras.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButtonAtras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAtrasActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, java.awt.BorderLayout.WEST);
+        jPanel2.add(jButtonAtras, java.awt.BorderLayout.WEST);
 
         jPanelBusqueda.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 200, 10, 200));
         jPanelBusqueda.setPreferredSize(new java.awt.Dimension(100, 50));
@@ -213,13 +222,13 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jList2.repaint();
     }//GEN-LAST:event_jList2ValueChanged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        changeToSecciones();
+    private void jButtonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtrasActionPerformed
+//        changeToSecciones();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonAtrasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAtras;
     private javax.swing.JLabel jLabelBuscarIcon;
     private javax.swing.JList<ProductoVenta> jList2;
     private javax.swing.JList<Seccion> jListSecciones;

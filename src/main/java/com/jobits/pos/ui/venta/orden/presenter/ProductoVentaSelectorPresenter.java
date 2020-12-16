@@ -12,8 +12,10 @@ import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
+import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter.ACTION_ABRIR_ORDEN;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -32,6 +34,9 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     private OrdenService service;
     private Mesa mesaSeleccionada;
     private String codOrdenEnlazada;
+
+    public static final String ACTION_MOSTRAR_SECCION = "Mostrar Seccion";
+    public static final String ACTION_OCULTAR_SECCION = "Ocultar Seccion";
 
     public static final String PROP_PRODUCTO_SELECCIONADO = "PROP_PRODUCTO_SELECCIONADO";
 
@@ -104,6 +109,28 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
 
     @Override
     protected void registerOperations() {
+        registerOperation(new AbstractViewAction(ACTION_MOSTRAR_SECCION) {
+            @Override
+            public Optional doAction() {
+                onMostrarSeccionClick();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_OCULTAR_SECCION) {
+            @Override
+            public Optional doAction() {
+                onOcultarSeccionClick();
+                return Optional.empty();
+            }
+        });
+
+    }
+
+    public void onMostrarSeccionClick() {
+        getBean().setMostrar_seccion(true);
+    }
+    public void onOcultarSeccionClick() {
+        getBean().setMostrar_seccion(false);
     }
 
     @Override

@@ -66,6 +66,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
                 if ((boolean) evt.getNewValue()) {
                     ordenService.setModoAgrego(ordenPresenter.getBean().getProducto_orden_seleccionado());
                     menuPresenter.showSeccionesAgregadas();
+                    menuPresenter.onMostrarSeccionClick();
                 } else {
                     ordenService.setModoAgrego(null);
                     menuPresenter.refreshState();
