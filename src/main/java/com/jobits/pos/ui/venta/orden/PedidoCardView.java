@@ -24,7 +24,6 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.CellRenderPedido;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel.*;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter.*;
 import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel.PROP_PV_FILTRADO;
@@ -102,9 +101,10 @@ public class PedidoCardView extends AbstractViewPanel {
 
         setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
         setToolTipText(null);
-        setMaximumSize(new java.awt.Dimension(32773, 7500));
-        setMinimumSize(new java.awt.Dimension(280, 400));
-        setPreferredSize(new java.awt.Dimension(280, 490));
+        setMaximumSize(new java.awt.Dimension(290, 1000));
+        setMinimumSize(new java.awt.Dimension(290, 400));
+        setName(""); // NOI18N
+        setPreferredSize(new java.awt.Dimension(290, 490));
         setLayout(new java.awt.BorderLayout());
 
         jPanelHeader.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, DefaultValues.SECONDARY_COLOR));
@@ -182,8 +182,8 @@ public class PedidoCardView extends AbstractViewPanel {
 
         jPanelMedia.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jPanelMedia.setToolTipText(null);
-        jPanelMedia.setMaximumSize(new java.awt.Dimension(600, 30000));
-        jPanelMedia.setMinimumSize(new java.awt.Dimension(600, 200));
+        jPanelMedia.setMaximumSize(new java.awt.Dimension(295, 30000));
+        jPanelMedia.setMinimumSize(new java.awt.Dimension(295, 200));
         jPanelMedia.setPreferredSize(new java.awt.Dimension(0, 250));
         jPanelMedia.setRequestFocusEnabled(false);
         jPanelMedia.setLayout(new java.awt.BorderLayout());
@@ -224,6 +224,7 @@ public class PedidoCardView extends AbstractViewPanel {
 
         jPanelMedia.add(jPanel1, java.awt.BorderLayout.NORTH);
 
+        jScrollPane1.setHorizontalScrollBar(null);
         jScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 200));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(259, 200));
 
