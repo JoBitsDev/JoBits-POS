@@ -383,9 +383,11 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelRoot.add(jPanelData, java.awt.BorderLayout.CENTER);
 
         jPanelFooter.setBackground(new java.awt.Color(204, 204, 204));
+        jPanelFooter.setPreferredSize(new java.awt.Dimension(597, 50));
         jPanelFooter.setLayout(new java.awt.BorderLayout());
 
         jPanel8.setOpaque(false);
+        jPanel8.setPreferredSize(new java.awt.Dimension(597, 50));
         jPanel8.setLayout(new java.awt.BorderLayout());
 
         jButtonCambiarTurno.setText(bundle.getString("label_cambiar_turno")); // NOI18N
@@ -401,9 +403,11 @@ public class VentaDetailView extends AbstractViewPanel {
 
         jButtonReabrirVentas.setText(bundle.getString("label_reabrir_ventas")); // NOI18N
         jButtonReabrirVentas.setEnabled(false);
+        jButtonReabrirVentas.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanelTerminarVentas.add(jButtonReabrirVentas);
 
         jButtonTerminar.setText("Terminar");
+        jButtonTerminar.setPreferredSize(new java.awt.Dimension(100, 50));
         jButtonTerminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonTerminarActionPerformed(evt);
