@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.utils;
+package com.jobits.pos.ui.venta.orden;
 
 import com.jobits.pos.domain.models.ProductovOrden;
+import com.jobits.pos.ui.utils.utils;
+import java.awt.Dimension;
 
 /**
  *
@@ -24,7 +26,15 @@ public class CellRenderPedido extends javax.swing.JPanel {
         }
         jLabelAgrego.setVisible(o.getAgregadoA() != null);
         jLabelAgrego1.setVisible(o.getAgregadoA() != null);
-        jLabelProducto.setText(o.getNombreProductoVendido());
+//        jLabelProducto.setText(o.getNombreProductoVendido());
+        int rows = (int) Math.ceil(o.getNombreProductoVendido().length() / 20);
+        System.out.println(rows);
+        jTextAreaProducto.setRows(rows);
+        if (rows > 1) {
+            int heigth = (rows * 11) + 50;
+            setPreferredSize(new Dimension(254, heigth));
+        }
+        jTextAreaProducto.setText(o.getNombreProductoVendido());
         jLabelCantidad.setText("x" + o.getCantidad());
         jLabelCantidadEnviada.setVisible(false);
         if (o.getCantidad() > o.getEnviadosacocina()) {
@@ -44,40 +54,49 @@ public class CellRenderPedido extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
         jLabelProducto = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jLabelAgrego = new javax.swing.JLabel();
-        jLabelPrecio = new javax.swing.JLabel();
+        jTextAreaProducto = new javax.swing.JTextArea();
+        jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabelAgrego1 = new javax.swing.JLabel();
         jLabelCantidad = new javax.swing.JLabel();
         jLabelCantidadEnviada = new javax.swing.JLabel();
+        jLabelPrecio = new javax.swing.JLabel();
+
+        jLabelProducto.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
+        jLabelProducto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelProducto.setText("<Producto>");
 
         setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 5, 3, 5));
+        setMinimumSize(new java.awt.Dimension(122, 50));
         setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(254, 50));
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.BorderLayout());
-
-        jLabelProducto.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
-        jLabelProducto.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelProducto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabelProducto.setText("<Producto>");
-        jPanel2.add(jLabelProducto, java.awt.BorderLayout.CENTER);
 
         jLabelAgrego.setForeground(new java.awt.Color(0, 153, 204));
         jLabelAgrego.setText("-->");
         jLabelAgrego.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 3));
         jPanel2.add(jLabelAgrego, java.awt.BorderLayout.WEST);
 
-        add(jPanel2, java.awt.BorderLayout.PAGE_START);
+        jTextAreaProducto.setEditable(false);
+        jTextAreaProducto.setColumns(20);
+        jTextAreaProducto.setLineWrap(true);
+        jTextAreaProducto.setRows(2);
+        jTextAreaProducto.setText("asd\nasd\n");
+        jTextAreaProducto.setMinimumSize(new java.awt.Dimension(4, 10));
+        jTextAreaProducto.setOpaque(false);
+        jPanel2.add(jTextAreaProducto, java.awt.BorderLayout.CENTER);
 
-        jLabelPrecio.setFont(new java.awt.Font(".SF NS Text", 1, 12)); // NOI18N
-        jLabelPrecio.setForeground(new java.awt.Color(0, 102, 51));
-        jLabelPrecio.setText("1200 MN");
-        add(jLabelPrecio, java.awt.BorderLayout.LINE_END);
+        add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanel3.setOpaque(false);
+        jPanel3.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
@@ -99,7 +118,14 @@ public class CellRenderPedido extends javax.swing.JPanel {
         jLabelCantidadEnviada.setToolTipText("por enviar");
         jPanel1.add(jLabelCantidadEnviada);
 
-        add(jPanel1, java.awt.BorderLayout.CENTER);
+        jPanel3.add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jLabelPrecio.setFont(new java.awt.Font(".SF NS Text", 1, 12)); // NOI18N
+        jLabelPrecio.setForeground(new java.awt.Color(0, 102, 51));
+        jLabelPrecio.setText("1200 MN");
+        jPanel3.add(jLabelPrecio, java.awt.BorderLayout.EAST);
+
+        add(jPanel3, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -112,5 +138,7 @@ public class CellRenderPedido extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelProducto;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextArea jTextAreaProducto;
     // End of variables declaration//GEN-END:variables
 }
