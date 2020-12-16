@@ -88,7 +88,8 @@ public class CellRenderPedido extends javax.swing.JPanel {
         jTextAreaProducto.setColumns(20);
         jTextAreaProducto.setLineWrap(true);
         jTextAreaProducto.setRows(2);
-        jTextAreaProducto.setText("asd\nasd\n");
+        jTextAreaProducto.setText("qwertyuiopasdfghjklz");
+        jTextAreaProducto.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 25));
         jTextAreaProducto.setMinimumSize(new java.awt.Dimension(4, 10));
         jTextAreaProducto.setOpaque(false);
         jPanel2.add(jTextAreaProducto, java.awt.BorderLayout.CENTER);
