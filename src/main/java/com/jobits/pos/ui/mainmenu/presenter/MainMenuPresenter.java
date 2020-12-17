@@ -101,8 +101,10 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
 
     @Override
     protected Optional refreshState() {
-        nivelDeAccesoAutenticado = Application.getInstance().getLoggedUser()
-                .getPuestoTrabajonombrePuesto().getNivelAcceso();
+        Application.getInstance().getBackgroundWorker().processInBackground("Cargando...", () -> {
+            nivelDeAccesoAutenticado = Application.getInstance().getLoggedUser()
+                    .getPuestoTrabajonombrePuesto().getNivelAcceso();
+        });
         return Optional.empty();
     }
 
