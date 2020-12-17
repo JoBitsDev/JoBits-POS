@@ -747,22 +747,22 @@ public class VentaDetailView extends AbstractViewPanel {
 
         float perdida = 0;
         if (insumos != null) {
-            float insumo = Float.parseFloat(insumos.split(" ")[0]);
+            float insumo = Float.parseFloat(insumos.split("_")[0].replaceAll(" ", ""));
             perdida += insumo;
             chartPie.addSeries("Gastos de Insumo " + utils.setDosLugaresDecimales(insumo), insumo);
         }
         if (otro != null) {
-            float otros = Float.parseFloat(otro.split(" ")[0]);
+            float otros = Float.parseFloat(otro.split("_")[0].replaceAll(" ", ""));
             perdida += otros;
             chartPie.addSeries("Otros gastos " + utils.setDosLugaresDecimales(otros), otros);
         }
         if (salarios != null) {
-            float trabajadores = Float.parseFloat(salarios.split(" ")[0]);
+            float trabajadores = Float.parseFloat(salarios.split("_")[0].replaceAll(" ", ""));
             perdida += trabajadores;
             chartPie.addSeries("Pago a trabajadores " + utils.setDosLugaresDecimales(trabajadores), trabajadores);
         }
         if (ventasTotal != null) {
-            float gananciaRelativa = Float.parseFloat(ventasTotal.split(" ")[0]) - perdida;
+            float gananciaRelativa = Float.parseFloat(ventasTotal.split("_")[0].replaceAll(" ", "")) - perdida;
             chartPie.addSeries("Resto de efectivo " + utils.setDosLugaresDecimales(gananciaRelativa), gananciaRelativa).setFillColor(Color.GREEN);
         }
 
