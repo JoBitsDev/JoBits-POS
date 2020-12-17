@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.servicios.impresion.formatter;
 
+import com.jobits.pos.adapters.repo.impl.ProductovOrdenDAO;
 import com.jobits.pos.domain.models.IpvRegistro;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.ProductovOrden;
@@ -14,6 +15,7 @@ import com.jobits.pos.servicios.impresion.Ticket;
 import com.jobits.pos.ui.utils.utils;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.print.Doc;
 import javax.print.DocFlavor;
@@ -47,6 +49,8 @@ public abstract class AbstractTicketFormatter implements PrintFormatter {
      */
     public final String COCINA = "Pto Elaboracion: ";
 
+    private final String TAB = "****> ";
+
     protected final String DELACASA = "(Pedido por la casa)",
             ORDEN = "Orden No: ",
             MESA = "Mesa: ",
@@ -62,7 +66,7 @@ public abstract class AbstractTicketFormatter implements PrintFormatter {
             CANCELACION = "CANCELACION";
 
     protected String PIE = "Vuelva Pronto",
-            MONEDA = "";
+            MONEDA = R.COIN_SUFFIX;
 
     /**
      * Strings referentes a la impresion de resumenes de ventas
@@ -232,8 +236,8 @@ public abstract class AbstractTicketFormatter implements PrintFormatter {
         float total = 0;
         for (ProductovOrden x : prods) {
             t.alignLeft();
-            t.setText(x.getCantidad() + " " + x.getNombreProductoVendido());
-            t.newLine();
+//            t.setText(x.getCantidad() + " " + x.getNombreProductoVendido());
+            adjusttextToLine(t, x.getNombreProductoVendido(), "" + x.getCantidad(), false);
             t.alignRight();
             if (this.SHOW_PRICES) {
                 if (x.getOrden().getDeLaCasa()) {
@@ -246,6 +250,28 @@ public abstract class AbstractTicketFormatter implements PrintFormatter {
                     t.setText(utils.setDosLugaresDecimales(x.getCantidad() * x.getPrecioVendido()));
                 }
                 t.newLine();
+            }
+            t.alignLeft();
+            if (x.getAgregos() != null) {
+                if (!x.getAgregos().isEmpty()) {
+                    for (ProductovOrden a : x.getAgregos()) {
+                        adjusttextToLine(t, a.getNombreProductoVendido(),
+                                TAB + (a.getCantidad()), true);
+//                            t.setText(TAB + (a.getCantidad() - a.getEnviadosacocina()) + " " + a.getNombreProductoVendido());
+//                            t.newLine();
+                        t.alignRight();
+                        t.setText(utils.setDosLugaresDecimales((a.getCantidad()) * a.getPrecioVendido()));
+                        t.newLine();
+                        t.alignLeft();
+//                        a.setEnviadosacocina(a.getCantidad());
+//                        try {
+//                            ProductovOrdenDAO.getInstance().edit(a);
+//                        } catch (Exception ex) {
+//                            Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+
+                    }
+                }
             }
             if (x.getOrden().getDeLaCasa()) {
                 if (this.PRINT_GASTOS_EN_AUTORIZOS) {
@@ -265,6 +291,33 @@ public abstract class AbstractTicketFormatter implements PrintFormatter {
         Doc doc = new SimpleDoc(bytes, flavor, null);
         return doc;
 
+    }
+
+    private void adjusttextToLine(Ticket t, String text, String inicio, boolean addTab) {
+        String[] part = text.split(" ");
+        String[] line = new String[5];
+        line[0] = inicio;
+        int numLine = 0;
+        for (int i = 0; i < part.length; i++) {
+            if (line[numLine].length() + part[i].length() < 32) {
+                line[numLine] += " " + part[i];
+            } else {
+                numLine++;
+                if (addTab) {
+                    line[numLine] = "      " + part[i];
+                } else {
+                    line[numLine] = part[i];
+                }
+            }
+        }
+        for (String string : line) {
+            if (string != null) {
+                t.setText(string);
+                t.newLine();
+            } else {
+                break;
+            }
+        }
     }
 
 }

@@ -10,8 +10,10 @@ import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.adapters.repo.impl.ProductovOrdenDAO;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.Ticket;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -27,6 +29,7 @@ public class CocinaFormatter extends AbstractTicketFormatter {
     Orden orden;
     Cocina cocina;
     String sync;
+    private final String TAB = "****> ";
 
     public CocinaFormatter(Orden orden, Cocina cocina, String sync) {
         this.orden = orden;
@@ -69,15 +72,40 @@ public class CocinaFormatter extends AbstractTicketFormatter {
                     t.setText(x.getNota().getDescripcion().replace('%', ' '));
                     t.newLine();
                     t.alignLeft();
-                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getNombreProductoVendido());
+                    adjusttextToLine(t, x.getNombreProductoVendido(),
+                            "*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()), false);
+//                    t.setText("*NOTA* " + (x.getCantidad() - x.getEnviadosacocina()) + " " + x.getNombreProductoVendido());
                 } else {
-                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getNombreProductoVendido());
+                    adjusttextToLine(t, x.getNombreProductoVendido(),
+                            "" + (x.getCantidad() - x.getEnviadosacocina()), false);
+//                    t.setText(x.getCantidad() - x.getEnviadosacocina() + " " + x.getNombreProductoVendido());
                 }
-                t.newLine();
                 t.alignRight();
-                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getPrecioVendido() + " " + MONEDA);
+                t.setText((x.getCantidad() - x.getEnviadosacocina()) * x.getPrecioVendido() + MONEDA);
                 t.newLine();
                 t.alignLeft();
+
+                if (x.getAgregos() != null) {
+                    if (!x.getAgregos().isEmpty()) {
+                        for (ProductovOrden a : x.getAgregos()) {
+                            adjusttextToLine(t, a.getNombreProductoVendido(),
+                                    TAB + (a.getCantidad() - a.getEnviadosacocina()), true);
+//                            t.setText(TAB + (a.getCantidad() - a.getEnviadosacocina()) + " " + a.getNombreProductoVendido());
+//                            t.newLine();
+                            t.alignRight();
+                            t.setText((a.getCantidad() - a.getEnviadosacocina()) * a.getPrecioVendido() + MONEDA);
+                            t.newLine();
+                            t.alignLeft();
+                            a.setEnviadosacocina(a.getCantidad());
+                            try {
+                                ProductovOrdenDAO.getInstance().edit(a);
+                            } catch (Exception ex) {
+                                Logger.getLogger(Impresion.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                        }
+                    }
+                }
 
                 ordenSinPlatos = false;
                 x.setEnviadosacocina(x.getCantidad());
@@ -111,6 +139,33 @@ public class CocinaFormatter extends AbstractTicketFormatter {
         return createDoc(new Ticket().finalCommandSet().getBytes());
     }
 
+    private void adjusttextToLine(Ticket t, String text, String inicio, boolean addTab) {
+        String[] part = text.split(" ");
+        String[] line = new String[5];
+        line[0] = inicio;
+        int numLine = 0;
+        for (int i = 0; i < part.length; i++) {
+            if (line[numLine].length() + part[i].length() < 32) {
+                line[numLine] += " " + part[i];
+            } else {
+                numLine++;
+                if (addTab) {
+                    line[numLine] = "      " + part[i];
+                } else {
+                    line[numLine] = part[i];
+                }
+            }
+        }
+        for (String string : line) {
+            if (string != null) {
+                t.setText(string);
+                t.newLine();
+            } else {
+                break;
+            }
+        }
+    }
+
     private void log(Orden o, ProductovOrden x) {
         RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.IMPRIMIENDO_PRODUCTO,
                 Level.FINEST,
@@ -118,9 +173,7 @@ public class CocinaFormatter extends AbstractTicketFormatter {
                 x.getEnviadosacocina() - x.getCantidad());
     }
 
-    
-    
-    public Orden printKitchenForced(Orden o) {
+    private Orden printKitchenForced(Orden o) {
         Ticket t = new Ticket();
         boolean ordenSinPlatos = true;
 
