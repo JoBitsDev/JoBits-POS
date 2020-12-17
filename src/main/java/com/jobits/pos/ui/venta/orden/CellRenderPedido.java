@@ -20,21 +20,22 @@ public class CellRenderPedido extends javax.swing.JPanel {
      */
     public CellRenderPedido(ProductovOrden o, boolean selected) {
         initComponents();
+        int rowsCant = 33;
         if (o.getAgregadoA() != null) {
             jLabelProducto.setFont(jLabelProducto.getFont().deriveFont(10));
             jLabelAgrego.setFont(jLabelProducto.getFont().deriveFont(10));
+            rowsCant = 27;
         }
         jLabelAgrego.setVisible(o.getAgregadoA() != null);
         jLabelAgrego1.setVisible(o.getAgregadoA() != null);
-//        jLabelProducto.setText(o.getNombreProductoVendido());
-        int rows = (int) Math.ceil(o.getNombreProductoVendido().length() / 20);
-        System.out.println(rows);
+
+        jTextAreaProducto.setRows(rowsCant);
+        int rows = (int) Math.ceil((float) o.getNombreProductoVendido().length() / rowsCant);
         jTextAreaProducto.setRows(rows);
-        if (rows > 1) {
-            int heigth = (rows * 11) + 50;
-            setPreferredSize(new Dimension(254, heigth));
-        }
+        int heigth = ((rows - 1) * 14) + 50;
+        setPreferredSize(new Dimension(254, heigth));
         jTextAreaProducto.setText(o.getNombreProductoVendido());
+
         jLabelCantidad.setText("x" + o.getCantidad());
         jLabelCantidadEnviada.setVisible(false);
         if (o.getCantidad() > o.getEnviadosacocina()) {
@@ -55,8 +56,8 @@ public class CellRenderPedido extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabelProducto = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         jLabelAgrego = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jTextAreaProducto = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -70,27 +71,26 @@ public class CellRenderPedido extends javax.swing.JPanel {
         jLabelProducto.setText("<Producto>");
 
         setBackground(new java.awt.Color(153, 153, 153));
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 5, 3, 5));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 5, 3, 30));
         setMinimumSize(new java.awt.Dimension(122, 50));
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(254, 50));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
         jLabelAgrego.setForeground(new java.awt.Color(0, 153, 204));
         jLabelAgrego.setText("-->");
         jLabelAgrego.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 3));
-        jPanel2.add(jLabelAgrego, java.awt.BorderLayout.WEST);
+        add(jLabelAgrego, java.awt.BorderLayout.WEST);
+
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
         jTextAreaProducto.setEditable(false);
-        jTextAreaProducto.setColumns(20);
+        jTextAreaProducto.setColumns(30);
         jTextAreaProducto.setLineWrap(true);
-        jTextAreaProducto.setRows(2);
-        jTextAreaProducto.setText("qwertyuiopasdfghjklz");
+        jTextAreaProducto.setWrapStyleWord(true);
         jTextAreaProducto.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 25));
-        jTextAreaProducto.setMinimumSize(new java.awt.Dimension(4, 10));
+        jTextAreaProducto.setMinimumSize(new java.awt.Dimension(4, 12));
         jTextAreaProducto.setOpaque(false);
         jPanel2.add(jTextAreaProducto, java.awt.BorderLayout.CENTER);
 
