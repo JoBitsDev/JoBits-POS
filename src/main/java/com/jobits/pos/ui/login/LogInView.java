@@ -53,6 +53,10 @@ public class LogInView extends AbstractViewPanel {
         jPanel1 = new javax.swing.JPanel();
         jPanelLogo = new javax.swing.JPanel();
         jXLabelUser1 = new org.jdesktop.swingx.JXLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanelInput = new javax.swing.JPanel();
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("Introduzca el nombre de usuario","Usuario");
         jPasswordField = MaterialComponentsFactory.Input.getPasswordField(java.util.ResourceBundle.getBundle("Strings").getString("label_introduzca_contrasena"), java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena"));
@@ -95,6 +99,18 @@ public class LogInView extends AbstractViewPanel {
 
         jPanel1.add(jPanelLogo);
 
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jPanel4.setLayout(new java.awt.GridLayout(2, 1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/usuario_indigo.png"))); // NOI18N
+        jPanel4.add(jLabel1);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/password_indigo.png"))); // NOI18N
+        jPanel4.add(jLabel2);
+
+        jPanel3.add(jPanel4, java.awt.BorderLayout.WEST);
+
         jPanelInput.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
         jPanelInput.setMaximumSize(new java.awt.Dimension(220, 32767));
         jPanelInput.setOpaque(false);
@@ -106,7 +122,9 @@ public class LogInView extends AbstractViewPanel {
         jPasswordField.setMaximumSize(new java.awt.Dimension(220, 2147483647));
         jPanelInput.add(jPasswordField);
 
-        jPanel1.add(jPanelInput);
+        jPanel3.add(jPanelInput, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(jPanel3);
 
         jPanelAutenticar.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
         jPanelAutenticar.setOpaque(false);
@@ -155,10 +173,14 @@ public class LogInView extends AbstractViewPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonAutenticar;
     private javax.swing.JButton jButtonEdit;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelEstadoConexion;
     private javax.swing.JLabel jLabelUbicacionSeleccionada;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelAutenticar;
     private javax.swing.JPanel jPanelConn;
     private javax.swing.JPanel jPanelInput;
