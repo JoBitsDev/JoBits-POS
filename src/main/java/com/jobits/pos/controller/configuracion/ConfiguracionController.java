@@ -50,7 +50,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
         ConfiguracionDAO c = ConfiguracionDAO.getInstance();
         R.REST_NAME = model.getNombre();
         R.MAIN_COIN = model.getMonedaPrincipal();
-        R.COIN_SUFFIX = " " + model.getMonedaPrincipal();
+        R.COIN_SUFFIX = "_" + model.getMonedaPrincipal();
         R.COINCHANGE = c.find(R.SettingID.GENERAL_CAMBIO_MONEDA).getValor();
         R.VARIOS_TURNOS = c.find(R.SettingID.GENERAL_TURNOS_VARIOS).getValor() == 1;
         R.CAJERO_PERMISOS_ESPECIALES = c.find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() == 1;

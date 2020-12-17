@@ -40,7 +40,7 @@ public class CartaListController extends OldAbstractListController<Carta> implem
         Carta c = new Carta();
         c.setAreaList(new ArrayList<>());
         c.setCodCarta(getModel().generateStringCode("Cta-"));
-        c.setMonedaPrincipal(R.COIN_SUFFIX.trim());
+        c.setMonedaPrincipal(R.COIN_SUFFIX.substring(1));
         c.setNombreCarta(nombre);
         c.setSeccionList(new ArrayList<>());
         if (nombre != null && !nombre.isEmpty()) {

@@ -207,7 +207,7 @@ public class ProductoVenta implements Serializable,Comparable<ProductoVenta>{
 
     @Override
     public String toString() {
-        return nombre + " (" + precioVenta + R.COIN_SUFFIX + " )";
+        return nombre + " (" + precioVenta + R.COIN_SUFFIX + ")";
     }
     
     public Float getPagoPorVenta() {
