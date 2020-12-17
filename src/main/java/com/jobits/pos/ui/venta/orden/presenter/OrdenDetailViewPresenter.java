@@ -51,6 +51,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_SHOW_LOGS = "Ver Detalles";
     public static String ACTION_SET_AUTORIZO = "Autorizo";
     public static String ACTION_SET_AGREGO = "Agrego";
+    public static String ACTION_SET_SUPORT_PANEL_VISIBLE = "Suport Panel Visible";
     public static String ACTION_SET_PORCIENTO = "Porciento";
     private String codOrden;
     private OrdenService controller;
@@ -151,6 +152,10 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         } else {
             JOptionPane.showMessageDialog(null, "No hay registros de orden: " + codOrden, "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void onSuperPanelVisibleClick() {
+        getBean().setSuport_panel_visible(!getBean().isSuport_panel_visible());
     }
 
     @Override
@@ -284,6 +289,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onVerDetallesClick();
+                return Optional.empty();
+            }
+        }
+        );
+        registerOperation(new AbstractViewAction(ACTION_SET_SUPORT_PANEL_VISIBLE) {
+            @Override
+            public Optional doAction() {
+                onSuperPanelVisibleClick();
                 return Optional.empty();
             }
         }

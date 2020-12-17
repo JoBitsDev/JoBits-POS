@@ -119,6 +119,30 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_BOTTON_AGREGO_ENABLED = "botton_agrego_enabled";
 
+    private boolean suport_panel_visible = false;
+
+    public static final String PROP_SUPORT_PANEL_VISIBLE = "suport_panel_visible";
+
+    /**
+     * Get the value of suport_panel_visible
+     *
+     * @return the value of suport_panel_visible
+     */
+    public boolean isSuport_panel_visible() {
+        return suport_panel_visible;
+    }
+
+    /**
+     * Set the value of suport_panel_visible
+     *
+     * @param suport_panel_visible new value of suport_panel_visible
+     */
+    public void setSuport_panel_visible(boolean suport_panel_visible) {
+        boolean oldSuport_panel_visible = this.suport_panel_visible;
+        this.suport_panel_visible = suport_panel_visible;
+        firePropertyChange(PROP_SUPORT_PANEL_VISIBLE, oldSuport_panel_visible, suport_panel_visible);
+    }
+
     /**
      * Get the value of botton_agrego_enabled
      *

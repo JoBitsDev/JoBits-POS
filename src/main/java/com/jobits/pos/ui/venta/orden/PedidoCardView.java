@@ -79,10 +79,12 @@ public class PedidoCardView extends AbstractViewPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>()
         ;
+        jPanel6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jideButtonCierreParcial = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jideButtonEnviarCocina = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jideButtonCerrarMesa = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jToggleButtonHideSupportPanel = new javax.swing.JToggleButton();
         jPanelSupportText = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxClientes = new javax.swing.JComboBox<>();
@@ -177,7 +179,7 @@ public class PedidoCardView extends AbstractViewPanel {
 
         add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
 
-        Main.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 10, 10));
+        Main.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
         Main.setLayout(new javax.swing.BoxLayout(Main, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelMedia.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -233,6 +235,8 @@ public class PedidoCardView extends AbstractViewPanel {
 
         jPanelMedia.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
         jideButtonCierreParcial.setBackground(new java.awt.Color(204, 204, 204));
         jideButtonCierreParcial.setIcon(MaterialIcons.PRINT);
         jideButtonCierreParcial.setToolTipText("Cierre Parcial");
@@ -257,7 +261,13 @@ public class PedidoCardView extends AbstractViewPanel {
         jideButtonCerrarMesa.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel3.add(jideButtonCerrarMesa);
 
-        jPanelMedia.add(jPanel3, java.awt.BorderLayout.SOUTH);
+        jPanel6.add(jPanel3, java.awt.BorderLayout.CENTER);
+
+        jToggleButtonHideSupportPanel.setIcon(MaterialIcons.ARROW_DROP_UP);
+        jToggleButtonHideSupportPanel.setSelectedIcon(MaterialIcons.ARROW_DROP_DOWN);
+        jPanel6.add(jToggleButtonHideSupportPanel, java.awt.BorderLayout.EAST);
+
+        jPanelMedia.add(jPanel6, java.awt.BorderLayout.SOUTH);
 
         Main.add(jPanelMedia);
 
@@ -384,6 +394,7 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelActionButtons;
     private javax.swing.JPanel jPanelEstado;
     private javax.swing.JPanel jPanelHeader;
@@ -395,6 +406,7 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButtonAgregos;
     private javax.swing.JToggleButton jToggleButtonAutorizo;
+    private javax.swing.JToggleButton jToggleButtonHideSupportPanel;
     private javax.swing.JButton jideButtonCerrarMesa;
     private javax.swing.JButton jideButtonCierreParcial;
     private javax.swing.JButton jideButtonEnviarCocina;
@@ -425,6 +437,7 @@ public class PedidoCardView extends AbstractViewPanel {
 //        Bindings.bind(jLabelGratis, "visible", getPresenter().getModel(PROP_ES_AUTORIZO));
 //        Bindings.bind(jLabelPorciento, "visible", getPresenter().getModel(PROP_TIENE_PORCIENTO));
         Bindings.bind(jLabelTerminada, "visible", getPresenter().getModel(PROP_ORDEN_TERMINADA));
+        Bindings.bind(jPanelSupportText, "visible", getPresenter().getModel(PROP_SUPORT_PANEL_VISIBLE));
 
         jideButtonCerrarMesa.addActionListener(getPresenter().getOperation(ACTION_CERRAR_ORDEN));
         jideButtonEnviarCocina.addActionListener(getPresenter().getOperation(ACTION_ENVIAR_ELABORAR));
@@ -433,6 +446,7 @@ public class PedidoCardView extends AbstractViewPanel {
         jButton3.addActionListener(getPresenter().getOperation(ACTION_ADD_NOTA));
         jButton4.addActionListener(getPresenter().getOperation(ACTION_SHOW_LOGS));
         jideButtonCierreParcial.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_CIERRE_PARCIAL));
+        jToggleButtonHideSupportPanel.addActionListener(getPresenter().getOperation(ACTION_SET_SUPORT_PANEL_VISIBLE));
 
 //        jToggleButtonExpand.addActionListener((ActionEvent e) -> {
 //            jPanelMedia.setVisible(jToggleButtonExpand.isSelected());
