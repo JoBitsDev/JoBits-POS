@@ -103,7 +103,16 @@ public class VentaCalendarView extends AbstractViewPanel {
         jTableCalendar.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jTableCalendar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
 
@@ -112,7 +121,6 @@ public class VentaCalendarView extends AbstractViewPanel {
         jTableCalendar.setColumnSelectionAllowed(true);
         jTableCalendar.setOpaque(false);
         jTableCalendar.setRowHeight(80);
-        jTableCalendar.setShowGrid(false);
         jTableCalendar.setTableHeader(null);
         jScrollPane1.setViewportView(jTableCalendar);
 
@@ -409,8 +417,10 @@ public class VentaCalendarView extends AbstractViewPanel {
             @Override
             public Venta getObjectAt(int dayOfMonth) {
                 for (int i = 0; i < getListModel().getSize(); i++) {
-                    if (super.getRow(i).getFecha().getDate() == dayOfMonth) {
-                        return super.getRow(i);
+                    if (super.getRow(i) != null) {
+                        if (super.getRow(i).getFecha().getDate() == dayOfMonth) {
+                            return super.getRow(i);
+                        }
                     }
                 }
                 return null;

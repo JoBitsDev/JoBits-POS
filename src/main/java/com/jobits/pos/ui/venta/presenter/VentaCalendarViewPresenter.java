@@ -28,9 +28,13 @@ import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaResumenView;
 import java.beans.PropertyChangeEvent;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -47,6 +51,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     public static final String ACTION_IMPORTAR_VENTA = "Importar venta",
             ACTION_Y = "Y",
             ACTION_RESUMEN_DETALLADO = "Resumen detallado";
+
+    private List<Venta> listaReal = new ArrayList();
 
     public VentaCalendarViewPresenter(VentaListController controller) {
         super(new VentaCalendarViewModel(), "Ventas");
@@ -176,8 +182,22 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void setListToBean() {
-        getBean().setLista_elementos(service.findVentas(getBean().getMes_seleccionado(), getBean().getYear_seleccionado()));
-
+        listaReal = service.findVentas(getBean().getMes_seleccionado(), getBean().getYear_seleccionado());
+        int flag = 0;
+        Venta aux[] = new Venta[0];
+        if (!listaReal.isEmpty()) {
+            aux = new Venta[listaReal.get(listaReal.size() - 1).getFecha().getDate()];
+            for (int i = 0; i < aux.length - 1; i++) {
+                if (i == listaReal.get(flag).getFecha().getDate()) {
+                    aux[i] = listaReal.get(flag);
+                    flag++;
+                } else {
+                    aux[i] = null;
+                }
+            }
+        }
+        getBean().setLista_elementos(Arrays.asList(aux));
+//        getBean().setLista_elementos(service.findVentas(getBean().getMes_seleccionado(), getBean().getYear_seleccionado()));
     }
 
     private void updateBeanData() {
@@ -190,7 +210,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         double gGastos = 0;
         double gTrabajadores = 0;
         int cantidad = 0;
-        for (Venta x : getBean().getLista_elementos()) {
+        for (Venta x : listaReal) {
             if (x.getVentaTotal() != null) {
                 suma += x.getVentaTotal();
                 if (x.getVentagastosEninsumos() != null) {
@@ -213,7 +233,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         getBean().setGasto_insumo_intervalo(utils.setDosLugaresDecimales((float) gInsumos));
         getBean().setGasto_trabajadores_intervalo(utils.setDosLugaresDecimales((float) (gTrabajadores)));
         getBean().setGasto_otros_intervalo(utils.setDosLugaresDecimales((float) gGastos));
-        int hora_pico_promedio = VentaDAO1.getModalPickHour(getBean().getLista_elementos());
+        int hora_pico_promedio = VentaDAO1.getModalPickHour(listaReal);
         getBean().setHora_pico_intervalo(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
         getBean().setY_visible(service.isYVisible());
     }
@@ -231,14 +251,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     }
 
     private int calculateMonthOffset() {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_MONTH, 1);
-        cal.set(Calendar.YEAR, getBean().getYear_seleccionado());
-        cal.set(Calendar.MONTH, getBean().getMes_seleccionado());
-        int monthOffset = cal.get(Calendar.DAY_OF_WEEK) - 2;//TODO trabajar desde el bean
-        if (monthOffset == -1) {
-            monthOffset = 6;
-        }
-        return monthOffset;
+        LocalDate date = LocalDate.of(getBean().getYear_seleccionado(), getBean().getMes_seleccionado() + 1, 1);
+        return date.getDayOfWeek().getValue() - 1;
     }
 }

@@ -93,9 +93,11 @@ public class VentaCalendarViewModel extends AbstractListViewModel<Venta> {
      * @param dia_seleccionado new value of dia_seleccionado
      */
     public void setDia_seleccionado(Venta dia_seleccionado) {
-        Venta oldDia_seleccionado = this.dia_seleccionado;
-        this.dia_seleccionado = dia_seleccionado;
-        firePropertyChange(PROP_DIA_SELECCIONADO, oldDia_seleccionado, dia_seleccionado);
+        if (dia_seleccionado != null) {
+            Venta oldDia_seleccionado = this.dia_seleccionado;
+            this.dia_seleccionado = dia_seleccionado;
+            firePropertyChange(PROP_DIA_SELECCIONADO, oldDia_seleccionado, dia_seleccionado);
+        }
     }
 
     /**
