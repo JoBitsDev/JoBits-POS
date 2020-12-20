@@ -9,10 +9,12 @@ import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaAreaTablaModel;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,54 +23,58 @@ import java.util.List;
  */
 public interface VentaDetailService {
 
-    public Orden createNewOrden();
+    public Venta cambiarTurno(Venta venta);
 
-    public List<Orden> getOrdenesActivas();
+    public boolean canReabrirVenta(int codVenta);
 
-    public void fetchNewDataFromServer(int turnoTrabajo);
+    public Orden createNewOrden(int codVenta);
 
-    public void printZ();
+    public void fetchNewDataFromServer(int codVenta);
 
-    public void printGastosCasa();
+    public Venta getInstance(int codVenta);
 
-    public boolean terminarVentas();
+    public List<Orden> getOrdenesActivas(int codVenta);
 
-    public boolean terminarYExportar(File file);
+    public List<ResumenVentaAreaTablaModel> getResumenPorAreaVenta(int codVenta);
 
-    public void reabrirVentas();
+    public List<ResumenVentaPtoElabTablaModel> getResumenPorPtoVenta(int codVenta);
 
-    public void printCocinaResumen(String codCocina);
+    public List<ResumenVentaUsuarioTablaModel> getResumenPorUsuarioVenta(int codVenta);
 
-    public void printAreaResumen(Area a);
+    public String getTotalAutorizos(int codVenta);
 
-    public void printPersonalResumenRow(Personal personal);
+    public String getTotalGastadoInsumos(int codVenta);
 
-    public void printPagoPorVentaPersonal(Personal user);
+    public String getTotalGastos(int codVenta);
 
-    public List<ResumenVentaAreaTablaModel> getResumenPorAreaVenta();
+    public String getTotalPagoTrabajadores(int codVenta);
 
-    public List<ResumenVentaPtoElabTablaModel> getResumenPorPtoVenta();
+    public float getTotalPropina(int codVenta);
 
-    public List<ResumenVentaUsuarioTablaModel> getResumenPorUsuarioVenta();
+    public String getTotalVendido(int codVenta);
 
-    public float getTotalPropina();
+    public String getTotalVendidoNeto(int codVenta);
 
-    public boolean canReabrirVenta();
+    public void initIPV(Venta venta_seleccionada);
 
-    public String getTotalAutorizos();
+    public void printAreaResumen(Area a, int codVenta);
 
-    public String getTotalGastadoInsumos();
+    public void printCocinaResumen(String codCocina, int codVenta);
 
-    public String getTotalGastos();
+    public void printGastosCasa(int codVenta);
 
-    public String getTotalPagoTrabajadores();
+    public void printPagoPorVentaPersonal(Personal user, int codVenta);
 
-    public String getTotalVendidoNeto();
+    public void printPersonalResumenRow(Personal personal, int codVenta);
 
-    public String getTotalVendido();
+    public void printZ(int codVenta);
 
-    public boolean canCambiarTurno();
+    public void reabrirVentas(int codVenta);
 
-    public Venta getInstance();
+    public boolean terminarVentas(int codVenta);
+
+    public boolean terminarYExportar(File file, int codVenta);
+    
+    public boolean canOpenNuevoTurno(int ventasExistentes);
 
 }

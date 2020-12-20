@@ -47,6 +47,7 @@ import com.jobits.ui.components.swing.displayers.Card;
 import java.awt.Dimension;
 import javax.swing.Action;
 import javax.swing.Box;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -72,6 +73,7 @@ public class VentaDetailView extends AbstractViewPanel {
 
         jPanelResumenDetallado = new javax.swing.JPanel();
         jTabbedPaneResumen = new javax.swing.JTabbedPane();
+        jComboBoxSeleccionarVentaPorTurno = new javax.swing.JComboBox<>();
         jPanelRoot = new javax.swing.JPanel();
         jPanelData = new javax.swing.JPanel();
         jTabbedPaneData = new javax.swing.JTabbedPane();
@@ -116,7 +118,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanel8 = new javax.swing.JPanel();
         jPanelTurnosTrabajo = new javax.swing.JPanel();
         jButtonCambiarTurno = new javax.swing.JButton();
-        jComboBoxSeleccionarVentaPorTurno = new javax.swing.JComboBox<>();
+        jComboBoxVentas = new javax.swing.JComboBox<>();
         jPanelTerminarVentas = new javax.swing.JPanel();
         jButtonReabrirVentas = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonTerminar = MaterialComponentsFactory.Buttons.getMaterialButton();
@@ -127,6 +129,9 @@ public class VentaDetailView extends AbstractViewPanel {
 
         jPanelResumenDetallado.setLayout(new java.awt.BorderLayout());
         jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
+
+        jComboBoxSeleccionarVentaPorTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todo", "Turno 1", "Turno 2" }));
+        jComboBoxSeleccionarVentaPorTurno.setToolTipText("Seleccione el turno a visualizar");
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new java.awt.BorderLayout());
@@ -390,12 +395,14 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanel8.setPreferredSize(new java.awt.Dimension(597, 50));
         jPanel8.setLayout(new java.awt.BorderLayout());
 
+        jPanelTurnosTrabajo.setMinimumSize(new java.awt.Dimension(180, 44));
+        jPanelTurnosTrabajo.setPreferredSize(new java.awt.Dimension(180, 44));
+        jPanelTurnosTrabajo.setLayout(new java.awt.GridLayout(2, 1));
+
         jButtonCambiarTurno.setText(bundle.getString("label_cambiar_turno")); // NOI18N
         jPanelTurnosTrabajo.add(jButtonCambiarTurno);
 
-        jComboBoxSeleccionarVentaPorTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todo", "Turno 1", "Turno 2" }));
-        jComboBoxSeleccionarVentaPorTurno.setToolTipText("Seleccione el turno a visualizar");
-        jPanelTurnosTrabajo.add(jComboBoxSeleccionarVentaPorTurno);
+        jPanelTurnosTrabajo.add(jComboBoxVentas);
 
         jPanel8.add(jPanelTurnosTrabajo, java.awt.BorderLayout.WEST);
 
@@ -474,6 +481,7 @@ public class VentaDetailView extends AbstractViewPanel {
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonTerminar;
     private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
+    private javax.swing.JComboBox<String> jComboBoxVentas;
     private javax.swing.JLabel jLabelFecha;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
@@ -566,10 +574,13 @@ public class VentaDetailView extends AbstractViewPanel {
         jButtonImprimirResumenPto.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_PTO));
 
         jButtonRefresh.addActionListener(getPresenter().getOperation(ACTION_REFRESCAR_VENTA));
-        
+        Bindings.bind(jComboBoxVentas, new SelectionInList<Venta>(
+                getPresenter().getModel(PROP_LIST_VENTAS),
+                getPresenter().getModel(PROP_VENTA_SELECCIONADA)));
         Bindings.bind(jButtonCambiarTurno, "enabled", getPresenter().getModel(PROP_CAMBIAR_TURNO_ENABLED));
+        jButtonCambiarTurno.addActionListener(getPresenter().getOperation(ACTION_CREAR_NUEVO_TURNO));
+
         updateGraficasResumenGeneralVentas();
-        
     }
 
     @Override
@@ -588,9 +599,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
-        VentaDetailService ventaService = ((VentaDetailViewPresenter)getPresenter()).getService();
-        VentaOrdenListViewPresenter ventaOrdenPresenter = new VentaOrdenListViewPresenter(ventaService, new OrdenController());
-        jPanelVentas.add(new VentaListOrdenesView(ventaOrdenPresenter));
+        jPanelVentas.add(new VentaListOrdenesView(((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter()));
 
         jPanelPagoTrabajadores.add(new AsistenciaPersonalView(new AsistenciaPersonalPresenter(ventaInstance)));
         jPanelExtracciones.add(new GastosView(new GastosViewPresenter(new GastoOperacionController(ventaInstance))));

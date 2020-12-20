@@ -108,10 +108,6 @@ public class VentaDetailViewModel extends AbstractViewModel {
     //
     //General
     //
-    private boolean cambiar_turno_enabled;
-
-    public static final String PROP_CAMBIAR_TURNO_ENABLED = "cambiar_turno_enabled";
-
     private String fecha;
 
     public static final String PROP_FECHA = "fecha";
@@ -125,6 +121,79 @@ public class VentaDetailViewModel extends AbstractViewModel {
 
     public static void setVentaInstance(Venta ventaInstance) {
         VentaDetailViewModel.ventaInstance = ventaInstance;
+    }
+
+    //Turnos 
+    private ArrayListModel<Venta> list_ventas = new ArrayListModel<>();
+
+    public static final String PROP_LIST_VENTAS = "list_ventas";
+
+    private Venta venta_seleccionada;
+
+    public static final String PROP_VENTA_SELECCIONADA = "venta_seleccionada";
+
+    private boolean cambiar_turno_enabled;
+
+    public static final String PROP_CAMBIAR_TURNO_ENABLED = "cambiar_turno_enabled";
+
+    /**
+     * Get the value of cambiar_turno_enabled
+     *
+     * @return the value of cambiar_turno_enabled
+     */
+    public boolean isCambiar_turno_enabled() {
+        return cambiar_turno_enabled;
+    }
+
+    /**
+     * Set the value of cambiar_turno_enabled
+     *
+     * @param cambiar_turno_enabled new value of cambiar_turno_enabled
+     */
+    public void setCambiar_turno_enabled(boolean cambiar_turno_enabled) {
+        boolean oldCambiar_turno_enabled = this.cambiar_turno_enabled;
+        this.cambiar_turno_enabled = cambiar_turno_enabled;
+        firePropertyChange(PROP_CAMBIAR_TURNO_ENABLED, oldCambiar_turno_enabled, cambiar_turno_enabled);
+    }
+
+    /**
+     * Get the value of venta_seleccionada
+     *
+     * @return the value of venta_seleccionada
+     */
+    public Venta getVenta_seleccionada() {
+        return venta_seleccionada;
+    }
+
+    /**
+     * Set the value of venta_seleccionada
+     *
+     * @param venta_seleccionada new value of venta_seleccionada
+     */
+    public void setVenta_seleccionada(Venta venta_seleccionada) {
+        Venta oldVenta_seleccionada = this.venta_seleccionada;
+        this.venta_seleccionada = venta_seleccionada;
+        firePropertyChange(PROP_VENTA_SELECCIONADA, oldVenta_seleccionada, venta_seleccionada);
+    }
+
+    /**
+     * Get the value of list_ventas
+     *
+     * @return the value of list_ventas
+     */
+    public ArrayListModel<Venta> getList_ventas() {
+        return list_ventas;
+    }
+
+    /**
+     * Set the value of list_ventas
+     *
+     * @param list_ventas new value of list_ventas
+     */
+    public void setList_ventas(ArrayListModel<Venta> list_ventas) {
+        ArrayListModel<Venta> oldList_ventas = this.list_ventas;
+        this.list_ventas = list_ventas;
+        firePropertyChange(PROP_LIST_VENTAS, oldList_ventas, list_ventas);
     }
 
     /**
@@ -145,26 +214,6 @@ public class VentaDetailViewModel extends AbstractViewModel {
         String oldFecha = this.fecha;
         this.fecha = fecha;
         firePropertyChange(PROP_FECHA, oldFecha, fecha);
-    }
-
-    /**
-     * Get the value of cambiar_turno_enabled
-     *
-     * @return the value of cambiar_turno_enabled
-     */
-    public boolean isCambiar_turno_enabled() {
-        return cambiar_turno_enabled;
-    }
-
-    /**
-     * Set the value of cambiar_turno_enabled
-     *
-     * @param cambiar_turno_enabled new value of cambiar_turno_enabled
-     */
-    public void setCambiar_turno_enabled(boolean cambiar_turno_enabled) {
-        boolean oldCambiar_turno_enabled = this.cambiar_turno_enabled;
-        this.cambiar_turno_enabled = cambiar_turno_enabled;
-        firePropertyChange(PROP_CAMBIAR_TURNO_ENABLED, oldCambiar_turno_enabled, cambiar_turno_enabled);
     }
 
     /**

@@ -5,19 +5,21 @@
  */
 package com.jobits.pos.ui.venta.presenter;
 
-import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter;
-import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel;
-import com.jobits.pos.controller.venta.OrdenController;
-import com.jobits.pos.controller.venta.VentaDetailController;
+import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.utils;
-import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
+import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
+import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.PROP_VENTA_SELECCIONADA;
 import java.beans.PropertyChangeEvent;
+import java.util.List;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,6 +36,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             ACTION_TERMINAR_VENTAS = "Terminar Ventas",
             ACTION_REABRIR_VENTA = "Reabrir Venta",
             ACTION_REFRESCAR_VENTA = "Refrescar Venta",
+            ACTION_CREAR_NUEVO_TURNO = "Crear Nueva Turno",
             //Area
             ACTION_IMPRIMIR_RESUMEN_AREA = "Imprimir resumen area",
             //Dpte
@@ -43,17 +46,37 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             ACTION_IMPRIMIR_RESUMEN_PTO = "Imprimir Pto elaboracion";
 
     private VentaDetailService service;
+    OrdenService ordenService;
+    private VentaOrdenListViewPresenter ventaOrdenPresenter;
+    private List<Venta> ventas;
 
-    public VentaDetailViewPresenter(VentaDetailController controller, OrdenController ordenController) {
+    /**
+     *
+     * @param controller
+     * @param ordenController
+     * @param ventas no pasar la lista vacia
+     */
+    public VentaDetailViewPresenter(
+            VentaDetailService controller, OrdenService ordenController, List<Venta> ventas) {
         super(new VentaDetailViewModel());
         this.service = controller;
-        service.fetchNewDataFromServer(0);
-        updateBeanData();
-        controller.initIPV(controller.getInstance());
+        this.ordenService = ordenController;
+        this.ventas = ventas;
+
+        addListeners();
+        setListToBean();
+//        this.ventaOrdenPresenter = new VentaOrdenListViewPresenter(controller, ordenController, getBean().getVenta_seleccionada().getId());
+//        updateBeanData();
+        controller.initIPV(getBean().getVenta_seleccionada());
+
     }
 
     public VentaDetailService getService() {
         return service;
+    }
+
+    public VentaOrdenListViewPresenter getVentaOrdenListViewPresenter() {
+        return ventaOrdenPresenter;
     }
 
     @Override
@@ -68,7 +91,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         registerOperation(new AbstractViewAction(ACTION_REFRESCAR_VENTA) {
             @Override
             public Optional doAction() {
-                service.fetchNewDataFromServer(0);
+                service.fetchNewDataFromServer(getBean().getVenta_seleccionada().getId());
                 updateBeanData();
                 return Optional.empty();
             }
@@ -131,67 +154,108 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             }
 
         });
+        registerOperation(new AbstractViewAction(ACTION_CREAR_NUEVO_TURNO) {
+            @Override
+            public Optional doAction() {
+                onCrearNuevoTurnoClick();
+                return Optional.empty();
+            }
+
+        });
 
     }
 
     private void onImprimirZClick() {
-        service.printZ();
+        service.printZ(getBean().getVenta_seleccionada().getId());
     }
 
     private void onImprimirAutorizosClick() {
-        service.printGastosCasa();
+        service.printGastosCasa(getBean().getVenta_seleccionada().getId());
     }
 
     private void onTerminarClick() {
-        if (service.terminarVentas()) {
+        if (service.terminarVentas(getBean().getVenta_seleccionada().getId())) {
             Application.getInstance().getNavigator().navigateUp();
         }
     }
 
     private void onTerminarYExportarClick() {
-        service.terminarYExportar(getBean().getFile_for_export());
+        service.terminarYExportar(getBean().getFile_for_export(), getBean().getVenta_seleccionada().getId());
         Application.getInstance().getNavigator().navigateUp();
     }
 
     private void onReabrirVentaCLick() {
-        service.reabrirVentas();
+        service.reabrirVentas(getBean().getVenta_seleccionada().getId());
     }
 
     private void onImprimirResumenVentaAreaClick() {
-        service.printAreaResumen(getBean().getResumem_area_seleccionada().getArea());
+        service.printAreaResumen(getBean().getResumem_area_seleccionada().getArea(), getBean().getVenta_seleccionada().getId());
 
     }
 
     private void onImprimirResumenVentaUsuarioClick() {
-        service.printPersonalResumenRow(getBean().getResumen_usuario_seleccionado().getPersonal());
+        service.printPersonalResumenRow(getBean().getResumen_usuario_seleccionado().getPersonal(), getBean().getVenta_seleccionada().getId());
 
     }
 
     private void onImprimirResumenVentaUsuarioComisionClick() {
-        service.printPagoPorVentaPersonal(getBean().getResumen_usuario_seleccionado().getPersonal());
+        service.printPagoPorVentaPersonal(getBean().getResumen_usuario_seleccionado().getPersonal(), getBean().getVenta_seleccionada().getId());
 
     }
 
     private void onImprimirResumenPtoElabClick() {
-        service.printCocinaResumen(getBean().getResumen_pto_seleccionado().getCodigoPto());
+        service.printCocinaResumen(getBean().getResumen_pto_seleccionado().getCodigoPto(), getBean().getVenta_seleccionada().getId());
+    }
+
+    private void onCrearNuevoTurnoClick() {
+        if (JOptionPane.showConfirmDialog(null, "Desea terminar el turno?")
+                == JOptionPane.YES_OPTION) {
+            Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada());
+            if (venta != null) {
+                getBean().getList_ventas().add(venta);
+                getBean().setVenta_seleccionada(venta);
+            }
+        }
     }
 
     private void updateBeanData() {
-        com.jobits.pos.domain.models.Venta v = service.getInstance();
-        getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta());
-        getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta());
-        getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta());
-        getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(service.getTotalPropina()));
-        getBean().setReabrir_ventas_enabled(service.canReabrirVenta());
-        getBean().setTotal_autorizos(service.getTotalAutorizos());
-        getBean().setTotal_gasto_insumos(service.getTotalGastadoInsumos());
-        getBean().setTotal_gasto_otros(service.getTotalGastos());
-        getBean().setTotal_gasto_salario(service.getTotalPagoTrabajadores());
-        getBean().setVenta_neta(service.getTotalVendidoNeto());
-        getBean().setVenta_total(service.getTotalVendido());
-        getBean().setCambiar_turno_enabled(service.canCambiarTurno());
-        getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
-        getBean().setVentaInstance(v);
+        if (getBean().getVenta_seleccionada() != null) {
+            int codVenta = getBean().getVenta_seleccionada().getId();
+            if (ventaOrdenPresenter == null) {
+                ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, codVenta);
+            }
+            ventaOrdenPresenter.setCodVenta(codVenta);
+            service.fetchNewDataFromServer(codVenta);
+            Venta v = service.getInstance(codVenta);
+            getBean().setVentaInstance(v);
+            getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(codVenta));
+            getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(codVenta));
+            getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta(codVenta));
+            getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(service.getTotalPropina(codVenta)));
+            getBean().setReabrir_ventas_enabled(service.canReabrirVenta(codVenta));
+            getBean().setTotal_autorizos(service.getTotalAutorizos(codVenta));
+            getBean().setTotal_gasto_insumos(service.getTotalGastadoInsumos(codVenta));
+            getBean().setTotal_gasto_otros(service.getTotalGastos(codVenta));
+            getBean().setTotal_gasto_salario(service.getTotalPagoTrabajadores(codVenta));
+            getBean().setVenta_neta(service.getTotalVendidoNeto(codVenta));
+            getBean().setVenta_total(service.getTotalVendido(codVenta));
+            getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
+            getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(getBean().getList_ventas().getSize()));
+        }
+
+    }
+
+    private void addListeners() {
+        addBeanPropertyChangeListener(PROP_VENTA_SELECCIONADA, (PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() != null) {
+                updateBeanData();
+            }
+        });
+    }
+
+    private void setListToBean() {
+        getBean().setList_ventas(new ArrayListModel<>(ventas));
+        getBean().setVenta_seleccionada(getBean().getList_ventas().get(0));
     }
 
 }
