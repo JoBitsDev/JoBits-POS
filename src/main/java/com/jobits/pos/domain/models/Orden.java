@@ -88,7 +88,7 @@ public class Orden implements Serializable, Comparable<Orden> {
     @JoinColumn(name = "personalusuario", referencedColumnName = "usuario", nullable = true)
     @ManyToOne(optional = true)
     private Personal personalusuario;
-    @OneToMany(mappedBy = "orden", orphanRemoval = true)
+    @OneToMany(mappedBy = "orden", orphanRemoval = true,cascade = CascadeType.ALL)
     private List<ProductovOrden> productovOrdenList;
 
     public Orden() {
