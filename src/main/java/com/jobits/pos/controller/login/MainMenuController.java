@@ -81,7 +81,6 @@ public class MainMenuController implements MainMenuService {
             VentaDetailController controller = new VentaDetailController();
             diaVenta = controller.inicializarVentas(new Date(), false);
             Venta v = diaVenta.get(diaVenta.size() - 1);
-            controller.initIPV(controller.getInstance(v.getId()));//TODO: mover al ventadetail controller
             Application.getInstance().getNotificationService().
                     notify("El dia de trabajo esta iniciado en la fecha: "
                             + R.DATE_FORMAT.format(v.getFecha()),
@@ -95,7 +94,6 @@ public class MainMenuController implements MainMenuService {
     public VentaDetailController comenzarVentasCajero() {
         VentaDetailController controller = new VentaDetailController();
         diaVenta = controller.inicializarVentas(null, false);
-        controller.initIPV(controller.getInstance(diaVenta.get(diaVenta.size() - 1).getId()));//TODO: mover al ventadetail controller
         return controller;
 
     }

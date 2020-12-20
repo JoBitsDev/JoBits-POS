@@ -8,6 +8,7 @@ package com.jobits.pos.controller.almacen;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.IpvRegistro;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
+import com.jobits.pos.domain.models.Venta;
 import java.util.Date;
 import java.util.List;
 
@@ -22,9 +23,11 @@ public interface IPVService {
     public void darEntradaIPV(IpvVentaRegistro ipv_venta_registro_seleccionado);
 
     public void ajustarConsumo(IpvRegistro ipv_registro_seleciconado);
-    
-    public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha);
-    
-    public List<IpvVentaRegistro> getIpvRegistroVentaList(Cocina cocina, Date fecha);
-    
+
+    public List<Venta> getVentasInRange(Date fecha);
+
+    public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha, int codVenta);
+
+    public List<IpvVentaRegistro> getIpvRegistroVentaList(Cocina cocina, int codVenta);
+
 }

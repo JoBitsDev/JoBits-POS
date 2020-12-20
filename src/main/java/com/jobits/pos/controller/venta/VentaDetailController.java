@@ -417,7 +417,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
             getModel().commitTransaction();
             IPVController ipvController = new IPVController();
             ipvController.recalcularExistencias(ret.getFecha(), ret.getId());
-            ipvController.recalcularIpvRegistros(ret, ret.getId());//TODO: arreglar esto
+            ipvController.recalcularIpvRegistros(ret.getId());//TODO: arreglar esto
             return true;
         } catch (IOException ex) {
             System.out.println(ex.getMessage());

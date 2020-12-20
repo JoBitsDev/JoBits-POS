@@ -187,8 +187,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 if (v != null) {
                     getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
                             service.getIpvRegistroVentaList(getBean().
-                                    getPunto_elaboracion_seleccionado(),
-                                    getBean().getFecha_ipv_ventas_seleccionada(), v.getId())));
+                                    getPunto_elaboracion_seleccionado(), v.getId())));
                     getBean().setCheck_ocultar_productos_ipv_venta(false);
                 }
             }

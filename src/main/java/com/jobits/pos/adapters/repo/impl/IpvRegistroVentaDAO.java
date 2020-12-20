@@ -39,9 +39,9 @@ public class IpvRegistroVentaDAO extends AbstractRepository<IpvVentaRegistro> {
         }
     }
 
-    public List<IpvVentaRegistro> getIpvVentaRegistroList(Date fecha) {
-        List<IpvVentaRegistro> ret = new ArrayList<>(getEntityManager().createNamedQuery("IpvVentaRegistro.findByVentafecha")
-                .setParameter("ventafecha", fecha)
+    public List<IpvVentaRegistro> getIpvVentaRegistroList(int ventaId) {
+        List<IpvVentaRegistro> ret = new ArrayList<>(getEntityManager().createNamedQuery("IpvVentaRegistro.findByVentaid")
+                .setParameter("ventaid", ventaId)
                 .getResultList());
         for (IpvVentaRegistro x : ret) {
             getEntityManager().refresh(x);
