@@ -9,7 +9,10 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import com.jobits.pos.domain.VentaDAO1;
+import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Venta;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -43,7 +46,6 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jidePopup1 = new com.jidesoft.popup.JidePopup();
         jLabelGastos = new javax.swing.JLabel();
         jLabelVentas = new javax.swing.JLabel();
         jLabelHoraPico = new javax.swing.JLabel();
@@ -98,20 +100,46 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     private javax.swing.JLabel jLabelGastos;
     private javax.swing.JLabel jLabelHoraPico;
     private javax.swing.JLabel jLabelVentas;
-    private com.jidesoft.popup.JidePopup jidePopup1;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        VentaCellRender ret = new VentaCellRender((Venta) value);
+        if (value != null) {
+            Venta venta = new Venta();
+            Double ventaTotal = 0.0;
+            Double ventaGastos = 0.0;
+            float ventaGastosGastos = 0;
+            List<Orden> ordenes = new ArrayList();
+            for (Venta x : (List<Venta>) value) {
+                venta.setFecha(x.getFecha());
+                if (x.getVentaTotal() != null) {
+                    ventaTotal += x.getVentaTotal();
+                }
+                if (x.getVentagastosEninsumos() != null) {
+                    ventaGastos += x.getVentagastosEninsumos();
+                }
+                if (x.getVentagastosGastos()!=null) {
+                    ventaGastosGastos+=x.getVentagastosGastos();
+                }
+                if (!x.getOrdenList().isEmpty()) {
+                    ordenes.addAll(x.getOrdenList());
+                }
+            }
+            venta.setVentaTotal(ventaTotal);
+            venta.setVentagastosEninsumos(ventaGastos);
+            venta.setOrdenList(ordenes);
+            venta.setVentagastosGastos(ventaGastosGastos);
 
-        if (isSelected) {
-            ret.setBackground(table.getSelectionBackground());
-        }else{
-            ret.setBackground(table.getBackground());
+            VentaCellRender ret = new VentaCellRender(venta);
+            if (isSelected) {
+                ret.setBackground(table.getSelectionBackground());
+            } else {
+                ret.setBackground(table.getBackground());
+            }
+
+            return ret;
         }
-        
-        return ret;
+        return null;
     }
 
     public Venta getV() {
