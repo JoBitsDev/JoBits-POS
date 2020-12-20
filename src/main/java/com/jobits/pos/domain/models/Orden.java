@@ -25,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import java.util.ArrayList;
+import javax.validation.constraints.NotNull;
 
 /**
  * FirstDream
@@ -47,6 +48,14 @@ import java.util.ArrayList;
     @NamedQuery(name = "Orden.findByOrdengastoEninsumos", query = "SELECT o FROM Orden o WHERE o.ordengastoEninsumos = :ordengastoEninsumos")})
 public class Orden implements Serializable, Comparable<Orden> {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ventafecha")
+    @Temporal(TemporalType.DATE)
+    private Date ventafecha;
+    @JoinColumn(name = "ventaid", referencedColumnName = "id")
+    @ManyToOne
+    private Venta ventaid;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -79,10 +88,7 @@ public class Orden implements Serializable, Comparable<Orden> {
     @JoinColumn(name = "personalusuario", referencedColumnName = "usuario", nullable = true)
     @ManyToOne(optional = true)
     private Personal personalusuario;
-    @JoinColumn(name = "ventafecha", referencedColumnName = "fecha")
-    @ManyToOne(optional = false)
-    private Venta ventafecha;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "orden", orphanRemoval = true)
+    @OneToMany(mappedBy = "orden", orphanRemoval = true)
     private List<ProductovOrden> productovOrdenList;
 
     public Orden() {
@@ -185,13 +191,6 @@ public class Orden implements Serializable, Comparable<Orden> {
         this.personalusuario = personalusuario;
     }
 
-    public Venta getVentafecha() {
-        return ventafecha;
-    }
-
-    public void setVentafecha(Venta ventafecha) {
-        this.ventafecha = ventafecha;
-    }
 
     public List<ProductovOrden> getProductovOrdenList() {
         List<ProductovOrden> aux = new ArrayList<>();
@@ -245,6 +244,22 @@ public class Orden implements Serializable, Comparable<Orden> {
             return -1;
         }
         return 0;
+    }
+
+    public Date getVentafecha() {
+        return ventafecha;
+    }
+
+    public void setVentafecha(Date ventafecha) {
+        this.ventafecha = ventafecha;
+    }
+
+    public Venta getVentaid() {
+        return ventaid;
+    }
+
+    public void setVentaid(Venta ventaid) {
+        this.ventaid = ventaid;
     }
 
 }

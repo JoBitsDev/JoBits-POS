@@ -44,6 +44,16 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Cliente.findByObservacionesCliente", query = "SELECT c FROM Cliente c WHERE c.observacionesCliente = :observacionesCliente")})
 public class Cliente implements Serializable, Comparable<Cliente> {
 
+    @Size(max = 30)
+    @Column(name = "alias_cliente")
+    private String aliasCliente;
+    @Size(max = 100)
+    @Column(name = "municipio_cliente")
+    private String municipioCliente;
+    @Size(max = 100)
+    @Column(name = "privincia_cliente")
+    private String privinciaCliente;
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -57,15 +67,6 @@ public class Cliente implements Serializable, Comparable<Cliente> {
     @Basic(optional = false)
     @Column(name = "apellidos_cliente")
     private String apellidosCliente;
-    @Size(max = 30)
-    @Column(name = "alias_cliente")
-    private String aliasCliente;
-    @Size(max = 100)
-    @Column(name = "municipio_cliente")
-    private String municipioCliente;
-    @Size(max = 100)
-    @Column(name = "privincia_cliente")
-    private String privinciaCliente;
     @Column(name = "direccion_cliente")
     private String direccionCliente;
     @Column(name = "telefono_cliente")

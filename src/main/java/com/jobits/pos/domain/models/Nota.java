@@ -33,10 +33,11 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Nota.findByProductovOrdenid", query = "SELECT n FROM Nota n WHERE n.productovOrdenid = :productovOrdenid")})
 public class Nota implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Size(max = 255)
     @Column(name = "descripcion")
     private String descripcion;
+
+    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
@@ -53,13 +54,6 @@ public class Nota implements Serializable {
         this.productovOrdenid = productovOrdenid;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 
     public Integer getProductovOrdenid() {
         return productovOrdenid;
@@ -100,6 +94,14 @@ public class Nota implements Serializable {
     @Override
     public String toString() {
         return "com.jobits.pos.domain.models.Nota[ productovOrdenid=" + productovOrdenid + " ]";
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
 }

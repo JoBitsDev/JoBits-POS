@@ -37,6 +37,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "ContabilidadCuenta.findByNumeroCuenta", query = "SELECT c FROM ContabilidadCuenta c WHERE c.numeroCuenta = :numeroCuenta")})
 public class ContabilidadCuenta implements Serializable {
 
+    @Column(name = "cierra")
+    private Boolean cierra;
+
     @OneToMany(mappedBy = "idCuentaARebajar")
     private List<Pago> pagoList;
 
@@ -191,6 +194,14 @@ public class ContabilidadCuenta implements Serializable {
 
     public void setPagoList(List<Pago> pagoList) {
         this.pagoList = pagoList;
+    }
+
+    public Boolean getCierra() {
+        return cierra;
+    }
+
+    public void setCierra(Boolean cierra) {
+        this.cierra = cierra;
     }
 
 }

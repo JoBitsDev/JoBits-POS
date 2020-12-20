@@ -19,6 +19,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
+import javax.persistence.Basic;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  * FirstDream
@@ -31,10 +35,14 @@ import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
 @Table(name = "asistencia_personal")
 @NamedQueries({
     @NamedQuery(name = "AsistenciaPersonal.findAll", query = "SELECT a FROM AsistenciaPersonal a"),
-    @NamedQuery(name = "AsistenciaPersonal.findByVentafecha", query = "SELECT a FROM AsistenciaPersonal a WHERE a.asistenciaPersonalPK.ventafecha = :ventafecha"),
+    @NamedQuery(name = "AsistenciaPersonal.findByVentaId", query = "SELECT a FROM AsistenciaPersonal a WHERE a.asistenciaPersonalPK.ventaid = :ventaId"),
     @NamedQuery(name = "AsistenciaPersonal.findByPersonalusuario", query = "SELECT a FROM AsistenciaPersonal a WHERE a.asistenciaPersonalPK.personalusuario = :personalusuario"),
     @NamedQuery(name = "AsistenciaPersonal.findByPago", query = "SELECT a FROM AsistenciaPersonal a WHERE a.pago = :pago")})
 public class AsistenciaPersonal implements Serializable, Comparable<AsistenciaPersonal> {
+
+    @JoinColumn(name = "ventaid", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Venta venta;
 
     @Column(name = "a_mayores")
     private Float aMayores;
@@ -50,9 +58,6 @@ public class AsistenciaPersonal implements Serializable, Comparable<AsistenciaPe
     @JoinColumn(name = "personalusuario", referencedColumnName = "usuario", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Personal personal;
-    @JoinColumn(name = "ventafecha", referencedColumnName = "fecha", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Venta venta;
 
     public AsistenciaPersonal() {
     }
@@ -61,7 +66,7 @@ public class AsistenciaPersonal implements Serializable, Comparable<AsistenciaPe
         this.asistenciaPersonalPK = asistenciaPersonalPK;
     }
 
-    public AsistenciaPersonal(Date ventafecha, String personalusuario) {
+    public AsistenciaPersonal(Integer ventafecha, String personalusuario) {
         this.asistenciaPersonalPK = new AsistenciaPersonalPK(ventafecha, personalusuario);
     }
 
@@ -128,7 +133,7 @@ public class AsistenciaPersonal implements Serializable, Comparable<AsistenciaPe
 
     @Override
     public int compareTo(AsistenciaPersonal o) {
-        return o.getAsistenciaPersonalPK().getVentafecha().compareTo(getAsistenciaPersonalPK().getVentafecha());
+        return o.getAsistenciaPersonalPK().getVentaid().compareTo(getAsistenciaPersonalPK().getVentaid());
     }
 
     public Float getAMayores() {
@@ -146,5 +151,4 @@ public class AsistenciaPersonal implements Serializable, Comparable<AsistenciaPe
     public void setPropina(Float propina) {
         this.propina = propina;
     }
-
 }

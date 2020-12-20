@@ -61,7 +61,7 @@ public class ProductovOrden implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "nombre_producto_vendido")
     private String nombreProductoVendido;
-    @OneToMany(mappedBy = "agregadoA")
+    @OneToMany(mappedBy = "agregadoA", orphanRemoval = true)
     private List<ProductovOrden> agregos;
     @JoinColumn(name = "agregado_a", referencedColumnName = "id")
     @ManyToOne
