@@ -12,10 +12,12 @@ import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,6 +29,7 @@ import javax.swing.JOptionPane;
 public class MainMenuController implements MainMenuService {
 
     private SincronizacionController sincronizacion = new SincronizacionController();
+    private List<Venta> diaVenta;
 
     public MainMenuController() {
         if (Application.getInstance().getLoggedUser() == null) {
@@ -34,6 +37,11 @@ public class MainMenuController implements MainMenuService {
         }
         new ConfiguracionController().cargarConfiguracion();
         sincronizacion.terminarSincronizacion();
+    }
+
+    @Override
+    public List<Venta> getDiaVentaSeleccionado() {
+        return diaVenta;
     }
 
     public boolean validate(Personal loggedUser, MenuButtons menuButtons) throws UnauthorizedAccessException {
@@ -55,11 +63,9 @@ public class MainMenuController implements MainMenuService {
     }
 
     public VentaDetailController comenzarVentasEconomico(Date date) throws IllegalArgumentException {
-        if (date == null) {
-            return new VentaDetailController();
-        } else {
-            return new VentaDetailController(date);
-        }
+        VentaDetailController ret = new VentaDetailController();
+        diaVenta = ret.inicializarVentas(date, false);
+        return ret;
     }
 
     private boolean showConfirmDialog(String string) {
@@ -72,11 +78,13 @@ public class MainMenuController implements MainMenuService {
     @Override
     public VentaDetailController comenzarVentasDependiente() {
         if (showConfirmDialog("Desea comenzar el dia de trabajo en el dia " + R.DATE_FORMAT.format(new Date()))) {
-            VentaDetailController controller = new VentaDetailController(new Date());
-            controller.initIPV(controller.getInstance());
+            VentaDetailController controller = new VentaDetailController();
+            diaVenta = controller.inicializarVentas(new Date(), false);
+            Venta v = diaVenta.get(diaVenta.size() - 1);
+            controller.initIPV(controller.getInstance(v.getId()));//TODO: mover al ventadetail controller
             Application.getInstance().getNotificationService().
                     notify("El dia de trabajo esta iniciado en la fecha: "
-                            + R.DATE_FORMAT.format(controller.getInstance().getFecha()),
+                            + R.DATE_FORMAT.format(v.getFecha()),
                             TipoNotificacion.SUCCESS);
             return controller;
         }
@@ -85,7 +93,11 @@ public class MainMenuController implements MainMenuService {
 
     @Override
     public VentaDetailController comenzarVentasCajero() {
-        return new VentaDetailController();
+        VentaDetailController controller = new VentaDetailController();
+        diaVenta = controller.inicializarVentas(null, false);
+        controller.initIPV(controller.getInstance(diaVenta.get(diaVenta.size() - 1).getId()));//TODO: mover al ventadetail controller
+        return controller;
+
     }
 
     public enum MenuButtons {
