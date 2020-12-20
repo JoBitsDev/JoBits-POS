@@ -6,24 +6,35 @@
 package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.IpvRegistro;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
+import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.PedidoIpvVentasView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
+import com.jobits.pos.ui.login.UbicacionView;
+import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -157,12 +168,14 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onFechaCambiadaIpv() {
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
             if (getBean().getPunto_elaboracion_seleccionado() != null) {
-
-                getBean().setLista_ipv_registro(new ArrayListModel<>(
-                        service.getIpvRegistroList(getBean().
-                                getPunto_elaboracion_seleccionado(),
-                                getBean().getFecha_ipv_seleccionada())));
-                getBean().setCheck_ocultar_productos_ipv(false);
+                Venta v = selectFecha(service.getVentasInRange(getBean().getFecha_ipv_seleccionada()));
+                if (v != null) {
+                    getBean().setLista_ipv_registro(new ArrayListModel<>(
+                            service.getIpvRegistroList(
+                                    getBean().getPunto_elaboracion_seleccionado(),
+                                    getBean().getFecha_ipv_seleccionada(), v.getId())));
+                    getBean().setCheck_ocultar_productos_ipv(false);
+                }
             }
         });
     }
@@ -170,11 +183,14 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onFechaCambiadaIpvVenta() {
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
             if (getBean().getPunto_elaboracion_seleccionado() != null) {
-                getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
-                        service.getIpvRegistroVentaList(getBean().
-                                getPunto_elaboracion_seleccionado(),
-                                getBean().getFecha_ipv_ventas_seleccionada())));
-                getBean().setCheck_ocultar_productos_ipv_venta(false);
+                Venta v = selectFecha(service.getVentasInRange(getBean().getFecha_ipv_ventas_seleccionada()));
+                if (v != null) {
+                    getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
+                            service.getIpvRegistroVentaList(getBean().
+                                    getPunto_elaboracion_seleccionado(),
+                                    getBean().getFecha_ipv_ventas_seleccionada(), v.getId())));
+                    getBean().setCheck_ocultar_productos_ipv_venta(false);
+                }
             }
         });
     }
@@ -212,7 +228,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         if (getBean().isCheck_ocultar_productos_ipv_venta()) {
             for (int i = 0; i < getBean().getLista_ipv_venta_registro().getSize();) {
                 IpvVentaRegistro x = getBean().getLista_ipv_venta_registro().get(i);
-                if (x.getVendidos() == 0 && x.getDisponible() == 0) {
+                if (x.getVenta() == 0 && x.getDisponible() == 0) {
                     getBean().getLista_ipv_venta_registro().remove(i);
                 } else {
                     i++;
@@ -261,4 +277,29 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         service.ajustarConsumo(getBean().getIpv_registro_seleciconado());
     }
 
+    private Venta selectFecha(List<Venta> ventas) {
+        JComboBox<Venta> jComboBox1 = new JComboBox<>();
+        jComboBox1.setModel(new DefaultComboBoxModel<>(ventas.toArray(new Venta[0])));
+        jComboBox1.setSelectedItem(ventas.get(0));
+        Object[] options = {"Seleccionar", "Cancelar"};
+        //                     yes        no       cancel
+        int confirm = JOptionPane.showOptionDialog(
+                null,
+                jComboBox1,
+                "Ventas",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.YES_NO_OPTION,
+                MaterialIcons.MONETIZATION_ON,
+                options,
+                options[0]);
+        switch (confirm) {
+            case JOptionPane.YES_OPTION:
+                return (Venta) jComboBox1.getSelectedItem();
+            case JOptionPane.NO_OPTION:
+                break;
+            default:
+                break;
+        }
+        return null;
+    }
 }

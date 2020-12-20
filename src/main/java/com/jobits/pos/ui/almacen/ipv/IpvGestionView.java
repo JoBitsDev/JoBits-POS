@@ -53,7 +53,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanelOpciones = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel8 = new javax.swing.JPanel();
         jComboBoxPtoElabSelec = new javax.swing.JComboBox<>();
-        jButtonRefrescar = new com.jidesoft.swing.JideButton();
+        jButtonRefrescar = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanelRegistros = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -94,8 +94,8 @@ public class IpvGestionView extends AbstractViewPanel {
         jComboBoxPtoElabSelec.setPreferredSize(new java.awt.Dimension(250, 50));
         jPanel8.add(jComboBoxPtoElabSelec);
 
-        jButtonRefrescar.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jButtonRefrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/refresh.png"))); // NOI18N
+        jButtonRefrescar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/refrescar_indigo.png"))); // NOI18N
+        jButtonRefrescar.setPreferredSize(new java.awt.Dimension(40, 40));
         jPanel8.add(jButtonRefrescar);
 
         jPanelOpciones.add(jPanel8, java.awt.BorderLayout.EAST);
@@ -257,7 +257,7 @@ public class IpvGestionView extends AbstractViewPanel {
     private javax.swing.JButton jButtonDarEntradaIpvVenta;
     private javax.swing.JButton jButtonImprimirIpvVenta;
     private javax.swing.JButton jButtonPedido;
-    private com.jidesoft.swing.JideButton jButtonRefrescar;
+    private javax.swing.JButton jButtonRefrescar;
     private javax.swing.JButton jButtonimprimirIpv;
     private javax.swing.JComboBox<Cocina> jComboBoxPtoElabSelec;
     private org.jdesktop.swingx.JXDatePicker jDateChooserIpv;
@@ -356,11 +356,11 @@ public class IpvGestionView extends AbstractViewPanel {
                         case 4:
                             return getRow(rowIndex).getAutorizos();
                         case 5:
-                            return getRow(rowIndex).getVendidos();
+                            return getRow(rowIndex).getVenta();
                         case 6:
                             return getRow(rowIndex).getProductoVenta().getPrecioVenta();
                         case 7:
-                            return utils.setDosLugaresDecimales(getRow(rowIndex).getVendidos() * getRow(rowIndex).getProductoVenta().getPrecioVenta());
+                            return utils.setDosLugaresDecimales(getRow(rowIndex).getVenta()* getRow(rowIndex).getProductoVenta().getPrecioVenta());
                         case 8:
                             return getRow(rowIndex).getFinal1();
                         default:
