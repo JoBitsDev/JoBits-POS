@@ -24,6 +24,8 @@ import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 /**
  * FirstDream
@@ -31,7 +33,8 @@ import com.jobits.pos.ui.utils.utils;
  * @author Jorge
  *
  */
-public class VentaListController extends AbstractDialogController<Venta> implements VentaListService {
+public class VentaListController extends AbstractDialogController<Venta>
+        implements VentaListService {
 
     public VentaListController() {
         super(VentaDAO.getInstance());
@@ -106,20 +109,24 @@ public class VentaListController extends AbstractDialogController<Venta> impleme
         if (initDateNotSet) {
             throw new ValidatingException(getView());
         }
-        return new VentaDetailController(v, al);
+        return new VentaDetailController();
 
     }
 
-    public List<Venta> findVentas(int month, int year) {
-        ArrayList<Venta> ret = new ArrayList<>();
-        getModel().findAll().stream().map((x) -> {
-            if (x.getFecha().getMonth() == month && x.getFecha().getYear() + 1900 == year) {
-                ret.add(x);
-            }
-            return x;
-        }).forEachOrdered((Venta _item) -> {
-            Collections.sort(ret, (Venta o1, Venta o2) -> o1.getFecha().compareTo(o2.getFecha()));
-        });
+    /**
+     *
+     * @param month Mes tiene que ser del 1 - 12
+     * @param year Anno natural ej: 2020
+     * @return
+     */
+    @Override
+    public List<List<Venta>> findVentas(int month, int year) {
+        List<List<Venta>> ret = new ArrayList<>();
+        LocalDate fecha = LocalDate.of(year, month, 1);
+        while (fecha.getMonth().getValue() == month) {
+            ret.add(VentaDAO.getInstance().find(Date.from(fecha.atStartOfDay(ZoneId.systemDefault()).toInstant())));
+            fecha = fecha.plusDays(1);
+        }
         return ret;
     }
 

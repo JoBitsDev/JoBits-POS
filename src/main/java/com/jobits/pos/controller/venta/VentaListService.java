@@ -22,7 +22,7 @@ public interface VentaListService {
 
     public void destroy(Venta find, boolean b);
 
-    public List<Venta> findVentas(int month, int year);
+    public List<List<Venta>> findVentas(int month, int year);
 
     public List<Venta> findVentasInRange(Calendar start, Calendar end);
 

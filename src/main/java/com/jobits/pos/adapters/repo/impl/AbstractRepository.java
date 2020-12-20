@@ -79,9 +79,6 @@ public abstract class AbstractRepository<T> implements Model {
 
     public T find(Object id) {
         T ret = getEntityManager().find(entityClass, id);
-        if (ret != null) {
-            getEntityManager().refresh(ret);
-        }
         return ret;
     }
 

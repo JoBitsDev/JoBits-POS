@@ -33,11 +33,16 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     private OrdenDetailViewPresenter ordenPresenter;
     private ProductoVentaSelectorPresenter menuPresenter;
     private OrdenService ordenService;
+    int codVenta;
 
     private VentaOrdenListViewPresenter(VentaDetailService ventaService) {
         super(new VentaOrdenListViewModel());
         this.ventaService = ventaService;
+    }
 
+    public void setCodVenta(int codVenta) {
+        this.codVenta = codVenta;
+        refreshState();
     }
 
     public OrdenDetailViewPresenter getOrdenPresenter() {
@@ -49,28 +54,23 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     public VentaOrdenListViewPresenter(VentaDetailService ventaService,
-            OrdenService ordenService) {
+            OrdenService ordenService, int codVenta) {
         this(ventaService);
         this.ordenService = ordenService;
-        ordenPresenter = new OrdenDetailViewPresenter(ordenService);
-        menuPresenter = new ProductoVentaSelectorPresenter(ordenService);
-        menuPresenter.addPropertyChangeListener(ProductoVentaSelectorPresenter.PROP_PRODUCTO_SELECCIONADO, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                ordenPresenter.refreshState();
-            }
+        this.codVenta = codVenta;
+        ordenPresenter = new OrdenDetailViewPresenter(this.ordenService);
+        menuPresenter = new ProductoVentaSelectorPresenter(this.ordenService);
+        menuPresenter.addPropertyChangeListener(ProductoVentaSelectorPresenter.PROP_PRODUCTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
+            ordenPresenter.refreshState();
         });
-        ordenPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_MODO_AGREGO_ACTIVADO, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if ((boolean) evt.getNewValue()) {
-                    ordenService.setModoAgrego(ordenPresenter.getBean().getProducto_orden_seleccionado());
-                    menuPresenter.showSeccionesAgregadas();
-                    menuPresenter.onMostrarSeccionClick();
-                } else {
-                    ordenService.setModoAgrego(null);
-                    menuPresenter.refreshState();
-                }
+        ordenPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_MODO_AGREGO_ACTIVADO, (PropertyChangeEvent evt) -> {
+            if ((boolean) evt.getNewValue()) {
+                ordenService.setModoAgrego(ordenPresenter.getBean().getProducto_orden_seleccionado());
+                menuPresenter.showSeccionesAgregadas();
+                menuPresenter.onMostrarSeccionClick();
+            } else {
+                ordenService.setModoAgrego(null);
+                menuPresenter.refreshState();
             }
         });
         refreshState();
@@ -97,7 +97,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     private void onCrearOrdenAction() {
-        Orden newOrden = ventaService.createNewOrden();
+        Orden newOrden = ventaService.createNewOrden(codVenta);
         getBean().setElemento_seleccionado(newOrden);
         onAbrirOrdenAction();
         refreshState();
@@ -113,7 +113,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     @Override
     protected Optional refreshState() {
         Orden o = getBean().getElemento_seleccionado();
-        getBean().setLista_elementos(ventaService.getOrdenesActivas());
+        getBean().setLista_elementos(ventaService.getOrdenesActivas(codVenta));
         getBean().setElemento_seleccionado(o);
         return Optional.empty();
     }

@@ -43,7 +43,6 @@ public class PedidoCardView extends AbstractViewPanel {
     String imageURL, title, secondaryText, mediaURL, supportText;
     Action mainButtonAction, secundaryButtonAction;
     ValueModel valueModelTitle, valueModelSecundaryText;
-    List<Action> menuActionsList = new ArrayList<>();
 
     public PedidoCardView(AbstractViewPresenter presenter) {
         super(presenter);
@@ -412,21 +411,6 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JButton jideButtonEnviarCocina;
     // End of variables declaration//GEN-END:variables
 
-    private Component addMenuItem(Action action) {
-        Component c = jPanelSubActions.add(buildFromAction(action));
-        jPopupMenu1.add(action);
-        return c;
-    }
-
-    private Component buildFromAction(Action a) {
-        return new TaskButton(a, jPanelSubActions.getWidth());
-    }
-
-    private void createPopupPanel() {
-//        jPopupMenu1.show(jButtonMenu, jButtonMenu.getBounds().x - jPopupMenu1.getWidth(), jButtonMenu.getBounds().y + jButtonMenu.getHeight());
-//        jPopupMenu1.show(jButtonMenu, jButtonMenu.getBounds().x - jPopupMenu1.getWidth(), jButtonMenu.getBounds().y + jButtonMenu.getHeight());
-    }
-
     @Override
     public void wireUp() {
         Bindings.bind(jLabelOrdenNo, getPresenter().getModel(PROP_ID_ORDEN));
@@ -434,8 +418,6 @@ public class PedidoCardView extends AbstractViewPanel {
         Bindings.bind(jLabelVALORHora, getPresenter().getModel(PROP_HORA_PEDIDO));
         Bindings.bind(jLabelVALORTotal, getPresenter().getModel(PROP_TOTAL_ORDEN));
         Bindings.bind(jLabelVALORUsuario, getPresenter().getModel(PROP_USUARIO));
-//        Bindings.bind(jLabelGratis, "visible", getPresenter().getModel(PROP_ES_AUTORIZO));
-//        Bindings.bind(jLabelPorciento, "visible", getPresenter().getModel(PROP_TIENE_PORCIENTO));
         Bindings.bind(jLabelTerminada, "visible", getPresenter().getModel(PROP_ORDEN_TERMINADA));
         Bindings.bind(jPanelSupportText, "visible", getPresenter().getModel(PROP_SUPORT_PANEL_VISIBLE));
 
@@ -448,16 +430,6 @@ public class PedidoCardView extends AbstractViewPanel {
         jideButtonCierreParcial.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_CIERRE_PARCIAL));
         jToggleButtonHideSupportPanel.addActionListener(getPresenter().getOperation(ACTION_SET_SUPORT_PANEL_VISIBLE));
 
-//        jToggleButtonExpand.addActionListener((ActionEvent e) -> {
-//            jPanelMedia.setVisible(jToggleButtonExpand.isSelected());
-//        });
-//        jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_ADD_NOTA)));
-//        jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_ADD_PRODUCTO)));
-//        jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_REMOVE_PRODUCTO)));
-//        jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_SHOW_LOGS)));
-//        jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_IMPRIMIR_CIERRE_PARCIAL)));
-//        jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_SET_AUTORIZO)));
-//        jPanelSubActions.add(addMenuItem(getPresenter().getOperation(ACTION_SET_PORCIENTO)));
         SpinnerToValueModelConnector connector5 = new SpinnerToValueModelConnector(jSpinner1.getModel(),
                 getPresenter().getModel(PROP_PORCIENTO_SERVICIO), 0);
         Bindings.bind(jSpinner1, "value", getPresenter().getModel(PROP_PORCIENTO_SERVICIO));

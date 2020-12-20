@@ -8,6 +8,11 @@ package com.jobits.pos.adapters.repo.impl;
 import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.domain.models.Nota;
 import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.exceptions.DevelopingOperationException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * FirstDream
@@ -31,4 +36,18 @@ public class VentaDAO extends AbstractRepository<Venta> {
             return INSTANCE;
         }
     }
+
+//    @Override
+//    public Venta find(Object id) {
+//        throw new DevelopingOperationException("terminar");
+//    }
+
+    public List<Venta> find(Date fecha) {
+        List<Venta> ret = new ArrayList<>(
+                getEntityManager().createNamedQuery("Venta.findByFecha")
+                        .setParameter("fecha", fecha)
+                        .getResultList());
+        return ret;
+    }
+
 }

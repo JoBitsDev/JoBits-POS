@@ -15,6 +15,7 @@ import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Configuracion;
@@ -154,11 +155,6 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 }
                 ProductovOrdenDAO.getInstance().create(founded);
             }
-            if (getInstance(codOrden).getDeLaCasa()) {
-                ipvController.consumirPorLaCasa(founded, founded.getCantidad());
-            } else {
-                ipvController.consumir(founded, founded.getCantidad());
-            }
             if (found) {
                 ProductovOrdenDAO.getInstance().edit(founded);
             } else {
@@ -166,29 +162,12 @@ public class OrdenController extends AbstractFragmentController<Orden>
             }
             cantidadAgregada = founded.getCantidad() - cantidadAgregada;
             fireWarningOnAdding(founded, cantidadAgregada);
-            update(getInstance(codOrden));
+            update(o);
             return true;
         }
         return false;
     }
 
-//    private void addProduct(String codOrden, ProductovOrden selected, float cantidad) {
-//        if (autorize(codOrden)) {
-//            if (!esDespachable(selected.getProductoVenta(), selected.getOrden(), cantidad)) {
-//                throw new ValidatingException(getView(), "No hay existencias de " + selected + " para elaborar");
-//            }
-//            selected.setCantidad(selected.getCantidad() + cantidad);
-//            if (getInstance(codOrden).getDeLaCasa()) {
-//                ipvController.consumirPorLaCasa(selected, cantidad);
-//            } else {
-//                ipvController.consumir(selected, cantidad);
-//            }
-//            ProductovOrdenDAO.getInstance().edit(selected);
-//            fireWarningOnAdding(selected, cantidad);
-//            update(instance);
-//        }
-//    }
-//    
     public void addRapidoProducto(String codOrden, String idProducto, float cantidad) {
         ProductoVenta productoABuscar = ProductoVentaDAO.getInstance().find(idProducto);
         if (productoABuscar != null) {
@@ -233,7 +212,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
             }
             setShowDialogs(false);
             NavigationService.getInstance().navigateTo(CalcularCambioView.VIEW_NAME,
-                        new CalcularCambioViewPresenter(o), DisplayType.POPUP);
+                    new CalcularCambioViewPresenter(o), DisplayType.POPUP);
 //            CalcularCambioViewDialog cambio = new CalcularCambioViewDialog(null, true, o);
         }
     }
@@ -249,7 +228,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
     @Override
-    public Orden createNewInstance(String codMesa, String fechaPedido) {
+    public Orden createNewInstance(String codMesa, String fechaPedido, int idVenta) {
         Orden ret = new Orden();
         Mesa m;
         if (ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_MESA_FIJA_CAJERO.getValue()).getValor() == 0) {
@@ -287,7 +266,8 @@ public class OrdenController extends AbstractFragmentController<Orden>
         ret.setOrdenvalorMonetario((float) 0);
         ret.setProductovOrdenList(new ArrayList<>());
         try {
-            ret.setVentafecha(VentaDAO.getInstance().find(R.DATE_FORMAT.parse(fechaPedido)));
+            ret.setVentafecha((R.DATE_FORMAT.parse(fechaPedido)));
+            ret.setVentaid(VentaDAO.getInstance().find(idVenta));
         } catch (ParseException ex) {
             throw new IllegalArgumentException("Fecha de pedido en formato incorrecto " + fechaPedido + " formato correcto (dd/mm/yy)");
         }
@@ -311,11 +291,6 @@ public class OrdenController extends AbstractFragmentController<Orden>
     public void setDeLaCasa(String codOrden, boolean selected) {
         Orden o = getInstance(codOrden);
         o.setDeLaCasa(selected);
-        if (selected) {
-            ipvController.consumirPorLaCasa(o.getProductovOrdenList());
-        } else {
-            ipvController.devolverPorLaCasa(o.getProductovOrdenList());
-        }
     }
 
     public float getGastosInsumos(Orden instance) {
@@ -338,10 +313,15 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     @Override
     public Orden getInstance(String codOrden) {
+        getModel().getEntityManager().getEntityManagerFactory().getCache().evictAll();
         Orden ret = OrdenDAO.getInstance().find(codOrden);
         if (ret == null) {
             throw new IllegalArgumentException("La orden " + codOrden + " no existe en el sistema");
         }
+        getModel().getEntityManager().refresh(ret);
+//        for (ProductovOrden x : ret.getProductovOrdenList()) {
+//            getModel().getEntityManager().refresh(x.getId());
+//        }
         return ret;
     }
 
@@ -355,7 +335,8 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
     @Override
-    public void setInstance(Orden instance) {
+    public void setInstance(Orden instance
+    ) {
         throw new IllegalStateException("Depracated");
     }
 
@@ -440,11 +421,6 @@ public class OrdenController extends AbstractFragmentController<Orden>
             o.getProductovOrdenList().get(index).setCantidad(difer - cantidad);
             //Impresion i = new Impresion();
             printCancelationTicket(o);
-            if (o.getDeLaCasa()) {
-                ipvController.devolverPorLaCasa(selected, cantidad);
-            } else {
-                ipvController.devolver(selected, cantidad);
-            }
             getModel().startTransaction();
             for (NotificacionEnvioCocina x : o.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
                 float dif = x.getCantidad() - cantidad;
@@ -455,12 +431,14 @@ public class OrdenController extends AbstractFragmentController<Orden>
                     getModel().getEntityManager().merge(x);
                 }
             }
+            o.getProductovOrdenList().remove(index);
+            ProductovOrdenDAO.getInstance().edit(selected);
             getModel().commitTransaction();
 
-            ProductovOrdenDAO.getInstance().edit(selected);
             fireWarningOnDeleting(codOrden, selected, cantidad);
 
             update(o);
+
         }
     }
 
@@ -494,7 +472,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     private boolean esDespachable(ProductoVenta selected, Orden ordenVenta, float cantidad) {
         return selected.getCocinacodCocina().getLimitarVentaInsumoAgotado()
-                ? new IPVController().hayDisponibilidad(selected, ordenVenta.getVentafecha().getFecha(), cantidad)
+                ? new IPVController().hayDisponibilidad(selected, ordenVenta.getVentafecha(), cantidad)
                 : true;
 
     }
@@ -527,7 +505,8 @@ public class OrdenController extends AbstractFragmentController<Orden>
         setDismissOnAction(false);
         setShowDialogs(false);
         if (LOGGER.getHandlers().length == 0) {
-            LOGGER.addHandler(new RestManagerHandler(Venta.class));
+            LOGGER.addHandler(new RestManagerHandler(Venta.class
+            ));
             LOGGER.setLevel(Level.FINE);
         }
     }
@@ -604,25 +583,21 @@ public class OrdenController extends AbstractFragmentController<Orden>
     private void removeProduct(String codOrden, ProductovOrden objectAtSelectedRow) {
         Orden o = getInstance(codOrden);
         int index = o.getProductovOrdenList().indexOf(objectAtSelectedRow);
-        float cantidadBorrada = o.getProductovOrdenList().get(index).getCantidad();
-        o.getProductovOrdenList().get(index).setCantidad(0);
+        float cantidadBorrada = objectAtSelectedRow.getCantidad();
+        objectAtSelectedRow.setCantidad(0);
         //Impresion i = new Impresion();
         printCancelationTicket(o);
-        if (o.getDeLaCasa()) {
-            ipvController.devolverPorLaCasa(objectAtSelectedRow, cantidadBorrada);
-        } else {
-            ipvController.devolver(objectAtSelectedRow, cantidadBorrada);
-        }
         getModel().startTransaction();
-        for (NotificacionEnvioCocina x : o.getProductovOrdenList().get(index).getNotificacionEnvioCocinaList()) {
+        for (NotificacionEnvioCocina x : objectAtSelectedRow.getNotificacionEnvioCocinaList()) {
             getModel().getEntityManager().remove(x);
         }
-        getModel().commitTransaction();
         ProductovOrdenDAO.getInstance().remove(objectAtSelectedRow);
-        o.getProductovOrdenList().remove(objectAtSelectedRow);
+        o.getProductovOrdenList().remove(index);
+        getModel().commitTransaction();
 
         fireWarningOnDeleting(codOrden, objectAtSelectedRow, cantidadBorrada);
-        update(o);
+        getModel().getEntityManager().refresh(o);
+//        update(o);
     }
 
     @Override

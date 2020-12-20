@@ -12,6 +12,7 @@ import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.domain.models.Cliente;
+import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.main.Application;
@@ -96,7 +97,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     private void onAddProductoClick() {
         if (getBean().getProducto_orden_seleccionado() != null) {
-            getController().addProduct(getBean().getId_orden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), new NumberPad(null).showView());
+            getController().addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), new NumberPad(null).showView());
             getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
         } else {
             JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
@@ -130,7 +131,6 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onSetAutorizoClick() {
-        getBean().setEs_autorizo(!getBean().isEs_autorizo());
         getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
         refreshState();
 //        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
@@ -160,16 +160,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     @Override
     protected Optional refreshState() {
-        com.jobits.pos.domain.models.Orden instance = getController().getInstance(getCodOrden());
+        Orden instance = getController().getInstance(getCodOrden());
         getBean().setEs_autorizo(instance.getDeLaCasa());
-        getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha().getFecha()));
+        getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha()));
         getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
         getBean().setOrden_terminada(instance.getHoraTerminada() != null);
         getBean().setId_orden(instance.getCodOrden());
         getBean().setLista_general_productos_venta(getController().getPDVList(getCodOrden()));
         getBean().setModo_agrego_activado(false);
-//        getBean().setLista_producto_orden(aux);
-
         getBean().setLista_producto_orden(instance.getProductovOrdenList());
 //        getBean().setLista_secciones(getController().getListaSecciones());
         if (instance.getMesacodMesa() != null) {
@@ -226,7 +224,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onAddProductoClick();
-                refreshState();
+                setCodOrden(codOrden);
                 return Optional.empty();
             }
         });
