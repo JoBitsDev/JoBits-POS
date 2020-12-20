@@ -139,7 +139,7 @@ public abstract class AbstractTicketFormatter implements PrintFormatter {
         t.addLineSeperator();
         t.newLine();
         t.alignRight();
-        t.setText(this.FECHA + R.DATE_FORMAT.format(o.getVentafecha().getFecha()) + R.TIME_FORMAT.format(date));
+        t.setText(this.FECHA + R.DATE_FORMAT.format(o.getVentafecha()) + R.TIME_FORMAT.format(date));
         t.newLine();
         t.setText(this.ORDEN + o.getCodOrden());
         t.newLine();

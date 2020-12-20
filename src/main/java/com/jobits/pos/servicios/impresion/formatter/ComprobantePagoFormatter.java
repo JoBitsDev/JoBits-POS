@@ -60,7 +60,7 @@ public class ComprobantePagoFormatter extends AbstractTicketFormatter {
             if (a.getVenta().getFecha().compareTo(personal.getUltimodiaPago()) >= 0) {
                 if (a.getVenta().getVentaTotal() != null) {
                     t.alignLeft();
-                    t.setText(R.DATE_FORMAT.format(a.getAsistenciaPersonalPK().getVentafecha()));
+                    t.setText(R.DATE_FORMAT.format(a.getAsistenciaPersonalPK().getVentaid()));
                     t.newLine();
                     t.alignRight();
                     t.setText(utils.setDosLugaresDecimales(a.getPago()));

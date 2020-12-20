@@ -79,7 +79,7 @@ public class AsistenciaTrabajadoresView extends AbstractFragmentView<AsistenciaP
 
     @Override
     public void updateView() {
-        panel.getHandler().getTableModel().setItems(getController().updateSalaries());
+        panel.getHandler().getTableModel().setItems(getController().updateSalaries(v.getId()));
     }
 
     @Override

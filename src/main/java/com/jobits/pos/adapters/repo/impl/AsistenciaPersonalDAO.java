@@ -33,9 +33,9 @@ public class AsistenciaPersonalDAO extends AbstractRepository<AsistenciaPersonal
         }
     }
 
-    public List<AsistenciaPersonal> getPersonalTrabajando(Date fecha) {
-          return  getEntityManager().createNamedQuery("AsistenciaPersonal.findByVentafecha")
-                .setParameter("ventafecha", fecha)
+    public List<AsistenciaPersonal> getPersonalTrabajando(int ventaCod) {
+          return  getEntityManager().createNamedQuery("AsistenciaPersonal.findByVentaId")
+                .setParameter("ventaId", ventaCod)
                 .getResultList();
     }
        

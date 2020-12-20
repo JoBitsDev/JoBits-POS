@@ -75,25 +75,25 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
         return PersonalDAO.getInstance().findAll();
     }
 
-    public void calcularPagoTrabajador(AsistenciaPersonal ret) {
-        VentaDetailController controller = new VentaDetailController(ret.getVenta());
-        ret.setPago(controller.getPagoTrabajador(ret.getPersonal()));
-        ret.setPropina(controller.getPropinaTrabajador(ret.getPersonal()));
+    public void calcularPagoTrabajador(AsistenciaPersonal ret, int codVenta) {
+        VentaDetailController controller = new VentaDetailController();
+        ret.setPago(controller.getPagoTrabajador(ret.getPersonal(), codVenta));
+        ret.setPropina(controller.getPropinaTrabajador(ret.getPersonal(), codVenta));
 
     }
 
     public List<AsistenciaPersonal> getPersonalTrabajando(Venta v) {
-        if (AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(v.getFecha()) != null) {
-            return AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(v.getFecha());
+        if (AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(v.getId()) != null) {
+            return AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(v.getId());
         }
         return new ArrayList<>();
     }
 
     public AsistenciaPersonal createNewInstance(Personal selected, Venta v) {
-        AsistenciaPersonal ret = new AsistenciaPersonal(v.getFecha(), selected.getUsuario());
+        AsistenciaPersonal ret = new AsistenciaPersonal(v.getId(), selected.getUsuario());
         ret.setPersonal(selected);
         ret.setVenta(v);
-        calcularPagoTrabajador(ret);
+        calcularPagoTrabajador(ret, v.getId());
         create(ret, true);
         return ret;
     }
@@ -110,13 +110,13 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
         this.readOnlyData = readOnlyData;
     }
 
-    public List<AsistenciaPersonal> updateSalaries() {
+    public List<AsistenciaPersonal> updateSalaries(int codVenta) {
         if (!readOnlyData) {
             ArrayList<AsistenciaPersonal> ret = new ArrayList<>(getPersonalTrabajando(diaVenta));
-            VentaDetailController controller = new VentaDetailController(diaVenta);
+            VentaDetailController controller = new VentaDetailController();
             for (AsistenciaPersonal a : ret) {
-                a.setPago(controller.getPagoTrabajador(a.getPersonal()));
-                a.setPropina(controller.getPropinaTrabajador(a.getPersonal()));
+                a.setPago(controller.getPagoTrabajador(a.getPersonal(), codVenta));
+                a.setPropina(controller.getPropinaTrabajador(a.getPersonal(), codVenta));
                 update(a, true);
             }
             return ret;

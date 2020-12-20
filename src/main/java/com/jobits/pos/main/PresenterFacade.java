@@ -175,7 +175,7 @@ public class PresenterFacade {
             case IpvGestionView.VIEW_NAME:
                 return new IpvGestionViewPresenter(new IPVController());
             case VentaDetailView.VIEW_NAME:
-                return new VentaDetailViewPresenter(new VentaDetailController(), new OrdenController());
+                return new VentaDetailViewPresenter(new VentaDetailController(), new OrdenController(),new ArrayList<>());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter(new UbicacionConexionController());
             case VentaCalendarView.VIEW_NAME:

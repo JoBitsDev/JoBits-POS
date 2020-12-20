@@ -142,7 +142,7 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
                 }
             }
 
-            GastoVenta v = new GastoVenta(gast.getCodGasto(), diaVenta.getFecha());
+            GastoVenta v = new GastoVenta(gast.getCodGasto(), diaVenta.getId());
             v.setImporte(monto);
             v.setGasto(gast);
             v.setVenta(diaVenta);
