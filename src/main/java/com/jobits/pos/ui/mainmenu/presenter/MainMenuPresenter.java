@@ -76,7 +76,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
 
                 }
                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                        new VentaDetailViewPresenter(control, new OrdenController()));
+                        new VentaDetailViewPresenter(control, new OrdenController(),service.getDiaVentaSeleccionado()));
                 return Optional.empty();
             }
         };

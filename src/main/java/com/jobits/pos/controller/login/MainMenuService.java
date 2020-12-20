@@ -6,8 +6,10 @@
 package com.jobits.pos.controller.login;
 
 import com.jobits.pos.controller.venta.VentaDetailController;
+import com.jobits.pos.domain.models.Venta;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -22,4 +24,6 @@ public interface MainMenuService {
     public VentaDetailController comenzarVentasCajero();
 
     public boolean estaActivaLaLicencia();
+
+    public List<Venta> getDiaVentaSeleccionado();
 }
