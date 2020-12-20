@@ -69,6 +69,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                 Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
                 NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
                         new MainMenuPresenter(new MainMenuController())); //TODO revisar eso codigo que no le pertenece a esta clse
+               RootView.getInstance().getDashboard().getTaskPane().setShrinked(true);
             }
         } catch (IllegalArgumentException ex) {
             Application.getInstance().getNotificationService().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion
