@@ -112,6 +112,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
             case IMPRESION_BUZZER_ON:
             case SINCRONIZACION_HABILITAR:
                 return c.getValor() == 1;
+            case GENERAL_CANTIDAD_TURNOS:
             case GENERAL_CAMBIO_MONEDA:
             case IMPRESION_CANTIDAD_COPIAS:
             case IMPRESION_TICKET_TAMANO_PAPEL:
@@ -143,6 +144,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
             case SINCRONIZACION_HABILITAR:
                 c.setValor((boolean) update == true ? 1 : 0);
                 break;
+            case GENERAL_CANTIDAD_TURNOS:
             case GENERAL_CAMBIO_MONEDA:
             case IMPRESION_CANTIDAD_COPIAS:
             case IMPRESION_TICKET_TAMANO_PAPEL:

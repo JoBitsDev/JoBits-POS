@@ -39,19 +39,17 @@ public class Generales extends AbstractViewPanel {
 
         jPanelGenerales = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelNegocio = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel24HR = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
-        jToggleButtonMultiplesTurnos = new javax.swing.JToggleButton();
-        filler10 = new javax.swing.Box.Filler(new java.awt.Dimension(200, 0), new java.awt.Dimension(200, 0), new java.awt.Dimension(200, 32767));
+        jPanelTipoNegocio1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jLabel3 = MaterialComponentsFactory.Displayers.getLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jComboBoxCantidadturnos = MaterialComponentsFactory.Displayers.getComboBox();
         jPanelTipoNegocio = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
         jLabel2 = MaterialComponentsFactory.Displayers.getLabel();
-        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(250, 0), new java.awt.Dimension(255, 0), new java.awt.Dimension(200, 32767));
+        jPanel4 = new javax.swing.JPanel();
         jComboBoxTipoNegocio = MaterialComponentsFactory.Displayers.getComboBox();
         jPanelCambioMoneda = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
         jLabel1 = MaterialComponentsFactory.Displayers.getLabel();
-        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(200, 0), new java.awt.Dimension(200, 0), new java.awt.Dimension(200, 32767));
+        jPanel5 = new javax.swing.JPanel();
         jComboBoxCambioMoneda = MaterialComponentsFactory.Displayers.getComboBox();
         jPanelCaja = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
@@ -71,28 +69,48 @@ public class Generales extends AbstractViewPanel {
         jPanelGenerales.setLayout(new javax.swing.BoxLayout(jPanelGenerales, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelNegocio.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Negocio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
+        jPanelNegocio.setPreferredSize(new java.awt.Dimension(720, 200));
         jPanelNegocio.setLayout(new java.awt.GridLayout(3, 1, 0, 3));
 
-        jPanel24HR.setLayout(new javax.swing.BoxLayout(jPanel24HR, javax.swing.BoxLayout.LINE_AXIS));
-        jPanel24HR.add(filler5);
+        jPanelTipoNegocio1.setLayout(new java.awt.GridLayout());
 
-        jToggleButtonMultiplesTurnos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jToggleButtonMultiplesTurnos.setText("Abierto 24 horas");
-        jPanel24HR.add(jToggleButtonMultiplesTurnos);
-        jPanel24HR.add(filler10);
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Cantidad de Turnos");
+        jPanelTipoNegocio1.add(jLabel3);
 
-        jPanelNegocio.add(jPanel24HR);
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
-        jPanelTipoNegocio.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        jPanelTipoNegocio.add(filler4);
+        jComboBoxCantidadturnos.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jComboBoxCantidadturnos.setMaximumRowCount(3);
+        jComboBoxCantidadturnos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3" }));
+        jComboBoxCantidadturnos.setMaximumSize(new java.awt.Dimension(150, 26));
+        jComboBoxCantidadturnos.setMinimumSize(new java.awt.Dimension(150, 26));
+        jComboBoxCantidadturnos.setPreferredSize(new java.awt.Dimension(150, 26));
+        jComboBoxCantidadturnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCantidadturnosActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jComboBoxCantidadturnos, new java.awt.GridBagConstraints());
+
+        jPanelTipoNegocio1.add(jPanel3);
+
+        jPanelNegocio.add(jPanelTipoNegocio1);
+
+        jPanelTipoNegocio.setLayout(new java.awt.GridLayout(1, 2));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Tipo Negocio");
         jPanelTipoNegocio.add(jLabel2);
-        jPanelTipoNegocio.add(filler6);
+
+        jPanel4.setPreferredSize(new java.awt.Dimension(351, 115));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jComboBoxTipoNegocio.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jComboBoxTipoNegocio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Restaurante", "Cafeteria", "Bar", "Carniceria", "Dulceria", "Tienda" }));
+        jComboBoxTipoNegocio.setMaximumSize(new java.awt.Dimension(150, 26));
         jComboBoxTipoNegocio.setMinimumSize(new java.awt.Dimension(150, 26));
         jComboBoxTipoNegocio.setPreferredSize(new java.awt.Dimension(150, 26));
         jComboBoxTipoNegocio.addActionListener(new java.awt.event.ActionListener() {
@@ -100,20 +118,25 @@ public class Generales extends AbstractViewPanel {
                 jComboBoxTipoNegocioActionPerformed(evt);
             }
         });
-        jPanelTipoNegocio.add(jComboBoxTipoNegocio);
+        jPanel4.add(jComboBoxTipoNegocio, new java.awt.GridBagConstraints());
+
+        jPanelTipoNegocio.add(jPanel4);
 
         jPanelNegocio.add(jPanelTipoNegocio);
 
-        jPanelCambioMoneda.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        jPanelCambioMoneda.add(filler3);
+        jPanelCambioMoneda.setLayout(new java.awt.GridLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Cambio de moneda");
         jPanelCambioMoneda.add(jLabel1);
-        jPanelCambioMoneda.add(filler7);
+
+        jPanel5.setPreferredSize(new java.awt.Dimension(351, 115));
+        jPanel5.setLayout(new java.awt.GridBagLayout());
 
         jComboBoxCambioMoneda.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jComboBoxCambioMoneda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "24", "25" }));
+        jComboBoxCambioMoneda.setMaximumSize(new java.awt.Dimension(150, 26));
         jComboBoxCambioMoneda.setMinimumSize(new java.awt.Dimension(150, 26));
         jComboBoxCambioMoneda.setPreferredSize(new java.awt.Dimension(150, 26));
         jComboBoxCambioMoneda.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +144,9 @@ public class Generales extends AbstractViewPanel {
                 jComboBoxCambioMonedaActionPerformed(evt);
             }
         });
-        jPanelCambioMoneda.add(jComboBoxCambioMoneda);
+        jPanel5.add(jComboBoxCambioMoneda, new java.awt.GridBagConstraints());
+
+        jPanelCambioMoneda.add(jPanel5);
 
         jPanelNegocio.add(jPanelCambioMoneda);
 
@@ -182,11 +207,15 @@ public class Generales extends AbstractViewPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxTipoNegocioActionPerformed
 
+    private void jComboBoxCantidadturnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCantidadturnosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxCantidadturnosActionPerformed
+
     @Override
     public void wireUp() {
 
         //Bindings.bind(jCheckBoxMultiplesTurnos, getPresenter().getModel(R.SettingID.GENERAL_TURNOS_VARIOS.toString()));
-        Bindings.bind(jToggleButtonMultiplesTurnos, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
+//        Bindings.bind(jToggleButtonMultiplesTurnos, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
 
         //Bindings.bind(jCheckBoxPermEsp, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
         Bindings.bind(jToggleButtonPermEsp, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
@@ -197,8 +226,12 @@ public class Generales extends AbstractViewPanel {
         Bindings.bind(jComboBoxTipoNegocio, new ComboBoxAdapter(Arrays.asList(
                 "Restaurante", "Cafeteria", "Bar", "Carniceria", "Dulceria", "Tienda"),
                 getPresenter().getModel(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO.toString())));
+        
         Bindings.bind(jComboBoxCambioMoneda, new ComboBoxAdapter(Arrays.asList("24", "25"),
                 getPresenter().getModel(R.SettingID.GENERAL_CAMBIO_MONEDA.toString())));
+        
+        Bindings.bind(jComboBoxCantidadturnos, new ComboBoxAdapter(Arrays.asList("1", "2", "3"),
+                getPresenter().getModel(R.SettingID.GENERAL_CANTIDAD_TURNOS.toString())));
 
     }
 
@@ -215,29 +248,27 @@ public class Generales extends AbstractViewPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler10;
     private javax.swing.Box.Filler filler2;
-    private javax.swing.Box.Filler filler3;
-    private javax.swing.Box.Filler filler4;
-    private javax.swing.Box.Filler filler5;
-    private javax.swing.Box.Filler filler6;
-    private javax.swing.Box.Filler filler7;
     private javax.swing.Box.Filler filler8;
     private javax.swing.Box.Filler filler9;
     private javax.swing.JComboBox<String> jComboBoxCambioMoneda;
+    private javax.swing.JComboBox<String> jComboBoxCantidadturnos;
     private javax.swing.JComboBox<String> jComboBoxTipoNegocio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel24HR;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelCaja;
     private javax.swing.JPanel jPanelCambioMoneda;
     private javax.swing.JPanel jPanelGenerales;
     private javax.swing.JPanel jPanelNegocio;
     private javax.swing.JPanel jPanelTipoNegocio;
+    private javax.swing.JPanel jPanelTipoNegocio1;
     private javax.swing.JToggleButton jToggleButtonMesaFija;
-    private javax.swing.JToggleButton jToggleButtonMultiplesTurnos;
     private javax.swing.JToggleButton jToggleButtonPermEsp;
     // End of variables declaration//GEN-END:variables
 }
