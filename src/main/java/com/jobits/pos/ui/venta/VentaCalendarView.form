@@ -77,7 +77,7 @@
                       <Font name="Lucida Grande" size="18" style="1"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="0" rowCount="10"/>
+                      <Table columnCount="0" rowCount="0"/>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0"/>
@@ -85,6 +85,7 @@
                     <Property name="columnSelectionAllowed" type="boolean" value="true"/>
                     <Property name="opaque" type="boolean" value="false"/>
                     <Property name="rowHeight" type="int" value="80"/>
+                    <Property name="showGrid" type="boolean" value="false"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="null" type="code"/>
                     </Property>

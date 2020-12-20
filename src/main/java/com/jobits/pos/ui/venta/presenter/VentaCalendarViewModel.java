@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalField;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -20,7 +21,7 @@ import java.util.Date;
  * @author Jorge
  *
  */
-public class VentaCalendarViewModel extends AbstractListViewModel<Venta> {
+public class VentaCalendarViewModel extends AbstractListViewModel<List<Venta>> {
 
     private int year_seleccionado = LocalDate.now().get(ChronoField.YEAR);
 
@@ -74,7 +75,7 @@ public class VentaCalendarViewModel extends AbstractListViewModel<Venta> {
 
     public static final String PROP_MONTH_OFFSET = "month_offset";
 
-    private Venta dia_seleccionado;
+    private List<Venta> dia_seleccionado;
 
     public static final String PROP_DIA_SELECCIONADO = "dia_seleccionado";
 
@@ -83,7 +84,7 @@ public class VentaCalendarViewModel extends AbstractListViewModel<Venta> {
      *
      * @return the value of dia_seleccionado
      */
-    public Venta getDia_seleccionado() {
+    public List<Venta> getDia_seleccionado() {
         return dia_seleccionado;
     }
 
@@ -92,9 +93,9 @@ public class VentaCalendarViewModel extends AbstractListViewModel<Venta> {
      *
      * @param dia_seleccionado new value of dia_seleccionado
      */
-    public void setDia_seleccionado(Venta dia_seleccionado) {
+    public void setDia_seleccionado(List<Venta> dia_seleccionado) {
         if (dia_seleccionado != null) {
-            Venta oldDia_seleccionado = this.dia_seleccionado;
+            List<Venta> oldDia_seleccionado = this.dia_seleccionado;
             this.dia_seleccionado = dia_seleccionado;
             firePropertyChange(PROP_DIA_SELECCIONADO, oldDia_seleccionado, dia_seleccionado);
         }

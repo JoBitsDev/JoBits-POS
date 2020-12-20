@@ -17,7 +17,12 @@ import com.jobits.pos.ui.venta.presenter.VentaCalendarViewModel;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.calendar.DateSelectionModel;
 
 /**
  *
@@ -29,7 +34,7 @@ public class VentaCalendarView extends AbstractViewPanel {
 
     private JFileChooser fileChooser;
 
-    private BindableTableModel<Venta> model;
+    private BindableTableModel<List<Venta>> model;
 
     public VentaCalendarView(AbstractViewPresenter presenter) {
         super(presenter);
@@ -103,16 +108,7 @@ public class VentaCalendarView extends AbstractViewPanel {
         jTableCalendar.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jTableCalendar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {},
-                {},
-                {},
-                {},
-                {},
-                {},
-                {}
+
             },
             new String [] {
 
@@ -121,6 +117,7 @@ public class VentaCalendarView extends AbstractViewPanel {
         jTableCalendar.setColumnSelectionAllowed(true);
         jTableCalendar.setOpaque(false);
         jTableCalendar.setRowHeight(80);
+        jTableCalendar.setShowGrid(false);
         jTableCalendar.setTableHeader(null);
         jScrollPane1.setViewportView(jTableCalendar);
 
@@ -366,14 +363,16 @@ public class VentaCalendarView extends AbstractViewPanel {
                 getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_IMPORTAR_VENTA).doAction();
             }
         });
-        Bindings.bind(jTableCalendar, new SelectionInList(getPresenter().getModel(VentaCalendarViewModel.PROP_LISTA_ELEMENTOS),
+        Bindings.bind(jTableCalendar, new SelectionInList<List<Venta>>(
+                getPresenter().getModel(VentaCalendarViewModel.PROP_LISTA_ELEMENTOS),
                 getPresenter().getModel(VentaCalendarViewModel.PROP_ELEMENTO_SELECCIONADO)));
         jButtonY.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_Y));
         jButton3.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_RESUMEN_DETALLADO));
         jTableCalendar.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
-            if (!e.getValueIsAdjusting()) {
-                getPresenter().getModel(VentaCalendarViewModel.PROP_DIA_SELECCIONADO).setValue(getObjectAtSelectedCell());
-            }
+            getPresenter().getModel(VentaCalendarViewModel.PROP_DIA_SELECCIONADO).setValue(getObjectAtSelectedCell());
+        });
+        jTableCalendar.getColumnModel().getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
+            getPresenter().getModel(VentaCalendarViewModel.PROP_DIA_SELECCIONADO).setValue(getObjectAtSelectedCell());
         });
         jTableCalendar.addMouseListener(new MouseAdapter() {
             @Override
@@ -392,7 +391,7 @@ public class VentaCalendarView extends AbstractViewPanel {
         initComponents();
         jScrollPane1.getViewport().setOpaque(false);
         fileChooser = new JFileChooser();
-        model = new BindableTableModel<Venta>(jTableCalendar) {//findVentas(month, year)
+        model = new BindableTableModel<List<Venta>>(jTableCalendar) {//findVentas(month, year)
             @Override
             public int getColumnCount() {
                 return 7;
@@ -400,11 +399,11 @@ public class VentaCalendarView extends AbstractViewPanel {
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                return Venta.class;
+                return List.class;
             }
 
             @Override
-            public Venta getValueAt(int rowIndex, int columnIndex) {
+            public List<Venta> getValueAt(int rowIndex, int columnIndex) {
                 int linearPos = (rowIndex * (getColumnCount() - 1) + columnIndex) + rowIndex + 1;
                 int relativePos = linearPos - getPresenter().getModel(VentaCalendarViewModel.PROP_MONTH_OFFSET).intValue();
 
@@ -415,11 +414,13 @@ public class VentaCalendarView extends AbstractViewPanel {
             }
 
             @Override
-            public Venta getObjectAt(int dayOfMonth) {
+            public List<Venta> getObjectAt(int dayOfMonth) {
                 for (int i = 0; i < getListModel().getSize(); i++) {
                     if (super.getRow(i) != null) {
-                        if (super.getRow(i).getFecha().getDate() == dayOfMonth) {
-                            return super.getRow(i);
+                        if (!super.getRow(i).isEmpty()) {
+                            if (super.getRow(i).get(0).getFecha().getDate() == dayOfMonth) {
+                                return super.getRow(i);
+                            }
                         }
                     }
                 }
@@ -450,8 +451,11 @@ public class VentaCalendarView extends AbstractViewPanel {
 
         };
         jTableCalendar.setModel(model);
-        jTableCalendar.setDefaultRenderer(Venta.class, new VentaCellRender());
+        jTableCalendar.setDefaultRenderer(List.class, new VentaCellRender());
+        jTableCalendar.setCellSelectionEnabled(true);
+        jTableCalendar.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         jPanelResumen.setVisible(false);
+
     }
 
     @Override
@@ -459,12 +463,11 @@ public class VentaCalendarView extends AbstractViewPanel {
         return VIEW_NAME;
     }
 
-    private Venta getObjectAtSelectedCell() {
+    private List<Venta> getObjectAtSelectedCell() {
         if (jTableCalendar.getSelectedRow() == -1 || jTableCalendar.getSelectedColumn() == -1) {
             return null;
         }
-        return (Venta) model.getValueAt(jTableCalendar.convertRowIndexToModel(jTableCalendar.getSelectedRow()),
-                jTableCalendar.convertColumnIndexToModel(jTableCalendar.getSelectedColumn()));
+        return (List<Venta>) model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn());
     }
 
 }

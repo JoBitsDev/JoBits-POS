@@ -36,6 +36,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,7 +53,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             ACTION_Y = "Y",
             ACTION_RESUMEN_DETALLADO = "Resumen detallado";
 
-    private List<Venta> listaReal = new ArrayList();
+    private List<Venta> listaVentasTotales = new ArrayList();
+    private List<List<Venta>> ventas = new ArrayList<>();
 
     public VentaCalendarViewPresenter(VentaListController controller) {
         super(new VentaCalendarViewModel(), "Ventas");
@@ -70,9 +72,12 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             public Optional doAction() {
                 boolean confirmed = (boolean) Application.getInstance().getNotificationService().showDialog("Confirme la operación", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
                 if (confirmed) {
-                    Application.getInstance().getBackgroundWorker().processInBackground("Ejecutando Y", () -> {
-                        onEjecutarY(getBean().getDia_seleccionado());
-                    });
+                    Venta v = getVentaFromCalendar();
+                    if (v != null) {
+                        Application.getInstance().getBackgroundWorker().processInBackground("Ejecutando Y", () -> {
+                            onEjecutarY(v);
+                        });
+                    }
                 }
                 return Optional.empty();
             }
@@ -101,20 +106,37 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     @Override
     protected void onEditarClick() {//TODO vista
         if (getBean().getDia_seleccionado() != null) {
-            VentaDetailController ventaController = new VentaDetailController(getBean().getDia_seleccionado());
+            VentaDetailController ventaController = new VentaDetailController();
             VentaDetailViewPresenter presenter
                     = new VentaDetailViewPresenter(ventaController,
-                            new OrdenController());
+                            new OrdenController(), getBean().getDia_seleccionado());
             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         }
     }
 
     @Override
     protected void onEliminarClick() {
-        if (getBean().getDia_seleccionado() != null) {
-            service.destroy(getBean().getDia_seleccionado());
+        Venta v = getVentaFromCalendar();
+        if (v != null) {
+            service.destroy(v);
             updateBeanData();
         }
+    }
+
+    private Venta getVentaFromCalendar() {
+        if (getBean().getDia_seleccionado()!= null) {
+            if (getBean().getDia_seleccionado().size() == 1) {
+                return getBean().getDia_seleccionado().get(0);
+            } else {
+                int seleccion = JOptionPane.showOptionDialog(null, "Seleccione la venta", "Seleccion",
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                        null, getBean().getDia_seleccionado().toArray(), getBean().getDia_seleccionado().get(0));
+                if (seleccion != JOptionPane.CLOSED_OPTION) {
+                    return getBean().getDia_seleccionado().get(seleccion);
+                }
+            }
+        }
+        return null;
     }
 
     private void onResumenDetalladoClick() {
@@ -142,7 +164,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         //   throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
         // }
         try {
-            service.destroy(VentaDAO.getInstance().find(old.getFecha()), true);
+            service.destroy(old, true);
             newVenta.setAsistenciaPersonalList(new ArrayList<>());
             newVenta.setFecha(old.getFecha());
             newVenta.setOrdenList(alg.ejecutarAlgoritmo());
@@ -182,22 +204,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void setListToBean() {
-        listaReal = service.findVentas(getBean().getMes_seleccionado(), getBean().getYear_seleccionado());
-        int flag = 0;
-        Venta aux[] = new Venta[0];
-        if (!listaReal.isEmpty()) {
-            aux = new Venta[listaReal.get(listaReal.size() - 1).getFecha().getDate()];
-            for (int i = 0; i < aux.length - 1; i++) {
-                if (i == listaReal.get(flag).getFecha().getDate()) {
-                    aux[i] = listaReal.get(flag);
-                    flag++;
-                } else {
-                    aux[i] = null;
-                }
-            }
-        }
-        getBean().setLista_elementos(Arrays.asList(aux));
-//        getBean().setLista_elementos(service.findVentas(getBean().getMes_seleccionado(), getBean().getYear_seleccionado()));
+        ventas = service.findVentas(getBean().getMes_seleccionado() + 1, getBean().getYear_seleccionado());
+        getBean().setLista_elementos(ventas);
     }
 
     private void updateBeanData() {
@@ -210,19 +218,22 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         double gGastos = 0;
         double gTrabajadores = 0;
         int cantidad = 0;
-        for (Venta x : listaReal) {
-            if (x.getVentaTotal() != null) {
-                suma += x.getVentaTotal();
-                if (x.getVentagastosEninsumos() != null) {
-                    gInsumos += x.getVentagastosEninsumos();
+        for (List<Venta> venta : ventas) {
+            for (Venta x : venta) {
+                listaVentasTotales.add(x);
+                if (x.getVentaTotal() != null) {
+                    suma += x.getVentaTotal();
+                    if (x.getVentagastosEninsumos() != null) {
+                        gInsumos += x.getVentagastosEninsumos();
+                    }
+                    if (x.getVentagastosGastos() != null) {
+                        gGastos += x.getVentagastosGastos();
+                    }
+                    if (x.getVentagastosPagotrabajadores() != null) {
+                        gTrabajadores += x.getVentagastosPagotrabajadores();
+                    }
+                    cantidad++;
                 }
-                if (x.getVentagastosGastos() != null) {
-                    gGastos += x.getVentagastosGastos();
-                }
-                if (x.getVentagastosPagotrabajadores() != null) {
-                    gTrabajadores += x.getVentagastosPagotrabajadores();
-                }
-                cantidad++;
             }
         }
         double promedio = suma / cantidad;
@@ -233,7 +244,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         getBean().setGasto_insumo_intervalo(utils.setDosLugaresDecimales((float) gInsumos));
         getBean().setGasto_trabajadores_intervalo(utils.setDosLugaresDecimales((float) (gTrabajadores)));
         getBean().setGasto_otros_intervalo(utils.setDosLugaresDecimales((float) gGastos));
-        int hora_pico_promedio = VentaDAO1.getModalPickHour(listaReal);
+        int hora_pico_promedio = VentaDAO1.getModalPickHour(listaVentasTotales);
         getBean().setHora_pico_intervalo(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
         getBean().setY_visible(service.isYVisible());
     }
