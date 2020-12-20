@@ -69,6 +69,9 @@ public class OrdenLogRepo {
                 String line = br.readLine();
                 while (line != null) {
                     String[] data = line.split("_");
+                    data[3] = data[3] + "_" + data[4];
+                    data[4] = data[5];
+                    data = Arrays.copyOf(data, data.length - 1);
                     listaToReturn.add(data);
                     line = br.readLine();
                 }
