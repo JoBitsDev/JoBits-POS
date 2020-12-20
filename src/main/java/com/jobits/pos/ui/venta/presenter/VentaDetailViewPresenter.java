@@ -6,13 +6,16 @@
 package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.gasto.GastoOperacionController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.gastos.presenter.GastosViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.PROP_VENTA_SELECCIONADA;
@@ -48,6 +51,8 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     private VentaDetailService service;
     OrdenService ordenService;
     private VentaOrdenListViewPresenter ventaOrdenPresenter;
+    private AsistenciaPersonalPresenter asistenciaPersonalPresenter;
+    private GastosViewPresenter gastosPresenter;
     private List<Venta> ventas;
 
     /**
@@ -77,6 +82,14 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     public VentaOrdenListViewPresenter getVentaOrdenListViewPresenter() {
         return ventaOrdenPresenter;
+    }
+
+    public AsistenciaPersonalPresenter getAsistenciaPersonalPresenter() {
+        return asistenciaPersonalPresenter;
+    }
+
+    public GastosViewPresenter getGastosPresenter() {
+        return gastosPresenter;
     }
 
     @Override
@@ -227,6 +240,14 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             ventaOrdenPresenter.setCodVenta(codVenta);
             service.fetchNewDataFromServer(codVenta);
             Venta v = service.getInstance(codVenta);
+            if (asistenciaPersonalPresenter == null) {
+                asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(v);
+            }
+            asistenciaPersonalPresenter.setVenta(v);
+            if (gastosPresenter == null) {
+                gastosPresenter = new GastosViewPresenter(new GastoOperacionController(v));
+            }
+            gastosPresenter.setVenta(v);
             getBean().setVentaInstance(v);
             getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(codVenta));
             getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(codVenta));

@@ -601,8 +601,8 @@ public class VentaDetailView extends AbstractViewPanel {
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
         jPanelVentas.add(new VentaListOrdenesView(((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter()));
 
-        jPanelPagoTrabajadores.add(new AsistenciaPersonalView(new AsistenciaPersonalPresenter(ventaInstance)));
-        jPanelExtracciones.add(new GastosView(new GastosViewPresenter(new GastoOperacionController(ventaInstance))));
+        jPanelPagoTrabajadores.add(new AsistenciaPersonalView(((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter()));
+        jPanelExtracciones.add(new GastosView(((VentaDetailViewPresenter) getPresenter()).getGastosPresenter()));
     }
 
     @Override

@@ -33,18 +33,19 @@ import com.jobits.pos.recursos.R;
  */
 public class GastoOperacionController extends AbstractFragmentListController<Gasto> {
 
-    Venta diaVenta;
+    private Venta diaVenta;
 
     public GastoOperacionController() {
         super(GastoDAO.getInstance());
     }
 
-    public GastoOperacionController(/*Container parent,*/ Venta fecha) {
+    public GastoOperacionController( Venta fecha) {
         this();
-//        setParent(parent);
         this.diaVenta = fecha;
 
     }
+    
+    
 
     public List<String> getNombres(String toString) {
         List<String> ret = new ArrayList<>();

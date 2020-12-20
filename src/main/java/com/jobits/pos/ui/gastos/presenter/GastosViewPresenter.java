@@ -8,6 +8,7 @@ package com.jobits.pos.ui.gastos.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.gasto.GastoOperacionController;
 import com.jobits.pos.domain.models.GastoVenta;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
@@ -37,8 +38,13 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     public GastosViewPresenter(GastoOperacionController service) {
         super(new GastosViewModel());
         this.service = service;
-        addBeanData();
+        refreshState();
         addListeners();
+    }
+
+    public void setVenta(Venta v) {
+        service.setDiaVenta(v);
+        refreshState();
     }
 
     @Override
@@ -77,7 +83,8 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         });
     }
 
-    private void addBeanData() {
+    @Override
+    protected Optional refreshState() {
         getBean().setCategoria_gasto_seleccionada(R.TipoGasto.UNSPECIFIED);
         getBean().getLista_gasto_venta().clear();
         getBean().getLista_gasto_venta().addAll(service.getLista());
@@ -88,6 +95,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         } else {
             getBean().setTotal_gastos(utils.setDosLugaresDecimales(0));
         }
+        return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void onAgregarClick() {
@@ -97,7 +105,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
                     getBean().getTipo_gasto_seleccionado(),
                     getBean().getMonto_gasto(),
                     getBean().getDescripcion_gasto());
-            addBeanData();
+            refreshState();
             onLimpiarClick();
         } else {
             JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Rellene todos los campos obligatorios");
@@ -109,7 +117,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
             JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un gasto primero");
         } else {
             service.removeGasto(getBean().getGasto_venta_seleccionado());
-            addBeanData();
+            refreshState();
         }
     }
 

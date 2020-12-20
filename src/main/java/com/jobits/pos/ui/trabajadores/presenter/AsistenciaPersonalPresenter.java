@@ -33,7 +33,12 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         super(new AsistenciaPersonalViewModel());
         this.venta = venta;
         personalService = new AsistenciaPersonalController(this.venta);
-        updateBeanData();
+        refreshState();
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
+        refreshState();
     }
 
     @Override
@@ -71,11 +76,13 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         });
     }
 
-    private void updateBeanData() {
+    @Override
+    protected Optional refreshState() {
         getBean().getLista_personal_disponible().clear();
         getBean().getLista_personal_disponible().addAll(new ArrayListModel<>(personalService.getTrabajadoresList()));
         getBean().getLista_personal_contenido().clear();
         getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void onEliminarClick() {
