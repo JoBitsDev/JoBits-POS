@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.impl.AreaDAO;
 import com.jobits.pos.adapters.repo.impl.CocinaDAO;
+import com.jobits.pos.adapters.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.adapters.repo.impl.OrdenDAO;
 import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.controller.AbstractDetailController;
@@ -120,10 +121,13 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return v;
     }
 
-    public boolean canOpenNuevoTurno(int ventasExistentes) {
-        return ventasExistentes < R.SettingID.GENERAL_CANTIDAD_TURNOS.getIntegerValue();
+    @Override
+    public boolean canOpenNuevoTurno(Date fecha) {
+        return VentaDAO.getInstance().find(fecha).size() < ConfiguracionDAO.getInstance().
+                find(R.SettingID.GENERAL_CANTIDAD_TURNOS).getValor();
     }
 
+    @Override
     public boolean canReabrirVenta(int codVenta) {
         return getInstance(codVenta).getVentaTotal() != null;
 
@@ -628,6 +632,10 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         create(aux, true);
         List<Venta> ret = getVentasDeFecha(fecha);
         ret.add(aux);
+
+        //Crear IPvs
+        initIPV(aux);
+
         return ret;
     }
 

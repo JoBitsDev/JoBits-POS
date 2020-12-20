@@ -240,7 +240,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             getBean().setVenta_neta(service.getTotalVendidoNeto(codVenta));
             getBean().setVenta_total(service.getTotalVendido(codVenta));
             getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
-            getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(getBean().getList_ventas().getSize()));
+            getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(getBean().getVenta_seleccionada().getFecha()));
         }
 
     }

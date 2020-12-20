@@ -75,6 +75,6 @@ public interface VentaDetailService {
 
     public boolean terminarYExportar(File file, int codVenta);
     
-    public boolean canOpenNuevoTurno(int ventasExistentes);
+    public boolean canOpenNuevoTurno(Date fecha);
 
 }
