@@ -87,7 +87,7 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
         });
         getBean().addPropertyChangeListener(PROP_FECHA_DESDE, (PropertyChangeEvent evt) -> {
             getBean().setFecha_hasta((Date) evt.getNewValue());
-            setPeriodo();
+//            setPeriodo();
         });
         getBean().addPropertyChangeListener(PROP_FECHA_HASTA, (PropertyChangeEvent evt) -> {
             LocalDate inicio = getBean().getDesde();
