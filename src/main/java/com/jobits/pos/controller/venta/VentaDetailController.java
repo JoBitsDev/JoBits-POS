@@ -444,18 +444,15 @@ public class VentaDetailController extends AbstractDetailController<Venta>
                 }
             }
         }
-        Collections.sort(ret, new Comparator<>() {
-            @Override
-            public int compare(Venta o1, Venta o2) {
-                int ret = o1.getId().compareTo(o2.getId());
-                int a, b;
-                a = o1.getVentaTotal() == null ? -1 : 0;
-                b = o2.getVentaTotal() == null ? -1 : 0;
-                if (a == b) {
-                    return ret;
-                } else {
-                    return Integer.compare(a, b);
-                }
+        Collections.sort(ret, (Venta o1, Venta o2) -> {
+            int ret1 = o1.getId().compareTo(o2.getId());
+            int a, b;
+            a = o1.getVentaTotal() == null ? -1 : 0;
+            b = o2.getVentaTotal() == null ? -1 : 0;
+            if (a == b) {
+                return ret1;
+            } else {
+                return Integer.compare(a, b);
             }
         });
         switch (Application.getInstance().getLoggedUser().getPuestoTrabajonombrePuesto().getNivelAcceso()) {
