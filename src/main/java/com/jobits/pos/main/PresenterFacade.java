@@ -24,6 +24,8 @@ import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.reportes.ReportarBugController;
+import com.jobits.pos.controller.reservas.ReservaController;
+import com.jobits.pos.controller.reservas.ReservaListController;
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.seccion.SeccionDetailServiceImpl;
 import com.jobits.pos.controller.trabajadores.NominasController;
@@ -42,11 +44,8 @@ import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
-import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
-import com.jobits.pos.ui.dashboard.DashBoardView;
-import com.jobits.pos.ui.mainmenu.MainMenuView;
-import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
+import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
@@ -63,12 +62,18 @@ import com.jobits.pos.ui.autorizo.AutorizoView;
 import com.jobits.pos.ui.autorizo.presenter.AutorizoViewPresenter;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
+import com.jobits.pos.ui.cartas.CartasSeccionView;
+import com.jobits.pos.ui.cartas.SeccionDetailView;
+import com.jobits.pos.ui.cartas.presenter.CartasSeccionViewPresenter;
+import com.jobits.pos.ui.cartas.presenter.SeccionDetailViewPresenter;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
 import com.jobits.pos.ui.clientes.ClientesListView;
 import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
 import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
+import com.jobits.pos.ui.dashboard.DashBoardView;
+import com.jobits.pos.ui.dashboard.presenter.DashboardViewPresenter;
 import com.jobits.pos.ui.imagemanager.ImageManagerView;
 import com.jobits.pos.ui.imagemanager.presenter.ImageManagerViewPresenter;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
@@ -80,18 +85,19 @@ import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaListViewPresenter;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
-import com.jobits.pos.ui.cartas.CartasSeccionView;
-import com.jobits.pos.ui.cartas.SeccionDetailView;
-import com.jobits.pos.ui.cartas.presenter.CartasSeccionViewPresenter;
-import com.jobits.pos.ui.cartas.presenter.SeccionDetailViewPresenter;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
+import com.jobits.pos.ui.reserva.ReservasDetailView;
+import com.jobits.pos.ui.reserva.ReservasListView;
+import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
+import com.jobits.pos.ui.reserva.presenter.ReservaListViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -102,11 +108,11 @@ import com.jobits.pos.ui.trabajadores.presenter.PersonalDetailViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PersonalListViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoDetailViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.PuestoTrabajoListViewPresenter;
-import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaResumenView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
+import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
@@ -175,7 +181,7 @@ public class PresenterFacade {
             case IpvGestionView.VIEW_NAME:
                 return new IpvGestionViewPresenter(new IPVController());
             case VentaDetailView.VIEW_NAME:
-                return new VentaDetailViewPresenter(new VentaDetailController(), new OrdenController(),new ArrayList<>());
+                return new VentaDetailViewPresenter(new VentaDetailController(), new OrdenController(), new ArrayList<>());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter(new UbicacionConexionController());
             case VentaCalendarView.VIEW_NAME:
@@ -190,6 +196,8 @@ public class PresenterFacade {
                 return new ReportarBugViewPresenter(new ReportarBugController());
             case OrdenLogView.VIEW_NAME:
                 return new OrdenLogViewPresenter(null);
+            case ReservasDetailView.VIEW_NAME:
+                return new ReservaDetailViewPresenter(new ReservaController());
             case CalcularCambioView.VIEW_NAME:
                 return new CalcularCambioViewPresenter(new Orden());
             case VentaResumenView.VIEW_NAME:
@@ -206,6 +214,8 @@ public class PresenterFacade {
                 return new ClientesListViewPresenter(new ClientesListServiceImpl());
             case ClientesDetailView.VIEW_NAME:
                 return new ClientesDetailViewPresenter(new ClientesDetailServiceImpl());
+            case ReservasListView.VIEW_NAME:
+                return new ReservaListViewPresenter(new ReservaListController());
             case IPVPedidoVentasView.VIEW_NAME:
                 return new IPVPedidoVentasViewPresenter(new PedidoIpvVentasController(new ArrayList<>(), new Cocina()));
             case LicenceDialogView.VIEW_NAME:

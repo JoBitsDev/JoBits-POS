@@ -35,6 +35,8 @@ import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.cartas.CartasSeccionView;
 import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
+import com.jobits.pos.ui.reserva.ReservasDetailView;
+import com.jobits.pos.ui.reserva.ReservasListView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -129,6 +131,8 @@ public class ViewFacade {
                 return new ReportarBugView(p);
             case ClientesDetailView.VIEW_NAME:
                 return new ClientesDetailView(p);
+            case ReservasDetailView.VIEW_NAME:
+                return new ReservasDetailView(p);
             case ClientesListView.VIEW_NAME:
                 return new ClientesListView((AbstractListViewPresenter) p);
             case OrdenLogView.VIEW_NAME:
@@ -143,6 +147,8 @@ public class ViewFacade {
                 return new AutorizoView(p);
             case IPVPedidoVentasView.VIEW_NAME:
                 return new IPVPedidoVentasView(p);
+            case ReservasListView.VIEW_NAME:
+                return new ReservasListView((AbstractListViewPresenter) p);
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListView((AbstractListViewPresenter) p);
             case LicenceDialogView.VIEW_NAME:
