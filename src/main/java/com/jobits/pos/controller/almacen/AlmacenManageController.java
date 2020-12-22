@@ -44,7 +44,6 @@ import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.AlmacenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.StockBalanceFormatter;
-import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
 import java.awt.Frame;
 import java.util.Collections;
@@ -394,13 +393,15 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         Impresion.getDefaultInstance().print(new StockBalanceFormatter(a), null);
     }
 
-    private void updateValorTotalAlmacen(Almacen instance) {
-        float total = 0;
+    public void updateValorTotalAlmacen(Almacen instance) {
+        double total = 0;
         instance = getModel().find(instance.getCodAlmacen());
         for (InsumoAlmacen x : instance.getInsumoAlmacenList()) {
-            total += x.getValorMonetario();
+            if (x.getValorMonetario() != null) {
+                total += utils.setDosLugaresDecimalesFloat(x.getValorMonetario());
+            }
         }
-        instance.setValorMonetario(total);
+        instance.setValorMonetario(utils.setDosLugaresDecimalesDouble(total));
         update(instance, true);
         getModel().getEntityManager().getEntityManagerFactory().getCache().evict(Almacen.class
         );
