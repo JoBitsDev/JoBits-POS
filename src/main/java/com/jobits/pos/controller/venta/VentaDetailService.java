@@ -29,6 +29,8 @@ public interface VentaDetailService {
 
     public Orden createNewOrden(int codVenta);
 
+    public Orden abrirReserva(int codVenta);
+
     public void fetchNewDataFromServer(int codVenta);
 
     public Venta getInstance(int codVenta);
@@ -74,7 +76,7 @@ public interface VentaDetailService {
     public boolean terminarVentas(int codVenta);
 
     public boolean terminarYExportar(File file, int codVenta);
-    
+
     public boolean canOpenNuevoTurno(Date fecha);
 
 }
