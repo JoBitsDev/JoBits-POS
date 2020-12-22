@@ -263,12 +263,17 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         } else {
             switch (currentOperation) {
                 case ENTRADA:
-                    TransaccionSimple transaccionEntrada = new TransaccionSimple(
-                            getBean().getInsumo_selecionado(),
-                            getBean().getCantidad_entrada(),
-                            Float.parseFloat(getBean().getMonto_entrada()));
-                    getBean().getLista_elementos().add(transaccionEntrada);
-                    setDefaultValues(currentOperation, false);
+                    if (!getBean().getMonto_entrada().equals("") && getBean().getMonto_entrada() != null) {
+                        TransaccionSimple transaccionEntrada = new TransaccionSimple(
+                                getBean().getInsumo_selecionado(),
+                                getBean().getCantidad_entrada(),
+                                Float.parseFloat(getBean().getMonto_entrada())
+                        );
+                        getBean().getLista_elementos().add(transaccionEntrada);
+                        setDefaultValues(currentOperation, false);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Defina el monto primero");
+                    }
                     break;
                 case SALIDA:
                     if (getBean().getDestino_seleccionado() == null) {
