@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.adapters.repo.impl.SeccionDAO;
 import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
@@ -14,11 +13,8 @@ import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.InsumoAlmacen;
-import com.jobits.pos.domain.models.InsumoAlmacenPK;
-import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
@@ -26,15 +22,11 @@ import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
-import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel;
-import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -137,6 +129,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                         new TransaccionListPresenter(
                                 new TransaccionesListController(
                                         detailService.getInstance())), DisplayType.POPUP);
+                refreshView();
                 return Optional.empty();
             }
         });
@@ -148,6 +141,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                             new InsumoDetailViewPresenter(
                                     new InsumoDetailController(
                                             getBean().getInsumo_contenido_seleccionado().getInsumo())), DisplayType.POPUP);
+                    refreshView();
                 } else {
                     JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un insumo primero");
                 }
@@ -159,6 +153,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             public Optional doAction() {
                 NavigationService.getInstance().navigateTo(FacturaView.VIEW_NAME,
                         new FacturaViewPresenter(detailService), DisplayType.POPUP);
+                refreshView();
                 return Optional.empty();
             }
         });
@@ -191,7 +186,8 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void refreshView() {
-        getBean().setValor_monetario_text(utils.setDosLugaresDecimales(detailService.getInstance().getValorMonetario()));
+        detailService.updateValorTotalAlmacen(getBean().getElemento_seleccionado());
+        getBean().setValor_monetario_text(utils.setDosLugaresDecimalesDoubleString(detailService.getInstance().getValorMonetario()));
         getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(detailService.getInstance())));
         getBean().setLista_insumos_disponibles(new ArrayListModel<>(detailService.getInsumoList()));
 
