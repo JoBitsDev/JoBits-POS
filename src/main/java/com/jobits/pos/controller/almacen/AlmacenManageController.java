@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jobits.pos.ui.almacen.OldAlmacenEditView;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,7 +44,6 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.AlmacenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.StockBalanceFormatter;
 import com.jobits.pos.ui.utils.utils;
-import java.awt.Frame;
 import java.util.Collections;
 
 /**
@@ -79,7 +77,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new OldAlmacenEditView(this, (Frame) parent, getInstance()));
+//        setView(new OldAlmacenEditView(this, (Frame) parent, getInstance()));
         getView().updateView();
         getView().fetchComponentData();
         getView().setVisible(true);
