@@ -7,6 +7,7 @@ package com.jobits.pos.adapters.repo.impl;
 
 import com.jobits.pos.controller.productos.ProductoVentaMapper;
 import com.jobits.pos.controller.productos.ProductoVentaMapperRepoImpl;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.CsvReader;
 import com.jobits.pos.ui.utils.CsvWriter;
@@ -61,6 +62,7 @@ public class OrdenLogRepo {
     }
 
     public static List<String[]> loadLogFile(String keyWord) {
+        Application.getInstance().authorizeUser(R.NivelAcceso.ECONOMICO);
         List<String[]> listaToReturn = new ArrayList<>();
         File f = new File(LOGS_FILE_PATH + keyWord + ".txt");
         if (f.exists()) {
