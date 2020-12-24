@@ -6,12 +6,10 @@
 package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.PedidoIpvVentasController;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.domain.InsumoPedidoModel;
 import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
 import com.jobits.pos.domain.VentaDAO1;
-import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
 import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.main.Application;
