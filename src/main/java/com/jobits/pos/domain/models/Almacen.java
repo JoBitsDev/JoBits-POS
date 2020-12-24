@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jobits.pos.domain.models;
 
 import java.io.Serializable;
@@ -23,8 +22,9 @@ import javax.persistence.Table;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
 @Entity
 @Table(name = "almacen")
@@ -34,7 +34,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Almacen.findByNombre", query = "SELECT a FROM Almacen a WHERE a.nombre = :nombre"),
     @NamedQuery(name = "Almacen.findByCantidadInsumos", query = "SELECT a FROM Almacen a WHERE a.cantidadInsumos = :cantidadInsumos"),
     @NamedQuery(name = "Almacen.findByValorMonetario", query = "SELECT a FROM Almacen a WHERE a.valorMonetario = :valorMonetario")})
-public class Almacen implements Serializable {
+public class Almacen implements Serializable, Comparable<Almacen> {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacen")
     private List<Operacion> operacionList;
@@ -44,7 +44,7 @@ public class Almacen implements Serializable {
 
     @Column(name = "centro_elaboracion")
     private Boolean centroElaboracion = false;
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -129,7 +129,7 @@ public class Almacen implements Serializable {
 
     @Override
     public String toString() {
-        return codAlmacen +" : "+nombre ;
+        return codAlmacen + " : " + nombre;
     }
 
     public Boolean getCentroElaboracion() {
@@ -154,6 +154,10 @@ public class Almacen implements Serializable {
 
     public void setOperacionList(List<Operacion> operacionList) {
         this.operacionList = operacionList;
+    }
+
+    public int compareTo(Almacen o) {
+        return codAlmacen.split("-")[1].compareTo(o.getCodAlmacen().split("-")[1]);
     }
 
 }
