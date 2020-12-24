@@ -38,6 +38,7 @@ import com.jobits.pos.adapters.repo.impl.TransaccionDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionEntradaDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionMermaDAO;
 import com.jobits.pos.domain.TransaccionSimple;
+import com.jobits.pos.domain.models.InsumoElaborado;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
@@ -240,7 +241,14 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         float sumaTransformacion = 0;
         for (TransaccionTransformacion i : items) {
             sumaTransformacion += i.getCantidadUsada();
-            if (!selected.getInsumo().getInsumoDerivadoList().contains(i.getInsumo())) {
+            boolean flag = true;
+            for (InsumoElaborado x : selected.getInsumo().getInsumoDerivadoList()) {
+                if (x.getInsumo_derivado_nombre().equals(i.getInsumo())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
                 throw new ValidatingException("El insumo " + i.getInsumo() + " no es un insumo derivado de " + selected.getInsumo()
                         + "\n y no es posible transformarlo");
             }
