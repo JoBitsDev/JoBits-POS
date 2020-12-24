@@ -123,7 +123,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     }
 
     public void addTransaccionTransformacion(InsumoAlmacen selected, Date fecha, Date hora, List<TransaccionTransformacion> items, float cantidad, float merma, Almacen destino) {
-        Transaccion t = nuevaTransaccion(null, selected.getInsumo(), fecha, hora, selected.getAlmacen(), cantidad);
+        Transaccion t = nuevaTransaccion(new Operacion(), selected.getInsumo(), fecha, hora, selected.getAlmacen(), cantidad);
         float precioMedioNuevo = (cantidad * selected.getInsumo().getCostoPorUnidad()) / cantidad - merma;
         for (TransaccionTransformacion i : items) {
             TransaccionTransformacionPK pk = new TransaccionTransformacionPK(t.getNoTransaccion(), i.getInsumo().getCodInsumo());
@@ -187,9 +187,10 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     private Transaccion nuevaTransaccion(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad) {
         Transaccion t = new Transaccion();
-        if (o != null) {
-            t.setOperacionnoOperacion(o);
-        }
+//        if (o != null) {
+        o.setAlmacen(a);
+        t.setOperacionnoOperacion(o);
+//        }
         t.setDescripcion(R.loggedUser.getUsuario());
         t.setCantidad(cantidad);
         t.setInsumocodInsumo(insumo);
