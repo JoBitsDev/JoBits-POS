@@ -103,7 +103,10 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
                 reg.setEntrada(reg.getEntrada() + cantidad);
                 updateInstance(reg);
             }
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
+            if (getModel().getEntityManager().getTransaction().isActive()) {
+                getModel().getEntityManager().getTransaction().rollback();
+            }
             System.out.println(e.getMessage());
             throw new ValidatingException(getView(),
                     "El insumo en el ipv a dar entrada no existe o no hay un ipv inizializado en el dia actual");
