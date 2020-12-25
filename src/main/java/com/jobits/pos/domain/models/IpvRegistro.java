@@ -81,7 +81,6 @@ public class IpvRegistro implements Serializable {
     private Ipv ipv;
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
