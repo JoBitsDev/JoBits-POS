@@ -45,7 +45,7 @@ public class OrdenLogViewPresenter extends AbstractViewPresenter<OrdenLogViewMod
     private void fillBeanData() {
         getBean().setCodigo_orden(codOrden);
         getBean().getLog_list().clear();
-        getBean().getLog_list().addAll(OrdenLogRepo.loadLogFile(codOrden));
+        getBean().getLog_list().addAll(OrdenLogRepo.loadLogFile(codOrden));//TODO: falta controller
 
     }
 

@@ -56,7 +56,7 @@ public class Almacen implements Serializable {
     private Integer cantidadInsumos;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "valor_monetario")
-    private Float valorMonetario;
+    private Double valorMonetario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "almacen")
     private List<InsumoAlmacen> insumoAlmacenList;
 
@@ -91,11 +91,11 @@ public class Almacen implements Serializable {
         this.cantidadInsumos = cantidadInsumos;
     }
 
-    public Float getValorMonetario() {
+    public Double getValorMonetario() {
         return valorMonetario;
     }
 
-    public void setValorMonetario(Float valorMonetario) {
+    public void setValorMonetario(Double valorMonetario) {
         this.valorMonetario = valorMonetario;
     }
 

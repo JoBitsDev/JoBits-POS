@@ -234,6 +234,10 @@ public class utils {
         return (double) (Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2));
     }
 
+    public static String setDosLugaresDecimalesDoubleString(Double valorARedondear) {
+        return (Math.round(valorARedondear * Math.pow(10, 2)) / Math.pow(10, 2)) + R.COIN_SUFFIX;
+    }
+
     public static int cantidadARedondearPorExceso(int valorARedondear) {
         return valorARedondear % 5 != 0 ? 5 - (valorARedondear % 5) : 0;
     }

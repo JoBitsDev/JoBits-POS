@@ -37,9 +37,9 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "IpvRegistro.findAll", query = "SELECT i FROM IpvRegistro i"),
     @NamedQuery(name = "IpvRegistro.findByIpvinsumocodInsumo", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvinsumocodInsumo = :ipvinsumocodInsumo"),
     @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocina",
-            query = "SELECT DISTINCT i.ipvRegistroPK.fecha FROM IpvRegistro i "
+            query = "SELECT DISTINCT i.ipvRegistroPK.ventaId FROM IpvRegistro i "
             + "WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina  "
-            + "ORDER BY i.ipvRegistroPK.fecha DESC"),
+            + "ORDER BY i.ipvRegistroPK.ventaId DESC"),
     @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndId",
             query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina AND i.ipvRegistroPK.ventaId = :ventaId"),
     @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndIdAndInsumo",

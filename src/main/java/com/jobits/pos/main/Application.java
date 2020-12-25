@@ -12,6 +12,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.notification.NotificationService;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.LongProcessActionService;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -69,7 +70,7 @@ public class Application {
     private LicenceController licenceController = new LicenceController();
 
     private Personal loggedUser;
-    
+
     public static String PROP_LOGGED_USER = "Logged User";
 
     private static Application application;
@@ -95,6 +96,15 @@ public class Application {
             application = new Application(debugMode);
         }
         return application;
+    }
+
+    public boolean authorizeUser(R.NivelAcceso nivelAcceso) {
+        if (getLoggedUser().getPuestoTrabajonombrePuesto().getNivelAcceso() == nivelAcceso.getNivel()) {
+            getNotificationService().showDialog("No posees permisos para acceder a este recurso", TipoNotificacion.ERROR);
+            throw new IllegalAccessError("Acceso denegado.");
+        }
+        return true;
+
     }
 
     public void start() throws Exception {

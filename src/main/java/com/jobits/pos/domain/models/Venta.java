@@ -231,3 +231,4 @@ public class Venta implements Serializable {
     public void setIpvRegistroList(List<IpvRegistro> ipvRegistroList) {
         this.ipvRegistroList = ipvRegistroList;
     }
+}

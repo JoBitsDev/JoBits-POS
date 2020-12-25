@@ -474,7 +474,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     private boolean esDespachable(ProductoVenta selected, Orden ordenVenta, float cantidad) {
         return selected.getCocinacodCocina().getLimitarVentaInsumoAgotado()
-                ? new IPVController().hayDisponibilidad(selected, ordenVenta.getVentafecha(), cantidad)
+                ? new IPVController().hayDisponibilidad(selected, ordenVenta.getVentaid().getId(), cantidad)//TODO: da palo cuando es una reserva
                 : true;
 
     }

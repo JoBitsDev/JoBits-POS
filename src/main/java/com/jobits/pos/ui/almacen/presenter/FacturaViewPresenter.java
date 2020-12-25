@@ -43,6 +43,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     public static final String ACTION_ELIMINAR_INSUMO_TRANSFORMADO = "Agregar Insumo Transformado";
     public static final String ACTION_AGREGAR_INSUMO_TRANSFORMADO = "Eliminar Insumo Transformado";
 
+
     public FacturaViewPresenter(AlmacenManageController controller) {
         super(new FacturaViewModel());
         this.controller = controller;
@@ -263,12 +264,17 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         } else {
             switch (currentOperation) {
                 case ENTRADA:
-                    TransaccionSimple transaccionEntrada = new TransaccionSimple(
-                            getBean().getInsumo_selecionado(),
-                            getBean().getCantidad_entrada(),
-                            Float.parseFloat(getBean().getMonto_entrada()));
-                    getBean().getLista_elementos().add(transaccionEntrada);
-                    setDefaultValues(currentOperation, false);
+                    if (!getBean().getMonto_entrada().equals("") && getBean().getMonto_entrada() != null) {
+                        TransaccionSimple transaccionEntrada = new TransaccionSimple(
+                                getBean().getInsumo_selecionado(),
+                                getBean().getCantidad_entrada(),
+                                Float.parseFloat(getBean().getMonto_entrada())
+                        );
+                        getBean().getLista_elementos().add(transaccionEntrada);
+                        setDefaultValues(currentOperation, false);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Defina el monto primero");
+                    }
                     break;
                 case SALIDA:
                     if (getBean().getDestino_seleccionado() == null) {
@@ -332,7 +338,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 controller.crearOperacion(getBean().getLista_elementos(),
                         currentOperation,
                         getBean().getFecha_factura(),
-                        getBean().getNumero_recibo());
+                        getBean().getNumero_recibo(), null);
                 Application.getInstance().getNavigator().navigateUp();
 //                setDefaultValues(currentOperation, true);
             }

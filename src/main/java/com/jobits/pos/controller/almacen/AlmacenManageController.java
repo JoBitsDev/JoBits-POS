@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jobits.pos.ui.almacen.OldAlmacenEditView;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,9 +43,7 @@ import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.AlmacenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.StockBalanceFormatter;
-import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
-import java.awt.Frame;
 import java.util.Collections;
 
 /**
@@ -80,7 +77,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        setView(new OldAlmacenEditView(this, (Frame) parent, getInstance()));
+//        setView(new OldAlmacenEditView(this, (Frame) parent, getInstance()));
         getView().updateView();
         getView().fetchComponentData();
         getView().setVisible(true);
@@ -174,7 +171,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      * @param importe
      * @param causaRebaja
      */
-    public void crearTransaccion(Operacion o, InsumoAlmacen ins, int tipo, Cocina destino, Almacen destinoTraspaso, float cantidad, float importe, String causaRebaja, boolean showSuccesDialog) {
+    public void crearTransaccion(Operacion o, InsumoAlmacen ins, int tipo, Cocina destino, Almacen destinoTraspaso, float cantidad, float importe, String causaRebaja, boolean showSuccesDialog, Integer idVenta) {
         TransaccionDetailController controller = new TransaccionDetailController();
         controller.setView(getView());
         getModel().startTransaction();
@@ -186,7 +183,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
                 break;
             case 1:
                 if (showConfirmDialog(getView(), "Desea dar salida a " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " hacia " + destino)) {
-                    controller.addTransaccionSalida(o, ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad);
+                    controller.addTransaccionSalida(o, ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad,idVenta);
                 }
                 break;
             case 2:
@@ -322,7 +319,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         updateValorTotalAlmacen(instance);
     }
 
-    void darSalidaAInsumo(TransaccionSalida x) throws ValidatingException {
+    void darSalidaAInsumo(TransaccionSalida x, int idVenta) throws ValidatingException {
         IPVController controller = new IPVController();
         controller.setView(getView());
         InsumoAlmacen insumoADarSalida = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getTransaccion().getInsumocodInsumo().getCodInsumo());
@@ -333,7 +330,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
             }
             throw new com.jobits.pos.exceptions.ValidatingException(getView(), "No hay suficiente cantidad de " + x.getTransaccion().getInsumocodInsumo() + " para extraer del almacen");
         }
-        controller.darEntradaExistencia(x.getTransaccion().getInsumocodInsumo(), x.getCocinacodCocina(), x.getTransaccion().getFecha(), x.getTransaccion().getCantidad());
+        controller.darEntradaExistencia(x.getTransaccion().getInsumocodInsumo(), x.getCocinacodCocina(), idVenta, x.getTransaccion().getCantidad());
         float precioMedio = insumoADarSalida.getValorMonetario() / insumoADarSalida.getCantidad();
         insumoADarSalida.setCantidad(insumoADarSalida.getCantidad() - x.getTransaccion().getCantidad());
         insumoADarSalida.setValorMonetario(insumoADarSalida.getValorMonetario() - x.getTransaccion().getCantidad() * precioMedio);
@@ -394,19 +391,21 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         Impresion.getDefaultInstance().print(new StockBalanceFormatter(a), null);
     }
 
-    private void updateValorTotalAlmacen(Almacen instance) {
-        float total = 0;
+    public void updateValorTotalAlmacen(Almacen instance) {
+        double total = 0;
         instance = getModel().find(instance.getCodAlmacen());
         for (InsumoAlmacen x : instance.getInsumoAlmacenList()) {
-            total += x.getValorMonetario();
+            if (x.getValorMonetario() != null) {
+                total += utils.setDosLugaresDecimalesFloat(x.getValorMonetario());
+            }
         }
-        instance.setValorMonetario(total);
+        instance.setValorMonetario(utils.setDosLugaresDecimalesDouble(total));
         update(instance, true);
         getModel().getEntityManager().getEntityManagerFactory().getCache().evict(Almacen.class
         );
     }
 
-    public void crearOperacion(ArrayList<TransaccionSimple> transacciones, CheckBoxType tipoOperacion, Date date, String recibo) {
+    public void crearOperacion(ArrayList<TransaccionSimple> transacciones, CheckBoxType tipoOperacion, Date date, String recibo,Integer idVenta) {
         Operacion o = new Operacion();
         o.setAlmacen(getInstance());
         o.setFecha(date);
@@ -418,16 +417,16 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         for (TransaccionSimple t : transacciones) {
             switch (tipoOperacion) {
                 case ENTRADA:
-                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), t.getMonto(), null, false);
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), t.getMonto(), null, false,null);
                     break;
                 case REBAJA:
-                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), -1, t.getCausa(), false);
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), -1, t.getCausa(), false,null);
                     break;
                 case SALIDA:
-                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), t.getcDestino(), null, t.getCantidad(), -1, null, false);
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), t.getcDestino(), null, t.getCantidad(), -1, null, false,idVenta);
                     break;
                 case TRASPASO:
-                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, t.getaDestino(), t.getCantidad(), -1, null, false);
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, t.getaDestino(), t.getCantidad(), -1, null, false,null);
                     break;
 
             }
