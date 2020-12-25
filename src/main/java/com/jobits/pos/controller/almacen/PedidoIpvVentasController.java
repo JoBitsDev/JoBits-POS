@@ -59,7 +59,7 @@ public class PedidoIpvVentasController extends AbstractDialogController<IpvVenta
             ipvController.setView(getView());
 
             for (InsumoPedidoModel i : insumosARebajar) {
-                controller.crearTransaccion(null, controller.findInsumo(i.getInsumo()), 1, puntoDestino, null, i.getCantidad(), 0, null, false);
+                controller.crearTransaccion(null, controller.findInsumo(i.getInsumo()), 1, puntoDestino, null, i.getCantidad(), 0, null, false,ipvProductList.get(0).getDiaVenta().getId());
             }
             for (ProdcutoVentaPedidoModel p : pedido) {
                 ipvController.darEntradaIPV(p.getIpvProducto(), p.getCantidad());

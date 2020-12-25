@@ -10,26 +10,17 @@ import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasController;
-import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.IpvRegistro;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
-import com.jobits.pos.ui.almacen.ipv.PedidoIpvVentasView;
-import com.jobits.pos.ui.insumo.InsumoDetailView;
-import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
-import com.jobits.pos.ui.login.UbicacionView;
-import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
@@ -172,8 +163,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 if (v != null) {
                     getBean().setLista_ipv_registro(new ArrayListModel<>(
                             service.getIpvRegistroList(
-                                    getBean().getPunto_elaboracion_seleccionado(),
-                                    getBean().getFecha_ipv_seleccionada(), v.getId())));
+                                    getBean().getPunto_elaboracion_seleccionado(), v.getId())));
                     getBean().setCheck_ocultar_productos_ipv(false);
                 }
             }

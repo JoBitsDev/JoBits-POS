@@ -33,7 +33,6 @@ public class IpvRegistroPK implements Serializable {
     private String ipvcocinacodCocina;
     @Basic(optional = false)
     @Column(name = "ventaid")
-    @Temporal(TemporalType.DATE)
     private int ventaId;
 
     public IpvRegistroPK() {

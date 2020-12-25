@@ -484,7 +484,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         new LongProcessActionServiceImpl("Creando IPVs.........") {
             @Override
             protected void longProcessMethod() {
-                new IPVController().inicializarExistencias(v.getFecha());
+                new IPVController().inicializarExistencias(v.getId());
                 new IPVController().inicializarIpvs(v.getId());
             }
         }.performAction(getView());
