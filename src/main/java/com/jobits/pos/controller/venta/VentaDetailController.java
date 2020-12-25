@@ -58,6 +58,7 @@ import com.jobits.pos.ui.venta.presenter.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -70,6 +71,7 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
+import javax.swing.text.DateFormatter;
 
 /**
  * FirstDream
@@ -698,33 +700,37 @@ public class VentaDetailController extends AbstractDetailController<Venta>
                 listaReserva.add(reserva);
             }
         }
-
-        JList<Orden> jList = new JList<>(listaReserva.toArray(new Orden[listaReserva.size()]));
-        jList.setSelectedIndex(-1);
-        Object[] options = {"Abrir", "Cancelar"};
-        //                     yes        no  
-        int confirm = JOptionPane.showOptionDialog(
-                null,
-                jList,
-                "Reservas",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.YES_NO_OPTION,
-                MaterialIcons.RESTORE,
-                options,
-                options[0]);
-        switch (confirm) {
-            case JOptionPane.YES_OPTION:
-                orden = (Orden) jList.getSelectedValue();
-                orden.setVentaid(VentaDAO.getInstance().find(codVenta));
-                getModel().startTransaction();
-                OrdenDAO.getInstance().edit(orden);
-                getModel().commitTransaction();
-                getInstance(codVenta).getOrdenList().add(orden);
-                return orden;
-            case JOptionPane.NO_OPTION:
-                break;
-            default:
-                break;
+        SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy");
+        if (listaReserva.isEmpty()) {
+            showErrorDialog(null, "No hay reservaciones para el " + sdf.format(currentDate));
+        } else {
+            JList<Orden> jList = new JList<>(listaReserva.toArray(new Orden[listaReserva.size()]));
+            jList.setSelectedIndex(-1);
+            Object[] options = {"Abrir", "Cancelar"};
+            //                     yes        no  
+            int confirm = JOptionPane.showOptionDialog(
+                    null,
+                    jList,
+                    "Reservas",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.YES_NO_OPTION,
+                    MaterialIcons.RESTORE,
+                    options,
+                    options[0]);
+            switch (confirm) {
+                case JOptionPane.YES_OPTION:
+                    orden = (Orden) jList.getSelectedValue();
+                    orden.setVentaid(VentaDAO.getInstance().find(codVenta));
+                    getModel().startTransaction();
+                    OrdenDAO.getInstance().edit(orden);
+                    getModel().commitTransaction();
+                    getInstance(codVenta).getOrdenList().add(orden);
+                    return orden;
+                case JOptionPane.NO_OPTION:
+                    break;
+                default:
+                    break;
+            }
         }
         return null;
     }
