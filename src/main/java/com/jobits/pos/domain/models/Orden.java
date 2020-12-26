@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.jobits.pos.exceptions.DevelopingOperationException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.validation.constraints.NotNull;
 
@@ -88,7 +89,7 @@ public class Orden implements Serializable, Comparable<Orden> {
     @JoinColumn(name = "personalusuario", referencedColumnName = "usuario", nullable = true)
     @ManyToOne(optional = true)
     private Personal personalusuario;
-    @OneToMany(mappedBy = "orden", orphanRemoval = true,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "orden", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<ProductovOrden> productovOrdenList;
 
     public Orden() {
@@ -191,7 +192,6 @@ public class Orden implements Serializable, Comparable<Orden> {
         this.personalusuario = personalusuario;
     }
 
-
     public List<ProductovOrden> getProductovOrdenList() {
         List<ProductovOrden> aux = new ArrayList<>();
         for (ProductovOrden productovOrden : productovOrdenList) {
@@ -229,7 +229,12 @@ public class Orden implements Serializable, Comparable<Orden> {
 
     @Override
     public String toString() {
-        return codOrden;
+        SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy h:mm a");
+        String cliente = " ";
+        if (clienteIdCliente != null) {
+            cliente = " " + clienteIdCliente.getNombreCliente() + "";
+        }
+        return codOrden + cliente + "(" + sdf.format(ventafecha) + ") ";
     }
 
     @Override

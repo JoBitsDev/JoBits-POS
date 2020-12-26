@@ -228,7 +228,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
     @Override
-    public Orden createNewInstance(String codMesa, String fechaPedido, int idVenta) {
+    public Orden createNewInstance(String codMesa, String fechaPedido, Integer idVenta) {
         Orden ret = new Orden();
         Mesa m;
         if (ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_MESA_FIJA_CAJERO.getValue()).getValor() == 0) {
@@ -267,7 +267,9 @@ public class OrdenController extends AbstractFragmentController<Orden>
         ret.setProductovOrdenList(new ArrayList<>());
         try {
             ret.setVentafecha((R.DATE_FORMAT.parse(fechaPedido)));
-            ret.setVentaid(VentaDAO.getInstance().find(idVenta));
+            if (idVenta != null) {
+                ret.setVentaid(VentaDAO.getInstance().find(idVenta));
+            }
         } catch (ParseException ex) {
             throw new IllegalArgumentException("Fecha de pedido en formato incorrecto " + fechaPedido + " formato correcto (dd/mm/yy)");
         }
@@ -472,7 +474,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
 
     private boolean esDespachable(ProductoVenta selected, Orden ordenVenta, float cantidad) {
         return selected.getCocinacodCocina().getLimitarVentaInsumoAgotado()
-                ? new IPVController().hayDisponibilidad(selected, ordenVenta.getVentafecha(), cantidad)
+                ? new IPVController().hayDisponibilidad(selected, ordenVenta.getVentaid().getId(), cantidad)//TODO: da palo cuando es una reserva
                 : true;
 
     }
