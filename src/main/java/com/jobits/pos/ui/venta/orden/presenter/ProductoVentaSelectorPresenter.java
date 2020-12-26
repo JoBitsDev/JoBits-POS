@@ -40,7 +40,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
 
     public static final String PROP_PRODUCTO_SELECCIONADO = "PROP_PRODUCTO_SELECCIONADO";
 
-    ProductoVentaSelectorPresenter(OrdenService ordenService) {
+    public ProductoVentaSelectorPresenter(OrdenService ordenService) {
         super(new ProductoVentaSelectorViewModel());
         this.service = ordenService;
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {

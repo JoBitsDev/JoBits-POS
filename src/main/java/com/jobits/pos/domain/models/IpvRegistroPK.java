@@ -9,6 +9,7 @@ package com.jobits.pos.domain.models;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -31,17 +32,24 @@ public class IpvRegistroPK implements Serializable {
     @Column(name = "ipvcocinacod_cocina")
     private String ipvcocinacodCocina;
     @Basic(optional = false)
-    @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
+    @Column(name = "ventaid")
+    private int ventaId;
 
     public IpvRegistroPK() {
     }
 
-    public IpvRegistroPK(String ipvinsumocodInsumo, String ipvcocinacodCocina, Date fecha) {
+    public IpvRegistroPK(String ipvinsumocodInsumo, String ipvcocinacodCocina, int ventaId) {
         this.ipvinsumocodInsumo = ipvinsumocodInsumo;
         this.ipvcocinacodCocina = ipvcocinacodCocina;
-        this.fecha = fecha;
+        this.ventaId = ventaId;
+    }
+
+    public int getVentaId() {
+        return ventaId;
+    }
+
+    public void setVentaId(int ventaId) {
+        this.ventaId = ventaId;
     }
 
     public String getIpvinsumocodInsumo() {
@@ -60,37 +68,34 @@ public class IpvRegistroPK implements Serializable {
         this.ipvcocinacodCocina = ipvcocinacodCocina;
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (ipvinsumocodInsumo != null ? ipvinsumocodInsumo.hashCode() : 0);
-        hash += (ipvcocinacodCocina != null ? ipvcocinacodCocina.hashCode() : 0);
-        hash += (fecha != null ? fecha.hashCode() : 0);
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.ipvinsumocodInsumo);
+        hash = 37 * hash + Objects.hashCode(this.ipvcocinacodCocina);
+        hash = 37 * hash + this.ventaId;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof IpvRegistroPK)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        IpvRegistroPK other = (IpvRegistroPK) object;
-        if ((this.ipvinsumocodInsumo == null && other.ipvinsumocodInsumo != null) || (this.ipvinsumocodInsumo != null && !this.ipvinsumocodInsumo.equals(other.ipvinsumocodInsumo))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        if ((this.ipvcocinacodCocina == null && other.ipvcocinacodCocina != null) || (this.ipvcocinacodCocina != null && !this.ipvcocinacodCocina.equals(other.ipvcocinacodCocina))) {
+        final IpvRegistroPK other = (IpvRegistroPK) obj;
+        if (this.ventaId != other.ventaId) {
             return false;
         }
-        if ((this.fecha == null && other.fecha != null) || (this.fecha != null && !this.fecha.equals(other.fecha))) {
+        if (!Objects.equals(this.ipvinsumocodInsumo, other.ipvinsumocodInsumo)) {
+            return false;
+        }
+        if (!Objects.equals(this.ipvcocinacodCocina, other.ipvcocinacodCocina)) {
             return false;
         }
         return true;
@@ -98,7 +103,8 @@ public class IpvRegistroPK implements Serializable {
 
     @Override
     public String toString() {
-        return "restManager.persistencia.IpvRegistroPK[ ipvinsumocodInsumo=" + ipvinsumocodInsumo + ", ipvcocinacodCocina=" + ipvcocinacodCocina + ", fecha=" + fecha + " ]";
+        return "IpvRegistroPK{" + "ipvinsumocodInsumo=" + ipvinsumocodInsumo + ", ipvcocinacodCocina=" + ipvcocinacodCocina + ", ventaId=" + ventaId + '}';
     }
+
 
 }

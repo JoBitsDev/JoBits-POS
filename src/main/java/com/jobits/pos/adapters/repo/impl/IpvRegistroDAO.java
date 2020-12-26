@@ -37,10 +37,10 @@ public class IpvRegistroDAO extends AbstractRepository<IpvRegistro> {
         }
     }
 
-      public List<IpvRegistro> getIpvRegistroList(Date fecha) {
+      public List<IpvRegistro> getIpvRegistroList(int ventaId) {
         List<IpvRegistro> ret = new ArrayList<>(
-                getEntityManager().createNamedQuery("IpvRegistro.findByFecha")
-                .setParameter("fecha", fecha)
+                getEntityManager().createNamedQuery("IpvRegistro.findByVentaId")
+                .setParameter("ventaId", ventaId)
                 .getResultList());
         for (IpvRegistro x : ret) {
             getEntityManager().refresh(x);
@@ -54,10 +54,10 @@ public class IpvRegistroDAO extends AbstractRepository<IpvRegistro> {
                 .getResultList();
     }
 
-    public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha) {
-        List<IpvRegistro> ret = new ArrayList<>(getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFecha")
+    public List<IpvRegistro> getIpvRegistroList(Cocina cocina, int ventaId) {
+        List<IpvRegistro> ret = new ArrayList<>(getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndId")
                 .setParameter("ipvcocinacodCocina", cocina.getCodCocina())
-                .setParameter("fecha", fecha)
+                .setParameter("ventaId", ventaId)
                 .getResultList());
         for (IpvRegistro x : ret) {
             getEntityManager().refresh(x);
@@ -65,10 +65,10 @@ public class IpvRegistroDAO extends AbstractRepository<IpvRegistro> {
         return ret;
     }
 
-    public IpvRegistro getIpvRegistro(Cocina c, Date fecha, Insumo i)throws NoResultException,PersistenceException{
-        IpvRegistro ret =  (IpvRegistro) getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndFechaAndInsumo")
+    public IpvRegistro getIpvRegistro(Cocina c, int ventaId, Insumo i)throws NoResultException,PersistenceException{
+        IpvRegistro ret =  (IpvRegistro) getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndIdAndInsumo")
                 .setParameter("ipvcocinacodCocina", c.getCodCocina())
-                .setParameter("fecha", fecha)
+                .setParameter("ventaId", ventaId)
                 .setParameter("codinsumo", i.getCodInsumo())
                 .getSingleResult();
 

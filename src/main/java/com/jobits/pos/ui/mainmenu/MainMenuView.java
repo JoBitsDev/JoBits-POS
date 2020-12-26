@@ -95,6 +95,7 @@ public class MainMenuView extends AbstractViewPanel {
         contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.RESUMEN.toString()));
         contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.ESTADISTICAS.toString()));
         contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.CLIENTES.toString()));
+        contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.RESERVAS.toString()));
 
         CollapseMenu nominas = new CollapseMenu(MaterialIcons.ACCOUNT_BOX.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Nóminas");
         nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.NOMINAS.toString()));

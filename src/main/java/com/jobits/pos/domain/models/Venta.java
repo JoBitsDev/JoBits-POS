@@ -49,6 +49,8 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Venta.findByVentagastosEninsumos", query = "SELECT v FROM Venta v WHERE v.ventagastosEninsumos = :ventagastosEninsumos")})
 public class Venta implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta")
+    private List<IpvRegistro> ipvRegistroList;
     private static final long serialVersionUID = 1L;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "venta")
@@ -222,4 +224,11 @@ public class Venta implements Serializable {
         return "Venta ID: " + id;
     }
 
+    public List<IpvRegistro> getIpvRegistroList() {
+        return ipvRegistroList;
+}
+
+    public void setIpvRegistroList(List<IpvRegistro> ipvRegistroList) {
+        this.ipvRegistroList = ipvRegistroList;
+    }
 }

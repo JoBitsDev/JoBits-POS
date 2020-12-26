@@ -44,6 +44,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     public static final String ACTION_ELIMINAR_INSUMO_TRANSFORMADO = "Agregar Insumo Transformado";
     public static final String ACTION_AGREGAR_INSUMO_TRANSFORMADO = "Eliminar Insumo Transformado";
 
+
     public FacturaViewPresenter(AlmacenManageController controller) {
         super(new FacturaViewModel());
         this.controller = controller;
@@ -342,7 +343,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 controller.crearOperacion(getBean().getLista_elementos(),
                         currentOperation,
                         getBean().getFecha_factura(),
-                        getBean().getNumero_recibo());
+                        getBean().getNumero_recibo(), null);
                 Application.getInstance().getNavigator().navigateUp();
 //                setDefaultValues(currentOperation, true);
             }

@@ -132,6 +132,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jList2 = new javax.swing.JList<>();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        setMinimumSize(new java.awt.Dimension(50, 50));
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setLayout(new java.awt.BorderLayout());

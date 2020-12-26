@@ -7,6 +7,7 @@ package com.jobits.pos.controller.venta;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.impl.AreaDAO;
 import com.jobits.pos.adapters.repo.impl.CocinaDAO;
@@ -18,7 +19,11 @@ import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.reservas.ReservaListController;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
+import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
@@ -43,6 +48,8 @@ import com.jobits.pos.servicios.impresion.formatter.PersonalResumenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.PuntoElaboracionFormatter;
 import com.jobits.pos.servicios.impresion.formatter.ResumenVentaAreaFormatter;
 import com.jobits.pos.servicios.impresion.formatter.VentaZFormatter;
+import com.jobits.pos.ui.login.UbicacionView;
+import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.utils.CalcularCambioViewDialog;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.utils;
@@ -51,13 +58,20 @@ import com.jobits.pos.ui.venta.presenter.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
+import javax.swing.text.DateFormatter;
 
 /**
  * FirstDream
@@ -472,7 +486,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         new LongProcessActionServiceImpl("Creando IPVs.........") {
             @Override
             protected void longProcessMethod() {
-                new IPVController().inicializarExistencias(v.getFecha());
+                new IPVController().inicializarExistencias(v.getId());
                 new IPVController().inicializarIpvs(v.getId());
             }
         }.performAction(getView());
@@ -671,6 +685,54 @@ public class VentaDetailController extends AbstractDetailController<Venta>
 
     private List<Venta> getVentasDeFecha(Date date) {
         return VentaDAO.getInstance().find(date);
+    }
+
+    @Override
+    public Orden abrirReserva(int codVenta) {
+        Orden orden;
+        List<Orden> listaReserva = new ArrayList<>();
+        Date currentDate = VentaDAO.getInstance().find(codVenta).getFecha();
+        for (Orden reserva : (List<Orden>) new ReservaListController().getListaReservas()) {
+            Date d = reserva.getVentafecha();
+            if (currentDate.getDate() == d.getDate()
+                    && currentDate.getMonth() == d.getMonth()
+                    && currentDate.getYear() == d.getYear()) {
+                listaReserva.add(reserva);
+            }
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy");
+        if (listaReserva.isEmpty()) {
+            showErrorDialog(null, "No hay reservaciones para el " + sdf.format(currentDate));
+        } else {
+            JList<Orden> jList = new JList<>(listaReserva.toArray(new Orden[listaReserva.size()]));
+            jList.setSelectedIndex(-1);
+            Object[] options = {"Abrir", "Cancelar"};
+            //                     yes        no  
+            int confirm = JOptionPane.showOptionDialog(
+                    null,
+                    jList,
+                    "Reservas",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.YES_NO_OPTION,
+                    MaterialIcons.RESTORE,
+                    options,
+                    options[0]);
+            switch (confirm) {
+                case JOptionPane.YES_OPTION:
+                    orden = (Orden) jList.getSelectedValue();
+                    orden.setVentaid(VentaDAO.getInstance().find(codVenta));
+                    getModel().startTransaction();
+                    OrdenDAO.getInstance().edit(orden);
+                    getModel().commitTransaction();
+                    getInstance(codVenta).getOrdenList().add(orden);
+                    return orden;
+                case JOptionPane.NO_OPTION:
+                    break;
+                default:
+                    break;
+            }
+        }
+        return null;
     }
 
 }

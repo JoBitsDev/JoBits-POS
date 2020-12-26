@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.jobits.pos.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -20,29 +19,34 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import com.jobits.pos.recursos.R;
+import javax.persistence.Basic;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  * FirstDream
+ *
  * @author Jorge
- * 
+ *
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property =  "ipvRegistroPK",scope = IpvRegistro.class)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "ipvRegistroPK", scope = IpvRegistro.class)
 @Entity
 @Table(name = "ipv_registro")
 @NamedQueries({
     @NamedQuery(name = "IpvRegistro.findAll", query = "SELECT i FROM IpvRegistro i"),
     @NamedQuery(name = "IpvRegistro.findByIpvinsumocodInsumo", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvinsumocodInsumo = :ipvinsumocodInsumo"),
-    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocina", 
-            query = "SELECT DISTINCT i.ipvRegistroPK.fecha FROM IpvRegistro i "
-                    + "WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina  "
-                    + "ORDER BY i.ipvRegistroPK.fecha DESC"),
-    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndFecha", 
-            query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina AND i.ipvRegistroPK.fecha = :fecha"),
-    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndFechaAndInsumo", 
+    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocina",
+            query = "SELECT DISTINCT i.ipvRegistroPK.ventaId FROM IpvRegistro i "
+            + "WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina  "
+            + "ORDER BY i.ipvRegistroPK.ventaId DESC"),
+    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndId",
+            query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina AND i.ipvRegistroPK.ventaId = :ventaId"),
+    @NamedQuery(name = "IpvRegistro.findByIpvcocinacodCocinaAndIdAndInsumo",
             query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ipvcocinacodCocina = :ipvcocinacodCocina AND "
-                    + "i.ipvRegistroPK.fecha = :fecha AND i.ipvRegistroPK.ipvinsumocodInsumo = :codinsumo"),
-    
-    @NamedQuery(name = "IpvRegistro.findByFecha", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.fecha = :fecha"),
+            + "i.ipvRegistroPK.ventaId = :ventaId AND i.ipvRegistroPK.ipvinsumocodInsumo = :codinsumo"),
+
+    @NamedQuery(name = "IpvRegistro.findByVentaId", query = "SELECT i FROM IpvRegistro i WHERE i.ipvRegistroPK.ventaId = :ventaId"),
     @NamedQuery(name = "IpvRegistro.findByInicio", query = "SELECT i FROM IpvRegistro i WHERE i.inicio = :inicio"),
     @NamedQuery(name = "IpvRegistro.findByEntrada", query = "SELECT i FROM IpvRegistro i WHERE i.entrada = :entrada"),
     @NamedQuery(name = "IpvRegistro.findByDisponible", query = "SELECT i FROM IpvRegistro i WHERE i.disponible = :disponible"),
@@ -76,6 +80,14 @@ public class IpvRegistro implements Serializable {
     @ManyToOne(optional = false)
     private Ipv ipv;
 
+    @Basic(optional = false)
+    @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    @JoinColumn(name = "ventaid", referencedColumnName = "id", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Venta venta;
+
     public IpvRegistro() {
     }
 
@@ -83,8 +95,8 @@ public class IpvRegistro implements Serializable {
         this.ipvRegistroPK = ipvRegistroPK;
     }
 
-    public IpvRegistro(String ipvinsumocodInsumo, String ipvcocinacodCocina, Date fecha) {
-        this.ipvRegistroPK = new IpvRegistroPK(ipvinsumocodInsumo, ipvcocinacodCocina, fecha);
+    public IpvRegistro(String ipvinsumocodInsumo, String ipvcocinacodCocina, int ventaId) {
+        this.ipvRegistroPK = new IpvRegistroPK(ipvinsumocodInsumo, ipvcocinacodCocina, ventaId);
     }
 
     public IpvRegistroPK getIpvRegistroPK() {
@@ -181,7 +193,23 @@ public class IpvRegistro implements Serializable {
 
     @Override
     public String toString() {
-        return R.DATE_FORMAT.format(getIpvRegistroPK().getFecha());
+        return R.DATE_FORMAT.format(getFecha());
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Venta getVenta() {
+        return venta;
+    }
+
+    public void setVenta(Venta venta) {
+        this.venta = venta;
     }
 
 }
