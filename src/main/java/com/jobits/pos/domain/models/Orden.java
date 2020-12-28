@@ -232,7 +232,7 @@ public class Orden implements Serializable, Comparable<Orden> {
         SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy h:mm a");
         String cliente = " ";
         if (clienteIdCliente != null) {
-            cliente = " " + clienteIdCliente.getNombreCliente() + "";
+            cliente = " " + clienteIdCliente.getNombreCliente() + " ";
         }
         return codOrden + cliente + "(" + sdf.format(ventafecha) + ") ";
     }

@@ -30,7 +30,7 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
 
     public TransaccionListView(AbstractListViewPresenter presenter) {
         super(presenter);
-        
+
         jButtonEdit.setVisible(false);
         jButtonAdd.setVisible(false);
         jButtonDelete.setVisible(false);
@@ -46,9 +46,9 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
         jButtonPrint.setAction(getPresenter().getOperation(ACTION_IMPRIMIR_TRANSACCIONES));
         jButtonPrint.setIcon(MaterialIcons.PRINT);
         jXPanelControles.add(jButtonPrint);
-        
+
         add(jPanelOptionsButtons, BorderLayout.SOUTH);
-        
+
         jTableList.getColumnModel().getColumn(0).setMaxWidth(250);
         jTableList.getColumnModel().getColumn(0).setPreferredWidth(250);
         jTableList.getColumnModel().getColumn(1).setMaxWidth(150);
@@ -89,13 +89,13 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
                             return "ENTRADA (Total: " + t.getTransaccionEntrada().getValorTotal() + R.COIN_SUFFIX + ")";
                         }
                         if (t.getTransaccionMerma() != null) {
-                            return t.getTransaccionMerma().getRazon().toUpperCase();
+                            return "REBAJA: (" + t.getTransaccionMerma().getRazon().toUpperCase() + ")";
                         }
                         if (t.getTransaccionSalida() != null) {
                             return "SALIDA: " + t.getTransaccionSalida().getCocinacodCocina();
                         }
                         if (t.getTransaccionTraspaso() != null) {
-                            return "TRASPASO: ";
+                            return "TRASPASO: (" + t.getTransaccionTraspaso().getAlmacenDestino() + ")";
                         }
                         if (t.getTransaccionTransformacionList() != null) {
                             if (!t.getTransaccionTransformacionList().isEmpty()) {

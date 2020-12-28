@@ -88,6 +88,7 @@ public class TransaccionesListController extends OldAbstractListController<Trans
             if (x.getOperacionnoOperacion() != null) {
                 if (x.getOperacionnoOperacion().getAlmacen() != null) {
                     if (x.getOperacionnoOperacion().getAlmacen().equals(almacen)) {
+                        getModel().getEntityManager().refresh(x);
                         ret.add(x);
                     }
                 }

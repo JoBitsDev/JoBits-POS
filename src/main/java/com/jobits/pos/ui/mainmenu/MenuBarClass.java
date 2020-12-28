@@ -10,6 +10,8 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.mainmenu.presenter.MenuBarClassPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 
 /**
@@ -131,25 +133,31 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuJoBitsPOS.setText("JoBits POS");
 
         jMenuItemAcercaJobitPOS.setText("Acerca de JoBits POS");
+        jMenuItemAcercaJobitPOS.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/acerca_color.png")));
 
         jMenuJoBitsPOS.add(jMenuItemAcercaJobitPOS);
 
         jMenuItemPreferencias.setText("Preferencias");
+        jMenuItemPreferencias.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/configuracion_color.png")));
         jMenuJoBitsPOS.add(jMenuItemPreferencias);
 
         jMenuItemReportarBug.setText("Reportar Bug");
+        jMenuItemReportarBug.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/reportarBug_color.png")));
         jMenuJoBitsPOS.add(jMenuItemReportarBug);
         jMenuJoBitsPOS.add(jSeparator1);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jMenuItemCerrarSesion.setText(bundle.getString("label_cerrar_sesion")); // NOI18N
+        jMenuItemCerrarSesion.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/bloquear_color.png")));
         jMenuJoBitsPOS.add(jMenuItemCerrarSesion);
 
         jMenuItemCambiarUsuario.setText("Cambiar de Usuario");
+        jMenuItemCambiarUsuario.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/usuario_color.png")));
         jMenuJoBitsPOS.add(jMenuItemCambiarUsuario);
         jMenuJoBitsPOS.add(jSeparator2);
 
         jMenuItemSalir.setText("Salir");
+        jMenuItemSalir.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/apagar_color.png")));
         jMenuJoBitsPOS.add(jMenuItemSalir);
 
         jMenuBarMainManuBar.add(jMenuJoBitsPOS);
@@ -167,23 +175,24 @@ public class MenuBarClass extends AbstractViewPanel {
 //
 //        jMenuItemSeleccionarTodo.setText("Seleccionar Todo");
 //        jMenuEdicion.add(jMenuItemSeleccionarTodo);
-
 //        jMenuBarMainManuBar.add(jMenuEdicion);
 ////        TODO: Agregar Seccion de Edicion en el MenuBar
-
         jMenuVista.setText("Vista");
 
         jCheckBoxMenuItemOcultarBarraLateral.setSelected(true);
         jCheckBoxMenuItemOcultarBarraLateral.setText("Mostrar Barra Lateral");
+        jCheckBoxMenuItemOcultarBarraLateral.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/dashboard_color.png")));
         jMenuVista.add(jCheckBoxMenuItemOcultarBarraLateral);
 
         jCheckBoxMenuItemOcultarBarraEstado.setSelected(true);
         jCheckBoxMenuItemOcultarBarraEstado.setText("Mostrar Barra de Estado");
+        jCheckBoxMenuItemOcultarBarraEstado.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/status_bar_color.png")));
         jMenuVista.add(jCheckBoxMenuItemOcultarBarraEstado);
         jMenuVista.add(jSeparator3);
 
         jCheckBoxMenuItemSiemprePrimerPlano.setSelected(false);
         jCheckBoxMenuItemSiemprePrimerPlano.setText("Siempre en Primer Plano");
+        jCheckBoxMenuItemSiemprePrimerPlano.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/primer_plano_color.png")));
         jMenuVista.add(jCheckBoxMenuItemSiemprePrimerPlano);
 
         jMenuBarMainManuBar.add(jMenuVista);
@@ -191,12 +200,15 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuHerramientas.setText("Herramientas");
 
         jMenuItemCopiasSeguridad.setText("Copias de Seguridad");
+        jMenuItemCopiasSeguridad.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/backup_color.png")));
         jMenuHerramientas.add(jMenuItemCopiasSeguridad);
 
         jMenuItemUbicaciones.setText("Ubicaciones");
+        jMenuItemUbicaciones.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/ubicacion_color.png")));
         jMenuHerramientas.add(jMenuItemUbicaciones);
 
         jMenuItemActivarLicencia.setText("Activar Licencia");
+        jMenuItemActivarLicencia.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/licencia_color.png")));
         jMenuHerramientas.add(jMenuItemActivarLicencia);
 
         jMenuBarMainManuBar.add(jMenuHerramientas);
@@ -204,6 +216,7 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuAyuda.setText("Ayuda");
 
         jMenuItemManualUsuario.setText("Manual de Usuario");
+        jMenuItemManualUsuario.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/manual_usuario_color.png")));
         jMenuAyuda.add(jMenuItemManualUsuario);
 
         jMenuBarMainManuBar.add(jMenuAyuda);

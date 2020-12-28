@@ -39,8 +39,10 @@ public class OrdenLogRepo {
             if (!mediaFolder.exists()) {
                 mediaFolder.mkdirs();
             }
-            String[] splitValues = value.split("_");
-            File mediaFile = new File(LOGS_FILE_PATH + splitValues[1] + ".txt");
+            String[] fullorden = value.split("_");
+            String[] orden = fullorden[1].split(" ");
+            String splitValues = orden[0];
+            File mediaFile = new File(LOGS_FILE_PATH + splitValues + ".txt");
             if (!mediaFile.exists()) {
                 mediaFile.createNewFile();
             }

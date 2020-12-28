@@ -505,6 +505,7 @@ public class FacturaView extends AbstractViewPanel {
         Bindings.bind(jPanelTablaGeneral, "visible", getPresenter().getModel(PROP_TABLA_GENERAL_ENABLED));
         Bindings.bind(jPanelMontoEntrada, "visible", getPresenter().getModel(PROP_MONTO_ENABLED));
         Bindings.bind(jButtonAgregarInsumoEntrada, "visible", getPresenter().getModel(PROP_BUTTON_AGREGAR_INSUMO_ENABLED));
+        Bindings.bind(jButtonEliminarInsumoEntrada, "visible", getPresenter().getModel(PROP_BUTTON_AGREGAR_INSUMO_ENABLED));
         Bindings.bind(jPanelDestino, "visible", getPresenter().getModel(PROP_DESTINO_ENABLED));
         Bindings.bind(jPanelRazonRebaja, "visible", getPresenter().getModel(PROP_RAZON_REBAJA_ENABLED));
         Bindings.bind(jPanelTablaInsumosTransformar, "visible", getPresenter().getModel(PROP_TABLA_INSUMOS_TRANSFORMAR_ENABLED));

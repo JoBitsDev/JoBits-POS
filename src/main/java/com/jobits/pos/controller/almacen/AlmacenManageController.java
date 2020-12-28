@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.controller.almacen;
 
+import com.jhw.swing.material.standars.MaterialIcons;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,17 +35,24 @@ import com.jobits.pos.adapters.repo.impl.CocinaDAO;
 import com.jobits.pos.adapters.repo.impl.InsumoAlmacenDAO;
 import com.jobits.pos.adapters.repo.impl.InsumoDAO;
 import com.jobits.pos.adapters.repo.impl.OperacionDAO;
+import com.jobits.pos.adapters.repo.impl.OrdenDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionEntradaDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionMermaDAO;
+import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.domain.TransaccionSimple;
+import com.jobits.pos.domain.models.InsumoElaborado;
+import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.AlmacenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.StockBalanceFormatter;
 import com.jobits.pos.ui.utils.utils;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import javax.swing.JList;
 
 /**
  * FirstDream
@@ -183,7 +191,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
                 break;
             case 1:
                 if (showConfirmDialog(getView(), "Desea dar salida a " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " hacia " + destino)) {
-                    controller.addTransaccionSalida(o, ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad,idVenta);
+                    controller.addTransaccionSalida(o, ins.getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), destino, cantidad, idVenta);
                 }
                 break;
             case 2:
@@ -240,7 +248,14 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         float sumaTransformacion = 0;
         for (TransaccionTransformacion i : items) {
             sumaTransformacion += i.getCantidadUsada();
-            if (!selected.getInsumo().getInsumoDerivadoList().contains(i.getInsumo())) {
+            boolean flag = true;
+            for (InsumoElaborado x : selected.getInsumo().getInsumoDerivadoList()) {
+                if (x.getInsumo_derivado_nombre().equals(i.getInsumo())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
                 throw new ValidatingException("El insumo " + i.getInsumo() + " no es un insumo derivado de " + selected.getInsumo()
                         + "\n y no es posible transformarlo");
             }
@@ -405,7 +420,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         );
     }
 
-    public void crearOperacion(ArrayList<TransaccionSimple> transacciones, CheckBoxType tipoOperacion, Date date, String recibo,Integer idVenta) {
+    public boolean crearOperacion(ArrayList<TransaccionSimple> transacciones, CheckBoxType tipoOperacion, Date date, String recibo, Date fechaFactura) {
         Operacion o = new Operacion();
         o.setAlmacen(getInstance());
         o.setFecha(date);
@@ -417,20 +432,74 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         for (TransaccionSimple t : transacciones) {
             switch (tipoOperacion) {
                 case ENTRADA:
-                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), t.getMonto(), null, false,null);
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), t.getMonto(), null, false, null);
                     break;
                 case REBAJA:
-                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), -1, t.getCausa(), false,null);
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, null, t.getCantidad(), -1, t.getCausa(), false, null);
                     break;
                 case SALIDA:
-                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), t.getcDestino(), null, t.getCantidad(), -1, null, false,idVenta);
+                    Integer cod = selectIdFecha(date);
+                    if (cod != null) {
+                        crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), t.getcDestino(), null, t.getCantidad(), -1, null, false, cod);
+                    } else {
+                        return false;
+                    }
                     break;
                 case TRASPASO:
-                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, t.getaDestino(), t.getCantidad(), -1, null, false,null);
+                    crearTransaccion(o, t.getInsumo(), tipoOperacion.getNumero(), null, t.getaDestino(), t.getCantidad(), -1, null, false, null);
                     break;
 
             }
         }
+        return true;
+    }
+
+    public Integer selectIdFecha(Date fecha) {
+        List<Venta> list = VentaDAO.getInstance().find(fecha);
+        if (!list.isEmpty()) {
+            if (list.size() > 1) {
+                JList<Venta> jList = new JList<>(list.toArray(new Venta[list.size()]));
+                jList.setSelectedIndex(-1);
+                Object[] options = {"Seleccionar", "Cancelar"};
+                //                     yes        no  
+                SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy");
+                int confirm = JOptionPane.showOptionDialog(
+                        null,
+                        jList,
+                        "Ventas del " + sdf.format(fecha),
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.YES_NO_OPTION,
+                        MaterialIcons.RESTORE,
+                        options,
+                        options[0]);
+                switch (confirm) {
+                    case JOptionPane.YES_OPTION:
+                        Venta v = (Venta) jList.getSelectedValue();
+                        if (v.getVentaTotal() == null) {
+                            return ((Venta) jList.getSelectedValue()).getId();
+                        } else {
+                            if (JOptionPane.showConfirmDialog(null,
+                                    "La venta se encuentra cerrada \n "
+                                    + "Desea relizar aun la transaccion?") == JOptionPane.YES_OPTION) {
+                                return ((Venta) jList.getSelectedValue()).getId();
+                            } else {
+                                return null;
+                            }
+                        }
+                    case JOptionPane.NO_OPTION:
+                        return null;
+                    default:
+                        break;
+                }
+            } else {
+                return list.get(0).getId();
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "No hay ventas registradas el dia de la factura", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
     }
 
     public enum CheckBoxType {
