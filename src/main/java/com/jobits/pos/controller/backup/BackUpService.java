@@ -624,7 +624,7 @@ public class BackUpService implements LongProcessMethod {//TODO separar los paqu
     }
 
     private void backUpRegistroExistencias(Venta v) {
-        List<IpvRegistro> ret = IpvRegistroDAO.getInstance().getIpvRegistroList(v.getFecha());
+        List<IpvRegistro> ret = IpvRegistroDAO.getInstance().getIpvRegistroList(v.getId());
         for (IpvRegistro x : ret) {
             if (EntityExist(x, x.getIpvRegistroPK())) {
                 em.merge(x);

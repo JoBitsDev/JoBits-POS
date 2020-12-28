@@ -43,16 +43,22 @@ public class VentaListOrdenesView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButtonCalcCAmbio = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelOrdenesActivas = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jButtonCalcCAmbio = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonEnviarCerrarCrearNueva = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonCheckReservas = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonNuevaOrden = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListOrdenesActivas = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
+
+        jButtonCalcCAmbio.setIcon(MaterialIcons.REPEAT);
+        jButtonCalcCAmbio.setToolTipText("Calcular Cambio");
+        jButtonCalcCAmbio.setEnabled(false);
+        jButtonCalcCAmbio.setPreferredSize(new java.awt.Dimension(50, 50));
 
         setLayout(new java.awt.BorderLayout());
 
@@ -66,18 +72,17 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 3));
 
-        jButtonCalcCAmbio.setIcon(MaterialIcons.REPEAT);
-        jButtonCalcCAmbio.setToolTipText("Calcular Cambio");
-        jButtonCalcCAmbio.setEnabled(false);
-        jButtonCalcCAmbio.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel3.add(jButtonCalcCAmbio);
-
         jButtonEnviarCerrarCrearNueva.setIcon(MaterialIcons.SHOPPING_CART);
         jButtonEnviarCerrarCrearNueva.setMnemonic('r');
         jButtonEnviarCerrarCrearNueva.setToolTipText("Cerrado Rapido");
         jButtonEnviarCerrarCrearNueva.setEnabled(false);
         jButtonEnviarCerrarCrearNueva.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel3.add(jButtonEnviarCerrarCrearNueva);
+
+        jButtonCheckReservas.setIcon(MaterialIcons.SEARCH);
+        jButtonCheckReservas.setToolTipText("Buscar Reservaciones");
+        jButtonCheckReservas.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel3.add(jButtonCheckReservas);
 
         jButtonNuevaOrden.setIcon(MaterialIcons.ADD_CIRCLE);
         jButtonNuevaOrden.setToolTipText("Agregar");
@@ -106,6 +111,7 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCalcCAmbio;
+    private javax.swing.JButton jButtonCheckReservas;
     private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
     private javax.swing.JButton jButtonNuevaOrden;
     private javax.swing.JList<Orden> jListOrdenesActivas;
@@ -120,6 +126,7 @@ public class VentaListOrdenesView extends AbstractViewPanel {
     @Override
     public void wireUp() {
         jButtonNuevaOrden.addActionListener(getPresenter().getOperation(ACTION_CREAR_ORDEN));
+        jButtonCheckReservas.addActionListener(getPresenter().getOperation(ACTION_ABRIR_RESERVA));
         Bindings.bind(jListOrdenesActivas, new SelectionInList<Orden>(getPresenter().getModel(PROP_LISTA_ELEMENTOS), getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)));
         jListOrdenesActivas.addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -147,7 +154,7 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
         });
         jPanel2.add(new PedidoCardView(getPresenter().getOrdenPresenter()), BorderLayout.EAST);
-        jPanelOrdenesActivas.add(new ProductoVentaSelectorView(getPresenter().getMenuPresenter()),BorderLayout.CENTER);
+        jPanelOrdenesActivas.add(new ProductoVentaSelectorView(getPresenter().getMenuPresenter()), BorderLayout.CENTER);
     }
 
     @Override

@@ -26,7 +26,7 @@ public interface IPVService {
 
     public List<Venta> getVentasInRange(Date fecha);
 
-    public List<IpvRegistro> getIpvRegistroList(Cocina cocina, Date fecha, int codVenta);
+    public List<IpvRegistro> getIpvRegistroList(Cocina cocina, int codVenta);
 
     public List<IpvVentaRegistro> getIpvRegistroVentaList(Cocina cocina, int codVenta);
 

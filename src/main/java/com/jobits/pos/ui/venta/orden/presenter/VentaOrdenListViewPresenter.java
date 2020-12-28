@@ -28,6 +28,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
 
     public static final String ACTION_CREAR_ORDEN = "Nueva Orden";
     public static final String ACTION_ABRIR_ORDEN = "Abrir Orden";
+    public static final String ACTION_ABRIR_RESERVA = "Abrir Reserva";
 
     private VentaDetailService ventaService;
     private OrdenDetailViewPresenter ordenPresenter;
@@ -94,6 +95,23 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
             }
 
         });
+        registerOperation(new AbstractViewAction(ACTION_ABRIR_RESERVA) {
+            @Override
+            public Optional doAction() {
+                onAbrirReservaAction();
+                return Optional.empty();
+            }
+
+        });
+    }
+
+    private void onAbrirReservaAction() {
+        Orden newReserva = ventaService.abrirReserva(codVenta);
+        if (newReserva != null) {
+            getBean().setElemento_seleccionado(newReserva);
+            onAbrirOrdenAction();
+            refreshState();
+        }
     }
 
     private void onCrearOrdenAction() {

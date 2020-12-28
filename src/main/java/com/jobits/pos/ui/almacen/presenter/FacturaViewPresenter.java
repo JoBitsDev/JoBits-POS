@@ -13,6 +13,7 @@ import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoAlmacen;
+import com.jobits.pos.domain.models.InsumoElaborado;
 import com.jobits.pos.domain.models.TransaccionTransformacion;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.main.Application;
@@ -145,10 +146,14 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 getBean().setUnidad_medida_insumo(insumo.getInsumo().getUm());
                 if (getBean().getOperacion_selected() == CheckBoxType.TRANSFORMAR) {
                     List<Insumo> listaInsumos = new ArrayList<>();
-                    insumo.getInsumo().getInsumoDerivadoList().forEach((x) -> {
-                        listaInsumos.add(x.getInsumo());
-                    });
+                    for (InsumoElaborado x : insumo.getInsumo().getInsumoDerivadoList()) {
+                        listaInsumos.add(x.getInsumo_derivado_nombre());
+                    }
+                    getBean().getLista_insumo_elaborado_disponible().clear();
                     getBean().getLista_insumo_elaborado_disponible().addAll(listaInsumos);
+//                    insumo.getInsumo().getInsumoDerivadoList().forEach((x) -> {
+//                        listaInsumos.add(x.getInsumo_derivado_nombre());
+//                    });
                 }
             }
 
@@ -334,12 +339,13 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             }
         } else {
             if (validateInputs()) {
-                controller.crearOperacion(getBean().getLista_elementos(),
+                if (controller.crearOperacion(getBean().getLista_elementos(),
                         currentOperation,
                         getBean().getFecha_factura(),
-                        getBean().getNumero_recibo());
-                Application.getInstance().getNavigator().navigateUp();
-//                setDefaultValues(currentOperation, true);
+                        getBean().getNumero_recibo(),
+                        getBean().getFecha_factura())) {
+                    Application.getInstance().getNavigator().navigateUp();
+                }
             }
         }
     }

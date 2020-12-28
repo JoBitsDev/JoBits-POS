@@ -36,7 +36,7 @@ public class IPVPuntoElaboracionFomatter extends AbstractTicketFormatter {
 
     private Doc formatIPVPuntoElaboracion() {
         Cocina c = registros.get(0).getIpv().getCocina();
-        Date fecha = registros.get(0).getIpvRegistroPK().getFecha();
+        Date fecha = registros.get(0).getVenta().getFecha();
         Collections.sort(registros,
                 (o1, o2) -> {
                     return o1.getIpv().getInsumo().getNombre().

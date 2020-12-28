@@ -27,10 +27,11 @@ public interface OrdenService {
      *
      * @param codMesa ej. M-114
      * @param fechaPedido en el formato dd/mm/yy ej. 20/09/18
-     * @param idVenta el id de la venta a la que pertenece o -1 si es una reserva
+     * @param idVenta el id de la venta a la que pertenece o -1 si es una
+     * reserva
      * @return
      */
-    public Orden createNewInstance(String codMesa, String fechaPedido,int idVenta);
+    public Orden createNewInstance(String codMesa, String fechaPedido, Integer idVenta);
 
     public void enviarACocina(String codOrden);
 

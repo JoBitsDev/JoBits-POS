@@ -269,10 +269,10 @@ public class AlmacenMainView extends AbstractViewPanel {
 
         Bindings.bind(jLabelValorTotal, getPresenter().getModel(PROP_VALOR_MONETARIO_TEXT));
 
-        jComboBoxAlmacenList.addItemListener((ItemEvent e) -> {
-            getPresenter().getOperation(ACTION_ACTUALIZAR_LISTA_ALMACEN).doAction();
-            jTextFieldBusqueda.requestFocusInWindow();
-        });
+//        jComboBoxAlmacenList.addItemListener((ItemEvent e) -> {
+//            getPresenter().getOperation(ACTION_ACTUALIZAR_LISTA_ALMACEN).doAction();
+//            jTextFieldBusqueda.requestFocusInWindow();
+//        });
         jButtonResumen.setAction(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN));
         jButtonResumen.setIcon(MaterialIcons.PRINT);
         jButtonDarReporte.setAction(getPresenter().getOperation(ACTION_IMPRIMIR_REPORTE));

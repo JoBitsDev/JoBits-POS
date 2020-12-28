@@ -360,7 +360,7 @@ public class IpvGestionView extends AbstractViewPanel {
                         case 6:
                             return getRow(rowIndex).getProductoVenta().getPrecioVenta();
                         case 7:
-                            return utils.setDosLugaresDecimales(getRow(rowIndex).getVenta()* getRow(rowIndex).getProductoVenta().getPrecioVenta());
+                            return utils.setDosLugaresDecimales(getRow(rowIndex).getVenta() * getRow(rowIndex).getProductoVenta().getPrecioVenta());
                         case 8:
                             return getRow(rowIndex).getFinal1();
                         default:
@@ -420,6 +420,7 @@ public class IpvGestionView extends AbstractViewPanel {
         }
         );
         jTableIPV.getRowSorter().toggleSortOrder(0);
+        jTableIPV.getColumnModel().getColumn(0).setPreferredWidth(250);
 //  ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel()).addTotalRow(7);
 
         //
@@ -482,6 +483,7 @@ public class IpvGestionView extends AbstractViewPanel {
             }
         });
         jTableRegistro.getRowSorter().toggleSortOrder(0);
+        jTableRegistro.getColumnModel().getColumn(0).setPreferredWidth(250);
     }
 
     @Override

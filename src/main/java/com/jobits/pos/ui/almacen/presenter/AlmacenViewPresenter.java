@@ -163,8 +163,8 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     private void setListToBean() {
         getBean().getLista_elementos().clear();
         getBean().getLista_elementos().addAll(new ArrayListModel<>(listService.getItems()));
-        if (!listService.getItems().isEmpty()) {
-            getBean().setElemento_seleccionado(listService.getItems().get(0));
+        if (!getBean().getLista_elementos().isEmpty()) {
+            getBean().setElemento_seleccionado(getBean().getLista_elementos().get(0));
             if (getBean().getElemento_seleccionado() != null) {
                 detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
                 refreshView();
@@ -186,11 +186,12 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void refreshView() {
-        detailService.updateValorTotalAlmacen(getBean().getElemento_seleccionado());
-        getBean().setValor_monetario_text(utils.setDosLugaresDecimalesDoubleString(detailService.getInstance().getValorMonetario()));
-        getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(detailService.getInstance())));
-        getBean().setLista_insumos_disponibles(new ArrayListModel<>(detailService.getInsumoList()));
-
+        if (getBean().getElemento_seleccionado() != null) {
+            detailService.updateValorTotalAlmacen(getBean().getElemento_seleccionado());
+            getBean().setValor_monetario_text(utils.setDosLugaresDecimalesDoubleString(detailService.getInstance().getValorMonetario()));
+            getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(detailService.getInstance())));
+            getBean().setLista_insumos_disponibles(new ArrayListModel<>(detailService.getInsumoList()));
+        }
     }
 
     private void addListeners() {
@@ -208,6 +209,13 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                     });
                     getBean().setLista_insumos_contenidos(new ArrayListModel<>(insumoList));
                 }
+            }
+        });
+        addBeanPropertyChangeListener(AlmacenViewModel.PROP_ELEMENTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() != null) {
+                detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
+                refreshView();
+                getBean().setSearch_keyWord(null);
             }
         });
 

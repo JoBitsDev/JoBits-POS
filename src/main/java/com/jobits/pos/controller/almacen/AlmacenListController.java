@@ -16,6 +16,8 @@ import com.jobits.pos.adapters.repo.impl.AlmacenDAO;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.RegularExpressions;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * FirstDream
@@ -106,6 +108,13 @@ public class AlmacenListController extends OldAbstractListController<Almacen> im
     @Override
     public AbstractDetailController<Almacen> getDetailControllerForEdit(Almacen selected) {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Almacen> getItems() {
+        List<Almacen> ret = super.getItems();
+        Collections.sort(ret);
+        return ret;
     }
 
 }
