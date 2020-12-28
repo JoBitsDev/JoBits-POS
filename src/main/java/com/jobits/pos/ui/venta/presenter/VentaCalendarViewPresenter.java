@@ -159,7 +159,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         }
         Y alg = new Y(venta);
         Venta old = alg.getVentaReal();
-        Venta newVenta = new Venta();
+        Venta newVenta = new Venta(alg.getVentaReal().getId());
         // if (!new BackUpService().ExisteVentaEnLocal(old)) {
         //   throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
         // }
@@ -179,10 +179,11 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             VentaDAO.getInstance().startTransaction();
             VentaDAO.getInstance().create(old);
             VentaDAO.getInstance().commitTransaction();
+            e.printStackTrace();
             Application.getInstance().getNotificationService().showDialog("La operacion no se ha podido completar correctamente. Contacte con soporte", TipoNotificacion.ERROR);
 
         }
-        if (VentaDAO.getInstance().find(old.getFecha()) == null) {
+        if (VentaDAO.getInstance().find(old.getId()) == null) {
             VentaDAO.getInstance().startTransaction();
             VentaDAO.getInstance().create(old);
             VentaDAO.getInstance().commitTransaction();
