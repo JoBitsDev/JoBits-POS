@@ -30,4 +30,6 @@ public interface IPVService {
 
     public List<IpvVentaRegistro> getIpvRegistroVentaList(Cocina cocina, int codVenta);
 
+    public void transferirIPVRegistro(IpvRegistro ipv_registro_seleciconado);
+
 }
