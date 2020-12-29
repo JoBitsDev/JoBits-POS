@@ -595,13 +595,6 @@ public class VentaDAO1 {
 
         ArrayList<Orden> ordenes = new ArrayList<>(ventas.getOrdenList());
 
-        Collections.sort(ordenes, (Orden o1, Orden o2) -> {
-            int idO1, idO2;
-            idO1 = Integer.parseInt(o1.getCodOrden().substring(2));
-            idO2 = Integer.parseInt(o2.getCodOrden().substring(2));
-            return -1 * Integer.compare(idO1, idO2);
-        });
-
         List<Orden> retOrd = new ArrayList<>();
         List<String> existingMesasName = new ArrayList<>();
 
