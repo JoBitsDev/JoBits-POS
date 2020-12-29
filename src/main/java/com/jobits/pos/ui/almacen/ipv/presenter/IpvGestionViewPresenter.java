@@ -46,6 +46,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_IMPRIMIR_IPV = "Imprimir registros",
             ACTION_IMPRIMIR_IPV_VENTA = "Imprimir Ipv venta",
             ACTION_NUEVO_PEDIDO_IPV_VENTA = "Nuevo Pedido",
+            ACTION_ENVIAR_IPV_TO_IPV = "Enviar IPV to IPV",
             ACTION_AJUSTAR_IPV = "Ajustar consumo";
 
     private IPVService service;
@@ -153,6 +154,13 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_ENVIAR_IPV_TO_IPV) {
+            @Override
+            public Optional doAction() {
+                onTransferirAIPV();
+                return Optional.empty();
+            }
+        });
 
     }
 
@@ -239,7 +247,6 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private void onImprimirIpv() {//TODO:impresion donde y quien
-
     }
 
     private void onImprimirIpvVentas() {//TODO:impresion donde y quien
@@ -290,5 +297,9 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 break;
         }
         return null;
+    }
+
+    private void onTransferirAIPV() {
+        service.transferirIPVRegistro(getBean().getIpv_registro_seleciconado());
     }
 }

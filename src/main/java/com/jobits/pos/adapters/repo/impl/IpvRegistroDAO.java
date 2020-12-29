@@ -37,17 +37,17 @@ public class IpvRegistroDAO extends AbstractRepository<IpvRegistro> {
         }
     }
 
-      public List<IpvRegistro> getIpvRegistroList(int ventaId) {
+    public List<IpvRegistro> getIpvRegistroList(int ventaId) {
         List<IpvRegistro> ret = new ArrayList<>(
                 getEntityManager().createNamedQuery("IpvRegistro.findByVentaId")
-                .setParameter("ventaId", ventaId)
-                .getResultList());
+                        .setParameter("ventaId", ventaId)
+                        .getResultList());
         for (IpvRegistro x : ret) {
             getEntityManager().refresh(x);
         }
         return ret;
     }
-    
+
     public List<Date> getIpvRegistroList(Cocina cocina) {
         return getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocina")
                 .setParameter("ipvcocinacodCocina", cocina.getCodCocina())
@@ -65,15 +65,19 @@ public class IpvRegistroDAO extends AbstractRepository<IpvRegistro> {
         return ret;
     }
 
-    public IpvRegistro getIpvRegistro(Cocina c, int ventaId, Insumo i)throws NoResultException,PersistenceException{
-        IpvRegistro ret =  (IpvRegistro) getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndIdAndInsumo")
-                .setParameter("ipvcocinacodCocina", c.getCodCocina())
-                .setParameter("ventaId", ventaId)
-                .setParameter("codinsumo", i.getCodInsumo())
-                .getSingleResult();
+    public IpvRegistro getIpvRegistro(Cocina c, int ventaId, Insumo i) throws NoResultException, PersistenceException {
+        try {
+            IpvRegistro ret = (IpvRegistro) getEntityManager().createNamedQuery("IpvRegistro.findByIpvcocinacodCocinaAndIdAndInsumo")
+                    .setParameter("ipvcocinacodCocina", c.getCodCocina())
+                    .setParameter("ventaId", ventaId)
+                    .setParameter("codinsumo", i.getCodInsumo())
+                    .getSingleResult();
 
-        getEntityManager().refresh(ret);
-        return ret;
+            getEntityManager().refresh(ret);
+            return ret;
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
 }

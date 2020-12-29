@@ -62,6 +62,8 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel1 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonimprimirIpv = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonDarEntradaIpv = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonEnviarToIPV = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonEnviarToAlmacen = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonAjustarConsumo = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel4 = new javax.swing.JPanel();
         jToggleButtonIpv = new javax.swing.JToggleButton();
@@ -91,6 +93,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jComboBoxPtoElabSelec.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jComboBoxPtoElabSelec.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jComboBoxPtoElabSelec.setMinimumSize(new java.awt.Dimension(150, 70));
+        jComboBoxPtoElabSelec.setOpaque(false);
         jComboBoxPtoElabSelec.setPreferredSize(new java.awt.Dimension(250, 50));
         jPanel8.add(jComboBoxPtoElabSelec);
 
@@ -142,6 +145,18 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonDarEntradaIpv.setToolTipText(bundle.getString("label_dar_entada")); // NOI18N
         jButtonDarEntradaIpv.setBorderPainted(false);
         jPanel1.add(jButtonDarEntradaIpv);
+
+        jButtonEnviarToIPV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/enviar_cocina_indigo.png"))); // NOI18N
+        jButtonEnviarToIPV.setMnemonic('c');
+        jButtonEnviarToIPV.setToolTipText("Enviar a IPV");
+        jButtonEnviarToIPV.setBorderPainted(false);
+        jPanel1.add(jButtonEnviarToIPV);
+
+        jButtonEnviarToAlmacen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/enviar_almacen_indigo.png"))); // NOI18N
+        jButtonEnviarToAlmacen.setMnemonic('c');
+        jButtonEnviarToAlmacen.setToolTipText("Enviar a Almacen");
+        jButtonEnviarToAlmacen.setBorderPainted(false);
+        jPanel1.add(jButtonEnviarToAlmacen);
 
         jButtonAjustarConsumo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/estadisticas_indigo.png"))); // NOI18N
         jButtonAjustarConsumo.setMnemonic('a');
@@ -255,6 +270,8 @@ public class IpvGestionView extends AbstractViewPanel {
     private javax.swing.JButton jButtonAjustarConsumo;
     private javax.swing.JButton jButtonDarEntradaIpv;
     private javax.swing.JButton jButtonDarEntradaIpvVenta;
+    private javax.swing.JButton jButtonEnviarToAlmacen;
+    private javax.swing.JButton jButtonEnviarToIPV;
     private javax.swing.JButton jButtonImprimirIpvVenta;
     private javax.swing.JButton jButtonPedido;
     private javax.swing.JButton jButtonRefrescar;
@@ -311,6 +328,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jToggleButtonIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV));
         jToggleButtonIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV_VENTA));
         jButtonRefrescar.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_CAMBIAR_COCINA));
+        jButtonEnviarToIPV.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_IPV));
     }
 
     @Override
