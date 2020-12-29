@@ -153,7 +153,9 @@ public class VentaListOrdenesView extends AbstractViewPanel {
             }
 
         });
-        jPanel2.add(new PedidoCardView(getPresenter().getOrdenPresenter()), BorderLayout.EAST);
+        if (getPresenter().getOrdenPresenter() != null) {
+            jPanel2.add(new PedidoCardView(getPresenter().getOrdenPresenter()), BorderLayout.EAST);
+        }
         jPanelOrdenesActivas.add(new ProductoVentaSelectorView(getPresenter().getMenuPresenter()), BorderLayout.CENTER);
     }
 
