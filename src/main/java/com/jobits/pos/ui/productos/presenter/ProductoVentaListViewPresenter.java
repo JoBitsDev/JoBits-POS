@@ -16,6 +16,7 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -56,19 +57,23 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
     protected void onAgregarClick() {
         NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
                 new ProductoVentaDetailPresenter(
-                        new ProductoVentaDetailController(), null),DisplayType.POPUP);
+                        new ProductoVentaDetailController(), null), DisplayType.POPUP);
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
+        if (Application.getInstance().getLoggedUser().getPuestoTrabajonombrePuesto().getNivelAcceso() >= 3) {
+            NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
+                    new ProductoVentaDetailPresenter(
+                            new ProductoVentaDetailController(
+                                    getBean().getElemento_seleccionado()),
+                            getBean().getElemento_seleccionado()), DisplayType.POPUP);
+            setListToBean();
+        } else {
+            JOptionPane.showMessageDialog(null, "No tiene los permisos requeridos", "Privilegios insuficientes", JOptionPane.ERROR_MESSAGE);
+        }
 
-        NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
-                new ProductoVentaDetailPresenter(
-                        new ProductoVentaDetailController(
-                                getBean().getElemento_seleccionado()),
-                        getBean().getElemento_seleccionado()),DisplayType.POPUP);
-        setListToBean();
     }
 
     @Override
