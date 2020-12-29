@@ -8,9 +8,11 @@ package com.jobits.pos.ui.venta.orden.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
+import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 //import com.jobits.pos.adapters.repo.impl.OrdenTemporalRepo;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Cliente;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.ProductovOrden;
@@ -19,6 +21,8 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.productos.ProductoVentaDetailView;
+import com.jobits.pos.ui.productos.presenter.ProductoVentaDetailPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
@@ -145,12 +149,16 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 //        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
 //    }
     private void onVerDetallesClick() {
-        File temporalFile = new File(R.LOGS_FILE_PATH + "/Ordenes" + "/" + codOrden + ".txt");
-        if (temporalFile.exists()) {
-            Application.getInstance().getNavigator().navigateTo(
-                    OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);
+        if (Application.getInstance().getLoggedUser().getPuestoTrabajonombrePuesto().getNivelAcceso() >= 3) {
+            File temporalFile = new File(R.LOGS_FILE_PATH + "/Ordenes" + "/" + codOrden + ".txt");
+            if (temporalFile.exists()) {
+                Application.getInstance().getNavigator().navigateTo(
+                        OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay registros de orden: " + codOrden, "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "No hay registros de orden: " + codOrden, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No tiene los permisos requeridos", "Privilegios insuficientes", JOptionPane.ERROR_MESSAGE);
         }
     }
 
