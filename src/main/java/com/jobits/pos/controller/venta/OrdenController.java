@@ -77,9 +77,13 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 String nuevanota = showInputDialog(getView(), "Introduzca la nota a adjuntar");
                 Nota n = new Nota();
                 n.setDescripcion(nuevanota);
-
+                n.setProductovOrdenid(prod.getId());
+                n.setProductovOrden(prod);
                 prod.setNota(n);
+                getModel().startTransaction();
+                NotaDAO.getInstance().startTransaction();
                 NotaDAO.getInstance().create(n);
+                NotaDAO.getInstance().commitTransaction();
                 RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, codOrden, n.getDescripcion());
                 ProductovOrdenDAO.getInstance().edit(prod);
 
@@ -91,7 +95,10 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 } else {
                     nota.setDescripcion(nuevaNota);
                 }
+                NotaDAO.getInstance().startTransaction();
                 NotaDAO.getInstance().edit(nota);
+                NotaDAO.getInstance().commitTransaction();
+//                NotaDAO.getInstance().refresh(nota);
                 RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, codOrden, nota.getDescripcion());
             }
         } else {

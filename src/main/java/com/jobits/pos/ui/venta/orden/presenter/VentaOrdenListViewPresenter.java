@@ -13,6 +13,8 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -131,7 +133,9 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     @Override
     protected Optional refreshState() {
         Orden o = getBean().getElemento_seleccionado();
-        getBean().setLista_elementos(ventaService.getOrdenesActivas(codVenta));
+        List<Orden> lista = ventaService.getOrdenesActivas(codVenta);
+        Collections.sort(lista);
+        getBean().setLista_elementos(lista);
         getBean().setElemento_seleccionado(o);
         return Optional.empty();
     }

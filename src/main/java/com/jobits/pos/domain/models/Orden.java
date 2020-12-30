@@ -241,11 +241,20 @@ public class Orden implements Serializable, Comparable<Orden> {
     public int compareTo(Orden o) {
         int o2 = Integer.parseInt(o.getCodOrden().split("-")[1]);
         int o1 = Integer.parseInt(getCodOrden().split("-")[1]);
-
-        if (o1 > o2) {
+        Date v2 = o.getHoraTerminada();
+        Date v1 = getHoraTerminada();
+        if (v1 == null && v2 == null || v1 != null && v2 != null) {
+            if (o1 > o2) {
+                return 1;
+            }
+            if (o1 < o2) {
+                return -1;
+            }
+        }
+        if (v1 != null && v2 == null) {
             return 1;
         }
-        if (o1 < o2) {
+        if (v1 == null && v2 != null) {
             return -1;
         }
         return 0;
