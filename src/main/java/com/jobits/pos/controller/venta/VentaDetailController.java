@@ -551,7 +551,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
 
     @Override
     public void reabrirVentas(int codVenta) {
-        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO.getNivel())) {
+        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
             Calendar limitTime = Calendar.getInstance();
             limitTime.add(Calendar.DAY_OF_YEAR, -1);
             limitTime.set(Calendar.HOUR_OF_DAY, 0);

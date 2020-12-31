@@ -61,7 +61,7 @@ public class CuentaController extends AbstractDialogController<ContabilidadCuent
 
     @Override
     public void destroy(ContabilidadCuenta selected) {
-        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
+        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR)) {
             super.destroy();
         }
     }

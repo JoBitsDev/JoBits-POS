@@ -77,7 +77,7 @@ public class ProductoVentaListController extends OldAbstractListController<Produ
     }
 
     private void validate(R.NivelAcceso nivel) {
-        if (!new LogInController().constructoAuthorizationView(nivel.getNivel())) {
+        if (!new LogInController().constructoAuthorizationView(nivel)) {
             Application.getInstance().getNotificationService().notify("Acceso denegado", TipoNotificacion.ERROR);
             throw new IllegalAccessError("Access denied");
         }

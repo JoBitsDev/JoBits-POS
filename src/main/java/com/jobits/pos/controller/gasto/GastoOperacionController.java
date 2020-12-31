@@ -161,7 +161,7 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
     }
 
     public void removeGasto(GastoVenta objectAtSelectedRow) {
-        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO.getNivel())) {
+        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
             diaVenta.getGastoVentaList().remove(objectAtSelectedRow);
             getModel().startTransaction();
             GastoVentaDAO.getInstance().remove(objectAtSelectedRow);

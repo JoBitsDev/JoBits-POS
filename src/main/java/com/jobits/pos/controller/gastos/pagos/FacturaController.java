@@ -57,7 +57,7 @@ public class FacturaController extends AbstractDialogController<Factura> {
 
     @Override
     public void destroy(Factura selected) {
-        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
+        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR)) {
             super.destroy(selected);
         }
     }

@@ -129,7 +129,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
             }
             if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo())) {
                 if (cantidad < 0) {
-                    if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
+                    if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR)) {
                         return;
                     }
                 }
@@ -155,7 +155,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
             }
             if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta())) {
                 if (cantidad < 0) {
-                    if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
+                    if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR)) {
                         return;
                     }
                 }
@@ -172,7 +172,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     public void darEntradaIPV(IpvVentaRegistro instance, float cantidad) {
         if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta())) {
             if (cantidad < 0) {
-                if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
+                if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR)) {
                     return;
                 }
             }
