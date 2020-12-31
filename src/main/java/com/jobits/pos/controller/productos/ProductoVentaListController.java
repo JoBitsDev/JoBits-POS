@@ -18,14 +18,11 @@ import com.jobits.pos.adapters.repo.impl.CartaDAO;
 import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
 import com.jobits.pos.exceptions.ExceptionHandler;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * FirstDream
@@ -80,7 +77,7 @@ public class ProductoVentaListController extends OldAbstractListController<Produ
     }
 
     private void validate(R.NivelAcceso nivel) {
-        if (!new LogInController().constructoAuthorizationView(getView(), nivel)) {
+        if (!new LogInController().constructoAuthorizationView(nivel.getNivel())) {
             Application.getInstance().getNotificationService().notify("Acceso denegado", TipoNotificacion.ERROR);
             throw new IllegalAccessError("Access denied");
         }

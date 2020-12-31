@@ -10,11 +10,9 @@ import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.login.LogInController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.ContabilidadCuenta;
 import com.jobits.pos.domain.models.Factura;
@@ -63,7 +61,7 @@ public class CuentaController extends AbstractDialogController<ContabilidadCuent
 
     @Override
     public void destroy(ContabilidadCuenta selected) {
-        if (new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
+        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
             super.destroy();
         }
     }

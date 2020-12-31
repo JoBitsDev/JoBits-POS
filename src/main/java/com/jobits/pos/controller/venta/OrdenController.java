@@ -15,7 +15,6 @@ import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Configuracion;
@@ -455,7 +454,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
     //Metodos privados
     //
     private boolean autorize(String codOrden) {
-        return new LogInController().constructoAuthorizationView(null, getInstance(codOrden).getPersonalusuario().getUsuario());
+        return new LogInController().constructoAuthorizationView(getInstance(codOrden).getPersonalusuario().getUsuario());
     }
 
     private void checkIfProductIsValid(ProductoVenta producto, Orden o) {

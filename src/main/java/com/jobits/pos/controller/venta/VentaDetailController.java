@@ -21,9 +21,6 @@ import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.reservas.ReservaListController;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
-import com.jobits.pos.cordinator.DisplayType;
-import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
@@ -48,8 +45,6 @@ import com.jobits.pos.servicios.impresion.formatter.PersonalResumenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.PuntoElaboracionFormatter;
 import com.jobits.pos.servicios.impresion.formatter.ResumenVentaAreaFormatter;
 import com.jobits.pos.servicios.impresion.formatter.VentaZFormatter;
-import com.jobits.pos.ui.login.UbicacionView;
-import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.utils.CalcularCambioViewDialog;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.utils;
@@ -60,18 +55,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
-import javax.swing.text.DateFormatter;
 
 /**
  * FirstDream
@@ -562,7 +551,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
 
     @Override
     public void reabrirVentas(int codVenta) {
-        if (new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ECONOMICO)) {
+        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO.getNivel())) {
             Calendar limitTime = Calendar.getInstance();
             limitTime.add(Calendar.DAY_OF_YEAR, -1);
             limitTime.set(Calendar.HOUR_OF_DAY, 0);
