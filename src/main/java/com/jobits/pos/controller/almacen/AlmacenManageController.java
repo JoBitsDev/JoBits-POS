@@ -35,14 +35,12 @@ import com.jobits.pos.adapters.repo.impl.CocinaDAO;
 import com.jobits.pos.adapters.repo.impl.InsumoAlmacenDAO;
 import com.jobits.pos.adapters.repo.impl.InsumoDAO;
 import com.jobits.pos.adapters.repo.impl.OperacionDAO;
-import com.jobits.pos.adapters.repo.impl.OrdenDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionEntradaDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionMermaDAO;
 import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.domain.models.InsumoElaborado;
-import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.servicios.impresion.Impresion;
@@ -273,7 +271,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         float merma = utils.setDosLugaresDecimalesFloat(sumaTransformacion - cantidad);
         if (sumaTransformacion < cantidad) {
             if (showConfirmDialog(getView(), selected.getInsumo() + " mermara " + merma + ". Desea continuar?")) {
-                if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ECONOMICO)) {
+                if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO.getNivel())) {
                     return;
                 }
             } else {

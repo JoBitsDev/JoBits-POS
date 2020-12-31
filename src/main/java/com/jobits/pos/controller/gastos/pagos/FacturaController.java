@@ -15,7 +15,6 @@ import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.ContabilidadCuenta;
 import com.jobits.pos.domain.models.Factura;
 import com.jobits.pos.domain.models.Pago;
-import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.adapters.repo.impl.ContabilidadCuentaDAO;
 import com.jobits.pos.adapters.repo.impl.FacturaDAO;
 import com.jobits.pos.recursos.R;
@@ -37,7 +36,7 @@ public class FacturaController extends AbstractDialogController<Factura> {
         String error = null;
         if (selected.getIdCuentaAcreedora() == null || selected.getIdCuentaDeudora() == null) {
             error = "Las cuentas contables relacionadas con la factura no pueden estar vacias";
-        } else if (selected.getIdCuentaAcreedora().equals(selected.getIdCuentaDeudora()) 
+        } else if (selected.getIdCuentaAcreedora().equals(selected.getIdCuentaDeudora())
                 || selected.getIdCuentaAcreedora().getTipoCuenta().equals(selected.getIdCuentaDeudora().getTipoCuenta())) {
             error = "Las cuenta cargada y abonada no pueden ser las mismas ni del mismo tipo";
         }
@@ -58,7 +57,7 @@ public class FacturaController extends AbstractDialogController<Factura> {
 
     @Override
     public void destroy(Factura selected) {
-        if (new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
+        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
             super.destroy(selected);
         }
     }
@@ -84,7 +83,7 @@ public class FacturaController extends AbstractDialogController<Factura> {
     }
 
     public void createObligacionCobro(Factura f, Pago p) {
-                PagoController pagos = new PagoController();
+        PagoController pagos = new PagoController();
         if (p.getMontoPagado() > f.getMontoAPagar() - f.getMontoPagado()) {
             throw new ValidatingException(getView(), "La obligacion de cobro es mayor que el monto por cobrar de la factura");
         }

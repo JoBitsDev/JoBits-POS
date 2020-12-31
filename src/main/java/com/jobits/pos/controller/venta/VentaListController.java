@@ -5,8 +5,6 @@
  */
 package com.jobits.pos.controller.venta;
 
-import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.venta.VentaCalendarView;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,7 +15,6 @@ import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.controller.licencia.Licence;
@@ -50,7 +47,7 @@ public class VentaListController extends AbstractDialogController<Venta>
 
     @Override
     public void destroy(Venta selected) {
-        if (showDeleteDialog((Container) getView(), selected) && new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
+        if (showDeleteDialog((Container) getView(), selected) && new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
             this.selected = selected;
             this.destroy();
             this.selected = null;

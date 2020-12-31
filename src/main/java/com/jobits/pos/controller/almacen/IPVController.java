@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.adapters.repo.impl.CocinaDAO;
 import com.jobits.pos.adapters.repo.impl.InsumoDAO;
 import com.jobits.pos.adapters.repo.impl.IpvDAO;
@@ -34,7 +33,6 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.NumberPad;
 import java.awt.Container;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -131,7 +129,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
             }
             if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo())) {
                 if (cantidad < 0) {
-                    if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
+                    if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
                         return;
                     }
                 }
@@ -157,7 +155,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
             }
             if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta())) {
                 if (cantidad < 0) {
-                    if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
+                    if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
                         return;
                     }
                 }
@@ -174,7 +172,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     public void darEntradaIPV(IpvVentaRegistro instance, float cantidad) {
         if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta())) {
             if (cantidad < 0) {
-                if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
+                if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
                     return;
                 }
             }
