@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui.mainmenu.presenter;
 
+import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.MainMenuService;
 import com.jobits.pos.controller.venta.OrdenController;
@@ -76,7 +77,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
 
                 }
                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                        new VentaDetailViewPresenter(control, new OrdenController(),service.getDiaVentaSeleccionado()));
+                        new VentaDetailViewPresenter(control, new OrdenController(), service.getDiaVentaSeleccionado()));
                 return Optional.empty();
             }
         };
@@ -90,13 +91,17 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                 if (nivelDeAccesoAutenticado >= nivelDeAcceso) {
                     NavigationService.getInstance().navigateTo(actionName);//TODO: pifia
                 } else {
-                    Application.getInstance().getNotificationService().
-                            showDialog("El usuario no tiene permisos",
-                                    TipoNotificacion.ERROR);
+                    if (autorize(nivelDeAcceso)) {
+                        NavigationService.getInstance().navigateTo(actionName);//TODO: pifia
+                    }
                 }
                 return Optional.empty();
             }
         };
+    }
+
+    private boolean autorize(int nivelDeAcceso) {
+        return new LogInController().constructoAuthorizationView(nivelDeAcceso);
     }
 
     @Override
