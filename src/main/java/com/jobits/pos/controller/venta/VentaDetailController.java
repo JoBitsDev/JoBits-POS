@@ -448,7 +448,12 @@ public class VentaDetailController extends AbstractDetailController<Venta>
             if (fecha == null) {
                 ret = getDiaSinCerrar();
                 if (ret.isEmpty()) {
-                    ret = crearVenta(new Date());
+                    List<Venta> listVentas = getVentasDeFecha(new Date());
+                    if (listVentas.size() < R.SettingID.GENERAL_CANTIDAD_TURNOS.getIntegerValue()) {
+                        ret = crearVenta(new Date());
+                    } else {
+                        ret = listVentas;
+                    }
                 }
             } else {
                 //revisar si la fecha donde se quiere crear el dia ya esta creada
@@ -473,7 +478,9 @@ public class VentaDetailController extends AbstractDetailController<Venta>
             case 0:
             case 1:
             case 2:
-                ret = ret.subList(0, 1);
+                Venta v = ret.get(ret.size() - 1);
+                ret.clear();
+                ret.add(v);
                 break;
             default:
                 break;
