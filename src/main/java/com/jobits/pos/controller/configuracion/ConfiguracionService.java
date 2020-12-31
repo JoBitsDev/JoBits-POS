@@ -13,8 +13,10 @@ import com.jobits.pos.recursos.R;
  */
 public interface ConfiguracionService {
 
+    public void cargarConfiguracion();
+
     public void updateConfiguracion(R.SettingID v, Object configuration);
 
     public Object getConfiguracion(R.SettingID v);
-    
+
 }
