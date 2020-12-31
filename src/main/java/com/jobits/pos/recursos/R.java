@@ -66,11 +66,11 @@ public class R {
 
     public static final int MINOR_VERSION = 0;
 
-    public static final int PATCH_VERSION = 0;
+    public static final int PATCH_VERSION = 1;
 
     public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
 
-    public static int BUILD_VERSION = 34;
+    public static int BUILD_VERSION = 35;
 
     public static String CONFIG_FILE_PATH = "y.cfg";
 

@@ -74,6 +74,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelResumenDetallado = new javax.swing.JPanel();
         jTabbedPaneResumen = new javax.swing.JTabbedPane();
         jComboBoxSeleccionarVentaPorTurno = new javax.swing.JComboBox<>();
+        jPanelExtracciones = new javax.swing.JPanel();
         jPanelRoot = new javax.swing.JPanel();
         jPanelData = new javax.swing.JPanel();
         jTabbedPaneData = new javax.swing.JTabbedPane();
@@ -112,7 +113,6 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelVentas = new javax.swing.JPanel();
         jPanelOperaciones = new javax.swing.JPanel();
         jTabbedPaneResumenD1 = new javax.swing.JTabbedPane();
-        jPanelExtracciones = new javax.swing.JPanel();
         jPanelPagoTrabajadores = new javax.swing.JPanel();
         jPanelFooter = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -132,6 +132,8 @@ public class VentaDetailView extends AbstractViewPanel {
 
         jComboBoxSeleccionarVentaPorTurno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todo", "Turno 1", "Turno 2" }));
         jComboBoxSeleccionarVentaPorTurno.setToolTipText("Seleccione el turno a visualizar");
+
+        jPanelExtracciones.setLayout(new java.awt.BorderLayout());
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setLayout(new java.awt.BorderLayout());
@@ -373,9 +375,6 @@ public class VentaDetailView extends AbstractViewPanel {
         jTabbedPaneResumenD1.setToolTipText("");
         jTabbedPaneResumenD1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
 
-        jPanelExtracciones.setLayout(new java.awt.BorderLayout());
-        jTabbedPaneResumenD1.addTab("Extracciones Caja", jPanelExtracciones);
-
         jPanelPagoTrabajadores.setLayout(new java.awt.BorderLayout());
         jTabbedPaneResumenD1.addTab("Pago Empleados", jPanelPagoTrabajadores);
 
@@ -602,6 +601,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelVentas.add(new VentaListOrdenesView(((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter()));
 
         jPanelPagoTrabajadores.add(new AsistenciaPersonalView(((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter()));
+        jTabbedPaneResumenD1.addTab("Extracciones Caja", jPanelExtracciones);
         jPanelExtracciones.add(new GastosView(((VentaDetailViewPresenter) getPresenter()).getGastosPresenter()));
     }
 

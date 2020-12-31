@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -86,7 +88,12 @@ public class Seccion implements Serializable, Comparable<Seccion> {
     }
 
     public List<ProductoVenta> getProductoVentaList() {
-        return productoVentaList;
+        List<ProductoVenta> ret = new ArrayList<>();
+        productoVentaList.stream().filter(x -> (x.getVisible())).forEachOrdered(x -> {
+            ret.add(x);
+        });
+        Collections.sort(ret);
+        return ret;
     }
 
     public void setProductoVentaList(List<ProductoVenta> productoVentaList) {

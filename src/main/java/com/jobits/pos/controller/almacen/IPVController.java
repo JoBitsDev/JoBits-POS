@@ -33,12 +33,15 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.NumberPad;
 import java.awt.Container;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 /**
  * FirstDream
@@ -115,53 +118,61 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     }
 
     public void darEntradaExistencia(IpvRegistro instance) {
-        float cantidad;
-        try {
+        if (instance != null) {
+            float cantidad;
+            try {
 //            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
-            cantidad = new NumberPad(null).showView();
-        } catch (NumberFormatException e) {
-            showErrorDialog(getView(), "El valor introducido no es correcto");
-            return;
-        }
-        if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo())) {
-            if (cantidad < 0) {
-                if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
-                    return;
-                }
+                cantidad = new NumberPad(null).showView();
+            } catch (NumberFormatException e) {
+                showErrorDialog(getView(), "El valor introducido no es correcto");
+                return;
             }
-            getModel().getEntityManager().refresh(instance);
-            instance.setEntrada(instance.getEntrada() + cantidad);
-            updateInstance(instance);
-            getModel().getEntityManager().refresh(instance);
+            if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo())) {
+                if (cantidad < 0) {
+                    if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
+                        return;
+                    }
+                }
+                getModel().getEntityManager().refresh(instance);
+                instance.setEntrada(instance.getEntrada() + cantidad);
+                updateInstance(instance);
+                getModel().getEntityManager().refresh(instance);
+            }
+        } else {
+            showErrorDialog(getView(), "Seleccione un IPV primero");
         }
     }
 
     public void darEntradaIPV(IpvVentaRegistro instance) {
-        float cantidad;
-        try {
+        if (instance != null) {
+            float cantidad;
+            try {
 //            cantidad = Float.parseFloat(showInputDialog(getView(), "Introduzca la cantidad a dar entrada"));
-            cantidad = new NumberPad(null).showView();
-        } catch (NumberFormatException e) {
-            showErrorDialog(getView(), "El valor introducido no es correcto");
-            return;
-        }
-        if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta())) {
-            if (cantidad < 0) {
-                if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
-                    return;
-                }
+                cantidad = new NumberPad(null).showView();
+            } catch (NumberFormatException e) {
+                showErrorDialog(getView(), "El valor introducido no es correcto");
+                return;
             }
-            getModel().getEntityManager().refresh(instance);
-            instance.setEntrada(instance.getEntrada() + cantidad);
-            updateInstance(instance);
-            getModel().getEntityManager().refresh(instance);
+            if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta())) {
+                if (cantidad < 0) {
+                    if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
+                        return;
+                    }
+                }
+                getModel().getEntityManager().refresh(instance);
+                instance.setEntrada(instance.getEntrada() + cantidad);
+                updateInstance(instance);
+                getModel().getEntityManager().refresh(instance);
+            }
+        } else {
+            showErrorDialog(getView(), "Seleccione un IPV primero");
         }
     }
 
     public void darEntradaIPV(IpvVentaRegistro instance, float cantidad) {
         if (showConfirmDialog(getView(), "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta())) {
             if (cantidad < 0) {
-                if (!new LogInController().constructoAuthorizationView(getView(), R.NivelAcceso.ADMINISTRADOR)) {
+                if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR.getNivel())) {
                     return;
                 }
             }
@@ -421,7 +432,6 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     private float getEntradaDiaAnterior(IpvRegistro reg) {
         int id = reg.getIpvRegistroPK().getVentaId();
 
-
         byte i = 0;
         IpvRegistro founded = null;
         do {
@@ -530,6 +540,70 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
         IpvRegistroVentaDAO.getInstance().startTransaction();
         IpvRegistroVentaDAO.getInstance().edit(instance);
         IpvRegistroVentaDAO.getInstance().commitTransaction();
+    }
+
+    @Override
+    public void transferirIPVRegistro(IpvRegistro ipv_registro_seleciconado) {
+        if (ipv_registro_seleciconado != null) {
+
+            List<Cocina> cocinas = getCocinaList();
+            Cocina cocina;
+            float cantidad;
+            if (!cocinas.isEmpty()) {
+                JComboBox<Cocina> jComboBox1 = new JComboBox<>();
+                jComboBox1.setModel(new DefaultComboBoxModel<>(cocinas.toArray(new Cocina[0])));
+                jComboBox1.setSelectedItem(cocinas.get(0));
+                Object[] options = {"Seleccionar", "Cancelar"};
+                //                     yes        no       cancel
+                int confirm = JOptionPane.showOptionDialog(
+                        null,
+                        jComboBox1,
+                        "Puntos de Elaboracion",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.YES_NO_OPTION,
+                        new ImageIcon(getClass().getResource("/restManager/resources/icons pack/olla_indigo.png")),
+                        options,
+                        options[0]);
+                switch (confirm) {
+                    case JOptionPane.YES_OPTION:
+                        cocina = (Cocina) jComboBox1.getSelectedItem();
+                        if (cocina != null) {
+                            IpvRegistro IPVregistroDestino = IpvRegistroDAO.getInstance().
+                                    getIpvRegistro(cocina, ipv_registro_seleciconado.getVenta().getId(), ipv_registro_seleciconado.getIpv().getInsumo());
+                            if (IPVregistroDestino != null) {
+                                cantidad = new NumberPad(null).showView();
+                                if (ipv_registro_seleciconado.getDisponible() >= cantidad) {
+
+                                    getModel().getEntityManager().refresh(ipv_registro_seleciconado);
+                                    ipv_registro_seleciconado.setEntrada(ipv_registro_seleciconado.getDisponible() - cantidad);
+                                    updateInstance(ipv_registro_seleciconado);
+                                    getModel().getEntityManager().refresh(ipv_registro_seleciconado);
+
+                                    getModel().getEntityManager().refresh(IPVregistroDestino);
+                                    IPVregistroDestino.setEntrada(IPVregistroDestino.getDisponible() + cantidad);
+                                    updateInstance(IPVregistroDestino);
+                                    getModel().getEntityManager().refresh(IPVregistroDestino);
+                                } else {
+                                    showErrorDialog(null, "No hay suficiente "
+                                            + ipv_registro_seleciconado.getIpv().getInsumo().getNombre()
+                                            + " disponible para transferir a "
+                                            + cocina.getNombreCocina());
+                                }
+                            } else {
+                                showErrorDialog(null, ipv_registro_seleciconado.getIpv().getInsumo().getNombre()
+                                        + " no esta registrado en " + cocina.getNombreCocina());
+                            }
+                        }
+                    case JOptionPane.NO_OPTION:
+                    default:
+                        break;
+                }
+            } else {
+                showErrorDialog(null, "No hay Puntos de Elaboracion registrados en el sistema");
+            }
+        } else {
+            showErrorDialog(null, "Seleccione un IPV primero");
+        }
     }
 
 }

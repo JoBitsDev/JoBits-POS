@@ -15,7 +15,6 @@ import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Configuracion;
@@ -77,9 +76,13 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 String nuevanota = showInputDialog(getView(), "Introduzca la nota a adjuntar");
                 Nota n = new Nota();
                 n.setDescripcion(nuevanota);
-
+                n.setProductovOrdenid(prod.getId());
+                n.setProductovOrden(prod);
                 prod.setNota(n);
+                getModel().startTransaction();
+                NotaDAO.getInstance().startTransaction();
                 NotaDAO.getInstance().create(n);
+                NotaDAO.getInstance().commitTransaction();
                 RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, codOrden, n.getDescripcion());
                 ProductovOrdenDAO.getInstance().edit(prod);
 
@@ -91,7 +94,10 @@ public class OrdenController extends AbstractFragmentController<Orden>
                 } else {
                     nota.setDescripcion(nuevaNota);
                 }
+                NotaDAO.getInstance().startTransaction();
                 NotaDAO.getInstance().edit(nota);
+                NotaDAO.getInstance().commitTransaction();
+//                NotaDAO.getInstance().refresh(nota);
                 RestManagerHandler.Log(LOGGER, RestManagerHandler.Action.SET_NOTA, Level.FINER, codOrden, nota.getDescripcion());
             }
         } else {
@@ -448,7 +454,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
     //Metodos privados
     //
     private boolean autorize(String codOrden) {
-        return new LogInController().constructoAuthorizationView(null, getInstance(codOrden).getPersonalusuario().getUsuario());
+        return new LogInController().constructoAuthorizationView(getInstance(codOrden).getPersonalusuario().getUsuario());
     }
 
     private void checkIfProductIsValid(ProductoVenta producto, Orden o) {

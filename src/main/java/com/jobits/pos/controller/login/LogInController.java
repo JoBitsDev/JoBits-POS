@@ -15,6 +15,7 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.recursos.R.NivelAcceso;
 import com.jobits.pos.ui.autorizo.AutorizoView;
 import com.jobits.pos.ui.autorizo.presenter.AutorizoViewPresenter;
 
@@ -75,7 +76,7 @@ public class LogInController implements LogInService {
     //
     //Metodos para la ventana de autorizacion
     //
-    private void constructLoginPanel(Container Parent, String title) {
+    private void constructLoginPanel(String title) {
         NavigationService.getInstance().navigateTo(AutorizoView.VIEW_NAME,
                 new AutorizoViewPresenter(this, title), DisplayType.POPUP);
 
@@ -83,24 +84,24 @@ public class LogInController implements LogInService {
     }
 
     public boolean constructoAuthorizationViewForConfirm(Container parent) {
-
-        constructLoginPanel(parent, "Confirmar Accion (" + R.loggedUser.getUsuario() + ")");
+        constructLoginPanel("Confirmar Accion (" + R.loggedUser.getUsuario() + ")");
         this.usuarioRequerido = R.loggedUser.getUsuario();
         // getView().setVisible(true); //TODO Cordinator
         return AUTORIZADO;
     }
 
-    public boolean constructoAuthorizationView(Container parent, R.NivelAcceso nivelMinimo) {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= nivelMinimo.getNivel()) {
+    public boolean constructoAuthorizationView(int nivelMinimo) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= nivelMinimo) {
             return true;
         }
-        constructLoginPanel(parent, "Nivel Minimo (" + nivelMinimo + ")");
-        this.nivelMinimo = nivelMinimo.getNivel();
+        NivelAcceso a = R.NivelAcceso.values()[nivelMinimo];
+        constructLoginPanel("Nivel Minimo (" + a.name() + ")");
+        this.nivelMinimo = nivelMinimo;
         //  getView().setVisible(true); //TODO Cordinator
         return AUTORIZADO;
     }
 
-    public boolean constructoAuthorizationView(Container parent, String usuario) {
+    public boolean constructoAuthorizationView(String usuario) {
         int nivelUsuario = PersonalDAO.getInstance().find(usuario).getPuestoTrabajonombrePuesto().getNivelAcceso();
         if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > nivelUsuario) {
             return true;
@@ -109,7 +110,7 @@ public class LogInController implements LogInService {
             return true;
         }
         this.usuarioRequerido = usuario;
-        constructLoginPanel(parent, "Usuario Requerido (" + usuario + ")");
+        constructLoginPanel("Usuario Requerido (" + usuario + ")");
         //getView().setVisible(true); //TODO Cordinator
         return AUTORIZADO;
     }

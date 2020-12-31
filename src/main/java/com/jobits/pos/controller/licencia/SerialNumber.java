@@ -11,8 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Scanner;
-import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.exceptions.ExceptionHandler;
+import org.jboss.logging.Logger;
 
 /**
  * FirstDream
@@ -40,8 +39,9 @@ public class SerialNumber {
             }
             return checkSerial(ret);
         } catch (Exception E) {
-            ExceptionHandler.showExceptionToUser(E,"UID no encontrado contacte con soporte tecnico : ");
-            return "UID no encontrado";
+            Logger.getLogger(SerialNumber.class).log(Logger.Level.ERROR,
+                    "UID no encontrado contacte con soporte tecnico : ");
+            return "000000000000";
         }
     }
 
@@ -252,11 +252,10 @@ public class SerialNumber {
     }
 
     private static String checkSerial(String ret) {
-        if(ret.length() > 12){
+        if (ret.length() > 12) {
             return ret.substring(0, 12);
-        }
-        else{
-            while(ret.length() < 12){
+        } else {
+            while (ret.length() < 12) {
                 ret += "0";
             }
         }
