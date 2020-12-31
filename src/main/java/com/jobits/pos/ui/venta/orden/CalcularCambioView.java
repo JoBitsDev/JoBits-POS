@@ -15,6 +15,8 @@ import static com.jobits.pos.ui.venta.orden.presenter.CalcularCambioViewPresente
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /**
  *
@@ -180,6 +182,7 @@ public class CalcularCambioView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         javax.swing.JSpinner.DefaultEditor defCantidad = (javax.swing.JSpinner.DefaultEditor) jSpinnerMonedaNacional.getEditor();
+        javax.swing.JSpinner.DefaultEditor defCantidad2 = (javax.swing.JSpinner.DefaultEditor) jSpinnerSegundaMoneda.getEditor();
         defCantidad.getTextField().addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -191,7 +194,6 @@ public class CalcularCambioView extends AbstractViewPanel {
             public void focusLost(FocusEvent e) {
             }
         });
-        javax.swing.JSpinner.DefaultEditor defCantidad2 = (javax.swing.JSpinner.DefaultEditor) jSpinnerSegundaMoneda.getEditor();
         defCantidad2.getTextField().addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -201,6 +203,44 @@ public class CalcularCambioView extends AbstractViewPanel {
 
             @Override
             public void focusLost(FocusEvent e) {
+            }
+        });
+        defCantidad.getTextField().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    defCantidad2.getTextField().requestFocusInWindow();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    getPresenter().getOperation(ACTION_CERRAR).doAction();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        defCantidad2.getTextField().addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    getPresenter().getOperation(ACTION_ABRIR_CAJA).doAction();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    getPresenter().getOperation(ACTION_CERRAR).doAction();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
             }
         });
 //

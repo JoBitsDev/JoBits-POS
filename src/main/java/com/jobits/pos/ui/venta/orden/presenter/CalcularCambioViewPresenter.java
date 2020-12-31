@@ -39,6 +39,7 @@ public class CalcularCambioViewPresenter extends AbstractViewPresenter<CalcularC
             @Override
             public Optional doAction() {
                 Impresion.getDefaultInstance().forceDrawerKick();
+                Application.getInstance().getNavigator().navigateUp();
                 return Optional.empty();
             }
         });
@@ -69,11 +70,9 @@ public class CalcularCambioViewPresenter extends AbstractViewPresenter<CalcularC
         getBean().setCambio(R.formatoMoneda.format(0));
         getBean().setEntrada_moneda_nacional(0);
         getBean().setEntrada_segunda_moneda(0);
-        
+
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
 
     private void actualizarVuelto() {
         float mn = getBean().getEntrada_moneda_nacional();
