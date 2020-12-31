@@ -114,7 +114,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     }
 
     private void onEliminarClick() {
-        if (new LogInController().constructoAuthorizationView(null, R.NivelAcceso.ECONOMICO)) {
+        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO.getNivel())) {
             if (getBean().getGasto_venta_seleccionado() == null) {
                 JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un gasto primero");
             } else {
