@@ -76,6 +76,9 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
                 menuPresenter.refreshState();
             }
         });
+        ordenPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_ES_AUTORIZO, (PropertyChangeEvent evt) -> {
+            refreshState();
+        });
         refreshState();
     }
 
@@ -124,19 +127,22 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     private void onAbrirOrdenAction() {
-        ordenPresenter.setCodOrden(getBean().getElemento_seleccionado().getCodOrden());
-
-        menuPresenter.setMesaSeleccionada(getBean().getElemento_seleccionado().getMesacodMesa());
-        menuPresenter.setCodOrdenEnlazada(getBean().getElemento_seleccionado().getCodOrden());
+        if (getBean().getElemento_seleccionado() != null) {
+            ordenPresenter.setCodOrden(getBean().getElemento_seleccionado().getCodOrden());
+            menuPresenter.setMesaSeleccionada(getBean().getElemento_seleccionado().getMesacodMesa());
+            menuPresenter.setCodOrdenEnlazada(getBean().getElemento_seleccionado().getCodOrden());
+        }
     }
 
     @Override
     protected Optional refreshState() {
         Orden o = getBean().getElemento_seleccionado();
         List<Orden> lista = ventaService.getOrdenesActivas(codVenta);
-        Collections.sort(lista);
-        getBean().setLista_elementos(lista);
-        getBean().setElemento_seleccionado(o);
+        if (!lista.isEmpty()) {
+            Collections.sort(lista);
+            getBean().setLista_elementos(lista);
+            getBean().setElemento_seleccionado(o);
+        }
         return Optional.empty();
     }
 
