@@ -7,17 +7,10 @@ package com.jobits.pos.ui.areaventa.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
-import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.areaventa.AreaVentaService;
-import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.cordinator.DisplayType;
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
-import com.jobits.pos.ui.areaventa.AreaCreateEditView;
-import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
