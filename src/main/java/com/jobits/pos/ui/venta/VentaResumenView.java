@@ -517,11 +517,11 @@ add(jPanel15, java.awt.BorderLayout.SOUTH);
                     case 0:
                         return "Producto Venta";
                     case 1:
-                        return "Precio";
+                        return "Precio (" + R.COIN_SUFFIX.substring(1) + ")";
                     case 2:
                         return "Cantidad";
                     case 3:
-                        return "Dinero Recaudado";
+                        return "Recaudado (" + R.COIN_SUFFIX.substring(1) + ")";
                 }
                 return null;
             }
@@ -542,7 +542,21 @@ add(jPanel15, java.awt.BorderLayout.SOUTH);
                 }
                 return null;
             }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return String.class;
+                    default:
+                        return Float.class;
+                }
+            }
         });
+        jTableVentas.getColumnModel().getColumn(0).setPreferredWidth(200);
+        jTableVentas.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
+        jTableVentas.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
+        jTableVentas.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
         jTableVentas.getRowSorter().toggleSortOrder(0);
 
         jTableGastos.setModel(new BindableTableModel<ProductoInsumo>(jTableGastos) {
@@ -561,7 +575,7 @@ add(jPanel15, java.awt.BorderLayout.SOUTH);
                     case 2:
                         return "Cantidad";
                     case 3:
-                        return "Costo";
+                        return "Costo (" + R.COIN_SUFFIX.substring(1) + ")";
                 }
                 return null;
             }
@@ -582,8 +596,23 @@ add(jPanel15, java.awt.BorderLayout.SOUTH);
                 }
                 return null;
             }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return String.class;
+                    case 1:
+                        return String.class;
+                    default:
+                        return Float.class;
+                }
+            }
         });
         jTableGastos.getRowSorter().toggleSortOrder(0);
+        jTableGastos.getColumnModel().getColumn(0).setPreferredWidth(200);
+        jTableGastos.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
+        jTableGastos.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
 
         jToggleButtonReodndearValores.addActionListener((ActionEvent e) -> {
             jTableGastos.repaint();

@@ -23,6 +23,7 @@ import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.RestaurantManagerListIntelliHint;
+import com.jobits.pos.ui.utils.TableDate;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
@@ -616,7 +617,22 @@ public class FacturaView extends AbstractViewPanel {
                 return null;
             }
 
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 1:
+                        return Float.class;
+                    case 2:
+                        return Float.class;
+                    default:
+                        return super.getColumnClass(columnIndex);
+                }
+            }
+
         });
+        jTableEntrada.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
+        jTableEntrada.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
+
         jTableEntrada.getRowSorter().toggleSortOrder(0);
         jTableEntrada.addKeyListener(new KeyAdapter() {
             @Override

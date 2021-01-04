@@ -11,6 +11,10 @@ import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaListViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.utils;
+import java.util.Comparator;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  * FirstDream
@@ -39,6 +43,7 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
 //        super.getjPanelExtra().add(label);
 //        super.getjPanelExtra().add(cartas);
 //TODO implementar el comboBox de los menu
+        jTableList.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
     }
 
     @Override
@@ -57,7 +62,7 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
                     case 1:
                         return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getNombre();
                     case 2:
-                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getPrecioVenta() + R.COIN_SUFFIX;
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getPrecioVenta();
                     case 3:
                         return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getSeccionnombreSeccion();
                     case 4:
@@ -77,7 +82,7 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
                     case 1:
                         return "Nombre";
                     case 2:
-                        return "Precio";
+                        return "Precio (" + R.COIN_SUFFIX.substring(1) + ")";
                     case 3:
                         return "Seccion";
                     case 4:
@@ -96,11 +101,13 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 5) {
-                    return Boolean.class;
-                } else {
-                    return super.getColumnClass(columnIndex);
-
+                switch (columnIndex) {
+                    case 2:
+                        return Float.class;
+                    case 5:
+                        return Boolean.class;
+                    default:
+                        return super.getColumnClass(columnIndex);
                 }
             }
 

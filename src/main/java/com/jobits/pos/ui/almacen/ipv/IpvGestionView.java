@@ -16,9 +16,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.IpvRegistro;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
-import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewModel.*;
@@ -27,7 +27,6 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import com.jobits.ui.components.MaterialComponentsFactory.Containers;
 
 /**
  *
@@ -378,7 +377,7 @@ public class IpvGestionView extends AbstractViewPanel {
                         case 6:
                             return getRow(rowIndex).getProductoVenta().getPrecioVenta();
                         case 7:
-                            return utils.setDosLugaresDecimales(getRow(rowIndex).getVenta() * getRow(rowIndex).getProductoVenta().getPrecioVenta());
+                            return utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getVenta() * getRow(rowIndex).getProductoVenta().getPrecioVenta());
                         case 8:
                             return getRow(rowIndex).getFinal1();
                         default:
@@ -404,9 +403,9 @@ public class IpvGestionView extends AbstractViewPanel {
                     case 5:
                         return "Venta";
                     case 6:
-                        return "Precio Venta";
+                        return "Precio Venta (" + R.COIN_SUFFIX.substring(1) + ")";
                     case 7:
-                        return "Importe";
+                        return "Importe (" + R.COIN_SUFFIX.substring(1) + ")";
                     case 8:
                         return "Final";
                     default:
@@ -429,7 +428,6 @@ public class IpvGestionView extends AbstractViewPanel {
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                    case 8:
                         return String.class;
                     default:
                         return Float.class;
@@ -468,7 +466,7 @@ public class IpvGestionView extends AbstractViewPanel {
                     case 6:
                         return getRow(rowIndex).getFinalCalculado();
                     case 7:
-                        return utils.setDosLugaresDecimales(
+                        return utils.setDosLugaresDecimalesFloat(
                                 getRow(rowIndex).getFinalCalculado()
                                 * getRow(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
                     default:
@@ -494,9 +492,19 @@ public class IpvGestionView extends AbstractViewPanel {
                     case 6:
                         return "Final";
                     case 7:
-                        return "Importe";
+                        return "Importe (" + R.COIN_SUFFIX.substring(1) + ")";
                     default:
                         return null;
+                }
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 1:
+                        return Insumo.class;
+                    default:
+                        return Float.class;
                 }
             }
         });
