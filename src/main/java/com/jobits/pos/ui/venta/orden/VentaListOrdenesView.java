@@ -125,17 +125,16 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
-        jButtonNuevaOrden.addActionListener(getPresenter().getOperation(ACTION_CREAR_ORDEN));
-        jButtonCheckReservas.addActionListener(getPresenter().getOperation(ACTION_ABRIR_RESERVA));
-        Bindings.bind(jListOrdenesActivas, new SelectionInList<Orden>(getPresenter().getModel(PROP_LISTA_ELEMENTOS), getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)));
-        jListOrdenesActivas.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
+        if (getPresenter() != null) {
+            jButtonNuevaOrden.addActionListener(getPresenter().getOperation(ACTION_CREAR_ORDEN));
+            jButtonCheckReservas.addActionListener(getPresenter().getOperation(ACTION_ABRIR_RESERVA));
+            Bindings.bind(jListOrdenesActivas, new SelectionInList<Orden>(getPresenter().getModel(PROP_LISTA_ELEMENTOS), getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)));
+            jListOrdenesActivas.addListSelectionListener((ListSelectionEvent e) -> {
                 if (!e.getValueIsAdjusting()) {
                     getPresenter().getOperation(ACTION_ABRIR_ORDEN).doAction();
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
