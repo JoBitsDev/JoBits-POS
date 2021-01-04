@@ -80,10 +80,10 @@ public class IpvRegistro implements Serializable {
     @ManyToOne(optional = false)
     private Ipv ipv;
 
-    @Basic(optional = false)
-    @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
-    private Date fecha;
+//    @Basic(optional = false)
+//    @Column(name = "fecha")
+//    @Temporal(TemporalType.DATE)
+//    private Date fecha;
     @JoinColumn(name = "ventaid", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Venta venta;
@@ -193,16 +193,17 @@ public class IpvRegistro implements Serializable {
 
     @Override
     public String toString() {
-        return R.DATE_FORMAT.format(getFecha());
+//        return R.DATE_FORMAT.format(getFecha());
+        return this.ipvRegistroPK.getIpvinsumocodInsumo();
     }
 
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
+//    public Date getFecha() {
+//        return fecha;
+//    }
+//
+//    public void setFecha(Date fecha) {
+//        this.fecha = fecha;
+//    }
 
     public Venta getVenta() {
         return venta;

@@ -5,32 +5,23 @@
  */
 package com.jobits.pos.controller.insumo;
 
-import com.jobits.pos.ui.insumo.OLDInsumoCreateEditView;
-import java.awt.Dialog;
-import java.awt.Window;
 import java.util.Collections;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaDetailController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.adapters.repo.impl.AlmacenDAO;
 import com.jobits.pos.adapters.repo.impl.InsumoDAO;
-import com.jobits.pos.adapters.repo.impl.InsumoElaboradoDAO;
-import com.jobits.pos.adapters.repo.impl.ProductoInsumoDAO;
 import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
 import com.jobits.pos.domain.models.InsumoElaborado;
 import com.jobits.pos.domain.models.InsumoElaboradoPK;
 import com.jobits.pos.domain.models.ProductoInsumoPK;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.utils;
-import java.awt.Frame;
 import java.util.ArrayList;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 
 /**
  * FirstDream

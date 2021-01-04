@@ -45,7 +45,6 @@ import com.jobits.pos.servicios.impresion.formatter.PersonalResumenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.PuntoElaboracionFormatter;
 import com.jobits.pos.servicios.impresion.formatter.ResumenVentaAreaFormatter;
 import com.jobits.pos.servicios.impresion.formatter.VentaZFormatter;
-import com.jobits.pos.ui.utils.CalcularCambioViewDialog;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaAreaTablaModel;
@@ -88,9 +87,6 @@ public class VentaDetailController extends AbstractDetailController<Venta>
 
     }
 
-    public void calcularCambio(Orden objectAtSelectedRow) {
-        CalcularCambioViewDialog cc = new CalcularCambioViewDialog(getView(), true, objectAtSelectedRow);
-    }
 
     @Deprecated
     public void cambiarTurno(int codVenta) {
@@ -453,15 +449,16 @@ public class VentaDetailController extends AbstractDetailController<Venta>
             }
         }
         Collections.sort(ret, (Venta o1, Venta o2) -> {
-            int ret1 = o1.getId().compareTo(o2.getId());
-            int a, b;
-            a = o1.getVentaTotal() == null ? -1 : 0;
-            b = o2.getVentaTotal() == null ? -1 : 0;
-            if (a == b) {
-                return ret1;
-            } else {
-                return Integer.compare(a, b);
-            }
+            return o1.getId().compareTo(o2.getId());
+//            int ret1 = o1.getId().compareTo(o2.getId());
+//            int a, b;
+//            a = o1.getVentaTotal() == null ? -1 : 0;
+//            b = o2.getVentaTotal() == null ? -1 : 0;
+//            if (a == b) {
+//                return ret1;
+//            } else {
+//                return Integer.compare(a, b);
+//            }
         });
         switch (Application.getInstance().getLoggedUser().getPuestoTrabajonombrePuesto().getNivelAcceso()) {
             case 0:
@@ -551,7 +548,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
 
     @Override
     public void reabrirVentas(int codVenta) {
-        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO.getNivel())) {
+        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
             Calendar limitTime = Calendar.getInstance();
             limitTime.add(Calendar.DAY_OF_YEAR, -1);
             limitTime.set(Calendar.HOUR_OF_DAY, 0);

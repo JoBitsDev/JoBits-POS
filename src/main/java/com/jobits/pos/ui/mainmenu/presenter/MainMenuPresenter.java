@@ -48,7 +48,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                 registerOperation(onComenzarVentaClick(v.toString()));
                 continue;
             }
-            registerOperation(onMenuClick(v.toString(), v.getNivelMinimoAcceso()));
+            registerOperation(onMenuClick(v.toString(), R.NivelAcceso.values()[v.getNivelMinimoAcceso()]));
 
         }
     }
@@ -83,12 +83,12 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
         };
     }
 
-    private AbstractViewAction onMenuClick(String actionName, int nivelDeAcceso) {
+    private AbstractViewAction onMenuClick(String actionName, R.NivelAcceso nivelDeAcceso) {
         return new LicencedViewAction(actionName) {
             @Override
             public Optional doAction() {
                 refreshState();
-                if (nivelDeAccesoAutenticado >= nivelDeAcceso) {
+                if (nivelDeAccesoAutenticado >= nivelDeAcceso.getNivel()) {
                     NavigationService.getInstance().navigateTo(actionName);//TODO: pifia
                 } else {
                     if (autorize(nivelDeAcceso)) {
@@ -100,7 +100,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
         };
     }
 
-    private boolean autorize(int nivelDeAcceso) {
+    private boolean autorize(R.NivelAcceso nivelDeAcceso) {
         return new LogInController().constructoAuthorizationView(nivelDeAcceso);
     }
 

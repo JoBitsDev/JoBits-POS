@@ -271,7 +271,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         float merma = utils.setDosLugaresDecimalesFloat(sumaTransformacion - cantidad);
         if (sumaTransformacion < cantidad) {
             if (showConfirmDialog(getView(), selected.getInsumo() + " mermara " + merma + ". Desea continuar?")) {
-                if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO.getNivel())) {
+                if (!new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
                     return;
                 }
             } else {
