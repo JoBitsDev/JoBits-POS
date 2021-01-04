@@ -7,8 +7,15 @@ import java.util.Date;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.recursos.R;
+import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
+import org.edisoncor.gui.table.BasicTableCellenderer;
 
 /**
  *
@@ -280,5 +287,35 @@ public class utils {
         //calendar.set(Calendar.MILLISECOND, 0);
         date = calendar.getTime();
         return date;
+    }
+
+    public static DefaultTableCellRenderer numberColumCellRender() {
+        DefaultTableCellRenderer ret = new DefaultTableCellRenderer();
+        ret.setHorizontalAlignment(JLabel.CENTER);
+        ret.setBackground(Color.white);
+        return ret;
+    }
+
+    public static Date formatToDate(Date date) {
+        Date a = new TableDate(date);
+        return a;
+    }
+
+    public static Date formatToTime(Date date) {
+        return new TableDate(date) {
+            @Override
+            public String toString() {
+                return getHours() + "/" + getMinutes() + " " + getPMAM();
+            }
+        };
+//        Date ret = null;
+//        SimpleDateFormat sdf = new SimpleDateFormat("hh/mm a");
+//        try {
+//            ret = sdf.parse(sdf.format(date));
+//        } catch (ParseException ex) {
+//            Logger.getLogger(utils.class
+//                    .getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return ret;
     }
 }

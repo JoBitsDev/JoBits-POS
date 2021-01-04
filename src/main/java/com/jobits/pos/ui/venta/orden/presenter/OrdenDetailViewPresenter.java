@@ -61,6 +61,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private String codOrden;
     private OrdenService controller;
 
+    public static final String PROP_CHANGES = "Changes";
+
     public OrdenDetailViewPresenter(OrdenService controller) {
         super(new OrdenDetailViewModel());
         this.controller = controller;
@@ -137,8 +139,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private void onSetAutorizoClick() {
         getBean().setEs_autorizo(!getBean().isEs_autorizo());
         getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
-        refreshState();
-        firePropertyChange(OrdenDetailViewModel.PROP_ES_AUTORIZO, null, null);
+        firePropertyChange(PROP_CHANGES, null, null);
     }
 
     private void onSetAgregoClick() {

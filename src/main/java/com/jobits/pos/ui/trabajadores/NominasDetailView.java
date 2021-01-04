@@ -20,6 +20,7 @@ import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
 import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -398,7 +399,7 @@ public class NominasDetailView extends AbstractViewPanel {
                     case 1:
                         return getRow(rowIndex).getCantidadDiasTrabajados();
                     case 2:
-                        return utils.setDosLugaresDecimales(getRow(rowIndex).getPromedioCobro());
+                        return utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getPromedioCobro());
                     case 3:
                         return getRow(rowIndex).isUse();
                     default:
@@ -414,7 +415,7 @@ public class NominasDetailView extends AbstractViewPanel {
                     case 1:
                         return "Dias";
                     case 2:
-                        return "Promedio";
+                        return "Promedio (" + R.COIN_SUFFIX.substring(1) + ")";
                     case 3:
                         return "";
                     default:
@@ -440,6 +441,8 @@ public class NominasDetailView extends AbstractViewPanel {
             }
         };
         jTableUsuariosActivos.setModel(model);
+        jTableUsuariosActivos.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
+        jTableUsuariosActivos.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
         jTableUsuariosActivos.getModel().addTableModelListener((TableModelEvent e) -> {
             if (e.getType() == TableModelEvent.UPDATE) {
                 onDetallesClick();

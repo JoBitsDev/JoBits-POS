@@ -16,6 +16,8 @@ import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
@@ -125,17 +127,20 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
-        jButtonNuevaOrden.addActionListener(getPresenter().getOperation(ACTION_CREAR_ORDEN));
-        jButtonCheckReservas.addActionListener(getPresenter().getOperation(ACTION_ABRIR_RESERVA));
-        Bindings.bind(jListOrdenesActivas, new SelectionInList<Orden>(getPresenter().getModel(PROP_LISTA_ELEMENTOS), getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)));
-        jListOrdenesActivas.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
+        if (getPresenter() != null) {
+            jButtonNuevaOrden.addActionListener(getPresenter().getOperation(ACTION_CREAR_ORDEN));
+            jButtonCheckReservas.addActionListener(getPresenter().getOperation(ACTION_ABRIR_RESERVA));
+            Bindings.bind(jListOrdenesActivas, new SelectionInList<Orden>(getPresenter().getModel(PROP_LISTA_ELEMENTOS), getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)));
+            jListOrdenesActivas.addListSelectionListener((ListSelectionEvent e) -> {
                 if (!e.getValueIsAdjusting()) {
                     getPresenter().getOperation(ACTION_ABRIR_ORDEN).doAction();
                 }
-            }
-        });
+            });
+            getPresenter().addBeanPropertyChangeListener(PROP_LISTA_ELEMENTOS, (PropertyChangeEvent evt) -> {
+                jListOrdenesActivas.repaint();
+                jListOrdenesActivas.revalidate();
+            });
+        }
     }
 
     @Override

@@ -12,20 +12,19 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoAlmacen;
+import com.jobits.pos.recursos.R;
 import static com.jobits.pos.ui.almacen.presenter.AlmacenViewModel.*;
 import static com.jobits.pos.ui.almacen.presenter.AlmacenViewPresenter.*;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.TableDate;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ItemEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  *
@@ -329,9 +328,9 @@ public class AlmacenMainView extends AbstractViewPanel {
                         return utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getCantidad());
                     case 4:
                         return getRow(rowIndex).getCantidad() != 0
-                                ? utils.setDosLugaresDecimales(getRow(rowIndex).getValorMonetario() / getRow(rowIndex).getCantidad()) : utils.setDosLugaresDecimales(0);
+                                ? utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getValorMonetario() / getRow(rowIndex).getCantidad()) : utils.setDosLugaresDecimalesFloat(0);
                     case 5:
-                        return utils.setDosLugaresDecimales(getRow(rowIndex).getValorMonetario());
+                        return utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getValorMonetario());
                     default:
                         return null;
                 }
@@ -347,24 +346,43 @@ public class AlmacenMainView extends AbstractViewPanel {
                     case 1:
                         return "UM";
                     case 3:
-                        return "En Almacen";
+                        return "En Almacen (" + R.COIN_SUFFIX.substring(1) + ")";
                     case 4:
-                        return "Costo Unitario (Prom)";
+                        return "Costo Unitario Prom (" + R.COIN_SUFFIX.substring(1) + ")";
                     case 5:
-                        return "Valor Total";
+                        return "Valor Total (" + R.COIN_SUFFIX.substring(1) + ")";
                     default:
                         return null;
                 }
             }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 3:
+                        return Float.class;
+                    case 4:
+                        return Float.class;
+                    case 5:
+                        return Float.class;
+                    default:
+                        return super.getColumnClass(columnIndex);
+                }
+            }
+
         };
         builder.tableModel(tableModel);
 
         tableInsumos = builder.build();
         tableInsumos.getjButtonAgregarProd().setText("Registrar");
+        tableInsumos.getjTableCrossReference().getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
+        tableInsumos.getjTableCrossReference().getColumnModel().getColumn(4).setCellRenderer(utils.numberColumCellRender());
+        tableInsumos.getjTableCrossReference().getColumnModel().getColumn(5).setCellRenderer(utils.numberColumCellRender());
         jPanelTabla.add(tableInsumos, BorderLayout.CENTER);
     }
 
     @Override
+
     public String getViewName() {
         return VIEW_NAME;
     }

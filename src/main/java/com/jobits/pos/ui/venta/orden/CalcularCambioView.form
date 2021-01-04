@@ -240,6 +240,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getMaterialButton()"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButtonAbrirCajon.setFocusable(true); // NOI18N"/>
               </AuxValues>
             </Component>
           </SubComponents>
