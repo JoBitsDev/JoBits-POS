@@ -84,6 +84,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getNewValue() != null) {
                     onAbrirOrdenAction();
+                    menuPresenter.onMostrarSeccionClick();
                 }
             }
         });
