@@ -70,7 +70,7 @@ public class R {
 
     public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
 
-    public static int BUILD_VERSION = 36;
+    public static int BUILD_VERSION = 37;
 
     public static String CONFIG_FILE_PATH = "y.cfg";
 
