@@ -62,6 +62,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
     private IPVController ipvController = new IPVController();
     protected final String SYNC = "Sale con: ";
     private ProductovOrden productoOrdenAgregar = null;
+    public static final String PROP_SERVICE = "PROP_SERVICE";
 
     public OrdenController() {
         super(OrdenDAO.getInstance());
@@ -299,6 +300,9 @@ public class OrdenController extends AbstractFragmentController<Orden>
     public void setDeLaCasa(String codOrden, boolean selected) {
         Orden o = getInstance(codOrden);
         o.setDeLaCasa(selected);
+        getModel().startTransaction();
+        getModel().edit(o);
+        getModel().commitTransaction();
     }
 
     public float getGastosInsumos(Orden instance) {
@@ -343,8 +347,7 @@ public class OrdenController extends AbstractFragmentController<Orden>
     }
 
     @Override
-    public void setInstance(Orden instance
-    ) {
+    public void setInstance(Orden instance) {
         throw new IllegalStateException("Depracated");
     }
 

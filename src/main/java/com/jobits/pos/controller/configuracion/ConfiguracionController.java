@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  * @author Jorge
  *
  */
-public class ConfiguracionController extends AbstractDialogController<Configuracion> implements ConfiguracionService{
+public class ConfiguracionController extends AbstractDialogController<Configuracion> implements ConfiguracionService {
 
     private ParametrosConfiguracion configuracionY;
 
@@ -45,6 +45,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
         super(ConfiguracionDAO.getInstance());
     }
 
+    @Override
     public void cargarConfiguracion() {
         Negocio model = NegocioDAO.getInstance().find(1);
         ConfiguracionDAO c = ConfiguracionDAO.getInstance();
@@ -52,7 +53,7 @@ public class ConfiguracionController extends AbstractDialogController<Configurac
         R.MAIN_COIN = model.getMonedaPrincipal();
         R.COIN_SUFFIX = "_" + model.getMonedaPrincipal();
         R.COINCHANGE = c.find(R.SettingID.GENERAL_CAMBIO_MONEDA).getValor();
-        R.VARIOS_TURNOS = c.find(R.SettingID.GENERAL_TURNOS_VARIOS).getValor() == 1;
+        R.VARIOS_TURNOS = c.find(R.SettingID.GENERAL_CANTIDAD_TURNOS).getValor() > 1;
         R.CAJERO_PERMISOS_ESPECIALES = c.find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() == 1;
         R.CONSUMO_DE_LA_CASA_EN_ESTADISTICAS = c.find(R.SettingID.GENERAL_CONSUMO_CASA_ESTADISTICAS).getValor() == 1;
         Ticket.PAPER_LENGHT = c.find(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL).getValor();

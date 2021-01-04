@@ -277,7 +277,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     private void setListToBean() {
         if (!ventas.isEmpty()) {
             getBean().setList_ventas(new ArrayListModel<>(ventas));
-            getBean().setVenta_seleccionada(getBean().getList_ventas().get(0));
+            getBean().setVenta_seleccionada(getBean().getList_ventas().get(ventas.size() - 1));
         }
     }
 

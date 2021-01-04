@@ -135,9 +135,10 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onSetAutorizoClick() {
+        getBean().setEs_autorizo(!getBean().isEs_autorizo());
         getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
         refreshState();
-//        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
+        firePropertyChange(OrdenDetailViewModel.PROP_ES_AUTORIZO, null, null);
     }
 
     private void onSetAgregoClick() {

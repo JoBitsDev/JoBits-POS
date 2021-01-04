@@ -69,6 +69,7 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
             }
         }
         Application.getInstance().getNotificationService().notify("Propiedades guardadas exitosamente", TipoNotificacion.SUCCESS);
+        service.cargarConfiguracion();
         NavigationService.getInstance().navigateUp();
     }
 

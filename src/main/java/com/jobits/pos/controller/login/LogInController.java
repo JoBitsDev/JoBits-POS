@@ -90,13 +90,13 @@ public class LogInController implements LogInService {
         return AUTORIZADO;
     }
 
-    public boolean constructoAuthorizationView(int nivelMinimo) {
-        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= nivelMinimo) {
+    public boolean constructoAuthorizationView(R.NivelAcceso nivelMinimo) {
+        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() >= nivelMinimo.getNivel()) {
             return true;
         }
-        NivelAcceso a = R.NivelAcceso.values()[nivelMinimo];
+        NivelAcceso a = R.NivelAcceso.values()[nivelMinimo.getNivel()];
         constructLoginPanel("Nivel Minimo (" + a.name() + ")");
-        this.nivelMinimo = nivelMinimo;
+        this.nivelMinimo = nivelMinimo.getNivel();
         //  getView().setVisible(true); //TODO Cordinator
         return AUTORIZADO;
     }
