@@ -12,6 +12,7 @@ import com.jobits.pos.ui.AbstractListViewPanel;
 import static com.jobits.pos.ui.almacen.presenter.TransaccionListPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -59,6 +60,8 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
         jTableList.getColumnModel().getColumn(3).setPreferredWidth(100);
         jTableList.getColumnModel().getColumn(4).setMaxWidth(150);
         jTableList.getColumnModel().getColumn(4).setPreferredWidth(150);
+
+        jTableList.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
 
     }
 
@@ -124,6 +127,16 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
                         return "Tipo";
                     default:
                         return null;
+                }
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 3:
+                        return Float.class;
+                    default:
+                        return super.getColumnClass(columnIndex);
                 }
             }
 

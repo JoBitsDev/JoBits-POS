@@ -70,7 +70,7 @@ public class R {
 
     public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
 
-    public static int BUILD_VERSION = 36;
+    public static int BUILD_VERSION = 37;
 
     public static String CONFIG_FILE_PATH = "y.cfg";
 
@@ -88,7 +88,7 @@ public class R {
         //GENERALES
         //
         GENERAL_CANTIDAD_TURNOS("GENERAL_CANTIDAD_TURNOS", 1, null),
-        GENERAL_CAMBIO_MONEDA("GENERAL_CAMBIO_MONEDA", 24, null),
+        GENERAL_CAMBIO_MONEDA("GENERAL_CAMBIO_MONEDA", 20, null),
         GENERAL_TURNOS_VARIOS("GENERAL_MULTIPLES_TURNOS", 0, null),
         GENERAL_CAJERO_PERMISOS_ESP("GENERAL_CAJERO_PERMISOS_ESP", 0, null),
         GENERAL_CONSUMO_CASA_ESTADISTICAS("GENERAL_CONSUMO_CASA_ESTADISTICAS", 0, null),
