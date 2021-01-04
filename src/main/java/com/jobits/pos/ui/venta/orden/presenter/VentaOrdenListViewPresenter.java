@@ -76,7 +76,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
                 menuPresenter.refreshState();
             }
         });
-        ordenPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_ES_AUTORIZO, (PropertyChangeEvent evt) -> {
+        ordenPresenter.addPropertyChangeListener(OrdenDetailViewPresenter.PROP_CHANGES, (PropertyChangeEvent evt) -> {
             refreshState();
         });
         addBeanPropertyChangeListener(VentaOrdenListViewModel.PROP_ELEMENTO_SELECCIONADO, new PropertyChangeListener() {

@@ -16,6 +16,8 @@ import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
@@ -133,6 +135,10 @@ public class VentaListOrdenesView extends AbstractViewPanel {
                 if (!e.getValueIsAdjusting()) {
                     getPresenter().getOperation(ACTION_ABRIR_ORDEN).doAction();
                 }
+            });
+            getPresenter().addBeanPropertyChangeListener(PROP_LISTA_ELEMENTOS, (PropertyChangeEvent evt) -> {
+                jListOrdenesActivas.repaint();
+                jListOrdenesActivas.revalidate();
             });
         }
     }
