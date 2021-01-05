@@ -598,13 +598,14 @@ public class VentaDetailView extends AbstractViewPanel {
         jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
-        jPanelVentas.add(new VentaListOrdenesView(((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter()));
-
-        jPanelPagoTrabajadores.add(new AsistenciaPersonalView(((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter()));
         if ((VentaDetailViewPresenter) getPresenter() != null) {
+            if (((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter() != null) {
+                jPanelVentas.add(new VentaListOrdenesView(((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter()));
+            }
+            if (((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter() != null) {
+                jPanelPagoTrabajadores.add(new AsistenciaPersonalView(((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter()));
+            }
             if (Application.getInstance().getLoggedUser().getPuestoTrabajonombrePuesto().getNivelAcceso() >= 3) {
-//            jPanelExtracciones = new javax.swing.JPanel();
-//            jPanelExtracciones.setLayout(new java.awt.BorderLayout());
                 jTabbedPaneResumenD1.addTab("Extracciones Caja", jPanelExtracciones);
                 jPanelExtracciones.add(new GastosView(((VentaDetailViewPresenter) getPresenter()).getGastosPresenter()));
             }
