@@ -5,12 +5,9 @@
  */
 package com.jobits.pos.adapters.repo.impl;
 
-import com.jobits.pos.controller.productos.ProductoVentaMapper;
 import com.jobits.pos.controller.productos.ProductoVentaMapperRepoImpl;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.utils.CsvReader;
-import com.jobits.pos.ui.utils.CsvWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -80,7 +77,7 @@ public class OrdenLogRepo {
                     line = br.readLine();
                 }
             } catch (IOException ex) {
-                Logger.getLogger(CsvReader.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(OrdenLogRepo.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return listaToReturn;

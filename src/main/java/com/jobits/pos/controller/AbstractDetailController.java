@@ -5,13 +5,11 @@
  */
 package com.jobits.pos.controller;
 
-import com.jobits.pos.ui.AbstractDetailView;
-import com.jobits.pos.ui.OldAbstractView;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import java.awt.Window;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.adapters.repo.impl.AbstractRepository;
+import com.jobits.pos.ui.AbstractDetailView;
 
 /**
  * FirstDream

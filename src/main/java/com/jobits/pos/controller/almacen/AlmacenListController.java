@@ -33,11 +33,7 @@ public class AlmacenListController extends OldAbstractListController<Almacen> im
         super(AlmacenDAO.getInstance());
     }
 
-    @Override
-    public void createInstance() {
-        createNewStorage();
-    }
-
+ 
     @Override
     public void destroy(Almacen selected) {
         setSelected(selected);

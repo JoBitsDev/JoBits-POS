@@ -5,20 +5,13 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.almacen.OldTransaccionListView;
-import com.jidesoft.swing.JideButton;
 import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
 import java.util.List;
-import javax.swing.JButton;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.OldAbstractListController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Transaccion;
-import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.adapters.repo.impl.TransaccionDAO;
 import com.jobits.pos.adapters.repo.impl.TransaccionEntradaDAO;
 import com.jobits.pos.servicios.impresion.Impresion;

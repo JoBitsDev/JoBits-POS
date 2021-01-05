@@ -9,8 +9,6 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
-import javax.swing.UnsupportedLookAndFeelException;
-import org.pushingpixels.substance.api.skin.SubstanceBusinessLookAndFeel;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.UbicacionConexionModel;
 
@@ -74,13 +72,6 @@ public class R {
 
     public static String CONFIG_FILE_PATH = "y.cfg";
 
-    public static void setLookAndFeels() {
-        try {
-            javax.swing.UIManager.setLookAndFeel(new SubstanceBusinessLookAndFeel());
-        } catch (UnsupportedLookAndFeelException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
 
     public static enum SettingID {
 

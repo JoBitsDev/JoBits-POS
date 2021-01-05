@@ -13,7 +13,6 @@ import javax.persistence.Persistence;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.domain.UbicacionConexionModel;
-import com.jobits.pos.ui.OldView;
 
 /**
  *
@@ -58,7 +57,7 @@ public class DBConnector {
         new DBConnector(connection);
     }
 
-    public static void resetConnection(OldView view) {
+    public static void resetConnection() {
         new DBConnector(R.CURRENT_CONNECTION);
     }
 

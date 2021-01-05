@@ -215,7 +215,7 @@ public abstract class AbstractRepository<T> implements Model {
         if (getEntityManager().getTransaction().isActive()) {
             getEntityManager().getTransaction().rollback();
         }
-        DBConnector.resetConnection(null);
+        DBConnector.resetConnection();
         e.printStackTrace();
     }
 

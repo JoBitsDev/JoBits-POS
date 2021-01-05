@@ -26,11 +26,6 @@ public class Licencia implements Controller
     }
 
     @Override
-    public OldView getView() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }

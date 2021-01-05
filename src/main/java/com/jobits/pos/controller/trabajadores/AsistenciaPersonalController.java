@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
-import com.jobits.pos.ui.trabajadores.AsistenciaTrabajadoresView;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,20 +12,12 @@ import com.jobits.pos.controller.AbstractFragmentListController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
-import com.jobits.pos.domain.models.Gasto;
-import com.jobits.pos.domain.models.GastoVenta;
 import com.jobits.pos.domain.models.Personal;
-import com.jobits.pos.domain.models.TipoGasto;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.impl.AsistenciaPersonalDAO;
-import com.jobits.pos.adapters.repo.impl.GastoDAO;
-import com.jobits.pos.adapters.repo.impl.GastoVentaDAO;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
-import com.jobits.pos.adapters.repo.impl.TipoGastoDAO;
-import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.servicios.impresion.Impresion;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.PersonalTrabajandoFormatter;
 import javax.swing.JOptionPane;
 

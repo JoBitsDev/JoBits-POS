@@ -48,7 +48,6 @@ public abstract class AbstractController<T> implements Controller {
      */
     public abstract void constructView(java.awt.Container parent);
 
-    @Override
     public OldView getView() {
         return view;
     }

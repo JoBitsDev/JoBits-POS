@@ -77,6 +77,7 @@ dependencies {
     implementation project(':autenticacion')
     implementation project(':Material')
     implementation project(':clean-swing')
+    implementation project(':posCore')
 
 
     
