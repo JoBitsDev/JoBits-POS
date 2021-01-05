@@ -61,7 +61,6 @@ public class OrdenLogRepo {
     }
 
     public static List<String[]> loadLogFile(String keyWord) {
-        Application.getInstance().authorizeUser(R.NivelAcceso.ECONOMICO);
         List<String[]> listaToReturn = new ArrayList<>();
         File f = new File(LOGS_FILE_PATH + keyWord + ".txt");
         if (f.exists()) {

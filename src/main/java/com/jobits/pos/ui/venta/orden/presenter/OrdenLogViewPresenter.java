@@ -6,7 +6,9 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.adapters.repo.impl.OrdenLogRepo;
+import com.jobits.pos.adapters.repo.impl.OrdenLogRepo;
+import com.jobits.pos.controller.logs.OrdenLogController;
+import com.jobits.pos.controller.logs.OrdenLogService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -45,7 +47,8 @@ public class OrdenLogViewPresenter extends AbstractViewPresenter<OrdenLogViewMod
     private void fillBeanData() {
         getBean().setCodigo_orden(codOrden);
         getBean().getLog_list().clear();
-        getBean().getLog_list().addAll(OrdenLogRepo.loadLogFile(codOrden));//TODO: falta controller
+        OrdenLogService service = new OrdenLogController();
+        getBean().getLog_list().addAll(service.loadLogFile(codOrden));//TODO: falta controller
 
     }
 
