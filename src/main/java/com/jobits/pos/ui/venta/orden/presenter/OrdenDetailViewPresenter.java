@@ -24,7 +24,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaDetailPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 //import com.jobits.pos.ui.venta.orden.OrdenLogsDetailView;
 import java.beans.PropertyChangeEvent;

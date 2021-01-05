@@ -35,7 +35,7 @@ import com.jobits.pos.servicios.impresion.formatter.AbstractTicketFormatter;
 import com.jobits.pos.servicios.impresion.formatter.CancelacionCocinaFormatter;
 import com.jobits.pos.servicios.impresion.formatter.CocinaFormatter;
 import com.jobits.pos.servicios.impresion.formatter.OrdenFormatter;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.presenter.CalcularCambioViewPresenter;
 import java.awt.Container;

@@ -12,7 +12,7 @@ import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.Ticket;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;

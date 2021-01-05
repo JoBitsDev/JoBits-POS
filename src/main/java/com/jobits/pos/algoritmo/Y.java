@@ -26,7 +26,7 @@ import com.jobits.pos.adapters.repo.impl.SeccionDAO;
 import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.LoadingWindow;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 
 /**
  * FirstDream

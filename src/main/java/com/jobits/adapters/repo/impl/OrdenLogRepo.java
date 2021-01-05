@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.adapters.repo.impl;
+package com.jobits.adapters.repo.impl;
 
 import com.jobits.pos.controller.productos.ProductoVentaMapperRepoImpl;
 import com.jobits.pos.main.Application;

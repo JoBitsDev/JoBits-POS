@@ -5,10 +5,13 @@
  */
 package com.jobits.pos.ui.venta.presenter;
 
+import com.jobits.pos.domain.venta.ResumenVentaAreaTablaModel;
+import com.jobits.pos.domain.venta.ResumenVentaPtoElabTablaModel;
+import com.jobits.pos.domain.venta.ResumenVentaUsuarioTablaModel;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.ui.utils.StringsTreatment;
+import com.jobits.pos.utils.StringsTreatment;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.io.File;
 import java.util.List;

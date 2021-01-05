@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui.utils;
 
+import com.jobits.pos.utils.utils;
 import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
@@ -64,7 +65,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         jLabelGastos.setForeground(new java.awt.Color(102, 0, 0));
         jLabelGastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgares-abajo.png"))); // NOI18N
         jLabelGastos.setText(v.getVentagastosEninsumos() != null
-            ? com.jobits.pos.ui.utils.utils.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue())
+            ? com.jobits.pos.utils.utils.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue())
             : "-");
         jLabelGastos.setToolTipText("Gastos");
         add(jLabelGastos, java.awt.BorderLayout.CENTER);
@@ -74,7 +75,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         jLabelVentas.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgar-arriba.png"))); // NOI18N
         jLabelVentas.setText(v.getVentaTotal() != null
-            ? com.jobits.pos.ui.utils.utils.setDosLugaresDecimales(v.getVentaTotal().floatValue())
+            ? com.jobits.pos.utils.utils.setDosLugaresDecimales(v.getVentaTotal().floatValue())
             :"-");
         jLabelVentas.setToolTipText("Ventas");
         jLabelVentas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);

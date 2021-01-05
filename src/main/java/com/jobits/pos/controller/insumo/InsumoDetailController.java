@@ -20,7 +20,7 @@ import com.jobits.pos.domain.models.InsumoElaborado;
 import com.jobits.pos.domain.models.InsumoElaboradoPK;
 import com.jobits.pos.domain.models.ProductoInsumoPK;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.util.ArrayList;
 
 /**

@@ -20,7 +20,7 @@ import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.time.LocalDate;
 import java.time.ZoneId;
 

@@ -24,7 +24,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.LongProcessMethod;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaResumenView;
 import java.beans.PropertyChangeEvent;

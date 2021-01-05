@@ -19,7 +19,7 @@ import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import static com.jobits.pos.ui.venta.presenter.VentaResumenViewModel.*;
 import static com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter.ACTION_IMPRIMIR_RESUMEN;
 import com.jobits.ui.components.MaterialComponentsFactory;

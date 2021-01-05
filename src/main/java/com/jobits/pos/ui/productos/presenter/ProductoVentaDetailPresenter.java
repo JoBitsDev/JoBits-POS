@@ -20,7 +20,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.awt.Dimension;
 import java.util.Optional;
 import javax.swing.ImageIcon;

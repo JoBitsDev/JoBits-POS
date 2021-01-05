@@ -9,7 +9,7 @@ import com.jobits.pos.domain.VentaDAO1;
 import com.jobits.pos.domain.models.GastoVenta;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.servicios.impresion.Ticket;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import javax.print.Doc;
 
 /**

@@ -16,7 +16,7 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel;
 import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
