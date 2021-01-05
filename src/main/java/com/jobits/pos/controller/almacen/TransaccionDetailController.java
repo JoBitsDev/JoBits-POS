@@ -42,7 +42,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class TransaccionDetailController extends AbstractDetailController<Transaccion> {
+public class TransaccionDetailController extends AbstractDetailController<Transaccion> implements TransaccionDetailService {
 
     Almacen a;
 
@@ -78,6 +78,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 //        getView().setVisible(true);
     }
 
+    @Override
     public List<Insumo> getInsumoList() {
         return InsumoDAO.getInstance().findAll();
     }
@@ -95,6 +96,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     }
 
+    @Override
     public Transaccion addTransaccionSalida(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, Cocina cocina, float cantidad,int idVenta) {
         Transaccion t = nuevaTransaccion(o, insumo, fecha, hora, a, cantidad);
 
@@ -106,6 +108,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     }
 
+    @Override
     public void addTransaccionRebaja(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad, String causaRebaja) {
         Transaccion t = nuevaTransaccion(o, insumo, fecha, hora, a, cantidad);
         TransaccionMerma rebaja = new TransaccionMerma(t.getNoTransaccion());
@@ -114,6 +117,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         createNewTransaccionRebaja(rebaja, a);
     }
 
+    @Override
     public void addTransaccionTraspaso(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, Almacen destinoTraspaso, float cantidad) {
         Transaccion t = nuevaTransaccion(o, insumo, fecha, hora, a, cantidad);
         TransaccionTraspaso traspaso = new TransaccionTraspaso(t.getNoTransaccion());
@@ -122,6 +126,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         createNewTransaccionTraspaso(traspaso, a);
     }
 
+    @Override
     public void addTransaccionTransformacion(InsumoAlmacen selected, Date fecha, Date hora, List<TransaccionTransformacion> items, float cantidad, float merma, Almacen destino) {
         Transaccion t = nuevaTransaccion(new Operacion(), selected.getInsumo(), fecha, hora, selected.getAlmacen(), cantidad);
         float precioMedioNuevo = (cantidad * selected.getInsumo().getCostoPorUnidad()) / cantidad - merma;
@@ -135,6 +140,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         createNewTransaccionTransformacion(t, destino, selected.getAlmacen());
     }
 
+    @Override
     public void createNewTransaccionEntrada(TransaccionEntrada transaccion, Almacen a) {
         getModel().startTransaction();
         AlmacenManageController controller = new AlmacenManageController(a);
@@ -144,6 +150,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         TransaccionEntradaDAO.getInstance().commitTransaction();
     }
 
+    @Override
     public void createNewTransaccionSalida(TransaccionSalida transaccion, Almacen a, int idVenta) {
         getModel().startTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(a);
@@ -154,6 +161,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     }
 
+    @Override
     public void createNewTransaccionRebaja(TransaccionMerma transaccion, Almacen a) {
         getModel().startTransaction();
         AlmacenManageController almacenController = new AlmacenManageController(a);
@@ -181,6 +189,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         almacenController.getCocinaList();
     }
 
+    @Override
     public List<Cocina> getCocinaList() {
         return CocinaDAO.getInstance().findAll();
     }

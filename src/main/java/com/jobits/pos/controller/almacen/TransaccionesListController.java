@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * @author Jorge
  *
  */
-public class TransaccionesListController extends OldAbstractListController<Transaccion> {
+public class TransaccionesListController extends OldAbstractListController<Transaccion> implements TransaccionListController {
 
     Almacen almacen;
 
@@ -67,6 +67,7 @@ public class TransaccionesListController extends OldAbstractListController<Trans
 //        getModel().commitTransaction();
     }
 
+    @Override
     public void imprimirTransaccionesSeleccionadas(List<Transaccion> selectedsObjects) {
         if (!selectedsObjects.isEmpty()) {
             Impresion i = new Impresion();

@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  * @author Jorge
  *
  */
-public class AsistenciaPersonalController extends AbstractFragmentListController<AsistenciaPersonal> {
+public class AsistenciaPersonalController extends AbstractFragmentListController<AsistenciaPersonal> implements AsistenciaPersonalService {
 
     private Venta diaVenta;
     private boolean readOnlyData = false;
@@ -62,10 +62,12 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public List<Personal> getTrabajadoresList() {
         return PersonalDAO.getInstance().findAll();
     }
 
+    @Override
     public void calcularPagoTrabajador(AsistenciaPersonal ret, int codVenta) {
         VentaDetailController controller = new VentaDetailController();
         ret.setPago(controller.getPagoTrabajador(ret.getPersonal(), codVenta));
@@ -73,6 +75,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
 
     }
 
+    @Override
     public List<AsistenciaPersonal> getPersonalTrabajando(Venta v) {
         if (AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(v.getId()) != null) {
             return AsistenciaPersonalDAO.getInstance().getPersonalTrabajando(v.getId());
@@ -80,6 +83,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
         return new ArrayList<>();
     }
 
+    @Override
     public AsistenciaPersonal createNewInstance(Personal selected, Venta v) {
         AsistenciaPersonal ret = new AsistenciaPersonal(v.getId(), selected.getUsuario());
         ret.setPersonal(selected);
@@ -89,18 +93,22 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
         return ret;
     }
 
+    @Override
     public void setDiaVenta(Venta instance) {
         this.diaVenta = instance;
     }
 
+    @Override
     public boolean isReadOnlyData() {
         return readOnlyData;
     }
 
+    @Override
     public void setReadOnlyData(boolean readOnlyData) {
         this.readOnlyData = readOnlyData;
     }
 
+    @Override
     public List<AsistenciaPersonal> updateSalaries(int codVenta) {
         if (!readOnlyData) {
             ArrayList<AsistenciaPersonal> ret = new ArrayList<>(getPersonalTrabajando(diaVenta));
@@ -116,11 +124,13 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
 
     }
 
+    @Override
     public void updateAMayores(AsistenciaPersonal personalABuscar, float aMayoresValor) {
         personalABuscar.setAMayores(aMayoresValor);
         AsistenciaPersonalDAO.getInstance().edit(personalABuscar);
     }
 
+    @Override
     public void imprimirAsistencia() {
         if (getPersonalTrabajando(diaVenta).isEmpty()) {
             JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "No hay trabajadores registrados en esta fecha");

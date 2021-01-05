@@ -58,7 +58,7 @@ import javax.swing.JList;
  * @author Jorge
  *
  */
-public class AlmacenManageController extends AbstractDetailController<Almacen> {
+public class AlmacenManageController extends AbstractDetailController<Almacen> implements AlmacenManageService {
 
     public AlmacenManageController(Almacen a) {
         super(a, AlmacenDAO.getInstance());
@@ -89,6 +89,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         getView().setVisible(true);
     }
 
+    @Override
     public void imprimirReporteParaCompras(Almacen a) {
         String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
         int selection = JOptionPane.showOptionDialog(getView(),
@@ -108,27 +109,32 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
 
     }
 
+    @Override
     public void modificarStock(Insumo i) {
         //InsumoDetailController insumoController = new InsumoDetailController(i, getView());
         // getView().updateView();
     }
 
+    @Override
     public void imprimirResumenAlmacen(Almacen a) {
         Impresion i = new Impresion();
         i.print(new AlmacenFormatter(a), null);
 
     }
 
+    @Override
     public List<InsumoAlmacen> getInsumoAlmacenList(Almacen a) {
         List<InsumoAlmacen> retSorted = a.getInsumoAlmacenList();
         Collections.sort(retSorted);
         return a.getInsumoAlmacenList();
     }
 
+    @Override
     public List<Insumo> getInsumoList() {
         return InsumoDAO.getInstance().findAll();
     }
 
+    @Override
     public void verTransacciones(Almacen a) {
 //        TransaccionesListController controller = new TransaccionesListController(getView(), a);
     }
@@ -138,6 +144,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public List<Cocina> getCocinaList() {
         return CocinaDAO.getInstance().findAll();
     }
@@ -177,6 +184,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
      * @param importe
      * @param causaRebaja
      */
+    @Override
     public void crearTransaccion(Operacion o, InsumoAlmacen ins, int tipo, Cocina destino, Almacen destinoTraspaso, float cantidad, float importe, String causaRebaja, boolean showSuccesDialog, Integer idVenta) {
         TransaccionDetailController controller = new TransaccionDetailController();
         controller.setView(getView());
@@ -214,10 +222,12 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         showSuccessDialog(Application.getInstance().getMainWindow());
     }
 
+    @Override
     public void createInsumo(InsumoAlmacen newInsumo) {
         InsumoAlmacenDAO.getInstance().create(newInsumo);
     }
 
+    @Override
     public void removeInsumoFromStorage(InsumoAlmacen objectAtSelectedRow) {
         if (showConfirmDialog(getView(), "Desea eliminar las existencias de " + objectAtSelectedRow.getInsumo() + " del almacen")) {
             getModel().startTransaction();
@@ -227,11 +237,13 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         }
     }
 
+    @Override
     public void setCentroElaboracion(boolean selected) {
         instance.setCentroElaboracion(selected);
         update(instance, true);
     }
 
+    @Override
     public void crearTransformacion(InsumoAlmacen selected, float cantidad, List<TransaccionTransformacion> items, Almacen destino) {
 
         // Validaciones
@@ -282,6 +294,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         controller.addTransaccionTransformacion(selected, new Date(), new Date(), items, cantidad, merma, destino);
     }
 
+    @Override
     public InsumoAlmacen findInsumo(Insumo ins) {
         for (InsumoAlmacen i : getInsumoAlmacenList(getInstance())) {
             if (i.getInsumo().getCodInsumo().equals(ins.getCodInsumo())) {
@@ -291,6 +304,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         return null;
     }
 
+    @Override
     public void agregarInsumoAlmacen(Insumo i) {
         if (findInsumo(i) == null) {
             InsumoAlmacen insumoAlmacen = new InsumoAlmacen(
@@ -404,6 +418,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         Impresion.getDefaultInstance().print(new StockBalanceFormatter(a), null);
     }
 
+    @Override
     public void updateValorTotalAlmacen(Almacen instance) {
         double total = 0;
         instance = getModel().find(instance.getCodAlmacen());
@@ -418,6 +433,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         );
     }
 
+    @Override
     public boolean crearOperacion(ArrayList<TransaccionSimple> transacciones, CheckBoxType tipoOperacion, Date date, String recibo, Date fechaFactura) {
         Operacion o = new Operacion();
         o.setAlmacen(getInstance());
@@ -452,6 +468,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> {
         return true;
     }
 
+    @Override
     public Integer selectIdFecha(Date fecha) {
         List<Venta> list = VentaDAO.getInstance().find(fecha);
         if (!list.isEmpty()) {

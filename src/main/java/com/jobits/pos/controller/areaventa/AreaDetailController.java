@@ -20,7 +20,7 @@ import com.jobits.pos.adapters.repo.impl.CartaDAO;
  * @author Jorge
  *
  */
-public class AreaDetailController extends AbstractDetailController<Area> {
+public class AreaDetailController extends AbstractDetailController<Area> implements AreaDetailService {
 
     private boolean creatingMode = true;
 
@@ -81,6 +81,7 @@ public class AreaDetailController extends AbstractDetailController<Area> {
 //        getView().setVisible(true);
     }
 
+    @Override
     public List<Carta> getCartaList() {
         return CartaDAO.getInstance().findAll();
     }
@@ -90,6 +91,7 @@ public class AreaDetailController extends AbstractDetailController<Area> {
 //        return (AbstractDetailView<Area>) super.getView(); //To change body of generated methods, choose Tools | Templates.
 //    }
 
+    @Override
     public boolean isCreatingMode() {
         return creatingMode;
     }

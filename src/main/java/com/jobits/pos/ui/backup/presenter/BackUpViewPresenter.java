@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.backup.presenter;
 
-import com.jobits.pos.controller.backup.BackUpService;
+import com.jobits.pos.controller.backup.BackUpController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.login.UbicacionConexionService;
 import com.jobits.pos.domain.UbicacionConexionModel;
@@ -72,31 +72,31 @@ public class BackUpViewPresenter extends AbstractViewPresenter<BackUpViewModel> 
 
             if (resp) {
 
-                BackUpService bu = new BackUpService(getBean().getUbicacion_seleccionada());
+                BackUpController bu = new BackUpController(getBean().getUbicacion_seleccionada());
 
                 if (getBean().isCheckbox_personal()) {
-                    bu.setTipoBackUp(BackUpService.TipoBackUp.PERSONAL);
+                    bu.setTipoBackUp(BackUpController.TipoBackUp.PERSONAL);
 
                 }
                 if (getBean().isCheckbox_productos()) {
-                    bu.setTipoBackUp(BackUpService.TipoBackUp.PRODUCTOS);
+                    bu.setTipoBackUp(BackUpController.TipoBackUp.PRODUCTOS);
 
                 }
                 if (getBean().isCheckbox_ventas()) {
-                    bu.setTipoBackUp(BackUpService.TipoBackUp.VENTA);
+                    bu.setTipoBackUp(BackUpController.TipoBackUp.VENTA);
                 }
                 if (getBean().isCheckbox_todo()) {
-                    bu.setTipoBackUp(BackUpService.TipoBackUp.All);
+                    bu.setTipoBackUp(BackUpController.TipoBackUp.All);
                 }
                 if (getBean().isCheckbox_limpieza_servidor()) {
 //                    LogInController controller = new LogInController();
 //                    if (controller.constructoAuthorizationViewForConfirm()) {
-                    bu.setTipoBackUp(BackUpService.TipoBackUp.LIMPIEZA);
+                    bu.setTipoBackUp(BackUpController.TipoBackUp.LIMPIEZA);
 //                    }
                 }
 
-                if (bu.getTipoBackUp() != BackUpService.TipoBackUp.NULO) {
-                    bu.addPropertyChangeListener(BackUpService.PROPERTY_PROGRESS_UPDATE, (PropertyChangeEvent evt) -> {
+                if (bu.getTipoBackUp() != BackUpController.TipoBackUp.NULO) {
+                    bu.addPropertyChangeListener(BackUpController.PROPERTY_PROGRESS_UPDATE, (PropertyChangeEvent evt) -> {
                         int valor = ((Float) evt.getNewValue()).intValue();
                         getBean().setProgress_indicator(valor);
                     });

@@ -23,7 +23,7 @@ import com.jobits.pos.adapters.repo.impl.PuestoTrabajoDAO;
  * @author Jorge
  *
  */
-public class PuestoTrabajoDetailController extends AbstractDetailController<PuestoTrabajo> {
+public class PuestoTrabajoDetailController extends AbstractDetailController<PuestoTrabajo> implements PuestoTrabajoDetailService {
 
     private boolean creatingMode = true;
 
@@ -77,15 +77,18 @@ public class PuestoTrabajoDetailController extends AbstractDetailController<Pues
         return new PuestoTrabajo();
     }
 
+    @Override
     public List<Area> getAreaList() {
         return AreaDAO.getInstance().findAll();
     }
 
+    @Override
     public List<Cocina> getAreasPago() {
         return CocinaDAO.getInstance().findAll();
 
     }
 
+    @Override
     public boolean isCreatingMode() {
         return creatingMode;
     }

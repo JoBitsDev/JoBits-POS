@@ -22,7 +22,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class SincronizacionController {
+public class SincronizacionController implements SincronizacionService {
 
     private boolean habilitado;
     private UbicacionConexionModel ubicacion;
@@ -68,11 +68,11 @@ public class SincronizacionController {
     }
 
     private void sincronizarDatosConServidor() {
-        BackUpService backupService = new BackUpService(ubicacion);
+        BackUpController backupService = new BackUpController(ubicacion);
         backupService.incluirDiaAbierto(true);
         Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, "Ejecutando sincronizacion con servidor");
         String logRespuesta = "Sincronizacion con servidor completada ";
-        if (backupService.EjecutarBackUpLineal(BackUpService.TipoBackUp.VENTA)) {
+        if (backupService.EjecutarBackUpLineal(BackUpController.TipoBackUp.VENTA)) {
             logRespuesta += "exitosamente";
         } else {
             logRespuesta += "con errores";
@@ -87,6 +87,7 @@ public class SincronizacionController {
 
     }
 
+    @Override
     public void terminarSincronizacion() {
         Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, "Limpiando Task");
         syncTask.cancel();

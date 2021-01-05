@@ -27,7 +27,7 @@ import javax.swing.JFrame;
  * @author Jorge
  *
  */
-public class PersonalDetailController extends AbstractDetailController<Personal> {
+public class PersonalDetailController extends AbstractDetailController<Personal> implements PersonalDetailService {
 
     private boolean creatingMode = true;
     
@@ -81,10 +81,12 @@ public class PersonalDetailController extends AbstractDetailController<Personal>
         return ret;
     }
 
+    @Override
     public List<PuestoTrabajo> getPuestoTrabajoList() {
         return PuestoTrabajoDAO.getInstance().findAll();
     }
 
+    @Override
     public void pagarTrabajador() {
         instance.setUltimodiaPago(new Date());
         instance.setPagoPendiente((float) 0);
@@ -92,11 +94,13 @@ public class PersonalDetailController extends AbstractDetailController<Personal>
         showSuccessDialog(null, "Trabajador Pagado exitosamente");
     }
 
+    @Override
     public void acumularSalarioTrabajador(float salarioAcumular) {
         instance.setPagoPendiente(instance.getPagoPendiente() + salarioAcumular);
         update(instance, true);
     }
 
+    @Override
     public boolean isCreatingMode() {
         return creatingMode;
     }

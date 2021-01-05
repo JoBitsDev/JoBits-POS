@@ -27,7 +27,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class GastoOperacionController extends AbstractFragmentListController<Gasto> {
+public class GastoOperacionController extends AbstractFragmentListController<Gasto> implements GastoOperacionService {
 
     private Venta diaVenta;
 
@@ -41,6 +41,7 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
 
     }
 
+    @Override
     public List<String> getNombres(String toString) {
         List<String> ret = new ArrayList<>();
         for (TipoGasto t : TipoGastoDAO.getInstance().findAll()) {
@@ -51,6 +52,7 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
         return ret;
     }
 
+    @Override
     public List<GastoVenta> getGastos(Date dia) {
         return GastoVentaDAO.getInstance().getGastosByFecha(dia);
     }
@@ -59,10 +61,12 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
      *
      * @return
      */
+    @Override
     public List<GastoVenta> getLista() {
         return diaVenta.getGastoVentaList();
     }
 
+    @Override
     public void setDiaVenta(Venta diaVenta) {
         this.diaVenta = diaVenta;
     }
@@ -86,6 +90,7 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
 //        getView().setVisible(true);
     }
 
+    @Override
     public void createNewGasto(R.TipoGasto cat, String nombre, float monto, String descripcion) {
         //    if (showConfirmDialog(getView(), "Desea confirmar la accion")) {
         int idCat = -1;
@@ -152,6 +157,7 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
 
     }
 
+    @Override
     public float getValorTotalGastos() {
         float ret = 0;
         for (GastoVenta x : diaVenta.getGastoVentaList()) {
@@ -160,6 +166,7 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
         return ret;
     }
 
+    @Override
     public void removeGasto(GastoVenta objectAtSelectedRow) {
         if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
             diaVenta.getGastoVentaList().remove(objectAtSelectedRow);
