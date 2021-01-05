@@ -5,14 +5,11 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.adapters.repo.impl.OrdenLogRepo;
 import com.jobits.pos.controller.logs.OrdenLogController;
 import com.jobits.pos.controller.logs.OrdenLogService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.util.List;
 import java.util.Optional;
 
 /**

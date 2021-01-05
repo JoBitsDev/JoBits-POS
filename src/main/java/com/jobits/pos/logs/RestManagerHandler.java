@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.logs;
 
-import com.jobits.pos.adapters.repo.impl.OrdenLogRepo;
 import com.jobits.pos.controller.logs.OrdenLogController;
 import com.jobits.pos.controller.logs.OrdenLogService;
 import java.io.BufferedWriter;
