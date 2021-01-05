@@ -18,7 +18,7 @@ import com.jobits.pos.adapters.repo.impl.AsistenciaPersonalDAO;
 import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.ComprobantePagoFormatter;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 
 /**
  * FirstDream

@@ -7,7 +7,7 @@ package com.jobits.pos.servicios.impresion.formatter;
 
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.servicios.impresion.Ticket;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import javax.print.Doc;
 
 /**

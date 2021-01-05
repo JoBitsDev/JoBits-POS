@@ -13,7 +13,7 @@ import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableListIntelliHint;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorPresenter.*;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel;
 import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel.*;

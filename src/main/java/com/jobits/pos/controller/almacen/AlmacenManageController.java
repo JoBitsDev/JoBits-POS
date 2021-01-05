@@ -47,7 +47,7 @@ import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.formatter.AlmacenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.StockBalanceFormatter;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import javax.swing.JList;

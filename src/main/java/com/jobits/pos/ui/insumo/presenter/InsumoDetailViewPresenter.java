@@ -15,7 +15,7 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.util.Arrays;
 import java.util.Optional;
 import javax.swing.JOptionPane;

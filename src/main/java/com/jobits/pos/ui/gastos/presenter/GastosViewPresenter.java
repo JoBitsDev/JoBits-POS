@@ -15,7 +15,7 @@ import com.jobits.pos.servicios.impresion.formatter.GastosFormatter;
 import static com.jobits.pos.ui.gastos.presenter.GastosViewModel.*;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeEvent;
 import java.util.Optional;
 import javax.swing.JOptionPane;

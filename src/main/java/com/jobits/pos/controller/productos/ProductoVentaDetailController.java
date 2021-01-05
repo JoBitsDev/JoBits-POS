@@ -24,7 +24,7 @@ import com.jobits.pos.adapters.repo.impl.InsumoDAO;
 import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
 import com.jobits.pos.adapters.repo.impl.SeccionDAO;
 import com.jobits.pos.domain.models.ProductoInsumoPK;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 
 /**
  * FirstDream

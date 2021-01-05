@@ -15,7 +15,7 @@ import static com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresent
 import static com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalViewModel.*;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 

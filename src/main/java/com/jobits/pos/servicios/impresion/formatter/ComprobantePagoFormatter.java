@@ -9,7 +9,7 @@ import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Ticket;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.print.Doc;

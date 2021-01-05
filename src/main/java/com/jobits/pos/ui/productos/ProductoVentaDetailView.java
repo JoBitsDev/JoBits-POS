@@ -21,7 +21,7 @@ import com.jobits.ui.components.MaterialComponentsFactory;
 import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.*;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.awt.BorderLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;

@@ -20,7 +20,7 @@ import static com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;

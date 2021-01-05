@@ -15,7 +15,7 @@ import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.exceptions.ValidatingException;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.awt.Container;
 import java.time.LocalDate;
 import java.time.ZoneId;

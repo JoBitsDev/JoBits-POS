@@ -10,7 +10,6 @@ import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalField;
 import java.util.Date;
 import java.util.List;
 

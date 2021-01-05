@@ -11,7 +11,7 @@ import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaListViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.util.Comparator;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;

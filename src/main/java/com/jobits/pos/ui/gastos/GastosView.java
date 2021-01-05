@@ -18,7 +18,7 @@ import static com.jobits.pos.ui.gastos.presenter.GastosViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.util.ResourceBundle;
 import javax.swing.event.TableModelEvent;

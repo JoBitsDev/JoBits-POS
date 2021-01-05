@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import com.jobits.pos.exceptions.HiddenException;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.adapters.repo.impl.AbstractRepository;
+import com.jobits.pos.adapters.repo.impl.AbstractRepository.PersistAction;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.OldView;
@@ -333,12 +334,5 @@ public abstract class AbstractController<T> implements Controller {
         }
     }
 
-    //
-    // Enum for persist action
-    //
-    public static enum PersistAction {
-        CREATE,
-        DELETE,
-        UPDATE
-    }
+  
 }

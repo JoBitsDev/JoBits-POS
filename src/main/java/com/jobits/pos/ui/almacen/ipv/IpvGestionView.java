@@ -25,7 +25,7 @@ import static com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewModel.*;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
