@@ -5,18 +5,12 @@
  */
 package com.jobits.pos.controller.areaventa;
 
-import com.jobits.pos.ui.AbstractDetailView;
-import com.jobits.pos.ui.OldAbstractView;
-import com.jobits.pos.ui.areaventa.AreaCreateEditView;
 import java.awt.Container;
-import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Carta;
-import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.adapters.repo.impl.AreaDAO;
 import com.jobits.pos.adapters.repo.impl.CartaDAO;
 

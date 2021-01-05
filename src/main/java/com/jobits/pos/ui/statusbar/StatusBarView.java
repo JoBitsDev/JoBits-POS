@@ -10,7 +10,6 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import static com.jobits.pos.ui.statusbar.StatusBarViewModel.*;
-import util.MaterialIcons;
 
 /**
  *

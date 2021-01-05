@@ -5,11 +5,9 @@
  */
 package com.jobits.pos.ui.gastos.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.gasto.GastoOperacionController;
-import com.jobits.pos.domain.models.GastoVenta;
+import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
@@ -113,11 +111,13 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     }
 
     private void onEliminarClick() {
-        if (getBean().getGasto_venta_seleccionado() == null) {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un gasto primero");
-        } else {
-            service.removeGasto(getBean().getGasto_venta_seleccionado());
-            refreshState();
+        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
+            if (getBean().getGasto_venta_seleccionado() == null) {
+                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un gasto primero");
+            } else {
+                service.removeGasto(getBean().getGasto_venta_seleccionado());
+                refreshState();
+            }
         }
     }
 

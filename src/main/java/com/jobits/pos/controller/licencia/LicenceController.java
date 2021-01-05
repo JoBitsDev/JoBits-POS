@@ -5,6 +5,8 @@
  */
 package com.jobits.pos.controller.licencia;
 
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,12 +32,11 @@ public class LicenceController implements LicenceService {
 
     public LicenceController() {
     }
-    
+
     public LicenceController(Licence.TipoLicencia tipoLic) {
         this.tipoLic = tipoLic;
         estadoLic = getEstadoLicencia(this.tipoLic);
     }
-
 
     public String getEstadoLicencia(Licence.TipoLicencia tipo) {
         licence.reset();
@@ -64,18 +65,22 @@ public class LicenceController implements LicenceService {
         }
     }
 
-    public void validateAndSafe(String key) {
+    public boolean validateAndSafe(String key) {
         if (validateLicence(key)) {
             saveLicence(key);
-            // showSuccessDialog(getView(), "Licencia activa por " + licence.DIAS_RESTANTES + " Dia(s)");
-            //getView().dispose();
+            return true;
         } else {
+            return false;
 //            showErrorDialog(getView(), LICENCIA_INVALIDA);
         }
     }
 
     private boolean validateLicence(String key) {
-        licence.setLicence(key);
+        try {
+            licence.setLicence(key);
+        } catch (Exception e) {
+            return false;
+        }
         return licence.LICENCIA_ACTIVA && licence.LICENCIA_VALIDA;
     }
 

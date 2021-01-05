@@ -9,6 +9,8 @@ import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
@@ -304,11 +306,20 @@ public class LicenceDialogView extends JPanel implements View {
         key += jTextField7.getText();
         key += jTextField8.getText();
         key += jTextField9.getText();
-        controller.validateAndSafe(key);
+        boolean result = controller.validateAndSafe(key);
+        if (result) {
+            Application.getInstance().getNotificationService().notify(
+                    controller.getEstadoLic(), TipoNotificacion.SUCCESS);
+            NavigationService.getInstance().navigateUp();
+        } else {
+            Application.getInstance().getNotificationService().notify(
+                    controller.getEstadoLic(), TipoNotificacion.ERROR);
+
+        }
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
     private void jButtonActivar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivar1ActionPerformed
-        NavigationService.getInstance().navigateUp();
+        NavigationService.getInstance().navigateUp(); //TODO:arreglar pifia
     }//GEN-LAST:event_jButtonActivar1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

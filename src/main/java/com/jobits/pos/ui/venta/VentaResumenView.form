@@ -474,7 +474,6 @@
                         <Component class="javax.swing.JToggleButton" name="jToggleButtonMostrarConsumoDeLaCasa">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Mostrar Consumo de la Casa"/>
-                            <Property name="opaque" type="boolean" value="false"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -627,7 +626,6 @@
                         <Component class="javax.swing.JToggleButton" name="jToggleButtonReodndearValores">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Redondear Valores"/>
-                            <Property name="opaque" type="boolean" value="false"/>
                           </Properties>
                           <Constraints>
                             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

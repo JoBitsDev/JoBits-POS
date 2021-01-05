@@ -45,7 +45,6 @@ import com.jobits.pos.servicios.impresion.formatter.PersonalResumenFormatter;
 import com.jobits.pos.servicios.impresion.formatter.PuntoElaboracionFormatter;
 import com.jobits.pos.servicios.impresion.formatter.ResumenVentaAreaFormatter;
 import com.jobits.pos.servicios.impresion.formatter.VentaZFormatter;
-import com.jobits.pos.ui.utils.CalcularCambioViewDialog;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.utils;
 import com.jobits.pos.ui.venta.presenter.ResumenVentaAreaTablaModel;
@@ -88,9 +87,6 @@ public class VentaDetailController extends AbstractDetailController<Venta>
 
     }
 
-    public void calcularCambio(Orden objectAtSelectedRow) {
-        CalcularCambioViewDialog cc = new CalcularCambioViewDialog(getView(), true, objectAtSelectedRow);
-    }
 
     @Deprecated
     public void cambiarTurno(int codVenta) {

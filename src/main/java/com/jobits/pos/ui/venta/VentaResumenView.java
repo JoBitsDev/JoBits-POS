@@ -663,7 +663,7 @@ add(jPanel15, java.awt.BorderLayout.SOUTH);
             jTableVentas.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat(hVentas), footer);
             jTableGastos.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat(hGastos), footer);
         } catch (PrinterException ex) {
-            Logger.getLogger(Resumenes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VentaResumenView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
