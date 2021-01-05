@@ -18,6 +18,7 @@ import static com.jobits.pos.ui.almacen.ipv.presenter.IPVPedidoVentasViewModel.*
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 
@@ -32,6 +33,7 @@ public class IPVPedidoVentasView extends AbstractViewPanel {
 
     /**
      * Creates new form IPVPedidoVentasView
+     *
      * @param presenter
      */
     public IPVPedidoVentasView(AbstractViewPresenter presenter) {
@@ -240,10 +242,21 @@ public class IPVPedidoVentasView extends AbstractViewPanel {
                         return null;
                 }
             }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 1:
+                        return Float.class;
+                    default:
+                        return super.getColumnClass(columnIndex);
+                }
+            }
         };
         builder.tableModel(tableModel);
 
         tableAPedir = builder.build();
+        tableAPedir.getjTableCrossReference().getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
 //        tableAPedir.getjButtonAgregarProd().setText("Registrar");
         jPanelAPedir.add(tableAPedir, BorderLayout.CENTER);
 
@@ -274,8 +287,19 @@ public class IPVPedidoVentasView extends AbstractViewPanel {
                 }
                 return null;
             }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 1:
+                        return Float.class;
+                    default:
+                        return super.getColumnClass(columnIndex);
+                }
+            }
         });
         jTablePedido.getRowSorter().toggleSortOrder(0);
+        jTablePedido.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
     }
 
     @Override

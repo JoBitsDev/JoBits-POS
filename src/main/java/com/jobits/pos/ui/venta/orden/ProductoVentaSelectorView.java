@@ -45,12 +45,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
-//        jPanelMain.setLayout(cards);
-//        jPanelMain.add(jScrollPaneProductos, "Productos");
-//        jPanelMain.add(jScrollPaneSecciones, "Secciones");
-
         jListSecciones.addListSelectionListener((ListSelectionEvent e) -> {
-            changeToProductos();
             getPresenter().getOperation(ACTION_OCULTAR_SECCION).doAction();
         });
         jScrollPaneSecciones.getVerticalScrollBar().setUnitIncrement(80);
@@ -105,6 +100,8 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         getPresenter().addBeanPropertyChangeListener(PROP_MOSTRAR_SECCION, (PropertyChangeEvent evt) -> {
             if ((boolean) evt.getNewValue()) {
                 changeToSecciones();
+            } else {
+                changeToProductos();
             }
         });
 

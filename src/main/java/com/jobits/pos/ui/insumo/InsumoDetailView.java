@@ -20,6 +20,7 @@ import static com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
@@ -394,6 +395,8 @@ public class InsumoDetailView extends AbstractViewPanel {
         builder.tableModel(tableModel);
 
         tableInsumoElab = builder.build();
+        tableInsumoElab.getjTableCrossReference().getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
+        tableInsumoElab.getjTableCrossReference().getColumnModel().getColumn(4).setCellRenderer(utils.numberColumCellRender());
         jPanelDerivados.add(tableInsumoElab, BorderLayout.CENTER);
 
         tableInsumoElab.getjPanelOpcionesContainer().add(jPanelCosto, java.awt.BorderLayout.WEST);
@@ -403,7 +406,6 @@ public class InsumoDetailView extends AbstractViewPanel {
 //                crossReferencePanel.getJTextFieldAutoComplete().setText("");
 //            }
 //        });
-
         AddFromPanel.AddFromPanelBuilder<ProductoInsumo, ProductoVenta> builder2 = AddFromPanel.builder();
 
         builder2.addAction(getPresenter().getOperation(ACTION_AGREGAR_PRODUCTO));
@@ -488,6 +490,7 @@ public class InsumoDetailView extends AbstractViewPanel {
         builder2.tableModel(tableModel2);
 
         tableProductoInsumo = builder2.build();
+        tableProductoInsumo.getjTableCrossReference().getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
         jPanelUsos.add(tableProductoInsumo, BorderLayout.CENTER);
 
         jTabbedPane1.setTitleAt(0, "Usos (" + tableProductoInsumo.getTableModel().getItemsSize() + ")");

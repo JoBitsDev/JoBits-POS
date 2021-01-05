@@ -133,6 +133,7 @@ public class CalcularCambioView extends AbstractViewPanel {
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonAbrirCajon.setText(bundle.getString("label_abrir_cajon")); // NOI18N
+        jButtonAbrirCajon.setFocusable(true); // NOI18N
         jPanel3.add(jButtonAbrirCajon);
 
         jPanel5.add(jPanel3, java.awt.BorderLayout.SOUTH);
@@ -232,7 +233,7 @@ public class CalcularCambioView extends AbstractViewPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    getPresenter().getOperation(ACTION_ABRIR_CAJA).doAction();
+                    jButtonAbrirCajon.requestFocusInWindow();
                 }
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     getPresenter().getOperation(ACTION_CERRAR).doAction();

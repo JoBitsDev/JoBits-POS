@@ -395,7 +395,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         Bindings.bind(jTextFieldPagoPorVenta, getPresenter().getModel(PROP_COMISION_POR_VENTA));
         jButtonCancelar.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_CANCELAR));
         jButtonCrear.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR));
-       
+
         Bindings.bind(jButtonCrear, "text", getPresenter().getModel(PROP_CREAR_EDITAR_BUTTON_TEXT));
         Bindings.bind(jLabelIProductImage, "icon", getPresenter().getModel(PROP_IMAGEN_PRODUCTO));
     }
@@ -467,7 +467,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 3) {
+                if (columnIndex == 3 || columnIndex == 4) {
                     return Float.class;
                 }
                 return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
@@ -487,11 +487,10 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         builder.tableModel(tableModel);
 
         crossReferencePanel = builder.build();
-
+        crossReferencePanel.getjTableCrossReference().getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
+        crossReferencePanel.getjTableCrossReference().getColumnModel().getColumn(4).setCellRenderer(utils.numberColumCellRender());
         crossReferencePanel.getjPanelOpciones().add(jButtonAddInsumo, 0);
-
         jPanelCrossRef.add(crossReferencePanel, BorderLayout.CENTER);
-
         jTabbedPane1.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
