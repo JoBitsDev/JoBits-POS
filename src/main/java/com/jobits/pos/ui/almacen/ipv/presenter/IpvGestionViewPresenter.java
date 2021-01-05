@@ -274,27 +274,33 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private Venta selectFecha(List<Venta> ventas) {
-        JComboBox<Venta> jComboBox1 = new JComboBox<>();
-        jComboBox1.setModel(new DefaultComboBoxModel<>(ventas.toArray(new Venta[0])));
-        jComboBox1.setSelectedItem(ventas.get(0));
-        Object[] options = {"Seleccionar", "Cancelar"};
-        //                     yes        no       cancel
-        int confirm = JOptionPane.showOptionDialog(
-                null,
-                jComboBox1,
-                "Ventas",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.YES_NO_OPTION,
-                MaterialIcons.MONETIZATION_ON,
-                options,
-                options[0]);
-        switch (confirm) {
-            case JOptionPane.YES_OPTION:
-                return (Venta) jComboBox1.getSelectedItem();
-            case JOptionPane.NO_OPTION:
-                break;
-            default:
-                break;
+        if (ventas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay ventas registradas", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (ventas.size() == 1) {
+            return ventas.get(0);
+        } else {
+            JComboBox<Venta> jComboBox1 = new JComboBox<>();
+            jComboBox1.setModel(new DefaultComboBoxModel<>(ventas.toArray(new Venta[0])));
+            jComboBox1.setSelectedItem(ventas.get(0));
+            Object[] options = {"Seleccionar", "Cancelar"};
+            //                     yes        no       cancel
+            int confirm = JOptionPane.showOptionDialog(
+                    null,
+                    jComboBox1,
+                    "Ventas",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.YES_NO_OPTION,
+                    MaterialIcons.MONETIZATION_ON,
+                    options,
+                    options[0]);
+            switch (confirm) {
+                case JOptionPane.YES_OPTION:
+                    return (Venta) jComboBox1.getSelectedItem();
+                case JOptionPane.NO_OPTION:
+                    break;
+                default:
+                    break;
+            }
         }
         return null;
     }

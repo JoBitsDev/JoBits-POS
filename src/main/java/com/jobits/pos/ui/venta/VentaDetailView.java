@@ -589,16 +589,10 @@ public class VentaDetailView extends AbstractViewPanel {
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
         if ((VentaDetailViewPresenter) getPresenter() != null) {
-            if (((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter() != null) {
-                jPanelVentas.add(new VentaListOrdenesView(((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter()));
-            }
-            if (((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter() != null) {
-                jPanelPagoTrabajadores.add(new AsistenciaPersonalView(((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter()));
-            }
-            if (Application.getInstance().getLoggedUser().getPuestoTrabajonombrePuesto().getNivelAcceso() >= 3) {
-                jTabbedPaneResumenD1.addTab("Extracciones Caja", jPanelExtracciones);
-                jPanelExtracciones.add(new GastosView(((VentaDetailViewPresenter) getPresenter()).getGastosPresenter()));
-            }
+            jPanelVentas.add(new VentaListOrdenesView(((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter()));
+            jPanelPagoTrabajadores.add(new AsistenciaPersonalView(((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter()));
+            jTabbedPaneResumenD1.addTab("Extracciones Caja", jPanelExtracciones);
+            jPanelExtracciones.add(new GastosView(((VentaDetailViewPresenter) getPresenter()).getGastosPresenter()));
         }
     }
 
