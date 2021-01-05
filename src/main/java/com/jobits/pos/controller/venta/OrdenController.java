@@ -216,10 +216,10 @@ public class OrdenController extends AbstractFragmentController<Orden>
                     setDismissOnAction(true);
                     update(o, true);
                 }
+                NavigationService.getInstance().navigateTo(CalcularCambioView.VIEW_NAME,
+                        new CalcularCambioViewPresenter(o), DisplayType.POPUP);
             }
             setShowDialogs(false);
-            NavigationService.getInstance().navigateTo(CalcularCambioView.VIEW_NAME,
-                    new CalcularCambioViewPresenter(o), DisplayType.POPUP);
 //            CalcularCambioViewDialog cambio = new CalcularCambioViewDialog(null, true, o);
         }
     }
