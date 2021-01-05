@@ -9,13 +9,7 @@ import javax.swing.table.DefaultTableModel;
 import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.recursos.R;
 import java.awt.Color;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableRowSorter;
-import org.edisoncor.gui.table.BasicTableCellenderer;
 
 /**
  *
