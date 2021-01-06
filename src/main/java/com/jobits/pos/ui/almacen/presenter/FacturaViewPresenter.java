@@ -6,7 +6,9 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
+import com.jhw.swing.material.standars.MaterialIcons;
+import com.jobits.pos.adapters.repo.impl.VentaDAO;
+import com.jobits.pos.controller.almacen.AlmacenManageController.OperationType;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.domain.models.Almacen;
@@ -15,17 +17,22 @@ import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.domain.models.InsumoElaborado;
 import com.jobits.pos.domain.models.TransaccionTransformacion;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -87,6 +94,8 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             @Override
             public Optional doAction() {
                 confirmarTransaccion(getBean().getOperacion_selected());
+                Application.getInstance().getNavigator().navigateUp();
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
                 return Optional.empty();
             }
         });
@@ -121,7 +130,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     private void addListeners() {
         getBean().addPropertyChangeListener(PROP_CANTIDAD_ENTRADA, (PropertyChangeEvent evt) -> {
             if (getBean().getInsumo_selecionado() != null) {
-                if (getBean().getOperacion_selected() == CheckBoxType.ENTRADA) {
+                if (getBean().getOperacion_selected() == OperationType.ENTRADA) {
                     if (getBean().getCantidad_entrada() != 0) {
                         if (getBean().getInsumo_selecionado().getValorMonetario() != 0) {
                             getBean().setMonto_entrada(R.formatoMoneda.format(getBean().getCantidad_entrada() * utils.setDosLugaresDecimalesFloat(
@@ -139,12 +148,12 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 
             if (insumo == null) {
                 getBean().setUnidad_medida_insumo("<U/M>");
-                if (getBean().getOperacion_selected() == CheckBoxType.TRANSFORMAR) {
+                if (getBean().getOperacion_selected() == OperationType.TRANSFORMAR) {
                     getBean().getLista_insumo_elaborado_disponible().clear();
                 }
             } else {
                 getBean().setUnidad_medida_insumo(insumo.getInsumo().getUm());
-                if (getBean().getOperacion_selected() == CheckBoxType.TRANSFORMAR) {
+                if (getBean().getOperacion_selected() == OperationType.TRANSFORMAR) {
                     List<Insumo> listaInsumos = new ArrayList<>();
                     for (InsumoElaborado x : insumo.getInsumo().getInsumoDerivadoList()) {
                         listaInsumos.add(x.getInsumo_derivado_nombre());
@@ -159,12 +168,12 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 
         });
         getBean().addPropertyChangeListener(PROP_OPERACION_SELECTED, (PropertyChangeEvent evt) -> {
-            setVisiblePanels((CheckBoxType) evt.getNewValue());
-            setDefaultValues((CheckBoxType) evt.getNewValue(), true);
+            setVisiblePanels((OperationType) evt.getNewValue());
+            setDefaultValues((OperationType) evt.getNewValue(), true);
         });
     }
 
-    private void setVisiblePanels(CheckBoxType aux) {
+    private void setVisiblePanels(OperationType aux) {
         switch (aux) {
             case ENTRADA:
                 getBean().setTabla_general_enabled(true);
@@ -211,7 +220,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         }
     }
 
-    private void setDefaultValues(CheckBoxType aux, boolean newOp) {
+    private void setDefaultValues(OperationType aux, boolean newOp) {
         getBean().setInsumo_selecionado(null);
         switch (aux) {
             case ENTRADA:
@@ -261,7 +270,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         }
     }
 
-    private void addTransaction(CheckBoxType currentOperation) {
+    private void addTransaction(OperationType currentOperation) {
         if (getBean().getCantidad_entrada() == 0) {
             JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(),
                     "Seleccione una cantidad de: " + getBean().getInsumo_selecionado().getInsumo().getNombre());
@@ -328,8 +337,8 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 
     }
 
-    private void confirmarTransaccion(CheckBoxType currentOperation) {
-        if (currentOperation == CheckBoxType.TRANSFORMAR) {
+    private void confirmarTransaccion(OperationType currentOperation) {
+        if (currentOperation == OperationType.TRANSFORMAR) {
             if (validateTransformationInputs()) {
                 service.crearTransformacion(getBean().getInsumo_selecionado(),
                         getBean().getCantidad_entrada(),
@@ -339,13 +348,34 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             }
         } else {
             if (validateInputs()) {
-                if (service.crearOperacion(getBean().getLista_elementos(),
-                        currentOperation,
-                        getBean().getFecha_factura(),
-                        getBean().getNumero_recibo(),
-                        getBean().getFecha_factura())) {
-                    Application.getInstance().getNavigator().navigateUp();
+                switch (currentOperation) {
+                    case ENTRADA:
+                        service.crearOperacionEntrada(getBean().getLista_elementos(),
+                                getBean().getNumero_recibo(), getBean().getFecha_factura());
+                        break;
+                    case SALIDA:
+                        Date fecha = getBean().getFecha_factura();
+                        service.crearOperacionSalida(getBean().getLista_elementos(),
+                                getBean().getNumero_recibo(), fecha, selectIdFecha(fecha));
+                        break;
+                    case REBAJA:
+                        service.crearOperacionRebaja(getBean().getLista_elementos(),
+                                getBean().getNumero_recibo(), getBean().getFecha_factura());
+                        break;
+                    case TRASPASO:
+                        service.crearOperacionTraspaso(getBean().getLista_elementos(),
+                                getBean().getNumero_recibo(), getBean().getFecha_factura());
+                        break;
+                    default:
+                        throw new UnExpectedErrorException("Tipo de operacion no soportada");
                 }
+//                if (service.crearOperacion(getBean().getLista_elementos(),
+//                        currentOperation,
+//                        getBean().getFecha_factura(),
+//                        getBean().getNumero_recibo(),
+//                        getBean().getFecha_factura())) {
+//                    Application.getInstance().getNavigator().navigateUp();
+//                }
             }
         }
     }
@@ -374,6 +404,53 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             return false;
         }
         return true;
+    }
+
+    private Integer selectIdFecha(Date fecha) {
+        List<Venta> list = VentaDAO.getInstance().find(fecha);
+        if (!list.isEmpty()) {
+            if (list.size() > 1) {
+                JList<Venta> jList = new JList<>(list.toArray(new Venta[list.size()]));
+                jList.setSelectedIndex(-1);
+                Object[] options = {"Seleccionar", "Cancelar"};
+                //                     yes        no  
+                SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy");
+                int confirm = JOptionPane.showOptionDialog(
+                        null,
+                        jList,
+                        "Ventas del " + sdf.format(fecha),
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.YES_NO_OPTION,
+                        MaterialIcons.RESTORE,
+                        options,
+                        options[0]);
+                switch (confirm) {
+                    case JOptionPane.YES_OPTION:
+                        Venta v = (Venta) jList.getSelectedValue();
+                        if (v.getVentaTotal() == null) {
+                            return ((Venta) jList.getSelectedValue()).getId();
+                        } else {
+                            if (JOptionPane.showConfirmDialog(null,
+                                    "La venta se encuentra cerrada \n "
+                                    + "Desea relizar aun la transaccion?") == JOptionPane.YES_OPTION) {
+                                return ((Venta) jList.getSelectedValue()).getId();
+                            } else {
+                                return null;
+                            }
+                        }
+                    case JOptionPane.NO_OPTION:
+                        return null;
+                    default:
+                        break;
+                }
+            } else {
+                return list.get(0).getId();
+            }
+
+        } else {
+            throw new IllegalArgumentException("No hay ventas registradas el dia de la factura");
+        }
+        return null;
     }
 
 }

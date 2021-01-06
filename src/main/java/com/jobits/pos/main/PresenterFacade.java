@@ -42,6 +42,7 @@ import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
@@ -217,7 +218,7 @@ public class PresenterFacade {
             case ReservasListView.VIEW_NAME:
                 return new ReservaListViewPresenter(new ReservaListController());
             case IPVPedidoVentasView.VIEW_NAME:
-                return new IPVPedidoVentasViewPresenter(new PedidoIpvVentasController(new ArrayList<>(), new Cocina()));
+                return new IPVPedidoVentasViewPresenter(new PedidoIpvVentasController(new ArrayList<>(), new Cocina(), new Venta()));
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;
