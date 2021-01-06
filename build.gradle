@@ -1,5 +1,6 @@
 plugins {
     id 'io.freefair.lombok' apply true
+    id 'edu.sc.seis.launch4j' version '2.4.6' apply true  
 }
 
 apply plugin: 'application'
@@ -82,3 +83,14 @@ dependencies {
 
     
 }
+
+launch4j{
+    headerType = 'gui'
+    outfile = 'JoBits POS.exe'
+    mainClassName = 'com.jobits.pos.main.Main'
+    bundledJrePath = 'jdk'
+    //icon = '${projectDir}/scr/main/resources/'
+    
+}
+
+build.finalizedBy(createExe)
