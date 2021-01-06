@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.backup.presenter;
 
 import com.jobits.pos.controller.backup.BackUpController;
+import com.jobits.pos.controller.backup.BackUpService;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.login.UbicacionConexionService;
 import com.jobits.pos.domain.UbicacionConexionModel;
@@ -72,7 +73,7 @@ public class BackUpViewPresenter extends AbstractViewPresenter<BackUpViewModel> 
 
             if (resp) {
 
-                BackUpController bu = new BackUpController(getBean().getUbicacion_seleccionada());
+                BackUpService bu = new BackUpController(getBean().getUbicacion_seleccionada());
 
                 if (getBean().isCheckbox_personal()) {
                     bu.setTipoBackUp(BackUpController.TipoBackUp.PERSONAL);

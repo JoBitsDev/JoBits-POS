@@ -68,7 +68,7 @@ public class SincronizacionController implements SincronizacionService {
     }
 
     private void sincronizarDatosConServidor() {
-        BackUpController backupService = new BackUpController(ubicacion);
+        BackUpService backupService = new BackUpController(ubicacion);
         backupService.incluirDiaAbierto(true);
         Logger.getLogger(SincronizacionController.class.getName()).log(Level.INFO, "Ejecutando sincronizacion con servidor");
         String logRespuesta = "Sincronizacion con servidor completada ";
