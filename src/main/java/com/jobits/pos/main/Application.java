@@ -141,6 +141,7 @@ public class Application {
     private void setExceptionHandling() {
         Thread.setDefaultUncaughtExceptionHandler((Thread t, Throwable e) -> {
             getNotificationService().showDialog(e.getMessage(), TipoNotificacion.ERROR);
+            e.printStackTrace();
         });
     }
 
