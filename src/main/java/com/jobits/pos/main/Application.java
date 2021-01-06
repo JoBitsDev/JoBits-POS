@@ -115,6 +115,7 @@ public class Application {
         setApplicationLooks();
         setNotificationChannel();
         calculateLicenceLeft();
+        setExceptionHandling();
         mainWindow = new MainWindow();
         mainWindow.setTitle(APP_NAME);
         mainWindow.setWelcomeHeader(true);
@@ -135,6 +136,12 @@ public class Application {
             Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private void setExceptionHandling() {
+        Thread.setDefaultUncaughtExceptionHandler((Thread t, Throwable e) -> {
+            getNotificationService().showDialog(e.getMessage(), TipoNotificacion.ERROR);
+        });
     }
 
     private void setLocale() {
