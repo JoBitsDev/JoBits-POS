@@ -30,5 +30,9 @@ public interface PuestoTrabajoDetailService {
     List<Cocina> getAreasPago();
 
     boolean isCreatingMode();
-    
+
+    public void create(PuestoTrabajo puestoTrabajo);
+
+    public void update(PuestoTrabajo puestoTrabajo);
+
 }

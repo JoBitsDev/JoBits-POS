@@ -5,10 +5,7 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
-import java.awt.Window;
 import java.util.List;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Cocina;

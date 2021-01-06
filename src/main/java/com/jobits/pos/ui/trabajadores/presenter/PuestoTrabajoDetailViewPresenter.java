@@ -7,6 +7,7 @@ package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
+import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.PuestoTrabajo;
@@ -32,7 +33,7 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
 
-    private PuestoTrabajoDetailController service;
+    private PuestoTrabajoDetailService service;
     PuestoTrabajo puesto;
 
     public PuestoTrabajoDetailViewPresenter(PuestoTrabajoDetailController service) {
