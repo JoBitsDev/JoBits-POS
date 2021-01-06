@@ -42,5 +42,7 @@ public interface AsistenciaPersonalService {
     void updateAMayores(AsistenciaPersonal personalABuscar, float aMayoresValor);
 
     List<AsistenciaPersonal> updateSalaries(int codVenta);
-    
+
+    public void destroy(AsistenciaPersonal asistenciaPersonal, boolean quietMode);
+
 }

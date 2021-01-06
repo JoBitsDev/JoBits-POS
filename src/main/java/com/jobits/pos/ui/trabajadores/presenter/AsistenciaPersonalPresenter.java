@@ -7,6 +7,7 @@ package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
+import com.jobits.pos.controller.trabajadores.AsistenciaPersonalService;
 import com.jobits.pos.domain.models.AsistenciaPersonal;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
@@ -26,7 +27,7 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
             ACTION_AGREGAR_PERSONAL = "Agregar Personal",
             ACTION_ELIMINAR_PERSONAL = "Eliminar Personal";
 
-    private AsistenciaPersonalController personalService;
+    private AsistenciaPersonalService personalService;
     private Venta venta;
 
     public AsistenciaPersonalPresenter(Venta venta) {
