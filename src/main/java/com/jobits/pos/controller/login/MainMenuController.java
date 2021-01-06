@@ -6,6 +6,7 @@
 package com.jobits.pos.controller.login;
 
 import com.jobits.pos.controller.backup.SincronizacionController;
+import com.jobits.pos.controller.backup.SincronizacionService;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
@@ -28,7 +29,7 @@ import javax.swing.JOptionPane;
  */
 public class MainMenuController implements MainMenuService {
 
-    private SincronizacionController sincronizacion = new SincronizacionController();
+    private SincronizacionService sincronizacion = new SincronizacionController();
     private List<Venta> diaVenta;
 
     public MainMenuController() {
