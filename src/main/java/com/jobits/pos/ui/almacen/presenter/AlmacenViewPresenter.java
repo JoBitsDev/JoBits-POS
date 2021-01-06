@@ -9,11 +9,11 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
+import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.almacen.TransaccionesListController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.FacturaView;
@@ -50,7 +50,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     public static final String ACTION_NUEVA_FACTURA = "Nueva Factura";
 
     AlmacenListService listService;
-    AlmacenManageController detailService;
+    AlmacenManageService detailService;
 
     public AlmacenViewPresenter(AlmacenListController listController) {
         super(new AlmacenViewModel());

@@ -143,9 +143,9 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     @Override
     public void createNewTransaccionEntrada(TransaccionEntrada transaccion, Almacen a) {
         getModel().startTransaction();
-        AlmacenManageController controller = new AlmacenManageController(a);
-        controller.setView(getView());
-        controller.darEntradaAInsumo(transaccion);
+        AlmacenManageService service = new AlmacenManageController(a);
+//        service.setView(getView());
+        service.darEntradaAInsumo(transaccion);
         TransaccionEntradaDAO.getInstance().create(transaccion);
         TransaccionEntradaDAO.getInstance().commitTransaction();
     }
@@ -153,9 +153,9 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     @Override
     public void createNewTransaccionSalida(TransaccionSalida transaccion, Almacen a, int idVenta) {
         getModel().startTransaction();
-        AlmacenManageController almacenController = new AlmacenManageController(a);
-        almacenController.setView(getView());
-        almacenController.darSalidaAInsumo(transaccion,idVenta);
+        AlmacenManageService service = new AlmacenManageController(a);
+//        almacenController.setView(getView());
+        service.darSalidaAInsumo(transaccion,idVenta);
         TransaccionSalidaDAO.getInstance().create(transaccion);
         getModel().commitTransaction();
 
@@ -164,9 +164,9 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     @Override
     public void createNewTransaccionRebaja(TransaccionMerma transaccion, Almacen a) {
         getModel().startTransaction();
-        AlmacenManageController almacenController = new AlmacenManageController(a);
-        almacenController.setView(getView());
-        almacenController.darMermaInsumo(transaccion);
+        AlmacenManageService service = new AlmacenManageController(a);
+//        service.setView(getView());
+        service.darMermaInsumo(transaccion);
         TransaccionMermaDAO.getInstance().create(transaccion);
         getModel().commitTransaction();
 
@@ -174,19 +174,19 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     private void createNewTransaccionTraspaso(TransaccionTraspaso transaccion, Almacen a) {
         getModel().startTransaction();
-        AlmacenManageController almacenController = new AlmacenManageController(a);
-        almacenController.setView(getView());
-        almacenController.darTraspasoInsumo(transaccion);
+        AlmacenManageService service = new AlmacenManageController(a);
+//        service.setView(getView());
+        service.darTraspasoInsumo(transaccion);
         TransaccionTraspasoDAO.getInstance().create(transaccion);
         getModel().commitTransaction();
     }
 
     private void createNewTransaccionTransformacion(Transaccion t, Almacen a, Almacen origen) {
         TransaccionDAO.getInstance().startTransaction();
-        AlmacenManageController almacenController = new AlmacenManageController(origen);
-        almacenController.setView(getView());
-        almacenController.darTransformacionAInsumo(t, a);
-        almacenController.getCocinaList();
+        AlmacenManageService service = new AlmacenManageController(origen);
+//        service.setView(getView());
+        service.darTransformacionAInsumo(t, a);
+        service.getCocinaList();
     }
 
     @Override

@@ -6,8 +6,8 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
+import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Cocina;
@@ -34,7 +34,7 @@ import javax.swing.JOptionPane;
  */
 public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel> {
 
-    private AlmacenManageController controller;
+    private AlmacenManageService service;
     public static final String ACTION_AGREGAR_INSUMO = "Agregar Insumo";
     public static final String ACTION_ELIMINAR_INSUMO = "Eliminar Insumo";
 
@@ -44,9 +44,9 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     public static final String ACTION_ELIMINAR_INSUMO_TRANSFORMADO = "Agregar Insumo Transformado";
     public static final String ACTION_AGREGAR_INSUMO_TRANSFORMADO = "Eliminar Insumo Transformado";
 
-    public FacturaViewPresenter(AlmacenManageController controller) {
+    public FacturaViewPresenter(AlmacenManageService controller) {
         super(new FacturaViewModel());
-        this.controller = controller;
+        this.service = controller;
         addListeners();
         getBean().getLista_insumos_disponibles().clear();
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(controller.getInsumoAlmacenList(controller.getInstance())));
@@ -223,7 +223,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 if (newOp) {
                     getBean().setDestino_seleccionado(null);
                     getBean().getLista_destino().clear();
-                    getBean().getLista_destino().addAll(new ArrayListModel(controller.getCocinaList()));
+                    getBean().getLista_destino().addAll(new ArrayListModel(service.getCocinaList()));
                     getBean().getLista_elementos().clear();
                     getBean().setComponent_locked(true);
                 }
@@ -239,7 +239,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 if (newOp) {
                     getBean().setDestino_seleccionado(null);
                     getBean().getLista_destino().clear();
-                    getBean().getLista_destino().addAll(new ArrayListModel(controller.getItems()));
+                    getBean().getLista_destino().addAll(new ArrayListModel(service.getItems()));
                     getBean().getLista_elementos().clear();
                     getBean().setComponent_locked(true);
                     break;
@@ -248,7 +248,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 if (newOp) {
                     getBean().setDestino_seleccionado(null);
                     getBean().getLista_destino().clear();
-                    getBean().getLista_destino().addAll(new ArrayListModel(controller.getItems()));
+                    getBean().getLista_destino().addAll(new ArrayListModel(service.getItems()));
                     getBean().getLista_insumos_transformados_contenidos().clear();
                     getBean().getLista_insumo_elaborado_disponible().clear();
                     getBean().setInsumo_transformado_contenido_seleccionado(null);
@@ -331,7 +331,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     private void confirmarTransaccion(CheckBoxType currentOperation) {
         if (currentOperation == CheckBoxType.TRANSFORMAR) {
             if (validateTransformationInputs()) {
-                controller.crearTransformacion(getBean().getInsumo_selecionado(),
+                service.crearTransformacion(getBean().getInsumo_selecionado(),
                         getBean().getCantidad_entrada(),
                         getBean().getLista_insumos_transformados_contenidos(),
                         (Almacen) getBean().getDestino_seleccionado());
@@ -339,7 +339,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             }
         } else {
             if (validateInputs()) {
-                if (controller.crearOperacion(getBean().getLista_elementos(),
+                if (service.crearOperacion(getBean().getLista_elementos(),
                         currentOperation,
                         getBean().getFecha_factura(),
                         getBean().getNumero_recibo(),

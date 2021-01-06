@@ -149,7 +149,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> i
         return CocinaDAO.getInstance().findAll();
     }
 
-    void darTraspasoInsumo(TransaccionTraspaso x) throws ValidatingException {
+    public void darTraspasoInsumo(TransaccionTraspaso x) throws ValidatingException {
         InsumoAlmacen desde = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getTransaccion().getInsumocodInsumo().getCodInsumo());
         InsumoAlmacen hasta;
         try {
@@ -323,7 +323,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> i
     //
     //Accesibles por otros controladores
     //
-    void darEntradaAInsumo(TransaccionEntrada x) {
+    @Override
+    public void darEntradaAInsumo(TransaccionEntrada x) {
         darEntradaAInsumo(x.getTransaccion().getInsumocodInsumo(), x.getTransaccion().getCantidad(), x.getValorTotal());
     }
 
@@ -346,7 +347,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> i
         updateValorTotalAlmacen(instance);
     }
 
-    void darSalidaAInsumo(TransaccionSalida x, int idVenta) throws ValidatingException {
+    @Override
+    public void darSalidaAInsumo(TransaccionSalida x, int idVenta) throws ValidatingException {
         IPVController controller = new IPVController();
         controller.setView(getView());
         InsumoAlmacen insumoADarSalida = AlmacenDAO.getInstance().findInsumo(getInstance().getCodAlmacen(), x.getTransaccion().getInsumocodInsumo().getCodInsumo());
@@ -365,7 +367,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> i
         updateValorTotalAlmacen(instance);
     }
 
-    void darMermaInsumo(TransaccionMerma x) throws ValidatingException {
+    @Override
+    public void darMermaInsumo(TransaccionMerma x) throws ValidatingException {
         darMermaInsumo(x.getTransaccion().getInsumocodInsumo(), x.getTransaccion().getCantidad());
     }
 
@@ -387,7 +390,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> i
         updateValorTotalAlmacen(instance);
     }
 
-    void darTransformacionAInsumo(Transaccion t, Almacen a) {
+    @Override
+    public void darTransformacionAInsumo(Transaccion t, Almacen a) {
         darMermaInsumo(t.getInsumocodInsumo(), t.getCantidad());
         InsumoAlmacen ins = AlmacenDAO.getInstance().findInsumo(a.getCodAlmacen(), t.getInsumocodInsumo().getCodInsumo());
         float precioMedio = ins.getValorMonetario() / ins.getCantidad();
@@ -516,6 +520,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> i
         }
         return null;
     }
+
 
     public enum CheckBoxType {
         ENTRADA(0),

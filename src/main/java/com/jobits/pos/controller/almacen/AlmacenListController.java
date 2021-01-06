@@ -91,7 +91,7 @@ public class AlmacenListController extends OldAbstractListController<Almacen> im
         if (selected == null) {
             throw new NoSelectedException();
         } else {
-            AlmacenManageController manageController = new AlmacenManageController(Application.getInstance().getMainWindow(), selected);
+            AlmacenManageService service = new AlmacenManageController(Application.getInstance().getMainWindow(), selected);
         }
 
     }

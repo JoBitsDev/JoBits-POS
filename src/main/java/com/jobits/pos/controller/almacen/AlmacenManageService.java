@@ -12,7 +12,12 @@ import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.domain.models.Operacion;
+import com.jobits.pos.domain.models.Transaccion;
+import com.jobits.pos.domain.models.TransaccionEntrada;
+import com.jobits.pos.domain.models.TransaccionMerma;
+import com.jobits.pos.domain.models.TransaccionSalida;
 import com.jobits.pos.domain.models.TransaccionTransformacion;
+import com.jobits.pos.domain.models.TransaccionTraspaso;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,6 +69,20 @@ public interface AlmacenManageService {
 
     List<Insumo> getInsumoList();
 
+    public Almacen getInstance();
+
+    public List<Almacen> getItems();
+
+    public void darEntradaAInsumo(TransaccionEntrada x);
+
+    public void darSalidaAInsumo(TransaccionSalida x, int idVenta);
+
+    public void darMermaInsumo(TransaccionMerma x);
+
+    public void darTransformacionAInsumo(Transaccion t, Almacen a);
+
+    public void darTraspasoInsumo(TransaccionTraspaso x);
+
     void imprimirReporteParaCompras(Almacen a);
 
     void imprimirResumenAlmacen(Almacen a);
@@ -79,5 +98,5 @@ public interface AlmacenManageService {
     void updateValorTotalAlmacen(Almacen instance);
 
     void verTransacciones(Almacen a);
-    
+
 }

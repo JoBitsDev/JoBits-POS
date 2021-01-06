@@ -50,16 +50,16 @@ public class PedidoIpvVentasController extends AbstractDialogController<IpvVenta
 
     public boolean realizarPedidoDeIpv(List<InsumoPedidoModel> insumosARebajar, List<ProdcutoVentaPedidoModel> pedido, Cocina puntoDestino, Almacen almacenOrigen) {
         if (showConfirmDialog(getView(), "Desea ejecutar el pedido")) {
-            AlmacenManageController controller = new AlmacenManageController(almacenOrigen);
-            controller.setView(getView());
-            controller.setShowDialogs(false);
+            AlmacenManageService service = new AlmacenManageController(almacenOrigen);
+//            controller.setView(getView());
+//            controller.setShowDialogs(false);
 
             IPVController ipvController = new IPVController();
             ipvController.setShowDialogs(false);
             ipvController.setView(getView());
 
             for (InsumoPedidoModel i : insumosARebajar) {
-                controller.crearTransaccion(null, controller.findInsumo(i.getInsumo()), 1, puntoDestino, null, i.getCantidad(), 0, null, false,ipvProductList.get(0).getDiaVenta().getId());
+                service.crearTransaccion(null, service.findInsumo(i.getInsumo()), 1, puntoDestino, null, i.getCantidad(), 0, null, false,ipvProductList.get(0).getDiaVenta().getId());
             }
             for (ProdcutoVentaPedidoModel p : pedido) {
                 ipvController.darEntradaIPV(p.getIpvProducto(), p.getCantidad());
