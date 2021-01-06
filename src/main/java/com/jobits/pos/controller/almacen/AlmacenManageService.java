@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.controller.almacen;
 
-import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
+import com.jobits.pos.controller.almacen.AlmacenManageController.OperationType;
 import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Cocina;
@@ -40,20 +40,13 @@ public interface AlmacenManageService {
      */
     void constructView(Container parent);
 
-    boolean crearOperacion(ArrayList<TransaccionSimple> transacciones, CheckBoxType tipoOperacion, Date date, String recibo, Date fechaFactura);
+    public void crearOperacionEntrada(ArrayList<TransaccionSimple> transacciones, String recibo, Date fechaFactura);
 
-    /**
-     *
-     * @param o
-     * @param ins
-     * @param tipo 0-entrada, 1- salida, 2-merma, 3 traspaso
-     * @param destino sino es de tipo destino este parametro es nulo
-     * @param destinoTraspaso
-     * @param cantidad
-     * @param importe
-     * @param causaRebaja
-     */
-    void crearTransaccion(Operacion o, InsumoAlmacen ins, int tipo, Cocina destino, Almacen destinoTraspaso, float cantidad, float importe, String causaRebaja, boolean showSuccesDialog, Integer idVenta);
+    public void crearOperacionRebaja(ArrayList<TransaccionSimple> transacciones, String recibo, Date fechaFactura);
+
+    public void crearOperacionSalida(ArrayList<TransaccionSimple> transacciones, String recibo, Date fechaFactura, Integer codVenta);
+
+    public void crearOperacionTraspaso(ArrayList<TransaccionSimple> transacciones, String recibo, Date fechaFactura);
 
     void crearTransformacion(InsumoAlmacen selected, float cantidad, List<TransaccionTransformacion> items, Almacen destino);
 
@@ -83,15 +76,13 @@ public interface AlmacenManageService {
 
     public void darTraspasoInsumo(TransaccionTraspaso x);
 
-    void imprimirReporteParaCompras(Almacen a);
+    void imprimirReporteParaCompras(Almacen a, int selection);
 
     void imprimirResumenAlmacen(Almacen a);
 
     void modificarStock(Insumo i);
 
     void removeInsumoFromStorage(InsumoAlmacen objectAtSelectedRow);
-
-    Integer selectIdFecha(Date fecha);
 
     void setCentroElaboracion(boolean selected);
 

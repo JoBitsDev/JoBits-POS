@@ -124,7 +124,12 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_REPORTE) {
             @Override
             public Optional doAction() {
-                detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado());
+                String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+                int selection = JOptionPane.showOptionDialog(null,
+                        R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
+                        R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+                detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado(), selection);
                 return Optional.empty();
             }
         });
