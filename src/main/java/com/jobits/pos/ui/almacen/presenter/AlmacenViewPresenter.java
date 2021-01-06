@@ -16,6 +16,8 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
@@ -73,7 +75,8 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_CREAR_ALMACEN) {
             @Override
             public Optional doAction() {
-                listService.createNewStorage();
+                listService.createNewStorage(JOptionPane.showInputDialog(R.RESOURCE_BUNDLE.getString("dialogo_agregar_almacen")));
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
                 setListToBean();
                 return Optional.empty();
             }
@@ -89,7 +92,10 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_ELIMINAR_ALMACEN) {
             @Override
             public Optional doAction() {
-                listService.destroy(getBean().getElemento_seleccionado());
+                listService.destroy(getBean().getElemento_seleccionado(), JOptionPane.showConfirmDialog(
+                        null, R.RESOURCE_BUNDLE.getString("dialogo_borrar_almacen") + " " + getBean().getElemento_seleccionado().getNombre(),
+                        "Eliminar", JOptionPane.YES_NO_OPTION));
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
                 setListToBean();
                 return Optional.empty();
             }
