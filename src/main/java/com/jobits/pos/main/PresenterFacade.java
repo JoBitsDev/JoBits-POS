@@ -10,7 +10,7 @@ import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasController;
-import com.jobits.pos.controller.almacen.TransaccionesListController;
+import com.jobits.pos.controller.almacen.TransaccionListController;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
@@ -207,7 +207,7 @@ public class PresenterFacade {
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(new ImageManagerController(null));
             case TransaccionListView.VIEW_NAME:
-                return new TransaccionListPresenter(new TransaccionesListController(new Almacen()));
+                return new TransaccionListPresenter(new TransaccionListController(new Almacen()));
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
             case ClientesListView.VIEW_NAME:

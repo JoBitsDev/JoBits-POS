@@ -10,7 +10,7 @@ import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.almacen.TransaccionesListController;
+import com.jobits.pos.controller.almacen.TransaccionListController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -127,7 +127,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             public Optional doAction() {
                 NavigationService.getInstance().navigateTo(TransaccionListView.VIEW_NAME,
                         new TransaccionListPresenter(
-                                new TransaccionesListController(
+                                new TransaccionListController(
                                         detailService.getInstance())), DisplayType.POPUP);
                 refreshView();
                 return Optional.empty();
