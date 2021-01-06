@@ -54,5 +54,9 @@ public interface AreaDetailService {
     //        return (AbstractDetailView<Area>) super.getView(); //To change body of generated methods, choose Tools | Templates.
     //    }
     boolean isCreatingMode();
-    
+
+    public void create(Area area);
+
+    public void update(Area area);
+
 }

@@ -6,22 +6,15 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.adapters.repo.impl.AreaDAO;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
+import com.jobits.pos.controller.areaventa.AreaDetailService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.Carta;
-import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
-import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.venta.presenter.VentaStatisticsViewModel;
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -35,16 +28,16 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
     public static final String ACTION_AGREGAR = "Agregar";
     public static final String ACTION_ELIMINAR = "Eliminar";
 
-    private AreaDetailController service;
+    private AreaDetailService service;
     Area area;
 
-    public AreaDetailViewPresenter(AreaDetailController service) {
+    public AreaDetailViewPresenter(AreaDetailController controller) {
         super(new AreaDetailViewModel());
-        this.service = service;
-        if (service.isCreatingMode()) {
-            area = service.createNewInstance();
+        this.service = controller;
+        if (controller.isCreatingMode()) {
+            area = controller.createNewInstance();
         } else {
-            area = service.getInstance();
+            area = controller.getInstance();
         }
         fillForm();
         addListeners();

@@ -5,15 +5,12 @@
  */
 package com.jobits.pos.ui.cartas.presenter;
 
-import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.seccion.SeccionDetailServiceImpl;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
-import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewPresenter;
 import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;

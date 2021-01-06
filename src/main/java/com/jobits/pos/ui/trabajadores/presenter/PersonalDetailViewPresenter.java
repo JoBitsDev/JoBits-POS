@@ -6,27 +6,18 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.DatosPersonales;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
-import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewModel;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.awt.Color;
-import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import javax.swing.border.LineBorder;
 
 /**
  *
