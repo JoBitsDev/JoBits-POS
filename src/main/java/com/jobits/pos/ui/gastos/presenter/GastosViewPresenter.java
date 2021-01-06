@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.gastos.presenter;
 
 import com.jobits.pos.controller.gasto.GastoOperacionController;
+import com.jobits.pos.controller.gasto.GastoOperacionService;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
@@ -31,7 +32,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
             ACTION_AGREGAR_GASTO = "Agregar Gasto",
             ACTION_ELIMINAR_GASTO = "Eliminar Gasto";
 
-    private GastoOperacionController service;
+    private GastoOperacionService service;
 
     public GastosViewPresenter(GastoOperacionController service) {
         super(new GastosViewModel());
