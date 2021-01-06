@@ -440,10 +440,11 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> i
             getModel().startTransaction();
             if (t.getInsumo().getCantidad() < t.getCantidad()) {
                 throw new IllegalArgumentException("La cantidad a transferir tiene que ser mayor a la cantidad existente");
-            }
+            } else {
 //            if (showConfirmDialog(getView(), "Desea traspasar " + cantidad + ins.getInsumo().getUm() + "\n de " + ins.getInsumo() + " hacia " + destinoTraspaso)) {
-            controller.addTransaccionTraspaso(o, t.getInsumo().getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), t.getaDestino(), t.getCantidad());
+                controller.addTransaccionTraspaso(o, t.getInsumo().getInsumo(), R.TODAYS_DATE, new Date(), getInstance(), t.getaDestino(), t.getCantidad());
 //            }
+            }
             getModel().commitTransaction();
         }
         updateValorTotalAlmacen(getInstance());
