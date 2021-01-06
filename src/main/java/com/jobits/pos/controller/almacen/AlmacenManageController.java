@@ -186,8 +186,8 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> i
      */
     @Override
     public void crearTransaccion(Operacion o, InsumoAlmacen ins, int tipo, Cocina destino, Almacen destinoTraspaso, float cantidad, float importe, String causaRebaja, boolean showSuccesDialog, Integer idVenta) {
-        TransaccionDetailController controller = new TransaccionDetailController();
-        controller.setView(getView());
+        TransaccionDetailService controller = new TransaccionDetailController();
+//        controller.setView(getView());
         getModel().startTransaction();
         switch (tipo) {
             case 0:
@@ -290,7 +290,7 @@ public class AlmacenManageController extends AbstractDetailController<Almacen> i
                 return;
             }
         }
-        TransaccionDetailController controller = new TransaccionDetailController();
+        TransaccionDetailService controller = new TransaccionDetailController();
         controller.addTransaccionTransformacion(selected, new Date(), new Date(), items, cantidad, merma, destino);
     }
 

@@ -83,7 +83,8 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
         return InsumoDAO.getInstance().findAll();
     }
 
-    TransaccionEntrada addTransaccionEntrada(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad, float importe) {
+    @Override
+    public TransaccionEntrada addTransaccionEntrada(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad, float importe) {
         Transaccion t = nuevaTransaccion(o, insumo, fecha, hora, a, cantidad);
         TransaccionEntrada ret = new TransaccionEntrada(t.getNoTransaccion());
         ret.setJustificado(false);

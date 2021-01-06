@@ -27,6 +27,8 @@ public interface TransaccionDetailService {
 
     void addTransaccionRebaja(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad, String causaRebaja);
 
+    public TransaccionEntrada addTransaccionEntrada(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad, float importe);
+
     Transaccion addTransaccionSalida(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, Cocina cocina, float cantidad, int idVenta);
 
     void addTransaccionTransformacion(InsumoAlmacen selected, Date fecha, Date hora, List<TransaccionTransformacion> items, float cantidad, float merma, Almacen destino);
@@ -46,5 +48,5 @@ public interface TransaccionDetailService {
     List<Cocina> getCocinaList();
 
     List<Insumo> getInsumoList();
-    
+
 }
