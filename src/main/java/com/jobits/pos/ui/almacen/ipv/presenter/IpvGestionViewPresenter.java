@@ -167,11 +167,12 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onFechaCambiadaIpv() {
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
             if (getBean().getPunto_elaboracion_seleccionado() != null) {
-                Venta v = selectFecha(service.getVentasInRange(getBean().getFecha_ipv_seleccionada()));
-                if (v != null) {
+                getBean().setVenta_ipv_seleccionada(selectFecha(service.getVentasInRange(getBean().getFecha_ipv_seleccionada())));
+                if (getBean().getVenta_ipv_seleccionada() != null) {
                     getBean().setLista_ipv_registro(new ArrayListModel<>(
                             service.getIpvRegistroList(
-                                    getBean().getPunto_elaboracion_seleccionado(), v.getId())));
+                                    getBean().getPunto_elaboracion_seleccionado(),
+                                    getBean().getVenta_ipv_seleccionada().getId())));
                     getBean().setCheck_ocultar_productos_ipv(false);
                 }
             }
@@ -181,11 +182,12 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onFechaCambiadaIpvVenta() {
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
             if (getBean().getPunto_elaboracion_seleccionado() != null) {
-                Venta v = selectFecha(service.getVentasInRange(getBean().getFecha_ipv_ventas_seleccionada()));
-                if (v != null) {
+                getBean().setVenta_ipv_ventas_seleccionada(selectFecha(service.getVentasInRange(getBean().getFecha_ipv_ventas_seleccionada())));
+                if (getBean().getVenta_ipv_ventas_seleccionada() != null) {
                     getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
                             service.getIpvRegistroVentaList(getBean().
-                                    getPunto_elaboracion_seleccionado(), v.getId())));
+                                    getPunto_elaboracion_seleccionado(),
+                                    getBean().getVenta_ipv_ventas_seleccionada().getId())));
                     getBean().setCheck_ocultar_productos_ipv_venta(false);
                 }
             }
@@ -259,7 +261,8 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         NavigationService.getInstance().navigateTo(IPVPedidoVentasView.VIEW_NAME,
                 new IPVPedidoVentasViewPresenter(
                         new PedidoIpvVentasController(
-                                getBean().getLista_ipv_venta_registro(), cocina)),
+                                getBean().getLista_ipv_venta_registro(), cocina,
+                                getBean().getVenta_ipv_ventas_seleccionada())),
                 DisplayType.POPUP);
 
 //        new PedidoIpvVentasView(
