@@ -5,21 +5,15 @@
  */
 package com.jobits.pos.controller.trabajadores;
 
-import java.awt.Dialog;
-import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.DatosPersonales;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.PuestoTrabajo;
-import com.jobits.pos.adapters.repo.impl.AbstractRepository;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.impl.PuestoTrabajoDAO;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 
 /**
  * FirstDream

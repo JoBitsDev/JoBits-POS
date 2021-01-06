@@ -7,6 +7,7 @@ package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.trabajadores.PersonalDetailController;
+import com.jobits.pos.controller.trabajadores.PersonalDetailService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.PuestoTrabajo;
@@ -28,7 +29,7 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
 
-    private PersonalDetailController service;
+    private PersonalDetailService service;
     Personal personal;
 
     public PersonalDetailViewPresenter(PersonalDetailController service) {

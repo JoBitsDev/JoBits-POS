@@ -31,5 +31,9 @@ public interface PersonalDetailService {
     boolean isCreatingMode();
 
     void pagarTrabajador();
-    
+
+    public void create(Personal personal);
+
+    public void update(Personal personal);
+
 }

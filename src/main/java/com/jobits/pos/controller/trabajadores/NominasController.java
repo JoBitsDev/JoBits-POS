@@ -77,9 +77,9 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
             i.print(new ComprobantePagoFormatter(personal), null);
         }
         if (showConfirmDialog(getView(), "Confirme el pago a " + personal.getDatosPersonales().getNombre() + " " + personal.getDatosPersonales().getApellidos())) {
-            PersonalDetailController controller = new PersonalDetailController(personal);
-            controller.setView(getView());
-            controller.pagarTrabajador();
+            PersonalDetailService service = new PersonalDetailController(personal);
+//            controller.setView(getView());
+            service.pagarTrabajador();
         }
     }
 
