@@ -9,6 +9,8 @@ import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.controller.trabajadores.NominasService;
 import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
@@ -47,29 +49,18 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
     }
 
     private void onBuscarClick() {
-        if (getBean().getDesde() == null || getBean().getHasta() == null) {
-            fireToast("Campos de fechas vacios");
-            return;
-        }
-        if (getBean().getDesde().isAfter(getBean().getHasta())) {
-            fireToast("Fechas incorrectas");
-            return;
-
-        }
         getBean().getLista_personal().clear();
         getBean().getLista_personal().addAll(service.getPersonalActivo(getBean().getFecha_desde(), getBean().getFecha_hasta()));
 
     }
 
     private void onPagarClick() {
-        if (!getBean().getLista_personal().isEmpty()) {
-            for (AsistenciaPersonalEstadisticas i : getBean().getLista_personal()) {
-                if (i.isUse()) {
-                    service.pagar(i);
-                }
-            }
-            getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize());
-        }
+        boolean flag = JOptionPane.showConfirmDialog(null,
+                "Desea imprimir el comprobante de pago", "Comprobante de Pago",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+        service.pagar(getBean().getLista_personal(), flag);
+        getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize());
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onImprimirClick() {
