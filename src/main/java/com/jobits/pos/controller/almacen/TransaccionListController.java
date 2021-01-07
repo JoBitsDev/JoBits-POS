@@ -33,7 +33,6 @@ public class TransaccionListController extends OldAbstractListController<Transac
         this.almacen = a;
         TransaccionDAO.getInstance().addPropertyChangeListener(this);
         TransaccionEntradaDAO.getInstance().addPropertyChangeListener(this);
-        // constructView(parent);
     }
 
     @Override
@@ -48,12 +47,6 @@ public class TransaccionListController extends OldAbstractListController<Transac
 
     @Override
     public void constructView(Container parent) {
-//        setView(new OldTransaccionListView(this, (OldAbstractView) parent, true));
-//        getView().getjButtonAdd().setVisible(false);
-//        getView().getjButtonEdit().setVisible(false);
-//
-//        getView().updateView();
-//        getView().setVisible(true);
     }
 
     @Override

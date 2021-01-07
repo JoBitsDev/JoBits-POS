@@ -12,8 +12,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.jobits.pos.controller.AbstractDetailController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.exceptions.ValidatingException;
 
 import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.Cocina;
@@ -73,9 +71,6 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     @Override
     public void constructView(Container parent) {
-//        setView(new TransaccionDetailView(a, this, (OldAbstractView) parent));
-//        getView().updateView();
-//        getView().setVisible(true);
     }
 
     @Override
@@ -98,13 +93,13 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     }
 
     @Override
-    public Transaccion addTransaccionSalida(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, Cocina cocina, float cantidad,int idVenta) {
+    public Transaccion addTransaccionSalida(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, Cocina cocina, float cantidad, int idVenta) {
         Transaccion t = nuevaTransaccion(o, insumo, fecha, hora, a, cantidad);
 
         TransaccionSalida salida = new TransaccionSalida(t.getNoTransaccion());
         salida.setTransaccion(t);
         salida.setCocinacodCocina(cocina);
-        createNewTransaccionSalida(salida, a,idVenta);
+        createNewTransaccionSalida(salida, a, idVenta);
         return t;
 
     }
@@ -145,7 +140,6 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     public void createNewTransaccionEntrada(TransaccionEntrada transaccion, Almacen a) {
         getModel().startTransaction();
         AlmacenManageService service = new AlmacenManageController(a);
-//        service.setView(getView());
         service.darEntradaAInsumo(transaccion);
         TransaccionEntradaDAO.getInstance().create(transaccion);
         TransaccionEntradaDAO.getInstance().commitTransaction();
@@ -155,8 +149,7 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     public void createNewTransaccionSalida(TransaccionSalida transaccion, Almacen a, int idVenta) {
         getModel().startTransaction();
         AlmacenManageService service = new AlmacenManageController(a);
-//        almacenController.setView(getView());
-        service.darSalidaAInsumo(transaccion,idVenta);
+        service.darSalidaAInsumo(transaccion, idVenta);
         TransaccionSalidaDAO.getInstance().create(transaccion);
         getModel().commitTransaction();
 
@@ -166,7 +159,6 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     public void createNewTransaccionRebaja(TransaccionMerma transaccion, Almacen a) {
         getModel().startTransaction();
         AlmacenManageService service = new AlmacenManageController(a);
-//        service.setView(getView());
         service.darMermaInsumo(transaccion);
         TransaccionMermaDAO.getInstance().create(transaccion);
         getModel().commitTransaction();
@@ -176,7 +168,6 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     private void createNewTransaccionTraspaso(TransaccionTraspaso transaccion, Almacen a) {
         getModel().startTransaction();
         AlmacenManageService service = new AlmacenManageController(a);
-//        service.setView(getView());
         service.darTraspasoInsumo(transaccion);
         TransaccionTraspasoDAO.getInstance().create(transaccion);
         getModel().commitTransaction();
@@ -185,7 +176,6 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
     private void createNewTransaccionTransformacion(Transaccion t, Almacen a, Almacen origen) {
         TransaccionDAO.getInstance().startTransaction();
         AlmacenManageService service = new AlmacenManageController(origen);
-//        service.setView(getView());
         service.darTransformacionAInsumo(t, a);
         service.getCocinaList();
     }
@@ -197,10 +187,8 @@ public class TransaccionDetailController extends AbstractDetailController<Transa
 
     private Transaccion nuevaTransaccion(Operacion o, Insumo insumo, Date fecha, Date hora, Almacen a, float cantidad) {
         Transaccion t = new Transaccion();
-//        if (o != null) {
         o.setAlmacen(a);
         t.setOperacionnoOperacion(o);
-//        }
         t.setDescripcion(R.loggedUser.getUsuario());
         t.setCantidad(cantidad);
         t.setInsumocodInsumo(insumo);
