@@ -32,9 +32,11 @@ public class PuntoElaboracionListController extends OldAbstractListController<Co
     }
 
     @Override
-    public void createInstance() {
-        String newCocina = showInputDialog(getView(), "Introduzca el nombre del nuevo punto de elaboracion");
-        if (newCocina != null && !newCocina.equals("")) {
+    public void createInstance(String newCocina) {
+        if (newCocina != null) {
+            if (!newCocina.equals("")) {
+                throw new IllegalArgumentException("Nombre no puede ser nulo o vacio");
+            }
             Cocina c = new Cocina(getModel().generateStringCode("C-"));
             c.setImpresoraList(new ArrayList<>());
             c.setIpvList(new ArrayList<>());
@@ -46,12 +48,10 @@ public class PuntoElaboracionListController extends OldAbstractListController<Co
             });
             create(c);
         }
-
     }
 
     @Override
-    public void update(Cocina selected) {
-        String editCocina = showInputDialog(getView(), "Introduzca el nuevo nombre al punto de elaboracion", selected.getNombreCocina());
+    public void update(Cocina selected, String editCocina) {
         if (editCocina != null && !editCocina.equals("")) {
             getItems().stream().filter((x)
                     -> (x.getNombreCocina().toLowerCase().equals(editCocina.toLowerCase()))).forEachOrdered((_item) -> {
@@ -65,18 +65,12 @@ public class PuntoElaboracionListController extends OldAbstractListController<Co
     }
 
     @Override
-    public void destroy(Cocina selected) {
-        if (!selected.getProductoVentaList().isEmpty()) {
-            if (showConfirmDialog(getView(), "El punto de elaboracion " + selected
-                    + " contiene " + selected.getProductoVentaList().size()
-                    + " productos de venta enlazados \n" + "presione si para borrar los productos de venta, no para cancelar")) {
-                for (ProductoVenta p : selected.getProductoVentaList()) {
-                    p.setCocinacodCocina(null);
-                    p.setVisible(false);
-                    ProductoVentaDAO.getInstance().edit(p);
-                }
-            } else {
-                return;
+    public void destroy(Cocina selected, boolean flag) {
+        if (flag) {
+            for (ProductoVenta p : selected.getProductoVentaList()) {
+                p.setCocinacodCocina(null);
+                p.setVisible(false);
+                ProductoVentaDAO.getInstance().edit(p);
             }
         }
         super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
@@ -84,12 +78,12 @@ public class PuntoElaboracionListController extends OldAbstractListController<Co
 
     @Override
     public AbstractDetailController<Cocina> getDetailControllerForNew() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public AbstractDetailController<Cocina> getDetailControllerForEdit(Cocina selected) {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -99,7 +93,7 @@ public class PuntoElaboracionListController extends OldAbstractListController<Co
     @Override
     public void constructView(java.awt.Container parent) {
     }
-    
+
     @Override
     public List<Cocina> getItems() {
         List<Cocina> retSorted = super.getItems();

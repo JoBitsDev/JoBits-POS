@@ -5,13 +5,18 @@
  */
 package com.jobits.pos.ui.puntoelaboracion.presenter;
 
+import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -64,19 +69,33 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
 
     @Override
     protected void onAgregarClick() {
-        service.createInstance();
+        String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre del nuevo punto de elaboracion");
+        service.createInstance(nombre);
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
-        service.update(getBean().getElemento_seleccionado());
+        String nombre = JOptionPane.showInputDialog(null,
+                "Introduzca el nuevo nombre al punto de elaboracion",
+                getBean().getElemento_seleccionado().getNombreCocina());
+        service.update(getBean().getElemento_seleccionado(), nombre);
         setListToBean();
     }
 
     @Override
     protected void onEliminarClick() {
-        service.destroy(getBean().getElemento_seleccionado());
+        Cocina c = getBean().getElemento_seleccionado();
+        boolean flag = false;
+        if (c == null) {
+            throw new IllegalArgumentException("Seleccione una cocina");
+        }
+        if (!c.getProductoVentaList().isEmpty()) {
+            flag = JOptionPane.showConfirmDialog(null, "El punto de elaboracion " + c
+                    + " contiene " + c.getProductoVentaList().size()
+                    + " productos de venta enlazados \n" + "presione si para borrar los productos de venta, no para cancelar", "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+        }
+        service.destroy(getBean().getElemento_seleccionado(), flag);
         setListToBean();
     }
 
