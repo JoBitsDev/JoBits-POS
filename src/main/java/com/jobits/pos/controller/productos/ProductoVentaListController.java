@@ -54,6 +54,9 @@ public class ProductoVentaListController extends OldAbstractListController<Produ
 
     @Override
     public void destroy(ProductoVenta selected) {
+        if (selected == null) {
+            throw new IllegalArgumentException("Seleccione un producto");
+        }
         validate(R.NivelAcceso.ADMINISTRADOR);
         super.destroy(selected);
     }
@@ -64,7 +67,6 @@ public class ProductoVentaListController extends OldAbstractListController<Produ
      */
     @Override
     public void constructView(java.awt.Container parent) {
-
     }
 
     public Carta[] getCartaList() {
@@ -78,16 +80,14 @@ public class ProductoVentaListController extends OldAbstractListController<Produ
 
     private void validate(R.NivelAcceso nivel) {
         if (!new LogInController().constructoAuthorizationView(nivel)) {
-            Application.getInstance().getNotificationService().notify("Acceso denegado", TipoNotificacion.ERROR);
-            throw new IllegalAccessError("Access denied");
+            throw new IllegalAccessError("Acceso denegado");
         }
     }
 
     public boolean canSetVisible(ProductoVenta get) {
         if (get.getCocinacodCocina() == null || get.getSeccionnombreSeccion() == null) {
-            Application.getInstance().getNotificationService().notify("El producto de venta no puede ponerse visible "
-                    + "\n si no se encuentra dentro de una seccion y un punto de elaboracion", TipoNotificacion.ERROR);
-            return false;
+            throw new IllegalAccessError("El producto de venta no puede ponerse visible "
+                    + "\n si no se encuentra dentro de una seccion y un punto de elaboracion");
         }
         return true;
     }
@@ -126,7 +126,6 @@ public class ProductoVentaListController extends OldAbstractListController<Produ
         ObjectMapper om = new ObjectMapper();
         try {
             List<ProductoVenta> importedList = om.readValue(fileToRead, om.getTypeFactory().constructCollectionLikeType(List.class, ProductoVenta.class));
-
             for (ProductoVenta item : getItems()) {
                 for (ProductoVenta importedListItem : importedList) {
                     if (item.getNombre().equals(importedListItem.getNombre())) {
