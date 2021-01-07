@@ -210,7 +210,9 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAddCategoriaClick() {
-        new SeccionListController().createInstance();
+        String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre de la sección a crear",
+                "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
+        new SeccionListController().createInstance(nombre);
         getBean().setLista_categorias(new ArrayListModel<>(service.getSeccionList()));
 
     }

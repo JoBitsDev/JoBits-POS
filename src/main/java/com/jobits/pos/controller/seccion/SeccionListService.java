@@ -8,7 +8,6 @@ package com.jobits.pos.controller.seccion;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Seccion;
-import com.jobits.pos.ui.OldAbstractView;
 
 /**
  *
@@ -16,7 +15,7 @@ import com.jobits.pos.ui.OldAbstractView;
  */
 public interface SeccionListService {
 
-    public void createInstance();
+    public void createInstance(String nombre);
 
     public void createInstanceOffline(Seccion seccion, Carta a);
 

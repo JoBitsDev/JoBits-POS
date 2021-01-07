@@ -37,28 +37,29 @@ public class SeccionListController extends OldAbstractListController<Seccion> im
     }
 
     @Override
-    public void createInstance() {
-        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la sección a crear",
-                "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
-        Seccion newSeccion = new Seccion();
-        newSeccion.setDescripcion("");
-        newSeccion.setNombreSeccion(nombre);
-        newSeccion.setProductoVentaList(new ArrayList<>());
-        if (owner != null) {
-            newSeccion.setCartacodCarta(owner);
-        }
-
-        if (nombre != null && !nombre.isEmpty()) {
+    public void createInstance(String nombre) {
+        if (nombre != null) {
+            if (nombre.isEmpty()) {
+                throw new IllegalArgumentException("Nombre no puede ser vacio");
+            }
+            Seccion newSeccion = new Seccion();
+            newSeccion.setDescripcion("");
+            newSeccion.setNombreSeccion(nombre);
+            newSeccion.setProductoVentaList(new ArrayList<>());
+            if (owner != null) {
+                newSeccion.setCartacodCarta(owner);
+            }
             if (validate(newSeccion)) {
                 getModel().startTransaction();
                 create(newSeccion);
                 getModel().commitTransaction();
             } else {
-                showErrorDialog(getView(), "La sección a crear ya existe");
+                throw new IllegalStateException("La seccion a crear ya existe");
             }
         }
     }
 
+    @Override
     public void createInstanceOffline(Seccion newSeccion, Carta a) {
 //        setView(view);
 //        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la sección a crear",
