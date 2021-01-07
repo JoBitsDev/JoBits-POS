@@ -56,12 +56,10 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
 
     @Override
     protected Optional refreshState() {
-        if (seccion.getNombreSeccion() != null) {
-            getBean().setNombre_habilitado(false);
-            getBean().setNombre_seccion(service.getSeccion(seccion.getNombreSeccion()).getNombreSeccion());
-            getBean().setLista_secciones_agregadas(
-                    new ArrayListModel<>(service.getSeccion(seccion.getNombreSeccion()).getAgregadoEn()));
-        }
+        getBean().setNombre_habilitado(false);
+        getBean().setNombre_seccion(service.getSeccion(seccion.getNombreSeccion()).getNombreSeccion());
+        getBean().setLista_secciones_agregadas(
+                new ArrayListModel<>(service.getSeccion(seccion.getNombreSeccion()).getAgregadoEn()));
         List<Seccion> aux = new ArrayList();
         List<Carta> listaCartas = new MenuController().getCartaListService().getItems();
         for (Carta x : listaCartas) {

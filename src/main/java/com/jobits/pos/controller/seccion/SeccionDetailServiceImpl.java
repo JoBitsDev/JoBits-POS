@@ -31,6 +31,9 @@ public class SeccionDetailServiceImpl implements SeccionDetailService {
 
     @Override
     public Seccion getSeccion(Object id_seccion) {
+        if (id_seccion == null) {
+            throw new IllegalArgumentException("Codigo de Seccion nulo");
+        }
         Seccion seccion = model.find(id_seccion);
         if (seccion == null) {
             throw new IllegalStateException("No se ha econtrado la seccion");
