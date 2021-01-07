@@ -63,7 +63,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
                     new ArrayListModel<>(service.getSeccion(seccion.getNombreSeccion()).getAgregadoEn()));
         }
         List<Seccion> aux = new ArrayList();
-        List<Carta> listaCartas = new MenuController().getCartaListController().getItems();
+        List<Carta> listaCartas = new MenuController().getCartaListService().getItems();
         for (Carta x : listaCartas) {
             aux.addAll(x.getSeccionList());
         }

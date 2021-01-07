@@ -11,8 +11,8 @@ package com.jobits.pos.controller.seccion;
  */
 public interface MenuService {
 
-    public CartaListController getCartaListController();
+    public CartaListService getCartaListService();
 
-    public SeccionListController getSeccionListController();
+    public SeccionListService getSeccionListService();
 
 }

@@ -26,29 +26,27 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class CartaListController extends OldAbstractListController<Carta> implements CartaListService{
+public class CartaListController extends OldAbstractListController<Carta> implements CartaListService {
 
     public CartaListController() {
         super(MenuDAO.getInstance());
     }
 
-
     @Override
-    public void createInstance() {
-        String nombre = JOptionPane.showInputDialog(getView(), "Introduzca el nombre de la Carta a crear",
-                "Nueva Carta", JOptionPane.QUESTION_MESSAGE);
-        Carta c = new Carta();
-        c.setAreaList(new ArrayList<>());
-        c.setCodCarta(getModel().generateStringCode("Cta-"));
-        c.setMonedaPrincipal(R.COIN_SUFFIX.substring(1));
-        c.setNombreCarta(nombre);
-        c.setSeccionList(new ArrayList<>());
-        if (nombre != null && !nombre.isEmpty()) {
+    public void createInstance(String nombre) {
+        if (nombre != null) {
+            if (nombre.isEmpty()) {
+                throw new IllegalArgumentException("Introduzca un nombre valido");
+            }
+            Carta c = new Carta();
+            c.setAreaList(new ArrayList<>());
+            c.setCodCarta(getModel().generateStringCode("Cta-"));
+            c.setMonedaPrincipal(R.COIN_SUFFIX.substring(1));
+            c.setNombreCarta(nombre);
+            c.setSeccionList(new ArrayList<>());
             getModel().startTransaction();
             create(c);
             getModel().commitTransaction();
-        } else {
-            throw new ValidatingException(getView());
         }
     }
 
@@ -73,7 +71,11 @@ public class CartaListController extends OldAbstractListController<Carta> implem
 //        new SeccionListController().createInstanceOffline(selectedValue, getView());
     }
 
+    @Override
     public void removeSeccionFromCarta(Seccion selectedValue) {
+        if (selectedValue == null) {
+            throw new IllegalArgumentException("Seleccione una seccion");
+        }
         SeccionListController controller = new SeccionListController();
         controller.getModel().removePropertyChangeListener(controller);
         controller.destroy(selectedValue);
@@ -81,6 +83,9 @@ public class CartaListController extends OldAbstractListController<Carta> implem
 
     @Override
     public void destroy(Carta selected) {
+        if (selected == null) {
+            throw new IllegalArgumentException("Seleccione una carta");
+        }
         for (Seccion s : selected.getSeccionList()) {
             if (!s.getProductoVentaList().isEmpty()) {
                 if (showConfirmDialog(getView(), "La seccion " + s.getNombreSeccion()
