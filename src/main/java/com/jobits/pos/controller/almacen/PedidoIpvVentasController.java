@@ -53,29 +53,24 @@ public class PedidoIpvVentasController extends AbstractDialogController<IpvVenta
     }
 
     @Override
-    public boolean realizarPedidoDeIpv(List<InsumoPedidoModel> insumosARebajar, List<ProdcutoVentaPedidoModel> pedido, Cocina puntoDestino, Almacen almacenOrigen) {
-        if (showConfirmDialog(getView(), "Desea ejecutar el pedido")) {
-            AlmacenManageService service = new AlmacenManageController(almacenOrigen);
-            IPVController ipvController = new IPVController();
-            ipvController.setShowDialogs(false);
-            ipvController.setView(getView());
-            for (InsumoPedidoModel i : insumosARebajar) {
-                TransaccionSimple transaccionSalida = new TransaccionSimple(
-                        service.findInsumo(i.getInsumo()),
-                        i.getCantidad(),
-                        puntoDestino);
-                service.crearOperacionSalida(new ArrayList<>(Arrays.asList(transaccionSalida)), null, venta.getFecha(), venta.getId());
-//                service.crearTransaccion(null, service.findInsumo(i.getInsumo()), 1, puntoDestino, null, i.getCantidad(), 0, null, false, ipvProductList.get(0).getDiaVenta().getId());
-            }
-            for (ProdcutoVentaPedidoModel p : pedido) {
-                ipvController.darEntradaIPV(p.getIpvProducto(), p.getCantidad());
-            }
-            showSuccessDialog(getView());
-            return true;
+    public void realizarPedidoDeIpv(List<InsumoPedidoModel> insumosARebajar, List<ProdcutoVentaPedidoModel> pedido, Cocina puntoDestino, Almacen almacenOrigen) {
+        AlmacenManageService service = new AlmacenManageController(almacenOrigen);
+        IPVController ipvController = new IPVController();
+        ipvController.setShowDialogs(false);
+        ipvController.setView(getView());
+        for (InsumoPedidoModel i : insumosARebajar) {
+            TransaccionSimple transaccionSalida = new TransaccionSimple(
+                    service.findInsumo(i.getInsumo()),
+                    i.getCantidad(),
+                    puntoDestino);
+            service.crearOperacionSalida(new ArrayList<>(Arrays.asList(transaccionSalida)), null, venta.getFecha(), venta.getId());
         }
-        return false;
+        for (ProdcutoVentaPedidoModel p : pedido) {
+            ipvController.darEntradaIPV(p.getIpvProducto(), p.getCantidad());
+        }
     }
 
+    @Override
     public List<Almacen> getAlmacenList() {
         return AlmacenDAO.getInstance().findAll();
     }

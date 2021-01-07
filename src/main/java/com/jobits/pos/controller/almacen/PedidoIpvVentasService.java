@@ -24,6 +24,6 @@ public interface PedidoIpvVentasService {
 
     public List<Almacen> getAlmacenList();
 
-    public boolean realizarPedidoDeIpv(List<InsumoPedidoModel> insumosARebajar, List<ProdcutoVentaPedidoModel> pedido, Cocina puntoDestino, Almacen almacenOrigen);
+    public void realizarPedidoDeIpv(List<InsumoPedidoModel> insumosARebajar, List<ProdcutoVentaPedidoModel> pedido, Cocina puntoDestino, Almacen almacenOrigen);
 
 }
