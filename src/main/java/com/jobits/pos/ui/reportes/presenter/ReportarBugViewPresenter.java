@@ -10,6 +10,7 @@ import com.jobits.pos.controller.reportes.ReportarBugService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import static com.jobits.pos.ui.mainmenu.presenter.MenuBarClassPresenter.ACTION_SHOW_ACERCA_DE;
@@ -64,13 +65,8 @@ public class ReportarBugViewPresenter extends AbstractViewPresenter<ReportarBugV
         String titile = getBean().getTitulo_reporte();
         String description = getBean().getDescripcion_reporte();
         String fecha = getBean().getFecha();
-
-        if (getBean().getTitulo_reporte() != null && getBean().getDescripcion_reporte() != null) {
-            service.guardarReporte(user, titile, description, fecha);
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Se ha registrado el reporte");
-        } else {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Rellene todos los campos");
-        }
+        service.guardarReporte(user, titile, description, fecha);
+        Application.getInstance().getNotificationService().notify("Se ha registrado el reporte", TipoNotificacion.SUCCESS);
     }
 
     private void updateBeanData() {
