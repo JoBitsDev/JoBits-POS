@@ -11,9 +11,11 @@ import com.jobits.pos.controller.areaventa.AreaVentaService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -126,23 +128,19 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
     }
 
     private void onNuevaMesaClick() {
-        if (getBean().getArea_seleccionada() == null) {
-            Application.getInstance().getNotificationService().notify("Debe seleccionar un area", TipoNotificacion.ERROR);
-            return;
-        }
-        service.createMesa(getBean().getArea_seleccionada());
+        String id = JOptionPane.showInputDialog("Introduzca el numero de la mesa a agregar ");
+        service.createMesa(getBean().getArea_seleccionada(), id);
         getBean().getLista_mesas().clear();
         getBean().setArea_seleccionada(getBean().getArea_seleccionada());
-
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onEliminarMesaClick() {
-        if (getBean().getMesa_seleccionada() == null) {
-            Application.getInstance().getNotificationService().notify("Debe seleccionar una seccion", TipoNotificacion.ERROR);
-            return;
+        if (JOptionPane.showConfirmDialog(null, "Desea eliminar la seccion", "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            service.removeMesa(getBean().getMesa_seleccionada());
+            getBean().setArea_seleccionada(getBean().getArea_seleccionada());
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
-        service.removeMesa(getBean().getMesa_seleccionada());
-        getBean().setArea_seleccionada(getBean().getArea_seleccionada());
     }
 
 }

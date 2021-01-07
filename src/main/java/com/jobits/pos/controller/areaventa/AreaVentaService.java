@@ -22,11 +22,11 @@ public interface AreaVentaService {
     public void destroy(Area area_seleccionada);
 
     public AbstractDetailController<Area> getDetailControllerForEdit(Area area_seleccionada);
-      
+
     public void removeMesa(Mesa selectedValue);
 
     public List<Area> getItems();
 
-    public void createMesa(Area area_seleccionada);
-    
+    public void createMesa(Area area_seleccionada, String id);
+
 }

@@ -34,17 +34,6 @@ public class AreaDetailController extends AbstractDetailController<Area> impleme
         creatingMode = false;
     }
 
-//    public AreaDetailController(Area instance, AbstractRepository<Area> model) {
-//        super(instance, AreaDAO.getInstance());
-//    }
-//
-//    public AreaDetailController(Window parent) {
-//        super(parent, AreaDAO.getInstance());
-//    }
-//
-//    public AreaDetailController(Area instance, Window parent) {
-//        super(instance, parent, AreaDAO.getInstance());
-//    }
     @Override
     public Area createNewInstance() {
         Area ret = new Area();
@@ -57,39 +46,14 @@ public class AreaDetailController extends AbstractDetailController<Area> impleme
         return ret;
     }
 
-//    @Override
-//    public void createUpdateInstance() {
-//        if (getView().validateData()) {
-//            switch (state) {
-//                case CREATING:
-//                    create(instance);
-//                    break;
-//                case EDITING:
-//
-//                    update(instance);
-//                    break;
-//            }
-//        } else {
-//            throw new ValidatingException();
-//        }
-//    }
-
     @Override
     public void constructView(Container parent) {
-//        setView(new AreaCreateEditView(getInstance(), this, (OldAbstractView) parent));
-//        getView().updateView();
-//        getView().setVisible(true);
     }
 
     @Override
     public List<Carta> getCartaList() {
         return CartaDAO.getInstance().findAll();
     }
-
-//    @Override
-//    public AbstractDetailView<Area> getView() {
-//        return (AbstractDetailView<Area>) super.getView(); //To change body of generated methods, choose Tools | Templates.
-//    }
 
     @Override
     public boolean isCreatingMode() {
