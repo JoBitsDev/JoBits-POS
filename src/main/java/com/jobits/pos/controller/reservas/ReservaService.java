@@ -45,4 +45,6 @@ public interface ReservaService {
 
     public List<Cliente> getListaClientes();
 
+    public Date formatDate(int hora, int minutos, String pm_am, Date date);
+
 }
