@@ -7,7 +7,7 @@ package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
+import com.jobits.pos.controller.clientes.ClientesDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 //import com.jobits.pos.adapters.repo.impl.OrdenTemporalRepo;
 import com.jobits.pos.controller.venta.OrdenService;
@@ -193,7 +193,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
                     "/restManager/resources/icons pack/porciento_indigo.png")));
         }
-        getBean().setLista_clientes(new ArrayListModel<>(new ClientesDetailServiceImpl().getListaClientes()));
+        getBean().setLista_clientes(new ArrayListModel<>(new ClientesDetailController().getListaClientes()));
         if (instance.getClienteIdCliente() != null) {
             getBean().setCliente_seleccionado(instance.getClienteIdCliente());
         } else {
@@ -329,7 +329,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_CLIENTE_SELECCIONADO, (PropertyChangeEvent evt) -> {
             Cliente newValue = (Cliente) evt.getNewValue();
             if (newValue != null) {
-                ClientesDetailServiceImpl clienteservice = new ClientesDetailServiceImpl();
+                ClientesDetailController clienteservice = new ClientesDetailController();
                 clienteservice.addOrdenToClientOrdenList(newValue, getController().getInstance(codOrden));
             }
         }

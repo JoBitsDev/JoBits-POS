@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.clientes.presenter;
 
-import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
+import com.jobits.pos.controller.clientes.ClientesDetailController;
 import com.jobits.pos.controller.clientes.ClientesListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -38,14 +38,14 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
     @Override
     protected void onAgregarClick() {
         NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
-                new ClientesDetailViewPresenter(new ClientesDetailServiceImpl()), DisplayType.POPUP);
+                new ClientesDetailViewPresenter(new ClientesDetailController()), DisplayType.POPUP);
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
         NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
-                new ClientesDetailViewPresenter(new ClientesDetailServiceImpl(getBean().getElemento_seleccionado())), DisplayType.POPUP);
+                new ClientesDetailViewPresenter(new ClientesDetailController(getBean().getElemento_seleccionado())), DisplayType.POPUP);
         setListToBean();
     }
 
