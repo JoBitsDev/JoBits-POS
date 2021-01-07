@@ -20,6 +20,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.utils.utils;
 import java.awt.Dimension;
 import java.util.Optional;
@@ -221,22 +222,13 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAgregarInsumoFichaClick() {
-        Optional<String> opt = Application.getInstance().getNotificationService().showDialog("Introduzca la cantidad de " + getBean().getInsumo_disponible_sel(), TipoNotificacion.DIALOG_INPUT);
-        if (opt.isPresent()) {
-            try {
-                float cantidad = Float.parseFloat(opt.get());
-                Insumo inSel = getBean().getInsumo_disponible_sel();
-                service.agregarInsumoaProducto(inSel, cantidad);
-                getBean().setInsumo_disponible_sel(null);
-                getBean().getLista_insumos_contenidos().clear();
-                getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
-                updateCostoValue();
-                getBean().setInsumo_disponible_sel(null);
-            } catch (NumberFormatException ex) {
-                Application.getInstance().getNotificationService().showDialog("Valores Incorrectos", TipoNotificacion.ERROR);
-            }
-        }
-
+        Insumo inSel = getBean().getInsumo_disponible_sel();
+        service.agregarInsumoaProducto(inSel, new NumberPad(null).showView());
+        getBean().setInsumo_disponible_sel(null);
+        getBean().getLista_insumos_contenidos().clear();
+        getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
+        updateCostoValue();
+        getBean().setInsumo_disponible_sel(null);
     }
 
     private void updateCostoValue() {
@@ -259,7 +251,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onEditarImagenClick() {
-        new ImageManagerPopUpContainer(null, p.getCodigoProducto());
+        ImageManagerPopUpContainer a = new ImageManagerPopUpContainer(null, p.getCodigoProducto());
 //        TODO: Arreglar Navegacion al ImageManagerPopup
         getBean().setRuta_imagen_producto(R.MEDIA_FILE_PATH + p.getCodigoProducto() + ".jpg");
     }
