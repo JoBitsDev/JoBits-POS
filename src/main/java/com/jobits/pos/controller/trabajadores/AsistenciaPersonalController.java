@@ -126,6 +126,9 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
 
     @Override
     public void updateAMayores(AsistenciaPersonal personalABuscar, float aMayoresValor) {
+        if (personalABuscar == null) {
+            throw new IllegalArgumentException("Seleccione un personal");
+        }
         personalABuscar.setAMayores(aMayoresValor);
         AsistenciaPersonalDAO.getInstance().edit(personalABuscar);
     }
@@ -133,10 +136,10 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     @Override
     public void imprimirAsistencia() {
         if (getPersonalTrabajando(diaVenta).isEmpty()) {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "No hay trabajadores registrados en esta fecha");
-        } else {
-            Impresion.getDefaultInstance().print(new PersonalTrabajandoFormatter(getPersonalTrabajando(diaVenta)), null);
+            throw new IllegalStateException("No hay trabajadores registrados en esta fecha");
         }
+        Impresion.getDefaultInstance().print(new PersonalTrabajandoFormatter(getPersonalTrabajando(diaVenta)), null);
+
     }
 
 }

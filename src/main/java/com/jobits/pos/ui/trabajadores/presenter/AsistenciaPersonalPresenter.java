@@ -13,6 +13,7 @@ import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.NumberPad;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -99,15 +100,10 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
     }
 
     private void onAMayoresClick() {
-        if (getBean().getPersonal_contenido_selecionado() == null) {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un personal primero");
-        } else {
-            float aMayores = Float.parseFloat(JOptionPane.showInputDialog("Introduzca el valor de A mayores"));
-            AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
-            personalService.updateAMayores(personal, aMayores);
-            getBean().getLista_personal_contenido().clear();
-            getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
-        }
+        AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
+        personalService.updateAMayores(personal, new NumberPad(null).showView());
+        getBean().getLista_personal_contenido().clear();
+        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
     }
 
 }
