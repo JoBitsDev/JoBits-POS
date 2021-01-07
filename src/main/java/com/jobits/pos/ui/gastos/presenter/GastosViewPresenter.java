@@ -10,6 +10,7 @@ import com.jobits.pos.controller.gasto.GastoOperacionService;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.GastosFormatter;
@@ -98,27 +99,21 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     }
 
     private void onAgregarClick() {
-        if (getBean().getCategoria_gasto_seleccionada() != null && getBean().getTipo_gasto_seleccionado() != null) {
-            service.createNewGasto(
-                    getBean().getCategoria_gasto_seleccionada(),
-                    getBean().getTipo_gasto_seleccionado(),
-                    getBean().getMonto_gasto(),
-                    getBean().getDescripcion_gasto());
-            refreshState();
-            onLimpiarClick();
-        } else {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Rellene todos los campos obligatorios");
-        }
+        service.createNewGasto(
+                getBean().getCategoria_gasto_seleccionada(),
+                getBean().getTipo_gasto_seleccionado(),
+                getBean().getMonto_gasto(),
+                getBean().getDescripcion_gasto());
+        refreshState();
+        onLimpiarClick();
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onEliminarClick() {
         if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
-            if (getBean().getGasto_venta_seleccionado() == null) {
-                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un gasto primero");
-            } else {
-                service.removeGasto(getBean().getGasto_venta_seleccionado());
-                refreshState();
-            }
+            service.removeGasto(getBean().getGasto_venta_seleccionado());
+            refreshState();
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 
