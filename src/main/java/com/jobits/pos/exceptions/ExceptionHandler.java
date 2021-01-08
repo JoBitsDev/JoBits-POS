@@ -5,11 +5,10 @@
  */
 package com.jobits.pos.exceptions;
 
+import com.jobits.pos.main.Application;
 import java.awt.Component;
-import java.awt.Container;
 import javax.swing.JOptionPane;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.OldView;
 
 /**
  * FirstDream
@@ -20,28 +19,11 @@ import com.jobits.pos.ui.OldView;
 public class ExceptionHandler {
 
     private Exception e;
-    private OldView v;
     private String message;
 
-    public static void showExceptionToUser(Exception e, OldView v, String message) {
-        JOptionPane.showMessageDialog((Component) v, message+"\n" + e.getMessage(),
+    public static void showExceptionToUser(Exception e, String message) {
+        JOptionPane.showMessageDialog((Component) Application.getInstance().getMainWindow(), message + "\n" + e.getMessage(),
                 R.RESOURCE_BUNDLE.getString("label_error") + e.getMessage(), JOptionPane.ERROR_MESSAGE);
     }
-
-    public static void showExceptionToUser(Exception e, OldView v) {
-        showExceptionToUser(e, v, null);
-    }
-
-    public static void showExceptionToUser(Exception e) {
-        showExceptionToUser(e, null, null);
-
-    }
-    
-    public static void showExceptionToUser(Exception e,String s) {
-        showExceptionToUser(e, null, s);
-
-    }
-    
-    
 
 }
