@@ -16,10 +16,9 @@ import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.adapters.repo.impl.AsistenciaPersonalDAO;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
-import com.jobits.pos.main.Application;
+import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.PersonalTrabajandoFormatter;
-import javax.swing.JOptionPane;
 
 /**
  * FirstDream
@@ -69,7 +68,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
 
     @Override
     public void calcularPagoTrabajador(AsistenciaPersonal ret, int codVenta) {
-        VentaDetailController controller = new VentaDetailController();
+        VentaDetailService controller = new VentaDetailController();
         ret.setPago(controller.getPagoTrabajador(ret.getPersonal(), codVenta));
         ret.setPropina(controller.getPropinaTrabajador(ret.getPersonal(), codVenta));
 
@@ -112,7 +111,7 @@ public class AsistenciaPersonalController extends AbstractFragmentListController
     public List<AsistenciaPersonal> updateSalaries(int codVenta) {
         if (!readOnlyData) {
             ArrayList<AsistenciaPersonal> ret = new ArrayList<>(getPersonalTrabajando(diaVenta));
-            VentaDetailController controller = new VentaDetailController();
+            VentaDetailService controller = new VentaDetailController();
             for (AsistenciaPersonal a : ret) {
                 a.setPago(controller.getPagoTrabajador(a.getPersonal(), codVenta));
                 a.setPropina(controller.getPropinaTrabajador(a.getPersonal(), codVenta));

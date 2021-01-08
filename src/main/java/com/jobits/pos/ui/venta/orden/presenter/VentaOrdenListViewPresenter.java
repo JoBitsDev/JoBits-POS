@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jobits.pos.controller.venta.OrdenController;
+import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.domain.models.Orden;
@@ -16,6 +16,7 @@ import java.beans.PropertyChangeListener;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -120,7 +121,31 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     private void onAbrirReservaAction() {
-        Orden newReserva = ventaService.abrirReserva(codVenta);
+        List<Orden> listaReserva = ventaService.findReservas(codVenta);
+        Orden newReserva = null;
+        JList<Orden> jList = new JList<>(listaReserva.toArray(new Orden[listaReserva.size()]));
+        jList.setSelectedIndex(-1);
+        Object[] options = {"Abrir", "Cancelar"};
+        //                     yes        no  
+        int confirm = JOptionPane.showOptionDialog(
+                null,
+                jList,
+                "Reservas",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.YES_NO_OPTION,
+                MaterialIcons.RESTORE,
+                options,
+                options[0]);
+        switch (confirm) {
+            case JOptionPane.YES_OPTION:
+                newReserva = (Orden) jList.getSelectedValue();
+                ventaService.abrirReserva(newReserva, codVenta);
+                break;
+            case JOptionPane.NO_OPTION:
+                break;
+            default:
+                break;
+        }
         if (newReserva != null) {
             getBean().setElemento_seleccionado(newReserva);
             onAbrirOrdenAction();

@@ -15,6 +15,7 @@ import com.jobits.pos.adapters.repo.impl.VentaDAO;
 import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.venta.VentaDetailController;
+import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.Ipv;
@@ -27,10 +28,7 @@ import com.jobits.pos.domain.models.ProductoInsumo;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.exceptions.UnExpectedErrorException;
-import com.jobits.pos.exceptions.ValidatingException;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.utils.NumberPad;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,10 +36,6 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 
 /**
  * FirstDream
@@ -175,7 +169,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
 
     public List<IpvRegistro> getIpvRegistroList(Cocina cocina, int ventaCod) {
         List<IpvRegistro> lista = IpvRegistroDAO.getInstance().getIpvRegistroList(cocina, ventaCod);
-        VentaDetailController controller = new VentaDetailController();
+        VentaDetailService controller = new VentaDetailController();
         for (IpvRegistro i : lista) {
             i.setConsumo(controller.getGastoTotalDeInsumo(i, ventaCod));
             updateInstance(i);
@@ -184,7 +178,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     }
 
     public List<IpvVentaRegistro> getIpvRegistroVentaList(Cocina cocina, int codVenta) {
-        VentaDetailController controller = new VentaDetailController();
+        VentaDetailService controller = new VentaDetailController();
         List<IpvVentaRegistro> list = IpvRegistroVentaDAO.getInstance().getIpvVentaRegistroList(codVenta);
         List<IpvVentaRegistro> ret = new ArrayList<>();
         for (IpvVentaRegistro x : list) {
@@ -298,7 +292,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
      * @param idVenta
      */
     public void recalcularExistencias(Date fecha, int idVenta) {
-        VentaDetailController ventaController = new VentaDetailController();
+        VentaDetailService ventaController = new VentaDetailController();
         for (IpvRegistro x : IpvRegistroDAO.getInstance().getIpvRegistroList(idVenta)) {
             x.setConsumo(ventaController.getGastoTotalDeInsumo(x, idVenta));
             getModel().startTransaction();
@@ -309,7 +303,7 @@ public class IPVController extends AbstractDialogController<Ipv> implements IPVS
     }
 
     public void recalcularIpvRegistros(int codVenta) {
-        VentaDetailController ventaController = new VentaDetailController();
+        VentaDetailService ventaController = new VentaDetailController();
         for (IpvVentaRegistro x : IpvRegistroVentaDAO.getInstance().getIpvVentaRegistroList(codVenta)) {
             x.setVenta(ventaController.getVentaTotalDelProducto(x.getProductoVenta(), codVenta));
             x.setAutorizos(ventaController.getAutorizosTotalDelProducto(x.getProductoVenta(), codVenta));

@@ -7,7 +7,6 @@ package com.jobits.pos.controller.venta;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.impl.AreaDAO;
 import com.jobits.pos.adapters.repo.impl.CocinaDAO;
@@ -35,7 +34,6 @@ import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.exceptions.DevelopingOperationException;
-import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
@@ -58,8 +56,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 
 /**
  * FirstDream
@@ -88,9 +84,9 @@ public class VentaDetailController extends AbstractDetailController<Venta>
     }
 
     @Deprecated
+    @Override
     public void cambiarTurno(int codVenta) {
         throw new DevelopingOperationException();
-        //getModel().getEntityManager().refresh(super.getInstance(codVenta));
 //        if (showConfirmDialog(getView(), "Seguro desea cambiar el turno. Esta accion no se puede deshacer")) {
 //
 //            ArrayList<Orden> ord = new ArrayList<>(getInstance(codVenta).getOrdenList());
@@ -113,9 +109,9 @@ public class VentaDetailController extends AbstractDetailController<Venta>
     @Override
     public Venta cambiarTurno(Venta fecha) {
         Venta v = null;
-        if (terminarVentas(fecha.getId())) {
-            v = inicializarVentas(fecha.getFecha(), true).get(0);
-        }
+        terminarVentas(fecha.getId());
+        v = inicializarVentas(fecha.getFecha(), true).get(0);
+
         return v;
     }
 
@@ -131,13 +127,12 @@ public class VentaDetailController extends AbstractDetailController<Venta>
 
     }
 
+    @Override
     public void cerrarOrdenRapido(String codOrden, int codVenta) {
         if (ordController != null) {
-            if (showConfirmDialog(getView(), "Desea enviar a cocina, cerrar y crear una nueva orden")) {
-                ordController.enviarACocina(codOrden);
-                ordController.cerrarOrden(codOrden, true);
-                createNewOrden(codVenta);
-            }
+            ordController.enviarACocina(codOrden);
+            ordController.cerrarOrden(codOrden, true);
+            createNewOrden(codVenta);
         }
 
     }
@@ -173,10 +168,12 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         getModel().getEntityManager().refresh(getModel().find(codVenta));
     }
 
+    @Override
     public List<Area> getAreaList() {
         return AreaDAO.getInstance().findAll();
     }
 
+    @Override
     public float getAutorizosTotalDelProducto(ProductoVenta productoVenta, int codVenta) {
         float total = 0;
         for (Orden x : getInstance(codVenta).getOrdenList()) {
@@ -191,10 +188,12 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return total;
     }
 
+    @Override
     public List<Cocina> getCocinaList() {
         return CocinaDAO.getInstance().findAll();
     }
 
+    @Override
     public Float getGastoTotalDeInsumo(IpvRegistro i, int codVenta) {
         float total = 0;
         for (Orden x : getInstance(codVenta).getOrdenList()) {
@@ -234,7 +233,6 @@ public class VentaDetailController extends AbstractDetailController<Venta>
                 }
             }
             return vent;
-
         }
     }
 
@@ -255,6 +253,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return ret;
     }
 
+    @Override
     public Float getPagoTrabajador(Personal personal, int codVenta) {
         float pago = 0;
         PuestoTrabajo p = personal.getPuestoTrabajonombrePuesto();
@@ -265,14 +264,12 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         } else {
             totalVentas = VentaDAO1.getValorTotalVentas(v);
         }
-
         pago += p.getSalarioFijo();
         if (totalVentas > p.getAPartirDe()) {
             pago += (totalVentas - p.getAPartirDe()) * (p.getSalarioPorcientoDeArea() / 100);
             totalVentas -= p.getAPartirDe();
         }
         pago += (p.getSalarioPorcientoVentaTotal() * totalVentas) / 100;
-
         if (personal.getPuestoTrabajonombrePuesto().getPagoPorVentas() != null) {
             if (personal.getPuestoTrabajonombrePuesto().getPagoPorVentas()) {
                 int personalTrabajandoPorVentas = 0;
@@ -284,15 +281,15 @@ public class VentaDetailController extends AbstractDetailController<Venta>
                 pago += VentaDAO1.getValorPagoPorVentas(getInstance(codVenta)) / personalTrabajandoPorVentas;
             }
         }
-
         return utils.setDosLugaresDecimalesFloat(pago);
-
     }
 
+    @Override
     public List<Personal> getPersonalList() {
         return PersonalDAO.getInstance().findAll();
     }
 
+    @Override
     public Float getPropinaTrabajador(Personal personal, int codVenta) {
         float ret = 0;
         Venta v = getInstance(codVenta);
@@ -314,6 +311,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return utils.setDosLugaresDecimalesFloat(ret);
     }
 
+    @Override
     public List<ResumenVentaAreaTablaModel> getResumenPorAreaVenta(int codVenta) {
         List<ResumenVentaAreaTablaModel> ret = new ArrayList<>();
         for (Area a : getAreaList()) {
@@ -325,6 +323,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return ret;
     }
 
+    @Override
     public List<ResumenVentaPtoElabTablaModel> getResumenPorPtoVenta(int codVenta) {
         List<ResumenVentaPtoElabTablaModel> ret = new ArrayList<>();
         for (Cocina c : getCocinaList()) {
@@ -336,6 +335,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return ret;
     }
 
+    @Override
     public List<ResumenVentaUsuarioTablaModel> getResumenPorUsuarioVenta(int codVenta) {
         List<ResumenVentaUsuarioTablaModel> ret = new ArrayList<>();
         for (Personal p : getPersonalList()) {
@@ -347,6 +347,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return ret;
     }
 
+    @Override
     public String getTotalAutorizos(int codVenta) {
         float ret = 0;
         for (ProductovOrden x : VentaDAO1.getResumenVentasCasa(getInstance(codVenta))) {
@@ -355,10 +356,12 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return utils.setDosLugaresDecimales(ret);
     }
 
+    @Override
     public String getTotalGastadoInsumos(int codVenta) {
         return utils.setDosLugaresDecimales(VentaDAO1.getValorTotalGastosInsumo(getInstance(codVenta)));
     }
 
+    @Override
     public String getTotalGastos(int codVenta) {
         float total = 0;
         for (GastoVenta g : getInstance(codVenta).getGastoVentaList()) {
@@ -367,10 +370,12 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return utils.setDosLugaresDecimales(total);
     }
 
+    @Override
     public String getTotalPagoTrabajadores(int codVenta) {
         return utils.setDosLugaresDecimales(VentaDAO1.getValorTotalPagoTrabajadores(getInstance(codVenta)));
     }
 
+    @Override
     public float getTotalPropina(int codVenta) {
         if (getInstance(codVenta).getVentapropina() != null) {
             return getInstance(codVenta).getVentapropina();
@@ -379,6 +384,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         }
     }
 
+    @Override
     public String getTotalVendido(int codVenta) {
         return utils.setDosLugaresDecimales(VentaDAO1.getValorTotalVentas(getInstance(codVenta)));
     }
@@ -388,6 +394,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return utils.setDosLugaresDecimales(VentaDAO1.getValorTotalVentasNeta(getInstance(codVenta)));
     }
 
+    @Override
     public float getVentaTotalDelProducto(ProductoVenta productoVenta, int codVenta) {
         float total = 0;
         for (Orden x : getInstance(codVenta).getOrdenList()) {
@@ -402,8 +409,11 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return total;
     }
 
-    public boolean importarVenta(File file) {
-
+    @Override
+    public void importarVenta(File file) {
+        if (file == null) {
+            throw new IllegalArgumentException("Seleccione un archivo a importar");
+        }
         try {
             Venta ret = new ObjectMapper().readValue(file, Venta.class);
             getModel().startTransaction();
@@ -416,16 +426,14 @@ public class VentaDetailController extends AbstractDetailController<Venta>
             IPVController ipvController = new IPVController();
             ipvController.recalcularExistencias(ret.getFecha(), ret.getId());
             ipvController.recalcularIpvRegistros(ret.getId());//TODO: arreglar esto
-            return true;
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            showErrorDialog(getView(), "Ocurrio un error importando la venta.");
-            return false;
+            throw new IllegalStateException("Ocurrio un error importando la venta.");
         }
     }
 
+    @Override
     public List<Venta> inicializarVentas(Date fecha, boolean nuevaVenta) {
-        List<Venta> ret = new ArrayList<>();
+        List<Venta> ret;
         if (nuevaVenta) {
             ret = crearVenta(fecha);
         } else {
@@ -449,15 +457,6 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         }
         Collections.sort(ret, (Venta o1, Venta o2) -> {
             return o1.getId().compareTo(o2.getId());
-//            int ret1 = o1.getId().compareTo(o2.getId());
-//            int a, b;
-//            a = o1.getVentaTotal() == null ? -1 : 0;
-//            b = o2.getVentaTotal() == null ? -1 : 0;
-//            if (a == b) {
-//                return ret1;
-//            } else {
-//                return Integer.compare(a, b);
-//            }
         });
         switch (Application.getInstance().getLoggedUser().getPuestoTrabajonombrePuesto().getNivelAcceso()) {
             case 0:
@@ -471,9 +470,9 @@ public class VentaDetailController extends AbstractDetailController<Venta>
                 break;
         }
         return ret;
-
     }
 
+    @Override
     public void initIPV(Venta v) {
         new LongProcessActionServiceImpl("Creando IPVs.........") {
             @Override
@@ -484,6 +483,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         }.performAction(getView());
     }
 
+    @Override
     public void mostrarVenta(int turnoVenta) {
         switch (turnoVenta) {
             case 0:
@@ -499,44 +499,47 @@ public class VentaDetailController extends AbstractDetailController<Venta>
 
     @Override
     public void printAreaResumen(Area a, int codVenta) {
+        if (a == null) {
+            throw new IllegalArgumentException("El Area es nula");
+        }
         Impresion.getDefaultInstance().print(new ResumenVentaAreaFormatter(
                 VentaDAO1.getResumenVentaPorAreaOld(getInstance(codVenta), a), getInstance(codVenta).getFecha()), null);
     }
 
-    public void printCocinaResumen(String codCocina, int codVenta) {
+    @Override
+    public void printCocinaResumen(String codCocina, int codVenta, boolean printValores) {
         Cocina c = CocinaDAO.getInstance().find(codCocina);
         List<ProductovOrden> aux = VentaDAO1.getResumenVentasCocina(getInstance(codVenta), c);
         Collections.sort(aux, (o1, o2) -> {
             return o1.getNombreProductoVendido().compareTo(o2.getNombreProductoVendido());
         });
-        getImpresionInstance().print(new PuntoElaboracionFormatter(aux, c, getInstance(codVenta).getFecha()), c.getNombreCocina());
+        getImpresionInstance(printValores).print(new PuntoElaboracionFormatter(aux, c, getInstance(codVenta).getFecha()), c.getNombreCocina());
     }
 
+    @Override
     public void printGastosCasa(int codVenta) {
         Impresion.getDefaultInstance().print(new CasaFormatter(VentaDAO1.getResumenVentasCasa(getInstance(codVenta)), getInstance(codVenta).getFecha()), null);
     }
 
-    /**
-     *
-     * @param user
-     */
     @Override
-    public void printPagoPorVentaPersonal(Personal user, int codVenta) {
-        Impresion i = getImpresionInstance();
+    public void printPagoPorVentaPersonal(Personal user, int codVenta, boolean printValores) {
+        if (user == null) {
+            throw new IllegalArgumentException("Personal nulo");
+        }
+        Impresion i = getImpresionInstance(printValores);
         i.print(new PagoPorVentaFormatter(getInstance(codVenta), user.getUsuario()), null);
     }
 
-    /**
-     *
-     * @param p
-     */
     @Override
-    public void printPersonalResumenRow(Personal p, int codVenta) {
+    public void printPersonalResumenRow(Personal p, int codVenta, boolean printValores) {
+        if (p == null) {
+            throw new IllegalArgumentException("Personal nulo");
+        }
         List<ProductovOrden> aux = VentaDAO1.getResumenVentasCamarero(getInstance(codVenta), p);
         Collections.sort(aux, (o1, o2) -> {
             return o1.getNombreProductoVendido().compareTo(o2.getNombreProductoVendido());
         });
-        getImpresionInstance().print(new PersonalResumenFormatter(aux, p, getInstance(codVenta).getFecha()), null);
+        getImpresionInstance(printValores).print(new PersonalResumenFormatter(aux, p, getInstance(codVenta).getFecha()), null);
 
     }
 
@@ -555,69 +558,57 @@ public class VentaDetailController extends AbstractDetailController<Venta>
             limitTime.set(Calendar.SECOND, 0);
             limitTime.set(Calendar.MILLISECOND, 0);
             if (getInstance(codVenta).getFecha().getTime() < limitTime.getTimeInMillis()) {
-                showErrorDialog(getView(), "La venta solo se puede reabrir en el margen de 1 dia laboral. No antes");
-                return;
+                throw new IllegalStateException("La venta solo se puede reabrir en el margen de 1 dia laboral. No antes");
             }
             Venta v = getInstance(codVenta);
             v.setVentaTotal(null);
             update(v, true);
-            showSuccessDialog(getView());
-
         }
     }
 
+    @Override
     public void setPropina(float value, int codVenta) {
         getInstance(codVenta).setVentapropina(value);
         update(getInstance(codVenta), true);
     }
 
-    public boolean terminarVentas(int codVenta) {
-
-        if (showConfirmDialog(null, "¿Desea terminar el día de trabajo?")) {
-
-            float ventaTotal = 0,
-                    ventasGastosEnInsumos = 0,
-                    ventasGastosGastos = 0,
-                    ventasPagoTrabajadores = 0;
-            Venta v = getModel().getEntityManager().find(Venta.class, codVenta);
-            getModel().getEntityManager().refresh(v);
-            for (Orden x : v.getOrdenList()) {
-                if (x.getHoraTerminada() == null) {
-                    showErrorDialog(null, "Existen tickets sin cerrar (" + x + "). Cierre los tickets antes de terminar la venta");
-                    return false;
-                }
-                if (!x.getDeLaCasa()) {
-                    ventaTotal += x.getOrdenvalorMonetario();
-                }
-                ventasGastosEnInsumos += x.getOrdengastoEninsumos();
-
+    @Override
+    public void terminarVentas(int codVenta) {
+        float ventaTotal = 0,
+                ventasGastosEnInsumos = 0,
+                ventasGastosGastos = 0,
+                ventasPagoTrabajadores = 0;
+        Venta v = getModel().getEntityManager().find(Venta.class, codVenta);
+        getModel().getEntityManager().refresh(v);
+        for (Orden x : v.getOrdenList()) {
+            if (x.getHoraTerminada() == null) {
+                throw new IllegalStateException("Existen tickets sin cerrar (" + x + "). Cierre los tickets antes de terminar la venta");
             }
-            for (GastoVenta x : v.getGastoVentaList()) {
-                ventasGastosGastos += x.getImporte();
+            if (!x.getDeLaCasa()) {
+                ventaTotal += x.getOrdenvalorMonetario();
             }
-            for (AsistenciaPersonal x : v.getAsistenciaPersonalList()) {
-                ventasPagoTrabajadores += x.getPago();
-            }
-            v.setVentaTotal((double) ventaTotal);
-            v.setVentagastosEninsumos((double) ventasGastosEnInsumos);
-            v.setVentagastosGastos(ventasGastosGastos);
-            v.setVentagastosPagotrabajadores(ventasPagoTrabajadores);
-            update(v);
-
-            return true;
+            ventasGastosEnInsumos += x.getOrdengastoEninsumos();
         }
-        return false;
+        for (GastoVenta x : v.getGastoVentaList()) {
+            ventasGastosGastos += x.getImporte();
+        }
+        for (AsistenciaPersonal x : v.getAsistenciaPersonalList()) {
+            ventasPagoTrabajadores += x.getPago();
+        }
+        v.setVentaTotal((double) ventaTotal);
+        v.setVentagastosEninsumos((double) ventasGastosEnInsumos);
+        v.setVentagastosGastos(ventasGastosGastos);
+        v.setVentagastosPagotrabajadores(ventasPagoTrabajadores);
+        update(v);
     }
 
-    public boolean terminarYExportar(File file, int codVenta) {
+    @Override
+    public void terminarYExportar(File file, int codVenta) {
         terminarVentas(codVenta);
         try {
             new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writeValue(file, getInstance(codVenta));
-            return true;
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            showErrorDialog(getView(), "Ocurrio un error exportando la venta.");
-            return false;
+            throw new IllegalAccessError("Ocurrio un error exportando la venta.");
         }
     }
 
@@ -625,7 +616,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         LicenceController licence = new LicenceController(Licence.TipoLicencia.APLICACION);
         //revisar si la fecha donde se quiere crear el dia excede el tiempo de licencia
         if (licence.getLicence().getFechaFinMilis() < fecha.toInstant().toEpochMilli()) {
-            throw new UnauthorizedAccessException(getView(), "No se pueden crear ventas mas alla de la fecha fin de la licencia");
+            throw new IllegalStateException("No se pueden crear ventas mas alla de la fecha fin de la licencia");
         }
         Venta aux = new Venta();
         aux.setVentagastosEninsumos(0.0);
@@ -638,7 +629,6 @@ public class VentaDetailController extends AbstractDetailController<Venta>
 
         //Crear IPvs
         initIPV(aux);
-
         return ret;
     }
 
@@ -653,25 +643,9 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         return new ArrayList<>();
     }
 
-    private Impresion getImpresionInstance() {
+    private Impresion getImpresionInstance(boolean printValores) {
         Impresion i = Impresion.getDefaultInstance();
-
-        int value = JOptionPane.showConfirmDialog(getView(), "Presione SI para imprimir los valores,\nNo para imprimir solo las cantidades",
-                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")));
-
-        switch (value) {
-            case JOptionPane.YES_OPTION:
-                i.setSHOW_PRICES(true);
-                break;
-            case JOptionPane.NO_OPTION:
-                i.setSHOW_PRICES(false);
-                break;
-            case JOptionPane.CLOSED_OPTION:
-                throw new RuntimeException();
-            default:
-                break;
-        }
+        i.setSHOW_PRICES(printValores);
         return i;
     }
 
@@ -680,8 +654,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
     }
 
     @Override
-    public Orden abrirReserva(int codVenta) {
-        Orden orden;
+    public List<Orden> findReservas(int codVenta) {
         List<Orden> listaReserva = new ArrayList<>();
         Date currentDate = VentaDAO.getInstance().find(codVenta).getFecha();
         for (Orden reserva : (List<Orden>) new ReservaListController().getListaReservas()) {
@@ -694,36 +667,18 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         }
         SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy");
         if (listaReserva.isEmpty()) {
-            showErrorDialog(null, "No hay reservaciones para el " + sdf.format(currentDate));
-        } else {
-            JList<Orden> jList = new JList<>(listaReserva.toArray(new Orden[listaReserva.size()]));
-            jList.setSelectedIndex(-1);
-            Object[] options = {"Abrir", "Cancelar"};
-            //                     yes        no  
-            int confirm = JOptionPane.showOptionDialog(
-                    null,
-                    jList,
-                    "Reservas",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.YES_NO_OPTION,
-                    MaterialIcons.RESTORE,
-                    options,
-                    options[0]);
-            switch (confirm) {
-                case JOptionPane.YES_OPTION:
-                    orden = (Orden) jList.getSelectedValue();
-                    orden.setVentaid(VentaDAO.getInstance().find(codVenta));
-                    getModel().startTransaction();
-                    OrdenDAO.getInstance().edit(orden);
-                    getModel().commitTransaction();
-                    getInstance(codVenta).getOrdenList().add(orden);
-                    return orden;
-                case JOptionPane.NO_OPTION:
-                    break;
-                default:
-                    break;
-            }
+            throw new IllegalStateException("No hay reservaciones para el " + sdf.format(currentDate));
         }
+        return listaReserva;
+    }
+
+    @Override
+    public Orden abrirReserva(Orden orden, int codVenta) {
+        orden.setVentaid(VentaDAO.getInstance().find(codVenta));
+        getModel().startTransaction();
+        OrdenDAO.getInstance().edit(orden);
+        getModel().commitTransaction();
+        getInstance(codVenta).getOrdenList().add(orden);
         return null;
     }
 

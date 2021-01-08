@@ -6,77 +6,117 @@
 package com.jobits.pos.controller.venta;
 
 import com.jobits.pos.domain.models.Area;
+import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.IpvRegistro;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.Venta;
-import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import com.jobits.pos.domain.venta.ResumenVentaAreaTablaModel;
 import com.jobits.pos.domain.venta.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.domain.venta.ResumenVentaUsuarioTablaModel;
+import java.awt.Container;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
 
 /**
  *
- * @author ERIK QUESADA
+ * @author Home
  */
 public interface VentaDetailService {
 
-    public Venta cambiarTurno(Venta venta);
+    public List<Orden> findReservas(int codVenta);
 
-    public boolean canReabrirVenta(int codVenta);
+    Orden abrirReserva(Orden orden, int codVenta);
 
-    public Orden createNewOrden(int codVenta);
+    @Deprecated
+    void cambiarTurno(int codVenta);
 
-    public Orden abrirReserva(int codVenta);
+    Venta cambiarTurno(Venta fecha);
 
-    public void fetchNewDataFromServer(int codVenta);
+    boolean canOpenNuevoTurno(Date fecha);
 
-    public Venta getInstance(int codVenta);
+    boolean canReabrirVenta(int codVenta);
 
-    public List<Orden> getOrdenesActivas(int codVenta);
+    void cerrarOrdenRapido(String codOrden, int codVenta);
 
-    public List<ResumenVentaAreaTablaModel> getResumenPorAreaVenta(int codVenta);
+    void constructView(Container parent);
 
-    public List<ResumenVentaPtoElabTablaModel> getResumenPorPtoVenta(int codVenta);
+    Venta createNewInstance();
 
-    public List<ResumenVentaUsuarioTablaModel> getResumenPorUsuarioVenta(int codVenta);
+    Orden createNewOrden(int codVenta);
 
-    public String getTotalAutorizos(int codVenta);
+    void fetchNewDataFromServer(int codVenta);
 
-    public String getTotalGastadoInsumos(int codVenta);
+    List<Area> getAreaList();
 
-    public String getTotalGastos(int codVenta);
+    float getAutorizosTotalDelProducto(ProductoVenta productoVenta, int codVenta);
 
-    public String getTotalPagoTrabajadores(int codVenta);
+    List<Cocina> getCocinaList();
 
-    public float getTotalPropina(int codVenta);
+    Float getGastoTotalDeInsumo(IpvRegistro i, int codVenta);
 
-    public String getTotalVendido(int codVenta);
+    Venta getInstance(int codVenta);
 
-    public String getTotalVendidoNeto(int codVenta);
+    Venta getInstance();
 
-    public void initIPV(Venta venta_seleccionada);
+    List<Orden> getOrdenesActivas(int codVenta);
 
-    public void printAreaResumen(Area a, int codVenta);
+    Float getPagoTrabajador(Personal personal, int codVenta);
 
-    public void printCocinaResumen(String codCocina, int codVenta);
+    List<Personal> getPersonalList();
 
-    public void printGastosCasa(int codVenta);
+    Float getPropinaTrabajador(Personal personal, int codVenta);
 
-    public void printPagoPorVentaPersonal(Personal user, int codVenta);
+    List<ResumenVentaAreaTablaModel> getResumenPorAreaVenta(int codVenta);
 
-    public void printPersonalResumenRow(Personal personal, int codVenta);
+    List<ResumenVentaPtoElabTablaModel> getResumenPorPtoVenta(int codVenta);
 
-    public void printZ(int codVenta);
+    List<ResumenVentaUsuarioTablaModel> getResumenPorUsuarioVenta(int codVenta);
 
-    public void reabrirVentas(int codVenta);
+    String getTotalAutorizos(int codVenta);
 
-    public boolean terminarVentas(int codVenta);
+    String getTotalGastadoInsumos(int codVenta);
 
-    public boolean terminarYExportar(File file, int codVenta);
+    String getTotalGastos(int codVenta);
 
-    public boolean canOpenNuevoTurno(Date fecha);
+    String getTotalPagoTrabajadores(int codVenta);
+
+    float getTotalPropina(int codVenta);
+
+    String getTotalVendido(int codVenta);
+
+    String getTotalVendidoNeto(int codVenta);
+
+    float getVentaTotalDelProducto(ProductoVenta productoVenta, int codVenta);
+
+    void importarVenta(File file);
+
+    List<Venta> inicializarVentas(Date fecha, boolean nuevaVenta);
+
+    void initIPV(Venta v);
+
+    void mostrarVenta(int turnoVenta);
+
+    void printAreaResumen(Area a, int codVenta);
+
+    void printGastosCasa(int codVenta);
+
+    void printCocinaResumen(String codCocina, int codVenta, boolean printValores);
+
+    void printPagoPorVentaPersonal(Personal user, int codVenta, boolean printValores);
+
+    void printPersonalResumenRow(Personal p, int codVenta, boolean printValores);
+
+    void printZ(int codVenta);
+
+    void reabrirVentas(int codVenta);
+
+    void setPropina(float value, int codVenta);
+
+    void terminarVentas(int codVenta);
+
+    void terminarYExportar(File file, int codVenta);
 
 }

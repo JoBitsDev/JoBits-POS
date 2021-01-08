@@ -11,6 +11,7 @@ import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.gastos.presenter.GastosViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -22,7 +23,6 @@ import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.PROP_VENTA_
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -187,18 +187,28 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     }
 
     private void onTerminarClick() {
-        if (service.terminarVentas(getBean().getVenta_seleccionada().getId())) {
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea terminar el día de trabajo?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.terminarVentas(getBean().getVenta_seleccionada().getId());
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             Application.getInstance().getNavigator().navigateUp();
         }
     }
 
     private void onTerminarYExportarClick() {
-        service.terminarYExportar(getBean().getFile_for_export(), getBean().getVenta_seleccionada().getId());
-        Application.getInstance().getNavigator().navigateUp();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea terminar el día de trabajo?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.terminarYExportar(getBean().getFile_for_export(), getBean().getVenta_seleccionada().getId());
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNavigator().navigateUp();
+        }
     }
 
     private void onReabrirVentaCLick() {
         service.reabrirVentas(getBean().getVenta_seleccionada().getId());
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onImprimirResumenVentaAreaClick() {
@@ -207,27 +217,43 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     }
 
     private void onImprimirResumenVentaUsuarioClick() {
-        service.printPersonalResumenRow(getBean().getResumen_usuario_seleccionado().getPersonal(), getBean().getVenta_seleccionada().getId());
+        boolean imprimirValores = (boolean) Application.getInstance().getNotificationService().
+                showDialog("Presione SI para imprimir los valores,"
+                        + "\nNo para imprimir solo las cantidades",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+        service.printPersonalResumenRow(getBean().getResumen_usuario_seleccionado().getPersonal(),
+                getBean().getVenta_seleccionada().getId(), imprimirValores);
 
     }
 
     private void onImprimirResumenVentaUsuarioComisionClick() {
-        service.printPagoPorVentaPersonal(getBean().getResumen_usuario_seleccionado().getPersonal(), getBean().getVenta_seleccionada().getId());
+        boolean imprimirValores = (boolean) Application.getInstance().getNotificationService().
+                showDialog("Presione SI para imprimir los valores,"
+                        + "\nNo para imprimir solo las cantidades",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+        service.printPagoPorVentaPersonal(getBean().getResumen_usuario_seleccionado().getPersonal(),
+                getBean().getVenta_seleccionada().getId(), imprimirValores);
 
     }
 
     private void onImprimirResumenPtoElabClick() {
-        service.printCocinaResumen(getBean().getResumen_pto_seleccionado().getCodigoPto(), getBean().getVenta_seleccionada().getId());
+        boolean imprimirValores = (boolean) Application.getInstance().getNotificationService().
+                showDialog("Presione SI para imprimir los valores,"
+                        + "\nNo para imprimir solo las cantidades",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+        service.printCocinaResumen(getBean().getResumen_pto_seleccionado().getCodigoPto(),
+                getBean().getVenta_seleccionada().getId(), imprimirValores);
     }
 
     private void onCrearNuevoTurnoClick() {
-        if (JOptionPane.showConfirmDialog(null, "Desea terminar el turno?")
-                == JOptionPane.YES_OPTION) {
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea terminar el turno?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada());
             if (venta != null) {
                 getBean().getList_ventas().add(venta);
                 getBean().setVenta_seleccionada(venta);
             }
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 
