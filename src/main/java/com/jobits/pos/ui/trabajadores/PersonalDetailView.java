@@ -315,7 +315,7 @@ public class PersonalDetailView extends AbstractViewPanel {
 
     private void jTextFieldTelefonoFijoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoFijoKeyTyped
         char c = evt.getKeyChar();
-        int l = jTextFieldTelefonoMovil.getText().length();
+        int l = jTextFieldTelefonoFijo.getText().length();
         if (((l >= 8) || (c < '0') || (c > '9')) && (c != '\b')) {
             evt.consume();
         }

@@ -8,6 +8,7 @@ package com.jobits.pos.controller.trabajadores;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.PuestoTrabajo;
 import java.awt.Container;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +27,8 @@ public interface PersonalDetailService {
 
     Personal createNewInstance();
 
+    public Personal getInstance();
+
     List<PuestoTrabajo> getPuestoTrabajoList();
 
     boolean isCreatingMode();
@@ -35,5 +38,20 @@ public interface PersonalDetailService {
     public void create(Personal personal);
 
     public void update(Personal personal);
+
+    public void fillPersonalData(
+            String nombre,
+            String apellidos,
+            Date fechaNac,
+            PuestoTrabajo puestoTrabajo,
+            String usuario,
+            String contrasennaNueva,
+            String contrasennaNuevaRepetida,
+            String contrasennaAntigua,
+            String telefonoMovil,
+            String telefonoFijo,
+            String direccion,
+            String carnetID,
+            String sexo);
 
 }

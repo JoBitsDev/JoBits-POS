@@ -14,6 +14,10 @@ import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.adapters.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.adapters.repo.impl.PuestoTrabajoDAO;
+import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import javax.swing.JOptionPane;
 
 /**
  * FirstDream
@@ -24,8 +28,8 @@ import com.jobits.pos.adapters.repo.impl.PuestoTrabajoDAO;
 public class PersonalDetailController extends AbstractDetailController<Personal> implements PersonalDetailService {
 
     private boolean creatingMode = true;
-    
-     public PersonalDetailController() {
+
+    public PersonalDetailController() {
         super(PersonalDAO.getInstance());
         instance = createNewInstance();
     }
@@ -34,23 +38,6 @@ public class PersonalDetailController extends AbstractDetailController<Personal>
         super(instance, PersonalDAO.getInstance());
         creatingMode = false;
     }
-//
-//    public PersonalDetailController() {
-//        super(PersonalDAO.getInstance());
-//        instance = createNewInstance();
-//    }
-//
-//    public PersonalDetailController(Personal instance) {
-//        super(instance, PersonalDAO.getInstance());
-//    }
-//
-//    public PersonalDetailController(Window parent) {
-//        super(parent, PersonalDAO.getInstance());
-//    }
-//
-//    public PersonalDetailController(Personal instance, Window parent) {
-//        super(instance, parent, PersonalDAO.getInstance());
-//    }
 
     /**
      *
@@ -58,13 +45,11 @@ public class PersonalDetailController extends AbstractDetailController<Personal>
      */
     @Override
     public void constructView(java.awt.Container parent) {
-//        if (parent instanceof JDialog) {
-//            setView(new OLDPersonalDetailView(instance, this, (Dialog) parent, true));
-//        } else {
-//            setView(new OLDPersonalDetailView(instance, this, (JFrame) parent, true));
-//
-//        }
-//        getView().setVisible(true);
+    }
+
+    @Override
+    public Personal getInstance() {
+        return super.getInstance(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -85,7 +70,6 @@ public class PersonalDetailController extends AbstractDetailController<Personal>
         instance.setUltimodiaPago(new Date());
         instance.setPagoPendiente((float) 0);
         update(selected, true);
-        showSuccessDialog(null, "Trabajador Pagado exitosamente");
     }
 
     @Override
@@ -97,6 +81,69 @@ public class PersonalDetailController extends AbstractDetailController<Personal>
     @Override
     public boolean isCreatingMode() {
         return creatingMode;
+    }
+
+    @Override
+    public void fillPersonalData(String nombre, String apellidos, Date fechaNac, PuestoTrabajo puestoTrabajo, String usuario, String contrasennaNueva, String contrasennaNuevaRepetida, String contrasennaAntigua, String telefonoMovil, String telefonoFijo, String direccion, String carnetID, String sexo) {
+        if (contrasennaNueva != null) {
+            if (!contrasennaNueva.equals(contrasennaNuevaRepetida)) {
+                throw new IllegalArgumentException("Repita correctamente la nueva contrasena");
+            }
+        }
+        if (nombre == null
+                || apellidos == null
+                || usuario == null
+                || contrasennaNueva == null && contrasennaAntigua == null
+                || puestoTrabajo == null
+                || nombre.equals("")
+                || apellidos.equals("")
+                || usuario.equals("")) {
+            throw new IllegalArgumentException("Hay campos obligatorios sin rellenar");
+        }
+
+        instance.getDatosPersonales().setNombre(nombre);
+        instance.getDatosPersonales().setApellidos(apellidos);
+        instance.getDatosPersonales().setFechaNacimineto(fechaNac);
+        instance.getDatosPersonales().setDireccion(direccion);
+        instance.getDatosPersonales().setCarnet(carnetID);
+
+        instance.setPuestoTrabajonombrePuesto(puestoTrabajo);
+        instance.setUsuario(usuario);
+        instance.getDatosPersonales().setPersonalusuario(usuario);
+
+        instance.setUltimodiaPago(new Date());
+        instance.setPagoPendiente((float) 0);
+        instance.setOnline(false);
+
+        if (contrasennaNueva == null || contrasennaNueva.equals("")) {
+            if (contrasennaAntigua != null && !contrasennaAntigua.equals("")) {
+                instance.setContrasenna(contrasennaAntigua);
+            }
+        } else {
+            instance.setContrasenna(contrasennaNueva);
+        }
+        if (telefonoMovil == null) {
+            instance.getDatosPersonales().setTelefonoMovil(null);
+        } else {
+            instance.getDatosPersonales().setTelefonoMovil(Integer.parseInt(telefonoMovil));
+        }
+        if (telefonoFijo == null) {
+            instance.getDatosPersonales().setTelefonoFijo(null);
+        } else {
+            instance.getDatosPersonales().setTelefonoFijo(Integer.parseInt(telefonoFijo));
+        }
+        if (sexo != null) {
+            if (sexo.equals("Masculino")) {
+                instance.getDatosPersonales().setSexo('M');
+            } else {
+                instance.getDatosPersonales().setSexo('F');
+            }
+        }
+        if (isCreatingMode()) {
+            create(instance);
+        } else {
+            update(instance);
+        }
     }
 
 }
