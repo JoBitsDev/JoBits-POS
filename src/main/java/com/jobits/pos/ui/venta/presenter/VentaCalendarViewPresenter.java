@@ -112,10 +112,9 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     @Override
     protected void onEliminarClick() {
         Venta v = getVentaFromCalendar();
-        if (v != null) {
-            service.destroy(v);
-            updateBeanData();
-        }
+        service.destroy(v);
+        updateBeanData();
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private Venta getVentaFromCalendar() {
