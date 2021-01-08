@@ -80,14 +80,6 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
      */
     @Override
     public void constructView(java.awt.Container parent) {
-//        if (parent instanceof JDialog) {
-//            setView(new OLDInsumoCreateEditView(this, (JDialog) parent, true, getInstance()));
-//
-//        } else {
-//            setView(new OLDInsumoCreateEditView(this, (JFrame) parent, true, getInstance()));
-//        }
-//        getView().updateView();
-//        getView().setVisible(true);
     }
 
     @Override
