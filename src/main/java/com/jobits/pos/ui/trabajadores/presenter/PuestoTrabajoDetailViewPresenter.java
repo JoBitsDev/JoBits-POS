@@ -68,49 +68,19 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
     }
 
     private void onAgregarClick() {
-        if (getBean().getNombre_puesto_trabajo() == null || getBean().getNombre_puesto_trabajo().equals("")) {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "El campo nombre es obligatorio");
-            return;
-        } else {
-            String nombre = getBean().getNombre_puesto_trabajo();
-            if (nombre.length() > 30 || !nombre.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
-                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Nombre no permitido");
-                return;
-            } else {
-                puesto.setNombrePuesto(nombre);
-            }
-        }
-
-        puesto.setAreacodArea(getBean().getArea_trabajo_seleccionada());
-
-        if (getBean().getArea_pago_seleccionada() == null) {
-            puesto.setAreaPago(null);
-        } else {
-            puesto.setAreaPago(getBean().getArea_pago_seleccionada().getCodCocina());
-        }
-        if (getBean().getNivel_acceso_seleccionado() == null) {
-            puesto.setNivelAcceso(0);
-        } else {
-            puesto.setNivelAcceso(getBean().getNivel_acceso_seleccionado().getNivel());
-        }
-
-        puesto.setPagoPorVentas(getBean().isPago_por_ventas());
-        puesto.setPropina(getBean().isPropina());
-        puesto.setPuestosDisponibles(getBean().getPuestos_disponibles());
-        puesto.setAPartirDe(getBean().getPago_a_partir());
-        puesto.setSalarioFijo(getBean().getSalario_fijo());
-        puesto.setSalarioPorcientoDeArea(getBean().getPago_porciento_a_partir());
-        puesto.setSalarioPorcientoVentaTotal(getBean().getSalario_venta());
-
-        if (puesto.getPersonalList() == null) {
-            puesto.setPersonalList(new ArrayList<>());
-        }
-
-        if (service.isCreatingMode()) {
-            service.create(puesto);
-        } else {
-            service.update(puesto);
-        }
+        service.fillPuestoTrabajoData(
+                getBean().getNombre_puesto_trabajo(),
+                getBean().getArea_trabajo_seleccionada(),
+                getBean().getArea_pago_seleccionada().getCodCocina(),
+                getBean().getNivel_acceso_seleccionado().getNivel(),
+                getBean().isPago_por_ventas(),
+                getBean().isPropina(),
+                getBean().getPuestos_disponibles(),
+                getBean().getPago_a_partir(),
+                getBean().getSalario_fijo(),
+                getBean().getPago_porciento_a_partir(),
+                getBean().getSalario_venta());
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
     }
 

@@ -7,6 +7,7 @@ package com.jobits.pos.controller.trabajadores;
 
 import com.jobits.pos.domain.models.Area;
 import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.PuestoTrabajo;
 import java.awt.Container;
 import java.util.List;
@@ -34,5 +35,18 @@ public interface PuestoTrabajoDetailService {
     public void create(PuestoTrabajo puestoTrabajo);
 
     public void update(PuestoTrabajo puestoTrabajo);
+
+    public void fillPuestoTrabajoData(
+            String nombre,
+            Area areaTrabajo,
+            String areaPago,
+            Integer nivelAcceso,
+            boolean pagoPorVentas,
+            boolean propina,
+            Integer puestosDisponibles,
+            float aPartirDe,
+            float salarioFijo,
+            float salarioPorcientoDeArea,
+            float salarioPorcientoVentaTotal);
 
 }
