@@ -52,4 +52,12 @@ public class PuestoTrabajoListController extends OldAbstractListController<Puest
         return retSorted;
     }
 
+    @Override
+    public void destroy(PuestoTrabajo selected) {
+        if (selected == null) {
+            throw new IllegalArgumentException("Seleccione un Puesto de trabajo");
+        }
+        super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
