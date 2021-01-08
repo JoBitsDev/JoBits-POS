@@ -17,11 +17,13 @@ import java.util.List;
  */
 public interface OrdenService {
 
-    public void addNota(String codOrden, ProductovOrden producto_orden_seleccionado);
+    public boolean nuevaNota(ProductovOrden p);
 
-    public boolean addProduct(String codOrden, ProductoVenta producto_venta_seleccionado, float cantidad);
+    public void addNota(String codOrden, ProductovOrden producto_orden_seleccionado, String nuevaNota);
 
-    public void cerrarOrden(String codOrden);
+    public boolean addProduct(String codOrden, ProductoVenta producto_seleccionado, float cantidad);
+
+    public Orden cerrarOrden(String codOrden, boolean imprimirTicket);
 
     /**
      *
@@ -52,4 +54,6 @@ public interface OrdenService {
     public void setPorciento(String codOrden, float porciento_servicio);
 
     public void setModoAgrego(ProductovOrden producto_orden_seleccionado);
+
+    public void canViewOrdenLog(String codOrden);
 }

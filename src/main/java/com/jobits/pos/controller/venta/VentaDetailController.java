@@ -87,7 +87,6 @@ public class VentaDetailController extends AbstractDetailController<Venta>
 
     }
 
-
     @Deprecated
     public void cambiarTurno(int codVenta) {
         throw new DevelopingOperationException();
@@ -136,7 +135,7 @@ public class VentaDetailController extends AbstractDetailController<Venta>
         if (ordController != null) {
             if (showConfirmDialog(getView(), "Desea enviar a cocina, cerrar y crear una nueva orden")) {
                 ordController.enviarACocina(codOrden);
-                ordController.cerrarOrden(codOrden);
+                ordController.cerrarOrden(codOrden, true);
                 createNewOrden(codVenta);
             }
         }
