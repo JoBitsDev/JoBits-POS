@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.controller.productos;
 
+import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.ProductoInsumo;
@@ -34,11 +35,22 @@ public interface ProductoVentaDetailService {
     public void discardChanges();
 
     public void create(ProductoVenta p);
-    
+
     public void update(ProductoVenta p);
 
     public List<Seccion> getSeccionList();
 
     public List<Cocina> getCocinaList();
+
+    public boolean isCreatingMode();
+
+    public void fillProductoVentaData(String nombre,
+            String precioCosto,
+            String pagoPorVenta,
+            String precioVenta,
+            Cocina cocina,
+            Seccion categegoria,
+            ArrayListModel<ProductoInsumo> lista_insumos_contenidos,
+            String rutaImagenProducto);
 
 }

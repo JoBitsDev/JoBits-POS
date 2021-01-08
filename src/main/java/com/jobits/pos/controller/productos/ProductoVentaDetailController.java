@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.controller.productos;
 
+import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import java.awt.Graphics;
 import java.awt.Window;
@@ -34,6 +35,8 @@ import com.jobits.pos.utils.utils;
  */
 public class ProductoVentaDetailController extends AbstractDetailController<ProductoVenta> implements ProductoVentaDetailService {
 
+    private boolean creatingMode = true;
+
     public ProductoVentaDetailController() {
         super(ProductoVentaDAO.getInstance());
         instance = createNewInstance();
@@ -42,6 +45,11 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
 
     public ProductoVentaDetailController(ProductoVenta instance) {
         super(instance, ProductoVentaDAO.getInstance());
+        creatingMode = false;
+    }
+
+    public boolean isCreatingMode() {
+        return creatingMode;
     }
 
     @Override
@@ -142,6 +150,35 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
             throw new IllegalArgumentException("Selecione un insumo");
         }
         getInstance().getProductoInsumoList().remove(insumo_contenido_seleccionado);//TODO donde se actualiza el valor total del insumo
+    }
+
+    @Override
+    public void fillProductoVentaData(String nombre, String precioCosto, String pagoPorVenta, String precioVenta, Cocina cocina, Seccion categegoria, ArrayListModel<ProductoInsumo> lista_insumos_contenidos, String rutaImagenProducto) {
+        if (nombre == null) {
+            throw new IllegalArgumentException("Introduzca el nombre del producto");
+        }
+        if (precioCosto == null || precioCosto.equals("")) {
+            instance.setGasto(0f);
+        } else {
+            instance.setGasto(Float.valueOf(precioCosto));
+        }
+        if (pagoPorVenta == null) {
+            instance.setPagoPorVenta((float) 0);
+        } else {
+            instance.setPagoPorVenta(Float.parseFloat(pagoPorVenta));
+        }
+        instance.setNombre(nombre);
+        instance.setPrecioVenta(Float.parseFloat(precioVenta));
+        instance.setCocinacodCocina(cocina);
+        instance.setSeccionnombreSeccion(categegoria);
+        instance.setProductoInsumoList(lista_insumos_contenidos);
+        instance.setDescripcion(rutaImagenProducto);
+        instance.setVisible(true);
+        if (isCreatingMode()) {
+            create(instance);
+        } else {
+            update(instance);
+        }
     }
 
 }
