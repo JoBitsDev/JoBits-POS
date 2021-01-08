@@ -14,15 +14,11 @@ import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.recursos.RegularExpressions;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,7 +32,7 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
     private PuestoTrabajoDetailService service;
     PuestoTrabajo puesto;
 
-    public PuestoTrabajoDetailViewPresenter(PuestoTrabajoDetailController service) {
+    public PuestoTrabajoDetailViewPresenter(PuestoTrabajoDetailService service) {
         super(new PuestoTrabajoDetailViewModel());
         this.service = service;
         if (service.isCreatingMode()) {

@@ -37,7 +37,7 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
         if (controller.isCreatingMode()) {
             area = controller.createNewInstance();
         } else {
-            area = controller.getInstance();
+            area = controller.getSelected();
         }
         fillForm();
         addListeners();
