@@ -11,6 +11,7 @@ import com.jobits.pos.controller.trabajadores.PersonalListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 
@@ -34,15 +35,13 @@ public class PersonalListViewPresenter extends AbstractListViewPresenter<Persona
     @Override
     protected void onAgregarClick() {
         Application.getInstance().getNavigator().navigateTo("Crear Personal", null, DisplayType.POPUP);
-        //    PersonalDetailController newController = new PersonalDetailController(Application.getInstance().getMainWindow());
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
         if (getBean().getElemento_seleccionado() == null) {
-            Application.getInstance().getNotificationService().notify("Debe seleccionar una trabajador", TipoNotificacion.ERROR);
-            return;
+            throw new IllegalArgumentException("Debe seleccionar una trabajador");
         }
         Application.getInstance().getNavigator().navigateTo(
                 "Crear Personal",
@@ -50,16 +49,21 @@ public class PersonalListViewPresenter extends AbstractListViewPresenter<Persona
                         new PersonalDetailController(
                                 getBean().getElemento_seleccionado())),
                 DisplayType.POPUP);
-
-        //PersonalDetailController newController = new PersonalDetailController(getBean().getElemento_seleccionado(), Application.getInstance().getMainWindow());
         setListToBean();
 
     }
 
     @Override
     protected void onEliminarClick() {
-        controller.destroy(getBean().getElemento_seleccionado());
-        setListToBean();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("ATENCION: esto elimina al usuario de todas las ordenes que ha atendido."
+                        + "\n Esta seguro que desea continuar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            controller.destroy(getBean().getElemento_seleccionado());
+            setListToBean();
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        }
+
     }
 
     @Override
