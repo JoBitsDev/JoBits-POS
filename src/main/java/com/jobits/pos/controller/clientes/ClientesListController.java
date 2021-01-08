@@ -12,9 +12,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class ClientesListServiceImpl implements ClientesListService {
+public class ClientesListController implements ClientesListService {
 
-    public ClientesListServiceImpl() {
+    public ClientesListController() {
     }
 
     @Override

@@ -16,7 +16,7 @@ import com.jobits.pos.adapters.repo.impl.GastoDAO;
  * @author Jorge
  * 
  */
-public class GastoController extends AbstractController<Gasto>{
+public class GastoController extends AbstractController<Gasto> implements GastoService{
 
     public GastoController() {
         super(GastoDAO.getInstance());

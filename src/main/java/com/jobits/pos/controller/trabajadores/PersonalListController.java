@@ -78,19 +78,14 @@ public class PersonalListController extends OldAbstractListController<Personal> 
     @Override
     public void destroy(Personal selected) {
         if (!selected.getOrdenList().isEmpty()) {
-            if (showConfirmDialog(getView(), "ATENCION: esto elimina al usuario de todas las ordenes que ha atendido."
-                    + "\n Esta seguro que desea continuar?")) {
-                getModel().startTransaction();
-                for (Orden o : selected.getOrdenList()) {
-                    o.setPersonalusuario(null);
-                }
-                super.destroy(selected);
-                getModel().commitTransaction();
-                return;
-            } else {
-                return;
+            getModel().startTransaction();
+            for (Orden o : selected.getOrdenList()) {
+                o.setPersonalusuario(null);
             }
+            super.destroy(selected);
+            getModel().commitTransaction();
+        } else {
+            super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
         }
-        super.destroy(selected); //To change body of generated methods, choose Tools | Templates.
     }
 }

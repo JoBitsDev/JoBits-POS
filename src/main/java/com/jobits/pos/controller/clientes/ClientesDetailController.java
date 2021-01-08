@@ -14,16 +14,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-public class ClientesDetailServiceImpl extends AbstractDetailController<Cliente> implements ClientesDetailService {
+public class ClientesDetailController extends AbstractDetailController<Cliente> implements ClientesDetailService {
 
     private boolean creatingMode = true;
 
-    public ClientesDetailServiceImpl() {
+    public ClientesDetailController() {
         super(ClienteDAO.getInstance());
         instance = createNewInstance();
     }
 
-    public ClientesDetailServiceImpl(Cliente instance) {
+    public ClientesDetailController(Cliente instance) {
         super(instance, ClienteDAO.getInstance());
         creatingMode = false;
     }

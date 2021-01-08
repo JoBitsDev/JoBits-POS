@@ -19,11 +19,17 @@ public class SeccionDetailServiceImpl implements SeccionDetailService {
 
     @Override
     public void crearSeccion(Carta carta, Seccion seccion) {
+        if (seccion.getNombreSeccion().isEmpty() || seccion.getNombreSeccion() == null) {
+            throw new IllegalArgumentException("El nombre de la seccion no puede ser vacio o nulo");
+        }
         new SeccionListController().createInstanceOffline(seccion, carta);
     }
 
     @Override
     public void editarSeccion(Seccion seccion) {
+        if (seccion.getNombreSeccion().isEmpty() || seccion.getNombreSeccion() == null) {
+            throw new IllegalArgumentException("El nombre de la seccion no puede ser vacio o nulo");
+        }
         model.startTransaction();
         model.edit(seccion);
         model.commitTransaction();
@@ -31,6 +37,9 @@ public class SeccionDetailServiceImpl implements SeccionDetailService {
 
     @Override
     public Seccion getSeccion(Object id_seccion) {
+        if (id_seccion == null) {
+            throw new IllegalArgumentException("Codigo de Seccion nulo");
+        }
         Seccion seccion = model.find(id_seccion);
         if (seccion == null) {
             throw new IllegalStateException("No se ha econtrado la seccion");

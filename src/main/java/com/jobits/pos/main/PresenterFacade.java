@@ -10,11 +10,11 @@ import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasController;
-import com.jobits.pos.controller.almacen.TransaccionesListController;
+import com.jobits.pos.controller.almacen.TransaccionListController;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
-import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
-import com.jobits.pos.controller.clientes.ClientesListServiceImpl;
+import com.jobits.pos.controller.clientes.ClientesDetailController;
+import com.jobits.pos.controller.clientes.ClientesListController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.imagemanager.ImageManagerController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
@@ -42,6 +42,7 @@ import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
@@ -207,17 +208,17 @@ public class PresenterFacade {
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(new ImageManagerController(null));
             case TransaccionListView.VIEW_NAME:
-                return new TransaccionListPresenter(new TransaccionesListController(new Almacen()));
+                return new TransaccionListPresenter(new TransaccionListController(new Almacen()));
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
             case ClientesListView.VIEW_NAME:
-                return new ClientesListViewPresenter(new ClientesListServiceImpl());
+                return new ClientesListViewPresenter(new ClientesListController());
             case ClientesDetailView.VIEW_NAME:
-                return new ClientesDetailViewPresenter(new ClientesDetailServiceImpl());
+                return new ClientesDetailViewPresenter(new ClientesDetailController());
             case ReservasListView.VIEW_NAME:
                 return new ReservaListViewPresenter(new ReservaListController());
             case IPVPedidoVentasView.VIEW_NAME:
-                return new IPVPedidoVentasViewPresenter(new PedidoIpvVentasController(new ArrayList<>(), new Cocina()));
+                return new IPVPedidoVentasViewPresenter(new PedidoIpvVentasController(new ArrayList<>(), new Cocina(), new Venta()));
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;

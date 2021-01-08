@@ -34,8 +34,6 @@ public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<Pu
     @Override
     protected void onAgregarClick() {
         Application.getInstance().getNavigator().navigateTo("Crear Puesto de Trabajo", null, DisplayType.POPUP);
-
-        //   PuestoTrabajoDetailController newController = new PuestoTrabajoDetailController(Application.getInstance().getMainWindow());
         setListToBean();
 
     }
@@ -43,8 +41,7 @@ public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<Pu
     @Override
     protected void onEditarClick() {
         if (getBean().getElemento_seleccionado() == null) {
-            Application.getInstance().getNotificationService().notify("Debe seleccionar una trabajador", TipoNotificacion.ERROR);
-            return;
+            throw new IllegalArgumentException("Debe seleccionar una trabajador");
         }
         Application.getInstance().getNavigator().navigateTo(
                 "Crear Puesto de Trabajo",
@@ -53,14 +50,17 @@ public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<Pu
                                 getBean().getElemento_seleccionado())),
                 DisplayType.POPUP);
 
-        //  PuestoTrabajoDetailController newController = new PuestoTrabajoDetailController(getBean().getElemento_seleccionado(), Application.getInstance().getMainWindow());
         setListToBean();
     }
 
     @Override
     protected void onEliminarClick() {
-        service.destroy(getBean().getElemento_seleccionado());
-        setListToBean();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea eliminar el Puesto seleccionado?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.destroy(getBean().getElemento_seleccionado());
+            setListToBean();
+        }
     }
 
     @Override

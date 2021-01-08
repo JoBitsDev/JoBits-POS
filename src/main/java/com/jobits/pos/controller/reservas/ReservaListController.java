@@ -36,6 +36,9 @@ public class ReservaListController implements ReservaListService {
 
     @Override
     public void deleteReserva(Orden orden) {
+        if (orden == null) {
+            throw new IllegalArgumentException("Seleccione una reserva");
+        }
         OrdenDAO.getInstance().startTransaction();
         OrdenDAO.getInstance().remove(orden);
         OrdenDAO.getInstance().commitTransaction();

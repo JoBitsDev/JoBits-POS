@@ -27,7 +27,7 @@ import com.jobits.pos.recursos.R;
  * @author Jorge
  *
  */
-public class GastoOperacionController extends AbstractFragmentListController<Gasto> {
+public class GastoOperacionController extends AbstractFragmentListController<Gasto> implements GastoOperacionService {
 
     private Venta diaVenta;
 
@@ -41,6 +41,7 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
 
     }
 
+    @Override
     public List<String> getNombres(String toString) {
         List<String> ret = new ArrayList<>();
         for (TipoGasto t : TipoGastoDAO.getInstance().findAll()) {
@@ -51,6 +52,7 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
         return ret;
     }
 
+    @Override
     public List<GastoVenta> getGastos(Date dia) {
         return GastoVentaDAO.getInstance().getGastosByFecha(dia);
     }
@@ -59,35 +61,38 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
      *
      * @return
      */
+    @Override
     public List<GastoVenta> getLista() {
         return diaVenta.getGastoVentaList();
     }
 
+    @Override
     public void setDiaVenta(Venta diaVenta) {
         this.diaVenta = diaVenta;
     }
 
     @Override
     public Gasto createNewInstanceAndAdd() {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Gasto editInstance(Gasto instance) {
-        throw new DevelopingOperationException(); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void constructView(Container parent) {
-//        if (getView() == null) {
-//            setView(new GastoOperacionView(this, parent));
-//        }
-//        getView().updateView();
-//        getView().setVisible(true);
     }
 
+    @Override
     public void createNewGasto(R.TipoGasto cat, String nombre, float monto, String descripcion) {
-        //    if (showConfirmDialog(getView(), "Desea confirmar la accion")) {
+        if (cat == null) {
+            throw new IllegalArgumentException("El tipo de gasto no puede ser nulo");
+        }
+        if (nombre != null) {
+            throw new IllegalArgumentException("El nombre del gasto no puede ser nulo");
+        }
         int idCat = -1;
         for (TipoGasto x : TipoGastoDAO.getInstance().findAll()) {
             if (x.getNombre().equals(cat.getNombre())) {
@@ -95,7 +100,6 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
                 break;
             }
         }
-
         if (idCat == -1) {
             TipoGasto nuevo = new TipoGasto(TipoGastoDAO.getInstance().generateIDCode());
             nuevo.setGastoList(new ArrayList<>());
@@ -105,7 +109,6 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
             getModel().commitTransaction();
             idCat = nuevo.getIdGasto();
         }
-
         Gasto gast = null;
         for (Gasto g : GastoDAO.getInstance().findAll()) {
             if (g.getNombre().equals(nombre)) {
@@ -124,19 +127,15 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
             GastoDAO.getInstance().create(gast);
             getModel().commitTransaction();
         }
-
         for (GastoVenta li : diaVenta.getGastoVentaList()) {
             if (li.getGasto().getNombre().equals(nombre)) {
                 li.setImporte(li.getImporte() + monto);
                 getModel().startTransaction();
                 GastoVentaDAO.getInstance().edit(li);
                 getModel().commitTransaction();
-//                    showSuccessDialog(getView());
-//                    getView().updateView();
                 return;
             }
         }
-
         GastoVenta v = new GastoVenta(gast.getCodGasto(), diaVenta.getId());
         v.setImporte(monto);
         v.setGasto(gast);
@@ -146,12 +145,9 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
         GastoVentaDAO.getInstance().create(v);
         getModel().commitTransaction();
         diaVenta.getGastoVentaList().add(v);
-        //           showSuccessDialog(Application.getInstance().getMainWindow());
-//            getView().updateView();
-        //     }
-
     }
 
+    @Override
     public float getValorTotalGastos() {
         float ret = 0;
         for (GastoVenta x : diaVenta.getGastoVentaList()) {
@@ -160,14 +156,16 @@ public class GastoOperacionController extends AbstractFragmentListController<Gas
         return ret;
     }
 
+    @Override
     public void removeGasto(GastoVenta objectAtSelectedRow) {
+        if (objectAtSelectedRow == null) {
+            throw new IllegalArgumentException("Seleccione un gasto");
+        }
         if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
             diaVenta.getGastoVentaList().remove(objectAtSelectedRow);
             getModel().startTransaction();
             GastoVentaDAO.getInstance().remove(objectAtSelectedRow);
             getModel().commitTransaction();
-//            getView().updateView();
-            //           showSuccessDialog(Application.getInstance().getMainWindow());
         }
     }
 

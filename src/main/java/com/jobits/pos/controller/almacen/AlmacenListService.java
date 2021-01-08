@@ -14,12 +14,12 @@ import java.util.List;
  */
 public interface AlmacenListService {
 
-    public void createNewStorage();
+    public void createNewStorage(String storageName);
 
     public void update(Almacen elemento_seleccionado);
 
-    public void destroy(Almacen elemento_seleccionado);
-    
+    public void destroy(Almacen elemento_seleccionado, int confirm);
+
     public List<Almacen> getItems();
-      
+
 }

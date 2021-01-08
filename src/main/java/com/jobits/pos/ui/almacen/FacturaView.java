@@ -9,7 +9,7 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
+import com.jobits.pos.controller.almacen.AlmacenManageController.OperationType;
 import com.jobits.pos.domain.TransaccionSimple;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.domain.models.InsumoAlmacen;
@@ -522,7 +522,7 @@ public class FacturaView extends AbstractViewPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    switch ((CheckBoxType) jComboBoxOperationSelector.getSelectedItem()) {
+                    switch ((OperationType) jComboBoxOperationSelector.getSelectedItem()) {
                         case ENTRADA:
                             if (jTextFieldMonto.isEnabled()) {
                                 jTextFieldMonto.requestFocusInWindow();

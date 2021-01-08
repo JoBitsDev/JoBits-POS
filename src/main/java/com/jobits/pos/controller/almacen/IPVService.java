@@ -18,11 +18,11 @@ import java.util.List;
  */
 public interface IPVService {
 
-    public void darEntradaExistencia(IpvRegistro ipv_registro_seleciconado);
+    public void darEntradaExistencia(IpvRegistro ipv_registro_seleciconado, float cantidad);
 
-    public void darEntradaIPV(IpvVentaRegistro ipv_venta_registro_seleccionado);
+    public void darEntradaIPV(IpvVentaRegistro ipv_venta_registro_seleccionado, float cantidad);
 
-    public void ajustarConsumo(IpvRegistro ipv_registro_seleciconado);
+    public void ajustarConsumo(IpvRegistro ipv_registro_seleciconado, float cantidad);
 
     public List<Venta> getVentasInRange(Date fecha);
 
@@ -30,6 +30,8 @@ public interface IPVService {
 
     public List<IpvVentaRegistro> getIpvRegistroVentaList(Cocina cocina, int codVenta);
 
-    public void transferirIPVRegistro(IpvRegistro ipv_registro_seleciconado);
+    public void transferirIPVRegistro(IpvRegistro ipv_registro_seleciconado, Cocina cocina, float cantidad);
+
+    public List<Cocina> getCocinaList();
 
 }

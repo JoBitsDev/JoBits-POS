@@ -14,6 +14,9 @@ import com.jobits.pos.domain.models.Mesa;
 import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.ProductovOrden;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
@@ -155,32 +158,17 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     }
 
     private void onAceptarClick() {
-        if (getBean().getMesa_seleccionada() != null) {
-            service.crearEditarReserva(
-                    formatDate(),
-                    getBean().getMesa_seleccionada(),
-                    getBean().getCliente(),
-                    getBean().getLista_producto());
-        } else {
-            JOptionPane.showMessageDialog(
-                    null, "Debe selecionar la mesa que desea reservar", "AVISO", JOptionPane.ERROR_MESSAGE);
-        }
-        NavigationService.getInstance().navigateUp();
-    }
-
-    private Date formatDate() {
         int hora = getBean().getHora();
         int minutos = getBean().getMinutos();
         String pm_am = getBean().getPm_am();
         Date date = getBean().getFecha();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
-        String input = sdf.format(date) + " " + hora + ":" + minutos + " " + pm_am;
-        try {
-            date = df.parse(input);
-        } catch (ParseException ex) {
-            Logger.getLogger(ReservaDetailViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return date;
+        service.crearEditarReserva(
+                service.formatDate(hora, minutos, pm_am, date),
+                getBean().getMesa_seleccionada(),
+                getBean().getCliente(),
+                getBean().getLista_producto());
+        NavigationService.getInstance().navigateUp();
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
+
 }

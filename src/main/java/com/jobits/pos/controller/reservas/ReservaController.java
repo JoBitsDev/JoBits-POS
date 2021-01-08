@@ -17,13 +17,19 @@ import com.jobits.pos.domain.models.Orden;
 import com.jobits.pos.domain.models.ProductoVenta;
 import com.jobits.pos.domain.models.ProductovOrden;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
 import java.awt.Container;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -59,6 +65,9 @@ public class ReservaController extends AbstractController<Orden>
 
     @Override
     public void crearEditarReserva(Date fecha, Mesa mesa, Cliente cliente, List<ProductovOrden> lista) {
+        if (mesa == null) {
+            throw new IllegalArgumentException("Debe selecionar la mesa que desea reservar");
+        }
         reserva.setVentafecha(fecha);
         reserva.setMesacodMesa(mesa);
         reserva.setClienteIdCliente(cliente);
@@ -202,6 +211,19 @@ public class ReservaController extends AbstractController<Orden>
     @Override
     public List<Cliente> getListaClientes() {
         return ClienteDAO.getInstance().findAll();
+    }
+
+    @Override
+    public Date formatDate(int hora, int minutos, String pm_am, Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
+        String input = sdf.format(date) + " " + hora + ":" + minutos + " " + pm_am;
+        try {
+            date = df.parse(input);
+        } catch (ParseException ex) {
+            Logger.getLogger(ReservaDetailViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return date;
     }
 
 }

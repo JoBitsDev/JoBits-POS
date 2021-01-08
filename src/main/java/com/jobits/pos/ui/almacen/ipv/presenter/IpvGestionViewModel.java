@@ -9,6 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.domain.models.Cocina;
 import com.jobits.pos.domain.models.IpvRegistro;
 import com.jobits.pos.domain.models.IpvVentaRegistro;
+import com.jobits.pos.domain.models.Venta;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Date;
 
@@ -60,6 +61,55 @@ public class IpvGestionViewModel extends AbstractViewModel {
     private boolean check_ocultar_productos_ipv_venta = false;
 
     public static final String PROP_CHECK_OCULTAR_PRODUCTOS_IPV_VENTA = "check_ocultar_productos_ipv_venta";
+
+    private Venta venta_ipv_ventas_seleccionada;
+
+    public static final String PROP_VENTA_IPV_VENTAS_SELECCIONADA = "venta_ipv_ventas_seleccionada";
+
+    private Venta venta_ipv_seleccionada;
+
+    public static final String PROP_VENTA_IPV_SELECCIONADA = "venta_ipv_seleccionada";
+
+    /**
+     * Get the value of venta_ipv_seleccionada
+     *
+     * @return the value of venta_ipv_seleccionada
+     */
+    public Venta getVenta_ipv_seleccionada() {
+        return venta_ipv_seleccionada;
+    }
+
+    /**
+     * Set the value of venta_ipv_seleccionada
+     *
+     * @param venta_ipv_seleccionada new value of venta_ipv_seleccionada
+     */
+    public void setVenta_ipv_seleccionada(Venta venta_ipv_seleccionada) {
+        Venta oldVenta_ipv_seleccionada = this.venta_ipv_seleccionada;
+        this.venta_ipv_seleccionada = venta_ipv_seleccionada;
+        firePropertyChange(PROP_VENTA_IPV_SELECCIONADA, oldVenta_ipv_seleccionada, venta_ipv_seleccionada);
+    }
+
+    /**
+     * Get the value of venta_ipv_ventas_seleccionada
+     *
+     * @return the value of venta_ipv_ventas_seleccionada
+     */
+    public Venta getVenta_ipv_ventas_seleccionada() {
+        return venta_ipv_ventas_seleccionada;
+    }
+
+    /**
+     * Set the value of venta_ipv_ventas_seleccionada
+     *
+     * @param venta_ipv_ventas_seleccionada new value of
+     * venta_ipv_ventas_seleccionada
+     */
+    public void setVenta_ipv_ventas_seleccionada(Venta venta_ipv_ventas_seleccionada) {
+        Venta oldVenta_ipv_ventas_seleccionada = this.venta_ipv_ventas_seleccionada;
+        this.venta_ipv_ventas_seleccionada = venta_ipv_ventas_seleccionada;
+        firePropertyChange(PROP_VENTA_IPV_VENTAS_SELECCIONADA, oldVenta_ipv_ventas_seleccionada, venta_ipv_ventas_seleccionada);
+    }
 
     /**
      * Get the value of check_ocultar_productos_ipv_venta

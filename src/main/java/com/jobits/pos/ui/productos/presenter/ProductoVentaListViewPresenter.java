@@ -57,7 +57,7 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
     protected void onAgregarClick() {
         NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
                 new ProductoVentaDetailPresenter(
-                        new ProductoVentaDetailController(), null), DisplayType.POPUP);
+                        new ProductoVentaDetailController()), DisplayType.POPUP);
         setListToBean();
     }
 
@@ -67,8 +67,7 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
             NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
                     new ProductoVentaDetailPresenter(
                             new ProductoVentaDetailController(
-                                    getBean().getElemento_seleccionado()),
-                            getBean().getElemento_seleccionado()), DisplayType.POPUP);
+                                    getBean().getElemento_seleccionado())), DisplayType.POPUP);
             setListToBean();
         } else {
             JOptionPane.showMessageDialog(null, "No tiene los permisos requeridos", "Privilegios insuficientes", JOptionPane.ERROR_MESSAGE);

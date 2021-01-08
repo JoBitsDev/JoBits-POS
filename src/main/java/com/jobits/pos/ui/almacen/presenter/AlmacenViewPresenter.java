@@ -9,13 +9,15 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
-import com.jobits.pos.controller.almacen.TransaccionesListController;
+import com.jobits.pos.controller.almacen.AlmacenManageService;
+import com.jobits.pos.controller.almacen.TransaccionListController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Almacen;
 import com.jobits.pos.domain.models.InsumoAlmacen;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
@@ -50,7 +52,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     public static final String ACTION_NUEVA_FACTURA = "Nueva Factura";
 
     AlmacenListService listService;
-    AlmacenManageController detailService;
+    AlmacenManageService detailService;
 
     public AlmacenViewPresenter(AlmacenListController listController) {
         super(new AlmacenViewModel());
@@ -73,7 +75,8 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_CREAR_ALMACEN) {
             @Override
             public Optional doAction() {
-                listService.createNewStorage();
+                listService.createNewStorage(JOptionPane.showInputDialog(R.RESOURCE_BUNDLE.getString("dialogo_agregar_almacen")));
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
                 setListToBean();
                 return Optional.empty();
             }
@@ -89,7 +92,10 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_ELIMINAR_ALMACEN) {
             @Override
             public Optional doAction() {
-                listService.destroy(getBean().getElemento_seleccionado());
+                listService.destroy(getBean().getElemento_seleccionado(), JOptionPane.showConfirmDialog(
+                        null, R.RESOURCE_BUNDLE.getString("dialogo_borrar_almacen") + " " + getBean().getElemento_seleccionado().getNombre(),
+                        "Eliminar", JOptionPane.YES_NO_OPTION));
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
                 setListToBean();
                 return Optional.empty();
             }
@@ -118,7 +124,12 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_REPORTE) {
             @Override
             public Optional doAction() {
-                detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado());
+                String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+                int selection = JOptionPane.showOptionDialog(null,
+                        R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
+                        R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+                detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado(), selection);
                 return Optional.empty();
             }
         });
@@ -127,7 +138,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             public Optional doAction() {
                 NavigationService.getInstance().navigateTo(TransaccionListView.VIEW_NAME,
                         new TransaccionListPresenter(
-                                new TransaccionesListController(
+                                new TransaccionListController(
                                         detailService.getInstance())), DisplayType.POPUP);
                 refreshView();
                 return Optional.empty();

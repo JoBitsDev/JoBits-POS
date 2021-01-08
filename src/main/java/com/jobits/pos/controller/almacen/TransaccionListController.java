@@ -24,16 +24,15 @@ import java.util.ArrayList;
  * @author Jorge
  *
  */
-public class TransaccionesListController extends OldAbstractListController<Transaccion> {
+public class TransaccionListController extends OldAbstractListController<Transaccion> implements TransaccionListService {
 
     Almacen almacen;
 
-    public TransaccionesListController(/*OldAbstractView parent, */Almacen a) {
+    public TransaccionListController(/*OldAbstractView parent, */Almacen a) {
         super(TransaccionDAO.getInstance());
         this.almacen = a;
         TransaccionDAO.getInstance().addPropertyChangeListener(this);
         TransaccionEntradaDAO.getInstance().addPropertyChangeListener(this);
-        // constructView(parent);
     }
 
     @Override
@@ -48,12 +47,6 @@ public class TransaccionesListController extends OldAbstractListController<Trans
 
     @Override
     public void constructView(Container parent) {
-//        setView(new OldTransaccionListView(this, (OldAbstractView) parent, true));
-//        getView().getjButtonAdd().setVisible(false);
-//        getView().getjButtonEdit().setVisible(false);
-//
-//        getView().updateView();
-//        getView().setVisible(true);
     }
 
     @Override
@@ -67,6 +60,7 @@ public class TransaccionesListController extends OldAbstractListController<Trans
 //        getModel().commitTransaction();
     }
 
+    @Override
     public void imprimirTransaccionesSeleccionadas(List<Transaccion> selectedsObjects) {
         if (!selectedsObjects.isEmpty()) {
             Impresion i = new Impresion();

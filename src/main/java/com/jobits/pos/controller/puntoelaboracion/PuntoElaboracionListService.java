@@ -18,12 +18,12 @@ public interface PuntoElaboracionListService {
 
     public void update();
 
-    public void createInstance();
+    public void createInstance(String nombreCocina);
 
-    public void update(Cocina elemento_seleccionado);
+    public void update(Cocina elemento_seleccionado, String nombreCocina);
 
-    public void destroy(Cocina elemento_seleccionado);
+    public void destroy(Cocina elemento_seleccionado, boolean flag);
 
     public Collection<? extends Cocina> getItems();
-    
+
 }

@@ -50,8 +50,11 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
      */
     @Override
     public List<AsistenciaPersonalEstadisticas> getPersonalActivo(Date del, Date al) {
+        if (del == null || al == null) {
+            throw new IllegalArgumentException("Campos de fechas vacios");
+        }
         if (al.compareTo(del) < 0) {
-            throw new NoSelectedException("La fecha fin no puede ser mayor a la fecha inicio");
+            throw new IllegalArgumentException("La fecha fin no puede ser mayor a la fecha inicio");
         }
         ArrayList<AsistenciaPersonalEstadisticas> ret = new ArrayList<>();
         ArrayList<AsistenciaPersonal> i = new ArrayList<>(getItems());
@@ -67,24 +70,31 @@ public class NominasController extends AbstractDetailController<AsistenciaPerson
             }
         }
         return ret;
-
     }
 
-    public void pagar(AsistenciaPersonalEstadisticas objectAtSelectedRow) {
-        Personal personal = objectAtSelectedRow.getP();
-        if (showConfirmDialog(getView(), "Desea imprimir un comprobante de pago a" + personal)) {
-            Impresion i = Impresion.getDefaultInstance();
-            i.print(new ComprobantePagoFormatter(personal), null);
+    @Override
+    public void pagar(ArrayListModel<AsistenciaPersonalEstadisticas> list, boolean flag) {
+        if (list.isEmpty()) {
+            throw new IllegalArgumentException("La lista de empleados a pagar esta vacia");
         }
-        if (showConfirmDialog(getView(), "Confirme el pago a " + personal.getDatosPersonales().getNombre() + " " + personal.getDatosPersonales().getApellidos())) {
-            PersonalDetailController controller = new PersonalDetailController(personal);
-            controller.setView(getView());
-            controller.pagarTrabajador();
+        for (AsistenciaPersonalEstadisticas i : list) {
+            if (i.isUse()) {
+                Personal personal = i.getP();
+                if (flag) {
+                    Impresion imp = Impresion.getDefaultInstance();
+                    imp.print(new ComprobantePagoFormatter(personal), null);
+                }
+                PersonalDetailService service = new PersonalDetailController(personal);
+                service.pagarTrabajador();
+            }
         }
     }
 
     @Override
     public void imprimirEstadisticas(ArrayListModel<AsistenciaPersonalEstadisticas> lista_personal) {
+        if (lista_personal.isEmpty()) {
+            throw new IllegalArgumentException("La lista a imprimir esta vacia");
+        }
         for (int i = 0; i < lista_personal.getSize(); i++) {
             if (lista_personal.get(i).isUse()) {
                 Impresion.getDefaultInstance().print(new ComprobantePagoFormatter(lista_personal.get(i).getP()), null);

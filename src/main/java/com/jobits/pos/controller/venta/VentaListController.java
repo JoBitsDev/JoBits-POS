@@ -47,6 +47,9 @@ public class VentaListController extends AbstractDialogController<Venta>
 
     @Override
     public void destroy(Venta selected) {
+        if (selected == null) {
+            throw new IllegalArgumentException("Seleccione una venta");
+        }
         if (showDeleteDialog((Container) getView(), selected) && new LogInController().constructoAuthorizationView(R.NivelAcceso.ADMINISTRADOR)) {
             this.selected = selected;
             this.destroy();
@@ -54,7 +57,6 @@ public class VentaListController extends AbstractDialogController<Venta>
             if (getView() != null) {
                 getView().updateView();
             }
-            showSuccessDialog(getView());
         }
     }
 
@@ -127,6 +129,7 @@ public class VentaListController extends AbstractDialogController<Venta>
         return ret;
     }
 
+    @Override
     public List<Venta> findVentasInRange(Calendar start, Calendar end) {
         ArrayList<Venta> ret = new ArrayList<>();
 

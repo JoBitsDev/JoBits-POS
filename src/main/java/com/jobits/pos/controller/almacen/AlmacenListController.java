@@ -33,11 +33,10 @@ public class AlmacenListController extends OldAbstractListController<Almacen> im
         super(AlmacenDAO.getInstance());
     }
 
- 
     @Override
-    public void destroy(Almacen selected) {
+    public void destroy(Almacen selected, int confirm) {
         setSelected(selected);
-        deleteSelectedStorage();
+        deleteSelectedStorage(confirm);
     }
 
     @Override
@@ -54,9 +53,8 @@ public class AlmacenListController extends OldAbstractListController<Almacen> im
     public void constructView(java.awt.Container parent) {
     }
 
-    public void createNewStorage() {
-
-        String storageName = JOptionPane.showInputDialog(R.RESOURCE_BUNDLE.getString("dialogo_agregar_almacen"));
+    @Override
+    public void createNewStorage(String storageName) {
         if (storageName != null) {
             if (storageName.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
                 selected = new Almacen();
@@ -65,33 +63,28 @@ public class AlmacenListController extends OldAbstractListController<Almacen> im
                 selected.setValorMonetario(0.0);
                 selected.setCodAlmacen(super.getModel().generateStringCode(PREFIX_FOR_ID));
                 selected.setNombre(storageName);
-
                 create();
-                showSuccessDialog(Application.getInstance().getMainWindow());
             } else {
-                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Nombre no permitido");
-                //TODO: implementar exepciones
+                throw new IllegalArgumentException("Nombre no permitido");
             }
         }
     }
 
-    public void deleteSelectedStorage() {
+    public void deleteSelectedStorage(int confirm) {
         if (selected == null) {
-            throw new NoSelectedException();
+            throw new IllegalArgumentException(R.RESOURCE_BUNDLE.getString("exception_no_selected"));
         } else {
-            int resp = JOptionPane.showConfirmDialog(getView(), R.RESOURCE_BUNDLE.getString("dialogo_borrar_almacen") + " " + selected.getNombre());
-            if (resp == JOptionPane.YES_OPTION) {
+            if (confirm == JOptionPane.YES_OPTION) {
                 destroy();
-                showSuccessDialog(Application.getInstance().getMainWindow());
             }
         }
     }
 
     public void openSelectedStorage() {
         if (selected == null) {
-            throw new NoSelectedException();
+            throw new IllegalArgumentException(R.RESOURCE_BUNDLE.getString("exception_no_selected"));
         } else {
-            AlmacenManageController manageController = new AlmacenManageController(Application.getInstance().getMainWindow(), selected);
+            AlmacenManageService service = new AlmacenManageController(null, selected);
         }
 
     }

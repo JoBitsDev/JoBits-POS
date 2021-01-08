@@ -5,13 +5,8 @@
  */
 package com.jobits.pos.controller.insumo;
 
-import com.jobits.pos.ui.insumo.InsumoListView;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.controller.OldAbstractListController;
-import com.jobits.pos.exceptions.DevelopingOperationException;
 import com.jobits.pos.domain.models.Insumo;
 import com.jobits.pos.adapters.repo.impl.InsumoDAO;
 import java.util.Collections;
@@ -50,13 +45,11 @@ public class InsumoListController extends OldAbstractListController<Insumo> impl
     @Override
     public AbstractDetailController<Insumo> getDetailControllerForNew() {
         return new InsumoDetailController();
-        //   return new InsumoDetailController(getView());
     }
 
     @Override
     public AbstractDetailController<Insumo> getDetailControllerForEdit(Insumo selected) {
         return new InsumoDetailController();
-        // return new InsumoDetailController(getSelected(), getView());
     }
 
     @Override

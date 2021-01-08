@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.controller.productos;
 
+import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import java.awt.Graphics;
 import java.awt.Window;
@@ -34,6 +35,8 @@ import com.jobits.pos.utils.utils;
  */
 public class ProductoVentaDetailController extends AbstractDetailController<ProductoVenta> implements ProductoVentaDetailService {
 
+    private boolean creatingMode = true;
+
     public ProductoVentaDetailController() {
         super(ProductoVentaDAO.getInstance());
         instance = createNewInstance();
@@ -42,6 +45,11 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
 
     public ProductoVentaDetailController(ProductoVenta instance) {
         super(instance, ProductoVentaDAO.getInstance());
+        creatingMode = false;
+    }
+
+    public boolean isCreatingMode() {
+        return creatingMode;
     }
 
     @Override
@@ -58,16 +66,14 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
      */
     @Override
     public void constructView(java.awt.Container parent) {
-        //setView(new ProductoVentaDetailView(instance, this, (JDialog) parent, true));
-        //getView().updateView();
-        //getView().setVisible(true);
-
     }
 
+    @Override
     public List<Cocina> getCocinaList() {
         return CocinaDAO.getInstance().findAll();
     }
 
+    @Override
     public List<Seccion> getSeccionList() {
         List<Seccion> ret = SeccionDAO.getInstance().findAll();
         Collections.sort(ret, (o1, o2) -> {
@@ -114,16 +120,15 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
             @Override
             protected void whenDone() {
                 controller.constructView(getView());
-                //   ((ProductoVentaDetailView) getView()).getCrossReferencePanel().addItemToComboBox(controller.getInstance());
             }
-
         }.performAction(getView());
-        // getView().setCreatingM
-
     }
 
     @Override
     public void agregarInsumoaProducto(Insumo insumo_disponible_sel, float cantidad) {
+        if (insumo_disponible_sel == null) {
+            throw new IllegalArgumentException("Selecione un insumo");
+        }
         ProductoInsumo ret = new ProductoInsumo();
         ProductoInsumoPK pk = new ProductoInsumoPK(getInstance().getCodigoProducto(), insumo_disponible_sel.getCodInsumo());
         ret.setProductoInsumoPK(pk);
@@ -141,7 +146,39 @@ public class ProductoVentaDetailController extends AbstractDetailController<Prod
 
     @Override
     public void eliminarInsumoProducto(ProductoInsumo insumo_contenido_seleccionado) {
+        if (insumo_contenido_seleccionado == null) {
+            throw new IllegalArgumentException("Selecione un insumo");
+        }
         getInstance().getProductoInsumoList().remove(insumo_contenido_seleccionado);//TODO donde se actualiza el valor total del insumo
+    }
+
+    @Override
+    public void fillProductoVentaData(String nombre, String precioCosto, String pagoPorVenta, String precioVenta, Cocina cocina, Seccion categegoria, ArrayListModel<ProductoInsumo> lista_insumos_contenidos, String rutaImagenProducto) {
+        if (nombre == null) {
+            throw new IllegalArgumentException("Introduzca el nombre del producto");
+        }
+        if (precioCosto == null || precioCosto.equals("")) {
+            instance.setGasto(0f);
+        } else {
+            instance.setGasto(Float.valueOf(precioCosto));
+        }
+        if (pagoPorVenta == null) {
+            instance.setPagoPorVenta((float) 0);
+        } else {
+            instance.setPagoPorVenta(Float.parseFloat(pagoPorVenta));
+        }
+        instance.setNombre(nombre);
+        instance.setPrecioVenta(Float.parseFloat(precioVenta));
+        instance.setCocinacodCocina(cocina);
+        instance.setSeccionnombreSeccion(categegoria);
+        instance.setProductoInsumoList(lista_insumos_contenidos);
+        instance.setDescripcion(rutaImagenProducto);
+        instance.setVisible(true);
+        if (isCreatingMode()) {
+            create(instance);
+        } else {
+            update(instance);
+        }
     }
 
 }

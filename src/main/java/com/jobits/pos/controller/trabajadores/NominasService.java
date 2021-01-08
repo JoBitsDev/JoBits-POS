@@ -18,8 +18,8 @@ public interface NominasService {
 
     public Collection<? extends AsistenciaPersonalEstadisticas> getPersonalActivo(Date fecha_desde, Date fecha_hasta);
 
-    public void pagar(AsistenciaPersonalEstadisticas i);
-
     public void imprimirEstadisticas(ArrayListModel<AsistenciaPersonalEstadisticas> lista_personal);
-    
+
+    public void pagar(ArrayListModel<AsistenciaPersonalEstadisticas> list, boolean flag);
+
 }

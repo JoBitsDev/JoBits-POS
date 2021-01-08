@@ -48,10 +48,8 @@ public class ReservaListViewPresenter extends AbstractListViewPresenter<ReservaL
 
     @Override
     protected void onEliminarClick() {
-        if (getBean().getElemento_seleccionado() != null) {
-            service.deleteReserva(getBean().getElemento_seleccionado());
-            setListToBean();
-        }
+        service.deleteReserva(getBean().getElemento_seleccionado());
+        setListToBean();
     }
 
     @Override

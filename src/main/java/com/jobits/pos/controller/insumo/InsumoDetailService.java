@@ -22,6 +22,8 @@ public interface InsumoDetailService {
 
     public Insumo getInstance();
 
+    public void setInstanceValues(String nombre, float costoPorUnidad, float stockEstuimation, String um, float cantidadCreada);
+
     public void createUpdateInstance();
 
     public List<Almacen> getAlmacenList();

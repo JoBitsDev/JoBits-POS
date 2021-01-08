@@ -13,13 +13,13 @@ import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Seccion;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -56,14 +56,12 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
 
     @Override
     protected Optional refreshState() {
-        if (seccion.getNombreSeccion() != null) {
-            getBean().setNombre_habilitado(false);
-            getBean().setNombre_seccion(service.getSeccion(seccion.getNombreSeccion()).getNombreSeccion());
-            getBean().setLista_secciones_agregadas(
-                    new ArrayListModel<>(service.getSeccion(seccion.getNombreSeccion()).getAgregadoEn()));
-        }
+        getBean().setNombre_habilitado(false);
+        getBean().setNombre_seccion(service.getSeccion(seccion.getNombreSeccion()).getNombreSeccion());
+        getBean().setLista_secciones_agregadas(
+                new ArrayListModel<>(service.getSeccion(seccion.getNombreSeccion()).getAgregadoEn()));
         List<Seccion> aux = new ArrayList();
-        List<Carta> listaCartas = new MenuController().getCartaListController().getItems();
+        List<Carta> listaCartas = new MenuController().getCartaListService().getItems();
         for (Carta x : listaCartas) {
             aux.addAll(x.getSeccionList());
         }
@@ -120,12 +118,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea guardar los cambios",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            if (getBean().getNombre_seccion() != null || getBean().getNombre_seccion().isEmpty()) {
-                seccion.setNombreSeccion(getBean().getNombre_seccion());
-            } else {
-                JOptionPane.showMessageDialog(null, "Nombre no permitido");
-                return;
-            }
+            seccion.setNombreSeccion(getBean().getNombre_seccion());
             seccion.setAgregadoEn(getBean().getLista_secciones_agregadas());
             if (service.isCreatingMode()) {
                 service.crearSeccion(carta, seccion);
@@ -133,27 +126,25 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
                 service.editarSeccion(seccion);
             }
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 
     private void onEliminarClick() {
-
-        if (getBean().getSeccion_agregada_seleccionada() != null) {
-            getBean().getLista_secciones_agregadas().remove(getBean().getSeccion_seleccionada());
-            if (!getBean().getLista_secciones_agregadas().isEmpty()) {
-                getBean().setSeccion_seleccionada(null);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Seleccione una seccion primero");
+        if (getBean().getSeccion_agregada_seleccionada() == null) {
+            throw new IllegalArgumentException("Seleccione una seccion");
+        }
+        getBean().getLista_secciones_agregadas().remove(getBean().getSeccion_seleccionada());
+        if (!getBean().getLista_secciones_agregadas().isEmpty()) {
+            getBean().setSeccion_seleccionada(null);
         }
     }
 
     private void onAgregarClick() {
-        if (!getBean().getLista_secciones_agregadas().contains(getBean().getSeccion_seleccionada())) {
-            getBean().getLista_secciones_agregadas().add(getBean().getSeccion_seleccionada());
-        } else {
-            JOptionPane.showMessageDialog(null, "Ya la seccion se encuentra agregada");
+        if (getBean().getLista_secciones_agregadas().contains(getBean().getSeccion_seleccionada())) {
+            throw new IllegalStateException("Ya la seccion se encuentra agregada");
         }
+        getBean().getLista_secciones_agregadas().add(getBean().getSeccion_seleccionada());
     }
 
 }

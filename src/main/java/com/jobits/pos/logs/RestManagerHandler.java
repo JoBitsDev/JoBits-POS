@@ -5,7 +5,8 @@
  */
 package com.jobits.pos.logs;
 
-import com.jobits.adapters.repo.impl.OrdenLogRepo;
+import com.jobits.pos.controller.logs.OrdenLogController;
+import com.jobits.pos.controller.logs.OrdenLogService;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -43,9 +44,8 @@ public class RestManagerHandler extends Handler {
 
             logFile = new File(R.LOGS_FILE_PATH + "/" + modelClassLog.getSimpleName()
                     + "/" + modelClassLog.getSimpleName() + "-" + R.DATE_FORMAT_FOR_LOGS.format(new Date()) + ".txt");
-            logFileWriter = new FileWriter(logFile,true);
+            logFileWriter = new FileWriter(logFile, true);
             logBuffer = new BufferedWriter(logFileWriter);
-            
 
         } catch (IOException ex) {
             Logger.getLogger(RestManagerHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,8 +59,9 @@ public class RestManagerHandler extends Handler {
         for (Object o : actedOn) {
             sms += R.SEPARADOR + o;
         }
-        if (act.equals(Action.AGREGAR)||act.equals(Action.BORRAR)) {
-            OrdenLogRepo.saveToLogFile(sms);
+        if (act.equals(Action.AGREGAR) || act.equals(Action.BORRAR)) {
+            OrdenLogService service = new OrdenLogController();
+            service.saveToLogFile(sms);
         }
         l.log(lv, sms);
     }
@@ -130,7 +131,7 @@ public class RestManagerHandler extends Handler {
             } else {
                 source = record.getLoggerName();
             }
-            String message = formatMessage(record) + " [Usuario: "+ R.loggedUser + "]";
+            String message = formatMessage(record) + " [Usuario: " + R.loggedUser + "]";
             String throwable = "";
             if (record.getThrown() != null) {
                 StringWriter sw = new StringWriter();

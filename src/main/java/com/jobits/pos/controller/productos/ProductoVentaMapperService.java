@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.controller.productos;
 
+import com.jobits.pos.domain.models.ProductoVentaMapper;
 import java.util.List;
 
 /**

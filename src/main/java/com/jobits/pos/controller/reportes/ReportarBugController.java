@@ -25,9 +25,12 @@ public class ReportarBugController implements ReportarBugService {
 
     @Override
     public void guardarReporte(String usuario, String tituloReporte, String descripcion, String fecha) {
+        if (tituloReporte == null || descripcion == null) {
+            throw new IllegalArgumentException("Campos obligatorios vacios");
+        }
         File d = new File("Reportes");
         d.mkdir();
-        
+
         String reporte = "(" + usuario + ")  " + fecha + "\n" + "\n"
                 + ResourceBundle.getBundle("Strings").getString("label_titulo") + ": " + "\n" + tituloReporte + "\n" + "\n"
                 + ResourceBundle.getBundle("Strings").getString("label_descripcion") + ": " + "\n" + descripcion;
@@ -43,7 +46,7 @@ public class ReportarBugController implements ReportarBugService {
                     fw.write(reporte);
                 }
             } catch (IOException ex) {
-                Logger.getLogger(ReportarBugController.class.getName()).log(Level.SEVERE, null, ex);
+                throw new IllegalAccessError("Error al guardar el reporte");
             }
 
         }

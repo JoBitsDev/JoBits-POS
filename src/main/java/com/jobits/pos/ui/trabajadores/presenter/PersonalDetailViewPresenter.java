@@ -6,27 +6,20 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalDetailController;
+import com.jobits.pos.controller.trabajadores.PersonalDetailService;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.DatosPersonales;
 import com.jobits.pos.domain.models.Personal;
 import com.jobits.pos.domain.models.PuestoTrabajo;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
-import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewModel;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.awt.Color;
-import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import javax.swing.border.LineBorder;
 
 /**
  *
@@ -37,18 +30,14 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
 
-    private PersonalDetailController service;
-    Personal personal;
+    private PersonalDetailService service;
 
     public PersonalDetailViewPresenter(PersonalDetailController service) {
         super(new PersonalDetailViewModel());
         this.service = service;
-
         if (service.isCreatingMode()) {
-            personal = service.createNewInstance();
             getBean().setCrear_editar_button_text("Crear");
         } else {
-            personal = service.getInstance();
             getBean().setCrear_editar_button_text("Editar");
         }
         fillForm();
@@ -76,94 +65,23 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
     private void addListeners() {
     }
 
-    private boolean onAgregarClick() {
-        if (getBean().getContrasena_nueva() != null) {
-            if (!getBean().getContrasena_nueva().equals(getBean().getContrasena_nueva_repetida())) {
-                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Repita correctamente la nueva contrasena");
-                return false;
-            }
-        }
-        String nombre = getBean().getNombre_trabajador(),
-                apellidos = getBean().getApellidos_trabajador(),
-                usuario = getBean().getUsuario_trabajador(),
-                newPass = getBean().getContrasena_nueva(),
-                oldPass = getBean().getContrasena_antigua();
-        PuestoTrabajo puesto = getBean().getPuesto_trabajo_seleccionado();
-        if (nombre == null
-                || apellidos == null
-                || usuario == null
-                || newPass == null && oldPass == null
-                || puesto == null
-                || nombre.equals("")
-                || apellidos.equals("")
-                || usuario.equals("")) {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Hay campos obligatorios sin rellenar");
-            return false;
-        }
-//        if (!getBean().getTelefono_movil().matches("[0-9]+") && getBean().getTelefono_movil().length() != 8) {
-//            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "");
-//        }
-
-        if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea guardar los cambios",
-                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-
-            personal.getDatosPersonales().setNombre(getBean().getNombre_trabajador());
-            personal.getDatosPersonales().setApellidos(getBean().getApellidos_trabajador());
-            personal.getDatosPersonales().setFechaNacimineto(getBean().getFecha_nacimiento());
-
-            personal.setPuestoTrabajonombrePuesto(getBean().getPuesto_trabajo_seleccionado());
-            personal.setUsuario(getBean().getUsuario_trabajador());
-            personal.getDatosPersonales().setPersonalusuario(personal.getUsuario());
-
-            personal.setUltimodiaPago(new Date());
-            personal.setPagoPendiente((float) 0);
-            personal.setOnline(false);
-
-            if (getBean().getContrasena_nueva() == null || getBean().getContrasena_nueva().equals("")) {
-                if (getBean().getContrasena_antigua() != null && !getBean().getContrasena_antigua().equals("")) {
-                    personal.setContrasenna(getBean().getContrasena_antigua());
-                }
-            } else {
-                personal.setContrasenna(getBean().getContrasena_nueva());
-            }
-            if (getBean().getTelefono_movil() == null) {
-                personal.getDatosPersonales().setTelefonoMovil(null);
-            } else {
-                personal.getDatosPersonales().setTelefonoMovil(Integer.parseInt(getBean().getTelefono_movil()));
-            }
-            if (getBean().getTelefono_fijo() == null) {
-                personal.getDatosPersonales().setTelefonoFijo(null);
-            } else {
-                personal.getDatosPersonales().setTelefonoFijo(Integer.parseInt(getBean().getTelefono_fijo()));
-            }
-            if (getBean().getDireccion() == null) {
-                personal.getDatosPersonales().setDireccion(null);
-            } else {
-                personal.getDatosPersonales().setDireccion(getBean().getDireccion());
-            }
-            if (getBean().getCarnet_identidad() == null) {
-                personal.getDatosPersonales().setCarnet(null);
-            } else {
-                personal.getDatosPersonales().setCarnet(getBean().getCarnet_identidad());
-            }
-            if (getBean().getSexo_seleccionado() != null) {
-                if (getBean().getSexo_seleccionado().equals("Masculino")) {
-                    personal.getDatosPersonales().setSexo('M');
-                } else {
-                    personal.getDatosPersonales().setSexo('F');
-                }
-            }
-
-            if (service.isCreatingMode()) {
-                service.create(personal);
-            } else {
-                service.update(personal);
-            }
-
-            NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
-        }
-        return true;
+    private void onAgregarClick() {
+        service.fillPersonalData(
+                getBean().getNombre_trabajador(),
+                getBean().getApellidos_trabajador(),
+                getBean().getFecha_nacimiento(),
+                getBean().getPuesto_trabajo_seleccionado(),
+                getBean().getUsuario_trabajador(),
+                getBean().getContrasena_nueva(),
+                getBean().getContrasena_nueva_repetida(),
+                getBean().getContrasena_antigua(),
+                getBean().getTelefono_movil(),
+                getBean().getTelefono_fijo(),
+                getBean().getDireccion(),
+                getBean().getCarnet_identidad(),
+                getBean().getSexo_seleccionado());
+        NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onCancelarClick() {
@@ -180,6 +98,7 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
         getBean().getPuestos_trabajo_list().clear();
         getBean().getPuestos_trabajo_list().addAll(new ArrayListModel<>(service.getPuestoTrabajoList()));
 
+        Personal personal = service.getInstance();
         if (personal.getDatosPersonales() != null) {
             getBean().setNombre_trabajador(personal.getDatosPersonales().getNombre());
             getBean().setApellidos_trabajador(personal.getDatosPersonales().getApellidos());

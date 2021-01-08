@@ -19,12 +19,11 @@ import java.awt.Container;
  */
 public class MenuController extends AbstractController<Carta> implements MenuService{
 
-    CartaListController cartaListController = new CartaListController();
-    SeccionListController seccionListController = new SeccionListController();
+    CartaListService cartaListController = new CartaListController();
+    SeccionListService seccionListController = new SeccionListController();
 
     public MenuController() {
         super(CartaDAO.getInstance());
-        
     }
 
     @Override
@@ -32,11 +31,11 @@ public class MenuController extends AbstractController<Carta> implements MenuSer
         throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public CartaListController getCartaListController() {
+    public CartaListService getCartaListService() {
         return cartaListController;
     }
 
-    public SeccionListController getSeccionListController() {
+    public SeccionListService getSeccionListService() {
         return seccionListController;
     }
 

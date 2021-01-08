@@ -8,6 +8,7 @@ package com.jobits.pos.controller.seccion;
 import com.jobits.pos.controller.AbstractDetailController;
 import com.jobits.pos.domain.models.Carta;
 import com.jobits.pos.domain.models.Seccion;
+import java.util.List;
 
 /**
  *
@@ -15,7 +16,7 @@ import com.jobits.pos.domain.models.Seccion;
  */
 public interface CartaListService {
 
-    public void createInstance();
+    public void createInstance(String nombre);
 
     public AbstractDetailController<Carta> getDetailControllerForNew();
 
@@ -26,5 +27,7 @@ public interface CartaListService {
     public void removeSeccionFromCarta(Seccion selectedValue);
 
     public void destroy(Carta selected);
+
+    public List<Carta> getItems();
 
 }

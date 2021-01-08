@@ -42,14 +42,6 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
     public InsumoDetailController(Insumo instance) {
         super(instance, InsumoDAO.getInstance());
     }
-//
-//    public InsumoDetailController(Window parent) {
-//        super(parent, InsumoDAO.getInstance());
-//    }
-//
-//    public InsumoDetailController(Insumo instance, Window parent) {
-//        super(instance, parent, InsumoDAO.getInstance());
-//    }
 
     @Override
     public Insumo createNewInstance() {
@@ -75,7 +67,6 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
                 update(instance);
                 break;
         }
-        //super.createUpdateInstance(); //To change body of generated methods, choose Tools | Templates.
         if (!instance.getProductoInsumoList().isEmpty()) {
             if (showConfirmDialog(getView(), "Desea actualizar el costo en los productos de venta")) {
                 updateProductoOnInsumo(getInstance());
@@ -89,14 +80,6 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
      */
     @Override
     public void constructView(java.awt.Container parent) {
-//        if (parent instanceof JDialog) {
-//            setView(new OLDInsumoCreateEditView(this, (JDialog) parent, true, getInstance()));
-//
-//        } else {
-//            setView(new OLDInsumoCreateEditView(this, (JFrame) parent, true, getInstance()));
-//        }
-//        getView().updateView();
-//        getView().setVisible(true);
     }
 
     @Override
@@ -123,9 +106,11 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
         getModel().commitTransaction();
     }//TODO: Problemas de persistencia de datos
 
-
     @Override
     public void agregarInsumoElaboradoaInsumo(Insumo insumo_disponible_seleccionado, float cantidad) {
+        if (insumo_disponible_seleccionado == null) {
+            throw new IllegalArgumentException("Selecione un insumo primero");
+        }
         InsumoElaborado ret = new InsumoElaborado();
         InsumoElaboradoPK pk = new InsumoElaboradoPK(instance.getCodInsumo(), insumo_disponible_seleccionado.getCodInsumo());
         ret.setInsumoElaboradoPK(pk);
@@ -138,11 +123,17 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
 
     @Override
     public void eliminarInsumoElaboradoDeInsumo(InsumoElaborado insumo_contenido_seleccionado) {
+        if (insumo_contenido_seleccionado == null) {
+            throw new IllegalArgumentException("Selecione un insumo primero");
+        }
         getInstance().getInsumoDerivadoList().remove(insumo_contenido_seleccionado);//TODO donde se actualiza el valor total del insumo
     }
 
     @Override
     public void agregarProductoVentaAInsumo(ProductoVenta producto_disponible_seleccionado, float cantidad) {
+        if (producto_disponible_seleccionado == null) {
+            throw new IllegalArgumentException("Selecione un producto primero");
+        }
         ProductoInsumo ret = new ProductoInsumo();
         ProductoInsumoPK pk = new ProductoInsumoPK(producto_disponible_seleccionado.getCodigoProducto(), getInstance().getCodInsumo());
         ret.setProductoInsumoPK(pk);
@@ -155,7 +146,24 @@ public class InsumoDetailController extends AbstractDetailController<Insumo> imp
 
     @Override
     public void eliminarProductoVentaDeInsumo(ProductoInsumo producto_contenido_seleccionado) {
+        if (producto_contenido_seleccionado == null) {
+            throw new IllegalArgumentException("Selecione un producto primero");
+        }
         getInstance().getProductoInsumoList().remove(producto_contenido_seleccionado);
+    }
+
+    @Override
+    public void setInstanceValues(String nombre, float costoPorUnidad, float stockEstuimation, String um, float cantidadCreada) {
+        getInstance().setNombre(nombre);
+        getInstance().setCostoPorUnidad(costoPorUnidad);
+        getInstance().setStockEstimation(stockEstuimation);
+        getInstance().setUm(um);
+        getInstance().setCantidadCreada(cantidadCreada);
+        if (getInstance().getInsumoDerivadoList().isEmpty()) {
+            getInstance().setElaborado(false);
+        } else {
+            getInstance().setElaborado(true);
+        }
     }
 
 }
