@@ -248,7 +248,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     private void onCrearNuevoTurnoClick() {
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea terminar el turno?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada());
+            Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada(),Application.getInstance().getLoggedUser());
             if (venta != null) {
                 getBean().getList_ventas().add(venta);
                 getBean().setVenta_seleccionada(venta);

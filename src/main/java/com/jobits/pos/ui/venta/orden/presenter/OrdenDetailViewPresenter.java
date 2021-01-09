@@ -152,7 +152,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 //        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
 //    }
     private void onVerDetallesClick() {
-        getController().canViewOrdenLog(codOrden);
+        getController().canViewOrdenLog(Application.getInstance().getLoggedUser(),codOrden);
         Application.getInstance().getNavigator().navigateTo(
                 OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);
     }
