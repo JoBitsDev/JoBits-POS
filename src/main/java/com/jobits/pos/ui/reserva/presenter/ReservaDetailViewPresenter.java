@@ -24,16 +24,8 @@ import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorPresenter;
 import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO;
 import java.beans.PropertyChangeEvent;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -47,15 +39,16 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     public static final String ACTION_ACEPTAR = "Aceptar";
     public static final String ACTION_ELIMINAR = "Eliminar";
     public static final String ACTION_MODO_AGREGO = "Agrego";
+    public static final String ACTION_AGREGAR_CLIENTE = "Agregar Cliente";
 
     private ReservaService service;
 
     public ReservaDetailViewPresenter(ReservaController service) {
         super(new ReservaDetailViewModel());
         this.service = service;
-        setBeanData();
-        refreshState();
+        productoSelectorPresenter = new ProductoVentaSelectorPresenter(new OrdenController());
         addListeners();
+        refreshState();
         setListToBean();
     }
 
@@ -94,21 +87,24 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_AGREGAR_CLIENTE) {
+            @Override
+            public Optional doAction() {
+                onAgregarClienteClick();
+                return Optional.empty();
+            }
+        });
     }
 
     @Override
     protected Optional refreshState() {
-        productoSelectorPresenter = new ProductoVentaSelectorPresenter(new OrdenController());
-        getBean().setLista_mesas(new ArrayListModel<>(service.mesasDisponiblesParaReservar(getBean().getFecha())));
-        return super.refreshState();
-    }
-
-    private void setBeanData() {
         Orden o = service.getReserva();
         getBean().setFecha(o.getVentafecha());
+        getBean().setLista_mesas(new ArrayListModel<>(service.mesasDisponiblesParaReservar(getBean().getFecha())));
         getBean().setMesa_seleccionada(o.getMesacodMesa());
-        getBean().setCliente(o.getClienteIdCliente());
         getBean().setLista_clientes(new ArrayListModel<>(service.getListaClientes()));
+        getBean().setCliente(o.getClienteIdCliente());
+        return super.refreshState();
     }
 
     private void setListToBean() {
@@ -151,9 +147,22 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     }
 
     private void onEliminarClick() {
-        if (getBean().getProducto_seleccionado() != null) {
-            service.eliminarProDuctoDeOrden(getBean().getProducto_seleccionado());
-            setListToBean();
+        service.eliminarProDuctoDeOrden(getBean().getProducto_seleccionado());
+        setListToBean();
+    }
+
+    private void onAgregarClienteClick() {
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea registrar a: " + getBean().getNombre_cliente(),
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.crearCliente(getBean().getNombre_cliente(),
+                    getBean().getApellido_cliente(),
+                    getBean().getTelefono_cliente());
+            getBean().setLista_clientes(new ArrayListModel<>(service.getListaClientes()));
+            getBean().setNombre_cliente(null);
+            getBean().setApellido_cliente(null);
+            getBean().setTelefono_cliente(null);
+            Application.getInstance().getNotificationService().showDialog(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 

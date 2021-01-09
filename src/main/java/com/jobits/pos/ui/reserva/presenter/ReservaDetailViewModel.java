@@ -77,6 +77,79 @@ public class ReservaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_BOTTON_AGREGO_ENABLED = "botton_agrego_enabled";
 
+    //CLIENTE
+    private String nombre_cliente;
+
+    public static final String PROP_NOMBRE_CLIENTE = "nombre_cliente";
+
+    private String apellido_cliente;
+
+    public static final String PROP_APELLIDO_CLIENTE = "apellido_cliente";
+
+    private String telefono_cliente;
+
+    public static final String PROP_TELEFONO_CLIENTE = "telefono_cliente";
+
+    /**
+     * Get the value of telefono_cliente
+     *
+     * @return the value of telefono_cliente
+     */
+    public String getTelefono_cliente() {
+        return telefono_cliente;
+    }
+
+    /**
+     * Set the value of telefono_cliente
+     *
+     * @param telefono_cliente new value of telefono_cliente
+     */
+    public void setTelefono_cliente(String telefono_cliente) {
+        String oldTelefono_cliente = this.telefono_cliente;
+        this.telefono_cliente = telefono_cliente;
+        firePropertyChange(PROP_TELEFONO_CLIENTE, oldTelefono_cliente, telefono_cliente);
+    }
+
+    /**
+     * Get the value of apellido_cliente
+     *
+     * @return the value of apellido_cliente
+     */
+    public String getApellido_cliente() {
+        return apellido_cliente;
+    }
+
+    /**
+     * Set the value of apellido_cliente
+     *
+     * @param apellido_cliente new value of apellido_cliente
+     */
+    public void setApellido_cliente(String apellido_cliente) {
+        String oldApellido_cliente = this.apellido_cliente;
+        this.apellido_cliente = apellido_cliente;
+        firePropertyChange(PROP_APELLIDO_CLIENTE, oldApellido_cliente, apellido_cliente);
+    }
+
+    /**
+     * Get the value of nombre_cliente
+     *
+     * @return the value of nombre_cliente
+     */
+    public String getNombre_cliente() {
+        return nombre_cliente;
+    }
+
+    /**
+     * Set the value of nombre_cliente
+     *
+     * @param nombre_cliente new value of nombre_cliente
+     */
+    public void setNombre_cliente(String nombre_cliente) {
+        String oldNombre_cliente = this.nombre_cliente;
+        this.nombre_cliente = nombre_cliente;
+        firePropertyChange(PROP_NOMBRE_CLIENTE, oldNombre_cliente, nombre_cliente);
+    }
+
     /**
      * Get the value of botton_agrego_enabled
      *
@@ -194,7 +267,8 @@ public class ReservaDetailViewModel extends AbstractViewModel {
      */
     public void setLista_clientes(ArrayListModel<Cliente> lista_clientes) {
         ArrayListModel<Cliente> oldLista_clientes = this.lista_clientes;
-        this.lista_clientes = lista_clientes;
+        this.lista_clientes.clear();
+        this.lista_clientes.addAll(lista_clientes);
         firePropertyChange(PROP_LISTA_CLIENTES, oldLista_clientes, lista_clientes);
     }
 

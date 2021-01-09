@@ -17,6 +17,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter.*;
+import com.jobits.pos.ui.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.venta.orden.CellRenderPedido;
 import com.jobits.pos.ui.venta.orden.ProductoVentaSelectorView;
 import com.jobits.ui.components.MaterialComponentsFactory;
@@ -58,20 +59,24 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanel5 = new javax.swing.JPanel();
         jPanelMain = new javax.swing.JPanel();
         jPanelfecha = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jPanel24 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
         jDateChooserFecha = new org.jdesktop.swingx.JXDatePicker();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel25 = new javax.swing.JPanel();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
         jSpinnerHora = new javax.swing.JSpinner();
         jSpinnerMinutos = new javax.swing.JSpinner();
         jSpinnerPmAm = new javax.swing.JSpinner();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel22 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
         jComboBoxMesa = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel23 = new javax.swing.JPanel();
+        jButtonShowProductos = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
         jComboBoxCliente = new javax.swing.JComboBox<>();
+        jButtonShowNewClient = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelProductos = new javax.swing.JPanel();
         jPanelProductoSelector = new javax.swing.JPanel();
         jPanelProductosOrden = new javax.swing.JPanel();
@@ -81,19 +86,27 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanel1 = new javax.swing.JPanel();
         jButtonEliminar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jToggleButtonAgregos = new javax.swing.JToggleButton();
+        jPanelNewClient = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
+        jPanel6 = new javax.swing.JPanel();
+        jTextFieldApellidos = MaterialComponentsFactory.Input.getTextField("", "Apellidos");
+        jPanel7 = new javax.swing.JPanel();
+        jTextFieldTelefono = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono"));
+        jPanel3 = new javax.swing.JPanel();
+        jButtonAddCliente = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel8 = new javax.swing.JPanel();
-        jButtonShowFecha = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel9 = new javax.swing.JPanel();
+        jPanelGoBack = new javax.swing.JPanel();
+        jButtonGoBack = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel11 = new javax.swing.JPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel12 = new javax.swing.JPanel();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanel10 = new javax.swing.JPanel();
-        jButtonShowProductos = MaterialComponentsFactory.Buttons.getOutlinedButton();
 
         setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
-        setPreferredSize(new java.awt.Dimension(840, 602));
+        setPreferredSize(new java.awt.Dimension(670, 470));
         setLayout(new java.awt.BorderLayout());
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Reserva", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 24))); // NOI18N
@@ -101,74 +114,113 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanelMain.setLayout(new java.awt.CardLayout());
 
-        jPanelfecha.setLayout(new java.awt.GridLayout(4, 2));
+        jPanelfecha.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 70, 1, 70));
+        jPanelfecha.setLayout(new java.awt.GridLayout(3, 1));
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Fecha");
-        jPanelfecha.add(jLabel3);
+        jPanel8.setLayout(new java.awt.GridLayout(1, 0, 20, 0));
 
-        jPanel24.setLayout(new java.awt.GridBagLayout());
+        jPanel15.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 1, 30, 1));
+        jPanel15.setLayout(new java.awt.BorderLayout());
 
-        jDateChooserFecha.setPreferredSize(new java.awt.Dimension(200, 50));
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/calendar_indigo.png"))); // NOI18N
+        jLabel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jPanel15.add(jLabel9, java.awt.BorderLayout.WEST);
+
+        jDateChooserFecha.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jDateChooserFecha.setPreferredSize(new java.awt.Dimension(300, 50));
         jDateChooserFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jDateChooserFechaActionPerformed(evt);
             }
         });
-        jPanel24.add(jDateChooserFecha, new java.awt.GridBagConstraints());
+        jPanel15.add(jDateChooserFecha, java.awt.BorderLayout.CENTER);
 
-        jPanelfecha.add(jPanel24);
+        jPanel8.add(jPanel15);
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Hora");
-        jPanelfecha.add(jLabel4);
+        jPanel17.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 1, 30, 1));
+        jPanel17.setLayout(new java.awt.BorderLayout());
 
-        jPanel25.setLayout(new java.awt.GridBagLayout());
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/reloj_indigo.png"))); // NOI18N
+        jLabel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jPanel17.add(jLabel10, java.awt.BorderLayout.WEST);
+
+        jPanel16.setLayout(new javax.swing.BoxLayout(jPanel16, javax.swing.BoxLayout.LINE_AXIS));
 
         jSpinnerHora.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jSpinnerHora.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
-        jSpinnerHora.setPreferredSize(new java.awt.Dimension(60, 50));
-        jPanel25.add(jSpinnerHora, new java.awt.GridBagConstraints());
+        jSpinnerHora.setPreferredSize(new java.awt.Dimension(100, 50));
+        jPanel16.add(jSpinnerHora);
 
         jSpinnerMinutos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jSpinnerMinutos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
-        jSpinnerMinutos.setPreferredSize(new java.awt.Dimension(60, 50));
-        jPanel25.add(jSpinnerMinutos, new java.awt.GridBagConstraints());
+        jSpinnerMinutos.setPreferredSize(new java.awt.Dimension(100, 50));
+        jPanel16.add(jSpinnerMinutos);
 
         jSpinnerPmAm.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jSpinnerPmAm.setModel(new javax.swing.SpinnerListModel(new String[] {"PM", "AM"}));
-        jSpinnerPmAm.setPreferredSize(new java.awt.Dimension(60, 50));
-        jPanel25.add(jSpinnerPmAm, new java.awt.GridBagConstraints());
+        jSpinnerPmAm.setPreferredSize(new java.awt.Dimension(100, 50));
+        jPanel16.add(jSpinnerPmAm);
 
-        jPanelfecha.add(jPanel25);
+        jPanel17.add(jPanel16, java.awt.BorderLayout.CENTER);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Mesa");
-        jPanelfecha.add(jLabel1);
+        jPanel8.add(jPanel17);
 
-        jPanel22.setLayout(new java.awt.GridBagLayout());
+        jPanelfecha.add(jPanel8);
 
+        jPanel18.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 1, 30, 1));
+        jPanel18.setLayout(new java.awt.BorderLayout());
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/location_indigo.png"))); // NOI18N
+        jLabel11.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jPanel18.add(jLabel11, java.awt.BorderLayout.WEST);
+
+        jComboBoxMesa.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jComboBoxMesa.setMinimumSize(new java.awt.Dimension(200, 50));
-        jComboBoxMesa.setPreferredSize(new java.awt.Dimension(200, 50));
-        jPanel22.add(jComboBoxMesa, new java.awt.GridBagConstraints());
+        jComboBoxMesa.setPreferredSize(new java.awt.Dimension(300, 50));
+        jPanel18.add(jComboBoxMesa, java.awt.BorderLayout.CENTER);
 
-        jPanelfecha.add(jPanel22);
+        jButtonShowProductos.setIcon(MaterialIcons.FORMAT_LIST_BULLETED);
+        jButtonShowProductos.setToolTipText("Debe seleccionar una Mesa primero");
+        jButtonShowProductos.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonShowProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonShowProductosActionPerformed(evt);
+            }
+        });
+        jPanel18.add(jButtonShowProductos, java.awt.BorderLayout.LINE_END);
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Cliente");
-        jPanelfecha.add(jLabel2);
+        jPanelfecha.add(jPanel18);
 
-        jPanel23.setLayout(new java.awt.GridBagLayout());
+        jPanel19.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 1, 30, 1));
+        jPanel19.setLayout(new java.awt.BorderLayout());
 
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/perosna_indigo.png"))); // NOI18N
+        jLabel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jPanel19.add(jLabel12, java.awt.BorderLayout.WEST);
+
+        jComboBoxCliente.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jComboBoxCliente.setMinimumSize(new java.awt.Dimension(200, 50));
-        jComboBoxCliente.setPreferredSize(new java.awt.Dimension(200, 50));
-        jPanel23.add(jComboBoxCliente, new java.awt.GridBagConstraints());
+        jComboBoxCliente.setPreferredSize(new java.awt.Dimension(300, 50));
+        jPanel19.add(jComboBoxCliente, java.awt.BorderLayout.CENTER);
 
-        jPanelfecha.add(jPanel23);
+        jButtonShowNewClient.setIcon(MaterialIcons.ADD_CIRCLE_OUTLINE);
+        jButtonShowNewClient.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonShowNewClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonShowNewClientActionPerformed(evt);
+            }
+        });
+        jPanel19.add(jButtonShowNewClient, java.awt.BorderLayout.LINE_END);
+
+        jPanelfecha.add(jPanel19);
 
         jPanelMain.add(jPanelfecha, "Fecha");
 
@@ -208,27 +260,77 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanelMain.add(jPanelProductos, "Productos");
 
+        jPanelNewClient.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 100, 1, 100));
+        jPanelNewClient.setLayout(new java.awt.BorderLayout());
+
+        jPanel4.setLayout(new java.awt.GridLayout(4, 1));
+
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        jTextFieldNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jTextFieldNombre.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(250, 60));
+        jPanel2.add(jTextFieldNombre, new java.awt.GridBagConstraints());
+
+        jPanel4.add(jPanel2);
+
+        jPanel6.setLayout(new java.awt.GridBagLayout());
+
+        jTextFieldApellidos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jTextFieldApellidos.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
+        jTextFieldApellidos.setMinimumSize(new java.awt.Dimension(250, 60));
+        jTextFieldApellidos.setPreferredSize(new java.awt.Dimension(250, 60));
+        jPanel6.add(jTextFieldApellidos, new java.awt.GridBagConstraints());
+
+        jPanel4.add(jPanel6);
+
+        jPanel7.setLayout(new java.awt.GridBagLayout());
+
+        jTextFieldTelefono.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jTextFieldTelefono.setPreferredSize(new java.awt.Dimension(250, 60));
+        jTextFieldTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldTelefonoKeyTyped(evt);
+            }
+        });
+        jPanel7.add(jTextFieldTelefono, new java.awt.GridBagConstraints());
+
+        jPanel4.add(jPanel7);
+
+        jPanel3.setLayout(new java.awt.GridBagLayout());
+
+        jButtonAddCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/add_cliente_color.png"))); // NOI18N
+        jButtonAddCliente.setPreferredSize(new java.awt.Dimension(70, 70));
+        jPanel3.add(jButtonAddCliente, new java.awt.GridBagConstraints());
+
+        jPanel4.add(jPanel3);
+
+        jPanelNewClient.add(jPanel4, java.awt.BorderLayout.CENTER);
+
+        jPanelMain.add(jPanelNewClient, "Nuevo Cliente");
+
         jPanel5.add(jPanelMain, java.awt.BorderLayout.CENTER);
 
         jPanelBotones.setPreferredSize(new java.awt.Dimension(916, 80));
         jPanelBotones.setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanel8.setOpaque(false);
-        jPanel8.setLayout(new java.awt.GridBagLayout());
+        jPanel9.setOpaque(false);
+        jPanel9.setLayout(new javax.swing.BoxLayout(jPanel9, javax.swing.BoxLayout.LINE_AXIS));
 
-        jButtonShowFecha.setIcon(MaterialIcons.DATE_RANGE);
-        jButtonShowFecha.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonShowFecha.addActionListener(new java.awt.event.ActionListener() {
+        jPanelGoBack.setOpaque(false);
+        jPanelGoBack.setLayout(new java.awt.GridBagLayout());
+
+        jButtonGoBack.setIcon(MaterialIcons.ARROW_BACK);
+        jButtonGoBack.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonGoBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonShowFechaActionPerformed(evt);
+                jButtonGoBackActionPerformed(evt);
             }
         });
-        jPanel8.add(jButtonShowFecha, new java.awt.GridBagConstraints());
+        jPanelGoBack.add(jButtonGoBack, new java.awt.GridBagConstraints());
 
-        jPanelBotones.add(jPanel8);
-
-        jPanel9.setOpaque(false);
-        jPanel9.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel9.add(jPanelGoBack);
 
         jPanel11.setOpaque(false);
         jPanel11.setLayout(new java.awt.GridBagLayout());
@@ -250,66 +352,72 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanelBotones.add(jPanel9);
 
-        jPanel10.setOpaque(false);
-        jPanel10.setLayout(new java.awt.GridBagLayout());
-
-        jButtonShowProductos.setIcon(MaterialIcons.FORMAT_LIST_BULLETED);
-        jButtonShowProductos.setToolTipText("Debe seleccionar una Mesa primero");
-        jButtonShowProductos.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonShowProductos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonShowProductosActionPerformed(evt);
-            }
-        });
-        jPanel10.add(jButtonShowProductos, new java.awt.GridBagConstraints());
-
-        jPanelBotones.add(jPanel10);
-
         jPanel5.add(jPanelBotones, java.awt.BorderLayout.SOUTH);
 
         add(jPanel5, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jDateChooserFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserFechaActionPerformed
-
-    }//GEN-LAST:event_jDateChooserFechaActionPerformed
-
     private void jButtonShowProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShowProductosActionPerformed
         mostrarPanelProductos();
     }//GEN-LAST:event_jButtonShowProductosActionPerformed
 
-    private void jButtonShowFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShowFechaActionPerformed
-        mostrarPanelFecha();
-    }//GEN-LAST:event_jButtonShowFechaActionPerformed
+    private void jButtonGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGoBackActionPerformed
+        mostrarMainPanel();
+    }//GEN-LAST:event_jButtonGoBackActionPerformed
+
+    private void jDateChooserFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jDateChooserFechaActionPerformed
+
+    private void jButtonShowNewClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonShowNewClientActionPerformed
+        mostrarPanelNuevoCliente();
+    }//GEN-LAST:event_jButtonShowNewClientActionPerformed
+
+    private void jTextFieldTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoKeyTyped
+        char c = evt.getKeyChar();
+        int l = jTextFieldTelefono.getText().length();
+        if (((l >= 8) || (c < '0') || (c > '9')) && (c != '\b')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldTelefonoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JButton jButtonAddCliente;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEliminar;
-    private javax.swing.JButton jButtonShowFecha;
+    private javax.swing.JButton jButtonGoBack;
+    private javax.swing.JButton jButtonShowNewClient;
     private javax.swing.JButton jButtonShowProductos;
     private javax.swing.JComboBox<String> jComboBoxCliente;
     private javax.swing.JComboBox<String> jComboBoxMesa;
     private org.jdesktop.swingx.JXDatePicker jDateChooserFecha;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<ProductovOrden> jListListaProductos;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel22;
-    private javax.swing.JPanel jPanel23;
-    private javax.swing.JPanel jPanel24;
-    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelBotones;
+    private javax.swing.JPanel jPanelGoBack;
     private javax.swing.JPanel jPanelMain;
+    private javax.swing.JPanel jPanelNewClient;
     private javax.swing.JPanel jPanelProductoSelector;
     private javax.swing.JPanel jPanelProductos;
     private javax.swing.JPanel jPanelProductosOrden;
@@ -318,6 +426,9 @@ public class ReservasDetailView extends AbstractViewPanel {
     private javax.swing.JSpinner jSpinnerHora;
     private javax.swing.JSpinner jSpinnerMinutos;
     private javax.swing.JSpinner jSpinnerPmAm;
+    private javax.swing.JTextField jTextFieldApellidos;
+    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldTelefono;
     private javax.swing.JToggleButton jToggleButtonAgregos;
     // End of variables declaration//GEN-END:variables
 
@@ -358,20 +469,17 @@ public class ReservasDetailView extends AbstractViewPanel {
         jButtonCancelar.addActionListener(getPresenter().getOperation(ACTION_CANCELAR));
         jButtonEliminar.addActionListener(getPresenter().getOperation(ACTION_ELIMINAR));
         jButtonAceptar.addActionListener(getPresenter().getOperation(ACTION_ACEPTAR));
+        jButtonAddCliente.addActionListener(getPresenter().getOperation(ACTION_AGREGAR_CLIENTE));
+
+        Bindings.bind(jTextFieldNombre, getPresenter().getModel(PROP_NOMBRE_CLIENTE));
+        Bindings.bind(jTextFieldApellidos, getPresenter().getModel(PROP_APELLIDO_CLIENTE));
+        Bindings.bind(jTextFieldTelefono, getPresenter().getModel(PROP_TELEFONO_CLIENTE));
 
         jToggleButtonAgregos.addActionListener(getPresenter().getOperation(ACTION_MODO_AGREGO));
         Bindings.bind(jToggleButtonAgregos, "selected", getPresenter().getModel(PROP_MODO_AGREGO));
 
         Bindings.bind(jToggleButtonAgregos, "enabled", getPresenter().getModel(PROP_BOTTON_AGREGO_ENABLED));
         Bindings.bind(jButtonShowProductos, "enabled", getPresenter().getModel(PROP_SHOW_PRODUCTOS));
-
-        getPresenter().addBeanPropertyChangeListener(PROP_SHOW_PRODUCTOS, (PropertyChangeEvent evt) -> {
-            if ((boolean) evt.getNewValue()) {
-                jButtonShowProductos.setToolTipText(null);
-            } else {
-                jButtonShowProductos.setToolTipText("Debe seleccionar una Mesa primero");
-            }
-        });
 
     }
 
@@ -388,11 +496,12 @@ public class ReservasDetailView extends AbstractViewPanel {
         });
         jPanelProductoSelector.add(new ProductoVentaSelectorView(
                 getPresenter().getProductoSelectorPresenter()), BorderLayout.CENTER);
-        
+
         getPresenter().addBeanPropertyChangeListener(PROP_LISTA_PRODUCTO, (PropertyChangeEvent evt) -> {
             jListListaProductos.revalidate();
             jListListaProductos.repaint();
         });
+        jPanelGoBack.setVisible(false);
     }
 
     @Override
@@ -400,13 +509,21 @@ public class ReservasDetailView extends AbstractViewPanel {
         return VIEW_NAME;
     }
 
+    private void mostrarMainPanel() {
+        CardLayout cards = (CardLayout) jPanelMain.getLayout();
+        cards.show(jPanelMain, "Fecha");
+        jPanelGoBack.setVisible(false);
+    }
+
     private void mostrarPanelProductos() {
         CardLayout cards = (CardLayout) jPanelMain.getLayout();
         cards.show(jPanelMain, "Productos");
+        jPanelGoBack.setVisible(true);
     }
 
-    private void mostrarPanelFecha() {
+    private void mostrarPanelNuevoCliente() {
         CardLayout cards = (CardLayout) jPanelMain.getLayout();
-        cards.show(jPanelMain, "Fecha");
+        cards.show(jPanelMain, "Nuevo Cliente");
+        jPanelGoBack.setVisible(true);
     }
 }
