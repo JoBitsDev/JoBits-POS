@@ -59,6 +59,7 @@ import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewPresenter;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
+import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.autorizo.AutorizoView;
 import com.jobits.pos.ui.autorizo.presenter.AutorizoViewPresenter;
 import com.jobits.pos.ui.backup.BackUpView;
@@ -140,7 +141,7 @@ public class PresenterFacade {
     public static AbstractViewPresenter getPresenterFor(String viewUIDName) {
         switch (viewUIDName) {
             case LogInView.VIEW_NAME:
-                return new LoginViewPresenter(new LogInController());
+                return new LoginViewPresenter(new LogInController(new AuthorizerImpl()));
             case AcercaDeView.VIEW_NAME:
                 return new AcercaDeViewPresenter();
             case UbicacionView.VIEW_NAME:
@@ -204,7 +205,7 @@ public class PresenterFacade {
             case VentaResumenView.VIEW_NAME:
                 return new VentaResumenViewPresenter(new VentaResumenController());
             case AutorizoView.VIEW_NAME:
-                return new AutorizoViewPresenter(new LogInController(), null);
+                return new AutorizoViewPresenter(new LogInController(new AuthorizerImpl()), null);
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(new ImageManagerController(null));
             case TransaccionListView.VIEW_NAME:
