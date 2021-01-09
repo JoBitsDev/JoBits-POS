@@ -15,8 +15,11 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -96,22 +99,26 @@ public class ImportarExportarViewPresenter extends AbstractListViewPresenter<Imp
     }
 
     private void importarExportar() {
-        if (getBean().getTipo_dato_seleccionado().equals("Ficha de Costo")) {
-            if (getBean().getImportar_exportar_opcion_seleccionada().equals("Importar")) {
-                JFileChooser list = new JFileChooser();
-                int response = list.showOpenDialog(Application.getInstance().getMainWindow());
-                if (response == JFileChooser.APPROVE_OPTION) {
-                    service.importarFichadeCostoFromJson(list.getSelectedFile());
-                    showSuccessDialog(Application.getInstance().getMainWindow(), "El archivo se ha exportado con éxito");
-                }
-            } else if (getBean().getImportar_exportar_opcion_seleccionada().equals("Exportar")) {
-                JFileChooser list = new JFileChooser();
-                int response = list.showSaveDialog(Application.getInstance().getMainWindow());
-                if (response == JFileChooser.APPROVE_OPTION) {
-                    service.exportarToJson(list.getSelectedFile(), service.getItems());
-                    showSuccessDialog(Application.getInstance().getMainWindow(), "El archivo se ha importado con éxito");
+        try {
+            if (getBean().getTipo_dato_seleccionado().equals("Ficha de Costo")) {
+                if (getBean().getImportar_exportar_opcion_seleccionada().equals("Importar")) {
+                    JFileChooser list = new JFileChooser();
+                    int response = list.showOpenDialog(Application.getInstance().getMainWindow());
+                    if (response == JFileChooser.APPROVE_OPTION) {
+                        service.importarFichadeCostoFromJson(list.getSelectedFile());
+                        showSuccessDialog(Application.getInstance().getMainWindow(), "El archivo se ha exportado con éxito");
+                    }
+                } else if (getBean().getImportar_exportar_opcion_seleccionada().equals("Exportar")) {
+                    JFileChooser list = new JFileChooser();
+                    int response = list.showSaveDialog(Application.getInstance().getMainWindow());
+                    if (response == JFileChooser.APPROVE_OPTION) {
+                        service.exportarToJson(list.getSelectedFile(), service.getItems());
+                        showSuccessDialog(Application.getInstance().getMainWindow(), "El archivo se ha importado con éxito");
+                    }
                 }
             }
+        } catch (IOException ex) {
+            Logger.getLogger(ImportarExportarViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

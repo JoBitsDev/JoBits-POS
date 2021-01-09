@@ -67,7 +67,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         getBean().setContrasena("");
         try {
             if (service.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
-
+                Application.getInstance().setLoggedUser(service.getUsuarioConectado());
                 Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
                 NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
                         new MainMenuPresenter(new MainMenuController(PersonalDAO.getInstance().find(getBean().getNombreUsuario())))); //TODO revisar eso codigo que no le pertenece a esta clse
