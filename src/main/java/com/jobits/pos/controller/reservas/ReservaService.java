@@ -47,4 +47,6 @@ public interface ReservaService {
 
     public Date formatDate(int hora, int minutos, String pm_am, Date date);
 
+    public void crearCliente(String nombre, String apellido, String numero);
+
 }

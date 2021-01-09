@@ -10,6 +10,8 @@ import com.jobits.pos.adapters.repo.impl.ConfigDAO;
 import com.jobits.pos.adapters.repo.impl.MesaDAO;
 import com.jobits.pos.adapters.repo.impl.OrdenDAO;
 import com.jobits.pos.controller.AbstractController;
+import com.jobits.pos.controller.clientes.ClientesDetailController;
+import com.jobits.pos.controller.clientes.ClientesDetailService;
 import com.jobits.pos.domain.models.Cliente;
 import com.jobits.pos.domain.models.Configuracion;
 import com.jobits.pos.domain.models.Mesa;
@@ -202,6 +204,9 @@ public class ReservaController extends AbstractController<Orden>
 
     @Override
     public void eliminarProDuctoDeOrden(ProductovOrden producto_seleccionado) {
+        if (producto_seleccionado == null) {
+            throw new IllegalArgumentException("seleccione un producto");
+        }
         List<ProductovOrden> list = reserva.getProductovOrdenList();
         int index = list.indexOf(producto_seleccionado);
         list.remove(index);
@@ -224,6 +229,25 @@ public class ReservaController extends AbstractController<Orden>
             Logger.getLogger(ReservaDetailViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
         }
         return date;
+    }
+
+    @Override
+    public void crearCliente(String nombre, String apellido, String numero) {
+        if (nombre == null || nombre.isEmpty()) {
+            throw new IllegalArgumentException("El nombre del cliente no puede ser vacio");
+        }
+        if (apellido == null || apellido.isEmpty()) {
+            throw new IllegalArgumentException("El apellido del cliente no puede ser vacio");
+        }
+        if (numero == null || numero.isEmpty()) {
+            throw new IllegalArgumentException("El numero del cliente no puede ser vacio");
+        }
+        ClientesDetailService service = new ClientesDetailController();
+        Cliente cliente = new Cliente();
+        cliente.setNombreCliente(nombre);
+        cliente.setApellidosCliente(apellido);
+        cliente.setTelefonoCliente(numero);
+        service.crearCliente(cliente);
     }
 
 }
