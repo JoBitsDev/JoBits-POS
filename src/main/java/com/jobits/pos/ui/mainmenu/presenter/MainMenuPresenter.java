@@ -14,6 +14,7 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.venta.VentaDetailView;
@@ -101,7 +102,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
     }
 
     private boolean autorize(R.NivelAcceso nivelDeAcceso) {
-        return new LogInController().constructoAuthorizationView(nivelDeAcceso);
+        return new LogInController(new AuthorizerImpl()).constructoAuthorizationView(nivelDeAcceso);
     }
 
     @Override

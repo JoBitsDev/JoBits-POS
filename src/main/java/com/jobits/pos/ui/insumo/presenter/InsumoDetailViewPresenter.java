@@ -36,11 +36,11 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
 
     private InsumoDetailService service;
 
-    public InsumoDetailViewPresenter(InsumoDetailController service) {
+    public InsumoDetailViewPresenter(InsumoDetailService service) {
         super(new InsumoDetailViewModel());
         this.service = service;
         fillForm();
-        if (service.getState().equals(service.getState().CREATING)) {
+        if (service.isInCreatingState()) {
             getBean().setCrear_editar_button_text("Crear");
         } else {
             getBean().setCrear_editar_button_text("Editar");

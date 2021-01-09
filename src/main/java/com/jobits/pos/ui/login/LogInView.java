@@ -10,6 +10,7 @@ import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
+import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.utils.ComponentMover;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.login.presenter.LoginViewModel.*;
@@ -27,7 +28,7 @@ public class LogInView extends AbstractViewPanel {
     public static final String VIEW_NAME = "Autenticación";
 
     public static LogInView getInstance() {
-        return new LogInView(new LoginViewPresenter(new LogInController()));
+        return new LogInView(new LoginViewPresenter(new LogInController(new AuthorizerImpl())));
     }
 
     /**

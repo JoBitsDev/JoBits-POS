@@ -13,6 +13,7 @@ import com.jobits.pos.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.LongProcessMethod;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
@@ -101,12 +102,12 @@ public class BackUpViewPresenter extends AbstractViewPresenter<BackUpViewModel> 
                         int valor = ((Float) evt.getNewValue()).intValue();
                         getBean().setProgress_indicator(valor);
                     });
-                    Application.getInstance().getBackgroundWorker().processInBackground(bu);
-
+                    Application.getInstance().getBackgroundWorker().processInBackground(bu::execute);
                 }
             }
 
         }
+
     }
 
     private void updateBeanData() {

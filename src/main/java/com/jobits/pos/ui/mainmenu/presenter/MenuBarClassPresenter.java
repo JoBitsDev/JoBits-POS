@@ -18,6 +18,7 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.RootView;
 import static com.jobits.pos.ui.about.AcercaDeViewPresenter.ACTION_CLOSE;
+import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
@@ -96,7 +97,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        LogInView.VIEW_NAME, new LoginViewPresenter(new LogInController()), DisplayType.POPUP);
+                        LogInView.VIEW_NAME, new LoginViewPresenter(new LogInController(new AuthorizerImpl())), DisplayType.POPUP);
                 return Optional.empty();
             }
         });

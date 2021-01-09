@@ -14,6 +14,7 @@ import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.GastosFormatter;
+import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import static com.jobits.pos.ui.gastos.presenter.GastosViewModel.*;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -110,7 +111,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     }
 
     private void onEliminarClick() {
-        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
+        if (new LogInController(new AuthorizerImpl()).constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
             service.removeGasto(getBean().getGasto_venta_seleccionado());
             refreshState();
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
