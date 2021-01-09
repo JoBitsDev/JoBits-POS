@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.gasto.GastoOperacionController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
@@ -17,6 +18,7 @@ import com.jobits.pos.ui.gastos.presenter.GastosViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.PROP_VENTA_SELECCIONADA;
@@ -72,7 +74,12 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         setListToBean();
 //        this.ventaOrdenPresenter = new VentaOrdenListViewPresenter(controller, ordenController, getBean().getVenta_seleccionada().getId());
 //        updateBeanData();
-        controller.initIPV(getBean().getVenta_seleccionada());
+        new LongProcessActionServiceImpl("Creando IPVs.........") {
+            @Override
+            protected void longProcessMethod() {
+                controller.initIPV(getBean().getVenta_seleccionada());
+            }
+        }.performAction(null);
 
     }
 
@@ -248,15 +255,20 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     private void onCrearNuevoTurnoClick() {
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea terminar el turno?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada(),Application.getInstance().getLoggedUser());
-            if (venta != null) {
-                getBean().getList_ventas().add(venta);
-                getBean().setVenta_seleccionada(venta);
-            }
+            new LongProcessActionServiceImpl("Creando IPVs.........") {
+                @Override
+                protected void longProcessMethod() {
+                    Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
+                    if (venta != null) {
+                        getBean().getList_ventas().add(venta);
+                        getBean().setVenta_seleccionada(venta);
+                    }
+                }
+            }.performAction(null);
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
-
+    
     private void updateBeanData() {
         if (getBean().getVenta_seleccionada() != null) {
             int codVenta = getBean().getVenta_seleccionada().getId();

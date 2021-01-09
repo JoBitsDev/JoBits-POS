@@ -17,6 +17,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import java.text.ParseException;
@@ -58,27 +59,46 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
         return new LicencedViewAction(actionName) {
             @Override
             public Optional doAction() {
-                Optional<String> ret = Optional.empty();
-                VentaDetailController control = null;
                 refreshState();
                 if (nivelDeAccesoAutenticado >= R.NivelAcceso.ECONOMICO.getNivel()) {
-                    ret = Application.getInstance().getNotificationService().
-                            showDialog("Introduzca el dia para abrir las ventas en el formato dd/mm/aa",
-                                    TipoNotificacion.DIALOG_INPUT);
-                    try {
-                        control = service.comenzarVentasEconomico(R.DATE_FORMAT.parse(ret.get()));
-                    } catch (ParseException ex) {
-                        Application.getInstance().getNotificationService().showDialog("Formato incorrecto", TipoNotificacion.ERROR);
-                        return Optional.empty();
-                    }
+                    new LongProcessActionServiceImpl("Creando IPVs.........") {
+                        @Override
+                        protected void longProcessMethod() {
+                            try {
+                                Optional<String> ret = Optional.empty();
+                                ret = Application.getInstance().getNotificationService().
+                                        showDialog("Introduzca el dia para abrir las ventas en el formato dd/mm/aa",
+                                                TipoNotificacion.DIALOG_INPUT);
+                                VentaDetailController control = null;
+                                control = service.comenzarVentasEconomico(R.DATE_FORMAT.parse(ret.get()));
+                                Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
+                                        new VentaDetailViewPresenter(control, new OrdenController(), service.getDiaVentaSeleccionado()));
+                            } catch (ParseException ex) {
+                                throw new IllegalArgumentException("Formato incorrecto");
+                            }
+                        }
+                    }.performAction(null);
                 } else if (nivelDeAccesoAutenticado >= R.NivelAcceso.CAJERO.getNivel()) {
-                    control = service.comenzarVentasCajero();
+                    new LongProcessActionServiceImpl("Creando IPVs.........") {
+                        @Override
+                        protected void longProcessMethod() {
+                            VentaDetailController control = null;
+                            control = service.comenzarVentasCajero();
+                            Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
+                                    new VentaDetailViewPresenter(control, new OrdenController(), service.getDiaVentaSeleccionado()));
+                        }
+                    }.performAction(null);
                 } else {
-                    control = service.comenzarVentasDependiente();
-
+                    new LongProcessActionServiceImpl("Creando IPVs.........") {
+                        @Override
+                        protected void longProcessMethod() {
+                            VentaDetailController control = null;
+                            control = service.comenzarVentasDependiente();
+                            Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
+                                    new VentaDetailViewPresenter(control, new OrdenController(), service.getDiaVentaSeleccionado()));
+                        }
+                    }.performAction(null);
                 }
-                Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                        new VentaDetailViewPresenter(control, new OrdenController(), service.getDiaVentaSeleccionado()));
                 return Optional.empty();
             }
         };
