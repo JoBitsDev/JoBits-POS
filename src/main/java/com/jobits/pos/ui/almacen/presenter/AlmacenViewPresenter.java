@@ -192,8 +192,12 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onEliminarInsumoFichaClick() {
-        detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado());
-        refreshView();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea eliminar las existencias del insumo seleccionado del almacen",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado());
+            refreshView();
+        }
     }
 
     private void refreshView() {
