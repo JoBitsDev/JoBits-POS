@@ -9,7 +9,7 @@ import com.jobits.pos.controller.backup.BackUpController;
 import com.jobits.pos.controller.backup.BackUpService;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.login.UbicacionConexionService;
-import com.jobits.pos.domain.UbicacionConexionModel;
+import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;

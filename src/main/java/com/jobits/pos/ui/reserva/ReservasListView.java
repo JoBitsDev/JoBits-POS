@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.reserva;
 
-import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;

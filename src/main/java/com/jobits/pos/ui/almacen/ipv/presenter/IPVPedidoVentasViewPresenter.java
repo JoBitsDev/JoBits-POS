@@ -7,11 +7,11 @@ package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
-import com.jobits.pos.domain.InsumoPedidoModel;
-import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
-import com.jobits.pos.domain.VentaDAO1;
-import com.jobits.pos.domain.models.IpvVentaRegistro;
-import com.jobits.pos.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.InsumoPedidoModel;
+import com.jobits.pos.core.domain.ProdcutoVentaPedidoModel;
+import com.jobits.pos.core.domain.VentaDAO1;
+import com.jobits.pos.core.domain.models.IpvVentaRegistro;
+import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;

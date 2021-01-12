@@ -7,11 +7,11 @@ package com.jobits.pos.ui.productos;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.domain.models.Cocina;
-import com.jobits.pos.domain.models.Insumo;
-import com.jobits.pos.domain.models.ProductoInsumo;
-import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.Cocina;
+import com.jobits.pos.core.domain.models.Insumo;
+import com.jobits.pos.core.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.models.ProductoVenta;
+import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;

@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.venta.presenter;
 
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 import java.io.File;
 import java.time.LocalDate;

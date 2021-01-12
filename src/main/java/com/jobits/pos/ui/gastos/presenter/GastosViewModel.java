@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.gastos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.GastoVenta;
+import com.jobits.pos.core.domain.models.GastoVenta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Arrays;

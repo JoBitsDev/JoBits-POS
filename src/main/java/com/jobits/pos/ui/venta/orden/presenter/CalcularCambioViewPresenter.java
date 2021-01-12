@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;

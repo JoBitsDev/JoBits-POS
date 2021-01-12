@@ -6,7 +6,7 @@
 
 package com.jobits.pos.ui.insumo.presenter;
 
-import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 
 /**

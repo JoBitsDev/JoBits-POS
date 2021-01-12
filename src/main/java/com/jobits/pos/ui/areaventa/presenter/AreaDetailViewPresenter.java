@@ -9,7 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaDetailService;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Area;
+import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;

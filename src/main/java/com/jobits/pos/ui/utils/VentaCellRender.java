@@ -9,9 +9,9 @@ import com.jobits.pos.utils.utils;
 import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-import com.jobits.pos.domain.VentaDAO1;
-import com.jobits.pos.domain.models.Orden;
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.VentaDAO1;
+import com.jobits.pos.core.domain.models.Orden;
+import com.jobits.pos.core.domain.models.Venta;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -10,7 +10,7 @@ import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;

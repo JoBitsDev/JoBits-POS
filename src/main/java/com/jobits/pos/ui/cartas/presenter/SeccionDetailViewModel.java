@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.cartas.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 
 /**

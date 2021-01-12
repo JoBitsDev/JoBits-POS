@@ -6,12 +6,12 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.adapters.repo.impl.SeccionDAO;
+import com.jobits.pos.core.repo.impl.SeccionDAO;
 import com.jobits.pos.controller.productos.ProductoVentaListService;
 import com.jobits.pos.controller.venta.OrdenService;
-import com.jobits.pos.domain.models.Mesa;
-import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.Mesa;
+import com.jobits.pos.core.domain.models.ProductoVenta;
+import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;

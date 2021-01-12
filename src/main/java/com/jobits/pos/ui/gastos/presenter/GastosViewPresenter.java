@@ -8,7 +8,7 @@ package com.jobits.pos.ui.gastos.presenter;
 import com.jobits.pos.controller.gasto.GastoOperacionController;
 import com.jobits.pos.controller.gasto.GastoOperacionService;
 import com.jobits.pos.controller.login.LogInController;
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;

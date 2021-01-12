@@ -7,8 +7,8 @@ package com.jobits.pos.ui.areaventa;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.Mesa;
+import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.areaventa.presenter.AreaVentaViewModel.*;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;

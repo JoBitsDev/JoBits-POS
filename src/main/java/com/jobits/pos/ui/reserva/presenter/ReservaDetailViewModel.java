@@ -6,9 +6,9 @@
 package com.jobits.pos.ui.reserva.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Cliente;
-import com.jobits.pos.domain.models.Mesa;
-import com.jobits.pos.domain.models.ProductovOrden;
+import com.jobits.pos.core.domain.models.Cliente;
+import com.jobits.pos.core.domain.models.Mesa;
+import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Date;
 

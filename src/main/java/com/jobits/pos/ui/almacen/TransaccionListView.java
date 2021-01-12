@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.almacen;
 
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.domain.models.Transaccion;
+import com.jobits.pos.core.domain.models.Transaccion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import static com.jobits.pos.ui.almacen.presenter.TransaccionListPresenter.*;

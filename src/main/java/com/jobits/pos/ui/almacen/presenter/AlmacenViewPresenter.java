@@ -14,7 +14,7 @@ import com.jobits.pos.controller.almacen.TransaccionListController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.InsumoAlmacen;
+import com.jobits.pos.core.domain.models.InsumoAlmacen;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;

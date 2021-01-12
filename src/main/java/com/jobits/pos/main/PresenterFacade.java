@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.main;
 
-import com.jobits.pos.adapters.repo.impl.MesaDAO;
+import com.jobits.pos.core.repo.impl.MesaDAO;
 import com.jobits.pos.controller.almacen.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenManageController;
 import com.jobits.pos.controller.almacen.IPVController;
@@ -37,12 +37,12 @@ import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaResumenController;
-import com.jobits.pos.domain.models.Almacen;
-import com.jobits.pos.domain.models.Carta;
-import com.jobits.pos.domain.models.Cocina;
-import com.jobits.pos.domain.models.Orden;
-import com.jobits.pos.domain.models.Seccion;
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.models.Almacen;
+import com.jobits.pos.core.domain.models.Carta;
+import com.jobits.pos.core.domain.models.Cocina;
+import com.jobits.pos.core.domain.models.Orden;
+import com.jobits.pos.core.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.almacen.AlmacenMainView;

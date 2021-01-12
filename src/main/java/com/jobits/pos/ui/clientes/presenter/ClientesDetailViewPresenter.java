@@ -8,7 +8,7 @@ package com.jobits.pos.ui.clientes.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.clientes.ClientesDetailService;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Cliente;
+import com.jobits.pos.core.domain.models.Cliente;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;

@@ -9,7 +9,7 @@ import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.seccion.MenuService;
 import com.jobits.pos.controller.seccion.SeccionDetailServiceImpl;
 import com.jobits.pos.cordinator.DisplayType;
-import com.jobits.pos.domain.models.Carta;
+import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;

@@ -5,11 +5,11 @@
  */
 package com.jobits.pos.ui.puntoelaboracion.presenter;
 
-import com.jobits.pos.adapters.repo.impl.ProductoVentaDAO;
+import com.jobits.pos.core.repo.impl.ProductoVentaDAO;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
-import com.jobits.pos.domain.models.Cocina;
-import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.core.domain.models.Cocina;
+import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;

@@ -6,7 +6,7 @@
 
 package com.jobits.pos.ui.clientes.presenter;
 
-import com.jobits.pos.domain.models.Cliente;
+import com.jobits.pos.core.domain.models.Cliente;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 
 /**

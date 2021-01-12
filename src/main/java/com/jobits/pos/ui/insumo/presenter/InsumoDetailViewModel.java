@@ -6,10 +6,10 @@
 package com.jobits.pos.ui.insumo.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Insumo;
-import com.jobits.pos.domain.models.InsumoElaborado;
-import com.jobits.pos.domain.models.ProductoInsumo;
-import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.core.domain.models.Insumo;
+import com.jobits.pos.core.domain.models.InsumoElaborado;
+import com.jobits.pos.core.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.beans.PropertyChangeListener;

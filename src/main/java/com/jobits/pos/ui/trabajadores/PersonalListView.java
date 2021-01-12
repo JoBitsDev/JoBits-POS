@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.trabajadores;
 
-import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;

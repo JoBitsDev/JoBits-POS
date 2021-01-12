@@ -5,17 +5,17 @@
  */
 package com.jobits.pos.ui.venta.presenter;
 
-import com.jobits.pos.adapters.repo.impl.VentaDAO;
-import com.jobits.pos.algoritmo.Y;
+import com.jobits.pos.core.repo.impl.VentaDAO;
+import com.jobits.pos.core.usecase.algoritmo.Y;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.controller.venta.VentaResumenController;
-import com.jobits.pos.domain.UbicacionConexionModel;
-import com.jobits.pos.domain.VentaDAO1;
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.UbicacionConexionModel;
+import com.jobits.pos.core.domain.VentaDAO1;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;

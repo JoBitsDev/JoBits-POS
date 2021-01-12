@@ -6,7 +6,7 @@
 
 package com.jobits.pos.ui.puntoelaboracion.presenter;
 
-import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 

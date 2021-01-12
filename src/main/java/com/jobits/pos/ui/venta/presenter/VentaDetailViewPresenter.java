@@ -10,7 +10,7 @@ import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.gasto.GastoOperacionController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;

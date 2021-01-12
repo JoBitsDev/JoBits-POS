@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.productos;
 
-import com.jobits.pos.domain.models.ProductoVenta;
+import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;

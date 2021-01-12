@@ -6,10 +6,10 @@
 package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Cocina;
-import com.jobits.pos.domain.models.Insumo;
-import com.jobits.pos.domain.models.ProductoInsumo;
-import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.Cocina;
+import com.jobits.pos.core.domain.models.Insumo;
+import com.jobits.pos.core.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;

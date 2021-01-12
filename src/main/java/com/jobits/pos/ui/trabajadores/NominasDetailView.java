@@ -19,7 +19,7 @@ import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
 import com.jobits.pos.controller.trabajadores.NominasController;
-import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
+import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;

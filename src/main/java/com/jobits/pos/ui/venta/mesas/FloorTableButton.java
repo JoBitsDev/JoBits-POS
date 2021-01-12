@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.venta.mesas;
 
-import com.jobits.pos.domain.models.Mesa;
+import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.ui.components.MaterialComponentsFactory;

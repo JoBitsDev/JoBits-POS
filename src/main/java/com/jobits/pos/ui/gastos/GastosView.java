@@ -9,7 +9,7 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.domain.models.GastoVenta;
+import com.jobits.pos.core.domain.models.GastoVenta;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.R.TipoGasto;
 import com.jobits.pos.ui.AbstractViewPanel;

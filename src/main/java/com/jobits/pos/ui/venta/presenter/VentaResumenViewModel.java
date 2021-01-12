@@ -6,9 +6,9 @@
 package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Cocina;
-import com.jobits.pos.domain.models.ProductoInsumo;
-import com.jobits.pos.domain.models.ProductovOrden;
+import com.jobits.pos.core.domain.models.Cocina;
+import com.jobits.pos.core.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.time.LocalDate;
 import java.util.Date;

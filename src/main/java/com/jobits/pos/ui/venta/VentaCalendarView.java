@@ -9,7 +9,7 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.ui.utils.VentaCellRender;
 import javax.swing.JFileChooser;
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;

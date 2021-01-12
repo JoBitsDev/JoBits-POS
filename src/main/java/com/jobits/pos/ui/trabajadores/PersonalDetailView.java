@@ -7,7 +7,7 @@ package com.jobits.pos.ui.trabajadores;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.domain.models.PuestoTrabajo;
+import com.jobits.pos.core.domain.models.PuestoTrabajo;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.trabajadores.presenter.PersonalDetailViewModel.*;

@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.tree.TreeNode;
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.models.Venta;
 
 /**
  * FirstDream

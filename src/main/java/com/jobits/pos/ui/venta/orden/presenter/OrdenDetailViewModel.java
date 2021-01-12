@@ -6,10 +6,10 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Cliente;
-import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.domain.models.ProductovOrden;
-import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.Cliente;
+import com.jobits.pos.core.domain.models.ProductoVenta;
+import com.jobits.pos.core.domain.models.ProductovOrden;
+import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

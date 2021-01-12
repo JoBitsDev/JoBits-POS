@@ -8,7 +8,7 @@ package com.jobits.pos.ui.venta.orden.presenter;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;

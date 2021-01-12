@@ -6,8 +6,8 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.Cocina;
+import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 
