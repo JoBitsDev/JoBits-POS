@@ -7,6 +7,7 @@ package com.jobits.pos.main;
 
 import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.controller.licencia.LicenceController;
+import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -14,12 +15,16 @@ import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.reserva.core.module.ReservaCoreModule;
+import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
 import com.jobits.pos.ui.LongProcessActionService;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
+import com.jobits.pos.utils.UbicacionResourceServiceImpl;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.FileOutputStream;
@@ -40,48 +45,18 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class Application {
 
-    //
-    // Name
-    //
-    private final String APP_NAME = "JoBits POS";
-
-    //
-    // UI
-    //
-    private MainWindow mainWindow;
-
-    private CoordinatorService coordinator;
-
-    private NavigationService navigator;
-
-    private LongProcessActionService backgroundWorker;
-
-    private NotificationService notificationService = NotificationService.getInstance();
-
+    public static String PROP_LOGGED_USER = "Logged User";
     //
     //Log
     //
     private static String LOG_FILE_PATH = "LOGS/AppLogs";
-    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-
-    //
-    // App
-    //
-    private LicenceController licenceController = new LicenceController();
-
-    private Personal loggedUser;
-
-    public static String PROP_LOGGED_USER = "Logged User";
-
     private static Application application;
 
-    private boolean debugMode = true;
-
-    private Application() {
-    }
-
-    private Application(boolean debugMode) {
-        this.debugMode = debugMode;
+    public static Application createApplication(boolean debugMode) {
+        if (application == null) {
+            application = new Application(debugMode);
+        }
+        return application;
     }
 
     public static Application getInstance() {
@@ -91,11 +66,51 @@ public class Application {
         return application;
     }
 
-    public static Application createApplication(boolean debugMode) {
-        if (application == null) {
-            application = new Application(debugMode);
-        }
-        return application;
+    public static void setupLogging() throws Exception {
+        PrintStream out = new PrintStream(
+                new FileOutputStream(LOG_FILE_PATH, false), true);
+        System.setOut(out);
+        System.setErr(out);
+
+    }
+
+    //
+    // Name
+    //
+    private final String APP_NAME = "JoBits POS";
+    private LongProcessActionService backgroundWorker;
+
+    private CoordinatorService coordinator;
+    private boolean debugMode = true;
+
+    //
+    // App
+    //
+    private LicenceController licenceController = new LicenceController();
+
+    private Personal loggedUser;
+    //
+    // UI
+    //
+    private MainWindow mainWindow;
+    private NavigationService navigator;
+    private NotificationService notificationService = NotificationService.getInstance();
+    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+
+    private Application() {
+    }
+
+    private Application(boolean debugMode) {
+        this.debugMode = debugMode;
+    }
+
+    /**
+     * Add PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
     public boolean authorizeUser(R.NivelAcceso nivelAcceso) {
@@ -107,6 +122,54 @@ public class Application {
 
     }
 
+    public LongProcessActionService getBackgroundWorker() {
+        return backgroundWorker;
+    }
+
+    public CoordinatorService getCoordinator() {
+        return coordinator;
+    }
+
+    public LicenceController getLicenceController() {
+        return licenceController;
+    }
+
+    public Personal getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(Personal loggedUser) {
+        this.loggedUser = loggedUser;
+        R.loggedUser = loggedUser;
+        propertyChangeSupport.firePropertyChange(PROP_LOGGED_USER, null, this.loggedUser);
+    }
+
+    public MainWindow getMainWindow() {
+        return mainWindow;
+    }
+
+    public NavigationService getNavigator() {
+        return navigator;
+    }
+
+    public NotificationService getNotificationService() {
+        return notificationService;
+    }
+
+    /**
+     * Remove PropertyChangeListener.
+     *
+     * @param listener
+     */
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        propertyChangeSupport.removePropertyChangeListener(listener);
+    }
+
+    public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
+        PopUpDialog.disposeCurrentDisplayingPopUp();
+        return mainWindow.showView(viewUIDName, presenter, displayType);
+    }
+
     public void start() throws Exception {
         if (!debugMode) {
             setupLogging();
@@ -116,6 +179,8 @@ public class Application {
         setNotificationChannel();
         calculateLicenceLeft();
         setExceptionHandling();
+        registerResources();
+        initModules();
         mainWindow = new MainWindow();
         mainWindow.setTitle(APP_NAME);
         mainWindow.setWelcomeHeader(true);
@@ -127,6 +192,18 @@ public class Application {
         mainWindow.setVisible(true);
         navigator.startNavigation();
 
+    }
+
+    private void initModules() {
+        ReservaRepoModule.init();
+        ReservaCoreModule.init(ReservaRepoModule.getInstance());
+    }
+
+    private void registerResources() {
+        ResourceHandler.registerResourceService(new UbicacionResourceServiceImpl(new UbicacionConexionController()));
+    }
+
+    private void calculateLicenceLeft() {
     }
 
     private void setApplicationLooks() {
@@ -151,74 +228,6 @@ public class Application {
 
     private void setNotificationChannel() {
         notificationService.registerNotificationChannel(new NotificationHandler());
-    }
-
-    public Personal getLoggedUser() {
-        return loggedUser;
-    }
-
-    public void setLoggedUser(Personal loggedUser) {
-        this.loggedUser = loggedUser;
-        R.loggedUser = loggedUser;
-        propertyChangeSupport.firePropertyChange(PROP_LOGGED_USER, null, this.loggedUser);
-    }
-
-    public LicenceController getLicenceController() {
-        return licenceController;
-    }
-
-    private void calculateLicenceLeft() {
-    }
-
-    public MainWindow getMainWindow() {
-        return mainWindow;
-    }
-
-    public CoordinatorService getCoordinator() {
-        return coordinator;
-    }
-
-    public NavigationService getNavigator() {
-        return navigator;
-    }
-
-    public LongProcessActionService getBackgroundWorker() {
-        return backgroundWorker;
-    }
-
-    public NotificationService getNotificationService() {
-        return notificationService;
-    }
-
-    public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
-        PopUpDialog.disposeCurrentDisplayingPopUp();
-        return mainWindow.showView(viewUIDName, presenter, displayType);
-    }
-
-    public static void setupLogging() throws Exception {
-        PrintStream out = new PrintStream(
-                new FileOutputStream(LOG_FILE_PATH, false), true);
-        System.setOut(out);
-        System.setErr(out);
-
-    }
-
-    /**
-     * Add PropertyChangeListener.
-     *
-     * @param listener
-     */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
-
-    /**
-     * Remove PropertyChangeListener.
-     *
-     * @param listener
-     */
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
 }

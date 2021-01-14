@@ -75,6 +75,8 @@ dependencies {
     //  implementation fileTree(dir: 'lib',include: '*.jar')
 
     implementation project(':UIcomponents')
+    implementation project(':clean-core-pitti')
+    implementation project(':modulo-reserva')
     implementation project(':core')
     implementation project(':autenticacion')
     implementation project(':Material')
