@@ -27,6 +27,7 @@ import com.jobits.pos.ui.trabajadores.AsistenciaPersonalView;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.VentaListOrdenesView;
+import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.core.domain.venta.ResumenVentaAreaTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaUsuarioTablaModel;
@@ -104,6 +105,7 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelOperaciones = new javax.swing.JPanel();
         jTabbedPaneResumenD1 = new javax.swing.JTabbedPane();
         jPanelPagoTrabajadores = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jPanelFooter = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanelTurnosTrabajo = new javax.swing.JPanel();
@@ -372,6 +374,12 @@ public class VentaDetailView extends AbstractViewPanel {
 
         jTabbedPaneData.addTab("Operaciones", jPanelOperaciones);
 
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jPanel3.add(new ReservaSchedulerView());
+
+        jTabbedPaneData.addTab("Reservas", jPanel3);
+
         jPanelData.add(jTabbedPaneData, java.awt.BorderLayout.CENTER);
 
         jPanelRoot.add(jPanelData, java.awt.BorderLayout.CENTER);
@@ -477,6 +485,7 @@ public class VentaDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
