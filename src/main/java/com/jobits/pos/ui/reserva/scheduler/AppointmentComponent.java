@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class ExampleAppointmentComponent extends BasicAppointmentComponent implements MouseListener {
+public class AppointmentComponent extends BasicAppointmentComponent implements MouseListener {
 
     // The single action listener which will get click events.  This is a single entity for now, but we
     //  could make this a list if there was a need for it.
@@ -22,7 +22,7 @@ public class ExampleAppointmentComponent extends BasicAppointmentComponent imple
      *
      * @param appointment (not null) The appointment to wrap.
      */
-    public ExampleAppointmentComponent(Appointment appointment) {
+    public AppointmentComponent(Appointment appointment) {
         super(appointment);
 
         // Allow this instance to respond to mouse clicks.  I'm a bit uncomfortable with accessing 'this' at
@@ -57,8 +57,8 @@ public class ExampleAppointmentComponent extends BasicAppointmentComponent imple
     public void paintComponent(Graphics g) {
         // If our resource is a Demo Resource (and it really should be) then get its color.
         // We do this here so that if the resource is updated we will pick up its new color
-        if (_appointment instanceof ExampleAppointment) {
-            Color c = ((ExampleAppointment) _appointment).getCategory().getColor();
+        if (_appointment instanceof ReservaWrapper) {
+            Color c = ((ReservaWrapper) _appointment).getCategory().getColor();
             setBackground(c);
         }
 

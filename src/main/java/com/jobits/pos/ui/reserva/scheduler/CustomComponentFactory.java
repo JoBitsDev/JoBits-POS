@@ -12,7 +12,7 @@ import com.jobits.ui.scheduler.components.BasicComponentFactory;
  *
  * @author Joshua Gerth - jgerth@thirdnf.com
  */
-public class ExampleComponentFactory extends BasicComponentFactory {
+public class CustomComponentFactory extends BasicComponentFactory {
 
     // The appointment listener to call for mouse clicks on the appointments.
     private AppointmentListener _appointmentListener;
@@ -23,7 +23,7 @@ public class ExampleComponentFactory extends BasicComponentFactory {
     @Override
 
     public AbstractResourceComponent makeResourceComponent(Resource resource) {
-        ExampleResourceComponent component = new ExampleResourceComponent(resource);
+        ResourceComponent component = new ResourceComponent(resource);
         component.setResourceListener(_resourceListener);
 
         return component;
@@ -32,7 +32,7 @@ public class ExampleComponentFactory extends BasicComponentFactory {
     @Override
 
     public AbstractAppointmentComponent makeAppointmentComponent(Appointment appointment) {
-        ExampleAppointmentComponent component = new ExampleAppointmentComponent(appointment);
+        AppointmentComponent component = new AppointmentComponent(appointment);
         component.setAppointmentListener(_appointmentListener);
 
         return component;

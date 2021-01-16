@@ -16,7 +16,7 @@ import java.awt.event.MouseListener;
  *
  * @author Joshua Gerth - jgerth@thirdnf.com
  */
-public class ExampleResourceComponent extends BasicResourceComponent implements MouseListener {
+public class ResourceComponent extends BasicResourceComponent implements MouseListener {
 
     private ResourceListener _resourceListener;
 
@@ -27,7 +27,7 @@ public class ExampleResourceComponent extends BasicResourceComponent implements 
      *
      * @param resource (not null)
      */
-    public ExampleResourceComponent(Resource resource) {
+    public ResourceComponent(Resource resource) {
         super(resource);
 
         // Listen for mouse stuff
@@ -62,11 +62,8 @@ public class ExampleResourceComponent extends BasicResourceComponent implements 
     public void paintComponent(Graphics g) {
         // If our resource is a Demo Resource (and it really should be) then get its color.
         // We do this here so that if the resource is updated we will pick up its new color
-        if (_resource instanceof ExampleResource) {
-            Color c = ((ExampleResource) _resource).getColor();
-            setBackground(c);
-        }
-
+        Color c = _resource.getColor();
+        setBackground(c);
         super.paintComponent(g);
     }
 
