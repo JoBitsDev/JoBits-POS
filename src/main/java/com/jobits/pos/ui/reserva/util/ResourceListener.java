@@ -1,4 +1,4 @@
-package com.jobits.pos.ui.reserva.scheduler;
+package com.jobits.pos.ui.reserva.util;
 
 import com.jobits.ui.scheduler.Resource;
 

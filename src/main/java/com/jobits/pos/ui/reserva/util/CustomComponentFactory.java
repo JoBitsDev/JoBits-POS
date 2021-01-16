@@ -1,5 +1,7 @@
-package com.jobits.pos.ui.reserva.scheduler;
+package com.jobits.pos.ui.reserva.util;
 
+import com.jobits.pos.ui.reserva.util.AppointmentListener;
+import com.jobits.pos.ui.reserva.util.ResourceListener;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import com.jobits.ui.scheduler.components.AbstractAppointmentComponent;

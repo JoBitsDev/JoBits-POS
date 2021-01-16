@@ -5,20 +5,20 @@
  */
 package com.jobits.pos.ui.reserva;
 
+import com.jobits.pos.ui.reserva.util.CustomComponentFactory;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
-import com.jobits.pos.ui.reserva.scheduler.AppointmentListener;
-import com.jobits.pos.ui.reserva.scheduler.CategoriaWrapper;
-import com.jobits.pos.ui.reserva.scheduler.Category;
-import com.jobits.pos.ui.reserva.scheduler.CustomComponentFactory;
-import com.jobits.pos.ui.reserva.scheduler.ScheduleModel;
-import com.jobits.pos.ui.reserva.scheduler.ReservaWrapper;
-import com.jobits.pos.ui.reserva.scheduler.ResourceListener;
-import com.jobits.pos.ui.reserva.scheduler.UbicacionWrapper;
+import com.jobits.pos.ui.reserva.util.AppointmentListener;
+import com.jobits.pos.ui.reserva.model.CategoriaWrapper;
+import com.jobits.pos.ui.reserva.model.Category;
+import com.jobits.pos.ui.reserva.model.ScheduleModel;
+import com.jobits.pos.ui.reserva.model.ReservaWrapper;
+import com.jobits.pos.ui.reserva.util.ResourceListener;
+import com.jobits.pos.ui.reserva.model.UbicacionWrapper;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import com.jobits.ui.components.MaterialComponentsFactory;

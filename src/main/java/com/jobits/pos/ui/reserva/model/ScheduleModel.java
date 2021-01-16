@@ -1,4 +1,4 @@
-package com.jobits.pos.ui.reserva.scheduler;
+package com.jobits.pos.ui.reserva.model;
 
 import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
