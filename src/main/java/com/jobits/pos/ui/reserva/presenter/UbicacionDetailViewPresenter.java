@@ -16,6 +16,7 @@ import com.jobits.pos.reserva.core.usecase.UbicacionUseCase;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import static com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewModel.*;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
@@ -62,6 +63,7 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
 
     public UbicacionDetailViewPresenter() {
         super(new UbicacionDetailViewModel());
+        addListeners();
         initLists();
         refreshState();
     }
@@ -70,6 +72,7 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
         super(new UbicacionDetailViewModel());
         this.ubicacion = ubicacion;
         creatingMode = false;
+        addListeners();
         initLists();
         refreshState();
     }
@@ -149,6 +152,26 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
             times.add(baseTime);
             baseTime = baseTime.plusMinutes(30);
         }
+
+    }
+
+    private void addListeners() {
+        addBeanPropertyChangeListener(PROP_HORA_INICIO, (PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() != null) {
+                LocalTime newVal = (LocalTime) evt.getNewValue();
+                if (newVal.isAfter(getBean().getHora_cierre())) {
+                    getBean().setHora_cierre(newVal);
+                }
+            }
+        });
+        addBeanPropertyChangeListener(PROP_HORA_CIERRE, (PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() != null) {
+                LocalTime newVal = (LocalTime) evt.getNewValue();
+                if (newVal.isBefore(getBean().getHora_inicio())) {
+                    getBean().setHora_cierre(newVal);
+                }
+            }
+        });
 
     }
 
