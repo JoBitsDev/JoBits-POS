@@ -31,6 +31,7 @@ import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.core.domain.venta.ResumenVentaAreaTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaUsuarioTablaModel;
+import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
@@ -376,7 +377,7 @@ public class VentaDetailView extends AbstractViewPanel {
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jPanel3.add(new ReservaSchedulerView());
+        jPanel3.add(new ReservaSchedulerView(new ReservaSchedulerViewPresenter()));
 
         jTabbedPaneData.addTab("Reservas", jPanel3);
 
