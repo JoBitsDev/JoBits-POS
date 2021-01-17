@@ -12,6 +12,7 @@ import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
+import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -197,6 +198,7 @@ public class Application {
     private void initModules() {
         ReservaRepoModule.init();
         ReservaCoreModule.init(ReservaRepoModule.getInstance());
+        PosCoreModule.init(null);
     }
 
     private void registerResources() {
