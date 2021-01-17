@@ -10,6 +10,8 @@ import com.jobits.pos.ui.reserva.model.Category;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +31,98 @@ public class ReservaSchedulerViewModel extends AbstractViewModel {
     public static ArrayListModel<Category> list_categorias = new ArrayListModel<>();
 
     public static final String PROP_LIST_CATEGORIAS = "list_categorias";
+
+    private String total_indices = "0";
+
+    public static final String PROP_TOTAL_INDICES = "total_indices";
+
+    private String indice_actual = "0";
+
+    public static final String PROP_INDICE_ACTUAL = "indice_actual";
+
+    private Date dia_seleccionado = new Date();
+
+    public static final String PROP_DIA_SELECCIONADO = "dia_seleccionado";
+
+    public static LocalDate selected_date = LocalDate.now();
+
+    /**
+     * Get the value of selected_date
+     *
+     * @return the value of selected_date
+     */
+    public static LocalDate getSelected_date() {
+        return selected_date;
+    }
+
+    /**
+     * Set the value of selected_date
+     *
+     * @param selected_date new value of selected_date
+     */
+    public static void setSelected_date(LocalDate selected_date) {
+        ReservaSchedulerViewModel.selected_date = selected_date;
+    }
+
+    /**
+     * Get the value of dia_seleccionado
+     *
+     * @return the value of dia_seleccionado
+     */
+    public Date getDia_seleccionado() {
+        return dia_seleccionado;
+    }
+
+    /**
+     * Set the value of dia_seleccionado
+     *
+     * @param dia_seleccionado new value of dia_seleccionado
+     */
+    public void setDia_seleccionado(Date dia_seleccionado) {
+        Date oldDia_seleccionado = this.dia_seleccionado;
+        this.dia_seleccionado = dia_seleccionado;
+        firePropertyChange(PROP_DIA_SELECCIONADO, oldDia_seleccionado, dia_seleccionado);
+    }
+
+    /**
+     * Get the value of indice_actual
+     *
+     * @return the value of indice_actual
+     */
+    public String getIndice_actual() {
+        return indice_actual;
+    }
+
+    /**
+     * Set the value of indice_actual
+     *
+     * @param indice_actual new value of indice_actual
+     */
+    public void setIndice_actual(String indice_actual) {
+        String oldIndice_actual = this.indice_actual;
+        this.indice_actual = indice_actual;
+        firePropertyChange(PROP_INDICE_ACTUAL, oldIndice_actual, indice_actual);
+    }
+
+    /**
+     * Get the value of total_indices
+     *
+     * @return the value of total_indices
+     */
+    public String getTotal_indices() {
+        return total_indices;
+    }
+
+    /**
+     * Set the value of total_indices
+     *
+     * @param total_indices new value of total_indices
+     */
+    public void setTotal_indices(String total_indices) {
+        String oldTotal_indices = this.total_indices;
+        this.total_indices = total_indices;
+        firePropertyChange(PROP_TOTAL_INDICES, oldTotal_indices, total_indices);
+    }
 
     /**
      * Get the value of list_categorias

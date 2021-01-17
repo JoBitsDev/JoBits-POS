@@ -5,36 +5,25 @@
  */
 package com.jobits.pos.ui.reserva;
 
+import com.jgoodies.binding.adapter.Bindings;
 import com.jobits.pos.ui.reserva.util.CustomComponentFactory;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
-import com.jobits.pos.recursos.R;
-import com.jobits.pos.reserva.core.domain.Categoria;
-import com.jobits.pos.reserva.core.domain.Reserva;
-import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.reserva.util.AppointmentListener;
-import com.jobits.pos.ui.reserva.model.CategoriaWrapper;
-import com.jobits.pos.ui.reserva.model.Category;
 import com.jobits.pos.ui.reserva.model.ScheduleModel;
-import com.jobits.pos.ui.reserva.model.ReservaWrapper;
 import com.jobits.pos.ui.reserva.util.ResourceListener;
-import com.jobits.pos.ui.reserva.model.UbicacionWrapper;
-import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewModel.lista_ubicaciones;
-import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
+import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewModel.*;
+import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter.*;
+import com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewPresenter;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import com.jobits.ui.scheduler.Availability;
-import java.awt.Color;
-import java.time.Duration;
-import java.time.LocalDate;
+import java.beans.PropertyChangeEvent;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 
 /**
  *
@@ -64,7 +53,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     }
 
     private void handleAddAppointment(Resource resource, LocalDateTime time) {
-        addTestReserva(resource, time);
+//        addTestReserva(resource, time);
         Application.getInstance().getNotificationService().notify("Edit " + resource.getTitle(), TipoNotificacion.SUCCESS);
 
     }
@@ -94,11 +83,14 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         jLabelPeriodoActual = new javax.swing.JLabel();
         jPanelPeriodChooser = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        jDateChooserDel = new org.jdesktop.swingx.JXDatePicker();
+        jDateChooserDateToShow = new org.jdesktop.swingx.JXDatePicker();
         jPanel9 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        jButtonBack = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelCurrentIndex = new javax.swing.JLabel();
+        jLabelLine = new javax.swing.JLabel();
+        jLabelTotalIndexes = new javax.swing.JLabel();
+        jButtonNext = new javax.swing.JButton();
         jPanelOpciones = new javax.swing.JPanel();
         jButtonRestablecer = MaterialComponentsFactory.Buttons.getMaterialButton();
         jPanelDetails = new javax.swing.JPanel();
@@ -170,29 +162,50 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         jPanel8.setPreferredSize(new java.awt.Dimension(100, 20));
         jPanel8.setLayout(new java.awt.GridLayout(1, 0));
 
-        jDateChooserDel.addActionListener(new java.awt.event.ActionListener() {
+        jDateChooserDateToShow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jDateChooserDelActionPerformed(evt);
+                jDateChooserDateToShowActionPerformed(evt);
             }
         });
-        jPanel8.add(jDateChooserDel);
+        jPanel8.add(jDateChooserDateToShow);
 
         jPanelPeriodChooser.add(jPanel8);
 
         jPanel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         jPanel9.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setIcon(MaterialIcons.ARROW_BACK);
-        jButton1.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel9.add(jButton1, java.awt.BorderLayout.WEST);
+        jButtonBack.setIcon(MaterialIcons.ARROW_BACK);
+        jButtonBack.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel9.add(jButtonBack, java.awt.BorderLayout.WEST);
 
-        jButton2.setIcon(MaterialIcons.ARROW_FORWARD);
-        jButton2.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel9.add(jButton2, java.awt.BorderLayout.EAST);
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("[x-x]");
-        jPanel9.add(jLabel5, java.awt.BorderLayout.CENTER);
+        jLabelCurrentIndex.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCurrentIndex.setText("X");
+        jLabelCurrentIndex.setMaximumSize(new java.awt.Dimension(20, 16));
+        jLabelCurrentIndex.setMinimumSize(new java.awt.Dimension(20, 16));
+        jLabelCurrentIndex.setPreferredSize(new java.awt.Dimension(20, 16));
+        jPanel1.add(jLabelCurrentIndex, new java.awt.GridBagConstraints());
+
+        jLabelLine.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelLine.setText("-");
+        jLabelLine.setMaximumSize(new java.awt.Dimension(20, 16));
+        jLabelLine.setMinimumSize(new java.awt.Dimension(20, 16));
+        jLabelLine.setPreferredSize(new java.awt.Dimension(20, 16));
+        jPanel1.add(jLabelLine, new java.awt.GridBagConstraints());
+
+        jLabelTotalIndexes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTotalIndexes.setText("X");
+        jLabelTotalIndexes.setMaximumSize(new java.awt.Dimension(20, 16));
+        jLabelTotalIndexes.setMinimumSize(new java.awt.Dimension(20, 16));
+        jLabelTotalIndexes.setPreferredSize(new java.awt.Dimension(20, 16));
+        jPanel1.add(jLabelTotalIndexes, new java.awt.GridBagConstraints());
+
+        jPanel9.add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jButtonNext.setIcon(MaterialIcons.ARROW_FORWARD);
+        jButtonNext.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel9.add(jButtonNext, java.awt.BorderLayout.EAST);
 
         jPanelPeriodChooser.add(jPanel9);
 
@@ -227,26 +240,31 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 
     }//GEN-LAST:event_jLabelPeriodoActualPropertyChange
 
-    private void jDateChooserDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserDelActionPerformed
+    private void jDateChooserDateToShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserDateToShowActionPerformed
 
-    }//GEN-LAST:event_jDateChooserDelActionPerformed
+    }//GEN-LAST:event_jDateChooserDateToShowActionPerformed
 
     private void jButtonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestablecerActionPerformed
+        Application.getInstance().getNavigator().navigateTo(
+                UbicacionDetailView.VIEW_NAME, new UbicacionDetailViewPresenter(), DisplayType.POPUP);
     }//GEN-LAST:event_jButtonRestablecerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonBack;
+    private javax.swing.JButton jButtonNext;
     private javax.swing.JButton jButtonPeriodoSelector;
     private javax.swing.JButton jButtonRestablecer;
-    private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
+    private org.jdesktop.swingx.JXDatePicker jDateChooserDateToShow;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabelCurrentIndex;
+    private javax.swing.JLabel jLabelLine;
     private javax.swing.JLabel jLabelPeriodoActual;
+    private javax.swing.JLabel jLabelTotalIndexes;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
@@ -265,40 +283,54 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     // End of variables declaration//GEN-END:variables
 
     //TODO: borrar despues de probar
-    private void addTestData() {
-        // Resources
-        Resource ra = new UbicacionWrapper(new Ubicacion("Carlos", LocalTime.of(8, 0, 0), LocalTime.of(18, 0, 0)));
-        Resource rb = new UbicacionWrapper(new Ubicacion("ALberto", LocalTime.of(8, 0, 0), LocalTime.of(18, 0, 0)));
-        Resource rc = new UbicacionWrapper(new Ubicacion("Juan", LocalTime.of(8, 0, 0), LocalTime.of(18, 0, 0)));
-
-        // Our categories for our appointments
-        Category Green = new CategoriaWrapper(new Categoria("Green", new Color(9, 246, 76, 200).getRGB()));
-        Category Blue = new CategoriaWrapper(new Categoria("Blue", new Color(9, 171, 246, 200).getRGB()));
-
-        model.addResource(ra, model.getDate(), -1);
-        model.addResource(rb, model.getDate(), -1);
-        model.addResource(rc, model.getDate(), -1);
-
-        model.addCategory(Blue);
-        model.addCategory(Green);
-
-        addTestReserva(rc, LocalDateTime.of(model.getDate(), LocalTime.of(5, 30)));
-    }
-
-    private void addTestReserva(Resource resource, LocalDateTime time) {
-        Availability a = resource.getAvailability(time.toLocalDate()).next();
-        Ubicacion u = new Ubicacion(resource.getTitle(), a.getTime(), a.getTime().plus(a.getDuration()));
-        Reserva r = new Reserva(time.toLocalDate(), time.toLocalTime(), 3600, u); // 6 pm
-        r.setNotasreserva("Clases a erick");
-        ReservaWrapper wrapper = new ReservaWrapper(r,
-                new CategoriaWrapper(new Categoria("Green",
-                        new Color(9, 246, 76, 200).getRGB())), resource);
-        model.addAppointment(wrapper);
-
-    }
-
+//    private void addTestData() {
+//        // Resources
+//        Resource ra = new UbicacionWrapper(new Ubicacion("Carlos", LocalTime.of(8, 0, 0), LocalTime.of(18, 0, 0)));
+//        Resource rb = new UbicacionWrapper(new Ubicacion("ALberto", LocalTime.of(8, 0, 0), LocalTime.of(18, 0, 0)));
+//        Resource rc = new UbicacionWrapper(new Ubicacion("Juan", LocalTime.of(8, 0, 0), LocalTime.of(18, 0, 0)));
+//
+//        // Our categories for our appointments
+//        Category Green = new CategoriaWrapper(new Categoria("Green", new Color(9, 246, 76, 200).getRGB()));
+//        Category Blue = new CategoriaWrapper(new Categoria("Blue", new Color(9, 171, 246, 200).getRGB()));
+//
+//        model.addResource(ra, model.getDate(), -1);
+//        model.addResource(rb, model.getDate(), -1);
+//        model.addResource(rc, model.getDate(), -1);
+//
+//        model.addCategory(Blue);
+//        model.addCategory(Green);
+//
+//        addTestReserva(rc, LocalDateTime.of(model.getDate(), LocalTime.of(5, 30)));
+//    }
+//
+//    private void addTestReserva(Resource resource, LocalDateTime time) {
+//        Availability a = resource.getAvailability(time.toLocalDate()).next();
+//        Ubicacion u = new Ubicacion(resource.getTitle(), a.getTime(), a.getTime().plus(a.getDuration()));
+//        Reserva r = new Reserva(time.toLocalDate(), time.toLocalTime(), 3600, u); // 6 pm
+//        r.setNotasreserva("Clases a erick");
+//        ReservaWrapper wrapper = new ReservaWrapper(r,
+//                new CategoriaWrapper(new Categoria("Green",
+//                        new Color(9, 246, 76, 200).getRGB())), resource);
+//        model.addAppointment(wrapper);
+//
+//    }
     @Override
     public void wireUp() {
+        Bindings.bind(jDateChooserDateToShow, "date", getPresenter().getModel(PROP_DIA_SELECCIONADO));
+        Bindings.bind(jLabelCurrentIndex, getPresenter().getModel(PROP_INDICE_ACTUAL));
+        Bindings.bind(jLabelTotalIndexes, getPresenter().getModel(PROP_TOTAL_INDICES));
+        jButtonNext.addActionListener(getPresenter().getOperation(ACTION_NEXT));
+        jButtonBack.addActionListener(getPresenter().getOperation(ACTION_BACK));
+
+        getPresenter().addPropertyChangeListener(PROP_SHOW_SCHEDULE, (PropertyChangeEvent evt) -> {
+            setModelToScheduler();
+        });
+    }
+
+    private void setModelToScheduler() {
+        model = new ScheduleModel(selected_date, lista_ubicaciones, list_categorias, lista_reservas);
+        scheduler.setModel(model);
+        scheduler.showDate(model.getDate());
     }
 
     @Override
@@ -307,16 +339,6 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         scheduler.addScheduleListener((Resource resource, LocalDateTime time) -> {
             handleAddAppointment(resource, time);
         });
-
-//        model = new ScheduleModel(LocalDate.now(),
-//                LocalTime.now().minusHours(4).truncatedTo(ChronoUnit.HOURS),
-//                LocalTime.now().truncatedTo(ChronoUnit.HOURS), Duration.ofMinutes(30));//TODO obviamente ponerlo de otra manera
-        ReservaSchedulerViewPresenter a = new ReservaSchedulerViewPresenter();
-
-        model = new ScheduleModel(LocalDate.now(), lista_ubicaciones, new ArrayList<>(), new ArrayList<>());
-        //TODO obviamente ponerlo de otra manera
-//        addTestData();
-        //TODO borrar
 
         CustomComponentFactory componentFactory = new CustomComponentFactory();
         componentFactory.setAppointmentListener(new AppointmentListener() {
@@ -331,7 +353,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 
             @Override
             public void handleDelete(Appointment appointment) {
-                model.deleteAppointment(appointment);
+//                model.deleteAppointment(appointment);
             }
 
             @Override
@@ -354,10 +376,8 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 //                handleResourceEdit(resource);
             }
         });
-
         scheduler.setComponentFactory(componentFactory);
-        scheduler.setModel(model);
-        scheduler.showDate(model.getDate());
+        setModelToScheduler();
     }
 
     @Override
