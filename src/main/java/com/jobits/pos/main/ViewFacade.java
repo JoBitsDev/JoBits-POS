@@ -37,6 +37,7 @@ import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
 import com.jobits.pos.ui.reserva.ReservasListView;
+import com.jobits.pos.ui.reserva.UbicacionDetailView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -123,6 +124,8 @@ public class ViewFacade {
                 return new VentaCalendarView(p);
             case VentaStatisticsView.VIEW_NAME:
                 return new VentaStatisticsView(p);
+            case UbicacionDetailView.VIEW_NAME:
+                return new UbicacionDetailView(p);
             case AlmacenMainView.VIEW_NAME:
                 return new AlmacenMainView(p);
             case FacturaView.VIEW_NAME:

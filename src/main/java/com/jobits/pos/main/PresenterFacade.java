@@ -98,8 +98,10 @@ import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
 import com.jobits.pos.ui.reserva.ReservasListView;
+import com.jobits.pos.ui.reserva.UbicacionDetailView;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
 import com.jobits.pos.ui.reserva.presenter.ReservaListViewPresenter;
+import com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -218,6 +220,8 @@ public class PresenterFacade {
                 return new ClientesDetailViewPresenter(new ClientesDetailController());
             case ReservasListView.VIEW_NAME:
                 return new ReservaListViewPresenter(new ReservaListController());
+            case UbicacionDetailView.VIEW_NAME:
+                return new UbicacionDetailViewPresenter();
             case IPVPedidoVentasView.VIEW_NAME:
                 return new IPVPedidoVentasViewPresenter(new PedidoIpvVentasController(new ArrayList<>(), new Cocina(), new Venta()));
             case LicenceDialogView.VIEW_NAME:
