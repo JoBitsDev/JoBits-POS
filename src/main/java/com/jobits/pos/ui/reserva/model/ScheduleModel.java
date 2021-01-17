@@ -1,5 +1,7 @@
 package com.jobits.pos.ui.reserva.model;
 
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.ui.scheduler.*;
@@ -19,28 +21,31 @@ import java.util.List;
  */
 public class ScheduleModel extends AbstractScheduleModel {
 
+    private LocalTime startTime = LocalTime.of(ConfiguracionDAO.getInstance().find(
+            R.SettingID.HORARIO_INICIO_HORA).getValor(), 0);
+    private LocalTime endTime = LocalTime.of(ConfiguracionDAO.getInstance().find(
+            R.SettingID.HORARIO_CIERRE_HORA).getValor(), 0);
+    private Duration increments = Duration.ofMinutes(30);
+
     private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private Duration increments;
 
-    private List<Resource> resources = new ArrayList<>();
+    private List<Resource> resources;
 
-    private List<Category> categories = new ArrayList<>();
+    private List<Category> categories;
 
-    private List<Appointment> appointments = new ArrayList<>();
+    private List<Appointment> appointments;
 
-    /**
-     *
-     * @param date
-     * @param startTime
-     * @param endTime
-     */
-    public ScheduleModel(LocalDate date, LocalTime startTime, LocalTime endTime, Duration incrementos) {
+//    public ScheduleModel(LocalDate date, LocalTime startTime, LocalTime endTime, Duration incrementos) {
+//        this.date = date;
+//        this.startTime = startTime;
+//        this.endTime = endTime;
+//        this.increments = incrementos;
+//    }
+    public ScheduleModel(LocalDate date, List<Resource> resources, List<Category> categories, List<Appointment> appointments) {
         this.date = date;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.increments = incrementos;
+        this.resources = resources;
+        this.categories = categories;
+        this.appointments = appointments;
     }
 
     @Override
