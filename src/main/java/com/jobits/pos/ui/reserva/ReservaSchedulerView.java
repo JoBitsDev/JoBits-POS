@@ -7,11 +7,15 @@ package com.jobits.pos.ui.reserva;
 
 import com.jobits.pos.ui.reserva.util.CustomComponentFactory;
 import com.jhw.swing.material.standars.MaterialIcons;
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
+import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.reserva.util.AppointmentListener;
 import com.jobits.pos.ui.reserva.model.CategoriaWrapper;
 import com.jobits.pos.ui.reserva.model.Category;
@@ -19,6 +23,8 @@ import com.jobits.pos.ui.reserva.model.ScheduleModel;
 import com.jobits.pos.ui.reserva.model.ReservaWrapper;
 import com.jobits.pos.ui.reserva.util.ResourceListener;
 import com.jobits.pos.ui.reserva.model.UbicacionWrapper;
+import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewModel.lista_ubicaciones;
+import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import com.jobits.ui.components.MaterialComponentsFactory;
@@ -28,71 +34,25 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 /**
  *
  * @author Home
  */
-public class ReservaSchedulerView extends javax.swing.JPanel {
+public class ReservaSchedulerView extends AbstractViewPanel {
 
-    private final ScheduleModel model;
+    public static final String VIEW_NAME = "Reserva Scheduler";
+
+    private ScheduleModel model;
 
     /**
      * Creates new form ReservaSchedulerView
+     *
+     * @param presenter
      */
-    public ReservaSchedulerView() {
-        initComponents();
-        scheduler.addScheduleListener((Resource resource, LocalDateTime time) -> {
-            handleAddAppointment(resource, time);
-        });
-
-        model = new ScheduleModel(LocalDate.now(),
-                LocalTime.now().minusHours(4).truncatedTo(ChronoUnit.HOURS),
-                LocalTime.now().truncatedTo(ChronoUnit.HOURS), Duration.ofMinutes(30));//TODO obviamente ponerlo de otra manera
-        addTestData(); //TODO borrar
-        CustomComponentFactory componentFactory = new CustomComponentFactory();
-        componentFactory.setAppointmentListener(new AppointmentListener() {
-            @Override
-            public void handleClick(Appointment appointment, int clickCount) {
-                if (clickCount == 1) {
-                    handleAppointmentClick(appointment);
-                } else {
-                    handleAppointmentEdit(appointment);
-                }
-            }
-
-            @Override
-            public void handleDelete(Appointment appointment) {
-                model.deleteAppointment(appointment);
-            }
-
-            @Override
-            public void handleEdit(Appointment appointment) {
-                handleAppointmentEdit(appointment);
-            }
-
-        });
-
-        componentFactory.setResourceListener(new ResourceListener() {
-            @Override
-            public void handleDelete(Resource resource) {
-                // Pass this directly down to the model
-//                LocalDate date = _todayRadio.isSelected() ? date : Tomorrow;
-//                _model.deleteResource(resource, date);
-            }
-
-            @Override
-            public void handleEdit(Resource resource) {
-//                handleResourceEdit(resource);
-            }
-        });
-
-        scheduler.setComponentFactory(componentFactory);
-
-        scheduler.setModel(model);
-        scheduler.showDate(model.getDate());
-
+    public ReservaSchedulerView(AbstractViewPresenter presenter) {
+        super(presenter);
     }
 
     private void handleAppointmentClick(Appointment appointment) {
@@ -272,17 +232,6 @@ public class ReservaSchedulerView extends javax.swing.JPanel {
     }//GEN-LAST:event_jDateChooserDelActionPerformed
 
     private void jButtonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestablecerActionPerformed
-
-        //        try {
-        //
-        //            MessageFormat footer = new MessageFormat("-Pag {0}-");
-        //
-        //            jTableGastos.print(JTable.PrintMode.FIT_WIDTH, headerGastos, footer);
-        //            jTableVentas.print(JTable.PrintMode.FIT_WIDTH, headerVentas, footer);
-        //
-        //        } catch (PrinterException ex) {
-        //            Logger.getLogger(Resumenes.class.getName()).log(Level.SEVERE, null, ex);
-        //        }
     }//GEN-LAST:event_jButtonRestablecerActionPerformed
 
 
@@ -332,6 +281,8 @@ public class ReservaSchedulerView extends javax.swing.JPanel {
 
         model.addCategory(Blue);
         model.addCategory(Green);
+
+        addTestReserva(rc, LocalDateTime.of(model.getDate(), LocalTime.of(5, 30)));
     }
 
     private void addTestReserva(Resource resource, LocalDateTime time) {
@@ -344,6 +295,74 @@ public class ReservaSchedulerView extends javax.swing.JPanel {
                         new Color(9, 246, 76, 200).getRGB())), resource);
         model.addAppointment(wrapper);
 
+    }
+
+    @Override
+    public void wireUp() {
+    }
+
+    @Override
+    public void uiInit() {
+        initComponents();
+        scheduler.addScheduleListener((Resource resource, LocalDateTime time) -> {
+            handleAddAppointment(resource, time);
+        });
+
+//        model = new ScheduleModel(LocalDate.now(),
+//                LocalTime.now().minusHours(4).truncatedTo(ChronoUnit.HOURS),
+//                LocalTime.now().truncatedTo(ChronoUnit.HOURS), Duration.ofMinutes(30));//TODO obviamente ponerlo de otra manera
+        ReservaSchedulerViewPresenter a = new ReservaSchedulerViewPresenter();
+
+        model = new ScheduleModel(LocalDate.now(), lista_ubicaciones, new ArrayList<>(), new ArrayList<>());
+        //TODO obviamente ponerlo de otra manera
+//        addTestData();
+        //TODO borrar
+
+        CustomComponentFactory componentFactory = new CustomComponentFactory();
+        componentFactory.setAppointmentListener(new AppointmentListener() {
+            @Override
+            public void handleClick(Appointment appointment, int clickCount) {
+                if (clickCount == 1) {
+                    handleAppointmentClick(appointment);
+                } else {
+                    handleAppointmentEdit(appointment);
+                }
+            }
+
+            @Override
+            public void handleDelete(Appointment appointment) {
+                model.deleteAppointment(appointment);
+            }
+
+            @Override
+            public void handleEdit(Appointment appointment) {
+                handleAppointmentEdit(appointment);
+            }
+
+        });
+
+        componentFactory.setResourceListener(new ResourceListener() {
+            @Override
+            public void handleDelete(Resource resource) {
+                // Pass this directly down to the model
+//                LocalDate date = _todayRadio.isSelected() ? date : Tomorrow;
+//                _model.deleteResource(resource, date);
+            }
+
+            @Override
+            public void handleEdit(Resource resource) {
+//                handleResourceEdit(resource);
+            }
+        });
+
+        scheduler.setComponentFactory(componentFactory);
+        scheduler.setModel(model);
+        scheduler.showDate(model.getDate());
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
     }
 
 }
