@@ -13,7 +13,6 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.domain.Reserva;
-import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.core.usecase.CategoriaUseCase;
 import com.jobits.pos.reserva.core.usecase.ClienteUseCase;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
@@ -38,10 +37,10 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
 
     public ProductoVentaSelectorPresenter productoSelectorPresenter;
 
-    ReservaUseCase reservasUseCase = ReservaCoreModule.getInstance().getImplementation(ReservaUseCase.class);
-    UbicacionUseCase ubicacionUseCase = ReservaCoreModule.getInstance().getImplementation(UbicacionUseCase.class);
-    CategoriaUseCase categoriasUseCase = ReservaCoreModule.getInstance().getImplementation(CategoriaUseCase.class);
-    ClienteUseCase clienteUseCase = ReservaCoreModule.getInstance().getImplementation(ClienteUseCase.class);
+    ReservaUseCase reservasUseCase = PosDesktopUiModule.getInstance().getImplementation(ReservaUseCase.class);
+    UbicacionUseCase ubicacionUseCase = PosDesktopUiModule.getInstance().getImplementation(UbicacionUseCase.class);
+    CategoriaUseCase categoriasUseCase = PosDesktopUiModule.getInstance().getImplementation(CategoriaUseCase.class);
+    ClienteUseCase clienteUseCase = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_ACEPTAR = "Aceptar";
