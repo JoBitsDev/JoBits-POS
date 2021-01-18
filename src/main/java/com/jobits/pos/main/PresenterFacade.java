@@ -32,9 +32,7 @@ import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
-import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.OrdenService;
-import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaResumenController;
@@ -44,7 +42,6 @@ import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.core.domain.models.Venta;
-import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.ui.about.AcercaDeView;
@@ -92,6 +89,7 @@ import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
@@ -192,8 +190,8 @@ public class PresenterFacade {
                 return new IpvGestionViewPresenter(new IPVController());
             case VentaDetailView.VIEW_NAME:
                 return new VentaDetailViewPresenter(
-                        PosCoreModule.getInstance().getImplementation(VentaDetailService.class),
-                        PosCoreModule.getInstance().getImplementation(OrdenService.class), 
+                        PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class),
+                        PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), 
                         new ArrayList<>());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter(new UbicacionConexionController());

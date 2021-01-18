@@ -7,10 +7,8 @@ package com.jobits.pos.ui.reserva.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.reservas.ReservaService;
-import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -20,6 +18,7 @@ import com.jobits.pos.reserva.core.usecase.CategoriaUseCase;
 import com.jobits.pos.reserva.core.usecase.ClienteUseCase;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
 import com.jobits.pos.reserva.core.usecase.UbicacionUseCase;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorPresenter;
@@ -68,7 +67,7 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         super(new ReservaDetailViewModel());
         this.reserva = reserva;
         initLists();
-        productoSelectorPresenter = new ProductoVentaSelectorPresenter(PosCoreModule.getInstance().getImplementation(OrdenService.class));
+        productoSelectorPresenter = new ProductoVentaSelectorPresenter(PosDesktopUiModule.getInstance().getImplementation(OrdenService.class));
         addListeners();
         refreshState();
         setListToBean();

@@ -19,6 +19,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
 import com.jobits.pos.ui.LongProcessActionService;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
@@ -199,6 +200,7 @@ public class Application {
         ReservaRepoModule.init();
         ReservaCoreModule.init(ReservaRepoModule.getInstance());
         PosCoreModule.init(null);
+        PosDesktopUiModule.init(ReservaCoreModule.getInstance(),ReservaRepoModule.getInstance());
     }
 
     private void registerResources() {
