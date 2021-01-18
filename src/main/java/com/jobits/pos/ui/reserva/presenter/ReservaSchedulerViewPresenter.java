@@ -106,7 +106,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
 
     private List<Resource> ubicacionConverter() {
         List<Resource> ret = new ArrayList<>();
-        ubicacionUseCase.getUbicacaionesActivas(amountToShow, currentIndex).forEach(ubicacion -> {
+        ubicacionUseCase.getUbicacaionesActivas(amountToShow, currentIndex - 1).forEach(ubicacion -> {
             ret.add(new UbicacionWrapper(ubicacion));
         });
         return ret;
@@ -125,7 +125,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
     private void setTotalIndex() {
         int total = ubicacionUseCase.findAll().size();
         if (total != 0) {
-            totalIndex = (int) Math.ceil((float) (total / amountToShow));
+            totalIndex = (int) Math.ceil((float) total / amountToShow);
             currentIndex = 1;
         }
         getBean().setIndice_actual(String.valueOf(currentIndex));
