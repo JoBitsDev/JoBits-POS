@@ -32,18 +32,18 @@ public class ReservaListViewPresenter extends AbstractListViewPresenter<ReservaL
 
     @Override
     protected void onAgregarClick() {
-        NavigationService.getInstance().navigateTo(ReservasDetailView.VIEW_NAME,
-                new ReservaDetailViewPresenter(new ReservaController()), DisplayType.POPUP);
-        setListToBean();
+//        NavigationService.getInstance().navigateTo(ReservasDetailView.VIEW_NAME,
+//                new ReservaDetailViewPresenter(new ReservaController()), DisplayType.POPUP);
+//        setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
-        if (getBean().getElemento_seleccionado() != null) {
-            NavigationService.getInstance().navigateTo(ReservasDetailView.VIEW_NAME,
-                    new ReservaDetailViewPresenter(new ReservaController(getBean().getElemento_seleccionado())), DisplayType.POPUP);
-            setListToBean();
-        }
+//        if (getBean().getElemento_seleccionado() != null) {
+//            NavigationService.getInstance().navigateTo(ReservasDetailView.VIEW_NAME,
+//                    new ReservaDetailViewPresenter(new ReservaController(getBean().getElemento_seleccionado())), DisplayType.POPUP);
+//            setListToBean();
+//        }
     }
 
     @Override
