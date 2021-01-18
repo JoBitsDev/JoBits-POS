@@ -1,15 +1,10 @@
 package com.jobits.pos.ui.reserva.model;
 
 import com.jobits.pos.reserva.core.domain.Reserva;
-import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.temporal.ChronoUnit;
 
 /**
  * Example Appointment
@@ -57,7 +52,11 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public String getTitle() {
-        return reserva.getNotasreserva();
+        if (reserva.getNotasreserva() != null) {
+            return reserva.getNotasreserva();
+        } else {
+            return "No Title";
+        }
     }
 
     public static ReservaWrapper create(
