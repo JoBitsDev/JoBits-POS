@@ -8,6 +8,7 @@ package com.jobits.pos.ui.venta.presenter;
 import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.core.usecase.algoritmo.Y;
 import com.jobits.pos.controller.venta.OrdenController;
+import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListController;
@@ -16,6 +17,7 @@ import com.jobits.pos.controller.venta.VentaResumenController;
 import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -104,7 +106,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             VentaDetailService ventaController = new VentaDetailController();
             VentaDetailViewPresenter presenter
                     = new VentaDetailViewPresenter(ventaController,
-                            new OrdenController(), getBean().getDia_seleccionado());
+                            PosCoreModule.getInstance().getImplementation(OrdenService.class), getBean().getDia_seleccionado());
             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         }
     }

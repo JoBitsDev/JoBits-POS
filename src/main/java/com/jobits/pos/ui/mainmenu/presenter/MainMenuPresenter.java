@@ -9,8 +9,10 @@ import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.MainMenuService;
 import com.jobits.pos.controller.venta.OrdenController;
+import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailController;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -72,7 +74,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                                 VentaDetailController control = null;
                                 control = service.comenzarVentasEconomico(R.DATE_FORMAT.parse(ret.get()));
                                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                        new VentaDetailViewPresenter(control, new OrdenController(), service.getDiaVentaSeleccionado()));
+                                        new VentaDetailViewPresenter(control, PosCoreModule.getInstance().getImplementation(OrdenService.class), service.getDiaVentaSeleccionado()));
                             } catch (ParseException ex) {
                                 throw new IllegalArgumentException("Formato incorrecto");
                             }
@@ -85,7 +87,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                             VentaDetailController control = null;
                             control = service.comenzarVentasCajero();
                             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                    new VentaDetailViewPresenter(control, new OrdenController(), service.getDiaVentaSeleccionado()));
+                                    new VentaDetailViewPresenter(control, PosCoreModule.getInstance().getImplementation(OrdenService.class), service.getDiaVentaSeleccionado()));
                         }
                     }.performAction(null);
                 } else {
@@ -95,7 +97,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                             VentaDetailController control = null;
                             control = service.comenzarVentasDependiente();
                             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                    new VentaDetailViewPresenter(control, new OrdenController(), service.getDiaVentaSeleccionado()));
+                                    new VentaDetailViewPresenter(control, PosCoreModule.getInstance().getImplementation(OrdenService.class), service.getDiaVentaSeleccionado()));
                         }
                     }.performAction(null);
                 }
