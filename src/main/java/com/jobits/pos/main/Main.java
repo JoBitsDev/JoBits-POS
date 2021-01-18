@@ -35,36 +35,6 @@ public class Main {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-       
-       /*
-        
-        DBConnector dbconnect = new DBConnector(null);
-        ConfiguracionController config = new ConfiguracionController();
-        config.cargarConfiguracion();
-        
-        
-        ImpresoraUseCase impUC = new ImpresoraUseCase();
-        Impresion imp = new Impresion();
-        Ticket t = new Ticket();
-        
-        impUC.AddNewPrinter("Test1", new ArrayList<Cocina>(), true);
-        
-        imp.addHeader(t);
 
-        t.addLineSeperator();
-        t.newLine();
-        t.alignCenter();
-        t.setText("HOLA MUNDO");
-        t.newLine();
-        t.alignRight();
-        t.addLineSeperator();
-        t.newLine();
-
-        imp.addFinal(t);
-
-        imp.feedPrinter(t.finalCommandSet().getBytes(),null,null);*/
-       
-       
     }
-
 }

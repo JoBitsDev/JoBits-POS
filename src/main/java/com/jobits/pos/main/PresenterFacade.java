@@ -5,12 +5,12 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.controller.almacen.AlmacenListService;
+import com.jobits.pos.controller.almacen.AlmacenManageService;
+import com.jobits.pos.controller.almacen.IPVService;
+import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
+import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
-import com.jobits.pos.controller.almacen.AlmacenListController;
-import com.jobits.pos.controller.almacen.AlmacenManageController;
-import com.jobits.pos.controller.almacen.IPVController;
-import com.jobits.pos.controller.almacen.PedidoIpvVentasController;
-import com.jobits.pos.controller.almacen.TransaccionListController;
 import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.clientes.ClientesDetailController;
@@ -32,16 +32,13 @@ import com.jobits.pos.controller.trabajadores.PersonalDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
-import com.jobits.pos.controller.venta.OrdenController;
-import com.jobits.pos.controller.venta.VentaDetailController;
+import com.jobits.pos.controller.venta.OrdenService;
+import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaResumenController;
-import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Carta;
-import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Seccion;
-import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.ui.about.AcercaDeView;
@@ -89,6 +86,7 @@ import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
@@ -186,9 +184,12 @@ public class PresenterFacade {
             case ConfiguracionView.VIEW_NAME:
                 return new ConfigurationViewPresenter(new ConfiguracionController());
             case IpvGestionView.VIEW_NAME:
-                return new IpvGestionViewPresenter(new IPVController());
+                return new IpvGestionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(IPVService.class));
             case VentaDetailView.VIEW_NAME:
-                return new VentaDetailViewPresenter(new VentaDetailController(), new OrdenController(), new ArrayList<>());
+                return new VentaDetailViewPresenter(
+                        PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class),
+                        PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), 
+                        new ArrayList<>());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter(new UbicacionConexionController());
             case VentaCalendarView.VIEW_NAME:
@@ -196,9 +197,11 @@ public class PresenterFacade {
             case VentaStatisticsView.VIEW_NAME:
                 return new VentaStatisticsViewPresenter(new VentaListController());
             case AlmacenMainView.VIEW_NAME:
-                return new AlmacenViewPresenter(new AlmacenListController());
+                return new AlmacenViewPresenter(
+                        PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
+                        PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class));
             case FacturaView.VIEW_NAME:
-                return new FacturaViewPresenter(new AlmacenManageController(new Almacen()));
+                return new FacturaViewPresenter(PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class));
             case ReportarBugView.VIEW_NAME:
                 return new ReportarBugViewPresenter(new ReportarBugController());
             case OrdenLogView.VIEW_NAME:
@@ -216,7 +219,7 @@ public class PresenterFacade {
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(new ImageManagerController(null));
             case TransaccionListView.VIEW_NAME:
-                return new TransaccionListPresenter(new TransaccionListController(new Almacen()));
+                return new TransaccionListPresenter(PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class));
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
             case ClientesListView.VIEW_NAME:
@@ -228,7 +231,7 @@ public class PresenterFacade {
             case UbicacionDetailView.VIEW_NAME:
                 return new UbicacionDetailViewPresenter();
             case IPVPedidoVentasView.VIEW_NAME:
-                return new IPVPedidoVentasViewPresenter(new PedidoIpvVentasController(new ArrayList<>(), new Cocina(), new Venta()));
+                return new IPVPedidoVentasViewPresenter(PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class));
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;

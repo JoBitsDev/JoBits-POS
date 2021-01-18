@@ -5,10 +5,10 @@
  */
 package com.jobits.pos.ui.reserva.presenter;
 
-import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.core.usecase.CategoriaUseCase;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
 import com.jobits.pos.reserva.core.usecase.UbicacionUseCase;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.reserva.model.CategoriaWrapper;
@@ -20,8 +20,6 @@ import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,9 +35,9 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
     public static final String ACTION_BACK = "Back";
     public static final String PROP_SHOW_SCHEDULE = "Show Scheduler";
 
-    UbicacionUseCase ubicacionUseCase = ReservaCoreModule.getInstance().getImplementation(UbicacionUseCase.class);
-    CategoriaUseCase categoriasUseCase = ReservaCoreModule.getInstance().getImplementation(CategoriaUseCase.class);
-    ReservaUseCase reservasUseCase = ReservaCoreModule.getInstance().getImplementation(ReservaUseCase.class);
+    UbicacionUseCase ubicacionUseCase = PosDesktopUiModule.getInstance().getImplementation(UbicacionUseCase.class);
+    CategoriaUseCase categoriasUseCase = PosDesktopUiModule.getInstance().getImplementation(CategoriaUseCase.class);
+    ReservaUseCase reservasUseCase = PosDesktopUiModule.getInstance().getImplementation(ReservaUseCase.class);
 
     private int amountToShow = 10;
     private int totalIndex = 0, currentIndex = 0;

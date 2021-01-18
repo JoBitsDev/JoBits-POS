@@ -6,11 +6,12 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenListController;
+import com.jobits.pos.controller.almacen.impl.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenListService;
-import com.jobits.pos.controller.almacen.AlmacenManageController;
+import com.jobits.pos.controller.almacen.impl.AlmacenManageController;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.almacen.TransaccionListController;
+import com.jobits.pos.controller.almacen.TransaccionListService;
+import com.jobits.pos.controller.almacen.impl.TransaccionListController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -22,6 +23,7 @@ import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
@@ -54,9 +56,10 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     AlmacenListService listService;
     AlmacenManageService detailService;
 
-    public AlmacenViewPresenter(AlmacenListController listController) {
+    public AlmacenViewPresenter(AlmacenListService listController, AlmacenManageService detailService) {
         super(new AlmacenViewModel());
         listService = listController;
+        this.detailService = detailService;
         setListToBean();
         addListeners();
     }
@@ -66,7 +69,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_ACTUALIZAR_LISTA_ALMACEN) {
             @Override
             public Optional doAction() {
-                detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
+                detailService.setInstance(getBean().getElemento_seleccionado());
                 refreshView();
                 getBean().setSearch_keyWord(null);
                 return Optional.empty();
@@ -92,11 +95,13 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_ELIMINAR_ALMACEN) {
             @Override
             public Optional doAction() {
-                listService.destroy(getBean().getElemento_seleccionado(), JOptionPane.showConfirmDialog(
+                if (JOptionPane.showConfirmDialog(
                         null, R.RESOURCE_BUNDLE.getString("dialogo_borrar_almacen") + " " + getBean().getElemento_seleccionado().getNombre(),
-                        "Eliminar", JOptionPane.YES_NO_OPTION));
-                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
-                setListToBean();
+                        "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    listService.destroy(getBean().getElemento_seleccionado());
+                    Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                    setListToBean();
+                }
                 return Optional.empty();
             }
         });
@@ -136,10 +141,10 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_TRANSACCIONES) {
             @Override
             public Optional doAction() {
+                TransaccionListService ser = PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class);
+                ser.setAlmacen(detailService.getInstance());
                 NavigationService.getInstance().navigateTo(TransaccionListView.VIEW_NAME,
-                        new TransaccionListPresenter(
-                                new TransaccionListController(
-                                        detailService.getInstance())), DisplayType.POPUP);
+                        new TransaccionListPresenter(ser), DisplayType.POPUP);
                 refreshView();
                 return Optional.empty();
             }
@@ -177,7 +182,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         if (!getBean().getLista_elementos().isEmpty()) {
             getBean().setElemento_seleccionado(getBean().getLista_elementos().get(0));
             if (getBean().getElemento_seleccionado() != null) {
-                detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
+                detailService.setInstance(getBean().getElemento_seleccionado());
                 refreshView();
                 getBean().setPanel_visible(true);
             }
@@ -228,7 +233,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         });
         addBeanPropertyChangeListener(AlmacenViewModel.PROP_ELEMENTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null) {
-                detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
+                detailService.setInstance(getBean().getElemento_seleccionado());
                 refreshView();
                 getBean().setSearch_keyWord(null);
             }

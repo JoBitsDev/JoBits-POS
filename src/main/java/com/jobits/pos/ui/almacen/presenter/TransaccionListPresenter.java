@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.ui.almacen.presenter;
 
-import com.jobits.pos.controller.almacen.TransaccionListController;
 import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.TransaccionListView;
@@ -24,7 +23,7 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
     public static final String ACTION_IMPRIMIR_TRANSACCIONES = "";
     public static final String ACTION_CERRAR_POPUP = "Cerrar";
 
-    public TransaccionListPresenter(TransaccionListController controller) {
+    public TransaccionListPresenter(TransaccionListService controller) {
         super(new TransaccionListModel(), TransaccionListView.VIEW_NAME);
         this.service = controller;
         setListToBean();

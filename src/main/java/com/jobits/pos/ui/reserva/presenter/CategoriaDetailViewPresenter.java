@@ -10,10 +10,9 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.reserva.core.domain.Categoria;
-import com.jobits.pos.reserva.core.domain.UbicacionEstado;
-import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.core.usecase.CategoriaUseCase;
 import com.jobits.pos.ui.DefaultValues;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.root101.clean.core.domain.services.ResourceHandler;
@@ -27,7 +26,7 @@ import java.util.Optional;
  */
 public class CategoriaDetailViewPresenter extends AbstractViewPresenter<CategoriaDetailVIewModel> {
 
-    CategoriaUseCase categoriasUseCase = ReservaCoreModule.getInstance().getImplementation(CategoriaUseCase.class);
+    CategoriaUseCase categoriasUseCase = PosDesktopUiModule.getInstance().getImplementation(CategoriaUseCase.class);
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_ACEPTAR = "Aceptar";

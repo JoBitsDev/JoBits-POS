@@ -12,12 +12,14 @@ import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
+import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
 import com.jobits.pos.ui.LongProcessActionService;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
@@ -49,7 +51,8 @@ public class Application {
     //
     //Log
     //
-    private static String LOG_FILE_PATH = "LOGS/AppLogs";
+    private static final String LOG_FILE_PATH = "LOGS/AppLogs";
+    private static final String ERR_FILE_PATH = "LOGS/AppLogsErr";
     private static Application application;
 
     public static Application createApplication(boolean debugMode) {
@@ -69,8 +72,10 @@ public class Application {
     public static void setupLogging() throws Exception {
         PrintStream out = new PrintStream(
                 new FileOutputStream(LOG_FILE_PATH, false), true);
+        PrintStream err = new PrintStream(
+                new FileOutputStream(ERR_FILE_PATH, false), true);
         System.setOut(out);
-        System.setErr(out);
+        System.setErr(err);
 
     }
 
@@ -197,6 +202,10 @@ public class Application {
     private void initModules() {
         ReservaRepoModule.init();
         ReservaCoreModule.init(ReservaRepoModule.getInstance());
+        PosCoreModule.init(null);
+        PosDesktopUiModule.init(
+                ReservaCoreModule.getInstance(),
+                PosCoreModule.getInstance());
     }
 
     private void registerResources() {

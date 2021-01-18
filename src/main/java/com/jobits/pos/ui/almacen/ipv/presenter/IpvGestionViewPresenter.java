@@ -7,9 +7,8 @@ package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.controller.almacen.IPVController;
 import com.jobits.pos.controller.almacen.IPVService;
-import com.jobits.pos.controller.almacen.PedidoIpvVentasController;
+import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Cocina;
@@ -19,6 +18,7 @@ import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
@@ -54,7 +54,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private IPVService service;
 
-    public IpvGestionViewPresenter(IPVController controller) {
+    public IpvGestionViewPresenter(IPVService controller) {
         super(new IpvGestionViewModel());
         this.service = controller;
         getBean().setLista_punto_elaboracion(new ArrayListModel<>(controller.getCocinaList()));
@@ -272,12 +272,12 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onNuevoPedido() {//TODO: mojon aqui
         Cocina cocina = getBean().getPunto_elaboracion_seleccionado();
+        PedidoIpvVentasService pedidoService = PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class);
+        pedidoService.setIpvVentaRegistroList(getBean().getLista_ipv_venta_registro());
+        pedidoService.setVentaSeleccionada(getBean().getVenta_ipv_ventas_seleccionada());
+        pedidoService.setCocina(cocina);
         NavigationService.getInstance().navigateTo(IPVPedidoVentasView.VIEW_NAME,
-                new IPVPedidoVentasViewPresenter(
-                        new PedidoIpvVentasController(
-                                getBean().getLista_ipv_venta_registro(), cocina,
-                                getBean().getVenta_ipv_ventas_seleccionada())),
-                DisplayType.POPUP);
+                new IPVPedidoVentasViewPresenter(pedidoService),DisplayType.POPUP);
         onCocinaStateChange();
     }
 

@@ -7,8 +7,7 @@ package com.jobits.pos.ui.venta.presenter;
 
 import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.core.usecase.algoritmo.Y;
-import com.jobits.pos.controller.venta.OrdenController;
-import com.jobits.pos.controller.venta.VentaDetailController;
+import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaListService;
@@ -20,6 +19,7 @@ import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.utils.utils;
@@ -101,10 +101,10 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     @Override
     protected void onEditarClick() {//TODO vista
         if (getBean().getDia_seleccionado() != null) {
-            VentaDetailService ventaController = new VentaDetailController();
+            VentaDetailService ventaController = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
             VentaDetailViewPresenter presenter
                     = new VentaDetailViewPresenter(ventaController,
-                            new OrdenController(), getBean().getDia_seleccionado());
+                            PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), getBean().getDia_seleccionado());
             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         }
     }
@@ -187,7 +187,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     }
 
     private void onImportarVentaClick() {
-        VentaDetailService control = new VentaDetailController();
+        VentaDetailService control = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
         Application.getInstance().getBackgroundWorker().processInBackground("Importando venta", () -> {
             control.importarVenta(getBean().getArchivo_a_importar());
             updateBeanData();

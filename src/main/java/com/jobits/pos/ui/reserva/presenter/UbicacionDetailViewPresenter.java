@@ -11,16 +11,15 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.reserva.core.domain.UbicacionEstado;
-import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.core.usecase.UbicacionUseCase;
 import com.jobits.pos.ui.DefaultValues;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewModel.*;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +32,7 @@ import java.util.Optional;
  */
 public class UbicacionDetailViewPresenter extends AbstractViewPresenter<UbicacionDetailViewModel> {
 
-    UbicacionUseCase ubicacionUseCase = ReservaCoreModule.getInstance().getImplementation(UbicacionUseCase.class);
+    UbicacionUseCase ubicacionUseCase = PosDesktopUiModule.getInstance().getImplementation(UbicacionUseCase.class);
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_ACEPTAR = "Aceptar";
