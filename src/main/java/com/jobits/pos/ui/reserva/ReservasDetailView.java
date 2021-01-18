@@ -59,24 +59,31 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanel5 = new javax.swing.JPanel();
         jPanelMain = new javax.swing.JPanel();
         jPanelfecha = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
         jPanel15 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jDateChooserFecha = new org.jdesktop.swingx.JXDatePicker();
         jPanel17 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
-        jSpinnerHora = new javax.swing.JSpinner();
-        jSpinnerMinutos = new javax.swing.JSpinner();
-        jSpinnerPmAm = new javax.swing.JSpinner();
+        jComboBoxHora = new javax.swing.JComboBox();
+        jComboBoxMinuto = new javax.swing.JComboBox();
+        jComboBoxPMAM = new javax.swing.JComboBox();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(30, 32767));
+        jSpinnerDuracion = new javax.swing.JSpinner();
+        jLabel1 = new javax.swing.JLabel();
         jPanel18 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jComboBoxMesa = new javax.swing.JComboBox<>();
+        jComboBoxUbicacion = new javax.swing.JComboBox<>();
         jButtonShowProductos = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel19 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jComboBoxCliente = new javax.swing.JComboBox<>();
         jButtonShowNewClient = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel20 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jComboBoxCategoria = new javax.swing.JComboBox<>();
         jPanelProductos = new javax.swing.JPanel();
         jPanelProductoSelector = new javax.swing.JPanel();
         jPanelProductosOrden = new javax.swing.JPanel();
@@ -106,7 +113,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
-        setPreferredSize(new java.awt.Dimension(670, 470));
+        setPreferredSize(new java.awt.Dimension(500, 460));
         setLayout(new java.awt.BorderLayout());
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Reserva", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 24))); // NOI18N
@@ -114,12 +121,15 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanelMain.setLayout(new java.awt.CardLayout());
 
-        jPanelfecha.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 70, 1, 70));
-        jPanelfecha.setLayout(new java.awt.GridLayout(3, 1));
+        jPanelfecha.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 40, 20, 40));
+        jPanelfecha.setLayout(new java.awt.GridLayout(6, 1));
 
-        jPanel8.setLayout(new java.awt.GridLayout(1, 0, 20, 0));
+        jPanel21.setLayout(new java.awt.BorderLayout());
+        jPanel21.add(jTextField1, java.awt.BorderLayout.CENTER);
 
-        jPanel15.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 1, 30, 1));
+        jPanelfecha.add(jPanel21);
+
+        jPanel15.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
         jPanel15.setLayout(new java.awt.BorderLayout());
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -137,9 +147,9 @@ public class ReservasDetailView extends AbstractViewPanel {
         });
         jPanel15.add(jDateChooserFecha, java.awt.BorderLayout.CENTER);
 
-        jPanel8.add(jPanel15);
+        jPanelfecha.add(jPanel15);
 
-        jPanel17.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 1, 30, 1));
+        jPanel17.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
         jPanel17.setLayout(new java.awt.BorderLayout());
 
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -150,28 +160,33 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanel16.setLayout(new javax.swing.BoxLayout(jPanel16, javax.swing.BoxLayout.LINE_AXIS));
 
-        jSpinnerHora.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jSpinnerHora.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
-        jSpinnerHora.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel16.add(jSpinnerHora);
+        jComboBoxHora.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jComboBoxHora.setPreferredSize(new java.awt.Dimension(35, 26));
+        jPanel16.add(jComboBoxHora);
 
-        jSpinnerMinutos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jSpinnerMinutos.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
-        jSpinnerMinutos.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel16.add(jSpinnerMinutos);
+        jComboBoxMinuto.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jComboBoxMinuto.setPreferredSize(new java.awt.Dimension(35, 26));
+        jPanel16.add(jComboBoxMinuto);
 
-        jSpinnerPmAm.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jSpinnerPmAm.setModel(new javax.swing.SpinnerListModel(new String[] {"PM", "AM"}));
-        jSpinnerPmAm.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel16.add(jSpinnerPmAm);
+        jComboBoxPMAM.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jComboBoxPMAM.setPreferredSize(new java.awt.Dimension(35, 26));
+        jPanel16.add(jComboBoxPMAM);
+        jPanel16.add(filler1);
+
+        jSpinnerDuracion.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jSpinnerDuracion.setModel(new javax.swing.SpinnerNumberModel(0, 0, 120, 5));
+        jSpinnerDuracion.setMinimumSize(new java.awt.Dimension(25, 26));
+        jSpinnerDuracion.setPreferredSize(new java.awt.Dimension(25, 26));
+        jPanel16.add(jSpinnerDuracion);
+
+        jLabel1.setText("Min");
+        jPanel16.add(jLabel1);
 
         jPanel17.add(jPanel16, java.awt.BorderLayout.CENTER);
 
-        jPanel8.add(jPanel17);
+        jPanelfecha.add(jPanel17);
 
-        jPanelfecha.add(jPanel8);
-
-        jPanel18.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 1, 30, 1));
+        jPanel18.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
         jPanel18.setLayout(new java.awt.BorderLayout());
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -180,10 +195,10 @@ public class ReservasDetailView extends AbstractViewPanel {
         jLabel11.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
         jPanel18.add(jLabel11, java.awt.BorderLayout.WEST);
 
-        jComboBoxMesa.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jComboBoxMesa.setMinimumSize(new java.awt.Dimension(200, 50));
-        jComboBoxMesa.setPreferredSize(new java.awt.Dimension(300, 50));
-        jPanel18.add(jComboBoxMesa, java.awt.BorderLayout.CENTER);
+        jComboBoxUbicacion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jComboBoxUbicacion.setMinimumSize(new java.awt.Dimension(200, 50));
+        jComboBoxUbicacion.setPreferredSize(new java.awt.Dimension(300, 50));
+        jPanel18.add(jComboBoxUbicacion, java.awt.BorderLayout.CENTER);
 
         jButtonShowProductos.setIcon(MaterialIcons.FORMAT_LIST_BULLETED);
         jButtonShowProductos.setToolTipText("Debe seleccionar una Mesa primero");
@@ -197,7 +212,7 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanelfecha.add(jPanel18);
 
-        jPanel19.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 1, 30, 1));
+        jPanel19.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
         jPanel19.setLayout(new java.awt.BorderLayout());
 
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -221,6 +236,22 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanel19.add(jButtonShowNewClient, java.awt.BorderLayout.LINE_END);
 
         jPanelfecha.add(jPanel19);
+
+        jPanel20.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
+        jPanel20.setLayout(new java.awt.BorderLayout());
+
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/categoria_2_indigo.png"))); // NOI18N
+        jLabel13.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jPanel20.add(jLabel13, java.awt.BorderLayout.WEST);
+
+        jComboBoxCategoria.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jComboBoxCategoria.setMinimumSize(new java.awt.Dimension(200, 50));
+        jComboBoxCategoria.setPreferredSize(new java.awt.Dimension(300, 50));
+        jPanel20.add(jComboBoxCategoria, java.awt.BorderLayout.CENTER);
+
+        jPanelfecha.add(jPanel20);
 
         jPanelMain.add(jPanelfecha, "Fecha");
 
@@ -260,7 +291,7 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanelMain.add(jPanelProductos, "Productos");
 
-        jPanelNewClient.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 100, 1, 100));
+        jPanelNewClient.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
         jPanelNewClient.setLayout(new java.awt.BorderLayout());
 
         jPanel4.setLayout(new java.awt.GridLayout(4, 1));
@@ -312,7 +343,7 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanel5.add(jPanelMain, java.awt.BorderLayout.CENTER);
 
-        jPanelBotones.setPreferredSize(new java.awt.Dimension(916, 80));
+        jPanelBotones.setPreferredSize(new java.awt.Dimension(916, 50));
         jPanelBotones.setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel9.setOpaque(false);
@@ -322,7 +353,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanelGoBack.setLayout(new java.awt.GridBagLayout());
 
         jButtonGoBack.setIcon(MaterialIcons.ARROW_BACK);
-        jButtonGoBack.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonGoBack.setPreferredSize(new java.awt.Dimension(50, 50));
         jButtonGoBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGoBackActionPerformed(evt);
@@ -336,7 +367,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanel11.setLayout(new java.awt.GridBagLayout());
 
         jButtonCancelar.setIcon(MaterialIcons.CLOSE);
-        jButtonCancelar.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel11.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         jPanel9.add(jPanel11);
@@ -345,7 +376,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanel12.setLayout(new java.awt.GridBagLayout());
 
         jButtonAceptar.setIcon(MaterialIcons.DONE);
-        jButtonAceptar.setPreferredSize(new java.awt.Dimension(70, 70));
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel12.add(jButtonAceptar, new java.awt.GridBagConstraints());
 
         jPanel9.add(jPanel12);
@@ -383,6 +414,7 @@ public class ReservasDetailView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonAddCliente;
     private javax.swing.JButton jButtonCancelar;
@@ -390,12 +422,18 @@ public class ReservasDetailView extends AbstractViewPanel {
     private javax.swing.JButton jButtonGoBack;
     private javax.swing.JButton jButtonShowNewClient;
     private javax.swing.JButton jButtonShowProductos;
+    private javax.swing.JComboBox<String> jComboBoxCategoria;
     private javax.swing.JComboBox<String> jComboBoxCliente;
-    private javax.swing.JComboBox<String> jComboBoxMesa;
+    private javax.swing.JComboBox jComboBoxHora;
+    private javax.swing.JComboBox jComboBoxMinuto;
+    private javax.swing.JComboBox jComboBoxPMAM;
+    private javax.swing.JComboBox<String> jComboBoxUbicacion;
     private org.jdesktop.swingx.JXDatePicker jDateChooserFecha;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<ProductovOrden> jListListaProductos;
     private javax.swing.JPanel jPanel1;
@@ -407,12 +445,13 @@ public class ReservasDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelGoBack;
@@ -423,9 +462,8 @@ public class ReservasDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelProductosOrden;
     private javax.swing.JPanel jPanelfecha;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinnerHora;
-    private javax.swing.JSpinner jSpinnerMinutos;
-    private javax.swing.JSpinner jSpinnerPmAm;
+    private javax.swing.JSpinner jSpinnerDuracion;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldApellidos;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldTelefono;
@@ -440,27 +478,30 @@ public class ReservasDetailView extends AbstractViewPanel {
     @Override
     public void wireUp() {
         //Compomentes Enabled
-
-        Bindings.bind(jComboBoxMesa, new SelectionInList<>(
-                getPresenter().getModel(PROP_LISTA_MESAS),
-                getPresenter().getModel(PROP_MESA_SELECCIONADA)));
+        Bindings.bind(jComboBoxUbicacion, new SelectionInList<>(
+                getPresenter().getModel(PROP_LISTA_UBICACIONES),
+                getPresenter().getModel(PROP_UBICACION_SELECCIONADA)));
+        Bindings.bind(jComboBoxCategoria, new SelectionInList<>(
+                getPresenter().getModel(PROP_LISTA_CATEGORIAS),
+                getPresenter().getModel(PROP_CATEGORIA_SELECCIONADA)));
         Bindings.bind(jComboBoxCliente, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
                 getPresenter().getModel(PROP_CLIENTE)));
+        Bindings.bind(jComboBoxHora, new SelectionInList<>(
+                getPresenter().getModel(PROP_LISTA_HORAS),
+                getPresenter().getModel(PROP_HORA_SELECCIONADA)));
+        Bindings.bind(jComboBoxMinuto, new SelectionInList<>(
+                getPresenter().getModel(PROP_LISTA_MINUTOS),
+                getPresenter().getModel(PROP_MINUTO_SELECCIONADO)));
+        Bindings.bind(jComboBoxPMAM, new SelectionInList<>(
+                getPresenter().getModel(PROP_LISTA_AM_PM),
+                getPresenter().getModel(PROP_AM_PM_SELECCIONADO)));
 
         Bindings.bind(jDateChooserFecha, "date", getPresenter().getModel(PROP_FECHA));
 
-        SpinnerToValueModelConnector connectorHora = new SpinnerToValueModelConnector(jSpinnerHora.getModel(),
-                getPresenter().getModel(PROP_HORA), 0);
-        Bindings.bind(jSpinnerHora, "value", getPresenter().getModel(PROP_HORA));
-
-        SpinnerToValueModelConnector connectorMinutos = new SpinnerToValueModelConnector(jSpinnerMinutos.getModel(),
-                getPresenter().getModel(PROP_MINUTOS), 0);
-        Bindings.bind(jSpinnerMinutos, "value", getPresenter().getModel(PROP_MINUTOS));
-
-        SpinnerToValueModelConnector connectorPMAM = new SpinnerToValueModelConnector(jSpinnerPmAm.getModel(),
-                getPresenter().getModel(PROP_PM_AM), 0);
-        Bindings.bind(jSpinnerPmAm, "value", getPresenter().getModel(PROP_PM_AM));
+        SpinnerToValueModelConnector connectorDuracion = new SpinnerToValueModelConnector(jSpinnerDuracion.getModel(),
+                getPresenter().getModel(PROP_DURACION), 0);
+        Bindings.bind(jSpinnerDuracion, "value", getPresenter().getModel(PROP_DURACION));
 
         Bindings.bind(jListListaProductos, new SelectionInList<ProductovOrden>(
                 getPresenter().getModel(PROP_LISTA_PRODUCTO),
@@ -486,7 +527,10 @@ public class ReservasDetailView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
-        jSpinnerMinutos.setEditor(new JSpinner.NumberEditor(jSpinnerMinutos, "00"));
+         jComboBoxHora.setRenderer(new TimeCellRender("h"));
+         jComboBoxMinuto.setRenderer(new TimeCellRender("mm"));
+         jComboBoxPMAM.setRenderer(new TimeCellRender("a"));
+        
         jListListaProductos.setCellRenderer(new ListCellRenderer<ProductovOrden>() {
             @Override
             public Component getListCellRendererComponent(JList<? extends ProductovOrden> list,
@@ -502,6 +546,7 @@ public class ReservasDetailView extends AbstractViewPanel {
             jListListaProductos.repaint();
         });
         jPanelGoBack.setVisible(false);
+        jButtonShowProductos.setVisible(false);
     }
 
     @Override
