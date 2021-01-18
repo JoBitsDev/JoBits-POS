@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.reserva.presenter;
+package com.jobits.pos.ui.reserva.ubicaciones.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.cordinator.NavigationService;
@@ -16,7 +16,7 @@ import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import static com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewModel.*;
+import static com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionDetailViewModel.*;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
@@ -60,17 +60,16 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
 
     private boolean creatingMode = true;
 
-    public UbicacionDetailViewPresenter() {
-        super(new UbicacionDetailViewModel());
-        addListeners();
-        initLists();
-        refreshState();
-    }
-
-    public UbicacionDetailViewPresenter(Ubicacion ubicacion) {
+//    public UbicacionDetailViewPresenter() {
+//        super(new UbicacionDetailViewModel());
+//        addListeners();
+//        initLists();
+//        refreshState();
+//    }
+    public UbicacionDetailViewPresenter(Ubicacion ubicacion, boolean creatingMode) {
         super(new UbicacionDetailViewModel());
         this.ubicacion = ubicacion;
-        creatingMode = false;
+        this.creatingMode = creatingMode;
         addListeners();
         initLists();
         refreshState();

@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.reserva;
+package com.jobits.pos.ui.reserva.ubicaciones;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import static com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewModel.*;
-import static com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewPresenter.*;
+import com.jobits.pos.ui.reserva.ColoredCellRender;
+import com.jobits.pos.ui.reserva.TimeCellRender;
+import static com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionDetailViewModel.*;
+import static com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionDetailViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
