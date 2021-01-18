@@ -20,6 +20,8 @@ import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -116,8 +118,8 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         List<Appointment> ret = new ArrayList<>();
         reservasUseCase.getReservasDisponibles(selected_date).forEach(reserva -> {
             ret.add(new ReservaWrapper(reserva,
-                    categoriaConverter().get(categoriaConverter().indexOf(new CategoriaWrapper(reserva.getCategoriaidcategoria()))),
-                    ubicacionConverter().get(ubicacionConverter().indexOf(new UbicacionWrapper(reserva.getUbicacionidubicacion())))));
+                    new CategoriaWrapper(reserva.getCategoriaidcategoria()),
+                    new UbicacionWrapper(reserva.getUbicacionidubicacion())));
         });
         return ret;
     }

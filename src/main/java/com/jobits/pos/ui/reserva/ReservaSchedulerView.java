@@ -11,10 +11,17 @@ import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.reserva.core.domain.Categoria;
+import com.jobits.pos.reserva.core.domain.Reserva;
+import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.reserva.model.ReservaWrapper;
 import com.jobits.pos.ui.reserva.util.AppointmentListener;
 import com.jobits.pos.ui.reserva.model.ScheduleModel;
+import com.jobits.pos.ui.reserva.model.UbicacionWrapper;
+import com.jobits.pos.ui.reserva.presenter.CategoriaDetailViewPresenter;
+import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
 import com.jobits.pos.ui.reserva.util.ResourceListener;
 import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewModel.*;
 import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter.*;
@@ -22,6 +29,7 @@ import com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewPresenter;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import com.jobits.ui.scheduler.Availability;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDateTime;
 
@@ -45,17 +53,23 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     }
 
     private void handleAppointmentClick(Appointment appointment) {
-        Application.getInstance().getNotificationService().notify("Click " + appointment.getTitle(), TipoNotificacion.SUCCESS);
+//        Application.getInstance().getNotificationService().notify("Click " + appointment.getTitle(), TipoNotificacion.SUCCESS);
     }
 
     private void handleAppointmentEdit(Appointment appointment) {
-        Application.getInstance().getNotificationService().notify("Edit " + appointment.getTitle(), TipoNotificacion.SUCCESS);
+        Reserva reserva = ((ReservaWrapper) appointment).getReserva();
+        Application.getInstance().getNavigator().navigateTo(
+                ReservasDetailView.VIEW_NAME, new ReservaDetailViewPresenter(reserva), DisplayType.POPUP);
     }
 
     private void handleAddAppointment(Resource resource, LocalDateTime time) {
+//        Availability a = resource.getAvailability(time.toLocalDate()).next();
+        Ubicacion u = ((UbicacionWrapper) resource).getUbicacion();
+        Reserva reserva = new Reserva(time.toLocalDate(), time.toLocalTime(), 30, u); // 6 pm
+        Application.getInstance().getNavigator().navigateTo(
+                ReservasDetailView.VIEW_NAME, new ReservaDetailViewPresenter(reserva), DisplayType.POPUP);
 //        addTestReserva(resource, time);
-        Application.getInstance().getNotificationService().notify("Edit " + resource.getTitle(), TipoNotificacion.SUCCESS);
-
+//        Application.getInstance().getNotificationService().notify("Edit " + resource.getTitle(), TipoNotificacion.SUCCESS);
     }
 
     /**
@@ -93,6 +107,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         jButtonNext = new javax.swing.JButton();
         jPanelOpciones = new javax.swing.JPanel();
         jButtonRestablecer = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jButton1 = new javax.swing.JButton();
         jPanelDetails = new javax.swing.JPanel();
         jPanelMainScheduler = new javax.swing.JPanel();
         scheduler = new com.jobits.ui.scheduler.Scheduler();
@@ -215,13 +230,21 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         jPanelOpciones.setPreferredSize(new java.awt.Dimension(110, 50));
         jPanelOpciones.setLayout(new java.awt.GridLayout(1, 2, 5, 1));
 
-        jButtonRestablecer.setText("Imprimir");
+        jButtonRestablecer.setText("Ubic");
         jButtonRestablecer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRestablecerActionPerformed(evt);
             }
         });
         jPanelOpciones.add(jButtonRestablecer);
+
+        jButton1.setText("Cat");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanelOpciones.add(jButton1);
 
         jPanelSeleccion.add(jPanelOpciones, java.awt.BorderLayout.EAST);
 
@@ -249,8 +272,14 @@ public class ReservaSchedulerView extends AbstractViewPanel {
                 UbicacionDetailView.VIEW_NAME, new UbicacionDetailViewPresenter(), DisplayType.POPUP);
     }//GEN-LAST:event_jButtonRestablecerActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Application.getInstance().getNavigator().navigateTo(
+                CategoriaDetailView.VIEW_NAME, new CategoriaDetailViewPresenter(new Categoria(), true), DisplayType.POPUP);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBack;
     private javax.swing.JButton jButtonNext;
     private javax.swing.JButton jButtonPeriodoSelector;
@@ -344,9 +373,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         componentFactory.setAppointmentListener(new AppointmentListener() {
             @Override
             public void handleClick(Appointment appointment, int clickCount) {
-                if (clickCount == 1) {
-                    handleAppointmentClick(appointment);
-                } else {
+                if (clickCount == 2) {
                     handleAppointmentEdit(appointment);
                 }
             }
@@ -363,19 +390,19 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 
         });
 
-        componentFactory.setResourceListener(new ResourceListener() {
-            @Override
-            public void handleDelete(Resource resource) {
-                // Pass this directly down to the model
-//                LocalDate date = _todayRadio.isSelected() ? date : Tomorrow;
-//                _model.deleteResource(resource, date);
-            }
-
-            @Override
-            public void handleEdit(Resource resource) {
-//                handleResourceEdit(resource);
-            }
-        });
+//        componentFactory.setResourceListener(new ResourceListener() {
+//            @Override
+//            public void handleDelete(Resource resource) {
+//                // Pass this directly down to the model
+////                LocalDate date = _todayRadio.isSelected() ? date : Tomorrow;
+////                _model.deleteResource(resource, date);
+//            }
+//
+//            @Override
+//            public void handleEdit(Resource resource) {
+////                handleResourceEdit(resource);
+//            }
+//        });
         scheduler.setComponentFactory(componentFactory);
         setModelToScheduler();
     }

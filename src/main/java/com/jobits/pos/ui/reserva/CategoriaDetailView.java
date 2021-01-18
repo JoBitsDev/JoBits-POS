@@ -8,24 +8,24 @@ package com.jobits.pos.ui.reserva;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import static com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewModel.*;
-import static com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewPresenter.*;
+import static com.jobits.pos.ui.reserva.presenter.CategoriaDetailVIewModel.*;
+import static com.jobits.pos.ui.reserva.presenter.CategoriaDetailViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**
  *
  * @author Home
  */
-public class UbicacionDetailView extends AbstractViewPanel {
+public class CategoriaDetailView extends AbstractViewPanel {
 
-    public static final String VIEW_NAME = "Ubicacionees Detail";
+    public static final String VIEW_NAME = "Categorias Detail";
 
     /**
-     * Creates new form UbicacionDetailView
+     * Creates new form CategoriaDetailView
+     * @param presenter
      */
-    public UbicacionDetailView(AbstractViewPresenter presenter) {
+    public CategoriaDetailView(AbstractViewPresenter presenter) {
         super(presenter);
     }
 
@@ -42,19 +42,8 @@ public class UbicacionDetailView extends AbstractViewPanel {
         jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel12 = new javax.swing.JPanel();
-        jToggleButton1 = new javax.swing.JToggleButton();
         jPanel11 = new javax.swing.JPanel();
-        jTextField1 = MaterialComponentsFactory.Input.getTextField("", "Ubicacion");
-        jPanel3 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jComboBoxHoraInicio = new javax.swing.JComboBox();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
-        jLabel2 = new javax.swing.JLabel();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
-        jComboBoxHoraCierre = new javax.swing.JComboBox();
+        jTextField1 = MaterialComponentsFactory.Input.getTextField("", "Nombre");
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -65,45 +54,15 @@ public class UbicacionDetailView extends AbstractViewPanel {
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 32767));
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
-        setPreferredSize(new java.awt.Dimension(568, 332));
         setLayout(new java.awt.BorderLayout());
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 10, 10, 10));
         jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
-        jPanel1.setLayout(new java.awt.GridLayout(3, 1));
+        jPanel1.setLayout(new java.awt.GridLayout(2, 1));
 
         jPanel2.setLayout(new java.awt.BorderLayout());
-
-        jPanel12.setPreferredSize(new java.awt.Dimension(150, 77));
-
-        jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/congelado_color.png"))); // NOI18N
-        jToggleButton1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/caliente_color.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
-        jPanel12.setLayout(jPanel12Layout);
-        jPanel12Layout.setHorizontalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
-            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel12Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jToggleButton1)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        jPanel12Layout.setVerticalGroup(
-            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 91, Short.MAX_VALUE)
-            .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel12Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jToggleButton1)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-
-        jPanel2.add(jPanel12, java.awt.BorderLayout.WEST);
 
         jPanel11.setLayout(new java.awt.GridBagLayout());
 
@@ -120,34 +79,6 @@ public class UbicacionDetailView extends AbstractViewPanel {
 
         jPanel1.add(jPanel2);
 
-        jPanel3.setLayout(new java.awt.BorderLayout());
-
-        jPanel6.setPreferredSize(new java.awt.Dimension(150, 77));
-        jPanel6.setLayout(new java.awt.GridBagLayout());
-
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel1.setText("Aviabilidad");
-        jPanel6.add(jLabel1, new java.awt.GridBagConstraints());
-
-        jPanel3.add(jPanel6, java.awt.BorderLayout.WEST);
-
-        jPanel7.setLayout(new java.awt.GridBagLayout());
-
-        jComboBoxHoraInicio.setPreferredSize(new java.awt.Dimension(120, 26));
-        jPanel7.add(jComboBoxHoraInicio, new java.awt.GridBagConstraints());
-        jPanel7.add(filler1, new java.awt.GridBagConstraints());
-
-        jLabel2.setText("Hasta");
-        jPanel7.add(jLabel2, new java.awt.GridBagConstraints());
-        jPanel7.add(filler2, new java.awt.GridBagConstraints());
-
-        jComboBoxHoraCierre.setPreferredSize(new java.awt.Dimension(120, 26));
-        jPanel7.add(jComboBoxHoraCierre, new java.awt.GridBagConstraints());
-
-        jPanel3.add(jPanel7, java.awt.BorderLayout.CENTER);
-
-        jPanel1.add(jPanel3);
-
         jPanel8.setLayout(new java.awt.BorderLayout());
 
         jPanel9.setPreferredSize(new java.awt.Dimension(150, 77));
@@ -161,7 +92,7 @@ public class UbicacionDetailView extends AbstractViewPanel {
 
         jPanel10.setLayout(new java.awt.GridBagLayout());
 
-        jComboBoxColores.setPreferredSize(new java.awt.Dimension(313, 26));
+        jComboBoxColores.setPreferredSize(new java.awt.Dimension(200, 26));
         jPanel10.add(jComboBoxColores, new java.awt.GridBagConstraints());
 
         jPanel8.add(jPanel10, java.awt.BorderLayout.CENTER);
@@ -189,64 +120,43 @@ public class UbicacionDetailView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JComboBox jComboBoxColores;
-    private javax.swing.JComboBox jComboBoxHoraCierre;
-    private javax.swing.JComboBox jComboBoxHoraInicio;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void wireUp() {
-        Bindings.bind(jTextField1, getPresenter().getModel(PROP_NOMBRE_UBICACION));
 
-        Bindings.bind(jComboBoxHoraInicio, new SelectionInList<>(
-                getPresenter().getModel(PROP_LISTA_HORAS_INICIO),
-                getPresenter().getModel(PROP_HORA_INICIO)));
-        Bindings.bind(jComboBoxHoraCierre, new SelectionInList<>(
-                getPresenter().getModel(PROP_LISTA_HORAS_CIERRE),
-                getPresenter().getModel(PROP_HORA_CIERRE)));
+        Bindings.bind(jTextField1, getPresenter().getModel(PROP_NOMBRE_CATEGORIA));
+
         Bindings.bind(jComboBoxColores, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_COLORES),
                 getPresenter().getModel(PROP_COLOR_SELECCIONADO)));
-        Bindings.bind(jToggleButton1, "selected", getPresenter().getModel(PROP_UBICACION_HABILITADA));
 
         jButtonCancelar.addActionListener(getPresenter().getOperation(ACTION_CANCELAR));
         jButtonAceptar.addActionListener(getPresenter().getOperation(ACTION_ACEPTAR));
-
     }
 
     @Override
     public void uiInit() {
         initComponents();
         jComboBoxColores.setRenderer(new ColoredCellRender());
-        jComboBoxHoraInicio.setRenderer(new TimeCellRender());
-        jComboBoxHoraCierre.setRenderer(new TimeCellRender());
     }
 
     @Override
     public String getViewName() {
         return VIEW_NAME;
     }
-
 }
