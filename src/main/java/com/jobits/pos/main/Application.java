@@ -200,7 +200,9 @@ public class Application {
         ReservaRepoModule.init();
         ReservaCoreModule.init(ReservaRepoModule.getInstance());
         PosCoreModule.init(null);
-        PosDesktopUiModule.init(ReservaCoreModule.getInstance(),ReservaRepoModule.getInstance());
+        PosDesktopUiModule.init(
+                ReservaCoreModule.getInstance(),
+                ReservaRepoModule.getInstance());
     }
 
     private void registerResources() {
