@@ -20,15 +20,15 @@ import java.util.List;
  */
 public class ReservaSchedulerViewModel extends AbstractViewModel {
 
-    public static ArrayListModel<Resource> lista_ubicaciones = new ArrayListModel<>();
+    private ArrayListModel<Resource> lista_ubicaciones = new ArrayListModel<>();
 
     public static final String PROP_LISTA_UBICACIONES = "lista_ubicaciones";
 
-    public static ArrayListModel<Appointment> lista_reservas = new ArrayListModel<>();
+    private ArrayListModel<Appointment> lista_reservas = new ArrayListModel<>();
 
     public static final String PROP_LISTA_RESERVAS = "lista_reservas";
 
-    public static ArrayListModel<Category> list_categorias = new ArrayListModel<>();
+    private ArrayListModel<Category> list_categorias = new ArrayListModel<>();
 
     public static final String PROP_LIST_CATEGORIAS = "list_categorias";
 
@@ -44,14 +44,14 @@ public class ReservaSchedulerViewModel extends AbstractViewModel {
 
     public static final String PROP_DIA_SELECCIONADO = "dia_seleccionado";
 
-    public static LocalDate selected_date = LocalDate.now();
+    private LocalDate selected_date = LocalDate.now();
 
     /**
      * Get the value of selected_date
      *
      * @return the value of selected_date
      */
-    public static LocalDate getSelected_date() {
+    public LocalDate getSelected_date() {
         return selected_date;
     }
 
@@ -60,8 +60,10 @@ public class ReservaSchedulerViewModel extends AbstractViewModel {
      *
      * @param selected_date new value of selected_date
      */
-    public static void setSelected_date(LocalDate selected_date) {
-        ReservaSchedulerViewModel.selected_date = selected_date;
+    public void setSelected_date(LocalDate selected_date) {
+        LocalDate oldDia_seleccionado = this.selected_date;
+        this.selected_date = selected_date;
+        firePropertyChange(PROP_DIA_SELECCIONADO, oldDia_seleccionado, selected_date);
     }
 
     /**

@@ -38,6 +38,7 @@ import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
 import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
+import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
 import com.jobits.pos.ui.reserva.ubicaciones.UbicacionDetailView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
@@ -150,7 +151,7 @@ public class ViewFacade {
             case AutorizoView.VIEW_NAME:
                 return new AutorizoView(p);
             case ReservaSchedulerView.VIEW_NAME:
-                return new ReservaSchedulerView(p);
+                return new ReservaSchedulerView((ReservaSchedulerViewPresenter) p);
             case IPVPedidoVentasView.VIEW_NAME:
                 return new IPVPedidoVentasView(p);
             case CategoriaDetailView.VIEW_NAME:

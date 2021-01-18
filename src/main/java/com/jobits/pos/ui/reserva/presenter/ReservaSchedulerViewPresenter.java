@@ -15,7 +15,6 @@ import com.jobits.pos.ui.reserva.model.CategoriaWrapper;
 import com.jobits.pos.ui.reserva.model.Category;
 import com.jobits.pos.ui.reserva.model.ReservaWrapper;
 import com.jobits.pos.ui.reserva.model.UbicacionWrapper;
-import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewModel.*;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import java.beans.PropertyChangeEvent;
@@ -114,7 +113,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
 
     private List<Appointment> reservaConverter() {
         List<Appointment> ret = new ArrayList<>();
-        reservasUseCase.getReservasDisponibles(selected_date).forEach(reserva -> {
+        reservasUseCase.getReservasDisponibles(getBean().getSelected_date()).forEach(reserva -> {
             ret.add(new ReservaWrapper(reserva,
                     new CategoriaWrapper(reserva.getCategoriaidcategoria()),
                     new UbicacionWrapper(reserva.getUbicacionidubicacion())));
@@ -131,11 +130,11 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         getBean().setIndice_actual(String.valueOf(currentIndex));
         getBean().setTotal_indices(String.valueOf(totalIndex));
         Date d = getBean().getDia_seleccionado();
-        selected_date = LocalDate.of(d.getYear() + 1900, d.getMonth() + 1, d.getDate());
+        getBean().setSelected_date( LocalDate.of(d.getYear() + 1900, d.getMonth() + 1, d.getDate()));
     }
 
     private void addListeners() {
-        addBeanPropertyChangeListener(PROP_DIA_SELECCIONADO, (PropertyChangeEvent evt) -> {
+        addBeanPropertyChangeListener(ReservaSchedulerViewModel.PROP_DIA_SELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null) {
                 setTotalIndex();
                 refreshState();

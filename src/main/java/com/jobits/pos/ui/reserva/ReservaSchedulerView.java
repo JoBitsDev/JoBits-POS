@@ -16,15 +16,14 @@ import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.reserva.model.ReservaWrapper;
 import com.jobits.pos.ui.reserva.util.AppointmentListener;
 import com.jobits.pos.ui.reserva.model.ScheduleModel;
 import com.jobits.pos.ui.reserva.model.UbicacionWrapper;
 import com.jobits.pos.ui.reserva.ubicaciones.presenter.CategoriaDetailViewPresenter;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
-import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewModel.*;
-import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter.*;
+import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewModel;
+import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
 import com.jobits.pos.ui.reserva.ubicaciones.CategoriasListView;
 import com.jobits.pos.ui.reserva.ubicaciones.UbicacionesListView;
 import com.jobits.pos.ui.reserva.ubicaciones.presenter.CategoriaListViewPresenter;
@@ -51,7 +50,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
      *
      * @param presenter
      */
-    public ReservaSchedulerView(AbstractViewPresenter presenter) {
+    public ReservaSchedulerView(ReservaSchedulerViewPresenter presenter) {
         super(presenter);
     }
 
@@ -371,19 +370,22 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 //    }
     @Override
     public void wireUp() {
-        Bindings.bind(jDateChooserDateToShow, "date", getPresenter().getModel(PROP_DIA_SELECCIONADO));
-        Bindings.bind(jLabelCurrentIndex, getPresenter().getModel(PROP_INDICE_ACTUAL));
-        Bindings.bind(jLabelTotalIndexes, getPresenter().getModel(PROP_TOTAL_INDICES));
-        jButtonNext.addActionListener(getPresenter().getOperation(ACTION_NEXT));
-        jButtonBack.addActionListener(getPresenter().getOperation(ACTION_BACK));
+        Bindings.bind(jDateChooserDateToShow, "date", getPresenter().getModel(ReservaSchedulerViewModel.PROP_DIA_SELECCIONADO));
+        Bindings.bind(jLabelCurrentIndex, getPresenter().getModel(ReservaSchedulerViewModel.PROP_INDICE_ACTUAL));
+        Bindings.bind(jLabelTotalIndexes, getPresenter().getModel(ReservaSchedulerViewModel.PROP_TOTAL_INDICES));
+        jButtonNext.addActionListener(getPresenter().getOperation(ReservaSchedulerViewPresenter.ACTION_NEXT));
+        jButtonBack.addActionListener(getPresenter().getOperation(ReservaSchedulerViewPresenter.ACTION_BACK));
 
-        getPresenter().addPropertyChangeListener(PROP_SHOW_SCHEDULE, (PropertyChangeEvent evt) -> {
+        getPresenter().addPropertyChangeListener(ReservaSchedulerViewPresenter.PROP_SHOW_SCHEDULE, (PropertyChangeEvent evt) -> {
             setModelToScheduler();
         });
     }
 
     private void setModelToScheduler() {
-        model = new ScheduleModel(selected_date, lista_ubicaciones, list_categorias, lista_reservas);
+        model = new ScheduleModel(getPresenter().getBean().getSelected_date(),
+                getPresenter().getBean().getLista_ubicaciones(),
+                getPresenter().getBean().getList_categorias(),
+                getPresenter().getBean().getLista_reservas());
         scheduler.setModel(model);
         scheduler.showDate(model.getDate());
     }
@@ -418,6 +420,11 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 
         scheduler.setComponentFactory(componentFactory);
         setModelToScheduler();
+    }
+
+    @Override
+    public ReservaSchedulerViewPresenter getPresenter() {
+        return (ReservaSchedulerViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
