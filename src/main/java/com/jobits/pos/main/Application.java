@@ -51,7 +51,8 @@ public class Application {
     //
     //Log
     //
-    private static String LOG_FILE_PATH = "LOGS/AppLogs";
+    private static final String LOG_FILE_PATH = "LOGS/AppLogs";
+    private static final String ERR_FILE_PATH = "LOGS/AppLogsErr";
     private static Application application;
 
     public static Application createApplication(boolean debugMode) {
@@ -71,8 +72,10 @@ public class Application {
     public static void setupLogging() throws Exception {
         PrintStream out = new PrintStream(
                 new FileOutputStream(LOG_FILE_PATH, false), true);
+        PrintStream err = new PrintStream(
+                new FileOutputStream(ERR_FILE_PATH, false), true);
         System.setOut(out);
-        System.setErr(out);
+        System.setErr(err);
 
     }
 
