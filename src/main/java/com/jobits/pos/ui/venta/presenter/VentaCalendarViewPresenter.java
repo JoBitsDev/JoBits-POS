@@ -103,7 +103,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     @Override
     protected void onEditarClick() {//TODO vista
         if (getBean().getDia_seleccionado() != null) {
-            VentaDetailService ventaController = new VentaDetailController();
+            VentaDetailService ventaController = PosCoreModule.getInstance().getImplementation(VentaDetailService.class);
             VentaDetailViewPresenter presenter
                     = new VentaDetailViewPresenter(ventaController,
                             PosCoreModule.getInstance().getImplementation(OrdenService.class), getBean().getDia_seleccionado());
@@ -189,7 +189,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     }
 
     private void onImportarVentaClick() {
-        VentaDetailService control = new VentaDetailController();
+        VentaDetailService control = PosCoreModule.getInstance().getImplementation(VentaDetailService.class);
         Application.getInstance().getBackgroundWorker().processInBackground("Importando venta", () -> {
             control.importarVenta(getBean().getArchivo_a_importar());
             updateBeanData();

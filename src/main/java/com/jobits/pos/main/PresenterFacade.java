@@ -35,6 +35,7 @@ import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
 import com.jobits.pos.controller.venta.OrdenController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailController;
+import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaResumenController;
 import com.jobits.pos.core.domain.models.Almacen;
@@ -190,7 +191,10 @@ public class PresenterFacade {
             case IpvGestionView.VIEW_NAME:
                 return new IpvGestionViewPresenter(new IPVController());
             case VentaDetailView.VIEW_NAME:
-                return new VentaDetailViewPresenter(new VentaDetailController(), PosCoreModule.getInstance().getImplementation(OrdenService.class), new ArrayList<>());
+                return new VentaDetailViewPresenter(
+                        PosCoreModule.getInstance().getImplementation(VentaDetailService.class),
+                        PosCoreModule.getInstance().getImplementation(OrdenService.class), 
+                        new ArrayList<>());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter(new UbicacionConexionController());
             case VentaCalendarView.VIEW_NAME:
