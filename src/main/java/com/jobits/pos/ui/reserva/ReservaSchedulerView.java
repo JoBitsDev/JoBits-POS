@@ -5,12 +5,13 @@
  */
 package com.jobits.pos.ui.reserva;
 
+import com.jobits.pos.ui.reserva.ubicaciones.UbicacionDetailView;
+import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jobits.pos.ui.reserva.util.CustomComponentFactory;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
@@ -20,16 +21,18 @@ import com.jobits.pos.ui.reserva.model.ReservaWrapper;
 import com.jobits.pos.ui.reserva.util.AppointmentListener;
 import com.jobits.pos.ui.reserva.model.ScheduleModel;
 import com.jobits.pos.ui.reserva.model.UbicacionWrapper;
-import com.jobits.pos.ui.reserva.presenter.CategoriaDetailViewPresenter;
+import com.jobits.pos.ui.reserva.ubicaciones.presenter.CategoriaDetailViewPresenter;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
-import com.jobits.pos.ui.reserva.util.ResourceListener;
 import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewModel.*;
 import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter.*;
-import com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewPresenter;
+import com.jobits.pos.ui.reserva.ubicaciones.CategoriasListView;
+import com.jobits.pos.ui.reserva.ubicaciones.UbicacionesListView;
+import com.jobits.pos.ui.reserva.ubicaciones.presenter.CategoriaListViewPresenter;
+import com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionDetailViewPresenter;
+import com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionesListViewPresenter;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import com.jobits.ui.scheduler.Availability;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDateTime;
 
@@ -39,7 +42,7 @@ import java.time.LocalDateTime;
  */
 public class ReservaSchedulerView extends AbstractViewPanel {
 
-    public static final String VIEW_NAME = "Reserva Scheduler";
+    public static final String VIEW_NAME = "Reservas";
 
     private ScheduleModel model;
 
@@ -90,6 +93,8 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         jTextField3 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
         jPanelSeleccion = new javax.swing.JPanel();
         jPanelPeriodo = new javax.swing.JPanel();
         jButtonPeriodoSelector = new javax.swing.JButton();
@@ -111,6 +116,8 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         jPanelDetails = new javax.swing.JPanel();
         jPanelMainScheduler = new javax.swing.JPanel();
         scheduler = new com.jobits.ui.scheduler.Scheduler();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
 
         jPanel2.setLayout(new java.awt.GridLayout(4, 2));
 
@@ -139,6 +146,8 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         jPanel2.add(jTextField4);
 
         setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setLayout(new java.awt.BorderLayout());
 
         jPanelSeleccion.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
         jPanelSeleccion.setLayout(new java.awt.BorderLayout());
@@ -248,28 +257,42 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 
         jPanelSeleccion.add(jPanelOpciones, java.awt.BorderLayout.EAST);
 
-        add(jPanelSeleccion, java.awt.BorderLayout.NORTH);
+        jPanel3.add(jPanelSeleccion, java.awt.BorderLayout.NORTH);
 
         jPanelDetails.setLayout(new java.awt.BorderLayout());
-        add(jPanelDetails, java.awt.BorderLayout.WEST);
+        jPanel3.add(jPanelDetails, java.awt.BorderLayout.WEST);
 
         jPanelMainScheduler.setLayout(new java.awt.BorderLayout());
         jPanelMainScheduler.add(scheduler, java.awt.BorderLayout.CENTER);
 
-        add(jPanelMainScheduler, java.awt.BorderLayout.CENTER);
+        jPanel3.add(jPanelMainScheduler, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane1.addTab("Reservas", jPanel3);
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        jPanel4.add(new UbicacionesListView(new UbicacionesListViewPresenter()));
+
+        jTabbedPane1.addTab("Ubicaciones", jPanel4);
+
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        jPanel6.add(new CategoriasListView(new CategoriaListViewPresenter()));
+
+        jTabbedPane1.addTab("Categorias", jPanel6);
+
+        add(jTabbedPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelPeriodoActualPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jLabelPeriodoActualPropertyChange
-
     }//GEN-LAST:event_jLabelPeriodoActualPropertyChange
 
     private void jDateChooserDateToShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserDateToShowActionPerformed
-
     }//GEN-LAST:event_jDateChooserDateToShowActionPerformed
 
     private void jButtonRestablecerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestablecerActionPerformed
         Application.getInstance().getNavigator().navigateTo(
-                UbicacionDetailView.VIEW_NAME, new UbicacionDetailViewPresenter(), DisplayType.POPUP);
+                UbicacionDetailView.VIEW_NAME, new UbicacionDetailViewPresenter(new Ubicacion(), true), DisplayType.POPUP);
     }//GEN-LAST:event_jButtonRestablecerActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -295,7 +318,10 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelTotalIndexes;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelDetails;
@@ -304,6 +330,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelPeriodChooser;
     private javax.swing.JPanel jPanelPeriodo;
     private javax.swing.JPanel jPanelSeleccion;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
@@ -329,13 +356,12 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 //        model.addCategory(Blue);
 //        model.addCategory(Green);
 //
-//        addTestReserva(rc, LocalDateTime.of(model.getDate(), LocalTime.of(5, 30)));
+//        addTestReserva(lista_ubicaciones.get(0), LocalDateTime.of(model.getDate(), LocalTime.of(5, 30)));
 //    }
-//
 //    private void addTestReserva(Resource resource, LocalDateTime time) {
 //        Availability a = resource.getAvailability(time.toLocalDate()).next();
 //        Ubicacion u = new Ubicacion(resource.getTitle(), a.getTime(), a.getTime().plus(a.getDuration()));
-//        Reserva r = new Reserva(time.toLocalDate(), time.toLocalTime(), 3600, u); // 6 pm
+//        Reserva r = new Reserva(time.toLocalDate(), time.toLocalTime(), 30, u); // 6 pm
 //        r.setNotasreserva("Clases a erick");
 //        ReservaWrapper wrapper = new ReservaWrapper(r,
 //                new CategoriaWrapper(new Categoria("Green",
@@ -390,19 +416,6 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 
         });
 
-//        componentFactory.setResourceListener(new ResourceListener() {
-//            @Override
-//            public void handleDelete(Resource resource) {
-//                // Pass this directly down to the model
-////                LocalDate date = _todayRadio.isSelected() ? date : Tomorrow;
-////                _model.deleteResource(resource, date);
-//            }
-//
-//            @Override
-//            public void handleEdit(Resource resource) {
-////                handleResourceEdit(resource);
-//            }
-//        });
         scheduler.setComponentFactory(componentFactory);
         setModelToScheduler();
     }
