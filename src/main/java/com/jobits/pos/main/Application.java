@@ -205,7 +205,7 @@ public class Application {
         PosCoreModule.init(null);
         PosDesktopUiModule.init(
                 ReservaCoreModule.getInstance(),
-                ReservaRepoModule.getInstance());
+                PosCoreModule.getInstance());
     }
 
     private void registerResources() {
