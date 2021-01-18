@@ -20,10 +20,10 @@ public class ReservaWrapper implements Appointment {
 
     private Category _category;
     private Resource _resource;
-    private Reserva ubicacion;
+    private Reserva reserva;
 
-    public ReservaWrapper(Reserva ubicacion, Category category, Resource resource) {
-        this.ubicacion = ubicacion;
+    public ReservaWrapper(Reserva reserva, Category category, Resource resource) {
+        this.reserva = reserva;
         _category = category;
         _resource = resource;
     }
@@ -36,9 +36,13 @@ public class ReservaWrapper implements Appointment {
         _category = category;
     }
 
+    public Reserva getReserva() {
+        return reserva;
+    }
+
     @Override
     public LocalDateTime getDateTime() {
-        return LocalDateTime.of(ubicacion.getFechareserva(), ubicacion.getHorareserva());
+        return LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva());
     }
 
     @Override
@@ -48,12 +52,12 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public Duration getDuration() {
-        return Duration.ofSeconds(ubicacion.getDuracionreservasegundos());
+        return Duration.ofSeconds(reserva.getDuracionreservasegundos());
     }
 
     @Override
     public String getTitle() {
-        return ubicacion.getNotasreserva();
+        return reserva.getNotasreserva();
     }
 
     public static ReservaWrapper create(
