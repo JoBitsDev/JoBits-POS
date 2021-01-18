@@ -106,7 +106,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
 
     private List<Resource> ubicacionConverter() {
         List<Resource> ret = new ArrayList<>();
-        ubicacionUseCase.getUbicacaionesActivas(amountToShow, currentIndex - 1).forEach(ubicacion -> {
+        ubicacionUseCase.getUbicacaionesActivas(amountToShow, currentIndex).forEach(ubicacion -> {
             ret.add(new UbicacionWrapper(ubicacion));
         });
         return ret;
