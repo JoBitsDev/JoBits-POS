@@ -49,4 +49,7 @@ public class UbicacionWrapper implements Resource {
         return new Color(Integer.parseInt(data.getColorubicacion()));
     }
 
+    public Ubicacion getUbicacion() {
+        return data;
+    }
 }
