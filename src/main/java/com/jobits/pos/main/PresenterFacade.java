@@ -24,7 +24,6 @@ import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.reportes.ReportarBugController;
-import com.jobits.pos.controller.reservas.ReservaListController;
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.seccion.SeccionDetailServiceImpl;
 import com.jobits.pos.controller.trabajadores.NominasController;
@@ -41,6 +40,7 @@ import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.reserva.core.domain.Reserva;
+import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
@@ -95,14 +95,14 @@ import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
-import com.jobits.pos.ui.reserva.CategoriaDetailView;
+import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
+import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
-import com.jobits.pos.ui.reserva.ReservasListView;
-import com.jobits.pos.ui.reserva.UbicacionDetailView;
-import com.jobits.pos.ui.reserva.presenter.CategoriaDetailViewPresenter;
+import com.jobits.pos.ui.reserva.ubicaciones.UbicacionDetailView;
+import com.jobits.pos.ui.reserva.ubicaciones.presenter.CategoriaDetailViewPresenter;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
-import com.jobits.pos.ui.reserva.presenter.ReservaListViewPresenter;
-import com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewPresenter;
+import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
+import com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionDetailViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -226,10 +226,10 @@ public class PresenterFacade {
                 return new ClientesListViewPresenter(new ClientesListController());
             case ClientesDetailView.VIEW_NAME:
                 return new ClientesDetailViewPresenter(new ClientesDetailController());
-            case ReservasListView.VIEW_NAME:
-                return new ReservaListViewPresenter(new ReservaListController());
+            case ReservaSchedulerView.VIEW_NAME:
+                return new ReservaSchedulerViewPresenter();
             case UbicacionDetailView.VIEW_NAME:
-                return new UbicacionDetailViewPresenter();
+                return new UbicacionDetailViewPresenter(new Ubicacion(), true);
             case IPVPedidoVentasView.VIEW_NAME:
                 return new IPVPedidoVentasViewPresenter(PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class));
             case LicenceDialogView.VIEW_NAME:
