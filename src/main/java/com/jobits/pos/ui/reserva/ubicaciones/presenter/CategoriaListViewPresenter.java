@@ -41,7 +41,7 @@ public class CategoriaListViewPresenter extends AbstractListViewPresenter<Catego
         if (getBean().getElemento_seleccionado() != null) {
             Application.getInstance().getNavigator().navigateTo(
                     CategoriaDetailView.VIEW_NAME, new CategoriaDetailViewPresenter(
-                            getBean().getElemento_seleccionado(), true), DisplayType.POPUP);
+                            getBean().getElemento_seleccionado(), false), DisplayType.POPUP);
             setListToBean();
         } else {
             Application.getInstance().getNotificationService().
