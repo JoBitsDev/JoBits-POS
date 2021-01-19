@@ -5,6 +5,7 @@ import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Example Appointment
@@ -67,4 +68,39 @@ public class ReservaWrapper implements Appointment {
         ReservaWrapper appointment = new ReservaWrapper(reserva, category, resource);
         return appointment;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this._category);
+        hash = 67 * hash + Objects.hashCode(this._resource);
+        hash = 67 * hash + Objects.hashCode(this.reserva);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ReservaWrapper other = (ReservaWrapper) obj;
+        if (!Objects.equals(this._category, other._category)) {
+            return false;
+        }
+        if (!Objects.equals(this._resource, other._resource)) {
+            return false;
+        }
+        if (!Objects.equals(this.reserva, other.reserva)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
