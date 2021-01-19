@@ -9,9 +9,11 @@ import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.reserva.core.domain.UbicacionEstado;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.reserva.ColorColumnCellRender;
 import static com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionesListViewPresenter.ACTION_ACT_DESAC_UB;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -55,29 +57,31 @@ public class UbicacionesListView extends AbstractListViewPanel<Ubicacion> {
         return new BindableTableModel<Ubicacion>(jTableList) {
             @Override
             public int getColumnCount() {
-                return 6;
+                return 7;
             }
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return getRow(rowIndex).getIdubicacion();
+                        return Integer.parseInt(getRow(rowIndex).getColorubicacion());
                     case 1:
-                        return getRow(rowIndex).getNombreubicacion();
+                        return getRow(rowIndex).getIdubicacion();
                     case 2:
+                        return getRow(rowIndex).getNombreubicacion();
+                    case 3:
                         return getRow(rowIndex).getDisponibledesde().
                                 format(DateTimeFormatter.ofPattern("h:mm a"));
-                    case 3:
+                    case 4:
                         return getRow(rowIndex).getDisponiblehasta().
                                 format(DateTimeFormatter.ofPattern("h:mm a"));
-                    case 4:
+                    case 5:
                         if (getRow(rowIndex).getReservaCollection() != null) {
                             return getRow(rowIndex).getReservaCollection().size();
                         } else {
                             return 0;
                         }
-                    case 5:
+                    case 6:
                         return getRow(rowIndex).getEstadoubicacion().equals(UbicacionEstado.HABILITADA.getEstado());
                     default:
                         return null;
@@ -87,17 +91,17 @@ public class UbicacionesListView extends AbstractListViewPanel<Ubicacion> {
             @Override
             public String getColumnName(int column) {
                 switch (column) {
-                    case 0:
-                        return "Codigo";
                     case 1:
-                        return "Nombre";
+                        return "Codigo";
                     case 2:
-                        return "Disponible desde";
+                        return "Nombre";
                     case 3:
-                        return "Disponible hasta";
+                        return "Disponible desde";
                     case 4:
-                        return "Cantidad de Reservas";
+                        return "Disponible hasta";
                     case 5:
+                        return "Cantidad de Reservas";
+                    case 6:
                         return "Habilitada";
                     default:
                         return null;
@@ -107,11 +111,15 @@ public class UbicacionesListView extends AbstractListViewPanel<Ubicacion> {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
-                    case 0:
+                    case 1:
                         return Long.class;
+                    case 3:
+                        return LocalTime.class;
                     case 4:
-                        return int.class;
+                        return LocalTime.class;
                     case 5:
+                        return int.class;
+                    case 6:
                         return Boolean.class;
                     default:
                         return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
@@ -120,12 +128,12 @@ public class UbicacionesListView extends AbstractListViewPanel<Ubicacion> {
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 5;
+                return columnIndex == 6;
             }
 
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                if (columnIndex == 5) {
+                if (columnIndex == 6) {
                     getPresenter().getOperation(ACTION_ACT_DESAC_UB).doAction();
                 }
             }
@@ -141,8 +149,10 @@ public class UbicacionesListView extends AbstractListViewPanel<Ubicacion> {
     @Override
     public void uiInit() {
         super.uiInit();
-        jTableList.getColumnModel().getColumn(0).setCellRenderer(utils.numberColumCellRender());
-        jTableList.getColumnModel().getColumn(4).setCellRenderer(utils.numberColumCellRender());
+        jTableList.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
+        jTableList.getColumnModel().getColumn(5).setCellRenderer(utils.numberColumCellRender());
+        jTableList.getColumnModel().getColumn(0).setCellRenderer(new ColorColumnCellRender());
+        jTableList.getColumnModel().getColumn(0).setMaxWidth(20);
     }
 
 
