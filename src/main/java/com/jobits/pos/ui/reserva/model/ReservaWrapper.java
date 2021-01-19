@@ -48,7 +48,7 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public Duration getDuration() {
-        return Duration.ofSeconds(reserva.getDuracionreservasegundos());
+        return Duration.ofMinutes(reserva.getDuracionreservasegundos());
     }
 
     @Override
