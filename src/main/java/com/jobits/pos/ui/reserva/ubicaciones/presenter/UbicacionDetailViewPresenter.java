@@ -22,7 +22,6 @@ import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,13 +81,8 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
         getBean().setHora_inicio(ubicacion.getDisponibledesde());
         getBean().setLista_horas_cierre(new ArrayListModel<>(times));
         getBean().setHora_cierre(ubicacion.getDisponiblehasta());
-        getBean().setLista_colores(new ArrayListModel<>(Arrays.asList(Colors)));
-        getBean().setColor_seleccionado(
-                getBean().getLista_colores().get(
-                        getBean().getLista_colores().indexOf(
-                                new Color(Integer.parseInt(
-                                        ubicacion.getColorubicacion())))));
-
+        getBean().setLista_colores(new ArrayListModel<>(colorsToRGB()));
+        getBean().setColor_seleccionado(Integer.parseInt(ubicacion.getColorubicacion()));
         if (ubicacion.getEstadoubicacion().equals(UbicacionEstado.HABILITADA.getEstado())) {
             getBean().setUbicacion_habilitada(true);
         } else {
@@ -128,7 +122,7 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
             ubicacion.setNombreubicacion(getBean().getNombre_ubicacion());
             ubicacion.setDisponibledesde(getBean().getHora_inicio());
             ubicacion.setDisponiblehasta(getBean().getHora_cierre());
-            ubicacion.setColorubicacion(String.valueOf(getBean().getColor_seleccionado().getRGB()));
+            ubicacion.setColorubicacion(String.valueOf(getBean().getColor_seleccionado()));
             if (getBean().isUbicacion_habilitada()) {
                 ubicacion.setEstadoubicacion(UbicacionEstado.HABILITADA.getEstado());
             } else {
@@ -171,6 +165,14 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
             }
         });
 
+    }
+
+    private List<Integer> colorsToRGB() {
+        List<Integer> ret = new ArrayList<>();
+        for (Color x : Colors) {
+            ret.add(x.getRGB());
+        }
+        return ret;
     }
 
 }

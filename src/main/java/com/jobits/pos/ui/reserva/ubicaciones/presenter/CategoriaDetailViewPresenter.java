@@ -17,7 +17,8 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.awt.Color;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -81,7 +82,9 @@ public class CategoriaDetailViewPresenter extends AbstractViewPresenter<Categori
 
     @Override
     protected Optional refreshState() {
-        getBean().setLista_colores(new ArrayListModel<>(Arrays.asList(Colors)));
+        getBean().setLista_colores(new ArrayListModel<>(colorsToRGB()));
+        getBean().setColor_seleccionado(categoria.getColor());
+        getBean().setNombre_categoria(categoria.getNombre());
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -94,15 +97,23 @@ public class CategoriaDetailViewPresenter extends AbstractViewPresenter<Categori
                 showDialog("Desea confirmar los cambios?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             categoria.setNombre(getBean().getNombre_categoria());
-            categoria.setColor(getBean().getColor_seleccionado().getRGB());
+            categoria.setColor(getBean().getColor_seleccionado());
             if (creatingMode) {
                 categoriasUseCase.create(categoria);
-            }else{
+            } else {
                 categoriasUseCase.edit(categoria);
             }
             NavigationService.getInstance().navigateUp();
         }
 
+    }
+
+    private List<Integer> colorsToRGB() {
+        List<Integer> ret = new ArrayList<>();
+        for (Color x : Colors) {
+            ret.add(x.getRGB());
+        }
+        return ret;
     }
 
 }
