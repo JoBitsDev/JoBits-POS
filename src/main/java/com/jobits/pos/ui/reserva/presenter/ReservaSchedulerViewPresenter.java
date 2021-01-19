@@ -40,6 +40,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
 
     public static final String ACTION_NEXT = "Next";
     public static final String ACTION_BACK = "Back";
+    public static final String ACTION_REFRESH = "Refresh";
     public static final String PROP_SHOW_SCHEDULE = "Show Scheduler";
 
     UbicacionUseCase ubicacionUseCase = PosDesktopUiModule.getInstance().getImplementation(UbicacionUseCase.class);
@@ -47,7 +48,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
     ReservaUseCase reservasUseCase = PosDesktopUiModule.getInstance().getImplementation(ReservaUseCase.class);
 
     private final int amountToShow = 2;
-    private int totalIndex = 0, currentIndex = 1;
+    private int totalIndex = 0, currentIndex = 0;
 
     public ReservaSchedulerViewPresenter() {
         super(new ReservaSchedulerViewModel());
@@ -93,7 +94,9 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
 
     @Override
     protected Optional refreshState() {
-        getBean().setIndice_actual(String.valueOf(currentIndex));
+        setTotalIndex();
+        Date d = getBean().getDia_seleccionado();
+        getBean().setSelected_date(LocalDate.of(d.getYear() + 1900, d.getMonth() + 1, d.getDate()));
         getBean().setList_categorias(categoriaConverter());
         getBean().setLista_ubicaciones(ubicacionConverter());
         getBean().setLista_reservas(reservaConverter());
@@ -132,17 +135,17 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         if (total != 0) {
             totalIndex = (int) Math.ceil((float) total / amountToShow);
             currentIndex = 1;
+        } else {
+            totalIndex = 0;
+            currentIndex = 0;
         }
         getBean().setIndice_actual(String.valueOf(currentIndex));
         getBean().setTotal_indices(String.valueOf(totalIndex));
-        Date d = getBean().getDia_seleccionado();
-        getBean().setSelected_date(LocalDate.of(d.getYear() + 1900, d.getMonth() + 1, d.getDate()));
     }
 
     private void addListeners() {
         addBeanPropertyChangeListener(ReservaSchedulerViewModel.PROP_DIA_SELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null) {
-                setTotalIndex();
                 refreshState();
             }
         });

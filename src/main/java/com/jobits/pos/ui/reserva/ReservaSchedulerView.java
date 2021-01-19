@@ -64,6 +64,8 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         jPanel3 = new javax.swing.JPanel();
         jPanelSeleccion = new javax.swing.JPanel();
         jPanelPeriodo = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jButtonRefresh = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelPeriodChooser = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jButtonBack = MaterialComponentsFactory.Buttons.getOutlinedButton();
@@ -115,7 +117,19 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 
         jPanelPeriodo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
         jPanelPeriodo.setPreferredSize(new java.awt.Dimension(220, 50));
-        jPanelPeriodo.setLayout(new java.awt.GridBagLayout());
+        jPanelPeriodo.setLayout(new java.awt.BorderLayout());
+
+        jPanel5.setLayout(new java.awt.GridBagLayout());
+
+        jButtonRefresh.setIcon(MaterialIcons.REFRESH);
+        jButtonRefresh.setToolTipText("Refrescar");
+        jButtonRefresh.setMaximumSize(new java.awt.Dimension(40, 40));
+        jButtonRefresh.setMinimumSize(new java.awt.Dimension(40, 40));
+        jButtonRefresh.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel5.add(jButtonRefresh, new java.awt.GridBagConstraints());
+
+        jPanelPeriodo.add(jPanel5, java.awt.BorderLayout.WEST);
+
         jPanelSeleccion.add(jPanelPeriodo, java.awt.BorderLayout.WEST);
 
         jPanelPeriodChooser.setPreferredSize(new java.awt.Dimension(200, 50));
@@ -211,6 +225,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBack;
     private javax.swing.JButton jButtonNext;
+    private javax.swing.JButton jButtonRefresh;
     private org.jdesktop.swingx.JXDatePicker jDateChooserDateToShow;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -223,6 +238,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelDetails;
@@ -277,6 +293,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         Bindings.bind(jLabelTotalIndexes, getPresenter().getModel(ReservaSchedulerViewModel.PROP_TOTAL_INDICES));
         jButtonNext.addActionListener(getPresenter().getOperation(ReservaSchedulerViewPresenter.ACTION_NEXT));
         jButtonBack.addActionListener(getPresenter().getOperation(ReservaSchedulerViewPresenter.ACTION_BACK));
+        jButtonRefresh.addActionListener(getPresenter().getOperation(ReservaSchedulerViewPresenter.ACTION_REFRESH_STATE));
 
         getPresenter().addPropertyChangeListener(ReservaSchedulerViewPresenter.PROP_SHOW_SCHEDULE, (PropertyChangeEvent evt) -> {
             setModelToScheduler();
