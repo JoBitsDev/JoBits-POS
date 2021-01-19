@@ -45,7 +45,7 @@ public class UbicacionesListViewPresenter extends AbstractListViewPresenter<Ubic
                 } else {
                     ubicacionUseCase.activarUbicacion(ubicacion.getIdubicacion().intValue());
                 }
-                getBean().getLista_elementos().fireContentsChanged(getBean().getLista_elementos().indexOf(ubicacion));
+                setListToBean();
                 return Optional.empty();
             }
 
