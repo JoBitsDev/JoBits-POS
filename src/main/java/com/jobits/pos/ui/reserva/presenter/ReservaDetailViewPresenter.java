@@ -129,7 +129,7 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         }
         getBean().setHora_seleccionada(LocalTime.of(lt.getHour(), 0));
         getBean().setMinuto_seleccionado(LocalTime.of(0, lt.getMinute()));
-        getBean().setDuracion(reserva.getDuracionreservasegundos());
+        getBean().setDuracion(reserva.getDuracionMinutos());
         getBean().setLista_ubicaciones(new ArrayListModel<>(ubicacionUseCase.findAll()));
         getBean().setUbicacion_seleccionada(reserva.getUbicacionidubicacion());
         getBean().setLista_clientes(new ArrayListModel<>(clienteUseCase.findAll()));
@@ -223,7 +223,7 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         reserva.setNotasreserva(getBean().getNombre_reserva());
         reserva.setFechareserva(LocalDate.of(date.getYear() + 1900, date.getMonth() + 1, date.getDate()));
         reserva.setHorareserva(LocalTime.of(hora.getHour(), minutos.getMinute()));
-        reserva.setDuracionreservasegundos(getBean().getDuracion());
+        reserva.setDuracionMinutos(getBean().getDuracion());
         reserva.setUbicacionidubicacion(getBean().getUbicacion_seleccionada());
         reserva.setClienteidcliente(getBean().getCliente());
         reserva.setCategoriaidcategoria(getBean().getCategoria_seleccionada());
