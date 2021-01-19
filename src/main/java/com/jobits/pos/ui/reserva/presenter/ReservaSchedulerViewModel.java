@@ -143,7 +143,7 @@ public class ReservaSchedulerViewModel extends AbstractViewModel {
     public void setList_categorias(List<Category> list_categorias) {
         ArrayListModel<Category> oldList_categorias = this.list_categorias;
         this.list_categorias.clear();
-        this.list_categorias.addAll(list_categorias);
+        this.list_categorias.addAll(new ArrayListModel<>(list_categorias));
         firePropertyChange(PROP_LIST_CATEGORIAS, oldList_categorias, list_categorias);
     }
 
@@ -164,7 +164,7 @@ public class ReservaSchedulerViewModel extends AbstractViewModel {
     public void setLista_reservas(List<Appointment> lista_reservas) {
         ArrayListModel<Appointment> oldLista_reservas = this.lista_reservas;
         this.lista_reservas.clear();
-        this.lista_reservas.addAll(lista_reservas);
+        this.lista_reservas.addAll(new ArrayListModel<>(lista_reservas));
         firePropertyChange(PROP_LISTA_RESERVAS, oldLista_reservas, lista_reservas);
     }
 
@@ -185,7 +185,7 @@ public class ReservaSchedulerViewModel extends AbstractViewModel {
     public void setLista_ubicaciones(List<Resource> lista_ubicaciones) {
         ArrayListModel<Resource> oldLista_ubicaciones = this.lista_ubicaciones;
         this.lista_ubicaciones.clear();
-        this.lista_ubicaciones.addAll(lista_ubicaciones);
+        this.lista_ubicaciones.addAll(new ArrayListModel<>(lista_ubicaciones));
         firePropertyChange(PROP_LISTA_UBICACIONES, oldLista_ubicaciones, lista_ubicaciones);
     }
 
