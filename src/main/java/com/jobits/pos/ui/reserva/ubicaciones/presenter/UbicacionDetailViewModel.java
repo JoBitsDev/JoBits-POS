@@ -23,7 +23,7 @@ public class UbicacionDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_HORA_INICIO = "hora_inicio";
 
-    private LocalTime hora_cierre = LocalTime.MAX;
+    private LocalTime hora_cierre = LocalTime.NOON;
 
     public static final String PROP_HORA_CIERRE = "hora_cierre";
 
