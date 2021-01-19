@@ -8,6 +8,7 @@ package com.jobits.pos.ui.reserva.ubicaciones;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.reserva.ColoredCellRender;
 import static com.jobits.pos.ui.reserva.ubicaciones.presenter.CategoriaDetailVIewModel.*;
@@ -38,7 +39,6 @@ public class CategoriaDetailView extends AbstractViewPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel5 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -55,6 +55,8 @@ public class CategoriaDetailView extends AbstractViewPanel {
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 32767));
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
+        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
+        setPreferredSize(new java.awt.Dimension(427, 307));
         setLayout(new java.awt.BorderLayout());
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 10, 10, 10));
@@ -67,14 +69,11 @@ public class CategoriaDetailView extends AbstractViewPanel {
 
         jPanel11.setLayout(new java.awt.GridBagLayout());
 
+        jTextField1.setMaximumSize(new java.awt.Dimension(250, 50));
+        jTextField1.setMinimumSize(new java.awt.Dimension(250, 50));
+        jTextField1.setName(""); // NOI18N
         jTextField1.setPreferredSize(new java.awt.Dimension(250, 50));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 235;
-        gridBagConstraints.ipady = 26;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        jPanel11.add(jTextField1, gridBagConstraints);
+        jPanel11.add(jTextField1, new java.awt.GridBagConstraints());
 
         jPanel2.add(jPanel11, java.awt.BorderLayout.CENTER);
 
