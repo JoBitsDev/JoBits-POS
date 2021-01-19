@@ -48,23 +48,17 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     public static final String ACTION_MODO_AGREGO = "Agrego";
     public static final String ACTION_AGREGAR_CLIENTE = "Agregar Cliente";
 
-    private ReservaService service;
+    private final boolean creatingMode;
 
     List<LocalTime> hours = new ArrayList<>();
     List<LocalTime> mins = new ArrayList<>();
 
     private Reserva reserva = new Reserva();
 
-//    public ReservaDetailViewPresenter() {
-//        super(new ReservaDetailViewModel());
-//        productoSelectorPresenter = new ProductoVentaSelectorPresenter(new OrdenController());
-//        addListeners();
-//        refreshState();
-//        setListToBean();
-//    }
-    public ReservaDetailViewPresenter(Reserva reserva) {
+    public ReservaDetailViewPresenter(Reserva reserva, boolean creatingMode) {
         super(new ReservaDetailViewModel());
         this.reserva = reserva;
+        this.creatingMode = creatingMode;
         initLists();
         productoSelectorPresenter = new ProductoVentaSelectorPresenter(PosDesktopUiModule.getInstance().getImplementation(OrdenService.class));
         addListeners();
@@ -227,12 +221,11 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         reserva.setUbicacionidubicacion(getBean().getUbicacion_seleccionada());
         reserva.setClienteidcliente(getBean().getCliente());
         reserva.setCategoriaidcategoria(getBean().getCategoria_seleccionada());
-        reservasUseCase.create(reserva);
-//        service.crearEditarReserva(
-//                service.formatDate(hora, minutos, pm_am, date),
-//                getBean().getMesa_seleccionada(),
-//                getBean().getCliente(),
-//                getBean().getLista_producto());
+        if (creatingMode) {
+            reservasUseCase.create(reserva);
+        } else {
+            reservasUseCase.edit(reserva);
+        }
         NavigationService.getInstance().navigateUp();
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }

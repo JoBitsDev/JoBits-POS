@@ -61,17 +61,14 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     private void handleAppointmentEdit(Appointment appointment) {
         Reserva reserva = ((ReservaWrapper) appointment).getReserva();
         Application.getInstance().getNavigator().navigateTo(
-                ReservasDetailView.VIEW_NAME, new ReservaDetailViewPresenter(reserva), DisplayType.POPUP);
+                ReservasDetailView.VIEW_NAME, new ReservaDetailViewPresenter(reserva, false), DisplayType.POPUP);
     }
 
     private void handleAddAppointment(Resource resource, LocalDateTime time) {
-//        Availability a = resource.getAvailability(time.toLocalDate()).next();
         Ubicacion u = ((UbicacionWrapper) resource).getUbicacion();
         Reserva reserva = new Reserva(time.toLocalDate(), time.toLocalTime(), 30, u); // 6 pm
         Application.getInstance().getNavigator().navigateTo(
-                ReservasDetailView.VIEW_NAME, new ReservaDetailViewPresenter(reserva), DisplayType.POPUP);
-//        addTestReserva(resource, time);
-//        Application.getInstance().getNotificationService().notify("Edit " + resource.getTitle(), TipoNotificacion.SUCCESS);
+                ReservasDetailView.VIEW_NAME, new ReservaDetailViewPresenter(reserva, true), DisplayType.POPUP);
     }
 
     /**

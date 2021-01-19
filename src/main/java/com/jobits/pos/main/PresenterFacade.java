@@ -188,7 +188,7 @@ public class PresenterFacade {
             case VentaDetailView.VIEW_NAME:
                 return new VentaDetailViewPresenter(
                         PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class),
-                        PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), 
+                        PosDesktopUiModule.getInstance().getImplementation(OrdenService.class),
                         new ArrayList<>());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter(new UbicacionConexionController());
@@ -207,7 +207,7 @@ public class PresenterFacade {
             case OrdenLogView.VIEW_NAME:
                 return new OrdenLogViewPresenter(null);
             case ReservasDetailView.VIEW_NAME:
-                return new ReservaDetailViewPresenter(new Reserva());
+                return new ReservaDetailViewPresenter(new Reserva(), true);
             case CategoriaDetailView.VIEW_NAME:
                 return new CategoriaDetailViewPresenter(new Categoria(), true);
             case CalcularCambioView.VIEW_NAME:
