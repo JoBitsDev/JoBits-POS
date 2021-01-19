@@ -39,7 +39,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
     ReservaUseCase reservasUseCase = PosDesktopUiModule.getInstance().getImplementation(ReservaUseCase.class);
 
     private int amountToShow = 10;
-    private int totalIndex = 0, currentIndex = 0;
+    private int totalIndex = 0, currentIndex = 1;
 
     public ReservaSchedulerViewPresenter() {
         super(new ReservaSchedulerViewModel());
