@@ -53,11 +53,7 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public String getTitle() {
-        if (reserva.getNotasreserva() != null) {
-            return reserva.getNotasreserva();
-        } else {
-            return "No Title";
-        }
+        return reserva.getNotasreserva() + " (" + reserva.getDuracionMinutos() + " mins)";
     }
 
     public static ReservaWrapper create(
@@ -101,6 +97,5 @@ public class ReservaWrapper implements Appointment {
         }
         return true;
     }
-    
-    
+
 }
