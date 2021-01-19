@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.reserva.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.reservas.ReservaService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
@@ -59,7 +58,7 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         super(new ReservaDetailViewModel());
         this.reserva = reserva;
         this.creatingMode = creatingMode;
-        initLists();
+        initMinutes();
         productoSelectorPresenter = new ProductoVentaSelectorPresenter(PosDesktopUiModule.getInstance().getImplementation(OrdenService.class));
         addListeners();
         refreshState();
@@ -118,10 +117,15 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         getBean().setFecha(date);
         LocalTime lt = reserva.getHorareserva();
         if (lt.get(ChronoField.AMPM_OF_DAY) == 1) {
-            lt.minusHours(12);
             getBean().setAm_pm_seleccionado(LocalTime.NOON);
+            initEveningHours();
+        } else {
+            getBean().setAm_pm_seleccionado(LocalTime.MIDNIGHT);
+            initMorningHours();
         }
+        getBean().setLista_horas(new ArrayListModel<>(hours));
         getBean().setHora_seleccionada(LocalTime.of(lt.getHour(), 0));
+        getBean().setLista_minutos(new ArrayListModel<>(mins));
         getBean().setMinuto_seleccionado(LocalTime.of(0, lt.getMinute()));
         getBean().setDuracion(reserva.getDuracionMinutos());
         getBean().setLista_ubicaciones(new ArrayListModel<>(ubicacionUseCase.findAll()));
@@ -133,19 +137,12 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         return super.refreshState();
     }
 
-    private void initLists() {
+    private void initMinutes() {
         LocalTime baseTime = LocalTime.MIN;
-        for (int i = 0; i < 12; i++) {
-            hours.add(baseTime);
-            baseTime = baseTime.plusHours(1);
-        }
-        baseTime = LocalTime.MIN;
         for (int i = 0; i < 60; i++) {
             mins.add(baseTime);
             baseTime = baseTime.plusMinutes(1);
         }
-        getBean().setLista_horas(new ArrayListModel<>(hours));
-        getBean().setLista_minutos(new ArrayListModel<>(mins));
     }
 
     private void setListToBean() {
@@ -228,6 +225,22 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         }
         NavigationService.getInstance().navigateUp();
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+    }
+
+    private void initMorningHours() {
+        LocalTime baseTime = LocalTime.MIDNIGHT;
+        for (int i = 0; i < 12; i++) {
+            hours.add(baseTime);
+            baseTime = baseTime.plusHours(1);
+        }
+    }
+
+    private void initEveningHours() {
+        LocalTime baseTime = LocalTime.NOON;
+        for (int i = 12; i < 24; i++) {
+            hours.add(baseTime);
+            baseTime = baseTime.plusHours(1);
+        }
     }
 
 }

@@ -9,7 +9,6 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.core.domain.models.Cliente;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
@@ -17,7 +16,6 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter.*;
-import com.jobits.pos.ui.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.venta.orden.CellRenderPedido;
 import com.jobits.pos.ui.venta.orden.ProductoVentaSelectorView;
 import com.jobits.ui.components.MaterialComponentsFactory;
@@ -25,9 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import javax.swing.JList;
-import javax.swing.JSpinner;
 import javax.swing.ListCellRenderer;
 
 /**
@@ -60,7 +56,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanelMain = new javax.swing.JPanel();
         jPanelfecha = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldNombreReserva = MaterialComponentsFactory.Input.getTextField("", "Nombre de la Reserva");
         jPanel15 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jDateChooserFecha = new org.jdesktop.swingx.JXDatePicker();
@@ -125,7 +121,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanelfecha.setLayout(new java.awt.GridLayout(6, 1));
 
         jPanel21.setLayout(new java.awt.BorderLayout());
-        jPanel21.add(jTextField1, java.awt.BorderLayout.CENTER);
+        jPanel21.add(jTextFieldNombreReserva, java.awt.BorderLayout.CENTER);
 
         jPanelfecha.add(jPanel21);
 
@@ -463,9 +459,9 @@ public class ReservasDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelfecha;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinnerDuracion;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldApellidos;
     private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldNombreReserva;
     private javax.swing.JTextField jTextFieldTelefono;
     private javax.swing.JToggleButton jToggleButtonAgregos;
     // End of variables declaration//GEN-END:variables
@@ -477,7 +473,7 @@ public class ReservasDetailView extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
-        //Compomentes Enabled
+        Bindings.bind(jTextFieldNombreReserva, getPresenter().getModel(PROP_NOMBRE_RESERVA));
         Bindings.bind(jComboBoxUbicacion, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_UBICACIONES),
                 getPresenter().getModel(PROP_UBICACION_SELECCIONADA)));
@@ -527,10 +523,10 @@ public class ReservasDetailView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
-         jComboBoxHora.setRenderer(new TimeCellRender("h"));
-         jComboBoxMinuto.setRenderer(new TimeCellRender("mm"));
-         jComboBoxPMAM.setRenderer(new TimeCellRender("a"));
-        
+        jComboBoxHora.setRenderer(new TimeCellRender("h"));
+        jComboBoxMinuto.setRenderer(new TimeCellRender("mm"));
+        jComboBoxPMAM.setRenderer(new TimeCellRender("a"));
+
         jListListaProductos.setCellRenderer(new ListCellRenderer<ProductovOrden>() {
             @Override
             public Component getListCellRendererComponent(JList<? extends ProductovOrden> list,
