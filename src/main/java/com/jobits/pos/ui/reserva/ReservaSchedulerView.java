@@ -328,13 +328,18 @@ public class ReservaSchedulerView extends AbstractViewPanel {
             }
 
             @Override
-            public void handleDelete(Appointment appointment) {
-//                model.deleteAppointment(appointment);
+            public void handleCheckIn(Appointment appointment) {
+                getPresenter().handleChekInReserva(appointment);
             }
 
             @Override
             public void handleEdit(Appointment appointment) {
                 getPresenter().handleEditReserva(appointment);
+            }
+
+            @Override
+            public void handleCheckOut(Appointment appointment) {
+                getPresenter().handleChekOutReserva(appointment);
             }
 
         });

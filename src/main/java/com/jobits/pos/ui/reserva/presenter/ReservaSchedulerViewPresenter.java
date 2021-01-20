@@ -173,4 +173,26 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         Application.getInstance().getNotificationService().notify("Reserva editada", TipoNotificacion.SUCCESS);
     }
 
+    public void handleChekInReserva(Appointment appointment) {
+        Reserva reserva = ((ReservaWrapper) appointment).getReserva();
+        if (reserva.getCheckin() != null) {
+            throw new IllegalStateException("Ya se hizo CheckIn a la reserva seleccionada");
+        } else {
+            reservasUseCase.checkIn((long) reserva.getIdreserva(), LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva()));
+        }
+        refreshState();
+        Application.getInstance().getNotificationService().notify("Check In realizado", TipoNotificacion.SUCCESS);
+    }
+
+    public void handleChekOutReserva(Appointment appointment) {
+        Reserva reserva = ((ReservaWrapper) appointment).getReserva();
+        if (reserva.getCheckout() != null) {
+            throw new IllegalStateException("Ya se hizo CheckOut a la reserva seleccionada");
+        } else {
+            reservasUseCase.checkOut((long) reserva.getIdreserva(), LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva()));
+        }
+        refreshState();
+        Application.getInstance().getNotificationService().notify("Check Out realizado", TipoNotificacion.SUCCESS);
+    }
+
 }
