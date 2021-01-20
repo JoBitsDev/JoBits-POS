@@ -178,7 +178,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         if (reserva.getCheckin() != null) {
             throw new IllegalStateException("Ya se hizo CheckIn a la reserva seleccionada");
         } else {
-            reservasUseCase.checkIn((long) reserva.getIdreserva(), LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva()));
+            reservasUseCase.checkIn(reserva.getIdreserva(), LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva()));
         }
         refreshState();
         Application.getInstance().getNotificationService().notify("Check In realizado", TipoNotificacion.SUCCESS);
@@ -189,7 +189,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         if (reserva.getCheckout() != null) {
             throw new IllegalStateException("Ya se hizo CheckOut a la reserva seleccionada");
         } else {
-            reservasUseCase.checkOut((long) reserva.getIdreserva(), LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva()));
+            reservasUseCase.checkOut(reserva.getIdreserva(), LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva()));
         }
         refreshState();
         Application.getInstance().getNotificationService().notify("Check Out realizado", TipoNotificacion.SUCCESS);
