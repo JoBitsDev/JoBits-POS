@@ -20,6 +20,7 @@ import com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionesListViewPresen
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDateTime;
 
@@ -314,8 +315,10 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
-        scheduler.addScheduleListener((Resource resource, LocalDateTime time) -> {
-            getPresenter().handleAddReserva(resource, time);
+        scheduler.addScheduleListener((Resource resource, LocalDateTime time, MouseEvent e) -> {
+            if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() <= 1) {
+                getPresenter().handleAddReserva(resource, time);
+            }
         });
 
         CustomComponentFactory componentFactory = new CustomComponentFactory();
