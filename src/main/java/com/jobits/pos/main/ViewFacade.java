@@ -15,6 +15,7 @@ import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
+import com.jobits.pos.ui.areaventa.MesaDetailView;
 import com.jobits.pos.ui.autorizo.AutorizoView;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
@@ -118,6 +119,8 @@ public class ViewFacade {
                 return new IpvGestionView(p);
             case VentaDetailView.VIEW_NAME:
                 return new VentaDetailView(p);
+            case MesaDetailView.VIEW_NAME:
+                return new MesaDetailView(p);
             case OrdenDetailFragmentView.VIEW_NAME:
                 return new OrdenDetailFragmentView(p);
             case BackUpView.VIEW_NAME:

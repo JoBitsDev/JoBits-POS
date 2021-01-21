@@ -35,7 +35,9 @@ import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaResumenController;
+import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Carta;
+import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.reserva.core.domain.Categoria;
@@ -55,8 +57,10 @@ import com.jobits.pos.ui.almacen.presenter.FacturaViewPresenter;
 import com.jobits.pos.ui.almacen.presenter.TransaccionListPresenter;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
+import com.jobits.pos.ui.areaventa.MesaDetailView;
 import com.jobits.pos.ui.areaventa.presenter.AreaDetailViewPresenter;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
+import com.jobits.pos.ui.areaventa.presenter.MesaDetailViewPresenter;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.autorizo.AutorizoView;
 import com.jobits.pos.ui.autorizo.presenter.AutorizoViewPresenter;
@@ -228,6 +232,8 @@ public class PresenterFacade {
                 return new ClientesDetailViewPresenter(new ClientesDetailController());
             case ReservaSchedulerView.VIEW_NAME:
                 return new ReservaSchedulerViewPresenter();
+            case MesaDetailView.VIEW_NAME:
+                return new MesaDetailViewPresenter(new Area(), new Mesa(), true);
             case UbicacionDetailView.VIEW_NAME:
                 return new UbicacionDetailViewPresenter(new Ubicacion(), true);
             case IPVPedidoVentasView.VIEW_NAME:

@@ -15,6 +15,7 @@ import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
+import com.jobits.pos.ui.areaventa.MesaDetailView;
 import com.jobits.pos.ui.autorizo.AutorizoView;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
@@ -134,6 +135,7 @@ public class CoordinatorService implements Coordinator {
                         CategoriaDetailView.VIEW_NAME,
                         IPVPedidoVentasView.VIEW_NAME,
                         VentaResumenView.VIEW_NAME,
+                        MesaDetailView.VIEW_NAME,
                         UbicacionDetailView.VIEW_NAME,
                         LicenceDialogView.VIEW_NAME
                 ));
