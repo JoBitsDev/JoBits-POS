@@ -93,6 +93,30 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_INSUMO_SELECCIONADO = "insumo_contenido_seleccionado";
 
+    private int timepo_elaboracion = 0;
+
+    public static final String PROP_TIMEPO_ELABORACION = "timepo_elaboracion";
+
+    /**
+     * Get the value of timepo_elaboracion
+     *
+     * @return the value of timepo_elaboracion
+     */
+    public int getTimepo_elaboracion() {
+        return timepo_elaboracion;
+    }
+
+    /**
+     * Set the value of timepo_elaboracion
+     *
+     * @param timepo_elaboracion new value of timepo_elaboracion
+     */
+    public void setTimepo_elaboracion(int timepo_elaboracion) {
+        int oldTimepo_elaboracion = this.timepo_elaboracion;
+        this.timepo_elaboracion = timepo_elaboracion;
+        firePropertyChange(PROP_TIMEPO_ELABORACION, oldTimepo_elaboracion, timepo_elaboracion);
+    }
+
     /**
      * Get the value of insumo_disponible_sel
      *
