@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 public class NumberPad extends javax.swing.JDialog {
 
     private final String[] values = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."};
+    private boolean close = false;
 
     /**
      * Creates new form NumberPad
@@ -36,19 +37,23 @@ public class NumberPad extends javax.swing.JDialog {
         ComponentMover cr = new ComponentMover(this, jPanel1);
     }
 
-    public float showView() {
+    public Float showView() {
         this.setVisible(true);
-        float cantidad = 0;
+        Float cantidad = null;
         String value = jTextFieldEntrada.getText();
-        if (!value.equals("") && !value.equals(".")) {
-            cantidad = Float.parseFloat(value);
-            if (cantidad == 0f) {
+        if (close) {
+            return null;
+        } else {
+            if (!value.equals("") && !value.equals(".")) {
+                cantidad = Float.parseFloat(value);
+                if (cantidad == 0f) {
+                    throw new IllegalArgumentException("El valor introducido debe ser distinto de 0");
+                }
+            } else {
                 throw new IllegalArgumentException("El valor introducido no es una cantidad valida");
             }
-        } else {
-            throw new IllegalArgumentException("El valor introducido no es una cantidad valida");
+            return cantidad;
         }
-        return cantidad;
     }
 
     /**
@@ -347,6 +352,7 @@ public class NumberPad extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldEntradaActionPerformed
 
     private void jButtonCancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelaActionPerformed
+        close = true;
         jTextFieldEntrada.setText("");
         dispose();
     }//GEN-LAST:event_jButtonCancelaActionPerformed
