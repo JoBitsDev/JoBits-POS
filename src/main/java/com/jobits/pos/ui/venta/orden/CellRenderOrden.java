@@ -8,6 +8,7 @@ package com.jobits.pos.ui.venta.orden;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.utils.utils;
+import java.awt.Color;
 
 /**
  *
@@ -24,7 +25,14 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
         initComponents();
         this.o = o;
         if (o.getMesacodMesa() != null) {
-        jLabelMesa.setText(o.getMesacodMesa().getCodMesa());
+            jLabelCodMesa.setText(o.getMesacodMesa().getCodMesa());
+            if (o.getMesacodMesa().getNombre() == null) {
+                jLabelNombreMesa.setVisible(false);
+            }
+            if (selected) {
+                jLabelNombreMesa.setForeground(Color.white);
+            }
+            jLabelNombreMesa.setText(o.getMesacodMesa().getNombre());
         }
         jLabelPrecio.setText(utils.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
         jLabelOrden.setText(o.getCodOrden());
@@ -53,26 +61,38 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jLabelTerminada = new javax.swing.JLabel();
+        jLabelNombreMesa = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelCodMesa = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jLabelPorciento = new javax.swing.JLabel();
         jLabelGratis = new javax.swing.JLabel();
-        jLabelPrecio = new javax.swing.JLabel();
-        jLabelMesa = new javax.swing.JLabel();
         jLabelOrden = new javax.swing.JLabel();
+        jLabelPrecio = new javax.swing.JLabel();
+        jLabelTerminada = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 5, 3, 5));
         setOpaque(false);
-        setLayout(new java.awt.GridBagLayout());
+        setLayout(new java.awt.BorderLayout());
 
-        jLabelTerminada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTerminada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/icons8-checkmark.png"))); // NOI18N
-        jLabelTerminada.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        add(jLabelTerminada, gridBagConstraints);
+        jLabelNombreMesa.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jLabelNombreMesa.setForeground(new java.awt.Color(153, 153, 153));
+        jLabelNombreMesa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelNombreMesa.setText("<NombreMesa>");
+        add(jLabelNombreMesa, java.awt.BorderLayout.NORTH);
+
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
+
+        jLabelCodMesa.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
+        jLabelCodMesa.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelCodMesa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelCodMesa.setText("<CodMesa>");
+        jPanel1.add(jLabelCodMesa);
+
+        jPanel2.setOpaque(false);
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jLabelPorciento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelPorciento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/icons8-percentage.png"))); // NOI18N
@@ -80,7 +100,7 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 6;
         gridBagConstraints.gridy = 0;
-        add(jLabelPorciento, gridBagConstraints);
+        jPanel2.add(jLabelPorciento, gridBagConstraints);
 
         jLabelGratis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelGratis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/icons8-gratis-negro.png"))); // NOI18N
@@ -89,53 +109,40 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
         gridBagConstraints.gridx = 7;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
-        add(jLabelGratis, gridBagConstraints);
+        jPanel2.add(jLabelGratis, gridBagConstraints);
+
+        jPanel1.add(jPanel2);
+
+        jLabelOrden.setFont(new java.awt.Font(".SF NS Text", 0, 12)); // NOI18N
+        jLabelOrden.setForeground(new java.awt.Color(153, 0, 153));
+        jLabelOrden.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelOrden.setText("<O-145567>");
+        jPanel1.add(jLabelOrden);
 
         jLabelPrecio.setFont(new java.awt.Font(".SF NS Text", 1, 12)); // NOI18N
         jLabelPrecio.setForeground(new java.awt.Color(0, 102, 51));
         jLabelPrecio.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelPrecio.setText("1200 MN");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 5;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipady = 10;
-        add(jLabelPrecio, gridBagConstraints);
+        jPanel1.add(jLabelPrecio);
 
-        jLabelMesa.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
-        jLabelMesa.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelMesa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelMesa.setText("<CodMesa>");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
-        add(jLabelMesa, gridBagConstraints);
+        add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        jLabelOrden.setFont(new java.awt.Font(".SF NS Text", 0, 12)); // NOI18N
-        jLabelOrden.setForeground(new java.awt.Color(153, 0, 153));
-        jLabelOrden.setText("<O-145567>");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 10);
-        add(jLabelOrden, gridBagConstraints);
+        jLabelTerminada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTerminada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/icons8-checkmark.png"))); // NOI18N
+        jLabelTerminada.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(jLabelTerminada, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabelCodMesa;
     private javax.swing.JLabel jLabelGratis;
-    private javax.swing.JLabel jLabelMesa;
+    private javax.swing.JLabel jLabelNombreMesa;
     private javax.swing.JLabel jLabelOrden;
     private javax.swing.JLabel jLabelPorciento;
     private javax.swing.JLabel jLabelPrecio;
     private javax.swing.JLabel jLabelTerminada;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
