@@ -1,8 +1,10 @@
 package com.jobits.pos.ui.reserva.model;
 
 import com.jobits.pos.reserva.core.domain.Reserva;
+import com.jobits.pos.reserva.core.domain.ReservaEstado;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
+import java.awt.Color;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -111,6 +113,24 @@ public class ReservaWrapper implements Appointment {
                 + "CheckOut: " + reserva.getCheckout() + "<br>"
                 + "</html>";
 
+    }
+
+    @Override
+    public Color getColorStatus() {
+        String status = reserva.getEstado();
+        if (status.equals(ReservaEstado.AGENDADA.toString())) {
+            return Color.yellow;
+        } else if (status.equals(ReservaEstado.CHEQUEADA.toString())) {
+            return Color.green;
+        } else if (status.equals(ReservaEstado.COMPLETADA.toString())) {
+            return Color.blue;
+        } else if (status.equals(ReservaEstado.CANCELADA.toString())) {
+            return Color.red;
+        } else if (status.equals(ReservaEstado.RECHAZADA.toString())) {
+            return Color.darkGray;
+        } else {
+            return Color.black;
+        }
     }
 
 }
