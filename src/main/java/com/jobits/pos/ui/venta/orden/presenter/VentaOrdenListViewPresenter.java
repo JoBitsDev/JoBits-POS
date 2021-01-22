@@ -8,6 +8,7 @@ package com.jobits.pos.ui.venta.orden.presenter;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
+import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -16,6 +17,8 @@ import java.beans.PropertyChangeListener;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
@@ -154,10 +157,19 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     private void onCrearOrdenAction() {
-        Orden newOrden = ventaService.createNewOrden(codVenta);
-        getBean().setElemento_seleccionado(newOrden);
-        onAbrirOrdenAction();
-        refreshState();
+        Mesa m;
+        if (ordenService.validateAddOrden()) {
+            List<Mesa> list = ordenService.getListaMesasDisponibles();
+            m = selectMesa(list);
+        } else {
+            m = ordenService.findMesaCaja();
+        }
+        Orden newOrden = ventaService.createNewOrden(codVenta, m);
+        if (newOrden != null) {
+            getBean().setElemento_seleccionado(newOrden);
+            onAbrirOrdenAction();
+            refreshState();
+        }
     }
 
     private void onAbrirOrdenAction() {
@@ -185,4 +197,26 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
         refreshState();
     }
 
+    private Mesa selectMesa(List<Mesa> list) {
+        JComboBox<Mesa> jComboBox1 = new JComboBox<>();
+        jComboBox1.setModel(new DefaultComboBoxModel<>(list.toArray(new Mesa[list.size()])));
+        jComboBox1.setSelectedItem(list.get(0));
+        Object[] options = {"Seleccionar", "Cancelar"};
+        //                     yes            cancel
+        int confirm = JOptionPane.showOptionDialog(
+                null,
+                jComboBox1,
+                "Seleccione una Mesa",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.YES_NO_OPTION,
+                MaterialIcons.LOCATION_ON,
+                options,
+                options[0]);
+        switch (confirm) {
+            case JOptionPane.YES_OPTION:
+                return (Mesa) jComboBox1.getSelectedItem();
+            default:
+                return null;
+        }
+    }
 }

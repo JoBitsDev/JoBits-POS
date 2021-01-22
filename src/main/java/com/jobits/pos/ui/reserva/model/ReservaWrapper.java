@@ -1,15 +1,11 @@
 package com.jobits.pos.ui.reserva.model;
 
 import com.jobits.pos.reserva.core.domain.Reserva;
-import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 /**
  * Example Appointment
@@ -52,12 +48,12 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public Duration getDuration() {
-        return Duration.ofSeconds(reserva.getDuracionreservasegundos());
+        return Duration.ofMinutes(reserva.getDuracionMinutos());
     }
 
     @Override
     public String getTitle() {
-        return reserva.getNotasreserva();
+        return reserva.getNotasreserva() + " (" + reserva.getDuracionMinutos() + " mins)";
     }
 
     public static ReservaWrapper create(
@@ -68,4 +64,38 @@ public class ReservaWrapper implements Appointment {
         ReservaWrapper appointment = new ReservaWrapper(reserva, category, resource);
         return appointment;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this._category);
+        hash = 67 * hash + Objects.hashCode(this._resource);
+        hash = 67 * hash + Objects.hashCode(this.reserva);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ReservaWrapper other = (ReservaWrapper) obj;
+        if (!Objects.equals(this._category, other._category)) {
+            return false;
+        }
+        if (!Objects.equals(this._resource, other._resource)) {
+            return false;
+        }
+        if (!Objects.equals(this.reserva, other.reserva)) {
+            return false;
+        }
+        return true;
+    }
+
 }

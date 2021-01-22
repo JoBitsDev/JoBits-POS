@@ -5,21 +5,28 @@
  */
 package com.jobits.pos.ui.reserva.presenter;
 
+import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.reserva.core.domain.Reserva;
+import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.reserva.core.usecase.CategoriaUseCase;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
 import com.jobits.pos.reserva.core.usecase.UbicacionUseCase;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.reserva.ReservasDetailView;
 import com.jobits.pos.ui.reserva.model.CategoriaWrapper;
 import com.jobits.pos.ui.reserva.model.Category;
 import com.jobits.pos.ui.reserva.model.ReservaWrapper;
 import com.jobits.pos.ui.reserva.model.UbicacionWrapper;
-import static com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewModel.*;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,13 +40,14 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
 
     public static final String ACTION_NEXT = "Next";
     public static final String ACTION_BACK = "Back";
+    public static final String ACTION_REFRESH = "Refresh";
     public static final String PROP_SHOW_SCHEDULE = "Show Scheduler";
 
     UbicacionUseCase ubicacionUseCase = PosDesktopUiModule.getInstance().getImplementation(UbicacionUseCase.class);
     CategoriaUseCase categoriasUseCase = PosDesktopUiModule.getInstance().getImplementation(CategoriaUseCase.class);
     ReservaUseCase reservasUseCase = PosDesktopUiModule.getInstance().getImplementation(ReservaUseCase.class);
 
-    private int amountToShow = 10;
+    private final int amountToShow = 2;
     private int totalIndex = 0, currentIndex = 0;
 
     public ReservaSchedulerViewPresenter() {
@@ -73,9 +81,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         if (currentIndex > totalIndex) {
             currentIndex = 1;
         }
-        getBean().setLista_ubicaciones(ubicacionConverter());
-        getBean().setIndice_actual(String.valueOf(currentIndex));
-        firePropertyChange(PROP_SHOW_SCHEDULE, null, null);
+        refreshState();
     }
 
     private void onBackClick() {
@@ -83,16 +89,18 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         if (currentIndex <= 0) {
             currentIndex = totalIndex;
         }
-        getBean().setLista_ubicaciones(ubicacionConverter());
-        getBean().setIndice_actual(String.valueOf(currentIndex));
-        firePropertyChange(PROP_SHOW_SCHEDULE, null, null);
+        refreshState();
     }
 
     @Override
     protected Optional refreshState() {
+        setTotalIndex();
+        Date d = getBean().getDia_seleccionado();
+        getBean().setSelected_date(LocalDate.of(d.getYear() + 1900, d.getMonth() + 1, d.getDate()));
         getBean().setList_categorias(categoriaConverter());
         getBean().setLista_ubicaciones(ubicacionConverter());
         getBean().setLista_reservas(reservaConverter());
+        firePropertyChange(PROP_SHOW_SCHEDULE, null, null);
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -114,7 +122,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
 
     private List<Appointment> reservaConverter() {
         List<Appointment> ret = new ArrayList<>();
-        reservasUseCase.getReservasDisponibles(selected_date).forEach(reserva -> {
+        reservasUseCase.getReservasDisponibles(getBean().getSelected_date()).forEach(reserva -> {
             ret.add(new ReservaWrapper(reserva,
                     new CategoriaWrapper(reserva.getCategoriaidcategoria()),
                     new UbicacionWrapper(reserva.getUbicacionidubicacion())));
@@ -125,23 +133,66 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
     private void setTotalIndex() {
         int total = ubicacionUseCase.findAll().size();
         if (total != 0) {
-            totalIndex = (int) Math.ceil((float) (total / amountToShow));
+            totalIndex = (int) Math.ceil((float) total / amountToShow);
             currentIndex = 1;
+        } else {
+            totalIndex = 0;
+            currentIndex = 0;
         }
         getBean().setIndice_actual(String.valueOf(currentIndex));
         getBean().setTotal_indices(String.valueOf(totalIndex));
-        Date d = getBean().getDia_seleccionado();
-        selected_date = LocalDate.of(d.getYear() + 1900, d.getMonth() + 1, d.getDate());
     }
 
     private void addListeners() {
-        addBeanPropertyChangeListener(PROP_DIA_SELECCIONADO, (PropertyChangeEvent evt) -> {
+        addBeanPropertyChangeListener(ReservaSchedulerViewModel.PROP_DIA_SELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null) {
-                setTotalIndex();
                 refreshState();
-                firePropertyChange(PROP_SHOW_SCHEDULE, null, null);
             }
         });
+    }
+
+    public void handleAddReserva(Resource resource, LocalDateTime time) {
+        LocalTime inicio = ((UbicacionWrapper) resource).getUbicacion().getDisponibledesde(),
+                cierre = ((UbicacionWrapper) resource).getUbicacion().getDisponiblehasta(),
+                current = time.toLocalTime();
+        if (current.isBefore(cierre) && current.isAfter(inicio)) {
+            Ubicacion u = ((UbicacionWrapper) resource).getUbicacion();
+            Reserva reserva = new Reserva(time.toLocalDate(), time.toLocalTime(), 30, u); // 6 pm
+            Application.getInstance().getNavigator().navigateTo(
+                    ReservasDetailView.VIEW_NAME, new ReservaDetailViewPresenter(reserva, true), DisplayType.POPUP);
+            refreshState();
+            Application.getInstance().getNotificationService().notify("Reserva creada", TipoNotificacion.SUCCESS);
+        }
+    }
+
+    public void handleEditReserva(Appointment appointment) {
+        Reserva reserva = ((ReservaWrapper) appointment).getReserva();
+        Application.getInstance().getNavigator().navigateTo(
+                ReservasDetailView.VIEW_NAME, new ReservaDetailViewPresenter(reserva, false), DisplayType.POPUP);
+        refreshState();
+        Application.getInstance().getNotificationService().notify("Reserva editada", TipoNotificacion.SUCCESS);
+    }
+
+    public void handleChekInReserva(Appointment appointment) {
+        Reserva reserva = ((ReservaWrapper) appointment).getReserva();
+        if (reserva.getCheckin() != null) {
+            throw new IllegalStateException("Ya se hizo CheckIn a la reserva seleccionada");
+        } else {
+            reservasUseCase.checkIn(reserva.getIdreserva(), LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva()));
+        }
+        refreshState();
+        Application.getInstance().getNotificationService().notify("Check In realizado", TipoNotificacion.SUCCESS);
+    }
+
+    public void handleChekOutReserva(Appointment appointment) {
+        Reserva reserva = ((ReservaWrapper) appointment).getReserva();
+        if (reserva.getCheckout() != null) {
+            throw new IllegalStateException("Ya se hizo CheckOut a la reserva seleccionada");
+        } else {
+            reservasUseCase.checkOut(reserva.getIdreserva(), LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva()));
+        }
+        refreshState();
+        Application.getInstance().getNotificationService().notify("Check Out realizado", TipoNotificacion.SUCCESS);
     }
 
 }

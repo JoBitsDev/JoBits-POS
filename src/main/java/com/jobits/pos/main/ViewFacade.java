@@ -15,6 +15,7 @@ import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
+import com.jobits.pos.ui.areaventa.MesaDetailView;
 import com.jobits.pos.ui.autorizo.AutorizoView;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
@@ -35,10 +36,11 @@ import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.cartas.CartasSeccionView;
 import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
-import com.jobits.pos.ui.reserva.CategoriaDetailView;
+import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
+import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
-import com.jobits.pos.ui.reserva.ReservasListView;
-import com.jobits.pos.ui.reserva.UbicacionDetailView;
+import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
+import com.jobits.pos.ui.reserva.ubicaciones.UbicacionDetailView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -117,6 +119,8 @@ public class ViewFacade {
                 return new IpvGestionView(p);
             case VentaDetailView.VIEW_NAME:
                 return new VentaDetailView(p);
+            case MesaDetailView.VIEW_NAME:
+                return new MesaDetailView(p);
             case OrdenDetailFragmentView.VIEW_NAME:
                 return new OrdenDetailFragmentView(p);
             case BackUpView.VIEW_NAME:
@@ -149,12 +153,12 @@ public class ViewFacade {
                 return new VentaResumenView(p);
             case AutorizoView.VIEW_NAME:
                 return new AutorizoView(p);
+            case ReservaSchedulerView.VIEW_NAME:
+                return new ReservaSchedulerView((ReservaSchedulerViewPresenter) p);
             case IPVPedidoVentasView.VIEW_NAME:
                 return new IPVPedidoVentasView(p);
             case CategoriaDetailView.VIEW_NAME:
                 return new CategoriaDetailView(p);
-            case ReservasListView.VIEW_NAME:
-                return new ReservasListView((AbstractListViewPresenter) p);
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListView((AbstractListViewPresenter) p);
             case LicenceDialogView.VIEW_NAME:

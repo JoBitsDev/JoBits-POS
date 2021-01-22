@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.reserva.presenter;
+package com.jobits.pos.ui.reserva.ubicaciones.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.cordinator.NavigationService;
@@ -16,13 +16,12 @@ import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import static com.jobits.pos.ui.reserva.presenter.UbicacionDetailViewModel.*;
+import static com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionDetailViewModel.*;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,17 +59,16 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
 
     private boolean creatingMode = true;
 
-    public UbicacionDetailViewPresenter() {
-        super(new UbicacionDetailViewModel());
-        addListeners();
-        initLists();
-        refreshState();
-    }
-
-    public UbicacionDetailViewPresenter(Ubicacion ubicacion) {
+//    public UbicacionDetailViewPresenter() {
+//        super(new UbicacionDetailViewModel());
+//        addListeners();
+//        initLists();
+//        refreshState();
+//    }
+    public UbicacionDetailViewPresenter(Ubicacion ubicacion, boolean creatingMode) {
         super(new UbicacionDetailViewModel());
         this.ubicacion = ubicacion;
-        creatingMode = false;
+        this.creatingMode = creatingMode;
         addListeners();
         initLists();
         refreshState();
@@ -83,13 +81,8 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
         getBean().setHora_inicio(ubicacion.getDisponibledesde());
         getBean().setLista_horas_cierre(new ArrayListModel<>(times));
         getBean().setHora_cierre(ubicacion.getDisponiblehasta());
-        getBean().setLista_colores(new ArrayListModel<>(Arrays.asList(Colors)));
-        getBean().setColor_seleccionado(
-                getBean().getLista_colores().get(
-                        getBean().getLista_colores().indexOf(
-                                new Color(Integer.parseInt(
-                                        ubicacion.getColorubicacion())))));
-
+        getBean().setLista_colores(new ArrayListModel<>(colorsToRGB()));
+        getBean().setColor_seleccionado(Integer.parseInt(ubicacion.getColorubicacion()));
         if (ubicacion.getEstadoubicacion().equals(UbicacionEstado.HABILITADA.getEstado())) {
             getBean().setUbicacion_habilitada(true);
         } else {
@@ -129,7 +122,7 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
             ubicacion.setNombreubicacion(getBean().getNombre_ubicacion());
             ubicacion.setDisponibledesde(getBean().getHora_inicio());
             ubicacion.setDisponiblehasta(getBean().getHora_cierre());
-            ubicacion.setColorubicacion(String.valueOf(getBean().getColor_seleccionado().getRGB()));
+            ubicacion.setColorubicacion(String.valueOf(getBean().getColor_seleccionado()));
             if (getBean().isUbicacion_habilitada()) {
                 ubicacion.setEstadoubicacion(UbicacionEstado.HABILITADA.getEstado());
             } else {
@@ -172,6 +165,14 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
             }
         });
 
+    }
+
+    private List<Integer> colorsToRGB() {
+        List<Integer> ret = new ArrayList<>();
+        for (Color x : Colors) {
+            ret.add(x.getRGB());
+        }
+        return ret;
     }
 
 }

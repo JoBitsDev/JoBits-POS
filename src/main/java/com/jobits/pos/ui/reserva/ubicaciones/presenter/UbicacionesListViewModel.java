@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.reserva.presenter;
+package com.jobits.pos.ui.reserva.ubicaciones.presenter;
 
-import com.jobits.pos.core.domain.models.Orden;
+import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 
 /**
  *
  * @author Home
  */
-public class ReservaListViewModel extends AbstractListViewModel<Orden>{
+public class UbicacionesListViewModel extends AbstractListViewModel<Ubicacion>{
     
 }

@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.reserva.presenter;
+package com.jobits.pos.ui.reserva.ubicaciones.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
-import java.awt.Color;
 import java.time.LocalTime;
 
 /**
@@ -24,7 +23,7 @@ public class UbicacionDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_HORA_INICIO = "hora_inicio";
 
-    private LocalTime hora_cierre = LocalTime.MAX;
+    private LocalTime hora_cierre = LocalTime.NOON;
 
     public static final String PROP_HORA_CIERRE = "hora_cierre";
 
@@ -36,11 +35,11 @@ public class UbicacionDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_HORAS_CIERRE = "lista_horas_cierre";
 
-    private Color color_seleccionado;
+    private Integer color_seleccionado;
 
     public static final String PROP_COLOR_SELECCIONADO = "color_seleccionado";
 
-    private ArrayListModel<Color> lista_colores = new ArrayListModel<>();
+    private ArrayListModel<Integer> lista_colores = new ArrayListModel<>();
 
     public static final String PROP_LISTA_COLORES = "lista_colores";
 
@@ -73,7 +72,7 @@ public class UbicacionDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_colores
      */
-    public ArrayListModel<Color> getLista_colores() {
+    public ArrayListModel<Integer> getLista_colores() {
         return lista_colores;
     }
 
@@ -82,8 +81,8 @@ public class UbicacionDetailViewModel extends AbstractViewModel {
      *
      * @param lista_colores new value of lista_colores
      */
-    public void setLista_colores(ArrayListModel<Color> lista_colores) {
-        ArrayListModel<Color> oldLista_colores = this.lista_colores;
+    public void setLista_colores(ArrayListModel<Integer> lista_colores) {
+        ArrayListModel<Integer> oldLista_colores = this.lista_colores;
         this.lista_colores = lista_colores;
         firePropertyChange(PROP_LISTA_COLORES, oldLista_colores, lista_colores);
     }
@@ -93,7 +92,7 @@ public class UbicacionDetailViewModel extends AbstractViewModel {
      *
      * @return the value of color_seleccionado
      */
-    public Color getColor_seleccionado() {
+    public Integer getColor_seleccionado() {
         return color_seleccionado;
     }
 
@@ -102,8 +101,8 @@ public class UbicacionDetailViewModel extends AbstractViewModel {
      *
      * @param color_seleccionado new value of color_seleccionado
      */
-    public void setColor_seleccionado(Color color_seleccionado) {
-        Color oldColor_seleccionado = this.color_seleccionado;
+    public void setColor_seleccionado(Integer color_seleccionado) {
+        Integer oldColor_seleccionado = this.color_seleccionado;
         this.color_seleccionado = color_seleccionado;
         firePropertyChange(PROP_COLOR_SELECCIONADO, oldColor_seleccionado, color_seleccionado);
     }

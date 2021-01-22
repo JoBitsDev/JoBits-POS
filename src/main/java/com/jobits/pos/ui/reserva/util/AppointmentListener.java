@@ -12,7 +12,9 @@ public interface AppointmentListener {
      */
     void handleClick(Appointment appointment, int clickCount);
 
-    void handleDelete(Appointment appointment);
+    void handleCheckIn(Appointment appointment);
+
+    void handleCheckOut(Appointment appointment);
 
     void handleEdit(Appointment appointment);
 }

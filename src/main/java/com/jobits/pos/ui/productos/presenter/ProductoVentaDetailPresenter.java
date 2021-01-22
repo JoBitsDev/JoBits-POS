@@ -137,6 +137,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setCategoria_seleccionada(pv.getSeccionnombreSeccion());
         getBean().setNombre_producto(pv.getNombre());
         getBean().setCodigo_producto(pv.getCodigoProducto());
+        getBean().setTimepo_elaboracion(pv.getTiempoServicioMin());
         if (pv.getPagoPorVenta() != null) {
             getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(pv.getPagoPorVenta()));
         }
@@ -167,7 +168,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 getBean().getElaborado_seleccionado(),
                 getBean().getCategoria_seleccionada(),
                 getBean().getLista_insumos_contenidos(),
-                getBean().getRuta_imagen_producto());
+                getBean().getRuta_imagen_producto(),
+                getBean().getTimepo_elaboracion());
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
     }

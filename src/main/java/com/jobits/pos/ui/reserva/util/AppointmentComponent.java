@@ -32,27 +32,28 @@ public class AppointmentComponent extends BasicAppointmentComponent implements M
         addMouseListener(this);
 
         _popupMenu = new JPopupMenu();
-        JMenuItem editItem = new JMenuItem("Edit");
-        editItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (_appointmentListener != null) {
-                    _appointmentListener.handleEdit(_appointment);
-                }
+        JMenuItem editar = new JMenuItem("Editar");
+        editar.addActionListener((ActionEvent e) -> {
+            if (_appointmentListener != null) {
+                _appointmentListener.handleEdit(_appointment);
             }
         });
-        _popupMenu.add(editItem);
+        _popupMenu.add(editar);
+        JMenuItem checkIn = new JMenuItem("CheckIn");
+        checkIn.addActionListener((ActionEvent e) -> {
+            if (_appointmentListener != null) {
+                _appointmentListener.handleCheckIn(_appointment);
+            }
+        });
+        _popupMenu.add(checkIn);
 
-        JMenuItem deleteItem = new JMenuItem("Delete");
-        deleteItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (_appointmentListener != null) {
-                    _appointmentListener.handleDelete(_appointment);
-                }
+        JMenuItem checkOut = new JMenuItem("CheckOut");
+        checkOut.addActionListener((ActionEvent e) -> {
+            if (_appointmentListener != null) {
+                _appointmentListener.handleCheckOut(_appointment);
             }
         });
-        _popupMenu.add(deleteItem);
+        _popupMenu.add(checkOut);
     }
 
     @Override

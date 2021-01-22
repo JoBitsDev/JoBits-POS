@@ -3,29 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.reserva;
+package com.jobits.pos.ui.reserva.ubicaciones;
 
-import com.jobits.pos.core.domain.models.Orden;
+import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.reserva.ColorColumnCellRender;
+import static com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionesListViewPresenter.ACTION_ACT_DESAC_UB;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.jobits.pos.utils.utils;
+import java.awt.Color;
 
 /**
  *
  * @author Home
  */
-public class ReservasListView extends AbstractListViewPanel<Orden> {
+public class CategoriasListView extends AbstractListViewPanel<Categoria> {
 
-    public static final String VIEW_NAME = "Reservas";
+    public static final String VIEW_NAME = "Categorias List";
 
     /**
-     * Creates new form ReservasListView
-     *
-     * @param presenter
+     * Creates new form CategoriasListView
      */
-    public ReservasListView(AbstractListViewPresenter presenter) {
+    public CategoriasListView(AbstractListViewPresenter presenter) {
         super(presenter);
     }
 
@@ -51,29 +51,22 @@ public class ReservasListView extends AbstractListViewPanel<Orden> {
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
-    public BindableTableModel<Orden> generateTableModel() {
-        return new BindableTableModel<Orden>(jTableList) {
+    public BindableTableModel<Categoria> generateTableModel() {
+        return new BindableTableModel<Categoria>(jTableList) {
             @Override
             public int getColumnCount() {
-                return 4;
+                return 3;
             }
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return getRow(rowIndex).getCodOrden();
+                        return getRow(rowIndex).getIdcategoria();
                     case 1:
-                        SimpleDateFormat sdf = new SimpleDateFormat("d/MM/yyyy h:mm a");
-                        return sdf.format(getRow(rowIndex).getVentafecha());
+                        return getRow(rowIndex).getNombre();
                     case 2:
-                        if (getRow(rowIndex).getClienteIdCliente() != null) {
-                            return getRow(rowIndex).getClienteIdCliente().getNombreCliente();
-                        } else {
-                            return null;
-                        }
-                    case 3:
-                        return getRow(rowIndex).getProductovOrdenList().size();
+                        return getRow(rowIndex).getColor();
                     default:
                         return null;
                 }
@@ -85,22 +78,43 @@ public class ReservasListView extends AbstractListViewPanel<Orden> {
                     case 0:
                         return "Codigo";
                     case 1:
-                        return "Fecha";
+                        return "Nombre";
                     case 2:
-                        return "Cliente";
-                    case 3:
-                        return "Productos en reserva";
+                        return "Color";
                     default:
                         return null;
+                }
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return int.class;
+                    case 1:
+                        return String.class;
+                    case 2:
+                        return Color.class;
+                    default:
+                        return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
                 }
             }
         };
     }
 
     @Override
+    public void uiInit() {
+        super.uiInit(); //To change body of generated methods, choose Tools | Templates.
+        jTableList.getColumnModel().getColumn(0).setCellRenderer(utils.numberColumCellRender());
+        jTableList.getColumnModel().getColumn(2).setCellRenderer(new ColorColumnCellRender());
+    }
+
+    @Override
     public String getViewName() {
         return VIEW_NAME;
     }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.reserva.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.reservas.ReservaService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
@@ -48,24 +47,18 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     public static final String ACTION_MODO_AGREGO = "Agrego";
     public static final String ACTION_AGREGAR_CLIENTE = "Agregar Cliente";
 
-    private ReservaService service;
+    private final boolean creatingMode;
 
     List<LocalTime> hours = new ArrayList<>();
     List<LocalTime> mins = new ArrayList<>();
 
     private Reserva reserva = new Reserva();
 
-//    public ReservaDetailViewPresenter() {
-//        super(new ReservaDetailViewModel());
-//        productoSelectorPresenter = new ProductoVentaSelectorPresenter(new OrdenController());
-//        addListeners();
-//        refreshState();
-//        setListToBean();
-//    }
-    public ReservaDetailViewPresenter(Reserva reserva) {
+    public ReservaDetailViewPresenter(Reserva reserva, boolean creatingMode) {
         super(new ReservaDetailViewModel());
         this.reserva = reserva;
-        initLists();
+        this.creatingMode = creatingMode;
+        initMinutes();
         productoSelectorPresenter = new ProductoVentaSelectorPresenter(PosDesktopUiModule.getInstance().getImplementation(OrdenService.class));
         addListeners();
         refreshState();
@@ -124,12 +117,17 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         getBean().setFecha(date);
         LocalTime lt = reserva.getHorareserva();
         if (lt.get(ChronoField.AMPM_OF_DAY) == 1) {
-            lt.minusHours(12);
             getBean().setAm_pm_seleccionado(LocalTime.NOON);
+            initEveningHours();
+        } else {
+            getBean().setAm_pm_seleccionado(LocalTime.MIDNIGHT);
+            initMorningHours();
         }
+        getBean().setLista_horas(new ArrayListModel<>(hours));
         getBean().setHora_seleccionada(LocalTime.of(lt.getHour(), 0));
+        getBean().setLista_minutos(new ArrayListModel<>(mins));
         getBean().setMinuto_seleccionado(LocalTime.of(0, lt.getMinute()));
-        getBean().setDuracion(reserva.getDuracionreservasegundos());
+        getBean().setDuracion(reserva.getDuracionMinutos());
         getBean().setLista_ubicaciones(new ArrayListModel<>(ubicacionUseCase.findAll()));
         getBean().setUbicacion_seleccionada(reserva.getUbicacionidubicacion());
         getBean().setLista_clientes(new ArrayListModel<>(clienteUseCase.findAll()));
@@ -139,19 +137,12 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         return super.refreshState();
     }
 
-    private void initLists() {
+    private void initMinutes() {
         LocalTime baseTime = LocalTime.MIN;
-        for (int i = 0; i < 12; i++) {
-            hours.add(baseTime);
-            baseTime = baseTime.plusHours(1);
-        }
-        baseTime = LocalTime.MIN;
         for (int i = 0; i < 60; i++) {
             mins.add(baseTime);
             baseTime = baseTime.plusMinutes(1);
         }
-        getBean().setLista_horas(new ArrayListModel<>(hours));
-        getBean().setLista_minutos(new ArrayListModel<>(mins));
     }
 
     private void setListToBean() {
@@ -223,18 +214,33 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         reserva.setNotasreserva(getBean().getNombre_reserva());
         reserva.setFechareserva(LocalDate.of(date.getYear() + 1900, date.getMonth() + 1, date.getDate()));
         reserva.setHorareserva(LocalTime.of(hora.getHour(), minutos.getMinute()));
-        reserva.setDuracionreservasegundos(getBean().getDuracion());
+        reserva.setDuracionMinutos(getBean().getDuracion());
         reserva.setUbicacionidubicacion(getBean().getUbicacion_seleccionada());
         reserva.setClienteidcliente(getBean().getCliente());
         reserva.setCategoriaidcategoria(getBean().getCategoria_seleccionada());
-        reservasUseCase.create(reserva);
-//        service.crearEditarReserva(
-//                service.formatDate(hora, minutos, pm_am, date),
-//                getBean().getMesa_seleccionada(),
-//                getBean().getCliente(),
-//                getBean().getLista_producto());
+        if (creatingMode) {
+            reservasUseCase.create(reserva);
+        } else {
+            reservasUseCase.edit(reserva);
+        }
         NavigationService.getInstance().navigateUp();
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+    }
+
+    private void initMorningHours() {
+        LocalTime baseTime = LocalTime.MIDNIGHT;
+        for (int i = 0; i < 12; i++) {
+            hours.add(baseTime);
+            baseTime = baseTime.plusHours(1);
+        }
+    }
+
+    private void initEveningHours() {
+        LocalTime baseTime = LocalTime.NOON;
+        for (int i = 12; i < 24; i++) {
+            hours.add(baseTime);
+            baseTime = baseTime.plusHours(1);
+        }
     }
 
 }

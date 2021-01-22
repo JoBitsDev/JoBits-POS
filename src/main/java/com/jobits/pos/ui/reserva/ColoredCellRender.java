@@ -31,7 +31,7 @@ public class ColoredCellRender extends DefaultListCellRenderer {
     public Component getListCellRendererComponent(JList list, Object color,
             int index, boolean isSelected, boolean cellHasFocus) {
         setText(" ");
-        super.setBackground((Color) color);
+        super.setBackground(new Color((Integer) color));
         if (isBordered) {
             if (isSelected) {
                 if (selectedBorder == null) {
