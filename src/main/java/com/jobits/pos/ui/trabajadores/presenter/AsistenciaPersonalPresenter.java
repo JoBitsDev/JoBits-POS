@@ -83,7 +83,7 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         getBean().getLista_personal_disponible().clear();
         getBean().getLista_personal_disponible().addAll(new ArrayListModel<>(personalService.getTrabajadoresList()));
         getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.updateSalaries(venta.getId())));
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -106,4 +106,5 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
     }
 
+    
 }
