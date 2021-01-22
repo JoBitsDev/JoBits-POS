@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.ui.licencia;
 
-import com.jobits.pos.controller.AbstractDialogController;
 import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.cordinator.NavigationService;
@@ -15,8 +14,6 @@ import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Component;
-import java.awt.Frame;
-import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 /**

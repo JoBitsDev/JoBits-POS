@@ -6,31 +6,27 @@
 package com.jobits.pos.ui.reserva.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.reservas.ReservaController;
-import com.jobits.pos.controller.reservas.ReservaService;
-import com.jobits.pos.controller.venta.OrdenController;
+import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Mesa;
-import com.jobits.pos.domain.models.Orden;
-import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.domain.models.ProductovOrden;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
+import com.jobits.pos.reserva.core.domain.Reserva;
+import com.jobits.pos.reserva.core.usecase.CategoriaUseCase;
+import com.jobits.pos.reserva.core.usecase.ClienteUseCase;
+import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
+import com.jobits.pos.reserva.core.usecase.UbicacionUseCase;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
-import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorPresenter;
-import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO;
-import java.beans.PropertyChangeEvent;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,19 +36,32 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
 
     public ProductoVentaSelectorPresenter productoSelectorPresenter;
 
+    ReservaUseCase reservasUseCase = PosDesktopUiModule.getInstance().getImplementation(ReservaUseCase.class);
+    UbicacionUseCase ubicacionUseCase = PosDesktopUiModule.getInstance().getImplementation(UbicacionUseCase.class);
+    CategoriaUseCase categoriasUseCase = PosDesktopUiModule.getInstance().getImplementation(CategoriaUseCase.class);
+    ClienteUseCase clienteUseCase = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
+
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_ACEPTAR = "Aceptar";
     public static final String ACTION_ELIMINAR = "Eliminar";
     public static final String ACTION_MODO_AGREGO = "Agrego";
+    public static final String ACTION_AGREGAR_CLIENTE = "Agregar Cliente";
 
-    private ReservaService service;
+    private final boolean creatingMode;
 
-    public ReservaDetailViewPresenter(ReservaController service) {
+    List<LocalTime> hours = new ArrayList<>();
+    List<LocalTime> mins = new ArrayList<>();
+
+    private Reserva reserva = new Reserva();
+
+    public ReservaDetailViewPresenter(Reserva reserva, boolean creatingMode) {
         super(new ReservaDetailViewModel());
-        this.service = service;
-        setBeanData();
-        refreshState();
+        this.reserva = reserva;
+        this.creatingMode = creatingMode;
+        initMinutes();
+        productoSelectorPresenter = new ProductoVentaSelectorPresenter(PosDesktopUiModule.getInstance().getImplementation(OrdenService.class));
         addListeners();
+        refreshState();
         setListToBean();
     }
 
@@ -91,96 +100,147 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_AGREGAR_CLIENTE) {
+            @Override
+            public Optional doAction() {
+                onAgregarClienteClick();
+                return Optional.empty();
+            }
+        });
     }
 
     @Override
     protected Optional refreshState() {
-        productoSelectorPresenter = new ProductoVentaSelectorPresenter(new OrdenController());
-        getBean().setLista_mesas(new ArrayListModel<>(service.mesasDisponiblesParaReservar(getBean().getFecha())));
+        getBean().setNombre_reserva(reserva.getNotasreserva());
+        LocalDate ld = reserva.getFechareserva();
+        Date date = new Date(ld.getYear() - 1900, ld.getMonthValue() - 1, ld.getDayOfMonth());//chek this shit
+        getBean().setFecha(date);
+        LocalTime lt = reserva.getHorareserva();
+        if (lt.get(ChronoField.AMPM_OF_DAY) == 1) {
+            getBean().setAm_pm_seleccionado(LocalTime.NOON);
+            initEveningHours();
+        } else {
+            getBean().setAm_pm_seleccionado(LocalTime.MIDNIGHT);
+            initMorningHours();
+        }
+        getBean().setLista_horas(new ArrayListModel<>(hours));
+        getBean().setHora_seleccionada(LocalTime.of(lt.getHour(), 0));
+        getBean().setLista_minutos(new ArrayListModel<>(mins));
+        getBean().setMinuto_seleccionado(LocalTime.of(0, lt.getMinute()));
+        getBean().setDuracion(reserva.getDuracionMinutos());
+        getBean().setLista_ubicaciones(new ArrayListModel<>(ubicacionUseCase.findAll()));
+        getBean().setUbicacion_seleccionada(reserva.getUbicacionidubicacion());
+        getBean().setLista_clientes(new ArrayListModel<>(clienteUseCase.findAll()));
+        getBean().setCliente(reserva.getClienteidcliente());
+        getBean().setLista_categorias(new ArrayListModel<>(categoriasUseCase.findAll()));
+        getBean().setCategoria_seleccionada(reserva.getCategoriaidcategoria());
         return super.refreshState();
     }
 
-    private void setBeanData() {
-        Orden o = service.getReserva();
-        getBean().setFecha(o.getVentafecha());
-        getBean().setMesa_seleccionada(o.getMesacodMesa());
-        getBean().setCliente(o.getClienteIdCliente());
-        getBean().setLista_clientes(new ArrayListModel<>(service.getListaClientes()));
+    private void initMinutes() {
+        LocalTime baseTime = LocalTime.MIN;
+        for (int i = 0; i < 60; i++) {
+            mins.add(baseTime);
+            baseTime = baseTime.plusMinutes(1);
+        }
     }
 
     private void setListToBean() {
-        getBean().setProducto_seleccionado(null);
-        getBean().setLista_producto(new ArrayListModel<>(service.getReserva().getProductovOrdenList()));
+//        getBean().setProducto_seleccionado(null);
+//        getBean().setLista_producto(new ArrayListModel<>(service.getReserva().getProductovOrdenList()));
     }
 
     private void addListeners() {
-        getBean().addPropertyChangeListener(PROP_MESA_SELECCIONADA, (PropertyChangeEvent evt) -> {
-            Mesa m = (Mesa) evt.getNewValue();
-            if (m != null) {
-                productoSelectorPresenter.setMesaSeleccionada(getBean().getMesa_seleccionada());
-            }
-            getBean().setShow_productos(m != null);
-        });
-        productoSelectorPresenter.addBeanPropertyChangeListener(PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
-            ProductoVenta pv = (ProductoVenta) evt.getNewValue();
-            if (pv != null) {
-                ProductovOrden pvo = service.generarProductovOrden(pv, new NumberPad(null).showView());
-                service.agregarProductoAOrden(getBean().isModo_agrego(), pvo, getBean().getProducto_seleccionado());
-                setListToBean();
-            }
-        });
-        getBean().addPropertyChangeListener(PROP_FECHA, (PropertyChangeEvent evt) -> {
-            Date fecha = (Date) evt.getNewValue();
-            if (fecha != null) {
-                getBean().setLista_mesas(new ArrayListModel<>(service.mesasDisponiblesParaReservar(fecha)));
-            }
-        });
-        getBean().addPropertyChangeListener(PROP_PRODUCTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
-            ProductovOrden p = (ProductovOrden) evt.getNewValue();
-            if (p != null && p.getAgregadoA() == null) {
-                getBean().setBotton_agrego_enabled(true);
-            } else {
-                getBean().setModo_agrego(false);
-                getBean().setBotton_agrego_enabled(false);
-            }
-        }
-        );
+//        getBean().addPropertyChangeListener(PROP_MESA_SELECCIONADA, (PropertyChangeEvent evt) -> {
+//            Mesa m = (Mesa) evt.getNewValue();
+//            if (m != null) {
+//                productoSelectorPresenter.setMesaSeleccionada(getBean().getMesa_seleccionada());
+//            }
+//            getBean().setShow_productos(m != null);
+//        });
+//        productoSelectorPresenter.addBeanPropertyChangeListener(PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
+//            ProductoVenta pv = (ProductoVenta) evt.getNewValue();
+//            if (pv != null) {
+//                ProductovOrden pvo = service.generarProductovOrden(pv, new NumberPad(null).showView());
+//                service.agregarProductoAOrden(getBean().isModo_agrego(), pvo, getBean().getProducto_seleccionado());
+//                setListToBean();
+//            }
+//        });
+//        getBean().addPropertyChangeListener(PROP_FECHA, (PropertyChangeEvent evt) -> {
+//            Date fecha = (Date) evt.getNewValue();
+//            if (fecha != null) {
+//                getBean().setLista_mesas(new ArrayListModel<>(service.mesasDisponiblesParaReservar(fecha)));
+//            }
+//        });
+//        getBean().addPropertyChangeListener(PROP_PRODUCTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
+//            ProductovOrden p = (ProductovOrden) evt.getNewValue();
+//            if (p != null && p.getAgregadoA() == null) {
+//                getBean().setBotton_agrego_enabled(true);
+//            } else {
+//                getBean().setModo_agrego(false);
+//                getBean().setBotton_agrego_enabled(false);
+//            }
+//        }
+//        );
     }
 
     private void onEliminarClick() {
-        if (getBean().getProducto_seleccionado() != null) {
-            service.eliminarProDuctoDeOrden(getBean().getProducto_seleccionado());
-            setListToBean();
-        }
+//        service.eliminarProDuctoDeOrden(getBean().getProducto_seleccionado());
+//        setListToBean();
+    }
+
+    private void onAgregarClienteClick() {
+//        if ((boolean) Application.getInstance().getNotificationService().
+//                showDialog("Desea registrar a: " + getBean().getNombre_cliente(),
+//                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+//            service.crearCliente(getBean().getNombre_cliente(),
+//                    getBean().getApellido_cliente(),
+//                    getBean().getTelefono_cliente());
+//            getBean().setLista_clientes(new ArrayListModel<>(service.getListaClientes()));
+//            getBean().setNombre_cliente(null);
+//            getBean().setApellido_cliente(null);
+//            getBean().setTelefono_cliente(null);
+//            Application.getInstance().getNotificationService().showDialog(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+//        }
     }
 
     private void onAceptarClick() {
-        if (getBean().getMesa_seleccionada() != null) {
-            service.crearEditarReserva(
-                    formatDate(),
-                    getBean().getMesa_seleccionada(),
-                    getBean().getCliente(),
-                    getBean().getLista_producto());
+        Date date = getBean().getFecha();
+        LocalTime hora = getBean().getHora_seleccionada();
+        LocalTime minutos = getBean().getMinuto_seleccionado();
+        if (getBean().getAm_pm_seleccionado().get(ChronoField.AMPM_OF_DAY) == 1) {
+            hora.plusHours(12);
+        }
+        reserva.setNotasreserva(getBean().getNombre_reserva());
+        reserva.setFechareserva(LocalDate.of(date.getYear() + 1900, date.getMonth() + 1, date.getDate()));
+        reserva.setHorareserva(LocalTime.of(hora.getHour(), minutos.getMinute()));
+        reserva.setDuracionMinutos(getBean().getDuracion());
+        reserva.setUbicacionidubicacion(getBean().getUbicacion_seleccionada());
+        reserva.setClienteidcliente(getBean().getCliente());
+        reserva.setCategoriaidcategoria(getBean().getCategoria_seleccionada());
+        if (creatingMode) {
+            reservasUseCase.create(reserva);
         } else {
-            JOptionPane.showMessageDialog(
-                    null, "Debe selecionar la mesa que desea reservar", "AVISO", JOptionPane.ERROR_MESSAGE);
+            reservasUseCase.edit(reserva);
         }
         NavigationService.getInstance().navigateUp();
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
-    private Date formatDate() {
-        int hora = getBean().getHora();
-        int minutos = getBean().getMinutos();
-        String pm_am = getBean().getPm_am();
-        Date date = getBean().getFecha();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy hh:mm aa");
-        String input = sdf.format(date) + " " + hora + ":" + minutos + " " + pm_am;
-        try {
-            date = df.parse(input);
-        } catch (ParseException ex) {
-            Logger.getLogger(ReservaDetailViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
+    private void initMorningHours() {
+        LocalTime baseTime = LocalTime.MIDNIGHT;
+        for (int i = 0; i < 12; i++) {
+            hours.add(baseTime);
+            baseTime = baseTime.plusHours(1);
         }
-        return date;
     }
+
+    private void initEveningHours() {
+        LocalTime baseTime = LocalTime.NOON;
+        for (int i = 12; i < 24; i++) {
+            hours.add(baseTime);
+            baseTime = baseTime.plusHours(1);
+        }
+    }
+
 }

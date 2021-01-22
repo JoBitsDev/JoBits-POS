@@ -17,28 +17,23 @@ import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.XChartPanel;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
-import com.jobits.pos.controller.gasto.GastoOperacionController;
-import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
-import com.jobits.pos.controller.venta.OrdenController;
-import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.gastos.GastoOperacionView;
 import com.jobits.pos.ui.gastos.GastosView;
-import com.jobits.pos.ui.gastos.presenter.GastosViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.trabajadores.AsistenciaPersonalView;
-import com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
-import com.jobits.pos.ui.venta.orden.OldVentaListOrdenesView;
+import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.VentaListOrdenesView;
-import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
-import com.jobits.pos.ui.venta.presenter.ResumenVentaAreaTablaModel;
-import com.jobits.pos.ui.venta.presenter.ResumenVentaPtoElabTablaModel;
-import com.jobits.pos.ui.venta.presenter.ResumenVentaUsuarioTablaModel;
+import com.jobits.pos.ui.reserva.ReservaSchedulerView;
+import com.jobits.pos.core.domain.venta.ResumenVentaAreaTablaModel;
+import com.jobits.pos.core.domain.venta.ResumenVentaPtoElabTablaModel;
+import com.jobits.pos.core.domain.venta.ResumenVentaUsuarioTablaModel;
+import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
+import com.jobits.pos.ui.reserva.ubicaciones.UbicacionesListView;
+import com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionesListViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
@@ -47,7 +42,6 @@ import com.jobits.ui.components.swing.displayers.Card;
 import java.awt.Dimension;
 import javax.swing.Action;
 import javax.swing.Box;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -598,11 +592,12 @@ public class VentaDetailView extends AbstractViewPanel {
         jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
-        jPanelVentas.add(new VentaListOrdenesView(((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter()));
-
-        jPanelPagoTrabajadores.add(new AsistenciaPersonalView(((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter()));
-        jTabbedPaneResumenD1.addTab("Extracciones Caja", jPanelExtracciones);
-        jPanelExtracciones.add(new GastosView(((VentaDetailViewPresenter) getPresenter()).getGastosPresenter()));
+        if ((VentaDetailViewPresenter) getPresenter() != null) {
+            jPanelVentas.add(new VentaListOrdenesView(((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter()));
+            jPanelPagoTrabajadores.add(new AsistenciaPersonalView(((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter()));
+            jTabbedPaneResumenD1.addTab("Extracciones Caja", jPanelExtracciones);
+            jPanelExtracciones.add(new GastosView(((VentaDetailViewPresenter) getPresenter()).getGastosPresenter()));
+        }
     }
 
     @Override

@@ -5,8 +5,7 @@
  */
 package com.jobits.pos.ui.login.presenter;
 
-import com.jobits.pos.domain.UbicacionConexionModel;
-import com.jobits.pos.domain.models.Ubicacion;
+import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.awt.Color;
 import java.util.List;

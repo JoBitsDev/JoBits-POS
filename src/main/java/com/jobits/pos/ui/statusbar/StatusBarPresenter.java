@@ -9,7 +9,7 @@ import com.jobits.pos.controller.licencia.Licence;
 import com.jobits.pos.controller.licencia.LicenceController;
 import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.cordinator.DisplayType;
-import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.valores.Colors;

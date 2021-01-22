@@ -1,7 +1,9 @@
 plugins {
     id 'io.freefair.lombok' apply true
+    id 'edu.sc.seis.launch4j' version '2.4.6' apply true  
 }
 
+description = 'JoBits POS:modulo-pos-client-desktop'
 apply plugin: 'application'
 
 application{
@@ -73,11 +75,25 @@ dependencies {
     //  implementation fileTree(dir: 'lib',include: '*.jar')
 
     implementation project(':UIcomponents')
+    implementation project(':clean-core-pitti')
+    implementation project(':modulo-reserva')
     implementation project(':core')
     implementation project(':autenticacion')
     implementation project(':Material')
     implementation project(':clean-swing')
+    implementation project(':posCore')
 
 
     
 }
+
+launch4j{
+    headerType = 'gui'
+    outfile = 'JoBits POS.exe'
+    mainClassName = 'com.jobits.pos.main.Main'
+    bundledJrePath = 'jdk'
+    //icon = '${projectDir}/scr/main/resources/'
+    
+}
+
+build.finalizedBy(createExe)

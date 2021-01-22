@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.ui.venta.orden;
 
-import com.jobits.pos.domain.models.ProductovOrden;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.core.domain.models.ProductovOrden;
+import com.jobits.pos.utils.utils;
 import java.awt.Dimension;
 
 /**

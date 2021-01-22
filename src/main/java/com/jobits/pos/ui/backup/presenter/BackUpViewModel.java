@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.backup.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.UbicacionConexionModel;
+import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.List;
 

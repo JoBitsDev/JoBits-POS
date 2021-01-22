@@ -11,6 +11,7 @@ import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.mainmenu.presenter.MainMenuPresenter;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.main.ViewFacade;
 
 import com.jobits.pos.ui.dashboard.DashBoardView;
@@ -56,7 +57,7 @@ public class RootView extends JPanel {
         initComponents();
         // jPanelContent.setLayout(cards);
         jPanelStatus.add(statusBar);
-        dashboard = new MainMenuView(new MainMenuPresenter(new MainMenuController()));
+        dashboard = new MainMenuView(new MainMenuPresenter(new MainMenuController(Application.getInstance().getLoggedUser())));
         add(dashboard, BorderLayout.CENTER);
         setShrinked(true);
         statusBar.refreshView();

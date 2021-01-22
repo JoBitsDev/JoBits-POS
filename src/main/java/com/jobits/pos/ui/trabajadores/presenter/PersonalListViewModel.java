@@ -6,7 +6,7 @@
 
 package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 
 /**

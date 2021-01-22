@@ -9,11 +9,11 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
-import com.jobits.pos.domain.TransaccionSimple;
-import com.jobits.pos.domain.models.Insumo;
-import com.jobits.pos.domain.models.InsumoAlmacen;
-import com.jobits.pos.domain.models.TransaccionTransformacion;
+import com.jobits.pos.controller.almacen.impl.AlmacenManageController.OperationType;
+import com.jobits.pos.core.domain.TransaccionSimple;
+import com.jobits.pos.core.domain.models.Insumo;
+import com.jobits.pos.core.domain.models.InsumoAlmacen;
+import com.jobits.pos.core.domain.models.TransaccionTransformacion;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
@@ -23,8 +23,7 @@ import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.RestaurantManagerListIntelliHint;
-import com.jobits.pos.ui.utils.TableDate;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
@@ -522,7 +521,7 @@ public class FacturaView extends AbstractViewPanel {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    switch ((CheckBoxType) jComboBoxOperationSelector.getSelectedItem()) {
+                    switch ((OperationType) jComboBoxOperationSelector.getSelectedItem()) {//TODO: enum de una implementacion de un service en una vista
                         case ENTRADA:
                             if (jTextFieldMonto.isEnabled()) {
                                 jTextFieldMonto.requestFocusInWindow();

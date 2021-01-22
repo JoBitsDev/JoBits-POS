@@ -6,8 +6,8 @@
 package com.jobits.pos.ui.venta.mesas.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.Mesa;
+import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.List;

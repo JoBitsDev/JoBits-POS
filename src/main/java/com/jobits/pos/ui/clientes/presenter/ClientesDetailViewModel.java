@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.clientes.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Orden;
+import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Date;
 

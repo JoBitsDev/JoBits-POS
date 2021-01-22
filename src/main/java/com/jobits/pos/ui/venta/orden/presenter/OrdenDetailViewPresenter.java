@@ -6,36 +6,29 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.controller.clientes.ClientesDetailServiceImpl;
-import com.jobits.pos.controller.productos.ProductoVentaDetailController;
+import com.jobits.pos.controller.clientes.ClientesDetailController;
 //import com.jobits.pos.adapters.repo.impl.OrdenTemporalRepo;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Cliente;
-import com.jobits.pos.domain.models.Orden;
-import com.jobits.pos.domain.models.ProductovOrden;
-import com.jobits.pos.exceptions.ValidatingException;
+import com.jobits.pos.core.domain.models.Cliente;
+import com.jobits.pos.core.domain.models.Orden;
+import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.productos.ProductoVentaDetailView;
-import com.jobits.pos.ui.productos.presenter.ProductoVentaDetailPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.venta.orden.CalcularCambioView;
+import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 //import com.jobits.pos.ui.venta.orden.OrdenLogsDetailView;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -98,42 +91,50 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onAddNotaLCick() {
-        getController().addNota(getCodOrden(), getBean().getProducto_orden_seleccionado());
+        ProductovOrden p = getBean().getProducto_orden_seleccionado();
+        String nota;
+        if (getController().nuevaNota(p)) {
+            nota = JOptionPane.showInputDialog(null, "Introduzca la nota a adjuntar");
+        } else {
+            nota = JOptionPane.showInputDialog(null, "Introduzca la nota a adjuntar", p.getNota().getDescripcion());
+        }
+        getController().addNota(getCodOrden(), getBean().getProducto_orden_seleccionado(), nota);
     }
 
     private void onAddProductoClick() {
-        if (getBean().getProducto_orden_seleccionado() != null) {
-            getController().addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), new NumberPad(null).showView());
-            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
-
-        }
+        getController().addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), new NumberPad(null).showView());
+        getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
     }
 
     private void onCerrarOrdenClick() {
-        getController().cerrarOrden(getCodOrden());
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea cerrar la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            boolean cerrarTicket = (boolean) Application.getInstance().getNotificationService().
+                    showDialog("Desea imprimir un ticket de la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+            Orden o = getController().cerrarOrden(getCodOrden(), cerrarTicket);
+            if (o != null) {
+                NavigationService.getInstance().navigateTo(CalcularCambioView.VIEW_NAME,
+                        new CalcularCambioViewPresenter(o), DisplayType.POPUP);
+            }
+        }
     }
 
     private void onEnviarAElaborarCLick() {
         getController().enviarACocina(getCodOrden());
         getBean().setLista_producto_orden(getController().getInstance(getCodOrden()).getProductovOrdenList());
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onImprimirCierreParcial() {
         getController().imprimirPreTicket(getCodOrden());
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onRemoveProductoCLick() {
-        if (getBean().getProducto_orden_seleccionado() != null) {
-            getController().removeProduct(getCodOrden(), getBean().getProducto_orden_seleccionado(),
-                    getBean().getProducto_orden_seleccionado().getCantidad());
-            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
-        } else {
-            JOptionPane.showMessageDialog(null, "Debe seleccionar un producto primero", "Error", JOptionPane.ERROR_MESSAGE);
-
-        }
-
+        getController().removeProduct(getCodOrden(), getBean().getProducto_orden_seleccionado(),
+                getBean().getProducto_orden_seleccionado().getCantidad());
+        getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onSetAutorizoClick() {
@@ -151,17 +152,9 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 //        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
 //    }
     private void onVerDetallesClick() {
-        if (Application.getInstance().getLoggedUser().getPuestoTrabajonombrePuesto().getNivelAcceso() >= 3) {
-            File temporalFile = new File(R.LOGS_FILE_PATH + "/Ordenes" + "/" + codOrden + ".txt");
-            if (temporalFile.exists()) {
-                Application.getInstance().getNavigator().navigateTo(
-                        OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);
-            } else {
-                JOptionPane.showMessageDialog(null, "No hay registros de orden: " + codOrden, "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No tiene los permisos requeridos", "Privilegios insuficientes", JOptionPane.ERROR_MESSAGE);
-        }
+        getController().canViewOrdenLog(Application.getInstance().getLoggedUser(),codOrden);
+        Application.getInstance().getNavigator().navigateTo(
+                OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);
     }
 
     private void onSuperPanelVisibleClick() {
@@ -193,7 +186,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
                     "/restManager/resources/icons pack/porciento_indigo.png")));
         }
-        getBean().setLista_clientes(new ArrayListModel<>(new ClientesDetailServiceImpl().getListaClientes()));
+        getBean().setLista_clientes(new ArrayListModel<>(new ClientesDetailController().getListaClientes()));
         if (instance.getClienteIdCliente() != null) {
             getBean().setCliente_seleccionado(instance.getClienteIdCliente());
         } else {
@@ -329,7 +322,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_CLIENTE_SELECCIONADO, (PropertyChangeEvent evt) -> {
             Cliente newValue = (Cliente) evt.getNewValue();
             if (newValue != null) {
-                ClientesDetailServiceImpl clienteservice = new ClientesDetailServiceImpl();
+                ClientesDetailController clienteservice = new ClientesDetailController();
                 clienteservice.addOrdenToClientOrdenList(newValue, getController().getInstance(codOrden));
             }
         }

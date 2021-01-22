@@ -7,12 +7,14 @@ package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
-import com.jobits.pos.domain.InsumoPedidoModel;
-import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
-import com.jobits.pos.domain.VentaDAO1;
-import com.jobits.pos.domain.models.IpvVentaRegistro;
-import com.jobits.pos.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.InsumoPedidoModel;
+import com.jobits.pos.core.domain.ProdcutoVentaPedidoModel;
+import com.jobits.pos.core.domain.VentaDAO1;
+import com.jobits.pos.core.domain.models.IpvVentaRegistro;
+import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
@@ -59,7 +61,6 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
                 actualizarTablaPedido();
                 return Optional.empty();
             }
-
         }
         );
         registerOperation(new AbstractViewAction(ACTION_CANCELAR) {
@@ -76,18 +77,19 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
                 onAceptarClick();
                 return Optional.empty();
             }
-
         }
         );
     }
 
     private void onAceptarClick() {
-        if (service.realizarPedidoDeIpv(
-                getBean().getLista_insumo_pedido_model(),
-                getBean().getLista_producto_venta_model(),
-                service.getElaboracion(),
-                getBean().getSeleccionado_almacen())) {
+        if (JOptionPane.showConfirmDialog(null, "Desea ejecutar el pedido", "Ejecutar Pedido", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            service.realizarPedidoDeIpv(
+                    getBean().getLista_insumo_pedido_model(),
+                    getBean().getLista_producto_venta_model(),
+                    service.getElaboracion(),
+                    getBean().getSeleccionado_almacen());
             Application.getInstance().getNavigator().navigateUp();
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 
@@ -98,7 +100,7 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
             getBean().getLista_producto_venta_model().add(
                     new ProdcutoVentaPedidoModel(selected, cantidad));
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un Producto de IPV primero");
+            throw new IllegalArgumentException("Seleccione un Producto de IPV primero");
         }
     }
 
@@ -107,7 +109,7 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
         if (selected != null) {
             getBean().getLista_producto_venta_model().remove(selected);
         } else {
-            JOptionPane.showMessageDialog(null, "Seleccione un Producto de IPV primero");
+            throw new IllegalArgumentException("Seleccione un Producto de IPV primero");
         }
     }
 

@@ -6,7 +6,7 @@
 
 package com.jobits.pos.ui.almacen.ipv;
 
-import com.jobits.pos.domain.models.Insumo;
+import com.jobits.pos.core.domain.models.Insumo;
 
 /**
  * FirstDream

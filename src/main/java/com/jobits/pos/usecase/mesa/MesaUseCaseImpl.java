@@ -5,10 +5,10 @@
  */
 package com.jobits.pos.usecase.mesa;
 
-import com.jobits.pos.adapters.repo.MesaRepo;
-import com.jobits.pos.adapters.repo.impl.AreaDAO;
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.Mesa;
+import com.jobits.pos.core.repo.MesaRepo;
+import com.jobits.pos.core.repo.impl.AreaDAO;
+import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Mesa;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

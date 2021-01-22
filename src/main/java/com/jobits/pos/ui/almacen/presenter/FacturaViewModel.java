@@ -6,14 +6,12 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenManageController.CheckBoxType;
-import com.jobits.pos.domain.TransaccionSimple;
-import com.jobits.pos.domain.models.Insumo;
-import com.jobits.pos.domain.models.InsumoAlmacen;
-import com.jobits.pos.domain.models.InsumoElaborado;
-import com.jobits.pos.domain.models.TransaccionTransformacion;
+import com.jobits.pos.controller.almacen.impl.AlmacenManageController.OperationType;//TODO; enum de implementacion en view
+import com.jobits.pos.core.domain.TransaccionSimple;
+import com.jobits.pos.core.domain.models.Insumo;
+import com.jobits.pos.core.domain.models.InsumoAlmacen;
+import com.jobits.pos.core.domain.models.TransaccionTransformacion;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
-import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -90,12 +88,12 @@ public class FacturaViewModel extends AbstractListViewModel {
     public static final String PROP_COMPONENT_LOCKED = "component_locked";
 
     //OPERACIONES
-    private CheckBoxType operacion_selected = CheckBoxType.ENTRADA;
+    private OperationType operacion_selected = OperationType.ENTRADA;
 
     public static final String PROP_OPERACION_SELECTED = "operacion_selected";
 
-    private ArrayListModel<CheckBoxType> lista_operaciones
-            = new ArrayListModel<>(Arrays.asList(CheckBoxType.ENTRADA, CheckBoxType.REBAJA, CheckBoxType.SALIDA, CheckBoxType.TRASPASO, CheckBoxType.TRANSFORMAR));
+    private ArrayListModel<OperationType> lista_operaciones
+            = new ArrayListModel<>(Arrays.asList(OperationType.ENTRADA, OperationType.REBAJA, OperationType.SALIDA, OperationType.TRASPASO, OperationType.TRANSFORMAR));
 
     public static final String PROP_LISTA_OPERACIONES = "lista_operaciones";
 
@@ -342,7 +340,7 @@ public class FacturaViewModel extends AbstractListViewModel {
      *
      * @return the value of operacion_selected
      */
-    public CheckBoxType getOperacion_selected() {
+    public OperationType getOperacion_selected() {
         return operacion_selected;
     }
 
@@ -351,8 +349,8 @@ public class FacturaViewModel extends AbstractListViewModel {
      *
      * @param operacion_selected new value of operacion_selected
      */
-    public void setOperacion_selected(CheckBoxType operacion_selected) {
-        CheckBoxType oldOperacion_selected = this.operacion_selected;
+    public void setOperacion_selected(OperationType operacion_selected) {
+        OperationType oldOperacion_selected = this.operacion_selected;
         this.operacion_selected = operacion_selected;
         firePropertyChange(PROP_OPERACION_SELECTED, oldOperacion_selected, operacion_selected);
     }

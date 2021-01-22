@@ -6,10 +6,10 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.Carta;
-import com.jobits.pos.domain.models.Mesa;
-import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Carta;
+import com.jobits.pos.core.domain.models.Mesa;
+import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.List;
 

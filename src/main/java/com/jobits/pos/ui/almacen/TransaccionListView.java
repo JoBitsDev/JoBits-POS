@@ -6,13 +6,13 @@
 package com.jobits.pos.ui.almacen;
 
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.domain.models.Transaccion;
+import com.jobits.pos.core.domain.models.Transaccion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import static com.jobits.pos.ui.almacen.presenter.TransaccionListPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;

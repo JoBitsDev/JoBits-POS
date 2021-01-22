@@ -15,17 +15,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import com.jobits.pos.domain.models.Cocina;
-import com.jobits.pos.domain.models.Insumo;
-import com.jobits.pos.domain.models.IpvRegistro;
-import com.jobits.pos.domain.models.IpvVentaRegistro;
+import com.jobits.pos.core.domain.models.Cocina;
+import com.jobits.pos.core.domain.models.Insumo;
+import com.jobits.pos.core.domain.models.IpvRegistro;
+import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewModel.*;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**

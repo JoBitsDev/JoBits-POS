@@ -9,20 +9,21 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.gasto.GastoOperacionController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.gastos.presenter.GastosViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
+import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.PROP_VENTA_SELECCIONADA;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -72,7 +73,12 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         setListToBean();
 //        this.ventaOrdenPresenter = new VentaOrdenListViewPresenter(controller, ordenController, getBean().getVenta_seleccionada().getId());
 //        updateBeanData();
-        controller.initIPV(getBean().getVenta_seleccionada());
+        new LongProcessActionServiceImpl("Creando IPVs.........") {
+            @Override
+            protected void longProcessMethod() {
+                controller.initIPV(getBean().getVenta_seleccionada());
+            }
+        }.performAction(null);
 
     }
 
@@ -187,18 +193,28 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     }
 
     private void onTerminarClick() {
-        if (service.terminarVentas(getBean().getVenta_seleccionada().getId())) {
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea terminar el día de trabajo?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.terminarVentas(getBean().getVenta_seleccionada().getId());
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             Application.getInstance().getNavigator().navigateUp();
         }
     }
 
     private void onTerminarYExportarClick() {
-        service.terminarYExportar(getBean().getFile_for_export(), getBean().getVenta_seleccionada().getId());
-        Application.getInstance().getNavigator().navigateUp();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea terminar el día de trabajo?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.terminarYExportar(getBean().getFile_for_export(), getBean().getVenta_seleccionada().getId());
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNavigator().navigateUp();
+        }
     }
 
     private void onReabrirVentaCLick() {
         service.reabrirVentas(getBean().getVenta_seleccionada().getId());
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onImprimirResumenVentaAreaClick() {
@@ -207,30 +223,51 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     }
 
     private void onImprimirResumenVentaUsuarioClick() {
-        service.printPersonalResumenRow(getBean().getResumen_usuario_seleccionado().getPersonal(), getBean().getVenta_seleccionada().getId());
+        boolean imprimirValores = (boolean) Application.getInstance().getNotificationService().
+                showDialog("Presione SI para imprimir los valores,"
+                        + "\nNo para imprimir solo las cantidades",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+        service.printPersonalResumenRow(getBean().getResumen_usuario_seleccionado().getPersonal(),
+                getBean().getVenta_seleccionada().getId(), imprimirValores);
 
     }
 
     private void onImprimirResumenVentaUsuarioComisionClick() {
-        service.printPagoPorVentaPersonal(getBean().getResumen_usuario_seleccionado().getPersonal(), getBean().getVenta_seleccionada().getId());
+        boolean imprimirValores = (boolean) Application.getInstance().getNotificationService().
+                showDialog("Presione SI para imprimir los valores,"
+                        + "\nNo para imprimir solo las cantidades",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+        service.printPagoPorVentaPersonal(getBean().getResumen_usuario_seleccionado().getPersonal(),
+                getBean().getVenta_seleccionada().getId(), imprimirValores);
 
     }
 
     private void onImprimirResumenPtoElabClick() {
-        service.printCocinaResumen(getBean().getResumen_pto_seleccionado().getCodigoPto(), getBean().getVenta_seleccionada().getId());
+        boolean imprimirValores = (boolean) Application.getInstance().getNotificationService().
+                showDialog("Presione SI para imprimir los valores,"
+                        + "\nNo para imprimir solo las cantidades",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+        service.printCocinaResumen(getBean().getResumen_pto_seleccionado().getCodigoPto(),
+                getBean().getVenta_seleccionada().getId(), imprimirValores);
     }
 
     private void onCrearNuevoTurnoClick() {
-        if (JOptionPane.showConfirmDialog(null, "Desea terminar el turno?")
-                == JOptionPane.YES_OPTION) {
-            Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada());
-            if (venta != null) {
-                getBean().getList_ventas().add(venta);
-                getBean().setVenta_seleccionada(venta);
-            }
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea terminar el turno?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            new LongProcessActionServiceImpl("Creando IPVs.........") {
+                @Override
+                protected void longProcessMethod() {
+                    Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
+                    if (venta != null) {
+                        getBean().getList_ventas().add(venta);
+                        getBean().setVenta_seleccionada(venta);
+                    }
+                }
+            }.performAction(null);
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
-
+    
     private void updateBeanData() {
         if (getBean().getVenta_seleccionada() != null) {
             int codVenta = getBean().getVenta_seleccionada().getId();

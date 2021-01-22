@@ -6,16 +6,19 @@
 package com.jobits.pos.ui.gastos.presenter;
 
 import com.jobits.pos.controller.gasto.GastoOperacionController;
+import com.jobits.pos.controller.gasto.GastoOperacionService;
 import com.jobits.pos.controller.login.LogInController;
-import com.jobits.pos.domain.models.Venta;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.GastosFormatter;
+import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import static com.jobits.pos.ui.gastos.presenter.GastosViewModel.*;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeEvent;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -31,7 +34,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
             ACTION_AGREGAR_GASTO = "Agregar Gasto",
             ACTION_ELIMINAR_GASTO = "Eliminar Gasto";
 
-    private GastoOperacionController service;
+    private GastoOperacionService service;
 
     public GastosViewPresenter(GastoOperacionController service) {
         super(new GastosViewModel());
@@ -97,27 +100,21 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     }
 
     private void onAgregarClick() {
-        if (getBean().getCategoria_gasto_seleccionada() != null && getBean().getTipo_gasto_seleccionado() != null) {
-            service.createNewGasto(
-                    getBean().getCategoria_gasto_seleccionada(),
-                    getBean().getTipo_gasto_seleccionado(),
-                    getBean().getMonto_gasto(),
-                    getBean().getDescripcion_gasto());
-            refreshState();
-            onLimpiarClick();
-        } else {
-            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Rellene todos los campos obligatorios");
-        }
+        service.createNewGasto(
+                getBean().getCategoria_gasto_seleccionada(),
+                getBean().getTipo_gasto_seleccionado(),
+                getBean().getMonto_gasto(),
+                getBean().getDescripcion_gasto());
+        refreshState();
+        onLimpiarClick();
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onEliminarClick() {
-        if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
-            if (getBean().getGasto_venta_seleccionado() == null) {
-                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un gasto primero");
-            } else {
-                service.removeGasto(getBean().getGasto_venta_seleccionado());
-                refreshState();
-            }
+        if (new LogInController(new AuthorizerImpl()).constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
+            service.removeGasto(getBean().getGasto_venta_seleccionado());
+            refreshState();
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 

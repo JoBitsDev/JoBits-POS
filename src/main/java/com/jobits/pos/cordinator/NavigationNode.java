@@ -5,8 +5,6 @@
  */
 package com.jobits.pos.cordinator;
 
-import com.jobits.pos.ui.View;
-import java.util.List;
 import lombok.Data;
 
 /**

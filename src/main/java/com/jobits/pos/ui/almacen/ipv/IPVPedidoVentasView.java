@@ -7,10 +7,10 @@ package com.jobits.pos.ui.almacen.ipv;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.domain.InsumoPedidoModel;
-import com.jobits.pos.domain.ProdcutoVentaPedidoModel;
-import com.jobits.pos.domain.models.Almacen;
-import com.jobits.pos.domain.models.IpvVentaRegistro;
+import com.jobits.pos.core.domain.InsumoPedidoModel;
+import com.jobits.pos.core.domain.ProdcutoVentaPedidoModel;
+import com.jobits.pos.core.domain.models.Almacen;
+import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.almacen.ipv.presenter.IPVPedidoVentasViewPresenter.*;
@@ -18,7 +18,7 @@ import static com.jobits.pos.ui.almacen.ipv.presenter.IPVPedidoVentasViewModel.*
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 

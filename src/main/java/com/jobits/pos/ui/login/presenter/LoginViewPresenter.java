@@ -8,13 +8,14 @@ package com.jobits.pos.ui.login.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jhw.swing.util.icons.DerivableIcon;
+import com.jobits.pos.core.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.controller.login.MainMenuController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.UbicacionConexionModel;
+import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.mainmenu.presenter.MainMenuPresenter;
@@ -66,10 +67,11 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         getBean().setContrasena("");
         try {
             if (service.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
+                Application.getInstance().setLoggedUser(service.getUsuarioConectado());
                 Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
                 NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
-                        new MainMenuPresenter(new MainMenuController())); //TODO revisar eso codigo que no le pertenece a esta clse
-               RootView.getInstance().getDashboard().getTaskPane().setShrinked(true);
+                        new MainMenuPresenter(new MainMenuController(PersonalDAO.getInstance().find(getBean().getNombreUsuario())))); //TODO revisar eso codigo que no le pertenece a esta clse
+                RootView.getInstance().getDashboard().getTaskPane().setShrinked(true);
             }
         } catch (IllegalArgumentException ex) {
             Application.getInstance().getNotificationService().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion

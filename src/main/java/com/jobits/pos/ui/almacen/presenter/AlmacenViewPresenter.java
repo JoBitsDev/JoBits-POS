@@ -6,23 +6,27 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenListController;
+import com.jobits.pos.controller.almacen.impl.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenListService;
-import com.jobits.pos.controller.almacen.AlmacenManageController;
-import com.jobits.pos.controller.almacen.TransaccionesListController;
+import com.jobits.pos.controller.almacen.impl.AlmacenManageController;
+import com.jobits.pos.controller.almacen.AlmacenManageService;
+import com.jobits.pos.controller.almacen.TransaccionListService;
+import com.jobits.pos.controller.almacen.impl.TransaccionListController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.domain.models.Almacen;
-import com.jobits.pos.domain.models.InsumoAlmacen;
+import com.jobits.pos.core.domain.models.InsumoAlmacen;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +54,12 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     public static final String ACTION_NUEVA_FACTURA = "Nueva Factura";
 
     AlmacenListService listService;
-    AlmacenManageController detailService;
+    AlmacenManageService detailService;
 
-    public AlmacenViewPresenter(AlmacenListController listController) {
+    public AlmacenViewPresenter(AlmacenListService listController, AlmacenManageService detailService) {
         super(new AlmacenViewModel());
         listService = listController;
+        this.detailService = detailService;
         setListToBean();
         addListeners();
     }
@@ -64,7 +69,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_ACTUALIZAR_LISTA_ALMACEN) {
             @Override
             public Optional doAction() {
-                detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
+                detailService.setInstance(getBean().getElemento_seleccionado());
                 refreshView();
                 getBean().setSearch_keyWord(null);
                 return Optional.empty();
@@ -73,7 +78,8 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_CREAR_ALMACEN) {
             @Override
             public Optional doAction() {
-                listService.createNewStorage();
+                listService.createNewStorage(JOptionPane.showInputDialog(R.RESOURCE_BUNDLE.getString("dialogo_agregar_almacen")));
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
                 setListToBean();
                 return Optional.empty();
             }
@@ -89,8 +95,13 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_ELIMINAR_ALMACEN) {
             @Override
             public Optional doAction() {
-                listService.destroy(getBean().getElemento_seleccionado());
-                setListToBean();
+                if (JOptionPane.showConfirmDialog(
+                        null, R.RESOURCE_BUNDLE.getString("dialogo_borrar_almacen") + " " + getBean().getElemento_seleccionado().getNombre(),
+                        "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    listService.destroy(getBean().getElemento_seleccionado());
+                    Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                    setListToBean();
+                }
                 return Optional.empty();
             }
         });
@@ -118,17 +129,22 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_REPORTE) {
             @Override
             public Optional doAction() {
-                detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado());
+                String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+                int selection = JOptionPane.showOptionDialog(null,
+                        R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
+                        R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+                detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado(), selection);
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_TRANSACCIONES) {
             @Override
             public Optional doAction() {
+                TransaccionListService ser = PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class);
+                ser.setAlmacen(detailService.getInstance());
                 NavigationService.getInstance().navigateTo(TransaccionListView.VIEW_NAME,
-                        new TransaccionListPresenter(
-                                new TransaccionesListController(
-                                        detailService.getInstance())), DisplayType.POPUP);
+                        new TransaccionListPresenter(ser), DisplayType.POPUP);
                 refreshView();
                 return Optional.empty();
             }
@@ -166,7 +182,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         if (!getBean().getLista_elementos().isEmpty()) {
             getBean().setElemento_seleccionado(getBean().getLista_elementos().get(0));
             if (getBean().getElemento_seleccionado() != null) {
-                detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
+                detailService.setInstance(getBean().getElemento_seleccionado());
                 refreshView();
                 getBean().setPanel_visible(true);
             }
@@ -181,8 +197,12 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onEliminarInsumoFichaClick() {
-        detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado());
-        refreshView();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea eliminar las existencias del insumo seleccionado del almacen",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado());
+            refreshView();
+        }
     }
 
     private void refreshView() {
@@ -213,7 +233,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         });
         addBeanPropertyChangeListener(AlmacenViewModel.PROP_ELEMENTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null) {
-                detailService = new AlmacenManageController(getBean().getElemento_seleccionado());
+                detailService.setInstance(getBean().getElemento_seleccionado());
                 refreshView();
                 getBean().setSearch_keyWord(null);
             }

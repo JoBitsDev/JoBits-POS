@@ -7,8 +7,8 @@ package com.jobits.pos.ui.cartas;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.domain.models.Carta;
-import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.Carta;
+import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;

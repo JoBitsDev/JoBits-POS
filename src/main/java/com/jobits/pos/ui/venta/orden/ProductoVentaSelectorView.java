@@ -8,12 +8,12 @@ package com.jobits.pos.ui.venta.orden;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.domain.models.ProductoVenta;
-import com.jobits.pos.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.ProductoVenta;
+import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableListIntelliHint;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorPresenter.*;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel;
 import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel.*;
@@ -61,7 +61,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
                 return new CellRenderLabel(value.getNombre(), utils.setDosLugaresDecimales(value.getPrecioVenta()), isSelected, value.getDescripcion());
             }
         });
-
+        jButtonAtras.setVisible(false);
     }
 
     @Override
@@ -120,6 +120,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jPanel2 = new javax.swing.JPanel();
         jButtonAtras = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelBusqueda = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jTextFieldSearch = new javax.swing.JTextField();
         jLabelBuscarIcon = new javax.swing.JLabel();
         jPanelMain = new javax.swing.JPanel();
@@ -132,6 +133,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         setMinimumSize(new java.awt.Dimension(50, 50));
         setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setPreferredSize(new java.awt.Dimension(140, 60));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jButtonAtras.setIcon(MaterialIcons.ARROW_BACK);
@@ -143,12 +145,14 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         });
         jPanel2.add(jButtonAtras, java.awt.BorderLayout.WEST);
 
-        jPanelBusqueda.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 200, 10, 200));
+        jPanelBusqueda.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jPanelBusqueda.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanelBusqueda.setLayout(new java.awt.BorderLayout());
 
         jTextFieldSearch.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jTextFieldSearch.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldSearch.setMinimumSize(new java.awt.Dimension(200, 50));
+        jTextFieldSearch.setPreferredSize(new java.awt.Dimension(200, 50));
         jTextFieldSearch.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextFieldSearchFocusGained(evt);
@@ -162,10 +166,13 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
                 jTextFieldSearchKeyTyped(evt);
             }
         });
-        jPanelBusqueda.add(jTextFieldSearch, java.awt.BorderLayout.CENTER);
+        jPanel1.add(jTextFieldSearch);
 
         jLabelBuscarIcon.setIcon(MaterialIcons.SEARCH);
-        jPanelBusqueda.add(jLabelBuscarIcon, java.awt.BorderLayout.LINE_END);
+        jLabelBuscarIcon.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanel1.add(jLabelBuscarIcon);
+
+        jPanelBusqueda.add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(jPanelBusqueda, java.awt.BorderLayout.CENTER);
 
@@ -230,6 +237,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelBuscarIcon;
     private javax.swing.JList<ProductoVenta> jList2;
     private javax.swing.JList<Seccion> jListSecciones;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelBusqueda;
     private javax.swing.JPanel jPanelMain;
@@ -241,10 +249,12 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     private void changeToProductos() {
         CardLayout cards = (CardLayout) jPanelMain.getLayout();
         cards.show(jPanelMain, "Productos");
+        jButtonAtras.setVisible(true);
     }
 
     private void changeToSecciones() {
         CardLayout cards = (CardLayout) jPanelMain.getLayout();
         cards.show(jPanelMain, "Secciones");
+        jButtonAtras.setVisible(false);
     }
 }

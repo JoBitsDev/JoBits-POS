@@ -7,8 +7,8 @@ package com.jobits.pos.ui.login;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.domain.UbicacionConexionModel;
-import com.jobits.pos.domain.UbicacionConexionModel.TipoUbicacion;
+import com.jobits.pos.core.domain.UbicacionConexionModel;
+import com.jobits.pos.core.domain.UbicacionConexionModel.TipoUbicacion;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;

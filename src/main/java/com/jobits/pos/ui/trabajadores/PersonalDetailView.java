@@ -7,7 +7,7 @@ package com.jobits.pos.ui.trabajadores;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.domain.models.PuestoTrabajo;
+import com.jobits.pos.core.domain.models.PuestoTrabajo;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.trabajadores.presenter.PersonalDetailViewModel.*;
@@ -315,7 +315,7 @@ public class PersonalDetailView extends AbstractViewPanel {
 
     private void jTextFieldTelefonoFijoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoFijoKeyTyped
         char c = evt.getKeyChar();
-        int l = jTextFieldTelefonoMovil.getText().length();
+        int l = jTextFieldTelefonoFijo.getText().length();
         if (((l >= 8) || (c < '0') || (c > '9')) && (c != '\b')) {
             evt.consume();
         }

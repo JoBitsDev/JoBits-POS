@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.usecase.mesa;
 
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.Mesa;
+import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Mesa;
 import java.util.List;
 
 /**

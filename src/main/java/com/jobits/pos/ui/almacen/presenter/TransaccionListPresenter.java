@@ -5,15 +5,11 @@
  */
 package com.jobits.pos.ui.almacen.presenter;
 
-import com.jobits.pos.controller.almacen.TransaccionesListController;
-import com.jobits.pos.domain.models.Transaccion;
-import com.jobits.pos.exceptions.DevelopingOperationException;
+import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -23,13 +19,13 @@ import javax.swing.JOptionPane;
  */
 public class TransaccionListPresenter extends AbstractListViewPresenter<TransaccionListModel> {
 
-    TransaccionesListController controller;
+    TransaccionListService service;
     public static final String ACTION_IMPRIMIR_TRANSACCIONES = "";
     public static final String ACTION_CERRAR_POPUP = "Cerrar";
 
-    public TransaccionListPresenter(TransaccionesListController controller) {
+    public TransaccionListPresenter(TransaccionListService controller) {
         super(new TransaccionListModel(), TransaccionListView.VIEW_NAME);
-        this.controller = controller;
+        this.service = controller;
         setListToBean();
         registerExtraOperations();
         
@@ -44,7 +40,7 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
 //                for (Transaccion lista_elemento : getBean().getLista_elementos()) {
 //                    //TODO:selecionar solo transaciones seleccionadas
 //                }
-//                controller.imprimirTransaccionesSeleccionadas(a);
+//                service.imprimirTransaccionesSeleccionadas(a);
                 return Optional.empty();
             }
         });
@@ -75,7 +71,7 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(controller.getItems());
+        getBean().getLista_elementos().addAll(service.getItems());
     }
 
 }

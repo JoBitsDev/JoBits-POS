@@ -12,6 +12,7 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Arrays;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.util.List;
 
 /**
  *
@@ -39,7 +40,7 @@ public class Generales extends AbstractViewPanel {
 
         jPanelGenerales = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelNegocio = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanelTipoNegocio1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelCantidadturnos = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jLabel3 = MaterialComponentsFactory.Displayers.getLabel();
         jPanel3 = new javax.swing.JPanel();
         jComboBoxCantidadturnos = MaterialComponentsFactory.Displayers.getComboBox();
@@ -51,6 +52,22 @@ public class Generales extends AbstractViewPanel {
         jLabel1 = MaterialComponentsFactory.Displayers.getLabel();
         jPanel5 = new javax.swing.JPanel();
         jComboBoxCambioMoneda = MaterialComponentsFactory.Displayers.getComboBox();
+        jPanelCambioMoneda1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jLabel4 = MaterialComponentsFactory.Displayers.getLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jComboBoxHoraInicio = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jPanelCambioMoneda2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jLabel5 = MaterialComponentsFactory.Displayers.getLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jComboBoxHoraCierre = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jPanelCambioMoneda3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jLabel6 = MaterialComponentsFactory.Displayers.getLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jComboBoxTiempoMInServ = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
         jPanelCaja = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
@@ -69,15 +86,15 @@ public class Generales extends AbstractViewPanel {
         jPanelGenerales.setLayout(new javax.swing.BoxLayout(jPanelGenerales, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelNegocio.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Negocio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
-        jPanelNegocio.setPreferredSize(new java.awt.Dimension(720, 200));
-        jPanelNegocio.setLayout(new java.awt.GridLayout(3, 1, 0, 3));
+        jPanelNegocio.setPreferredSize(new java.awt.Dimension(780, 300));
+        jPanelNegocio.setLayout(new java.awt.GridLayout(6, 1, 0, 3));
 
-        jPanelTipoNegocio1.setLayout(new java.awt.GridLayout());
+        jPanelCantidadturnos.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Cantidad de Turnos");
-        jPanelTipoNegocio1.add(jLabel3);
+        jPanelCantidadturnos.add(jLabel3);
 
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
@@ -94,9 +111,9 @@ public class Generales extends AbstractViewPanel {
         });
         jPanel3.add(jComboBoxCantidadturnos, new java.awt.GridBagConstraints());
 
-        jPanelTipoNegocio1.add(jPanel3);
+        jPanelCantidadturnos.add(jPanel3);
 
-        jPanelNegocio.add(jPanelTipoNegocio1);
+        jPanelNegocio.add(jPanelCantidadturnos);
 
         jPanelTipoNegocio.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -124,7 +141,7 @@ public class Generales extends AbstractViewPanel {
 
         jPanelNegocio.add(jPanelTipoNegocio);
 
-        jPanelCambioMoneda.setLayout(new java.awt.GridLayout());
+        jPanelCambioMoneda.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -150,9 +167,96 @@ public class Generales extends AbstractViewPanel {
 
         jPanelNegocio.add(jPanelCambioMoneda);
 
+        jPanelCambioMoneda1.setLayout(new java.awt.GridLayout(1, 0));
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Hora de Inicio");
+        jPanelCambioMoneda1.add(jLabel4);
+
+        jPanel6.setPreferredSize(new java.awt.Dimension(351, 115));
+        jPanel6.setLayout(new java.awt.GridBagLayout());
+
+        jComboBoxHoraInicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" }));
+        jComboBoxHoraInicio.setMaximumSize(new java.awt.Dimension(75, 26));
+        jComboBoxHoraInicio.setMinimumSize(new java.awt.Dimension(75, 26));
+        jComboBoxHoraInicio.setPreferredSize(new java.awt.Dimension(75, 26));
+        jPanel6.add(jComboBoxHoraInicio, new java.awt.GridBagConstraints());
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Horas");
+        jLabel9.setMaximumSize(new java.awt.Dimension(75, 26));
+        jLabel9.setMinimumSize(new java.awt.Dimension(75, 26));
+        jLabel9.setPreferredSize(new java.awt.Dimension(75, 26));
+        jPanel6.add(jLabel9, new java.awt.GridBagConstraints());
+
+        jPanelCambioMoneda1.add(jPanel6);
+
+        jPanelNegocio.add(jPanelCambioMoneda1);
+
+        jPanelCambioMoneda2.setLayout(new java.awt.GridLayout(1, 0));
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Hora de Cierre");
+        jPanelCambioMoneda2.add(jLabel5);
+
+        jPanel7.setPreferredSize(new java.awt.Dimension(351, 115));
+        jPanel7.setLayout(new java.awt.GridBagLayout());
+
+        jComboBoxHoraCierre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" }));
+        jComboBoxHoraCierre.setMaximumSize(new java.awt.Dimension(75, 26));
+        jComboBoxHoraCierre.setMinimumSize(new java.awt.Dimension(75, 26));
+        jComboBoxHoraCierre.setPreferredSize(new java.awt.Dimension(75, 26));
+        jPanel7.add(jComboBoxHoraCierre, new java.awt.GridBagConstraints());
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Horas");
+        jLabel8.setMaximumSize(new java.awt.Dimension(75, 26));
+        jLabel8.setMinimumSize(new java.awt.Dimension(75, 26));
+        jLabel8.setPreferredSize(new java.awt.Dimension(75, 26));
+        jPanel7.add(jLabel8, new java.awt.GridBagConstraints());
+
+        jPanelCambioMoneda2.add(jPanel7);
+
+        jPanelNegocio.add(jPanelCambioMoneda2);
+
+        jPanelCambioMoneda3.setLayout(new java.awt.GridLayout(1, 0));
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Tiempo minimo de Servicio");
+        jPanelCambioMoneda3.add(jLabel6);
+
+        jPanel8.setPreferredSize(new java.awt.Dimension(351, 115));
+        jPanel8.setLayout(new java.awt.GridBagLayout());
+
+        jPanel9.setLayout(new java.awt.GridLayout(1, 0));
+
+        jComboBoxTiempoMInServ.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "15", "30", "45", "60", "90", "120" }));
+        jComboBoxTiempoMInServ.setMaximumSize(new java.awt.Dimension(75, 26));
+        jComboBoxTiempoMInServ.setMinimumSize(new java.awt.Dimension(75, 26));
+        jComboBoxTiempoMInServ.setPreferredSize(new java.awt.Dimension(75, 26));
+        jPanel9.add(jComboBoxTiempoMInServ);
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Min");
+        jLabel7.setMaximumSize(new java.awt.Dimension(75, 26));
+        jLabel7.setMinimumSize(new java.awt.Dimension(75, 26));
+        jLabel7.setPreferredSize(new java.awt.Dimension(75, 26));
+        jPanel9.add(jLabel7);
+
+        jPanel8.add(jPanel9, new java.awt.GridBagConstraints());
+
+        jPanelCambioMoneda3.add(jPanel8);
+
+        jPanelNegocio.add(jPanelCambioMoneda3);
+
         jPanelGenerales.add(jPanelNegocio);
 
         jPanelCaja.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Caja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
+        jPanelCaja.setMinimumSize(new java.awt.Dimension(450, 125));
+        jPanelCaja.setPreferredSize(new java.awt.Dimension(450, 125));
         jPanelCaja.setLayout(new java.awt.GridLayout(2, 1));
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.LINE_AXIS));
@@ -181,21 +285,17 @@ public class Generales extends AbstractViewPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanelGenerales, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanelGenerales, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 524, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanelGenerales, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanelGenerales, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -213,25 +313,28 @@ public class Generales extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
-
         //Bindings.bind(jCheckBoxMultiplesTurnos, getPresenter().getModel(R.SettingID.GENERAL_TURNOS_VARIOS.toString()));
 //        Bindings.bind(jToggleButtonMultiplesTurnos, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
         //Bindings.bind(jCheckBoxPermEsp, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
         Bindings.bind(jToggleButtonPermEsp, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
-
         //Bindings.bind(jCheckBoxMesaFija, getPresenter().getModel(R.SettingID.GENERAL_MESA_FIJA_CAJERO.toString()));
         Bindings.bind(jToggleButtonMesaFija, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
 
         Bindings.bind(jComboBoxTipoNegocio, new ComboBoxAdapter(Arrays.asList(
                 "Restaurante", "Cafeteria", "Bar", "Carniceria", "Dulceria", "Tienda"),
                 getPresenter().getModel(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO.toString())));
-
         Bindings.bind(jComboBoxCambioMoneda, new ComboBoxAdapter(Arrays.asList("20", "21", "22", "23", "24", "25"),
                 getPresenter().getModel(R.SettingID.GENERAL_CAMBIO_MONEDA.toString())));
-
         Bindings.bind(jComboBoxCantidadturnos, new ComboBoxAdapter(Arrays.asList("1", "2", "3"),
                 getPresenter().getModel(R.SettingID.GENERAL_CANTIDAD_TURNOS.toString())));
 
+        //HORARIO
+        Bindings.bind(jComboBoxHoraInicio, new ComboBoxAdapter(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"),
+                getPresenter().getModel(R.SettingID.HORARIO_INICIO_HORA.toString())));
+        Bindings.bind(jComboBoxHoraCierre, new ComboBoxAdapter(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"),
+                getPresenter().getModel(R.SettingID.HORARIO_CIERRE_HORA.toString())));
+        Bindings.bind(jComboBoxTiempoMInServ, new ComboBoxAdapter(Arrays.asList("10", "15", "30", "45", "60", "90", "120"),
+                getPresenter().getModel(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO.toString())));
     }
 
     @Override
@@ -252,21 +355,37 @@ public class Generales extends AbstractViewPanel {
     private javax.swing.Box.Filler filler9;
     private javax.swing.JComboBox<String> jComboBoxCambioMoneda;
     private javax.swing.JComboBox<String> jComboBoxCantidadturnos;
+    private javax.swing.JComboBox<String> jComboBoxHoraCierre;
+    private javax.swing.JComboBox<String> jComboBoxHoraInicio;
+    private javax.swing.JComboBox<String> jComboBoxTiempoMInServ;
     private javax.swing.JComboBox<String> jComboBoxTipoNegocio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelCaja;
     private javax.swing.JPanel jPanelCambioMoneda;
+    private javax.swing.JPanel jPanelCambioMoneda1;
+    private javax.swing.JPanel jPanelCambioMoneda2;
+    private javax.swing.JPanel jPanelCambioMoneda3;
+    private javax.swing.JPanel jPanelCantidadturnos;
     private javax.swing.JPanel jPanelGenerales;
     private javax.swing.JPanel jPanelNegocio;
     private javax.swing.JPanel jPanelTipoNegocio;
-    private javax.swing.JPanel jPanelTipoNegocio1;
     private javax.swing.JToggleButton jToggleButtonMesaFija;
     private javax.swing.JToggleButton jToggleButtonPermEsp;
     // End of variables declaration//GEN-END:variables

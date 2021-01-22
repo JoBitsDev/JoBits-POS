@@ -7,8 +7,8 @@ package com.jobits.pos.ui.areaventa;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.domain.models.Area;
-import com.jobits.pos.domain.models.Mesa;
+import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.areaventa.presenter.AreaVentaViewModel.*;
 import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
@@ -194,6 +194,33 @@ public class AreaVentaListView extends AbstractViewPanel {
                     getPresenter().getOperation(AreaVentaViewPresenter.ACTION_ELIMINAR_AREA).doAction();
                 }
             }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        jListMesas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    getPresenter().getOperation(AreaVentaViewPresenter.ACTION_EDITAR_MESA).doAction();
+                }
+            }
+        });
+        jListMesas.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    getPresenter().getOperation(AreaVentaViewPresenter.ACTION_ELIMINAR_MESA).doAction();
+                }
+            }
+
             @Override
             public void keyTyped(KeyEvent e) {
                 // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

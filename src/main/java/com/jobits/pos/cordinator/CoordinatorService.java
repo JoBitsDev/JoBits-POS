@@ -15,6 +15,7 @@ import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
+import com.jobits.pos.ui.areaventa.MesaDetailView;
 import com.jobits.pos.ui.autorizo.AutorizoView;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
@@ -31,8 +32,10 @@ import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.cartas.CartasSeccionView;
 import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
+import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
+import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
-import com.jobits.pos.ui.reserva.ReservasListView;
+import com.jobits.pos.ui.reserva.ubicaciones.UbicacionDetailView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
@@ -95,7 +98,6 @@ public class CoordinatorService implements Coordinator {
         navigationGraph.put(PuestoTrabajoListView.VIEW_NAME, Arrays.asList(PuestoTrabajoDetailView.VIEW_NAME));
         navigationGraph.put(InsumoListView.VIEW_NAME, Arrays.asList(InsumoDetailView.VIEW_NAME));
         navigationGraph.put(ClientesListView.VIEW_NAME, Arrays.asList(ClientesDetailView.VIEW_NAME));
-        navigationGraph.put(ReservasListView.VIEW_NAME, Arrays.asList(ReservasDetailView.VIEW_NAME));
         navigationGraph.put(AlmacenMainView.VIEW_NAME,
                 Arrays.asList(InsumoDetailView.VIEW_NAME,
                         FacturaView.VIEW_NAME,
@@ -117,7 +119,6 @@ public class CoordinatorService implements Coordinator {
                         VentaDetailView.VIEW_NAME,
                         BackUpView.VIEW_NAME,
                         VentaCalendarView.VIEW_NAME,
-                        ReservasListView.VIEW_NAME,
                         AlmacenMainView.VIEW_NAME,
                         VentaStatisticsView.VIEW_NAME,
                         AcercaDeView.VIEW_NAME,
@@ -129,8 +130,13 @@ public class CoordinatorService implements Coordinator {
                         LogInView.VIEW_NAME,
                         AutorizoView.VIEW_NAME,
                         ClientesListView.VIEW_NAME,
+                        ReservasDetailView.VIEW_NAME,
+                        ReservaSchedulerView.VIEW_NAME,
+                        CategoriaDetailView.VIEW_NAME,
                         IPVPedidoVentasView.VIEW_NAME,
                         VentaResumenView.VIEW_NAME,
+                        MesaDetailView.VIEW_NAME,
+                        UbicacionDetailView.VIEW_NAME,
                         LicenceDialogView.VIEW_NAME
                 ));
         navigationGraph.put(VentaDetailView.VIEW_NAME, Arrays.asList(OrdenDetailFragmentView.VIEW_NAME));

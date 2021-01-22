@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.domain.AsistenciaPersonalEstadisticas;
+import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.time.LocalDate;
 import java.util.Date;

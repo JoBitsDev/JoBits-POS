@@ -6,8 +6,8 @@
 package com.jobits.pos.ui.trabajadores;
 
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.domain.models.AsistenciaPersonal;
-import com.jobits.pos.domain.models.Personal;
+import com.jobits.pos.core.domain.models.AsistenciaPersonal;
+import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -15,7 +15,7 @@ import static com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresent
 import static com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalViewModel.*;
 import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.utils.BindableTableModel;
-import com.jobits.pos.ui.utils.utils;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 
