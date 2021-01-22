@@ -5,6 +5,7 @@ import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -96,6 +97,20 @@ public class ReservaWrapper implements Appointment {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String getDescription() {
+        return "<html>"
+                + "Nombre: " + reserva.getNotasreserva() + "<br>"
+                + "Cliente: " + reserva.getClienteidcliente() + "<br>"
+                + "Estado: " + reserva.getEstado() + "<br>"
+                + "Hora: " + reserva.getHorareserva().format(DateTimeFormatter.ofPattern("h:mm a")) + "<br>"
+                + "Duracion: " + reserva.getDuracionMinutos() + " minutos" + "<br>"
+                + "CheckIn: " + reserva.getCheckin() + "<br>"
+                + "CheckOut: " + reserva.getCheckout() + "<br>"
+                + "</html>";
+
     }
 
 }
