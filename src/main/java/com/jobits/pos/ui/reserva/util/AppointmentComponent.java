@@ -54,6 +54,13 @@ public class AppointmentComponent extends BasicAppointmentComponent implements M
             }
         });
         _popupMenu.add(checkOut);
+        JMenuItem cancel = new JMenuItem("Cancelar");
+        checkOut.addActionListener((ActionEvent e) -> {
+            if (_appointmentListener != null) {
+                _appointmentListener.handleCancel(_appointment);
+            }
+        });
+        _popupMenu.add(cancel);
     }
 
     @Override

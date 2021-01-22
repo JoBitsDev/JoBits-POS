@@ -1,10 +1,13 @@
 package com.jobits.pos.ui.reserva.model;
 
 import com.jobits.pos.reserva.core.domain.Reserva;
+import com.jobits.pos.reserva.core.domain.ReservaEstado;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
+import java.awt.Color;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -53,7 +56,7 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public String getTitle() {
-        return reserva.getNotasreserva() + " (" + reserva.getDuracionMinutos() + " mins)";
+        return reserva.getNotasreserva();
     }
 
     public static ReservaWrapper create(
@@ -96,6 +99,49 @@ public class ReservaWrapper implements Appointment {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String getDescription() {
+        String checkin, checkout;
+        if (reserva.getCheckin() != null) {
+            checkin = reserva.getCheckin().format(DateTimeFormatter.ofPattern("h:mm a"));
+        } else {
+            checkin = "-:-- xx";
+        }
+        if (reserva.getCheckout() != null) {
+            checkout = reserva.getCheckout().format(DateTimeFormatter.ofPattern("h:mm a"));
+        } else {
+            checkout = "-:-- xx";
+        }
+        return "<html>"
+                + "Nombre: " + reserva.getNotasreserva() + "<br>"
+                + "Cliente: " + reserva.getClienteidcliente() + "<br>"
+                + "Estado: " + reserva.getEstado() + "<br>"
+                + "Hora: " + reserva.getHorareserva().format(DateTimeFormatter.ofPattern("h:mm a")) + "<br>"
+                + "Duracion: " + reserva.getDuracionMinutos() + " minutos" + "<br>"
+                + "CheckIn: " + checkin + "<br>"
+                + "CheckOut: " + checkout + "<br>"
+                + "</html>";
+
+    }
+
+    @Override
+    public Color getColorStatus() {
+        String status = reserva.getEstado();
+        if (status.equals(ReservaEstado.AGENDADA.toString())) {
+            return Color.yellow;
+        } else if (status.equals(ReservaEstado.CHEQUEADA.toString())) {
+            return Color.green;
+        } else if (status.equals(ReservaEstado.COMPLETADA.toString())) {
+            return Color.blue;
+        } else if (status.equals(ReservaEstado.CANCELADA.toString())) {
+            return Color.red;
+        } else if (status.equals(ReservaEstado.RECHAZADA.toString())) {
+            return Color.darkGray;
+        } else {
+            return Color.black;
+        }
     }
 
 }

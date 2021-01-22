@@ -17,4 +17,6 @@ public interface AppointmentListener {
     void handleCheckOut(Appointment appointment);
 
     void handleEdit(Appointment appointment);
+
+    void handleCancel(Appointment appointment);
 }
