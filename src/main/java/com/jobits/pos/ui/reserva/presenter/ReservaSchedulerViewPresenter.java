@@ -9,6 +9,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.reserva.core.domain.Reserva;
+import com.jobits.pos.reserva.core.domain.ReservaEstado;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.reserva.core.usecase.CategoriaUseCase;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
@@ -201,6 +202,17 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
             throw new IllegalStateException("Ya se hizo CheckOut a la reserva seleccionada");
         } else {
             reservasUseCase.checkOut(reserva.getIdreserva(), LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva()));
+        }
+        refreshState();
+        Application.getInstance().getNotificationService().notify("Check Out realizado", TipoNotificacion.SUCCESS);
+    }
+
+    public void handleCancelarReserva(Appointment appointment) {
+        Reserva reserva = ((ReservaWrapper) appointment).getReserva();
+        if (reserva.getEstado().equals(ReservaEstado.CANCELADA.toString())) {
+            throw new IllegalStateException("Ya la reseserva fue cancelada");
+        } else {
+            reservasUseCase.cancelar(reserva.getIdreserva());
         }
         refreshState();
         Application.getInstance().getNotificationService().notify("Check Out realizado", TipoNotificacion.SUCCESS);

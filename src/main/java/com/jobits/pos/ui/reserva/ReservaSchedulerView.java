@@ -345,6 +345,11 @@ public class ReservaSchedulerView extends AbstractViewPanel {
                 getPresenter().handleChekOutReserva(appointment);
             }
 
+            @Override
+            public void handleCancel(Appointment appointment) {
+                getPresenter().handleCancelarReserva(appointment);
+            }
+
         });
 
         scheduler.setComponentFactory(componentFactory);
