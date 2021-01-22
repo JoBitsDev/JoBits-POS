@@ -89,22 +89,18 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
 
     private void onEliminarClick() {
         personalService.destroy(getBean().getPersonal_contenido_selecionado());
-        getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        refreshState();
     }
 
     private void onAgregarClick() {
         personalService.createNewInstance(getBean().getPersonal_disponible_seleccionado(), venta);
-        getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        refreshState();
     }
 
     private void onAMayoresClick() {
         AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
         personalService.updateAMayores(personal, new NumberPad(null).showView());
-        getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        refreshState();
     }
 
-    
 }
