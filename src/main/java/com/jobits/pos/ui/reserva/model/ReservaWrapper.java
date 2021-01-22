@@ -56,7 +56,7 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public String getTitle() {
-        return reserva.getNotasreserva() + " (" + reserva.getDuracionMinutos() + " mins)";
+        return reserva.getNotasreserva();
     }
 
     public static ReservaWrapper create(
