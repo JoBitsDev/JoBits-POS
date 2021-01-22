@@ -15,7 +15,6 @@ import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.root101.clean.core.domain.services.ResourceHandler;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,23 +30,6 @@ public class CategoriaDetailViewPresenter extends AbstractViewPresenter<Categori
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_ACEPTAR = "Aceptar";
-
-    private static final Color[] Colors = new Color[]{
-        new Color(Integer.parseInt(ResourceHandler.getString("com.jobits.pos.reserva.default_color"))),
-        DefaultValues.PRIMARY_COLOR_DARK,
-        DefaultValues.PRIMARY_COLOR,
-        DefaultValues.PRIMARY_COLOR_LIGHT,
-        DefaultValues.SECONDARY_DARK,
-        DefaultValues.SECONDARY_COLOR,
-        DefaultValues.SECONDARY_COLOR_LIGHT,
-        new Color(51, 204, 255),
-        new Color(55, 102, 205),
-        new Color(204, 255, 51),
-        new Color(251, 198, 12, 200),
-        new Color(12, 251, 160, 200),
-        new Color(166, 251, 12, 200),
-        new Color(66, 151, 12, 200)
-    };
 
     Categoria categoria;
 
@@ -110,7 +92,7 @@ public class CategoriaDetailViewPresenter extends AbstractViewPresenter<Categori
 
     private List<Integer> colorsToRGB() {
         List<Integer> ret = new ArrayList<>();
-        for (Color x : Colors) {
+        for (Color x : DefaultValues.DEFAULT_COLOR_PALETE) {
             ret.add(x.getRGB());
         }
         return ret;
