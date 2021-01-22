@@ -103,14 +103,25 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public String getDescription() {
+        String checkin, checkout;
+        if (reserva.getCheckin() != null) {
+            checkin = reserva.getCheckin().format(DateTimeFormatter.ofPattern("h:mm a"));
+        } else {
+            checkin = "-:-- xx";
+        }
+        if (reserva.getCheckout() != null) {
+            checkout = reserva.getCheckout().format(DateTimeFormatter.ofPattern("h:mm a"));
+        } else {
+            checkout = "-:-- xx";
+        }
         return "<html>"
                 + "Nombre: " + reserva.getNotasreserva() + "<br>"
                 + "Cliente: " + reserva.getClienteidcliente() + "<br>"
                 + "Estado: " + reserva.getEstado() + "<br>"
                 + "Hora: " + reserva.getHorareserva().format(DateTimeFormatter.ofPattern("h:mm a")) + "<br>"
                 + "Duracion: " + reserva.getDuracionMinutos() + " minutos" + "<br>"
-                + "CheckIn: " + reserva.getCheckin() + "<br>"
-                + "CheckOut: " + reserva.getCheckout() + "<br>"
+                + "CheckIn: " + checkin + "<br>"
+                + "CheckOut: " + checkout + "<br>"
                 + "</html>";
 
     }
