@@ -11,30 +11,30 @@ import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.ProductovOrden;
-import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.servicios.impresion.Impresora;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
-import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewPresenter;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import static com.jobits.pos.ui.venta.presenter.VentaResumenViewModel.*;
-import static com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter.ACTION_IMPRIMIR_RESUMEN;
+import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.print.Book;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
 import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -50,7 +50,7 @@ public class VentaResumenView extends AbstractViewPanel {
      *
      * @param presenter
      */
-    public VentaResumenView(AbstractViewPresenter presenter) {
+    public VentaResumenView(VentaResumenViewPresenter presenter) {
         super(presenter);
     }
 
@@ -659,11 +659,67 @@ add(jPanel15, java.awt.BorderLayout.SOUTH);
             hGastos += " (" + c.getCodCocina() + ")";
         }
         try {
+
             MessageFormat footer = new MessageFormat("-Pag {0}-");
             jTableVentas.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat(hVentas), footer);
             jTableGastos.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat(hGastos), footer);
+            PrinterJob pj = PrinterJob.getPrinterJob();
+            Book book = new Book();
+            book.append(new ResumenTotal(), pj.defaultPage());
+            pj.setPageable(book);
+            pj.print();
         } catch (PrinterException ex) {
             Logger.getLogger(VentaResumenView.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private class ResumenTotal implements Printable {
+
+        Font font = new Font("SansSerif", Font.PLAIN, 14);
+        Font headerFont = new Font("SansSerif", Font.BOLD, 24);
+
+        @Override
+        public int print(Graphics g, PageFormat pf, int pageIndex)
+                throws PrinterException {
+            String total = "0.0", ganancias = "0.0", inversion = "0.0", delacasa = "0.0";
+            if (getPresenter().getBean().getTotal_recaudado() != null) {
+                total = getPresenter().getBean().getTotal_recaudado();
+            }
+            if (getPresenter().getBean().getGanancia() != null) {
+                ganancias = getPresenter().getBean().getGanancia();
+            }
+            if (getPresenter().getBean().getDinero_invertido() != null) {
+                inversion = getPresenter().getBean().getDinero_invertido();
+            }
+            if (getPresenter().getBean().getGastos_de_la_casa() != null) {
+                delacasa = getPresenter().getBean().getGastos_de_la_casa();
+            }
+
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.translate(pf.getImageableX(), pf.getImageableY());
+            g2d.setColor(Color.black);
+            g2d.setFont(headerFont);
+            int line = (int) pf.getImageableY();
+            g2d.drawString("Resumen Total", 20, line);
+            line += (headerFont.getSize() + 20);
+            g2d.setFont(font);
+            g2d.drawString("Total: ", 20, line);
+            g2d.drawString(total, (int) pf.getWidth() / 2, line);
+            line += (font.getSize() + 10);
+            g2d.drawString("Ganancias: ", 20, line);
+            g2d.drawString(ganancias, (int) pf.getWidth() / 2, line);
+            line += (font.getSize() + 10);
+            g2d.drawString("Inversion: ", 20, line);
+            g2d.drawString(inversion, (int) pf.getWidth() / 2, line);
+            line += (font.getSize() + 10);
+            g2d.drawString("De la Casa: ", 20, line);
+            g2d.drawString(delacasa, (int) pf.getWidth() / 2, line);
+            return Printable.PAGE_EXISTS;
+        }
+    }
+
+    @Override
+    public VentaResumenViewPresenter getPresenter() {
+        return (VentaResumenViewPresenter) super.getPresenter();
     }
 }
