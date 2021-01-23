@@ -33,8 +33,8 @@ import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.controller.venta.VentaListController;
-import com.jobits.pos.controller.venta.VentaResumenController;
+import com.jobits.pos.controller.venta.VentaListService;
+import com.jobits.pos.controller.venta.VentaResumenService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Mesa;
@@ -197,9 +197,9 @@ public class PresenterFacade {
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter(new UbicacionConexionController());
             case VentaCalendarView.VIEW_NAME:
-                return new VentaCalendarViewPresenter(new VentaListController());
+                return new VentaCalendarViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaListService.class));
             case VentaStatisticsView.VIEW_NAME:
-                return new VentaStatisticsViewPresenter(new VentaListController());
+                return new VentaStatisticsViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaListService.class));
             case AlmacenMainView.VIEW_NAME:
                 return new AlmacenViewPresenter(
                         PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
@@ -217,7 +217,7 @@ public class PresenterFacade {
             case CalcularCambioView.VIEW_NAME:
                 return new CalcularCambioViewPresenter(new Orden());
             case VentaResumenView.VIEW_NAME:
-                return new VentaResumenViewPresenter(new VentaResumenController());
+                return new VentaResumenViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaResumenService.class));
             case AutorizoView.VIEW_NAME:
                 return new AutorizoViewPresenter(new LogInController(new AuthorizerImpl()), null);
             case ImageManagerView.VIEW_NAME:
