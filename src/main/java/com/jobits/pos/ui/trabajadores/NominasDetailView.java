@@ -77,10 +77,10 @@ public class NominasDetailView extends AbstractViewPanel {
         jRadioButtonPie = new javax.swing.JRadioButton();
         jPanelData = new javax.swing.JPanel();
         jPanelIzq = new javax.swing.JPanel();
-        jLabelAcumulado = MaterialComponentsFactory.Displayers.getLabel();
         jCheckBoxseleccionarTodos = new javax.swing.JCheckBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableUsuariosActivos = new javax.swing.JTable();
+        jLabelAcumulado = MaterialComponentsFactory.Displayers.getLabel();
         jPanelGrafica = new javax.swing.JPanel();
         jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonAcumulado = MaterialComponentsFactory.Buttons.getOutlinedButton();
@@ -94,7 +94,7 @@ public class NominasDetailView extends AbstractViewPanel {
         jPanelSeleccion.setLayout(new java.awt.BorderLayout());
 
         jPanelPeriodo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
-        jPanelPeriodo.setPreferredSize(new java.awt.Dimension(375, 50));
+        jPanelPeriodo.setPreferredSize(new java.awt.Dimension(325, 50));
         jPanelPeriodo.setLayout(new java.awt.BorderLayout());
 
         jButtonPeriodoSelector.setIcon(MaterialIcons.ARROW_DROP_RIGHT);
@@ -189,17 +189,8 @@ public class NominasDetailView extends AbstractViewPanel {
         jPanelIzq.setMaximumSize(new java.awt.Dimension(2147483647, 100));
         jPanelIzq.setMinimumSize(new java.awt.Dimension(375, 510));
         jPanelIzq.setOpaque(false);
-        jPanelIzq.setPreferredSize(new java.awt.Dimension(375, 510));
+        jPanelIzq.setPreferredSize(new java.awt.Dimension(325, 510));
         jPanelIzq.setLayout(new java.awt.BorderLayout(5, 5));
-
-        jLabelAcumulado.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabelAcumulado.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabelAcumulado.setText("           --               ");
-        jLabelAcumulado.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 18)))); // NOI18N
-        jLabelAcumulado.setMaximumSize(new java.awt.Dimension(300, 50));
-        jLabelAcumulado.setMinimumSize(new java.awt.Dimension(193, 40));
-        jLabelAcumulado.setPreferredSize(new java.awt.Dimension(300, 50));
-        jPanelIzq.add(jLabelAcumulado, java.awt.BorderLayout.SOUTH);
 
         jCheckBoxseleccionarTodos.setText("Seleccionar Todos");
         jCheckBoxseleccionarTodos.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -244,6 +235,13 @@ public class NominasDetailView extends AbstractViewPanel {
 
         jPanelIzq.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
+        jLabelAcumulado.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabelAcumulado.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelAcumulado.setText("           --               ");
+        jLabelAcumulado.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 18)))); // NOI18N
+        jLabelAcumulado.setMaximumSize(new java.awt.Dimension(300, 50));
+        jPanelIzq.add(jLabelAcumulado, java.awt.BorderLayout.PAGE_END);
+
         jPanelData.add(jPanelIzq, java.awt.BorderLayout.WEST);
 
         jPanelGrafica.setOpaque(false);
@@ -254,16 +252,17 @@ public class NominasDetailView extends AbstractViewPanel {
 
         jPanelBotones.setOpaque(false);
         jPanelBotones.setPreferredSize(new java.awt.Dimension(300, 60));
+        jPanelBotones.setLayout(new java.awt.GridBagLayout());
 
-        jButtonAcumulado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonAcumulado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/imprimir_detallado_indigo.png"))); // NOI18N
         jButtonAcumulado.setText("Imprimir");
         jButtonAcumulado.setPreferredSize(new java.awt.Dimension(130, 50));
-        jPanelBotones.add(jButtonAcumulado);
+        jPanelBotones.add(jButtonAcumulado, new java.awt.GridBagConstraints());
 
-        jButtonPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/banknote.png"))); // NOI18N
+        jButtonPagar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/billete_gris.png"))); // NOI18N
         jButtonPagar.setText("Pagar");
         jButtonPagar.setPreferredSize(new java.awt.Dimension(130, 50));
-        jPanelBotones.add(jButtonPagar);
+        jPanelBotones.add(jButtonPagar, new java.awt.GridBagConstraints());
 
         add(jPanelBotones, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
@@ -374,8 +373,8 @@ public class NominasDetailView extends AbstractViewPanel {
         Bindings.bind(jTableUsuariosActivos, new SelectionInList(
                 getPresenter().getModel(PROP_LISTA_PERSONAL),
                 getPresenter().getModel(PROP_PERSONAL_SELECCIONADO)));
-        jButtonPagar.setAction(getPresenter().getOperation(NominasDetailPresenter.ACTION_PAGAR));
-        jButtonAcumulado.setAction(getPresenter().getOperation(NominasDetailPresenter.ACTION_IMPRIMIR));
+        jButtonPagar.addActionListener(getPresenter().getOperation(NominasDetailPresenter.ACTION_PAGAR));
+        jButtonAcumulado.addActionListener(getPresenter().getOperation(NominasDetailPresenter.ACTION_IMPRIMIR));
         jCheckBoxseleccionarTodos.setAction(getPresenter().getOperation(NominasDetailPresenter.ACTION_SELECCIONAR_TODOS));
         Bindings.bind(jCheckBoxseleccionarTodos, getPresenter().getModel(PROP_SELECCIONAR_TODO_SELECCIONADO));
         Bindings.bind(jDateChooserDel, "date", getPresenter().getModel(PROP_FECHA_DESDE));
