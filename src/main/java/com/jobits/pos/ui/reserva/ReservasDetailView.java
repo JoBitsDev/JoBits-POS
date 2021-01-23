@@ -10,6 +10,8 @@ import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.core.domain.models.ProductovOrden;
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -25,6 +27,7 @@ import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -526,6 +529,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jComboBoxHora.setRenderer(new TimeCellRender("h"));
         jComboBoxMinuto.setRenderer(new TimeCellRender("mm"));
         jComboBoxPMAM.setRenderer(new TimeCellRender("a"));
+        ((SpinnerNumberModel) jSpinnerDuracion.getModel()).setMinimum(ConfiguracionDAO.getInstance().find(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO).getValor());
 
         jListListaProductos.setCellRenderer(new ListCellRenderer<ProductovOrden>() {
             @Override
