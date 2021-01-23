@@ -45,7 +45,7 @@ public class NominasDetailView extends AbstractViewPanel {
 
     BindableTableModel<AsistenciaPersonalEstadisticas> model;
 
-    public static final String VIEW_NAME = "Nóminas";
+    public static final String VIEW_NAME = "Nominas";
 
     public NominasDetailView(AbstractViewPresenter presenter) {
         super(presenter);
