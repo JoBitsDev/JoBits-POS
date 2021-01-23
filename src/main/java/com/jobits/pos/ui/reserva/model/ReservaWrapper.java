@@ -56,7 +56,11 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public String getTitle() {
-        return reserva.getNotasreserva();
+        if (reserva.getNotasreserva() != null) {
+            return reserva.getNotasreserva();
+        } else {
+            return " ";
+        }
     }
 
     public static ReservaWrapper create(
@@ -103,7 +107,12 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public String getDescription() {
-        String checkin, checkout;
+        String nombre, checkin, checkout;
+        if (reserva.getNotasreserva() != null) {
+            nombre = reserva.getNotasreserva();
+        } else {
+            nombre = "Sin Nombre";
+        }
         if (reserva.getCheckin() != null) {
             checkin = reserva.getCheckin().format(DateTimeFormatter.ofPattern("h:mm a"));
         } else {
@@ -114,8 +123,9 @@ public class ReservaWrapper implements Appointment {
         } else {
             checkout = "-:-- xx";
         }
+
         return "<html>"
-                + "Nombre: " + reserva.getNotasreserva() + "<br>"
+                + "Nombre: " + nombre + "<br>"
                 + "Cliente: " + reserva.getClienteidcliente() + "<br>"
                 + "Estado: " + reserva.getEstado() + "<br>"
                 + "Hora: " + reserva.getHorareserva().format(DateTimeFormatter.ofPattern("h:mm a")) + "<br>"

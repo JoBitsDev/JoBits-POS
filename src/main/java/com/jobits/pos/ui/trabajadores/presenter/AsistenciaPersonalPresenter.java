@@ -98,9 +98,14 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
     }
 
     private void onAMayoresClick() {
-        AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
-        personalService.updateAMayores(personal, new NumberPad(null).showView());
-        refreshState();
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
+            personalService.updateAMayores(personal, cantidad);
+            getBean().getLista_personal_contenido().clear();
+            getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        }
+
     }
 
 }

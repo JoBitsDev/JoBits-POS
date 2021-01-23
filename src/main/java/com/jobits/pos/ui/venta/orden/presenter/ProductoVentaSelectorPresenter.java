@@ -45,9 +45,12 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
         this.service = ordenService;
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null && codOrdenEnlazada != null) {
-                service.addProduct(codOrdenEnlazada, (ProductoVenta) evt.getNewValue(), new NumberPad(null).showView());
-                getBean().setProductoVentaSeleccionado(null);
-                firePropertyChange(PROP_PRODUCTO_SELECCIONADO, null, null);
+                Float cantidad = new NumberPad(null).showView();
+                if (cantidad != null) {
+                    service.addProduct(codOrdenEnlazada, (ProductoVenta) evt.getNewValue(), cantidad);
+                    getBean().setProductoVentaSeleccionado(null);
+                    firePropertyChange(PROP_PRODUCTO_SELECCIONADO, null, null);
+                }
 //                addBeanPropertyChangeListener(PROPERTY_BEAN, new PropertyChangeListener() {
 //                    @Override
 //                    public void propertyChange(PropertyChangeEvent evt) {
@@ -129,6 +132,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     public void onMostrarSeccionClick() {
         getBean().setMostrar_seccion(true);
     }
+
     public void onOcultarSeccionClick() {
         getBean().setMostrar_seccion(false);
     }

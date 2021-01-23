@@ -6,8 +6,10 @@
 package com.jobits.pos.ui.reserva.presenter;
 
 import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.reserva.core.domain.ReservaEstado;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
@@ -170,6 +172,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         if (current.isBefore(cierre) && current.isAfter(inicio)) {
             Ubicacion u = ((UbicacionWrapper) resource).getUbicacion();
             Reserva reserva = new Reserva(time.toLocalDate(), time.toLocalTime(), 30, u); // 6 pm
+            reserva.setDuracionMinutos(ConfiguracionDAO.getInstance().find(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO).getValor());
             Application.getInstance().getNavigator().navigateTo(
                     ReservasDetailView.VIEW_NAME, new ReservaDetailViewPresenter(reserva, true), DisplayType.POPUP);
             refreshState();

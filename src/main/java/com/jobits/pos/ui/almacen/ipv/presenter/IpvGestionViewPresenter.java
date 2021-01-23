@@ -243,22 +243,26 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onDarEntradaIpv() {
         IpvRegistro instance = getBean().getIpv_registro_seleciconado();
-        float cantidad = new NumberPad(null).showView();
-        if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo(),
-                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
-            service.darEntradaExistencia(instance, cantidad);
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo(),
+                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    == JOptionPane.YES_OPTION) {
+                service.darEntradaExistencia(instance, cantidad);
+            }
         }
 
     }
 
     private void onDarEntradaIpvVentas() {
         IpvVentaRegistro instance = getBean().getIpv_venta_registro_seleccionado();
-        float cantidad = new NumberPad(null).showView();
-        if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta(),
-                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
-            service.darEntradaIPV(instance, cantidad);
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta(),
+                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    == JOptionPane.YES_OPTION) {
+                service.darEntradaIPV(instance, cantidad);
+            }
         }
 
     }
@@ -277,17 +281,19 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         pedidoService.setVentaSeleccionada(getBean().getVenta_ipv_ventas_seleccionada());
         pedidoService.setCocina(cocina);
         NavigationService.getInstance().navigateTo(IPVPedidoVentasView.VIEW_NAME,
-                new IPVPedidoVentasViewPresenter(pedidoService),DisplayType.POPUP);
+                new IPVPedidoVentasViewPresenter(pedidoService), DisplayType.POPUP);
         onCocinaStateChange();
     }
 
     private void onAjustarIpv() {
         IpvRegistro instance = getBean().getIpv_registro_seleciconado();
-        float cantidad = new NumberPad(null).showView();
-        if (JOptionPane.showConfirmDialog(null, "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad,
-                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
-            service.ajustarConsumo(instance, cantidad);
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            if (JOptionPane.showConfirmDialog(null, "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad,
+                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    == JOptionPane.YES_OPTION) {
+                service.ajustarConsumo(instance, cantidad);
+            }
         }
     }
 
@@ -345,7 +351,10 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 case JOptionPane.YES_OPTION:
                     cocina = (Cocina) jComboBox1.getSelectedItem();
                     if (cocina != null) {
-                        service.transferirIPVRegistro(getBean().getIpv_registro_seleciconado(), cocina, new NumberPad(null).showView());
+                        Float cantidad = new NumberPad(null).showView();
+                        if (cantidad != null) {
+                            service.transferirIPVRegistro(getBean().getIpv_registro_seleciconado(), cocina, cantidad);
+                        }
                     }
                 case JOptionPane.NO_OPTION:
                 default:
