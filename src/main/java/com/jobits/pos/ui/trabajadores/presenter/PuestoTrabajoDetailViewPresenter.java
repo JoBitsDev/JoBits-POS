@@ -64,11 +64,20 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
     }
 
     private void onAgregarClick() {
+        String codAreaPago = null;
+        if (getBean().getArea_pago_seleccionada() != null) {
+            codAreaPago = getBean().getArea_pago_seleccionada().getCodCocina();
+        }
+        int nivelAcceso = 0;
+        if (getBean().getNivel_acceso_seleccionado() != null) {
+            nivelAcceso = getBean().getNivel_acceso_seleccionado().getNivel();
+        }
+
         service.fillPuestoTrabajoData(
                 getBean().getNombre_puesto_trabajo(),
                 getBean().getArea_trabajo_seleccionada(),
-                getBean().getArea_pago_seleccionada().getCodCocina(),
-                getBean().getNivel_acceso_seleccionado().getNivel(),
+                codAreaPago,
+                nivelAcceso,
                 getBean().isPago_por_ventas(),
                 getBean().isPropina(),
                 getBean().getPuestos_disponibles(),
