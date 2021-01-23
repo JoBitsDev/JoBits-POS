@@ -199,13 +199,17 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAgregarInsumoFichaClick() {
-        Insumo inSel = getBean().getInsumo_disponible_sel();
-        service.agregarInsumoaProducto(inSel, new NumberPad(null).showView());
-        getBean().setInsumo_disponible_sel(null);
-        getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
-        updateCostoValue();
-        getBean().setInsumo_disponible_sel(null);
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            Insumo inSel = getBean().getInsumo_disponible_sel();
+            service.agregarInsumoaProducto(inSel, cantidad);
+            getBean().setInsumo_disponible_sel(null);
+            getBean().getLista_insumos_contenidos().clear();
+            getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
+            updateCostoValue();
+            getBean().setInsumo_disponible_sel(null);
+        }
+
     }
 
     private void updateCostoValue() {
