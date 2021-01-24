@@ -6,11 +6,6 @@
 package com.jobits.pos.ui.module;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Scopes;
-import com.jobits.pos.controller.venta.OrdenController;
-import com.jobits.pos.controller.venta.OrdenService;
-import com.jobits.pos.controller.venta.VentaDetailController;
-import com.jobits.pos.controller.venta.VentaDetailService;
 
 /**
  *

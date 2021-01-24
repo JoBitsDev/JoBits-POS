@@ -9,9 +9,8 @@ import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.core.usecase.algoritmo.Y;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaListService;
-import com.jobits.pos.controller.venta.VentaResumenController;
+import com.jobits.pos.controller.venta.VentaResumenService;
 import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Venta;
@@ -51,7 +50,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     private List<Venta> listaVentasTotales = new ArrayList();
     private List<List<Venta>> ventas = new ArrayList<>();
 
-    public VentaCalendarViewPresenter(VentaListController controller) {
+    public VentaCalendarViewPresenter(VentaListService controller) {
         super(new VentaCalendarViewModel(), "Ventas");
         this.service = controller;
         updateBeanData();
@@ -142,7 +141,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 //        }
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
 //            VentaDetailController ventaController = service.createDetailResumenView(getBean().getResumen_desde(), getBean().getResumen_hasta());//TODO devolver valor e invocar al navigator
-            VentaResumenViewPresenter presenter = new VentaResumenViewPresenter(new VentaResumenController());
+            VentaResumenViewPresenter presenter = new VentaResumenViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaResumenService.class));
             Application.getInstance().getNavigator().navigateTo(VentaResumenView.VIEW_NAME, presenter);
         });
     }
