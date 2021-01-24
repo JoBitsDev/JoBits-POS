@@ -1,5 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change thi            @Override
+            public boolean accept(File f) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public String getDescription() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        } license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -7,19 +16,16 @@ package com.jobits.pos.ui.configuracion;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.controller.productos.ProductoVentaListController;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewModel;
 import com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewPresenter;
-import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewModel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.awt.Container;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.CardLayout;
 import java.util.ResourceBundle;
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
 
 /**
  *
@@ -28,6 +34,8 @@ import java.util.ResourceBundle;
 public class ImportarExportar extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Importar Exportar";
+
+    private final Border matteBorder = BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.PRIMARY_COLOR);
 
     /**
      * Creates new form ImportarExportar2
@@ -50,13 +58,82 @@ public class ImportarExportar extends AbstractViewPanel {
         jPanelImportarExportar = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel5 = new javax.swing.JPanel();
-        jComboBoxImportarExportar = MaterialComponentsFactory.Displayers.getComboBox();
-        jComboBoxDatosAGuardar = MaterialComponentsFactory.Displayers.getComboBox();
         jPanel3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jButtonAbrirGuardar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-
-        setPreferredSize(new java.awt.Dimension(730, 525));
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        jPanelProgress = new javax.swing.JPanel();
+        jPanelOption = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanelFilleSel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanelColSel = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanelReady = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanelMain = new javax.swing.JPanel();
+        jPanelImpExp = new javax.swing.JPanel();
+        jPanel11 = new javax.swing.JPanel();
+        jTextArea1 = new javax.swing.JTextArea();
+        jPanel12 = new javax.swing.JPanel();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        jComboBoxImportarExportar = MaterialComponentsFactory.Displayers.getComboBox();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelOption1 = new javax.swing.JLabel();
+        jPanel20 = new javax.swing.JPanel();
+        jComboBoxDatosAGuardar = MaterialComponentsFactory.Displayers.getComboBox();
+        jPanelNavButtons1 = new javax.swing.JPanel();
+        jPanel30 = new javax.swing.JPanel();
+        jButtonToSelectFile = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jPanelCargarArchivo = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
+        jPanel18 = new javax.swing.JPanel();
+        jTextArea2 = new javax.swing.JTextArea();
+        jPanel17 = new javax.swing.JPanel();
+        jPanel14 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jPanelNavButtons2 = new javax.swing.JPanel();
+        jPanel32 = new javax.swing.JPanel();
+        jButtonToSelectColumns = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jPanelSelColumnas = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabelOption2 = new javax.swing.JLabel();
+        jPanel22 = new javax.swing.JPanel();
+        jPanel23 = new javax.swing.JPanel();
+        jPanel25 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel26 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanel27 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jPanel28 = new javax.swing.JPanel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jPanel24 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanelNavButtons3 = new javax.swing.JPanel();
+        jPanel34 = new javax.swing.JPanel();
+        jButtonToReady = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jPanelCarga = new javax.swing.JPanel();
+        jPanelready = new javax.swing.JPanel();
+        jPanelReadyToImport = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabelOption3 = new javax.swing.JLabel();
+        jPanelOperationSucces = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jPanelNavButtons4 = new javax.swing.JPanel();
+        jPanel36 = new javax.swing.JPanel();
+        jButtonDoActionOption = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         jPanelImportarExportar.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanelImportarExportar.setPreferredSize(new java.awt.Dimension(730, 525));
@@ -65,27 +142,6 @@ public class ImportarExportar extends AbstractViewPanel {
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(150, 1, 1, 1));
 
         jPanel5.setLayout(new java.awt.GridLayout(2, 1, 20, 100));
-
-        jComboBoxImportarExportar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jComboBoxImportarExportar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jComboBoxImportarExportar.setPreferredSize(new java.awt.Dimension(200, 50));
-        jComboBoxImportarExportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxImportarExportarActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jComboBoxImportarExportar);
-
-        jComboBoxDatosAGuardar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jComboBoxDatosAGuardar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jComboBoxDatosAGuardar.setPreferredSize(new java.awt.Dimension(200, 50));
-        jComboBoxDatosAGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxDatosAGuardarActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jComboBoxDatosAGuardar);
-
         jPanel2.add(jPanel5);
 
         jPanelImportarExportar.add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -109,26 +165,346 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelImportarExportar.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanelImportarExportar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanelImportarExportar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        setPreferredSize(new java.awt.Dimension(730, 525));
+        setLayout(new java.awt.BorderLayout());
+
+        jPanelProgress.setPreferredSize(new java.awt.Dimension(0, 50));
+        jPanelProgress.setLayout(new java.awt.GridLayout());
+
+        jPanelOption.setLayout(new java.awt.GridBagLayout());
+
+        jLabel1.setText("Importar / Exportar");
+        jPanelOption.add(jLabel1, new java.awt.GridBagConstraints());
+
+        jPanelProgress.add(jPanelOption);
+
+        jPanelFilleSel.setLayout(new java.awt.GridBagLayout());
+
+        jLabel2.setText("Seleccionar Archivo");
+        jPanelFilleSel.add(jLabel2, new java.awt.GridBagConstraints());
+
+        jPanelProgress.add(jPanelFilleSel);
+
+        jPanelColSel.setLayout(new java.awt.GridBagLayout());
+
+        jLabel3.setText("Seleccionar Columnas");
+        jPanelColSel.add(jLabel3, new java.awt.GridBagConstraints());
+
+        jPanelProgress.add(jPanelColSel);
+
+        jPanelReady.setLayout(new java.awt.GridBagLayout());
+
+        jLabel4.setText("Importar");
+        jPanelReady.add(jLabel4, new java.awt.GridBagConstraints());
+
+        jPanelProgress.add(jPanelReady);
+
+        add(jPanelProgress, java.awt.BorderLayout.NORTH);
+
+        jPanelMain.setLayout(new java.awt.CardLayout());
+
+        jPanelImpExp.setLayout(new java.awt.BorderLayout());
+
+        jPanel11.setLayout(new java.awt.BorderLayout());
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(2);
+        jTextArea1.setText("En esta ventana podra selecionar la opcion si desea IMPORTAR o EXPORTAR datos de su negocio a un archivo CSV");
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
+        jTextArea1.setMinimumSize(new java.awt.Dimension(0, 0));
+        jTextArea1.setOpaque(false);
+        jPanel11.add(jTextArea1, java.awt.BorderLayout.CENTER);
+
+        jPanelImpExp.add(jPanel11, java.awt.BorderLayout.PAGE_START);
+
+        jPanel12.setLayout(new java.awt.GridLayout(2, 2));
+
+        jPanel15.setLayout(new java.awt.GridBagLayout());
+
+        jLabel5.setText("Seleccione la opcion que desea ejecutar");
+        jPanel15.add(jLabel5, new java.awt.GridBagConstraints());
+
+        jPanel12.add(jPanel15);
+
+        jPanel16.setLayout(new java.awt.GridBagLayout());
+
+        jComboBoxImportarExportar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jComboBoxImportarExportar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jComboBoxImportarExportar.setPreferredSize(new java.awt.Dimension(200, 50));
+        jComboBoxImportarExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxImportarExportarActionPerformed(evt);
+            }
+        });
+        jPanel16.add(jComboBoxImportarExportar, new java.awt.GridBagConstraints());
+
+        jPanel12.add(jPanel16);
+
+        jPanel19.setLayout(new java.awt.GridBagLayout());
+
+        jLabel6.setText("Seleccione el tipo de dato a ");
+        jPanel19.add(jLabel6, new java.awt.GridBagConstraints());
+
+        jLabelOption1.setText("<Option>");
+        jPanel19.add(jLabelOption1, new java.awt.GridBagConstraints());
+
+        jPanel12.add(jPanel19);
+
+        jPanel20.setLayout(new java.awt.GridBagLayout());
+
+        jComboBoxDatosAGuardar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jComboBoxDatosAGuardar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jComboBoxDatosAGuardar.setPreferredSize(new java.awt.Dimension(200, 50));
+        jComboBoxDatosAGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxDatosAGuardarActionPerformed(evt);
+            }
+        });
+        jPanel20.add(jComboBoxDatosAGuardar, new java.awt.GridBagConstraints());
+
+        jPanel12.add(jPanel20);
+
+        jPanelImpExp.add(jPanel12, java.awt.BorderLayout.CENTER);
+
+        jPanelNavButtons1.setPreferredSize(new java.awt.Dimension(0, 50));
+        jPanelNavButtons1.setLayout(new java.awt.BorderLayout());
+
+        jPanel30.setPreferredSize(new java.awt.Dimension(200, 259));
+        jPanel30.setLayout(new java.awt.GridBagLayout());
+
+        jButtonToSelectFile.setText("Siguiente");
+        jButtonToSelectFile.setPreferredSize(new java.awt.Dimension(150, 50));
+        jButtonToSelectFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonToSelectFileActionPerformed(evt);
+            }
+        });
+        jPanel30.add(jButtonToSelectFile, new java.awt.GridBagConstraints());
+
+        jPanelNavButtons1.add(jPanel30, java.awt.BorderLayout.EAST);
+
+        jPanelImpExp.add(jPanelNavButtons1, java.awt.BorderLayout.SOUTH);
+
+        jPanelMain.add(jPanelImpExp, "Opcion");
+
+        jPanelCargarArchivo.setLayout(new java.awt.BorderLayout());
+
+        jPanel13.setLayout(new java.awt.GridLayout(1, 2));
+
+        jPanel18.setLayout(new java.awt.GridBagLayout());
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jTextArea2.setLineWrap(true);
+        jTextArea2.setRows(2);
+        jTextArea2.setText("Elija un Archivo CSV de su ordenador");
+        jTextArea2.setWrapStyleWord(true);
+        jTextArea2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
+        jTextArea2.setMinimumSize(new java.awt.Dimension(0, 0));
+        jTextArea2.setOpaque(false);
+        jPanel18.add(jTextArea2, new java.awt.GridBagConstraints());
+
+        jPanel13.add(jPanel18);
+
+        jPanel17.setLayout(new java.awt.GridBagLayout());
+
+        jPanel14.setLayout(new java.awt.GridLayout(2, 1));
+
+        jButton2.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jButton2.setText("Seleccionar archivo");
+        jPanel14.add(jButton2);
+
+        jLabel8.setText("Ningun Archivo Seleccionado");
+        jPanel14.add(jLabel8);
+
+        jPanel17.add(jPanel14, new java.awt.GridBagConstraints());
+
+        jPanel13.add(jPanel17);
+
+        jPanelCargarArchivo.add(jPanel13, java.awt.BorderLayout.CENTER);
+
+        jPanelNavButtons2.setPreferredSize(new java.awt.Dimension(0, 50));
+        jPanelNavButtons2.setLayout(new java.awt.BorderLayout());
+
+        jPanel32.setPreferredSize(new java.awt.Dimension(200, 259));
+        jPanel32.setLayout(new java.awt.GridBagLayout());
+
+        jButtonToSelectColumns.setText("Siguiente");
+        jButtonToSelectColumns.setPreferredSize(new java.awt.Dimension(150, 50));
+        jButtonToSelectColumns.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonToSelectColumnsActionPerformed(evt);
+            }
+        });
+        jPanel32.add(jButtonToSelectColumns, new java.awt.GridBagConstraints());
+
+        jPanelNavButtons2.add(jPanel32, java.awt.BorderLayout.EAST);
+
+        jPanelCargarArchivo.add(jPanelNavButtons2, java.awt.BorderLayout.SOUTH);
+
+        jPanelMain.add(jPanelCargarArchivo, "Seleccionar Archivo");
+
+        jPanelSelColumnas.setLayout(new java.awt.BorderLayout());
+
+        jPanel21.setPreferredSize(new java.awt.Dimension(0, 50));
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 5);
+        flowLayout1.setAlignOnBaseline(true);
+        jPanel21.setLayout(flowLayout1);
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel11.setText("Seleccione los campos del archivo ");
+        jPanel21.add(jLabel11);
+
+        jLabel12.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 153, 204));
+        jLabel12.setText("<FileName>");
+        jPanel21.add(jLabel12);
+
+        jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel13.setText(" para asignarlos a los campos de ");
+        jPanel21.add(jLabel13);
+
+        jLabel14.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 153, 204));
+        jLabel14.setText("<DataType>");
+        jPanel21.add(jLabel14);
+
+        jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel15.setText(", o ignorarlos durante la ");
+        jPanel21.add(jLabel15);
+
+        jLabelOption2.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jLabelOption2.setForeground(new java.awt.Color(0, 153, 204));
+        jLabelOption2.setText("<Option>");
+        jPanel21.add(jLabelOption2);
+
+        jPanelSelColumnas.add(jPanel21, java.awt.BorderLayout.NORTH);
+
+        jPanel22.setLayout(new java.awt.BorderLayout());
+
+        jPanel23.setPreferredSize(new java.awt.Dimension(0, 100));
+        jPanel23.setLayout(new java.awt.GridLayout(2, 2));
+
+        jPanel25.setLayout(new java.awt.GridBagLayout());
+
+        jLabel9.setText("Nombre de la Columna");
+        jPanel25.add(jLabel9, new java.awt.GridBagConstraints());
+
+        jPanel23.add(jPanel25);
+
+        jPanel26.setLayout(new java.awt.GridBagLayout());
+
+        jLabel10.setText("Asignar al Campo");
+        jPanel26.add(jLabel10, new java.awt.GridBagConstraints());
+
+        jPanel23.add(jPanel26);
+
+        jPanel27.setLayout(new java.awt.GridBagLayout());
+
+        jComboBox1.setPreferredSize(new java.awt.Dimension(150, 30));
+        jPanel27.add(jComboBox1, new java.awt.GridBagConstraints());
+
+        jPanel23.add(jPanel27);
+
+        jPanel28.setLayout(new java.awt.GridBagLayout());
+
+        jComboBox2.setPreferredSize(new java.awt.Dimension(150, 30));
+        jPanel28.add(jComboBox2, new java.awt.GridBagConstraints());
+
+        jPanel23.add(jPanel28);
+
+        jPanel22.add(jPanel23, java.awt.BorderLayout.PAGE_START);
+
+        jPanel24.setLayout(new java.awt.BorderLayout());
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jPanel24.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel22.add(jPanel24, java.awt.BorderLayout.CENTER);
+
+        jPanelSelColumnas.add(jPanel22, java.awt.BorderLayout.CENTER);
+
+        jPanelNavButtons3.setPreferredSize(new java.awt.Dimension(0, 50));
+        jPanelNavButtons3.setLayout(new java.awt.BorderLayout());
+
+        jPanel34.setPreferredSize(new java.awt.Dimension(200, 259));
+        jPanel34.setLayout(new java.awt.GridBagLayout());
+
+        jButtonToReady.setText("Siguiente");
+        jButtonToReady.setPreferredSize(new java.awt.Dimension(150, 50));
+        jButtonToReady.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonToReadyActionPerformed(evt);
+            }
+        });
+        jPanel34.add(jButtonToReady, new java.awt.GridBagConstraints());
+
+        jPanelNavButtons3.add(jPanel34, java.awt.BorderLayout.EAST);
+
+        jPanelSelColumnas.add(jPanelNavButtons3, java.awt.BorderLayout.SOUTH);
+
+        jPanelMain.add(jPanelSelColumnas, "Sel Columnas");
+
+        jPanelCarga.setLayout(new java.awt.BorderLayout());
+
+        jPanelready.setLayout(new java.awt.CardLayout());
+
+        jPanelReadyToImport.setLayout(new java.awt.GridBagLayout());
+
+        jLabel17.setText("Todo listo para ");
+        jPanelReadyToImport.add(jLabel17, new java.awt.GridBagConstraints());
+
+        jLabelOption3.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jLabelOption3.setForeground(new java.awt.Color(0, 153, 204));
+        jLabelOption3.setText("<Option>");
+        jPanelReadyToImport.add(jLabelOption3, new java.awt.GridBagConstraints());
+
+        jPanelready.add(jPanelReadyToImport, "Ready");
+
+        jPanelOperationSucces.setLayout(new java.awt.GridBagLayout());
+
+        jLabel19.setText("Operacion Completada con Exito   ");
+        jPanelOperationSucces.add(jLabel19, new java.awt.GridBagConstraints());
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/ok_verde.png"))); // NOI18N
+        jPanelOperationSucces.add(jLabel20, new java.awt.GridBagConstraints());
+
+        jPanelready.add(jPanelOperationSucces, "Succes");
+
+        jPanelCarga.add(jPanelready, java.awt.BorderLayout.CENTER);
+
+        jPanelNavButtons4.setPreferredSize(new java.awt.Dimension(0, 50));
+        jPanelNavButtons4.setLayout(new java.awt.BorderLayout());
+
+        jPanel36.setPreferredSize(new java.awt.Dimension(200, 259));
+        jPanel36.setLayout(new java.awt.GridBagLayout());
+
+        jButtonDoActionOption.setText("<Option>");
+        jButtonDoActionOption.setPreferredSize(new java.awt.Dimension(150, 50));
+        jPanel36.add(jButtonDoActionOption, new java.awt.GridBagConstraints());
+
+        jPanelNavButtons4.add(jPanel36, java.awt.BorderLayout.EAST);
+
+        jPanelCarga.add(jPanelNavButtons4, java.awt.BorderLayout.SOUTH);
+
+        jPanelMain.add(jPanelCarga, "Ready");
+
+        add(jPanelMain, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAbrirGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirGuardarActionPerformed
@@ -140,8 +516,25 @@ public class ImportarExportar extends AbstractViewPanel {
     private void jComboBoxDatosAGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDatosAGuardarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxDatosAGuardarActionPerformed
+
+    private void jButtonToSelectFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToSelectFileActionPerformed
+        toSelectFile();
+    }//GEN-LAST:event_jButtonToSelectFileActionPerformed
+
+    private void jButtonToSelectColumnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToSelectColumnsActionPerformed
+        toSelectColumns();
+    }//GEN-LAST:event_jButtonToSelectColumnsActionPerformed
+
+    private void jButtonToReadyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToReadyActionPerformed
+        toSelectReady();
+    }//GEN-LAST:event_jButtonToReadyActionPerformed
     @Override
     public void wireUp() {
+        Bindings.bind(jLabelOption1, getPresenter().getModel(ImportarExportarViewModel.PROP_OPTION_TEXT));
+        Bindings.bind(jLabelOption2, getPresenter().getModel(ImportarExportarViewModel.PROP_OPTION_TEXT));
+        Bindings.bind(jLabelOption3, getPresenter().getModel(ImportarExportarViewModel.PROP_OPTION_TEXT));
+        Bindings.bind(jButtonDoActionOption, "text", getPresenter().getModel(ImportarExportarViewModel.PROP_OPTION_TEXT));
+
         Bindings.bind(jComboBoxImportarExportar, new SelectionInList<String>(
                 getPresenter().getModel(ImportarExportarViewModel.PROP_IMPORTAR_EXPORTAR_OPCIONES),
                 getPresenter().getModel(ImportarExportarViewModel.PROP_IMPORTAR_EXPORTAR_OPCION_SELECCIONADA)),
@@ -150,7 +543,6 @@ public class ImportarExportar extends AbstractViewPanel {
                 getPresenter().getModel(ImportarExportarViewModel.PROP_LISTA_TIPO_DATOS),
                 getPresenter().getModel(ImportarExportarViewModel.PROP_TIPO_DATO_SELECCIONADO)),
                 "Archivo");
-        Bindings.bind(jButtonAbrirGuardar, "text", getPresenter().getModel(ImportarExportarViewModel.PROP_BUTTON_TEXT));
         Bindings.bind(jButtonAbrirGuardar, "enabled", getPresenter().getModel(ImportarExportarViewModel.PROP_BUTTON_ENABLED));
         Bindings.bind(jComboBoxDatosAGuardar, "enabled", getPresenter().getModel(ImportarExportarViewModel.PROP_TIPO_DATO_ENABLED));
         jButtonAbrirGuardar.addActionListener(getPresenter().getOperation(ImportarExportarViewPresenter.ACTION_IMPORTAR_EXPORTAR));
@@ -167,13 +559,109 @@ public class ImportarExportar extends AbstractViewPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAbrirGuardar;
+    private javax.swing.JButton jButtonDoActionOption;
+    private javax.swing.JButton jButtonToReady;
+    private javax.swing.JButton jButtonToSelectColumns;
+    private javax.swing.JButton jButtonToSelectFile;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBoxDatosAGuardar;
     private javax.swing.JComboBox<String> jComboBoxImportarExportar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelOption1;
+    private javax.swing.JLabel jLabelOption2;
+    private javax.swing.JLabel jLabelOption3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel25;
+    private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
+    private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel30;
+    private javax.swing.JPanel jPanel32;
+    private javax.swing.JPanel jPanel34;
+    private javax.swing.JPanel jPanel36;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanelCarga;
+    private javax.swing.JPanel jPanelCargarArchivo;
+    private javax.swing.JPanel jPanelColSel;
+    private javax.swing.JPanel jPanelFilleSel;
+    private javax.swing.JPanel jPanelImpExp;
     private javax.swing.JPanel jPanelImportarExportar;
+    private javax.swing.JPanel jPanelMain;
+    private javax.swing.JPanel jPanelNavButtons1;
+    private javax.swing.JPanel jPanelNavButtons2;
+    private javax.swing.JPanel jPanelNavButtons3;
+    private javax.swing.JPanel jPanelNavButtons4;
+    private javax.swing.JPanel jPanelOperationSucces;
+    private javax.swing.JPanel jPanelOption;
+    private javax.swing.JPanel jPanelProgress;
+    private javax.swing.JPanel jPanelReady;
+    private javax.swing.JPanel jPanelReadyToImport;
+    private javax.swing.JPanel jPanelSelColumnas;
+    private javax.swing.JPanel jPanelready;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
+
+    private void toSelectFile() {
+        CardLayout cards = (CardLayout) jPanelMain.getLayout();
+        cards.show(jPanelMain, "Seleccionar Archivo");
+        jPanelOption.setBorder(matteBorder);
+    }
+
+    private void toSelectColumns() {
+        CardLayout cards = (CardLayout) jPanelMain.getLayout();
+        cards.show(jPanelMain, "Sel Columnas");
+        jPanelFilleSel.setBorder(matteBorder);
+    }
+
+    private void toSelectReady() {
+        CardLayout cards = (CardLayout) jPanelMain.getLayout();
+        cards.show(jPanelMain, "Ready");
+        jPanelColSel.setBorder(matteBorder);
+    }
+
+    private void toSelectSucces() {
+        CardLayout cards = (CardLayout) jPanelready.getLayout();
+        cards.show(jPanelMain, "Succes");
+        jPanelReady.setBorder(matteBorder);
+    }
+
 }

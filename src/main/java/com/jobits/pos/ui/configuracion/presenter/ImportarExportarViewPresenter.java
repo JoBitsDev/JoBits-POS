@@ -77,16 +77,12 @@ public class ImportarExportarViewPresenter extends AbstractListViewPresenter<Imp
     private void addListeners() {
         getBean().addPropertyChangeListener(ImportarExportarViewModel.PROP_IMPORTAR_EXPORTAR_OPCION_SELECCIONADA, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null) {
-                if (evt.getNewValue().equals("Importar")) {
-                    getBean().setButton_text("Abrir");
-                } else if (evt.getNewValue().equals("Exportar")) {
-                    getBean().setButton_text("Guardar");
-                }
+                getBean().setOption_text((String) evt.getNewValue());
                 getBean().setTipo_dato_enabled(true);
             } else if (evt.getNewValue() == null) {
                 getBean().setTipo_dato_enabled(false);
                 getBean().setTipo_dato_seleccionado(null);
-                getBean().setButton_text("---");
+                getBean().setOption_text("---");
             }
         });
         getBean().addPropertyChangeListener(ImportarExportarViewModel.PROP_TIPO_DATO_SELECCIONADO, (PropertyChangeEvent evt) -> {

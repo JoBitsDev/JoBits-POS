@@ -35,9 +35,9 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
 
     public static final String PROP_TIPO_DATO_ENABLED = "tipo_dato_enabled";
 
-    private String button_text = "---";
+    private String option_text = "---";
 
-    public static final String PROP_BUTTON_TEXT = "button_text";
+    public static final String PROP_OPTION_TEXT = "option_text";
 
     private boolean button_enabled = false;
 
@@ -84,23 +84,23 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
     }
 
     /**
-     * Get the value of button_text
+     * Get the value of option_text
      *
-     * @return the value of button_text
+     * @return the value of option_text
      */
-    public String getButton_text() {
-        return button_text;
+    public String getOption_text() {
+        return option_text;
     }
 
     /**
-     * Set the value of button_text
+     * Set the value of option_text
      *
-     * @param button_text new value of button_text
+     * @param option_text new value of option_text
      */
-    public void setButton_text(String button_text) {
-        String oldButton_text = this.button_text;
-        this.button_text = button_text;
-        firePropertyChange(PROP_BUTTON_TEXT, oldButton_text, button_text);
+    public void setOption_text(String option_text) {
+        String oldOption_text = this.option_text;
+        this.option_text = option_text;
+        firePropertyChange(PROP_OPTION_TEXT, oldOption_text, option_text);
     }
 
     /**
