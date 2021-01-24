@@ -14,9 +14,13 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.IpvRegistro;
 import com.jobits.pos.core.domain.models.IpvVentaRegistro;
+import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.Impresion;
+import com.jobits.pos.servicios.impresion.formatter.IPVPuntoElaboracionFomatter;
+import com.jobits.pos.servicios.impresion.formatter.OrdenFormatter;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -46,8 +50,8 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_OCULTAR_PRODUCTOS_IPV_VENTA = "Ocultar productos no utilizados",
             ACTION_DAR_ENTRADA_IPV_REGISTROS = "Entrada Registro",
             ACTION_DAR_ENTRADA_IPV_VENTA = "Entrada Ipv",
-            ACTION_IMPRIMIR_IPV = "Imprimir registros",
-            ACTION_IMPRIMIR_IPV_VENTA = "Imprimir Ipv venta",
+            ACTION_IMPRIMIR_IPV_REGISTRO = "Imprimir registros",
+            ACTION_IMPRIMIR_IPV = "Imprimir Ipv venta",
             ACTION_NUEVO_PEDIDO_IPV_VENTA = "Nuevo Pedido",
             ACTION_ENVIAR_IPV_TO_IPV = "Enviar IPV to IPV",
             ACTION_AJUSTAR_IPV = "Ajustar consumo";
@@ -129,17 +133,17 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 return Optional.empty();
             }
         });
-        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_IPV) {
+        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_IPV_REGISTRO) {
             @Override
             public Optional doAction() {
-                onImprimirIpv();
+//                onImprimirIpvVentas();
                 return Optional.empty();
             }
         });
-        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_IPV_VENTA) {
+        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_IPV) {
             @Override
             public Optional doAction() {
-                onImprimirIpvVentas();
+                onImprimirIPVRegistroClick();
                 return Optional.empty();
             }
         });
@@ -362,6 +366,31 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             }
         } else {
             throw new IllegalArgumentException("No hay Puntos de Elaboracion registrados en el sistema");
+        }
+    }
+
+    private void onImprimirIPVRegistroClick() {
+        String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+        int selection = JOptionPane.showOptionDialog(null,
+                R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
+                R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        switch (selection) {
+            case 0:
+                firePropertyChange("ImprimirTablaIPVRegistro", null, null);
+//                imprimirIPVRegistro();
+                break;//impresion normal
+            case 1:
+                Impresion i = new Impresion();
+                i.print(new IPVPuntoElaboracionFomatter(getBean().getLista_ipv_registro()), null);
+//                List<IpvRegistro> registros = jToggleButton1.isSelected()
+//                        ? ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getItems()
+//                        : registroList;
+
+                //   Impresion.getDefaultInstance().printResumenIPVDePuntoElaboracion(registros);
+                break;//impresion ticket
+            default:
+                break;//cancelado
         }
     }
 }
