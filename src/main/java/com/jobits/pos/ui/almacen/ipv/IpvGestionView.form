@@ -171,7 +171,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="jButtonimprimirIpv">
+                <Component class="javax.swing.JButton" name="jButtonimprimirIpvRegistro">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/restManager/resources/icons pack/imprimir_detallado_indigo.png"/>
@@ -409,7 +409,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="jButtonImprimirIpvVenta">
+                    <Component class="javax.swing.JButton" name="jButtonImprimirIpv">
                       <Properties>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/restManager/resources/icons pack/imprimir_detallado_indigo.png"/>
