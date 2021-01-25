@@ -1,34 +1,17 @@
-/*
- * To change thi            @Override
-            public boolean accept(File f) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-            @Override
-            public String getDescription() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-        } license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.jobits.pos.ui.configuracion;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.io.DataHeader;
-import com.jobits.pos.servicios.impresion.Impresora;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewModel.*;
 import static com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewPresenter.*;
-import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
@@ -40,7 +23,8 @@ public class ImportarExportar extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Importar Exportar";
 
-    private final Border matteBorder = BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.PRIMARY_COLOR);
+    private final Border matteBorderCompleted = BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.PRIMARY_COLOR);
+    private final Border matteBorderCurrent = BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.SECONDARY_DARK);
 
     /**
      * Creates new form ImportarExportar2
@@ -60,22 +44,16 @@ public class ImportarExportar extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelImportarExportar = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jButtonAbrirGuardar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanelProgress = new javax.swing.JPanel();
         jPanelOption = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelImpExp = new javax.swing.JLabel();
         jPanelFilleSel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelSelFile = new javax.swing.JLabel();
         jPanelColSel = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelSelCol = new javax.swing.JLabel();
         jPanelReady = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabelAction = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jPanelMain = new javax.swing.JPanel();
         jPanelImpExp = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -147,82 +125,74 @@ public class ImportarExportar extends AbstractViewPanel {
         jLabelOption4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabelDataAmount = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jLabelDataType1 = new javax.swing.JLabel();
         jLabel123 = new javax.swing.JLabel();
         jPanelOperationSucces = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        jPanelErrorDuringLoad = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
         jPanelNavButtons4 = new javax.swing.JPanel();
-        jPanel36 = new javax.swing.JPanel();
+        jPanelDoButtonAction = new javax.swing.JPanel();
         jButtonDoActionOption = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        jPanelImportarExportar.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        jPanelImportarExportar.setPreferredSize(new java.awt.Dimension(730, 525));
-        jPanelImportarExportar.setLayout(new java.awt.BorderLayout());
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(150, 1, 1, 1));
-
-        jPanel5.setLayout(new java.awt.GridLayout(2, 1, 20, 100));
-        jPanel2.add(jPanel5);
-
-        jPanelImportarExportar.add(jPanel2, java.awt.BorderLayout.CENTER);
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 5, 20));
-        jPanel3.setLayout(new java.awt.BorderLayout());
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 0, 0, 0, DefaultValues.SECONDARY_COLOR_LIGHT));
-
-        jButtonAbrirGuardar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButtonAbrirGuardar.setText("---");
-        jButtonAbrirGuardar.setAutoscrolls(true);
-        jButtonAbrirGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAbrirGuardarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButtonAbrirGuardar);
-
-        jPanel3.add(jPanel1, java.awt.BorderLayout.SOUTH);
-
-        jPanelImportarExportar.add(jPanel3, java.awt.BorderLayout.SOUTH);
-
+        setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 10, 10));
         setPreferredSize(new java.awt.Dimension(730, 525));
         setLayout(new java.awt.BorderLayout());
 
+        jPanelProgress.setOpaque(false);
         jPanelProgress.setPreferredSize(new java.awt.Dimension(0, 50));
         jPanelProgress.setLayout(new java.awt.GridLayout(1, 0));
 
+        jPanelOption.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.SECONDARY_DARK));
+        jPanelOption.setOpaque(false);
         jPanelOption.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setText("Importar / Exportar");
-        jPanelOption.add(jLabel1, new java.awt.GridBagConstraints());
+        jLabelImpExp.setForeground(DefaultValues.SECONDARY_DARK);
+        jLabelImpExp.setText("Importar / Exportar");
+        jPanelOption.add(jLabelImpExp, new java.awt.GridBagConstraints());
 
         jPanelProgress.add(jPanelOption);
 
+        jPanelFilleSel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.SECONDARY_COLOR));
+        jPanelFilleSel.setOpaque(false);
         jPanelFilleSel.setLayout(new java.awt.GridBagLayout());
 
-        jLabel2.setText("Seleccionar Archivo");
-        jPanelFilleSel.add(jLabel2, new java.awt.GridBagConstraints());
+        jLabelSelFile.setForeground(DefaultValues.SECONDARY_COLOR);
+        jLabelSelFile.setText("Seleccionar Archivo");
+        jPanelFilleSel.add(jLabelSelFile, new java.awt.GridBagConstraints());
 
         jPanelProgress.add(jPanelFilleSel);
 
+        jPanelColSel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.SECONDARY_COLOR));
+        jPanelColSel.setOpaque(false);
         jPanelColSel.setLayout(new java.awt.GridBagLayout());
 
-        jLabel3.setText("Seleccionar Columnas");
-        jPanelColSel.add(jLabel3, new java.awt.GridBagConstraints());
+        jLabelSelCol.setForeground(DefaultValues.SECONDARY_COLOR);
+        jLabelSelCol.setText("Seleccionar Columnas");
+        jPanelColSel.add(jLabelSelCol, new java.awt.GridBagConstraints());
 
         jPanelProgress.add(jPanelColSel);
 
+        jPanelReady.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.SECONDARY_COLOR));
+        jPanelReady.setOpaque(false);
         jPanelReady.setLayout(new java.awt.GridBagLayout());
 
-        jLabel4.setText("Importar");
-        jPanelReady.add(jLabel4, new java.awt.GridBagConstraints());
+        jLabelAction.setForeground(DefaultValues.SECONDARY_COLOR);
+        jLabelAction.setText("Hecho!");
+        jPanelReady.add(jLabelAction, new java.awt.GridBagConstraints());
 
         jPanelProgress.add(jPanelReady);
 
         add(jPanelProgress, java.awt.BorderLayout.NORTH);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 5, 0, 5));
+        jPanel1.setOpaque(false);
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanelMain.setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
         jPanelMain.setLayout(new java.awt.CardLayout());
 
         jPanelImpExp.setLayout(new java.awt.BorderLayout());
@@ -255,7 +225,7 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jComboBoxopcionSelector.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jComboBoxopcionSelector.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jComboBoxopcionSelector.setPreferredSize(new java.awt.Dimension(200, 50));
+        jComboBoxopcionSelector.setPreferredSize(new java.awt.Dimension(200, 30));
         jComboBoxopcionSelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxopcionSelectorActionPerformed(evt);
@@ -279,7 +249,7 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jComboBoxTipoDatoSelector.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jComboBoxTipoDatoSelector.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jComboBoxTipoDatoSelector.setPreferredSize(new java.awt.Dimension(200, 50));
+        jComboBoxTipoDatoSelector.setPreferredSize(new java.awt.Dimension(200, 30));
         jComboBoxTipoDatoSelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxTipoDatoSelectorActionPerformed(evt);
@@ -480,14 +450,14 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanel22.add(jPanel24, java.awt.BorderLayout.CENTER);
 
-        jPanel8.setPreferredSize(new java.awt.Dimension(100, 40));
+        jPanel8.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanel8.setLayout(new java.awt.BorderLayout());
 
         jPanel9.setMaximumSize(new java.awt.Dimension(100, 32767));
         jPanel9.setLayout(new java.awt.GridBagLayout());
 
         jButtonRemoveMixedHeaderValues.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/unmix_color.png"))); // NOI18N
-        jButtonRemoveMixedHeaderValues.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButtonRemoveMixedHeaderValues.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel9.add(jButtonRemoveMixedHeaderValues, new java.awt.GridBagConstraints());
 
         jPanel8.add(jPanel9, java.awt.BorderLayout.WEST);
@@ -527,41 +497,41 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanel29.setLayout(new java.awt.GridBagLayout());
 
+        jLabel17.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel17.setText("Todo listo para ");
         jPanel29.add(jLabel17, new java.awt.GridBagConstraints());
 
-        jLabelOption3.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jLabelOption3.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLabelOption3.setForeground(new java.awt.Color(0, 153, 204));
         jLabelOption3.setText("<Option>");
         jPanel29.add(jLabelOption3, new java.awt.GridBagConstraints());
 
         jPanel10.add(jPanel29);
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel7.setText("Se van a ");
         jPanel31.add(jLabel7);
 
-        jLabelOption4.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jLabelOption4.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLabelOption4.setForeground(new java.awt.Color(0, 153, 204));
         jLabelOption4.setText("<Option>");
         jPanel31.add(jLabelOption4);
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel8.setText(":  ");
         jPanel31.add(jLabel8);
 
-        jLabelDataAmount.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jLabelDataAmount.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabelDataAmount.setForeground(new java.awt.Color(0, 153, 204));
         jLabelDataAmount.setText("<DataAmount>");
         jPanel31.add(jLabelDataAmount);
 
-        jLabel12.setText("de");
-        jPanel31.add(jLabel12);
-
-        jLabelDataType1.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jLabelDataType1.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLabelDataType1.setForeground(new java.awt.Color(0, 153, 204));
         jLabelDataType1.setText("<DataType>");
         jPanel31.add(jLabelDataType1);
 
-        jLabel123.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
+        jLabel123.setFont(new java.awt.Font("Dialog", 3, 18)); // NOI18N
         jLabel123.setForeground(new java.awt.Color(0, 153, 204));
         jLabel123.setText("(s)");
         jPanel31.add(jLabel123);
@@ -574,6 +544,7 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelOperationSucces.setLayout(new java.awt.GridBagLayout());
 
+        jLabel19.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel19.setText("Operacion Completada con Exito   ");
         jPanelOperationSucces.add(jLabel19, new java.awt.GridBagConstraints());
 
@@ -582,35 +553,44 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelready.add(jPanelOperationSucces, "Succes");
 
+        jPanelErrorDuringLoad.setLayout(new java.awt.GridBagLayout());
+
+        jLabel21.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel21.setText("No se pudieron cargar los datos del archivo seleccionado");
+        jPanelErrorDuringLoad.add(jLabel21, new java.awt.GridBagConstraints());
+
+        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/error_color.png"))); // NOI18N
+        jPanelErrorDuringLoad.add(jLabel22, new java.awt.GridBagConstraints());
+
+        jPanelready.add(jPanelErrorDuringLoad, "Error During Load");
+
         jPanelCarga.add(jPanelready, java.awt.BorderLayout.CENTER);
 
         jPanelNavButtons4.setPreferredSize(new java.awt.Dimension(0, 50));
         jPanelNavButtons4.setLayout(new java.awt.BorderLayout());
 
-        jPanel36.setPreferredSize(new java.awt.Dimension(200, 259));
-        jPanel36.setLayout(new java.awt.GridBagLayout());
+        jPanelDoButtonAction.setPreferredSize(new java.awt.Dimension(200, 259));
+        jPanelDoButtonAction.setLayout(new java.awt.GridBagLayout());
 
         jButtonDoActionOption.setText("<Option>");
         jButtonDoActionOption.setPreferredSize(new java.awt.Dimension(150, 50));
-        jPanel36.add(jButtonDoActionOption, new java.awt.GridBagConstraints());
+        jPanelDoButtonAction.add(jButtonDoActionOption, new java.awt.GridBagConstraints());
 
-        jPanelNavButtons4.add(jPanel36, java.awt.BorderLayout.EAST);
+        jPanelNavButtons4.add(jPanelDoButtonAction, java.awt.BorderLayout.EAST);
 
         jPanelCarga.add(jPanelNavButtons4, java.awt.BorderLayout.SOUTH);
 
         jPanelMain.add(jPanelCarga, "Ready");
 
-        add(jPanelMain, java.awt.BorderLayout.CENTER);
-    }// </editor-fold>//GEN-END:initComponents
+        jPanel1.add(jPanelMain, java.awt.BorderLayout.CENTER);
 
-    private void jButtonAbrirGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAbrirGuardarActionPerformed
-    }//GEN-LAST:event_jButtonAbrirGuardarActionPerformed
+        add(jPanel1, java.awt.BorderLayout.CENTER);
+    }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBoxopcionSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxopcionSelectorActionPerformed
     }//GEN-LAST:event_jComboBoxopcionSelectorActionPerformed
 
     private void jComboBoxTipoDatoSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoDatoSelectorActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxTipoDatoSelectorActionPerformed
 
     private void jButtonToSelectFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToSelectFileActionPerformed
@@ -641,6 +621,16 @@ public class ImportarExportar extends AbstractViewPanel {
         Bindings.bind(jButtonToSelectColumns, "enabled", getPresenter().getModel(PROP_ENABLE_BUTTON_TO_SEL_COLUMNS));
         Bindings.bind(jButtonToReady, "enabled", getPresenter().getModel(PROP_ENABLE_BUTTON_TO_READY));
         Bindings.bind(jComboBoxTipoDatoSelector, "enabled", getPresenter().getModel(PROP_ENABLE_TIPO_DATO));
+        Bindings.bind(jButtonDoActionOption, "enabled", getPresenter().getModel(PROP_ENABLE_BUTTON_DO_ACTION));
+
+        Bindings.bind(jPanelDoButtonAction, "visible", getPresenter().getModel(PROP_ENABLE_BUTTON_DO_ACTION));
+
+        jButtonOpenSaveFile.addActionListener(getPresenter().getOperation(ACTION_OPEN_SAVE_FILE));
+        jButtonToSelectColumns.addActionListener(getPresenter().getOperation(ACTION_FILL_HEADER_VALUES));
+        jButtonMixHeaderValues.addActionListener(getPresenter().getOperation(ACTION_MIX_HEADER_VALUES));
+        jButtonRemoveMixedHeaderValues.addActionListener(getPresenter().getOperation(ACTION_REMOVE_MIXED_HEADER_VALUES));
+        jButtonDoActionOption.addActionListener(getPresenter().getOperation(ACTION_EXECUTE_ACTION));
+        jButtonToReady.addActionListener(getPresenter().getOperation(ACTION_LOAD_DATA_FROM_SOURCE));
 
         Bindings.bind(jComboBoxopcionSelector, new SelectionInList<OpcionIO>(
                 getPresenter().getModel(PROP_LISTA_OPCIONES),
@@ -659,13 +649,6 @@ public class ImportarExportar extends AbstractViewPanel {
         Bindings.bind(jTable1, new SelectionInList<DataHeaderWrapper>(
                 getPresenter().getModel(PROP_LISTA_DATA_HEADER_WRAPPER),
                 getPresenter().getModel(PROP_DATA_HEADER_WRAPPER_SELECCIONADO)));
-
-        jButtonOpenSaveFile.addActionListener(getPresenter().getOperation(ACTION_OPEN_SAVE_FILE));
-        jButtonToSelectColumns.addActionListener(getPresenter().getOperation(ACTION_FILL_HEADER_VALUES));
-        jButtonMixHeaderValues.addActionListener(getPresenter().getOperation(ACTION_MIX_HEADER_VALUES));
-        jButtonRemoveMixedHeaderValues.addActionListener(getPresenter().getOperation(ACTION_REMOVE_MIXED_HEADER_VALUES));
-        jButtonDoActionOption.addActionListener(getPresenter().getOperation(ACTION_EXECUTE_ACTION));
-        jButtonToReady.addActionListener(getPresenter().getOperation(ACTION_LOAD_DATA_FROM_SOURCE));
     }
 
     @Override
@@ -721,8 +704,6 @@ public class ImportarExportar extends AbstractViewPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButtonAbrirGuardar;
     private javax.swing.JButton jButtonDoActionOption;
     private javax.swing.JButton jButtonMixHeaderValues;
     private javax.swing.JButton jButtonOpenSaveFile;
@@ -734,31 +715,32 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JComboBox<String> jComboBoxRawHeader;
     private javax.swing.JComboBox<String> jComboBoxTipoDatoSelector;
     private javax.swing.JComboBox<String> jComboBoxopcionSelector;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel123;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelAction;
     private javax.swing.JLabel jLabelDataAmount;
     private javax.swing.JLabel jLabelDataType;
     private javax.swing.JLabel jLabelDataType1;
+    private javax.swing.JLabel jLabelImpExp;
     private javax.swing.JLabel jLabelOption1;
     private javax.swing.JLabel jLabelOption2;
     private javax.swing.JLabel jLabelOption3;
     private javax.swing.JLabel jLabelOption4;
+    private javax.swing.JLabel jLabelSelCol;
+    private javax.swing.JLabel jLabelSelFile;
     private javax.swing.JLabel jLabelSelectedFileName1;
     private javax.swing.JLabel jLabelSelectedFileName2;
     private javax.swing.JPanel jPanel1;
@@ -772,7 +754,6 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
@@ -783,14 +764,11 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel31;
     private javax.swing.JPanel jPanel32;
     private javax.swing.JPanel jPanel34;
-    private javax.swing.JPanel jPanel36;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
@@ -798,9 +776,10 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JPanel jPanelCarga;
     private javax.swing.JPanel jPanelCargarArchivo;
     private javax.swing.JPanel jPanelColSel;
+    private javax.swing.JPanel jPanelDoButtonAction;
+    private javax.swing.JPanel jPanelErrorDuringLoad;
     private javax.swing.JPanel jPanelFilleSel;
     private javax.swing.JPanel jPanelImpExp;
-    private javax.swing.JPanel jPanelImportarExportar;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelNavButtons1;
     private javax.swing.JPanel jPanelNavButtons2;
@@ -822,25 +801,41 @@ public class ImportarExportar extends AbstractViewPanel {
     private void toSelectFile() {
         CardLayout cards = (CardLayout) jPanelMain.getLayout();
         cards.show(jPanelMain, "Seleccionar Archivo");
-        jPanelOption.setBorder(matteBorder);
+        jPanelOption.setBorder(matteBorderCompleted);
+        jLabelImpExp.setForeground(DefaultValues.PRIMARY_COLOR);
+        jPanelFilleSel.setBorder(matteBorderCurrent);
+        jLabelSelFile.setForeground(DefaultValues.SECONDARY_DARK);
     }
 
     private void toSelectColumns() {
         CardLayout cards = (CardLayout) jPanelMain.getLayout();
         cards.show(jPanelMain, "Sel Columnas");
-        jPanelFilleSel.setBorder(matteBorder);
+        jPanelFilleSel.setBorder(matteBorderCompleted);
+        jLabelSelFile.setForeground(DefaultValues.PRIMARY_COLOR);
+        jPanelColSel.setBorder(matteBorderCurrent);
+        jLabelSelCol.setForeground(DefaultValues.SECONDARY_DARK);
     }
 
     private void toSelectReady() {
         CardLayout cards = (CardLayout) jPanelMain.getLayout();
         cards.show(jPanelMain, "Ready");
-        jPanelColSel.setBorder(matteBorder);
+        jPanelColSel.setBorder(matteBorderCompleted);
+        jLabelSelCol.setForeground(DefaultValues.PRIMARY_COLOR);
+        jPanelReady.setBorder(matteBorderCurrent);
+        jLabelAction.setForeground(DefaultValues.SECONDARY_DARK);
     }
 
     private void toSelectSucces() {
         CardLayout cards = (CardLayout) jPanelready.getLayout();
         cards.show(jPanelready, "Succes");
-        jPanelReady.setBorder(matteBorder);
+        jPanelReady.setBorder(matteBorderCompleted);
+        jLabelAction.setForeground(DefaultValues.PRIMARY_COLOR);
+    }
+
+    private void toSelectError() {
+        CardLayout cards = (CardLayout) jPanelready.getLayout();
+        cards.show(jPanelready, "Error During Load");
+        jPanelReady.setBorder(matteBorderCompleted);
     }
 
 }
