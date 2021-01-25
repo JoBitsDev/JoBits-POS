@@ -26,6 +26,8 @@ import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.pos.utils.UbicacionResourceServiceImpl;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
+import com.root101.clean.core.app.services.UserResolver;
+import com.root101.clean.core.app.services.UserResolverService;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -101,6 +103,8 @@ public class Application {
     private NavigationService navigator;
     private NotificationService notificationService = NotificationService.getInstance();
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+
+    private UserResolverService<Personal> userResolver = new UserResolverServiceImpl();
 
     private Application() {
     }
@@ -186,6 +190,7 @@ public class Application {
         setExceptionHandling();
         registerResources();
         initModules();
+        UserResolver.registerUserResolverService(userResolver);
         mainWindow = new MainWindow();
         mainWindow.setTitle(APP_NAME);
         mainWindow.setWelcomeHeader(true);
