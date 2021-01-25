@@ -665,7 +665,7 @@ public class ImportarExportar extends AbstractViewPanel {
         jButtonMixHeaderValues.addActionListener(getPresenter().getOperation(ACTION_MIX_HEADER_VALUES));
         jButtonRemoveMixedHeaderValues.addActionListener(getPresenter().getOperation(ACTION_REMOVE_MIXED_HEADER_VALUES));
         jButtonDoActionOption.addActionListener(getPresenter().getOperation(ACTION_EXECUTE_ACTION));
-
+        jButtonToReady.addActionListener(getPresenter().getOperation(ACTION_LOAD_DATA_FROM_SOURCE));
     }
 
     @Override
