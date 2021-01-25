@@ -56,6 +56,7 @@ public class Application {
     private static final String LOG_FILE_PATH = "LOGS/AppLogs";
     private static final String ERR_FILE_PATH = "LOGS/AppLogsErr";
     private static Application application;
+    private UserResolverService<Personal> userResolver = new UserResolverServiceImpl();
 
     public static Application createApplication(boolean debugMode) {
         if (application == null) {
@@ -104,7 +105,6 @@ public class Application {
     private NotificationService notificationService = NotificationService.getInstance();
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-    private UserResolverService<Personal> userResolver = new UserResolverServiceImpl();
 
     private Application() {
     }
@@ -144,7 +144,7 @@ public class Application {
     }
 
     public Personal getLoggedUser() {
-        return loggedUser;
+        return userResolver.resolveUser();
     }
 
     public void setLoggedUser(Personal loggedUser) {
