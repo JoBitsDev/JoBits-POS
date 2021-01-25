@@ -6,35 +6,60 @@
 package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.insumo.InsumoDetailService;
+import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
-import com.jobits.pos.controller.productos.ProductoVentaListService;
+import com.jobits.pos.core.domain.models.Insumo;
+import com.jobits.pos.io.DataHeader;
+import com.jobits.pos.io.IOTemplate;
+import com.jobits.pos.io.impl.AbstractRawDataConverter;
+import com.jobits.pos.io.impl.CsvIOTemplateImpl;
+import com.jobits.pos.io.impl.InsumoConverterRawDataConverterImpl;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.configuracion.ImportarExportar;
-import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
+import com.jobits.pos.ui.configuracion.DataHeaderWrapper;
+import com.jobits.pos.ui.configuracion.OpcionIO;
+import com.jobits.pos.ui.configuracion.TipoDato;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.awt.Container;
 import java.beans.PropertyChangeEvent;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Home
  */
-public class ImportarExportarViewPresenter extends AbstractListViewPresenter<ImportarExportarViewModel> {
+public class ImportarExportarViewPresenter extends AbstractViewPresenter<ImportarExportarViewModel> {
 
     ProductoVentaListController service;
 
-    public static final String ACTION_IMPORTAR_EXPORTAR = "Importar Exportar";
+    public static final String ACTION_OPEN_SAVE_FILE = "Open/Save File";
+    public static final String ACTION_FILL_HEADER_VALUES = "Fill Header Value";
+    public static final String ACTION_MIX_HEADER_VALUES = "Mix Header Value";
+    public static final String ACTION_REMOVE_MIXED_HEADER_VALUES = "Remove Mixed Header Values";
+    public static final String ACTION_LOAD_DATA_FROM_SOURCE = "Load Data From Source";
+    public static final String ACTION_EXECUTE_ACTION = "Execute Action";
+
+    IOTemplate<Insumo> template = new CsvIOTemplateImpl<>();
+    AbstractRawDataConverter converter;
+
+    public List dataList = new ArrayList();
 
     public ImportarExportarViewPresenter(ProductoVentaListController service) {
-        super(new ImportarExportarViewModel(), ImportarExportar.VIEW_NAME);
+        super(new ImportarExportarViewModel());
         this.service = service;
         addListeners();
         setListToBean();
@@ -42,80 +67,199 @@ public class ImportarExportarViewPresenter extends AbstractListViewPresenter<Imp
 
     @Override
     protected void registerOperations() {
-        super.registerOperations(); //To change body of generated methods, choose Tools | Templates.
-        registerOperation(new AbstractViewAction(ACTION_IMPORTAR_EXPORTAR) {
+        registerOperation(new AbstractViewAction(ACTION_OPEN_SAVE_FILE) {
             @Override
             public Optional doAction() {
-                importarExportar();
+                openSaveFile();
                 return Optional.empty();
             }
-
+        });
+        registerOperation(new AbstractViewAction(ACTION_FILL_HEADER_VALUES) {
+            @Override
+            public Optional doAction() {
+                fillHeaderValues();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_MIX_HEADER_VALUES) {
+            @Override
+            public Optional doAction() {
+                mixHeaderValues();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_REMOVE_MIXED_HEADER_VALUES) {
+            @Override
+            public Optional doAction() {
+                removeDataHeaderWrapper();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_LOAD_DATA_FROM_SOURCE) {
+            @Override
+            public Optional doAction() {
+                loadDataFromSource();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_EXECUTE_ACTION) {
+            @Override
+            public Optional doAction() {
+                executeAction();
+                return Optional.empty();
+            }
         });
     }
 
-    @Override
-    protected void onAgregarClick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected void onEditarClick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected void onEliminarClick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     protected void setListToBean() {
-        getBean().setImportar_exportar_opciones(new ArrayListModel(Arrays.asList("Importar", "Exportar")));
-        getBean().setLista_tipo_datos(new ArrayListModel(Arrays.asList("Ficha de Costo")));
+        getBean().setLista_opciones(new ArrayListModel(Arrays.asList(OpcionIO.values())));
+        getBean().setLista_tipo_dato(new ArrayListModel(Arrays.asList(TipoDato.values())));
     }
 
     private void addListeners() {
-        getBean().addPropertyChangeListener(ImportarExportarViewModel.PROP_IMPORTAR_EXPORTAR_OPCION_SELECCIONADA, (PropertyChangeEvent evt) -> {
-            if (evt.getNewValue() != null) {
-                getBean().setOption_text((String) evt.getNewValue());
-                getBean().setTipo_dato_enabled(true);
-            } else if (evt.getNewValue() == null) {
-                getBean().setTipo_dato_enabled(false);
-                getBean().setTipo_dato_seleccionado(null);
-                getBean().setOption_text("---");
+        getBean().addPropertyChangeListener(ImportarExportarViewModel.PROP_OPCION_SELECCIONADA, (PropertyChangeEvent evt) -> {
+            OpcionIO value = (OpcionIO) evt.getNewValue();
+            if (value.equals(OpcionIO.DEFAULT)) {
+                getBean().setEnable_tipo_dato(false);
+                getBean().setTipo_dato_seleccionado(TipoDato.DEFAULT);
+            } else {
+                getBean().setEnable_tipo_dato(true);
             }
+            getBean().setOpcion_text(value.getStringValue());
         });
         getBean().addPropertyChangeListener(ImportarExportarViewModel.PROP_TIPO_DATO_SELECCIONADO, (PropertyChangeEvent evt) -> {
-            if (evt.getNewValue() != null) {
-                getBean().setButton_enabled(true);
-            } else if (evt.getNewValue() == null) {
-                getBean().setButton_enabled(false);
+            TipoDato value = (TipoDato) evt.getNewValue();
+            if (value.equals(TipoDato.DEFAULT)) {
+                getBean().setEnable_button_to_sel_archivo(false);
+            } else {
+                getBean().setEnable_button_to_sel_archivo(true);
             }
+            getBean().setData_type_text(value.getStringValue());
         });
     }
 
-    private void importarExportar() {
-        try {
-            if (getBean().getTipo_dato_seleccionado().equals("Ficha de Costo")) {
-                if (getBean().getImportar_exportar_opcion_seleccionada().equals("Importar")) {
-                    JFileChooser list = new JFileChooser();
-                    int response = list.showOpenDialog(Application.getInstance().getMainWindow());
-                    if (response == JFileChooser.APPROVE_OPTION) {
-                        service.importarFichadeCostoFromJson(list.getSelectedFile());
-                        showSuccessDialog(Application.getInstance().getMainWindow(), "El archivo se ha exportado con éxito");
-                    }
-                } else if (getBean().getImportar_exportar_opcion_seleccionada().equals("Exportar")) {
-                    JFileChooser list = new JFileChooser();
-                    int response = list.showSaveDialog(Application.getInstance().getMainWindow());
-                    if (response == JFileChooser.APPROVE_OPTION) {
-                        service.exportarToJson(list.getSelectedFile(), service.getItems());
-                        showSuccessDialog(Application.getInstance().getMainWindow(), "El archivo se ha importado con éxito");
-                    }
+    private void openSaveFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("CSV File", "csv"));
+        int response;
+        File file;
+        switch (getBean().getOpcion_seleccionada()) {
+            case IMPORTAR:
+                response = fileChooser.showOpenDialog(null);
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    file = fileChooser.getSelectedFile();
+                    getBean().setArchivo_seleccionado(file);
+                    getBean().setNombre_archivo_seleccionado(file.getName());
+                    getBean().setEnable_button_to_sel_columns(true);
                 }
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ImportarExportarViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                break;
+            case EXPORTAR:
+                break;
+            case DEFAULT:
+                break;
         }
+//            if (getBean().getTipo_dato_seleccionado().equals("Ficha de Costo")) {
+//                if (getBean().getImportar_exportar_opcion_seleccionada().equals("Importar")) {
+//                    JFileChooser list = new JFileChooser();
+//                    int response = list.showOpenDialog(Application.getInstance().getMainWindow());
+//                    if (response == JFileChooser.APPROVE_OPTION) {
+//                        service.importarFichadeCostoFromJson(list.getSelectedFile());
+//                        showSuccessDialog(Application.getInstance().getMainWindow(), "El archivo se ha exportado con éxito");
+//                    }
+//                } else if (getBean().getImportar_exportar_opcion_seleccionada().equals("Exportar")) {
+//                    JFileChooser list = new JFileChooser();
+//                    int response = list.showSaveDialog(Application.getInstance().getMainWindow());
+//                    if (response == JFileChooser.APPROVE_OPTION) {
+//                        service.exportarToJson(list.getSelectedFile(), service.getItems());
+//                        showSuccessDialog(Application.getInstance().getMainWindow(), "El archivo se ha importado con éxito");
+//                    }
+//                }
+//            }
+    }
+
+    private void fillHeaderValues() {
+        switch (getBean().getTipo_dato_seleccionado()) {
+            case INSUMO:
+                converter = new InsumoConverterRawDataConverterImpl();
+                ArrayListModel<DataHeader> dataHeaders = new ArrayListModel<>(converter.getDataHeaders());
+                ArrayListModel<String> rawHeaders = new ArrayListModel<>(template.readHeaders(getBean().getArchivo_seleccionado().getPath()));
+                if (!dataHeaders.isEmpty()) {
+                    getBean().setLista_data_header(dataHeaders);
+                    getBean().setData_header_seleccionado(dataHeaders.get(0));
+                }
+                if (!rawHeaders.isEmpty()) {
+                    getBean().setLista_raw_header(rawHeaders);
+                    getBean().setRaw_header_seleccionado(rawHeaders.get(0));
+                }
+                break;
+            case FICHA_DE_COSTO:
+                break;
+            case DEFAULT:
+                break;
+        }
+
+    }
+
+    private void mixHeaderValues() {
+        DataHeader dataHeader = getBean().getData_header_seleccionado();
+        String rawHeader = getBean().getRaw_header_seleccionado();
+        if (rawHeader != null && dataHeader != null) {
+            getBean().getLista_data_header().remove(dataHeader);
+            getBean().getLista_raw_header().remove(rawHeader);
+            getBean().getLista_data_header_wrapper().add(new DataHeaderWrapper(dataHeader, rawHeader));
+            if (!getBean().getLista_data_header().isEmpty()) {
+                getBean().setData_header_seleccionado(getBean().getLista_data_header().get(0));
+            } else {
+                getBean().setData_header_seleccionado(null);
+            }
+            if (!getBean().getLista_raw_header().isEmpty()) {
+                getBean().setRaw_header_seleccionado(getBean().getLista_raw_header().get(0));
+            } else {
+                getBean().setRaw_header_seleccionado(null);
+            }
+            validateGoToNextView();
+        }
+    }
+
+    private void removeDataHeaderWrapper() {
+        DataHeaderWrapper dataHeaderWrapper = getBean().getData_header_wrapper_seleccionado();
+        if (dataHeaderWrapper != null) {
+            getBean().getLista_data_header().add(dataHeaderWrapper.getDataHeader());
+            getBean().getLista_raw_header().add(dataHeaderWrapper.getRawHeader());
+            getBean().getLista_data_header_wrapper().remove(dataHeaderWrapper);
+            validateGoToNextView();
+        }
+    }
+
+    private void loadDataFromSource() {
+        ArrayListModel<DataHeaderWrapper> lista = getBean().getLista_data_header_wrapper();
+        lista.forEach(x -> {
+            converter.mapDataToRawHeader(x.getDataHeader(), x.getRawHeader());
+        });
+        dataList = template.importDataFrom(getBean().getArchivo_seleccionado().getPath(), converter);
+        getBean().setCantidad_datos(String.valueOf(dataList.size()));
+    }
+
+    private void executeAction() {
+        switch (getBean().getOpcion_seleccionada()) {
+            case IMPORTAR:
+                switch (getBean().getTipo_dato_seleccionado()) {
+                    case INSUMO:
+                        InsumoDetailService useCase = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
+                        useCase.bulkImport(dataList);
+                        break;
+                    case FICHA_DE_COSTO:
+                        break;
+                    case DEFAULT:
+                        break;
+                }
+                break;
+            case EXPORTAR:
+                break;
+            case DEFAULT:
+                break;
+        }
+        firePropertyChange("Success", null, null);
     }
 
     public void showSuccessDialog(Container view, String text) {
@@ -123,5 +267,21 @@ public class ImportarExportarViewPresenter extends AbstractListViewPresenter<Imp
                 R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
 
+    }
+
+    private void validateGoToNextView() {
+        ArrayListModel<DataHeader> list = getBean().getLista_data_header();
+        if (!list.isEmpty()) {
+            for (DataHeader x : list) {
+                if (x.isRequired()) {
+                    getBean().setEnable_button_to_ready(false);
+                    break;
+                } else {
+                    getBean().setEnable_button_to_ready(true);
+                }
+            }
+        } else {
+            getBean().setEnable_button_to_ready(true);
+        }
     }
 }
