@@ -95,6 +95,30 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
 
     public static final String PROP_CANTIDAD_DATOS = "cantidad_datos";
 
+    private boolean enable_button_do_action = true;
+
+    public static final String PROP_ENABLE_BUTTON_DO_ACTION = "enable_button_do_action";
+
+    /**
+     * Get the value of enable_button_do_action
+     *
+     * @return the value of enable_button_do_action
+     */
+    public boolean isEnable_button_do_action() {
+        return enable_button_do_action;
+    }
+
+    /**
+     * Set the value of enable_button_do_action
+     *
+     * @param enable_button_do_action new value of enable_button_do_action
+     */
+    public void setEnable_button_do_action(boolean enable_button_do_action) {
+        boolean oldEnable_button_do_action = this.enable_button_do_action;
+        this.enable_button_do_action = enable_button_do_action;
+        firePropertyChange(PROP_ENABLE_BUTTON_DO_ACTION, oldEnable_button_do_action, enable_button_do_action);
+    }
+
     /**
      * Get the value of cantidad_datos
      *

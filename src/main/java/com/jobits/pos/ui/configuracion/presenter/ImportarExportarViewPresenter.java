@@ -6,36 +6,32 @@
 package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.insumo.InsumoDetailService;
-import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
+import com.jobits.pos.controller.productos.ProductoVentaListService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.io.DataHeader;
 import com.jobits.pos.io.IOTemplate;
 import com.jobits.pos.io.impl.AbstractRawDataConverter;
 import com.jobits.pos.io.impl.CsvIOTemplateImpl;
+import com.jobits.pos.io.impl.InsumoAlmacenRawDataConverterImpl;
 import com.jobits.pos.io.impl.InsumoConverterRawDataConverterImpl;
-import com.jobits.pos.main.Application;
-import com.jobits.pos.recursos.R;
-import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
+import com.jobits.pos.io.impl.ProductoInsumoRawDataConverterImpl;
+import com.jobits.pos.io.impl.ProductoVentaRawDataConverterImpl;
 import com.jobits.pos.ui.configuracion.DataHeaderWrapper;
 import com.jobits.pos.ui.configuracion.OpcionIO;
 import com.jobits.pos.ui.configuracion.TipoDato;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.awt.Container;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -44,14 +40,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class ImportarExportarViewPresenter extends AbstractViewPresenter<ImportarExportarViewModel> {
 
-    ProductoVentaListController service;
-
     public static final String ACTION_OPEN_SAVE_FILE = "Open/Save File";
     public static final String ACTION_FILL_HEADER_VALUES = "Fill Header Value";
     public static final String ACTION_MIX_HEADER_VALUES = "Mix Header Value";
     public static final String ACTION_REMOVE_MIXED_HEADER_VALUES = "Remove Mixed Header Values";
     public static final String ACTION_LOAD_DATA_FROM_SOURCE = "Load Data From Source";
     public static final String ACTION_EXECUTE_ACTION = "Execute Action";
+    ProductoVentaListController service;
 
     IOTemplate<Insumo> template = new CsvIOTemplateImpl<>();
     AbstractRawDataConverter converter;
@@ -181,21 +176,30 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
         switch (getBean().getTipo_dato_seleccionado()) {
             case INSUMO:
                 converter = new InsumoConverterRawDataConverterImpl();
-                ArrayListModel<DataHeader> dataHeaders = new ArrayListModel<>(converter.getDataHeaders());
-                ArrayListModel<String> rawHeaders = new ArrayListModel<>(template.readHeaders(getBean().getArchivo_seleccionado().getPath()));
-                if (!dataHeaders.isEmpty()) {
-                    getBean().setLista_data_header(dataHeaders);
-                    getBean().setData_header_seleccionado(dataHeaders.get(0));
-                }
-                if (!rawHeaders.isEmpty()) {
-                    getBean().setLista_raw_header(rawHeaders);
-                    getBean().setRaw_header_seleccionado(rawHeaders.get(0));
-                }
                 break;
             case FICHA_DE_COSTO:
+                converter = new ProductoInsumoRawDataConverterImpl();
+                break;
+            case INSUMO_ALMACEN:
+                converter = new InsumoAlmacenRawDataConverterImpl();
+                break;
+            case PRODUCTO_VENTA:
+                converter = new ProductoVentaRawDataConverterImpl();
                 break;
             case DEFAULT:
                 break;
+        }
+        ArrayListModel<DataHeader> dataHeaders;
+        ArrayListModel<String> rawHeaders;
+        dataHeaders = new ArrayListModel<>(converter.getDataHeaders());
+        rawHeaders = new ArrayListModel<>(template.readHeaders(getBean().getArchivo_seleccionado().getPath()));
+        if (!dataHeaders.isEmpty()) {
+            getBean().setLista_data_header(dataHeaders);
+            getBean().setData_header_seleccionado(dataHeaders.get(0));
+        }
+        if (!rawHeaders.isEmpty()) {
+            getBean().setLista_raw_header(rawHeaders);
+            getBean().setRaw_header_seleccionado(rawHeaders.get(0));
         }
 
     }
@@ -245,10 +249,24 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
             case IMPORTAR:
                 switch (getBean().getTipo_dato_seleccionado()) {
                     case INSUMO:
-                        InsumoDetailService useCase = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
-                        useCase.bulkImport(dataList);
+                        InsumoDetailService useCaseInsumo
+                                = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
+                        useCaseInsumo.bulkImport(dataList);
                         break;
                     case FICHA_DE_COSTO:
+                        ProductoVentaListService useCaseProductoInsumo
+                                = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
+                        useCaseProductoInsumo.bulkImportProductoInsumo(dataList);
+                        break;
+                    case INSUMO_ALMACEN:
+                        AlmacenManageService useCaseInsumoAlmacen
+                                = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
+                        useCaseInsumoAlmacen.bulkImport(dataList);
+                        break;
+                    case PRODUCTO_VENTA:
+                        ProductoVentaListService useCaseProductoVenta
+                                = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
+                        useCaseProductoVenta.bulkImport(dataList);
                         break;
                     case DEFAULT:
                         break;
@@ -259,14 +277,8 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
             case DEFAULT:
                 break;
         }
+        getBean().setEnable_button_do_action(false);
         firePropertyChange("Success", null, null);
-    }
-
-    public void showSuccessDialog(Container view, String text) {
-        JOptionPane.showMessageDialog(view, text,
-                R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
-                new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
-
     }
 
     private void validateGoToNextView() {
