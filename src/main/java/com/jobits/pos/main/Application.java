@@ -26,6 +26,8 @@ import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.pos.utils.UbicacionResourceServiceImpl;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
+import com.root101.clean.core.app.services.UserResolver;
+import com.root101.clean.core.app.services.UserResolverService;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -54,6 +56,7 @@ public class Application {
     private static final String LOG_FILE_PATH = "LOGS/AppLogs";
     private static final String ERR_FILE_PATH = "LOGS/AppLogsErr";
     private static Application application;
+    private UserResolverService<Personal> userResolver = new UserResolverServiceImpl();
 
     public static Application createApplication(boolean debugMode) {
         if (application == null) {
@@ -102,6 +105,7 @@ public class Application {
     private NotificationService notificationService = NotificationService.getInstance();
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
+
     private Application() {
     }
 
@@ -140,7 +144,7 @@ public class Application {
     }
 
     public Personal getLoggedUser() {
-        return loggedUser;
+        return userResolver.resolveUser();
     }
 
     public void setLoggedUser(Personal loggedUser) {
@@ -186,6 +190,7 @@ public class Application {
         setExceptionHandling();
         registerResources();
         initModules();
+        UserResolver.registerUserResolverService(userResolver);
         mainWindow = new MainWindow();
         mainWindow.setTitle(APP_NAME);
         mainWindow.setWelcomeHeader(true);
