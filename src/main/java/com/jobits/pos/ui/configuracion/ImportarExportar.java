@@ -11,7 +11,10 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
@@ -23,6 +26,7 @@ public class ImportarExportar extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Importar Exportar";
 
+    private final Border matteBorderError = BorderFactory.createMatteBorder(0, 0, 4, 0, Color.red);
     private final Border matteBorderCompleted = BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.PRIMARY_COLOR);
     private final Border matteBorderCurrent = BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.SECONDARY_DARK);
 
@@ -74,14 +78,14 @@ public class ImportarExportar extends AbstractViewPanel {
         jPanelCargarArchivo = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
-        jTextArea2 = new javax.swing.JTextArea();
-        jPanel17 = new javax.swing.JPanel();
-        jPanel14 = new javax.swing.JPanel();
-        jButtonOpenSaveFile = new javax.swing.JButton();
         jLabelSelectedFileName1 = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        jButtonOpenSaveFile = new javax.swing.JButton();
         jPanelNavButtons2 = new javax.swing.JPanel();
         jPanel32 = new javax.swing.JPanel();
         jButtonToSelectColumns = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jPanel33 = new javax.swing.JPanel();
+        jTextArea3 = new javax.swing.JTextArea();
         jPanelSelColumnas = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -131,7 +135,7 @@ public class ImportarExportar extends AbstractViewPanel {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jPanelErrorDuringLoad = new javax.swing.JPanel();
-        jLabel21 = new javax.swing.JLabel();
+        jLabelErrorMensage = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jPanelNavButtons4 = new javax.swing.JPanel();
         jPanelDoButtonAction = new javax.swing.JPanel();
@@ -144,10 +148,11 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelProgress.setOpaque(false);
         jPanelProgress.setPreferredSize(new java.awt.Dimension(0, 50));
-        jPanelProgress.setLayout(new java.awt.GridLayout(1, 0));
+        jPanelProgress.setLayout(new javax.swing.BoxLayout(jPanelProgress, javax.swing.BoxLayout.LINE_AXIS));
 
         jPanelOption.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.SECONDARY_DARK));
         jPanelOption.setOpaque(false);
+        jPanelOption.setPreferredSize(setComponentSize());
         jPanelOption.setLayout(new java.awt.GridBagLayout());
 
         jLabelImpExp.setForeground(DefaultValues.SECONDARY_DARK);
@@ -158,6 +163,7 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelFilleSel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.SECONDARY_COLOR));
         jPanelFilleSel.setOpaque(false);
+        jPanelFilleSel.setPreferredSize(setComponentSize());
         jPanelFilleSel.setLayout(new java.awt.GridBagLayout());
 
         jLabelSelFile.setForeground(DefaultValues.SECONDARY_COLOR);
@@ -168,6 +174,7 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelColSel.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.SECONDARY_COLOR));
         jPanelColSel.setOpaque(false);
+        jPanelColSel.setPreferredSize(setComponentSize());
         jPanelColSel.setLayout(new java.awt.GridBagLayout());
 
         jLabelSelCol.setForeground(DefaultValues.SECONDARY_COLOR);
@@ -178,6 +185,7 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelReady.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 4, 0, DefaultValues.SECONDARY_COLOR));
         jPanelReady.setOpaque(false);
+        jPanelReady.setPreferredSize(setComponentSize());
         jPanelReady.setLayout(new java.awt.GridBagLayout());
 
         jLabelAction.setForeground(DefaultValues.SECONDARY_COLOR);
@@ -288,32 +296,17 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanel18.setLayout(new java.awt.GridBagLayout());
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jTextArea2.setLineWrap(true);
-        jTextArea2.setRows(2);
-        jTextArea2.setText("Elija un Archivo CSV de su ordenador");
-        jTextArea2.setWrapStyleWord(true);
-        jTextArea2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
-        jTextArea2.setMinimumSize(new java.awt.Dimension(0, 0));
-        jTextArea2.setOpaque(false);
-        jPanel18.add(jTextArea2, new java.awt.GridBagConstraints());
+        jLabelSelectedFileName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelSelectedFileName1.setText("Ningun Archivo Seleccionado");
+        jPanel18.add(jLabelSelectedFileName1, new java.awt.GridBagConstraints());
 
         jPanel13.add(jPanel18);
 
         jPanel17.setLayout(new java.awt.GridBagLayout());
 
-        jPanel14.setLayout(new java.awt.GridLayout(2, 1));
-
         jButtonOpenSaveFile.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
         jButtonOpenSaveFile.setText("Seleccionar archivo");
-        jPanel14.add(jButtonOpenSaveFile);
-
-        jLabelSelectedFileName1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelSelectedFileName1.setText("Ningun Archivo Seleccionado");
-        jPanel14.add(jLabelSelectedFileName1);
-
-        jPanel17.add(jPanel14, new java.awt.GridBagConstraints());
+        jPanel17.add(jButtonOpenSaveFile, new java.awt.GridBagConstraints());
 
         jPanel13.add(jPanel17);
 
@@ -337,6 +330,21 @@ public class ImportarExportar extends AbstractViewPanel {
         jPanelNavButtons2.add(jPanel32, java.awt.BorderLayout.EAST);
 
         jPanelCargarArchivo.add(jPanelNavButtons2, java.awt.BorderLayout.SOUTH);
+
+        jPanel33.setLayout(new java.awt.BorderLayout());
+
+        jTextArea3.setColumns(20);
+        jTextArea3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jTextArea3.setLineWrap(true);
+        jTextArea3.setRows(2);
+        jTextArea3.setText("Elija el archivo CSV de su ordenador si desea Importar datos, en caso de Exportar seleccione la ruta donde desea almacenarlos. ");
+        jTextArea3.setWrapStyleWord(true);
+        jTextArea3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
+        jTextArea3.setMinimumSize(new java.awt.Dimension(0, 0));
+        jTextArea3.setOpaque(false);
+        jPanel33.add(jTextArea3, java.awt.BorderLayout.CENTER);
+
+        jPanelCargarArchivo.add(jPanel33, java.awt.BorderLayout.PAGE_START);
 
         jPanelMain.add(jPanelCargarArchivo, "Seleccionar Archivo");
 
@@ -555,9 +563,9 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelErrorDuringLoad.setLayout(new java.awt.GridBagLayout());
 
-        jLabel21.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel21.setText("No se pudieron cargar los datos del archivo seleccionado");
-        jPanelErrorDuringLoad.add(jLabel21, new java.awt.GridBagConstraints());
+        jLabelErrorMensage.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelErrorMensage.setText("No se pudieron cargar los datos del archivo seleccionado");
+        jPanelErrorDuringLoad.add(jLabelErrorMensage, new java.awt.GridBagConstraints());
 
         jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/error_color.png"))); // NOI18N
         jPanelErrorDuringLoad.add(jLabel22, new java.awt.GridBagConstraints());
@@ -598,7 +606,7 @@ public class ImportarExportar extends AbstractViewPanel {
     }//GEN-LAST:event_jButtonToSelectFileActionPerformed
 
     private void jButtonToSelectColumnsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToSelectColumnsActionPerformed
-        toSelectColumns();
+//        toSelectColumns();
     }//GEN-LAST:event_jButtonToSelectColumnsActionPerformed
 
     private void jButtonToReadyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonToReadyActionPerformed
@@ -615,15 +623,17 @@ public class ImportarExportar extends AbstractViewPanel {
         Bindings.bind(jLabelDataAmount, getPresenter().getModel(PROP_CANTIDAD_DATOS));
         Bindings.bind(jLabelSelectedFileName1, getPresenter().getModel(PROP_NOMBRE_ARCHIVO_SELECCIONADO));
         Bindings.bind(jLabelSelectedFileName2, getPresenter().getModel(PROP_NOMBRE_ARCHIVO_SELECCIONADO));
-        Bindings.bind(jButtonDoActionOption, "text", getPresenter().getModel(PROP_OPCION_TEXT));
+        Bindings.bind(jLabelErrorMensage, getPresenter().getModel(PROP_ERROR_TEXT_MESAGE));
 
-        Bindings.bind(jButtonToSelectFile, "enabled", getPresenter().getModel(PROP_ENABLE_BUTTON_TO_SEL_ARCHIVO));
+        Bindings.bind(jButtonDoActionOption, "text", getPresenter().getModel(PROP_OPCION_TEXT));
+        Bindings.bind(jButtonOpenSaveFile, "text", getPresenter().getModel(PROP_OPEN_FILE_TEXT_BUTTON));
+
         Bindings.bind(jButtonToSelectColumns, "enabled", getPresenter().getModel(PROP_ENABLE_BUTTON_TO_SEL_COLUMNS));
         Bindings.bind(jButtonToReady, "enabled", getPresenter().getModel(PROP_ENABLE_BUTTON_TO_READY));
-        Bindings.bind(jComboBoxTipoDatoSelector, "enabled", getPresenter().getModel(PROP_ENABLE_TIPO_DATO));
         Bindings.bind(jButtonDoActionOption, "enabled", getPresenter().getModel(PROP_ENABLE_BUTTON_DO_ACTION));
 
         Bindings.bind(jPanelDoButtonAction, "visible", getPresenter().getModel(PROP_ENABLE_BUTTON_DO_ACTION));
+        Bindings.bind(jPanelColSel, "visible", getPresenter().getModel(PROP_ENABLE_SELECT_COLUMN_PANEL));
 
         jButtonOpenSaveFile.addActionListener(getPresenter().getOperation(ACTION_OPEN_SAVE_FILE));
         jButtonToSelectColumns.addActionListener(getPresenter().getOperation(ACTION_FILL_HEADER_VALUES));
@@ -654,9 +664,22 @@ public class ImportarExportar extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
+        getPresenter().addPropertyChangeListener("To Column Select", (PropertyChangeEvent evt) -> {
+            toSelectColumns();
+        });
+        getPresenter().addPropertyChangeListener("To Ready", (PropertyChangeEvent evt) -> {
+            toSelectReady();
+        });
         getPresenter().addPropertyChangeListener("Success", (PropertyChangeEvent evt) -> {
             toSelectSucces();
         });
+        getPresenter().addPropertyChangeListener("Error During Load", (PropertyChangeEvent evt) -> {
+            toSelectError();
+        });
+        getPresenter().addPropertyChangeListener("Error During Save", (PropertyChangeEvent evt) -> {
+            toSelectError();
+        });
+
         jTable1.setModel(new BindableTableModel<DataHeaderWrapper>(jTable1) {
             @Override
             public int getColumnCount() {
@@ -723,7 +746,6 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -734,6 +756,7 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JLabel jLabelDataAmount;
     private javax.swing.JLabel jLabelDataType;
     private javax.swing.JLabel jLabelDataType1;
+    private javax.swing.JLabel jLabelErrorMensage;
     private javax.swing.JLabel jLabelImpExp;
     private javax.swing.JLabel jLabelOption1;
     private javax.swing.JLabel jLabelOption2;
@@ -748,7 +771,6 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
@@ -767,6 +789,7 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel31;
     private javax.swing.JPanel jPanel32;
+    private javax.swing.JPanel jPanel33;
     private javax.swing.JPanel jPanel34;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
@@ -795,7 +818,7 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextArea3;
     // End of variables declaration//GEN-END:variables
 
     private void toSelectFile() {
@@ -821,6 +844,8 @@ public class ImportarExportar extends AbstractViewPanel {
         cards.show(jPanelMain, "Ready");
         jPanelColSel.setBorder(matteBorderCompleted);
         jLabelSelCol.setForeground(DefaultValues.PRIMARY_COLOR);
+        jPanelFilleSel.setBorder(matteBorderCompleted);
+        jLabelSelFile.setForeground(DefaultValues.PRIMARY_COLOR);
         jPanelReady.setBorder(matteBorderCurrent);
         jLabelAction.setForeground(DefaultValues.SECONDARY_DARK);
     }
@@ -835,7 +860,15 @@ public class ImportarExportar extends AbstractViewPanel {
     private void toSelectError() {
         CardLayout cards = (CardLayout) jPanelready.getLayout();
         cards.show(jPanelready, "Error During Load");
-        jPanelReady.setBorder(matteBorderCompleted);
+    }
+
+    private Dimension setComponentSize() {
+        if (jPanelProgress.getComponentCount() != 0 && jPanelProgress.getWidth() != 0) {
+            int percent = 100 / jPanelProgress.getComponentCount();
+            int part = (jPanelProgress.getWidth() * percent) / 100;
+            return new Dimension(part, 0);
+        }
+        return new Dimension();
     }
 
 }
