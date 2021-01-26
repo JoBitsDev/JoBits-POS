@@ -19,7 +19,7 @@ import java.io.File;
  */
 public class ImportarExportarViewModel extends AbstractListViewModel {
 
-    private OpcionIO opcion_seleccionada = OpcionIO.DEFAULT;
+    private OpcionIO opcion_seleccionada = OpcionIO.IMPORTAR;
 
     public static final String PROP_OPCION_SELECCIONADA = "opcion_seleccionada";
 
@@ -27,7 +27,7 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
 
     public static final String PROP_LISTA_OPCIONES = "lista_opciones";
 
-    private TipoDato tipo_dato_seleccionado = TipoDato.DEFAULT;
+    private TipoDato tipo_dato_seleccionado = TipoDato.FICHA_DE_COSTO;
 
     public static final String PROP_TIPO_DATO_SELECCIONADO = "tipo_dato_seleccionado";
 
@@ -42,14 +42,6 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
     private String opcion_text;
 
     public static final String PROP_OPCION_TEXT = "opcion_text";
-
-    private boolean enable_tipo_dato;
-
-    public static final String PROP_ENABLE_TIPO_DATO = "enable_tipo_dato";
-
-    private boolean enable_button_to_sel_archivo = false;
-
-    public static final String PROP_ENABLE_BUTTON_TO_SEL_ARCHIVO = "enable_button_to_sel_archivo";
 
     private File archivo_seleccionado;
 
@@ -98,6 +90,78 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
     private boolean enable_button_do_action = true;
 
     public static final String PROP_ENABLE_BUTTON_DO_ACTION = "enable_button_do_action";
+
+    private boolean enable_select_column_panel;
+
+    public static final String PROP_ENABLE_SELECT_COLUMN_PANEL = "enable_select_column_panel";
+
+    private String open_file_text_button;
+
+    public static final String PROP_OPEN_FILE_TEXT_BUTTON = "open_file_text_button";
+
+    private String error_text_mesage;
+
+    public static final String PROP_ERROR_TEXT_MESAGE = "error_text_mesage";
+
+    /**
+     * Get the value of error_text_mesage
+     *
+     * @return the value of error_text_mesage
+     */
+    public String getError_text_mesage() {
+        return error_text_mesage;
+    }
+
+    /**
+     * Set the value of error_text_mesage
+     *
+     * @param error_text_mesage new value of error_text_mesage
+     */
+    public void setError_text_mesage(String error_text_mesage) {
+        String oldError_text_mesage = this.error_text_mesage;
+        this.error_text_mesage = error_text_mesage;
+        firePropertyChange(PROP_ERROR_TEXT_MESAGE, oldError_text_mesage, error_text_mesage);
+    }
+
+    /**
+     * Get the value of open_file_text_button
+     *
+     * @return the value of open_file_text_button
+     */
+    public String getOpen_file_text_button() {
+        return open_file_text_button;
+    }
+
+    /**
+     * Set the value of open_file_text_button
+     *
+     * @param open_file_text_button new value of open_file_text_button
+     */
+    public void setOpen_file_text_button(String open_file_text_button) {
+        String oldOpen_file_text_button = this.open_file_text_button;
+        this.open_file_text_button = open_file_text_button;
+        firePropertyChange(PROP_OPEN_FILE_TEXT_BUTTON, oldOpen_file_text_button, open_file_text_button);
+    }
+
+    /**
+     * Get the value of enable_select_column_panel
+     *
+     * @return the value of enable_select_column_panel
+     */
+    public boolean isEnable_select_column_panel() {
+        return enable_select_column_panel;
+    }
+
+    /**
+     * Set the value of enable_select_column_panel
+     *
+     * @param enable_select_column_panel new value of enable_select_column_panel
+     */
+    public void setEnable_select_column_panel(boolean enable_select_column_panel) {
+        boolean oldEnable_select_column_panel = this.enable_select_column_panel;
+        this.enable_select_column_panel = enable_select_column_panel;
+        firePropertyChange(PROP_ENABLE_SELECT_COLUMN_PANEL, oldEnable_select_column_panel, enable_select_column_panel);
+    }
 
     /**
      * Get the value of enable_button_do_action
@@ -360,47 +424,6 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
         File oldArchivo_seleccionado = this.archivo_seleccionado;
         this.archivo_seleccionado = archivo_seleccionado;
         firePropertyChange(PROP_ARCHIVO_SELECCIONADO, oldArchivo_seleccionado, archivo_seleccionado);
-    }
-
-    /**
-     * Get the value of enable_button_to_sel_archivo
-     *
-     * @return the value of enable_button_to_sel_archivo
-     */
-    public boolean isEnable_button_to_sel_archivo() {
-        return enable_button_to_sel_archivo;
-    }
-
-    /**
-     * Set the value of enable_button_to_sel_archivo
-     *
-     * @param enable_button_to_sel_archivo new value of
-     * enable_button_to_sel_archivo
-     */
-    public void setEnable_button_to_sel_archivo(boolean enable_button_to_sel_archivo) {
-        boolean oldEnable_button_to_sel_archivo = this.enable_button_to_sel_archivo;
-        this.enable_button_to_sel_archivo = enable_button_to_sel_archivo;
-        firePropertyChange(PROP_ENABLE_BUTTON_TO_SEL_ARCHIVO, oldEnable_button_to_sel_archivo, enable_button_to_sel_archivo);
-    }
-
-    /**
-     * Get the value of enable_tipo_dato
-     *
-     * @return the value of enable_tipo_dato
-     */
-    public boolean isEnable_tipo_dato() {
-        return enable_tipo_dato;
-    }
-
-    /**
-     * Set the value of enable_tipo_dato
-     *
-     * @param enable_tipo_dato new value of enable_tipo_dato
-     */
-    public void setEnable_tipo_dato(boolean enable_tipo_dato) {
-        boolean oldEnable_tipo_dato = this.enable_tipo_dato;
-        this.enable_tipo_dato = enable_tipo_dato;
-        firePropertyChange(PROP_ENABLE_TIPO_DATO, oldEnable_tipo_dato, enable_tipo_dato);
     }
 
     /**
