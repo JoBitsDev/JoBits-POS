@@ -11,7 +11,6 @@ package com.jobits.pos.ui.configuracion;
  */
 public enum OpcionIO {
 
-    DEFAULT("---"),
     IMPORTAR("Importar"),
     EXPORTAR("Exportar");
 

@@ -11,7 +11,6 @@ package com.jobits.pos.ui.configuracion;
  */
 public enum TipoDato {
 
-    DEFAULT("---"),
     FICHA_DE_COSTO("Ficha de Costo"),
     INSUMO_ALMACEN("Insumo Almacen"),
     PRODUCTO_VENTA("Producto de Venta"),
