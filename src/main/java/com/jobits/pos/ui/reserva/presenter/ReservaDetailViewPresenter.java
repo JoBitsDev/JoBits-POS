@@ -11,6 +11,7 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.reserva.core.usecase.CategoriaUseCase;
 import com.jobits.pos.reserva.core.usecase.ClienteUseCase;
@@ -190,18 +191,20 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     }
 
     private void onAgregarClienteClick() {
-//        if ((boolean) Application.getInstance().getNotificationService().
-//                showDialog("Desea registrar a: " + getBean().getNombre_cliente(),
-//                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-//            service.crearCliente(getBean().getNombre_cliente(),
-//                    getBean().getApellido_cliente(),
-//                    getBean().getTelefono_cliente());
-//            getBean().setLista_clientes(new ArrayListModel<>(service.getListaClientes()));
-//            getBean().setNombre_cliente(null);
-//            getBean().setApellido_cliente(null);
-//            getBean().setTelefono_cliente(null);
-//            Application.getInstance().getNotificationService().showDialog(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
-//        }
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Desea registrar a: " + getBean().getNombre_cliente(),
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            Cliente c = new Cliente();
+            c.setNombrecliente(getBean().getNombre_cliente());
+            c.setApellidocliente(getBean().getApellido_cliente());
+            c.setTelefonocliente(getBean().getTelefono_cliente());
+            clienteUseCase.create(c);
+            getBean().setLista_clientes(new ArrayListModel<>(clienteUseCase.findAll()));
+            getBean().setNombre_cliente(null);
+            getBean().setApellido_cliente(null);
+            getBean().setTelefono_cliente(null);
+            Application.getInstance().getNotificationService().showDialog(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        }
     }
 
     private void onAceptarClick() {

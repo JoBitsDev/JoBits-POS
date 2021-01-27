@@ -294,7 +294,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         Bindings.bind(jLabelTotalIndexes, getPresenter().getModel(ReservaSchedulerViewModel.PROP_TOTAL_INDICES));
         jButtonNext.addActionListener(getPresenter().getOperation(ReservaSchedulerViewPresenter.ACTION_NEXT));
         jButtonBack.addActionListener(getPresenter().getOperation(ReservaSchedulerViewPresenter.ACTION_BACK));
-        jButtonRefresh.addActionListener(getPresenter().getOperation(ReservaSchedulerViewPresenter.ACTION_REFRESH_STATE));
+        jButtonRefresh.addActionListener(getPresenter().getOperation(ReservaSchedulerViewPresenter.ACTION_REFRESH));
 
         getPresenter().addPropertyChangeListener(ReservaSchedulerViewPresenter.PROP_SHOW_SCHEDULE, (PropertyChangeEvent evt) -> {
             setModelToScheduler();
@@ -343,6 +343,11 @@ public class ReservaSchedulerView extends AbstractViewPanel {
             @Override
             public void handleCheckOut(Appointment appointment) {
                 getPresenter().handleChekOutReserva(appointment);
+            }
+
+            @Override
+            public void handleCancel(Appointment appointment) {
+                getPresenter().handleCancelarReserva(appointment);
             }
 
         });

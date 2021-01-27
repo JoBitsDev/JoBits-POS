@@ -145,12 +145,15 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     }
 
     private void onAgregarInsumoFichaClick() {
-        Insumo inSel = getBean().getInsumo_disponible_selecionado();
-        service.agregarInsumoElaboradoaInsumo(inSel, new NumberPad(null).showView());
-        getBean().setInsumo_disponible_selecionado(null);
-        getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(service.getInstance().getInsumoDerivadoList());
-        updateCostoValue();
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            Insumo inSel = getBean().getInsumo_disponible_selecionado();
+            service.agregarInsumoElaboradoaInsumo(inSel, cantidad);
+            getBean().setInsumo_disponible_selecionado(null);
+            getBean().getLista_insumos_contenidos().clear();
+            getBean().getLista_insumos_contenidos().addAll(service.getInstance().getInsumoDerivadoList());
+            updateCostoValue();
+        }
     }
 
     private void onEliminarInsumoFichaClick() {
@@ -162,11 +165,14 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     }
 
     private void onAgregarProductoFichaClick() {
-        service.agregarProductoVentaAInsumo(getBean().getProducto_disponible_seleccionado(), new NumberPad(null).showView());
-        getBean().setProducto_disponible_seleccionado(null);
-        getBean().getLista_productos_contenidos().clear();
-        getBean().getLista_productos_contenidos().addAll(service.getInstance().getProductoInsumoList());
-        getBean().setProducto_disponible_seleccionado(null);
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            service.agregarProductoVentaAInsumo(getBean().getProducto_disponible_seleccionado(), cantidad);
+            getBean().setProducto_disponible_seleccionado(null);
+            getBean().getLista_productos_contenidos().clear();
+            getBean().getLista_productos_contenidos().addAll(service.getInstance().getProductoInsumoList());
+            getBean().setProducto_disponible_seleccionado(null);
+        }
     }
 
     private void onEliminarProductoFichaClick() {

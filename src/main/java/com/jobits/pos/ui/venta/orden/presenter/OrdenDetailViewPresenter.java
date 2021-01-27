@@ -102,8 +102,12 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onAddProductoClick() {
-        getController().addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), new NumberPad(null).showView());
-        getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            getController().addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad);
+            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        }
+
     }
 
     private void onCerrarOrdenClick() {
@@ -152,7 +156,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 //        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
 //    }
     private void onVerDetallesClick() {
-        getController().canViewOrdenLog(Application.getInstance().getLoggedUser(),codOrden);
+        getController().canViewOrdenLog(Application.getInstance().getLoggedUser(), codOrden);
         Application.getInstance().getNavigator().navigateTo(
                 OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);
     }

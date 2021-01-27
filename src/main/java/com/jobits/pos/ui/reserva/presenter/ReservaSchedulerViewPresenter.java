@@ -6,9 +6,12 @@
 package com.jobits.pos.ui.reserva.presenter;
 
 import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.domain.Reserva;
+import com.jobits.pos.reserva.core.domain.ReservaEstado;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.reserva.core.usecase.CategoriaUseCase;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
@@ -47,7 +50,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
     CategoriaUseCase categoriasUseCase = PosDesktopUiModule.getInstance().getImplementation(CategoriaUseCase.class);
     ReservaUseCase reservasUseCase = PosDesktopUiModule.getInstance().getImplementation(ReservaUseCase.class);
 
-    private final int amountToShow = 2;
+    private final int amountToShow = 10;
     private int totalIndex = 0, currentIndex = 0;
 
     public ReservaSchedulerViewPresenter() {
@@ -74,6 +77,15 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
             }
 
         });
+        registerOperation(new AbstractViewAction(ACTION_REFRESH) {
+            @Override
+            public Optional doAction() {
+                setTotalIndex();
+                refreshState();
+                return Optional.empty();
+            }
+
+        });
     }
 
     private void onNextClick() {
@@ -81,6 +93,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         if (currentIndex > totalIndex) {
             currentIndex = 1;
         }
+        getBean().setIndice_actual(String.valueOf(currentIndex));
         refreshState();
     }
 
@@ -89,12 +102,12 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         if (currentIndex <= 0) {
             currentIndex = totalIndex;
         }
+        getBean().setIndice_actual(String.valueOf(currentIndex));
         refreshState();
     }
 
     @Override
     protected Optional refreshState() {
-        setTotalIndex();
         Date d = getBean().getDia_seleccionado();
         getBean().setSelected_date(LocalDate.of(d.getYear() + 1900, d.getMonth() + 1, d.getDate()));
         getBean().setList_categorias(categoriaConverter());
@@ -146,6 +159,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
     private void addListeners() {
         addBeanPropertyChangeListener(ReservaSchedulerViewModel.PROP_DIA_SELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null) {
+                setTotalIndex();
                 refreshState();
             }
         });
@@ -158,6 +172,7 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         if (current.isBefore(cierre) && current.isAfter(inicio)) {
             Ubicacion u = ((UbicacionWrapper) resource).getUbicacion();
             Reserva reserva = new Reserva(time.toLocalDate(), time.toLocalTime(), 30, u); // 6 pm
+            reserva.setDuracionMinutos(ConfiguracionDAO.getInstance().find(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO).getValor());
             Application.getInstance().getNavigator().navigateTo(
                     ReservasDetailView.VIEW_NAME, new ReservaDetailViewPresenter(reserva, true), DisplayType.POPUP);
             refreshState();
@@ -190,6 +205,17 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
             throw new IllegalStateException("Ya se hizo CheckOut a la reserva seleccionada");
         } else {
             reservasUseCase.checkOut(reserva.getIdreserva(), LocalDateTime.of(reserva.getFechareserva(), reserva.getHorareserva()));
+        }
+        refreshState();
+        Application.getInstance().getNotificationService().notify("Check Out realizado", TipoNotificacion.SUCCESS);
+    }
+
+    public void handleCancelarReserva(Appointment appointment) {
+        Reserva reserva = ((ReservaWrapper) appointment).getReserva();
+        if (reserva.getEstado().equals(ReservaEstado.CANCELADA.toString())) {
+            throw new IllegalStateException("Ya la reseserva fue cancelada");
+        } else {
+            reservasUseCase.cancelar(reserva.getIdreserva());
         }
         refreshState();
         Application.getInstance().getNotificationService().notify("Check Out realizado", TipoNotificacion.SUCCESS);

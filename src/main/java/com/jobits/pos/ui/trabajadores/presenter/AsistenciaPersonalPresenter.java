@@ -83,27 +83,29 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         getBean().getLista_personal_disponible().clear();
         getBean().getLista_personal_disponible().addAll(new ArrayListModel<>(personalService.getTrabajadoresList()));
         getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.updateSalaries(venta.getId())));
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void onEliminarClick() {
         personalService.destroy(getBean().getPersonal_contenido_selecionado());
-        getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        refreshState();
     }
 
     private void onAgregarClick() {
         personalService.createNewInstance(getBean().getPersonal_disponible_seleccionado(), venta);
-        getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        refreshState();
     }
 
     private void onAMayoresClick() {
-        AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
-        personalService.updateAMayores(personal, new NumberPad(null).showView());
-        getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
+            personalService.updateAMayores(personal, cantidad);
+            getBean().getLista_personal_contenido().clear();
+            getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        }
+
     }
 
 }

@@ -53,6 +53,7 @@ import com.jobits.pos.ui.venta.VentaResumenView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
+import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 
 /**
  *
@@ -150,7 +151,7 @@ public class ViewFacade {
             case CalcularCambioView.VIEW_NAME:
                 return new CalcularCambioView(p);
             case VentaResumenView.VIEW_NAME:
-                return new VentaResumenView(p);
+                return new VentaResumenView((VentaResumenViewPresenter) p);
             case AutorizoView.VIEW_NAME:
                 return new AutorizoView(p);
             case ReservaSchedulerView.VIEW_NAME:

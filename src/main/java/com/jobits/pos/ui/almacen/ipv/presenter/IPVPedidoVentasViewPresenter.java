@@ -96,9 +96,11 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     private void onAgregarIPVClick() {
         IpvVentaRegistro selected = getBean().getSeleccionado_ipv_ventas();
         if (selected != null) {
-            float cantidad = new NumberPad(null).showView();
-            getBean().getLista_producto_venta_model().add(
-                    new ProdcutoVentaPedidoModel(selected, cantidad));
+            Float cantidad = new NumberPad(null).showView();
+            if (cantidad != null) {
+                getBean().getLista_producto_venta_model().add(
+                        new ProdcutoVentaPedidoModel(selected, cantidad));
+            }
         } else {
             throw new IllegalArgumentException("Seleccione un Producto de IPV primero");
         }
