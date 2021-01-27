@@ -27,13 +27,13 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Application app = Application.createApplication(true);
+
+        SplashScreen sp = new SplashScreen();
+        app.init();
+        sp.dispose();
         java.awt.EventQueue.invokeLater(() -> {
-            Application app = Application.createApplication(true);
-            try {
-                app.start();
-            } catch (Exception ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            app.start();
         });
 
     }
