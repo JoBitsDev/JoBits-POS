@@ -105,7 +105,6 @@ public class Application {
     private NotificationService notificationService = NotificationService.getInstance();
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-
     private Application() {
     }
 
@@ -179,9 +178,13 @@ public class Application {
         return mainWindow.showView(viewUIDName, presenter, displayType);
     }
 
-    public void start() throws Exception {
+    public void init() {
         if (!debugMode) {
-            setupLogging();
+            try {
+                setupLogging();
+            } catch (Exception ex) {
+                Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         setLocale();
         setApplicationLooks();
@@ -191,6 +194,9 @@ public class Application {
         registerResources();
         initModules();
         UserResolver.registerUserResolverService(userResolver);
+    }
+
+    public void start() {
         mainWindow = new MainWindow();
         mainWindow.setTitle(APP_NAME);
         mainWindow.setWelcomeHeader(true);
@@ -201,7 +207,6 @@ public class Application {
         backgroundWorker = LongProcessActionServiceImpl.getInstance();
         mainWindow.setVisible(true);
         navigator.startNavigation();
-
     }
 
     private void initModules() {

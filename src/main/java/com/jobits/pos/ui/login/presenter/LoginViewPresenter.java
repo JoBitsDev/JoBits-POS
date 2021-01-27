@@ -58,8 +58,10 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         ubicacionController = new UbicacionConexionController();
         getBean().setListaUbicaciones(new ArrayListModel<>(
                 Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
-        getBean().setUbicacionSeleccionada(ubicacionController.getUbicaciones().getUbicacionActiva());
+    }
 
+    public void setUbicacionSeleccionada() {
+        getBean().setUbicacionSeleccionada(ubicacionController.getUbicaciones().getUbicacionActiva());
     }
 
     private void onAutenticarClick() {
@@ -132,10 +134,8 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
 
     private void actualizarLabelConexionYBotonAutenticar(boolean conn) {
         if (conn) {
-//            getBean().setEstadoConexion("Conectado");
             getBean().setColorLabelConexion(Color.green);
         } else {
-//            getBean().setEstadoConexion("No hay conexión");
             getBean().setColorLabelConexion(Color.red);
         }
         getBean().setBotonAutenticarHabilitado(conn);
