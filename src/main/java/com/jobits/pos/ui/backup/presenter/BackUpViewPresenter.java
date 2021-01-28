@@ -5,15 +5,14 @@
  */
 package com.jobits.pos.ui.backup.presenter;
 
-import com.jobits.pos.controller.backup.BackUpController;
+import com.jobits.pos.controller.backup.impl.BackUpController;
 import com.jobits.pos.controller.backup.BackUpService;
-import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.login.UbicacionConexionService;
 import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.LongProcessMethod;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
@@ -32,11 +31,10 @@ public class BackUpViewPresenter extends AbstractViewPresenter<BackUpViewModel> 
     public static final String ACTION_REALIZAR_COPIA_SEG = "Realizar copia de seguridad";
     public static final String ACTION_CERRAR = "Cerrar";
 
-    private UbicacionConexionService ubicacionController;
+    private UbicacionConexionService ubicacionController = PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class);
 
-    public BackUpViewPresenter(UbicacionConexionController ubicacionController) {
+    public BackUpViewPresenter() {
         super(new BackUpViewModel());
-        this.ubicacionController = ubicacionController;
         updateBeanData();
 
     }
@@ -74,7 +72,7 @@ public class BackUpViewPresenter extends AbstractViewPresenter<BackUpViewModel> 
 
             if (resp) {
 
-                BackUpService bu = new BackUpController(getBean().getUbicacion_seleccionada());
+                BackUpService bu = new BackUpController(getBean().getUbicacion_seleccionada());//TODO: inyectar despues
 
                 if (getBean().isCheckbox_personal()) {
                     bu.setTipoBackUp(BackUpController.TipoBackUp.PERSONAL);
