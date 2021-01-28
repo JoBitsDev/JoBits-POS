@@ -6,12 +6,12 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.areaventa.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaDetailService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
@@ -28,16 +28,17 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
     public static final String ACTION_AGREGAR = "Agregar";
     public static final String ACTION_ELIMINAR = "Eliminar";
 
-    private AreaDetailService service;
+    private AreaDetailService service = PosDesktopUiModule.getInstance().getImplementation(AreaDetailService.class);
+
+    private final boolean creatingMode;
     Area area;
 
-    public AreaDetailViewPresenter(AreaDetailController controller) {
+    public AreaDetailViewPresenter(Area area, boolean creatingMode) {
         super(new AreaDetailViewModel());
-        this.service = controller;
-        if (controller.isCreatingMode()) {
-            area = controller.createNewInstance();
-        } else {
-            area = controller.getSelected();
+        this.creatingMode = creatingMode;
+        this.area = area;
+        if (creatingMode) {
+            this.area = service.createNewInstance();
         }
         fillForm();
         addListeners();
@@ -78,11 +79,13 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
 
         });
     }
+
     private void addListeners() {
         getBean().addPropertyChangeListener(AreaDetailViewModel.PROP_CANT_MESAS_AREA, (PropertyChangeEvent evt) -> {
             System.out.println(getBean().getCant_mesas_area());
         });
     }
+
     private void onAceptarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea guardar los cambios",
@@ -93,7 +96,7 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
             area.setCapacidad(getBean().getCant_mesas_area());
             area.setPorcientoPorServicio(getBean().getPorciento_servicio());
             area.setCartaList(getBean().getLista_menu_area());
-            if (service.isCreatingMode()) {
+            if (creatingMode) {
                 service.create(area);
             } else {
                 service.update(area);
