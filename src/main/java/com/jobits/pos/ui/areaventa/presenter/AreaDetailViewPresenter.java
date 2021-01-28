@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.areaventa.impl.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaDetailService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Area;
