@@ -135,7 +135,11 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
                 getBean().getEstimacion_de_stock(),
                 getBean().getUnidad_medida_selected().getValor(),
                 getBean().getCantidad_creada());
-        service.createUpdateInstance();
+        if (service.isInCreatingState()) {
+            service.create(service.getInstance());
+        } else {
+            service.update(service.getInstance());
+        }
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         Application.getInstance().getNavigator().navigateUp();
     }
