@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.gasto.GastoOperacionController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Venta;
@@ -267,7 +266,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
-    
+
     private void updateBeanData() {
         if (getBean().getVenta_seleccionada() != null) {
             int codVenta = getBean().getVenta_seleccionada().getId();
@@ -282,9 +281,8 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             }
             asistenciaPersonalPresenter.setVenta(v);
             if (gastosPresenter == null) {
-                gastosPresenter = new GastosViewPresenter(new GastoOperacionController(v));
+                gastosPresenter = new GastosViewPresenter(v);
             }
-            gastosPresenter.setVenta(v);
             getBean().setVentaInstance(v);
             getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(codVenta));
             getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(codVenta));
