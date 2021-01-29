@@ -7,17 +7,13 @@ package com.jobits.pos.ui.mainmenu.presenter;
 
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.about.AcercaDeView;
-import com.jobits.pos.controller.configuracion.ConfiguracionController;
-import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.reportes.ReportarBugController;
-import com.jobits.pos.controller.reportes.ReportarBugService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.RootView;
-import static com.jobits.pos.ui.about.AcercaDeViewPresenter.ACTION_CLOSE;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
@@ -32,10 +28,7 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
-import java.awt.BorderLayout;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -81,7 +74,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        ConfiguracionView.VIEW_NAME, new ConfigurationViewPresenter(new ConfiguracionController()), DisplayType.POPUP);
+                        ConfiguracionView.VIEW_NAME, new ConfigurationViewPresenter(), DisplayType.POPUP);
                 return Optional.empty();
             }
         });

@@ -11,7 +11,6 @@ import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
-import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.imagemanager.ImageManagerController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.controller.insumo.InsumoListController;
@@ -182,7 +181,7 @@ public class PresenterFacade {
             case AreaDetailView.VIEW_NAME:
                 return new AreaDetailViewPresenter(null, true);
             case ConfiguracionView.VIEW_NAME:
-                return new ConfigurationViewPresenter(new ConfiguracionController());
+                return new ConfigurationViewPresenter();
             case IpvGestionView.VIEW_NAME:
                 return new IpvGestionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(IPVService.class));
             case VentaDetailView.VIEW_NAME:
