@@ -76,9 +76,12 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
 
     @Override
     protected void onEditarClick() {
-        String nombre = JOptionPane.showInputDialog(null,
-                "Introduzca el nuevo nombre al punto de elaboracion",
-                getBean().getElemento_seleccionado().getNombreCocina());
+        String nombre = null;
+        if (getBean().getElemento_seleccionado() != null) {
+            nombre = JOptionPane.showInputDialog(null,
+                    "Introduzca el nuevo nombre al punto de elaboracion",
+                    getBean().getElemento_seleccionado().getNombreCocina());
+        }
         service.update(getBean().getElemento_seleccionado(), nombre);
         setListToBean();
     }
