@@ -95,7 +95,7 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
 
     public static final String PROP_ENABLE_SELECT_COLUMN_PANEL = "enable_select_column_panel";
 
-    private String open_file_text_button;
+    private String open_file_text_button = "Seleccionar Archivo";
 
     public static final String PROP_OPEN_FILE_TEXT_BUTTON = "open_file_text_button";
 
