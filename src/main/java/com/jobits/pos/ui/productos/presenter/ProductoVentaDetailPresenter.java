@@ -145,7 +145,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(pv.getProductoInsumoList()));
         getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
-        getBean().setPrecio_venta("" + R.formatoMoneda.format(pv.getPrecioVenta()));
+        getBean().setPrecio_venta(String.valueOf(utils.setDosLugaresDecimalesFloat(pv.getPrecioVenta())));
         updateCostoValue();
         getBean().getLista_insumos_disponibles().clear();
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
@@ -213,13 +213,11 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void updateCostoValue() {
+        float total = 0;
         if (!getBean().getLista_insumos_contenidos().isEmpty()) {
-            float total = 0;
             total = getBean().getLista_insumos_contenidos().stream().map(x -> x.getCosto()).reduce(total, (accumulator, _item) -> accumulator + _item);
-            getBean().setPrecio_costo(R.formatoMoneda.format(total));
-        } else {
-            getBean().setPrecio_costo(R.formatoMoneda.format(0));
         }
+        getBean().setPrecio_costo(String.valueOf(utils.setDosLugaresDecimalesFloat(total)));
     }
 
     private void onEliminarInsumoFichaClick() {

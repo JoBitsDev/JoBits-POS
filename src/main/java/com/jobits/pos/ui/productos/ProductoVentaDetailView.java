@@ -170,12 +170,22 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jTextFieldPrecioVenta.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
         jTextFieldPrecioVenta.setMinimumSize(new java.awt.Dimension(250, 60));
         jTextFieldPrecioVenta.setPreferredSize(new java.awt.Dimension(250, 60));
+        jTextFieldPrecioVenta.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldPrecioVentaFocusGained(evt);
+            }
+        });
         jPanel10.add(jTextFieldPrecioVenta);
 
         jTextFieldPrecioCosto.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
         jTextFieldPrecioCosto.setMaximumSize(new java.awt.Dimension(250, 60));
         jTextFieldPrecioCosto.setMinimumSize(new java.awt.Dimension(250, 60));
         jTextFieldPrecioCosto.setPreferredSize(new java.awt.Dimension(250, 60));
+        jTextFieldPrecioCosto.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldPrecioCostoFocusGained(evt);
+            }
+        });
         jPanel10.add(jTextFieldPrecioCosto);
 
         jPanelInputs.add(jPanel10);
@@ -352,6 +362,14 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         }
     }//GEN-LAST:event_jLabelIProductImageMouseClicked
 
+    private void jTextFieldPrecioVentaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPrecioVentaFocusGained
+        jTextFieldPrecioVenta.setText(null);
+    }//GEN-LAST:event_jTextFieldPrecioVentaFocusGained
+
+    private void jTextFieldPrecioCostoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPrecioCostoFocusGained
+        jTextFieldPrecioCosto.setText(null);
+    }//GEN-LAST:event_jTextFieldPrecioCostoFocusGained
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
@@ -408,8 +426,8 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         Bindings.bind(jComboBoxSECCION, new SelectionInList<>(getPresenter().getModel(PROP_LISTA_CATEGORIAS), getPresenter().getModel(PROP_CATEGORIA_SELECCIONADA)));
         Bindings.bind(jTextFieldNombre, getPresenter().getModel(PROP_NOMBRE_PRODUCTO));
         Bindings.bind(jTextFieldPrecioVenta, getPresenter().getModel(PROP_PRECIO_VENTA));
-        Bindings.bind(jXLabelPCod, getPresenter().getModel(PROP_CODIGO_PRODUCTO));
         Bindings.bind(jTextFieldPrecioCosto, getPresenter().getModel(PROP_PRECIO_COSTO));
+        Bindings.bind(jXLabelPCod, getPresenter().getModel(PROP_CODIGO_PRODUCTO));
         jButtonAddCocina.addActionListener(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR_PUNTO_ELABORACION));
         jButtonAddSeccion.addActionListener(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR_CATEGORIA));
 

@@ -274,6 +274,9 @@
                       <Dimension value="[250, 60]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldPrecioVentaFocusGained"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getTextFielPrecioVenta(&quot;0.00&quot;, &quot;Precio venta&quot;,R.COIN_SUFFIX)"/>
                   </AuxValues>
@@ -293,6 +296,9 @@
                       <Dimension value="[250, 60]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldPrecioCostoFocusGained"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getTextFielPrecioVenta(&quot;0.00&quot;, &quot;Precio de costo&quot;,R.COIN_SUFFIX)"/>
                   </AuxValues>
