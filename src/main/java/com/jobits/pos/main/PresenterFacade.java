@@ -11,8 +11,6 @@ import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
-import com.jobits.pos.controller.clientes.ClientesDetailController;
-import com.jobits.pos.controller.clientes.ClientesListController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
 import com.jobits.pos.controller.imagemanager.ImageManagerController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
@@ -225,9 +223,9 @@ public class PresenterFacade {
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
             case ClientesListView.VIEW_NAME:
-                return new ClientesListViewPresenter(new ClientesListController());
+                return new ClientesListViewPresenter();
             case ClientesDetailView.VIEW_NAME:
-                return new ClientesDetailViewPresenter(new ClientesDetailController());
+                return new ClientesDetailViewPresenter(null);
             case ReservaSchedulerView.VIEW_NAME:
                 return new ReservaSchedulerViewPresenter();
             case MesaDetailView.VIEW_NAME:

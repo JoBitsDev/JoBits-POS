@@ -5,12 +5,12 @@
  */
 package com.jobits.pos.ui.clientes.presenter;
 
-import com.jobits.pos.controller.clientes.ClientesDetailController;
 import com.jobits.pos.controller.clientes.ClientesListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
 import com.jobits.pos.ui.clientes.ClientesListView;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 
 /**
@@ -22,11 +22,10 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
  */
 public class ClientesListViewPresenter extends AbstractListViewPresenter<ClientesListViewModel> {
 
-    private final ClientesListService service;
+    private final ClientesListService service = PosDesktopUiModule.getInstance().getImplementation(ClientesListService.class);
 
-    public ClientesListViewPresenter(ClientesListService service) {
+    public ClientesListViewPresenter() {
         super(new ClientesListViewModel(), ClientesListView.VIEW_NAME);
-        this.service = service;
         setListToBean();
     }
 
@@ -38,14 +37,14 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
     @Override
     protected void onAgregarClick() {
         NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
-                new ClientesDetailViewPresenter(new ClientesDetailController()), DisplayType.POPUP);
+                new ClientesDetailViewPresenter(null), DisplayType.POPUP);
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
         NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
-                new ClientesDetailViewPresenter(new ClientesDetailController(getBean().getElemento_seleccionado())), DisplayType.POPUP);
+                new ClientesDetailViewPresenter(getBean().getElemento_seleccionado()), DisplayType.POPUP);
         setListToBean();
     }
 
