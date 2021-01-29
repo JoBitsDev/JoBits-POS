@@ -34,6 +34,8 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
     Seccion seccion;
     Carta carta;
 
+    private final boolean creatingMode;
+
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_ACEPTAR = "Aceptar";
     public static final String ACTION_AGREGAR = "Agregar";
@@ -45,9 +47,10 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
         this.carta = carta;
         if (seccion == null) {
             this.seccion = new Seccion();
-            service.setCreatingMode(true);
+            creatingMode = true;
             getBean().setCrear_editar_button_text("Crear");
         } else {
+            creatingMode = false;
             this.seccion = seccion;
             getBean().setCrear_editar_button_text("Editar");
         }
@@ -56,10 +59,11 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
 
     @Override
     protected Optional refreshState() {
-        getBean().setNombre_habilitado(false);
-        getBean().setNombre_seccion(service.getSeccion(seccion.getNombreSeccion()).getNombreSeccion());
-        getBean().setLista_secciones_agregadas(
-                new ArrayListModel<>(service.getSeccion(seccion.getNombreSeccion()).getAgregadoEn()));
+        if (!creatingMode) {
+            getBean().setNombre_habilitado(false);
+        }
+        getBean().setNombre_seccion(seccion.getNombreSeccion());
+        getBean().setLista_secciones_agregadas(new ArrayListModel<>(seccion.getAgregadoEn()));
         List<Seccion> aux = new ArrayList();
         List<Carta> listaCartas = new MenuController().getCartaListService().getItems();
         for (Carta x : listaCartas) {
@@ -120,7 +124,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             seccion.setNombreSeccion(getBean().getNombre_seccion());
             seccion.setAgregadoEn(getBean().getLista_secciones_agregadas());
-            if (service.isCreatingMode()) {
+            if (creatingMode) {
                 service.crearSeccion(carta, seccion);
             } else {
                 service.editarSeccion(seccion);
