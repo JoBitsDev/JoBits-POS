@@ -305,7 +305,7 @@ public class ImportarExportar extends AbstractViewPanel {
         jPanel17.setLayout(new java.awt.GridBagLayout());
 
         jButtonOpenSaveFile.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-        jButtonOpenSaveFile.setText("Seleccionar archivo");
+        jButtonOpenSaveFile.setLabel("");
         jPanel17.add(jButtonOpenSaveFile, new java.awt.GridBagConstraints());
 
         jPanel13.add(jPanel17);
