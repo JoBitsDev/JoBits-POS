@@ -6,7 +6,7 @@
 package com.jobits.pos.main;
 
 import com.jobits.pos.ui.MainWindow;
-import com.jobits.pos.controller.licencia.LicenceController;
+import com.jobits.pos.controller.licencia.impl.LicenceController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
