@@ -7,8 +7,8 @@ package com.jobits.pos.ui.mainmenu.presenter;
 
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.about.AcercaDeView;
-import com.jobits.pos.controller.login.LogInController;
-import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.controller.login.impl.LogInController;
+import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.controller.reportes.ReportarBugController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;

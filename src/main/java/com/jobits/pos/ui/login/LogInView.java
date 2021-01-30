@@ -7,7 +7,7 @@ package com.jobits.pos.ui.login;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;

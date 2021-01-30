@@ -7,7 +7,7 @@ package com.jobits.pos.ui.gastos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.gasto.GastoOperacionService;
-import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
