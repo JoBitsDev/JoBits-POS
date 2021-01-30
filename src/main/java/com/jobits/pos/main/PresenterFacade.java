@@ -11,8 +11,6 @@ import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
-import com.jobits.pos.controller.insumo.InsumoDetailController;
-import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.controller.login.LogInController;
 import com.jobits.pos.controller.login.UbicacionConexionController;
 import com.jobits.pos.controller.productos.ProductoVentaListController;
@@ -156,9 +154,9 @@ public class PresenterFacade {
             case ProductoVentaDetailView.VIEW_NAME:
                 throw new IllegalStateException("Bad call on view: " + viewUIDName);
             case InsumoListView.VIEW_NAME:
-                return new InsumoListViewPresenter(new InsumoListController());
+                return new InsumoListViewPresenter();
             case InsumoDetailView.VIEW_NAME:
-                return new InsumoDetailViewPresenter(new InsumoDetailController());
+                return new InsumoDetailViewPresenter(null);
             case PersonalListView.VIEW_NAME:
                 return new PersonalListViewPresenter(new PersonalListController());
             case PersonalDetailView.VIEW_NAME:
