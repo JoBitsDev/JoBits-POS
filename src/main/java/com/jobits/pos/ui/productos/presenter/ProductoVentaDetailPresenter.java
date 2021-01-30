@@ -7,7 +7,7 @@ package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.imagemanager.ImageManagerService;
-import com.jobits.pos.controller.productos.ProductoVentaDetailController;
+import com.jobits.pos.controller.productos.impl.ProductoVentaDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaDetailService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.seccion.SeccionListController;
@@ -47,22 +47,24 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public static String ACTION_ELIMINAR_INSUMO_FICHA = "Eliminar";
     public static String ACTION_EDITAR_IMAGEN = "Editar Imagen";
 
-    private ProductoVentaDetailService service;
+    private final ProductoVentaDetailService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaDetailService.class);
+    private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
 
-    ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
+    private final boolean creatingMode;
+    ProductoVenta productoVenta;
 
     /**
      * Si es nulo es que el producto que se va a crear es nuevo
      *
-     * @param controller
+     * @param productoVenta
      */
-    public ProductoVentaDetailPresenter(ProductoVentaDetailController controller) {
+    public ProductoVentaDetailPresenter(ProductoVenta productoVenta) {
         super(new ProductoVentaDetailViewModel());
-        this.service = controller;
-        if (service.isCreatingMode()) {
-            getBean().setCrear_editar_button_text("Crear");
+        this.creatingMode = productoVenta == null;
+        if (creatingMode) {
+            this.productoVenta = service.createNewInstance();
         } else {
-            getBean().setCrear_editar_button_text("Editar");
+            this.productoVenta = productoVenta;
         }
         refreshView();
         refreshProductImage();
@@ -133,27 +135,31 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void refreshView() {
-        ProductoVenta pv = service.getInstance();
         getBean().getLista_categorias().addAll(new ArrayListModel<>(this.service.getSeccionList()));
         getBean().getLista_elaborado().addAll(new ArrayListModel<>(this.service.getCocinaList()));
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(this.service.getInsumoList()));
-        getBean().setCategoria_seleccionada(pv.getSeccionnombreSeccion());
-        getBean().setNombre_producto(pv.getNombre());
-        getBean().setCodigo_producto(pv.getCodigoProducto());
-        getBean().setTimepo_elaboracion(pv.getTiempoServicioMin());
-        if (pv.getPagoPorVenta() != null) {
-            getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(pv.getPagoPorVenta()));
+        getBean().setCategoria_seleccionada(productoVenta.getSeccionnombreSeccion());
+        getBean().setNombre_producto(productoVenta.getNombre());
+        getBean().setCodigo_producto(productoVenta.getCodigoProducto());
+        getBean().setTimepo_elaboracion(productoVenta.getTiempoServicioMin());
+        if (productoVenta.getPagoPorVenta() != null) {
+            getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoVenta.getPagoPorVenta()));
         }
-        getBean().setElaborado_seleccionado(pv.getCocinacodCocina());
+        getBean().setElaborado_seleccionado(productoVenta.getCocinacodCocina());
         getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(pv.getProductoInsumoList()));
+        getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoVenta.getProductoInsumoList()));
         getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
-        getBean().setPrecio_venta(String.valueOf(utils.setDosLugaresDecimalesFloat(pv.getPrecioVenta())));
+        getBean().setPrecio_venta(String.valueOf(utils.setDosLugaresDecimalesFloat(productoVenta.getPrecioVenta())));
         updateCostoValue();
         getBean().getLista_insumos_disponibles().clear();
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
-        getBean().setRuta_imagen_producto(pv.getDescripcion());
-        getBean().setCodigo_producto(service.getInstance().getCodigoProducto());
+        getBean().setRuta_imagen_producto(productoVenta.getDescripcion());
+        getBean().setCodigo_producto(productoVenta.getCodigoProducto());
+        if (creatingMode) {
+            getBean().setCrear_editar_button_text("Crear");
+        } else {
+            getBean().setCrear_editar_button_text("Editar");
+        }
     }
 
     private void onAddIngredienteClick() {
@@ -163,7 +169,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAceptarClick() {
-        service.fillProductoVentaData(
+        service.fillProductoVentaData(productoVenta,
                 getBean().getNombre_producto(),
                 getBean().getPrecio_costo(),
                 getBean().getComision_por_venta(),
@@ -173,6 +179,11 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 getBean().getLista_insumos_contenidos(),
                 getBean().getRuta_imagen_producto(),
                 getBean().getTimepo_elaboracion());
+        if (creatingMode) {
+            service.create(productoVenta);
+        } else {
+            service.create(productoVenta);
+        }
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
     }
@@ -181,7 +192,6 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea descartar los cambios?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            service.discardChanges();
             NavigationService.getInstance().navigateUp();
         }
 
@@ -205,10 +215,10 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         Float cantidad = new NumberPad(null).showView();
         if (cantidad != null) {
             Insumo inSel = getBean().getInsumo_disponible_sel();
-            service.agregarInsumoaProducto(inSel, cantidad);
+            service.agregarInsumoaProducto(productoVenta, inSel, cantidad);
             getBean().setInsumo_disponible_sel(null);
             getBean().getLista_insumos_contenidos().clear();
-            getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
+            getBean().getLista_insumos_contenidos().addAll(productoVenta.getProductoInsumoList());
             updateCostoValue();
             getBean().setInsumo_disponible_sel(null);
         }
@@ -225,17 +235,17 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private void onEliminarInsumoFichaClick() {
         ProductoInsumo inSel = getBean().getInsumo_contenido_seleccionado();
-        service.eliminarInsumoProducto(inSel);
+        service.eliminarInsumoProducto(productoVenta, inSel);
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
+        getBean().getLista_insumos_contenidos().addAll(productoVenta.getProductoInsumoList());
         updateCostoValue();
     }
 
     private void onEditarImagenClick() {
-        ImageManagerPopUpContainer a = new ImageManagerPopUpContainer(null, service.getInstance().getCodigoProducto());
+        ImageManagerPopUpContainer a = new ImageManagerPopUpContainer(null, productoVenta.getCodigoProducto());
 //        TODO: Arreglar Navegacion al ImageManagerPopup
-        getBean().setRuta_imagen_producto(R.MEDIA_FILE_PATH + service.getInstance().getCodigoProducto() + ".jpg");
+        getBean().setRuta_imagen_producto(R.MEDIA_FILE_PATH + productoVenta.getCodigoProducto() + ".jpg");
     }
 
     private void refreshProductImage() {

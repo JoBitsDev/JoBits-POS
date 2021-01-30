@@ -13,7 +13,7 @@ import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
 import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.login.impl.UbicacionConexionController;
-import com.jobits.pos.controller.productos.ProductoVentaListController;
+import com.jobits.pos.controller.productos.impl.ProductoVentaListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.reportes.ReportarBugController;
 import com.jobits.pos.controller.seccion.MenuController;
@@ -86,6 +86,7 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
+import com.jobits.pos.ui.productos.presenter.ProductoVentaDetailPresenter;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaListViewPresenter;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
@@ -150,9 +151,9 @@ public class PresenterFacade {
             case DashBoardView.VIEW_NAME:
                 return new DashboardViewPresenter();
             case ProductoVentaListView.VIEW_NAME:
-                return new ProductoVentaListViewPresenter(new ProductoVentaListController());
+                return new ProductoVentaListViewPresenter();
             case ProductoVentaDetailView.VIEW_NAME:
-                throw new IllegalStateException("Bad call on view: " + viewUIDName);
+                return new ProductoVentaDetailPresenter(null);
             case InsumoListView.VIEW_NAME:
                 return new InsumoListViewPresenter();
             case InsumoDetailView.VIEW_NAME:
