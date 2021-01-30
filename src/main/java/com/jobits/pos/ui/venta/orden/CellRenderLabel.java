@@ -5,18 +5,19 @@
  */
 package com.jobits.pos.ui.venta.orden;
 
-import com.jobits.pos.controller.imagemanager.ImageManagerController;
+import com.jobits.pos.controller.imagemanager.ImageManagerService;
 import com.jobits.pos.ui.DefaultValues;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.utils.IconFinder;
 import java.awt.Dimension;
-import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 
 /**
  *
  * @author Jorge
  */
 public class CellRenderLabel extends javax.swing.JPanel {
+
+    ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
 
     /**
      * Creates new form CellRenderLabel
@@ -34,7 +35,7 @@ public class CellRenderLabel extends javax.swing.JPanel {
         if (precio == null) {
             jLabelIcon.setIcon(new IconFinder().setIcon(selected, nombre));
         } else {
-            jLabelIcon.setIcon(ImageManagerController.loadImageIcon(rutaImagenProducto, new Dimension(50, 50)));//Hacer la dimension generica
+            jLabelIcon.setIcon(imageService.loadImageIcon(rutaImagenProducto, new Dimension(50, 50)));//Hacer la dimension generica
         }
     }
 

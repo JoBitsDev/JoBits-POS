@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.imagemanager.ImageManagerController;
+import com.jobits.pos.controller.imagemanager.ImageManagerService;
 import com.jobits.pos.controller.productos.ProductoVentaDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaDetailService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
@@ -19,6 +19,7 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
@@ -47,6 +48,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public static String ACTION_EDITAR_IMAGEN = "Editar Imagen";
 
     private ProductoVentaDetailService service;
+
+    ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
 
     /**
      * Si es nulo es que el producto que se va a crear es nuevo
@@ -237,7 +240,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private void refreshProductImage() {
         String path = getBean().getRuta_imagen_producto();
-        ImageIcon image = ImageManagerController.loadImageIcon(path, new Dimension(70, 70));
+        ImageIcon image = imageService.loadImageIcon(path, new Dimension(70, 70));
         getBean().setImagen_producto(image);
     }
 

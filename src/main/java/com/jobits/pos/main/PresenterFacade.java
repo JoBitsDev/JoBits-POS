@@ -11,7 +11,6 @@ import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
-import com.jobits.pos.controller.imagemanager.ImageManagerController;
 import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.controller.insumo.InsumoListController;
 import com.jobits.pos.controller.login.LogInController;
@@ -216,7 +215,7 @@ public class PresenterFacade {
             case AutorizoView.VIEW_NAME:
                 return new AutorizoViewPresenter(new LogInController(new AuthorizerImpl()), null);
             case ImageManagerView.VIEW_NAME:
-                return new ImageManagerViewPresenter(new ImageManagerController(null));
+                return new ImageManagerViewPresenter(null);
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListPresenter(PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class));
             case MesaListView.VIEW_NAME:
