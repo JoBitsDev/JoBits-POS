@@ -160,7 +160,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        BackUpView.VIEW_NAME, new BackUpViewPresenter(new UbicacionConexionController()), DisplayType.POPUP);
+                        BackUpView.VIEW_NAME, new BackUpViewPresenter(), DisplayType.POPUP);
                 return Optional.empty();
             }
         });

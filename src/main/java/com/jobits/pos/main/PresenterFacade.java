@@ -11,8 +11,6 @@ import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
-import com.jobits.pos.controller.areaventa.AreaDetailController;
-import com.jobits.pos.controller.areaventa.AreaVentaController;
 import com.jobits.pos.controller.clientes.ClientesDetailController;
 import com.jobits.pos.controller.clientes.ClientesListController;
 import com.jobits.pos.controller.configuracion.ConfiguracionController;
@@ -182,9 +180,9 @@ public class PresenterFacade {
             case SeccionDetailView.VIEW_NAME:
                 return new SeccionDetailViewPresenter(new SeccionDetailServiceImpl(), new Seccion(), new Carta());
             case AreaVentaListView.VIEW_NAME:
-                return new AreaVentaViewPresenter(new AreaVentaController());
+                return new AreaVentaViewPresenter();
             case AreaDetailView.VIEW_NAME:
-                return new AreaDetailViewPresenter(new AreaDetailController());
+                return new AreaDetailViewPresenter(null, true);
             case ConfiguracionView.VIEW_NAME:
                 return new ConfigurationViewPresenter(new ConfiguracionController());
             case IpvGestionView.VIEW_NAME:
@@ -195,7 +193,7 @@ public class PresenterFacade {
                         PosDesktopUiModule.getInstance().getImplementation(OrdenService.class),
                         new ArrayList<>());
             case BackUpView.VIEW_NAME:
-                return new BackUpViewPresenter(new UbicacionConexionController());
+                return new BackUpViewPresenter();
             case VentaCalendarView.VIEW_NAME:
                 return new VentaCalendarViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaListService.class));
             case VentaStatisticsView.VIEW_NAME:
