@@ -14,7 +14,7 @@ import com.jobits.pos.core.repo.impl.MesaDAO;
 import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.controller.productos.impl.ProductoVentaListController;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
+import com.jobits.pos.controller.puntoelaboracion.impl.PuntoElaboracionListController;
 import com.jobits.pos.controller.reportes.ReportarBugController;
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.seccion.SeccionDetailServiceImpl;
@@ -169,7 +169,7 @@ public class PresenterFacade {
             case NominasDetailView.VIEW_NAME:
                 return new NominasDetailPresenter(new NominasController());
             case PuntoElaboracionListView.VIEW_NAME:
-                return new PuntoElaboracionListViewPresenter(new PuntoElaboracionListController());
+                return new PuntoElaboracionListViewPresenter();
             case CartasSeccionView.VIEW_NAME:
                 return new CartasSeccionViewPresenter(new MenuController());
             case SeccionDetailView.VIEW_NAME:

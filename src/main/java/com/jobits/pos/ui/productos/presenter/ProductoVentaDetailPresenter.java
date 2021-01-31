@@ -7,9 +7,8 @@ package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.imagemanager.ImageManagerService;
-import com.jobits.pos.controller.productos.impl.ProductoVentaDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaDetailService;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.seccion.SeccionListController;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Insumo;
@@ -49,6 +48,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private final ProductoVentaDetailService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaDetailService.class);
     private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
+    private final PuntoElaboracionListService ptoElabService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
 
     private final boolean creatingMode;
     ProductoVenta productoVenta;
@@ -207,7 +207,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     private void onAddElaboracionCLick() {
         String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre del Punto de Elaboracion a crear",
                 "Nuevo Punto de Elaboracion", JOptionPane.QUESTION_MESSAGE);
-        new PuntoElaboracionListController().createInstance(nombre);
+        ptoElabService.createInstance(nombre);
         getBean().setLista_elaborado(new ArrayListModel<>(service.getCocinaList()));
     }
 

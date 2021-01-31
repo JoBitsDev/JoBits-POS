@@ -5,13 +5,9 @@
  */
 package com.jobits.pos.ui.puntoelaboracion.presenter;
 
-import com.jobits.pos.core.repo.impl.ProductoVentaDAO;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.ProductoVenta;
-import com.jobits.pos.main.Application;
-import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
@@ -30,11 +26,10 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
     public static String ACTION_CHANGE_RECIBIR_NOTIFICACION = "Recibir notificaciones";
     public static String ACTION_CHANGE_LIMITAR_VENTA = "Limitar ventas";
 
-    private PuntoElaboracionListService service;
+    private final PuntoElaboracionListService service = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
 
-    public PuntoElaboracionListViewPresenter(PuntoElaboracionListService service) {
+    public PuntoElaboracionListViewPresenter() {
         super(new PuntoElaboracionListViewModel(), PuntoElaboracionListView.VIEW_NAME);
-        this.service = service;
         setListToBean();
     }
 
@@ -96,7 +91,9 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
         if (!c.getProductoVentaList().isEmpty()) {
             flag = JOptionPane.showConfirmDialog(null, "El punto de elaboracion " + c
                     + " contiene " + c.getProductoVentaList().size()
-                    + " productos de venta enlazados \n" + "presione si para borrar los productos de venta, no para cancelar", "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+                    + " productos de venta enlazados \n"
+                    + "presione si para borrar los productos de venta, no para cancelar",
+                    "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
         }
         service.destroy(getBean().getElemento_seleccionado(), flag);
         setListToBean();
