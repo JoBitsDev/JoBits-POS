@@ -5,12 +5,14 @@
  */
 package com.jobits.pos.ui.productos.presenter;
 
-import com.jobits.pos.controller.productos.ProductoVentaDetailController;
+import com.jobits.pos.controller.productos.impl.ProductoVentaDetailController;
 import com.jobits.pos.controller.productos.ProductoVentaListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
@@ -29,11 +31,10 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
 
     public static String ACTION_CHANGE_VISIBLE;
 
-    private ProductoVentaListService controller;
+    private final ProductoVentaListService controller = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
 
-    public ProductoVentaListViewPresenter(ProductoVentaListService controller) {
+    public ProductoVentaListViewPresenter() {
         super(new ProductoVentaListViewModel(), ProductoVentaListView.VIEW_NAME);
-        this.controller = controller;
         setListToBean();
     }
 
@@ -56,29 +57,35 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
     @Override
     protected void onAgregarClick() {
         NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
-                new ProductoVentaDetailPresenter(
-                        new ProductoVentaDetailController()), DisplayType.POPUP);
+                new ProductoVentaDetailPresenter(null), DisplayType.POPUP);
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
         if (Application.getInstance().getLoggedUser().getPuestoTrabajonombrePuesto().getNivelAcceso() >= 3) {
-            NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
-                    new ProductoVentaDetailPresenter(
-                            new ProductoVentaDetailController(
-                                    getBean().getElemento_seleccionado())), DisplayType.POPUP);
-            setListToBean();
+            if (getBean().getElemento_seleccionado() != null) {
+                NavigationService.getInstance().navigateTo(ProductoVentaDetailView.VIEW_NAME,
+                        new ProductoVentaDetailPresenter(getBean().getElemento_seleccionado()), DisplayType.POPUP);
+                setListToBean();
+            } else {
+                Application.getInstance().getNotificationService().notify("Seleccione un producto", TipoNotificacion.ERROR);
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "No tiene los permisos requeridos", "Privilegios insuficientes", JOptionPane.ERROR_MESSAGE);
+            Application.getInstance().getNotificationService().notify("No tiene los permisos requeridos", TipoNotificacion.ERROR);
         }
 
     }
 
     @Override
     protected void onEliminarClick() {
-        controller.destroy(getBean().getElemento_seleccionado());
-        setListToBean();
+        if (getBean().getElemento_seleccionado() != null) {
+            controller.destroy(getBean().getElemento_seleccionado());
+            setListToBean();
+        } else {
+            Application.getInstance().getNotificationService().notify("Seleccione un producto", TipoNotificacion.ERROR);
+        }
+
     }
 
     @Override

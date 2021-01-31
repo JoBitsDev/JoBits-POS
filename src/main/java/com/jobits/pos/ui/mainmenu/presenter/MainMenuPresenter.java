@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.ui.mainmenu.presenter;
 
-import com.jobits.pos.controller.login.LogInController;
-import com.jobits.pos.controller.login.MainMenuController;
+import com.jobits.pos.controller.login.impl.LogInController;
+import com.jobits.pos.controller.login.impl.MainMenuController;
 import com.jobits.pos.controller.login.MainMenuService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;

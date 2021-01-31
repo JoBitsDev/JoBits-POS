@@ -5,9 +5,9 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jobits.pos.controller.logs.OrdenLogController;
 import com.jobits.pos.controller.logs.OrdenLogService;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
@@ -20,14 +20,14 @@ public class OrdenLogViewPresenter extends AbstractViewPresenter<OrdenLogViewMod
 
     public static String ACTION_CERRAR = "Cerrar";
 
+    OrdenLogService service = PosDesktopUiModule.getInstance().getImplementation(OrdenLogService.class);
+
     String codOrden;
 
     public OrdenLogViewPresenter(String codOrden) {
         super(new OrdenLogViewModel());
         this.codOrden = codOrden;
         fillBeanData();
-//        getBean().setCodigo_orden(codOrden);
-//        getBean().setLog_list(new ArrayListModel<>(logList));
     }
 
     @Override
@@ -44,7 +44,6 @@ public class OrdenLogViewPresenter extends AbstractViewPresenter<OrdenLogViewMod
     private void fillBeanData() {
         getBean().setCodigo_orden(codOrden);
         getBean().getLog_list().clear();
-        OrdenLogService service = new OrdenLogController();
         getBean().getLog_list().addAll(service.loadLogFile(codOrden));//TODO: falta controller
 
     }

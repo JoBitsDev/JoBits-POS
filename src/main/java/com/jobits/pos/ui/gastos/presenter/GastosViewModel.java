@@ -17,7 +17,7 @@ import java.util.Arrays;
  */
 public class GastosViewModel extends AbstractViewModel {
 
-    private ArrayListModel<R.TipoGasto> lista_categoria_gastos = new ArrayListModel<>(Arrays.asList(R.TipoGasto.values()));
+    private ArrayListModel<R.TipoGasto> lista_categoria_gastos = new ArrayListModel<>();
 
     public static final String PROP_LISTA_CATEGORIA_GASTOS = "lista_categoria_gastos";
 
@@ -89,7 +89,8 @@ public class GastosViewModel extends AbstractViewModel {
      */
     public void setLista_tipo_gasto(ArrayListModel<String> lista_tipo_gasto) {
         ArrayListModel<String> oldLista_tipo_gasto = this.lista_tipo_gasto;
-        this.lista_tipo_gasto = lista_tipo_gasto;
+        this.lista_tipo_gasto.clear();
+        this.lista_tipo_gasto.addAll(lista_tipo_gasto);
         firePropertyChange(PROP_LISTA_TIPO_GASTO, oldLista_tipo_gasto, lista_tipo_gasto);
     }
 
@@ -210,7 +211,7 @@ public class GastosViewModel extends AbstractViewModel {
     public void setCategoria_gasto_seleccionada(R.TipoGasto categoria_gasto_seleccionada) {
         R.TipoGasto oldCategoria_gasto_seleccionada = this.categoria_gasto_seleccionada;
         this.categoria_gasto_seleccionada = categoria_gasto_seleccionada;
-        firePropertyChange(PROP_CATEGORIA_GASTO_SELECCIONADA, oldCategoria_gasto_seleccionada, tipo_gasto_seleccionado);
+        firePropertyChange(PROP_CATEGORIA_GASTO_SELECCIONADA, oldCategoria_gasto_seleccionada, categoria_gasto_seleccionada);
     }
 
     /**

@@ -9,7 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.insumo.InsumoDetailService;
 import com.jobits.pos.controller.productos.ProductoInsumoListService;
-import com.jobits.pos.controller.productos.ProductoVentaListController;
+import com.jobits.pos.controller.productos.impl.ProductoVentaListController;
 import com.jobits.pos.controller.productos.ProductoVentaListService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.io.DataHeader;

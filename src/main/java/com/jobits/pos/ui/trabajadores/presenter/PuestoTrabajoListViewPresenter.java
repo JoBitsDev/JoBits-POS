@@ -5,12 +5,11 @@
  */
 package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 
@@ -23,11 +22,10 @@ import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
  */
 public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<PuestoTrabajoListViewModel> {
 
-    PuestoTrabajoListService service;
+    private final PuestoTrabajoListService service = PosDesktopUiModule.getInstance().getImplementation(PuestoTrabajoListService.class);
 
-    public PuestoTrabajoListViewPresenter(PuestoTrabajoListController controller) {
+    public PuestoTrabajoListViewPresenter() {
         super(new PuestoTrabajoListViewModel(), PuestoTrabajoListView.VIEW_NAME);
-        this.service = controller;
         setListToBean();
     }
 
@@ -46,8 +44,7 @@ public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<Pu
         Application.getInstance().getNavigator().navigateTo(
                 "Crear Puesto de Trabajo",
                 new PuestoTrabajoDetailViewPresenter(
-                        new PuestoTrabajoDetailController(
-                                getBean().getElemento_seleccionado())),
+                        getBean().getElemento_seleccionado()),
                 DisplayType.POPUP);
 
         setListToBean();

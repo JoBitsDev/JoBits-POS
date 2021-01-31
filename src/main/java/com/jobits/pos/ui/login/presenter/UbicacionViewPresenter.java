@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.presenters.AbstractViewAction;

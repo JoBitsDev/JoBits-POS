@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.ui.licencia;
 
-import com.jobits.pos.controller.licencia.Licence;
-import com.jobits.pos.controller.licencia.LicenceController;
+import com.jobits.pos.controller.licencia.impl.Licence;
+import com.jobits.pos.controller.licencia.impl.LicenceController;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
