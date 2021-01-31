@@ -57,6 +57,10 @@ import com.jobits.pos.ui.clientes.ClientesDetailView;
 import com.jobits.pos.ui.clientes.ClientesListView;
 import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
 import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
+import com.jobits.pos.ui.clientes.reserva.presenter.ClientesReservaDetailViewPresenter;
+import com.jobits.pos.ui.clientes.reserva.presenter.ClientesReservaListViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.dashboard.DashBoardView;
@@ -214,6 +218,10 @@ public class PresenterFacade {
                 return new ClientesListViewPresenter();
             case ClientesDetailView.VIEW_NAME:
                 return new ClientesDetailViewPresenter(null);
+            case ClientesReservaListView.VIEW_NAME:
+                return new ClientesReservaListViewPresenter();
+            case ClientesReservaDetailView.VIEW_NAME:
+                return new ClientesReservaDetailViewPresenter(null);
             case ReservaSchedulerView.VIEW_NAME:
                 return new ReservaSchedulerViewPresenter();
             case MesaDetailView.VIEW_NAME:
