@@ -13,11 +13,11 @@ import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
 import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.login.impl.UbicacionConexionController;
-import com.jobits.pos.controller.trabajadores.NominasController;
-import com.jobits.pos.controller.trabajadores.PersonalDetailController;
-import com.jobits.pos.controller.trabajadores.PersonalListController;
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
+import com.jobits.pos.controller.trabajadores.impl.NominasController;
+import com.jobits.pos.controller.trabajadores.impl.PersonalDetailController;
+import com.jobits.pos.controller.trabajadores.impl.PersonalListController;
+import com.jobits.pos.controller.trabajadores.impl.PuestoTrabajoDetailController;
+import com.jobits.pos.controller.trabajadores.impl.PuestoTrabajoListController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListService;
@@ -158,9 +158,9 @@ public class PresenterFacade {
             case PersonalDetailView.VIEW_NAME:
                 return new PersonalDetailViewPresenter(new PersonalDetailController());
             case PuestoTrabajoListView.VIEW_NAME:
-                return new PuestoTrabajoListViewPresenter(new PuestoTrabajoListController());
+                return new PuestoTrabajoListViewPresenter();
             case PuestoTrabajoDetailView.VIEW_NAME:
-                return new PuestoTrabajoDetailViewPresenter(new PuestoTrabajoDetailController());
+                return new PuestoTrabajoDetailViewPresenter(null);
             case NominasDetailView.VIEW_NAME:
                 return new NominasDetailPresenter(new NominasController());
             case PuntoElaboracionListView.VIEW_NAME:
