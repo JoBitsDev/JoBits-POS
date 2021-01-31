@@ -14,10 +14,6 @@ import com.jobits.pos.core.repo.impl.MesaDAO;
 import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.controller.trabajadores.impl.NominasController;
-import com.jobits.pos.controller.trabajadores.impl.PersonalDetailController;
-import com.jobits.pos.controller.trabajadores.impl.PersonalListController;
-import com.jobits.pos.controller.trabajadores.impl.PuestoTrabajoDetailController;
-import com.jobits.pos.controller.trabajadores.impl.PuestoTrabajoListController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListService;
@@ -154,9 +150,9 @@ public class PresenterFacade {
             case InsumoDetailView.VIEW_NAME:
                 return new InsumoDetailViewPresenter(null);
             case PersonalListView.VIEW_NAME:
-                return new PersonalListViewPresenter(new PersonalListController());
+                return new PersonalListViewPresenter();
             case PersonalDetailView.VIEW_NAME:
-                return new PersonalDetailViewPresenter(new PersonalDetailController());
+                return new PersonalDetailViewPresenter(null);
             case PuestoTrabajoListView.VIEW_NAME:
                 return new PuestoTrabajoListViewPresenter();
             case PuestoTrabajoDetailView.VIEW_NAME:
