@@ -9,7 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.imagemanager.ImageManagerService;
 import com.jobits.pos.controller.productos.ProductoVentaDetailService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
-import com.jobits.pos.controller.seccion.SeccionListController;
+import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
@@ -49,6 +49,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     private final ProductoVentaDetailService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaDetailService.class);
     private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
     private final PuntoElaboracionListService ptoElabService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    private final SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
 
     private final boolean creatingMode;
     ProductoVenta productoVenta;
@@ -200,7 +201,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     private void onAddCategoriaClick() {
         String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre de la sección a crear",
                 "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
-        new SeccionListController().createInstance(nombre);
+        seccionService.createInstance(nombre);
         getBean().setLista_categorias(new ArrayListModel<>(service.getSeccionList()));
     }
 
