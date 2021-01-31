@@ -15,7 +15,7 @@ import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.controller.productos.impl.ProductoVentaListController;
 import com.jobits.pos.controller.puntoelaboracion.impl.PuntoElaboracionListController;
-import com.jobits.pos.controller.reportes.ReportarBugController;
+import com.jobits.pos.controller.reportes.impl.ReportarBugController;
 import com.jobits.pos.controller.seccion.MenuController;
 import com.jobits.pos.controller.seccion.SeccionDetailServiceImpl;
 import com.jobits.pos.controller.trabajadores.NominasController;
@@ -200,7 +200,7 @@ public class PresenterFacade {
             case FacturaView.VIEW_NAME:
                 return new FacturaViewPresenter(PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class));
             case ReportarBugView.VIEW_NAME:
-                return new ReportarBugViewPresenter(new ReportarBugController());
+                return new ReportarBugViewPresenter();
             case OrdenLogView.VIEW_NAME:
                 return new OrdenLogViewPresenter(null);
             case ReservasDetailView.VIEW_NAME:

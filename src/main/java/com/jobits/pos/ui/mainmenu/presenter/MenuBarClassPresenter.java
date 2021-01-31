@@ -9,7 +9,6 @@ import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.login.impl.UbicacionConexionController;
-import com.jobits.pos.controller.reportes.ReportarBugController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
@@ -82,7 +81,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        ReportarBugView.VIEW_NAME, new ReportarBugViewPresenter(new ReportarBugController()), DisplayType.POPUP);
+                        ReportarBugView.VIEW_NAME, new ReportarBugViewPresenter(), DisplayType.POPUP);
                 return Optional.empty();
             }
         });
