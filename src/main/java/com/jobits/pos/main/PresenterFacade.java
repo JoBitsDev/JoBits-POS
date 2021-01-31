@@ -158,7 +158,7 @@ public class PresenterFacade {
             case PuestoTrabajoDetailView.VIEW_NAME:
                 return new PuestoTrabajoDetailViewPresenter(null);
             case NominasDetailView.VIEW_NAME:
-                return new NominasDetailPresenter(new NominasController());
+                return new NominasDetailPresenter();
             case PuntoElaboracionListView.VIEW_NAME:
                 return new PuntoElaboracionListViewPresenter();
             case CartasSeccionView.VIEW_NAME:

@@ -18,7 +18,6 @@ import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.PieStyler;
 import org.knowm.xchart.style.Styler;
-import com.jobits.pos.controller.trabajadores.NominasController;
 import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
@@ -284,11 +283,6 @@ public class NominasDetailView extends AbstractViewPanel {
 
     private void jRadioButtonPieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPieActionPerformed
     }//GEN-LAST:event_jRadioButtonPieActionPerformed
-
-    public NominasController getController() {
-        return null;
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
