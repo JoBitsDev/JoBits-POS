@@ -35,11 +35,11 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
 
     public static final String PROP_LISTA_TIPO_DATO = "lista_tipo_dato";
 
-    private String data_type_text;
+    private String data_type_text = TipoDato.FICHA_DE_COSTO.getStringValue();
 
     public static final String PROP_DATA_TYPE_TEXT = "data_type_text";
 
-    private String opcion_text;
+    private String opcion_text = OpcionIO.IMPORTAR.getStringValue();
 
     public static final String PROP_OPCION_TEXT = "opcion_text";
 
