@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.mainmenu;
 
 import com.jhw.swing.material.components.dashboard.taskpane.DashBoardTaskPane;
-import com.jobits.pos.controller.login.MainMenuController;
+import com.jobits.pos.controller.login.impl.MainMenuController;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jhw.swing.material.components.taskpane.CollapseMenu;
 import com.jhw.swing.material.components.taskpane.TaskButton;

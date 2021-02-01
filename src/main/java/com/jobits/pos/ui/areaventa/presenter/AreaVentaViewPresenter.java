@@ -6,20 +6,20 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.areaventa.AreaDetailController;
+//import com.jobits.pos.controller.areaventa.impl.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaService;
-import com.jobits.pos.controller.mesa.MesaController;
 import com.jobits.pos.controller.mesa.MesaService;
 import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.areaventa.MesaDetailView;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,9 +30,9 @@ import javax.swing.JOptionPane;
  */
 public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewModel> {
 
-    private AreaVentaService areaService;
+    private AreaVentaService areaService = PosDesktopUiModule.getInstance().getImplementation(AreaVentaService.class);
 
-    private MesaService mesaService = new MesaController();
+    private MesaService mesaService = PosDesktopUiModule.getInstance().getImplementation(MesaService.class);
 
     public static final String ACTION_AGREGAR_AREA = "Nueva area";
     public static final String ACTION_EDITAR_AREA = "Editar";
@@ -41,10 +41,9 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
     public static final String ACTION_ELIMINAR_MESA = "Eliminar mesa";
     public static final String ACTION_EDITAR_MESA = "Editar mesa";
 
-    public AreaVentaViewPresenter(AreaVentaService service) {
+    public AreaVentaViewPresenter() {
         super(new AreaVentaViewModel());
-        this.areaService = service;
-        getBean().getLista_area().addAll(service.getItems());
+        getBean().getLista_area().addAll(areaService.getItems());
     }
 
     @Override
@@ -95,21 +94,21 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
     @Override
     protected Optional refreshState() {
-        if (getBean().getArea_seleccionada() == null) {
+        Area areaSel = getBean().getArea_seleccionada();
+        if (areaSel == null) {
             getBean().getLista_area().clear();
             getBean().getLista_area().addAll(new ArrayListModel<>(areaService.getItems()));
             getBean().getLista_mesas().clear();
-        } else if (getBean().getArea_seleccionada() != null) {
-            getBean().getLista_area().clear();
-            getBean().getLista_area().addAll(new ArrayListModel<>(areaService.getItems()));
-            getBean().getLista_mesas().clear();
-            getBean().getLista_mesas().addAll(new ArrayListModel<>(getBean().getArea_seleccionada().getMesaList()));
+        } else {
+            getBean().setLista_area(new ArrayListModel<>(areaService.getItems()));
+            getBean().setArea_seleccionada(areaSel);
         }
         return Optional.empty();
     }
 
     private void onNuevaAreaCLick() {//TODO: no actualiza correctamente nada en las vistas
-        Application.getInstance().getNavigator().navigateTo("Crear Area", null, DisplayType.POPUP);
+        Application.getInstance().getNavigator().navigateTo("Crear Area",
+                new AreaDetailViewPresenter(null, true), DisplayType.POPUP);
         refreshState();
     }
 
@@ -131,13 +130,8 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
         }
         Application.getInstance().getNavigator().navigateTo(
                 "Crear Area",
-                new AreaDetailViewPresenter(
-                        new AreaDetailController(
-                                getBean().getArea_seleccionada())),
-                DisplayType.POPUP);
+                new AreaDetailViewPresenter(getBean().getArea_seleccionada(), false), DisplayType.POPUP);
 
-//        service.getDetailControllerForEdit(getBean().getArea_seleccionada());
-        getBean().getLista_area().fireContentsChanged(0, getBean().getLista_area().getSize());
         refreshState();
     }
 

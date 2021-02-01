@@ -102,7 +102,7 @@ public class AreaVentaViewModel extends AbstractViewModel {
         ArrayListModel<Mesa> oldLista_secciones = this.lista_mesas;
         this.lista_mesas.clear();
         this.lista_mesas.addAll(lista_mesas);
-        firePropertyChange(PROP_LISTA_MESAS, oldLista_secciones, lista_mesas, false);
+        firePropertyChange(PROP_LISTA_MESAS, oldLista_secciones, lista_mesas);
     }
 
     /**
@@ -123,7 +123,7 @@ public class AreaVentaViewModel extends AbstractViewModel {
         ArrayListModel<Area> oldLista_menu = this.lista_area;
         this.lista_area.clear();
         this.lista_area.addAll(lista_area);
-        firePropertyChange(PROP_LISTA_AREA, oldLista_menu, lista_area, false);
+        firePropertyChange(PROP_LISTA_AREA, oldLista_menu, lista_area);
     }
 
 }

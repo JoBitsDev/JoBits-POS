@@ -6,13 +6,14 @@
 package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.binding.value.AbstractValueModel;
-import com.jobits.pos.controller.configuracion.ConfiguracionController;
+import com.jobits.pos.controller.configuracion.impl.ConfiguracionController;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.NotificationService;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
@@ -29,13 +30,11 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
     public static final String ACTION_APPLY = "Aplicar";
     public static final String ACTION_CANCEL = "Cancelar";
 
-    private ConfiguracionService service;
+    private final ConfiguracionService service = PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class);
 
-    public ConfigurationViewPresenter(ConfiguracionService service) {
+    public ConfigurationViewPresenter() {
         super(new ConfiguracionViewModel());
-        this.service = service;
         updateBeanConfig();
-
     }
 
     @Override

@@ -5,18 +5,6 @@
  */
 package com.jobits.pos.main;
 
-import com.jobits.pos.controller.configuracion.ConfiguracionController;
-import java.util.Locale;
-import com.jobits.pos.controller.login.LogInController;
-import com.jobits.pos.ui.RootView;
-import com.jobits.pos.ui.login.LogInView;
-import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
-import com.jobits.pos.ui.utils.LoadingWindow;
-import java.awt.Window;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
-
 /**
  * FirstDream
  *
@@ -27,13 +15,13 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Application app = Application.createApplication(true);
+
+        SplashScreen sp = new SplashScreen();
+        app.init();
+        sp.dispose();
         java.awt.EventQueue.invokeLater(() -> {
-            Application app = Application.createApplication(true);
-            try {
-                app.start();
-            } catch (Exception ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            app.start();
         });
 
     }

@@ -7,13 +7,14 @@ package com.jobits.pos.ui.insumo.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.controller.insumo.InsumoDetailController;
+import com.jobits.pos.controller.insumo.impl.InsumoDetailController;
 import com.jobits.pos.controller.insumo.InsumoDetailService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.InsumoElaborado;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.utils.utils;
@@ -27,24 +28,26 @@ import javax.swing.JOptionPane;
  */
 public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetailViewModel> {
 
-    public static String ACTION_AGREGAR = "";
+    public static String ACTION_AGREGAR = "Aceptar";
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_ELIMINAR_INSUMO = "Eliminar Insumo";
     public static String ACTION_AGREGAR_INSUMO = "Agregr Insumo";
     public static String ACTION_ELIMINAR_PRODUCTO = "Eliminar Producto";
     public static String ACTION_AGREGAR_PRODUCTO = "Agregar Producto";
 
-    private InsumoDetailService service;
+    private final InsumoDetailService service = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
+    private final boolean creatingMode;
+    private Insumo insumo;
 
-    public InsumoDetailViewPresenter(InsumoDetailService service) {
+    public InsumoDetailViewPresenter(Insumo insumo) {
         super(new InsumoDetailViewModel());
-        this.service = service;
-        fillForm();
-        if (service.isInCreatingState()) {
-            getBean().setCrear_editar_button_text("Crear");
+        this.creatingMode = insumo == null;
+        if (creatingMode) {
+            this.insumo = service.createNewInstance();
         } else {
-            getBean().setCrear_editar_button_text("Editar");
+            this.insumo = insumo;
         }
+        fillForm();
     }
 
     @Override
@@ -98,25 +101,30 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         getBean().getList_unidades_medida().addAll(new ArrayListModel(Arrays.asList(R.UM.values())));
         //TABLA DE INSUMOS
         getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(new ArrayListModel(service.getInstance().getInsumoDerivadoList()));
+        getBean().getLista_insumos_contenidos().addAll(new ArrayListModel(insumo.getInsumoDerivadoList()));
         getBean().getLista_insumos_disponibles().clear();
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel(service.getItems()));
         //TABLA DE PRODUCTOS
         getBean().getLista_productos_contenidos().clear();
-        getBean().getLista_productos_contenidos().addAll(new ArrayListModel(service.getInstance().getProductoInsumoList()));
+        getBean().getLista_productos_contenidos().addAll(new ArrayListModel(insumo.getProductoInsumoList()));
         getBean().getLista_productos_disponibles().clear();
         getBean().getLista_productos_disponibles().addAll(new ArrayListModel(service.getProductoList()));
         //PANEL INPUTS
-        getBean().setNombre_insumo(service.getInstance().getNombre());
-        getBean().setUnidad_medida_selected(R.UM.valueOf(service.getInstance().getUm()));
-        getBean().setCosto_unitario(service.getInstance().getCostoPorUnidad());
-        getBean().setEstimacion_de_stock(service.getInstance().getStockEstimation());
-        if (service.getInstance().getCantidadCreada() == null) {
+        getBean().setNombre_insumo(insumo.getNombre());
+        getBean().setUnidad_medida_selected(R.UM.valueOf(insumo.getUm()));
+        getBean().setCosto_unitario(insumo.getCostoPorUnidad());
+        getBean().setEstimacion_de_stock(insumo.getStockEstimation());
+        if (insumo.getCantidadCreada() == null) {
             getBean().setCantidad_creada(Float.valueOf("0"));
         } else {
-            getBean().setCantidad_creada(service.getInstance().getCantidadCreada());
+            getBean().setCantidad_creada(insumo.getCantidadCreada());
         }
         updateCostoValue();
+        if (creatingMode) {
+            getBean().setCrear_editar_button_text("Crear");
+        } else {
+            getBean().setCrear_editar_button_text("Editar");
+        }
     }
 
     private void updateCostoValue() {
@@ -130,12 +138,17 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     }
 
     private void onAgregarClick() {
-        service.setInstanceValues(getBean().getNombre_insumo(),
-                getBean().getCosto_unitario(),
-                getBean().getEstimacion_de_stock(),
-                getBean().getUnidad_medida_selected().getValor(),
-                getBean().getCantidad_creada());
-        service.createUpdateInstance();
+        insumo.setNombre(getBean().getNombre_insumo());
+        insumo.setCostoPorUnidad(getBean().getCosto_unitario());
+        insumo.setStockEstimation(getBean().getEstimacion_de_stock());
+        insumo.setUm(getBean().getUnidad_medida_selected().getValor());
+        insumo.setCantidadCreada(getBean().getCantidad_creada());
+        insumo.setElaborado(!insumo.getInsumoDerivadoList().isEmpty());
+        if (creatingMode) {
+            service.create(insumo);
+        } else {
+            service.update(insumo);
+        }
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         Application.getInstance().getNavigator().navigateUp();
     }
@@ -148,38 +161,38 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         Float cantidad = new NumberPad(null).showView();
         if (cantidad != null) {
             Insumo inSel = getBean().getInsumo_disponible_selecionado();
-            service.agregarInsumoElaboradoaInsumo(inSel, cantidad);
+            service.agregarInsumoElaboradoaInsumo(insumo, inSel, cantidad);
             getBean().setInsumo_disponible_selecionado(null);
             getBean().getLista_insumos_contenidos().clear();
-            getBean().getLista_insumos_contenidos().addAll(service.getInstance().getInsumoDerivadoList());
+            getBean().getLista_insumos_contenidos().addAll(insumo.getInsumoDerivadoList());
             updateCostoValue();
         }
     }
 
     private void onEliminarInsumoFichaClick() {
-        service.eliminarInsumoElaboradoDeInsumo(getBean().getInsumo_contenido_seleccionado());
+        service.eliminarInsumoElaboradoDeInsumo(insumo, getBean().getInsumo_contenido_seleccionado());
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(service.getInstance().getInsumoDerivadoList());
+        getBean().getLista_insumos_contenidos().addAll(insumo.getInsumoDerivadoList());
         updateCostoValue();
     }
 
     private void onAgregarProductoFichaClick() {
         Float cantidad = new NumberPad(null).showView();
         if (cantidad != null) {
-            service.agregarProductoVentaAInsumo(getBean().getProducto_disponible_seleccionado(), cantidad);
+            service.agregarProductoVentaAInsumo(insumo, getBean().getProducto_disponible_seleccionado(), cantidad);
             getBean().setProducto_disponible_seleccionado(null);
             getBean().getLista_productos_contenidos().clear();
-            getBean().getLista_productos_contenidos().addAll(service.getInstance().getProductoInsumoList());
+            getBean().getLista_productos_contenidos().addAll(insumo.getProductoInsumoList());
             getBean().setProducto_disponible_seleccionado(null);
         }
     }
 
     private void onEliminarProductoFichaClick() {
-        service.eliminarProductoVentaDeInsumo(getBean().getProducto_contenido_seleccionado());
+        service.eliminarProductoVentaDeInsumo(insumo, getBean().getProducto_contenido_seleccionado());
         getBean().setProducto_contenido_seleccionado(null);
         getBean().getLista_productos_contenidos().clear();
-        getBean().getLista_productos_contenidos().addAll(service.getInstance().getProductoInsumoList());
+        getBean().getLista_productos_contenidos().addAll(insumo.getProductoInsumoList());
     }
 
 }

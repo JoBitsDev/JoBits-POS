@@ -5,13 +5,14 @@
  */
 package com.jobits.pos.ui.areaventa.presenter;
 
-import com.jobits.pos.controller.mesa.MesaController;
+//import com.jobits.pos.controller.mesa.impl.MesaController;
 import com.jobits.pos.controller.mesa.MesaService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class MesaDetailViewPresenter extends AbstractViewPresenter<MesaDetailVie
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_ACEPTAR = "Aceptar";
 
-    private final MesaService service = new MesaController();
+    private final MesaService service = PosDesktopUiModule.getInstance().getImplementation(MesaService.class);
     private final boolean creatingMode;
     private Mesa mesa;
     private Area area;

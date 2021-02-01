@@ -10,7 +10,6 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.areaventa.presenter.AreaVentaViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import static com.jobits.pos.ui.cartas.presenter.CartasSeccionViewModel.*;
@@ -131,15 +130,15 @@ public class CartasSeccionView extends AbstractViewPanel {
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonEliminarSeccion.setText(bundle.getString("label_eliminar")); // NOI18N
-        jButtonEliminarSeccion.setPreferredSize(new java.awt.Dimension(130, 50));
+        jButtonEliminarSeccion.setPreferredSize(new java.awt.Dimension(140, 50));
         jPanel3.add(jButtonEliminarSeccion);
 
         jButtonEditarSeccion.setText(bundle.getString("label_eliminar")); // NOI18N
-        jButtonEditarSeccion.setPreferredSize(new java.awt.Dimension(130, 50));
+        jButtonEditarSeccion.setPreferredSize(new java.awt.Dimension(140, 50));
         jPanel3.add(jButtonEditarSeccion);
 
         jButtonAgregarSeccion.setText(bundle.getString("label_agregar")); // NOI18N
-        jButtonAgregarSeccion.setPreferredSize(new java.awt.Dimension(130, 50));
+        jButtonAgregarSeccion.setPreferredSize(new java.awt.Dimension(140, 50));
         jPanel3.add(jButtonAgregarSeccion);
 
         jPanelMesas.add(jPanel3, java.awt.BorderLayout.PAGE_END);

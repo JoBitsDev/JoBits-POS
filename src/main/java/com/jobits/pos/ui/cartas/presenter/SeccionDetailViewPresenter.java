@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.cartas.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.seccion.MenuController;
+import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.controller.seccion.SeccionDetailService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Carta;
@@ -14,6 +14,7 @@ import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.ArrayList;
@@ -30,38 +31,43 @@ import java.util.Optional;
  */
 public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDetailViewModel> {
 
-    private SeccionDetailService service;
-    Seccion seccion;
-    Carta carta;
-
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_ACEPTAR = "Aceptar";
     public static final String ACTION_AGREGAR = "Agregar";
     public static final String ACTION_ELIMINAR = "Eliminar";
 
-    public SeccionDetailViewPresenter(SeccionDetailService controller, Seccion seccion, Carta carta) {
+    private final SeccionDetailService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionDetailService.class);
+    private final CartaListService cartaService = PosDesktopUiModule.getInstance().getImplementation(CartaListService.class);
+
+    Seccion seccion;
+    Carta carta;
+
+    private final boolean creatingMode;
+
+    public SeccionDetailViewPresenter(Seccion seccion, Carta carta) {
         super(new SeccionDetailViewModel());
-        this.service = controller;
         this.carta = carta;
-        if (seccion == null) {
+        creatingMode = seccion == null;
+        if (creatingMode) {
             this.seccion = new Seccion();
-            service.setCreatingMode(true);
-            getBean().setCrear_editar_button_text("Crear");
         } else {
             this.seccion = seccion;
-            getBean().setCrear_editar_button_text("Editar");
         }
         refreshState();
     }
 
     @Override
     protected Optional refreshState() {
-        getBean().setNombre_habilitado(false);
-        getBean().setNombre_seccion(service.getSeccion(seccion.getNombreSeccion()).getNombreSeccion());
-        getBean().setLista_secciones_agregadas(
-                new ArrayListModel<>(service.getSeccion(seccion.getNombreSeccion()).getAgregadoEn()));
+        if (!creatingMode) {
+            getBean().setNombre_habilitado(false);
+            getBean().setCrear_editar_button_text("Editar");
+        } else {
+            getBean().setCrear_editar_button_text("Crear");
+        }
+        getBean().setNombre_seccion(seccion.getNombreSeccion());
+        getBean().setLista_secciones_agregadas(new ArrayListModel<>(seccion.getAgregadoEn()));
         List<Seccion> aux = new ArrayList();
-        List<Carta> listaCartas = new MenuController().getCartaListService().getItems();
+        List<Carta> listaCartas = cartaService.getItems();
         for (Carta x : listaCartas) {
             aux.addAll(x.getSeccionList());
         }
@@ -120,10 +126,10 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             seccion.setNombreSeccion(getBean().getNombre_seccion());
             seccion.setAgregadoEn(getBean().getLista_secciones_agregadas());
-            if (service.isCreatingMode()) {
-                service.crearSeccion(carta, seccion);
+            if (creatingMode) {
+                seccionService.crearSeccion(carta, seccion);
             } else {
-                service.editarSeccion(seccion);
+                seccionService.editarSeccion(seccion);
             }
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);

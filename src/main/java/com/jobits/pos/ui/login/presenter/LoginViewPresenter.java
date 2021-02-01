@@ -9,10 +9,10 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jhw.swing.util.icons.DerivableIcon;
 import com.jobits.pos.core.repo.autenticacion.PersonalDAO;
-import com.jobits.pos.controller.login.MainMenuController;
-import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.login.impl.MainMenuController;
+import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.login.LogInService;
-import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.UbicacionConexionModel;
@@ -58,8 +58,10 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         ubicacionController = new UbicacionConexionController();
         getBean().setListaUbicaciones(new ArrayListModel<>(
                 Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
-        getBean().setUbicacionSeleccionada(ubicacionController.getUbicaciones().getUbicacionActiva());
+    }
 
+    public void setUbicacionSeleccionada() {
+        getBean().setUbicacionSeleccionada(ubicacionController.getUbicaciones().getUbicacionActiva());
     }
 
     private void onAutenticarClick() {
@@ -132,10 +134,8 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
 
     private void actualizarLabelConexionYBotonAutenticar(boolean conn) {
         if (conn) {
-//            getBean().setEstadoConexion("Conectado");
             getBean().setColorLabelConexion(Color.green);
         } else {
-//            getBean().setEstadoConexion("No hay conexión");
             getBean().setColorLabelConexion(Color.red);
         }
         getBean().setBotonAutenticarHabilitado(conn);

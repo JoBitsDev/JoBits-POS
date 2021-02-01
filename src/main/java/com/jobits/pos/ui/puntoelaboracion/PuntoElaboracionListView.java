@@ -19,7 +19,7 @@ import com.jobits.pos.ui.utils.BindableTableModel;
  */
 public class PuntoElaboracionListView extends AbstractListViewPanel<Cocina> {
 
-    public static final String VIEW_NAME = "Puntos elaboración";
+    public static final String VIEW_NAME = "Puntos de Elaboracion";
 
     public PuntoElaboracionListView(AbstractListViewPresenter presenter) {
         super(presenter);

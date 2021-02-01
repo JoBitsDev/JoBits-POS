@@ -5,13 +5,12 @@
  */
 package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jobits.pos.controller.trabajadores.PersonalDetailController;
-import com.jobits.pos.controller.trabajadores.PersonalListController;
 import com.jobits.pos.controller.trabajadores.PersonalListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 
@@ -24,11 +23,10 @@ import com.jobits.pos.ui.trabajadores.PersonalListView;
  */
 public class PersonalListViewPresenter extends AbstractListViewPresenter<PersonalListViewModel> {
 
-    PersonalListService controller;
+    private final PersonalListService service = PosDesktopUiModule.getInstance().getImplementation(PersonalListService.class);
 
-    public PersonalListViewPresenter(PersonalListController controller) {
+    public PersonalListViewPresenter() {
         super(new PersonalListViewModel(), PersonalListView.VIEW_NAME);
-        this.controller = controller;
         setListToBean();
     }
 
@@ -46,8 +44,7 @@ public class PersonalListViewPresenter extends AbstractListViewPresenter<Persona
         Application.getInstance().getNavigator().navigateTo(
                 "Crear Personal",
                 new PersonalDetailViewPresenter(
-                        new PersonalDetailController(
-                                getBean().getElemento_seleccionado())),
+                        getBean().getElemento_seleccionado()),
                 DisplayType.POPUP);
         setListToBean();
 
@@ -59,7 +56,7 @@ public class PersonalListViewPresenter extends AbstractListViewPresenter<Persona
                 showDialog("ATENCION: esto elimina al usuario de todas las ordenes que ha atendido."
                         + "\n Esta seguro que desea continuar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            controller.destroy(getBean().getElemento_seleccionado());
+            service.destroy(getBean().getElemento_seleccionado());
             setListToBean();
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
@@ -69,7 +66,7 @@ public class PersonalListViewPresenter extends AbstractListViewPresenter<Persona
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(controller.getItems());
+        getBean().getLista_elementos().addAll(service.getItems());
     }
 
 }
