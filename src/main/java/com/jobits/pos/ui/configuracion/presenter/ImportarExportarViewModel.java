@@ -35,11 +35,11 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
 
     public static final String PROP_LISTA_TIPO_DATO = "lista_tipo_dato";
 
-    private String data_type_text;
+    private String data_type_text = TipoDato.FICHA_DE_COSTO.getStringValue();
 
     public static final String PROP_DATA_TYPE_TEXT = "data_type_text";
 
-    private String opcion_text;
+    private String opcion_text = OpcionIO.IMPORTAR.getStringValue();
 
     public static final String PROP_OPCION_TEXT = "opcion_text";
 
@@ -102,6 +102,30 @@ public class ImportarExportarViewModel extends AbstractListViewModel {
     private String error_text_mesage;
 
     public static final String PROP_ERROR_TEXT_MESAGE = "error_text_mesage";
+
+    private String error_text_description;
+
+    public static final String PROP_ERROR_TEXT_DESCRIPTION = "error_text_description";
+
+    /**
+     * Get the value of error_text_description
+     *
+     * @return the value of error_text_description
+     */
+    public String getError_text_description() {
+        return error_text_description;
+    }
+
+    /**
+     * Set the value of error_text_description
+     *
+     * @param error_text_description new value of error_text_description
+     */
+    public void setError_text_description(String error_text_description) {
+        String oldError_text_description = this.error_text_description;
+        this.error_text_description = error_text_description;
+        firePropertyChange(PROP_ERROR_TEXT_DESCRIPTION, oldError_text_description, error_text_description);
+    }
 
     /**
      * Get the value of error_text_mesage

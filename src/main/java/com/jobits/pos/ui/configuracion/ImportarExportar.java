@@ -136,7 +136,7 @@ public class ImportarExportar extends AbstractViewPanel {
         jLabel20 = new javax.swing.JLabel();
         jPanelErrorDuringLoad = new javax.swing.JPanel();
         jLabelErrorMensage = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
+        jLabelErrorDescription = new javax.swing.JLabel();
         jPanelNavButtons4 = new javax.swing.JPanel();
         jPanelDoButtonAction = new javax.swing.JPanel();
         jButtonDoActionOption = MaterialComponentsFactory.Buttons.getMaterialButton();
@@ -305,7 +305,6 @@ public class ImportarExportar extends AbstractViewPanel {
         jPanel17.setLayout(new java.awt.GridBagLayout());
 
         jButtonOpenSaveFile.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
-        jButtonOpenSaveFile.setLabel("");
         jPanel17.add(jButtonOpenSaveFile, new java.awt.GridBagConstraints());
 
         jPanel13.add(jPanel17);
@@ -561,14 +560,16 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanelready.add(jPanelOperationSucces, "Succes");
 
-        jPanelErrorDuringLoad.setLayout(new java.awt.GridBagLayout());
+        jPanelErrorDuringLoad.setLayout(new java.awt.GridLayout(2, 1));
 
         jLabelErrorMensage.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelErrorMensage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelErrorMensage.setText("No se pudieron cargar los datos del archivo seleccionado");
-        jPanelErrorDuringLoad.add(jLabelErrorMensage, new java.awt.GridBagConstraints());
+        jPanelErrorDuringLoad.add(jLabelErrorMensage);
 
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/error_color.png"))); // NOI18N
-        jPanelErrorDuringLoad.add(jLabel22, new java.awt.GridBagConstraints());
+        jLabelErrorDescription.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelErrorDescription.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/error_color.png"))); // NOI18N
+        jPanelErrorDuringLoad.add(jLabelErrorDescription);
 
         jPanelready.add(jPanelErrorDuringLoad, "Error During Load");
 
@@ -624,6 +625,7 @@ public class ImportarExportar extends AbstractViewPanel {
         Bindings.bind(jLabelSelectedFileName1, getPresenter().getModel(PROP_NOMBRE_ARCHIVO_SELECCIONADO));
         Bindings.bind(jLabelSelectedFileName2, getPresenter().getModel(PROP_NOMBRE_ARCHIVO_SELECCIONADO));
         Bindings.bind(jLabelErrorMensage, getPresenter().getModel(PROP_ERROR_TEXT_MESAGE));
+        Bindings.bind(jLabelErrorDescription, getPresenter().getModel(PROP_ERROR_TEXT_DESCRIPTION));
 
         Bindings.bind(jButtonDoActionOption, "text", getPresenter().getModel(PROP_OPCION_TEXT));
         Bindings.bind(jButtonOpenSaveFile, "text", getPresenter().getModel(PROP_OPEN_FILE_TEXT_BUTTON));
@@ -746,7 +748,6 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -756,6 +757,7 @@ public class ImportarExportar extends AbstractViewPanel {
     private javax.swing.JLabel jLabelDataAmount;
     private javax.swing.JLabel jLabelDataType;
     private javax.swing.JLabel jLabelDataType1;
+    private javax.swing.JLabel jLabelErrorDescription;
     private javax.swing.JLabel jLabelErrorMensage;
     private javax.swing.JLabel jLabelImpExp;
     private javax.swing.JLabel jLabelOption1;

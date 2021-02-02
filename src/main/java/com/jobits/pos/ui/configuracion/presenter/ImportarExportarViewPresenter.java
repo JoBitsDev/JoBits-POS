@@ -267,6 +267,7 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
         } catch (Exception ex) {
             getBean().setEnable_button_do_action(false);
             getBean().setError_text_mesage("No se pudieron cargar los datos del archivo seleccionado");
+            getBean().setError_text_description(ex.getMessage());
             firePropertyChange("Error During Load", null, null);
         }
     }

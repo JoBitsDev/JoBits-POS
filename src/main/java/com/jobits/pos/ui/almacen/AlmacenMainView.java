@@ -346,7 +346,7 @@ public class AlmacenMainView extends AbstractViewPanel {
                     case 1:
                         return "UM";
                     case 3:
-                        return "En Almacen (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "En Almacen";
                     case 4:
                         return "Costo Unitario Prom (" + R.COIN_SUFFIX.substring(1) + ")";
                     case 5:
