@@ -11,6 +11,7 @@ import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.IpvRegistro;
 import com.jobits.pos.core.domain.models.IpvVentaRegistro;
@@ -55,6 +56,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_IMPRIMIR_IPV_VENTA_REGISTRO = "Imprimir Ipv venta",
             ACTION_NUEVO_PEDIDO_IPV_VENTA = "Nuevo Pedido",
             ACTION_ENVIAR_IPV_TO_IPV = "Enviar IPV to IPV",
+            ACTION_ENVIAR_IPV_TO_ALMACEN = "Enviar IPV to Almacen",
             ACTION_AJUSTAR_IPV = "Ajustar consumo";
 
     private IPVService service;
@@ -169,7 +171,13 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 return Optional.empty();
             }
         });
-
+        registerOperation(new AbstractViewAction(ACTION_ENVIAR_IPV_TO_ALMACEN) {
+            @Override
+            public Optional doAction() {
+                onTransferirAAlmacen();
+                return Optional.empty();
+            }
+        });
     }
 
     private void onFechaCambiadaIpv() {
@@ -342,7 +350,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     "Puntos de Elaboracion",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.YES_NO_OPTION,
-                    new ImageIcon(getClass().getResource("/restManager/resources/icons pack/olla_indigo.png")),
+                    new ImageIcon(getClass().getResource("/restManager/resources/icons pack/enviar_indigo.png")),
                     options,
                     options[0]);
             switch (confirm) {
@@ -352,6 +360,42 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                         Float cantidad = new NumberPad(null).showView();
                         if (cantidad != null) {
                             service.transferirIPVRegistro(getBean().getIpv_registro_seleciconado(), cocina, cantidad);
+                        }
+                    }
+                case JOptionPane.NO_OPTION:
+                default:
+                    break;
+            }
+        } else {
+            throw new IllegalArgumentException("No hay Puntos de Elaboracion registrados en el sistema");
+        }
+    }
+
+    private void onTransferirAAlmacen() {
+        List<Almacen> almacenes = service.getAlmacenList();
+        Almacen almacen;
+        if (!almacenes.isEmpty()) {
+            JComboBox<Almacen> jComboBox1 = new JComboBox<>();
+            jComboBox1.setModel(new DefaultComboBoxModel<>(almacenes.toArray(new Almacen[0])));
+            jComboBox1.setSelectedItem(almacenes.get(0));
+            Object[] options = {"Seleccionar", "Cancelar"};
+            //                     yes        no       cancel
+            int confirm = JOptionPane.showOptionDialog(
+                    null,
+                    jComboBox1,
+                    "Almacenes",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.YES_NO_OPTION,
+                    new ImageIcon(getClass().getResource("/restManager/resources/icons pack/enviar_indigo.png")),
+                    options,
+                    options[0]);
+            switch (confirm) {
+                case JOptionPane.YES_OPTION:
+                    almacen = (Almacen) jComboBox1.getSelectedItem();
+                    if (almacen != null) {
+                        Float cantidad = new NumberPad(null).showView();
+                        if (cantidad != null) {
+                            service.transferirIPVRegistroToAlmacen(getBean().getIpv_registro_seleciconado(), almacen, cantidad);
                         }
                     }
                 case JOptionPane.NO_OPTION:

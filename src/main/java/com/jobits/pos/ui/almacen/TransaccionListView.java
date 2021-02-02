@@ -105,6 +105,7 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
                                 return "TRANSFORMACION: ";
                             }
                         }
+                        return "TRASPASO DE IPV";
                     default:
                         return null;
                 }

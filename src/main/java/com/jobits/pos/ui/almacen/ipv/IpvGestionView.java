@@ -329,6 +329,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jToggleButtonIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV_VENTA));
         jButtonRefrescar.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_CAMBIAR_COCINA));
         jButtonEnviarToIPV.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_IPV));
+        jButtonEnviarToAlmacen.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_ALMACEN));
 
         getPresenter().addPropertyChangeListener("ImprimirTablaIPVVentaRegistro", (PropertyChangeEvent evt) -> {
             imprimirIPVVentaRegistro();
