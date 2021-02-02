@@ -13,7 +13,6 @@ import java.awt.print.PrinterException;
 import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
@@ -27,6 +26,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.beans.PropertyChangeEvent;
 
 /**
  *
@@ -59,7 +59,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableRegistro = new javax.swing.JTable();
         jPanel1 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jButtonimprimirIpv = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonimprimirIpvRegistro = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonDarEntradaIpv = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonEnviarToIPV = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonEnviarToAlmacen = MaterialComponentsFactory.Buttons.getOutlinedButton();
@@ -74,7 +74,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jScrollPane4 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableIPV = new javax.swing.JTable();
         jPanel6 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jButtonImprimirIpvVenta = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonImprimirIpv = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonDarEntradaIpvVenta = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonPedido = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel7 = new javax.swing.JPanel();
@@ -132,11 +132,11 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setOpaque(false);
 
-        jButtonimprimirIpv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/imprimir_detallado_indigo.png"))); // NOI18N
-        jButtonimprimirIpv.setMnemonic('i');
-        jButtonimprimirIpv.setToolTipText("Imprimir");
-        jButtonimprimirIpv.setBorderPainted(false);
-        jPanel1.add(jButtonimprimirIpv);
+        jButtonimprimirIpvRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/imprimir_detallado_indigo.png"))); // NOI18N
+        jButtonimprimirIpvRegistro.setMnemonic('i');
+        jButtonimprimirIpvRegistro.setToolTipText("Imprimir");
+        jButtonimprimirIpvRegistro.setBorderPainted(false);
+        jPanel1.add(jButtonimprimirIpvRegistro);
 
         jButtonDarEntradaIpv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/entrada_detallado_indigo.png"))); // NOI18N
         jButtonDarEntradaIpv.setMnemonic('e');
@@ -222,11 +222,11 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel6.setBackground(new java.awt.Color(204, 204, 204));
         jPanel6.setMinimumSize(new java.awt.Dimension(207, 58));
 
-        jButtonImprimirIpvVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/imprimir_detallado_indigo.png"))); // NOI18N
-        jButtonImprimirIpvVenta.setMnemonic('i');
-        jButtonImprimirIpvVenta.setToolTipText("Imprimir");
-        jButtonImprimirIpvVenta.setBorderPainted(false);
-        jPanel6.add(jButtonImprimirIpvVenta);
+        jButtonImprimirIpv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/imprimir_detallado_indigo.png"))); // NOI18N
+        jButtonImprimirIpv.setMnemonic('i');
+        jButtonImprimirIpv.setToolTipText("Imprimir");
+        jButtonImprimirIpv.setBorderPainted(false);
+        jPanel6.add(jButtonImprimirIpv);
 
         jButtonDarEntradaIpvVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/entrada_detallado_indigo.png"))); // NOI18N
         jButtonDarEntradaIpvVenta.setMnemonic('e');
@@ -271,10 +271,10 @@ public class IpvGestionView extends AbstractViewPanel {
     private javax.swing.JButton jButtonDarEntradaIpvVenta;
     private javax.swing.JButton jButtonEnviarToAlmacen;
     private javax.swing.JButton jButtonEnviarToIPV;
-    private javax.swing.JButton jButtonImprimirIpvVenta;
+    private javax.swing.JButton jButtonImprimirIpv;
     private javax.swing.JButton jButtonPedido;
     private javax.swing.JButton jButtonRefrescar;
-    private javax.swing.JButton jButtonimprimirIpv;
+    private javax.swing.JButton jButtonimprimirIpvRegistro;
     private javax.swing.JComboBox<Cocina> jComboBoxPtoElabSelec;
     private org.jdesktop.swingx.JXDatePicker jDateChooserIpv;
     private org.jdesktop.swingx.JXDatePicker jDateChooserIpvVentas;
@@ -321,13 +321,23 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonAjustarConsumo.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_AJUSTAR_IPV));
         jButtonDarEntradaIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_DAR_ENTRADA_IPV_REGISTROS));
         jButtonDarEntradaIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_DAR_ENTRADA_IPV_VENTA));
-        jButtonImprimirIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_VENTA));
+        jButtonImprimirIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_VENTA_REGISTRO));
+        jButtonimprimirIpvRegistro.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_REGISTRO));
         jButtonPedido.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_NUEVO_PEDIDO_IPV_VENTA));
-        jButtonimprimirIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_VENTA));
+//        jButtonimprimirIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_VENTA_REGISTRO));
         jToggleButtonIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV));
         jToggleButtonIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV_VENTA));
         jButtonRefrescar.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_CAMBIAR_COCINA));
         jButtonEnviarToIPV.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_IPV));
+        jButtonEnviarToAlmacen.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_ALMACEN));
+
+        getPresenter().addPropertyChangeListener("ImprimirTablaIPVVentaRegistro", (PropertyChangeEvent evt) -> {
+            imprimirIPVVentaRegistro();
+        });
+        getPresenter().addPropertyChangeListener("ImprimirTablaIPVRegistro", (PropertyChangeEvent evt) -> {
+            imprimirIPVRegistro();
+        });
+
     }
 
     @Override
@@ -517,12 +527,11 @@ public class IpvGestionView extends AbstractViewPanel {
         return VIEW_NAME;
     }
 
-    private void imprimirTabla() {
+    private void imprimirIPVRegistro() {
         MessageFormat footer = new MessageFormat("-Pag {0}-");
         MessageFormat header = new MessageFormat("IPV " + jComboBoxPtoElabSelec.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooserIpv.getDate()));
         try {
             jTableRegistro.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-            System.out.println(jTableRegistro.getFont());
         } catch (PrinterException ex) {
             Logger.getLogger(IpvGestionView.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -530,8 +539,7 @@ public class IpvGestionView extends AbstractViewPanel {
 
     }
 
-    public void Imprimir() {
-
+    private void imprimirIPVVentaRegistro() {
         MessageFormat footer = new MessageFormat("Entregado por                  Recibido por                  Revisado por");
         MessageFormat header = new MessageFormat("IPV " + jComboBoxPtoElabSelec.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooserIpv.getDate()));
         try {
@@ -541,28 +549,6 @@ public class IpvGestionView extends AbstractViewPanel {
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
-
-    private void onImprimirClick() {
-        String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
-        int selection = JOptionPane.showOptionDialog(this,
-                R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
-                R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-        switch (selection) {
-            case 0:
-                imprimirTabla();
-                break;//impresion normal
-            case 1:
-//                List<IpvRegistro> registros = jToggleButton1.isSelected()
-//                        ? ((RestManagerAbstractTableModel<IpvRegistro>) jTableRegistro.getModel()).getItems()
-//                        : registroList;
-
-                //   Impresion.getDefaultInstance().printResumenIPVDePuntoElaboracion(registros);
-                break;//impresion ticket
-            default:
-                break;//cancelado
-        }
     }
 
 }

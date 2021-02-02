@@ -11,12 +11,18 @@ import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.IpvRegistro;
 import com.jobits.pos.core.domain.models.IpvVentaRegistro;
+import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.Impresion;
+import com.jobits.pos.servicios.impresion.formatter.IPVRegistroFomatter;
+import com.jobits.pos.servicios.impresion.formatter.IPVVentaRegistroFomatter;
+import com.jobits.pos.servicios.impresion.formatter.OrdenFormatter;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -46,10 +52,11 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_OCULTAR_PRODUCTOS_IPV_VENTA = "Ocultar productos no utilizados",
             ACTION_DAR_ENTRADA_IPV_REGISTROS = "Entrada Registro",
             ACTION_DAR_ENTRADA_IPV_VENTA = "Entrada Ipv",
-            ACTION_IMPRIMIR_IPV = "Imprimir registros",
-            ACTION_IMPRIMIR_IPV_VENTA = "Imprimir Ipv venta",
+            ACTION_IMPRIMIR_IPV_REGISTRO = "Imprimir registros",
+            ACTION_IMPRIMIR_IPV_VENTA_REGISTRO = "Imprimir Ipv venta",
             ACTION_NUEVO_PEDIDO_IPV_VENTA = "Nuevo Pedido",
             ACTION_ENVIAR_IPV_TO_IPV = "Enviar IPV to IPV",
+            ACTION_ENVIAR_IPV_TO_ALMACEN = "Enviar IPV to Almacen",
             ACTION_AJUSTAR_IPV = "Ajustar consumo";
 
     private IPVService service;
@@ -129,17 +136,17 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 return Optional.empty();
             }
         });
-        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_IPV) {
+        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_IPV_REGISTRO) {
             @Override
             public Optional doAction() {
-                onImprimirIpv();
+                onImprimirIpvRegistro();
                 return Optional.empty();
             }
         });
-        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_IPV_VENTA) {
+        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_IPV_VENTA_REGISTRO) {
             @Override
             public Optional doAction() {
-                onImprimirIpvVentas();
+                onImprimirIPVVentaRegistroClick();
                 return Optional.empty();
             }
         });
@@ -164,7 +171,13 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 return Optional.empty();
             }
         });
-
+        registerOperation(new AbstractViewAction(ACTION_ENVIAR_IPV_TO_ALMACEN) {
+            @Override
+            public Optional doAction() {
+                onTransferirAAlmacen();
+                return Optional.empty();
+            }
+        });
     }
 
     private void onFechaCambiadaIpv() {
@@ -243,30 +256,27 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onDarEntradaIpv() {
         IpvRegistro instance = getBean().getIpv_registro_seleciconado();
-        float cantidad = new NumberPad(null).showView();
-        if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo(),
-                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
-            service.darEntradaExistencia(instance, cantidad);
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo(),
+                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    == JOptionPane.YES_OPTION) {
+                service.darEntradaExistencia(instance, cantidad);
+            }
         }
 
     }
 
     private void onDarEntradaIpvVentas() {
         IpvVentaRegistro instance = getBean().getIpv_venta_registro_seleccionado();
-        float cantidad = new NumberPad(null).showView();
-        if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta(),
-                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
-            service.darEntradaIPV(instance, cantidad);
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta(),
+                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    == JOptionPane.YES_OPTION) {
+                service.darEntradaIPV(instance, cantidad);
+            }
         }
-
-    }
-
-    private void onImprimirIpv() {//TODO:impresion donde y quien
-    }
-
-    private void onImprimirIpvVentas() {//TODO:impresion donde y quien
 
     }
 
@@ -277,17 +287,19 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         pedidoService.setVentaSeleccionada(getBean().getVenta_ipv_ventas_seleccionada());
         pedidoService.setCocina(cocina);
         NavigationService.getInstance().navigateTo(IPVPedidoVentasView.VIEW_NAME,
-                new IPVPedidoVentasViewPresenter(pedidoService),DisplayType.POPUP);
+                new IPVPedidoVentasViewPresenter(pedidoService), DisplayType.POPUP);
         onCocinaStateChange();
     }
 
     private void onAjustarIpv() {
         IpvRegistro instance = getBean().getIpv_registro_seleciconado();
-        float cantidad = new NumberPad(null).showView();
-        if (JOptionPane.showConfirmDialog(null, "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad,
-                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                == JOptionPane.YES_OPTION) {
-            service.ajustarConsumo(instance, cantidad);
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            if (JOptionPane.showConfirmDialog(null, "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad,
+                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    == JOptionPane.YES_OPTION) {
+                service.ajustarConsumo(instance, cantidad);
+            }
         }
     }
 
@@ -338,14 +350,17 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     "Puntos de Elaboracion",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.YES_NO_OPTION,
-                    new ImageIcon(getClass().getResource("/restManager/resources/icons pack/olla_indigo.png")),
+                    new ImageIcon(getClass().getResource("/restManager/resources/icons pack/enviar_indigo.png")),
                     options,
                     options[0]);
             switch (confirm) {
                 case JOptionPane.YES_OPTION:
                     cocina = (Cocina) jComboBox1.getSelectedItem();
                     if (cocina != null) {
-                        service.transferirIPVRegistro(getBean().getIpv_registro_seleciconado(), cocina, new NumberPad(null).showView());
+                        Float cantidad = new NumberPad(null).showView();
+                        if (cantidad != null) {
+                            service.transferirIPVRegistro(getBean().getIpv_registro_seleciconado(), cocina, cantidad);
+                        }
                     }
                 case JOptionPane.NO_OPTION:
                 default:
@@ -353,6 +368,80 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             }
         } else {
             throw new IllegalArgumentException("No hay Puntos de Elaboracion registrados en el sistema");
+        }
+    }
+
+    private void onTransferirAAlmacen() {
+        List<Almacen> almacenes = service.getAlmacenList();
+        Almacen almacen;
+        if (!almacenes.isEmpty()) {
+            JComboBox<Almacen> jComboBox1 = new JComboBox<>();
+            jComboBox1.setModel(new DefaultComboBoxModel<>(almacenes.toArray(new Almacen[0])));
+            jComboBox1.setSelectedItem(almacenes.get(0));
+            Object[] options = {"Seleccionar", "Cancelar"};
+            //                     yes        no       cancel
+            int confirm = JOptionPane.showOptionDialog(
+                    null,
+                    jComboBox1,
+                    "Almacenes",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.YES_NO_OPTION,
+                    new ImageIcon(getClass().getResource("/restManager/resources/icons pack/enviar_indigo.png")),
+                    options,
+                    options[0]);
+            switch (confirm) {
+                case JOptionPane.YES_OPTION:
+                    almacen = (Almacen) jComboBox1.getSelectedItem();
+                    if (almacen != null) {
+                        Float cantidad = new NumberPad(null).showView();
+                        if (cantidad != null) {
+                            service.transferirIPVRegistroToAlmacen(getBean().getIpv_registro_seleciconado(), almacen, cantidad);
+                        }
+                    }
+                case JOptionPane.NO_OPTION:
+                default:
+                    break;
+            }
+        } else {
+            throw new IllegalArgumentException("No hay Puntos de Elaboracion registrados en el sistema");
+        }
+    }
+
+    private void onImprimirIPVVentaRegistroClick() {
+        String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+        int selection = JOptionPane.showOptionDialog(null,
+                R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
+                R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        switch (selection) {
+            case 0:
+                firePropertyChange("ImprimirTablaIPVVentaRegistro", null, null);
+                break;//impresion normal
+            case 1:
+                Impresion i = new Impresion();
+                i.print(new IPVVentaRegistroFomatter(getBean().getLista_ipv_venta_registro()), null);
+                break;//impresion ticket
+            default:
+                break;//cancelado
+        }
+    }
+
+    private void onImprimirIpvRegistro() {
+        String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+        int selection = JOptionPane.showOptionDialog(null,
+                R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
+                R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        switch (selection) {
+            case 0:
+                firePropertyChange("ImprimirTablaIPVRegistro", null, null);
+                break;//impresion normal
+            case 1:
+                Impresion i = new Impresion();
+                i.print(new IPVRegistroFomatter(getBean().getLista_ipv_registro()), null);
+                break;//impresion ticket
+            default:
+                break;//cancelado
         }
     }
 }

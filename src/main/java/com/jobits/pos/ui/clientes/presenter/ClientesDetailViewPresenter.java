@@ -11,6 +11,7 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Cliente;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
@@ -27,19 +28,19 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
-    private final ClientesDetailService service;
+    private final ClientesDetailService clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClientesDetailService.class);
+    private final boolean creatingMode;
+
     private Cliente cliente;
 
-    public ClientesDetailViewPresenter(ClientesDetailService service) {
+    public ClientesDetailViewPresenter(Cliente cliente) {
         super(new ClientesDetailViewModel());
-        this.service = service;
-        if (service.isCreatingMode()) {
-            cliente = service.createNewInstance();
-        } else {
-            cliente = service.getInstance();
+        this.creatingMode = cliente == null;
+        this.cliente = cliente;
+        if (creatingMode) {
+            this.cliente = clienteservice.createNewInstance();
         }
-        fillForm();
-        addListeners();
+        refreshState();
     }
 
     @Override
@@ -60,9 +61,6 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
         });
     }
 
-    private void addListeners() {
-    }
-
     private void onAgregarClick() {
         if (getBean().getNombre() != null
                 && getBean().getApellidos() != null
@@ -76,7 +74,12 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
             cliente.setMunicipioCliente(getBean().getMunicipio());
             cliente.setPrivinciaCliente(getBean().getCiudad());
             cliente.setOrdenList(getBean().getLista_ordenes());
-            service.crearCliente(cliente);
+
+            if (creatingMode) {
+                clienteservice.crearCliente(cliente);
+            } else {
+                clienteservice.editarCliente(cliente);
+            }
             NavigationService.getInstance().navigateUp();
         } else {
             JOptionPane.showMessageDialog(null, "Faltan campos obligarios por llenar");
@@ -91,7 +94,8 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
         }
     }
 
-    private void fillForm() {
+    @Override
+    protected Optional refreshState() {
         getBean().setNombre(cliente.getNombreCliente());
         getBean().setApellidos(cliente.getApellidosCliente());
         getBean().setAlias(cliente.getAliasCliente());
@@ -101,5 +105,6 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
         getBean().setMunicipio(cliente.getMunicipioCliente());
         getBean().setCiudad(cliente.getPrivinciaCliente());
         getBean().setLista_ordenes(new ArrayListModel<>(cliente.getOrdenList()));
+        return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 }

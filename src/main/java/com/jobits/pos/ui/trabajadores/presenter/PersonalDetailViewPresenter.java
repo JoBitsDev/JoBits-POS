@@ -6,20 +6,18 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.trabajadores.PersonalDetailController;
+import com.jobits.pos.controller.trabajadores.impl.PersonalDetailController;
 import com.jobits.pos.controller.trabajadores.PersonalDetailService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
-import com.jobits.pos.core.domain.models.PuestoTrabajo;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,18 +28,19 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
 
-    private PersonalDetailService service;
+    private final PersonalDetailService service = PosDesktopUiModule.getInstance().getImplementation(PersonalDetailService.class);
+    private Personal personal;
+    private final boolean creatingMode;
 
-    public PersonalDetailViewPresenter(PersonalDetailController service) {
+    public PersonalDetailViewPresenter(Personal personal) {
         super(new PersonalDetailViewModel());
-        this.service = service;
-        if (service.isCreatingMode()) {
-            getBean().setCrear_editar_button_text("Crear");
+        creatingMode = personal == null;
+        if (creatingMode) {
+            this.personal = service.createNewInstance();
         } else {
-            getBean().setCrear_editar_button_text("Editar");
+            this.personal = personal;
         }
         fillForm();
-        addListeners();
     }
 
     @Override
@@ -62,11 +61,8 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
         });
     }
 
-    private void addListeners() {
-    }
-
     private void onAgregarClick() {
-        service.fillPersonalData(
+        service.fillPersonalData(personal,
                 getBean().getNombre_trabajador(),
                 getBean().getApellidos_trabajador(),
                 getBean().getFecha_nacimiento(),
@@ -80,6 +76,11 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
                 getBean().getDireccion(),
                 getBean().getCarnet_identidad(),
                 getBean().getSexo_seleccionado());
+        if (creatingMode) {
+            service.create(personal);
+        } else {
+            service.update(personal);
+        }
         NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
@@ -93,12 +94,16 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
     }
 
     private void fillForm() {
+        if (creatingMode) {
+            getBean().setCrear_editar_button_text("Crear");
+        } else {
+            getBean().setCrear_editar_button_text("Editar");
+        }
         getBean().getSexo_list().clear();
         getBean().getSexo_list().addAll(new ArrayListModel<>(Arrays.asList("Masculino", "Femenino")));
         getBean().getPuestos_trabajo_list().clear();
         getBean().getPuestos_trabajo_list().addAll(new ArrayListModel<>(service.getPuestoTrabajoList()));
 
-        Personal personal = service.getInstance();
         if (personal.getDatosPersonales() != null) {
             getBean().setNombre_trabajador(personal.getDatosPersonales().getNombre());
             getBean().setApellidos_trabajador(personal.getDatosPersonales().getApellidos());

@@ -6,8 +6,7 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.clientes.ClientesDetailController;
-//import com.jobits.pos.adapters.repo.impl.OrdenTemporalRepo;
+import com.jobits.pos.controller.clientes.ClientesDetailService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -17,15 +16,14 @@ import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
-import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
-//import com.jobits.pos.ui.venta.orden.OrdenLogsDetailView;
+import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeEvent;
-import java.io.File;
 import java.util.Optional;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -55,6 +53,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private OrdenService controller;
 
     public static final String PROP_CHANGES = "Changes";
+
+    ClientesDetailService clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClientesDetailService.class);
 
     public OrdenDetailViewPresenter(OrdenService controller) {
         super(new OrdenDetailViewModel());
@@ -102,8 +102,12 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onAddProductoClick() {
-        getController().addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), new NumberPad(null).showView());
-        getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            getController().addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad);
+            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+        }
+
     }
 
     private void onCerrarOrdenClick() {
@@ -152,7 +156,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 //        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
 //    }
     private void onVerDetallesClick() {
-        getController().canViewOrdenLog(Application.getInstance().getLoggedUser(),codOrden);
+        getController().canViewOrdenLog(Application.getInstance().getLoggedUser(), codOrden);
         Application.getInstance().getNavigator().navigateTo(
                 OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);
     }
@@ -186,7 +190,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
                     "/restManager/resources/icons pack/porciento_indigo.png")));
         }
-        getBean().setLista_clientes(new ArrayListModel<>(new ClientesDetailController().getListaClientes()));
+        getBean().setLista_clientes(new ArrayListModel<>(clienteservice.getListaClientes()));
         if (instance.getClienteIdCliente() != null) {
             getBean().setCliente_seleccionado(instance.getClienteIdCliente());
         } else {
@@ -322,7 +326,6 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_CLIENTE_SELECCIONADO, (PropertyChangeEvent evt) -> {
             Cliente newValue = (Cliente) evt.getNewValue();
             if (newValue != null) {
-                ClientesDetailController clienteservice = new ClientesDetailController();
                 clienteservice.addOrdenToClientOrdenList(newValue, getController().getInstance(codOrden));
             }
         }

@@ -6,11 +6,10 @@
 package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.imagemanager.ImageManagerController;
-import com.jobits.pos.controller.productos.ProductoVentaDetailController;
+import com.jobits.pos.controller.imagemanager.ImageManagerService;
 import com.jobits.pos.controller.productos.ProductoVentaDetailService;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
-import com.jobits.pos.controller.seccion.SeccionListController;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
+import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
@@ -19,6 +18,7 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
@@ -46,20 +46,26 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public static String ACTION_ELIMINAR_INSUMO_FICHA = "Eliminar";
     public static String ACTION_EDITAR_IMAGEN = "Editar Imagen";
 
-    private ProductoVentaDetailService service;
+    private final ProductoVentaDetailService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaDetailService.class);
+    private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
+    private final PuntoElaboracionListService ptoElabService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    private final SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
+
+    private final boolean creatingMode;
+    ProductoVenta productoVenta;
 
     /**
      * Si es nulo es que el producto que se va a crear es nuevo
      *
-     * @param controller
+     * @param productoVenta
      */
-    public ProductoVentaDetailPresenter(ProductoVentaDetailController controller) {
+    public ProductoVentaDetailPresenter(ProductoVenta productoVenta) {
         super(new ProductoVentaDetailViewModel());
-        this.service = controller;
-        if (service.isCreatingMode()) {
-            getBean().setCrear_editar_button_text("Crear");
+        this.creatingMode = productoVenta == null;
+        if (creatingMode) {
+            this.productoVenta = service.createNewInstance();
         } else {
-            getBean().setCrear_editar_button_text("Editar");
+            this.productoVenta = productoVenta;
         }
         refreshView();
         refreshProductImage();
@@ -130,27 +136,31 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void refreshView() {
-        ProductoVenta pv = service.getInstance();
         getBean().getLista_categorias().addAll(new ArrayListModel<>(this.service.getSeccionList()));
         getBean().getLista_elaborado().addAll(new ArrayListModel<>(this.service.getCocinaList()));
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(this.service.getInsumoList()));
-        getBean().setCategoria_seleccionada(pv.getSeccionnombreSeccion());
-        getBean().setNombre_producto(pv.getNombre());
-        getBean().setCodigo_producto(pv.getCodigoProducto());
-        getBean().setTimepo_elaboracion(pv.getTiempoServicioMin());
-        if (pv.getPagoPorVenta() != null) {
-            getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(pv.getPagoPorVenta()));
+        getBean().setCategoria_seleccionada(productoVenta.getSeccionnombreSeccion());
+        getBean().setNombre_producto(productoVenta.getNombre());
+        getBean().setCodigo_producto(productoVenta.getCodigoProducto());
+        getBean().setTimepo_elaboracion(productoVenta.getTiempoServicioMin());
+        if (productoVenta.getPagoPorVenta() != null) {
+            getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoVenta.getPagoPorVenta()));
         }
-        getBean().setElaborado_seleccionado(pv.getCocinacodCocina());
+        getBean().setElaborado_seleccionado(productoVenta.getCocinacodCocina());
         getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(pv.getProductoInsumoList()));
+        getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoVenta.getProductoInsumoList()));
         getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
-        getBean().setPrecio_venta("" + R.formatoMoneda.format(pv.getPrecioVenta()));
+        getBean().setPrecio_venta(String.valueOf(utils.setDosLugaresDecimalesFloat(productoVenta.getPrecioVenta())));
         updateCostoValue();
         getBean().getLista_insumos_disponibles().clear();
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
-        getBean().setRuta_imagen_producto(pv.getDescripcion());
-        getBean().setCodigo_producto(service.getInstance().getCodigoProducto());
+        getBean().setRuta_imagen_producto(productoVenta.getDescripcion());
+        getBean().setCodigo_producto(productoVenta.getCodigoProducto());
+        if (creatingMode) {
+            getBean().setCrear_editar_button_text("Crear");
+        } else {
+            getBean().setCrear_editar_button_text("Editar");
+        }
     }
 
     private void onAddIngredienteClick() {
@@ -160,7 +170,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAceptarClick() {
-        service.fillProductoVentaData(
+        service.fillProductoVentaData(productoVenta,
                 getBean().getNombre_producto(),
                 getBean().getPrecio_costo(),
                 getBean().getComision_por_venta(),
@@ -170,6 +180,11 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 getBean().getLista_insumos_contenidos(),
                 getBean().getRuta_imagen_producto(),
                 getBean().getTimepo_elaboracion());
+        if (creatingMode) {
+            service.create(productoVenta);
+        } else {
+            service.create(productoVenta);
+        }
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
     }
@@ -178,7 +193,6 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea descartar los cambios?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            service.discardChanges();
             NavigationService.getInstance().navigateUp();
         }
 
@@ -187,55 +201,57 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     private void onAddCategoriaClick() {
         String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre de la sección a crear",
                 "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
-        new SeccionListController().createInstance(nombre);
+        seccionService.createInstance(nombre);
         getBean().setLista_categorias(new ArrayListModel<>(service.getSeccionList()));
     }
 
     private void onAddElaboracionCLick() {
         String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre del Punto de Elaboracion a crear",
                 "Nuevo Punto de Elaboracion", JOptionPane.QUESTION_MESSAGE);
-        new PuntoElaboracionListController().createInstance(nombre);
+        ptoElabService.createInstance(nombre);
         getBean().setLista_elaborado(new ArrayListModel<>(service.getCocinaList()));
     }
 
     private void onAgregarInsumoFichaClick() {
-        Insumo inSel = getBean().getInsumo_disponible_sel();
-        service.agregarInsumoaProducto(inSel, new NumberPad(null).showView());
-        getBean().setInsumo_disponible_sel(null);
-        getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
-        updateCostoValue();
-        getBean().setInsumo_disponible_sel(null);
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            Insumo inSel = getBean().getInsumo_disponible_sel();
+            service.agregarInsumoaProducto(productoVenta, inSel, cantidad);
+            getBean().setInsumo_disponible_sel(null);
+            getBean().getLista_insumos_contenidos().clear();
+            getBean().getLista_insumos_contenidos().addAll(productoVenta.getProductoInsumoList());
+            updateCostoValue();
+            getBean().setInsumo_disponible_sel(null);
+        }
+
     }
 
     private void updateCostoValue() {
+        float total = 0;
         if (!getBean().getLista_insumos_contenidos().isEmpty()) {
-            float total = 0;
             total = getBean().getLista_insumos_contenidos().stream().map(x -> x.getCosto()).reduce(total, (accumulator, _item) -> accumulator + _item);
-            getBean().setPrecio_costo(R.formatoMoneda.format(total));
-        } else {
-            getBean().setPrecio_costo(R.formatoMoneda.format(0));
         }
+        getBean().setPrecio_costo(String.valueOf(utils.setDosLugaresDecimalesFloat(total)));
     }
 
     private void onEliminarInsumoFichaClick() {
         ProductoInsumo inSel = getBean().getInsumo_contenido_seleccionado();
-        service.eliminarInsumoProducto(inSel);
+        service.eliminarInsumoProducto(productoVenta, inSel);
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
-        getBean().getLista_insumos_contenidos().addAll(service.getInstance().getProductoInsumoList());
+        getBean().getLista_insumos_contenidos().addAll(productoVenta.getProductoInsumoList());
         updateCostoValue();
     }
 
     private void onEditarImagenClick() {
-        ImageManagerPopUpContainer a = new ImageManagerPopUpContainer(null, service.getInstance().getCodigoProducto());
+        ImageManagerPopUpContainer a = new ImageManagerPopUpContainer(null, productoVenta.getCodigoProducto());
 //        TODO: Arreglar Navegacion al ImageManagerPopup
-        getBean().setRuta_imagen_producto(R.MEDIA_FILE_PATH + service.getInstance().getCodigoProducto() + ".jpg");
+        getBean().setRuta_imagen_producto(R.MEDIA_FILE_PATH + productoVenta.getCodigoProducto() + ".jpg");
     }
 
     private void refreshProductImage() {
         String path = getBean().getRuta_imagen_producto();
-        ImageIcon image = ImageManagerController.loadImageIcon(path, new Dimension(70, 70));
+        ImageIcon image = imageService.loadImageIcon(path, new Dimension(70, 70));
         getBean().setImagen_producto(image);
     }
 

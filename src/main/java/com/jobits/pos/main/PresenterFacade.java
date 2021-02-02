@@ -11,30 +11,13 @@ import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
-import com.jobits.pos.controller.areaventa.AreaDetailController;
-import com.jobits.pos.controller.areaventa.AreaVentaController;
-import com.jobits.pos.controller.clientes.ClientesDetailController;
-import com.jobits.pos.controller.clientes.ClientesListController;
-import com.jobits.pos.controller.configuracion.ConfiguracionController;
-import com.jobits.pos.controller.imagemanager.ImageManagerController;
-import com.jobits.pos.controller.insumo.InsumoDetailController;
-import com.jobits.pos.controller.insumo.InsumoListController;
-import com.jobits.pos.controller.login.LogInController;
-import com.jobits.pos.controller.login.UbicacionConexionController;
-import com.jobits.pos.controller.productos.ProductoVentaListController;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListController;
-import com.jobits.pos.controller.reportes.ReportarBugController;
-import com.jobits.pos.controller.seccion.MenuController;
-import com.jobits.pos.controller.seccion.SeccionDetailServiceImpl;
-import com.jobits.pos.controller.trabajadores.NominasController;
-import com.jobits.pos.controller.trabajadores.PersonalDetailController;
-import com.jobits.pos.controller.trabajadores.PersonalListController;
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailController;
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoListController;
+import com.jobits.pos.controller.login.impl.LogInController;
+import com.jobits.pos.controller.login.impl.UbicacionConexionController;
+import com.jobits.pos.controller.trabajadores.impl.NominasController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.controller.venta.VentaListController;
-import com.jobits.pos.controller.venta.VentaResumenController;
+import com.jobits.pos.controller.venta.VentaListService;
+import com.jobits.pos.controller.venta.VentaResumenService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Mesa;
@@ -74,6 +57,10 @@ import com.jobits.pos.ui.clientes.ClientesDetailView;
 import com.jobits.pos.ui.clientes.ClientesListView;
 import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
 import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
+import com.jobits.pos.ui.clientes.reserva.presenter.ClientesReservaDetailViewPresenter;
+import com.jobits.pos.ui.clientes.reserva.presenter.ClientesReservaListViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.dashboard.DashBoardView;
@@ -94,6 +81,7 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
+import com.jobits.pos.ui.productos.presenter.ProductoVentaDetailPresenter;
 import com.jobits.pos.ui.productos.presenter.ProductoVentaListViewPresenter;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
@@ -158,35 +146,35 @@ public class PresenterFacade {
             case DashBoardView.VIEW_NAME:
                 return new DashboardViewPresenter();
             case ProductoVentaListView.VIEW_NAME:
-                return new ProductoVentaListViewPresenter(new ProductoVentaListController());
+                return new ProductoVentaListViewPresenter();
             case ProductoVentaDetailView.VIEW_NAME:
-                throw new IllegalStateException("Bad call on view: " + viewUIDName);
+                return new ProductoVentaDetailPresenter(null);
             case InsumoListView.VIEW_NAME:
-                return new InsumoListViewPresenter(new InsumoListController());
+                return new InsumoListViewPresenter();
             case InsumoDetailView.VIEW_NAME:
-                return new InsumoDetailViewPresenter(new InsumoDetailController());
+                return new InsumoDetailViewPresenter(null);
             case PersonalListView.VIEW_NAME:
-                return new PersonalListViewPresenter(new PersonalListController());
+                return new PersonalListViewPresenter();
             case PersonalDetailView.VIEW_NAME:
-                return new PersonalDetailViewPresenter(new PersonalDetailController());
+                return new PersonalDetailViewPresenter(null);
             case PuestoTrabajoListView.VIEW_NAME:
-                return new PuestoTrabajoListViewPresenter(new PuestoTrabajoListController());
+                return new PuestoTrabajoListViewPresenter();
             case PuestoTrabajoDetailView.VIEW_NAME:
-                return new PuestoTrabajoDetailViewPresenter(new PuestoTrabajoDetailController());
+                return new PuestoTrabajoDetailViewPresenter(null);
             case NominasDetailView.VIEW_NAME:
-                return new NominasDetailPresenter(new NominasController());
+                return new NominasDetailPresenter();
             case PuntoElaboracionListView.VIEW_NAME:
-                return new PuntoElaboracionListViewPresenter(new PuntoElaboracionListController());
+                return new PuntoElaboracionListViewPresenter();
             case CartasSeccionView.VIEW_NAME:
-                return new CartasSeccionViewPresenter(new MenuController());
+                return new CartasSeccionViewPresenter();
             case SeccionDetailView.VIEW_NAME:
-                return new SeccionDetailViewPresenter(new SeccionDetailServiceImpl(), new Seccion(), new Carta());
+                return new SeccionDetailViewPresenter(new Seccion(), new Carta());
             case AreaVentaListView.VIEW_NAME:
-                return new AreaVentaViewPresenter(new AreaVentaController());
+                return new AreaVentaViewPresenter();
             case AreaDetailView.VIEW_NAME:
-                return new AreaDetailViewPresenter(new AreaDetailController());
+                return new AreaDetailViewPresenter(null, true);
             case ConfiguracionView.VIEW_NAME:
-                return new ConfigurationViewPresenter(new ConfiguracionController());
+                return new ConfigurationViewPresenter();
             case IpvGestionView.VIEW_NAME:
                 return new IpvGestionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(IPVService.class));
             case VentaDetailView.VIEW_NAME:
@@ -195,11 +183,11 @@ public class PresenterFacade {
                         PosDesktopUiModule.getInstance().getImplementation(OrdenService.class),
                         new ArrayList<>());
             case BackUpView.VIEW_NAME:
-                return new BackUpViewPresenter(new UbicacionConexionController());
+                return new BackUpViewPresenter();
             case VentaCalendarView.VIEW_NAME:
-                return new VentaCalendarViewPresenter(new VentaListController());
+                return new VentaCalendarViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaListService.class));
             case VentaStatisticsView.VIEW_NAME:
-                return new VentaStatisticsViewPresenter(new VentaListController());
+                return new VentaStatisticsViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaListService.class));
             case AlmacenMainView.VIEW_NAME:
                 return new AlmacenViewPresenter(
                         PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
@@ -207,7 +195,7 @@ public class PresenterFacade {
             case FacturaView.VIEW_NAME:
                 return new FacturaViewPresenter(PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class));
             case ReportarBugView.VIEW_NAME:
-                return new ReportarBugViewPresenter(new ReportarBugController());
+                return new ReportarBugViewPresenter();
             case OrdenLogView.VIEW_NAME:
                 return new OrdenLogViewPresenter(null);
             case ReservasDetailView.VIEW_NAME:
@@ -217,19 +205,23 @@ public class PresenterFacade {
             case CalcularCambioView.VIEW_NAME:
                 return new CalcularCambioViewPresenter(new Orden());
             case VentaResumenView.VIEW_NAME:
-                return new VentaResumenViewPresenter(new VentaResumenController());
+                return new VentaResumenViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaResumenService.class));
             case AutorizoView.VIEW_NAME:
                 return new AutorizoViewPresenter(new LogInController(new AuthorizerImpl()), null);
             case ImageManagerView.VIEW_NAME:
-                return new ImageManagerViewPresenter(new ImageManagerController(null));
+                return new ImageManagerViewPresenter(null);
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListPresenter(PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class));
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
             case ClientesListView.VIEW_NAME:
-                return new ClientesListViewPresenter(new ClientesListController());
+                return new ClientesListViewPresenter();
             case ClientesDetailView.VIEW_NAME:
-                return new ClientesDetailViewPresenter(new ClientesDetailController());
+                return new ClientesDetailViewPresenter(null);
+            case ClientesReservaListView.VIEW_NAME:
+                return new ClientesReservaListViewPresenter();
+            case ClientesReservaDetailView.VIEW_NAME:
+                return new ClientesReservaDetailViewPresenter(null);
             case ReservaSchedulerView.VIEW_NAME:
                 return new ReservaSchedulerViewPresenter();
             case MesaDetailView.VIEW_NAME:

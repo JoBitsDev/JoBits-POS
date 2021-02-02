@@ -328,7 +328,7 @@ public class PuestoTrabajoDetailView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_NIVEL_ACCESO_SELECCIONADO)), "Nivel de Acceso");
         Bindings.bind(jComboBoxAreaPago, new SelectionInList<Cocina>(
                 getPresenter().getModel(PROP_AREA_PAGO_LIST),
-                getPresenter().getModel(PROP_AREA_PAGO_SELECCIONADA)));
+                getPresenter().getModel(PROP_AREA_PAGO_SELECCIONADA)), "Area de Pago");
         Bindings.bind(jToggleButtonPagoPorVentas,
                 getPresenter().getModel(PROP_PAGO_POR_VENTAS));
         Bindings.bind(jToggleButtonPropina,

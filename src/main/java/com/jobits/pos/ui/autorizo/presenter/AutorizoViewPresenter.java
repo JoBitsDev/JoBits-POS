@@ -5,9 +5,9 @@
  */
 package com.jobits.pos.ui.autorizo.presenter;
 
-import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.login.LogInService;
-import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;

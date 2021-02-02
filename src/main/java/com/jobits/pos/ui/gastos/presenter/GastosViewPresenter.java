@@ -5,9 +5,9 @@
  */
 package com.jobits.pos.ui.gastos.presenter;
 
-import com.jobits.pos.controller.gasto.GastoOperacionController;
+import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.gasto.GastoOperacionService;
-import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -16,10 +16,12 @@ import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.GastosFormatter;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import static com.jobits.pos.ui.gastos.presenter.GastosViewModel.*;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeEvent;
+import java.util.Arrays;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -34,13 +36,12 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
             ACTION_AGREGAR_GASTO = "Agregar Gasto",
             ACTION_ELIMINAR_GASTO = "Eliminar Gasto";
 
-    private GastoOperacionService service;
+    private final GastoOperacionService service = PosDesktopUiModule.getInstance().getImplementation(GastoOperacionService.class);
 
-    public GastosViewPresenter(GastoOperacionController service) {
+    public GastosViewPresenter(Venta v) {
         super(new GastosViewModel());
-        this.service = service;
-        refreshState();
         addListeners();
+        setVenta(v);
     }
 
     public void setVenta(Venta v) {
@@ -86,16 +87,10 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
 
     @Override
     protected Optional refreshState() {
+        getBean().setLista_categoria_gastos(new ArrayListModel<>(Arrays.asList(R.TipoGasto.values())));
         getBean().setCategoria_gasto_seleccionada(R.TipoGasto.UNSPECIFIED);
-        getBean().getLista_gasto_venta().clear();
-        getBean().getLista_gasto_venta().addAll(service.getLista());
-        if (!getBean().getLista_gasto_venta().isEmpty()) {
-            float a = 0;
-            a = getBean().getLista_gasto_venta().stream().map((gastoVenta) -> gastoVenta.getImporte()).reduce(a, (accumulator, _item) -> accumulator + _item);
-            getBean().setTotal_gastos(utils.setDosLugaresDecimales(a));
-        } else {
-            getBean().setTotal_gastos(utils.setDosLugaresDecimales(0));
-        }
+        getBean().setLista_gasto_venta(new ArrayListModel<>(service.getLista()));
+        getBean().setTotal_gastos(utils.setDosLugaresDecimales(service.getValorTotalGastos()));
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -120,13 +115,13 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
 
     private void onLimpiarClick() {
         getBean().setCategoria_gasto_seleccionada(R.TipoGasto.UNSPECIFIED);
+        getBean().setLista_tipo_gasto(new ArrayListModel<>());
         getBean().setTipo_gasto_seleccionado(null);
         getBean().setMonto_gasto(0);
         getBean().setDescripcion_gasto(null);
     }
 
     private void onImprimirClick() {
-
         if (!getBean().getLista_gasto_venta().isEmpty()) {
             Impresion i = new Impresion();
             i.print(new GastosFormatter(getBean().getLista_gasto_venta()), null);
@@ -137,13 +132,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
 
     private void addListeners() {
         getBean().addPropertyChangeListener(PROP_CATEGORIA_GASTO_SELECCIONADA, (PropertyChangeEvent evt) -> {
-            if (getBean().getCategoria_gasto_seleccionada() != null) {
-                getBean().getLista_tipo_gasto().clear();
-                getBean().getLista_tipo_gasto().addAll(
-                        service.getNombres(getBean().getCategoria_gasto_seleccionada().getNombre()));
-            } else {
-                getBean().getLista_tipo_gasto().clear();
-            }
+            getBean().setLista_tipo_gasto(new ArrayListModel<>(service.getNombres(((R.TipoGasto) evt.getNewValue()).getNombre())));
         });
     }
 

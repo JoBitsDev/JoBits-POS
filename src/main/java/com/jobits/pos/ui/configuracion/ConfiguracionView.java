@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.configuracion;
 
-import com.jobits.pos.controller.productos.ProductoVentaListController;
+import com.jobits.pos.controller.productos.impl.ProductoVentaListController;
 import com.jobits.pos.servicios.impresion.ImpresoraRepoImpl;
 import com.jobits.pos.servicios.impresion.ImpresoraUseCase;
 import com.jobits.pos.ui.AbstractViewPanel;

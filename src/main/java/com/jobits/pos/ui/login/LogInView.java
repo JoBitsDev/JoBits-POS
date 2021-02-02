@@ -7,7 +7,7 @@ package com.jobits.pos.ui.login;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
@@ -18,6 +18,8 @@ import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import static com.jobits.pos.ui.login.presenter.LoginViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Component;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 /**
  *
@@ -36,7 +38,7 @@ public class LogInView extends AbstractViewPanel {
      *
      * @param presenter
      */
-    private LogInView(AbstractViewPresenter presenter) {
+    private LogInView(LoginViewPresenter presenter) {
         super(presenter);
     }
 
@@ -192,8 +194,8 @@ public class LogInView extends AbstractViewPanel {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public AbstractViewPresenter getPresenter() {
-        return presenter;
+    public LoginViewPresenter getPresenter() {
+        return (LoginViewPresenter) presenter;
     }
 
     @Override
@@ -201,7 +203,7 @@ public class LogInView extends AbstractViewPanel {
         Bindings.bind(jTextFieldUsuario, getPresenter().getModel(PROP_NOMBREUSUARIO));
         Bindings.bind(jPasswordField, getPresenter().getModel(PROP_CONTRASENA));
         Bindings.bind(jButtonAutenticar, "enabled", getPresenter().getModel(PROP_BOTON_AUTENTICAR_HABILITADO));
-        
+
         Bindings.bind(jLabelEstadoConexion, "foreground", getPresenter().getModel(PROP_COLORLABELCONEXION));
         Bindings.bind(jLabelUbicacionSeleccionada, getPresenter().getModel(PROP_ESTADOCONEXION));
 
@@ -217,6 +219,17 @@ public class LogInView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         ComponentMover cr = new ComponentMover(this, this.getComponents());
+        jTextFieldUsuario.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                getPresenter().setUbicacionSeleccionada();
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+            }
+        });
+        jTextFieldUsuario.requestFocusInWindow();
     }
 
     @Override

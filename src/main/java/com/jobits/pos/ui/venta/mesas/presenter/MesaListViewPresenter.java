@@ -5,15 +5,11 @@
  */
 package com.jobits.pos.ui.venta.mesas.presenter;
 
-import com.jobits.pos.controller.venta.OrdenController;
-import com.jobits.pos.main.Application;
+import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
-import com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter;
 import com.jobits.pos.usecase.mesa.MesaUseCase;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Optional;
 
 /**
@@ -66,7 +62,7 @@ public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewMod
     }
 
     private void onAbrirMesaClick() {
-        OrdenController ordenController;
+        OrdenService ordenController;
 
         if (getBean().getElemento_seleccionado().isVacia()) {
             //ordenController = new OrdenController(getBean().getElemento_seleccionado());

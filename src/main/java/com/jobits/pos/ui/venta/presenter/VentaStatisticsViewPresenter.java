@@ -6,10 +6,8 @@
 package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.venta.VentaListController;
 import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.core.domain.VentaDAO1;
-import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
@@ -49,7 +47,7 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
             fecha_inicio_anterior,
             fecha_final_anterior;
 
-    public VentaStatisticsViewPresenter(VentaListController controller) {
+    public VentaStatisticsViewPresenter(VentaListService controller) {
         super(new VentaStatisticsViewModel(), "Ventas");
         this.fecha_final_anterior = Calendar.getInstance();
         this.fecha_inicio_anterior = Calendar.getInstance();

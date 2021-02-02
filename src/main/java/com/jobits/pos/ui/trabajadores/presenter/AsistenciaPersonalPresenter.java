@@ -6,11 +6,12 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
+import com.jobits.pos.controller.trabajadores.impl.AsistenciaPersonalController;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalService;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
@@ -28,13 +29,13 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
             ACTION_AGREGAR_PERSONAL = "Agregar Personal",
             ACTION_ELIMINAR_PERSONAL = "Eliminar Personal";
 
-    private AsistenciaPersonalService personalService;
+    private final AsistenciaPersonalService personalService = PosDesktopUiModule.getInstance().getImplementation(AsistenciaPersonalService.class);
     private Venta venta;
 
     public AsistenciaPersonalPresenter(Venta venta) {
         super(new AsistenciaPersonalViewModel());
         this.venta = venta;
-        personalService = new AsistenciaPersonalController(this.venta);
+        personalService.setDiaVenta(venta);
         refreshState();
     }
 
@@ -83,27 +84,29 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         getBean().getLista_personal_disponible().clear();
         getBean().getLista_personal_disponible().addAll(new ArrayListModel<>(personalService.getTrabajadoresList()));
         getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.updateSalaries(venta.getId())));
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void onEliminarClick() {
         personalService.destroy(getBean().getPersonal_contenido_selecionado());
-        getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        refreshState();
     }
 
     private void onAgregarClick() {
         personalService.createNewInstance(getBean().getPersonal_disponible_seleccionado(), venta);
-        getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        refreshState();
     }
 
     private void onAMayoresClick() {
-        AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
-        personalService.updateAMayores(personal, new NumberPad(null).showView());
-        getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null) {
+            AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
+            personalService.updateAMayores(personal, cantidad);
+            getBean().getLista_personal_contenido().clear();
+            getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(personalService.getPersonalTrabajando(venta)));
+        }
+
     }
 
 }

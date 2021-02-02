@@ -35,6 +35,8 @@ import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.cartas.CartasSeccionView;
 import com.jobits.pos.ui.cartas.SeccionDetailView;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
 import com.jobits.pos.ui.reserva.ReservaSchedulerView;
@@ -53,6 +55,7 @@ import com.jobits.pos.ui.venta.VentaResumenView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
+import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 
 /**
  *
@@ -139,10 +142,14 @@ public class ViewFacade {
                 return new ReportarBugView(p);
             case ClientesDetailView.VIEW_NAME:
                 return new ClientesDetailView(p);
+            case ClientesReservaDetailView.VIEW_NAME:
+                return new ClientesReservaDetailView(p);
             case ReservasDetailView.VIEW_NAME:
                 return new ReservasDetailView(p);
             case ClientesListView.VIEW_NAME:
                 return new ClientesListView((AbstractListViewPresenter) p);
+            case ClientesReservaListView.VIEW_NAME:
+                return new ClientesReservaListView((AbstractListViewPresenter) p);
             case OrdenLogView.VIEW_NAME:
                 return new OrdenLogView(p);
             case ImageManagerView.VIEW_NAME:
@@ -150,7 +157,7 @@ public class ViewFacade {
             case CalcularCambioView.VIEW_NAME:
                 return new CalcularCambioView(p);
             case VentaResumenView.VIEW_NAME:
-                return new VentaResumenView(p);
+                return new VentaResumenView((VentaResumenViewPresenter) p);
             case AutorizoView.VIEW_NAME:
                 return new AutorizoView(p);
             case ReservaSchedulerView.VIEW_NAME:

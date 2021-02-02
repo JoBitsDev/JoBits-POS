@@ -69,9 +69,10 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
             getBean().setLista_ventas(new ArrayListModel<>(service.getListaVentas(redondear)));
         }
         getBean().setLista_costos(new ArrayListModel<>(service.getListaGastos(redondear)));
-        getBean().setTotal_recaudado(Float.toString(service.getTotalRecaudado()) + R.COIN_SUFFIX);
-        getBean().setGanancia(Float.toString(service.getGanancias()) + R.COIN_SUFFIX);
-        getBean().setDinero_invertido(Float.toString(service.getDineroInvertido()) + R.COIN_SUFFIX);
+        getBean().setTotal_recaudado(service.getTotalRecaudado() + R.COIN_SUFFIX);
+        getBean().setGanancia(service.getGanancias() + R.COIN_SUFFIX);
+        getBean().setDinero_invertido(service.getDineroInvertido() + R.COIN_SUFFIX);
+        getBean().setGastos_de_la_casa(service.getGastosDeLaCasa() + R.COIN_SUFFIX);
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
