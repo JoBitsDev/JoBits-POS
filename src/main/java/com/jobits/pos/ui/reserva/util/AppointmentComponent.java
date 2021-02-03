@@ -30,36 +30,47 @@ public class AppointmentComponent extends BasicAppointmentComponent implements M
         // Allow this instance to respond to mouse clicks.  I'm a bit uncomfortable with accessing 'this' at
         //  this point, but I think that is just an old C++ fear.
         addMouseListener(this);
-
         _popupMenu = new JPopupMenu();
+
         JMenuItem editar = new JMenuItem("Editar");
+        JMenuItem cancel = new JMenuItem("Cancelar");
+        JMenuItem checkIn = new JMenuItem("CheckIn");
+        JMenuItem checkOut = new JMenuItem("CheckOut");
+        JMenuItem abrir_orden = new JMenuItem("Abrir Orden");
+
         editar.addActionListener((ActionEvent e) -> {
             if (_appointmentListener != null) {
                 _appointmentListener.handleEdit(_appointment);
             }
         });
-        _popupMenu.add(editar);
-        JMenuItem checkIn = new JMenuItem("CheckIn");
         checkIn.addActionListener((ActionEvent e) -> {
             if (_appointmentListener != null) {
                 _appointmentListener.handleCheckIn(_appointment);
             }
         });
-        _popupMenu.add(checkIn);
-
-        JMenuItem checkOut = new JMenuItem("CheckOut");
         checkOut.addActionListener((ActionEvent e) -> {
             if (_appointmentListener != null) {
                 _appointmentListener.handleCheckOut(_appointment);
             }
         });
-        _popupMenu.add(checkOut);
-        JMenuItem cancel = new JMenuItem("Cancelar");
         checkOut.addActionListener((ActionEvent e) -> {
             if (_appointmentListener != null) {
                 _appointmentListener.handleCancel(_appointment);
             }
         });
+        abrir_orden.addActionListener((ActionEvent e) -> {
+            if (_appointmentListener != null) {
+                _appointmentListener.handleOpenOrden(_appointment);
+            }
+        });
+
+        checkOut.setVisible(false);
+        abrir_orden.setVisible(appointment.cheackIn());
+
+        _popupMenu.add(editar);
+        _popupMenu.add(checkIn);
+        _popupMenu.add(checkOut);
+        _popupMenu.add(abrir_orden);
         _popupMenu.add(cancel);
     }
 

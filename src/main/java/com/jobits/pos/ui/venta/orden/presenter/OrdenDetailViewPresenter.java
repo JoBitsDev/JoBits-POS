@@ -60,21 +60,19 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         super(new OrdenDetailViewModel());
         this.controller = controller;
         addListeners();
-
     }
 
     public OrdenDetailViewPresenter(String cod_orden, OrdenService controller) {
         this(controller);
         this.codOrden = cod_orden;
-        addListeners();
         refreshState();
     }
 
     public String getCodOrden() {
-        if (codOrden == null) {
+        if (this.codOrden == null) {
             throw new IllegalStateException("El codigo de la orden no puede ser nulo.");
         }
-        return codOrden;
+        return this.codOrden;
     }
 
     public void setCodOrden(String codOrden) {
@@ -115,7 +113,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 showDialog("Desea cerrar la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             boolean cerrarTicket = (boolean) Application.getInstance().getNotificationService().
                     showDialog("Desea imprimir un ticket de la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
-            Orden o = getController().cerrarOrden(getCodOrden(), cerrarTicket);
+            Orden o = controller.cerrarOrden(getCodOrden(), cerrarTicket);
             if (o != null) {
                 NavigationService.getInstance().navigateTo(CalcularCambioView.VIEW_NAME,
                         new CalcularCambioViewPresenter(o), DisplayType.POPUP);
@@ -166,53 +164,55 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     @Override
-    protected Optional refreshState() {
-        Orden instance = getController().getInstance(getCodOrden());
-        getBean().setEs_autorizo(instance.getDeLaCasa());
-        getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha()));
-        getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
-        getBean().setOrden_terminada(instance.getHoraTerminada() != null);
-        getBean().setId_orden(instance.getCodOrden());
-        getBean().setLista_general_productos_venta(getController().getPDVList(getCodOrden()));
-        getBean().setModo_agrego_activado(false);
-        getBean().setLista_producto_orden(instance.getProductovOrdenList());
+    public Optional refreshState() {
+        if (codOrden != null) {
+            Orden instance = getController().getInstance(getCodOrden());
+            getBean().setEs_autorizo(instance.getDeLaCasa());
+            getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha()));
+            getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
+            getBean().setOrden_terminada(instance.getHoraTerminada() != null);
+            getBean().setId_orden(instance.getCodOrden());
+            getBean().setLista_general_productos_venta(getController().getPDVList(getCodOrden()));
+            getBean().setModo_agrego_activado(false);
+            getBean().setLista_producto_orden(instance.getProductovOrdenList());
 //        getBean().setLista_secciones(getController().getListaSecciones());
-        if (instance.getMesacodMesa() != null) {
-            getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
-        }
-        getBean().setPorciento_servicio(instance.getPorciento());
-        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
-        getBean().setUsuario(instance.getPersonalusuario().getUsuario());
-        if (getBean().getPorciento_servicio() == 0) {
-            getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
-                    "/restManager/resources/icons pack/porciento_gris.png")));
-        } else {
-            getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
-                    "/restManager/resources/icons pack/porciento_indigo.png")));
-        }
-        getBean().setLista_clientes(new ArrayListModel<>(clienteservice.getListaClientes()));
-        if (instance.getClienteIdCliente() != null) {
-            getBean().setCliente_seleccionado(instance.getClienteIdCliente());
-        } else {
-            getBean().setCliente_seleccionado(null);
-        }
-        if (getBean().getLista_producto_orden().isEmpty()) {
-            getBean().setEnvio_cocina(false);
-        } else {
-            boolean flag = false;
-            for (ProductovOrden x : getBean().getLista_producto_orden()) {
-                if (x.getCantidad() != x.getEnviadosacocina()) {
-                    flag = true;
-                    break;
-                }
+            if (instance.getMesacodMesa() != null) {
+                getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
             }
-            getBean().setEnvio_cocina(flag);
-        }
-        ProductovOrden p = getBean().getProducto_orden_seleccionado();
-        if (p != null && p.getAgregadoA() == null) {
-            getBean().setBotton_agrego_enabled(true);
-        } else {
-            getBean().setBotton_agrego_enabled(false);
+            getBean().setPorciento_servicio(instance.getPorciento());
+            getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
+            getBean().setUsuario(instance.getPersonalusuario().getUsuario());
+            if (getBean().getPorciento_servicio() == 0) {
+                getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                        "/restManager/resources/icons pack/porciento_gris.png")));
+            } else {
+                getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                        "/restManager/resources/icons pack/porciento_indigo.png")));
+            }
+            getBean().setLista_clientes(new ArrayListModel<>(clienteservice.getListaClientes()));
+            if (instance.getClienteIdCliente() != null) {
+                getBean().setCliente_seleccionado(instance.getClienteIdCliente());
+            } else {
+                getBean().setCliente_seleccionado(null);
+            }
+            if (getBean().getLista_producto_orden().isEmpty()) {
+                getBean().setEnvio_cocina(false);
+            } else {
+                boolean flag = false;
+                for (ProductovOrden x : getBean().getLista_producto_orden()) {
+                    if (x.getCantidad() != x.getEnviadosacocina()) {
+                        flag = true;
+                        break;
+                    }
+                }
+                getBean().setEnvio_cocina(flag);
+            }
+            ProductovOrden p = getBean().getProducto_orden_seleccionado();
+            if (p != null && p.getAgregadoA() == null) {
+                getBean().setBotton_agrego_enabled(true);
+            } else {
+                getBean().setBotton_agrego_enabled(false);
+            }
         }
         return Optional.empty();
     }

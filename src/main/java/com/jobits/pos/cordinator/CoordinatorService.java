@@ -34,6 +34,7 @@ import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
+import com.jobits.pos.ui.reserva.ReservaOrdenDetailView;
 import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
 import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
@@ -141,6 +142,7 @@ public class CoordinatorService implements Coordinator {
                         VentaResumenView.VIEW_NAME,
                         MesaDetailView.VIEW_NAME,
                         UbicacionDetailView.VIEW_NAME,
+                        ReservaOrdenDetailView.VIEW_NAME,
                         LicenceDialogView.VIEW_NAME
                 ));
         navigationGraph.put(VentaDetailView.VIEW_NAME, Arrays.asList(OrdenDetailFragmentView.VIEW_NAME));

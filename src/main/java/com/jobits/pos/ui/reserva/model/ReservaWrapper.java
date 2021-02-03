@@ -107,7 +107,7 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public String getDescription() {
-        String nombre, checkin, checkout;
+        String nombre, checkin, checkout, orden;
         if (reserva.getNotasreserva() != null) {
             nombre = reserva.getNotasreserva();
         } else {
@@ -123,6 +123,11 @@ public class ReservaWrapper implements Appointment {
         } else {
             checkout = "-:-- xx";
         }
+        if (reserva.getNumeroPedidoAsociado() != null) {
+            orden = reserva.getNumeroPedidoAsociado();
+        } else {
+            orden = "O-xxxxx";
+        }
 
         return "<html>"
                 + "Nombre: " + nombre + "<br>"
@@ -132,6 +137,7 @@ public class ReservaWrapper implements Appointment {
                 + "Duracion: " + reserva.getDuracionMinutos() + " minutos" + "<br>"
                 + "CheckIn: " + checkin + "<br>"
                 + "CheckOut: " + checkout + "<br>"
+                + "Orden: " + orden + "<br>"
                 + "</html>";
 
     }
@@ -152,6 +158,11 @@ public class ReservaWrapper implements Appointment {
         } else {
             return Color.black;
         }
+    }
+
+    @Override
+    public boolean cheackIn() {
+        return reserva.getCheckin() != null;
     }
 
 }
