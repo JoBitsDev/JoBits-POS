@@ -87,12 +87,14 @@ import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
+import com.jobits.pos.ui.reserva.ReservaOrdenDetailView;
 import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
 import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
 import com.jobits.pos.ui.reserva.ubicaciones.UbicacionDetailView;
 import com.jobits.pos.ui.reserva.ubicaciones.presenter.CategoriaDetailViewPresenter;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
+import com.jobits.pos.ui.reserva.presenter.ReservaOrdenDetailViewPresenter;
 import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
 import com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionDetailViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
@@ -184,6 +186,8 @@ public class PresenterFacade {
                         new ArrayList<>());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter();
+            case ReservaOrdenDetailView.VIEW_NAME:
+                return new ReservaOrdenDetailViewPresenter(null, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class));
             case VentaCalendarView.VIEW_NAME:
                 return new VentaCalendarViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaListService.class));
             case VentaStatisticsView.VIEW_NAME:
