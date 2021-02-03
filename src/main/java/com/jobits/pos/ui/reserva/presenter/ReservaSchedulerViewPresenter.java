@@ -5,7 +5,9 @@
  */
 package com.jobits.pos.ui.reserva.presenter;
 
+import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -19,6 +21,7 @@ import com.jobits.pos.reserva.core.usecase.UbicacionUseCase;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.reserva.ReservaOrdenDetailView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
 import com.jobits.pos.ui.reserva.model.CategoriaWrapper;
 import com.jobits.pos.ui.reserva.model.Category;
@@ -217,6 +220,21 @@ public class ReservaSchedulerViewPresenter extends AbstractViewPresenter<Reserva
         } else {
             reservasUseCase.cancelar(reserva.getIdreserva());
         }
+        refreshState();
+        Application.getInstance().getNotificationService().notify("Check Out realizado", TipoNotificacion.SUCCESS);
+    }
+
+    public void handleOpenOrdenReserva(Appointment appointment) {
+        Reserva reserva = ((ReservaWrapper) appointment).getReserva();
+        if (reserva.getNumeroPedidoAsociado() == null) {
+            throw new IllegalStateException("Esta reserva no tiene una orden asociada");
+        } else {
+            Application.getInstance().getNavigator().navigateTo(
+                    ReservaOrdenDetailView.VIEW_NAME,
+                    new ReservaOrdenDetailViewPresenter(reserva.getNumeroPedidoAsociado(),
+                            PosCoreModule.getInstance().getImplementation(OrdenService.class)), DisplayType.POPUP);
+        }
+
         refreshState();
         Application.getInstance().getNotificationService().notify("Check Out realizado", TipoNotificacion.SUCCESS);
     }
