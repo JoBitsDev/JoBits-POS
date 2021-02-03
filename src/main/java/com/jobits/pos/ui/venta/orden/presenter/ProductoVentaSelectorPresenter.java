@@ -138,7 +138,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     }
 
     @Override
-    protected Optional refreshState() {
+    public Optional refreshState() {
         getBean().setLista_elementos(SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada));//TODO: pifia logica en los presenters
         return Optional.empty();
     }
