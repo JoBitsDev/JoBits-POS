@@ -129,12 +129,17 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 
     private void addListeners() {
         getBean().addPropertyChangeListener(PROP_CANTIDAD_ENTRADA, (PropertyChangeEvent evt) -> {
-            if (getBean().getInsumo_selecionado() != null) {
+            InsumoAlmacen insumo = getBean().getInsumo_selecionado();
+            float cant = (float) evt.getNewValue();
+            if (insumo != null) {
                 if (getBean().getOperacion_selected() == OperationType.ENTRADA) {
-                    if (getBean().getCantidad_entrada() != 0) {
-                        if (getBean().getInsumo_selecionado().getValorMonetario() != 0) {
-                            getBean().setMonto_entrada(R.formatoMoneda.format(getBean().getCantidad_entrada() * utils.setDosLugaresDecimalesFloat(
-                                    getBean().getInsumo_selecionado().getValorMonetario() / getBean().getInsumo_selecionado().getCantidad())));
+                    if (cant != 0) {
+                        if (insumo.getInsumo() != null) {
+                            if (insumo.getInsumo().getCostoPorUnidad() != 0) {
+                                getBean().setMonto_entrada(String.valueOf(
+                                        utils.setDosLugaresDecimalesFloat(
+                                                cant * insumo.getInsumo().getCostoPorUnidad())));
+                            }
                         }
                     }
                 }
