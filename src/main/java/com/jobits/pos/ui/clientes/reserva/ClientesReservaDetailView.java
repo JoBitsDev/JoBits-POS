@@ -3,29 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.clientes;
+package com.jobits.pos.ui.clientes.reserva;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.core.domain.models.Orden;
+import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
-import static com.jobits.pos.ui.clientes.presenter.ClientesDetailViewModel.*;
-import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
-import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewModel;
+import static com.jobits.pos.ui.clientes.reserva.presenter.ClientesReservaDetailViewModel.*;
+import static com.jobits.pos.ui.clientes.reserva.presenter.ClientesReservaDetailViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author Jorge
  */
-public class ClientesDetailView extends AbstractViewPanel {
+public class ClientesReservaDetailView extends AbstractViewPanel {
 
-    public static final String VIEW_NAME = "Detalles Cliente (OLD)";
+    public static final String VIEW_NAME = "Detalles Cliente";
 
-    public ClientesDetailView(AbstractViewPresenter presenter) {
+    public ClientesReservaDetailView(AbstractViewPresenter presenter) {
         super(presenter);
     }
 
@@ -47,12 +47,8 @@ public class ClientesDetailView extends AbstractViewPanel {
         jPanel1 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel2 = new javax.swing.JPanel();
         jTextFieldTelefono = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono")+"*");
-        jTextFieldAlias = MaterialComponentsFactory.Input.getTextField("", "Alias");
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jPanel6 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jPanelAddress = new javax.swing.JPanel();
         jPanel5 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -81,7 +77,7 @@ public class ClientesDetailView extends AbstractViewPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_DARK, 2, true));
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(500, 720));
+        setPreferredSize(new java.awt.Dimension(490, 620));
         setLayout(new java.awt.BorderLayout());
 
         jTabbedPane1.setOpaque(true);
@@ -111,6 +107,7 @@ public class ClientesDetailView extends AbstractViewPanel {
         jPanelPersonalData.add(jPanel7);
 
         jPanelInfoPersonal.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalles"));
+        jPanelInfoPersonal.setPreferredSize(new java.awt.Dimension(521, 100));
         jPanelInfoPersonal.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -119,7 +116,7 @@ public class ClientesDetailView extends AbstractViewPanel {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 100));
         jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
+        jPanel2.setLayout(new java.awt.GridLayout(1, 1, 0, 20));
 
         jTextFieldTelefono.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jTextFieldTelefono.setPreferredSize(new java.awt.Dimension(150, 80));
@@ -130,43 +127,14 @@ public class ClientesDetailView extends AbstractViewPanel {
         });
         jPanel2.add(jTextFieldTelefono);
 
-        jTextFieldAlias.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
-        jTextFieldAlias.setMaximumSize(new java.awt.Dimension(250, 60));
-        jTextFieldAlias.setMinimumSize(new java.awt.Dimension(250, 60));
-        jTextFieldAlias.setPreferredSize(new java.awt.Dimension(250, 60));
-        jPanel2.add(jTextFieldAlias);
-
-        jDateChooser1.setBackground(new java.awt.Color(255, 255, 255));
-        jDateChooser1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Fecha Nacimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 0, 12))); // NOI18N
-        jDateChooser1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jDateChooser1.setOpaque(false);
-        jDateChooser1.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel2.add(jDateChooser1);
-
         jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 50, 1, 1));
         jPanel6.setOpaque(false);
-        jPanel6.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
+        jPanel6.setLayout(new java.awt.GridLayout(1, 1, 0, 20));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/telefono_indigo.png"))); // NOI18N
-        jLabel5.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel5.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel5.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel6.add(jLabel5);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/hombre_indigo.png"))); // NOI18N
-        jLabel6.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel6.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel6.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel6.add(jLabel6);
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/cumpleanos_indigo.png"))); // NOI18N
-        jLabel7.setToolTipText("");
-        jLabel7.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel7.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel7.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel6.add(jLabel7);
 
         jPanel1.add(jPanel6, java.awt.BorderLayout.LINE_START);
 
@@ -175,6 +143,7 @@ public class ClientesDetailView extends AbstractViewPanel {
         jPanelPersonalData.add(jPanelInfoPersonal);
 
         jPanelAddress.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("direccion"))); // NOI18N
+        jPanelAddress.setPreferredSize(new java.awt.Dimension(521, 275));
         jPanelAddress.setLayout(new java.awt.BorderLayout());
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -212,22 +181,13 @@ public class ClientesDetailView extends AbstractViewPanel {
         jPanel4.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/calle_indigo.png"))); // NOI18N
-        jLabel1.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel1.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel1.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel4.add(jLabel1);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/edificio_indigo.png"))); // NOI18N
-        jLabel2.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel2.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel2.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel4.add(jLabel2);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/estado_indigo.png"))); // NOI18N
         jLabel3.setToolTipText("");
-        jLabel3.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel3.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel3.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel4.add(jLabel3);
 
         jPanel5.add(jPanel4, java.awt.BorderLayout.LINE_START);
@@ -268,7 +228,7 @@ public class ClientesDetailView extends AbstractViewPanel {
 
         jPanelTable.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("Historial de Compra", jPanelTable);
+        jTabbedPane1.addTab("Historial de Reserva", jPanelTable);
 
         add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
@@ -303,13 +263,10 @@ public class ClientesDetailView extends AbstractViewPanel {
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JCheckBox jCheckBoxInventariarProducto;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -328,7 +285,6 @@ public class ClientesDetailView extends AbstractViewPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableHistorial;
-    private javax.swing.JTextField jTextFieldAlias;
     private javax.swing.JTextField jTextFieldApellidos;
     private javax.swing.JTextField jTextFieldCiudad;
     private javax.swing.JTextField jTextFieldLineAddress;
@@ -341,23 +297,21 @@ public class ClientesDetailView extends AbstractViewPanel {
     public void wireUp() {
         Bindings.bind(jTextFieldNombre, getPresenter().getModel(PROP_NOMBRE));
         Bindings.bind(jTextFieldApellidos, getPresenter().getModel(PROP_APELLIDOS));
-        Bindings.bind(jTextFieldAlias, getPresenter().getModel(PROP_ALIAS));
         Bindings.bind(jTextFieldTelefono, getPresenter().getModel(PROP_TELEFONO));
-        Bindings.bind(jDateChooser1, "date", getPresenter().getModel(PROP_CUMPLEANOS));
         Bindings.bind(jTextFieldLineAddress, getPresenter().getModel(PROP_DIRECCION));
         Bindings.bind(jTextFieldMunicipio, getPresenter().getModel(PROP_MUNICIPIO));
         Bindings.bind(jTextFieldCiudad, getPresenter().getModel(PROP_CIUDAD));
         Bindings.bind(jTableHistorial, new SelectionInList<String>(
-                getPresenter().getModel(PROP_LISTA_ORDENES),
-                getPresenter().getModel(PROP_ORDEN_SELECCIONADA)));
-        jButtonCancelar.addActionListener(getPresenter().getOperation(ClientesDetailViewPresenter.ACTION_CANCELAR));
-        jButtonCrear.addActionListener(getPresenter().getOperation(ClientesDetailViewPresenter.ACTION_AGREGAR));
+                getPresenter().getModel(PROP_LISTA_RESERVAS),
+                getPresenter().getModel(PROP_RESERVA_SELECCIONADA)));
+        jButtonCancelar.addActionListener(getPresenter().getOperation(ACTION_CANCELAR));
+        jButtonCrear.addActionListener(getPresenter().getOperation(ACTION_AGREGAR));
     }
 
     @Override
     public void uiInit() {
         initComponents();
-        jTableHistorial.setModel(new BindableTableModel<Orden>(jTableHistorial) {
+        jTableHistorial.setModel(new BindableTableModel<Reserva>(jTableHistorial) {
             @Override
             public int getColumnCount() {
                 return 3;
@@ -369,22 +323,24 @@ public class ClientesDetailView extends AbstractViewPanel {
                     case 0:
                         return java.util.ResourceBundle.getBundle("Strings").getString("label_codigo");
                     case 1:
-                        return "Fecha";
+                        return "Fecha/Hora";
                     case 2:
-                        return "Valor Monetario";
+                        return "Categoria";
                 }
                 return null;
             }
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
+                Reserva r = ((Reserva) getListModel().getElementAt(rowIndex));
                 switch (columnIndex) {
                     case 0:
-                        return ((Orden) getListModel().getElementAt(rowIndex)).getCodOrden();
+                        return r.getIdreserva();
                     case 1:
-                        return ((Orden) getListModel().getElementAt(rowIndex)).getHoraComenzada();
+                        return r.getFechareserva().format(DateTimeFormatter.ofPattern("d/MM/yyyy "))
+                                + r.getHorareserva().format(DateTimeFormatter.ofPattern("hh/mm a"));
                     case 2:
-                        return ((Orden) getListModel().getElementAt(rowIndex)).getOrdenvalorMonetario();
+                        return r.getCategoriaidcategoria();
                 }
                 return null;
             }

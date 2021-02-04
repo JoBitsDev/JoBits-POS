@@ -5,12 +5,13 @@
  */
 package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jobits.pos.controller.trabajadores.NominasController;
+import com.jobits.pos.controller.trabajadores.impl.NominasController;
 import com.jobits.pos.controller.trabajadores.NominasService;
 import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
@@ -39,11 +40,10 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
     public static String ACTION_SELECCIONAR_TODOS = "Seleccionar todos";
     public static final String ACTION_DESPLEGAR_OPCIONES = "Desplegar opciones";
 
-    NominasService service;
+    private final NominasService service = PosDesktopUiModule.getInstance().getImplementation(NominasService.class);
 
-    public NominasDetailPresenter(NominasService servicio) {
+    public NominasDetailPresenter() {
         super(new NominasDetailViewModel());
-        this.service = servicio;
         addListeners();
         setPeriodo();
     }

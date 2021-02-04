@@ -13,7 +13,6 @@ import java.awt.print.PrinterException;
 import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
@@ -27,11 +26,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.Action;
 
 /**
  *
@@ -326,16 +321,21 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonAjustarConsumo.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_AJUSTAR_IPV));
         jButtonDarEntradaIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_DAR_ENTRADA_IPV_REGISTROS));
         jButtonDarEntradaIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_DAR_ENTRADA_IPV_VENTA));
-        jButtonImprimirIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV));
+        jButtonImprimirIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_VENTA_REGISTRO));
+        jButtonimprimirIpvRegistro.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_REGISTRO));
         jButtonPedido.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_NUEVO_PEDIDO_IPV_VENTA));
-//        jButtonimprimirIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV));
+//        jButtonimprimirIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_VENTA_REGISTRO));
         jToggleButtonIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV));
         jToggleButtonIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_OCULTAR_PRODUCTOS_IPV_VENTA));
         jButtonRefrescar.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_CAMBIAR_COCINA));
         jButtonEnviarToIPV.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_IPV));
+        jButtonEnviarToAlmacen.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_ALMACEN));
 
+        getPresenter().addPropertyChangeListener("ImprimirTablaIPVVentaRegistro", (PropertyChangeEvent evt) -> {
+            imprimirIPVVentaRegistro();
+        });
         getPresenter().addPropertyChangeListener("ImprimirTablaIPVRegistro", (PropertyChangeEvent evt) -> {
-            imprimirIPV();
+            imprimirIPVRegistro();
         });
 
     }
@@ -520,9 +520,6 @@ public class IpvGestionView extends AbstractViewPanel {
         });
         jTableRegistro.getRowSorter().toggleSortOrder(0);
         jTableRegistro.getColumnModel().getColumn(0).setPreferredWidth(250);
-        jButtonimprimirIpvRegistro.addActionListener((ActionEvent e) -> {
-            imprimirIPVRegistro();
-        });
     }
 
     @Override
@@ -535,7 +532,6 @@ public class IpvGestionView extends AbstractViewPanel {
         MessageFormat header = new MessageFormat("IPV " + jComboBoxPtoElabSelec.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooserIpv.getDate()));
         try {
             jTableRegistro.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-            System.out.println(jTableRegistro.getFont());
         } catch (PrinterException ex) {
             Logger.getLogger(IpvGestionView.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -543,7 +539,7 @@ public class IpvGestionView extends AbstractViewPanel {
 
     }
 
-    private void imprimirIPV() {
+    private void imprimirIPVVentaRegistro() {
         MessageFormat footer = new MessageFormat("Entregado por                  Recibido por                  Revisado por");
         MessageFormat header = new MessageFormat("IPV " + jComboBoxPtoElabSelec.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooserIpv.getDate()));
         try {

@@ -5,15 +5,14 @@
  */
 package com.jobits.pos.ui.cartas.presenter;
 
-import com.jobits.pos.controller.seccion.MenuController;
-import com.jobits.pos.controller.seccion.MenuService;
-import com.jobits.pos.controller.seccion.SeccionDetailServiceImpl;
+import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.cartas.SeccionDetailView;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
@@ -28,7 +27,7 @@ import javax.swing.JOptionPane;
  */
 public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSeccionViewModel> {
 
-    private MenuService controller;
+    private final CartaListService cartaService = PosDesktopUiModule.getInstance().getImplementation(CartaListService.class);
 
     public static final String ACTION_AGREGAR_MENU = "Nueva Carta";
     public static final String ACTION_EDITAR_MENU = "Editar Carta";
@@ -37,27 +36,26 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
     public static final String ACTION_EDITAR_SECCION = "Editar sección";
     public static final String ACTION_ELIMINAR_SECCION = "Eliminar Seccion";
 
-    public CartasSeccionViewPresenter(MenuController controller) {
+    public CartasSeccionViewPresenter() {
         super(new CartasSeccionViewModel());
-        this.controller = controller;
-        getBean().getLista_menu().addAll(controller.getCartaListService().getItems());
+        getBean().getLista_menu().addAll(cartaService.getItems());
     }
 
     private void onNuevoMenuCLick() {//TODO: no actualiza correctamente nada en las vistas
         String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre de la Carta a crear",
                 "Nueva Carta", JOptionPane.QUESTION_MESSAGE);
-        controller.getCartaListService().createInstance(nombre);
+        cartaService.createInstance(nombre);
         Carta menuSeleccionado = getBean().getMenu_seleccionado();
         getBean().getLista_menu().clear();
-        getBean().getLista_menu().addAll(controller.getCartaListService().getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
+        getBean().getLista_menu().addAll(cartaService.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
         getBean().setMenu_seleccionado(menuSeleccionado);
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onEliminarMenuClick() {
-        controller.getCartaListService().destroy(getBean().getMenu_seleccionado());
+        cartaService.destroy(getBean().getMenu_seleccionado());
         getBean().setMenu_seleccionado(null);
-        getBean().setLista_menu(controller.getCartaListService().getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
+        getBean().setLista_menu(cartaService.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
@@ -67,7 +65,7 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
         }
         Application.getInstance().getNavigator().navigateTo(
                 SeccionDetailView.VIEW_NAME,
-                new SeccionDetailViewPresenter(new SeccionDetailServiceImpl(), null, getBean().getMenu_seleccionado()),
+                new SeccionDetailViewPresenter(null, getBean().getMenu_seleccionado()),
                 DisplayType.POPUP);
         getBean().getLista_secciones().clear();
         getBean().setMenu_seleccionado(getBean().getMenu_seleccionado());
@@ -82,15 +80,14 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
         }
         Application.getInstance().getNavigator().navigateTo(
                 SeccionDetailView.VIEW_NAME,
-                new SeccionDetailViewPresenter(
-                        new SeccionDetailServiceImpl(), getBean().getSeccion_seleccionada(), getBean().getMenu_seleccionado()),
+                new SeccionDetailViewPresenter(getBean().getSeccion_seleccionada(), getBean().getMenu_seleccionado()),
                 DisplayType.POPUP);
         getBean().getLista_secciones().clear();
         getBean().setMenu_seleccionado(getBean().getMenu_seleccionado());
     }
 
     private void onEliminarSeccionClick() {
-        controller.getCartaListService().removeSeccionFromCarta(getBean().getSeccion_seleccionada());
+        cartaService.removeSeccionFromCarta(getBean().getSeccion_seleccionada());
         getBean().setMenu_seleccionado(getBean().getMenu_seleccionado());
     }
 

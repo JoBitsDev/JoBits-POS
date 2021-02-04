@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.gasto.GastoOperacionController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Venta;
@@ -72,7 +71,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         addListeners();
         setListToBean();
 //        this.ventaOrdenPresenter = new VentaOrdenListViewPresenter(controller, ordenController, getBean().getVenta_seleccionada().getId());
-//        updateBeanData();
+        updateBeanData();
         new LongProcessActionServiceImpl("Creando IPVs.........") {
             @Override
             protected void longProcessMethod() {
@@ -267,36 +266,26 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
-    
+
     private void updateBeanData() {
         if (getBean().getVenta_seleccionada() != null) {
-            int codVenta = getBean().getVenta_seleccionada().getId();
-            if (ventaOrdenPresenter == null) {
-                ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, codVenta);
-            }
-            ventaOrdenPresenter.setCodVenta(codVenta);
-            service.fetchNewDataFromServer(codVenta);
-            Venta v = service.getInstance(codVenta);
-            if (asistenciaPersonalPresenter == null) {
-                asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(v);
-            }
-            asistenciaPersonalPresenter.setVenta(v);
-            if (gastosPresenter == null) {
-                gastosPresenter = new GastosViewPresenter(new GastoOperacionController(v));
-            }
-            gastosPresenter.setVenta(v);
+            Venta v = getBean().getVenta_seleccionada();
+            service.fetchNewDataFromServer(v.getId());
+            ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, v.getId());
+            asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(v);
+            gastosPresenter = new GastosViewPresenter(v);
             getBean().setVentaInstance(v);
-            getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(codVenta));
-            getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(codVenta));
-            getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta(codVenta));
-            getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(service.getTotalPropina(codVenta)));
-            getBean().setReabrir_ventas_enabled(service.canReabrirVenta(codVenta));
-            getBean().setTotal_autorizos(service.getTotalAutorizos(codVenta));
-            getBean().setTotal_gasto_insumos(service.getTotalGastadoInsumos(codVenta));
-            getBean().setTotal_gasto_otros(service.getTotalGastos(codVenta));
-            getBean().setTotal_gasto_salario(service.getTotalPagoTrabajadores(codVenta));
-            getBean().setVenta_neta(service.getTotalVendidoNeto(codVenta));
-            getBean().setVenta_total(service.getTotalVendido(codVenta));
+            getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(v.getId()));
+            getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(v.getId()));
+            getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta(v.getId()));
+            getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(service.getTotalPropina(v.getId())));
+            getBean().setReabrir_ventas_enabled(service.canReabrirVenta(v.getId()));
+            getBean().setTotal_autorizos(service.getTotalAutorizos(v.getId()));
+            getBean().setTotal_gasto_insumos(service.getTotalGastadoInsumos(v.getId()));
+            getBean().setTotal_gasto_otros(service.getTotalGastos(v.getId()));
+            getBean().setTotal_gasto_salario(service.getTotalPagoTrabajadores(v.getId()));
+            getBean().setVenta_neta(service.getTotalVendidoNeto(v.getId()));
+            getBean().setVenta_total(service.getTotalVendido(v.getId()));
             getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
             getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(getBean().getVenta_seleccionada().getFecha()));
         }

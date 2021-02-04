@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.clientes;
+package com.jobits.pos.ui.clientes.reserva;
 
-import com.jobits.pos.core.domain.models.Cliente;
-import com.jobits.pos.ui.trabajadores.*;
-import com.jobits.pos.core.domain.models.Personal;
+import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
@@ -18,11 +16,11 @@ import com.jobits.pos.ui.utils.BindableTableModel;
  * @author Jorge
  *
  */
-public class ClientesListView extends AbstractListViewPanel<Cliente> {
+public class ClientesReservaListView extends AbstractListViewPanel<Cliente> {
 
-    public static final String VIEW_NAME = "Clientes (OLD)";
+    public static final String VIEW_NAME = "Clientes";
 
-    public ClientesListView(AbstractListViewPresenter presenter) {
+    public ClientesReservaListView(AbstractListViewPresenter presenter) {
         super(presenter);
     }
 
@@ -36,13 +34,14 @@ public class ClientesListView extends AbstractListViewPanel<Cliente> {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
+                Cliente c = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return getRow(rowIndex).getNombreCliente();
+                        return c.getNombrecliente() + " " + c.getApellidocliente();
                     case 1:
-                        return getRow(rowIndex).getTelefonoCliente();
+                        return c.getTelefonocliente();
                     case 2:
-                        return getRow(rowIndex).getOrdenList().size();
+                        return c.getReservaCollection().size();
                     default:
                         return null;
                 }
@@ -56,7 +55,7 @@ public class ClientesListView extends AbstractListViewPanel<Cliente> {
                     case 1:
                         return java.util.ResourceBundle.getBundle("Strings").getString("label_telefono");
                     case 2:
-                        return "Cantidad de Ordenes";
+                        return "Cantidad de Reservas";
                     default:
                         return null;
                 }

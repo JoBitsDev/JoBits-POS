@@ -31,7 +31,10 @@ import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.cartas.CartasSeccionView;
 import com.jobits.pos.ui.cartas.SeccionDetailView;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
+import com.jobits.pos.ui.reserva.ReservaOrdenDetailView;
 import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
 import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
@@ -98,6 +101,7 @@ public class CoordinatorService implements Coordinator {
         navigationGraph.put(PuestoTrabajoListView.VIEW_NAME, Arrays.asList(PuestoTrabajoDetailView.VIEW_NAME));
         navigationGraph.put(InsumoListView.VIEW_NAME, Arrays.asList(InsumoDetailView.VIEW_NAME));
         navigationGraph.put(ClientesListView.VIEW_NAME, Arrays.asList(ClientesDetailView.VIEW_NAME));
+        navigationGraph.put(ClientesReservaListView.VIEW_NAME, Arrays.asList(ClientesReservaDetailView.VIEW_NAME));
         navigationGraph.put(AlmacenMainView.VIEW_NAME,
                 Arrays.asList(InsumoDetailView.VIEW_NAME,
                         FacturaView.VIEW_NAME,
@@ -130,6 +134,7 @@ public class CoordinatorService implements Coordinator {
                         LogInView.VIEW_NAME,
                         AutorizoView.VIEW_NAME,
                         ClientesListView.VIEW_NAME,
+                        ClientesReservaListView.VIEW_NAME,
                         ReservasDetailView.VIEW_NAME,
                         ReservaSchedulerView.VIEW_NAME,
                         CategoriaDetailView.VIEW_NAME,
@@ -137,6 +142,7 @@ public class CoordinatorService implements Coordinator {
                         VentaResumenView.VIEW_NAME,
                         MesaDetailView.VIEW_NAME,
                         UbicacionDetailView.VIEW_NAME,
+                        ReservaOrdenDetailView.VIEW_NAME,
                         LicenceDialogView.VIEW_NAME
                 ));
         navigationGraph.put(VentaDetailView.VIEW_NAME, Arrays.asList(OrdenDetailFragmentView.VIEW_NAME));

@@ -9,7 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.insumo.InsumoDetailService;
 import com.jobits.pos.controller.productos.ProductoInsumoListService;
-import com.jobits.pos.controller.productos.ProductoVentaListController;
+import com.jobits.pos.controller.productos.impl.ProductoVentaListController;
 import com.jobits.pos.controller.productos.ProductoVentaListService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.io.DataHeader;
@@ -267,6 +267,7 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
         } catch (Exception ex) {
             getBean().setEnable_button_do_action(false);
             getBean().setError_text_mesage("No se pudieron cargar los datos del archivo seleccionado");
+            getBean().setError_text_description(ex.getMessage());
             firePropertyChange("Error During Load", null, null);
         }
     }

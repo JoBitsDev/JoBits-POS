@@ -7,21 +7,29 @@ package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jhw.swing.util.icons.DerivableIcon;
+import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.core.repo.autenticacion.PersonalDAO;
-import com.jobits.pos.controller.login.MainMenuController;
-import com.jobits.pos.controller.login.LogInController;
+import com.jobits.pos.controller.login.impl.MainMenuController;
 import com.jobits.pos.controller.login.LogInService;
-import com.jobits.pos.controller.login.UbicacionConexionController;
+import com.jobits.pos.controller.login.impl.UbicacionConexionController;
+import com.jobits.pos.controller.mesa.MesaService;
+import com.jobits.pos.controller.reservas.ReservaOrdenListener;
+import com.jobits.pos.controller.reservas.UbicacionMesaListener;
+import com.jobits.pos.controller.venta.OrdenService;
+import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.reserva.core.module.ReservaCoreModule;
+import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
+import com.jobits.pos.reserva.core.usecase.UbicacionUseCase;
 import com.jobits.pos.ui.mainmenu.presenter.MainMenuPresenter;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.login.UbicacionView;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
@@ -31,7 +39,6 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -68,17 +75,37 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         String password = getBean().getContrasena();
         getBean().setContrasena("");
         try {
-            if (service.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
-                Application.getInstance().setLoggedUser(service.getUsuarioConectado());
-                Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
-                NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
-                        new MainMenuPresenter(new MainMenuController(PersonalDAO.getInstance().find(getBean().getNombreUsuario())))); //TODO revisar eso codigo que no le pertenece a esta clse
-                RootView.getInstance().getDashboard().getTaskPane().setShrinked(true);
-            }
+            new LongProcessActionServiceImpl("Autenticando") {//TODO: internacionalizar
+                @Override
+                protected void longProcessMethod() {
+                    if (service.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
+                        Application.getInstance().setLoggedUser(service.getUsuarioConectado());
+                        Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
+                        NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
+                                new MainMenuPresenter(new MainMenuController(PersonalDAO.getInstance().find(getBean().getNombreUsuario())))); //TODO revisar eso codigo que no le pertenece a esta clse
+                        RootView.getInstance().getDashboard().getTaskPane().setShrinked(true);
+                    }
+                }
+            }.performAction(null);
         } catch (IllegalArgumentException ex) {
             Application.getInstance().getNotificationService().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion
         }
         RootView.getInstance().getStatusBar().refreshView();
+        if (ReservaOrdenListener.getInstance() == null) {
+            ReservaOrdenListener.initInstance(
+                    PosDesktopUiModule.getInstance().getImplementation(OrdenService.class),
+                    ReservaCoreModule.getInstance().getImplementation(ReservaUseCase.class),
+                    PosDesktopUiModule.getInstance().getImplementation(VentaListService.class),
+                    PosDesktopUiModule.getInstance().getImplementation(MesaService.class));
+        }
+        if (UbicacionMesaListener.getInstance() == null) {
+            UbicacionMesaListener.initInstance(
+                    ReservaCoreModule.getInstance().getImplementation(UbicacionUseCase.class),
+                    PosDesktopUiModule.getInstance().getImplementation(MesaService.class),
+                    PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class));
+        }
+        ReservaOrdenListener.getInstance();
+        UbicacionMesaListener.getInstance();
     }
 
     private void onUbicacionSeleccionadaChanged() {
@@ -120,6 +147,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                 getBean().setUbicacionSeleccionada((UbicacionConexionModel) jComboBox1.getSelectedItem());
                 break;
             case JOptionPane.NO_OPTION:
+                ubicacionController.setSelectedUbicacion((UbicacionConexionModel) jComboBox1.getSelectedItem());
                 NavigationService.getInstance().navigateTo(UbicacionView.VIEW_NAME,
                         new UbicacionViewPresenter(ubicacionController), DisplayType.POPUP);//TODO codigo de ubicaciones
                 break;

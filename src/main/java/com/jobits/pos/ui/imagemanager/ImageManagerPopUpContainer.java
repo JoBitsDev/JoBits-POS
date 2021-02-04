@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.ui.imagemanager;
 
-import com.jobits.pos.controller.imagemanager.ImageManagerController;
 import com.jobits.pos.ui.utils.*;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.imagemanager.presenter.ImageManagerViewPresenter;
@@ -37,9 +36,7 @@ public class ImageManagerPopUpContainer extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         ComponentMover cr = new ComponentMover(this, this);
         jPanelMainPanel.add(new ImageManagerView(
-                new ImageManagerViewPresenter(
-                        new ImageManagerController(
-                                codProd))), java.awt.BorderLayout.CENTER);
+                new ImageManagerViewPresenter(codProd)), java.awt.BorderLayout.CENTER);
         jLabel1.setText(codProd);
         this.setVisible(true);
     }

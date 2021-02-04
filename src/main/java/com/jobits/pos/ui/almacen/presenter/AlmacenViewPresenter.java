@@ -6,13 +6,9 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.impl.AlmacenListController;
 import com.jobits.pos.controller.almacen.AlmacenListService;
-import com.jobits.pos.controller.almacen.impl.AlmacenManageController;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
-import com.jobits.pos.controller.almacen.impl.TransaccionListController;
-import com.jobits.pos.controller.insumo.InsumoDetailController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.InsumoAlmacen;
@@ -155,8 +151,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                 if (getBean().getInsumo_contenido_seleccionado() != null) {
                     NavigationService.getInstance().navigateTo(InsumoDetailView.VIEW_NAME,
                             new InsumoDetailViewPresenter(
-                                    new InsumoDetailController(
-                                            getBean().getInsumo_contenido_seleccionado().getInsumo())), DisplayType.POPUP);
+                                    getBean().getInsumo_contenido_seleccionado().getInsumo()), DisplayType.POPUP);
                     refreshView();
                 } else {
                     JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un insumo primero");

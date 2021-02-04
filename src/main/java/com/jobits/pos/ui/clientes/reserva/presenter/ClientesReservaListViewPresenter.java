@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.clientes.presenter;
+package com.jobits.pos.ui.clientes.reserva.presenter;
 
+import com.jobits.pos.ui.clientes.presenter.*;
 import com.jobits.pos.controller.clientes.ClientesListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.reserva.core.usecase.ClienteUseCase;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
 import com.jobits.pos.ui.clientes.ClientesListView;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 
@@ -20,12 +24,12 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
  * @author Home
  *
  */
-public class ClientesListViewPresenter extends AbstractListViewPresenter<ClientesListViewModel> {
+public class ClientesReservaListViewPresenter extends AbstractListViewPresenter<ClientesReservaListViewModel> {
 
-    private final ClientesListService service = PosDesktopUiModule.getInstance().getImplementation(ClientesListService.class);
+    private final ClienteUseCase service = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
 
-    public ClientesListViewPresenter() {
-        super(new ClientesListViewModel(), ClientesListView.VIEW_NAME);
+    public ClientesReservaListViewPresenter() {
+        super(new ClientesReservaListViewModel(), ClientesReservaListView.VIEW_NAME);
         setListToBean();
     }
 
@@ -36,28 +40,28 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
 
     @Override
     protected void onAgregarClick() {
-        NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
-                new ClientesDetailViewPresenter(null), DisplayType.POPUP);
+        NavigationService.getInstance().navigateTo(ClientesReservaDetailView.VIEW_NAME,
+                new ClientesReservaDetailViewPresenter(null), DisplayType.POPUP);
         setListToBean();
     }
 
     @Override
     protected void onEditarClick() {
-        NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
-                new ClientesDetailViewPresenter(getBean().getElemento_seleccionado()), DisplayType.POPUP);
+        NavigationService.getInstance().navigateTo(ClientesReservaDetailView.VIEW_NAME,
+                new ClientesReservaDetailViewPresenter(getBean().getElemento_seleccionado()), DisplayType.POPUP);
         setListToBean();
     }
 
     @Override
     protected void onEliminarClick() {
-        service.eliminar(getBean().getElemento_seleccionado());
+        service.destroy(getBean().getElemento_seleccionado());
         setListToBean();
     }
 
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(service.getListaClientes());
+        getBean().getLista_elementos().addAll(service.findAll());
     }
 
 }

@@ -5,11 +5,12 @@
  */
 package com.jobits.pos.ui.imagemanager.presenter;
 
-import com.jobits.pos.controller.imagemanager.ImageManagerController;
+//import com.jobits.pos.controller.imagemanager.impl.ImageManagerController;
 import com.jobits.pos.controller.imagemanager.ImageManagerService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.PanelDibujo;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.awt.Dimension;
@@ -27,11 +28,11 @@ public class ImageManagerViewPresenter extends AbstractViewPresenter<ImageManage
     public static String ACTION_GUARDAR_IMAGEN = "Guardar Imagen";
     public static String ACTION_CERRAR = "Cerrar";
 
-    ImageManagerService service;
+    ImageManagerService service = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
 
-    public ImageManagerViewPresenter(ImageManagerService service) {
+    public ImageManagerViewPresenter(String imageName) {
         super(new ImageManagerViewModel());
-        this.service = service;
+        service.setImageName(imageName);
         preLoadOldImage();
     }
 
@@ -75,6 +76,6 @@ public class ImageManagerViewPresenter extends AbstractViewPresenter<ImageManage
 
     private void preLoadOldImage() {
         String path = R.MEDIA_FILE_PATH + service.getImageName() + ".jpg";
-        getBean().setOld_image(ImageManagerController.loadImageIcon(path, new Dimension(70, 70)));//TODO: Hacer que la dimension sea generica
+        getBean().setOld_image(service.loadImageIcon(path, new Dimension(70, 70)));//TODO: Hacer que la dimension sea generica
     }
 }

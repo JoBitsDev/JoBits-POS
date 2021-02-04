@@ -6,11 +6,12 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.trabajadores.AsistenciaPersonalController;
+import com.jobits.pos.controller.trabajadores.impl.AsistenciaPersonalController;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalService;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
@@ -28,13 +29,13 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
             ACTION_AGREGAR_PERSONAL = "Agregar Personal",
             ACTION_ELIMINAR_PERSONAL = "Eliminar Personal";
 
-    private AsistenciaPersonalService personalService;
+    private final AsistenciaPersonalService personalService = PosDesktopUiModule.getInstance().getImplementation(AsistenciaPersonalService.class);
     private Venta venta;
 
     public AsistenciaPersonalPresenter(Venta venta) {
         super(new AsistenciaPersonalViewModel());
         this.venta = venta;
-        personalService = new AsistenciaPersonalController(this.venta);
+        personalService.setDiaVenta(venta);
         refreshState();
     }
 

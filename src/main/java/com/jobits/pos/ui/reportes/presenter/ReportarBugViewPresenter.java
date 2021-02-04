@@ -5,20 +5,14 @@
  */
 package com.jobits.pos.ui.reportes.presenter;
 
-import com.jobits.pos.controller.reportes.ReportarBugController;
 import com.jobits.pos.controller.reportes.ReportarBugService;
-import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
-import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.about.AcercaDeView;
-import com.jobits.pos.ui.about.AcercaDeViewPresenter;
-import static com.jobits.pos.ui.mainmenu.presenter.MenuBarClassPresenter.ACTION_SHOW_ACERCA_DE;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Calendar;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,11 +23,10 @@ public class ReportarBugViewPresenter extends AbstractViewPresenter<ReportarBugV
     public static final String ACTION_REPORTAR = "Reportar";
     public static final String ACTION_CERRAR = "Cerrar";
 
-    ReportarBugService service;
+    private final ReportarBugService service = PosDesktopUiModule.getInstance().getImplementation(ReportarBugService.class);
 
-    public ReportarBugViewPresenter(ReportarBugService service) {
+    public ReportarBugViewPresenter() {
         super(new ReportarBugViewModel());
-        this.service = service;
         if (Application.getInstance().getLoggedUser() != null) {
             getBean().setUsuario_loggeado(Application.getInstance().getLoggedUser().getUsuario());
         }
