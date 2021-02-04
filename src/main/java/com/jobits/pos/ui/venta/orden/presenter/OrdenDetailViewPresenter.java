@@ -164,7 +164,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     @Override
-    public Optional refreshState() {
+    protected Optional refreshState() {
         if (codOrden != null) {
             Orden instance = getController().getInstance(getCodOrden());
             getBean().setEs_autorizo(instance.getDeLaCasa());
