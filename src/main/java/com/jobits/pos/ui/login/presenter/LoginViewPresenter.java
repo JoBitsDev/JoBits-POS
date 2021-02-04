@@ -147,6 +147,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                 getBean().setUbicacionSeleccionada((UbicacionConexionModel) jComboBox1.getSelectedItem());
                 break;
             case JOptionPane.NO_OPTION:
+                ubicacionController.setSelectedUbicacion((UbicacionConexionModel) jComboBox1.getSelectedItem());
                 NavigationService.getInstance().navigateTo(UbicacionView.VIEW_NAME,
                         new UbicacionViewPresenter(ubicacionController), DisplayType.POPUP);//TODO codigo de ubicaciones
                 break;
