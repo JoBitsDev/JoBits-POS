@@ -386,8 +386,7 @@ public class FacturaView extends AbstractViewPanel {
     }//GEN-LAST:event_jTextFieldMontoActionPerformed
 
     private void jTextFieldMontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldMontoFocusGained
-//        jTextFieldMonto.setText("");
-        // TODO add your handling code here:
+        jTextFieldMonto.selectAll();
     }//GEN-LAST:event_jTextFieldMontoFocusGained
 
     private void jTextFieldMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoKeyTyped
