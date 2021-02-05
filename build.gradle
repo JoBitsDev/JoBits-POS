@@ -4,14 +4,18 @@ plugins {
 }
 
 description = 'JoBits POS:modulo-pos-client-desktop'
+group = 'com.jobits.pos.ui'
 apply plugin: 'application'
-version = '3.2.2'
+version = '3.2.3'
 
 application{
     mainClassName = 'com.jobits.pos.main.Main'
 
 }
 
+jar{
+    archiveBaseName = 'com.jobits.pos.ui'    
+}
 
 repositories {
     jcenter()
