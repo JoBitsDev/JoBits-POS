@@ -100,6 +100,9 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onAddProductoClick() {
+        if (getBean().getProducto_orden_seleccionado() == null) {
+            throw new IllegalArgumentException("Seleccione un Producto Primero");
+        }
         Float cantidad = new NumberPad(null).showView();
         if (cantidad != null) {
             getController().addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad);
@@ -133,6 +136,9 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onRemoveProductoCLick() {
+        if (getBean().getProducto_orden_seleccionado() == null) {
+            throw new IllegalArgumentException("Seleccione un Producto Primero");
+        }
         getController().removeProduct(getCodOrden(), getBean().getProducto_orden_seleccionado(),
                 getBean().getProducto_orden_seleccionado().getCantidad());
         getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
