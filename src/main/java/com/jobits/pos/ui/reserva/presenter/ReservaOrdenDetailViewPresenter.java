@@ -65,7 +65,7 @@ public class ReservaOrdenDetailViewPresenter extends AbstractViewPresenter<Reser
     private void addListeners() {
         productoListPresenter.addPropertyChangeListener(ProductoVentaSelectorPresenter.PROP_PRODUCTO_SELECCIONADO,
                 (PropertyChangeEvent evt) -> {
-                    ordenPresenter.refreshState();
+                    ordenPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
                 }
         );
         ordenPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_MODO_AGREGO_ACTIVADO,
