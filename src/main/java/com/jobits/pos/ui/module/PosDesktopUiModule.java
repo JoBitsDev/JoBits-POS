@@ -7,7 +7,7 @@ package com.jobits.pos.ui.module;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.jobits.pos.reserva.repo.util.ResourceServiceImpl;
+import com.jobits.pos.reserva.repo.module.ResourceServiceImpl;
 import com.root101.clean.core.app.modules.AbstractModule;
 import com.root101.clean.core.app.modules.DefaultAbstractModule;
 import com.root101.clean.core.domain.services.ResourceHandler;
