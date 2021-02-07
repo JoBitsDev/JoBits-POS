@@ -6,12 +6,9 @@
 package com.jobits.pos.adapters.repo.impl;
 
 import com.jobits.pos.core.repo.impl.ProductovOrdenDAO;
-import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.core.domain.models.ProductovOrden;
-import com.jobits.pos.recursos.DBConnector;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -24,7 +21,7 @@ public class ProductovOrdenDAOTest {
 
     @Before
     public void setUp() {
-        DBConnector.init(new UbicacionConexionController().getUbicaciones().getUbicacionActiva());
+        //DBConnector.init(new UbicacionConexionController().getUbicaciones().getUbicacionActiva());
     }
 
     /**

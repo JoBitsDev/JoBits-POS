@@ -8,7 +8,7 @@ package com.jobits.pos.ui.login.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.UbicacionConexionModel;
+import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.io.IOException;
@@ -78,7 +78,7 @@ public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewM
         getBean().setUsuario(ubicacionActiva.getUsuario());
         getBean().setDriver(ubicacionActiva.getDriver());
         getBean().setLista_tipo_servidor(new ArrayListModel<>(Arrays.asList(UbicacionConexionModel.TipoUbicacion.values())));
-        getBean().setNombre_ubicacion(ubicacionActiva.getNombre());
+        getBean().setNombre_ubicacion(ubicacionActiva.getNombreUbicacion());
         getBean().setPassword(ubicacionActiva.getContrasena());
         getBean().setTipo_servidor_seleccionado(ubicacionActiva.getTipoUbicacion());
         getBean().setUrl(ubicacionActiva.getUrl());
