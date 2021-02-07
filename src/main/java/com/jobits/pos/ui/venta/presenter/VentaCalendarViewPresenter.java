@@ -10,7 +10,6 @@ import com.jobits.pos.core.usecase.algoritmo.Y;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListService;
-import com.jobits.pos.controller.venta.VentaResumenService;
 import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Venta;
@@ -31,6 +30,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
+import com.jobits.pos.controller.venta.VentaResumenServiceOld;
 
 /**
  *
@@ -141,7 +141,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 //        }
         Application.getInstance().getBackgroundWorker().processInBackground(() -> {
 //            VentaDetailController ventaController = service.createDetailResumenView(getBean().getResumen_desde(), getBean().getResumen_hasta());//TODO devolver valor e invocar al navigator
-            VentaResumenViewPresenter presenter = new VentaResumenViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaResumenService.class));
+            VentaResumenViewPresenter presenter = new VentaResumenViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaResumenServiceOld.class));
             Application.getInstance().getNavigator().navigateTo(VentaResumenView.VIEW_NAME, presenter);
         });
     }

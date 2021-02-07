@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.main;
 
-import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.View;
@@ -59,6 +58,8 @@ import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
+import com.jobits.pos.ui.venta.resumen.ResumenMainview;
+import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 
 /**
  *
@@ -169,6 +170,8 @@ public class ViewFacade {
                 return new IPVPedidoVentasView(p);
             case CategoriaDetailView.VIEW_NAME:
                 return new CategoriaDetailView(p);
+            case ResumenMainview.VIEW_NAME:
+                return new ResumenMainview(p);
             case ReservaOrdenDetailView.VIEW_NAME:
                 return new ReservaOrdenDetailView((ReservaOrdenDetailViewPresenter) p);
             case TransaccionListView.VIEW_NAME:
