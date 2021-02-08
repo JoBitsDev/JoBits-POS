@@ -26,8 +26,8 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
 
     public ResumenMainViewPresenter() {
         super(new ResumenMainViewModel());
-        refreshState();
         initListeners();
+        refreshState();
     }
 
     public DetailResumenVentaPresenter getPresenterVenta() {
@@ -42,11 +42,6 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
                 toMainPanel();
                 return Optional.empty();
             }
-
-            private void toMainPanel() {
-                firePropertyChange("TO_MAIN_PANEL", null, true);
-                System.out.println("Its Happ (Presenter)");
-            }
         });
         registerOperation(new AbstractViewAction(ACTION_TO_DETAILS_VENTA) {
             @Override
@@ -54,13 +49,17 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
                 toDetailsVenta();
                 return Optional.empty();
             }
-
-            private void toDetailsVenta() {
-                firePropertyChange("TO_DETAILS_VENTA", null, true);
-                System.out.println("Its Happ (Presenter)");
-            }
         });
+    }
 
+    private void toMainPanel() {
+        getBean().setControls_visibility(false);
+        firePropertyChange("TO_MAIN_PANEL", null, true);
+    }
+
+    private void toDetailsVenta() {
+        getBean().setControls_visibility(true);
+        firePropertyChange("TO_DETAILS_VENTA", null, true);
     }
 
     private void refreshPresenters() {
@@ -75,12 +74,18 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
             refreshPresenters();
             getBean().setTotal_venta(String.valueOf(presenterVenta.getTotal()));
         });
+        firePropertyChange("REFRESH_STATE_EXECUTED", null, true);
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void initListeners() {
-        getBean().addPropertyChangeListener(PROP_FECHA_DESDE, (PropertyChangeEvent evt) -> {
-            refreshState();
+        getBean().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            switch (evt.getPropertyName()) {
+                case PROP_FECHA_DESDE:
+                case PROP_FECHA_HASTA:
+                    refreshState();
+                    break;
+            }
         });
     }
 }
