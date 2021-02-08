@@ -29,6 +29,7 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DiaVent
 
     public DetailResumenVentaView(AbstractViewPresenter presenter, JToggleButton detailButton) {
         super(presenter, detailButton);
+        jTableMain.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
     }
 
     /**
@@ -57,7 +58,7 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DiaVent
         return new BindableTableModel<DiaVentaWrapper>(jTableMain) {
             @Override
             public int getColumnCount() {
-                return 3;
+                return 2;
             }
 
             @Override
@@ -67,8 +68,6 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DiaVent
                         return "Fecha";
                     case 1:
                         return "Total";
-                    case 2:
-                        return "Promedio";
                 }
                 return null;
             }
@@ -82,11 +81,13 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DiaVent
                     case 1:
                         return utils.setDosLugaresDecimalesFloat(
                                 ((DiaVentaWrapper) getListModel().getElementAt(rowIndex)).getTotal());
-                    case 2:
-                        return utils.setDosLugaresDecimalesFloat(
-                                ((DiaVentaWrapper) getListModel().getElementAt(rowIndex)).getPromedio());
                 }
                 return null;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnIndex == 1 ? Float.class : super.getColumnClass(columnIndex);
             }
         };
     }
