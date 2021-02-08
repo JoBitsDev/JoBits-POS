@@ -23,10 +23,35 @@ public class ResumenMainViewModel extends AbstractViewModel {
 
     public static final String PROP_FECHA_HASTA = "fecha_hasta";
 
+    //Visibilidad de Componentes
+    private boolean controls_visibility = false;
+
+    public static final String PROP_CONTROLS_VISIBILITY = "controls_visibility";
+
     //Totales
     private String total_venta = "XX.XX";
 
     public static final String PROP_TOTAL_VENTA = "total_venta";
+
+    /**
+     * Get the value of controls_visibility
+     *
+     * @return the value of controls_visibility
+     */
+    public boolean isControls_visibility() {
+        return controls_visibility;
+    }
+
+    /**
+     * Set the value of controls_visibility
+     *
+     * @param controls_visibility new value of controls_visibility
+     */
+    public void setControls_visibility(boolean controls_visibility) {
+        boolean oldControls_visibility = this.controls_visibility;
+        this.controls_visibility = controls_visibility;
+        firePropertyChange(PROP_CONTROLS_VISIBILITY, oldControls_visibility, controls_visibility);
+    }
 
     /**
      * Get the value of total_venta
