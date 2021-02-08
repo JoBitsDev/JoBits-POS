@@ -8,7 +8,6 @@ package com.jobits.pos.ui.mainmenu.presenter;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.controller.login.impl.LogInController;
-import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
@@ -23,12 +22,14 @@ import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
 import java.util.Optional;
 import javax.swing.JOptionPane;
+import org.jobits.app.repo.UbicacionConexionService;
 
 /**
  *
@@ -160,7 +161,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        UbicacionView.VIEW_NAME, new UbicacionViewPresenter(new UbicacionConexionController()), DisplayType.POPUP);
+                        UbicacionView.VIEW_NAME, new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class)), DisplayType.POPUP);
                 return Optional.empty();
             }
         });

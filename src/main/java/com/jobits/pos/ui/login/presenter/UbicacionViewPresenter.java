@@ -6,16 +6,13 @@
 package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.cordinator.NavigationService;
 import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.jobits.app.repo.UbicacionConexionService;
 
 /**
  *
@@ -28,12 +25,12 @@ public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewM
 
     public static final String ACTION_ACEPTAR_EDICION = "Editar ubicación";
     public static String ACTION_CANCELAR_EDICION = "Cancelar";
-    private final UbicacionConexionController controller;
+    private final UbicacionConexionService service;
 
-    public UbicacionViewPresenter(UbicacionConexionController controller) {
+    public UbicacionViewPresenter(UbicacionConexionService controller) {
         super(new UbicacionViewModel());
-        this.controller = controller;
-        loadFormData(this.controller.getUbicaciones().getUbicacionActiva());
+        this.service = controller;
+        loadFormData(this.service.getUbicaciones().getUbicacionActiva());
     }
 
     private void onEditarUbicacionCLick() {
@@ -42,12 +39,8 @@ public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewM
                 getBean().getUrl(),
                 getBean().getUsuario(),
                 getBean().getPassword(), getBean().getDriver(), getBean().getTipo_servidor_seleccionado());
-        try {
-            controller.editUbicacion(uc, controller.getUbicaciones().getSelectedUbicacion());
-            NavigationService.getInstance().navigateUp();//TODO: codigo de navegacion
-        } catch (IOException | IllegalArgumentException ex) {
-            Logger.getLogger(UbicacionViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        service.editUbicacion(uc, service.getUbicaciones().getSelectedUbicacion());
+        NavigationService.getInstance().navigateUp();//TODO: codigo de navegacion
     }
 
     private void onCancelar() {

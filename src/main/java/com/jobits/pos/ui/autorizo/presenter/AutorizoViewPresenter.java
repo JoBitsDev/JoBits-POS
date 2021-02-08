@@ -5,13 +5,8 @@
  */
 package com.jobits.pos.ui.autorizo.presenter;
 
-import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.login.LogInService;
-import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
-import com.jobits.pos.ui.backup.presenter.BackUpViewModel;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
