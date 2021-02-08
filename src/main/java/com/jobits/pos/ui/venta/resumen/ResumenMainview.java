@@ -12,9 +12,16 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewModel.*;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter.*;
+import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.beans.PropertyChangeEvent;
+import org.knowm.xchart.PieChart;
+import org.knowm.xchart.PieChartBuilder;
+import org.knowm.xchart.XChartPanel;
+import org.knowm.xchart.style.PieStyler;
+import org.knowm.xchart.style.Styler;
 
 /**
  *
@@ -29,7 +36,7 @@ public class ResumenMainview extends AbstractViewPanel {
      *
      * @param presenter
      */
-    public ResumenMainview(AbstractViewPresenter presenter) {
+    public ResumenMainview(ResumenMainViewPresenter presenter) {
         super(presenter);
     }
 
@@ -165,7 +172,7 @@ public class ResumenMainview extends AbstractViewPanel {
         jPanelMainDashBoard.add(jPanelGraficaPrincipal, java.awt.BorderLayout.CENTER);
 
         jPanelResumenesDetallados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanelResumenesDetallados.setPreferredSize(new java.awt.Dimension(250, 400));
+        jPanelResumenesDetallados.setPreferredSize(new java.awt.Dimension(150, 400));
         jPanelResumenesDetallados.setLayout(new java.awt.GridLayout(6, 1, 0, 10));
         jPanelMainDashBoard.add(jPanelResumenesDetallados, java.awt.BorderLayout.EAST);
 
@@ -214,10 +221,13 @@ public class ResumenMainview extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
+        Bindings.bind(jToggleButtonDetailView, "visible", getPresenter().getModel(PROP_CONTROLS_VISIBILITY));
+        Bindings.bind(jButtonPeriodoSelector, "visible", getPresenter().getModel(PROP_CONTROLS_VISIBILITY));
+
+        jButtonPeriodoSelector.addActionListener(getPresenter().getOperation(ACTION_TO_MAIN_PANEL));
+
         Bindings.bind(jDateChooserDel, "date", getPresenter().getModel(PROP_FECHA_DESDE));
         Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(PROP_FECHA_HASTA));
-        jButtonPeriodoSelector.addActionListener(getPresenter().getOperation(ACTION_TO_MAIN_PANEL));
-        jButtonImprimir.setAction(getPresenter().getOperation(ACTION_TO_DETAILS_VENTA));
     }
 
     @Override
@@ -225,9 +235,9 @@ public class ResumenMainview extends AbstractViewPanel {
         initComponents();
         initListeners();
         jPanelDetallesVenta.add(new DetailResumenVentaView(
-                ((ResumenMainViewPresenter) getPresenter()).getPresenterVenta(), jToggleButtonDetailView));
+                getPresenter().getPresenterVenta(), jToggleButtonDetailView));
 
-        jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Total",
+        jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Venta",
                 getPresenter().getModel(PROP_TOTAL_VENTA), getPresenter().getOperation(ACTION_TO_DETAILS_VENTA)));
     }
 
@@ -236,31 +246,47 @@ public class ResumenMainview extends AbstractViewPanel {
         return VIEW_NAME;
     }
 
-//    @Override
-//    public ResumenMainViewPresenter getPresenter() {
-//        return (ResumenMainViewPresenter) super.getPresenter();
-//    }
+    @Override
+    public ResumenMainViewPresenter getPresenter() {
+        return (ResumenMainViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private void initListeners() {
         getPresenter().addPropertyChangeListener((PropertyChangeEvent evt) -> {
-            System.out.println("Its Happ (View)");
+            CardLayout cards;
             switch (evt.getPropertyName()) {
                 case "TO_MAIN_PANEL":
-                    switchToMain();
+                    cards = (CardLayout) jPanelsContainer.getLayout();
+                    cards.show(jPanelsContainer, "Main");
                     break;
                 case "TO_DETAILS_VENTA":
-                    switchToVenta();
+                    cards = (CardLayout) jPanelsContainer.getLayout();
+                    cards.show(jPanelsContainer, "Detalles Venta");
+                    break;
+                case "REFRESH_STATE_EXECUTED":
+                    updateChartValues();
                     break;
             }
         });
     }
 
-    private void switchToMain() {
-        CardLayout cards = (CardLayout) jPanelsContainer.getLayout();
-        cards.show(jPanelsContainer, "Main");
-    }
+    private void updateChartValues() {
+        PieChart chartPie = new PieChartBuilder().theme(Styler.ChartTheme.XChart).title("Resumen General").build();
+        chartPie.getStyler().setAnnotationType(PieStyler.AnnotationType.Percentage);
+        chartPie.getStyler().setChartTitleBoxVisible(true);
+        chartPie.getStyler().setLegendPosition(Styler.LegendPosition.InsideSE);
+        chartPie.getStyler().setLegendBackgroundColor(new Color(255, 255, 255, 0));
 
-    private void switchToVenta() {
-        CardLayout cards = (CardLayout) jPanelsContainer.getLayout();
-        cards.show(jPanelsContainer, "Detalles Venta");
+        String venta = getPresenter().getBean().getTotal_venta();
+        if (venta != null) {
+            float ventaValue = Float.parseFloat(venta);
+            chartPie.addSeries("Venta", ventaValue);
+        }
+
+        XChartPanel wrapperPie = new XChartPanel(chartPie);
+        if (jPanelGraficaPrincipal.getComponentCount() > 0) {
+            jPanelGraficaPrincipal.removeAll();
+        }
+        jPanelGraficaPrincipal.add(wrapperPie);
     }
 }
