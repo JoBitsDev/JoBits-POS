@@ -171,7 +171,7 @@ public class ViewFacade {
             case CategoriaDetailView.VIEW_NAME:
                 return new CategoriaDetailView(p);
             case ResumenMainview.VIEW_NAME:
-                return new ResumenMainview(p);
+                return new ResumenMainview((ResumenMainViewPresenter) p);
             case ReservaOrdenDetailView.VIEW_NAME:
                 return new ReservaOrdenDetailView((ReservaOrdenDetailViewPresenter) p);
             case TransaccionListView.VIEW_NAME:
