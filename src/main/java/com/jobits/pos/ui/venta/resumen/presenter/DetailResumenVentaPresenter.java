@@ -6,10 +6,11 @@
 package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.resumen.VentaResumenService;
-import com.jobits.pos.core.domain.models.temporal.DiaVentaWrapper;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractResumenViewPresenter;
+import com.jobits.pos.controller.resumen.VentaResumenService;
+import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.utils.utils;
 
 /**
  *
@@ -32,10 +33,10 @@ public class DetailResumenVentaPresenter extends AbstractResumenViewPresenter<De
 
     public float getTotal() {
         float total = 0;
-        for (DiaVentaWrapper x : getBean().getListaMain()) {
+        for (DayReviewWrapper x : getBean().getListaMain()) {
             total += x.getTotal();
         }
-        return total;
+        return utils.setDosLugaresDecimalesFloat(total);
     }
 
     @Override

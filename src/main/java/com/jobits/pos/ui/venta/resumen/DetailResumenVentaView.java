@@ -6,10 +6,9 @@
 package com.jobits.pos.ui.venta.resumen;
 
 import com.jobits.pos.core.domain.models.ProductovOrden;
-import com.jobits.pos.core.domain.models.temporal.DiaVentaWrapper;
+import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractListResumenViewPanel;
-import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
@@ -17,18 +16,17 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import javax.swing.JToggleButton;
 
 /**
  *
  * @author Home
  */
-public class DetailResumenVentaView extends AbstractListResumenViewPanel<DiaVentaWrapper, ProductovOrden> {
+public class DetailResumenVentaView extends AbstractListResumenViewPanel<DayReviewWrapper, ProductovOrden> {
 
     public static final String VIEW_NAME = "Resumen Venta View";
 
-    public DetailResumenVentaView(AbstractViewPresenter presenter, JToggleButton detailButton) {
-        super(presenter, detailButton);
+    public DetailResumenVentaView(AbstractViewPresenter presenter) {
+        super(presenter);
         jTableMain.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
     }
 
@@ -54,8 +52,8 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DiaVent
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
-    public BindableTableModel<DiaVentaWrapper> generateMainTableModel() {
-        return new BindableTableModel<DiaVentaWrapper>(jTableMain) {
+    public BindableTableModel<DayReviewWrapper> generateMainTableModel() {
+        return new BindableTableModel<DayReviewWrapper>(jTableMain) {
             @Override
             public int getColumnCount() {
                 return 2;
@@ -76,11 +74,11 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DiaVent
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((DiaVentaWrapper) getListModel().getElementAt(rowIndex))
+                        return ((DayReviewWrapper) getListModel().getElementAt(rowIndex))
                                 .getFecha().format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
                     case 1:
                         return utils.setDosLugaresDecimalesFloat(
-                                ((DiaVentaWrapper) getListModel().getElementAt(rowIndex)).getTotal());
+                                ((DayReviewWrapper) getListModel().getElementAt(rowIndex)).getTotal());
                 }
                 return null;
             }
@@ -144,8 +142,6 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DiaVent
     public String getViewName() {
         return VIEW_NAME;
     }
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }
