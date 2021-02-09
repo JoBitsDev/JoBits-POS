@@ -52,24 +52,24 @@ public class ResumenMainview extends AbstractViewPanel {
         jPanelSeleccion = new javax.swing.JPanel();
         jButtonPeriodoSelector = new javax.swing.JButton();
         jPanelPeriodChooser = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
         jDateChooserDel = new org.jdesktop.swingx.JXDatePicker();
-        jPanel6 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jDateChooserAl = new org.jdesktop.swingx.JXDatePicker();
-        jPanel9 = new javax.swing.JPanel();
-        jToggleButtonDetailView = new javax.swing.JToggleButton();
         jPanelOpciones = new javax.swing.JPanel();
-        jButtonImprimir = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jButtonCargarResumen = MaterialComponentsFactory.Buttons.getMaterialButton();
         jPanelsContainer = new javax.swing.JPanel();
         jPanelMainDashBoard = new javax.swing.JPanel();
         jPanelValoresEstadisticos = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButtonImpimir = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelGraficaPrincipal = new javax.swing.JPanel();
         jPanelResumenesDetallados = new javax.swing.JPanel();
         jPanelDetallesVenta = new javax.swing.JPanel();
+        jPanelDetallesAutorizo = new javax.swing.JPanel();
+        jPanelDetallesCostos = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -82,66 +82,45 @@ public class ResumenMainview extends AbstractViewPanel {
 
         jPanelPeriodChooser.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 5, 10, 0));
         jPanelPeriodChooser.setPreferredSize(new java.awt.Dimension(200, 50));
-        jPanelPeriodChooser.setLayout(new java.awt.GridLayout(1, 3));
+        jPanelPeriodChooser.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 30, 5));
 
-        jPanel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jPanel8.setMinimumSize(new java.awt.Dimension(254, 20));
-        jPanel8.setPreferredSize(new java.awt.Dimension(100, 20));
-        jPanel8.setLayout(new java.awt.GridLayout(1, 0));
-
+        jDateChooserDel.setPreferredSize(new java.awt.Dimension(150, 24));
         jDateChooserDel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jDateChooserDelActionPerformed(evt);
             }
         });
-        jPanel8.add(jDateChooserDel);
-
-        jPanel6.setMinimumSize(new java.awt.Dimension(20, 26));
-        jPanel6.setPreferredSize(new java.awt.Dimension(20, 100));
+        jPanelPeriodChooser.add(jDateChooserDel);
 
         jLabel15.setText("hasta");
         jLabel15.setToolTipText("");
         jLabel15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel6.add(jLabel15);
+        jPanelPeriodChooser.add(jLabel15);
 
-        jPanel8.add(jPanel6);
-
+        jDateChooserAl.setPreferredSize(new java.awt.Dimension(150, 24));
         jDateChooserAl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jDateChooserAlActionPerformed(evt);
             }
         });
-        jPanel8.add(jDateChooserAl);
-
-        jPanelPeriodChooser.add(jPanel8);
-
-        jPanel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jPanel9.setLayout(new java.awt.GridBagLayout());
-
-        jToggleButtonDetailView.setText("Detalles");
-        jToggleButtonDetailView.setMaximumSize(new java.awt.Dimension(150, 32));
-        jToggleButtonDetailView.setMinimumSize(new java.awt.Dimension(150, 32));
-        jToggleButtonDetailView.setPreferredSize(new java.awt.Dimension(150, 32));
-        jPanel9.add(jToggleButtonDetailView, new java.awt.GridBagConstraints());
-
-        jPanelPeriodChooser.add(jPanel9);
+        jPanelPeriodChooser.add(jDateChooserAl);
 
         jPanelSeleccion.add(jPanelPeriodChooser, java.awt.BorderLayout.CENTER);
 
         jPanelOpciones.setMinimumSize(new java.awt.Dimension(100, 100));
-        jPanelOpciones.setPreferredSize(new java.awt.Dimension(110, 50));
+        jPanelOpciones.setPreferredSize(new java.awt.Dimension(150, 50));
         jPanelOpciones.setLayout(new java.awt.BorderLayout());
 
-        jButtonImprimir.setText("Imprimir");
-        jButtonImprimir.setMaximumSize(new java.awt.Dimension(100, 32));
-        jButtonImprimir.setMinimumSize(new java.awt.Dimension(100, 32));
-        jButtonImprimir.setPreferredSize(new java.awt.Dimension(100, 32));
-        jButtonImprimir.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCargarResumen.setText("Cargar Resumen");
+        jButtonCargarResumen.setMaximumSize(new java.awt.Dimension(100, 32));
+        jButtonCargarResumen.setMinimumSize(new java.awt.Dimension(100, 32));
+        jButtonCargarResumen.setPreferredSize(new java.awt.Dimension(100, 32));
+        jButtonCargarResumen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImprimirActionPerformed(evt);
+                jButtonCargarResumenActionPerformed(evt);
             }
         });
-        jPanelOpciones.add(jButtonImprimir, java.awt.BorderLayout.CENTER);
+        jPanelOpciones.add(jButtonCargarResumen, java.awt.BorderLayout.CENTER);
 
         jPanelSeleccion.add(jPanelOpciones, java.awt.BorderLayout.EAST);
 
@@ -152,19 +131,26 @@ public class ResumenMainview extends AbstractViewPanel {
         jPanelMainDashBoard.setLayout(new java.awt.BorderLayout());
 
         jPanelValoresEstadisticos.setPreferredSize(new java.awt.Dimension(791, 35));
-        jPanelValoresEstadisticos.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelValoresEstadisticos.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
         jLabel1.setText("Valor 1");
-        jPanelValoresEstadisticos.add(jLabel1);
+        jPanel1.add(jLabel1);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
         jLabel2.setText("Valor 2");
-        jPanelValoresEstadisticos.add(jLabel2);
+        jPanel1.add(jLabel2);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
         jLabel3.setText("Valor 3");
-        jPanelValoresEstadisticos.add(jLabel3);
+        jPanel1.add(jLabel3);
+
+        jPanelValoresEstadisticos.add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        jButtonImpimir.setText("Imprimir");
+        jPanelValoresEstadisticos.add(jButtonImpimir, java.awt.BorderLayout.EAST);
 
         jPanelMainDashBoard.add(jPanelValoresEstadisticos, java.awt.BorderLayout.SOUTH);
 
@@ -181,6 +167,12 @@ public class ResumenMainview extends AbstractViewPanel {
         jPanelDetallesVenta.setLayout(new java.awt.BorderLayout());
         jPanelsContainer.add(jPanelDetallesVenta, "Detalles Venta");
 
+        jPanelDetallesAutorizo.setLayout(new java.awt.BorderLayout());
+        jPanelsContainer.add(jPanelDetallesAutorizo, "Detalles Autorizo");
+
+        jPanelDetallesCostos.setLayout(new java.awt.BorderLayout());
+        jPanelsContainer.add(jPanelDetallesCostos, "Detalles Costos");
+
         add(jPanelsContainer, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -191,12 +183,13 @@ public class ResumenMainview extends AbstractViewPanel {
     private void jDateChooserAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserAlActionPerformed
     }//GEN-LAST:event_jDateChooserAlActionPerformed
 
-    private void jButtonImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirActionPerformed
-    }//GEN-LAST:event_jButtonImprimirActionPerformed
+    private void jButtonCargarResumenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCargarResumenActionPerformed
+    }//GEN-LAST:event_jButtonCargarResumenActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonImprimir;
+    private javax.swing.JButton jButtonCargarResumen;
+    private javax.swing.JButton jButtonImpimir;
     private javax.swing.JButton jButtonPeriodoSelector;
     private org.jdesktop.swingx.JXDatePicker jDateChooserAl;
     private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
@@ -204,9 +197,9 @@ public class ResumenMainview extends AbstractViewPanel {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelDetallesAutorizo;
+    private javax.swing.JPanel jPanelDetallesCostos;
     private javax.swing.JPanel jPanelDetallesVenta;
     private javax.swing.JPanel jPanelGraficaPrincipal;
     private javax.swing.JPanel jPanelMainDashBoard;
@@ -216,29 +209,33 @@ public class ResumenMainview extends AbstractViewPanel {
     private javax.swing.JPanel jPanelSeleccion;
     private javax.swing.JPanel jPanelValoresEstadisticos;
     private javax.swing.JPanel jPanelsContainer;
-    private javax.swing.JToggleButton jToggleButtonDetailView;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void wireUp() {
-        Bindings.bind(jToggleButtonDetailView, "visible", getPresenter().getModel(PROP_CONTROLS_VISIBILITY));
         Bindings.bind(jButtonPeriodoSelector, "visible", getPresenter().getModel(PROP_CONTROLS_VISIBILITY));
-
-        jButtonPeriodoSelector.addActionListener(getPresenter().getOperation(ACTION_TO_MAIN_PANEL));
 
         Bindings.bind(jDateChooserDel, "date", getPresenter().getModel(PROP_FECHA_DESDE));
         Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(PROP_FECHA_HASTA));
+
+        jButtonPeriodoSelector.addActionListener(getPresenter().getOperation(ACTION_TO_MAIN_PANEL));
+        jButtonCargarResumen.addActionListener(getPresenter().getOperation(ACTION_CARGAR_RESUMEN));
     }
 
     @Override
     public void uiInit() {
         initComponents();
         initListeners();
-        jPanelDetallesVenta.add(new DetailResumenVentaView(
-                getPresenter().getPresenterVenta(), jToggleButtonDetailView));
+        jPanelDetallesVenta.add(new DetailResumenVentaView(getPresenter().getPresenterVenta()));
+        jPanelDetallesAutorizo.add(new DetailResumenAutorizoView(getPresenter().getPresenterAutorizo()));
+        jPanelDetallesCostos.add(new DetailResumenCostoView(getPresenter().getPresenterCosto()));
 
         jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Venta",
                 getPresenter().getModel(PROP_TOTAL_VENTA), getPresenter().getOperation(ACTION_TO_DETAILS_VENTA)));
+        jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Autorizos",
+                getPresenter().getModel(PROP_TOTAL_AUTORIZOS), getPresenter().getOperation(ACTION_TO_DETAILS_AUTORIZO)));
+        jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Costos",
+                getPresenter().getModel(PROP_TOTAL_COSTOS), getPresenter().getOperation(ACTION_TO_DETAILS_COSTO)));
     }
 
     @Override
@@ -263,6 +260,14 @@ public class ResumenMainview extends AbstractViewPanel {
                     cards = (CardLayout) jPanelsContainer.getLayout();
                     cards.show(jPanelsContainer, "Detalles Venta");
                     break;
+                case "TO_DETAILS_AUTORIZO":
+                    cards = (CardLayout) jPanelsContainer.getLayout();
+                    cards.show(jPanelsContainer, "Detalles Autorizo");
+                    break;
+                case "TO_DETAILS_COSTO":
+                    cards = (CardLayout) jPanelsContainer.getLayout();
+                    cards.show(jPanelsContainer, "Detalles Costos");
+                    break;
                 case "REFRESH_STATE_EXECUTED":
                     updateChartValues();
                     break;
@@ -281,6 +286,16 @@ public class ResumenMainview extends AbstractViewPanel {
         if (venta != null) {
             float ventaValue = Float.parseFloat(venta);
             chartPie.addSeries("Venta", ventaValue);
+        }
+        String autorizos = getPresenter().getBean().getTotal_autorizos();
+        if (autorizos != null) {
+            float autorizosValue = Float.parseFloat(autorizos);
+            chartPie.addSeries("Autorizos", autorizosValue);
+        }
+        String costos = getPresenter().getBean().getTotal_costos();
+        if (autorizos != null) {
+            float costosValue = Float.parseFloat(costos);
+            chartPie.addSeries("Costos", costosValue);
         }
 
         XChartPanel wrapperPie = new XChartPanel(chartPie);

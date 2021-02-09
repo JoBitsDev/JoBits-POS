@@ -29,9 +29,57 @@ public class ResumenMainViewModel extends AbstractViewModel {
     public static final String PROP_CONTROLS_VISIBILITY = "controls_visibility";
 
     //Totales
-    private String total_venta = "XX.XX";
+    private String total_venta = "00.00";
 
     public static final String PROP_TOTAL_VENTA = "total_venta";
+
+    private String total_autorizos = "00.00";
+
+    public static final String PROP_TOTAL_AUTORIZOS = "total_autorizos";
+
+    private String total_costos = "00.00";
+
+    public static final String PROP_TOTAL_COSTOS = "total_costos";
+
+    /**
+     * Get the value of total_costos
+     *
+     * @return the value of total_costos
+     */
+    public String getTotal_costos() {
+        return total_costos;
+    }
+
+    /**
+     * Set the value of total_costos
+     *
+     * @param total_costos new value of total_costos
+     */
+    public void setTotal_costos(String total_costos) {
+        String oldTotal_costos = this.total_costos;
+        this.total_costos = total_costos;
+        firePropertyChange(PROP_TOTAL_COSTOS, oldTotal_costos, total_costos);
+    }
+
+    /**
+     * Get the value of total_autorizos
+     *
+     * @return the value of total_autorizos
+     */
+    public String getTotal_autorizos() {
+        return total_autorizos;
+    }
+
+    /**
+     * Set the value of total_autorizos
+     *
+     * @param total_autorizos new value of total_autorizos
+     */
+    public void setTotal_autorizos(String total_autorizos) {
+        String oldTotal_autorizos = this.total_autorizos;
+        this.total_autorizos = total_autorizos;
+        firePropertyChange(PROP_TOTAL_AUTORIZOS, oldTotal_autorizos, total_autorizos);
+    }
 
     /**
      * Get the value of controls_visibility
