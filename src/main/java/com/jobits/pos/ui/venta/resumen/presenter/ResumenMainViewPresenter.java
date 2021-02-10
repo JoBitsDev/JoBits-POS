@@ -31,10 +31,14 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
     public static final String ACTION_TO_DETAILS_VENTA = "Detalles de Venta";
     public static final String ACTION_TO_DETAILS_AUTORIZO = "Detalles de Autorizo";
     public static final String ACTION_TO_DETAILS_COSTO = "Detalles de Costos";
+    public static final String ACTION_TO_DETAILS_SALARIO = "Detalles de Salarios";
+    public static final String ACTION_TO_DETAILS_GASTO = "Detalles de Gastos";
 
     private DetailResumenVentaPresenter presenterVenta = new DetailResumenVentaPresenter();
     private DetailResumenAutorizoViewPresenter presenterAutorizo = new DetailResumenAutorizoViewPresenter();
     private DetailResumenCostoViewPresenter presenterCosto = new DetailResumenCostoViewPresenter();
+    private DetailResumenSalarioViewPresenter presenterSalario = new DetailResumenSalarioViewPresenter();
+    private DetailResumenGastoViewPresenter presenterGasto = new DetailResumenGastoViewPresenter();
 
     public ResumenMainViewPresenter() {
         super(new ResumenMainViewModel());
@@ -52,6 +56,14 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
 
     public DetailResumenCostoViewPresenter getPresenterCosto() {
         return presenterCosto;
+    }
+
+    public DetailResumenSalarioViewPresenter getPresenterSalario() {
+        return presenterSalario;
+    }
+
+    public DetailResumenGastoViewPresenter getPresenterGasto() {
+        return presenterGasto;
     }
 
     @Override
@@ -91,6 +103,20 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_TO_DETAILS_SALARIO) {
+            @Override
+            public Optional doAction() {
+                toDetailsSalario();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_TO_DETAILS_GASTO) {
+            @Override
+            public Optional doAction() {
+                toDetailsGasto();
+                return Optional.empty();
+            }
+        });
     }
 
     private void toMainPanel() {
@@ -113,6 +139,16 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
         firePropertyChange("TO_DETAILS_COSTO", null, true);
     }
 
+    private void toDetailsSalario() {
+        getBean().setControls_visibility(true);
+        firePropertyChange("TO_DETAILS_SALARIO", null, true);
+    }
+
+    private void toDetailsGasto() {
+        getBean().setControls_visibility(true);
+        firePropertyChange("TO_DETAILS_GASTO", null, true);
+    }
+
     private void refreshPresenters() {
         presenterVenta.getBean().setSince_date(getBean().getFecha_desde());
         presenterVenta.getBean().setTo_date(getBean().getFecha_hasta());
@@ -123,6 +159,12 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
         presenterCosto.getBean().setSince_date(getBean().getFecha_desde());
         presenterCosto.getBean().setTo_date(getBean().getFecha_hasta());
         presenterCosto.setListsToBean();
+        presenterSalario.getBean().setSince_date(getBean().getFecha_desde());
+        presenterSalario.getBean().setTo_date(getBean().getFecha_hasta());
+        presenterSalario.setListsToBean();
+        presenterGasto.getBean().setSince_date(getBean().getFecha_desde());
+        presenterGasto.getBean().setTo_date(getBean().getFecha_hasta());
+        presenterGasto.setListsToBean();
     }
 
     @Override
@@ -133,9 +175,17 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
     private void cargarResumen() {
         Application.getInstance().getBackgroundWorker().processInBackground("Cargando Resumen...", () -> {
             refreshPresenters();
-            getBean().setTotal_venta(String.valueOf(presenterVenta.getTotal()));
+            float venta = presenterVenta.getTotal();
+            float costo = presenterCosto.getTotal();
+            float salario = presenterSalario.getTotal();
+            float gasto = presenterGasto.getTotal();
             getBean().setTotal_autorizos(String.valueOf(presenterAutorizo.getTotal()));
-            getBean().setTotal_costos(String.valueOf(presenterCosto.getTotal()));
+            getBean().setTotal_venta(String.valueOf(venta));
+            getBean().setTotal_costos(String.valueOf(costo));
+            getBean().setTotal_salarios(String.valueOf(salario));
+            getBean().setTotal_gastos(String.valueOf(gasto));
+            getBean().setTotal_utilidades(String.valueOf(venta - (costo + salario + gasto)));
+
         });
         firePropertyChange("REFRESH_STATE_EXECUTED", null, true);
     }

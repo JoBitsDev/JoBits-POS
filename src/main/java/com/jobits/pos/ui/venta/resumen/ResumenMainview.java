@@ -8,15 +8,16 @@ package com.jobits.pos.ui.venta.resumen;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewModel.*;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter.*;
-import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import com.jobits.ui.components.swing.displayers.Card;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
+import javax.swing.border.LineBorder;
 import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.XChartPanel;
@@ -70,6 +71,8 @@ public class ResumenMainview extends AbstractViewPanel {
         jPanelDetallesVenta = new javax.swing.JPanel();
         jPanelDetallesAutorizo = new javax.swing.JPanel();
         jPanelDetallesCostos = new javax.swing.JPanel();
+        jPanelDetallesSalarios = new javax.swing.JPanel();
+        jPanelDetallesGastos = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -157,8 +160,7 @@ public class ResumenMainview extends AbstractViewPanel {
         jPanelGraficaPrincipal.setLayout(new java.awt.BorderLayout());
         jPanelMainDashBoard.add(jPanelGraficaPrincipal, java.awt.BorderLayout.CENTER);
 
-        jPanelResumenesDetallados.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanelResumenesDetallados.setPreferredSize(new java.awt.Dimension(150, 400));
+        jPanelResumenesDetallados.setPreferredSize(new java.awt.Dimension(200, 400));
         jPanelResumenesDetallados.setLayout(new java.awt.GridLayout(6, 1, 0, 10));
         jPanelMainDashBoard.add(jPanelResumenesDetallados, java.awt.BorderLayout.EAST);
 
@@ -172,6 +174,12 @@ public class ResumenMainview extends AbstractViewPanel {
 
         jPanelDetallesCostos.setLayout(new java.awt.BorderLayout());
         jPanelsContainer.add(jPanelDetallesCostos, "Detalles Costos");
+
+        jPanelDetallesSalarios.setLayout(new java.awt.BorderLayout());
+        jPanelsContainer.add(jPanelDetallesSalarios, "Detalles Salario");
+
+        jPanelDetallesGastos.setLayout(new java.awt.BorderLayout());
+        jPanelsContainer.add(jPanelDetallesGastos, "Detalles Gastos");
 
         add(jPanelsContainer, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -200,6 +208,8 @@ public class ResumenMainview extends AbstractViewPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelDetallesAutorizo;
     private javax.swing.JPanel jPanelDetallesCostos;
+    private javax.swing.JPanel jPanelDetallesGastos;
+    private javax.swing.JPanel jPanelDetallesSalarios;
     private javax.swing.JPanel jPanelDetallesVenta;
     private javax.swing.JPanel jPanelGraficaPrincipal;
     private javax.swing.JPanel jPanelMainDashBoard;
@@ -229,13 +239,24 @@ public class ResumenMainview extends AbstractViewPanel {
         jPanelDetallesVenta.add(new DetailResumenVentaView(getPresenter().getPresenterVenta()));
         jPanelDetallesAutorizo.add(new DetailResumenAutorizoView(getPresenter().getPresenterAutorizo()));
         jPanelDetallesCostos.add(new DetailResumenCostoView(getPresenter().getPresenterCosto()));
+        jPanelDetallesSalarios.add(new DetailResumenSalarioView(getPresenter().getPresenterSalario()));
+        jPanelDetallesGastos.add(new DetailResumenGastoView(getPresenter().getPresenterGasto()));
 
+        Card utilCard = MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Utilidades",
+                getPresenter().getModel(PROP_TOTAL_UTILIDADES));
+        utilCard.setBorder(new LineBorder(Color.BLACK, 6, true));
+        utilCard.setSecondaryTextFont(new java.awt.Font("Dialog", 1, 18));
+        jPanelResumenesDetallados.add(utilCard);
         jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Venta",
                 getPresenter().getModel(PROP_TOTAL_VENTA), getPresenter().getOperation(ACTION_TO_DETAILS_VENTA)));
         jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Autorizos",
                 getPresenter().getModel(PROP_TOTAL_AUTORIZOS), getPresenter().getOperation(ACTION_TO_DETAILS_AUTORIZO)));
         jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Costos",
                 getPresenter().getModel(PROP_TOTAL_COSTOS), getPresenter().getOperation(ACTION_TO_DETAILS_COSTO)));
+        jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Salarios",
+                getPresenter().getModel(PROP_TOTAL_SALARIOS), getPresenter().getOperation(ACTION_TO_DETAILS_SALARIO)));
+        jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Gastos",
+                getPresenter().getModel(PROP_TOTAL_GASTOS), getPresenter().getOperation(ACTION_TO_DETAILS_GASTO)));
     }
 
     @Override
@@ -268,6 +289,14 @@ public class ResumenMainview extends AbstractViewPanel {
                     cards = (CardLayout) jPanelsContainer.getLayout();
                     cards.show(jPanelsContainer, "Detalles Costos");
                     break;
+                case "TO_DETAILS_SALARIO":
+                    cards = (CardLayout) jPanelsContainer.getLayout();
+                    cards.show(jPanelsContainer, "Detalles Salario");
+                    break;
+                case "TO_DETAILS_GASTO":
+                    cards = (CardLayout) jPanelsContainer.getLayout();
+                    cards.show(jPanelsContainer, "Detalles Gastos");
+                    break;
                 case "REFRESH_STATE_EXECUTED":
                     updateChartValues();
                     break;
@@ -296,6 +325,16 @@ public class ResumenMainview extends AbstractViewPanel {
         if (autorizos != null) {
             float costosValue = Float.parseFloat(costos);
             chartPie.addSeries("Costos", costosValue);
+        }
+        String salarios = getPresenter().getBean().getTotal_salarios();
+        if (autorizos != null) {
+            float salariosValue = Float.parseFloat(salarios);
+            chartPie.addSeries("Salarios", salariosValue);
+        }
+        String gastos = getPresenter().getBean().getTotal_gastos();
+        if (autorizos != null) {
+            float gastosValue = Float.parseFloat(gastos);
+            chartPie.addSeries("Gastos", gastosValue);
         }
 
         XChartPanel wrapperPie = new XChartPanel(chartPie);

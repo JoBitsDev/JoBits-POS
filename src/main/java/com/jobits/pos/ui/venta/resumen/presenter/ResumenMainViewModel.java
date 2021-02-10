@@ -29,17 +29,89 @@ public class ResumenMainViewModel extends AbstractViewModel {
     public static final String PROP_CONTROLS_VISIBILITY = "controls_visibility";
 
     //Totales
-    private String total_venta = "00.00";
+    private String total_venta = "0.0";
 
     public static final String PROP_TOTAL_VENTA = "total_venta";
 
-    private String total_autorizos = "00.00";
+    private String total_autorizos = "0.0";
 
     public static final String PROP_TOTAL_AUTORIZOS = "total_autorizos";
 
-    private String total_costos = "00.00";
+    private String total_costos = "0.0";
 
     public static final String PROP_TOTAL_COSTOS = "total_costos";
+
+    private String total_salarios = "0.0";
+
+    public static final String PROP_TOTAL_SALARIOS = "total_salarios";
+
+    private String total_gastos = "0.0";
+
+    public static final String PROP_TOTAL_GASTOS = "total_gastos";
+
+    private String total_utilidades = "0.0";
+
+    public static final String PROP_TOTAL_UTILIDADES = "total_utilidades";
+
+    /**
+     * Get the value of total_utilidades
+     *
+     * @return the value of total_utilidades
+     */
+    public String getTotal_utilidades() {
+        return total_utilidades;
+    }
+
+    /**
+     * Set the value of total_utilidades
+     *
+     * @param total_utilidades new value of total_utilidades
+     */
+    public void setTotal_utilidades(String total_utilidades) {
+        String oldTotal_utilidades = this.total_utilidades;
+        this.total_utilidades = total_utilidades;
+        firePropertyChange(PROP_TOTAL_UTILIDADES, oldTotal_utilidades, total_utilidades);
+    }
+
+    /**
+     * Get the value of total_gastos
+     *
+     * @return the value of total_gastos
+     */
+    public String getTotal_gastos() {
+        return total_gastos;
+    }
+
+    /**
+     * Set the value of total_gastos
+     *
+     * @param total_gastos new value of total_gastos
+     */
+    public void setTotal_gastos(String total_gastos) {
+        String oldTotal_gastos = this.total_gastos;
+        this.total_gastos = total_gastos;
+        firePropertyChange(PROP_TOTAL_GASTOS, oldTotal_gastos, total_gastos);
+    }
+
+    /**
+     * Get the value of total_salarios
+     *
+     * @return the value of total_salarios
+     */
+    public String getTotal_salarios() {
+        return total_salarios;
+    }
+
+    /**
+     * Set the value of total_salarios
+     *
+     * @param total_salarios new value of total_salarios
+     */
+    public void setTotal_salarios(String total_salarios) {
+        String oldTotal_salarios = this.total_salarios;
+        this.total_salarios = total_salarios;
+        firePropertyChange(PROP_TOTAL_SALARIOS, oldTotal_salarios, total_salarios);
+    }
 
     /**
      * Get the value of total_costos
