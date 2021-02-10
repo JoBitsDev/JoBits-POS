@@ -288,9 +288,9 @@ public class Generales extends AbstractViewPanel {
 
         jPanel13.setLayout(new java.awt.GridBagLayout());
 
-        jPanel14.setLayout(new java.awt.GridLayout());
+        jPanel14.setLayout(new java.awt.GridLayout(1, 2));
 
-        jComboBoxTiempoMaxedicionOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "15", "30", "45", "60", "90", "120" }));
+        jComboBoxTiempoMaxedicionOrden.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "3", "5", "7", "10", "20", "30", "60" }));
         jComboBoxTiempoMaxedicionOrden.setMaximumSize(new java.awt.Dimension(75, 26));
         jComboBoxTiempoMaxedicionOrden.setMinimumSize(new java.awt.Dimension(75, 26));
         jComboBoxTiempoMaxedicionOrden.setPreferredSize(new java.awt.Dimension(75, 26));
@@ -363,7 +363,7 @@ public class Generales extends AbstractViewPanel {
                 getPresenter().getModel(R.SettingID.HORARIO_CIERRE_HORA.toString())));
         Bindings.bind(jComboBoxTiempoMInServ, new ComboBoxAdapter(Arrays.asList("10", "15", "30", "45", "60", "90", "120"),
                 getPresenter().getModel(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO.toString())));
-        Bindings.bind(jComboBoxTiempoMaxedicionOrden, new ComboBoxAdapter(Arrays.asList("10", "15", "30", "45", "60", "90", "120"),
+        Bindings.bind(jComboBoxTiempoMaxedicionOrden, new ComboBoxAdapter(Arrays.asList("0", "1", "3", "5", "7", "10", "20", "30", "60"),
                 getPresenter().getModel(R.SettingID.HORARIO_TIEMPO_MAX_EDICION_PERMITIDA.toString())));
     }
 
