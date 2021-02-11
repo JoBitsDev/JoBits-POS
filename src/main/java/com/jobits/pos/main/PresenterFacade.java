@@ -15,7 +15,6 @@ import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListService;
-import com.jobits.pos.controller.venta.VentaResumenService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Mesa;
@@ -124,6 +123,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jobits.app.repo.UbicacionConexionService;
+import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
+import com.jobits.pos.ui.venta.resumen.ResumenMainview;
+import com.jobits.pos.controller.venta.VentaResumenServiceOld;
 
 /**
  *
@@ -208,7 +210,7 @@ public class PresenterFacade {
             case CalcularCambioView.VIEW_NAME:
                 return new CalcularCambioViewPresenter(new Orden());
             case VentaResumenView.VIEW_NAME:
-                return new VentaResumenViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaResumenService.class));
+                return new VentaResumenViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaResumenServiceOld.class));
             case AutorizoView.VIEW_NAME:
                 return new AutorizoViewPresenter(new LogInController(new AuthorizerImpl()), null);
             case ImageManagerView.VIEW_NAME:
@@ -227,6 +229,8 @@ public class PresenterFacade {
                 return new ClientesReservaDetailViewPresenter(null);
             case ReservaSchedulerView.VIEW_NAME:
                 return new ReservaSchedulerViewPresenter();
+            case ResumenMainview.VIEW_NAME:
+                return new ResumenMainViewPresenter();
             case MesaDetailView.VIEW_NAME:
                 return new MesaDetailViewPresenter(new Area(), new Mesa(), true);
             case UbicacionDetailView.VIEW_NAME:
