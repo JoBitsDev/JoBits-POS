@@ -74,11 +74,11 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DayRevi
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((DayReviewWrapper) getListModel().getElementAt(rowIndex))
+                        return getRow(rowIndex)
                                 .getFecha().format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
                     case 1:
                         return utils.setDosLugaresDecimalesFloat(
-                                ((DayReviewWrapper) getListModel().getElementAt(rowIndex)).getTotal());
+                                getRow(rowIndex).getTotal());
                 }
                 return null;
             }
@@ -119,18 +119,17 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DayRevi
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        Date d = ((ProductovOrden) getListModel().getElementAt(rowIndex)).getOrden().getVentafecha();
+                        Date d = getRow(rowIndex).getOrden().getVentafecha();
                         return Instant.ofEpochMilli(d.getTime()).atZone(ZoneId.systemDefault()).toLocalDate()
                                 .format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
                     case 1:
-                        return ((ProductovOrden) getListModel().getElementAt(rowIndex)).getProductoVenta().getNombre();
+                        return getRow(rowIndex).getProductoVenta().getNombre();
                     case 2:
-                        return ((ProductovOrden) getListModel().getElementAt(rowIndex)).getPrecioVendido();
+                        return getRow(rowIndex).getPrecioVendido();
                     case 3:
-                        ProductovOrden p = ((ProductovOrden) getListModel().getElementAt(rowIndex));
-                        return utils.setDosLugaresDecimalesFloat(p.getCantidad());
+                        return utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getCantidad());
                     case 4:
-                        ProductovOrden x = ((ProductovOrden) getListModel().getElementAt(rowIndex));
+                        ProductovOrden x = getRow(rowIndex);
                         return utils.setDosLugaresDecimalesFloat(x.getPrecioVendido() * x.getCantidad());
                 }
                 return null;
