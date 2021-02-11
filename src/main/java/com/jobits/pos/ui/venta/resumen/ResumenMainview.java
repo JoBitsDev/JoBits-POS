@@ -236,14 +236,15 @@ public class ResumenMainview extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         initListeners();
+        updateChartValues();
         jPanelDetallesVenta.add(new DetailResumenVentaView(getPresenter().getPresenterVenta()));
         jPanelDetallesAutorizo.add(new DetailResumenAutorizoView(getPresenter().getPresenterAutorizo()));
         jPanelDetallesCostos.add(new DetailResumenCostoView(getPresenter().getPresenterCosto()));
         jPanelDetallesSalarios.add(new DetailResumenSalarioView(getPresenter().getPresenterSalario()));
         jPanelDetallesGastos.add(new DetailResumenGastoView(getPresenter().getPresenterGasto()));
 
-        Card utilCard = MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Utilidades",
-                getPresenter().getModel(PROP_TOTAL_UTILIDADES));
+        Card utilCard = MaterialComponentsFactory.Displayers.getSmallCardImageValueModel(null, null, "Utilidades",
+                getPresenter().getModel(PROP_TOTAL_UTILIDADES), getPresenter().getModel(PROP_PROFITS_ICON));
         utilCard.setBorder(new LineBorder(Color.BLACK, 6, true));
         utilCard.setSecondaryTextFont(new java.awt.Font("Dialog", 1, 18));
         jPanelResumenesDetallados.add(utilCard);

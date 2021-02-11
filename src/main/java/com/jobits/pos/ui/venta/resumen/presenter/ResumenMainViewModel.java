@@ -7,6 +7,7 @@ package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Date;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -52,6 +53,54 @@ public class ResumenMainViewModel extends AbstractViewModel {
     private String total_utilidades = "0.0";
 
     public static final String PROP_TOTAL_UTILIDADES = "total_utilidades";
+
+    private ImageIcon profits_icon = new ImageIcon(getClass().getResource("/restManager/resources/icons pack/neutral_negro.png"));
+
+    public static final String PROP_PROFITS_ICON = "profits_icon";
+
+    private String rdi_value = "0.0";
+
+    public static final String PROP_RDI_VALUE = "rdi_value";
+
+    /**
+     * Get the value of rdi_value
+     *
+     * @return the value of rdi_value
+     */
+    public String getRdi_value() {
+        return rdi_value;
+    }
+
+    /**
+     * Set the value of rdi_value
+     *
+     * @param rdi_value new value of rdi_value
+     */
+    public void setRdi_value(String rdi_value) {
+        String oldRdi_value = this.rdi_value;
+        this.rdi_value = rdi_value;
+        firePropertyChange(PROP_RDI_VALUE, oldRdi_value, rdi_value);
+    }
+
+    /**
+     * Get the value of profits_icon
+     *
+     * @return the value of profits_icon
+     */
+    public ImageIcon getProfits_icon() {
+        return profits_icon;
+    }
+
+    /**
+     * Set the value of profits_icon
+     *
+     * @param profits_icon new value of profits_icon
+     */
+    public void setProfits_icon(ImageIcon profits_icon) {
+        ImageIcon oldProfits_icon = this.profits_icon;
+        this.profits_icon = profits_icon;
+        firePropertyChange(PROP_PROFITS_ICON, oldProfits_icon, profits_icon);
+    }
 
     /**
      * Get the value of total_utilidades

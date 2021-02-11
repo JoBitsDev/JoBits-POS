@@ -18,6 +18,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Optional;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -184,7 +185,15 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
             getBean().setTotal_costos(String.valueOf(costo));
             getBean().setTotal_salarios(String.valueOf(salario));
             getBean().setTotal_gastos(String.valueOf(gasto));
-            getBean().setTotal_utilidades(String.valueOf(venta - (costo + salario + gasto)));
+            float utilidad = venta - (costo + salario + gasto);
+            getBean().setTotal_utilidades(String.valueOf(utilidad));
+            if (utilidad > 0) {
+                getBean().setProfits_icon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/ganancia_verde_2.png")));
+            } else if (utilidad < 0) {
+                getBean().setProfits_icon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/perdida_rojo_2.png")));
+            } else if (utilidad == 0) {
+                getBean().setProfits_icon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/neutral_negro.png")));
+            }
 
         });
         firePropertyChange("REFRESH_STATE_EXECUTED", null, true);
