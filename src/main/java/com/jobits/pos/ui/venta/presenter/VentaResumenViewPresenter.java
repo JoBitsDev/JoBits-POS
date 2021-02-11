@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.venta.VentaResumenService;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
@@ -20,6 +19,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Optional;
 import javax.swing.JOptionPane;
+import com.jobits.pos.controller.venta.VentaResumenServiceOld;
 
 /**
  *
@@ -35,9 +35,9 @@ public class VentaResumenViewPresenter extends AbstractViewPresenter<VentaResume
 //    public static final String ACTION_3 = "Action_name";
 //    public static final String ACTION_4 = "Action_name";
 //    public static final String ACTION_5 = "Action_name";
-    private final VentaResumenService service;
+    private final VentaResumenServiceOld service;
 
-    public VentaResumenViewPresenter(VentaResumenService service) {
+    public VentaResumenViewPresenter(VentaResumenServiceOld service) {
         super(new VentaResumenViewModel());
         this.service = service;
         addListeners();

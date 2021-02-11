@@ -8,7 +8,7 @@ package com.jobits.pos.ui.configuracion;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
-import com.jobits.pos.core.domain.UbicacionConexionModel;
+import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;

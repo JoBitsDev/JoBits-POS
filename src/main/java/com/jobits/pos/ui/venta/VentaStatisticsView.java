@@ -343,6 +343,7 @@ public class VentaStatisticsView extends AbstractViewPanel {
                 null,
                 null,
                 title,
+                null,
                 subtitle);
         c.setPreferredSize(dimension);
         c.setMaximumSize(dimension);
