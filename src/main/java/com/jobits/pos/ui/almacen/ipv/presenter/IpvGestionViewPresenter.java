@@ -18,6 +18,7 @@ import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.IPVRegistroFomatter;
@@ -29,6 +30,8 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.NumberPad;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
@@ -66,18 +69,19 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         this.service = controller;
         getBean().setLista_punto_elaboracion(new ArrayListModel<>(controller.getCocinaList()));
         getBean().setPunto_elaboracion_seleccionado(getBean().getLista_punto_elaboracion().get(0));
-        getBean().addPropertyChangeListener(IpvGestionViewModel.PROP_PUNTO_ELABORACION_SELECCIONADO,
-                (evt) -> {
+        addBeanPropertyChangeListener((PropertyChangeEvent evt) -> {
+            switch (evt.getPropertyName()) {
+                case IpvGestionViewModel.PROP_PUNTO_ELABORACION_SELECCIONADO:
                     onCocinaStateChange();
-                });
-        getBean().addPropertyChangeListener(IpvGestionViewModel.PROP_FECHA_SELECCIONADA,
-                (evt) -> {
+                    break;
+                case IpvGestionViewModel.PROP_FECHA_SELECCIONADA:
                     onFechaCambiadaIpv();
-                });
-        getBean().addPropertyChangeListener(IpvGestionViewModel.PROP_FECHA_IPV_VENTAS_SELECCIONADA,
-                (evt) -> {
+                    break;
+                case IpvGestionViewModel.PROP_FECHA_IPV_VENTAS_SELECCIONADA:
                     onFechaCambiadaIpvVenta();
-                });
+                    break;
+            }
+        });
     }
 
     @Override
@@ -181,33 +185,41 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private void onFechaCambiadaIpv() {
-        Application.getInstance().getBackgroundWorker().processInBackground(() -> {
-            if (getBean().getPunto_elaboracion_seleccionado() != null) {
-                getBean().setVenta_ipv_seleccionada(selectFecha(service.getVentasInRange(getBean().getFecha_ipv_seleccionada())));
-                if (getBean().getVenta_ipv_seleccionada() != null) {
-                    getBean().setLista_ipv_registro(new ArrayListModel<>(
-                            service.getIpvRegistroList(
-                                    getBean().getPunto_elaboracion_seleccionado(),
-                                    getBean().getVenta_ipv_seleccionada().getId())));
-                    getBean().setCheck_ocultar_productos_ipv(false);
+        if (getBean().getFecha_ipv_seleccionada() != null) {
+            Application.getInstance().getBackgroundWorker().processInBackground(() -> {
+                if (getBean().getPunto_elaboracion_seleccionado() != null) {
+                    getBean().setVenta_ipv_seleccionada(selectFecha(service.getVentasInRange(getBean().getFecha_ipv_seleccionada())));
+                    if (getBean().getVenta_ipv_seleccionada() != null) {
+                        getBean().setLista_ipv_registro(new ArrayListModel<>(
+                                service.getIpvRegistroList(
+                                        getBean().getPunto_elaboracion_seleccionado(),
+                                        getBean().getVenta_ipv_seleccionada().getId())));
+                        getBean().setCheck_ocultar_productos_ipv(false);
+                        getBean().setFecha_ipv_ventas_seleccionada(null);
+                        getBean().setLista_ipv_venta_registro(new ArrayListModel<>());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void onFechaCambiadaIpvVenta() {
-        Application.getInstance().getBackgroundWorker().processInBackground(() -> {
-            if (getBean().getPunto_elaboracion_seleccionado() != null) {
-                getBean().setVenta_ipv_ventas_seleccionada(selectFecha(service.getVentasInRange(getBean().getFecha_ipv_ventas_seleccionada())));
-                if (getBean().getVenta_ipv_ventas_seleccionada() != null) {
-                    getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
-                            service.getIpvRegistroVentaList(getBean().
-                                    getPunto_elaboracion_seleccionado(),
-                                    getBean().getVenta_ipv_ventas_seleccionada().getId())));
-                    getBean().setCheck_ocultar_productos_ipv_venta(false);
+        if (getBean().getFecha_ipv_ventas_seleccionada() != null) {
+            Application.getInstance().getBackgroundWorker().processInBackground(() -> {
+                if (getBean().getPunto_elaboracion_seleccionado() != null) {
+                    getBean().setVenta_ipv_ventas_seleccionada(selectFecha(service.getVentasInRange(getBean().getFecha_ipv_ventas_seleccionada())));
+                    if (getBean().getVenta_ipv_ventas_seleccionada() != null) {
+                        getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
+                                service.getIpvRegistroVentaList(getBean().
+                                        getPunto_elaboracion_seleccionado(),
+                                        getBean().getVenta_ipv_ventas_seleccionada().getId())));
+                        getBean().setCheck_ocultar_productos_ipv_venta(false);
+                        getBean().setFecha_ipv_seleccionada(null);
+                        getBean().setLista_ipv_registro(new ArrayListModel<>());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void onCocinaStateChange() {
@@ -304,7 +316,9 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private Venta selectFecha(List<Venta> ventas) {
-        if (ventas.size() == 1) {
+        if (ventas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay ventas registradas", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (ventas.size() == 1) {
             return ventas.get(0);
         } else {
             JComboBox<Venta> jComboBox1 = new JComboBox<>();
