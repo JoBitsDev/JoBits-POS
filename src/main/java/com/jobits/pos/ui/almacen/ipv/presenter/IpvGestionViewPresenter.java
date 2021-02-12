@@ -304,9 +304,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private Venta selectFecha(List<Venta> ventas) {
-        if (ventas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No hay ventas registradas", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (ventas.size() == 1) {
+        if (ventas.size() == 1) {
             return ventas.get(0);
         } else {
             JComboBox<Venta> jComboBox1 = new JComboBox<>();
