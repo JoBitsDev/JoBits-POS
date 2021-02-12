@@ -7,8 +7,7 @@ package com.jobits.pos.ui.backup.presenter;
 
 import com.jobits.pos.controller.backup.impl.BackUpController;
 import com.jobits.pos.controller.backup.BackUpService;
-import com.jobits.pos.controller.login.UbicacionConexionService;
-import com.jobits.pos.core.domain.UbicacionConexionModel;
+import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -18,6 +17,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
 import java.util.Optional;
+import org.jobits.app.repo.UbicacionConexionService;
 
 /**
  *

@@ -8,7 +8,6 @@ package com.jobits.pos.ui.backup;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jhw.swing.material.standars.MaterialIcons;
-import com.jobits.pos.core.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.backup.presenter.BackUpViewModel;
@@ -16,6 +15,7 @@ import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import static com.jobits.pos.ui.backup.presenter.BackUpViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import org.jobits.app.repo.UbicacionConexionModel;
 
 /**
  *

@@ -258,6 +258,8 @@ public class ResumenMainview extends AbstractViewPanel {
                 getPresenter().getModel(PROP_TOTAL_SALARIOS), getPresenter().getOperation(ACTION_TO_DETAILS_SALARIO)));
         jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Gastos",
                 getPresenter().getModel(PROP_TOTAL_GASTOS), getPresenter().getOperation(ACTION_TO_DETAILS_GASTO)));
+
+        jPanel1.setVisible(false);
     }
 
     @Override
@@ -312,30 +314,25 @@ public class ResumenMainview extends AbstractViewPanel {
         chartPie.getStyler().setLegendPosition(Styler.LegendPosition.InsideSE);
         chartPie.getStyler().setLegendBackgroundColor(new Color(255, 255, 255, 0));
 
-        String venta = getPresenter().getBean().getTotal_venta();
+        String venta = getPresenter().getBean().getTotal_utilidades();
         if (venta != null) {
             float ventaValue = Float.parseFloat(venta);
-            chartPie.addSeries("Venta", ventaValue);
-        }
-        String autorizos = getPresenter().getBean().getTotal_autorizos();
-        if (autorizos != null) {
-            float autorizosValue = Float.parseFloat(autorizos);
-            chartPie.addSeries("Autorizos", autorizosValue);
+            chartPie.addSeries("Utilidades", ventaValue).setFillColor(Color.green);
         }
         String costos = getPresenter().getBean().getTotal_costos();
-        if (autorizos != null) {
+        if (costos != null) {
             float costosValue = Float.parseFloat(costos);
-            chartPie.addSeries("Costos", costosValue);
+            chartPie.addSeries("Costos", costosValue).setFillColor(Color.ORANGE);
         }
         String salarios = getPresenter().getBean().getTotal_salarios();
-        if (autorizos != null) {
+        if (salarios != null) {
             float salariosValue = Float.parseFloat(salarios);
-            chartPie.addSeries("Salarios", salariosValue);
+            chartPie.addSeries("Salarios", salariosValue).setFillColor(Color.yellow);
         }
         String gastos = getPresenter().getBean().getTotal_gastos();
-        if (autorizos != null) {
+        if (gastos != null) {
             float gastosValue = Float.parseFloat(gastos);
-            chartPie.addSeries("Gastos", gastosValue);
+            chartPie.addSeries("Gastos", gastosValue).setFillColor(Color.cyan);
         }
 
         XChartPanel wrapperPie = new XChartPanel(chartPie);

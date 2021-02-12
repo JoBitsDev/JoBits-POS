@@ -79,11 +79,11 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((DayReviewWrapper) getListModel().getElementAt(rowIndex))
+                        return getRow(rowIndex)
                                 .getFecha().format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
                     case 1:
                         return utils.setDosLugaresDecimalesFloat(
-                                ((DayReviewWrapper) getListModel().getElementAt(rowIndex)).getTotal());
+                                getRow(rowIndex).getTotal());
                 }
                 return null;
             }
@@ -123,14 +123,14 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((ProductoInsumo) getListModel().getElementAt(rowIndex)).getInsumo().getNombre();
+                        return getRow(rowIndex).getInsumo().getNombre();
                     case 1:
-                        return ((ProductoInsumo) getListModel().getElementAt(rowIndex)).getInsumo().getUm();
+                        return getRow(rowIndex).getInsumo().getUm();
                     case 2:
-                        ProductoInsumo p = ((ProductoInsumo) getListModel().getElementAt(rowIndex));
+                        ProductoInsumo p = getRow(rowIndex);
                         return utils.setDosLugaresDecimalesFloat(p.getCantidad());
                     case 3:
-                        ProductoInsumo x = ((ProductoInsumo) getListModel().getElementAt(rowIndex));
+                        ProductoInsumo x = getRow(rowIndex);
                         return utils.setDosLugaresDecimalesFloat(x.getCosto());
                 }
                 return null;

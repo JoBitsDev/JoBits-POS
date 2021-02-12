@@ -12,7 +12,6 @@ import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
 import com.jobits.pos.controller.login.impl.LogInController;
-import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListService;
@@ -123,9 +122,10 @@ import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.jobits.pos.controller.venta.VentaResumenServiceOld;
-import com.jobits.pos.ui.venta.resumen.ResumenMainview;
+import org.jobits.app.repo.UbicacionConexionService;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
+import com.jobits.pos.ui.venta.resumen.ResumenMainview;
+import com.jobits.pos.controller.venta.VentaResumenServiceOld;
 
 /**
  *
@@ -143,7 +143,7 @@ public class PresenterFacade {
             case AcercaDeView.VIEW_NAME:
                 return new AcercaDeViewPresenter();
             case UbicacionView.VIEW_NAME:
-                return new UbicacionViewPresenter(new UbicacionConexionController());
+                return new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class));
             case MainMenuView.VIEW_NAME:
                 throw new IllegalStateException("Bad call on view: " + viewUIDName);
             case DashBoardView.VIEW_NAME:

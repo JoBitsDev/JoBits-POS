@@ -7,7 +7,6 @@ package com.jobits.pos.main;
 
 import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.controller.licencia.impl.LicenceController;
-import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -39,6 +38,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import org.jobits.app.repo.UbicacionConexionServiceImpl;
 
 /**
  *
@@ -219,7 +219,7 @@ public class Application {
     }
 
     private void registerResources() {
-        ResourceHandler.registerResourceService(new UbicacionResourceServiceImpl(new UbicacionConexionController()));
+        ResourceHandler.registerResourceService(new UbicacionResourceServiceImpl(new UbicacionConexionServiceImpl()));//TODO: inyectar
     }
 
     private void calculateLicenceLeft() {

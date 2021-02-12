@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.core.domain.UbicacionConexionModel;
+import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

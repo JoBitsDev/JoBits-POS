@@ -54,7 +54,7 @@ public class ResumenMainViewModel extends AbstractViewModel {
 
     public static final String PROP_TOTAL_UTILIDADES = "total_utilidades";
 
-    private ImageIcon profits_icon = new ImageIcon(getClass().getResource("/restManager/resources/icons pack/neutral_negro.png"));
+    private ImageIcon profits_icon = new ImageIcon(getClass().getResource("/restManager/resources/icons pack/neutral_negro.png"));//TODO: corregir url
 
     public static final String PROP_PROFITS_ICON = "profits_icon";
 

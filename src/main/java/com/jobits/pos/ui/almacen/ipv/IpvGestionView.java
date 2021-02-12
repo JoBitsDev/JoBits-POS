@@ -177,7 +177,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel4.add(jLabel3, java.awt.BorderLayout.CENTER);
 
         jDateChooserIpv.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        jDateChooserIpv.setPreferredSize(new java.awt.Dimension(155, 40));
+        jDateChooserIpv.setPreferredSize(new java.awt.Dimension(170, 40));
         jPanel4.add(jDateChooserIpv, java.awt.BorderLayout.LINE_END);
 
         jPanelRegistros.add(jPanel4, java.awt.BorderLayout.PAGE_START);
@@ -253,7 +253,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel7.add(jToggleButtonIpvVenta, java.awt.BorderLayout.WEST);
 
         jDateChooserIpvVentas.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
-        jDateChooserIpvVentas.setPreferredSize(new java.awt.Dimension(155, 40));
+        jDateChooserIpvVentas.setPreferredSize(new java.awt.Dimension(170, 40));
         jPanel7.add(jDateChooserIpvVentas, java.awt.BorderLayout.LINE_END);
 
         jPanelIPV.add(jPanel7, java.awt.BorderLayout.PAGE_START);

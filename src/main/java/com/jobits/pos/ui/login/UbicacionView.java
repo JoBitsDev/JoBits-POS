@@ -7,8 +7,7 @@ package com.jobits.pos.ui.login;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.core.domain.UbicacionConexionModel;
-import com.jobits.pos.core.domain.UbicacionConexionModel.TipoUbicacion;
+import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -19,6 +18,7 @@ import com.jobits.ui.components.MaterialComponentsFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import org.jobits.app.repo.UbicacionConexionModel.TipoUbicacion;
 
 /**
  *

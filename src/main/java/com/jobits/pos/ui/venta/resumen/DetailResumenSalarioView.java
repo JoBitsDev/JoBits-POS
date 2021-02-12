@@ -83,11 +83,10 @@ public class DetailResumenSalarioView extends AbstractListResumenViewPanel<DayRe
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((DayReviewWrapper) getListModel().getElementAt(rowIndex))
+                        return getRow(rowIndex)
                                 .getFecha().format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
                     case 1:
-                        return utils.setDosLugaresDecimalesFloat(
-                                ((DayReviewWrapper) getListModel().getElementAt(rowIndex)).getTotal());
+                        return utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getTotal());
                 }
                 return null;
             }
@@ -124,7 +123,7 @@ public class DetailResumenSalarioView extends AbstractListResumenViewPanel<DayRe
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                AsistenciaPersonal p = ((AsistenciaPersonal) getListModel().getElementAt(rowIndex));
+                AsistenciaPersonal p = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
                         Date d = p.getVenta().getFecha();
