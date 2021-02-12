@@ -107,7 +107,9 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
     }
 
     private Venta selectFecha(List<Venta> ventas) {
-        if (ventas.size() == 1) {
+        if (ventas.isEmpty()) {
+            Application.getInstance().getNotificationService().showDialog("No hay ventas registradas", TipoNotificacion.ERROR);
+        } else if (ventas.size() == 1) {
             return ventas.get(0);
         } else {
             JComboBox<Venta> jComboBox1 = new JComboBox<>();
