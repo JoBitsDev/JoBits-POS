@@ -62,9 +62,7 @@ public class ResumenMainview extends AbstractViewPanel {
         jPanelMainDashBoard = new javax.swing.JPanel();
         jPanelValoresEstadisticos = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelCostoporPeso = new javax.swing.JLabel();
         jButtonImpimir = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelGraficaPrincipal = new javax.swing.JPanel();
         jPanelResumenesDetallados = new javax.swing.JPanel();
@@ -138,17 +136,10 @@ public class ResumenMainview extends AbstractViewPanel {
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
-        jLabel1.setText("Valor 1");
-        jPanel1.add(jLabel1);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
-        jLabel2.setText("Valor 2");
-        jPanel1.add(jLabel2);
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
-        jLabel3.setText("Valor 3");
-        jPanel1.add(jLabel3);
+        jLabelCostoporPeso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
+        jLabelCostoporPeso.setText("0.0");
+        jLabelCostoporPeso.setToolTipText("Costo por Peso");
+        jPanel1.add(jLabelCostoporPeso);
 
         jPanelValoresEstadisticos.add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -201,10 +192,8 @@ public class ResumenMainview extends AbstractViewPanel {
     private javax.swing.JButton jButtonPeriodoSelector;
     private org.jdesktop.swingx.JXDatePicker jDateChooserAl;
     private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelCostoporPeso;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelDetallesAutorizo;
     private javax.swing.JPanel jPanelDetallesCostos;
@@ -224,6 +213,7 @@ public class ResumenMainview extends AbstractViewPanel {
     @Override
     public void wireUp() {
         Bindings.bind(jButtonPeriodoSelector, "visible", getPresenter().getModel(PROP_CONTROLS_VISIBILITY));
+        Bindings.bind(jLabelCostoporPeso, getPresenter().getModel(PROP_COSTO_PESO));
 
         Bindings.bind(jDateChooserDel, "date", getPresenter().getModel(PROP_FECHA_DESDE));
         Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(PROP_FECHA_HASTA));
@@ -259,7 +249,6 @@ public class ResumenMainview extends AbstractViewPanel {
         jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Gastos",
                 getPresenter().getModel(PROP_TOTAL_GASTOS), getPresenter().getOperation(ACTION_TO_DETAILS_GASTO)));
 
-        jPanel1.setVisible(false);
     }
 
     @Override

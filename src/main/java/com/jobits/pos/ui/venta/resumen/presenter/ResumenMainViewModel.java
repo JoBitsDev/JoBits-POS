@@ -62,6 +62,30 @@ public class ResumenMainViewModel extends AbstractViewModel {
 
     public static final String PROP_RDI_VALUE = "rdi_value";
 
+    private String costo_peso = "0.0";
+
+    public static final String PROP_COSTO_PESO = "costo_peso";
+
+    /**
+     * Get the value of costo_peso
+     *
+     * @return the value of costo_peso
+     */
+    public String getCosto_peso() {
+        return costo_peso;
+    }
+
+    /**
+     * Set the value of costo_peso
+     *
+     * @param costo_peso new value of costo_peso
+     */
+    public void setCosto_peso(String costo_peso) {
+        String oldCosto_peso = this.costo_peso;
+        this.costo_peso = costo_peso;
+        firePropertyChange(PROP_COSTO_PESO, oldCosto_peso, costo_peso);
+    }
+
     /**
      * Get the value of rdi_value
      *

@@ -10,6 +10,7 @@ import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewModel.*;
+import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.Instant;
@@ -187,6 +188,7 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
             getBean().setTotal_gastos(String.valueOf(gasto));
             float utilidad = venta - (costo + salario + gasto);
             getBean().setTotal_utilidades(String.valueOf(utilidad));
+            getBean().setCosto_peso(String.valueOf(utils.setDosLugaresDecimalesFloat(utilidad / venta)));
             if (utilidad > 0) {
                 getBean().setProfits_icon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/ganancia_verde_2.png")));
             } else if (utilidad < 0) {
