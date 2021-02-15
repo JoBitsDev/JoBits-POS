@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui.mainmenu.presenter;
 
+import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.controller.login.impl.LogInController;
@@ -55,6 +56,8 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
     //Ayuda
     public static final String ACTION_SHOW_MANUAL_USUARIO = "Manual de Usuario";
 
+    LogInService loginService = PosDesktopUiModule.getInstance().getImplementation(LogInService.class);
+
     public MenuBarClassPresenter() {
         super(new MenuBarClassViewModel());
     }
@@ -73,8 +76,10 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
         registerOperation(new AbstractViewAction(ACTION_SHOW_PREFERENCIAS) {
             @Override
             public Optional doAction() {
-                Application.getInstance().getNavigator().navigateTo(
-                        ConfiguracionView.VIEW_NAME, new ConfigurationViewPresenter(), DisplayType.POPUP);
+                if (loginService.autorizarCurrentUser(R.NivelAcceso.ADMINISTRADOR)) {
+                    Application.getInstance().getNavigator().navigateTo(
+                            ConfiguracionView.VIEW_NAME, new ConfigurationViewPresenter(), DisplayType.POPUP);
+                }
                 return Optional.empty();
             }
         });
