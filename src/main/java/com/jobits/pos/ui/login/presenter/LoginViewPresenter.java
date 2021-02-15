@@ -11,7 +11,6 @@ import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.core.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.controller.login.impl.MainMenuController;
 import com.jobits.pos.controller.login.LogInService;
-import com.jobits.pos.controller.login.impl.UbicacionConexionController;
 import com.jobits.pos.controller.mesa.MesaService;
 import com.jobits.pos.controller.reservas.ReservaOrdenListener;
 import com.jobits.pos.controller.reservas.UbicacionMesaListener;
@@ -19,7 +18,7 @@ import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.UbicacionConexionModel;
+import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;
@@ -42,6 +41,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import org.jobits.app.repo.UbicacionConexionService;
 
 /**
  *
@@ -57,12 +57,11 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     public static final String ACTION_EDITAR_UBICACION = "Editar ubicacion";
 
     LogInService service;
-    UbicacionConexionController ubicacionController;
+    UbicacionConexionService ubicacionController = PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class);
 
     public LoginViewPresenter(LogInService service) {
         super(new LoginViewModel());
         this.service = service;
-        ubicacionController = new UbicacionConexionController();
         getBean().setListaUbicaciones(new ArrayListModel<>(
                 Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
     }
