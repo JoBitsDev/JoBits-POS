@@ -8,9 +8,12 @@ package com.jobits.pos.ui.venta.resumen;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.ui.AbstractListResumenViewPanel;
+import com.jobits.pos.ui.filter.FilterMainView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.venta.resumen.presenter.DetailResumenSalarioViewPresenter;
 import com.jobits.pos.utils.utils;
+import java.awt.BorderLayout;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -30,10 +33,11 @@ public class DetailResumenSalarioView extends AbstractListResumenViewPanel<DayRe
      *
      * @param presenter
      */
-    public DetailResumenSalarioView(AbstractViewPresenter presenter) {
+    public DetailResumenSalarioView(DetailResumenSalarioViewPresenter presenter) {
         super(presenter);
         jTableMain.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
+        jPanelDetailPanel.add(new FilterMainView(getPresenter().getBean().getFilter_presenter()), BorderLayout.EAST);
     }
 
     @Override
@@ -138,6 +142,11 @@ public class DetailResumenSalarioView extends AbstractListResumenViewPanel<DayRe
     @Override
     public String getViewName() {
         return VIEW_NAME;
+    }
+
+    @Override
+    public DetailResumenSalarioViewPresenter getPresenter() {
+        return (DetailResumenSalarioViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

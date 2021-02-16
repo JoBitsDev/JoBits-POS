@@ -9,9 +9,11 @@ import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractListResumenViewPanel;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.filter.FilterMainView;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.venta.resumen.presenter.DetailResumenAutorizoViewPresenter;
 import com.jobits.pos.utils.utils;
+import java.awt.BorderLayout;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -28,12 +30,13 @@ public class DetailResumenAutorizoView extends AbstractListResumenViewPanel<DayR
      *
      * @param presenter
      */
-    public DetailResumenAutorizoView(AbstractViewPresenter presenter) {
+    public DetailResumenAutorizoView(DetailResumenAutorizoViewPresenter presenter) {
         super(presenter);
         jTableMain.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
+        jPanelDetailPanel.add(new FilterMainView(getPresenter().getBean().getFilter_presenter()), BorderLayout.EAST);
     }
 
     @Override
@@ -137,6 +140,11 @@ public class DetailResumenAutorizoView extends AbstractListResumenViewPanel<DayR
     @Override
     public String getViewName() {
         return VIEW_NAME;
+    }
+
+    @Override
+    public DetailResumenAutorizoViewPresenter getPresenter() {
+        return (DetailResumenAutorizoViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

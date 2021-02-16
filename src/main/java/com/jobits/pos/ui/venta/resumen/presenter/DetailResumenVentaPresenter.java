@@ -9,8 +9,14 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractResumenViewPresenter;
 import com.jobits.pos.controller.resumen.VentaResumenService;
+import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.ui.filter.presenter.FilterViewPresenter;
+import static com.jobits.pos.ui.filter.presenter.FilterViewPresenter.PROP_FILTERED;
 import com.jobits.pos.utils.utils;
+import java.beans.PropertyChangeEvent;
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  *
@@ -22,6 +28,7 @@ public class DetailResumenVentaPresenter extends AbstractResumenViewPresenter<De
 
     public DetailResumenVentaPresenter() {
         super(new DetailResumenVentaModel(), false, "Resumen Venta General", "Resumen Venta Detallada");
+        setFilterPresenter();
     }
 
     @Override
@@ -41,6 +48,15 @@ public class DetailResumenVentaPresenter extends AbstractResumenViewPresenter<De
 
     @Override
     protected void registerOperations() {
+    }
+
+    private void setFilterPresenter() {
+        getBean().setFilter_presenter(new FilterViewPresenter<>());
+        getBean().getFilter_presenter().addPropertyChangeListener(PROP_FILTERED, (PropertyChangeEvent evt) -> {
+            ArrayListModel a = getBean().getListaDetail();
+            a.stream().filter((Predicate) evt.getNewValue());
+            getBean().setListaDetail(a);
+        });
     }
 
 }
