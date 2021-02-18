@@ -1,5 +1,5 @@
 plugins {
-    id 'io.freefair.lombok' apply true
+    id 'io.freefair.lombok' version '5.3.0' apply true
     id 'edu.sc.seis.launch4j' version '2.4.6' apply true  
 }
 
@@ -30,7 +30,8 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     
-    
+    implementation 'com.root101:clean-core:2.1.0.RELEASE.20210118'
+
     testCompile 'junit:junit:4.12'
     
     // https://mvnrepository.com/artifact/com.toedter/jcalendar
@@ -80,16 +81,35 @@ dependencies {
     //  implementation fileTree(dir: 'lib',include: '*.jar')
 
     implementation project(':UIcomponents')
-    implementation project(':clean-core-pitti')
     implementation project(':modulo-reserva')
     implementation project(':core')
-    implementation project(':autenticacion')
+    //implementation project(':autenticacion')
     implementation project(':Material')
     implementation project(':clean-swing')
     implementation project(':posCore')
 
 
-    
+    // https://mvnrepository.com/artifact/com.google.inject/guice
+    compile group: 'com.google.inject', name: 'guice', version: '4.2.3'
+
+    // https://mvnrepository.com/artifact/javax.inject/javax.inject
+    compile group: 'javax.inject', name: 'javax.inject', version: '1'
+
+    // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-binding
+    compile group: 'com.jgoodies', name: 'jgoodies-binding', version: '2.13.0'
+
+    // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-validation
+    compile group: 'com.jgoodies', name: 'jgoodies-validation', version: '2.5.1'
+ 
+    // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-common
+    compile group: 'com.jgoodies', name: 'jgoodies-common', version: '1.8.1'
+        
+    // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-forms
+    compile group: 'com.jgoodies', name: 'jgoodies-forms', version: '1.9.0'
+
+
+    //implementation 'org.glassfish.web:javax.el:2.2.6'
+        
 }
 
 launch4j{

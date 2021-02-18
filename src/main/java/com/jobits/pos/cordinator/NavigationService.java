@@ -6,15 +6,9 @@
 package com.jobits.pos.cordinator;
 
 import com.jobits.pos.main.Application;
-import com.jobits.pos.ui.RootView;
-import com.jobits.pos.ui.View;
 import com.jobits.pos.main.ViewFacade;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.awt.Component;
-import java.util.List;
-import java.util.Observable;
-import javax.swing.JFrame;
 import org.jboss.logging.Logger;
 
 /**
