@@ -49,7 +49,7 @@ public class FilterMainView extends AbstractViewPanel {
         jPanel1 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jPanelMain = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jPanelCardsContainer = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -89,7 +89,7 @@ public class FilterMainView extends AbstractViewPanel {
         jPanelMain.setPreferredSize(new java.awt.Dimension(220, 142));
         jPanelMain.setLayout(new java.awt.BorderLayout());
 
-        jPanelCardsContainer.setLayout(new java.awt.GridLayout(40, 1));
+        jPanelCardsContainer.setLayout(new java.awt.GridLayout(40, 1, 4, 4));
         jScrollPane1.setViewportView(jPanelCardsContainer);
 
         jPanelMain.add(jScrollPane1, java.awt.BorderLayout.CENTER);
