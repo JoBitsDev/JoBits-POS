@@ -5,9 +5,7 @@
  */
 package com.jobits.pos.ui.filter.presenter;
 
-import com.jobits.pos.core.ui.filter.AbstractFilterTypePresenter;
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.core.ui.filter.FilterType;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 
 /**
@@ -27,6 +25,30 @@ public class FilterViewModel extends AbstractViewModel {
     private ArrayListModel<AbstractFilterTypePresenter> lista_presenters = new ArrayListModel<>();
 
     public static final String PROP_LISTA_PRESENTERS = "lista_presenters";
+
+    private FilterType filtro_seleccionado;
+
+    public static final String PROP_FILTRO_SELECCIONADO = "filtro_seleccionado";
+
+    /**
+     * Get the value of filtro_seleccionado
+     *
+     * @return the value of filtro_seleccionado
+     */
+    public FilterType getFiltro_seleccionado() {
+        return filtro_seleccionado;
+    }
+
+    /**
+     * Set the value of filtro_seleccionado
+     *
+     * @param filtro_seleccionado new value of filtro_seleccionado
+     */
+    public void setFiltro_seleccionado(FilterType filtro_seleccionado) {
+        FilterType oldFiltro_seleccionado = this.filtro_seleccionado;
+        this.filtro_seleccionado = filtro_seleccionado;
+        firePropertyChange(PROP_FILTRO_SELECCIONADO, oldFiltro_seleccionado, filtro_seleccionado);
+    }
 
     /**
      * Get the value of lista_presenters

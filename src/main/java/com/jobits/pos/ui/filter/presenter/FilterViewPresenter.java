@@ -5,25 +5,18 @@
  */
 package com.jobits.pos.ui.filter.presenter;
 
-import com.jobits.pos.core.ui.filter.AbstractFilterTypeModel;
-import com.jobits.pos.core.ui.filter.AbstractFilterTypePresenter;
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.controller.filter.FilterService;
 import com.jobits.pos.core.domain.FilterBuilder;
-import com.jobits.pos.core.ui.filter.FilterType;
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.repo.impl.CocinaDAO;
-import static com.jobits.pos.core.ui.filter.FilterType.COCINA;
+import static com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter.ACTION_AUTO_ELIMINAR_FILTRO;
+import static com.jobits.pos.ui.filter.presenter.FilterType.COCINA;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.util.Arrays;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Optional;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,14 +29,21 @@ public class FilterViewPresenter<T> extends AbstractViewPresenter<FilterViewMode
     FilterService service = PosDesktopUiModule.getInstance().getImplementation(FilterService.class);
 
     public static final String ACTION_ADD_FILTER = "Agregar Filtro";
+    public static final String ACTION_REMOVE_ALL_FILTERS = "Reiniciar Filtros";
     public static final String ACTION_FILTRAR = "Filtrar";
     public static final String ACTION_SET_PANEL_VISIBLE = "Panel Visible";
+
     public static final String PROP_FILTER_ADDED = "Filtro Agregado";
+    public static final String PROP_FILTER_DELETED = "Filtro Eliminado";
+    public static final String PROP_FILTERS_RESETED = "Filtros Reiniciados";
     public static final String PROP_FILTERED = "Filtrado";
 
-    public FilterViewPresenter() {
+    public FilterViewPresenter(ArrayList<FilterType> filtrosDisponibles) {
         super(new FilterViewModel());
-        getBean().setFiltros_disponibles(new ArrayListModel<>(Arrays.asList(FilterType.values())));
+        getBean().setFiltros_disponibles(new ArrayListModel<>(filtrosDisponibles));
+        if (!getBean().getFiltros_disponibles().isEmpty()) {
+            getBean().setFiltro_seleccionado(getBean().getFiltros_disponibles().get(0));
+        }
     }
 
     @Override
@@ -69,6 +69,13 @@ public class FilterViewPresenter<T> extends AbstractViewPresenter<FilterViewMode
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_REMOVE_ALL_FILTERS) {
+            @Override
+            public Optional doAction() {
+                onResetFilters();
+                return Optional.empty();
+            }
+        });
 
     }
 
@@ -81,26 +88,36 @@ public class FilterViewPresenter<T> extends AbstractViewPresenter<FilterViewMode
     }
 
     private void onAddFilter() {
-        JComboBox<FilterType> jComboBox1 = new JComboBox<>();
-        jComboBox1.setModel(new DefaultComboBoxModel<>(getBean().getFiltros_disponibles().toArray(new FilterType[0])));
-        Object[] options = {"Seleccionar", "Cancelar"};
-        int confirm = JOptionPane.showOptionDialog(
-                null,
-                jComboBox1,
-                "Filtros disponibles",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.YES_NO_OPTION,
-                MaterialIcons.SEARCH,
-                options,
-                options[0]);
-        switch (confirm) {
-            case JOptionPane.YES_OPTION:
-                buildCardPresenter((FilterType) jComboBox1.getSelectedItem());
-                break;
-            case JOptionPane.NO_OPTION:
-                break;
-            default:
-                break;
+        if (getBean().getFiltro_seleccionado() != null) {
+            AbstractFilterTypeModel filterModel = new AbstractFilterTypeModel<>();
+            switch (getBean().getFiltro_seleccionado()) {
+                case COCINA:
+                    filterModel.setLista_elementos(new ArrayListModel(service.getListaCocinas()));
+                    break;
+                case INSUMO:
+                    filterModel.setLista_elementos(new ArrayListModel(service.getListaInsumos()));
+                    break;
+                case AREA:
+                    filterModel.setLista_elementos(new ArrayListModel(service.getListaAreas()));
+                    break;
+                case IPV:
+                    filterModel.setLista_elementos(new ArrayListModel(service.getListaCocinas()));
+                    break;
+                case PRODUCTO:
+                    filterModel.setLista_elementos(new ArrayListModel(service.getListaProductos()));
+                    break;
+                case SECCION:
+                    filterModel.setLista_elementos(new ArrayListModel(service.getListaSecciones()));
+                    break;
+            }
+            filterModel.setTipo_filtro(getBean().getFiltro_seleccionado());
+            AbstractFilterTypePresenter p = new AbstractFilterTypePresenter(filterModel);
+            p.addPropertyChangeListener(ACTION_AUTO_ELIMINAR_FILTRO, (PropertyChangeEvent evt) -> {
+                firePropertyChange(PROP_FILTER_DELETED, null, evt.getNewValue());
+                lista_presenters.remove((AbstractFilterTypePresenter) evt.getNewValue());
+            });
+            lista_presenters.add(p);
+            firePropertyChange(PROP_FILTER_ADDED, null, lista_presenters.get(lista_presenters.size() - 1));
         }
     }
 
@@ -108,18 +125,8 @@ public class FilterViewPresenter<T> extends AbstractViewPresenter<FilterViewMode
         getBean().setShow_panel(!getBean().isShow_panel());
     }
 
-    private void buildCardPresenter(FilterType filtroSelecionado) {
-        AbstractFilterTypeModel filterModel = new AbstractFilterTypeModel<>();
-        switch (filtroSelecionado) {
-            case COCINA:
-                filterModel.setLista_elementos(new ArrayListModel(service.getListaCocinas()));
-                break;
-            case INSUMO:
-                filterModel.setLista_elementos(new ArrayListModel(service.getListaInsumos()));
-                break;
-        }
-        filterModel.setTipo_filtro(filtroSelecionado);
-        lista_presenters.add(new AbstractFilterTypePresenter(filterModel));
-        firePropertyChange(PROP_FILTER_ADDED, null, lista_presenters.get(lista_presenters.size() - 1));
+    private void onResetFilters() {
+        firePropertyChange(PROP_FILTERS_RESETED, null, this);
+        lista_presenters.clear();
     }
 }
