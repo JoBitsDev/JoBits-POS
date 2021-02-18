@@ -8,9 +8,11 @@ package com.jobits.pos.ui.venta.resumen.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.resumen.AutorizoResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.ui.filter.presenter.FilterType;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
-import com.jobits.pos.ui.presenters.AbstractResumenViewPresenter;
 import com.jobits.pos.utils.utils;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -21,7 +23,12 @@ public class DetailResumenAutorizoViewPresenter extends AbstractResumenViewPrese
     AutorizoResumenService service = PosDesktopUiModule.getInstance().getImplementation(AutorizoResumenService.class);
 
     public DetailResumenAutorizoViewPresenter() {
-        super(new DetailResumenAutorizoViewModel(), false, "Resumen Autorizo General", "Resumen Autorizo Detallado");
+        super(new DetailResumenAutorizoViewModel(), false, "Resumen Autorizo General", "Resumen Autorizo Detallado",
+                new ArrayList<FilterType>(Arrays.asList(
+                        FilterType.INSUMO,
+                        FilterType.COCINA,
+                        FilterType.SECCION,
+                        FilterType.AREA)));
     }
 
     @Override
