@@ -7,10 +7,12 @@ package com.jobits.pos.ui.filter;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
-import static com.jobits.pos.core.ui.filter.AbstractFilterTypeModel.*;
-import com.jobits.pos.core.ui.filter.AbstractFilterTypePresenter;
+import static com.jobits.pos.ui.filter.presenter.AbstractFilterTypeModel.*;
+import com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter;
+import static com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter.ACTION_AUTO_ELIMINAR_FILTRO;
 import com.jobits.pos.ui.utils.BindableListIntelliHint;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.CardLayout;
@@ -41,6 +43,8 @@ public class FilterCardView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabelFilterType = new javax.swing.JLabel();
         jPanelmain = new javax.swing.JPanel();
@@ -53,12 +57,21 @@ public class FilterCardView extends AbstractViewPanel {
         setPreferredSize(new java.awt.Dimension(199, 80));
         setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jButton1.setIcon(MaterialIcons.CLOSE);
+        jButton1.setPreferredSize(new java.awt.Dimension(20, 20));
+        jPanel2.add(jButton1, java.awt.BorderLayout.EAST);
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(69, 20));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabelFilterType.setText("<FilterType>");
         jPanel1.add(jLabelFilterType, new java.awt.GridBagConstraints());
 
-        add(jPanel1, java.awt.BorderLayout.NORTH);
+        jPanel2.add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        add(jPanel2, java.awt.BorderLayout.NORTH);
 
         jPanelmain.setLayout(new java.awt.CardLayout());
 
@@ -82,9 +95,11 @@ public class FilterCardView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabelFilterType;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCombobox;
     private javax.swing.JPanel jPanelTextField;
     private javax.swing.JPanel jPanelmain;
@@ -102,6 +117,8 @@ public class FilterCardView extends AbstractViewPanel {
         BindableListIntelliHint lih = new BindableListIntelliHint(new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_ELEMENTOS),
                 getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)), jTextField1);
+
+        jButton1.addActionListener(getPresenter().getOperation(ACTION_AUTO_ELIMINAR_FILTRO));
     }
 
     @Override

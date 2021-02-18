@@ -6,15 +6,16 @@
 package com.jobits.pos.ui.filter;
 
 import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
 import com.jhw.swing.material.standars.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
-import com.jobits.pos.core.ui.filter.AbstractFilterTypeModel;
-import com.jobits.pos.core.ui.filter.AbstractFilterTypePresenter;
+import com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter;
 import static com.jobits.pos.ui.filter.presenter.FilterViewModel.*;
 import com.jobits.pos.ui.filter.presenter.FilterViewPresenter;
 import static com.jobits.pos.ui.filter.presenter.FilterViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 
 /**
@@ -50,6 +51,9 @@ public class FilterMainView extends AbstractViewPanel {
         jPanelMain = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanelCardsContainer = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jComboBoxFilters = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jButtonRemoveFilter = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonFilter = MaterialComponentsFactory.Buttons.getMaterialButton();
@@ -90,9 +94,19 @@ public class FilterMainView extends AbstractViewPanel {
 
         jPanelMain.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jPanel4.setLayout(new java.awt.GridLayout(2, 1));
+
+        jPanel5.setLayout(new java.awt.GridBagLayout());
+
+        jComboBoxFilters.setPreferredSize(new java.awt.Dimension(180, 30));
+        jPanel5.add(jComboBoxFilters, new java.awt.GridBagConstraints());
+
+        jPanel4.add(jPanel5);
+
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
-        jButtonRemoveFilter.setIcon(MaterialIcons.REMOVE_CIRCLE);
+        jButtonRemoveFilter.setIcon(MaterialIcons.RESTORE);
+        jButtonRemoveFilter.setToolTipText("Reiniciar Filtros");
         jButtonRemoveFilter.setPreferredSize(new java.awt.Dimension(40, 40));
         jPanel3.add(jButtonRemoveFilter, new java.awt.GridBagConstraints());
 
@@ -101,10 +115,13 @@ public class FilterMainView extends AbstractViewPanel {
         jPanel3.add(jButtonFilter, new java.awt.GridBagConstraints());
 
         jButtonAddFilter.setIcon(MaterialIcons.ADD_CIRCLE);
+        jButtonAddFilter.setToolTipText("Agregar Filtros");
         jButtonAddFilter.setPreferredSize(new java.awt.Dimension(40, 40));
         jPanel3.add(jButtonAddFilter, new java.awt.GridBagConstraints());
 
-        jPanelMain.add(jPanel3, java.awt.BorderLayout.SOUTH);
+        jPanel4.add(jPanel3);
+
+        jPanelMain.add(jPanel4, java.awt.BorderLayout.SOUTH);
 
         add(jPanelMain, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -114,9 +131,12 @@ public class FilterMainView extends AbstractViewPanel {
     private javax.swing.JButton jButtonAddFilter;
     private javax.swing.JButton jButtonFilter;
     private javax.swing.JButton jButtonRemoveFilter;
+    private javax.swing.JComboBox<String> jComboBoxFilters;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelCardsContainer;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JScrollPane jScrollPane1;
@@ -126,10 +146,13 @@ public class FilterMainView extends AbstractViewPanel {
     @Override
     public void wireUp() {
         Bindings.bind(jPanelMain, "visible", getPresenter().getModel(PROP_SHOW_PANEL));
-
+        Bindings.bind(jComboBoxFilters, new SelectionInList<>(
+                getPresenter().getModel(PROP_FILTROS_DISPONIBLES),
+                getPresenter().getModel(PROP_FILTRO_SELECCIONADO)));
         jToggleButton1.addActionListener(getPresenter().getOperation(ACTION_SET_PANEL_VISIBLE));
         jButtonAddFilter.addActionListener(getPresenter().getOperation(ACTION_ADD_FILTER));
         jButtonFilter.addActionListener(getPresenter().getOperation(ACTION_FILTRAR));
+        jButtonRemoveFilter.addActionListener(getPresenter().getOperation(ACTION_REMOVE_ALL_FILTERS));
     }
 
     @Override
@@ -140,6 +163,21 @@ public class FilterMainView extends AbstractViewPanel {
                 switch (evt.getPropertyName()) {
                     case PROP_FILTER_ADDED:
                         jPanelCardsContainer.add(new FilterCardView((AbstractFilterTypePresenter) evt.getNewValue()));
+                        break;
+                    case PROP_FILTER_DELETED:
+                        for (Component filterCard : jPanelCardsContainer.getComponents()) {
+                            if (((FilterCardView) filterCard).getPresenter().equals((AbstractFilterTypePresenter) evt.getNewValue())) {
+                                jPanelCardsContainer.remove(filterCard);
+                                break;
+                            }
+                        }
+                        jPanelCardsContainer.repaint();
+                        jPanelCardsContainer.revalidate();
+                        break;
+                    case PROP_FILTERS_RESETED:
+                        jPanelCardsContainer.removeAll();
+                        jPanelCardsContainer.repaint();
+                        jPanelCardsContainer.revalidate();
                         break;
                 }
             }
