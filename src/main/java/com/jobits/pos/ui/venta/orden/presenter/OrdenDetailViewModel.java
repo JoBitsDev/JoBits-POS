@@ -123,6 +123,30 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_SUPORT_PANEL_VISIBLE = "suport_panel_visible";
 
+    private boolean cierre_parcial_enabled = true;
+
+    public static final String PROP_CIERRE_PARCIAL_ENABLED = "cierre_parcial_enabled";
+
+    /**
+     * Get the value of cierre_parcial_enabled
+     *
+     * @return the value of cierre_parcial_enabled
+     */
+    public boolean isCierre_parcial_enabled() {
+        return cierre_parcial_enabled;
+    }
+
+    /**
+     * Set the value of cierre_parcial_enabled
+     *
+     * @param cierre_parcial_enabled new value of cierre_parcial_enabled
+     */
+    public void setCierre_parcial_enabled(boolean cierre_parcial_enabled) {
+        boolean oldCierre_parcial_enabled = this.cierre_parcial_enabled;
+        this.cierre_parcial_enabled = cierre_parcial_enabled;
+        firePropertyChange(PROP_CIERRE_PARCIAL_ENABLED, oldCierre_parcial_enabled, cierre_parcial_enabled);
+    }
+
     /**
      * Get the value of suport_panel_visible
      *
