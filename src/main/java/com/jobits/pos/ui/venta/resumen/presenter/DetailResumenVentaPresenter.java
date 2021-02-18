@@ -7,10 +7,12 @@ package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
-import com.jobits.pos.ui.presenters.AbstractResumenViewPresenter;
 import com.jobits.pos.controller.resumen.VentaResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.ui.filter.presenter.FilterType;
 import com.jobits.pos.utils.utils;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -21,7 +23,12 @@ public class DetailResumenVentaPresenter extends AbstractResumenViewPresenter<De
     VentaResumenService service = PosDesktopUiModule.getInstance().getImplementation(VentaResumenService.class);
 
     public DetailResumenVentaPresenter() {
-        super(new DetailResumenVentaModel(), false, "Resumen Venta General", "Resumen Venta Detallada");
+        super(new DetailResumenVentaModel(), false, "Resumen Venta General", "Resumen Venta Detallada",
+                new ArrayList<FilterType>(Arrays.asList(
+                        FilterType.INSUMO,
+                        FilterType.COCINA,
+                        FilterType.SECCION,
+                        FilterType.AREA)));
     }
 
     @Override

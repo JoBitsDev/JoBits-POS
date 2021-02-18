@@ -7,7 +7,7 @@ package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
-import com.jobits.pos.ui.viewmodel.AbstractResumenViewModel;
+import com.jobits.pos.ui.filter.presenter.FilterViewPresenter;
 
 /**
  *

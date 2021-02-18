@@ -8,9 +8,11 @@ package com.jobits.pos.ui.venta.resumen.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.resumen.CostosResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.ui.filter.presenter.FilterType;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
-import com.jobits.pos.ui.presenters.AbstractResumenViewPresenter;
 import com.jobits.pos.utils.utils;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -21,7 +23,10 @@ public class DetailResumenCostoViewPresenter extends AbstractResumenViewPresente
     CostosResumenService service = PosDesktopUiModule.getInstance().getImplementation(CostosResumenService.class);
 
     public DetailResumenCostoViewPresenter() {
-        super(new DetailResumenCostoViewModel(), false, "Resumen de Costos General", "Resumen de Costos Detallado");
+        super(new DetailResumenCostoViewModel(), false, "Resumen de Costos General", "Resumen de Costos Detallado",
+                new ArrayList<FilterType>(Arrays.asList(
+                        FilterType.PRODUCTO,
+                        FilterType.IPV)));
     }
 
     @Override
@@ -42,5 +47,4 @@ public class DetailResumenCostoViewPresenter extends AbstractResumenViewPresente
     @Override
     protected void registerOperations() {
     }
-
 }

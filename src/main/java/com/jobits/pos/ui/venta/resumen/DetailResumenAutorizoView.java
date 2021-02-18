@@ -8,9 +8,8 @@ package com.jobits.pos.ui.venta.resumen;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.AbstractListResumenViewPanel;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.venta.resumen.presenter.DetailResumenAutorizoViewPresenter;
 import com.jobits.pos.utils.utils;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +27,7 @@ public class DetailResumenAutorizoView extends AbstractListResumenViewPanel<DayR
      *
      * @param presenter
      */
-    public DetailResumenAutorizoView(AbstractViewPresenter presenter) {
+    public DetailResumenAutorizoView(DetailResumenAutorizoViewPresenter presenter) {
         super(presenter);
         jTableMain.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
