@@ -6,11 +6,9 @@
 package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.resumen.AutorizoResumenService;
 import com.jobits.pos.controller.resumen.GastoResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
-import com.jobits.pos.ui.presenters.AbstractResumenViewPresenter;
 import com.jobits.pos.utils.utils;
 
 /**

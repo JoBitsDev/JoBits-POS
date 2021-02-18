@@ -9,7 +9,6 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.resumen.SalarioResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
-import com.jobits.pos.ui.presenters.AbstractResumenViewPresenter;
 import com.jobits.pos.utils.utils;
 
 /**

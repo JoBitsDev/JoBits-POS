@@ -7,9 +7,8 @@ package com.jobits.pos.ui.venta.resumen;
 
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
-import com.jobits.pos.ui.AbstractListResumenViewPanel;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.venta.resumen.presenter.DetailResumenSalarioViewPresenter;
 import com.jobits.pos.utils.utils;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -30,7 +29,7 @@ public class DetailResumenSalarioView extends AbstractListResumenViewPanel<DayRe
      *
      * @param presenter
      */
-    public DetailResumenSalarioView(AbstractViewPresenter presenter) {
+    public DetailResumenSalarioView(DetailResumenSalarioViewPresenter presenter) {
         super(presenter);
         jTableMain.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());

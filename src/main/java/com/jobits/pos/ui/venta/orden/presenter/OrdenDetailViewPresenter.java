@@ -13,6 +13,7 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Cliente;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.ProductovOrden;
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -220,6 +221,9 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 getBean().setBotton_agrego_enabled(false);
             }
         }
+        getBean().setCierre_parcial_enabled(
+                ConfiguracionDAO.getInstance().find(
+                        R.SettingID.IMPRESION_CIERRE_PARCIAL_ENABLED).getValor() == 1);
         return Optional.empty();
     }
 
