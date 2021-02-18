@@ -53,7 +53,7 @@ public class FilterCardView extends AbstractViewPanel {
         jPanelTextField = new javax.swing.JPanel();
         jTextField1 = MaterialComponentsFactory.Input.getTextField("", "");
 
-        setBorder(javax.swing.BorderFactory.createCompoundBorder(null, new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true)));
+        setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3), new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 3, true)));
         setPreferredSize(new java.awt.Dimension(199, 80));
         setLayout(new java.awt.BorderLayout());
 
@@ -82,6 +82,7 @@ public class FilterCardView extends AbstractViewPanel {
 
         jPanelmain.add(jPanelCombobox, "ComboBox");
 
+        jPanelTextField.setMinimumSize(new java.awt.Dimension(55, 19));
         jPanelTextField.setLayout(new java.awt.GridBagLayout());
 
         jTextField1.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
