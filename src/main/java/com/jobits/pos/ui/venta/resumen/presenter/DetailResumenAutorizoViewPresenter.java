@@ -8,13 +8,11 @@ package com.jobits.pos.ui.venta.resumen.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.resumen.AutorizoResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
-import com.jobits.pos.ui.filter.presenter.FilterViewPresenter;
-import static com.jobits.pos.ui.filter.presenter.FilterViewPresenter.PROP_FILTERED;
+import com.jobits.pos.ui.filter.presenter.FilterType;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
-import com.jobits.pos.ui.presenters.AbstractResumenViewPresenter;
 import com.jobits.pos.utils.utils;
-import java.beans.PropertyChangeEvent;
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -25,8 +23,12 @@ public class DetailResumenAutorizoViewPresenter extends AbstractResumenViewPrese
     AutorizoResumenService service = PosDesktopUiModule.getInstance().getImplementation(AutorizoResumenService.class);
 
     public DetailResumenAutorizoViewPresenter() {
-        super(new DetailResumenAutorizoViewModel(), false, "Resumen Autorizo General", "Resumen Autorizo Detallado");
-        setFilterPresenter();
+        super(new DetailResumenAutorizoViewModel(), false, "Resumen Autorizo General", "Resumen Autorizo Detallado",
+                new ArrayList<FilterType>(Arrays.asList(
+                        FilterType.INSUMO,
+                        FilterType.COCINA,
+                        FilterType.SECCION,
+                        FilterType.AREA)));
     }
 
     @Override
@@ -48,12 +50,4 @@ public class DetailResumenAutorizoViewPresenter extends AbstractResumenViewPrese
     protected void registerOperations() {
     }
 
-    private void setFilterPresenter() {
-        getBean().setFilter_presenter(new FilterViewPresenter<>());
-        getBean().getFilter_presenter().addPropertyChangeListener(PROP_FILTERED, (PropertyChangeEvent evt) -> {
-            ArrayListModel a = getBean().getListaDetail();
-            a.stream().filter((Predicate) evt.getNewValue());
-            getBean().setListaDetail(a);
-        });
-    }
 }
