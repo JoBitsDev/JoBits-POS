@@ -436,12 +436,13 @@ public class PedidoCardView extends AbstractViewPanel {
 
         Bindings.bind(jLabelTest, "icon", getPresenter().getModel(PROP_ICONO_PORCIENTO));
 
+        Bindings.bind(jideButtonCierreParcial, "enabled", getPresenter().getModel(PROP_CIERRE_PARCIAL_ENABLED));
         Bindings.bind(jideButtonEnviarCocina, "enabled", getPresenter().getModel(PROP_ENVIO_COCINA));
         Bindings.bind(jToggleButtonAgregos, "enabled", getPresenter().getModel(PROP_BOTTON_AGREGO_ENABLED));
-        
+
         Bindings.bind(jToggleButtonAgregos, "selected", getPresenter().getModel(PROP_MODO_AGREGO_ACTIVADO));
         Bindings.bind(jToggleButtonAutorizo, "selected", getPresenter().getModel(PROP_ES_AUTORIZO));
-        
+
         jToggleButtonAutorizo.addActionListener(getPresenter().getOperation(ACTION_SET_AUTORIZO));
         jToggleButtonAgregos.addActionListener(getPresenter().getOperation(ACTION_SET_AGREGO));
 
