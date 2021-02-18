@@ -8,12 +8,9 @@ package com.jobits.pos.ui.venta.resumen;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.AbstractListResumenViewPanel;
-import com.jobits.pos.ui.filter.FilterMainView;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.venta.resumen.presenter.DetailResumenCostoViewPresenter;
 import com.jobits.pos.utils.utils;
-import java.awt.BorderLayout;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -36,7 +33,6 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
         jTableMain.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
-        jPanelDetailPanel.add(new FilterMainView(getPresenter().getBean().getFilter_presenter()), BorderLayout.EAST);
     }
 
     @Override
@@ -141,11 +137,6 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
     @Override
     public String getViewName() {
         return VIEW_NAME;
-    }
-
-    @Override
-    public DetailResumenCostoViewPresenter getPresenter() {
-        return (DetailResumenCostoViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

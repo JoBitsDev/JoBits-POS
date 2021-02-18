@@ -7,13 +7,9 @@ package com.jobits.pos.ui.venta.resumen;
 
 import com.jobits.pos.core.domain.models.GastoVenta;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
-import com.jobits.pos.ui.AbstractListResumenViewPanel;
-import com.jobits.pos.ui.filter.FilterMainView;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.venta.resumen.presenter.DetailResumenGastoViewPresenter;
 import com.jobits.pos.utils.utils;
-import java.awt.BorderLayout;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -37,7 +33,6 @@ public class DetailResumenGastoView extends AbstractListResumenViewPanel<DayRevi
         super(presenter);
         jTableMain.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
-        jPanelDetailPanel.add(new FilterMainView(getPresenter().getBean().getFilter_presenter()), BorderLayout.EAST);
 
     }
 
@@ -146,11 +141,6 @@ public class DetailResumenGastoView extends AbstractListResumenViewPanel<DayRevi
     @Override
     public String getViewName() {
         return VIEW_NAME;
-    }
-
-    @Override
-    public DetailResumenGastoViewPresenter getPresenter() {
-        return (DetailResumenGastoViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
