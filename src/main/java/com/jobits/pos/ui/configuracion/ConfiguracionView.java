@@ -52,7 +52,7 @@ public class ConfiguracionView extends AbstractViewPanel {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel12 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getAcceptButton();
 
         jPanelY.setLayout(new java.awt.BorderLayout());

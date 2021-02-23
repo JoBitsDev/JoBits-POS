@@ -38,52 +38,52 @@ public class Generales extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelGenerales = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelGenerales = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelNegocio = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanelCantidadturnos = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelCantidadturnos = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel3 = MaterialComponentsFactory.Displayers.getLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jComboBoxCantidadturnos = MaterialComponentsFactory.Displayers.getComboBox();
-        jPanelTipoNegocio = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxCantidadturnos = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanelTipoNegocio = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel2 = MaterialComponentsFactory.Displayers.getLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jComboBoxTipoNegocio = MaterialComponentsFactory.Displayers.getComboBox();
-        jPanelCambioMoneda = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxTipoNegocio = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanelCambioMoneda = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel1 = MaterialComponentsFactory.Displayers.getLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jComboBoxCambioMoneda = MaterialComponentsFactory.Displayers.getComboBox();
-        jPanelCambioMoneda1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxCambioMoneda = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanelCambioMoneda1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel4 = MaterialComponentsFactory.Displayers.getLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jComboBoxHoraInicio = new javax.swing.JComboBox<>();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxHoraInicio = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabel9 = new javax.swing.JLabel();
-        jPanelCambioMoneda2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelCambioMoneda2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel5 = MaterialComponentsFactory.Displayers.getLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jComboBoxHoraCierre = new javax.swing.JComboBox<>();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxHoraCierre = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabel8 = new javax.swing.JLabel();
-        jPanelCambioMoneda3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelCambioMoneda3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel6 = MaterialComponentsFactory.Displayers.getLabel();
-        jPanel8 = new javax.swing.JPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel9 = new javax.swing.JPanel();
-        jComboBoxTiempoMInServ = new javax.swing.JComboBox<>();
+        jComboBoxTiempoMInServ = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabel7 = new javax.swing.JLabel();
         jPanelCaja = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel11 = new javax.swing.JPanel();
+        jPanel11 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonPermEsp = new javax.swing.JToggleButton();
-        jPanel10 = new javax.swing.JPanel();
+        jPanel10 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonMesaFija = new javax.swing.JToggleButton();
-        jPanel12 = new javax.swing.JPanel();
+        jPanel12 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel10 = MaterialComponentsFactory.Displayers.getLabel();
-        jPanel13 = new javax.swing.JPanel();
+        jPanel13 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel14 = new javax.swing.JPanel();
-        jComboBoxTiempoMaxedicionOrden = new javax.swing.JComboBox<>();
+        jComboBoxTiempoMaxedicionOrden = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabel11 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(730, 525));
 
-        jPanelGenerales.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanelGenerales.setPreferredSize(new java.awt.Dimension(730, 525));
         jPanelGenerales.setLayout(new javax.swing.BoxLayout(jPanelGenerales, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -91,7 +91,7 @@ public class Generales extends AbstractViewPanel {
         jPanelNegocio.setPreferredSize(new java.awt.Dimension(780, 300));
         jPanelNegocio.setLayout(new java.awt.GridLayout(6, 1, 0, 3));
 
-        jPanelCantidadturnos.setLayout(new java.awt.GridLayout(1, 0));
+        jPanelCantidadturnos.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

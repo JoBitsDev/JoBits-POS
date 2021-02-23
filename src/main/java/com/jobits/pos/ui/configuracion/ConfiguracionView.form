@@ -143,7 +143,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getOutlinedButton()"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonAceptar">

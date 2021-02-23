@@ -62,7 +62,7 @@ public class InsumoDetailView extends AbstractViewPanel {
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
         jPanelSec = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jLabelUM = MaterialComponentsFactory.Displayers.getLabel();
-        jComboBoxUM = MaterialComponentsFactory.Displayers.getComboBox();
+        jComboBoxUM = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabelCostoU = MaterialComponentsFactory.Displayers.getLabel();
         jSpinnerCosto = new javax.swing.JSpinner();
         jLabelNombre4 = MaterialComponentsFactory.Displayers.getLabel();

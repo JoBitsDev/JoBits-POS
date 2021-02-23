@@ -53,7 +53,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanelInventario = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonCrear = MaterialComponentsFactory.Buttons.getAcceptButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelInputs = MaterialComponentsFactory.Containers.getPrimaryPanel();
@@ -71,8 +71,8 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jButtonAddCocina = MaterialComponentsFactory.Buttons.getAddButton();
         jButtonAddSeccion = MaterialComponentsFactory.Buttons.getAddButton();
         jPanel12 = new javax.swing.JPanel();
-        jComboBoxCOCINA = MaterialComponentsFactory.Displayers.getComboBox();
-        jComboBoxSECCION = MaterialComponentsFactory.Displayers.getComboBox();
+        jComboBoxCOCINA = MaterialComponentsFactory.Displayers.getComboBox("Elaborado en:");
+        jComboBoxSECCION = MaterialComponentsFactory.Displayers.getComboBox("Categoria");
         jPanelTable = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel6 = new javax.swing.JPanel();
         jCheckBoxProductoElaborado = MaterialComponentsFactory.Input.getCheckBox();
@@ -227,12 +227,10 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel12.setOpaque(false);
         jPanel12.setLayout(new java.awt.GridLayout(2, 1, 0, 20));
 
-        jComboBoxCOCINA.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3), "Elaborado en"));
         jComboBoxCOCINA.setMinimumSize(new java.awt.Dimension(250, 60));
         jComboBoxCOCINA.setPreferredSize(new java.awt.Dimension(250, 60));
         jPanel12.add(jComboBoxCOCINA);
 
-        jComboBoxSECCION.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3), bundle.getString("label_categoria"))); // NOI18N
         jComboBoxSECCION.setMinimumSize(new java.awt.Dimension(250, 40));
         jComboBoxSECCION.setPreferredSize(new java.awt.Dimension(250, 60));
         jPanel12.add(jComboBoxSECCION);
