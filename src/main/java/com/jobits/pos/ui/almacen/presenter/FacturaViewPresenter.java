@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.controller.almacen.impl.AlmacenManageController.OperationType;//TODO; enum de implementacion en view
 import com.jobits.pos.controller.almacen.AlmacenManageService;

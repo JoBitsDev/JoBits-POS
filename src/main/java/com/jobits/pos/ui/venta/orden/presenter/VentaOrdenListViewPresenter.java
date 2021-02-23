@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Mesa;

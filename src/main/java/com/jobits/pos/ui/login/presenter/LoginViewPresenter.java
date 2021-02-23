@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.core.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.controller.login.impl.MainMenuController;

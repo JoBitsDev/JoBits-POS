@@ -14,7 +14,7 @@ import com.jobits.ui.components.swing.containers.TaskButton;
 import java.awt.Component;
 import javax.swing.Action;
 import javax.swing.JLabel;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.ProductoVenta;
 import java.awt.Color;
 import java.util.ArrayList;

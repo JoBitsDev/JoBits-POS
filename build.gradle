@@ -20,6 +20,8 @@ jar{
 repositories {
     jcenter()
     mavenCentral()
+    maven {url "https://jobits.jfrog.io/artifactory/jobits-jfrog"}
+
 }
 
 compileJava.options.encoding = 'UTF-8'
@@ -78,14 +80,15 @@ dependencies {
     implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
     implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
 
-    //  implementation fileTree(dir: 'lib',include: '*.jar')
 
+    implementation 'com.root101.swing:swing-material-standars:2.0.0.RELEASE.20210109'
+    implementation 'com.root101.swing:swing-derivable-icons:2.0.0.RELEASE.20210107'
+    compile(group: 'com.root101.swing', name: 'swing-material-core', version: '6.0.1.SNAPSHOT.20210109')    
+    compile(group: 'com.root101.swing', name: 'clean-swing', version: '3.0.0.RELEASE.20201230')   
+    
     implementation project(':UIcomponents')
     implementation project(':modulo-reserva')
     implementation project(':core')
-    //implementation project(':autenticacion')
-    implementation project(':Material')
-    implementation project(':clean-swing')
     implementation project(':posCore')
 
 

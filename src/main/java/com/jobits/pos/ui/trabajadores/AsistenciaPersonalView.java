@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.trabajadores;
 
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
 import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.recursos.R;

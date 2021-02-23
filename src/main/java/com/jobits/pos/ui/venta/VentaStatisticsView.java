@@ -10,7 +10,7 @@ import com.jgoodies.binding.value.ValueModel;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewModel;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.venta.presenter.VentaStatisticsViewModel;
 import com.jobits.pos.ui.venta.presenter.VentaStatisticsViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
