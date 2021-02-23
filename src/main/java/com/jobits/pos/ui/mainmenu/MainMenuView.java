@@ -5,16 +5,15 @@
  */
 package com.jobits.pos.ui.mainmenu;
 
-import com.jhw.swing.material.components.dashboard.taskpane.DashBoardTaskPane;
 import com.jobits.pos.controller.login.impl.MainMenuController;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jhw.swing.material.components.taskpane.CollapseMenu;
-import com.jhw.swing.material.components.taskpane.TaskButton;
-import com.jhw.swing.material.components.taskpane.TaskPaneMainContainer;
-import com.jhw.swing.material.standars.MaterialColors;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
+import com.root101.swing.material.components.dashboard.taskpane.DashBoardTaskPane;
+import com.root101.swing.material.components.taskpane.CollapseMenu;
+import com.root101.swing.material.components.taskpane.TaskButton;
+import com.root101.swing.material.standards.MaterialColors;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.function.Consumer;
@@ -140,17 +139,6 @@ public class MainMenuView extends AbstractViewPanel {
                 t.setForeground(MaterialColors.BLACK);
                 t.setFont(DefaultValues.DEFAULT_FONT);
                 t.repaint();
-            }
-        });
-        taskPane.setCollapseMenuFormatter(new Consumer<CollapseMenu>() {
-            @Override
-            public void accept(CollapseMenu t) {
-                t.setSelectedColor(DefaultValues.PRIMARY_COLOR);
-                t.setDeselectedColor(MaterialColors.WHITE);
-                t.setMainPanelForeground(MaterialColors.BLACK);
-                t.setBorder(new LineBorder(DefaultValues.SECONDARY_COLOR_LIGHT, 1, false));
-                t.setFont(DefaultValues.DEFAULT_FONT);
-
             }
         });
         taskPane.setMenuFormatter(new Consumer<CollapseMenu>() {

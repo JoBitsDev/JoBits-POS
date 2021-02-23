@@ -7,7 +7,7 @@ package com.jobits.pos.ui.trabajadores;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import java.util.ArrayList;
 import java.util.List;
 import org.knowm.xchart.PieChart;

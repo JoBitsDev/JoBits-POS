@@ -7,7 +7,7 @@ package com.jobits.pos.ui.reserva;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jobits.pos.ui.reserva.util.CustomComponentFactory;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.reserva.util.AppointmentListener;
 import com.jobits.pos.ui.reserva.model.ScheduleModel;

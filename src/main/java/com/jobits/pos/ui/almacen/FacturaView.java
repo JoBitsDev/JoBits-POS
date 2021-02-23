@@ -8,7 +8,7 @@ package com.jobits.pos.ui.almacen;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.almacen.impl.AlmacenManageController.OperationType;
 import com.jobits.pos.core.domain.TransaccionSimple;
 import com.jobits.pos.core.domain.models.Insumo;

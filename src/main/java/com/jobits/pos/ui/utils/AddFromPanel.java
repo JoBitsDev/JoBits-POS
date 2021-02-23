@@ -8,26 +8,16 @@ package com.jobits.pos.ui.utils;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueModel;
-import com.jgoodies.common.collect.ArrayListModel;
-import com.jidesoft.hints.ListDataIntelliHints;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.ViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import java.awt.BorderLayout;
-import java.awt.event.KeyEvent;
-import java.util.List;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import mdlaf.components.table.MaterialTableUI;
 
 /**
  *
