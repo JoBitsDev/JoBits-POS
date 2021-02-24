@@ -52,38 +52,38 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jCheckBoxInventariarProducto = MaterialComponentsFactory.Input.getCheckBox();
         filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanelInventario = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonCrear = MaterialComponentsFactory.Buttons.getAcceptButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanelInputs = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel7 = new javax.swing.JPanel();
+        jPanelInputs = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanel8 = new javax.swing.JPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jXLabelPCod = new org.jdesktop.swingx.JXLabel();
-        jPanelImage = new javax.swing.JPanel();
+        jPanelImage = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelIProductImage = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
+        jPanel10 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio venta",R.COIN_SUFFIX);
         jTextFieldPrecioCosto = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio de costo",R.COIN_SUFFIX);
-        jPanel9 = new javax.swing.JPanel();
-        jPanel13 = new javax.swing.JPanel();
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel13 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAddCocina = MaterialComponentsFactory.Buttons.getAddButton();
         jButtonAddSeccion = MaterialComponentsFactory.Buttons.getAddButton();
-        jPanel12 = new javax.swing.JPanel();
+        jPanel12 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jComboBoxCOCINA = MaterialComponentsFactory.Displayers.getComboBox("Elaborado en:");
         jComboBoxSECCION = MaterialComponentsFactory.Displayers.getComboBox("Categoria");
-        jPanelTable = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel6 = new javax.swing.JPanel();
+        jPanelTable = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jCheckBoxProductoElaborado = MaterialComponentsFactory.Input.getCheckBox();
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        jPanelCrossRef = new javax.swing.JPanel();
+        jPanelCrossRef = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel5 = new javax.swing.JPanel();
         jButtonAddInsumo = MaterialComponentsFactory.Buttons.getAddButton();
         jPanelCosto = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jXLabelGasto = new org.jdesktop.swingx.JXLabel();
-        jPanel11 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel11 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel1 = new javax.swing.JPanel();
         jTextFieldPagoPorVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", java.util.ResourceBundle.getBundle("Strings").getString("label_comision_por_venta"),R.COIN_SUFFIX);
         jPanel4 = new javax.swing.JPanel();
@@ -107,16 +107,18 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setMinimumSize(new java.awt.Dimension(239, 70));
-        jPanel2.setPreferredSize(new java.awt.Dimension(849, 70));
+        jPanel2.setPreferredSize(new java.awt.Dimension(849, 50));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jButtonCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
-        jPanel2.add(jButtonCancelar);
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanel2.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         jButtonCrear.setMnemonic('c');
         jButtonCrear.setText(bundle.getString("label_crear_producto")); // NOI18N
-        jPanel2.add(jButtonCrear);
+        jButtonCrear.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanel2.add(jButtonCrear, new java.awt.GridBagConstraints());
 
         add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
