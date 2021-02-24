@@ -154,7 +154,6 @@ public class ConfiguracionView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
-        jTabbedPane1.setUI((TabbedPaneUI) MaterialComponentsFactory.Containers.getTabbedPaneUI(jTabbedPane1));
         jTabbedPane1.add("Generales", new Generales(presenter));
         jTabbedPane1.add("Sync", new Sincronizacion(presenter));
         jTabbedPane1.add("Impresión", new Impresion(presenter));
