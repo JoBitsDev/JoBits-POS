@@ -56,34 +56,47 @@ public class InsumoDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelCosto = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jXLabelGasto = new org.jdesktop.swingx.JXLabel();
         jPanelMain = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanelInputs = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 3), new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10));
+        jPanelControles = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAdd = MaterialComponentsFactory.Buttons.getAcceptButton();
+        jPanelInputs = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanelSec = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelSec = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelUM = MaterialComponentsFactory.Displayers.getLabel();
         jComboBoxUM = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabelCostoU = MaterialComponentsFactory.Displayers.getLabel();
         jSpinnerCosto = new javax.swing.JSpinner();
         jLabelNombre4 = MaterialComponentsFactory.Displayers.getLabel();
         jSpinnerEstimacionStock = new javax.swing.JSpinner();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 3), new java.awt.Dimension(0, 10), new java.awt.Dimension(0, 10));
-        jPanelTabla = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jScrollPaneTablas = new javax.swing.JScrollPane();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanelUsos = new javax.swing.JPanel();
-        jPanelDerivados = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanelCosto = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jXLabelGasto = new org.jdesktop.swingx.JXLabel();
-        jPanelControles = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonAdd = MaterialComponentsFactory.Buttons.getAcceptButton();
+        jPanelTabla = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jScrollPaneTablas = MaterialComponentsFactory.Containers.getScrollPane();
+        jTabbedPane1 = MaterialComponentsFactory.Containers.getTabPane();
+        jPanelUsos = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelDerivados = MaterialComponentsFactory.Containers.getSecondaryPanel();
+
+        jPanelCosto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 1));
+        jPanelCosto.setOpaque(false);
+        jPanelCosto.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
+        jLabel1.setText(":   ");
+        jPanelCosto.add(jLabel1, java.awt.BorderLayout.WEST);
+
+        jXLabelGasto.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
+        jXLabelGasto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jXLabelGasto.setText("0.00"); // NOI18N
+        jPanelCosto.add(jXLabelGasto, java.awt.BorderLayout.CENTER);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(600, 720));
         setMinimumSize(new java.awt.Dimension(600, 380));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(600, 720));
         setLayout(new java.awt.BorderLayout());
 
@@ -91,18 +104,48 @@ public class InsumoDetailView extends AbstractViewPanel {
         jPanelMain.setMaximumSize(new java.awt.Dimension(700, 700));
         jPanelMain.setMinimumSize(new java.awt.Dimension(248, 250));
         jPanelMain.setPreferredSize(new java.awt.Dimension(570, 700));
-        jPanelMain.setLayout(new javax.swing.BoxLayout(jPanelMain, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelMain.setLayout(new java.awt.BorderLayout());
+
+        jPanelControles.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanelControles.setPreferredSize(new java.awt.Dimension(282, 50));
+        jPanelControles.setLayout(new java.awt.GridBagLayout());
+
+        jButtonCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
+        jPanelControles.add(jButtonCancelar, new java.awt.GridBagConstraints());
+
+        jButtonAdd.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jButtonAdd.setText(bundle.getString("label_crear")); // NOI18N
+        jButtonAdd.setPreferredSize(new java.awt.Dimension(140, 40));
+        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddActionPerformed(evt);
+            }
+        });
+        jPanelControles.add(jButtonAdd, new java.awt.GridBagConstraints());
+
+        jPanelMain.add(jPanelControles, java.awt.BorderLayout.SOUTH);
 
         jPanelInputs.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 5, 1));
-        jPanelInputs.setLayout(new javax.swing.BoxLayout(jPanelInputs, javax.swing.BoxLayout.PAGE_AXIS));
-        jPanelInputs.add(filler1);
+        jPanelInputs.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jTextFieldNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jTextFieldNombre.setBorder(null);
         jTextFieldNombre.setMaximumSize(new java.awt.Dimension(250, 50));
         jTextFieldNombre.setMinimumSize(new java.awt.Dimension(150, 50));
         jTextFieldNombre.setPreferredSize(new java.awt.Dimension(250, 50));
-        jPanelInputs.add(jTextFieldNombre);
+        jPanel1.add(jTextFieldNombre, new java.awt.GridBagConstraints());
+
+        jPanelInputs.add(jPanel1, java.awt.BorderLayout.NORTH);
 
         jPanelSec.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
         jPanelSec.setForeground(new java.awt.Color(255, 255, 255));
@@ -113,7 +156,6 @@ public class InsumoDetailView extends AbstractViewPanel {
 
         jLabelUM.setBackground(new java.awt.Color(255, 255, 255));
         jLabelUM.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jLabelUM.setText(bundle.getString("label_um")); // NOI18N
         jLabelUM.setMinimumSize(new java.awt.Dimension(24, 20));
         jLabelUM.setPreferredSize(new java.awt.Dimension(0, 26));
@@ -150,13 +192,12 @@ public class InsumoDetailView extends AbstractViewPanel {
         jSpinnerEstimacionStock.setPreferredSize(new java.awt.Dimension(0, 26));
         jPanelSec.add(jSpinnerEstimacionStock);
 
-        jPanelInputs.add(jPanelSec);
-        jPanelInputs.add(filler2);
+        jPanelInputs.add(jPanelSec, java.awt.BorderLayout.CENTER);
 
-        jPanelMain.add(jPanelInputs);
+        jPanelMain.add(jPanelInputs, java.awt.BorderLayout.NORTH);
 
         jPanelTabla.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelTabla.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        jPanelTabla.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 20, 20));
         jPanelTabla.setForeground(new java.awt.Color(255, 255, 255));
         jPanelTabla.setMinimumSize(new java.awt.Dimension(600, 300));
         jPanelTabla.setOpaque(false);
@@ -172,64 +213,21 @@ public class InsumoDetailView extends AbstractViewPanel {
         jTabbedPane1.setToolTipText(null);
         jTabbedPane1.setOpaque(true);
 
+        jPanelUsos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
         jPanelUsos.setLayout(new java.awt.BorderLayout());
         jTabbedPane1.addTab("Usos", jPanelUsos);
 
+        jPanelDerivados.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
         jPanelDerivados.setLayout(new java.awt.BorderLayout());
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 20, 5, 20));
-        jPanel2.setLayout(new java.awt.BorderLayout());
-        //jPanel2.setVisible(false);
-
-        jPanelCosto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 1));
-        jPanelCosto.setOpaque(false);
-        jPanelCosto.setLayout(new java.awt.BorderLayout());
-
-        jLabel1.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
-        jLabel1.setText(":   ");
-        jPanelCosto.add(jLabel1, java.awt.BorderLayout.WEST);
-
-        jXLabelGasto.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
-        jXLabelGasto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jXLabelGasto.setText("0.00"); // NOI18N
-        jPanelCosto.add(jXLabelGasto, java.awt.BorderLayout.CENTER);
-
-        jPanel2.add(jPanelCosto, java.awt.BorderLayout.LINE_END);
-
-        jPanelDerivados.add(jPanel2, java.awt.BorderLayout.SOUTH);
-
         jTabbedPane1.addTab("Derivados", jPanelDerivados);
 
         jScrollPaneTablas.setViewportView(jTabbedPane1);
 
         jPanelTabla.add(jScrollPaneTablas, java.awt.BorderLayout.CENTER);
 
-        jPanelMain.add(jPanelTabla);
+        jPanelMain.add(jPanelTabla, java.awt.BorderLayout.CENTER);
 
         add(jPanelMain, java.awt.BorderLayout.CENTER);
-
-        jPanelControles.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-        jButtonCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
-            }
-        });
-        jPanelControles.add(jButtonCancelar);
-
-        jButtonAdd.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jButtonAdd.setText(bundle.getString("label_crear")); // NOI18N
-        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddActionPerformed(evt);
-            }
-        });
-        jPanelControles.add(jButtonAdd);
-
-        add(jPanelControles, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -240,8 +238,6 @@ public class InsumoDetailView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JComboBox<R.UM> jComboBoxUM;
@@ -249,7 +245,7 @@ public class InsumoDetailView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelCostoU;
     private javax.swing.JLabel jLabelNombre4;
     private javax.swing.JLabel jLabelUM;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelControles;
     private javax.swing.JPanel jPanelCosto;
     private javax.swing.JPanel jPanelDerivados;
