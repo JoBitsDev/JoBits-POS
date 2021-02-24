@@ -14,7 +14,9 @@ import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -38,12 +40,13 @@ public class LicenceDialogView extends JPanel implements View {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelTop = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelTop = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanelInfo = new javax.swing.JPanel();
+        jPanelInfo = MaterialComponentsFactory.Containers.getTransparentPanel();
         jideLabelIdentificador = new javax.swing.JLabel();
         jideLabelEstadoLic = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
@@ -59,18 +62,20 @@ public class LicenceDialogView extends JPanel implements View {
         jTextField8 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
-        jPanelActions = new javax.swing.JPanel();
-        jButtonActivar1 = MaterialComponentsFactory.Buttons.getCancelButton();
-        jButtonActivar = MaterialComponentsFactory.Buttons.getAcceptButton();
+        jPanelActions = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonActivar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setMaximumSize(new java.awt.Dimension(710, 210));
         setMinimumSize(new java.awt.Dimension(710, 173));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(710, 210));
-        setSize(new java.awt.Dimension(710, 210));
         setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
         jPanelTop.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelTop.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
         jPanelTop.setFont(new java.awt.Font("Lucida Grande", 1, 36)); // NOI18N
         jPanelTop.setLayout(new java.awt.BorderLayout());
 
@@ -79,7 +84,7 @@ public class LicenceDialogView extends JPanel implements View {
         jLabel1.setText("Licencia");
         jPanelTop.add(jLabel1, java.awt.BorderLayout.CENTER);
 
-        add(jPanelTop, java.awt.BorderLayout.PAGE_START);
+        jPanel2.add(jPanelTop, java.awt.BorderLayout.PAGE_START);
 
         jPanelInfo.setLayout(new java.awt.BorderLayout());
 
@@ -92,10 +97,11 @@ public class LicenceDialogView extends JPanel implements View {
         jideLabelEstadoLic.setText("Estado de la licencia");
         jPanelInfo.add(jideLabelEstadoLic, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jTextField2.setColumns(4);
         jTextField2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField2.setMaximumSize(new java.awt.Dimension(80, 40));
         jTextField2.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -103,15 +109,16 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField2KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField2);
+        jPanel1.add(jTextField2, new java.awt.GridBagConstraints());
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("-");
-        jPanel1.add(jLabel2);
+        jPanel1.add(jLabel2, new java.awt.GridBagConstraints());
 
         jTextField3.setColumns(4);
         jTextField3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField3.setMaximumSize(new java.awt.Dimension(80, 40));
         jTextField3.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -119,15 +126,16 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField3KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField3);
+        jPanel1.add(jTextField3, new java.awt.GridBagConstraints());
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("-");
-        jPanel1.add(jLabel3);
+        jPanel1.add(jLabel3, new java.awt.GridBagConstraints());
 
         jTextField4.setColumns(4);
         jTextField4.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField4.setMaximumSize(new java.awt.Dimension(80, 40));
         jTextField4.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -135,15 +143,16 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField4KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField4);
+        jPanel1.add(jTextField4, new java.awt.GridBagConstraints());
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("-");
-        jPanel1.add(jLabel9);
+        jPanel1.add(jLabel9, new java.awt.GridBagConstraints());
 
         jTextField5.setColumns(4);
         jTextField5.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField5.setMaximumSize(new java.awt.Dimension(80, 40));
         jTextField5.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -151,15 +160,16 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField5KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField5);
+        jPanel1.add(jTextField5, new java.awt.GridBagConstraints());
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("-");
-        jPanel1.add(jLabel7);
+        jPanel1.add(jLabel7, new java.awt.GridBagConstraints());
 
         jTextField6.setColumns(4);
         jTextField6.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField6.setMaximumSize(new java.awt.Dimension(80, 40));
         jTextField6.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField6.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -167,15 +177,16 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField6KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField6);
+        jPanel1.add(jTextField6, new java.awt.GridBagConstraints());
 
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("-");
-        jPanel1.add(jLabel5);
+        jPanel1.add(jLabel5, new java.awt.GridBagConstraints());
 
         jTextField7.setColumns(4);
         jTextField7.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField7.setMaximumSize(new java.awt.Dimension(80, 40));
         jTextField7.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField7.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -183,15 +194,16 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField7KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField7);
+        jPanel1.add(jTextField7, new java.awt.GridBagConstraints());
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("-");
-        jPanel1.add(jLabel6);
+        jPanel1.add(jLabel6, new java.awt.GridBagConstraints());
 
         jTextField8.setColumns(4);
         jTextField8.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField8.setMaximumSize(new java.awt.Dimension(80, 40));
         jTextField8.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField8.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -199,15 +211,16 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField8KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField8);
+        jPanel1.add(jTextField8, new java.awt.GridBagConstraints());
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("-");
-        jPanel1.add(jLabel4);
+        jPanel1.add(jLabel4, new java.awt.GridBagConstraints());
 
         jTextField9.setColumns(4);
         jTextField9.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField9.setMaximumSize(new java.awt.Dimension(80, 40));
         jTextField9.setPreferredSize(new java.awt.Dimension(80, 40));
         jTextField9.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -215,83 +228,94 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField9KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField9);
+        jPanel1.add(jTextField9, new java.awt.GridBagConstraints());
 
         jPanelInfo.add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        add(jPanelInfo, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jPanelInfo, java.awt.BorderLayout.CENTER);
 
         jPanelActions.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelActions.setBorder(new org.jdesktop.swingx.border.DropShadowBorder());
+        jPanelActions.setPreferredSize(new java.awt.Dimension(275, 50));
+        jPanelActions.setLayout(new java.awt.GridBagLayout());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButtonActivar1.setText(bundle.getString("label_cancelar")); // NOI18N
-        jButtonActivar1.setPreferredSize(new java.awt.Dimension(130, 50));
-        jButtonActivar1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonActivar1ActionPerformed(evt);
+                jButtonCancelarActionPerformed(evt);
             }
         });
-        jPanelActions.add(jButtonActivar1);
+        jPanelActions.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         jButtonActivar.setText(bundle.getString("label_activar")); // NOI18N
-        jButtonActivar.setPreferredSize(new java.awt.Dimension(130, 50));
+        jButtonActivar.setPreferredSize(new java.awt.Dimension(140, 40));
         jButtonActivar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonActivarActionPerformed(evt);
             }
         });
-        jPanelActions.add(jButtonActivar);
+        jPanelActions.add(jButtonActivar, new java.awt.GridBagConstraints());
 
-        add(jPanelActions, java.awt.BorderLayout.PAGE_END);
+        jPanel2.add(jPanelActions, java.awt.BorderLayout.PAGE_END);
+
+        add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
-        if (jTextField2.getText().length() > 2) {
-            jTextField2.transferFocus();
-        }// TODO add your handling code here:
+        validateInput(jTextField2, evt);
+//        if (jTextField2.getText().length() > 2) {
+//            jTextField2.transferFocus();
+//        }// TODO add your handling code here:
     }//GEN-LAST:event_jTextField2KeyTyped
 
     private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
-        if (jTextField3.getText().length() > 2) {
-            jTextField3.transferFocus();
-        }        // TODO add your handling code here:
+        validateInput(jTextField3, evt);
+//        if (jTextField3.getText().length() > 2) {
+//            jTextField3.transferFocus();
+//        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3KeyTyped
 
     private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
-        if (jTextField4.getText().length() > 2) {
-            jTextField4.transferFocus();
-        }     // TODO add your handling code here:
+        validateInput(jTextField4, evt);
+//        if (jTextField4.getText().length() > 2) {
+//            jTextField4.transferFocus();
+//        }     // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4KeyTyped
 
     private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
-        if (jTextField5.getText().length() > 2) {
-            jTextField5.transferFocus();
-        }        // TODO add your handling code here:
+        validateInput(jTextField5, evt);
+//        if (jTextField5.getText().length() > 2) {
+//            jTextField5.transferFocus();
+//        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5KeyTyped
 
     private void jTextField6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField6KeyTyped
-        if (jTextField6.getText().length() > 2) {
-            jTextField6.transferFocus();
-        }        // TODO add your handling code here:
+        validateInput(jTextField6, evt);
+//        if (jTextField6.getText().length() > 2) {
+//            jTextField6.transferFocus();
+//        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6KeyTyped
 
     private void jTextField7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField7KeyTyped
-        if (jTextField7.getText().length() > 2) {
-            jTextField7.transferFocus();
-        }        // TODO add your handling code here:
+        validateInput(jTextField7, evt);
+//        if (jTextField7.getText().length() > 2) {
+//            jTextField7.transferFocus();
+//        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7KeyTyped
 
     private void jTextField8KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField8KeyTyped
-        if (jTextField8.getText().length() > 2) {
-            jTextField8.transferFocus();
-        }        // TODO add your handling code here:
+        validateInput(jTextField8, evt);
+//        if (jTextField8.getText().length() > 2) {
+//            jTextField8.transferFocus();
+//        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField8KeyTyped
 
     private void jTextField9KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField9KeyTyped
-        if (jTextField9.getText().length() > 2) {
-            jTextField9.transferFocus();
-        }        // TODO add your handling code here:
+        validateInput(jTextField9, evt);
+//        if (jTextField9.getText().length() > 2) {
+//            jTextField9.transferFocus();
+//        }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField9KeyTyped
 
     private void jButtonActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivarActionPerformed
@@ -315,13 +339,13 @@ public class LicenceDialogView extends JPanel implements View {
         }
     }//GEN-LAST:event_jButtonActivarActionPerformed
 
-    private void jButtonActivar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActivar1ActionPerformed
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         NavigationService.getInstance().navigateUp(); //TODO:arreglar pifia
-    }//GEN-LAST:event_jButtonActivar1ActionPerformed
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonActivar;
-    private javax.swing.JButton jButtonActivar1;
+    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -331,6 +355,7 @@ public class LicenceDialogView extends JPanel implements View {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelActions;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelTop;
@@ -373,4 +398,20 @@ public class LicenceDialogView extends JPanel implements View {
         throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void validateInput(JTextField textField, KeyEvent evt) {
+        switch (textField.getText().length()) {
+            case 0:
+                if (evt.getKeyChar() == '\b' & textField != jTextField2) {
+                    textField.transferFocusBackward();
+                    evt.consume();
+                }
+                break;
+            case 4:
+                if (textField != jTextField9) {
+                    textField.transferFocus();
+                }
+                evt.consume();
+                break;
+        }
+    }
 }
