@@ -40,38 +40,37 @@ public class CartasSeccionView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel5 = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanelAreas = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelAreas = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
         jListMenus = MaterialComponentsFactory.Displayers.getList();
-        jPanel4 = new javax.swing.JPanel();
-        jButtonEliminarMenu = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel4 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonEliminarMenu = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAgregarMenu = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanelMesas = new javax.swing.JPanel();
+        jPanelMesas = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jListSecciones = MaterialComponentsFactory.Displayers.getList();
-        jPanel3 = new javax.swing.JPanel();
-        jButtonEliminarSeccion = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonEditarSeccion = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonEliminarSeccion = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonEditarSeccion = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAgregarSeccion = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setOpaque(false);
         setLayout(new java.awt.BorderLayout(0, 5));
 
-        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel5.setOpaque(false);
-        jPanel5.setLayout(new java.awt.BorderLayout());
+        jPanel5.setPreferredSize(new java.awt.Dimension(215, 50));
+        jPanel5.setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jLabel3.setText(bundle.getString("label_gestion_carta")); // NOI18N
-        jPanel5.add(jLabel3, java.awt.BorderLayout.CENTER);
+        jPanel5.add(jLabel3, new java.awt.GridBagConstraints());
 
         add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
@@ -88,14 +87,14 @@ public class CartasSeccionView extends AbstractViewPanel {
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelAreas.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 10));
+
         jListMenus.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListMenus.setPreferredSize(new java.awt.Dimension(100, 85));
         jScrollPane2.setViewportView(jListMenus);
 
         jPanelAreas.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel4.setOpaque(false);
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonEliminarMenu.setText(bundle.getString("label_eliminar")); // NOI18N
@@ -119,21 +118,21 @@ public class CartasSeccionView extends AbstractViewPanel {
         jLabel1.setText(bundle.getString("label_seccion")); // NOI18N
         jPanelMesas.add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 20));
+
         jListSecciones.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListSecciones.setPreferredSize(new java.awt.Dimension(100, 85));
         jScrollPane1.setViewportView(jListSecciones);
 
         jPanelMesas.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setOpaque(false);
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonEliminarSeccion.setText(bundle.getString("label_eliminar")); // NOI18N
         jButtonEliminarSeccion.setPreferredSize(new java.awt.Dimension(140, 50));
         jPanel3.add(jButtonEliminarSeccion);
 
-        jButtonEditarSeccion.setText(bundle.getString("label_eliminar")); // NOI18N
+        jButtonEditarSeccion.setText(bundle.getString("label_editar")); // NOI18N
         jButtonEditarSeccion.setPreferredSize(new java.awt.Dimension(140, 50));
         jPanel3.add(jButtonEditarSeccion);
 
@@ -189,6 +188,7 @@ public class CartasSeccionView extends AbstractViewPanel {
                     getPresenter().getOperation(CartasSeccionViewPresenter.ACTION_ELIMINAR_SECCION).doAction();
                 }
             }
+
             @Override
             public void keyTyped(KeyEvent e) {
                 // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
