@@ -74,11 +74,9 @@ public class CartasSeccionView extends AbstractViewPanel {
 
         add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
 
         jPanelAreas.setMinimumSize(new java.awt.Dimension(150, 102));
-        jPanelAreas.setOpaque(false);
         jPanelAreas.setLayout(new java.awt.BorderLayout(5, 5));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -110,7 +108,6 @@ public class CartasSeccionView extends AbstractViewPanel {
         jPanel1.add(jPanelAreas);
 
         jPanelMesas.setMinimumSize(new java.awt.Dimension(150, 102));
-        jPanelMesas.setOpaque(false);
         jPanelMesas.setLayout(new java.awt.BorderLayout(5, 5));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
