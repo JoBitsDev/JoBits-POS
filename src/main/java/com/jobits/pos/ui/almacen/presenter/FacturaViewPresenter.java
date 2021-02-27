@@ -51,6 +51,9 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     public static final String ACTION_ELIMINAR_INSUMO_TRANSFORMADO = "Agregar Insumo Transformado";
     public static final String ACTION_AGREGAR_INSUMO_TRANSFORMADO = "Eliminar Insumo Transformado";
 
+    public static final String PROP_SWAP_TO_ENTRADAS = "Entradas";
+    public static final String PROP_SWAP_TO_TRANSFORMAR = "Transformar";
+
     public FacturaViewPresenter(AlmacenManageService controller) {
         super(new FacturaViewModel());
         this.service = controller;
@@ -181,44 +184,39 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     private void setVisiblePanels(OperationType aux) {
         switch (aux) {
             case ENTRADA:
-                getBean().setTabla_general_enabled(true);
                 getBean().setMonto_enabled(true);
                 getBean().setButton_agregar_insumo_enabled(true);
                 getBean().setDestino_enabled(false);
                 getBean().setRazon_rebaja_enabled(false);
-                getBean().setTabla_insumos_transformar_enabled(false);
+                firePropertyChange(PROP_SWAP_TO_ENTRADAS, null, null);
                 break;
             case SALIDA:
-                getBean().setTabla_general_enabled(true);
                 getBean().setMonto_enabled(false);
                 getBean().setButton_agregar_insumo_enabled(true);
                 getBean().setDestino_enabled(true);
                 getBean().setRazon_rebaja_enabled(false);
-                getBean().setTabla_insumos_transformar_enabled(false);
+                firePropertyChange(PROP_SWAP_TO_ENTRADAS, null, null);
                 break;
             case REBAJA:
-                getBean().setTabla_general_enabled(true);
                 getBean().setMonto_enabled(false);
                 getBean().setButton_agregar_insumo_enabled(true);
                 getBean().setDestino_enabled(false);
                 getBean().setRazon_rebaja_enabled(true);
-                getBean().setTabla_insumos_transformar_enabled(false);
+                firePropertyChange(PROP_SWAP_TO_ENTRADAS, null, null);
                 break;
             case TRASPASO:
-                getBean().setTabla_general_enabled(true);
                 getBean().setMonto_enabled(false);
                 getBean().setButton_agregar_insumo_enabled(true);
                 getBean().setDestino_enabled(true);
                 getBean().setRazon_rebaja_enabled(false);
-                getBean().setTabla_insumos_transformar_enabled(false);
+                firePropertyChange(PROP_SWAP_TO_ENTRADAS, null, null);
                 break;
             case TRANSFORMAR:
-                getBean().setTabla_general_enabled(false);
                 getBean().setMonto_enabled(false);
                 getBean().setButton_agregar_insumo_enabled(false);
                 getBean().setDestino_enabled(true);
                 getBean().setRazon_rebaja_enabled(false);
-                getBean().setTabla_insumos_transformar_enabled(true);
+                firePropertyChange(PROP_SWAP_TO_TRANSFORMAR, null, null);
                 break;
             default:
                 throw new UnExpectedErrorException("Tipo de operacion no soportada");

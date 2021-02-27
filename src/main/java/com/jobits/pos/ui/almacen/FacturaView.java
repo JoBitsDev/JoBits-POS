@@ -26,10 +26,12 @@ import com.jobits.pos.ui.utils.RestaurantManagerListIntelliHint;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import org.checkerframework.checker.units.qual.K;
@@ -65,17 +67,13 @@ public class FacturaView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel7 = new javax.swing.JPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelHeader = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel12 = new javax.swing.JPanel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
-        jPanel1 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jComboBoxOperationSelector = new javax.swing.JComboBox<>();
-        jPaneloperaciones = new javax.swing.JPanel();
-        jPanelInputs = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        jComboBoxOperationSelector = MaterialComponentsFactory.Displayers.getComboBox("Operacion");
+        jPaneloperaciones = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelInputs = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelInsumo = new javax.swing.JPanel();
         jTextFieldInsumo = MaterialComponentsFactory.Input.getTextField("", "Insumo");
         jPanelCantidad = new javax.swing.JPanel();
@@ -83,65 +81,54 @@ public class FacturaView extends AbstractViewPanel {
         jPanel4 = new javax.swing.JPanel();
         jSpinnerCantidad = new javax.swing.JSpinner();
         jLabelUM = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanelMontoEntrada = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelMontoEntrada = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldMonto = MaterialComponentsFactory.Input.getTextField("", "Monto");
-        jPanelDestino = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jComboBoxDestino = new javax.swing.JComboBox<>();
-        jPanelRazonRebaja = new javax.swing.JPanel();
+        jPanelDestino = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxDestino = MaterialComponentsFactory.Displayers.getComboBox("Destino");
+        jPanelRazonRebaja = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldCausaRebaja = MaterialComponentsFactory.Input.getTextField("", "Causa de Rebaja");
-        jPanel6 = new javax.swing.JPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAgregarInsumoEntrada = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonEliminarInsumoEntrada = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelTablas = new javax.swing.JPanel();
-        jPanelTablaGeneral = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanelTablas = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelTablaGeneral = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableEntrada = new javax.swing.JTable();
-        jPanelTablaInsumosTransformar = new javax.swing.JPanel();
-        jPanelRecibo = new javax.swing.JPanel();
+        jPanelTablaInsumosTransformar = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelRecibo = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldRecibo = MaterialComponentsFactory.Input.getTextField("", "No. Recibo");
         jPanelCancelarConfirmar = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonClose = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonConfirmarEntrada = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setMinimumSize(new java.awt.Dimension(750, 900));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(750, 750));
         setLayout(new java.awt.BorderLayout());
 
+        jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
         jPanelHeader.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 10));
         jPanelHeader.setPreferredSize(new java.awt.Dimension(680, 70));
-        jPanelHeader.setLayout(new java.awt.GridLayout(1, 4));
-
-        jPanel12.setOpaque(false);
-        jPanel12.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelHeader.setLayout(new java.awt.BorderLayout());
 
         jDateChooser1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jDateChooser1.setPreferredSize(new java.awt.Dimension(170, 35));
-        jPanel12.add(jDateChooser1);
-
-        jPanelHeader.add(jPanel12);
-        jPanelHeader.add(filler4);
-        jPanelHeader.add(filler5);
-
-        jPanel1.setOpaque(false);
+        jPanelHeader.add(jDateChooser1, java.awt.BorderLayout.WEST);
 
         jComboBoxOperationSelector.setMaximumRowCount(5);
         jComboBoxOperationSelector.setMaximumSize(new java.awt.Dimension(170, 30));
         jComboBoxOperationSelector.setMinimumSize(new java.awt.Dimension(170, 30));
-        jComboBoxOperationSelector.setOpaque(false);
         jComboBoxOperationSelector.setPreferredSize(new java.awt.Dimension(170, 30));
         jComboBoxOperationSelector.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxOperationSelectorActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBoxOperationSelector);
-
-        jPanelHeader.add(jPanel1);
+        jPanelHeader.add(jComboBoxOperationSelector, java.awt.BorderLayout.EAST);
 
         jPanel7.add(jPanelHeader, java.awt.BorderLayout.NORTH);
 
@@ -232,11 +219,8 @@ public class FacturaView extends AbstractViewPanel {
         jPanelDestino.setPreferredSize(new java.awt.Dimension(350, 50));
         jPanelDestino.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 15));
 
-        jLabel6.setText("Destino");
-        jPanelDestino.add(jLabel6);
-
         jComboBoxDestino.setMinimumSize(new java.awt.Dimension(250, 26));
-        jComboBoxDestino.setPreferredSize(new java.awt.Dimension(250, 26));
+        jComboBoxDestino.setPreferredSize(new java.awt.Dimension(250, 40));
         jComboBoxDestino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxDestinoActionPerformed(evt);
@@ -298,6 +282,9 @@ public class FacturaView extends AbstractViewPanel {
 
         jPaneloperaciones.add(jPanelInputs, java.awt.BorderLayout.NORTH);
 
+        jPanelTablas.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanelTablas.setLayout(new java.awt.CardLayout());
+
         jPanelTablaGeneral.setPreferredSize(new java.awt.Dimension(680, 400));
         jPanelTablaGeneral.setLayout(new java.awt.BorderLayout());
 
@@ -315,11 +302,11 @@ public class FacturaView extends AbstractViewPanel {
 
         jPanelTablaGeneral.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanelTablas.add(jPanelTablaGeneral);
+        jPanelTablas.add(jPanelTablaGeneral, "entrada");
 
         jPanelTablaInsumosTransformar.setPreferredSize(new java.awt.Dimension(680, 400));
         jPanelTablaInsumosTransformar.setLayout(new java.awt.BorderLayout());
-        jPanelTablas.add(jPanelTablaInsumosTransformar);
+        jPanelTablas.add(jPanelTablaInsumosTransformar, "transformar");
 
         jPaneloperaciones.add(jPanelTablas, java.awt.BorderLayout.CENTER);
 
@@ -334,16 +321,21 @@ public class FacturaView extends AbstractViewPanel {
 
         jPanel7.add(jPaneloperaciones, java.awt.BorderLayout.CENTER);
 
+        jPanelCancelarConfirmar.setPreferredSize(new java.awt.Dimension(168, 50));
+        jPanelCancelarConfirmar.setLayout(new java.awt.GridBagLayout());
+
         jButtonClose.setText("Cancelar");
+        jButtonClose.setPreferredSize(new java.awt.Dimension(140, 40));
         jButtonClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCloseActionPerformed(evt);
             }
         });
-        jPanelCancelarConfirmar.add(jButtonClose);
+        jPanelCancelarConfirmar.add(jButtonClose, new java.awt.GridBagConstraints());
 
         jButtonConfirmarEntrada.setText("Confirmar");
-        jPanelCancelarConfirmar.add(jButtonConfirmarEntrada);
+        jButtonConfirmarEntrada.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanelCancelarConfirmar.add(jButtonConfirmarEntrada, new java.awt.GridBagConstraints());
 
         jPanel7.add(jPanelCancelarConfirmar, java.awt.BorderLayout.SOUTH);
 
@@ -418,8 +410,6 @@ public class FacturaView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler4;
-    private javax.swing.Box.Filler filler5;
     private javax.swing.JButton jButtonAgregarInsumoEntrada;
     private javax.swing.JButton jButtonClose;
     private javax.swing.JButton jButtonConfirmarEntrada;
@@ -428,10 +418,7 @@ public class FacturaView extends AbstractViewPanel {
     private javax.swing.JComboBox<String> jComboBoxOperationSelector;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelUM;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -501,17 +488,31 @@ public class FacturaView extends AbstractViewPanel {
         jButtonClose.setText("Cancelar");
 
         //PANEL VISIBILITY
-        Bindings.bind(jPanelTablaGeneral, "visible", getPresenter().getModel(PROP_TABLA_GENERAL_ENABLED));
         Bindings.bind(jPanelMontoEntrada, "visible", getPresenter().getModel(PROP_MONTO_ENABLED));
         Bindings.bind(jButtonAgregarInsumoEntrada, "visible", getPresenter().getModel(PROP_BUTTON_AGREGAR_INSUMO_ENABLED));
         Bindings.bind(jButtonEliminarInsumoEntrada, "visible", getPresenter().getModel(PROP_BUTTON_AGREGAR_INSUMO_ENABLED));
         Bindings.bind(jPanelDestino, "visible", getPresenter().getModel(PROP_DESTINO_ENABLED));
         Bindings.bind(jPanelRazonRebaja, "visible", getPresenter().getModel(PROP_RAZON_REBAJA_ENABLED));
-        Bindings.bind(jPanelTablaInsumosTransformar, "visible", getPresenter().getModel(PROP_TABLA_INSUMOS_TRANSFORMAR_ENABLED));
 
         //OPERATIONS SELECTOR
         Bindings.bind(jComboBoxOperationSelector, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_OPERACIONES), getPresenter().getModel(PROP_OPERACION_SELECTED)));
+
+        getPresenter().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            jPanelTablas.repaint();
+            jPanelTablas.revalidate();
+            CardLayout cards;
+            switch (evt.getPropertyName()) {
+                case PROP_SWAP_TO_ENTRADAS:
+                    cards = (CardLayout) jPanelTablas.getLayout();
+                    cards.show(jPanelTablas, "entrada");
+                    break;
+                case PROP_SWAP_TO_TRANSFORMAR:
+                    cards = (CardLayout) jPanelTablas.getLayout();
+                    cards.show(jPanelTablas, "transformar");
+                    break;
+            }
+        });
 
         //FOCUS EVENTS
         JSpinner.DefaultEditor defCantidad = (JSpinner.DefaultEditor) jSpinnerCantidad.getEditor();
@@ -580,6 +581,7 @@ public class FacturaView extends AbstractViewPanel {
     }
 
     @Override
+
     public void uiInit() {
         initComponents();
 
