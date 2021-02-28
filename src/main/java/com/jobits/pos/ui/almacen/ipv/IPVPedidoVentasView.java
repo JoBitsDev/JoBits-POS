@@ -49,52 +49,45 @@ public class IPVPedidoVentasView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelTop = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jPanelMain = new javax.swing.JPanel();
-        jPanelAPedir = new javax.swing.JPanel();
-        jPanelPedido = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelTop = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBox1 = MaterialComponentsFactory.Displayers.getComboBox("Pedir de Almacen");
+        jPanelMain = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelAPedir = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelPedido = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTablePedido = new javax.swing.JTable();
-        jPanelOpciones = new javax.swing.JPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanelOpciones = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
         setMaximumSize(new java.awt.Dimension(810, 550));
         setMinimumSize(new java.awt.Dimension(810, 550));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(810, 550));
         setLayout(new java.awt.BorderLayout());
 
-        jPanelTop.setLayout(new java.awt.BorderLayout());
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 0, 0));
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT);
-        flowLayout1.setAlignOnBaseline(true);
-        jPanel1.setLayout(flowLayout1);
-
-        jLabel1.setText("Pedir del almcen");
-        jPanel1.add(jLabel1);
+        jPanelTop.setPreferredSize(new java.awt.Dimension(180, 60));
+        jPanelTop.setLayout(new java.awt.GridBagLayout());
 
         jComboBox1.setToolTipText("Pedir del almcen");
-        jComboBox1.setPreferredSize(new java.awt.Dimension(170, 27));
-        jPanel1.add(jComboBox1);
+        jComboBox1.setPreferredSize(new java.awt.Dimension(250, 50));
+        jPanelTop.add(jComboBox1, new java.awt.GridBagConstraints());
 
-        jPanelTop.add(jPanel1, java.awt.BorderLayout.CENTER);
-
-        add(jPanelTop, java.awt.BorderLayout.PAGE_START);
+        jPanel2.add(jPanelTop, java.awt.BorderLayout.PAGE_START);
 
         jPanelMain.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 0, 10));
         jPanelMain.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
-        jPanelAPedir.setBorder(javax.swing.BorderFactory.createTitledBorder("A pedir"));
+        jPanelAPedir.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "A pedir"));
         jPanelAPedir.setPreferredSize(new java.awt.Dimension(100, 0));
         jPanelAPedir.setLayout(new java.awt.BorderLayout());
         jPanelMain.add(jPanelAPedir);
 
-        jPanelPedido.setBorder(javax.swing.BorderFactory.createTitledBorder("Pedido"));
+        jPanelPedido.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Pedido"));
         jPanelPedido.setPreferredSize(new java.awt.Dimension(300, 0));
         jPanelPedido.setLayout(new java.awt.BorderLayout());
 
@@ -127,21 +120,26 @@ public class IPVPedidoVentasView extends AbstractViewPanel {
 
         jPanelMain.add(jPanelPedido);
 
-        add(jPanelMain, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jPanelMain, java.awt.BorderLayout.CENTER);
+
+        jPanelOpciones.setPreferredSize(new java.awt.Dimension(168, 50));
+        jPanelOpciones.setLayout(new java.awt.GridBagLayout());
 
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setBorderPainted(false);
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 40));
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarActionPerformed(evt);
             }
         });
-        jPanelOpciones.add(jButtonCancelar);
+        jPanelOpciones.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonAceptar.setText(bundle.getString("label_confirmar")); // NOI18N
         jButtonAceptar.setBorderPainted(false);
         jButtonAceptar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(140, 40));
         jButtonAceptar.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jButtonAceptar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
@@ -149,9 +147,11 @@ public class IPVPedidoVentasView extends AbstractViewPanel {
                 jButtonAceptarActionPerformed(evt);
             }
         });
-        jPanelOpciones.add(jButtonAceptar);
+        jPanelOpciones.add(jButtonAceptar, new java.awt.GridBagConstraints());
 
-        add(jPanelOpciones, java.awt.BorderLayout.SOUTH);
+        jPanel2.add(jPanelOpciones, java.awt.BorderLayout.SOUTH);
+
+        add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
@@ -171,8 +171,7 @@ public class IPVPedidoVentasView extends AbstractViewPanel {
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JComboBox<Almacen> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelAPedir;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelOpciones;
