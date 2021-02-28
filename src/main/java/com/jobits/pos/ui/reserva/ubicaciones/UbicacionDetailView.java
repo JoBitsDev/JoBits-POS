@@ -41,33 +41,32 @@ public class UbicacionDetailView extends AbstractViewPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel5 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel12 = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel12 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jPanel11 = new javax.swing.JPanel();
+        jPanel11 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextField1 = MaterialComponentsFactory.Input.getTextField("", "Ubicacion");
-        jPanel3 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jComboBoxHoraInicio = new javax.swing.JComboBox();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
         jLabel2 = new javax.swing.JLabel();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
         jComboBoxHoraCierre = new javax.swing.JComboBox();
-        jPanel8 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
+        jPanel10 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jComboBoxColores = new javax.swing.JComboBox();
         jPanel4 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 32767));
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(568, 332));
         setLayout(new java.awt.BorderLayout());
 
@@ -97,7 +96,7 @@ public class UbicacionDetailView extends AbstractViewPanel {
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 91, Short.MAX_VALUE)
+            .addGap(0, 92, Short.MAX_VALUE)
             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel12Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -178,7 +177,6 @@ public class UbicacionDetailView extends AbstractViewPanel {
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setPreferredSize(new java.awt.Dimension(120, 50));
         jPanel4.add(jButtonCancelar, new java.awt.GridBagConstraints());
-        jPanel4.add(filler3, new java.awt.GridBagConstraints());
 
         jButtonAceptar.setText("Aceptar");
         jButtonAceptar.setPreferredSize(new java.awt.Dimension(120, 50));
@@ -193,7 +191,6 @@ public class UbicacionDetailView extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
-    private javax.swing.Box.Filler filler3;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JComboBox jComboBoxColores;
