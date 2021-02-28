@@ -43,19 +43,23 @@ public class FilterCardView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelFilterType = new javax.swing.JLabel();
-        jPanelmain = new javax.swing.JPanel();
-        jPanelCombobox = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jPanelTextField = new javax.swing.JPanel();
+        jPanelmain = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelCombobox = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBox1 = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanelTextField = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextField1 = MaterialComponentsFactory.Input.getTextField("", "");
 
-        setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3), new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 3, true)));
-        setPreferredSize(new java.awt.Dimension(199, 80));
+        setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(199, 90));
         setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 15, 15));
+        jPanel3.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
@@ -71,13 +75,13 @@ public class FilterCardView extends AbstractViewPanel {
 
         jPanel2.add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        add(jPanel2, java.awt.BorderLayout.NORTH);
+        jPanel3.add(jPanel2, java.awt.BorderLayout.NORTH);
 
         jPanelmain.setLayout(new java.awt.CardLayout());
 
         jPanelCombobox.setLayout(new java.awt.GridBagLayout());
 
-        jComboBox1.setPreferredSize(new java.awt.Dimension(190, 40));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(180, 40));
         jPanelCombobox.add(jComboBox1, new java.awt.GridBagConstraints());
 
         jPanelmain.add(jPanelCombobox, "ComboBox");
@@ -86,12 +90,14 @@ public class FilterCardView extends AbstractViewPanel {
         jPanelTextField.setLayout(new java.awt.GridBagLayout());
 
         jTextField1.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
-        jTextField1.setPreferredSize(new java.awt.Dimension(190, 40));
+        jTextField1.setPreferredSize(new java.awt.Dimension(180, 40));
         jPanelTextField.add(jTextField1, new java.awt.GridBagConstraints());
 
         jPanelmain.add(jPanelTextField, "TextField");
 
-        add(jPanelmain, java.awt.BorderLayout.CENTER);
+        jPanel3.add(jPanelmain, java.awt.BorderLayout.CENTER);
+
+        add(jPanel3, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -101,6 +107,7 @@ public class FilterCardView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelFilterType;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelCombobox;
     private javax.swing.JPanel jPanelTextField;
     private javax.swing.JPanel jPanelmain;
