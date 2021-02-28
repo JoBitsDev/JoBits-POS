@@ -50,83 +50,42 @@ public class GastosView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelInfo = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTableInfo = new javax.swing.JTable();
-        jPanel4 = new javax.swing.JPanel();
-        jButtonImprimirGastos = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonEliminarGasto = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelContainer = new javax.swing.JPanel();
-        jLabelGast = new javax.swing.JLabel();
-        jPanelAgregar1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jButtonLimpiarEntradas = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonCrearGasto = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanel8 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jComboBoxCategoria = new javax.swing.JComboBox<>();
-        jPanel6 = new javax.swing.JPanel();
-        jComboBoxTipoGasto = new javax.swing.JComboBox<>();
-        jPanel5 = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelContainer = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelAgregar1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jComboBoxCategoria = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanel6 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jComboBoxTipoGasto = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jSpinnerMonto = new javax.swing.JSpinner();
         jLabelMonto = new javax.swing.JLabel();
-        jPanelDesc = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanelDesc = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonLimpiarEntradas = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonCrearGasto = MaterialComponentsFactory.Buttons.getLinedButton();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabelGast = new javax.swing.JLabel();
+        jPanelInfo = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jScrollPane4 = MaterialComponentsFactory.Containers.getScrollPane();
+        jTableInfo = new javax.swing.JTable();
+        jPanel4 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonImprimirGastos = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonEliminarGasto = MaterialComponentsFactory.Buttons.getOutlinedButton();
 
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
-        jPanelInfo.setLayout(new java.awt.BorderLayout());
-
-        jTableInfo.setAutoCreateRowSorter(true);
-        jTableInfo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Categoria", "Tipo", "Monto", "Descripcion"
-            }
-        ));
-        jScrollPane4.setViewportView(jTableInfo);
-
-        jPanelInfo.add(jScrollPane4, java.awt.BorderLayout.CENTER);
-
-        jPanel4.setLayout(new java.awt.BorderLayout());
-
-        jButtonImprimirGastos.setText("Gastos");
-        jButtonImprimirGastos.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButtonImprimirGastos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonImprimirGastosActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButtonImprimirGastos, java.awt.BorderLayout.WEST);
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButtonEliminarGasto.setText(bundle.getString("label_eliminar")); // NOI18N
-        jButtonEliminarGasto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarGastoActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButtonEliminarGasto, java.awt.BorderLayout.EAST);
-
-        jPanelInfo.add(jPanel4, java.awt.BorderLayout.SOUTH);
-
-        add(jPanelInfo, java.awt.BorderLayout.CENTER);
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         jPanelContainer.setToolTipText(null);
         jPanelContainer.setMaximumSize(new java.awt.Dimension(200, 2147483647));
         jPanelContainer.setMinimumSize(new java.awt.Dimension(200, 85));
         jPanelContainer.setPreferredSize(new java.awt.Dimension(200, 100));
         jPanelContainer.setLayout(new java.awt.BorderLayout());
-
-        jLabelGast.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabelGast.setForeground(new java.awt.Color(153, 0, 0));
-        jLabelGast.setText("XXXX.XX CUC");
-        jLabelGast.setToolTipText(null);
-        jLabelGast.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Total"));
-        jPanelContainer.add(jLabelGast, java.awt.BorderLayout.SOUTH);
 
         jPanelAgregar1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Nuevo/Editar Gasto"));
         jPanelAgregar1.setToolTipText(null);
@@ -135,41 +94,18 @@ public class GastosView extends AbstractViewPanel {
         jPanelAgregar1.setPreferredSize(new java.awt.Dimension(200, 100));
         jPanelAgregar1.setLayout(new java.awt.BorderLayout());
 
-        jPanel3.setToolTipText(null);
-        jPanel3.setLayout(new java.awt.BorderLayout());
-
-        jButtonLimpiarEntradas.setToolTipText("Limpiar");
-        jButtonLimpiarEntradas.setPreferredSize(new java.awt.Dimension(40, 40));
-        jButtonLimpiarEntradas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLimpiarEntradasActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButtonLimpiarEntradas, java.awt.BorderLayout.WEST);
-
-        jButtonCrearGasto.setText("Crear");
-        jButtonCrearGasto.setToolTipText(null);
-        jButtonCrearGasto.setPreferredSize(new java.awt.Dimension(164, 28));
-        jButtonCrearGasto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCrearGastoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(jButtonCrearGasto, java.awt.BorderLayout.CENTER);
-
-        jPanelAgregar1.add(jPanel3, java.awt.BorderLayout.SOUTH);
-
         jPanel8.setToolTipText(null);
         jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_categoria"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), bundle.getString("label_categoria"))); // NOI18N
         jPanel2.setToolTipText(null);
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jComboBoxCategoria.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jComboBoxCategoria.setToolTipText(null);
         jComboBoxCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jComboBoxCategoria.setPreferredSize(new java.awt.Dimension(170, 36));
+        jComboBoxCategoria.setPreferredSize(new java.awt.Dimension(150, 36));
         jComboBoxCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxCategoriaActionPerformed(evt);
@@ -179,14 +115,14 @@ public class GastosView extends AbstractViewPanel {
 
         jPanel8.add(jPanel2);
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo"));
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Tipo"));
         jPanel6.setToolTipText(null);
         jPanel6.setLayout(new java.awt.GridBagLayout());
 
         jComboBoxTipoGasto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jComboBoxTipoGasto.setToolTipText(null);
         jComboBoxTipoGasto.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jComboBoxTipoGasto.setPreferredSize(new java.awt.Dimension(170, 36));
+        jComboBoxTipoGasto.setPreferredSize(new java.awt.Dimension(150, 36));
         jComboBoxTipoGasto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxTipoGastoActionPerformed(evt);
@@ -196,7 +132,7 @@ public class GastosView extends AbstractViewPanel {
 
         jPanel8.add(jPanel6);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Monto"));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Monto"));
         jPanel5.setToolTipText(null);
         jPanel5.setMinimumSize(new java.awt.Dimension(150, 60));
         jPanel5.setPreferredSize(new java.awt.Dimension(170, 60));
@@ -204,6 +140,7 @@ public class GastosView extends AbstractViewPanel {
 
         jSpinnerMonto.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
         jSpinnerMonto.setToolTipText(null);
+        jSpinnerMonto.setOpaque(false);
         jSpinnerMonto.setPreferredSize(new java.awt.Dimension(90, 26));
         jSpinnerMonto.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -222,7 +159,7 @@ public class GastosView extends AbstractViewPanel {
 
         jPanel8.add(jPanel5);
 
-        jPanelDesc.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("label_descripcion"))); // NOI18N
+        jPanelDesc.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), bundle.getString("label_descripcion"))); // NOI18N
         jPanelDesc.setPreferredSize(new java.awt.Dimension(170, 166));
         jPanelDesc.setLayout(new java.awt.BorderLayout());
 
@@ -248,9 +185,88 @@ public class GastosView extends AbstractViewPanel {
 
         jPanelAgregar1.add(jPanel8, java.awt.BorderLayout.CENTER);
 
+        jPanel3.setToolTipText(null);
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jButtonLimpiarEntradas.setToolTipText("Limpiar");
+        jButtonLimpiarEntradas.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButtonLimpiarEntradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarEntradasActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButtonLimpiarEntradas, java.awt.BorderLayout.WEST);
+
+        jButtonCrearGasto.setText("Crear");
+        jButtonCrearGasto.setToolTipText(null);
+        jButtonCrearGasto.setPreferredSize(new java.awt.Dimension(164, 28));
+        jButtonCrearGasto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCrearGastoActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButtonCrearGasto, java.awt.BorderLayout.CENTER);
+
+        jPanelAgregar1.add(jPanel3, java.awt.BorderLayout.SOUTH);
+
         jPanelContainer.add(jPanelAgregar1, java.awt.BorderLayout.CENTER);
 
-        add(jPanelContainer, java.awt.BorderLayout.WEST);
+        jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 15, 15));
+        jPanel7.setLayout(new java.awt.BorderLayout());
+
+        jLabelGast.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabelGast.setForeground(new java.awt.Color(153, 0, 0));
+        jLabelGast.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelGast.setText("XXXX.XX CUC");
+        jLabelGast.setToolTipText(null);
+        jLabelGast.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Total"));
+        jPanel7.add(jLabelGast, java.awt.BorderLayout.SOUTH);
+
+        jPanelContainer.add(jPanel7, java.awt.BorderLayout.PAGE_END);
+
+        jPanel1.add(jPanelContainer, java.awt.BorderLayout.WEST);
+
+        jPanelInfo.setLayout(new java.awt.BorderLayout());
+
+        jTableInfo.setAutoCreateRowSorter(true);
+        jTableInfo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Categoria", "Tipo", "Monto", "Descripcion"
+            }
+        ));
+        jScrollPane4.setViewportView(jTableInfo);
+
+        jPanelInfo.add(jScrollPane4, java.awt.BorderLayout.CENTER);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 0, 15));
+        jPanel4.setPreferredSize(new java.awt.Dimension(146, 50));
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        jButtonImprimirGastos.setText("Gastos");
+        jButtonImprimirGastos.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonImprimirGastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImprimirGastosActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButtonImprimirGastos, java.awt.BorderLayout.WEST);
+
+        jButtonEliminarGasto.setText(bundle.getString("label_eliminar")); // NOI18N
+        jButtonEliminarGasto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarGastoActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButtonEliminarGasto, java.awt.BorderLayout.EAST);
+
+        jPanelInfo.add(jPanel4, java.awt.BorderLayout.SOUTH);
+
+        jPanel1.add(jPanelInfo, java.awt.BorderLayout.CENTER);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonImprimirGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirGastosActionPerformed
@@ -402,7 +418,9 @@ public class GastosView extends AbstractViewPanel {
 
     private void setCounterInBorder(int max, int l) {
         jPanelDesc.setBorder(javax.swing.BorderFactory.createTitledBorder(
-                ResourceBundle.getBundle("Strings").getString("label_descripcion") + " (" + String.valueOf(max - l) + ")")); // NOI18N
+                javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15),
+                ResourceBundle.getBundle("Strings").getString("label_descripcion")
+                + " (" + String.valueOf(max - l) + ")")); // NOI18N
     }
 
 
@@ -415,11 +433,13 @@ public class GastosView extends AbstractViewPanel {
     private javax.swing.JComboBox<R.TipoGasto> jComboBoxTipoGasto;
     private javax.swing.JLabel jLabelGast;
     private javax.swing.JLabel jLabelMonto;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelAgregar1;
     private javax.swing.JPanel jPanelContainer;
