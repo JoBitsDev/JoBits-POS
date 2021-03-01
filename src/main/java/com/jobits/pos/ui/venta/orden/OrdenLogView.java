@@ -44,21 +44,21 @@ public class OrdenLogView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel4 = new javax.swing.JPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel2 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabelCodOrden = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonCerrar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_DARK, 2, true));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(750, 520));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 20, 1));
@@ -112,10 +112,12 @@ public class OrdenLogView extends AbstractViewPanel {
 
         jPanel4.add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        jPanel3.setPreferredSize(new java.awt.Dimension(728, 60));
+        jPanel3.setPreferredSize(new java.awt.Dimension(728, 50));
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jButtonCerrar.setText("Cerrar");
-        jPanel3.add(jButtonCerrar);
+        jButtonCerrar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanel3.add(jButtonCerrar, new java.awt.GridBagConstraints());
 
         jPanel4.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
