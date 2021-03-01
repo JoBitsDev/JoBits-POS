@@ -120,7 +120,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAtras = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelBusqueda = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldSearch = new javax.swing.JTextField();
         jLabelBuscarIcon = new javax.swing.JLabel();
         jPanelMain = MaterialComponentsFactory.Containers.getSecondaryPanel();
