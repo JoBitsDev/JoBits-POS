@@ -82,6 +82,7 @@ public class LicenceDialogView extends JPanel implements View {
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Licencia");
+        jLabel1.setOpaque(true);
         jPanelTop.add(jLabel1, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(jPanelTop, java.awt.BorderLayout.PAGE_START);
@@ -234,7 +235,6 @@ public class LicenceDialogView extends JPanel implements View {
 
         jPanel2.add(jPanelInfo, java.awt.BorderLayout.CENTER);
 
-        jPanelActions.setBackground(new java.awt.Color(204, 204, 204));
         jPanelActions.setPreferredSize(new java.awt.Dimension(275, 50));
         jPanelActions.setLayout(new java.awt.GridBagLayout());
 
