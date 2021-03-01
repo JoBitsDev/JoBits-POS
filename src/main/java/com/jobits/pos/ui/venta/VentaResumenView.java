@@ -517,11 +517,11 @@ add(jPanel15, java.awt.BorderLayout.SOUTH);
                     case 0:
                         return "Producto Venta";
                     case 1:
-                        return "Precio (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Precio (" + R.COIN_SUFFIX + ")";
                     case 2:
                         return "Cantidad";
                     case 3:
-                        return "Recaudado (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Recaudado (" + R.COIN_SUFFIX + ")";
                 }
                 return null;
             }
@@ -575,7 +575,7 @@ add(jPanel15, java.awt.BorderLayout.SOUTH);
                     case 2:
                         return "Cantidad";
                     case 3:
-                        return "Costo (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Costo (" + R.COIN_SUFFIX + ")";
                 }
                 return null;
             }

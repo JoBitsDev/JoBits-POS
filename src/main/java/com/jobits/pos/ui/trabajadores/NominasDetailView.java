@@ -407,7 +407,7 @@ public class NominasDetailView extends AbstractViewPanel {
                     case 1:
                         return "Días";
                     case 2:
-                        return "Promedio (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Promedio (" + R.COIN_SUFFIX + ")";
                     case 3:
                         return "";
                     default:

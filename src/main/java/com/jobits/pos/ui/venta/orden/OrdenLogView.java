@@ -7,11 +7,7 @@ package com.jobits.pos.ui.venta.orden;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.servicios.impresion.Impresora;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
-import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewModel;
-import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenLogViewModel.*;
@@ -175,13 +171,13 @@ public class OrdenLogView extends AbstractViewPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((String[]) getListModel().getElementAt(rowIndex))[0];
+                        return getRow(rowIndex)[0];
                     case 1:
-                        return ((String[]) getListModel().getElementAt(rowIndex))[1];
+                        return getRow(rowIndex)[1];
                     case 2:
-                        return ((String[]) getListModel().getElementAt(rowIndex))[3];
+                        return getRow(rowIndex)[2];
                     case 3:
-                        return ((String[]) getListModel().getElementAt(rowIndex))[4];
+                        return getRow(rowIndex)[3];
                 }
                 return null;
             }

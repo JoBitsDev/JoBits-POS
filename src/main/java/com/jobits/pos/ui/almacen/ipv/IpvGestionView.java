@@ -415,9 +415,9 @@ public class IpvGestionView extends AbstractViewPanel {
                     case 5:
                         return "Venta";
                     case 6:
-                        return "Precio Venta (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Precio Venta (" + R.COIN_SUFFIX + ")";
                     case 7:
-                        return "Importe (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Importe (" + R.COIN_SUFFIX + ")";
                     case 8:
                         return "Final";
                     default:
@@ -504,7 +504,7 @@ public class IpvGestionView extends AbstractViewPanel {
                     case 6:
                         return "Final";
                     case 7:
-                        return "Importe (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Importe (" + R.COIN_SUFFIX + ")";
                     default:
                         return null;
                 }

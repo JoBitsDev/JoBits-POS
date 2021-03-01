@@ -735,23 +735,27 @@ public class VentaDetailView extends AbstractViewPanel {
         chartPie.getStyler().setLegendBackgroundColor(new Color(255, 255, 255, 0));
 
         float perdida = 0;
+        System.out.println(insumos);
+        System.out.println(otro);
+        System.out.println(salarios);
+        System.out.println(ventasTotal);
         if (insumos != null) {
-            float insumo = Float.parseFloat(insumos.split("_")[0].replaceAll(" ", ""));
+            float insumo = Float.parseFloat(insumos.substring(0, insumos.lastIndexOf(" ")).replaceAll(" ", ""));
             perdida += insumo;
             chartPie.addSeries("Gastos de Insumo " + utils.setDosLugaresDecimales(insumo), insumo);
         }
         if (otro != null) {
-            float otros = Float.parseFloat(otro.split("_")[0].replaceAll(" ", ""));
+            float otros = Float.parseFloat(otro.substring(0, otro.lastIndexOf(" ")).replaceAll(" ", ""));
             perdida += otros;
             chartPie.addSeries("Otros gastos " + utils.setDosLugaresDecimales(otros), otros);
         }
         if (salarios != null) {
-            float trabajadores = Float.parseFloat(salarios.split("_")[0].replaceAll(" ", ""));
+            float trabajadores = Float.parseFloat(salarios.substring(0, salarios.lastIndexOf(" ")).replaceAll(" ", ""));
             perdida += trabajadores;
             chartPie.addSeries("Pago a trabajadores " + utils.setDosLugaresDecimales(trabajadores), trabajadores);
         }
         if (ventasTotal != null) {
-            float gananciaRelativa = Float.parseFloat(ventasTotal.split("_")[0].replaceAll(" ", "")) - perdida;
+            float gananciaRelativa = Float.parseFloat(ventasTotal.substring(0, ventasTotal.lastIndexOf(" ")).replaceAll(" ", "")) - perdida;
             chartPie.addSeries("Resto de efectivo " + utils.setDosLugaresDecimales(gananciaRelativa), gananciaRelativa).setFillColor(Color.GREEN);
         }
 
@@ -802,6 +806,7 @@ public class VentaDetailView extends AbstractViewPanel {
         c.setMaximumSize(dimension);
         panel.add(c);
 //        panel.add(Box.createRigidArea(new Dimension(1, 1)));
+
         return c;
     }
 }
