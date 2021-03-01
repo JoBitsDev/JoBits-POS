@@ -60,36 +60,36 @@ public class NominasDetailView extends AbstractViewPanel {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanelSeleccion = new javax.swing.JPanel();
-        jPanelPeriodo = new javax.swing.JPanel();
-        jButtonPeriodoSelector = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
+        jPanelSeleccion = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelPeriodo = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonPeriodoSelector = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelPeriodoActual = new javax.swing.JLabel();
-        jPanelPeriodChooser = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jDateChooserDel = new org.jdesktop.swingx.JXDatePicker();
-        jPanel6 = new javax.swing.JPanel();
+        jPanelPeriodChooser = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jDateChooserDel = MaterialComponentsFactory.Input.getUnlabeledDatePicker();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel14 = new javax.swing.JLabel();
-        jDateChooserAl = new org.jdesktop.swingx.JXDatePicker();
-        jPanel8 = new javax.swing.JPanel();
+        jDateChooserAl = MaterialComponentsFactory.Input.getUnlabeledDatePicker();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jRadioButtonXY = new javax.swing.JRadioButton();
         jRadioButtonPie = new javax.swing.JRadioButton();
-        jPanelData = new javax.swing.JPanel();
-        jPanelIzq = new javax.swing.JPanel();
+        jPanelData = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelIzq = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jCheckBoxseleccionarTodos = new javax.swing.JCheckBox();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableUsuariosActivos = new javax.swing.JTable();
         jLabelAcumulado = MaterialComponentsFactory.Displayers.getLabel();
-        jPanelGrafica = new javax.swing.JPanel();
+        jPanelGrafica = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jButtonAcumulado = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAcumulado = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonPagar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setOpaque(false);
         setLayout(new java.awt.BorderLayout(5, 5));
 
-        jPanelSeleccion.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
+        jPanelSeleccion.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 0, 15));
         jPanelSeleccion.setLayout(new java.awt.BorderLayout());
 
         jPanelPeriodo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
@@ -158,6 +158,7 @@ public class NominasDetailView extends AbstractViewPanel {
         jRadioButtonXY.setText("Dias Trabajados");
         jRadioButtonXY.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jRadioButtonXY.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jRadioButtonXY.setOpaque(false);
         jRadioButtonXY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonXYActionPerformed(evt);
@@ -168,6 +169,7 @@ public class NominasDetailView extends AbstractViewPanel {
         jRadioButtonPie.setText("Ventas Generales");
         jRadioButtonPie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jRadioButtonPie.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jRadioButtonPie.setOpaque(false);
         jRadioButtonPie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonPieActionPerformed(evt);
@@ -181,13 +183,11 @@ public class NominasDetailView extends AbstractViewPanel {
 
         add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
 
-        jPanelData.setOpaque(false);
         jPanelData.setLayout(new java.awt.BorderLayout());
 
-        jPanelIzq.setBorder(javax.swing.BorderFactory.createLineBorder(DefaultValues.SECONDARY_COLOR));
+        jPanelIzq.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanelIzq.setMaximumSize(new java.awt.Dimension(2147483647, 100));
         jPanelIzq.setMinimumSize(new java.awt.Dimension(375, 510));
-        jPanelIzq.setOpaque(false);
         jPanelIzq.setPreferredSize(new java.awt.Dimension(325, 510));
         jPanelIzq.setLayout(new java.awt.BorderLayout(5, 5));
 
@@ -239,17 +239,16 @@ public class NominasDetailView extends AbstractViewPanel {
         jLabelAcumulado.setText("           --               ");
         jLabelAcumulado.setBorder(javax.swing.BorderFactory.createCompoundBorder(null, javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 18)))); // NOI18N
         jLabelAcumulado.setMaximumSize(new java.awt.Dimension(300, 50));
+        jLabelAcumulado.setOpaque(true);
         jPanelIzq.add(jLabelAcumulado, java.awt.BorderLayout.PAGE_END);
 
         jPanelData.add(jPanelIzq, java.awt.BorderLayout.WEST);
 
-        jPanelGrafica.setOpaque(false);
         jPanelGrafica.setLayout(new java.awt.BorderLayout());
         jPanelData.add(jPanelGrafica, java.awt.BorderLayout.CENTER);
 
         add(jPanelData, java.awt.BorderLayout.CENTER);
 
-        jPanelBotones.setOpaque(false);
         jPanelBotones.setPreferredSize(new java.awt.Dimension(300, 60));
         jPanelBotones.setLayout(new java.awt.GridBagLayout());
 
@@ -406,7 +405,7 @@ public class NominasDetailView extends AbstractViewPanel {
                     case 0:
                         return "Usuario";
                     case 1:
-                        return "Dias";
+                        return "Días";
                     case 2:
                         return "Promedio (" + R.COIN_SUFFIX.substring(1) + ")";
                     case 3:
@@ -434,6 +433,7 @@ public class NominasDetailView extends AbstractViewPanel {
             }
         };
         jTableUsuariosActivos.setModel(model);
+        jTableUsuariosActivos.getColumnModel().getColumn(3).setWidth(30);
         jTableUsuariosActivos.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableUsuariosActivos.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
         jTableUsuariosActivos.getModel().addTableModelListener((TableModelEvent e) -> {
