@@ -57,92 +57,86 @@ public class AlmacenMainView extends AbstractViewPanel {
     private void initComponents() {
 
         jPanelSeleccion = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jTextFieldBusqueda = MaterialComponentsFactory.Input.getTextField("Buscar insumo", "");
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
-        jLabel1 = new javax.swing.JLabel();
-        jPanelPeriodo = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jComboBoxAlmacenList = new javax.swing.JComboBox<>();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
+        jPanelPeriodo = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxAlmacenList = MaterialComponentsFactory.Displayers.getComboBox("Almacenes");
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonNuevoAlmacen = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
         jButtonEliminarAlmacen = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelTabla = new javax.swing.JPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jTextFieldBusqueda = MaterialComponentsFactory.Input.getTextField("Buscar insumo", "");
+        jLabel1 = new javax.swing.JLabel();
+        jPanelTabla = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelOpciones = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelValorTotal = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jButtonNuevaFactura = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonTransacciones = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonDarReporte = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonResumen = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonNuevaFactura = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonTransacciones = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonDarReporte = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonResumen = MaterialComponentsFactory.Buttons.getLinedButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout(5, 5));
 
         jPanelSeleccion.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jPanelSeleccion.setPreferredSize(new java.awt.Dimension(400, 70));
         jPanelSeleccion.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 1, 15, 1));
-        jPanel4.setOpaque(false);
-        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.LINE_AXIS));
-
-        jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(300, 24));
-        jTextFieldBusqueda.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextFieldBusquedaFocusLost(evt);
-            }
-        });
-        jPanel4.add(jTextFieldBusqueda);
-        jPanel4.add(filler3);
-
-        jLabel1.setIcon(MaterialIcons.SEARCH);
-        jLabel1.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel4.add(jLabel1);
-
-        jPanelSeleccion.add(jPanel4, java.awt.BorderLayout.EAST);
-
-        jPanelPeriodo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        jPanelPeriodo.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 0));
         jPanelPeriodo.setOpaque(false);
         jPanelPeriodo.setPreferredSize(new java.awt.Dimension(400, 50));
-        jPanelPeriodo.setLayout(new javax.swing.BoxLayout(jPanelPeriodo, javax.swing.BoxLayout.LINE_AXIS));
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 1, 15, 1));
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanelPeriodo.setLayout(new java.awt.BorderLayout());
 
         jComboBoxAlmacenList.setMaximumRowCount(20);
+        jComboBoxAlmacenList.setPreferredSize(new java.awt.Dimension(200, 50));
         jComboBoxAlmacenList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxAlmacenListActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBoxAlmacenList, java.awt.BorderLayout.CENTER);
+        jPanelPeriodo.add(jComboBoxAlmacenList, java.awt.BorderLayout.CENTER);
 
-        jPanelPeriodo.add(jPanel1);
-        jPanelPeriodo.add(filler1);
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 1, 15, 1));
+        jPanel1.setPreferredSize(new java.awt.Dimension(100, 50));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jButtonNuevoAlmacen.setIcon(MaterialIcons.ADD);
         jButtonNuevoAlmacen.setMaximumSize(new java.awt.Dimension(40, 40));
         jButtonNuevoAlmacen.setMinimumSize(new java.awt.Dimension(40, 40));
         jButtonNuevoAlmacen.setPreferredSize(new java.awt.Dimension(40, 40));
-        jPanelPeriodo.add(jButtonNuevoAlmacen);
-        jPanelPeriodo.add(filler2);
+        jPanel1.add(jButtonNuevoAlmacen, new java.awt.GridBagConstraints());
 
         jButtonEliminarAlmacen.setIcon(MaterialIcons.DELETE);
         jButtonEliminarAlmacen.setMaximumSize(new java.awt.Dimension(40, 40));
         jButtonEliminarAlmacen.setMinimumSize(new java.awt.Dimension(40, 40));
         jButtonEliminarAlmacen.setPreferredSize(new java.awt.Dimension(40, 40));
-        jPanelPeriodo.add(jButtonEliminarAlmacen);
+        jPanel1.add(jButtonEliminarAlmacen, new java.awt.GridBagConstraints());
+
+        jPanelPeriodo.add(jPanel1, java.awt.BorderLayout.EAST);
 
         jPanelSeleccion.add(jPanelPeriodo, java.awt.BorderLayout.WEST);
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 0, 10, 10));
+        jPanel4.setOpaque(false);
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(300, 50));
+        jTextFieldBusqueda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldBusquedaFocusLost(evt);
+            }
+        });
+        jPanel4.add(jTextFieldBusqueda, java.awt.BorderLayout.CENTER);
+
+        jLabel1.setIcon(MaterialIcons.SEARCH);
+        jLabel1.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel4.add(jLabel1, java.awt.BorderLayout.EAST);
+
+        jPanelSeleccion.add(jPanel4, java.awt.BorderLayout.EAST);
+
         add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
 
-        jPanelTabla.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelTabla.setForeground(new java.awt.Color(255, 255, 255));
+        jPanelTabla.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         jPanelTabla.setLayout(new java.awt.BorderLayout());
         add(jPanelTabla, java.awt.BorderLayout.CENTER);
 
@@ -168,6 +162,7 @@ public class AlmacenMainView extends AbstractViewPanel {
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
 
         jButtonNuevaFactura.setText("Nueva Factura");
+        jButtonNuevaFactura.setPreferredSize(new java.awt.Dimension(150, 50));
         jButtonNuevaFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNuevaFacturaActionPerformed(evt);
@@ -176,6 +171,7 @@ public class AlmacenMainView extends AbstractViewPanel {
         jPanel3.add(jButtonNuevaFactura);
 
         jButtonTransacciones.setText("Transacciones");
+        jButtonTransacciones.setPreferredSize(new java.awt.Dimension(150, 50));
         jButtonTransacciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonTransaccionesActionPerformed(evt);
@@ -184,6 +180,7 @@ public class AlmacenMainView extends AbstractViewPanel {
         jPanel3.add(jButtonTransacciones);
 
         jButtonDarReporte.setText("Reporte");
+        jButtonDarReporte.setPreferredSize(new java.awt.Dimension(150, 50));
         jButtonDarReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonDarReporteActionPerformed(evt);
@@ -192,6 +189,7 @@ public class AlmacenMainView extends AbstractViewPanel {
         jPanel3.add(jButtonDarReporte);
 
         jButtonResumen.setText("Resumen");
+        jButtonResumen.setPreferredSize(new java.awt.Dimension(150, 50));
         jButtonResumen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonResumenActionPerformed(evt);
@@ -229,9 +227,6 @@ public class AlmacenMainView extends AbstractViewPanel {
     }//GEN-LAST:event_jTextFieldBusquedaFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
-    private javax.swing.Box.Filler filler3;
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonEliminarAlmacen;
     private javax.swing.JButton jButtonNuevaFactura;
@@ -348,9 +343,9 @@ public class AlmacenMainView extends AbstractViewPanel {
                     case 3:
                         return "En Almacen";
                     case 4:
-                        return "Costo Unitario Prom (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Costo Unitario Prom (" + R.COIN_SUFFIX + ")";
                     case 5:
-                        return "Valor Total (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Valor Total (" + R.COIN_SUFFIX + ")";
                     default:
                         return null;
                 }

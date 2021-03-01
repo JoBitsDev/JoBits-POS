@@ -58,8 +58,8 @@ public class ImageManagerPopUpContainer extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelMainPanel = new javax.swing.JPanel();
-        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelMainPanel = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonClose = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -67,7 +67,6 @@ public class ImageManagerPopUpContainer extends javax.swing.JDialog {
         setPreferredSize(new java.awt.Dimension(700, 500));
         setResizable(false);
 
-        jPanelMainPanel.setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_DARK, 2, true));
         jPanelMainPanel.setLayout(new java.awt.BorderLayout());
 
         jPanel3.setPreferredSize(new java.awt.Dimension(100, 60));

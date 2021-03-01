@@ -46,7 +46,7 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
         jButtonPrint.setPreferredSize(new java.awt.Dimension(50, 50));
         jButtonPrint.setAction(getPresenter().getOperation(ACTION_IMPRIMIR_TRANSACCIONES));
         jButtonPrint.setIcon(MaterialIcons.PRINT);
-        jXPanelControles.add(jButtonPrint);
+        jPanelControles.add(jButtonPrint);
 
         add(jPanelOptionsButtons, BorderLayout.SOUTH);
 

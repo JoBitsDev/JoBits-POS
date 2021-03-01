@@ -100,7 +100,7 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
                     case 2:
                         return "Cantidad";
                     case 3:
-                        return "Costo (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Costo (" + R.COIN_SUFFIX + ")";
                 }
                 return null;
             }

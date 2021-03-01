@@ -111,12 +111,12 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelInsert = new javax.swing.JPanel();
+        jPanelInsert = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel1 = new javax.swing.JPanel();
         jTextFieldAutoComplete = MaterialComponentsFactory.Input.getTextField("Buscar...", jTextFieldDataName);
         jButtonAgregarProd = MaterialComponentsFactory.Buttons.getAddButton();
-        jScrollPaneCrossReference = new javax.swing.JScrollPane();
-        jPanelOpcionesContainer = new javax.swing.JPanel();
+        jScrollPaneCrossReference = MaterialComponentsFactory.Containers.getScrollPane();
+        jPanelOpcionesContainer = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelOpciones = new javax.swing.JPanel();
         jButtonDeleteProd = MaterialComponentsFactory.Buttons.getCancelButton();
 
@@ -125,14 +125,12 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
-        jPanelInsert.setBackground(new java.awt.Color(204, 204, 204));
         jPanelInsert.setMaximumSize(new java.awt.Dimension(2147483647, 64));
         jPanelInsert.setMinimumSize(new java.awt.Dimension(100, 64));
         jPanelInsert.setOpaque(false);
         jPanelInsert.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setMinimumSize(new java.awt.Dimension(100, 38));
-        jPanel1.setOpaque(false);
 
         jTextFieldAutoComplete.setMinimumSize(new java.awt.Dimension(250, 26));
         jTextFieldAutoComplete.setPreferredSize(new java.awt.Dimension(200, 50));
@@ -156,7 +154,6 @@ public class AddFromPanel<T, K> extends AbstractViewPanel {
         jPanelOpcionesContainer.setLayout(new java.awt.BorderLayout());
 
         jPanelOpciones.setMaximumSize(new java.awt.Dimension(32767, 60));
-        jPanelOpciones.setOpaque(false);
         jPanelOpciones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonDeleteProd.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N

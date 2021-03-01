@@ -50,31 +50,34 @@ public class ResumenMainview extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelSeleccion = new javax.swing.JPanel();
-        jButtonPeriodoSelector = new javax.swing.JButton();
-        jPanelPeriodChooser = new javax.swing.JPanel();
-        jDateChooserDel = new org.jdesktop.swingx.JXDatePicker();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelSeleccion = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonPeriodoSelector = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanelPeriodChooser = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jDateChooserDel = MaterialComponentsFactory.Input.getDatePicker();
         jLabel15 = new javax.swing.JLabel();
-        jDateChooserAl = new org.jdesktop.swingx.JXDatePicker();
-        jPanelOpciones = new javax.swing.JPanel();
+        jDateChooserAl = MaterialComponentsFactory.Input.getDatePicker();
+        jPanelOpciones = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonCargarResumen = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanelsContainer = new javax.swing.JPanel();
-        jPanelMainDashBoard = new javax.swing.JPanel();
-        jPanelValoresEstadisticos = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelsContainer = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelMainDashBoard = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelGraficaPrincipal = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelValoresEstadisticos = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jLabelCostoporPeso = new javax.swing.JLabel();
-        jButtonImpimir = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelGraficaPrincipal = new javax.swing.JPanel();
-        jPanelResumenesDetallados = new javax.swing.JPanel();
-        jPanelDetallesVenta = new javax.swing.JPanel();
-        jPanelDetallesAutorizo = new javax.swing.JPanel();
-        jPanelDetallesCostos = new javax.swing.JPanel();
-        jPanelDetallesSalarios = new javax.swing.JPanel();
-        jPanelDetallesGastos = new javax.swing.JPanel();
+        jButtonImpimir = MaterialComponentsFactory.Buttons.getLinedButton();
+        jPanelResumenesDetallados = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelDetallesVenta = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelDetallesAutorizo = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelDetallesCostos = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelDetallesSalarios = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelDetallesGastos = MaterialComponentsFactory.Containers.getTransparentPanel();
 
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
-        jPanelSeleccion.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jPanelSeleccion.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 15));
         jPanelSeleccion.setLayout(new java.awt.BorderLayout());
 
         jButtonPeriodoSelector.setIcon(MaterialIcons.ARROW_DROP_LEFT);
@@ -125,33 +128,34 @@ public class ResumenMainview extends AbstractViewPanel {
 
         jPanelSeleccion.add(jPanelOpciones, java.awt.BorderLayout.EAST);
 
-        add(jPanelSeleccion, java.awt.BorderLayout.NORTH);
+        jPanel2.add(jPanelSeleccion, java.awt.BorderLayout.NORTH);
 
         jPanelsContainer.setLayout(new java.awt.CardLayout());
 
         jPanelMainDashBoard.setLayout(new java.awt.BorderLayout());
 
-        jPanelValoresEstadisticos.setPreferredSize(new java.awt.Dimension(791, 35));
+        jPanelGraficaPrincipal.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 0, 0));
+        jPanelGraficaPrincipal.setLayout(new java.awt.BorderLayout());
+        jPanelMainDashBoard.add(jPanelGraficaPrincipal, java.awt.BorderLayout.CENTER);
+
+        jPanelValoresEstadisticos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 15));
+        jPanelValoresEstadisticos.setPreferredSize(new java.awt.Dimension(791, 50));
         jPanelValoresEstadisticos.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
+        jLabelCostoporPeso.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelCostoporPeso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
         jLabelCostoporPeso.setText("0.0");
         jLabelCostoporPeso.setToolTipText("Costo por Peso");
-        jPanel1.add(jLabelCostoporPeso);
-
-        jPanelValoresEstadisticos.add(jPanel1, java.awt.BorderLayout.CENTER);
+        jPanelValoresEstadisticos.add(jLabelCostoporPeso, java.awt.BorderLayout.CENTER);
 
         jButtonImpimir.setText("Imprimir");
+        jButtonImpimir.setPreferredSize(new java.awt.Dimension(140, 40));
         jPanelValoresEstadisticos.add(jButtonImpimir, java.awt.BorderLayout.EAST);
 
         jPanelMainDashBoard.add(jPanelValoresEstadisticos, java.awt.BorderLayout.SOUTH);
 
-        jPanelGraficaPrincipal.setLayout(new java.awt.BorderLayout());
-        jPanelMainDashBoard.add(jPanelGraficaPrincipal, java.awt.BorderLayout.CENTER);
-
-        jPanelResumenesDetallados.setPreferredSize(new java.awt.Dimension(200, 400));
+        jPanelResumenesDetallados.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 0, 0, 15));
+        jPanelResumenesDetallados.setPreferredSize(new java.awt.Dimension(230, 400));
         jPanelResumenesDetallados.setLayout(new java.awt.GridLayout(6, 1, 0, 10));
         jPanelMainDashBoard.add(jPanelResumenesDetallados, java.awt.BorderLayout.EAST);
 
@@ -172,7 +176,9 @@ public class ResumenMainview extends AbstractViewPanel {
         jPanelDetallesGastos.setLayout(new java.awt.BorderLayout());
         jPanelsContainer.add(jPanelDetallesGastos, "Detalles Gastos");
 
-        add(jPanelsContainer, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jPanelsContainer, java.awt.BorderLayout.CENTER);
+
+        add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jDateChooserDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserDelActionPerformed
@@ -194,7 +200,7 @@ public class ResumenMainview extends AbstractViewPanel {
     private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabelCostoporPeso;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelDetallesAutorizo;
     private javax.swing.JPanel jPanelDetallesCostos;
     private javax.swing.JPanel jPanelDetallesGastos;
@@ -235,7 +241,7 @@ public class ResumenMainview extends AbstractViewPanel {
 
         Card utilCard = MaterialComponentsFactory.Displayers.getSmallCardImageValueModel(null, null, "Utilidades",
                 getPresenter().getModel(PROP_TOTAL_UTILIDADES), getPresenter().getModel(PROP_PROFITS_ICON));
-        utilCard.setBorder(new LineBorder(Color.BLACK, 6, true));
+//        utilCard.setBorder(new LineBorder(Color.BLACK, 6, true));
         utilCard.setSecondaryTextFont(new java.awt.Font("Dialog", 1, 18));
         jPanelResumenesDetallados.add(utilCard);
         jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Venta",

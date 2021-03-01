@@ -40,23 +40,23 @@ public class AreaVentaListView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel5 = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanelAreas = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelAreas = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
         jListAreas = MaterialComponentsFactory.Displayers.getList();
-        jPanel4 = new javax.swing.JPanel();
-        jButtonEliminarArea = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel4 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonEliminarArea = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAgregarArea = MaterialComponentsFactory.Buttons.getMaterialButton()
         ;
-        jPanelMesas = new javax.swing.JPanel();
+        jPanelMesas = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jListMesas = MaterialComponentsFactory.Displayers.getList();
-        jPanel3 = new javax.swing.JPanel();
-        jButtonEliminarMesa = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonEliminarMesa = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAgregarMesa = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -64,31 +64,28 @@ public class AreaVentaListView extends AbstractViewPanel {
         setOpaque(false);
         setLayout(new java.awt.BorderLayout(0, 5));
 
-        jPanel5.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel5.setOpaque(false);
-        jPanel5.setLayout(new java.awt.BorderLayout());
+        jPanel5.setPreferredSize(new java.awt.Dimension(169, 50));
+        jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jLabel3.setText(bundle.getString("label_gestion_salon")); // NOI18N
-        jPanel5.add(jLabel3, java.awt.BorderLayout.CENTER);
+        jPanel5.add(jLabel3, new java.awt.GridBagConstraints());
 
         add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.setOpaque(false);
         jPanel1.setLayout(new java.awt.GridLayout(1, 1, 5, 0));
 
-        jPanelAreas.setOpaque(false);
         jPanelAreas.setLayout(new java.awt.BorderLayout(5, 5));
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText(bundle.getString("label_areas")); // NOI18N
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanelAreas.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
-        jScrollPane2.setOpaque(false);
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 10));
 
         jListAreas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListAreas.setOpaque(false);
@@ -97,8 +94,6 @@ public class AreaVentaListView extends AbstractViewPanel {
 
         jPanelAreas.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel4.setOpaque(false);
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonEliminarArea.setText(bundle.getString("label_eliminar")); // NOI18N
@@ -115,15 +110,14 @@ public class AreaVentaListView extends AbstractViewPanel {
 
         jPanel1.add(jPanelAreas);
 
-        jPanelMesas.setOpaque(false);
         jPanelMesas.setLayout(new java.awt.BorderLayout(5, 5));
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText(bundle.getString("label_mesas")); // NOI18N
         jPanelMesas.add(jLabel1, java.awt.BorderLayout.PAGE_START);
 
-        jScrollPane1.setOpaque(false);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 10));
 
         jListMesas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListMesas.setOpaque(false);
@@ -132,8 +126,6 @@ public class AreaVentaListView extends AbstractViewPanel {
 
         jPanelMesas.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setOpaque(false);
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonEliminarMesa.setText(bundle.getString("label_eliminar")); // NOI18N

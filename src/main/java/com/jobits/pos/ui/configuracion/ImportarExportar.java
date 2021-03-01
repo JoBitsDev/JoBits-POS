@@ -57,25 +57,25 @@ public class ImportarExportar extends AbstractViewPanel {
         jLabelSelCol = new javax.swing.JLabel();
         jPanelReady = new javax.swing.JPanel();
         jLabelAction = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanelMain = new javax.swing.JPanel();
-        jPanelImpExp = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelMain = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelImpExp = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel11 = new javax.swing.JPanel();
         jTextArea1 = new javax.swing.JTextArea();
         jPanel12 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
-        jComboBoxopcionSelector = MaterialComponentsFactory.Displayers.getComboBox();
+        jComboBoxopcionSelector = MaterialComponentsFactory.Displayers.getComboBox("");
         jPanel19 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabelOption1 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
-        jComboBoxTipoDatoSelector = MaterialComponentsFactory.Displayers.getComboBox();
+        jComboBoxTipoDatoSelector = MaterialComponentsFactory.Displayers.getComboBox("");
         jPanelNavButtons1 = new javax.swing.JPanel();
         jPanel30 = new javax.swing.JPanel();
         jButtonToSelectFile = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanelCargarArchivo = new javax.swing.JPanel();
+        jPanelCargarArchivo = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel13 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
         jLabelSelectedFileName1 = new javax.swing.JLabel();
@@ -86,7 +86,7 @@ public class ImportarExportar extends AbstractViewPanel {
         jButtonToSelectColumns = MaterialComponentsFactory.Buttons.getMaterialButton();
         jPanel33 = new javax.swing.JPanel();
         jTextArea3 = new javax.swing.JTextArea();
-        jPanelSelColumnas = new javax.swing.JPanel();
+        jPanelSelColumnas = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel21 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabelSelectedFileName2 = new javax.swing.JLabel();
@@ -117,7 +117,7 @@ public class ImportarExportar extends AbstractViewPanel {
         jPanelNavButtons3 = new javax.swing.JPanel();
         jPanel34 = new javax.swing.JPanel();
         jButtonToReady = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanelCarga = new javax.swing.JPanel();
+        jPanelCarga = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelready = new javax.swing.JPanel();
         jPanelReadyToImport = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -143,6 +143,7 @@ public class ImportarExportar extends AbstractViewPanel {
 
         setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 10, 10));
+        setMinimumSize(new java.awt.Dimension(730, 525));
         setPreferredSize(new java.awt.Dimension(730, 525));
         setLayout(new java.awt.BorderLayout());
 

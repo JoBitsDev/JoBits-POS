@@ -68,51 +68,44 @@ public class SeccionDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelInfo = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel1 = new javax.swing.JPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
         jPanelMenus = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jComboBoxSecciones = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jComboBoxSecciones = MaterialComponentsFactory.Displayers.getComboBox("Secciones Agreagadas");
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jListSeccionesAgregadas = new javax.swing.JList<>();
-        jPanel6 = new javax.swing.JPanel();
-        jButtonEliminar = new javax.swing.JButton();
-        jButtonAgregar = new javax.swing.JButton();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonEliminar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAgregar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
+        setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(335, 500));
         setLayout(new java.awt.BorderLayout());
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
         jPanelInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
-        jPanelInfo.setLayout(new javax.swing.BoxLayout(jPanelInfo, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelInfo.setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jPanel1.setOpaque(false);
-        jPanel1.setPreferredSize(new java.awt.Dimension(180, 60));
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(250, 60));
+        jPanelInfo.add(jTextFieldNombre, new java.awt.GridBagConstraints());
 
-        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(150, 60));
-        jPanel1.add(jTextFieldNombre);
+        jPanel2.add(jPanelInfo, java.awt.BorderLayout.NORTH);
 
-        jPanelInfo.add(jPanel1);
-
-        add(jPanelInfo, java.awt.BorderLayout.NORTH);
-
-        jPanelMenus.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Secciones Agregadas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
+        jPanelMenus.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanelMenus.setLayout(new java.awt.BorderLayout());
 
-        jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jPanel7.setOpaque(false);
-        jPanel7.setLayout(new java.awt.BorderLayout());
-        jPanel7.add(jComboBoxSecciones, java.awt.BorderLayout.PAGE_START);
+        jComboBoxSecciones.setPreferredSize(new java.awt.Dimension(33, 50));
+        jPanelMenus.add(jComboBoxSecciones, java.awt.BorderLayout.PAGE_START);
 
         jScrollPane1.setViewportView(jListSeccionesAgregadas);
 
-        jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanelMenus.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel6.setOpaque(false);
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -125,19 +118,24 @@ public class SeccionDetailView extends AbstractViewPanel {
         jButtonAgregar.setPreferredSize(new java.awt.Dimension(40, 30));
         jPanel6.add(jButtonAgregar);
 
-        jPanel7.add(jPanel6, java.awt.BorderLayout.PAGE_END);
+        jPanelMenus.add(jPanel6, java.awt.BorderLayout.PAGE_END);
 
-        jPanelMenus.add(jPanel7, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jPanelMenus, java.awt.BorderLayout.CENTER);
 
-        add(jPanelMenus, java.awt.BorderLayout.CENTER);
+        jPanelBotones.setPreferredSize(new java.awt.Dimension(280, 50));
+        jPanelBotones.setLayout(new java.awt.GridBagLayout());
 
         jButtonCancelar.setText("Cancelar");
-        jPanelBotones.add(jButtonCancelar);
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanelBotones.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         jButtonAceptar.setText("Aceptar");
-        jPanelBotones.add(jButtonAceptar);
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanelBotones.add(jButtonAceptar, new java.awt.GridBagConstraints());
 
-        add(jPanelBotones, java.awt.BorderLayout.SOUTH);
+        jPanel2.add(jPanelBotones, java.awt.BorderLayout.SOUTH);
+
+        add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -148,9 +146,8 @@ public class SeccionDetailView extends AbstractViewPanel {
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JComboBox<String> jComboBoxSecciones;
     private javax.swing.JList<String> jListSeccionesAgregadas;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelMenus;

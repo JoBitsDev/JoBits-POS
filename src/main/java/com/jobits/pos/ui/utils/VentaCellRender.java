@@ -12,6 +12,7 @@ import javax.swing.table.TableCellRenderer;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.ui.components.MaterialComponentsFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,18 +48,24 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jLabelGastos = new javax.swing.JLabel();
         jLabelVentas = new javax.swing.JLabel();
         jLabelHoraPico = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(""+v.getFecha().getDate()));
         setToolTipText(CreateToolTip(v));
+        setMinimumSize(new java.awt.Dimension(165, 100));
+        setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(165, 100));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
             }
         });
         setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 10, 15), " "+v.getFecha().getDate()));
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabelGastos.setBackground(new java.awt.Color(255, 255, 255));
         jLabelGastos.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
@@ -68,7 +75,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
             ? com.jobits.pos.utils.utils.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue())
             : "-");
         jLabelGastos.setToolTipText("Gastos");
-        add(jLabelGastos, java.awt.BorderLayout.CENTER);
+        jPanel1.add(jLabelGastos, java.awt.BorderLayout.CENTER);
 
         jLabelVentas.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jLabelVentas.setForeground(new java.awt.Color(0, 102, 51));
@@ -79,7 +86,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
             :"-");
         jLabelVentas.setToolTipText("Ventas");
         jLabelVentas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        add(jLabelVentas, java.awt.BorderLayout.PAGE_START);
+        jPanel1.add(jLabelVentas, java.awt.BorderLayout.PAGE_START);
 
         jLabelHoraPico.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
         jLabelHoraPico.setForeground(new java.awt.Color(0, 0, 255));
@@ -89,7 +96,9 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
             ? getPickHour(v)
             :"-");
         jLabelHoraPico.setToolTipText("Hora Pico");
-        add(jLabelHoraPico, java.awt.BorderLayout.PAGE_END);
+        jPanel1.add(jLabelHoraPico, java.awt.BorderLayout.PAGE_END);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
@@ -101,6 +110,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     private javax.swing.JLabel jLabelGastos;
     private javax.swing.JLabel jLabelHoraPico;
     private javax.swing.JLabel jLabelVentas;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
     @Override

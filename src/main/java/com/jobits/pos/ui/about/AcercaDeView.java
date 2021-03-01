@@ -39,18 +39,21 @@ public class AcercaDeView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonCerrar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jXLabelUser1 = new org.jdesktop.swingx.JXLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelVersion = new javax.swing.JLabel();
         jLabelCopyrigth = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(DefaultValues.PRIMARY_COLOR_LIGHT));
         setMinimumSize(new java.awt.Dimension(300, 350));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(300, 350));
         setLayout(new java.awt.BorderLayout());
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
@@ -60,7 +63,7 @@ public class AcercaDeView extends AbstractViewPanel {
         jButtonCerrar.setPreferredSize(new java.awt.Dimension(40, 40));
         jPanel1.add(jButtonCerrar);
 
-        add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        jPanel4.add(jPanel1, java.awt.BorderLayout.NORTH);
 
         jPanel2.setLayout(new java.awt.GridLayout(2, 1));
 
@@ -77,6 +80,7 @@ public class AcercaDeView extends AbstractViewPanel {
         jLabelVersion.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jPanel3.add(jLabelVersion);
 
+        jLabelCopyrigth.setFont(new java.awt.Font("Dialog", 3, 12)); // NOI18N
         jLabelCopyrigth.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCopyrigth.setText("Anno Copyrigth");
         jLabelCopyrigth.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -84,7 +88,9 @@ public class AcercaDeView extends AbstractViewPanel {
 
         jPanel2.add(jPanel3);
 
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        jPanel4.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        add(jPanel4, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -95,6 +101,7 @@ public class AcercaDeView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private org.jdesktop.swingx.JXLabel jXLabelUser1;
     // End of variables declaration//GEN-END:variables
 

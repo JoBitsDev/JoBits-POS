@@ -35,11 +35,8 @@ public class StatusBarView extends AbstractViewPanel {
         jButtonLlave =
         MaterialComponentsFactory.Buttons.getIconButton(new javax.swing.ImageIcon(getClass().
             getResource("/restManager/resources/images/key.png")));
-    jPanel4 = new javax.swing.JPanel();
-    filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(20, 32767));
     jLabelEstadoLicencia = MaterialComponentsFactory.Displayers.getLabel();
     jLabelUsuarioRegistrado = MaterialComponentsFactory.Displayers.getLabel();
-    jPanel1 = new javax.swing.JPanel();
     jLabelVersion = MaterialComponentsFactory.Displayers.getLabel();
 
     jButtonLlave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/key.png"))); // NOI18N
@@ -51,49 +48,36 @@ public class StatusBarView extends AbstractViewPanel {
     setOpaque(false);
     setLayout(new java.awt.GridLayout(1, 3));
 
-    jPanel4.setOpaque(false);
-    jPanel4.setLayout(new java.awt.BorderLayout());
-    jPanel4.add(filler1, java.awt.BorderLayout.WEST);
-
     jLabelEstadoLicencia.setForeground(new java.awt.Color(102, 102, 102));
     jLabelEstadoLicencia.setText("<Estado licencia>");
-    jPanel4.add(jLabelEstadoLicencia, java.awt.BorderLayout.CENTER);
-
-    add(jPanel4);
+    add(jLabelEstadoLicencia);
 
     jLabelUsuarioRegistrado.setForeground(new java.awt.Color(102, 102, 102));
     jLabelUsuarioRegistrado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     jLabelUsuarioRegistrado.setText("<Usuario registrado>");
     add(jLabelUsuarioRegistrado);
 
-    jPanel1.setOpaque(false);
-    jPanel1.setLayout(new java.awt.BorderLayout());
-
     jLabelVersion.setForeground(new java.awt.Color(102, 102, 102));
-    jLabelVersion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    jLabelVersion.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
     jLabelVersion.setText("<Version x.x.x>");
-    jPanel1.add(jLabelVersion, java.awt.BorderLayout.EAST);
-
-    add(jPanel1);
+    add(jLabelVersion);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonLlave;
     private javax.swing.JLabel jLabelEstadoLicencia;
     private javax.swing.JLabel jLabelUsuarioRegistrado;
     private javax.swing.JLabel jLabelVersion;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel4;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void wireUp() {
         Bindings.bind(jLabelVersion, getPresenter().getModel(PROP_VERSION_SOFTWARE));
         Bindings.bind(jLabelUsuarioRegistrado, getPresenter().getModel(PROP_USUARIO_REGISTRADO));
-        Bindings.bind(jLabelUsuarioRegistrado,"foreground", getPresenter().getModel(PROP_USUARIO_REGISTRADO_COLOR));
+        Bindings.bind(jLabelUsuarioRegistrado, "foreground", getPresenter().getModel(PROP_USUARIO_REGISTRADO_COLOR));
         Bindings.bind(jLabelEstadoLicencia, getPresenter().getModel(PROP_ESTADO_LICENCIA));
+        Bindings.bind(jLabelEstadoLicencia, "foreground", getPresenter().getModel(PROP_ESTADO_LICENCIA_COLOR));
         jButtonLlave.setAction(getPresenter().getOperation(StatusBarPresenter.ACTION_LICENCIA));
         jButtonLlave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/key.png")));
     }

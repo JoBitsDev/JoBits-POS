@@ -39,6 +39,30 @@ public class StatusBarViewModel extends AbstractViewModel {
 
     public static final String PROP_USUARIO_REGISTRADO_COLOR = "usuario_registrado_color";
 
+    private Color estado_licencia_color;
+
+    public static final String PROP_ESTADO_LICENCIA_COLOR = "estado_licencia_color";
+
+    /**
+     * Get the value of estado_licencia_color
+     *
+     * @return the value of estado_licencia_color
+     */
+    public Color getEstado_licencia_color() {
+        return estado_licencia_color;
+    }
+
+    /**
+     * Set the value of estado_licencia_color
+     *
+     * @param estado_licencia_color new value of estado_licencia_color
+     */
+    public void setEstado_licencia_color(Color estado_licencia_color) {
+        Color oldEstado_licencia_color = this.estado_licencia_color;
+        this.estado_licencia_color = estado_licencia_color;
+        firePropertyChange(PROP_ESTADO_LICENCIA_COLOR, oldEstado_licencia_color, estado_licencia_color);
+    }
+
     /**
      * Get the value of usuario_registrado_color
      *

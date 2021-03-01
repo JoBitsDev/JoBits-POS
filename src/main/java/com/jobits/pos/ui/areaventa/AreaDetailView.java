@@ -43,27 +43,27 @@ public class AreaDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jPanelInfo = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel5 = new javax.swing.JPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelInfo = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelID = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanel4 = new javax.swing.JPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel2 = new javax.swing.JLabel();
         jSpinnerCantidad = new javax.swing.JSpinner();
-        jPanel9 = new javax.swing.JPanel();
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel3 = new javax.swing.JLabel();
         jSpinnerPorciento = new javax.swing.JSpinner();
-        jPanelMenus = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jComboBoxMenuList = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanelMenus = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxMenuList = MaterialComponentsFactory.Displayers.getComboBox("");
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jListAreaMenus = new javax.swing.JList<>();
-        jPanel6 = new javax.swing.JPanel();
-        jButtonEliminar = new javax.swing.JButton();
-        jButtonAgregar = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonEliminar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAgregar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
@@ -71,14 +71,17 @@ public class AreaDetailView extends AbstractViewPanel {
         setPreferredSize(new java.awt.Dimension(400, 600));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel8.setLayout(new java.awt.BorderLayout());
+
+        jPanel2.setPreferredSize(new java.awt.Dimension(317, 50));
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jPanelInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), bundle.getString("label_informacion"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
         jPanelInfo.setLayout(new javax.swing.BoxLayout(jPanelInfo, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jPanel5.setOpaque(false);
         jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jLabelID.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -90,49 +93,39 @@ public class AreaDetailView extends AbstractViewPanel {
 
         jPanelInfo.add(jPanel5);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jPanel1.setOpaque(false);
-        jPanel1.setPreferredSize(new java.awt.Dimension(180, 60));
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
-
         jTextFieldNombre.setPreferredSize(new java.awt.Dimension(150, 60));
-        jPanel1.add(jTextFieldNombre);
-
-        jPanelInfo.add(jPanel1);
+        jPanelInfo.add(jTextFieldNombre);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jPanel4.setOpaque(false);
-        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanel4.setLayout(new java.awt.BorderLayout());
 
         jLabel2.setText(bundle.getString("label_cantidad_de_mesas")); // NOI18N
-        jPanel4.add(jLabel2);
+        jPanel4.add(jLabel2, java.awt.BorderLayout.WEST);
 
         jSpinnerCantidad.setModel(new javax.swing.SpinnerNumberModel(0, 0, 20, 1));
         jSpinnerCantidad.setPreferredSize(new java.awt.Dimension(60, 26));
-        jPanel4.add(jSpinnerCantidad);
+        jPanel4.add(jSpinnerCantidad, java.awt.BorderLayout.EAST);
 
         jPanelInfo.add(jPanel4);
 
         jPanel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jPanel9.setOpaque(false);
-        jPanel9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanel9.setLayout(new java.awt.BorderLayout());
 
         jLabel3.setText(bundle.getString("label_porciento")); // NOI18N
-        jPanel9.add(jLabel3);
+        jPanel9.add(jLabel3, java.awt.BorderLayout.WEST);
 
         jSpinnerPorciento.setModel(new javax.swing.SpinnerNumberModel(0, -100, 100, 1));
         jSpinnerPorciento.setPreferredSize(new java.awt.Dimension(60, 26));
-        jPanel9.add(jSpinnerPorciento);
+        jPanel9.add(jSpinnerPorciento, java.awt.BorderLayout.EAST);
 
         jPanelInfo.add(jPanel9);
 
-        jPanel2.add(jPanelInfo);
+        jPanel2.add(jPanelInfo, java.awt.BorderLayout.NORTH);
 
         jPanelMenus.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), bundle.getString("label_carta"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 24))); // NOI18N
         jPanelMenus.setLayout(new java.awt.BorderLayout());
 
         jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
-        jPanel7.setOpaque(false);
         jPanel7.setLayout(new java.awt.BorderLayout());
         jPanel7.add(jComboBoxMenuList, java.awt.BorderLayout.PAGE_START);
 
@@ -140,7 +133,6 @@ public class AreaDetailView extends AbstractViewPanel {
 
         jPanel7.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel6.setOpaque(false);
         jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonEliminar.setPreferredSize(new java.awt.Dimension(40, 30));
@@ -153,20 +145,23 @@ public class AreaDetailView extends AbstractViewPanel {
 
         jPanelMenus.add(jPanel7, java.awt.BorderLayout.CENTER);
 
-        jPanel2.add(jPanelMenus);
+        jPanel2.add(jPanelMenus, java.awt.BorderLayout.CENTER);
 
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        jPanel8.add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel3.setOpaque(false);
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jButtonCancelar.setText("Cancelar");
-        jPanel3.add(jButtonCancelar);
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanel3.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         jButtonAceptar.setText("Aceptar");
-        jPanel3.add(jButtonAceptar);
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanel3.add(jButtonAceptar, new java.awt.GridBagConstraints());
 
-        add(jPanel3, java.awt.BorderLayout.PAGE_END);
+        jPanel8.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+
+        add(jPanel8, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -180,13 +175,13 @@ public class AreaDetailView extends AbstractViewPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelID;
     private javax.swing.JList<String> jListAreaMenus;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelMenus;

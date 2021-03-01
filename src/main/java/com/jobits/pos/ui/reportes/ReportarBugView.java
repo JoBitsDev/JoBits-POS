@@ -39,22 +39,26 @@ public class ReportarBugView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelFecha = new javax.swing.JLabel();
         jLabelUsuario = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldTitulo = MaterialComponentsFactory.Input.getTextField("", ResourceBundle.getBundle("Strings").getString("label_titulo_reporte"));
-        jScrollPane2 = new javax.swing.JScrollPane();
+        jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
-        jPanel3 = new javax.swing.JPanel();
-        jButtonCerrar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonCerrar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonReportar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Reportar Bug"));
         setMinimumSize(new java.awt.Dimension(550, 550));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(550, 550));
         setLayout(new java.awt.BorderLayout());
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Reportar Bug", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 24))); // NOI18N
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
@@ -70,7 +74,7 @@ public class ReportarBugView extends AbstractViewPanel {
 
         jPanel1.add(jPanel4);
 
-        add(jPanel1, java.awt.BorderLayout.PAGE_START);
+        jPanel5.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         jPanel2.setLayout(new java.awt.BorderLayout());
@@ -81,25 +85,34 @@ public class ReportarBugView extends AbstractViewPanel {
         jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 1, 1, 1));
 
         jTextAreaDescripcion.setColumns(20);
-        jTextAreaDescripcion.setRows(5);
+        jTextAreaDescripcion.setLineWrap(true);
+        jTextAreaDescripcion.setRows(10);
+        jTextAreaDescripcion.setWrapStyleWord(true);
         jScrollPane2.setViewportView(jTextAreaDescripcion);
 
         jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        jPanel5.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanel3.setPreferredSize(new java.awt.Dimension(147, 50));
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jButtonCerrar.setText("Cerrar");
-        jPanel3.add(jButtonCerrar);
+        jButtonCerrar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanel3.add(jButtonCerrar, new java.awt.GridBagConstraints());
 
         jButtonReportar.setText("Reportar");
+        jButtonReportar.setPreferredSize(new java.awt.Dimension(140, 40));
         jButtonReportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonReportarActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonReportar);
+        jPanel3.add(jButtonReportar, new java.awt.GridBagConstraints());
 
-        add(jPanel3, java.awt.BorderLayout.PAGE_END);
+        jPanel5.add(jPanel3, java.awt.BorderLayout.PAGE_END);
+
+        add(jPanel5, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonReportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReportarActionPerformed
@@ -116,6 +129,7 @@ public class ReportarBugView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextAreaDescripcion;
     private javax.swing.JTextField jTextFieldTitulo;

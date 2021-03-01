@@ -40,22 +40,21 @@ public class CategoriaDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel5 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel11 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextField1 = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanel8 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
+        jPanel10 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jComboBoxColores = new javax.swing.JComboBox();
         jPanel4 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 32767));
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(427, 307));
         setLayout(new java.awt.BorderLayout());
 
@@ -107,7 +106,6 @@ public class CategoriaDetailView extends AbstractViewPanel {
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setPreferredSize(new java.awt.Dimension(120, 50));
         jPanel4.add(jButtonCancelar, new java.awt.GridBagConstraints());
-        jPanel4.add(filler3, new java.awt.GridBagConstraints());
 
         jButtonAceptar.setText("Aceptar");
         jButtonAceptar.setPreferredSize(new java.awt.Dimension(120, 50));
@@ -120,7 +118,6 @@ public class CategoriaDetailView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler3;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JComboBox jComboBoxColores;

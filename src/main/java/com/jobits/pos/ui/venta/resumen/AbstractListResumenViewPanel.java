@@ -37,10 +37,10 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
         jPanelControlesSuperiores = new javax.swing.JPanel();
         jLabel1 = MaterialComponentsFactory.Displayers.getH3Label();
         jToggleButtonDetail = new javax.swing.JToggleButton();
-        jPanelTabla = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelTabla = MaterialComponentsFactory.Containers.getTransparentPanel();
         jScrollPaneMain = MaterialComponentsFactory.Containers.getScrollPane();
         jTableMain = new javax.swing.JTable();
-        jPanelDetailPanel = new javax.swing.JPanel();
+        jPanelDetailPanel = MaterialComponentsFactory.Containers.getTransparentPanel();
         jScrollPaneDetail = MaterialComponentsFactory.Containers.getScrollPane();
         jTableDetail = new javax.swing.JTable();
 

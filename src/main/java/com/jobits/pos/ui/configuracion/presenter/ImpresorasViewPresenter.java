@@ -24,6 +24,8 @@ import javax.swing.JOptionPane;
 public class ImpresorasViewPresenter extends AbstractListViewPresenter<ImpresorasViewModel> {
 
     public static String ACTION_CHANGE_DEFAULT;
+    public static final String ACTION_SET_PANEL_VISIBLE = "Panel Visible";
+
     ImpresoraService service;
 
     public ImpresorasViewPresenter(ImpresoraService service) {
@@ -43,6 +45,13 @@ public class ImpresorasViewPresenter extends AbstractListViewPresenter<Impresora
                 service.updateImpresora(impresora);
                 getBean().getLista_impresoras().clear();
                 getBean().getLista_impresoras().addAll(new ArrayListModel<>(service.findAll()));
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_SET_PANEL_VISIBLE) {
+            @Override
+            public Optional doAction() {
+                onSetPanelVisibile();
                 return Optional.empty();
             }
         });
@@ -117,5 +126,9 @@ public class ImpresorasViewPresenter extends AbstractListViewPresenter<Impresora
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION : true;
 
+    }
+
+    private void onSetPanelVisibile() {
+        getBean().setPanel_visible(!getBean().isPanel_visible());
     }
 }

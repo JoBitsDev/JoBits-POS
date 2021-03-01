@@ -42,72 +42,84 @@ public class Sincronizacion extends AbstractViewPanel {
         jPanelSincronizacion = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelNegocio1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel24HR1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
+        jLabel9 = MaterialComponentsFactory.Displayers.getLabel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonHablilitarSincronizacion = new javax.swing.JToggleButton();
         jPanel15 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
         jLabel6 = MaterialComponentsFactory.Displayers.getLabel();
-        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(250, 0), new java.awt.Dimension(255, 0), new java.awt.Dimension(200, 32767));
-        jComboBoxSincronizacionUbicacion = MaterialComponentsFactory.Displayers.getComboBox();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxSincronizacionUbicacion = MaterialComponentsFactory.Displayers.getComboBox("");
         jPanel16 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 0), new java.awt.Dimension(50, 32767));
         jLabel7 = MaterialComponentsFactory.Displayers.getLabel();
-        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(250, 0), new java.awt.Dimension(205, 0), new java.awt.Dimension(200, 32767));
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
 
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(730, 525));
 
-        jPanelSincronizacion.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanelSincronizacion.setPreferredSize(new java.awt.Dimension(730, 525));
         jPanelSincronizacion.setLayout(new javax.swing.BoxLayout(jPanelSincronizacion, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelNegocio1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Negocio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
         jPanelNegocio1.setLayout(new java.awt.GridLayout(3, 1, 0, 3));
 
-        jPanel24HR1.setLayout(new javax.swing.BoxLayout(jPanel24HR1, javax.swing.BoxLayout.LINE_AXIS));
-        jPanel24HR1.add(filler5);
+        jPanel24HR1.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Habilitar Sync");
+        jPanel24HR1.add(jLabel9);
+
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jToggleButtonHablilitarSincronizacion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jToggleButtonHablilitarSincronizacion.setText("Habilitar Sync");
-        jPanel24HR1.add(jToggleButtonHablilitarSincronizacion);
+        jPanel2.add(jToggleButtonHablilitarSincronizacion, new java.awt.GridBagConstraints());
+
+        jPanel24HR1.add(jPanel2);
 
         jPanelNegocio1.add(jPanel24HR1);
 
-        jPanel15.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        jPanel15.add(filler4);
+        jPanel15.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Ubicacion");
         jPanel15.add(jLabel6);
-        jPanel15.add(filler6);
+
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jComboBoxSincronizacionUbicacion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jComboBoxSincronizacionUbicacion.setMinimumSize(new java.awt.Dimension(150, 26));
         jComboBoxSincronizacionUbicacion.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel15.add(jComboBoxSincronizacionUbicacion);
+        jPanel3.add(jComboBoxSincronizacionUbicacion, new java.awt.GridBagConstraints());
+
+        jPanel15.add(jPanel3);
 
         jPanelNegocio1.add(jPanel15);
 
-        jPanel16.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-        jPanel16.add(filler7);
+        jPanel16.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Sincronizar cada");
         jPanel16.add(jLabel7);
-        jPanel16.add(filler8);
+
+        jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jSpinner1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jSpinner1.setModel(new javax.swing.SpinnerNumberModel(1, 1, 60, 1));
         jSpinner1.setMinimumSize(new java.awt.Dimension(150, 26));
-        jSpinner1.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanel16.add(jSpinner1);
+        jSpinner1.setPreferredSize(new java.awt.Dimension(100, 26));
+        jPanel4.add(jSpinner1, new java.awt.GridBagConstraints());
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel8.setText("Minuto(s)");
         jLabel8.setToolTipText("");
         jLabel8.setMinimumSize(new java.awt.Dimension(71, 26));
-        jPanel16.add(jLabel8);
+        jPanel4.add(jLabel8, new java.awt.GridBagConstraints());
+
+        jPanel16.add(jPanel4);
 
         jPanelNegocio1.add(jPanel16);
 
@@ -157,18 +169,17 @@ public class Sincronizacion extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler4;
-    private javax.swing.Box.Filler filler5;
-    private javax.swing.Box.Filler filler6;
-    private javax.swing.Box.Filler filler7;
-    private javax.swing.Box.Filler filler8;
     private javax.swing.JComboBox<UbicacionConexionModel> jComboBoxSincronizacionUbicacion;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel24HR1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelNegocio1;
     private javax.swing.JPanel jPanelSincronizacion;
     private javax.swing.JSpinner jSpinner1;

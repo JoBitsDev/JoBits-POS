@@ -40,26 +40,25 @@ public class ReiniciarDatosView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jButtonReiniciarAlmacen = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanel4 = new javax.swing.JPanel();
-        jComboBoxAlmacenes = new javax.swing.JComboBox<>();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jButtonReiniciarIPV = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jComboBoxCocinas = new javax.swing.JComboBox<>();
-        jPanel8 = new javax.swing.JPanel();
-        jDateChooserDel = new org.jdesktop.swingx.JXDatePicker();
+        jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel9 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonReiniciarAlmacen = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxAlmacenes = MaterialComponentsFactory.Displayers.getComboBox("Almacenes");
+        jPanel3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonReiniciarIPV = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxCocinas = MaterialComponentsFactory.Displayers.getComboBox("Punto de Elaboracion");
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jDateChooserDel = MaterialComponentsFactory.Input.getDatePicker();
 
-        setLayout(new java.awt.BorderLayout());
+        setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(730, 525));
+        setLayout(new java.awt.GridLayout(2, 1));
 
-        jPanel1.setLayout(new java.awt.GridLayout(2, 1));
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Reiniciar Almacen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 28))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Reiniciar Almacen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 28))); // NOI18N
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jPanel9.setPreferredSize(new java.awt.Dimension(200, 60));
@@ -74,14 +73,14 @@ public class ReiniciarDatosView extends AbstractViewPanel {
 
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
-        jComboBoxAlmacenes.setPreferredSize(new java.awt.Dimension(300, 40));
+        jComboBoxAlmacenes.setPreferredSize(new java.awt.Dimension(300, 50));
         jPanel4.add(jComboBoxAlmacenes, new java.awt.GridBagConstraints());
 
         jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        jPanel1.add(jPanel2);
+        add(jPanel2);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(41, 43, 45)), "Reiniciar IPV", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 28))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Reiniciar IPV", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 28))); // NOI18N
         jPanel3.setLayout(new java.awt.BorderLayout());
 
         jPanel7.setPreferredSize(new java.awt.Dimension(200, 60));
@@ -98,14 +97,14 @@ public class ReiniciarDatosView extends AbstractViewPanel {
 
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        jComboBoxCocinas.setPreferredSize(new java.awt.Dimension(250, 40));
+        jComboBoxCocinas.setPreferredSize(new java.awt.Dimension(250, 50));
         jPanel5.add(jComboBoxCocinas, new java.awt.GridBagConstraints());
 
         jPanel6.add(jPanel5);
 
         jPanel8.setLayout(new java.awt.GridBagLayout());
 
-        jDateChooserDel.setPreferredSize(new java.awt.Dimension(250, 40));
+        jDateChooserDel.setPreferredSize(new java.awt.Dimension(250, 50));
         jDateChooserDel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jDateChooserDelActionPerformed(evt);
@@ -117,9 +116,7 @@ public class ReiniciarDatosView extends AbstractViewPanel {
 
         jPanel3.add(jPanel6, java.awt.BorderLayout.CENTER);
 
-        jPanel1.add(jPanel3);
-
-        add(jPanel1, java.awt.BorderLayout.CENTER);
+        add(jPanel3);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jDateChooserDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooserDelActionPerformed
@@ -157,7 +154,6 @@ public class ReiniciarDatosView extends AbstractViewPanel {
     private javax.swing.JComboBox<String> jComboBoxAlmacenes;
     private javax.swing.JComboBox<String> jComboBoxCocinas;
     private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

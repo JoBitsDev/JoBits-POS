@@ -8,6 +8,7 @@ package com.jobits.pos.ui.imagemanager.presenter;
 //import com.jobits.pos.controller.imagemanager.impl.ImageManagerController;
 import com.jobits.pos.controller.imagemanager.ImageManagerService;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.PanelDibujo;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
@@ -62,6 +63,8 @@ public class ImageManagerViewPresenter extends AbstractViewPresenter<ImageManage
             public Optional doAction() {
                 PanelDibujo pd = getBean().getPanel_dibujo();
                 service.guardar_imagen(pd.getImagmemoria());
+                Application.getInstance().getNotificationService().showDialog(
+                        "Se ha guardado Correctamente la imagen recortada", TipoNotificacion.INFO);
                 return Optional.empty();
             }
         });
