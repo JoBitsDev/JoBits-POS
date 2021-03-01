@@ -48,41 +48,42 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
         buttonGroupPeriodoChooser = new javax.swing.ButtonGroup();
-        jPanelHeader = new javax.swing.JPanel();
-        jPanelSeleccion = new javax.swing.JPanel();
-        jPanelPeriodo = new javax.swing.JPanel();
-        jButtonPeriodoSelector = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
+        jPanelHeader = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelSeleccion = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelPeriodo = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonPeriodoSelector = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelPeriodoActual = new javax.swing.JLabel();
         jLabelPeriodoAnterior = new javax.swing.JLabel();
-        jPanelPeriodChooser = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jDateChooserDel = new org.jdesktop.swingx.JXDatePicker();
-        jPanel6 = new javax.swing.JPanel();
+        jPanelPeriodChooser = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jDateChooserDel = MaterialComponentsFactory.Input.getUnlabeledDatePicker();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel14 = new javax.swing.JLabel();
-        jDateChooserAl = new org.jdesktop.swingx.JXDatePicker();
-        jPanel8 = new javax.swing.JPanel();
+        jDateChooserAl = MaterialComponentsFactory.Input.getUnlabeledDatePicker();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jRadioButtonPeriodoAnterior = new javax.swing.JRadioButton();
         jRadioButtonAnnoAnterior = new javax.swing.JRadioButton();
-        jPanelOpciones = new javax.swing.JPanel();
+        jPanelOpciones = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonRestablecer = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanelCardsStats = new javax.swing.JPanel();
-        jPanelGrafica = new javax.swing.JPanel();
-        jPanelTotalVenta = new javax.swing.JPanel();
-        jPanelTotalGastos = new javax.swing.JPanel();
-        jPanelTotalOrdenes = new javax.swing.JPanel();
-        jPanelPorDesarrollar = new javax.swing.JPanel();
+        jPanelCardsStats = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelGrafica = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelTotalVenta = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelTotalGastos = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelTotalOrdenes = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelPorDesarrollar = MaterialComponentsFactory.Containers.getSecondaryPanel();
 
         jScrollPane2.setViewportView(jTree1);
 
         //buttonGroupPeriodoChooser.add(jRadioButtonPeriodoAnterior);
         //buttonGroupPeriodoChooser.add(jRadioButtonAnnoAnterior);
 
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout(5, 5));
 
         jPanelHeader.setLayout(new java.awt.BorderLayout());
 
-        jPanelSeleccion.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
+        jPanelSeleccion.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 15, 5, 15));
         jPanelSeleccion.setLayout(new java.awt.BorderLayout());
 
         jPanelPeriodo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
@@ -115,7 +116,7 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jPanel5.add(jLabelPeriodoAnterior);
 
         jPanelPeriodo.add(jPanel5, java.awt.BorderLayout.CENTER);
-        jPanel5.getAccessibleContext().setAccessibleName("SinglePeriod");
+        jPanel5.getAccessibleContext().setAccessibleName("");
 
         jPanelSeleccion.add(jPanelPeriodo, java.awt.BorderLayout.WEST);
 
@@ -161,6 +162,7 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jRadioButtonPeriodoAnterior.setText(bundle.getString("label_periodo_anterior")); // NOI18N
         jRadioButtonPeriodoAnterior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jRadioButtonPeriodoAnterior.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jRadioButtonPeriodoAnterior.setOpaque(false);
         jRadioButtonPeriodoAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonPeriodoAnteriorActionPerformed(evt);
@@ -171,6 +173,7 @@ public class VentaStatisticsView extends AbstractViewPanel {
         jRadioButtonAnnoAnterior.setText(bundle.getString("label_anno_anterior")); // NOI18N
         jRadioButtonAnnoAnterior.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jRadioButtonAnnoAnterior.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jRadioButtonAnnoAnterior.setOpaque(false);
         jRadioButtonAnnoAnterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonAnnoAnteriorActionPerformed(evt);
@@ -207,19 +210,19 @@ public class VentaStatisticsView extends AbstractViewPanel {
 
         jPanelGrafica.setLayout(new java.awt.GridLayout(2, 2));
 
-        jPanelTotalVenta.setBorder(javax.swing.BorderFactory.createTitledBorder("Total Venta\n"));
+        jPanelTotalVenta.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Total Venta\n"));
         jPanelTotalVenta.setLayout(new java.awt.BorderLayout());
         jPanelGrafica.add(jPanelTotalVenta);
 
-        jPanelTotalGastos.setBorder(javax.swing.BorderFactory.createTitledBorder("Total Gastos"));
+        jPanelTotalGastos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Total Gastos"));
         jPanelTotalGastos.setLayout(new java.awt.BorderLayout());
         jPanelGrafica.add(jPanelTotalGastos);
 
-        jPanelTotalOrdenes.setBorder(javax.swing.BorderFactory.createTitledBorder("Total Ordenes"));
+        jPanelTotalOrdenes.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Total Ordenes"));
         jPanelTotalOrdenes.setLayout(new java.awt.BorderLayout());
         jPanelGrafica.add(jPanelTotalOrdenes);
 
-        jPanelPorDesarrollar.setBorder(javax.swing.BorderFactory.createTitledBorder("POR DESARROLLAR"));
+        jPanelPorDesarrollar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "POR DESARROLLAR"));
         jPanelPorDesarrollar.setLayout(new javax.swing.BoxLayout(jPanelPorDesarrollar, javax.swing.BoxLayout.LINE_AXIS));
         jPanelGrafica.add(jPanelPorDesarrollar);
 
