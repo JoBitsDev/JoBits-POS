@@ -5,8 +5,6 @@
  */
 package com.jobits.pos.cordinator;
 
-import lombok.Data;
-
 /**
  *
  * JoBits
@@ -14,7 +12,6 @@ import lombok.Data;
  * @author Jorge
  *
  */
-@Data
 public class NavigationNode {
 
     private NavigationNode parentNode;
@@ -28,6 +25,22 @@ public class NavigationNode {
 
     public static NavigationNode of(NavigationNode parentNode, String viewUIDName) {
         return new NavigationNode(parentNode, viewUIDName);
+    }
+
+    public NavigationNode getParentNode() {
+        return parentNode;
+    }
+
+    public void setParentNode(NavigationNode parentNode) {
+        this.parentNode = parentNode;
+    }
+
+    public String getViewUIDName() {
+        return viewUIDName;
+    }
+
+    public void setViewUIDName(String viewUIDName) {
+        this.viewUIDName = viewUIDName;
     }
 
 }

@@ -40,54 +40,51 @@ public class PersonalDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanelDatosPrincipales = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel2 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel6 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelDatosPrincipales = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField(" ", "Nombre*");
         jTextFieldApellidos = MaterialComponentsFactory.Input.getTextField(" ", "Apellidos*");
-        jPanel7 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jComboBoxPuestoTrabajo = new javax.swing.JComboBox<>();
-        jPanelSeguridad = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxPuestoTrabajo = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanelSeguridad = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField(" ", "Usuario*");
-        jPanel5 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPasswordFieldPassAntigua = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena_antigua"));
         jToggleButtonMostrarPass = new javax.swing.JToggleButton();
         jPasswordFieldPassNueva = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena_nueva"));
         jPasswordFieldPassRepetir = MaterialComponentsFactory.Input.getPasswordField("", java.util.ResourceBundle.getBundle("Strings").getString("label_repetir_contrasena_nueva"));
-        jPanelDatosPersonales = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel4 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel8 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelDatosPersonales = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldCarnetIdentidad = MaterialComponentsFactory.Input.getTextField(" ", "Carnet de Identidad");
-        jPanel13 = new javax.swing.JPanel();
-        jComboBoxSexo = new javax.swing.JComboBox();
-        jPanel9 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel13 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxSexo = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jPanel10 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jDateChooser1 = MaterialComponentsFactory.Input.getUnlabeledDatePicker();
+        jPanel10 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldTelefonoMovil = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono_movil"));
         jTextFieldTelefonoFijo = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono_fijo"));
-        jPanel12 = new javax.swing.JPanel();
+        jPanel12 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldDireccion = MaterialComponentsFactory.Input.getTextField(" ", "Direccion");
-        jPanelBotones = new javax.swing.JPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonCrear = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
-        setPreferredSize(new java.awt.Dimension(400, 680));
+        setMinimumSize(new java.awt.Dimension(390, 625));
+        setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(390, 625));
         setLayout(new java.awt.BorderLayout());
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanelDatosPrincipales.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanelDatosPrincipales.setPreferredSize(new java.awt.Dimension(142, 91));
-        jPanelDatosPrincipales.setLayout(new javax.swing.BoxLayout(jPanelDatosPrincipales, javax.swing.BoxLayout.PAGE_AXIS));
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelDatosPrincipales.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        jPanelDatosPrincipales.setMinimumSize(new java.awt.Dimension(310, 150));
+        jPanelDatosPrincipales.setPreferredSize(new java.awt.Dimension(310, 150));
+        jPanelDatosPrincipales.setLayout(new java.awt.GridLayout(2, 1));
 
         jPanel6.setPreferredSize(new java.awt.Dimension(100, 50));
         jPanel6.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
@@ -106,16 +103,16 @@ public class PersonalDetailView extends AbstractViewPanel {
         jTextFieldApellidos.setPreferredSize(new java.awt.Dimension(170, 50));
         jPanel6.add(jTextFieldApellidos);
 
-        jPanel2.add(jPanel6);
+        jPanelDatosPrincipales.add(jPanel6);
 
         jPanel7.setMaximumSize(new java.awt.Dimension(2147483647, 50));
         jPanel7.setPreferredSize(new java.awt.Dimension(100, 30));
         jPanel7.setLayout(new java.awt.GridBagLayout());
 
-        jComboBoxPuestoTrabajo.setMaximumSize(new java.awt.Dimension(200, 27));
-        jComboBoxPuestoTrabajo.setMinimumSize(new java.awt.Dimension(120, 27));
+        jComboBoxPuestoTrabajo.setMaximumSize(new java.awt.Dimension(200, 40));
+        jComboBoxPuestoTrabajo.setMinimumSize(new java.awt.Dimension(200, 40));
         jComboBoxPuestoTrabajo.setOpaque(false);
-        jComboBoxPuestoTrabajo.setPreferredSize(new java.awt.Dimension(200, 26));
+        jComboBoxPuestoTrabajo.setPreferredSize(new java.awt.Dimension(200, 40));
         jComboBoxPuestoTrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxPuestoTrabajoActionPerformed(evt);
@@ -123,22 +120,18 @@ public class PersonalDetailView extends AbstractViewPanel {
         });
         jPanel7.add(jComboBoxPuestoTrabajo, new java.awt.GridBagConstraints());
 
-        jPanel2.add(jPanel7);
-
-        jPanelDatosPrincipales.add(jPanel2);
+        jPanelDatosPrincipales.add(jPanel7);
 
         jPanel1.add(jPanelDatosPrincipales);
 
-        jPanelSeguridad.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Seguridad"));
-        jPanelSeguridad.setPreferredSize(new java.awt.Dimension(310, 145));
-        jPanelSeguridad.setLayout(new javax.swing.BoxLayout(jPanelSeguridad, javax.swing.BoxLayout.LINE_AXIS));
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        jPanel3.setLayout(new java.awt.GridLayout(2, 2, 20, 10));
+        jPanelSeguridad.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Seguridad"));
+        jPanelSeguridad.setMinimumSize(new java.awt.Dimension(310, 150));
+        jPanelSeguridad.setPreferredSize(new java.awt.Dimension(310, 150));
+        jPanelSeguridad.setLayout(new java.awt.GridLayout(2, 2, 10, 10));
 
         jTextFieldUsuario.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jTextFieldUsuario.setPreferredSize(new java.awt.Dimension(150, 80));
-        jPanel3.add(jTextFieldUsuario);
+        jPanelSeguridad.add(jTextFieldUsuario);
 
         jPanel5.setMaximumSize(new java.awt.Dimension(150, 50));
         jPanel5.setOpaque(false);
@@ -160,27 +153,24 @@ public class PersonalDetailView extends AbstractViewPanel {
         });
         jPanel5.add(jToggleButtonMostrarPass, java.awt.BorderLayout.EAST);
 
-        jPanel3.add(jPanel5);
+        jPanelSeguridad.add(jPanel5);
 
         jPasswordFieldPassNueva.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jPasswordFieldPassNueva.setPreferredSize(new java.awt.Dimension(150, 80));
-        jPanel3.add(jPasswordFieldPassNueva);
+        jPanelSeguridad.add(jPasswordFieldPassNueva);
 
         jPasswordFieldPassRepetir.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jPasswordFieldPassRepetir.setPreferredSize(new java.awt.Dimension(150, 80));
-        jPanel3.add(jPasswordFieldPassRepetir);
-
-        jPanelSeguridad.add(jPanel3);
+        jPanelSeguridad.add(jPasswordFieldPassRepetir);
 
         jPanel1.add(jPanelSeguridad);
 
-        jPanelDatosPersonales.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Datos Personales"));
-        jPanelDatosPersonales.setPreferredSize(new java.awt.Dimension(150, 270));
-        jPanelDatosPersonales.setLayout(new javax.swing.BoxLayout(jPanelDatosPersonales, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelDatosPersonales.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Datos Personales"));
+        jPanelDatosPersonales.setPreferredSize(new java.awt.Dimension(150, 200));
+        jPanelDatosPersonales.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         jPanel4.setPreferredSize(new java.awt.Dimension(140, 200));
-        jPanel4.setLayout(new java.awt.GridLayout(3, 1));
+        jPanel4.setLayout(new java.awt.GridLayout(3, 1, 0, 10));
 
         jPanel8.setPreferredSize(new java.awt.Dimension(100, 40));
         jPanel8.setLayout(new java.awt.GridLayout(1, 2, 10, 20));
@@ -201,8 +191,9 @@ public class PersonalDetailView extends AbstractViewPanel {
         jPanel13.setLayout(new java.awt.GridBagLayout());
 
         jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Masculino", "Femenino" }));
+        jComboBoxSexo.setMinimumSize(new java.awt.Dimension(88, 40));
         jComboBoxSexo.setOpaque(false);
-        jComboBoxSexo.setPreferredSize(new java.awt.Dimension(150, 26));
+        jComboBoxSexo.setPreferredSize(new java.awt.Dimension(150, 40));
         jPanel13.add(jComboBoxSexo, new java.awt.GridBagConstraints());
 
         jPanel8.add(jPanel13);
@@ -219,8 +210,12 @@ public class PersonalDetailView extends AbstractViewPanel {
 
         jPanel9.add(jPanel11);
 
-        jDateChooser1.setOpaque(false);
-        jDateChooser1.setPreferredSize(new java.awt.Dimension(150, 26));
+        jDateChooser1.setPreferredSize(new java.awt.Dimension(150, 40));
+        jDateChooser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDateChooser1ActionPerformed(evt);
+            }
+        });
         jPanel9.add(jDateChooser1);
 
         jPanel4.add(jPanel9);
@@ -247,9 +242,8 @@ public class PersonalDetailView extends AbstractViewPanel {
 
         jPanel4.add(jPanel10);
 
-        jPanelDatosPersonales.add(jPanel4);
+        jPanelDatosPersonales.add(jPanel4, java.awt.BorderLayout.CENTER);
 
-        jPanel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
         jPanel12.setMaximumSize(new java.awt.Dimension(2147483647, 60));
         jPanel12.setOpaque(false);
         jPanel12.setPreferredSize(new java.awt.Dimension(100, 60));
@@ -262,7 +256,7 @@ public class PersonalDetailView extends AbstractViewPanel {
         jTextFieldDireccion.setPreferredSize(new java.awt.Dimension(170, 50));
         jPanel12.add(jTextFieldDireccion, java.awt.BorderLayout.CENTER);
 
-        jPanelDatosPersonales.add(jPanel12);
+        jPanelDatosPersonales.add(jPanel12, java.awt.BorderLayout.SOUTH);
 
         jPanel1.add(jPanelDatosPersonales);
 
@@ -270,7 +264,7 @@ public class PersonalDetailView extends AbstractViewPanel {
         jPanelBotones.setLayout(new java.awt.GridBagLayout());
 
         jButtonCancelar.setText("Cancelar");
-        jButtonCancelar.setPreferredSize(new java.awt.Dimension(107, 50));
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 40));
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarActionPerformed(evt);
@@ -279,7 +273,7 @@ public class PersonalDetailView extends AbstractViewPanel {
         jPanelBotones.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         jButtonCrear.setText("Crear");
-        jButtonCrear.setPreferredSize(new java.awt.Dimension(107, 50));
+        jButtonCrear.setPreferredSize(new java.awt.Dimension(140, 40));
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCrearActionPerformed(evt);
@@ -329,21 +323,23 @@ public class PersonalDetailView extends AbstractViewPanel {
         }        // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldCarnetIdentidadKeyTyped
 
+    private void jDateChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDateChooser1ActionPerformed
+
+    }//GEN-LAST:event_jDateChooser1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JComboBox<PuestoTrabajo> jComboBoxPuestoTrabajo;
     private javax.swing.JComboBox jComboBoxSexo;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private org.jdesktop.swingx.JXDatePicker jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -401,7 +397,7 @@ public class PersonalDetailView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
-        jDateChooser1.getJCalendar().setPreferredSize(new Dimension(420, 180));
+//        jDateChooser1.getJCalendar().setPreferredSize(new Dimension(420, 180));
     }
 
     @Override

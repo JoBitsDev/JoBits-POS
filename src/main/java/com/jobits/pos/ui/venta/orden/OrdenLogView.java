@@ -7,11 +7,7 @@ package com.jobits.pos.ui.venta.orden;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.servicios.impresion.Impresora;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
-import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewModel;
-import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenLogViewModel.*;
@@ -44,21 +40,21 @@ public class OrdenLogView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel4 = new javax.swing.JPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel2 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabelCodOrden = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonCerrar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_DARK, 2, true));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(750, 520));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 20, 1));
@@ -112,10 +108,12 @@ public class OrdenLogView extends AbstractViewPanel {
 
         jPanel4.add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        jPanel3.setPreferredSize(new java.awt.Dimension(728, 60));
+        jPanel3.setPreferredSize(new java.awt.Dimension(728, 50));
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jButtonCerrar.setText("Cerrar");
-        jPanel3.add(jButtonCerrar);
+        jButtonCerrar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanel3.add(jButtonCerrar, new java.awt.GridBagConstraints());
 
         jPanel4.add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
@@ -173,13 +171,13 @@ public class OrdenLogView extends AbstractViewPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((String[]) getListModel().getElementAt(rowIndex))[0];
+                        return getRow(rowIndex)[0];
                     case 1:
-                        return ((String[]) getListModel().getElementAt(rowIndex))[1];
+                        return getRow(rowIndex)[1];
                     case 2:
-                        return ((String[]) getListModel().getElementAt(rowIndex))[3];
+                        return getRow(rowIndex)[2];
                     case 3:
-                        return ((String[]) getListModel().getElementAt(rowIndex))[4];
+                        return getRow(rowIndex)[3];
                 }
                 return null;
             }

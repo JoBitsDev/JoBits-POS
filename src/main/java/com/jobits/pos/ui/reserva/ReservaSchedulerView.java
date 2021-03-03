@@ -7,7 +7,7 @@ package com.jobits.pos.ui.reserva;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jobits.pos.ui.reserva.util.CustomComponentFactory;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.reserva.util.AppointmentListener;
 import com.jobits.pos.ui.reserva.model.ScheduleModel;
@@ -63,22 +63,21 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         jTextField4 = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jPanelSeleccion = new javax.swing.JPanel();
-        jPanelPeriodo = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
+        jPanelSeleccion = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelPeriodo = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonRefresh = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelPeriodChooser = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
+        jPanelPeriodChooser = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonBack = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelCurrentIndex = new javax.swing.JLabel();
         jLabelLine = new javax.swing.JLabel();
         jLabelTotalIndexes = new javax.swing.JLabel();
         jButtonNext = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelOpciones = new javax.swing.JPanel();
-        jDateChooserDateToShow = new org.jdesktop.swingx.JXDatePicker();
-        jPanelDetails = new javax.swing.JPanel();
-        jPanelMainScheduler = new javax.swing.JPanel();
+        jPanelOpciones = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jDateChooserDateToShow = MaterialComponentsFactory.Input.getUnlabeledDatePicker();
+        jPanelMainScheduler = MaterialComponentsFactory.Containers.getSecondaryPanel();
         scheduler = new com.jobits.ui.scheduler.Scheduler();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -113,7 +112,8 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jPanelSeleccion.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
+        jPanelSeleccion.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 15));
+        jPanelSeleccion.setPreferredSize(new java.awt.Dimension(670, 60));
         jPanelSeleccion.setLayout(new java.awt.BorderLayout());
 
         jPanelPeriodo.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0));
@@ -178,11 +178,11 @@ public class ReservaSchedulerView extends AbstractViewPanel {
         jPanelSeleccion.add(jPanelPeriodChooser, java.awt.BorderLayout.CENTER);
 
         jPanelOpciones.setMinimumSize(new java.awt.Dimension(100, 100));
-        jPanelOpciones.setPreferredSize(new java.awt.Dimension(220, 50));
+        jPanelOpciones.setPreferredSize(new java.awt.Dimension(220, 40));
         jPanelOpciones.setLayout(new java.awt.GridBagLayout());
 
         jDateChooserDateToShow.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jDateChooserDateToShow.setPreferredSize(new java.awt.Dimension(200, 35));
+        jDateChooserDateToShow.setPreferredSize(new java.awt.Dimension(200, 50));
         jDateChooserDateToShow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jDateChooserDateToShowActionPerformed(evt);
@@ -194,9 +194,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
 
         jPanel3.add(jPanelSeleccion, java.awt.BorderLayout.NORTH);
 
-        jPanelDetails.setLayout(new java.awt.BorderLayout());
-        jPanel3.add(jPanelDetails, java.awt.BorderLayout.WEST);
-
+        jPanelMainScheduler.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanelMainScheduler.setLayout(new java.awt.BorderLayout());
         jPanelMainScheduler.add(scheduler, java.awt.BorderLayout.CENTER);
 
@@ -242,7 +240,6 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPanel jPanelDetails;
     private javax.swing.JPanel jPanelMainScheduler;
     private javax.swing.JPanel jPanelOpciones;
     private javax.swing.JPanel jPanelPeriodChooser;

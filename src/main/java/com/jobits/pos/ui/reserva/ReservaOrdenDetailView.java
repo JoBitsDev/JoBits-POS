@@ -38,14 +38,17 @@ public class ReservaOrdenDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel1 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelProductoSelector = new javax.swing.JPanel();
-        jPanelOrdenDetail = new javax.swing.JPanel();
+        jPanelProductoSelector = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelOrdenDetail = MaterialComponentsFactory.Containers.getTransparentPanel();
 
-        setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true), javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(880, 500));
         setLayout(new java.awt.BorderLayout());
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
@@ -53,19 +56,22 @@ public class ReservaOrdenDetailView extends AbstractViewPanel {
         jButtonCancelar.setPreferredSize(new java.awt.Dimension(130, 50));
         jPanel1.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
-        add(jPanel1, java.awt.BorderLayout.SOUTH);
+        jPanel2.add(jPanel1, java.awt.BorderLayout.SOUTH);
 
         jPanelProductoSelector.setLayout(new java.awt.BorderLayout());
-        add(jPanelProductoSelector, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jPanelProductoSelector, java.awt.BorderLayout.CENTER);
 
         jPanelOrdenDetail.setLayout(new java.awt.BorderLayout());
-        add(jPanelOrdenDetail, java.awt.BorderLayout.EAST);
+        jPanel2.add(jPanelOrdenDetail, java.awt.BorderLayout.EAST);
+
+        add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelOrdenDetail;
     private javax.swing.JPanel jPanelProductoSelector;
     // End of variables declaration//GEN-END:variables

@@ -7,7 +7,7 @@ package com.jobits.pos.ui.venta.orden;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter.*;
@@ -46,22 +46,22 @@ public class VentaListOrdenesView extends AbstractViewPanel {
     private void initComponents() {
 
         jButtonCalcCAmbio = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelOrdenesActivas = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelOrdenesActivas = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
+        jListOrdenesActivas = new javax.swing.JList<>();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonEnviarCerrarCrearNueva = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonCheckReservas = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonNuevaOrden = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListOrdenesActivas = new javax.swing.JList<>();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
 
         jButtonCalcCAmbio.setIcon(MaterialIcons.REPEAT);
         jButtonCalcCAmbio.setToolTipText("Calcular Cambio");
         jButtonCalcCAmbio.setEnabled(false);
         jButtonCalcCAmbio.setPreferredSize(new java.awt.Dimension(50, 50));
 
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
         jPanelOrdenesActivas.setMaximumSize(new java.awt.Dimension(300, 300));
@@ -69,8 +69,15 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         jPanelOrdenesActivas.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setMaximumSize(new java.awt.Dimension(200, 190));
-        jPanel1.setPreferredSize(new java.awt.Dimension(200, 190));
+        jPanel1.setPreferredSize(new java.awt.Dimension(215, 190));
         jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+
+        jListOrdenesActivas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jListOrdenesActivas);
+
+        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 3));
 
@@ -93,19 +100,10 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
-        jListOrdenesActivas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jListOrdenesActivas);
-
-        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
         jPanelOrdenesActivas.add(jPanel1, java.awt.BorderLayout.WEST);
 
-        jScrollPane2.setHorizontalScrollBar(null);
-
         jPanel2.setLayout(new java.awt.BorderLayout());
-        jScrollPane2.setViewportView(jPanel2);
-
-        jPanelOrdenesActivas.add(jScrollPane2, java.awt.BorderLayout.EAST);
+        jPanelOrdenesActivas.add(jPanel2, java.awt.BorderLayout.EAST);
 
         add(jPanelOrdenesActivas, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -122,7 +120,6 @@ public class VentaListOrdenesView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelOrdenesActivas;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -160,7 +157,7 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         });
         if (getPresenter() != null) {
             if (getPresenter().getOrdenPresenter() != null) {
-                jPanel2.add(new PedidoCardView(getPresenter().getOrdenPresenter()), BorderLayout.EAST);
+                jPanel2.add(new PedidoCardView(getPresenter().getOrdenPresenter()), BorderLayout.CENTER);
                 jPanelOrdenesActivas.add(new ProductoVentaSelectorView(getPresenter().getMenuPresenter()), BorderLayout.CENTER);
             }
         }

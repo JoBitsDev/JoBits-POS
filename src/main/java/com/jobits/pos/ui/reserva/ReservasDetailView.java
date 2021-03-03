@@ -8,7 +8,7 @@ package com.jobits.pos.ui.reserva;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.recursos.R;
@@ -55,67 +55,67 @@ public class ReservasDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel5 = new javax.swing.JPanel();
-        jPanelMain = new javax.swing.JPanel();
-        jPanelfecha = new javax.swing.JPanel();
-        jPanel21 = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelMain = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelfecha = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel21 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldNombreReserva = MaterialComponentsFactory.Input.getTextField("", "Nombre de la Reserva");
-        jPanel15 = new javax.swing.JPanel();
+        jPanel15 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel9 = new javax.swing.JLabel();
-        jDateChooserFecha = new org.jdesktop.swingx.JXDatePicker();
-        jPanel17 = new javax.swing.JPanel();
+        jDateChooserFecha = MaterialComponentsFactory.Input.getDatePicker();
+        jPanel17 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel16 = new javax.swing.JPanel();
+        jPanel16 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jComboBoxHora = new javax.swing.JComboBox();
         jComboBoxMinuto = new javax.swing.JComboBox();
         jComboBoxPMAM = new javax.swing.JComboBox();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(20, 0), new java.awt.Dimension(30, 32767));
         jSpinnerDuracion = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
-        jPanel18 = new javax.swing.JPanel();
+        jPanel18 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel11 = new javax.swing.JLabel();
-        jComboBoxUbicacion = new javax.swing.JComboBox<>();
+        jComboBoxUbicacion = MaterialComponentsFactory.Displayers.getComboBox("");
         jButtonShowProductos = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanel19 = new javax.swing.JPanel();
+        jPanel19 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel12 = new javax.swing.JLabel();
-        jComboBoxCliente = new javax.swing.JComboBox<>();
+        jComboBoxCliente = MaterialComponentsFactory.Displayers.getComboBox("");
         jButtonShowNewClient = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanel20 = new javax.swing.JPanel();
+        jPanel20 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel13 = new javax.swing.JLabel();
-        jComboBoxCategoria = new javax.swing.JComboBox<>();
-        jPanelProductos = new javax.swing.JPanel();
-        jPanelProductoSelector = new javax.swing.JPanel();
-        jPanelProductosOrden = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jComboBoxCategoria = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanelProductos = MaterialComponentsFactory.Containers.getTransparentPanel()
+        ;
+        jPanelProductoSelector = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelProductosOrden = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jListListaProductos = new javax.swing.JList<>()
         ;
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonEliminar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jToggleButtonAgregos = new javax.swing.JToggleButton();
-        jPanelNewClient = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanelNewClient = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanel6 = new javax.swing.JPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldApellidos = MaterialComponentsFactory.Input.getTextField("", "Apellidos");
-        jPanel7 = new javax.swing.JPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldTelefono = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono"));
-        jPanel3 = new javax.swing.JPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAddCliente = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jPanelGoBack = new javax.swing.JPanel();
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelGoBack = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonGoBack = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanel11 = new javax.swing.JPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanel12 = new javax.swing.JPanel();
+        jPanel11 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
+        jPanel12 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(500, 460));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Reserva", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 24))); // NOI18N
         jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPanelMain.setLayout(new java.awt.CardLayout());
@@ -128,7 +128,7 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanelfecha.add(jPanel21);
 
-        jPanel15.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
+        jPanel15.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 1, 0, 1));
         jPanel15.setLayout(new java.awt.BorderLayout());
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -352,7 +352,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanelGoBack.setLayout(new java.awt.GridBagLayout());
 
         jButtonGoBack.setIcon(MaterialIcons.ARROW_BACK);
-        jButtonGoBack.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonGoBack.setPreferredSize(new java.awt.Dimension(50, 40));
         jButtonGoBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonGoBackActionPerformed(evt);
@@ -365,8 +365,8 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanel11.setOpaque(false);
         jPanel11.setLayout(new java.awt.GridBagLayout());
 
-        jButtonCancelar.setIcon(MaterialIcons.CLOSE);
-        jButtonCancelar.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 40));
         jPanel11.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         jPanel9.add(jPanel11);
@@ -374,8 +374,8 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanel12.setOpaque(false);
         jPanel12.setLayout(new java.awt.GridBagLayout());
 
-        jButtonAceptar.setIcon(MaterialIcons.DONE);
-        jButtonAceptar.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonAceptar.setText("Aceptar");
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(140, 40));
         jPanel12.add(jButtonAceptar, new java.awt.GridBagConstraints());
 
         jPanel9.add(jPanel12);

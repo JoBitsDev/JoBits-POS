@@ -123,12 +123,12 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuAyuda = new javax.swing.JMenu();
         jMenuItemManualUsuario = new javax.swing.JMenuItem();
 
-        jMenuJoBitsPOS.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
-        jMenuEdicion.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
-        jMenuVista.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
-        jMenuHerramientas.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
-        jMenuAyuda.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
-        jMenuBarMainManuBar.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
+        jMenuJoBitsPOS.setBackground(DefaultValues.WHITE);
+        jMenuEdicion.setBackground(DefaultValues.WHITE);
+        jMenuVista.setBackground(DefaultValues.WHITE);
+        jMenuHerramientas.setBackground(DefaultValues.WHITE);
+        jMenuAyuda.setBackground(DefaultValues.WHITE);
+        jMenuBarMainManuBar.setBackground(DefaultValues.WHITE);
 
         jMenuJoBitsPOS.setText("JoBits POS");
 

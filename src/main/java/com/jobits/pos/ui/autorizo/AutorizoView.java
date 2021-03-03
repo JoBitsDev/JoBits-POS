@@ -38,18 +38,17 @@ public class AutorizoView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel4 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanelInput = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("Introduzca el nombre de usuario","Usuario");
         jPasswordField = MaterialComponentsFactory.Input.getPasswordField(java.util.ResourceBundle.getBundle("Strings").getString("label_introduzca_contrasena"), java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena"));
-        jPanel3 = new javax.swing.JPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -61,47 +60,32 @@ public class AutorizoView extends AbstractViewPanel {
 
         jPanel4.add(jPanel2, java.awt.BorderLayout.NORTH);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 40, 10, 40));
-
-        jPanelInput.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
-        jPanelInput.setMaximumSize(new java.awt.Dimension(220, 32767));
-        jPanelInput.setOpaque(false);
-        jPanelInput.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(60, 50, 60, 50));
+        jPanel1.setPreferredSize(new java.awt.Dimension(500, 246));
+        jPanel1.setLayout(new java.awt.GridLayout(2, 1, 0, 40));
 
         jTextFieldUsuario.setMaximumSize(new java.awt.Dimension(220, 2147483647));
-        jPanelInput.add(jTextFieldUsuario);
+        jPanel1.add(jTextFieldUsuario);
 
         jPasswordField.setMaximumSize(new java.awt.Dimension(220, 2147483647));
-        jPanelInput.add(jPasswordField);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(0, 63, Short.MAX_VALUE)
-                .addComponent(jPanelInput, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 63, Short.MAX_VALUE))
-        );
+        jPanel1.add(jPasswordField);
 
         jPanel4.add(jPanel1, java.awt.BorderLayout.CENTER);
 
+        jPanel3.setPreferredSize(new java.awt.Dimension(156, 60));
+        jPanel3.setLayout(new java.awt.GridBagLayout());
+
         jButtonCancelar.setText("Cancelar");
-        jPanel3.add(jButtonCancelar);
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 50));
+        jPanel3.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         jButtonAceptar.setText("Aceptar");
-        jPanel3.add(jButtonAceptar);
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(140, 50));
+        jPanel3.add(jButtonAceptar, new java.awt.GridBagConstraints());
 
         jPanel4.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
-        add(jPanel4, java.awt.BorderLayout.LINE_END);
+        add(jPanel4, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -113,7 +97,6 @@ public class AutorizoView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanelInput;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables

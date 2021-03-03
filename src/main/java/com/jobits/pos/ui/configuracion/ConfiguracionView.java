@@ -9,6 +9,7 @@ import com.jobits.pos.controller.productos.impl.ProductoVentaListController;
 import com.jobits.pos.servicios.impresion.ImpresoraRepoImpl;
 import com.jobits.pos.servicios.impresion.ImpresoraUseCase;
 import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewPresenter;
 import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewPresenter;
@@ -17,6 +18,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.plaf.TabbedPaneUI;
 
 /**
  *
@@ -50,9 +52,8 @@ public class ConfiguracionView extends AbstractViewPanel {
         jPanelExcluir = new javax.swing.JPanel();
         jPanelBebidas = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel12 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel12 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getAcceptButton();
 
         jPanelY.setLayout(new java.awt.BorderLayout());
@@ -87,32 +88,30 @@ public class ConfiguracionView extends AbstractViewPanel {
 
         jPanelY.add(jPanel3, java.awt.BorderLayout.CENTER);
 
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(750, 650));
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
+        setLayout(new java.awt.BorderLayout());
 
         jTabbedPane1.setPreferredSize(screenHeight(0.75));
-        add(jTabbedPane1);
+        add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel12.setLayout(new java.awt.BorderLayout());
-
-        jPanel1.setMinimumSize(new java.awt.Dimension(138, 60));
+        jPanel12.setPreferredSize(new java.awt.Dimension(260, 50));
+        jPanel12.setLayout(new java.awt.GridBagLayout());
 
         jButtonCancelar.setText("Cancelar");
-        jButtonCancelar.setPreferredSize(new java.awt.Dimension(130, 50));
-        jPanel1.add(jButtonCancelar);
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(130, 40));
+        jPanel12.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         jButtonAceptar.setText("Guardar cambios");
-        jButtonAceptar.setPreferredSize(new java.awt.Dimension(130, 50));
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(130, 40));
         jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAceptarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonAceptar);
+        jPanel12.add(jButtonAceptar, new java.awt.GridBagConstraints());
 
-        jPanel12.add(jPanel1, java.awt.BorderLayout.SOUTH);
-
-        add(jPanel12);
+        add(jPanel12, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
@@ -124,7 +123,6 @@ public class ConfiguracionView extends AbstractViewPanel {
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelBebidas;

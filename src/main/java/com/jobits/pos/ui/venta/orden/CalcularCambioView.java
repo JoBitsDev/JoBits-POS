@@ -42,11 +42,10 @@ public class CalcularCambioView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel5 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelCodigoOrden = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabelAPagar = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -55,18 +54,16 @@ public class CalcularCambioView extends AbstractViewPanel {
         jSpinnerSegundaMoneda = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
         jLabelCambio = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jButtonCerrar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 0), new java.awt.Dimension(40, 32767));
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonCerrar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAbrirCajon = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
         setMinimumSize(new java.awt.Dimension(500, 300));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(500, 300));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 5, 20));
+        jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 10, 0));
@@ -77,64 +74,61 @@ public class CalcularCambioView extends AbstractViewPanel {
 
         jPanel5.add(jPanel1, java.awt.BorderLayout.NORTH);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 0, 2, 0, DefaultValues.SECONDARY_COLOR));
-        jPanel2.setLayout(new java.awt.BorderLayout());
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        jPanel4.setLayout(new java.awt.GridLayout(4, 2, 0, 10));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        jPanel2.setLayout(new java.awt.GridLayout(4, 2, 0, 10));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Total a Pagar:");
-        jPanel4.add(jLabel3);
+        jPanel2.add(jLabel3);
 
         jLabelAPagar.setFont(new java.awt.Font("Century", 1, 18)); // NOI18N
         jLabelAPagar.setForeground(new java.awt.Color(0, 204, 0));
         jLabelAPagar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelAPagar.setText("XX.XX");
-        jPanel4.add(jLabelAPagar);
+        jPanel2.add(jLabelAPagar);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MN");
-        jPanel4.add(jLabel1);
+        jPanel2.add(jLabel1);
 
         jSpinnerMonedaNacional.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
-        jPanel4.add(jSpinnerMonedaNacional);
+        jPanel2.add(jSpinnerMonedaNacional);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("CUC");
-        jPanel4.add(jLabel2);
+        jPanel2.add(jLabel2);
 
         jSpinnerSegundaMoneda.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
-        jPanel4.add(jSpinnerSegundaMoneda);
+        jPanel2.add(jSpinnerSegundaMoneda);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Cambio:");
-        jPanel4.add(jLabel5);
+        jPanel2.add(jLabel5);
 
         jLabelCambio.setFont(new java.awt.Font("Century", 1, 18)); // NOI18N
         jLabelCambio.setForeground(new java.awt.Color(255, 0, 0));
         jLabelCambio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCambio.setText("XX.XX");
-        jPanel4.add(jLabelCambio);
-
-        jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jLabelCambio);
 
         jPanel5.add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel3.setPreferredSize(new java.awt.Dimension(220, 50));
+        jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jButtonCerrar.setText("Cerrar");
-        jPanel3.add(jButtonCerrar);
-        jPanel3.add(filler1);
+        jButtonCerrar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanel3.add(jButtonCerrar, new java.awt.GridBagConstraints());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jButtonAbrirCajon.setText(bundle.getString("label_abrir_cajon")); // NOI18N
+        jButtonAbrirCajon.setPreferredSize(new java.awt.Dimension(140, 40));
         jButtonAbrirCajon.setFocusable(true); // NOI18N
-        jPanel3.add(jButtonAbrirCajon);
+        jPanel3.add(jButtonAbrirCajon, new java.awt.GridBagConstraints());
 
         jPanel5.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
@@ -143,7 +137,6 @@ public class CalcularCambioView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonAbrirCajon;
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JLabel jLabel1;
@@ -156,7 +149,6 @@ public class CalcularCambioView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSpinner jSpinnerMonedaNacional;
     private javax.swing.JSpinner jSpinnerSegundaMoneda;

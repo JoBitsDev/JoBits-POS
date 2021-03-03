@@ -44,7 +44,8 @@ public class StatusBarPresenter extends AbstractViewPresenter<StatusBarViewModel
 
     private void refreshBean() {
         getBean().setBoton_licencia_habilitado(true);
-        getBean().setEstado_licencia(service.getEstadoLicencia(Licence.TipoLicencia.APLICACION));
+        licenseStatus();
+//        getBean().setEstado_licencia(service.getEstadoLicencia(Licence.TipoLicencia.APLICACION));
         if (Application.getInstance().getLoggedUser() != null) {
             getBean().setUsuario_registrado(Application.getInstance().getLoggedUser().getUsuario());
             colorUser();
@@ -90,18 +91,35 @@ public class StatusBarPresenter extends AbstractViewPresenter<StatusBarViewModel
                 getBean().setUsuario_registrado_color(Color.BLUE);
                 break;
             case 3:
-                getBean().setUsuario_registrado_color(new Color(51,51,255));//morado
+                getBean().setUsuario_registrado_color(new Color(51, 51, 255));//morado
                 break;
             case 4:
                 getBean().setUsuario_registrado_color(Color.RED);
                 break;
             case 5:
-                getBean().setUsuario_registrado_color(new Color(255,204,0));//dorado
+                getBean().setUsuario_registrado_color(Color.ORANGE);//dorado
                 break;
             default:
                 break;
         }
+    }
 
+    private void licenseStatus() {
+        String licenseStatus = service.getEstadoLicencia(Licence.TipoLicencia.APLICACION);
+        Color colorStatus = Color.black;
+        if (licenseStatus.contains("Dias restantes")) {
+            String[] value = licenseStatus.split(" ");
+            int daysLeft = Integer.parseInt(value[2]);
+            if (daysLeft <= 7 && daysLeft > 3) {
+                colorStatus = Color.orange;
+            } else if (daysLeft <= 3) {
+                colorStatus = Color.red;
+            }
+        } else {
+            colorStatus = Color.red;
+        }
+        getBean().setEstado_licencia(licenseStatus);
+        getBean().setEstado_licencia_color(colorStatus);
     }
 
 }

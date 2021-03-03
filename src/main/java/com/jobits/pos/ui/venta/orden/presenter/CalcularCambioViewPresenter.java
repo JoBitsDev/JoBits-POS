@@ -79,7 +79,7 @@ public class CalcularCambioViewPresenter extends AbstractViewPresenter<CalcularC
         float cuc = getBean().getEntrada_segunda_moneda();
         float montoADevolver = o.getOrdenvalorMonetario();
 
-        if (R.COIN_SUFFIX.equals("_CUC")) {
+        if (R.COIN_SUFFIX.contains("CUC")) {
 //            float cuc = (float) jSpinnerCUC.getValue();
             montoADevolver -= cuc;
 //            float mn = (int) jSpinnerMN.getValue();
