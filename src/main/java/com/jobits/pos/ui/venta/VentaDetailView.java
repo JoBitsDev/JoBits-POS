@@ -735,10 +735,6 @@ public class VentaDetailView extends AbstractViewPanel {
         chartPie.getStyler().setLegendBackgroundColor(new Color(255, 255, 255, 0));
 
         float perdida = 0;
-        System.out.println(insumos);
-        System.out.println(otro);
-        System.out.println(salarios);
-        System.out.println(ventasTotal);
         if (insumos != null) {
             float insumo = Float.parseFloat(insumos.substring(0, insumos.lastIndexOf(" ")).replaceAll(" ", ""));
             perdida += insumo;
