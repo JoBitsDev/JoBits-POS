@@ -7,6 +7,7 @@ package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.ProductovOrden;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.filter.presenter.FilterViewPresenter;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Date;
@@ -57,6 +58,30 @@ public abstract class AbstractResumenViewModel<Main, Detail> extends AbstractVie
     private FilterViewPresenter<Detail> filter_presenter;
 
     public static final String PROP_FILTER_PRESENTER = "filter_presenter";
+
+    private String total_resumen = "0.0" + R.COIN_SUFFIX;
+
+    public static final String PROP_TOTAL_RESUMEN = "total_resumen";
+
+    /**
+     * Get the value of total_resumen
+     *
+     * @return the value of total_resumen
+     */
+    public String getTotal_resumen() {
+        return total_resumen;
+    }
+
+    /**
+     * Set the value of total_resumen
+     *
+     * @param total_resumen new value of total_resumen
+     */
+    public void setTotal_resumen(String total_resumen) {
+        String oldTotal_resumen = this.total_resumen;
+        this.total_resumen = total_resumen;
+        firePropertyChange(PROP_TOTAL_RESUMEN, oldTotal_resumen, total_resumen);
+    }
 
     /**
      * Get the value of filter_presenter

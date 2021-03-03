@@ -59,6 +59,8 @@ public abstract class AbstractResumenViewPresenter<T extends AbstractResumenView
 
     protected abstract void setListsToBean();
 
+    public abstract float getTotal();
+
     public FilterViewPresenter getFilterPresenter() {
         return getBean().getFilter_presenter();
     }

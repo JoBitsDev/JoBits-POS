@@ -43,6 +43,8 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
         jPanelDetailPanel = MaterialComponentsFactory.Containers.getTransparentPanel();
         jScrollPaneDetail = MaterialComponentsFactory.Containers.getScrollPane();
         jTableDetail = new javax.swing.JTable();
+        jPanelFootter = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabelTotal = new javax.swing.JLabel();
 
         jPopupMenuClickDerecho.setInvoker(jTableMain);
 
@@ -141,6 +143,17 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
         jPanelTabla.add(jPanelDetailPanel, "detail");
 
         add(jPanelTabla, java.awt.BorderLayout.CENTER);
+
+        jPanelFootter.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 10, 15), "Total", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanelFootter.setPreferredSize(new java.awt.Dimension(93, 60));
+        jPanelFootter.setLayout(new java.awt.BorderLayout());
+
+        jLabelTotal.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelTotal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelTotal.setText("xx.xx MN");
+        jPanelFootter.add(jLabelTotal, java.awt.BorderLayout.CENTER);
+
+        add(jPanelFootter, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableMainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMainMouseClicked
@@ -170,8 +183,10 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JLabel jLabel1;
+    protected javax.swing.JLabel jLabelTotal;
     protected javax.swing.JPanel jPanelControlesSuperiores;
     protected javax.swing.JPanel jPanelDetailPanel;
+    protected javax.swing.JPanel jPanelFootter;
     protected javax.swing.JPanel jPanelTabla;
     protected javax.swing.JPopupMenu jPopupMenuClickDerecho;
     protected javax.swing.JScrollPane jScrollPaneDetail;
@@ -195,6 +210,7 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
                 new SelectionInList(getPresenter().getModel(PROP_LISTADETAIL),
                         getPresenter().getModel(PROP_SELECTED_DETAIL)));
         Bindings.bind(jLabel1, getPresenter().getModel(PROP_TITULO_VISTA));
+        Bindings.bind(jLabelTotal, getPresenter().getModel(PROP_TOTAL_RESUMEN));
 
         Bindings.bind(jToggleButtonDetail, getPresenter().getModel(PROP_DETAILSELECTED));
 
