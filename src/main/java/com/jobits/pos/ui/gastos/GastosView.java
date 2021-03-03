@@ -10,6 +10,7 @@ import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.GastoVenta;
+import com.jobits.pos.core.domain.models.temporal.DefaultGasto;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.gastos.presenter.GastosViewModel.*;
@@ -65,6 +66,11 @@ public class GastosView extends AbstractViewPanel {
         jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
         jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxDefaultGastos = MaterialComponentsFactory.Displayers.getComboBox("");
+        jButtonEliminarDefaultGasto = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonAgregarDefaultGasto = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel10 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonLimpiarEntradas = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonCrearGasto = MaterialComponentsFactory.Buttons.getLinedButton();
         jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
@@ -186,7 +192,44 @@ public class GastosView extends AbstractViewPanel {
         jPanelAgregar1.add(jPanel8, java.awt.BorderLayout.CENTER);
 
         jPanel3.setToolTipText(null);
-        jPanel3.setLayout(new java.awt.BorderLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
+
+        jPanel9.setLayout(new java.awt.BorderLayout());
+
+        jComboBoxDefaultGastos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        jComboBoxDefaultGastos.setToolTipText(null);
+        jComboBoxDefaultGastos.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jComboBoxDefaultGastos.setPreferredSize(new java.awt.Dimension(150, 36));
+        jComboBoxDefaultGastos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxDefaultGastosActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jComboBoxDefaultGastos, java.awt.BorderLayout.CENTER);
+
+        jButtonEliminarDefaultGasto.setIcon(MaterialIcons.DELETE);
+        jButtonEliminarDefaultGasto.setToolTipText("Eliminar Plantilla");
+        jButtonEliminarDefaultGasto.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButtonEliminarDefaultGasto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminarDefaultGastoActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jButtonEliminarDefaultGasto, java.awt.BorderLayout.WEST);
+
+        jButtonAgregarDefaultGasto.setIcon(MaterialIcons.ADD);
+        jButtonAgregarDefaultGasto.setToolTipText("Agregar Plantilla");
+        jButtonAgregarDefaultGasto.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButtonAgregarDefaultGasto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarDefaultGastoActionPerformed(evt);
+            }
+        });
+        jPanel9.add(jButtonAgregarDefaultGasto, java.awt.BorderLayout.EAST);
+
+        jPanel3.add(jPanel9);
+
+        jPanel10.setLayout(new java.awt.BorderLayout());
 
         jButtonLimpiarEntradas.setToolTipText("Limpiar");
         jButtonLimpiarEntradas.setPreferredSize(new java.awt.Dimension(40, 40));
@@ -195,7 +238,7 @@ public class GastosView extends AbstractViewPanel {
                 jButtonLimpiarEntradasActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonLimpiarEntradas, java.awt.BorderLayout.WEST);
+        jPanel10.add(jButtonLimpiarEntradas, java.awt.BorderLayout.WEST);
 
         jButtonCrearGasto.setText("Crear");
         jButtonCrearGasto.setToolTipText(null);
@@ -205,7 +248,9 @@ public class GastosView extends AbstractViewPanel {
                 jButtonCrearGastoActionPerformed(evt);
             }
         });
-        jPanel3.add(jButtonCrearGasto, java.awt.BorderLayout.CENTER);
+        jPanel10.add(jButtonCrearGasto, java.awt.BorderLayout.CENTER);
+
+        jPanel3.add(jPanel10);
 
         jPanelAgregar1.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
@@ -322,12 +367,27 @@ public class GastosView extends AbstractViewPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxTipoGastoActionPerformed
 
+    private void jComboBoxDefaultGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDefaultGastosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxDefaultGastosActionPerformed
+
+    private void jButtonEliminarDefaultGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarDefaultGastoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEliminarDefaultGastoActionPerformed
+
+    private void jButtonAgregarDefaultGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarDefaultGastoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAgregarDefaultGastoActionPerformed
+
     @Override
     public void wireUp() {
         Bindings.bind(jTableInfo, new SelectionInList<String>(
                 getPresenter().getModel(PROP_LISTA_GASTO_VENTA),
                 getPresenter().getModel(PROP_GASTO_VENTA_SELECCIONADO)));
 
+        Bindings.bind(jComboBoxDefaultGastos, new SelectionInList<DefaultGasto>(
+                getPresenter().getModel(PROP_DEFAULT_GASTO_LIST),
+                getPresenter().getModel(PROP_DEFAULT_GASTO_SELECCIONADO)));
         Bindings.bind(jComboBoxCategoria, new SelectionInList<String>(
                 getPresenter().getModel(PROP_LISTA_CATEGORIA_GASTOS),
                 getPresenter().getModel(PROP_CATEGORIA_GASTO_SELECCIONADA)));
@@ -351,6 +411,8 @@ public class GastosView extends AbstractViewPanel {
         jButtonEliminarGasto.addActionListener(getPresenter().getOperation(ACTION_ELIMINAR_GASTO));
         jButtonImprimirGastos.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_GASTOS));
         jButtonLimpiarEntradas.addActionListener(getPresenter().getOperation(ACTION_LIMPIAR));
+        jButtonAgregarDefaultGasto.addActionListener(getPresenter().getOperation(ACTION_AGREGAR_DEFAULT_GASTO));
+        jButtonEliminarDefaultGasto.addActionListener(getPresenter().getOperation(ACTION_ELIMINAR_DEFAULT_GASTO));
 
     }
 
@@ -425,15 +487,19 @@ public class GastosView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAgregarDefaultGasto;
     private javax.swing.JButton jButtonCrearGasto;
+    private javax.swing.JButton jButtonEliminarDefaultGasto;
     private javax.swing.JButton jButtonEliminarGasto;
     private javax.swing.JButton jButtonImprimirGastos;
     private javax.swing.JButton jButtonLimpiarEntradas;
     private javax.swing.JComboBox<R.TipoGasto> jComboBoxCategoria;
+    private javax.swing.JComboBox<R.TipoGasto> jComboBoxDefaultGastos;
     private javax.swing.JComboBox<R.TipoGasto> jComboBoxTipoGasto;
     private javax.swing.JLabel jLabelGast;
     private javax.swing.JLabel jLabelMonto;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -441,6 +507,7 @@ public class GastosView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelAgregar1;
     private javax.swing.JPanel jPanelContainer;
     private javax.swing.JPanel jPanelDesc;
