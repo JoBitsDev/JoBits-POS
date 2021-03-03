@@ -6,9 +6,11 @@
 package com.jobits.pos.ui.venta.resumen;
 
 import com.jgoodies.binding.adapter.Bindings;
+import com.jgoodies.binding.list.SelectionInList;
+import com.jobits.pos.core.domain.models.temporal.GeneralReviewWrapper;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
+import com.jobits.pos.ui.utils.BindableTableModel;
 import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewModel.*;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter.*;
@@ -16,8 +18,14 @@ import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.displayers.Card;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
-import javax.swing.border.LineBorder;
+import java.text.MessageFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
 import org.knowm.xchart.PieChart;
 import org.knowm.xchart.PieChartBuilder;
 import org.knowm.xchart.XChartPanel;
@@ -61,7 +69,10 @@ public class ResumenMainview extends AbstractViewPanel {
         jButtonCargarResumen = MaterialComponentsFactory.Buttons.getMaterialButton();
         jPanelsContainer = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelMainDashBoard = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelGraficaPrincipal = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableResumenGeneral = new javax.swing.JTable();
         jPanelValoresEstadisticos = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jLabelCostoporPeso = new javax.swing.JLabel();
         jButtonImpimir = MaterialComponentsFactory.Buttons.getLinedButton();
@@ -134,9 +145,28 @@ public class ResumenMainview extends AbstractViewPanel {
 
         jPanelMainDashBoard.setLayout(new java.awt.BorderLayout());
 
+        jPanel1.setLayout(new java.awt.CardLayout());
+
         jPanelGraficaPrincipal.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 0, 0));
         jPanelGraficaPrincipal.setLayout(new java.awt.BorderLayout());
-        jPanelMainDashBoard.add(jPanelGraficaPrincipal, java.awt.BorderLayout.CENTER);
+        jPanel1.add(jPanelGraficaPrincipal, "card2");
+
+        jTableResumenGeneral.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableResumenGeneral);
+
+        jPanel1.add(jScrollPane1, "card3");
+
+        jPanelMainDashBoard.add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jPanelValoresEstadisticos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 15));
         jPanelValoresEstadisticos.setPreferredSize(new java.awt.Dimension(791, 50));
@@ -200,6 +230,7 @@ public class ResumenMainview extends AbstractViewPanel {
     private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabelCostoporPeso;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelDetallesAutorizo;
     private javax.swing.JPanel jPanelDetallesCostos;
@@ -214,10 +245,16 @@ public class ResumenMainview extends AbstractViewPanel {
     private javax.swing.JPanel jPanelSeleccion;
     private javax.swing.JPanel jPanelValoresEstadisticos;
     private javax.swing.JPanel jPanelsContainer;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableResumenGeneral;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void wireUp() {
+        Bindings.bind(jTableResumenGeneral, new SelectionInList<GeneralReviewWrapper>(
+                getPresenter().getModel(PROP_LISTA_RESUMENES_GENERALES),
+                getPresenter().getModel(PROP_RESUMEN_SELECCIONADO)));
+
         Bindings.bind(jButtonPeriodoSelector, "visible", getPresenter().getModel(PROP_CONTROLS_VISIBILITY));
         Bindings.bind(jLabelCostoporPeso, getPresenter().getModel(PROP_COSTO_PESO));
 
@@ -226,6 +263,7 @@ public class ResumenMainview extends AbstractViewPanel {
 
         jButtonPeriodoSelector.addActionListener(getPresenter().getOperation(ACTION_TO_MAIN_PANEL));
         jButtonCargarResumen.addActionListener(getPresenter().getOperation(ACTION_CARGAR_RESUMEN));
+        jButtonImpimir.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN));
     }
 
     @Override
@@ -254,6 +292,57 @@ public class ResumenMainview extends AbstractViewPanel {
                 getPresenter().getModel(PROP_TOTAL_SALARIOS), getPresenter().getOperation(ACTION_TO_DETAILS_SALARIO)));
         jPanelResumenesDetallados.add(MaterialComponentsFactory.Displayers.getSmallCardValueModel(null, null, "Gastos",
                 getPresenter().getModel(PROP_TOTAL_GASTOS), getPresenter().getOperation(ACTION_TO_DETAILS_GASTO)));
+
+        jTableResumenGeneral.setModel(new BindableTableModel<GeneralReviewWrapper>(jTableResumenGeneral) {
+            @Override
+            public int getColumnCount() {
+                return 6;
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0:
+                        return "Fecha";
+                    case 1:
+                        return "Venta";
+                    case 2:
+                        return "Costos";
+                    case 3:
+                        return "Salarios";
+                    case 4:
+                        return "Gastos";
+                    case 5:
+                        return "Utilidades";
+                }
+                return null;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return getRow(rowIndex).getFecha().format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
+                    case 1:
+                        return getRow(rowIndex).getTotalVenta().getTotal();
+                    case 2:
+                        return getRow(rowIndex).getTotalCostos().getTotal();
+                    case 3:
+                        return getRow(rowIndex).getTotalSalarios().getTotal();
+                    case 4:
+                        return getRow(rowIndex).getTotalGastos().getTotal();
+                    case 5:
+                        return getRow(rowIndex).getUtilidad();
+                }
+                return null;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnIndex == 0 ? LocalDate.class : super.getColumnClass(columnIndex);
+            }
+
+        });
 
     }
 
@@ -298,6 +387,9 @@ public class ResumenMainview extends AbstractViewPanel {
                 case "REFRESH_STATE_EXECUTED":
                     updateChartValues();
                     break;
+                case "IMRPIMIR_RESUMEN":
+                    imprimirResumen();
+                    break;
             }
         });
     }
@@ -335,5 +427,14 @@ public class ResumenMainview extends AbstractViewPanel {
             jPanelGraficaPrincipal.removeAll();
         }
         jPanelGraficaPrincipal.add(wrapperPie);
+    }
+
+    private void imprimirResumen() {
+        MessageFormat m = new MessageFormat("Resumen General");
+        try {
+            jTableResumenGeneral.print(JTable.PrintMode.FIT_WIDTH, m, null);
+        } catch (PrinterException ex) {
+            Logger.getLogger(AbstractListResumenViewPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

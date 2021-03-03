@@ -201,14 +201,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="jPanelGraficaPrincipal">
-                  <Properties>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-                        <EmptyBorder bottom="0" left="15" right="0" top="15"/>
-                      </Border>
-                    </Property>
-                  </Properties>
+                <Container class="javax.swing.JPanel" name="jPanel1">
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
                   </AuxValues>
@@ -218,7 +211,54 @@
                     </Constraint>
                   </Constraints>
 
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
+                  <SubComponents>
+                    <Container class="javax.swing.JPanel" name="jPanelGraficaPrincipal">
+                      <Properties>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                            <EmptyBorder bottom="0" left="15" right="0" top="15"/>
+                          </Border>
+                        </Property>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
+                      </AuxValues>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                          <CardConstraints cardName="card2"/>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+                    </Container>
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                      <AuxValues>
+                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                      </AuxValues>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                          <CardConstraints cardName="card3"/>
+                        </Constraint>
+                      </Constraints>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <SubComponents>
+                        <Component class="javax.swing.JTable" name="jTableResumenGeneral">
+                          <Properties>
+                            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                              <Table columnCount="4" rowCount="4">
+                                <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                                <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                                <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                                <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                              </Table>
+                            </Property>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                  </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="jPanelValoresEstadisticos">
                   <Properties>

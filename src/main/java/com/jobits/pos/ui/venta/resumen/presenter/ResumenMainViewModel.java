@@ -5,6 +5,8 @@
  */
 package com.jobits.pos.ui.venta.resumen.presenter;
 
+import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.core.domain.models.temporal.GeneralReviewWrapper;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -65,6 +67,55 @@ public class ResumenMainViewModel extends AbstractViewModel {
     private String costo_peso = "0.0";
 
     public static final String PROP_COSTO_PESO = "costo_peso";
+
+    private GeneralReviewWrapper resumen_seleccionado;
+
+    public static final String PROP_RESUMEN_SELECCIONADO = "resumen_seleccionado";
+
+    private ArrayListModel<GeneralReviewWrapper> lista_resumenes_generales = new ArrayListModel<>();
+
+    public static final String PROP_LISTA_RESUMENES_GENERALES = "lista_resumenes_generales";
+
+    /**
+     * Get the value of lista_resumenes_generales
+     *
+     * @return the value of lista_resumenes_generales
+     */
+    public ArrayListModel<GeneralReviewWrapper> getLista_resumenes_generales() {
+        return lista_resumenes_generales;
+    }
+
+    /**
+     * Set the value of lista_resumenes_generales
+     *
+     * @param lista_resumenes_generales new value of lista_resumenes_generales
+     */
+    public void setLista_resumenes_generales(ArrayListModel<GeneralReviewWrapper> lista_resumenes_generales) {
+        ArrayListModel<GeneralReviewWrapper> oldLista_resumenes_generales = this.lista_resumenes_generales;
+        this.lista_resumenes_generales.clear();
+        this.lista_resumenes_generales.addAll(lista_resumenes_generales);
+        firePropertyChange(PROP_LISTA_RESUMENES_GENERALES, oldLista_resumenes_generales, lista_resumenes_generales);
+    }
+
+    /**
+     * Get the value of resumen_seleccionado
+     *
+     * @return the value of resumen_seleccionado
+     */
+    public GeneralReviewWrapper getResumen_seleccionado() {
+        return resumen_seleccionado;
+    }
+
+    /**
+     * Set the value of resumen_seleccionado
+     *
+     * @param resumen_seleccionado new value of resumen_seleccionado
+     */
+    public void setResumen_seleccionado(GeneralReviewWrapper resumen_seleccionado) {
+        GeneralReviewWrapper oldResumen_seleccionado = this.resumen_seleccionado;
+        this.resumen_seleccionado = resumen_seleccionado;
+        firePropertyChange(PROP_RESUMEN_SELECCIONADO, oldResumen_seleccionado, resumen_seleccionado);
+    }
 
     /**
      * Get the value of costo_peso
