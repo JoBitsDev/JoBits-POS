@@ -32,6 +32,30 @@ public class AbstractFilterTypeModel<T> extends AbstractViewModel {
 
     public static final String PROP_TIPO_FILTRO = "tipo_filtro";
 
+    private boolean tipo_operacion = false;
+
+    public static final String PROP_TIPO_OPERACION = "tipo_operacion";
+
+    /**
+     * Get the value of tipo_operacion
+     *
+     * @return the value of tipo_operacion
+     */
+    public boolean isTipo_operacion() {
+        return tipo_operacion;
+    }
+
+    /**
+     * Set the value of tipo_operacion
+     *
+     * @param tipo_operacion new value of tipo_operacion
+     */
+    public void setTipo_operacion(boolean tipo_operacion) {
+        boolean oldTipo_operacion = this.tipo_operacion;
+        this.tipo_operacion = tipo_operacion;
+        firePropertyChange(PROP_TIPO_OPERACION, oldTipo_operacion, tipo_operacion);
+    }
+
     /**
      * Get the value of tipo_filtro
      *
