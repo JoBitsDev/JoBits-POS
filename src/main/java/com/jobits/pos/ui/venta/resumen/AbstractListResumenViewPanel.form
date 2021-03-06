@@ -174,8 +174,9 @@
                   </TableColumnModel>
                 </Property>
                 <Property name="rowHeight" type="int" value="25"/>
+                <Property name="selectionMode" type="int" value="2"/>
                 <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
-                  <JTableSelectionModel selectionMode="1"/>
+                  <JTableSelectionModel selectionMode="2"/>
                 </Property>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="false" resizingAllowed="true"/>

@@ -7,6 +7,7 @@ import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.filter.FilterMainView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.ExcelAdapter;
 import static com.jobits.pos.ui.viewmodel.AbstractListViewModel.PROP_TITULO_VISTA;
 import static com.jobits.pos.ui.venta.resumen.presenter.AbstractResumenViewModel.*;
 import com.jobits.pos.ui.venta.resumen.presenter.AbstractResumenViewPresenter;
@@ -94,7 +95,8 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
         ));
         jTableMain.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
         jTableMain.setRowHeight(25);
-        jTableMain.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTableMain.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTableMain.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableMain.getTableHeader().setReorderingAllowed(false);
         jTableMain.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -219,8 +221,7 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
                 new SelectionInList(getPresenter().getModel(PROP_LISTAMAIN),
                         getPresenter().getModel(PROP_MAINSELECTED)));
         Bindings.bind(jTableDetail,
-                new SelectionInList(getPresenter().getModel(PROP_LISTADETAIL),
-                        getPresenter().getModel(PROP_SELECTED_DETAIL)));
+                new SelectionInList(getPresenter().getModel(PROP_LISTADETAIL)));
         Bindings.bind(jLabelNombreTabla, getPresenter().getModel(PROP_TITULO_VISTA));
         Bindings.bind(jLabelTotal, getPresenter().getModel(PROP_TOTAL_RESUMEN));
 
@@ -244,6 +245,10 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
         modelDetail = generateDetailTableModel();
         jTableMain.setModel(modelMain);
         jTableDetail.setModel(modelDetail);
+//        jTableDetail.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+//        jTableDetail.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        ExcelAdapter a = new ExcelAdapter(jTableDetail);
+
         setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
 
         getPresenter().addBeanPropertyChangeListener(PROP_DETAILSELECTED, (PropertyChangeEvent evt) -> {
