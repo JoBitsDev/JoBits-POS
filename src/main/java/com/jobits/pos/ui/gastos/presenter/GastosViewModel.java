@@ -62,6 +62,30 @@ public class GastosViewModel extends AbstractViewModel {
 
     public static final String PROP_DEFAULT_GASTO_LIST = "default_gasto_list";
 
+    private String tipo_gasto = null;
+
+    public static final String PROP_TIPO_GASTO = "tipo_gasto";
+
+    /**
+     * Get the value of tipo_gasto
+     *
+     * @return the value of tipo_gasto
+     */
+    public String getTipo_gasto() {
+        return tipo_gasto;
+    }
+
+    /**
+     * Set the value of tipo_gasto
+     *
+     * @param tipo_gasto new value of tipo_gasto
+     */
+    public void setTipo_gasto(String tipo_gasto) {
+        String oldTipo_gasto = this.tipo_gasto;
+        this.tipo_gasto = tipo_gasto;
+        firePropertyChange(PROP_TIPO_GASTO, oldTipo_gasto, tipo_gasto);
+    }
+
     /**
      * Get the value of default_gasto_list
      *
@@ -119,6 +143,7 @@ public class GastosViewModel extends AbstractViewModel {
     public void setTipo_gasto_seleccionado(String tipo_gasto_seleccionado) {
         String oldTipo_gasto_seleccionado = this.tipo_gasto_seleccionado;
         this.tipo_gasto_seleccionado = tipo_gasto_seleccionado;
+        this.tipo_gasto = tipo_gasto_seleccionado;
         firePropertyChange(PROP_TIPO_GASTO_SELECCIONADO, oldTipo_gasto_seleccionado, tipo_gasto_seleccionado);
     }
 
