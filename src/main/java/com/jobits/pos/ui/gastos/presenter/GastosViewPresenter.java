@@ -111,13 +111,14 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         getBean().setLista_gasto_venta(new ArrayListModel<>(service.getLista()));
         getBean().setTotal_gastos(utils.setDosLugaresDecimales(service.getValorTotalGastos()));
         getBean().setDefault_gasto_list(new ArrayListModel<>(service.getDefaultGastosList()));
+        getBean().setTipo_gasto(null);
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void onAgregarClick() {
         service.createNewGasto(
                 getBean().getCategoria_gasto_seleccionada(),
-                getBean().getTipo_gasto_seleccionado(),
+                getBean().getTipo_gasto(),
                 getBean().getMonto_gasto(),
                 getBean().getDescripcion_gasto());
         refreshState();

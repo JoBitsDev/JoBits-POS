@@ -58,10 +58,9 @@ public class GastosView extends AbstractViewPanel {
         jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jComboBoxCategoria = MaterialComponentsFactory.Displayers.getComboBox("");
         jPanel6 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jComboBoxTipoGasto = MaterialComponentsFactory.Displayers.getComboBox("");
+        jTextFieldTipoGasto = MaterialComponentsFactory.Input.getTextField("", "");
         jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jSpinnerMonto = new javax.swing.JSpinner();
-        jLabelMonto = new javax.swing.JLabel();
         jPanelDesc = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
@@ -125,20 +124,13 @@ public class GastosView extends AbstractViewPanel {
         jPanel6.setToolTipText(null);
         jPanel6.setLayout(new java.awt.GridBagLayout());
 
-        jComboBoxTipoGasto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jComboBoxTipoGasto.setToolTipText(null);
-        jComboBoxTipoGasto.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jComboBoxTipoGasto.setPreferredSize(new java.awt.Dimension(150, 36));
-        jComboBoxTipoGasto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxTipoGastoActionPerformed(evt);
-            }
-        });
-        jPanel6.add(jComboBoxTipoGasto, new java.awt.GridBagConstraints());
+        jTextFieldTipoGasto.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jTextFieldTipoGasto.setPreferredSize(new java.awt.Dimension(150, 40));
+        jPanel6.add(jTextFieldTipoGasto, new java.awt.GridBagConstraints());
 
         jPanel8.add(jPanel6);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Monto"));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Monto (" + R.COIN_SUFFIX + " )"));
         jPanel5.setToolTipText(null);
         jPanel5.setMinimumSize(new java.awt.Dimension(150, 60));
         jPanel5.setPreferredSize(new java.awt.Dimension(170, 60));
@@ -147,7 +139,7 @@ public class GastosView extends AbstractViewPanel {
         jSpinnerMonto.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
         jSpinnerMonto.setToolTipText(null);
         jSpinnerMonto.setOpaque(false);
-        jSpinnerMonto.setPreferredSize(new java.awt.Dimension(90, 26));
+        jSpinnerMonto.setPreferredSize(new java.awt.Dimension(150, 26));
         jSpinnerMonto.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSpinnerMontoStateChanged(evt);
@@ -159,9 +151,6 @@ public class GastosView extends AbstractViewPanel {
             }
         });
         jPanel5.add(jSpinnerMonto, new java.awt.GridBagConstraints());
-
-        jLabelMonto.setText("CUC");
-        jPanel5.add(jLabelMonto, new java.awt.GridBagConstraints());
 
         jPanel8.add(jPanel5);
 
@@ -363,10 +352,6 @@ public class GastosView extends AbstractViewPanel {
         }
     }//GEN-LAST:event_jTextAreaDescripcionKeyTyped
 
-    private void jComboBoxTipoGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoGastoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxTipoGastoActionPerformed
-
     private void jComboBoxDefaultGastosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxDefaultGastosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxDefaultGastosActionPerformed
@@ -391,9 +376,10 @@ public class GastosView extends AbstractViewPanel {
         Bindings.bind(jComboBoxCategoria, new SelectionInList<String>(
                 getPresenter().getModel(PROP_LISTA_CATEGORIA_GASTOS),
                 getPresenter().getModel(PROP_CATEGORIA_GASTO_SELECCIONADA)));
-        Bindings.bind(jComboBoxTipoGasto, new SelectionInList<String>(
+        BindableListIntelliHint lih = new BindableListIntelliHint(new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_TIPO_GASTO),
-                getPresenter().getModel(PROP_TIPO_GASTO_SELECCIONADO)));
+                getPresenter().getModel(PROP_TIPO_GASTO_SELECCIONADO)), jTextFieldTipoGasto);
+        Bindings.bind(jTextFieldTipoGasto, getPresenter().getModel(PROP_TIPO_GASTO));
 
         SpinnerToValueModelConnector connector = new SpinnerToValueModelConnector(jSpinnerMonto.getModel(),
                 getPresenter().getModel(PROP_MONTO_GASTO), 0);
@@ -422,7 +408,6 @@ public class GastosView extends AbstractViewPanel {
         jButtonLimpiarEntradas.setIcon(MaterialIcons.LOOP);
         jButtonImprimirGastos.setIcon(MaterialIcons.PRINT);
         jButtonEliminarGasto.setIcon(MaterialIcons.DELETE);
-        jLabelMonto.setText(R.COIN_SUFFIX);
         setCounterInBorder(90, jTextAreaDescripcion.getText().length());
 
         jTableInfo.setModel(new BindableTableModel<GastoVenta>(jTableInfo) {
@@ -495,9 +480,7 @@ public class GastosView extends AbstractViewPanel {
     private javax.swing.JButton jButtonLimpiarEntradas;
     private javax.swing.JComboBox<R.TipoGasto> jComboBoxCategoria;
     private javax.swing.JComboBox<R.TipoGasto> jComboBoxDefaultGastos;
-    private javax.swing.JComboBox<R.TipoGasto> jComboBoxTipoGasto;
     private javax.swing.JLabel jLabelGast;
-    private javax.swing.JLabel jLabelMonto;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -517,5 +500,6 @@ public class GastosView extends AbstractViewPanel {
     private javax.swing.JSpinner jSpinnerMonto;
     private javax.swing.JTable jTableInfo;
     private javax.swing.JTextArea jTextAreaDescripcion;
+    private javax.swing.JTextField jTextFieldTipoGasto;
     // End of variables declaration//GEN-END:variables
 }
