@@ -54,7 +54,7 @@ public class FilterMainView extends AbstractViewPanel {
         jPanelCardsContainer = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel4 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jComboBoxFilters = MaterialComponentsFactory.Displayers.getComboBox("Filtros");
+        jComboBoxFilters = MaterialComponentsFactory.Displayers.getComboBox("");
         jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonRemoveFilter = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonFilter = MaterialComponentsFactory.Buttons.getMaterialButton();

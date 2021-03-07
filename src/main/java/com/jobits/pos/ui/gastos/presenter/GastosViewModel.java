@@ -7,6 +7,7 @@ package com.jobits.pos.ui.gastos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.GastoVenta;
+import com.jobits.pos.core.domain.models.temporal.DefaultGasto;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Arrays;
@@ -52,6 +53,54 @@ public class GastosViewModel extends AbstractViewModel {
     private String tipo_gasto_seleccionado;
 
     public static final String PROP_TIPO_GASTO_SELECCIONADO = "tipo_gasto_seleccionado";
+
+    private DefaultGasto default_gasto_seleccionado;
+
+    public static final String PROP_DEFAULT_GASTO_SELECCIONADO = "default_gasto_seleccionado";
+
+    private ArrayListModel<DefaultGasto> default_gasto_list = new ArrayListModel<>();
+
+    public static final String PROP_DEFAULT_GASTO_LIST = "default_gasto_list";
+
+    /**
+     * Get the value of default_gasto_list
+     *
+     * @return the value of default_gasto_list
+     */
+    public ArrayListModel<DefaultGasto> getDefault_gasto_list() {
+        return default_gasto_list;
+    }
+
+    /**
+     * Set the value of default_gasto_list
+     *
+     * @param default_gasto_list new value of default_gasto_list
+     */
+    public void setDefault_gasto_list(ArrayListModel<DefaultGasto> default_gasto_list) {
+        ArrayListModel<DefaultGasto> oldDefault_gasto_list = this.default_gasto_list;
+        this.default_gasto_list = default_gasto_list;
+        firePropertyChange(PROP_DEFAULT_GASTO_LIST, oldDefault_gasto_list, default_gasto_list);
+    }
+
+    /**
+     * Get the value of default_gasto_seleccionado
+     *
+     * @return the value of default_gasto_seleccionado
+     */
+    public DefaultGasto getDefault_gasto_seleccionado() {
+        return default_gasto_seleccionado;
+    }
+
+    /**
+     * Set the value of default_gasto_seleccionado
+     *
+     * @param default_gasto_seleccionado new value of default_gasto_seleccionado
+     */
+    public void setDefault_gasto_seleccionado(DefaultGasto default_gasto_seleccionado) {
+        DefaultGasto oldDefault_gasto_seleccionado = this.default_gasto_seleccionado;
+        this.default_gasto_seleccionado = default_gasto_seleccionado;
+        firePropertyChange(PROP_DEFAULT_GASTO_SELECCIONADO, oldDefault_gasto_seleccionado, default_gasto_seleccionado);
+    }
 
     /**
      * Get the value of tipo_gasto_seleccionado

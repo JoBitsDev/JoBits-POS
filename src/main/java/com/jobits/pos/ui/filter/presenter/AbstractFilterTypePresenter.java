@@ -24,6 +24,7 @@ import java.util.function.Predicate;
 public class AbstractFilterTypePresenter extends AbstractViewPresenter<AbstractFilterTypeModel> {
 
     public static final String ACTION_AUTO_ELIMINAR_FILTRO = "Eliminar Filtro";
+    public static final String ACTION_SET_FILTER_OPERACTION = "Seleccionar Operacion";
 
     public AbstractFilterTypePresenter(AbstractFilterTypeModel bean) {
         super(bean);
@@ -39,10 +40,21 @@ public class AbstractFilterTypePresenter extends AbstractViewPresenter<AbstractF
             }
 
         });
+        registerOperation(new AbstractViewAction(ACTION_SET_FILTER_OPERACTION) {
+            @Override
+            public Optional doAction() {
+                onSetOperation();
+                return Optional.empty();
+            }
+        });
     }
 
     private void onSelfDestruct() {
         firePropertyChange(ACTION_AUTO_ELIMINAR_FILTRO, null, this);
+    }
+
+    private void onSetOperation() {
+        getBean().setTipo_operacion(!getBean().isTipo_operacion());
     }
 
     public Predicate createPredicate() {

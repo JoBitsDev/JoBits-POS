@@ -5,6 +5,9 @@
  */
 package com.jobits.pos.ui.venta.resumen.presenter;
 
+import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.core.domain.models.temporal.GeneralReviewWrapper;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -21,6 +24,9 @@ import java.util.Date;
 import java.util.Optional;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -35,6 +41,7 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
     public static final String ACTION_TO_DETAILS_COSTO = "Detalles de Costos";
     public static final String ACTION_TO_DETAILS_SALARIO = "Detalles de Salarios";
     public static final String ACTION_TO_DETAILS_GASTO = "Detalles de Gastos";
+    public static final String ACTION_IMPRIMIR_RESUMEN = "Imprimir Resumen";
 
     private DetailResumenVentaPresenter presenterVenta = new DetailResumenVentaPresenter();
     private DetailResumenAutorizoViewPresenter presenterAutorizo = new DetailResumenAutorizoViewPresenter();
@@ -119,6 +126,13 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_RESUMEN) {
+            @Override
+            public Optional doAction() {
+                onImprimirResumenGeneral();
+                return Optional.empty();
+            }
+        });
     }
 
     private void toMainPanel() {
@@ -196,7 +210,6 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
             } else if (utilidad == 0) {
                 getBean().setProfits_icon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/neutral_negro.png")));
             }
-
         });
         firePropertyChange("REFRESH_STATE_EXECUTED", null, true);
     }
@@ -218,5 +231,27 @@ public class ResumenMainViewPresenter extends AbstractViewPresenter<ResumenMainV
                     break;
             }
         });
+    }
+
+    private void onImprimirResumenGeneral() {
+        Application.getInstance().getBackgroundWorker().processInBackground("Preparando Documento...", () -> {
+            ArrayListModel<DayReviewWrapper> venta = presenterVenta.getBean().getListaMain();
+//            ArrayListModel<DayReviewWrapper> autorizo = presenterAutorizo.getBean().getListaMain();
+            ArrayListModel<DayReviewWrapper> costo = presenterCosto.getBean().getListaMain();
+            ArrayListModel<DayReviewWrapper> salario = presenterSalario.getBean().getListaMain();
+            ArrayListModel<DayReviewWrapper> gasto = presenterGasto.getBean().getListaMain();
+
+            ArrayListModel<GeneralReviewWrapper> list = new ArrayListModel<>();
+            for (int i = 0; i < venta.size(); i++) {
+                list.add(new GeneralReviewWrapper(
+                        venta.get(i).getFecha(),
+                        venta.get(i),
+                        costo.get(i),
+                        salario.get(i),
+                        gasto.get(i)));
+            }
+            getBean().setLista_resumenes_generales(list);
+        });
+        firePropertyChange("IMRPIMIR_RESUMEN", null, true);
     }
 }
