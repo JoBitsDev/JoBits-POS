@@ -37,34 +37,33 @@ public class ClientesDetailView extends AbstractViewPanel {
         jCheckBoxInventariarProducto = MaterialComponentsFactory.Input.getCheckBox();
         filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanelInventario = new javax.swing.JPanel();
+        jPanel9 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanelPersonalData = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jPanelNombreApellidos = new javax.swing.JPanel();
+        jPanelPersonalData = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelNombreApellidos = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre*");
         jTextFieldApellidos = MaterialComponentsFactory.Input.getTextField("", "Apellidos*");
-        jPanelInfoPersonal = new javax.swing.JPanel();
-        jPanel1 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanelInfoPersonal = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldTelefono = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono")+"*");
         jTextFieldAlias = MaterialComponentsFactory.Input.getTextField("", "Alias");
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jPanel6 = new javax.swing.JPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jPanelAddress = new javax.swing.JPanel();
-        jPanel5 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanel8 = new javax.swing.JPanel();
+        jPanelAddress = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldLineAddress = MaterialComponentsFactory.Input.getTextField("", java.util.ResourceBundle.getBundle("Strings").getString("label_direccion"));
         jTextFieldMunicipio = MaterialComponentsFactory.Input.getTextField("", "Municipio");
         jTextFieldCiudad = MaterialComponentsFactory.Input.getTextField(" ", "Ciudad");
-        jPanel4 = new javax.swing.JPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPanelTable = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanelTable = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableHistorial = new javax.swing.JTable();
         jPanelOpciones = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
@@ -79,10 +78,12 @@ public class ClientesDetailView extends AbstractViewPanel {
         jPanel3.add(filler6);
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_DARK, 2, true));
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(500, 720));
         setLayout(new java.awt.BorderLayout());
+
+        jPanel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        jPanel9.setLayout(new java.awt.BorderLayout());
 
         jTabbedPane1.setOpaque(true);
 
@@ -92,7 +93,6 @@ public class ClientesDetailView extends AbstractViewPanel {
         jPanel7.setLayout(new javax.swing.BoxLayout(jPanel7, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelNombreApellidos.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 20, 5, 20));
-        jPanelNombreApellidos.setOpaque(false);
         jPanelNombreApellidos.setLayout(new java.awt.GridLayout(1, 2, 20, 0));
 
         jTextFieldNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -110,15 +110,10 @@ public class ClientesDetailView extends AbstractViewPanel {
 
         jPanelPersonalData.add(jPanel7);
 
-        jPanelInfoPersonal.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalles"));
+        jPanelInfoPersonal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20), "Detalles"));
         jPanelInfoPersonal.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        jPanel1.setMinimumSize(new java.awt.Dimension(541, 200));
-        jPanel1.setLayout(new java.awt.BorderLayout());
-
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 100));
-        jPanel2.setOpaque(false);
         jPanel2.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
 
         jTextFieldTelefono.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -143,46 +138,29 @@ public class ClientesDetailView extends AbstractViewPanel {
         jDateChooser1.setPreferredSize(new java.awt.Dimension(150, 26));
         jPanel2.add(jDateChooser1);
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
+        jPanelInfoPersonal.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 50, 1, 1));
-        jPanel6.setOpaque(false);
         jPanel6.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/telefono_indigo.png"))); // NOI18N
-        jLabel5.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel5.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel5.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel6.add(jLabel5);
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/hombre_indigo.png"))); // NOI18N
-        jLabel6.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel6.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel6.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel6.add(jLabel6);
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/cumpleanos_indigo.png"))); // NOI18N
         jLabel7.setToolTipText("");
-        jLabel7.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel7.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel7.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel6.add(jLabel7);
 
-        jPanel1.add(jPanel6, java.awt.BorderLayout.LINE_START);
-
-        jPanelInfoPersonal.add(jPanel1, java.awt.BorderLayout.CENTER);
+        jPanelInfoPersonal.add(jPanel6, java.awt.BorderLayout.WEST);
 
         jPanelPersonalData.add(jPanelInfoPersonal);
 
-        jPanelAddress.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("direccion"))); // NOI18N
+        jPanelAddress.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20), bundle.getString("direccion"))); // NOI18N
         jPanelAddress.setLayout(new java.awt.BorderLayout());
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        jPanel5.setMinimumSize(new java.awt.Dimension(541, 200));
-        jPanel5.setLayout(new java.awt.BorderLayout());
-
         jPanel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 100));
-        jPanel8.setOpaque(false);
         jPanel8.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
 
         jTextFieldLineAddress.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -205,34 +183,22 @@ public class ClientesDetailView extends AbstractViewPanel {
         });
         jPanel8.add(jTextFieldCiudad);
 
-        jPanel5.add(jPanel8, java.awt.BorderLayout.CENTER);
+        jPanelAddress.add(jPanel8, java.awt.BorderLayout.CENTER);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 50, 1, 1));
-        jPanel4.setOpaque(false);
         jPanel4.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/calle_indigo.png"))); // NOI18N
-        jLabel1.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel1.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel1.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel4.add(jLabel1);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/edificio_indigo.png"))); // NOI18N
-        jLabel2.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel2.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel2.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel4.add(jLabel2);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/estado_indigo.png"))); // NOI18N
         jLabel3.setToolTipText("");
-        jLabel3.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel3.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel3.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel4.add(jLabel3);
 
-        jPanel5.add(jPanel4, java.awt.BorderLayout.LINE_START);
-
-        jPanelAddress.add(jPanel5, java.awt.BorderLayout.CENTER);
+        jPanelAddress.add(jPanel4, java.awt.BorderLayout.WEST);
 
         jPanelPersonalData.add(jPanelAddress);
 
@@ -270,20 +236,26 @@ public class ClientesDetailView extends AbstractViewPanel {
 
         jTabbedPane1.addTab("Historial de Compra", jPanelTable);
 
-        add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+        jPanel9.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         jPanelOpciones.setMinimumSize(new java.awt.Dimension(239, 70));
+        jPanelOpciones.setPreferredSize(new java.awt.Dimension(150, 50));
+        jPanelOpciones.setLayout(new java.awt.GridBagLayout());
 
         jButtonCancelar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButtonCancelar.setText(bundle.getString("label_cancelar")); // NOI18N
-        jPanelOpciones.add(jButtonCancelar);
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanelOpciones.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
         jButtonCrear.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jButtonCrear.setMnemonic('c');
         jButtonCrear.setText(bundle.getString("label_crear_producto")); // NOI18N
-        jPanelOpciones.add(jButtonCrear);
+        jButtonCrear.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanelOpciones.add(jButtonCrear, new java.awt.GridBagConstraints());
 
-        add(jPanelOpciones, java.awt.BorderLayout.SOUTH);
+        jPanel9.add(jPanelOpciones, java.awt.BorderLayout.SOUTH);
+
+        add(jPanel9, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoKeyTyped
@@ -310,14 +282,13 @@ public class ClientesDetailView extends AbstractViewPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelAddress;
     private javax.swing.JPanel jPanelInfoPersonal;
     private javax.swing.JPanel jPanelInventario;

@@ -17,6 +17,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  *
@@ -82,7 +83,14 @@ public class FilterViewPresenter<T> extends AbstractViewPresenter<FilterViewMode
     private void onFilterClick() {
         FilterBuilder<T> fb = new FilterBuilder<>();
         for (AbstractFilterTypePresenter p : lista_presenters) {
-            fb.or(p.createPredicate());
+            Predicate predicado = p.createPredicate();
+            if (p.getBean().isTipo_operacion()) {
+                fb.or(predicado);
+                System.out.println("Or");
+            } else {
+                System.out.println("And");
+                fb.and(predicado);
+            }
         }
         firePropertyChange(PROP_FILTERED, null, fb.build());
     }

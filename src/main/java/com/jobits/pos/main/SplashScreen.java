@@ -5,6 +5,8 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.ui.components.MaterialComponentsFactory;
+import com.root101.swing.material.standards.MaterialColors;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -48,17 +50,22 @@ public class SplashScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel3 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(600, 400));
-        setMinimumSize(new java.awt.Dimension(600, 400));
-        setPreferredSize(new java.awt.Dimension(600, 400));
+        setBackground(MaterialColors.TRANSPARENT);
+        setMaximumSize(new java.awt.Dimension(600, 460));
+        setMinimumSize(new java.awt.Dimension(600, 460));
+        setPreferredSize(new java.awt.Dimension(600, 460));
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(25, 10, 15, 10));
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setPreferredSize(new java.awt.Dimension(600, 370));
         jPanel1.setLayout(new java.awt.GridBagLayout());
@@ -66,22 +73,27 @@ public class SplashScreen extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/logo/SplashScreen.png"))); // NOI18N
         jPanel1.add(jLabel1, new java.awt.GridBagConstraints());
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        jPanel5.add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setPreferredSize(new java.awt.Dimension(20, 30));
+        jPanel2.setPreferredSize(new java.awt.Dimension(20, 100));
         jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jPanel4.setLayout(new java.awt.GridBagLayout());
+
+        jPanel4.add(MaterialComponentsFactory.Displayers.getRoundLoading());
+
+        jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
 
         jPanel3.setLayout(new java.awt.GridBagLayout());
 
         jLabel3.setText("Cargando Sistema");
         jPanel3.add(jLabel3, new java.awt.GridBagConstraints());
 
-        jPanel2.add(jPanel3, java.awt.BorderLayout.PAGE_START);
+        jPanel2.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
-        jPanel4.setLayout(new java.awt.BorderLayout());
-        jPanel2.add(jPanel4, java.awt.BorderLayout.CENTER);
+        jPanel5.add(jPanel2, java.awt.BorderLayout.SOUTH);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(jPanel5, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -93,6 +105,7 @@ public class SplashScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     // End of variables declaration//GEN-END:variables
 
     class ImagePanel extends JPanel {

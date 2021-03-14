@@ -7,6 +7,7 @@ package com.jobits.pos.ui.gastos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.GastoVenta;
+import com.jobits.pos.core.domain.models.temporal.DefaultGasto;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Arrays;
@@ -53,6 +54,78 @@ public class GastosViewModel extends AbstractViewModel {
 
     public static final String PROP_TIPO_GASTO_SELECCIONADO = "tipo_gasto_seleccionado";
 
+    private DefaultGasto default_gasto_seleccionado;
+
+    public static final String PROP_DEFAULT_GASTO_SELECCIONADO = "default_gasto_seleccionado";
+
+    private ArrayListModel<DefaultGasto> default_gasto_list = new ArrayListModel<>();
+
+    public static final String PROP_DEFAULT_GASTO_LIST = "default_gasto_list";
+
+    private String tipo_gasto = null;
+
+    public static final String PROP_TIPO_GASTO = "tipo_gasto";
+
+    /**
+     * Get the value of tipo_gasto
+     *
+     * @return the value of tipo_gasto
+     */
+    public String getTipo_gasto() {
+        return tipo_gasto;
+    }
+
+    /**
+     * Set the value of tipo_gasto
+     *
+     * @param tipo_gasto new value of tipo_gasto
+     */
+    public void setTipo_gasto(String tipo_gasto) {
+        String oldTipo_gasto = this.tipo_gasto;
+        this.tipo_gasto = tipo_gasto;
+        firePropertyChange(PROP_TIPO_GASTO, oldTipo_gasto, tipo_gasto);
+    }
+
+    /**
+     * Get the value of default_gasto_list
+     *
+     * @return the value of default_gasto_list
+     */
+    public ArrayListModel<DefaultGasto> getDefault_gasto_list() {
+        return default_gasto_list;
+    }
+
+    /**
+     * Set the value of default_gasto_list
+     *
+     * @param default_gasto_list new value of default_gasto_list
+     */
+    public void setDefault_gasto_list(ArrayListModel<DefaultGasto> default_gasto_list) {
+        ArrayListModel<DefaultGasto> oldDefault_gasto_list = this.default_gasto_list;
+        this.default_gasto_list = default_gasto_list;
+        firePropertyChange(PROP_DEFAULT_GASTO_LIST, oldDefault_gasto_list, default_gasto_list);
+    }
+
+    /**
+     * Get the value of default_gasto_seleccionado
+     *
+     * @return the value of default_gasto_seleccionado
+     */
+    public DefaultGasto getDefault_gasto_seleccionado() {
+        return default_gasto_seleccionado;
+    }
+
+    /**
+     * Set the value of default_gasto_seleccionado
+     *
+     * @param default_gasto_seleccionado new value of default_gasto_seleccionado
+     */
+    public void setDefault_gasto_seleccionado(DefaultGasto default_gasto_seleccionado) {
+        DefaultGasto oldDefault_gasto_seleccionado = this.default_gasto_seleccionado;
+        this.default_gasto_seleccionado = default_gasto_seleccionado;
+        firePropertyChange(PROP_DEFAULT_GASTO_SELECCIONADO, oldDefault_gasto_seleccionado, default_gasto_seleccionado);
+    }
+
     /**
      * Get the value of tipo_gasto_seleccionado
      *
@@ -70,6 +143,7 @@ public class GastosViewModel extends AbstractViewModel {
     public void setTipo_gasto_seleccionado(String tipo_gasto_seleccionado) {
         String oldTipo_gasto_seleccionado = this.tipo_gasto_seleccionado;
         this.tipo_gasto_seleccionado = tipo_gasto_seleccionado;
+        this.tipo_gasto = tipo_gasto_seleccionado;
         firePropertyChange(PROP_TIPO_GASTO_SELECCIONADO, oldTipo_gasto_seleccionado, tipo_gasto_seleccionado);
     }
 

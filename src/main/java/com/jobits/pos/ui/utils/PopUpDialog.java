@@ -7,6 +7,7 @@ package com.jobits.pos.ui.utils;
 
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.View;
+import com.root101.swing.material.standards.MaterialColors;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
@@ -15,7 +16,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  *
@@ -58,6 +58,7 @@ public class PopUpDialog extends javax.swing.JDialog {
         });
         setLayout(new BorderLayout());
         setSize(contentPane.getSize());
+        this.setBackground(MaterialColors.TRANSPARENT);
         setMaximumSize(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().getSize());
         add(contentPane, BorderLayout.CENTER);
         pack();

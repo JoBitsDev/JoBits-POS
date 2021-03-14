@@ -10,6 +10,7 @@ import com.jgoodies.binding.adapter.ComboBoxAdapter;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
 import java.util.Arrays;
 
 /**
@@ -36,139 +37,209 @@ public class Impresion extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelImpresion = new javax.swing.JPanel();
-        jPanelGeneral = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
+        jPanelImpresion = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelGeneral = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel10 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonRounding = new javax.swing.JToggleButton();
-        jPanel14 = new javax.swing.JPanel();
+        jPanel11 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonBuzzer = new javax.swing.JToggleButton();
-        jPanel15 = new javax.swing.JPanel();
+        jPanel12 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonCierreParcial = new javax.swing.JToggleButton();
-        jPanelCaracterSeparador1 = new javax.swing.JPanel();
+        jPanel14 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel5 = new javax.swing.JLabel();
-        filler13 = new javax.swing.Box.Filler(new java.awt.Dimension(85, 0), new java.awt.Dimension(85, 0), new java.awt.Dimension(200, 32767));
-        jComboBoxCantCopias = new javax.swing.JComboBox<>();
-        jPanelTickets = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxCantCopias = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanelTickets = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel15 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jPanel16 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonEncabezadoRestaurante = new javax.swing.JToggleButton();
-        jPanel13 = new javax.swing.JPanel();
+        jPanel17 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanel19 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonSegundaMoneda = new javax.swing.JToggleButton();
-        jPanelCaracterSeparador = new javax.swing.JPanel();
+        jPanel20 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel3 = new javax.swing.JLabel();
-        filler12 = new javax.swing.Box.Filler(new java.awt.Dimension(150, 0), new java.awt.Dimension(200, 0), new java.awt.Dimension(200, 32767));
-        jComboBoxCaracterSeparador = new javax.swing.JComboBox<>();
-        jPanelTamannoPapel = new javax.swing.JPanel();
+        jPanel22 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxCaracterSeparador = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanel23 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel4 = new javax.swing.JLabel();
-        filler14 = new javax.swing.Box.Filler(new java.awt.Dimension(242, 0), new java.awt.Dimension(242, 0), new java.awt.Dimension(200, 32767));
-        jComboBoxTamannoTicket = new javax.swing.JComboBox<>();
+        jPanel24 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxTamannoTicket = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabel9 = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(730, 525));
+        setRequestFocusEnabled(false);
 
-        jPanelImpresion.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jPanelImpresion.setPreferredSize(new java.awt.Dimension(730, 525));
-        jPanelImpresion.setLayout(new javax.swing.BoxLayout(jPanelImpresion, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelImpresion.setLayout(new java.awt.GridLayout(2, 1));
 
-        jPanelGeneral.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createTitledBorder(null, "Generales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26)), javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1))); // NOI18N
-        jPanelGeneral.setLayout(new javax.swing.BoxLayout(jPanelGeneral, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Generales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
+        jPanelGeneral.setLayout(new java.awt.GridLayout(4, 1));
 
-        jPanel10.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanel10.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Redondeo por exeso en tickets");
+        jPanel10.add(jLabel6);
+
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jToggleButtonRounding.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jToggleButtonRounding.setText("Redondeo por exeso en tickets");
-        jPanel10.add(jToggleButtonRounding);
+        jToggleButtonRounding.setHideActionText(true);
+        jToggleButtonRounding.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jPanel2.add(jToggleButtonRounding, new java.awt.GridBagConstraints());
+
+        jPanel10.add(jPanel2);
 
         jPanelGeneral.add(jPanel10);
 
-        jPanel14.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanel11.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Buzzer");
+        jPanel11.add(jLabel7);
+
+        jPanel4.setLayout(new java.awt.GridBagLayout());
 
         jToggleButtonBuzzer.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jToggleButtonBuzzer.setText("Buzzer");
-        jPanel14.add(jToggleButtonBuzzer);
+        jToggleButtonBuzzer.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jPanel4.add(jToggleButtonBuzzer, new java.awt.GridBagConstraints());
 
-        jPanelGeneral.add(jPanel14);
+        jPanel11.add(jPanel4);
 
-        jPanel15.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelGeneral.add(jPanel11);
+
+        jPanel12.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Cierre parcial");
+        jPanel12.add(jLabel8);
+
+        jPanel6.setLayout(new java.awt.GridBagLayout());
 
         jToggleButtonCierreParcial.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jToggleButtonCierreParcial.setText("Cierre parcial");
-        jPanel15.add(jToggleButtonCierreParcial);
+        jToggleButtonCierreParcial.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jPanel6.add(jToggleButtonCierreParcial, new java.awt.GridBagConstraints());
 
-        jPanelGeneral.add(jPanel15);
+        jPanel12.add(jPanel6);
 
-        jPanelCaracterSeparador1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelGeneral.add(jPanel12);
+
+        jPanel14.setLayout(new java.awt.GridLayout(1, 2));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Cantidad de copias de impresion");
-        jPanelCaracterSeparador1.add(jLabel5);
-        jPanelCaracterSeparador1.add(filler13);
+        jPanel14.add(jLabel5);
+
+        jPanel9.setLayout(new java.awt.GridBagLayout());
 
         jComboBoxCantCopias.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jComboBoxCantCopias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5" }));
         jComboBoxCantCopias.setToolTipText("el valor 0 es solo la original");
         jComboBoxCantCopias.setMinimumSize(new java.awt.Dimension(150, 26));
         jComboBoxCantCopias.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanelCaracterSeparador1.add(jComboBoxCantCopias);
+        jPanel9.add(jComboBoxCantCopias, new java.awt.GridBagConstraints());
 
-        jPanelGeneral.add(jPanelCaracterSeparador1);
+        jPanel14.add(jPanel9);
+
+        jPanelGeneral.add(jPanel14);
 
         jPanelImpresion.add(jPanelGeneral);
 
-        jPanelTickets.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createTitledBorder(null, "Tickets", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26)), javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 1))); // NOI18N
-        jPanelTickets.setLayout(new javax.swing.BoxLayout(jPanelTickets, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelTickets.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Tickets", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
+        jPanelTickets.setLayout(new java.awt.GridLayout(4, 1));
 
-        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanel15.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Mostrar encabezado");
+        jPanel15.add(jLabel11);
+
+        jPanel16.setLayout(new java.awt.GridBagLayout());
 
         jToggleButtonEncabezadoRestaurante.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jToggleButtonEncabezadoRestaurante.setText("Mostrar encabezado");
-        jPanel8.add(jToggleButtonEncabezadoRestaurante);
+        jToggleButtonEncabezadoRestaurante.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jPanel16.add(jToggleButtonEncabezadoRestaurante, new java.awt.GridBagConstraints());
 
-        jPanelTickets.add(jPanel8);
+        jPanel15.add(jPanel16);
 
-        jPanel13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelTickets.add(jPanel15);
+
+        jPanel17.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Total en segunda moneda");
+        jPanel17.add(jLabel10);
+
+        jPanel19.setLayout(new java.awt.GridBagLayout());
 
         jToggleButtonSegundaMoneda.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jToggleButtonSegundaMoneda.setText("Total en segunda moneda");
-        jPanel13.add(jToggleButtonSegundaMoneda);
+        jToggleButtonSegundaMoneda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jPanel19.add(jToggleButtonSegundaMoneda, new java.awt.GridBagConstraints());
 
-        jPanelTickets.add(jPanel13);
+        jPanel17.add(jPanel19);
 
-        jPanelCaracterSeparador.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelTickets.add(jPanel17);
+
+        jPanel20.setLayout(new java.awt.GridLayout(1, 2));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Caracter separador");
-        jPanelCaracterSeparador.add(jLabel3);
-        jPanelCaracterSeparador.add(filler12);
+        jPanel20.add(jLabel3);
+
+        jPanel22.setLayout(new java.awt.GridBagLayout());
 
         jComboBoxCaracterSeparador.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jComboBoxCaracterSeparador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "*", "-", "/", "+", java.util.ResourceBundle.getBundle("Strings").getString("character_comilla")}));
         jComboBoxCaracterSeparador.setMinimumSize(new java.awt.Dimension(150, 26));
         jComboBoxCaracterSeparador.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanelCaracterSeparador.add(jComboBoxCaracterSeparador);
+        jPanel22.add(jComboBoxCaracterSeparador, new java.awt.GridBagConstraints());
 
-        jPanelTickets.add(jPanelCaracterSeparador);
+        jPanel20.add(jPanel22);
 
-        jPanelTamannoPapel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelTickets.add(jPanel20);
+
+        jPanel23.setLayout(new java.awt.GridLayout(1, 2));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jLabel4.setText(bundle.getString("label_tamano_papel")); // NOI18N
         jLabel4.setToolTipText("");
-        jPanelTamannoPapel.add(jLabel4);
-        jPanelTamannoPapel.add(filler14);
+        jPanel23.add(jLabel4);
+
+        jPanel24.setLayout(new java.awt.GridBagLayout());
 
         jComboBoxTamannoTicket.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jComboBoxTamannoTicket.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "32", "48" }));
         jComboBoxTamannoTicket.setMinimumSize(new java.awt.Dimension(150, 26));
-        jComboBoxTamannoTicket.setPreferredSize(new java.awt.Dimension(150, 26));
-        jPanelTamannoPapel.add(jComboBoxTamannoTicket);
+        jComboBoxTamannoTicket.setPreferredSize(new java.awt.Dimension(55, 26));
+        jPanel24.add(jComboBoxTamannoTicket, new java.awt.GridBagConstraints());
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel9.setText("Caracteres");
         jLabel9.setToolTipText("");
-        jPanelTamannoPapel.add(jLabel9);
+        jPanel24.add(jLabel9, new java.awt.GridBagConstraints());
 
-        jPanelTickets.add(jPanelTamannoPapel);
+        jPanel23.add(jPanel24);
+
+        jPanelTickets.add(jPanel23);
 
         jPanelImpresion.add(jPanelTickets);
 
@@ -176,46 +247,52 @@ public class Impresion extends AbstractViewPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 730, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanelImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanelImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 524, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanelImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanelImpresion, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler12;
-    private javax.swing.Box.Filler filler13;
-    private javax.swing.Box.Filler filler14;
     private javax.swing.JComboBox<String> jComboBoxCantCopias;
     private javax.swing.JComboBox<String> jComboBoxCaracterSeparador;
     private javax.swing.JComboBox<String> jComboBoxTamannoTicket;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanelCaracterSeparador;
-    private javax.swing.JPanel jPanelCaracterSeparador1;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel19;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel22;
+    private javax.swing.JPanel jPanel23;
+    private javax.swing.JPanel jPanel24;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JPanel jPanelImpresion;
-    private javax.swing.JPanel jPanelTamannoPapel;
     private javax.swing.JPanel jPanelTickets;
     private javax.swing.JToggleButton jToggleButtonBuzzer;
     private javax.swing.JToggleButton jToggleButtonCierreParcial;
@@ -238,7 +315,7 @@ public class Impresion extends AbstractViewPanel {
                 new ComboBoxAdapter(Arrays.asList("*", "-", "/", "+", "ˆ"),
                         getPresenter().getModel(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR.toString())));
 
-        Bindings.bind(jComboBoxTamannoTicket, new ComboBoxAdapter(Arrays.asList("32", "48"),
+        Bindings.bind(jComboBoxTamannoTicket, new ComboBoxAdapter(Arrays.asList("22", "32", "48"),
                 getPresenter().getModel(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL.toString())));
 
     }

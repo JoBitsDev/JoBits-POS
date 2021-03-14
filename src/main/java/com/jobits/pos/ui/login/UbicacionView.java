@@ -42,69 +42,54 @@ public class UbicacionView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-        jPanel1 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        filler8 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        jPanel1 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jComboBox1 = MaterialComponentsFactory.Displayers.getComboBox("Tipo de Ubicacion");
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("","Nombre");
-        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jTextFieldUrl = MaterialComponentsFactory.Input.getTextField("","Url");
-        filler4 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jTextFieldUsuario = MaterialComponentsFactory.Input.getTextField("","Usuario");
-        filler5 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jPasswordFielContrasena = MaterialComponentsFactory.Input.getPasswordField("",java.util.ResourceBundle.getBundle("Strings").getString("label_contrasena"));
-        filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
         jTextFieldDriver = MaterialComponentsFactory.Input.getTextField("","Driver");
-        filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
-        jPanel2 = new javax.swing.JPanel();
-        jButton2 = MaterialComponentsFactory.Buttons.getCancelButton();
-        jButton1 = MaterialComponentsFactory.Buttons.getAcceptButton();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        jPanel2 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButton2 = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButton1 = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         setMinimumSize(new java.awt.Dimension(400, 300));
         setOpaque(false);
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
-        add(filler2);
+        setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         jPanel1.setMaximumSize(new java.awt.Dimension(400, 500));
         jPanel1.setMinimumSize(new java.awt.Dimension(400, 400));
         jPanel1.setPreferredSize(new java.awt.Dimension(400, 500));
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
+        jPanel1.setLayout(new java.awt.GridLayout(6, 1, 0, 10));
 
         jComboBox1.setMinimumSize(new java.awt.Dimension(52, 40));
         jComboBox1.setPreferredSize(new java.awt.Dimension(52, 40));
         jPanel1.add(jComboBox1);
-        jPanel1.add(filler8);
 
         jTextFieldNombre.setBorder(null);
         jTextFieldNombre.setMaximumSize(new java.awt.Dimension(2147483647, 60));
         jTextFieldNombre.setMinimumSize(new java.awt.Dimension(10, 30));
         jTextFieldNombre.setPreferredSize(new java.awt.Dimension(10, 60));
         jPanel1.add(jTextFieldNombre);
-        jPanel1.add(filler3);
 
         jTextFieldUrl.setBorder(null);
         jTextFieldUrl.setMaximumSize(new java.awt.Dimension(2147483647, 60));
         jTextFieldUrl.setMinimumSize(new java.awt.Dimension(10, 16));
         jTextFieldUrl.setPreferredSize(new java.awt.Dimension(0, 60));
         jPanel1.add(jTextFieldUrl);
-        jPanel1.add(filler4);
 
         jTextFieldUsuario.setBorder(null);
         jTextFieldUsuario.setMaximumSize(new java.awt.Dimension(2147483647, 60));
         jTextFieldUsuario.setMinimumSize(new java.awt.Dimension(0, 60));
         jTextFieldUsuario.setPreferredSize(new java.awt.Dimension(0, 60));
         jPanel1.add(jTextFieldUsuario);
-        jPanel1.add(filler5);
 
         jPasswordFielContrasena.setBorder(null);
         jPasswordFielContrasena.setMaximumSize(new java.awt.Dimension(2147483647, 60));
         jPasswordFielContrasena.setMinimumSize(new java.awt.Dimension(0, 60));
         jPasswordFielContrasena.setPreferredSize(new java.awt.Dimension(0, 60));
         jPanel1.add(jPasswordFielContrasena);
-        jPanel1.add(filler6);
 
         jTextFieldDriver.setBorder(null);
         jTextFieldDriver.setMaximumSize(new java.awt.Dimension(2147483647, 60));
@@ -115,20 +100,22 @@ public class UbicacionView extends AbstractViewPanel {
             }
         });
         jPanel1.add(jTextFieldDriver);
-        jPanel1.add(filler7);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jPanel2.setOpaque(false);
+        jPanel2.setPreferredSize(new java.awt.Dimension(156, 50));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jButton2.setText("Cancelar");
-        jPanel2.add(jButton2);
+        jButton2.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanel2.add(jButton2, new java.awt.GridBagConstraints());
 
         jButton1.setText("Aceptar");
-        jPanel2.add(jButton1);
+        jButton1.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanel2.add(jButton1, new java.awt.GridBagConstraints());
 
-        jPanel1.add(jPanel2);
-
-        add(jPanel1);
-        add(filler1);
+        add(jPanel2, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldDriverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDriverActionPerformed
@@ -137,14 +124,6 @@ public class UbicacionView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
-    private javax.swing.Box.Filler filler3;
-    private javax.swing.Box.Filler filler4;
-    private javax.swing.Box.Filler filler5;
-    private javax.swing.Box.Filler filler6;
-    private javax.swing.Box.Filler filler7;
-    private javax.swing.Box.Filler filler8;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<TipoUbicacion> jComboBox1;
@@ -171,8 +150,8 @@ public class UbicacionView extends AbstractViewPanel {
                         getPresenter().getModel(PROP_LISTA_TIPO_SERVIDOR),
                         getPresenter().getModel(PROP_TIPO_SERVIDOR_SELECCIONADO)));
         
-        jButton1.setAction(getPresenter().getOperation(UbicacionViewPresenter.ACTION_ACEPTAR_EDICION));
-        jButton2.setAction(getPresenter().getOperation(UbicacionViewPresenter.ACTION_CANCELAR_EDICION));
+        jButton1.addActionListener(getPresenter().getOperation(UbicacionViewPresenter.ACTION_ACEPTAR_EDICION));
+        jButton2.addActionListener(getPresenter().getOperation(UbicacionViewPresenter.ACTION_CANCELAR_EDICION));
         
     }
 

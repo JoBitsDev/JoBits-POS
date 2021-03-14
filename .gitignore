@@ -111,3 +111,5 @@ src/main/java/com/jobits/pos/ui/MenuBar.java
 nbproject/
 
 *.txt
+
+*.json

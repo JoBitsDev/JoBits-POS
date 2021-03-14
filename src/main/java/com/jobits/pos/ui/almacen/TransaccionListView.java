@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.almacen;
 
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.Transaccion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractListViewPanel;
@@ -46,7 +46,7 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
         jButtonPrint.setPreferredSize(new java.awt.Dimension(50, 50));
         jButtonPrint.setAction(getPresenter().getOperation(ACTION_IMPRIMIR_TRANSACCIONES));
         jButtonPrint.setIcon(MaterialIcons.PRINT);
-        jXPanelControles.add(jButtonPrint);
+        jPanelControles.add(jButtonPrint);
 
         add(jPanelOptionsButtons, BorderLayout.SOUTH);
 

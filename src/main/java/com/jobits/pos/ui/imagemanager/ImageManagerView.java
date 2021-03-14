@@ -40,17 +40,18 @@ public class ImageManagerView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonClose = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jLabel1 = new javax.swing.JLabel();
-        jPanelImageViewer = new javax.swing.JPanel();
+        jPanelImageViewer = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelOldImage = new javax.swing.JLabel();
         jPanel2 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonOpen = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonCrop = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonSave = MaterialComponentsFactory.Buttons.getOutlinedButton();
 
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(700, 450));
         setLayout(new java.awt.BorderLayout());
 
@@ -76,6 +77,7 @@ public class ImageManagerView extends AbstractViewPanel {
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
+        jPanelImageViewer.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanelImageViewer.setPreferredSize(new java.awt.Dimension(500, 500));
         jPanelImageViewer.setLayout(new java.awt.BorderLayout());
 
@@ -175,14 +177,14 @@ public class ImageManagerView extends AbstractViewPanel {
     }
 
     private void dragImage(PanelDibujo pd) {
-        int x = (jPanelImageViewer.getWidth() - pd.getImg().getWidth(null)) / 2;
-        int y = (jPanelImageViewer.getHeight() - pd.getImg().getHeight(null)) / 2;
-        pd.setLocation(x, y);
-        pd.repaint();
-        repaint();
         if (jPanelImageViewer.getComponentCount() > 0) {
             jPanelImageViewer.removeAll();
         }
+        int x = (jPanelImageViewer.getWidth() / 2) - (pd.getImg().getWidth(null) / 2);
+        int y = (jPanelImageViewer.getHeight() / 2) - (pd.getImg().getHeight(null) / 2);
+        pd.setLocation(x, y);
+        pd.repaint();
+        repaint();
         jPanelImageViewer.add(pd);
     }
 

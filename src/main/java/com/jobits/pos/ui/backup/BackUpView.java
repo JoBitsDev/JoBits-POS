@@ -7,7 +7,7 @@ package com.jobits.pos.ui.backup;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.backup.presenter.BackUpViewModel;
@@ -38,25 +38,29 @@ public class BackUpView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonClose = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jXPanel1 = new org.jdesktop.swingx.JXPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBox1 = MaterialComponentsFactory.Displayers.getComboBox("Copiar a:");
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jXLabel1 = new org.jdesktop.swingx.JXLabel();
-        jXPanel2 = new org.jdesktop.swingx.JXPanel();
+        jButtonRealizarCopia = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jCheckBoxProductos = new javax.swing.JCheckBox();
         jCheckBoxPersonal = new javax.swing.JCheckBox();
         jCheckBoxVentas = new javax.swing.JCheckBox();
         jCheckBoxTodo = new javax.swing.JCheckBox();
         jCheckBoxBorrado = new javax.swing.JCheckBox();
-        botonRealizarCopia = new org.pushingpixels.substance.internal.utils.SubstanceTitleButton();
         jProgressBar1 = new javax.swing.JProgressBar();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(DefaultValues.PRIMARY_COLOR_LIGHT));
+        setMinimumSize(new java.awt.Dimension(400, 450));
         setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(400, 450));
         setLayout(new java.awt.BorderLayout());
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
 
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
@@ -66,75 +70,68 @@ public class BackUpView extends AbstractViewPanel {
         jButtonClose.setPreferredSize(new java.awt.Dimension(40, 40));
         jPanel3.add(jButtonClose);
 
-        add(jPanel3, java.awt.BorderLayout.NORTH);
+        jPanel4.add(jPanel3, java.awt.BorderLayout.NORTH);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 20, 20));
         jPanel2.setMaximumSize(new java.awt.Dimension(400, 400));
         jPanel2.setMinimumSize(new java.awt.Dimension(400, 400));
         jPanel2.setPreferredSize(new java.awt.Dimension(400, 400));
         jPanel2.setLayout(new java.awt.BorderLayout(0, 5));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Copiar a"));
+        jPanel1.setPreferredSize(new java.awt.Dimension(33, 50));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.add(jComboBox1, java.awt.BorderLayout.PAGE_START);
+        jPanel1.add(jComboBox1, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        jXPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel6.setLayout(new java.awt.BorderLayout());
 
         jXLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jXLabel1.setText(bundle.getString("label_realizar_copia_de")); // NOI18N
-        jXPanel1.add(jXLabel1, java.awt.BorderLayout.PAGE_START);
+        jPanel6.add(jXLabel1, java.awt.BorderLayout.PAGE_START);
 
-        jXPanel2.setLayout(new java.awt.GridLayout(0, 1));
+        jButtonRealizarCopia.setText("Realizar copia de seguridad");
+        jPanel6.add(jButtonRealizarCopia, java.awt.BorderLayout.SOUTH);
+
+        jPanel5.setLayout(new java.awt.GridLayout(5, 1));
 
         jCheckBoxProductos.setText(bundle.getString("boton_ProductosdeVenta")); // NOI18N
-        jXPanel2.add(jCheckBoxProductos);
+        jPanel5.add(jCheckBoxProductos);
 
         jCheckBoxPersonal.setText(bundle.getString("boton_personal")); // NOI18N
-        jXPanel2.add(jCheckBoxPersonal);
+        jPanel5.add(jCheckBoxPersonal);
 
         jCheckBoxVentas.setText(bundle.getString("boton_ventas")); // NOI18N
-        jXPanel2.add(jCheckBoxVentas);
+        jPanel5.add(jCheckBoxVentas);
 
         jCheckBoxTodo.setText(bundle.getString("boton_todos")); // NOI18N
-        jXPanel2.add(jCheckBoxTodo);
+        jPanel5.add(jCheckBoxTodo);
 
         jCheckBoxBorrado.setForeground(new java.awt.Color(204, 0, 0));
         jCheckBoxBorrado.setText(bundle.getString("boton_borrado")); // NOI18N
         jCheckBoxBorrado.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jCheckBoxBorrado.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         jCheckBoxBorrado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxBorradoActionPerformed(evt);
             }
         });
-        jXPanel2.add(jCheckBoxBorrado);
+        jPanel5.add(jCheckBoxBorrado);
 
-        jXPanel1.add(jXPanel2, java.awt.BorderLayout.CENTER);
+        jPanel6.add(jPanel5, java.awt.BorderLayout.CENTER);
 
-        botonRealizarCopia.setText(bundle.getString("boton_realizar_copia")); // NOI18N
-        botonRealizarCopia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonRealizarCopiaActionPerformed(evt);
-            }
-        });
-        jXPanel1.add(botonRealizarCopia, java.awt.BorderLayout.PAGE_END);
-
-        jPanel2.add(jXPanel1, java.awt.BorderLayout.CENTER);
+        jPanel2.add(jPanel6, java.awt.BorderLayout.CENTER);
 
         jProgressBar1.setPreferredSize(new java.awt.Dimension(146, 30));
         jProgressBar1.setStringPainted(true);
         jPanel2.add(jProgressBar1, java.awt.BorderLayout.PAGE_END);
 
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        jPanel4.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        add(jPanel4, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void botonRealizarCopiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRealizarCopiaActionPerformed
-
-
-    }//GEN-LAST:event_botonRealizarCopiaActionPerformed
 
     private void jCheckBoxBorradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxBorradoActionPerformed
         // TODO add your handling code here:
@@ -142,8 +139,8 @@ public class BackUpView extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private org.pushingpixels.substance.internal.utils.SubstanceTitleButton botonRealizarCopia;
     private javax.swing.JButton jButtonClose;
+    private javax.swing.JButton jButtonRealizarCopia;
     private javax.swing.JCheckBox jCheckBoxBorrado;
     private javax.swing.JCheckBox jCheckBoxPersonal;
     private javax.swing.JCheckBox jCheckBoxProductos;
@@ -153,10 +150,11 @@ public class BackUpView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JProgressBar jProgressBar1;
     private org.jdesktop.swingx.JXLabel jXLabel1;
-    private org.jdesktop.swingx.JXPanel jXPanel1;
-    private org.jdesktop.swingx.JXPanel jXPanel2;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -169,9 +167,9 @@ public class BackUpView extends AbstractViewPanel {
         Bindings.bind(jCheckBoxPersonal, getPresenter().getModel(BackUpViewModel.PROP_CHECKBOX_USUARIOS));
         Bindings.bind(jCheckBoxProductos, getPresenter().getModel(BackUpViewModel.PROP_CHECKBOX_PRODUCTOS));
         Bindings.bind(jCheckBoxVentas, getPresenter().getModel(BackUpViewModel.PROP_CHECKBOX_VENTAS));
-        this.botonRealizarCopia.addActionListener(getPresenter().getOperation(BackUpViewPresenter.ACTION_REALIZAR_COPIA_SEG));
         Bindings.bind(jProgressBar1, "value", getPresenter().getModel(BackUpViewModel.PROP_PROGRESS_INDICATOR));
         jButtonClose.addActionListener(getPresenter().getOperation(ACTION_CERRAR));
+        jButtonRealizarCopia.addActionListener(getPresenter().getOperation(BackUpViewPresenter.ACTION_REALIZAR_COPIA_SEG));
     }
 
     @Override

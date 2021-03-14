@@ -9,6 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.gasto.GastoOperacionService;
 import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.domain.models.temporal.DefaultGasto;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -33,6 +34,8 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
 
     public static final String ACTION_IMPRIMIR_GASTOS = "Imprimir Gastos",
             ACTION_LIMPIAR = "Limpiar",
+            ACTION_AGREGAR_DEFAULT_GASTO = "Agregar Default Gasto",
+            ACTION_ELIMINAR_DEFAULT_GASTO = "Eliminar Default Gasto",
             ACTION_AGREGAR_GASTO = "Agregar Gasto",
             ACTION_ELIMINAR_GASTO = "Eliminar Gasto";
 
@@ -83,6 +86,22 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
             }
 
         });
+        registerOperation(new AbstractViewAction(ACTION_AGREGAR_DEFAULT_GASTO) {
+            @Override
+            public Optional doAction() {
+                onAgregarDefaultGasto();
+                return Optional.empty();
+            }
+
+        });
+        registerOperation(new AbstractViewAction(ACTION_ELIMINAR_DEFAULT_GASTO) {
+            @Override
+            public Optional doAction() {
+                onEliminarDefaultGasto();
+                return Optional.empty();
+            }
+
+        });
     }
 
     @Override
@@ -91,13 +110,15 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         getBean().setCategoria_gasto_seleccionada(R.TipoGasto.UNSPECIFIED);
         getBean().setLista_gasto_venta(new ArrayListModel<>(service.getLista()));
         getBean().setTotal_gastos(utils.setDosLugaresDecimales(service.getValorTotalGastos()));
+        getBean().setDefault_gasto_list(new ArrayListModel<>(service.getDefaultGastosList()));
+        getBean().setTipo_gasto(null);
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void onAgregarClick() {
         service.createNewGasto(
                 getBean().getCategoria_gasto_seleccionada(),
-                getBean().getTipo_gasto_seleccionado(),
+                getBean().getTipo_gasto(),
                 getBean().getMonto_gasto(),
                 getBean().getDescripcion_gasto());
         refreshState();
@@ -130,9 +151,44 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         }
     }
 
+    private void onAgregarDefaultGasto() {
+        String alias = getBean().getDefault_gasto_seleccionado() == null
+                ? JOptionPane.showInputDialog(null, "Introduzca el identificador de la plantilla")
+                : JOptionPane.showInputDialog(null, "Introduzca el nuevo identificador de la plantilla",
+                        getBean().getDefault_gasto_seleccionado().getAlias());
+        DefaultGasto gasto = service.agregarDefaultGasto(
+                alias,
+                getBean().getCategoria_gasto_seleccionada(),
+                getBean().getTipo_gasto_seleccionado(),
+                getBean().getMonto_gasto(),
+                getBean().getDescripcion_gasto());
+        getBean().setDefault_gasto_list(new ArrayListModel<>(service.getDefaultGastosList()));
+        getBean().setDefault_gasto_seleccionado(gasto);
+    }
+
+    private void onEliminarDefaultGasto() {
+        service.eliminarDefaultGasto(getBean().getDefault_gasto_seleccionado());
+        getBean().setDefault_gasto_list(new ArrayListModel<>(service.getDefaultGastosList()));
+        getBean().setDefault_gasto_seleccionado(null);
+    }
+
     private void addListeners() {
-        getBean().addPropertyChangeListener(PROP_CATEGORIA_GASTO_SELECCIONADA, (PropertyChangeEvent evt) -> {
-            getBean().setLista_tipo_gasto(new ArrayListModel<>(service.getNombres(((R.TipoGasto) evt.getNewValue()).getNombre())));
+        getBean().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            switch (evt.getPropertyName()) {
+                case PROP_CATEGORIA_GASTO_SELECCIONADA:
+                    getBean().setLista_tipo_gasto(new ArrayListModel<>(service.getNombres(((R.TipoGasto) evt.getNewValue()).getNombre())));
+                    break;
+                case PROP_DEFAULT_GASTO_SELECCIONADO:
+                    DefaultGasto gasto = (DefaultGasto) evt.getNewValue();
+                    if (gasto != null) {
+                        getBean().setCategoria_gasto_seleccionada(gasto.getCat());
+                        getBean().setLista_tipo_gasto(new ArrayListModel<>(service.getNombres(gasto.getCat().getNombre())));
+                        getBean().setTipo_gasto_seleccionado(gasto.getNombre());
+                        getBean().setDescripcion_gasto(gasto.getDescripcion());
+                        getBean().setMonto_gasto(gasto.getMonto());
+                    }
+                    break;
+            }
         });
     }
 

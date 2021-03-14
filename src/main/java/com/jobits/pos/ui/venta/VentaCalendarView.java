@@ -15,14 +15,13 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewModel;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
+import com.jobits.ui.utils.MaterialColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import org.jdesktop.swingx.calendar.DateSelectionModel;
 
 /**
  *
@@ -51,11 +50,18 @@ public class VentaCalendarView extends AbstractViewPanel {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
-        jPanelDetalles = new javax.swing.JPanel();
-        jPanelCalendario = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCalendar = new javax.swing.JTable();
-        jPanelHeader = new javax.swing.JPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelSeleccion = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jYearChooser1 = new com.toedter.calendar.JYearChooser();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
+        jPanelDetalles = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelCalendario = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelHeader = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -63,67 +69,81 @@ public class VentaCalendarView extends AbstractViewPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jPanelControles = new javax.swing.JPanel();
-        jButtonEliminar = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonY = new javax.swing.JButton();
-        jButtonImportarVentas = new javax.swing.JButton();
-        jPanelSeleccion = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jYearChooser1 = new com.toedter.calendar.JYearChooser();
-        jLabel8 = new javax.swing.JLabel();
-        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
-        jPanelEstadisticas = new javax.swing.JPanel();
-        jPanelVentas = new javax.swing.JPanel();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
+        jTableCalendar = new javax.swing.JTable();
+        jPanelEstadisticas = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelVentas = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanelV = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jLabelTotalVendido = new javax.swing.JLabel();
         jLabelPromedioVendido = new javax.swing.JLabel();
         jLabelHoraPico = new javax.swing.JLabel();
-        jPanelGastos = new javax.swing.JPanel();
+        jPanelGastos = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jPanelG = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jLabelInsumo = new javax.swing.JLabel();
         jLabelTrabajadores = new javax.swing.JLabel();
         jLabelOtros = new javax.swing.JLabel();
-        jPanelResumen = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jDateChooserDel = new org.jdesktop.swingx.JXDatePicker();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jDateChooserAl = new org.jdesktop.swingx.JXDatePicker();
-        jButton3 = new javax.swing.JButton();
+        jPanelControles = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonEliminar = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonEditar = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonY = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonImportarVentas = MaterialComponentsFactory.Buttons.getLinedButton();
 
         jScrollPane2.setViewportView(jTree1);
 
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout(5, 5));
 
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        jPanelSeleccion.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 0, 10, 0));
+        jPanelSeleccion.setMinimumSize(new java.awt.Dimension(325, 60));
+        jPanelSeleccion.setPreferredSize(new java.awt.Dimension(325, 60));
+        jPanelSeleccion.setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setPreferredSize(new java.awt.Dimension(400, 100));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(150, 100));
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
+
+        jLabel9.setFont(new java.awt.Font("Lucida Grande", 2, 18)); // NOI18N
+        jLabel9.setText("Año");
+        jPanel1.add(jLabel9);
+
+        jYearChooser1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jYearChooser1.setOpaque(false);
+        jYearChooser1.setPreferredSize(new java.awt.Dimension(80, 35));
+        jPanel1.add(jYearChooser1);
+
+        jPanel3.add(jPanel1, java.awt.BorderLayout.WEST);
+
+        jPanel2.setPreferredSize(new java.awt.Dimension(200, 100));
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
+
+        jLabel8.setFont(new java.awt.Font("Lucida Grande", 2, 18)); // NOI18N
+        jLabel8.setText("Mes");
+        jPanel2.add(jLabel8);
+
+        jMonthChooser1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jMonthChooser1.setMinimumSize(new java.awt.Dimension(176, 40));
+        jMonthChooser1.setOpaque(false);
+        jMonthChooser1.setPreferredSize(new java.awt.Dimension(176, 35));
+        jPanel2.add(jMonthChooser1);
+
+        jPanel3.add(jPanel2, java.awt.BorderLayout.CENTER);
+
+        jPanelSeleccion.add(jPanel3, java.awt.BorderLayout.EAST);
+
+        jPanel4.add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
+
+        jPanelDetalles.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 15, 15, 15));
         jPanelDetalles.setLayout(new javax.swing.OverlayLayout(jPanelDetalles));
 
-        jPanelCalendario.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelCalendario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanelCalendario.setLayout(new java.awt.BorderLayout());
 
-        jScrollPane1.setOpaque(false);
-
-        jTableCalendar.setBackground(new java.awt.Color(204, 204, 204));
-        jTableCalendar.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jTableCalendar.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        jTableCalendar.setColumnSelectionAllowed(true);
-        jTableCalendar.setOpaque(false);
-        jTableCalendar.setRowHeight(80);
-        jTableCalendar.setShowGrid(false);
-        jTableCalendar.setTableHeader(null);
-        jScrollPane1.setViewportView(jTableCalendar);
-
-        jPanelCalendario.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        jPanelHeader.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        jPanelHeader.setPreferredSize(new java.awt.Dimension(595, 50));
         jPanelHeader.setLayout(new java.awt.GridLayout(1, 7));
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -163,62 +183,44 @@ public class VentaCalendarView extends AbstractViewPanel {
 
         jPanelCalendario.add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
 
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
+        jScrollPane1.setOpaque(false);
+
+        jTableCalendar.setBackground(MaterialColor.TRANSPARENT);
+        jTableCalendar.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTableCalendar.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTableCalendar.setColumnSelectionAllowed(true);
+        jTableCalendar.setOpaque(false);
+        jTableCalendar.setRowHeight(100);
+        jTableCalendar.setShowGrid(false);
+        jTableCalendar.setTableHeader(null);
+        jScrollPane1.setViewportView(jTableCalendar);
+
+        jPanelCalendario.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
         jPanelDetalles.add(jPanelCalendario);
 
-        add(jPanelDetalles, java.awt.BorderLayout.CENTER);
+        jPanel4.add(jPanelDetalles, java.awt.BorderLayout.CENTER);
 
-        jPanelControles.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelControles.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
+        jPanelEstadisticas.setPreferredSize(new java.awt.Dimension(200, 527));
+        jPanelEstadisticas.setLayout(new java.awt.GridLayout(2, 0, 0, 20));
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButtonEliminar.setText(bundle.getString("label_eliminar")); // NOI18N
-        jPanelControles.add(jButtonEliminar);
+        jPanelVentas.setLayout(new java.awt.BorderLayout());
 
-        jButtonEditar.setText(bundle.getString("label_editar")); // NOI18N
-        jPanelControles.add(jButtonEditar);
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Ventas");
+        jPanelVentas.add(jLabel10, java.awt.BorderLayout.PAGE_START);
 
-        jButtonY.setText("Y");
-        jPanelControles.add(jButtonY);
-
-        jButtonImportarVentas.setText("Importar Ventas");
-        jPanelControles.add(jButtonImportarVentas);
-
-        add(jPanelControles, java.awt.BorderLayout.PAGE_END);
-
-        jPanelSeleccion.setBackground(new java.awt.Color(204, 204, 204));
-        jPanelSeleccion.setBorder(new org.pushingpixels.lafwidget.utils.ShadowPopupBorder());
-        jPanelSeleccion.setLayout(new java.awt.BorderLayout());
-
-        jPanel3.setOpaque(false);
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jLabel9.setFont(new java.awt.Font("Lucida Grande", 2, 18)); // NOI18N
-        jLabel9.setText("AÃ±o");
-        jPanel3.add(jLabel9);
-
-        jYearChooser1.setOpaque(false);
-        jYearChooser1.setPreferredSize(new java.awt.Dimension(80, 35));
-        jPanel3.add(jYearChooser1);
-
-        jLabel8.setFont(new java.awt.Font("Lucida Grande", 2, 18)); // NOI18N
-        jLabel8.setText("Mes");
-        jPanel3.add(jLabel8);
-
-        jMonthChooser1.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jMonthChooser1.setMinimumSize(new java.awt.Dimension(176, 40));
-        jMonthChooser1.setOpaque(false);
-        jMonthChooser1.setPreferredSize(new java.awt.Dimension(176, 40));
-        jPanel3.add(jMonthChooser1);
-
-        jPanelSeleccion.add(jPanel3, java.awt.BorderLayout.EAST);
-
-        add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
-
-        jPanelEstadisticas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadisticas Generales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
-        jPanelEstadisticas.setLayout(new java.awt.GridLayout(3, 0));
-
-        jPanelVentas.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ventas", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
-        jPanelVentas.setLayout(new java.awt.GridLayout(3, 0));
+        jPanelV.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        jPanelV.setLayout(new java.awt.GridLayout(3, 0));
 
         jLabelTotalVendido.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabelTotalVendido.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -226,7 +228,7 @@ public class VentaCalendarView extends AbstractViewPanel {
         jLabelTotalVendido.setText("XXXXXX.XX < >");
         jLabelTotalVendido.setToolTipText("Total");
         jLabelTotalVendido.setBorder(javax.swing.BorderFactory.createTitledBorder("Total"));
-        jPanelVentas.add(jLabelTotalVendido);
+        jPanelV.add(jLabelTotalVendido);
 
         jLabelPromedioVendido.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabelPromedioVendido.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -234,7 +236,7 @@ public class VentaCalendarView extends AbstractViewPanel {
         jLabelPromedioVendido.setText("XXXXXX.XX < >");
         jLabelPromedioVendido.setToolTipText("Promedio");
         jLabelPromedioVendido.setBorder(javax.swing.BorderFactory.createTitledBorder("Promedio"));
-        jPanelVentas.add(jLabelPromedioVendido);
+        jPanelV.add(jLabelPromedioVendido);
 
         jLabelHoraPico.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabelHoraPico.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -242,68 +244,76 @@ public class VentaCalendarView extends AbstractViewPanel {
         jLabelHoraPico.setText("XX PM/AM");
         jLabelHoraPico.setToolTipText("Hora Pico");
         jLabelHoraPico.setBorder(javax.swing.BorderFactory.createTitledBorder("Hora Pico"));
-        jPanelVentas.add(jLabelHoraPico);
+        jPanelV.add(jLabelHoraPico);
+
+        jPanelVentas.add(jPanelV, java.awt.BorderLayout.CENTER);
 
         jPanelEstadisticas.add(jPanelVentas);
 
-        jPanelGastos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gastos", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
-        jPanelGastos.setLayout(new java.awt.GridLayout(3, 0));
+        jPanelGastos.setLayout(new java.awt.BorderLayout());
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Gastos");
+        jPanelGastos.add(jLabel11, java.awt.BorderLayout.PAGE_START);
+
+        jPanelG.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        jPanelG.setLayout(new java.awt.GridLayout(3, 0));
 
         jLabelInsumo.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabelInsumo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jLabelInsumo.setText(bundle.getString("label_numeros_moneda")); // NOI18N
         jLabelInsumo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 0), 3, true), "Insumo"));
-        jPanelGastos.add(jLabelInsumo);
+        jPanelG.add(jLabelInsumo);
 
         jLabelTrabajadores.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabelTrabajadores.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelTrabajadores.setText(bundle.getString("label_numeros_moneda")); // NOI18N
         jLabelTrabajadores.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 0, 204), 3, true), "Trabajadores"));
-        jPanelGastos.add(jLabelTrabajadores);
+        jPanelG.add(jLabelTrabajadores);
 
         jLabelOtros.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabelOtros.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelOtros.setText(bundle.getString("label_numeros_moneda")); // NOI18N
         jLabelOtros.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 3, true), "Otros"));
-        jPanelGastos.add(jLabelOtros);
+        jPanelG.add(jLabelOtros);
+
+        jPanelGastos.add(jPanelG, java.awt.BorderLayout.CENTER);
 
         jPanelEstadisticas.add(jPanelGastos);
 
-        jPanelResumen.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Resumen Detallado", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 14))); // NOI18N
-        jPanelResumen.setLayout(new javax.swing.BoxLayout(jPanelResumen, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanel4.add(jPanelEstadisticas, java.awt.BorderLayout.EAST);
 
-        jLabel10.setText("Del");
-        jLabel10.setToolTipText("");
-        jPanel1.add(jLabel10);
-        jPanel1.add(jDateChooserDel);
+        jPanelControles.setPreferredSize(new java.awt.Dimension(328, 60));
+        jPanelControles.setLayout(new java.awt.GridBagLayout());
 
-        jPanelResumen.add(jPanel1);
+        jButtonEliminar.setText(bundle.getString("label_eliminar")); // NOI18N
+        jButtonEliminar.setPreferredSize(new java.awt.Dimension(120, 50));
+        jPanelControles.add(jButtonEliminar, new java.awt.GridBagConstraints());
 
-        jLabel11.setText("Al");
-        jLabel11.setToolTipText("");
-        jPanel2.add(jLabel11);
-        jPanel2.add(jDateChooserAl);
+        jButtonEditar.setText(bundle.getString("label_editar")); // NOI18N
+        jButtonEditar.setPreferredSize(new java.awt.Dimension(120, 50));
+        jPanelControles.add(jButtonEditar, new java.awt.GridBagConstraints());
 
-        jPanelResumen.add(jPanel2);
+        jButtonY.setText("Y");
+        jButtonY.setPreferredSize(new java.awt.Dimension(120, 50));
+        jPanelControles.add(jButtonY, new java.awt.GridBagConstraints());
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/detalles.png"))); // NOI18N
-        jButton3.setToolTipText("Vista Detallada");
-        jButton3.setBorderPainted(false);
-        jPanelResumen.add(jButton3);
+        jButtonImportarVentas.setText("Importar Ventas");
+        jButtonImportarVentas.setPreferredSize(new java.awt.Dimension(160, 50));
+        jPanelControles.add(jButtonImportarVentas, new java.awt.GridBagConstraints());
 
-        jPanelEstadisticas.add(jPanelResumen);
+        jPanel4.add(jPanelControles, java.awt.BorderLayout.PAGE_END);
 
-        add(jPanelEstadisticas, java.awt.BorderLayout.EAST);
+        add(jPanel4, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonImportarVentas;
     private javax.swing.JButton jButtonY;
-    private org.jdesktop.swingx.JXDatePicker jDateChooserAl;
-    private org.jdesktop.swingx.JXDatePicker jDateChooserDel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -325,14 +335,16 @@ public class VentaCalendarView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelCalendario;
     private javax.swing.JPanel jPanelControles;
     private javax.swing.JPanel jPanelDetalles;
     private javax.swing.JPanel jPanelEstadisticas;
+    private javax.swing.JPanel jPanelG;
     private javax.swing.JPanel jPanelGastos;
     private javax.swing.JPanel jPanelHeader;
-    private javax.swing.JPanel jPanelResumen;
     private javax.swing.JPanel jPanelSeleccion;
+    private javax.swing.JPanel jPanelV;
     private javax.swing.JPanel jPanelVentas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -345,8 +357,8 @@ public class VentaCalendarView extends AbstractViewPanel {
     public void wireUp() {
         Bindings.bind(jYearChooser1, "year", getPresenter().getModel(VentaCalendarViewModel.PROP_YEAR_SELECCIONADO));
         Bindings.bind(jMonthChooser1, "month", getPresenter().getModel(VentaCalendarViewModel.PROP_MES_SELECCIONADO));
-        Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_HASTA));
-        Bindings.bind(jDateChooserDel, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_DESDE));
+//        Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_HASTA));
+//        Bindings.bind(jDateChooserDel, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_DESDE));
         Bindings.bind(jLabelHoraPico, getPresenter().getModel(VentaCalendarViewModel.PROP_HORA_PICO_INTERVALOS));
         Bindings.bind(jLabelInsumo, getPresenter().getModel(VentaCalendarViewModel.PROP_GASTO_INSUMO_INTERVALO));
         Bindings.bind(jLabelOtros, getPresenter().getModel(VentaCalendarViewModel.PROP_GASTO_OTROS_INTERVALO));
@@ -367,7 +379,7 @@ public class VentaCalendarView extends AbstractViewPanel {
                 getPresenter().getModel(VentaCalendarViewModel.PROP_LISTA_ELEMENTOS),
                 getPresenter().getModel(VentaCalendarViewModel.PROP_ELEMENTO_SELECCIONADO)));
         jButtonY.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_Y));
-        jButton3.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_RESUMEN_DETALLADO));
+//        jButton3.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_RESUMEN_DETALLADO));
         jTableCalendar.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             getPresenter().getModel(VentaCalendarViewModel.PROP_DIA_SELECCIONADO).setValue(getObjectAtSelectedCell());
         });
@@ -454,7 +466,7 @@ public class VentaCalendarView extends AbstractViewPanel {
         jTableCalendar.setDefaultRenderer(List.class, new VentaCellRender());
         jTableCalendar.setCellSelectionEnabled(true);
         jTableCalendar.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        jPanelResumen.setVisible(false);
+//        jPanelResumen.setVisible(false);
 
     }
 
@@ -469,5 +481,5 @@ public class VentaCalendarView extends AbstractViewPanel {
         }
         return (List<Venta>) model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn());
     }
-
+    
 }

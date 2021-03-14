@@ -82,7 +82,7 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
                     case 1:
                         return "Nombre";
                     case 2:
-                        return "Precio (" + R.COIN_SUFFIX.substring(1) + ")";
+                        return "Precio (" + R.COIN_SUFFIX + ")";
                     case 3:
                         return "Seccion";
                     case 4:

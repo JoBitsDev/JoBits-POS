@@ -7,13 +7,19 @@ import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.filter.FilterMainView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.ExcelAdapter;
 import static com.jobits.pos.ui.viewmodel.AbstractListViewModel.PROP_TITULO_VISTA;
 import static com.jobits.pos.ui.venta.resumen.presenter.AbstractResumenViewModel.*;
 import com.jobits.pos.ui.venta.resumen.presenter.AbstractResumenViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
+import java.text.MessageFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
 
 /**
  *
@@ -35,14 +41,17 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
 
         jPopupMenuClickDerecho = new javax.swing.JPopupMenu();
         jPanelControlesSuperiores = new javax.swing.JPanel();
-        jLabel1 = MaterialComponentsFactory.Displayers.getH3Label();
+        jLabelNombreTabla = MaterialComponentsFactory.Displayers.getH3Label();
         jToggleButtonDetail = new javax.swing.JToggleButton();
-        jPanelTabla = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelTabla = MaterialComponentsFactory.Containers.getTransparentPanel();
         jScrollPaneMain = MaterialComponentsFactory.Containers.getScrollPane();
         jTableMain = new javax.swing.JTable();
-        jPanelDetailPanel = new javax.swing.JPanel();
+        jPanelDetailPanel = MaterialComponentsFactory.Containers.getTransparentPanel();
         jScrollPaneDetail = MaterialComponentsFactory.Containers.getScrollPane();
         jTableDetail = new javax.swing.JTable();
+        jPanelFootter = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabelTotal = new javax.swing.JLabel();
+        jButtonImprimir = MaterialComponentsFactory.Buttons.getLinedButton();
 
         jPopupMenuClickDerecho.setInvoker(jTableMain);
 
@@ -54,10 +63,10 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
         jPanelControlesSuperiores.setOpaque(false);
         jPanelControlesSuperiores.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel1.setText("Nombre Tabla");
-        jPanelControlesSuperiores.add(jLabel1, java.awt.BorderLayout.CENTER);
+        jLabelNombreTabla.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabelNombreTabla.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelNombreTabla.setText("Nombre Tabla");
+        jPanelControlesSuperiores.add(jLabelNombreTabla, java.awt.BorderLayout.CENTER);
 
         jToggleButtonDetail.setText("Detalles");
         jToggleButtonDetail.setMaximumSize(new java.awt.Dimension(150, 32));
@@ -86,7 +95,8 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
         ));
         jTableMain.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
         jTableMain.setRowHeight(25);
-        jTableMain.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTableMain.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTableMain.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableMain.getTableHeader().setReorderingAllowed(false);
         jTableMain.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -141,6 +151,22 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
         jPanelTabla.add(jPanelDetailPanel, "detail");
 
         add(jPanelTabla, java.awt.BorderLayout.CENTER);
+
+        jPanelFootter.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 10, 15));
+        jPanelFootter.setPreferredSize(new java.awt.Dimension(93, 60));
+        jPanelFootter.setLayout(new java.awt.BorderLayout());
+
+        jLabelTotal.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelTotal.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelTotal.setText("xx.xx MN");
+        jLabelTotal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), "Total", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 14))); // NOI18N
+        jPanelFootter.add(jLabelTotal, java.awt.BorderLayout.WEST);
+
+        jButtonImprimir.setText("Imprimir");
+        jButtonImprimir.setPreferredSize(new java.awt.Dimension(140, 50));
+        jPanelFootter.add(jButtonImprimir, java.awt.BorderLayout.EAST);
+
+        add(jPanelFootter, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTableMainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMainMouseClicked
@@ -169,9 +195,12 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
     }//GEN-LAST:event_jTableDetailMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JLabel jLabel1;
+    protected javax.swing.JButton jButtonImprimir;
+    protected javax.swing.JLabel jLabelNombreTabla;
+    protected javax.swing.JLabel jLabelTotal;
     protected javax.swing.JPanel jPanelControlesSuperiores;
     protected javax.swing.JPanel jPanelDetailPanel;
+    protected javax.swing.JPanel jPanelFootter;
     protected javax.swing.JPanel jPanelTabla;
     protected javax.swing.JPopupMenu jPopupMenuClickDerecho;
     protected javax.swing.JScrollPane jScrollPaneDetail;
@@ -192,11 +221,20 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
                 new SelectionInList(getPresenter().getModel(PROP_LISTAMAIN),
                         getPresenter().getModel(PROP_MAINSELECTED)));
         Bindings.bind(jTableDetail,
-                new SelectionInList(getPresenter().getModel(PROP_LISTADETAIL),
-                        getPresenter().getModel(PROP_SELECTED_DETAIL)));
-        Bindings.bind(jLabel1, getPresenter().getModel(PROP_TITULO_VISTA));
+                new SelectionInList(getPresenter().getModel(PROP_LISTADETAIL)));
+        Bindings.bind(jLabelNombreTabla, getPresenter().getModel(PROP_TITULO_VISTA));
+        Bindings.bind(jLabelTotal, getPresenter().getModel(PROP_TOTAL_RESUMEN));
 
         Bindings.bind(jToggleButtonDetail, getPresenter().getModel(PROP_DETAILSELECTED));
+        Bindings.bind(jButtonImprimir, "visible", getPresenter().getModel(PROP_DETAILSELECTED));
+        jButtonImprimir.addActionListener((e) -> {
+            MessageFormat m = new MessageFormat(jLabelNombreTabla.getText() + " (" + jLabelTotal.getText() + ")");
+            try {
+                jTableDetail.print(JTable.PrintMode.FIT_WIDTH, m, null);
+            } catch (PrinterException ex) {
+                Logger.getLogger(AbstractListResumenViewPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
 
     }
 
@@ -207,6 +245,10 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
         modelDetail = generateDetailTableModel();
         jTableMain.setModel(modelMain);
         jTableDetail.setModel(modelDetail);
+//        jTableDetail.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+//        jTableDetail.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        ExcelAdapter a = new ExcelAdapter(jTableDetail);
+
         setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
 
         getPresenter().addBeanPropertyChangeListener(PROP_DETAILSELECTED, (PropertyChangeEvent evt) -> {

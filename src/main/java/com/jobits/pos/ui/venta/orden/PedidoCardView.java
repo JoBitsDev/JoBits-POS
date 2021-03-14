@@ -14,7 +14,7 @@ import com.jobits.ui.components.swing.containers.TaskButton;
 import java.awt.Component;
 import javax.swing.Action;
 import javax.swing.JLabel;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.ProductoVenta;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -58,57 +58,59 @@ public class PedidoCardView extends AbstractViewPanel {
     private void initComponents() {
 
         jToggleButton1 = new javax.swing.JToggleButton();
-        jPanelHeader = new javax.swing.JPanel();
-        jPanelEstado = new javax.swing.JPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelHeader = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanelEstado = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelTest = new javax.swing.JLabel();
         jToggleButtonAutorizo = new javax.swing.JToggleButton();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelOrdenNo = MaterialComponentsFactory.Displayers.getH3Label();
         jLabelMesa = MaterialComponentsFactory.Displayers.getLabel();
-        jPanelMenu = new javax.swing.JPanel();
+        jPanelMenu = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelTerminada = new javax.swing.JLabel();
-        Main = new javax.swing.JPanel();
-        jPanelMedia = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        Main = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelMedia = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButton1 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButton2 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButton3 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButton4 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jToggleButtonAgregos = new javax.swing.JToggleButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jList1 = new javax.swing.JList<>()
         ;
-        jPanel6 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jideButtonCierreParcial = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jideButtonEnviarCocina = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jideButtonCerrarMesa = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jToggleButtonHideSupportPanel = new javax.swing.JToggleButton();
-        jPanelSupportText = new javax.swing.JPanel();
+        jPanelSupportText = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBoxClientes = new javax.swing.JComboBox<>();
+        jComboBoxClientes = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabel3 = new javax.swing.JLabel();
         jLabelVALORHora = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabelVALORUsuario = new javax.swing.JLabel();
-        jPanelActionButtons = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        jPanelActionButtons = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jLabelVALORTotal = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jSpinner1 = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
 
-        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
         setToolTipText(null);
         setMaximumSize(new java.awt.Dimension(290, 1000));
         setMinimumSize(new java.awt.Dimension(290, 400));
         setName(""); // NOI18N
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(290, 490));
         setLayout(new java.awt.BorderLayout());
 
-        jPanelHeader.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, DefaultValues.SECONDARY_COLOR));
+        jPanel7.setLayout(new java.awt.BorderLayout());
+
+        jPanelHeader.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanelHeader.setToolTipText(null);
         jPanelHeader.setMaximumSize(new java.awt.Dimension(400, 80));
         jPanelHeader.setMinimumSize(new java.awt.Dimension(20, 80));
@@ -176,7 +178,7 @@ public class PedidoCardView extends AbstractViewPanel {
 
         jPanelHeader.add(jPanelMenu, java.awt.BorderLayout.EAST);
 
-        add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
+        jPanel7.add(jPanelHeader, java.awt.BorderLayout.PAGE_START);
 
         Main.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10));
         Main.setLayout(new javax.swing.BoxLayout(Main, javax.swing.BoxLayout.PAGE_AXIS));
@@ -225,6 +227,7 @@ public class PedidoCardView extends AbstractViewPanel {
 
         jPanelMedia.add(jPanel1, java.awt.BorderLayout.NORTH);
 
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setHorizontalScrollBar(null);
         jScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 200));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(259, 200));
@@ -303,23 +306,20 @@ public class PedidoCardView extends AbstractViewPanel {
 
         Main.add(jPanelSupportText);
 
-        add(Main, java.awt.BorderLayout.CENTER);
+        jPanel7.add(Main, java.awt.BorderLayout.CENTER);
 
-        jPanelActionButtons.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
+        jPanelActionButtons.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Total"));
         jPanelActionButtons.setToolTipText(null);
-        jPanelActionButtons.setMaximumSize(new java.awt.Dimension(32767, 50));
-        jPanelActionButtons.setMinimumSize(new java.awt.Dimension(0, 25));
-        jPanelActionButtons.setPreferredSize(new java.awt.Dimension(0, 60));
+        jPanelActionButtons.setMaximumSize(new java.awt.Dimension(32767, 80));
+        jPanelActionButtons.setMinimumSize(new java.awt.Dimension(0, 70));
+        jPanelActionButtons.setPreferredSize(new java.awt.Dimension(0, 80));
         jPanelActionButtons.setLayout(new java.awt.BorderLayout());
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Total"));
-        jPanel4.setLayout(new java.awt.BorderLayout());
 
         jLabelVALORTotal.setBackground(new java.awt.Color(153, 255, 255));
         jLabelVALORTotal.setFont(jLabelVALORTotal.getFont().deriveFont(jLabelVALORTotal.getFont().getStyle() | java.awt.Font.BOLD, jLabelVALORTotal.getFont().getSize()+5));
         jLabelVALORTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelVALORTotal.setText("0.00"+R.COIN_SUFFIX);
-        jPanel4.add(jLabelVALORTotal, java.awt.BorderLayout.CENTER);
+        jPanelActionButtons.add(jLabelVALORTotal, java.awt.BorderLayout.CENTER);
 
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
@@ -331,11 +331,11 @@ public class PedidoCardView extends AbstractViewPanel {
         jLabel1.setText("%");
         jPanel5.add(jLabel1, new java.awt.GridBagConstraints());
 
-        jPanel4.add(jPanel5, java.awt.BorderLayout.EAST);
+        jPanelActionButtons.add(jPanel5, java.awt.BorderLayout.EAST);
 
-        jPanelActionButtons.add(jPanel4, java.awt.BorderLayout.CENTER);
+        jPanel7.add(jPanelActionButtons, java.awt.BorderLayout.SOUTH);
 
-        add(jPanelActionButtons, java.awt.BorderLayout.SOUTH);
+        add(jPanel7, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     public String getTitle() {
@@ -391,9 +391,9 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanelActionButtons;
     private javax.swing.JPanel jPanelEstado;
     private javax.swing.JPanel jPanelHeader;

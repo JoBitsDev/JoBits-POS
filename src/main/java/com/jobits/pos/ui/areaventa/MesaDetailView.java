@@ -41,21 +41,24 @@ public class MesaDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanel5 = new javax.swing.JPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldId = MaterialComponentsFactory.Input.getTextField("", "No. Mesa");
         jPanel1 = new javax.swing.JPanel();
         jSpinnerCantidad = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jButtoncancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtoncancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
+        setOpaque(false);
         setPreferredSize(new java.awt.Dimension(370, 205));
         setLayout(new java.awt.BorderLayout());
+
+        jPanel6.setLayout(new java.awt.BorderLayout());
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 1, 1));
         jPanel3.setLayout(new java.awt.GridLayout(2, 1));
@@ -94,20 +97,22 @@ public class MesaDetailView extends AbstractViewPanel {
 
         jPanel3.add(jPanel5);
 
-        add(jPanel3, java.awt.BorderLayout.CENTER);
+        jPanel6.add(jPanel3, java.awt.BorderLayout.CENTER);
 
         jPanel2.setPreferredSize(new java.awt.Dimension(429, 50));
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 20, 5));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jButtoncancelar.setText("Cancelar");
-        jButtoncancelar.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel2.add(jButtoncancelar);
+        jButtoncancelar.setPreferredSize(new java.awt.Dimension(100, 40));
+        jPanel2.add(jButtoncancelar, new java.awt.GridBagConstraints());
 
         jButtonAceptar.setText("Aceptar");
-        jButtonAceptar.setPreferredSize(new java.awt.Dimension(100, 50));
-        jPanel2.add(jButtonAceptar);
+        jButtonAceptar.setPreferredSize(new java.awt.Dimension(100, 40));
+        jPanel2.add(jButtonAceptar, new java.awt.GridBagConstraints());
 
-        add(jPanel2, java.awt.BorderLayout.SOUTH);
+        jPanel6.add(jPanel2, java.awt.BorderLayout.SOUTH);
+
+        add(jPanel6, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldIdKeyTyped
@@ -128,6 +133,7 @@ public class MesaDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JSpinner jSpinnerCantidad;
     private javax.swing.JTextField jTextFieldId;
     private javax.swing.JTextField jTextFieldNombre;

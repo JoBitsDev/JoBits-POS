@@ -7,7 +7,7 @@ package com.jobits.pos.ui.filter;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter;
@@ -45,21 +45,23 @@ public class FilterMainView extends AbstractViewPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel2 = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jPanelMain = new javax.swing.JPanel();
+        jPanelMain = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
-        jPanelCardsContainer = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jComboBoxFilters = new javax.swing.JComboBox<>();
-        jPanel3 = new javax.swing.JPanel();
+        jPanelCardsContainer = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxFilters = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonRemoveFilter = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonFilter = MaterialComponentsFactory.Buttons.getMaterialButton();
         jButtonAddFilter = MaterialComponentsFactory.Buttons.getOutlinedButton();
 
         setMinimumSize(new java.awt.Dimension(30, 0));
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setPreferredSize(new java.awt.Dimension(30, 400));
@@ -85,20 +87,25 @@ public class FilterMainView extends AbstractViewPanel {
 
         add(jPanel2, java.awt.BorderLayout.WEST);
 
-        jPanelMain.setBorder(new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 2, true));
-        jPanelMain.setPreferredSize(new java.awt.Dimension(220, 142));
+        jPanelMain.setPreferredSize(new java.awt.Dimension(240, 142));
         jPanelMain.setLayout(new java.awt.BorderLayout());
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 10));
+        jPanel6.setLayout(new java.awt.BorderLayout());
 
         jPanelCardsContainer.setLayout(new java.awt.GridLayout(40, 1, 4, 4));
         jScrollPane1.setViewportView(jPanelCardsContainer);
 
-        jPanelMain.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        jPanel6.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanelMain.add(jPanel6, java.awt.BorderLayout.CENTER);
 
         jPanel4.setLayout(new java.awt.GridLayout(2, 1));
 
+        jPanel5.setPreferredSize(new java.awt.Dimension(180, 50));
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        jComboBoxFilters.setPreferredSize(new java.awt.Dimension(180, 30));
+        jComboBoxFilters.setPreferredSize(new java.awt.Dimension(180, 50));
         jPanel5.add(jComboBoxFilters, new java.awt.GridBagConstraints());
 
         jPanel4.add(jPanel5);
@@ -137,6 +144,7 @@ public class FilterMainView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelCardsContainer;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JScrollPane jScrollPane1;

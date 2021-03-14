@@ -7,7 +7,7 @@ package com.jobits.pos.ui.venta.orden;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.AbstractViewPanel;
@@ -117,20 +117,20 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAtras = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelBusqueda = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelBusqueda = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldSearch = new javax.swing.JTextField();
         jLabelBuscarIcon = new javax.swing.JLabel();
-        jPanelMain = new javax.swing.JPanel();
-        jScrollPaneSecciones = new javax.swing.JScrollPane();
+        jPanelMain = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jScrollPaneSecciones = MaterialComponentsFactory.Containers.getScrollPane();
         jListSecciones = new javax.swing.JList<>();
-        jScrollPaneProductos = new javax.swing.JScrollPane();
+        jScrollPaneProductos = MaterialComponentsFactory.Containers.getScrollPane();
         jList2 = new javax.swing.JList<>();
 
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         setMinimumSize(new java.awt.Dimension(50, 50));
+        setOpaque(false);
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setPreferredSize(new java.awt.Dimension(140, 60));
@@ -180,7 +180,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
 
         jPanelMain.setLayout(new java.awt.CardLayout());
 
-        jScrollPaneSecciones.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Secciones"));
+        jScrollPaneSecciones.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Secciones"));
         jScrollPaneSecciones.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPaneSecciones.setPreferredSize(new java.awt.Dimension(200, 120));
 
@@ -191,7 +191,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
 
         jPanelMain.add(jScrollPaneSecciones, "Secciones");
 
-        jScrollPaneProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Productos"));
+        jScrollPaneProductos.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Productos"));
         jScrollPaneProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPaneProductos.setFocusable(false);
 

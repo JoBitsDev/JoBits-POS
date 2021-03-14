@@ -7,12 +7,11 @@ package com.jobits.pos.ui.filter;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jhw.swing.material.standars.MaterialIcons;
+import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.filter.presenter.AbstractFilterTypeModel.*;
+import static com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter.*;
 import com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter;
-import static com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter.ACTION_AUTO_ELIMINAR_FILTRO;
 import com.jobits.pos.ui.utils.BindableListIntelliHint;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.CardLayout;
@@ -43,25 +42,38 @@ public class FilterCardView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel3 = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jToggleButtonOperacion = new javax.swing.JToggleButton();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonEliminar = new javax.swing.JButton();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelFilterType = new javax.swing.JLabel();
-        jPanelmain = new javax.swing.JPanel();
-        jPanelCombobox = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jPanelTextField = new javax.swing.JPanel();
+        jPanelmain = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelCombobox = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBox1 = MaterialComponentsFactory.Displayers.getComboBox("");
+        jPanelTextField = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextField1 = MaterialComponentsFactory.Input.getTextField("", "");
 
-        setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 3, 3), new javax.swing.border.LineBorder(DefaultValues.SECONDARY_COLOR, 3, true)));
-        setPreferredSize(new java.awt.Dimension(199, 80));
+        setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(199, 90));
         setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 15, 15));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jToggleButtonOperacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/shuffle_indigo.png"))); // NOI18N
+        jToggleButtonOperacion.setMaximumSize(new java.awt.Dimension(40, 40));
+        jToggleButtonOperacion.setMinimumSize(new java.awt.Dimension(40, 40));
+        jToggleButtonOperacion.setOpaque(false);
+        jToggleButtonOperacion.setPreferredSize(new java.awt.Dimension(30, 30));
+        jToggleButtonOperacion.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/split_indigo.png"))); // NOI18N
+        jPanel3.add(jToggleButtonOperacion, java.awt.BorderLayout.EAST);
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setIcon(MaterialIcons.CLOSE);
-        jButton1.setPreferredSize(new java.awt.Dimension(20, 20));
-        jPanel2.add(jButton1, java.awt.BorderLayout.EAST);
+        jButtonEliminar.setIcon(MaterialIcons.CLOSE);
+        jButtonEliminar.setPreferredSize(new java.awt.Dimension(20, 20));
+        jPanel2.add(jButtonEliminar, java.awt.BorderLayout.EAST);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(69, 20));
         jPanel1.setLayout(new java.awt.GridBagLayout());
@@ -71,13 +83,13 @@ public class FilterCardView extends AbstractViewPanel {
 
         jPanel2.add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        add(jPanel2, java.awt.BorderLayout.NORTH);
+        jPanel3.add(jPanel2, java.awt.BorderLayout.NORTH);
 
         jPanelmain.setLayout(new java.awt.CardLayout());
 
         jPanelCombobox.setLayout(new java.awt.GridBagLayout());
 
-        jComboBox1.setPreferredSize(new java.awt.Dimension(190, 40));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(150, 40));
         jPanelCombobox.add(jComboBox1, new java.awt.GridBagConstraints());
 
         jPanelmain.add(jPanelCombobox, "ComboBox");
@@ -86,30 +98,35 @@ public class FilterCardView extends AbstractViewPanel {
         jPanelTextField.setLayout(new java.awt.GridBagLayout());
 
         jTextField1.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
-        jTextField1.setPreferredSize(new java.awt.Dimension(190, 40));
+        jTextField1.setPreferredSize(new java.awt.Dimension(150, 40));
         jPanelTextField.add(jTextField1, new java.awt.GridBagConstraints());
 
         jPanelmain.add(jPanelTextField, "TextField");
 
-        add(jPanelmain, java.awt.BorderLayout.CENTER);
+        jPanel3.add(jPanelmain, java.awt.BorderLayout.CENTER);
+
+        add(jPanel3, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabelFilterType;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelCombobox;
     private javax.swing.JPanel jPanelTextField;
     private javax.swing.JPanel jPanelmain;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JToggleButton jToggleButtonOperacion;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void wireUp() {
         Bindings.bind(jLabelFilterType, getPresenter().getModel(PROP_TIPO_FILTRO_INFO));
+        Bindings.bind(jToggleButtonOperacion, "selected", getPresenter().getModel(PROP_TIPO_OPERACION));
 
         Bindings.bind(jComboBox1, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_ELEMENTOS),
@@ -119,7 +136,8 @@ public class FilterCardView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_LISTA_ELEMENTOS),
                 getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)), jTextField1);
 
-        jButton1.addActionListener(getPresenter().getOperation(ACTION_AUTO_ELIMINAR_FILTRO));
+        jButtonEliminar.addActionListener(getPresenter().getOperation(ACTION_AUTO_ELIMINAR_FILTRO));
+        jToggleButtonOperacion.addActionListener(getPresenter().getOperation(ACTION_SET_FILTER_OPERACTION));
     }
 
     @Override
