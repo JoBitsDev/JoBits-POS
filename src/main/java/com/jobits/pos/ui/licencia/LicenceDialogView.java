@@ -98,8 +98,6 @@ public class LicenceDialogView extends JPanel implements View {
         jideLabelEstadoLic.setText("Estado de la licencia");
         jPanelInfo.add(jideLabelEstadoLic, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.setLayout(new java.awt.GridBagLayout());
-
         jTextField2.setColumns(4);
         jTextField2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -110,12 +108,12 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField2KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField2, new java.awt.GridBagConstraints());
+        jPanel1.add(jTextField2);
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("-");
-        jPanel1.add(jLabel2, new java.awt.GridBagConstraints());
+        jPanel1.add(jLabel2);
 
         jTextField3.setColumns(4);
         jTextField3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -127,12 +125,12 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField3KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField3, new java.awt.GridBagConstraints());
+        jPanel1.add(jTextField3);
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("-");
-        jPanel1.add(jLabel3, new java.awt.GridBagConstraints());
+        jPanel1.add(jLabel3);
 
         jTextField4.setColumns(4);
         jTextField4.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -144,12 +142,12 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField4KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField4, new java.awt.GridBagConstraints());
+        jPanel1.add(jTextField4);
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("-");
-        jPanel1.add(jLabel9, new java.awt.GridBagConstraints());
+        jPanel1.add(jLabel9);
 
         jTextField5.setColumns(4);
         jTextField5.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -161,12 +159,12 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField5KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField5, new java.awt.GridBagConstraints());
+        jPanel1.add(jTextField5);
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("-");
-        jPanel1.add(jLabel7, new java.awt.GridBagConstraints());
+        jPanel1.add(jLabel7);
 
         jTextField6.setColumns(4);
         jTextField6.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -178,12 +176,12 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField6KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField6, new java.awt.GridBagConstraints());
+        jPanel1.add(jTextField6);
 
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("-");
-        jPanel1.add(jLabel5, new java.awt.GridBagConstraints());
+        jPanel1.add(jLabel5);
 
         jTextField7.setColumns(4);
         jTextField7.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -195,12 +193,12 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField7KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField7, new java.awt.GridBagConstraints());
+        jPanel1.add(jTextField7);
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("-");
-        jPanel1.add(jLabel6, new java.awt.GridBagConstraints());
+        jPanel1.add(jLabel6);
 
         jTextField8.setColumns(4);
         jTextField8.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -212,12 +210,12 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField8KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField8, new java.awt.GridBagConstraints());
+        jPanel1.add(jTextField8);
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("-");
-        jPanel1.add(jLabel4, new java.awt.GridBagConstraints());
+        jPanel1.add(jLabel4);
 
         jTextField9.setColumns(4);
         jTextField9.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -229,7 +227,7 @@ public class LicenceDialogView extends JPanel implements View {
                 jTextField9KeyTyped(evt);
             }
         });
-        jPanel1.add(jTextField9, new java.awt.GridBagConstraints());
+        jPanel1.add(jTextField9);
 
         jPanelInfo.add(jPanel1, java.awt.BorderLayout.CENTER);
 
