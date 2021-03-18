@@ -187,7 +187,7 @@
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getSecondaryPanel()"/>
                       </AuxValues>
 
-                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
                       <SubComponents>
                         <Component class="javax.swing.JTextField" name="jTextFieldTipoGasto">
                           <Properties>
@@ -201,11 +201,6 @@
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getTextField(&quot;&quot;, &quot;&quot;)"/>
                           </AuxValues>
-                          <Constraints>
-                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                              <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
-                            </Constraint>
-                          </Constraints>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -235,30 +230,20 @@
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getSecondaryPanel()"/>
                       </AuxValues>
 
-                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JSpinner" name="jSpinnerMonto">
+                        <Component class="javax.swing.JTextField" name="jTextFieldMonto">
                           <Properties>
-                            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-                              <SpinnerModel initial="0.0" minimum="0.0" numberType="java.lang.Float" stepSize="5.0" type="number"/>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Dialog" size="10" style="0"/>
                             </Property>
-                            <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                              <Connection code="null" type="code"/>
-                            </Property>
-                            <Property name="opaque" type="boolean" value="false"/>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[150, 26]"/>
+                              <Dimension value="[150, 40]"/>
                             </Property>
                           </Properties>
-                          <Events>
-                            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jSpinnerMontoStateChanged"/>
-                            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jSpinnerMontoFocusGained"/>
-                          </Events>
-                          <Constraints>
-                            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                              <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
-                            </Constraint>
-                          </Constraints>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Input.getTextFielPrecioVenta(&quot;0.00&quot;,&quot;&quot;, R.COIN_SUFFIX)"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
