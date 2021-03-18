@@ -18,6 +18,7 @@ import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.hook.escandallo.ProductoEscandalloHook;
 import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -90,6 +91,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
             Application.getInstance().getNotificationService().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion
         }
         RootView.getInstance().getStatusBar().refreshView();
+        //TODO: poner todos los listeners en los controllers del core
         if (ReservaOrdenListener.getInstance() == null) {
             ReservaOrdenListener.initInstance(
                     PosDesktopUiModule.getInstance().getImplementation(OrdenService.class),
@@ -105,6 +107,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
         }
         ReservaOrdenListener.getInstance();
         UbicacionMesaListener.getInstance();
+        ProductoEscandalloHook.getInstance();
     }
 
     private void onUbicacionSeleccionadaChanged() {
