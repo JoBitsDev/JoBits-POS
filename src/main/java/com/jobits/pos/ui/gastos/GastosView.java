@@ -55,12 +55,13 @@ public class GastosView extends AbstractViewPanel {
         jPanelContainer = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelAgregar1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel11 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel2 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jComboBoxCategoria = MaterialComponentsFactory.Displayers.getComboBox("");
         jPanel6 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jTextFieldTipoGasto = MaterialComponentsFactory.Input.getTextField("", "");
         jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jSpinnerMonto = new javax.swing.JSpinner();
+        jTextFieldMonto = MaterialComponentsFactory.Input.getTextField("", "");
         jPanelDesc = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTextAreaDescripcion = new javax.swing.JTextArea();
@@ -100,7 +101,9 @@ public class GastosView extends AbstractViewPanel {
         jPanelAgregar1.setLayout(new java.awt.BorderLayout());
 
         jPanel8.setToolTipText(null);
-        jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanel8.setLayout(new java.awt.BorderLayout());
+
+        jPanel11.setLayout(new java.awt.GridLayout(3, 1));
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), bundle.getString("label_categoria"))); // NOI18N
@@ -118,7 +121,7 @@ public class GastosView extends AbstractViewPanel {
         });
         jPanel2.add(jComboBoxCategoria, new java.awt.GridBagConstraints());
 
-        jPanel8.add(jPanel2);
+        jPanel11.add(jPanel2);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Tipo"));
         jPanel6.setToolTipText(null);
@@ -128,7 +131,7 @@ public class GastosView extends AbstractViewPanel {
         jTextFieldTipoGasto.setPreferredSize(new java.awt.Dimension(150, 40));
         jPanel6.add(jTextFieldTipoGasto, new java.awt.GridBagConstraints());
 
-        jPanel8.add(jPanel6);
+        jPanel11.add(jPanel6);
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Monto (" + R.COIN_SUFFIX + " )"));
         jPanel5.setToolTipText(null);
@@ -136,26 +139,22 @@ public class GastosView extends AbstractViewPanel {
         jPanel5.setPreferredSize(new java.awt.Dimension(170, 60));
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        jSpinnerMonto.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
-        jSpinnerMonto.setToolTipText(null);
-        jSpinnerMonto.setOpaque(false);
-        jSpinnerMonto.setPreferredSize(new java.awt.Dimension(150, 26));
-        jSpinnerMonto.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinnerMontoStateChanged(evt);
+        jTextFieldMonto.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jTextFieldMonto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldMonto.setPreferredSize(new java.awt.Dimension(150, 40));
+        jTextFieldMonto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldMontoKeyTyped(evt);
             }
         });
-        jSpinnerMonto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jSpinnerMontoFocusGained(evt);
-            }
-        });
-        jPanel5.add(jSpinnerMonto, new java.awt.GridBagConstraints());
+        jPanel5.add(jTextFieldMonto, new java.awt.GridBagConstraints());
 
-        jPanel8.add(jPanel5);
+        jPanel11.add(jPanel5);
+
+        jPanel8.add(jPanel11, java.awt.BorderLayout.CENTER);
 
         jPanelDesc.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), bundle.getString("label_descripcion"))); // NOI18N
-        jPanelDesc.setPreferredSize(new java.awt.Dimension(170, 166));
+        jPanelDesc.setPreferredSize(new java.awt.Dimension(170, 160));
         jPanelDesc.setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -176,7 +175,7 @@ public class GastosView extends AbstractViewPanel {
 
         jPanelDesc.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel8.add(jPanelDesc);
+        jPanel8.add(jPanelDesc, java.awt.BorderLayout.SOUTH);
 
         jPanelAgregar1.add(jPanel8, java.awt.BorderLayout.CENTER);
 
@@ -328,20 +327,6 @@ public class GastosView extends AbstractViewPanel {
 //        }
     }//GEN-LAST:event_jComboBoxCategoriaActionPerformed
 
-    private void jSpinnerMontoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSpinnerMontoStateChanged
-//        try {
-//            jButtonCrearE.setEnabled((float) jSpinnerMonto.getValue() > 0);
-//            jTextAreaDescripcion.setEnabled((float) jSpinnerMonto.getValue() > 0);
-//        } catch (ClassCastException e) {
-//            jButtonCrearE.setEnabled((int) jSpinnerMonto.getValue() > 0);
-//            jTextAreaDescripcion.setEnabled((int) jSpinnerMonto.getValue() > 0);
-//        }
-    }//GEN-LAST:event_jSpinnerMontoStateChanged
-
-    private void jSpinnerMontoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jSpinnerMontoFocusGained
-//        jSpinnerMonto.setValue(null);
-    }//GEN-LAST:event_jSpinnerMontoFocusGained
-
     private void jTextAreaDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaDescripcionKeyTyped
         int max = 90;
         String s = jTextAreaDescripcion.getText();
@@ -364,6 +349,16 @@ public class GastosView extends AbstractViewPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonAgregarDefaultGastoActionPerformed
 
+    private void jTextFieldMontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMontoKeyTyped
+        char c = evt.getKeyChar();
+        if (((c < '0') || (c > '9')) && (c != '\b') && (c != '.')) {
+            evt.consume();
+        }
+        if ((c == '.') && (jTextFieldMonto.getText().contains("."))) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldMontoKeyTyped
+
     @Override
     public void wireUp() {
         Bindings.bind(jTableInfo, new SelectionInList<String>(
@@ -381,9 +376,7 @@ public class GastosView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_TIPO_GASTO_SELECCIONADO)), jTextFieldTipoGasto);
         Bindings.bind(jTextFieldTipoGasto, getPresenter().getModel(PROP_TIPO_GASTO));
 
-        SpinnerToValueModelConnector connector = new SpinnerToValueModelConnector(jSpinnerMonto.getModel(),
-                getPresenter().getModel(PROP_MONTO_GASTO), 0);
-        Bindings.bind(jSpinnerMonto, "value", getPresenter().getModel(PROP_MONTO_GASTO));
+        Bindings.bind(jTextFieldMonto, getPresenter().getModel(PROP_MONTO_GASTO));
 
         Bindings.bind(jTextAreaDescripcion, getPresenter().getModel(PROP_DESCRIPCION_GASTO));
         Bindings.bind(jLabelGast, getPresenter().getModel(PROP_TOTAL_GASTOS));
@@ -483,6 +476,7 @@ public class GastosView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelGast;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -497,9 +491,9 @@ public class GastosView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JSpinner jSpinnerMonto;
     private javax.swing.JTable jTableInfo;
     private javax.swing.JTextArea jTextAreaDescripcion;
+    private javax.swing.JTextField jTextFieldMonto;
     private javax.swing.JTextField jTextFieldTipoGasto;
     // End of variables declaration//GEN-END:variables
 }

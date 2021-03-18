@@ -26,7 +26,7 @@ public class GastosViewModel extends AbstractViewModel {
 
     public static final String PROP_CATEGORIA_GASTO_SELECCIONADA = "categoria_gasto_seleccionada";
 
-    private float monto_gasto;
+    private String monto_gasto;
 
     public static final String PROP_MONTO_GASTO = "monto_gasto";
 
@@ -253,7 +253,7 @@ public class GastosViewModel extends AbstractViewModel {
      *
      * @return the value of monto_gasto
      */
-    public float getMonto_gasto() {
+    public String getMonto_gasto() {
         return monto_gasto;
     }
 
@@ -262,8 +262,8 @@ public class GastosViewModel extends AbstractViewModel {
      *
      * @param monto_gasto new value of monto_gasto
      */
-    public void setMonto_gasto(float monto_gasto) {
-        float oldMonto_gasto = this.monto_gasto;
+    public void setMonto_gasto(String monto_gasto) {
+        String oldMonto_gasto = this.monto_gasto;
         this.monto_gasto = monto_gasto;
         firePropertyChange(PROP_MONTO_GASTO, oldMonto_gasto, monto_gasto);
     }
