@@ -88,8 +88,8 @@ public class Generales extends AbstractViewPanel {
         jPanelGenerales.setLayout(new javax.swing.BoxLayout(jPanelGenerales, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelNegocio.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Negocio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
-        jPanelNegocio.setPreferredSize(new java.awt.Dimension(780, 325));
-        jPanelNegocio.setLayout(new java.awt.GridLayout(7, 1, 0, 3));
+        jPanelNegocio.setPreferredSize(new java.awt.Dimension(780, 300));
+        jPanelNegocio.setLayout(new java.awt.GridLayout(6, 1, 0, 3));
 
         jPanelCantidadturnos.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
@@ -258,7 +258,7 @@ public class Generales extends AbstractViewPanel {
 
         jPanelCaja.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Caja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
         jPanelCaja.setMinimumSize(new java.awt.Dimension(450, 125));
-        jPanelCaja.setPreferredSize(new java.awt.Dimension(450, 100));
+        jPanelCaja.setPreferredSize(new java.awt.Dimension(450, 125));
         jPanelCaja.setLayout(new java.awt.GridLayout(2, 2));
 
         jPanel11.setLayout(new java.awt.GridBagLayout());
