@@ -303,7 +303,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanelCambioMoneda1">
+            <Container class="javax.swing.JPanel" name="jPanelHoraInicio">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
               </AuxValues>
@@ -411,7 +411,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanelCambioMoneda2">
+            <Container class="javax.swing.JPanel" name="jPanelHoraCierre">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
               </AuxValues>
@@ -519,7 +519,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanelCambioMoneda3">
+            <Container class="javax.swing.JPanel" name="jPanelTiempoMinServicio">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
               </AuxValues>

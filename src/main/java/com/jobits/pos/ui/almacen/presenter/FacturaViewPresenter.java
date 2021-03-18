@@ -11,6 +11,7 @@ import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.controller.almacen.impl.AlmacenManageController.OperationType;//TODO; enum de implementacion en view
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.core.domain.TransaccionSimple;
+import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;

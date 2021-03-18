@@ -148,6 +148,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
             service.create(insumo);
         } else {
             service.update(insumo);
+            service.updateProductoOnInsumo(insumo);
         }
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         Application.getInstance().getNavigator().navigateUp();
