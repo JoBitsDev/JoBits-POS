@@ -52,17 +52,17 @@ public class Generales extends AbstractViewPanel {
         jLabel1 = MaterialComponentsFactory.Displayers.getLabel();
         jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jComboBoxCambioMoneda = MaterialComponentsFactory.Displayers.getComboBox("");
-        jPanelCambioMoneda1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelHoraInicio = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel4 = MaterialComponentsFactory.Displayers.getLabel();
         jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jComboBoxHoraInicio = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabel9 = new javax.swing.JLabel();
-        jPanelCambioMoneda2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelHoraCierre = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel5 = MaterialComponentsFactory.Displayers.getLabel();
         jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jComboBoxHoraCierre = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabel8 = new javax.swing.JLabel();
-        jPanelCambioMoneda3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelTiempoMinServicio = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel6 = MaterialComponentsFactory.Displayers.getLabel();
         jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -88,8 +88,8 @@ public class Generales extends AbstractViewPanel {
         jPanelGenerales.setLayout(new javax.swing.BoxLayout(jPanelGenerales, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanelNegocio.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Negocio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
-        jPanelNegocio.setPreferredSize(new java.awt.Dimension(780, 300));
-        jPanelNegocio.setLayout(new java.awt.GridLayout(6, 1, 0, 3));
+        jPanelNegocio.setPreferredSize(new java.awt.Dimension(780, 325));
+        jPanelNegocio.setLayout(new java.awt.GridLayout(7, 1, 0, 3));
 
         jPanelCantidadturnos.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
@@ -169,12 +169,12 @@ public class Generales extends AbstractViewPanel {
 
         jPanelNegocio.add(jPanelCambioMoneda);
 
-        jPanelCambioMoneda1.setLayout(new java.awt.GridLayout(1, 0));
+        jPanelHoraInicio.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Hora de Inicio");
-        jPanelCambioMoneda1.add(jLabel4);
+        jPanelHoraInicio.add(jLabel4);
 
         jPanel6.setPreferredSize(new java.awt.Dimension(351, 115));
         jPanel6.setLayout(new java.awt.GridBagLayout());
@@ -192,16 +192,16 @@ public class Generales extends AbstractViewPanel {
         jLabel9.setPreferredSize(new java.awt.Dimension(75, 26));
         jPanel6.add(jLabel9, new java.awt.GridBagConstraints());
 
-        jPanelCambioMoneda1.add(jPanel6);
+        jPanelHoraInicio.add(jPanel6);
 
-        jPanelNegocio.add(jPanelCambioMoneda1);
+        jPanelNegocio.add(jPanelHoraInicio);
 
-        jPanelCambioMoneda2.setLayout(new java.awt.GridLayout(1, 0));
+        jPanelHoraCierre.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Hora de Cierre");
-        jPanelCambioMoneda2.add(jLabel5);
+        jPanelHoraCierre.add(jLabel5);
 
         jPanel7.setPreferredSize(new java.awt.Dimension(351, 115));
         jPanel7.setLayout(new java.awt.GridBagLayout());
@@ -219,16 +219,16 @@ public class Generales extends AbstractViewPanel {
         jLabel8.setPreferredSize(new java.awt.Dimension(75, 26));
         jPanel7.add(jLabel8, new java.awt.GridBagConstraints());
 
-        jPanelCambioMoneda2.add(jPanel7);
+        jPanelHoraCierre.add(jPanel7);
 
-        jPanelNegocio.add(jPanelCambioMoneda2);
+        jPanelNegocio.add(jPanelHoraCierre);
 
-        jPanelCambioMoneda3.setLayout(new java.awt.GridLayout(1, 0));
+        jPanelTiempoMinServicio.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Tiempo minimo de Servicio");
-        jPanelCambioMoneda3.add(jLabel6);
+        jPanelTiempoMinServicio.add(jLabel6);
 
         jPanel8.setPreferredSize(new java.awt.Dimension(351, 115));
         jPanel8.setLayout(new java.awt.GridBagLayout());
@@ -250,15 +250,15 @@ public class Generales extends AbstractViewPanel {
 
         jPanel8.add(jPanel9, new java.awt.GridBagConstraints());
 
-        jPanelCambioMoneda3.add(jPanel8);
+        jPanelTiempoMinServicio.add(jPanel8);
 
-        jPanelNegocio.add(jPanelCambioMoneda3);
+        jPanelNegocio.add(jPanelTiempoMinServicio);
 
         jPanelGenerales.add(jPanelNegocio);
 
         jPanelCaja.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Caja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
         jPanelCaja.setMinimumSize(new java.awt.Dimension(450, 125));
-        jPanelCaja.setPreferredSize(new java.awt.Dimension(450, 125));
+        jPanelCaja.setPreferredSize(new java.awt.Dimension(450, 100));
         jPanelCaja.setLayout(new java.awt.GridLayout(2, 2));
 
         jPanel11.setLayout(new java.awt.GridBagLayout());
@@ -411,12 +411,12 @@ public class Generales extends AbstractViewPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelCaja;
     private javax.swing.JPanel jPanelCambioMoneda;
-    private javax.swing.JPanel jPanelCambioMoneda1;
-    private javax.swing.JPanel jPanelCambioMoneda2;
-    private javax.swing.JPanel jPanelCambioMoneda3;
     private javax.swing.JPanel jPanelCantidadturnos;
     private javax.swing.JPanel jPanelGenerales;
+    private javax.swing.JPanel jPanelHoraCierre;
+    private javax.swing.JPanel jPanelHoraInicio;
     private javax.swing.JPanel jPanelNegocio;
+    private javax.swing.JPanel jPanelTiempoMinServicio;
     private javax.swing.JPanel jPanelTipoNegocio;
     private javax.swing.JToggleButton jToggleButtonMesaFija;
     private javax.swing.JToggleButton jToggleButtonPermEsp;

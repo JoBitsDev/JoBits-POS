@@ -155,6 +155,7 @@ public class ConfiguracionView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         jTabbedPane1.add("Generales", new Generales(presenter));
+        jTabbedPane1.add("Almacén", new Almacen(presenter));
         jTabbedPane1.add("Sync", new Sincronizacion(presenter));
         jTabbedPane1.add("ImpresiÃ³n", new Impresion(presenter));
         jTabbedPane1.add("ImportarExportar", new ImportarExportar(new ImportarExportarViewPresenter(new ProductoVentaListController())));
