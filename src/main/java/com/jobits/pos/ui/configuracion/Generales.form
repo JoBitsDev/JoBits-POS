@@ -72,7 +72,7 @@
               </Border>
             </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[780, 300]"/>
+              <Dimension value="[780, 325]"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -81,7 +81,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
             <Property name="columns" type="int" value="1"/>
-            <Property name="rows" type="int" value="6"/>
+            <Property name="rows" type="int" value="7"/>
             <Property name="verticalGap" type="int" value="3"/>
           </Layout>
           <SubComponents>
@@ -303,7 +303,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanelCambioMoneda1">
+            <Container class="javax.swing.JPanel" name="jPanelHoraInicio">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
               </AuxValues>
@@ -411,7 +411,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanelCambioMoneda2">
+            <Container class="javax.swing.JPanel" name="jPanelHoraCierre">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
               </AuxValues>
@@ -519,7 +519,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanelCambioMoneda3">
+            <Container class="javax.swing.JPanel" name="jPanelTiempoMinServicio">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
               </AuxValues>
@@ -632,7 +632,7 @@
               <Dimension value="[450, 125]"/>
             </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[450, 125]"/>
+              <Dimension value="[450, 100]"/>
             </Property>
           </Properties>
           <AuxValues>
