@@ -30,9 +30,11 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
     public DetailResumenCostoView(DetailResumenCostoViewPresenter presenter) {
         super(presenter);
         jTableMain.getColumnModel().getColumn(0).setPreferredWidth(200);
+        jTableMain.getColumnModel().getColumn(1).setPreferredWidth(50);
         jTableMain.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
+        jTableDetail.getColumnModel().getColumn(4).setCellRenderer(utils.numberColumCellRender());
     }
 
     @Override
@@ -86,7 +88,7 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
         return new BindableTableModel<ProductoInsumo>(jTableDetail) {
             @Override
             public int getColumnCount() {
-                return 4;
+                return 5;
 
             }
 
@@ -98,8 +100,10 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
                     case 1:
                         return "U/M";
                     case 2:
-                        return "Cantidad";
+                        return "Costo Unitario";
                     case 3:
+                        return "Cantidad";
+                    case 4:
                         return "Costo (" + R.COIN_SUFFIX + ")";
                 }
                 return null;
@@ -114,8 +118,10 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
                     case 1:
                         return i.getInsumo().getUm();
                     case 2:
-                        return utils.setDosLugaresDecimalesFloat(i.getCantidad());
+                        return utils.setDosLugaresDecimalesFloat(i.getInsumo().getCostoPorUnidad());
                     case 3:
+                        return utils.setDosLugaresDecimalesFloat(i.getCantidad());
+                    case 4:
                         return utils.setDosLugaresDecimalesFloat(i.getCosto());
                 }
                 return null;

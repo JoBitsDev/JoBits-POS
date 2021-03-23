@@ -138,7 +138,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         getBean().setCategoria_gasto_seleccionada(R.TipoGasto.UNSPECIFIED);
         getBean().setLista_tipo_gasto(new ArrayListModel<>());
         getBean().setTipo_gasto_seleccionado(null);
-        getBean().setMonto_gasto("");
+        getBean().setMonto_gasto(null);
         getBean().setDescripcion_gasto(null);
     }
 
@@ -185,7 +185,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
                         getBean().setLista_tipo_gasto(new ArrayListModel<>(service.getNombres(gasto.getCat().getNombre())));
                         getBean().setTipo_gasto_seleccionado(gasto.getNombre());
                         getBean().setDescripcion_gasto(gasto.getDescripcion());
-                        getBean().setMonto_gasto(""+gasto.getMonto());
+                        getBean().setMonto_gasto(String.valueOf(gasto.getMonto()));
                     }
                     break;
             }
