@@ -125,11 +125,11 @@ public class GastosView extends AbstractViewPanel {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Tipo"));
         jPanel6.setToolTipText(null);
-        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel6.setLayout(new java.awt.GridBagLayout());
 
         jTextFieldTipoGasto.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jTextFieldTipoGasto.setPreferredSize(new java.awt.Dimension(150, 40));
-        jPanel6.add(jTextFieldTipoGasto);
+        jPanel6.add(jTextFieldTipoGasto, new java.awt.GridBagConstraints());
 
         jPanel11.add(jPanel6);
 
@@ -137,23 +137,17 @@ public class GastosView extends AbstractViewPanel {
         jPanel5.setToolTipText(null);
         jPanel5.setMinimumSize(new java.awt.Dimension(150, 60));
         jPanel5.setPreferredSize(new java.awt.Dimension(170, 60));
-        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.LINE_AXIS));
+        jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        jSpinnerMonto.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
-        jSpinnerMonto.setToolTipText(null);
-        jSpinnerMonto.setOpaque(false);
-        jSpinnerMonto.setPreferredSize(new java.awt.Dimension(150, 26));
-        jSpinnerMonto.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jSpinnerMontoStateChanged(evt);
+        jTextFieldMonto.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        jTextFieldMonto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldMonto.setPreferredSize(new java.awt.Dimension(150, 40));
+        jTextFieldMonto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldMontoKeyTyped(evt);
             }
         });
-        jSpinnerMonto.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jSpinnerMontoFocusGained(evt);
-            }
-        });
-        jPanel5.add(jSpinnerMonto, new java.awt.GridBagConstraints());
+        jPanel5.add(jTextFieldMonto, new java.awt.GridBagConstraints());
 
         jPanel11.add(jPanel5);
 
@@ -382,9 +376,7 @@ public class GastosView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_TIPO_GASTO_SELECCIONADO)), jTextFieldTipoGasto);
         Bindings.bind(jTextFieldTipoGasto, getPresenter().getModel(PROP_TIPO_GASTO));
 
-        SpinnerToValueModelConnector connector = new SpinnerToValueModelConnector(jSpinnerMonto.getModel(),
-                getPresenter().getModel(PROP_MONTO_GASTO), 0);
-        Bindings.bind(jSpinnerMonto, "value", getPresenter().getModel(PROP_MONTO_GASTO));
+        Bindings.bind(jTextFieldMonto, getPresenter().getModel(PROP_MONTO_GASTO));
 
         Bindings.bind(jTextAreaDescripcion, getPresenter().getModel(PROP_DESCRIPCION_GASTO));
         Bindings.bind(jLabelGast, getPresenter().getModel(PROP_TOTAL_GASTOS));
