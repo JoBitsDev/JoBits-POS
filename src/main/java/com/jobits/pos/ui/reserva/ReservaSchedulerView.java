@@ -313,7 +313,7 @@ public class ReservaSchedulerView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         scheduler.addScheduleListener((Resource resource, LocalDateTime time, MouseEvent e) -> {
-            if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() <= 1) {
+            if (e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() == 2) {
                 getPresenter().handleAddReserva(resource, time);
             }
         });
