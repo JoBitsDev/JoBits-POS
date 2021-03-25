@@ -39,6 +39,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     public static final String ACTION_OCULTAR_SECCION = "Ocultar Seccion";
 
     public static final String PROP_PRODUCTO_SELECCIONADO = "PROP_PRODUCTO_SELECCIONADO";
+    public static final String PROP_MOSTRAR_SECCIONES = "Mostrar Secciones";
 
     public ProductoVentaSelectorPresenter(OrdenService ordenService) {
         super(new ProductoVentaSelectorViewModel());
@@ -130,11 +131,11 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     }
 
     public void onMostrarSeccionClick() {
-        getBean().setMostrar_seccion(true);
+        firePropertyChange(PROP_MOSTRAR_SECCIONES, false, true);
     }
 
     public void onOcultarSeccionClick() {
-        getBean().setMostrar_seccion(false);
+        firePropertyChange(PROP_MOSTRAR_SECCIONES, true, false);
     }
 
     @Override
