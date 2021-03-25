@@ -88,13 +88,14 @@ public class ReservaOrdenDetailViewPresenter extends AbstractViewPresenter<Reser
     }
 
     private void setMesa() {
-        Orden o = service.getInstance(this.codOrden);
-        if (o != null) {
-            if (o.getMesacodMesa() != null) {
-                productoListPresenter.setMesaSeleccionada(o.getMesacodMesa());
+        if (this.codOrden != null) {
+            Orden o = service.getInstance(this.codOrden);
+            if (o != null) {
+                if (o.getMesacodMesa() != null) {
+                    productoListPresenter.setMesaSeleccionada(o.getMesacodMesa());
+                }
             }
         }
-
     }
 
 }
