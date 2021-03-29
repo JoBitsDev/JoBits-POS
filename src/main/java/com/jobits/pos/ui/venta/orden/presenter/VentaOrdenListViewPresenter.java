@@ -35,6 +35,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     public static final String ACTION_CREAR_ORDEN = "Nueva Orden";
     public static final String ACTION_ABRIR_ORDEN = "Abrir Orden";
     public static final String ACTION_ABRIR_RESERVA = "Abrir Reserva";
+    public static final String ACTION_IMPRIMIR_LISTA_ORDENES = "Imprimir Ordenes";
 
     private VentaDetailService ventaService;
     private OrdenDetailViewPresenter ordenPresenter;
@@ -119,7 +120,13 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
                 onAbrirReservaAction();
                 return Optional.empty();
             }
-
+        });
+        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_LISTA_ORDENES) {
+            @Override
+            public Optional doAction() {
+                onImprimirOrdenesClick();
+                return Optional.empty();
+            }
         });
     }
 
@@ -178,6 +185,10 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
             menuPresenter.setMesaSeleccionada(getBean().getElemento_seleccionado().getMesacodMesa());
             menuPresenter.setCodOrdenEnlazada(getBean().getElemento_seleccionado().getCodOrden());
         }
+    }
+
+    private void onImprimirOrdenesClick() {
+        ordenService.impimirListaOrdenes(getBean().getLista_elementos(), codVenta);
     }
 
     @Override
