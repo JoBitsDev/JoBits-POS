@@ -9,6 +9,8 @@ import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.Orden;
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter.*;
 import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewModel.*;
@@ -17,11 +19,9 @@ import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -46,6 +46,7 @@ public class VentaListOrdenesView extends AbstractViewPanel {
     private void initComponents() {
 
         jButtonCalcCAmbio = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonPrintOrderList = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelOrdenesActivas = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
@@ -60,6 +61,10 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         jButtonCalcCAmbio.setToolTipText("Calcular Cambio");
         jButtonCalcCAmbio.setEnabled(false);
         jButtonCalcCAmbio.setPreferredSize(new java.awt.Dimension(50, 50));
+
+        jButtonPrintOrderList.setIcon(MaterialIcons.PRINT);
+        jButtonPrintOrderList.setToolTipText("Imprimir Ordenes");
+        jButtonPrintOrderList.setPreferredSize(new java.awt.Dimension(50, 50));
 
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
@@ -79,6 +84,7 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
+        jPanel3.setToolTipText(null);
         jPanel3.setLayout(new java.awt.GridLayout(1, 3));
 
         jButtonEnviarCerrarCrearNueva.setIcon(MaterialIcons.SHOPPING_CART);
@@ -114,6 +120,7 @@ public class VentaListOrdenesView extends AbstractViewPanel {
     private javax.swing.JButton jButtonCheckReservas;
     private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
     private javax.swing.JButton jButtonNuevaOrden;
+    private javax.swing.JButton jButtonPrintOrderList;
     private javax.swing.JList<Orden> jListOrdenesActivas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -125,6 +132,8 @@ public class VentaListOrdenesView extends AbstractViewPanel {
     @Override
     public void wireUp() {
         if (getPresenter() != null) {
+            jButtonPrintOrderList.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_LISTA_ORDENES));
+
             jButtonNuevaOrden.addActionListener(getPresenter().getOperation(ACTION_CREAR_ORDEN));
             jButtonCheckReservas.addActionListener(getPresenter().getOperation(ACTION_ABRIR_RESERVA));
             Bindings.bind(jListOrdenesActivas, new SelectionInList<Orden>(getPresenter().getModel(PROP_LISTA_ELEMENTOS), getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)));
@@ -160,6 +169,9 @@ public class VentaListOrdenesView extends AbstractViewPanel {
                 jPanel2.add(new PedidoCardView(getPresenter().getOrdenPresenter()), BorderLayout.CENTER);
                 jPanelOrdenesActivas.add(new ProductoVentaSelectorView(getPresenter().getMenuPresenter()), BorderLayout.CENTER);
             }
+        }
+        if (ConfiguracionDAO.getInstance().find(R.SettingID.IMPRESION_IMPRESION_ORDENES).getValor() == 1) {
+            jPanel3.add(jButtonPrintOrderList, 1);
         }
     }
 
