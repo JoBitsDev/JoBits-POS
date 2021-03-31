@@ -62,8 +62,8 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanelImage = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelIProductImage = new javax.swing.JLabel();
         jPanel10 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio venta",R.COIN_SUFFIX);
-        jTextFieldPrecioCosto = MaterialComponentsFactory.Input.getTextFielPrecioVenta("0.00", "Precio de costo",R.COIN_SUFFIX);
+        jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", "Precio venta",R.COIN_SUFFIX);
+        jTextFieldPrecioCosto = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", "Precio de costo",R.COIN_SUFFIX);
         jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel13 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAddCocina = MaterialComponentsFactory.Buttons.getAddButton();
@@ -369,11 +369,9 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     }//GEN-LAST:event_jLabelIProductImageMouseClicked
 
     private void jTextFieldPrecioVentaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPrecioVentaFocusGained
-        jTextFieldPrecioVenta.setText(null);
     }//GEN-LAST:event_jTextFieldPrecioVentaFocusGained
 
     private void jTextFieldPrecioCostoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPrecioCostoFocusGained
-        jTextFieldPrecioCosto.setText(null);
     }//GEN-LAST:event_jTextFieldPrecioCostoFocusGained
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

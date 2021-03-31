@@ -51,6 +51,10 @@ public class Impresion extends AbstractViewPanel {
         jLabel8 = new javax.swing.JLabel();
         jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonCierreParcial = new javax.swing.JToggleButton();
+        jPanel13 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jToggleButtonImprimirOrdenes = new javax.swing.JToggleButton();
         jPanel14 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
@@ -83,7 +87,7 @@ public class Impresion extends AbstractViewPanel {
         jPanelImpresion.setLayout(new java.awt.GridLayout(2, 1));
 
         jPanelGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Generales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
-        jPanelGeneral.setLayout(new java.awt.GridLayout(4, 1));
+        jPanelGeneral.setLayout(new java.awt.GridLayout(5, 1));
 
         jPanel10.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -136,6 +140,23 @@ public class Impresion extends AbstractViewPanel {
         jPanel12.add(jPanel6);
 
         jPanelGeneral.add(jPanel12);
+
+        jPanel13.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setText("Imprimir ordenes");
+        jPanel13.add(jLabel12);
+
+        jPanel7.setLayout(new java.awt.GridBagLayout());
+
+        jToggleButtonImprimirOrdenes.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jToggleButtonImprimirOrdenes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jPanel7.add(jToggleButtonImprimirOrdenes, new java.awt.GridBagConstraints());
+
+        jPanel13.add(jPanel7);
+
+        jPanelGeneral.add(jPanel13);
 
         jPanel14.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -268,6 +289,7 @@ public class Impresion extends AbstractViewPanel {
     private javax.swing.JComboBox<String> jComboBoxTamannoTicket;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -278,6 +300,7 @@ public class Impresion extends AbstractViewPanel {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
@@ -290,6 +313,7 @@ public class Impresion extends AbstractViewPanel {
     private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JPanel jPanelImpresion;
@@ -297,6 +321,7 @@ public class Impresion extends AbstractViewPanel {
     private javax.swing.JToggleButton jToggleButtonBuzzer;
     private javax.swing.JToggleButton jToggleButtonCierreParcial;
     private javax.swing.JToggleButton jToggleButtonEncabezadoRestaurante;
+    private javax.swing.JToggleButton jToggleButtonImprimirOrdenes;
     private javax.swing.JToggleButton jToggleButtonRounding;
     private javax.swing.JToggleButton jToggleButtonSegundaMoneda;
     // End of variables declaration//GEN-END:variables
@@ -308,6 +333,7 @@ public class Impresion extends AbstractViewPanel {
         Bindings.bind(jToggleButtonEncabezadoRestaurante, getPresenter().getModel(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE.toString()));
         Bindings.bind(jToggleButtonSegundaMoneda, getPresenter().getModel(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA.toString()));
         Bindings.bind(jToggleButtonCierreParcial, getPresenter().getModel(R.SettingID.IMPRESION_CIERRE_PARCIAL_ENABLED.toString()));
+        Bindings.bind(jToggleButtonImprimirOrdenes, getPresenter().getModel(R.SettingID.IMPRESION_IMPRESION_ORDENES.toString()));
         Bindings.bind(jComboBoxCantCopias,
                 new ComboBoxAdapter(Arrays.asList("0", "1", "2", "3", "4"),
                         getPresenter().getModel(R.SettingID.IMPRESION_CANTIDAD_COPIAS.toString())));

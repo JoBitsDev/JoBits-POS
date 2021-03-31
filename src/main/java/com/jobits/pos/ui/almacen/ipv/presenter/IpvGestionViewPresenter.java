@@ -13,6 +13,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Cocina;
+import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.IpvRegistro;
 import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.core.domain.models.Orden;
@@ -32,6 +33,7 @@ import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.NumberPad;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
@@ -267,13 +269,15 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private void onDarEntradaIpv() {
-        IpvRegistro instance = getBean().getIpv_registro_seleciconado();
+        Insumo instance = getBean().getIpv_registro_seleciconado().getIpv().getInsumo();
         Float cantidad = new NumberPad(null).showView();
-        if (cantidad != null) {
-            if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getIpv().getInsumo(),
+        Venta fecha = getBean().getVenta_ipv_seleccionada();
+        Cocina cocina = getBean().getPunto_elaboracion_seleccionado();
+        if (cantidad != null && instance != null && fecha != null && cocina != null) {
+            if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance,
                     R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
-                service.darEntradaExistencia(instance, cantidad);
+                service.darEntradaExistencia(instance, cocina, fecha.getId(), cantidad);
             }
         }
 

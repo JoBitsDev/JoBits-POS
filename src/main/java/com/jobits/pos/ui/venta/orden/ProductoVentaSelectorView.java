@@ -97,7 +97,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
             jList2.revalidate();
             jList2.repaint();
         });
-        getPresenter().addBeanPropertyChangeListener(PROP_MOSTRAR_SECCION, (PropertyChangeEvent evt) -> {
+        getPresenter().addPropertyChangeListener(PROP_MOSTRAR_SECCIONES, (PropertyChangeEvent evt) -> {
             if ((boolean) evt.getNewValue()) {
                 changeToSecciones();
             } else {

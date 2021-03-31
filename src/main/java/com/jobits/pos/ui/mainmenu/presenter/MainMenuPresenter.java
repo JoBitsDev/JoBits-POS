@@ -66,12 +66,16 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                         @Override
                         protected void longProcessMethod() {
                             try {
-                                Optional<String> ret = Optional.empty();
+                                Optional<String> ret;
                                 ret = Application.getInstance().getNotificationService().
                                         showDialog("Introduzca el dia para abrir las ventas en el formato dd/mm/aa",
                                                 TipoNotificacion.DIALOG_INPUT);
-                                VentaDetailService control = null;
-                                control = service.comenzarVentasEconomico(R.DATE_FORMAT.parse(ret.get()));
+                                VentaDetailService control;
+                                if (ret.get().isEmpty() || ret.get().isBlank()) {
+                                    control = service.comenzarVentasCajero();
+                                } else {
+                                    control = service.comenzarVentasEconomico(R.DATE_FORMAT.parse(ret.get()));
+                                }
                                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
                                         new VentaDetailViewPresenter(control, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), service.getDiaVentaSeleccionado()));
                             } catch (ParseException ex) {
