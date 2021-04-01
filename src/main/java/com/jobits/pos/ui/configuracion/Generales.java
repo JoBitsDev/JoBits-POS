@@ -361,7 +361,7 @@ public class Generales extends AbstractViewPanel {
                 getPresenter().getModel(R.SettingID.HORARIO_INICIO_HORA.toString())));
         Bindings.bind(jComboBoxHoraCierre, new ComboBoxAdapter(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"),
                 getPresenter().getModel(R.SettingID.HORARIO_CIERRE_HORA.toString())));
-        Bindings.bind(jComboBoxTiempoMInServ, new ComboBoxAdapter(Arrays.asList("10", "15", "30", "45", "60", "90", "120"),
+        Bindings.bind(jComboBoxTiempoMInServ, new ComboBoxAdapter(Arrays.asList("10", "15", "30", "45", "60", "90", "120", "150", "180", "210"),
                 getPresenter().getModel(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO.toString())));
         Bindings.bind(jComboBoxTiempoMaxedicionOrden, new ComboBoxAdapter(Arrays.asList("0", "1", "3", "5", "7", "10", "20", "30", "60"),
                 getPresenter().getModel(R.SettingID.HORARIO_TIEMPO_MAX_EDICION_PERMITIDA.toString())));
