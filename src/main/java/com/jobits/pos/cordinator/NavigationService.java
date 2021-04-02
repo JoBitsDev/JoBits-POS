@@ -34,7 +34,7 @@ public class NavigationService implements Navigator {
     }
 
     private NavigationService() {
-        this.activeNode = NavigationNode.of(null, ViewFacade.getView(LogInView.VIEW_NAME, null).getViewName());
+        this.activeNode = NavigationNode.of(null, ViewFacade.getView(LogInView.VIEW_NAME, null).getViewName(),null);
     }
 
     public void startNavigation() {
@@ -43,7 +43,7 @@ public class NavigationService implements Navigator {
 
     public void navigateTo(String viewUniqueName) {
         if (coordinator.canNavigateTo(activeNode.getViewUIDName(), viewUniqueName)) {
-            this.activeNode = NavigationNode.of(activeNode, viewUniqueName);
+            this.activeNode = NavigationNode.of(activeNode, viewUniqueName,null);
             showView(null, DisplayType.NORMAL);
 
         } else {
@@ -53,7 +53,7 @@ public class NavigationService implements Navigator {
 
     public void navigateTo(String viewUniqueName, DisplayType displayType) {
         if (coordinator.canNavigateTo(activeNode.getViewUIDName(), viewUniqueName)) {
-            this.activeNode = NavigationNode.of(activeNode, viewUniqueName);
+            this.activeNode = NavigationNode.of(activeNode, viewUniqueName,null);
             showView(null, displayType);
 
         } else {
@@ -63,7 +63,7 @@ public class NavigationService implements Navigator {
 
     public void navigateTo(String viewUniqueName, AbstractViewPresenter presenter) {
         if (coordinator.canNavigateTo(activeNode.getViewUIDName(), viewUniqueName)) {
-            this.activeNode = NavigationNode.of(activeNode, viewUniqueName);
+            this.activeNode = NavigationNode.of(activeNode, viewUniqueName,presenter);
             showView(presenter, DisplayType.NORMAL);
 
         }
@@ -71,7 +71,7 @@ public class NavigationService implements Navigator {
 
     public void navigateTo(String viewUniqueName, AbstractViewPresenter presenter, DisplayType displayType) {
         if (coordinator.canNavigateTo(activeNode.getViewUIDName(), viewUniqueName)) {
-            this.activeNode = NavigationNode.of(activeNode, viewUniqueName);
+            this.activeNode = NavigationNode.of(activeNode, viewUniqueName,presenter);
             showView(presenter, displayType);
 
         }
@@ -80,7 +80,7 @@ public class NavigationService implements Navigator {
     public void navigateUp() {
         if (activeNode.getParentNode() != null) {
             activeNode = activeNode.getParentNode();
-            showView(null, DisplayType.NORMAL);
+            showView(activeNode.getPresenter(), DisplayType.NORMAL);
         }
     }
 
