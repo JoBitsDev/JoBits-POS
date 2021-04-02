@@ -10,6 +10,7 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.mainmenu.presenter.MenuBarClassPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.swing.material.standards.MaterialIcons;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
@@ -43,6 +44,7 @@ public class MenuBarClass extends AbstractViewPanel {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemOcultarBarraEstado;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemOcultarBarraLateral;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemSiemprePrimerPlano;
+    private javax.swing.JMenu jMenuRefrescarVista;
     private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenuBar jMenuBarMainManuBar;
     private javax.swing.JMenu jMenuEdicion;
@@ -83,6 +85,7 @@ public class MenuBarClass extends AbstractViewPanel {
 //        jMenuItemSalir.addActionListener(getPresenter().getOperation(ACTION_SALIR));
 //        jMenuItemSalir.addActionListener(getPresenter().getOperation(ACTION_SALIR));
         //Vista
+        jMenuRefrescarVista.addActionListener(getPresenter().getOperation(ACTION_REFRESCAR_VISTA));
         jCheckBoxMenuItemOcultarBarraEstado.addActionListener(getPresenter().getOperation(ACTION_OCULTAR_STATUS_BAR));
         jCheckBoxMenuItemOcultarBarraLateral.addActionListener(getPresenter().getOperation(ACTION_OCULTAR_MENU_LATERAL));
         jCheckBoxMenuItemSiemprePrimerPlano.addActionListener(getPresenter().getOperation(ACTION_SIEMPRE_PRIMER_PLANO));
@@ -101,6 +104,7 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuItemAcercaJobitPOS = new javax.swing.JMenuItem();
         jMenuItemPreferencias = new javax.swing.JMenuItem();
         jMenuItemReportarBug = new javax.swing.JMenuItem();
+        jMenuRefrescarVista = new javax.swing.JMenu();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCerrarSesion = new javax.swing.JMenuItem();
         jMenuItemCambiarUsuario = new javax.swing.JMenuItem();
@@ -129,6 +133,10 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuHerramientas.setBackground(DefaultValues.WHITE);
         jMenuAyuda.setBackground(DefaultValues.WHITE);
         jMenuBarMainManuBar.setBackground(DefaultValues.WHITE);
+
+//        jMenuRefrescarVista.setText("Refrescar Vista");
+        jMenuRefrescarVista.setIcon(MaterialIcons.REFRESH);
+        jMenuBarMainManuBar.add(jMenuRefrescarVista);
 
         jMenuJoBitsPOS.setText("JoBits POS");
 

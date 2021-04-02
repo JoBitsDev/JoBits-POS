@@ -76,7 +76,7 @@ public class PedidoCardView extends AbstractViewPanel {
         jButton3 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButton4 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jToggleButtonAgregos = new javax.swing.JToggleButton();
-        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>()
         ;
         jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
