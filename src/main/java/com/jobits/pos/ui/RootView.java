@@ -129,29 +129,18 @@ public class RootView extends JPanel {
     //TODO: asco de metodo. arreglar
     public boolean showView(String viewNameToDisplay, AbstractViewPresenter presenter, DisplayType displayType) {//TODO trabjar en los popup
 
-        //Caso especial para las ordenes
-//        if (viewNameToDisplay.equals(OrdenDetailFragmentView.VIEW_NAME)) {
-//            View v = views.get(currentDisplayedViewName);
-//            if (v == null) {
-//                throw new IllegalArgumentException("Bad call on OrdenView when there is none displayed view");
-//            }
-//            if (v instanceof VentaDetailView) {
-//                // ((VentaDetailView) v).addOrdenView((OrdenDetailFragmentView) ViewFacade.getView(OrdenDetailFragmentView.VIEW_NAME, presenter));
-//                return false;
-//            }
-//            throw new IllegalStateException("Bad call to ordenView when  " + v.getClass().getName() + " is active");
-//
-//        }
-//        View v = views.get(viewNameToDisplay);
-//        if (v instanceof VentaDetailView) {
-        if (viewNameToDisplay.equals(VentaDetailView.VIEW_NAME)) {
-            views.remove(viewNameToDisplay);
-        }
-//        }
-
-//        views.clear();//TODO: Usar otra via para actulizar las vistas
         //primero ver si esta guardada la vista para mostrar
-        if (!views.containsKey(viewNameToDisplay)) {
+        View v = views.get(viewNameToDisplay);
+
+        //Caso especial para las ordenes
+        if (viewNameToDisplay.equals(VentaDetailView.VIEW_NAME)) {
+            if (v != null && !v.getPresenter().equals(presenter)) {
+               views.remove(viewNameToDisplay);
+               v = null;
+            }
+        }
+
+        if (v == null) {
             //trAtamiento especial para el menu principal
             if (viewNameToDisplay.equals(MainMenuView.VIEW_NAME)) {
                 viewNameToDisplay = DashBoardView.VIEW_NAME;//TODO: cuando se vuelva a la ventana de loggeo vaciar el usuario loggeado en la app
@@ -173,11 +162,11 @@ public class RootView extends JPanel {
         //jPanelHeader.setVisible(!currentDisplayedViewName.equals(LogInView.VIEW_NAME));
         jPanelStatus.setVisible(displayAggregatesViews);
         jPanelStatus.setVisible(statusBarVisibility);
-        dashboard.getTaskPane().showView(currentDisplayedViewName);
-        dashboard.getTaskPane().repaint();
-
+        dashboard.getTaskPane()
+                .showView(currentDisplayedViewName);
+        dashboard.getTaskPane()
+                .repaint();
         return true;
-
     }
 
     public String getCurrentViewName(String name) {
