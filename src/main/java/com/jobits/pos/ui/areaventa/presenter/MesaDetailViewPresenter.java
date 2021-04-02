@@ -69,7 +69,7 @@ public class MesaDetailViewPresenter extends AbstractViewPresenter<MesaDetailVie
 
     private void onAceptarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea guardar los cambios",
+                showDialog("Esta seguro que desea continuar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             if (creatingMode) {
                 service.create(area, getBean().getCodigo(), getBean().getNombre(), getBean().getCapacidad());
@@ -84,7 +84,7 @@ public class MesaDetailViewPresenter extends AbstractViewPresenter<MesaDetailVie
 
     private void onCancelarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea descartar los cambios?",
+                showDialog("Esta seguro que desea cancelar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             NavigationService.getInstance().navigateUp();
         }

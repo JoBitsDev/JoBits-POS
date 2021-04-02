@@ -7,6 +7,8 @@ package com.jobits.pos.ui.puntoelaboracion.presenter;
 
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.core.domain.models.Cocina;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -83,20 +85,24 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
 
     @Override
     protected void onEliminarClick() {
-        Cocina c = getBean().getElemento_seleccionado();
+        Cocina selected = getBean().getElemento_seleccionado();
         boolean flag = false;
-        if (c == null) {
+        if (selected == null) {
             throw new IllegalArgumentException("Seleccione una cocina");
         }
-        if (!c.getProductoVentaList().isEmpty()) {
-            flag = JOptionPane.showConfirmDialog(null, "El punto de elaboracion " + c
-                    + " contiene " + c.getProductoVentaList().size()
-                    + " productos de venta enlazados \n"
-                    + "presione si para borrar los productos de venta, no para cancelar",
-                    "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea eliminar: " + selected,
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            if (!selected.getProductoVentaList().isEmpty()) {
+                flag = JOptionPane.showConfirmDialog(null, "El punto de elaboracion " + selected
+                        + " contiene " + selected.getProductoVentaList().size()
+                        + " productos de venta enlazados \n"
+                        + "presione si para borrar los productos de venta, no para cancelar",
+                        "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            }
+            service.destroy(selected, flag);
+            setListToBean();
         }
-        service.destroy(getBean().getElemento_seleccionado(), flag);
-        setListToBean();
     }
 
     @Override

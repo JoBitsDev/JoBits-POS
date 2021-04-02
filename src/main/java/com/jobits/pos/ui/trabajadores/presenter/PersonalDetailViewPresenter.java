@@ -62,32 +62,36 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
     }
 
     private void onAgregarClick() {
-        service.fillPersonalData(personal,
-                getBean().getNombre_trabajador(),
-                getBean().getApellidos_trabajador(),
-                getBean().getFecha_nacimiento(),
-                getBean().getPuesto_trabajo_seleccionado(),
-                getBean().getUsuario_trabajador(),
-                getBean().getContrasena_nueva(),
-                getBean().getContrasena_nueva_repetida(),
-                getBean().getContrasena_antigua(),
-                getBean().getTelefono_movil(),
-                getBean().getTelefono_fijo(),
-                getBean().getDireccion(),
-                getBean().getCarnet_identidad(),
-                getBean().getSexo_seleccionado());
-        if (creatingMode) {
-            service.create(personal);
-        } else {
-            service.update(personal);
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea continuar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.fillPersonalData(personal,
+                    getBean().getNombre_trabajador(),
+                    getBean().getApellidos_trabajador(),
+                    getBean().getFecha_nacimiento(),
+                    getBean().getPuesto_trabajo_seleccionado(),
+                    getBean().getUsuario_trabajador(),
+                    getBean().getContrasena_nueva(),
+                    getBean().getContrasena_nueva_repetida(),
+                    getBean().getContrasena_antigua(),
+                    getBean().getTelefono_movil(),
+                    getBean().getTelefono_fijo(),
+                    getBean().getDireccion(),
+                    getBean().getCarnet_identidad(),
+                    getBean().getSexo_seleccionado());
+            if (creatingMode) {
+                service.create(personal);
+            } else {
+                service.update(personal);
+            }
+            NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
-        NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onCancelarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea descartar los cambios?",
+                showDialog("Esta seguro que desea cancelar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             NavigationService.getInstance().navigateUp();
         }

@@ -71,12 +71,16 @@ public class CategoriaDetailViewPresenter extends AbstractViewPresenter<Categori
     }
 
     private void onCancelarClick() {
-        NavigationService.getInstance().navigateUp();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea cancelar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            NavigationService.getInstance().navigateUp();
+        }
     }
 
     private void onAgregarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea confirmar los cambios?",
+                showDialog("Esta seguro que desea continuar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             categoria.setNombre(getBean().getNombre_categoria());
             categoria.setColor(getBean().getColor_seleccionado());

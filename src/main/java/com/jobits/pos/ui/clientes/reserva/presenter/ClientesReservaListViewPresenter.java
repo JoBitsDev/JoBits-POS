@@ -5,13 +5,13 @@
  */
 package com.jobits.pos.ui.clientes.reserva.presenter;
 
-import com.jobits.pos.ui.clientes.presenter.*;
-import com.jobits.pos.controller.clientes.ClientesListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.NotificationService;
+import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.reserva.core.usecase.ClienteUseCase;
-import com.jobits.pos.ui.clientes.ClientesDetailView;
-import com.jobits.pos.ui.clientes.ClientesListView;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
@@ -54,8 +54,17 @@ public class ClientesReservaListViewPresenter extends AbstractListViewPresenter<
 
     @Override
     protected void onEliminarClick() {
-        service.destroy(getBean().getElemento_seleccionado());
-        setListToBean();
+        Cliente selected = getBean().getElemento_seleccionado();
+        if (selected != null) {
+            if ((boolean) Application.getInstance().getNotificationService().
+                    showDialog("Esta seguro que desea eliminar: " + selected,
+                            TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                service.destroy(selected);
+                setListToBean();
+            }
+        } else {
+            NotificationService.getInstance().notify("Seleccione un cliente", TipoNotificacion.ERROR);
+        }
     }
 
     @Override

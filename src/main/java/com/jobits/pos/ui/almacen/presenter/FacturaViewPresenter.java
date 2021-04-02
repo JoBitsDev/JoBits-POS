@@ -80,9 +80,12 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         registerOperation(new AbstractViewAction(ACTION_ELIMINAR_INSUMO) {
             @Override
             public Optional doAction() {
-                getBean().getLista_elementos().remove(getBean().getElemento_seleccionado());
-                if (getBean().getLista_elementos().isEmpty()) {
-                    getBean().setComponent_locked(true);
+                TransaccionSimple selected = getBean().getElemento_seleccionado();
+                if (selected != null) {
+                    getBean().getLista_elementos().remove(selected);
+                    if (getBean().getLista_elementos().isEmpty()) {
+                        getBean().setComponent_locked(true);
+                    }
                 }
                 return Optional.empty();
             }
@@ -90,24 +93,34 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         registerOperation(new AbstractViewAction(ACTION_CERRAR_POPUP) {
             @Override
             public Optional doAction() {
-                Application.getInstance().getNavigator().navigateUp();
+                if ((boolean) Application.getInstance().getNotificationService().
+                        showDialog("Esta seguro que desea cancelar?",
+                                TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                    Application.getInstance().getNavigator().navigateUp();
+                }
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_CONFIRMAR_TRANSACCION) {
             @Override
             public Optional doAction() {
-                confirmarTransaccion(getBean().getOperacion_selected());
-                Application.getInstance().getNavigator().navigateUp();
-                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                if ((boolean) Application.getInstance().getNotificationService().
+                        showDialog("Esta seguro que desea confirmar?",
+                                TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                    confirmarTransaccion(getBean().getOperacion_selected());
+                    Application.getInstance().getNavigator().navigateUp();
+                    Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                }
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_ELIMINAR_INSUMO_TRANSFORMADO) {
             @Override
             public Optional doAction() {
-                getBean().getLista_insumos_transformados_contenidos().remove(
-                        getBean().getInsumo_transformado_contenido_seleccionado());
+                TransaccionTransformacion selected = getBean().getInsumo_transformado_contenido_seleccionado();
+                if (selected != null) {
+                    getBean().getLista_insumos_transformados_contenidos().remove(selected);
+                }
                 return Optional.empty();
             }
         });

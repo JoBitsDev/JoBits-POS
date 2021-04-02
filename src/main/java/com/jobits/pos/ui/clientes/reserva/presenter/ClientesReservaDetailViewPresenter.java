@@ -64,31 +64,35 @@ public class ClientesReservaDetailViewPresenter extends AbstractViewPresenter<Cl
     }
 
     private void onAgregarClick() {
-        if (getBean().getNombre() != null
-                && getBean().getApellidos() != null
-                && getBean().getTelefono() != null) {
-            cliente.setNombrecliente(getBean().getNombre());
-            cliente.setApellidocliente(getBean().getApellidos());
-            cliente.setTelefonocliente(getBean().getTelefono());
-            cliente.setDireccioncliente(getBean().getDireccion());
-            cliente.setMunicipiocliente(getBean().getMunicipio());
-            cliente.setProvinciacliente(getBean().getCiudad());
-            cliente.setReservaCollection(getBean().getLista_reservas());
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea continuar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            if (getBean().getNombre() != null
+                    && getBean().getApellidos() != null
+                    && getBean().getTelefono() != null) {
+                cliente.setNombrecliente(getBean().getNombre());
+                cliente.setApellidocliente(getBean().getApellidos());
+                cliente.setTelefonocliente(getBean().getTelefono());
+                cliente.setDireccioncliente(getBean().getDireccion());
+                cliente.setMunicipiocliente(getBean().getMunicipio());
+                cliente.setProvinciacliente(getBean().getCiudad());
+                cliente.setReservaCollection(getBean().getLista_reservas());
 
-            if (creatingMode) {
-                clienteservice.create(cliente);
+                if (creatingMode) {
+                    clienteservice.create(cliente);
+                } else {
+                    clienteservice.edit(cliente);
+                }
+                NavigationService.getInstance().navigateUp();
             } else {
-                clienteservice.edit(cliente);
+                JOptionPane.showMessageDialog(null, "Faltan campos obligarios por llenar");
             }
-            NavigationService.getInstance().navigateUp();
-        } else {
-            JOptionPane.showMessageDialog(null, "Faltan campos obligarios por llenar");
         }
     }
 
     private void onCancelarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea descartar los cambios?",
+                showDialog("Esta seguro que desea cancelar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             NavigationService.getInstance().navigateUp();
         }

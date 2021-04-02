@@ -9,6 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.areaventa.AreaDetailService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
@@ -88,7 +89,7 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
 
     private void onAceptarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea guardar los cambios",
+                showDialog("Esta seguro que desea continuar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
 
             area.setCodArea(getBean().getId_area());
@@ -108,14 +109,15 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
 
     private void onCancelarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea descartar los cambios?",
+                showDialog("Esta seguro que desea cancelar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             NavigationService.getInstance().navigateUp();
         }
     }
 
     private void onEliminarClick() {
-        getBean().getLista_menu_area().remove(getBean().getMenu_seleccionado_area());
+        Carta selected = getBean().getMenu_seleccionado_area();
+        getBean().getLista_menu_area().remove(selected);
         if (getBean().getLista_menu_area().get(0) != null) {
             getBean().setMenu_seleccionado_area(getBean().getLista_menu_area().get(0));
         }

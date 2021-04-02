@@ -82,7 +82,9 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     }
 
     private void onAceptarClick() {
-        if (JOptionPane.showConfirmDialog(null, "Desea ejecutar el pedido", "Ejecutar Pedido", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea ejecutar el pedido",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             service.realizarPedidoDeIpv(
                     getBean().getLista_insumo_pedido_model(),
                     getBean().getLista_producto_venta_model(),
@@ -96,10 +98,14 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     private void onAgregarIPVClick() {
         IpvVentaRegistro selected = getBean().getSeleccionado_ipv_ventas();
         if (selected != null) {
-            Float cantidad = new NumberPad(null).showView();
-            if (cantidad != null) {
-                getBean().getLista_producto_venta_model().add(
-                        new ProdcutoVentaPedidoModel(selected, cantidad));
+            if ((boolean) Application.getInstance().getNotificationService().
+                    showDialog("Esta seguro que desea agregar: " + selected.getProductoVenta(),
+                            TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                Float cantidad = new NumberPad(null).showView();
+                if (cantidad != null) {
+                    getBean().getLista_producto_venta_model().add(
+                            new ProdcutoVentaPedidoModel(selected, cantidad));
+                }
             }
         } else {
             throw new IllegalArgumentException("Seleccione un Producto de IPV primero");
@@ -109,7 +115,11 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     private void onEliminarIPVClick() {
         ProdcutoVentaPedidoModel selected = getBean().getSeleccionado_producto_venta();
         if (selected != null) {
-            getBean().getLista_producto_venta_model().remove(selected);
+            if ((boolean) Application.getInstance().getNotificationService().
+                    showDialog("Esta seguro que desea eliminar: " + selected.getIpvProducto().getProductoVenta(),
+                            TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                getBean().getLista_producto_venta_model().remove(selected);
+            }
         } else {
             throw new IllegalArgumentException("Seleccione un Producto de IPV primero");
         }
