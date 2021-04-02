@@ -5,6 +5,9 @@
  */
 package com.jobits.pos.cordinator;
 
+import com.jobits.pos.main.PresenterFacade;
+import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+
 /**
  *
  * JoBits
@@ -15,16 +18,19 @@ package com.jobits.pos.cordinator;
 public class NavigationNode {
 
     private NavigationNode parentNode;
+    
+    private AbstractViewPresenter presenter;
 
     private String viewUIDName;
 
-    public NavigationNode(NavigationNode parentNode, String viewUIDName) {
+    public NavigationNode(NavigationNode parentNode, String viewUIDName, AbstractViewPresenter presenter) {
         this.parentNode = parentNode;
         this.viewUIDName = viewUIDName;
+        this.presenter = presenter;
     }
 
-    public static NavigationNode of(NavigationNode parentNode, String viewUIDName) {
-        return new NavigationNode(parentNode, viewUIDName);
+    public static NavigationNode of(NavigationNode parentNode, String viewUIDName, AbstractViewPresenter presenter) {
+        return new NavigationNode(parentNode, viewUIDName, presenter);
     }
 
     public NavigationNode getParentNode() {
@@ -42,5 +48,15 @@ public class NavigationNode {
     public void setViewUIDName(String viewUIDName) {
         this.viewUIDName = viewUIDName;
     }
+
+    public AbstractViewPresenter getPresenter() {
+        return presenter;
+    }
+
+    public void setPresenter(AbstractViewPresenter presenter) {
+        this.presenter = presenter;
+    }
+    
+    
 
 }

@@ -396,6 +396,11 @@ public class LicenceDialogView extends JPanel implements View {
         throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public AbstractViewPresenter getPresenter() {
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private void validateInput(JTextField textField, KeyEvent evt) {
         switch (textField.getText().length()) {
             case 0:

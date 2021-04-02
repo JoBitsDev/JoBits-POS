@@ -22,6 +22,7 @@ import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.PROP_VENTA_SELECCIONADA;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -307,4 +308,34 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         }
     }
 
+    @Override
+    protected Optional refreshState() {
+        updateBeanData();
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final VentaDetailViewPresenter other = (VentaDetailViewPresenter) obj;
+        if (!Objects.equals(this.ventas, other.ventas)) {
+            return false;
+        }
+        return true;
+    }
+
+   
+
+    
+    
+    
+    
 }
