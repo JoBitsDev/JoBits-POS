@@ -15,6 +15,7 @@ import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JPanel;
 
 /**
  *
@@ -143,9 +144,9 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
 
             VentaCellRender ret = new VentaCellRender(venta);
             if (isSelected) {
-                ret.setBackground(table.getSelectionBackground());
+                ret.getjPanel1().setBackground(table.getSelectionBackground());
             } else {
-                ret.setBackground(table.getBackground());
+                ret.getjPanel1().setBackground(table.getBackground());
             }
 
             return ret;
@@ -175,5 +176,15 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         toolTip += RETORNO_CARRO;
         return toolTip;
     }
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    public void setjPanel1(JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
+    }
+    
+    
 
 }

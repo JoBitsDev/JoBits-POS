@@ -361,7 +361,7 @@ public class GastosView extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
-        Bindings.bind(jTableInfo, new SelectionInList<String>(
+        Bindings.bind(jTableInfo, new SelectionInList<GastoVenta>(
                 getPresenter().getModel(PROP_LISTA_GASTO_VENTA),
                 getPresenter().getModel(PROP_GASTO_VENTA_SELECCIONADO)));
 
@@ -428,13 +428,13 @@ public class GastosView extends AbstractViewPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((GastoVenta) getListModel().getElementAt(rowIndex)).getGasto().getTipoGastoidGasto().getNombre();
+                        return getRow(rowIndex).getGasto().getTipoGastoidGasto().getNombre();
                     case 1:
-                        return ((GastoVenta) getListModel().getElementAt(rowIndex)).getGasto().getNombre();
+                        return getRow(rowIndex).getGasto().getNombre();
                     case 2:
-                        return ((GastoVenta) getListModel().getElementAt(rowIndex)).getImporte();
+                        return getRow(rowIndex).getImporte();
                     case 3:
-                        return ((GastoVenta) getListModel().getElementAt(rowIndex)).getDescripcion();
+                        return getRow(rowIndex).getDescripcion();
                 }
                 return null;
             }

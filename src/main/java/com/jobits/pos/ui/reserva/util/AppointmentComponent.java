@@ -1,13 +1,11 @@
 package com.jobits.pos.ui.reserva.util;
 
-import com.jobits.pos.ui.reserva.util.AppointmentListener;
 import com.jobits.pos.ui.reserva.model.ReservaWrapper;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.components.BasicAppointmentComponent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -53,7 +51,7 @@ public class AppointmentComponent extends BasicAppointmentComponent implements M
                 _appointmentListener.handleCheckOut(_appointment);
             }
         });
-        checkOut.addActionListener((ActionEvent e) -> {
+        cancel.addActionListener((ActionEvent e) -> {
             if (_appointmentListener != null) {
                 _appointmentListener.handleCancel(_appointment);
             }
