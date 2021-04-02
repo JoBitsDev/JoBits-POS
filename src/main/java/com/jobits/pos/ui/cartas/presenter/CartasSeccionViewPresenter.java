@@ -8,6 +8,7 @@ package com.jobits.pos.ui.cartas.presenter;
 import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.domain.models.Carta;
+import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -53,10 +54,17 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
     }
 
     private void onEliminarMenuClick() {
-        cartaService.destroy(getBean().getMenu_seleccionado());
-        getBean().setMenu_seleccionado(null);
-        getBean().setLista_menu(cartaService.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        Carta selected = getBean().getMenu_seleccionado();
+        if (selected != null) {
+            if ((boolean) Application.getInstance().getNotificationService().
+                    showDialog("Esta seguro que desea eliminar: " + selected,
+                            TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                cartaService.destroy(getBean().getMenu_seleccionado());
+                getBean().setMenu_seleccionado(null);
+                getBean().setLista_menu(cartaService.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            }
+        }
     }
 
     private void onNuevaSeccionClick() {
@@ -87,8 +95,13 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
     }
 
     private void onEliminarSeccionClick() {
-        cartaService.removeSeccionFromCarta(getBean().getSeccion_seleccionada());
-        getBean().setMenu_seleccionado(getBean().getMenu_seleccionado());
+        Seccion selected = getBean().getSeccion_seleccionada();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea eliminar: " + selected,
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            cartaService.removeSeccionFromCarta(selected);
+            getBean().setMenu_seleccionado(getBean().getMenu_seleccionado());
+        }
     }
 
     @Override

@@ -114,7 +114,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
 
     private void onCancelarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea descartar los cambios?",
+                showDialog("Esta seguro que desea cancelar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             NavigationService.getInstance().navigateUp();
         }
@@ -122,7 +122,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
 
     private void onAceptarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea guardar los cambios",
+                showDialog("Esta seguro que desea continuar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             seccion.setNombreSeccion(getBean().getNombre_seccion());
             seccion.setAgregadoEn(getBean().getLista_secciones_agregadas());
@@ -137,7 +137,8 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
     }
 
     private void onEliminarClick() {
-        if (getBean().getSeccion_agregada_seleccionada() == null) {
+        Seccion selected = getBean().getSeccion_agregada_seleccionada();
+        if (selected == null) {
             throw new IllegalArgumentException("Seleccione una seccion");
         }
         getBean().getLista_secciones_agregadas().remove(getBean().getSeccion_seleccionada());
@@ -147,10 +148,11 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
     }
 
     private void onAgregarClick() {
-        if (getBean().getLista_secciones_agregadas().contains(getBean().getSeccion_seleccionada())) {
+        Seccion selected = getBean().getSeccion_seleccionada();
+        if (getBean().getLista_secciones_agregadas().contains(selected)) {
             throw new IllegalStateException("Ya la seccion se encuentra agregada");
         }
-        getBean().getLista_secciones_agregadas().add(getBean().getSeccion_seleccionada());
+        getBean().getLista_secciones_agregadas().add(selected);
     }
 
 }

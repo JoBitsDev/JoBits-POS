@@ -138,31 +138,39 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     }
 
     private void onAgregarClick() {
-        insumo.setNombre(getBean().getNombre_insumo());
-        insumo.setCostoPorUnidad(getBean().getCosto_unitario());
-        insumo.setStockEstimation(getBean().getEstimacion_de_stock());
-        insumo.setUm(getBean().getUnidad_medida_selected().getValor());
-        insumo.setCantidadCreada(getBean().getCantidad_creada());
-        insumo.setElaborado(!insumo.getInsumoDerivadoList().isEmpty());
-        if (creatingMode) {
-            service.create(insumo);
-        } else {
-            service.update(insumo);
-            service.updateProductoOnInsumo(insumo);
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea continuar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            insumo.setNombre(getBean().getNombre_insumo());
+            insumo.setCostoPorUnidad(getBean().getCosto_unitario());
+            insumo.setStockEstimation(getBean().getEstimacion_de_stock());
+            insumo.setUm(getBean().getUnidad_medida_selected().getValor());
+            insumo.setCantidadCreada(getBean().getCantidad_creada());
+            insumo.setElaborado(!insumo.getInsumoDerivadoList().isEmpty());
+            if (creatingMode) {
+                service.create(insumo);
+            } else {
+                service.update(insumo);
+                service.updateProductoOnInsumo(insumo);
+            }
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNavigator().navigateUp();
         }
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
-        Application.getInstance().getNavigator().navigateUp();
     }
 
     private void onCancelarClic() {
-        Application.getInstance().getNavigator().navigateUp();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea cancelar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            Application.getInstance().getNavigator().navigateUp();
+        }
     }
 
     private void onAgregarInsumoFichaClick() {
         Float cantidad = new NumberPad(null).showView();
         if (cantidad != null) {
-            Insumo inSel = getBean().getInsumo_disponible_selecionado();
-            service.agregarInsumoElaboradoaInsumo(insumo, inSel, cantidad);
+            Insumo selected = getBean().getInsumo_disponible_selecionado();
+            service.agregarInsumoElaboradoaInsumo(insumo, selected, cantidad);
             getBean().setInsumo_disponible_selecionado(null);
             getBean().getLista_insumos_contenidos().clear();
             getBean().getLista_insumos_contenidos().addAll(insumo.getInsumoDerivadoList());

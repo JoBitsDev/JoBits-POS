@@ -11,6 +11,7 @@ import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.InsumoAlmacen;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -60,44 +61,99 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         addListeners();
     }
 
+    private void onActualizarListaAlmacen() {
+        detailService.setInstance(getBean().getElemento_seleccionado());
+        refreshView();
+        getBean().setSearch_keyWord(null);
+    }
+
+    private void onCrearAlmacen() {
+        listService.createNewStorage(JOptionPane.showInputDialog(R.RESOURCE_BUNDLE.getString("dialogo_agregar_almacen")));
+        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        setListToBean();
+    }
+
+    private void onEditarAlmacen() {
+        listService.update(getBean().getElemento_seleccionado());
+        setListToBean();
+    }
+
+    private void onEliminarAlmacen() {
+        Almacen selected = getBean().getElemento_seleccionado();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea eliminar: " + selected.getNombre(),
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            listService.destroy(selected);
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            setListToBean();
+        }
+    }
+
+    private void onImprimirResumen() {
+        detailService.imprimirResumenAlmacen(getBean().getElemento_seleccionado());
+    }
+
+    private void onImprimirReporte() {
+        String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+        int selection = JOptionPane.showOptionDialog(null,
+                R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
+                R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado(), selection);
+    }
+
+    private void onTransacciones() {
+        TransaccionListService ser = PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class);
+        ser.setAlmacen(detailService.getInstance());
+        NavigationService.getInstance().navigateTo(TransaccionListView.VIEW_NAME,
+                new TransaccionListPresenter(ser), DisplayType.POPUP);
+        refreshView();
+    }
+
+    private void onModificarStock() {
+        if (getBean().getInsumo_contenido_seleccionado() != null) {
+            NavigationService.getInstance().navigateTo(InsumoDetailView.VIEW_NAME,
+                    new InsumoDetailViewPresenter(
+                            getBean().getInsumo_contenido_seleccionado().getInsumo()), DisplayType.POPUP);
+            refreshView();
+        } else {
+            JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un insumo primero");
+        }
+    }
+
+    private void onNuevaFactura() {
+        NavigationService.getInstance().navigateTo(FacturaView.VIEW_NAME,
+                new FacturaViewPresenter(detailService), DisplayType.POPUP);
+        refreshView();
+    }
+
     @Override
     protected void registerOperations() {
         registerOperation(new AbstractViewAction(ACTION_ACTUALIZAR_LISTA_ALMACEN) {
             @Override
             public Optional doAction() {
-                detailService.setInstance(getBean().getElemento_seleccionado());
-                refreshView();
-                getBean().setSearch_keyWord(null);
+                onActualizarListaAlmacen();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_CREAR_ALMACEN) {
             @Override
             public Optional doAction() {
-                listService.createNewStorage(JOptionPane.showInputDialog(R.RESOURCE_BUNDLE.getString("dialogo_agregar_almacen")));
-                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
-                setListToBean();
+                onCrearAlmacen();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_EDITAR_ALMACEN) {
             @Override
             public Optional doAction() {
-                listService.update(getBean().getElemento_seleccionado());
-                setListToBean();
+                onEditarAlmacen();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_ELIMINAR_ALMACEN) {
             @Override
             public Optional doAction() {
-                if (JOptionPane.showConfirmDialog(
-                        null, R.RESOURCE_BUNDLE.getString("dialogo_borrar_almacen") + " " + getBean().getElemento_seleccionado().getNombre(),
-                        "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                    listService.destroy(getBean().getElemento_seleccionado());
-                    Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
-                    setListToBean();
-                }
+                onEliminarAlmacen();
                 return Optional.empty();
             }
         });
@@ -118,53 +174,35 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_RESUMEN) {
             @Override
             public Optional doAction() {
-                detailService.imprimirResumenAlmacen(getBean().getElemento_seleccionado());
+                onImprimirResumen();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_REPORTE) {
             @Override
             public Optional doAction() {
-                String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
-                int selection = JOptionPane.showOptionDialog(null,
-                        R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
-                        R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-                detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado(), selection);
+                onImprimirReporte();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_TRANSACCIONES) {
             @Override
             public Optional doAction() {
-                TransaccionListService ser = PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class);
-                ser.setAlmacen(detailService.getInstance());
-                NavigationService.getInstance().navigateTo(TransaccionListView.VIEW_NAME,
-                        new TransaccionListPresenter(ser), DisplayType.POPUP);
-                refreshView();
+                onTransacciones();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_MODIFICAR_STOCK) {
             @Override
             public Optional doAction() {
-                if (getBean().getInsumo_contenido_seleccionado() != null) {
-                    NavigationService.getInstance().navigateTo(InsumoDetailView.VIEW_NAME,
-                            new InsumoDetailViewPresenter(
-                                    getBean().getInsumo_contenido_seleccionado().getInsumo()), DisplayType.POPUP);
-                    refreshView();
-                } else {
-                    JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Seleccione un insumo primero");
-                }
+                onModificarStock();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_NUEVA_FACTURA) {
             @Override
             public Optional doAction() {
-                NavigationService.getInstance().navigateTo(FacturaView.VIEW_NAME,
-                        new FacturaViewPresenter(detailService), DisplayType.POPUP);
-                refreshView();
+                onNuevaFactura();
                 return Optional.empty();
             }
         });

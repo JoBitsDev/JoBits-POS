@@ -8,6 +8,9 @@ package com.jobits.pos.ui.clientes.presenter;
 import com.jobits.pos.controller.clientes.ClientesListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.domain.models.Cliente;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
 import com.jobits.pos.ui.clientes.ClientesListView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
@@ -50,8 +53,15 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
 
     @Override
     protected void onEliminarClick() {
-        service.eliminar(getBean().getElemento_seleccionado());
-        setListToBean();
+        Cliente selected = getBean().getElemento_seleccionado();
+        if (selected != null) {
+            if ((boolean) Application.getInstance().getNotificationService().
+                    showDialog("Esta seguro que desea eliminar: " + selected,
+                            TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                service.eliminar(getBean().getElemento_seleccionado());
+                setListToBean();
+            }
+        }
     }
 
     @Override

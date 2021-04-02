@@ -75,7 +75,11 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         registerOperation(new AbstractViewAction(ACTION_CANCELAR) {
             @Override
             public Optional doAction() {
-                NavigationService.getInstance().navigateUp();
+                if ((boolean) Application.getInstance().getNotificationService().
+                        showDialog("Esta seguro que desea cancelar?",
+                                TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                    NavigationService.getInstance().navigateUp();
+                }
                 return Optional.empty();
             }
         });
@@ -208,26 +212,30 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     }
 
     private void onAceptarClick() {
-        Date date = getBean().getFecha();
-        LocalTime hora = getBean().getHora_seleccionada();
-        LocalTime minutos = getBean().getMinuto_seleccionado();
-        if (getBean().getAm_pm_seleccionado().get(ChronoField.AMPM_OF_DAY) == 1) {
-            hora.plusHours(12);
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea continuar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            Date date = getBean().getFecha();
+            LocalTime hora = getBean().getHora_seleccionada();
+            LocalTime minutos = getBean().getMinuto_seleccionado();
+            if (getBean().getAm_pm_seleccionado().get(ChronoField.AMPM_OF_DAY) == 1) {
+                hora.plusHours(12);
+            }
+            reserva.setNotasreserva(getBean().getNombre_reserva());
+            reserva.setFechareserva(LocalDate.of(date.getYear() + 1900, date.getMonth() + 1, date.getDate()));
+            reserva.setHorareserva(LocalTime.of(hora.getHour(), minutos.getMinute()));
+            reserva.setDuracionMinutos(getBean().getDuracion());
+            reserva.setUbicacionidubicacion(getBean().getUbicacion_seleccionada());
+            reserva.setClienteidcliente(getBean().getCliente());
+            reserva.setCategoriaidcategoria(getBean().getCategoria_seleccionada());
+            if (creatingMode) {
+                reservasUseCase.create(reserva);
+            } else {
+                reservasUseCase.edit(reserva);
+            }
+            NavigationService.getInstance().navigateUp();
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
-        reserva.setNotasreserva(getBean().getNombre_reserva());
-        reserva.setFechareserva(LocalDate.of(date.getYear() + 1900, date.getMonth() + 1, date.getDate()));
-        reserva.setHorareserva(LocalTime.of(hora.getHour(), minutos.getMinute()));
-        reserva.setDuracionMinutos(getBean().getDuracion());
-        reserva.setUbicacionidubicacion(getBean().getUbicacion_seleccionada());
-        reserva.setClienteidcliente(getBean().getCliente());
-        reserva.setCategoriaidcategoria(getBean().getCategoria_seleccionada());
-        if (creatingMode) {
-            reservasUseCase.create(reserva);
-        } else {
-            reservasUseCase.edit(reserva);
-        }
-        NavigationService.getInstance().navigateUp();
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void initMorningHours() {

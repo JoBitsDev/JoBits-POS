@@ -116,21 +116,29 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     }
 
     private void onAgregarClick() {
-        service.createNewGasto(
-                getBean().getCategoria_gasto_seleccionada(),
-                getBean().getTipo_gasto(),
-                Float.parseFloat(getBean().getMonto_gasto()),
-                getBean().getDescripcion_gasto());
-        refreshState();
-        onLimpiarClick();
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea agregar un nuevo gasto?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.createNewGasto(
+                    getBean().getCategoria_gasto_seleccionada(),
+                    getBean().getTipo_gasto(),
+                    Float.parseFloat(getBean().getMonto_gasto()),
+                    getBean().getDescripcion_gasto());
+            refreshState();
+            onLimpiarClick();
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        }
     }
 
     private void onEliminarClick() {
-        if (new LogInController(new AuthorizerImpl()).constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
-            service.removeGasto(getBean().getGasto_venta_seleccionado());
-            refreshState();
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea eliminar el gasto seleccionado?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            if (new LogInController(new AuthorizerImpl()).constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
+                service.removeGasto(getBean().getGasto_venta_seleccionado());
+                refreshState();
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            }
         }
     }
 
@@ -167,9 +175,13 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     }
 
     private void onEliminarDefaultGasto() {
-        service.eliminarDefaultGasto(getBean().getDefault_gasto_seleccionado());
-        getBean().setDefault_gasto_list(new ArrayListModel<>(service.getDefaultGastosList()));
-        getBean().setDefault_gasto_seleccionado(null);
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea eliminar la plantilla seleccionada?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.eliminarDefaultGasto(getBean().getDefault_gasto_seleccionado());
+            getBean().setDefault_gasto_list(new ArrayListModel<>(service.getDefaultGastosList()));
+            getBean().setDefault_gasto_seleccionado(null);
+        }
     }
 
     private void addListeners() {

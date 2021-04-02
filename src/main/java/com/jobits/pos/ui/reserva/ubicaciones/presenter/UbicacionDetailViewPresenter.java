@@ -89,12 +89,16 @@ public class UbicacionDetailViewPresenter extends AbstractViewPresenter<Ubicacio
     }
 
     private void onCancelarClick() {
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea cancelar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
         NavigationService.getInstance().navigateUp();
+        }
     }
 
     private void onAgregarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea confirmar los cambios?",
+                showDialog("Esta seguro que desea continuar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             ubicacion.setNombreubicacion(getBean().getNombre_ubicacion());
             ubicacion.setDisponibledesde(getBean().getHora_inicio());

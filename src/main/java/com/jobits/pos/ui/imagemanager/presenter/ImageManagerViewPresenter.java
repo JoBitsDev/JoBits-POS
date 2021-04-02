@@ -61,17 +61,25 @@ public class ImageManagerViewPresenter extends AbstractViewPresenter<ImageManage
         registerOperation(new AbstractViewAction(ACTION_GUARDAR_IMAGEN) {
             @Override
             public Optional doAction() {
-                PanelDibujo pd = getBean().getPanel_dibujo();
-                service.guardar_imagen(pd.getImagmemoria());
-                Application.getInstance().getNotificationService().showDialog(
-                        "Se ha guardado Correctamente la imagen recortada", TipoNotificacion.INFO);
+                if ((boolean) Application.getInstance().getNotificationService().
+                        showDialog("Esta seguro que desea continuar?",
+                                TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                    PanelDibujo pd = getBean().getPanel_dibujo();
+                    service.guardar_imagen(pd.getImagmemoria());
+                    Application.getInstance().getNotificationService().showDialog(
+                            "Se ha guardado Correctamente la imagen recortada", TipoNotificacion.INFO);
+                }
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_CERRAR) {
             @Override
             public Optional doAction() {
-                Application.getInstance().getNavigator().navigateUp();
+                if ((boolean) Application.getInstance().getNotificationService().
+                        showDialog("Esta seguro que desea cancelar?",
+                                TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                    Application.getInstance().getNavigator().navigateUp();
+                }
                 return Optional.empty();
             }
         });

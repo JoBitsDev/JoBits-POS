@@ -5,10 +5,13 @@
  */
 package com.jobits.pos.ui.insumo.presenter;
 
-import com.jobits.pos.controller.insumo.impl.InsumoDetailController;
 import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.domain.models.Insumo;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.NotificationService;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
@@ -46,9 +49,18 @@ public class InsumoListViewPresenter extends AbstractListViewPresenter<InsumoLis
 
     @Override
     protected void onEliminarClick() {
-        controller.destroy(getBean().getElemento_seleccionado());
-        getBean().setElemento_seleccionado(null);
-        setListToBean();
+        Insumo selected = getBean().getElemento_seleccionado();
+        if (selected != null) {
+            if ((boolean) Application.getInstance().getNotificationService().
+                    showDialog("Esta seguro que desea eliminar: " + selected,
+                            TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                controller.destroy(selected);
+                getBean().setElemento_seleccionado(null);
+                setListToBean();
+            }
+        } else {
+            NotificationService.getInstance().notify("Seleccione un insumo", TipoNotificacion.ERROR);
+        }
     }
 
     @Override

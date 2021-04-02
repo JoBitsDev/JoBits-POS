@@ -80,8 +80,12 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
     @Override
     protected void onEliminarClick() {
         if (getBean().getElemento_seleccionado() != null) {
-            controller.destroy(getBean().getElemento_seleccionado());
-            setListToBean();
+            if ((boolean) Application.getInstance().getNotificationService().
+                    showDialog("Esta seguro que desea eliminar: " + getBean().getElemento_seleccionado(),
+                            TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                controller.destroy(getBean().getElemento_seleccionado());
+                setListToBean();
+            }
         } else {
             Application.getInstance().getNotificationService().notify("Seleccione un producto", TipoNotificacion.ERROR);
         }
