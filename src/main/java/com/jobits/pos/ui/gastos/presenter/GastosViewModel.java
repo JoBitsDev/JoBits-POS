@@ -224,7 +224,8 @@ public class GastosViewModel extends AbstractViewModel {
      */
     public void setLista_gasto_venta(ArrayListModel<GastoVenta> lista_gasto_venta) {
         ArrayListModel<GastoVenta> oldLista_gasto_venta = this.lista_gasto_venta;
-        this.lista_gasto_venta = lista_gasto_venta;
+        this.lista_gasto_venta.clear();
+        this.lista_gasto_venta.addAll(lista_gasto_venta);
         firePropertyChange(PROP_LISTA_GASTO_VENTA, oldLista_gasto_venta, lista_gasto_venta);
     }
 
