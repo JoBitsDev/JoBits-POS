@@ -110,10 +110,14 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void onEliminarClick() {
-        Venta v = getVentaFromCalendar();
-        service.destroy(v);
-        updateBeanData();
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        Venta selected = getVentaFromCalendar();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea eliminar la venta seleccionada",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.destroy(selected);
+            updateBeanData();
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        }
     }
 
     private Venta getVentaFromCalendar() {

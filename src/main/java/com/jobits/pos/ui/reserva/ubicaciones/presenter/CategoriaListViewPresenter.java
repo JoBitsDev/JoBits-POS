@@ -53,7 +53,7 @@ public class CategoriaListViewPresenter extends AbstractListViewPresenter<Catego
     @Override
     protected void onEliminarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea eliminar la categoria seleccionada?",
+                showDialog("Esta seguro que desea eliminar la categoria seleccionada?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             categoriaUseCase.destroy(getBean().getElemento_seleccionado());
             setListToBean();

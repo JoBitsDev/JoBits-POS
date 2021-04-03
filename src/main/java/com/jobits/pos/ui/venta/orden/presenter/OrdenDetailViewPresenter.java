@@ -137,13 +137,18 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onRemoveProductoCLick() {
-        if (getBean().getProducto_orden_seleccionado() == null) {
+        ProductovOrden selected = getBean().getProducto_orden_seleccionado();
+        if (selected == null) {
             throw new IllegalArgumentException("Seleccione un Producto Primero");
         }
-        getController().removeProduct(getCodOrden(), getBean().getProducto_orden_seleccionado(),
-                getBean().getProducto_orden_seleccionado().getCantidad());
-        getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea eliminar: " + selected,
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            getController().removeProduct(getCodOrden(), selected,
+                    getBean().getProducto_orden_seleccionado().getCantidad());
+            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        }
     }
 
     private void onSetAutorizoClick() {

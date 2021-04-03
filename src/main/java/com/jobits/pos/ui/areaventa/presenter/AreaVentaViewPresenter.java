@@ -15,6 +15,7 @@ import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.MesaDetailView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -107,19 +108,24 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
     }
 
     private void onNuevaAreaCLick() {//TODO: no actualiza correctamente nada en las vistas
-        Application.getInstance().getNavigator().navigateTo("Crear Area",
+        Application.getInstance().getNavigator().navigateTo(AreaDetailView.VIEW_NAME,
                 new AreaDetailViewPresenter(null, true), DisplayType.POPUP);
         refreshState();
     }
 
     private void onEliminarAreaClick() {
-        if (getBean().getArea_seleccionada() == null) {
+        Area selected = getBean().getArea_seleccionada();
+        if (selected == null) {
             Application.getInstance().getNotificationService().notify("Debe seleccionar una area", TipoNotificacion.ERROR);
             return;
         }
-        areaService.destroy(getBean().getArea_seleccionada());
-        getBean().setArea_seleccionada(null);
-        getBean().setLista_area(areaService.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea eliminar: " + selected,
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            areaService.destroy(selected);
+            getBean().setArea_seleccionada(null);
+            getBean().setLista_area(areaService.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
+        }
 
     }
 
@@ -129,7 +135,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
             return;
         }
         Application.getInstance().getNavigator().navigateTo(
-                "Crear Area",
+                AreaDetailView.VIEW_NAME,
                 new AreaDetailViewPresenter(getBean().getArea_seleccionada(), false), DisplayType.POPUP);
 
         refreshState();
@@ -166,9 +172,15 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
     }
 
     private void onEliminarMesaClick() {
+        Mesa selected = getBean().getMesa_seleccionada();
+        if (selected == null) {
+            Application.getInstance().getNotificationService().notify("Debe seleccionar una mesa", TipoNotificacion.ERROR);
+            return;
+        }
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea eliminar la Mesa?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            mesaService.destroy(getBean().getMesa_seleccionada());
+                showDialog("Esta seguro que desea eliminar: " + selected,
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            mesaService.destroy(selected);
             getBean().setArea_seleccionada(getBean().getArea_seleccionada());
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }

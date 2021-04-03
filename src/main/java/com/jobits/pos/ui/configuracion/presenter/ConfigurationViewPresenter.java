@@ -49,7 +49,11 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
         registerOperation(new AbstractViewAction(ACTION_CANCEL) {
             @Override
             public Optional doAction() {
-                Application.getInstance().getNavigator().navigateUp();
+                if ((boolean) Application.getInstance().getNotificationService().
+                        showDialog("Esta seguro que desea cancelar?",
+                                TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                    Application.getInstance().getNavigator().navigateUp();
+                }
                 return Optional.empty();
             }
         });
@@ -61,15 +65,19 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
     }
 
     private void onAplicarClick() {
-        for (R.SettingID v : R.SettingID.values()) {
-            Object config = getBean().getConfiguration(v);
-            if (config != null) {
-                service.updateConfiguracion(v, getBean().getConfiguration(v));
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea confirmar los cambios?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            for (R.SettingID v : R.SettingID.values()) {
+                Object config = getBean().getConfiguration(v);
+                if (config != null) {
+                    service.updateConfiguracion(v, getBean().getConfiguration(v));
+                }
             }
+            Application.getInstance().getNotificationService().notify("Propiedades guardadas exitosamente", TipoNotificacion.SUCCESS);
+            service.cargarConfiguracion();
+            NavigationService.getInstance().navigateUp();
         }
-        Application.getInstance().getNotificationService().notify("Propiedades guardadas exitosamente", TipoNotificacion.SUCCESS);
-        service.cargarConfiguracion();
-        NavigationService.getInstance().navigateUp();
     }
 
     private void updateBeanConfig() {

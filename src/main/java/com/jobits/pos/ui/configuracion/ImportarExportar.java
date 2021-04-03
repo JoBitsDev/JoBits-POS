@@ -208,6 +208,7 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanel11.setLayout(new java.awt.BorderLayout());
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jTextArea1.setLineWrap(true);
@@ -333,6 +334,7 @@ public class ImportarExportar extends AbstractViewPanel {
 
         jPanel33.setLayout(new java.awt.BorderLayout());
 
+        jTextArea3.setEditable(false);
         jTextArea3.setColumns(20);
         jTextArea3.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jTextArea3.setLineWrap(true);

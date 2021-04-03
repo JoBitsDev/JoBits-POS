@@ -11,6 +11,7 @@ import com.jobits.pos.controller.trabajadores.AsistenciaPersonalService;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -89,8 +90,12 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
     }
 
     private void onEliminarClick() {
-        personalService.destroy(getBean().getPersonal_contenido_selecionado());
-        refreshState();
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea eliminar al personal seleccionado?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            personalService.destroy(getBean().getPersonal_contenido_selecionado());
+            refreshState();
+        }
     }
 
     private void onAgregarClick() {

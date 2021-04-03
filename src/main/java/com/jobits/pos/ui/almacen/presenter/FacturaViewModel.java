@@ -19,7 +19,7 @@ import java.util.Date;
  *
  * @author Home
  */
-public class FacturaViewModel extends AbstractListViewModel {
+public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
 
     //VALORES COMUNES
     private String numero_recibo;
@@ -120,7 +120,7 @@ public class FacturaViewModel extends AbstractListViewModel {
     public static final String PROP_INSUMO_ELABORADO_DISPONIBLE_SELECCIONADO = "insumo_elaborado_disponible_seleccionado";
 
     private ArrayListModel<TransaccionTransformacion> lista_insumos_transformados_contenidos = new ArrayListModel();
-    
+
     private TransaccionTransformacion insumo_transformado_contenido_seleccionado;
 
     public static final String PROP_INSUMO_TRANSFORMADO_CONTENIDO_SELECCIONADO = "insumo_transformado_contenido_seleccionado";
@@ -146,10 +146,7 @@ public class FacturaViewModel extends AbstractListViewModel {
         firePropertyChange(PROP_INSUMO_TRANSFORMADO_CONTENIDO_SELECCIONADO, oldInsumo_transformado_contenido_seleccionado, insumo_transformado_contenido_seleccionado);
     }
 
-
     public static final String PROP_LISTA_INSUMOS_TRANSFORMADOS_CONTENIDOS = "lista_insumos_transformados_contenidos";
-    
-    
 
     /**
      * Get the value of lista_insumos_transformados_contenidos

@@ -45,7 +45,7 @@ public class ReservaOrdenDetailView extends AbstractViewPanel {
         jPanelOrdenDetail = MaterialComponentsFactory.Containers.getTransparentPanel();
 
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(880, 500));
+        setPreferredSize(new java.awt.Dimension(880, 600));
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setLayout(new java.awt.BorderLayout());

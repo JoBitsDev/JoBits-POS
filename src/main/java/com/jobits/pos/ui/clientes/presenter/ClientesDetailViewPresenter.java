@@ -62,33 +62,37 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
     }
 
     private void onAgregarClick() {
-        if (getBean().getNombre() != null
-                && getBean().getApellidos() != null
-                && getBean().getTelefono() != null) {
-            cliente.setNombreCliente(getBean().getNombre());
-            cliente.setApellidosCliente(getBean().getApellidos());
-            cliente.setAliasCliente(getBean().getAlias());
-            cliente.setTelefonoCliente(getBean().getTelefono());
-            cliente.setFechanacCliente(getBean().getCumpleanos());
-            cliente.setDireccionCliente(getBean().getDireccion());
-            cliente.setMunicipioCliente(getBean().getMunicipio());
-            cliente.setPrivinciaCliente(getBean().getCiudad());
-            cliente.setOrdenList(getBean().getLista_ordenes());
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea continuar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            if (getBean().getNombre() != null
+                    && getBean().getApellidos() != null
+                    && getBean().getTelefono() != null) {
+                cliente.setNombreCliente(getBean().getNombre());
+                cliente.setApellidosCliente(getBean().getApellidos());
+                cliente.setAliasCliente(getBean().getAlias());
+                cliente.setTelefonoCliente(getBean().getTelefono());
+                cliente.setFechanacCliente(getBean().getCumpleanos());
+                cliente.setDireccionCliente(getBean().getDireccion());
+                cliente.setMunicipioCliente(getBean().getMunicipio());
+                cliente.setPrivinciaCliente(getBean().getCiudad());
+                cliente.setOrdenList(getBean().getLista_ordenes());
 
-            if (creatingMode) {
-                clienteservice.crearCliente(cliente);
+                if (creatingMode) {
+                    clienteservice.crearCliente(cliente);
+                } else {
+                    clienteservice.editarCliente(cliente);
+                }
+                NavigationService.getInstance().navigateUp();
             } else {
-                clienteservice.editarCliente(cliente);
+                JOptionPane.showMessageDialog(null, "Faltan campos obligarios por llenar");
             }
-            NavigationService.getInstance().navigateUp();
-        } else {
-            JOptionPane.showMessageDialog(null, "Faltan campos obligarios por llenar");
         }
     }
 
     private void onCancelarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea descartar los cambios?",
+                showDialog("Esta seguro que desea cancelar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             NavigationService.getInstance().navigateUp();
         }

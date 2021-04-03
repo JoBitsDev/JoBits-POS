@@ -170,28 +170,32 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAceptarClick() {
-        service.fillProductoVentaData(productoVenta,
-                getBean().getNombre_producto(),
-                getBean().getPrecio_costo(),
-                getBean().getComision_por_venta(),
-                getBean().getPrecio_venta(),
-                getBean().getElaborado_seleccionado(),
-                getBean().getCategoria_seleccionada(),
-                getBean().getLista_insumos_contenidos(),
-                getBean().getRuta_imagen_producto(),
-                getBean().getTimepo_elaboracion());
-        if (creatingMode) {
-            service.create(productoVenta);
-        } else {
-            service.create(productoVenta);
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea continuar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            service.fillProductoVentaData(productoVenta,
+                    getBean().getNombre_producto(),
+                    getBean().getPrecio_costo(),
+                    getBean().getComision_por_venta(),
+                    getBean().getPrecio_venta(),
+                    getBean().getElaborado_seleccionado(),
+                    getBean().getCategoria_seleccionada(),
+                    getBean().getLista_insumos_contenidos(),
+                    getBean().getRuta_imagen_producto(),
+                    getBean().getTimepo_elaboracion());
+            if (creatingMode) {
+                service.create(productoVenta);
+            } else {
+                service.create(productoVenta);
+            }
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         }
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
-        NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
     }
 
     private void onCancelarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea descartar los cambios?",
+                showDialog("Esta seguro que desea cancelar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             NavigationService.getInstance().navigateUp();
         }

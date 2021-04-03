@@ -64,40 +64,44 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
     }
 
     private void onAgregarClick() {
-        String codAreaPago = null;
-        if (getBean().getArea_pago_seleccionada() != null) {
-            codAreaPago = getBean().getArea_pago_seleccionada().getCodCocina();
-        }
-        int nivelAcceso = 0;
-        if (getBean().getNivel_acceso_seleccionado() != null) {
-            nivelAcceso = getBean().getNivel_acceso_seleccionado().getNivel();
-        }
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea continuar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            String codAreaPago = null;
+            if (getBean().getArea_pago_seleccionada() != null) {
+                codAreaPago = getBean().getArea_pago_seleccionada().getCodCocina();
+            }
+            int nivelAcceso = 0;
+            if (getBean().getNivel_acceso_seleccionado() != null) {
+                nivelAcceso = getBean().getNivel_acceso_seleccionado().getNivel();
+            }
 
-        service.fillPuestoTrabajoData(
-                puesto,
-                getBean().getNombre_puesto_trabajo(),
-                getBean().getArea_trabajo_seleccionada(),
-                codAreaPago,
-                nivelAcceso,
-                getBean().isPago_por_ventas(),
-                getBean().isPropina(),
-                getBean().getPuestos_disponibles(),
-                getBean().getPago_a_partir(),
-                getBean().getSalario_fijo(),
-                getBean().getPago_porciento_a_partir(),
-                getBean().getSalario_venta());
-        if (creatingMode) {
-            service.create(puesto);
-        } else {
-            service.update(puesto);
+            service.fillPuestoTrabajoData(
+                    puesto,
+                    getBean().getNombre_puesto_trabajo(),
+                    getBean().getArea_trabajo_seleccionada(),
+                    codAreaPago,
+                    nivelAcceso,
+                    getBean().isPago_por_ventas(),
+                    getBean().isPropina(),
+                    getBean().getPuestos_disponibles(),
+                    getBean().getPago_a_partir(),
+                    getBean().getSalario_fijo(),
+                    getBean().getPago_porciento_a_partir(),
+                    getBean().getSalario_venta());
+            if (creatingMode) {
+                service.create(puesto);
+            } else {
+                service.update(puesto);
+            }
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         }
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
-        NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
     }
 
     private void onCancelarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea descartar los cambios?",
+                showDialog("Esta seguro que desea cancelar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             NavigationService.getInstance().navigateUp();
         }

@@ -77,7 +77,7 @@ public class UbicacionesListViewPresenter extends AbstractListViewPresenter<Ubic
     @Override
     protected void onEliminarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea eliminar la ubicacion seleccionada?",
+                showDialog("Esta seguro que desea eliminar la ubicacion seleccionada?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             ubicacionUseCase.destroy(getBean().getElemento_seleccionado());
             setListToBean();
