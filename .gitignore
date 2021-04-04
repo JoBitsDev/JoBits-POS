@@ -96,8 +96,6 @@ impresoras.json
 
 *.key
 
-lombok.config
-
 lib/pers_mat.json
 
 pers_mat.json
@@ -113,3 +111,5 @@ nbproject/
 *.txt
 
 *.json
+
+*.config

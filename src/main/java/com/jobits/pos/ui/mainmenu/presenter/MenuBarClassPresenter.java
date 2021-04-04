@@ -131,6 +131,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
         registerOperation(new AbstractViewAction(ACTION_REFRESCAR_VISTA) {
             @Override
             public Optional doAction() {
+                System.out.println("Its Happ");
 //                TODO: Esperando Implementacion
                 return Optional.empty();
             }

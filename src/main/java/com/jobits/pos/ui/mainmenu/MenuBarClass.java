@@ -10,7 +10,10 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.mainmenu.presenter.MenuBarClassPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
 import com.root101.swing.material.standards.MaterialIcons;
+import java.awt.Color;
+import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
@@ -44,11 +47,11 @@ public class MenuBarClass extends AbstractViewPanel {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemOcultarBarraEstado;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemOcultarBarraLateral;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemSiemprePrimerPlano;
-    private javax.swing.JMenu jMenuRefrescarVista;
     private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenuBar jMenuBarMainManuBar;
     private javax.swing.JMenu jMenuEdicion;
     private javax.swing.JMenu jMenuHerramientas;
+    private javax.swing.JButton jButtonRefrescarVista;
     private javax.swing.JMenuItem jMenuItemAcercaJobitPOS;
     private javax.swing.JMenuItem jMenuItemActivarLicencia;
     private javax.swing.JMenuItem jMenuItemCambiarUsuario;
@@ -85,7 +88,7 @@ public class MenuBarClass extends AbstractViewPanel {
 //        jMenuItemSalir.addActionListener(getPresenter().getOperation(ACTION_SALIR));
 //        jMenuItemSalir.addActionListener(getPresenter().getOperation(ACTION_SALIR));
         //Vista
-        jMenuRefrescarVista.addActionListener(getPresenter().getOperation(ACTION_REFRESCAR_VISTA));
+        jButtonRefrescarVista.addActionListener(getPresenter().getOperation(ACTION_REFRESCAR_VISTA));
         jCheckBoxMenuItemOcultarBarraEstado.addActionListener(getPresenter().getOperation(ACTION_OCULTAR_STATUS_BAR));
         jCheckBoxMenuItemOcultarBarraLateral.addActionListener(getPresenter().getOperation(ACTION_OCULTAR_MENU_LATERAL));
         jCheckBoxMenuItemSiemprePrimerPlano.addActionListener(getPresenter().getOperation(ACTION_SIEMPRE_PRIMER_PLANO));
@@ -104,7 +107,7 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuItemAcercaJobitPOS = new javax.swing.JMenuItem();
         jMenuItemPreferencias = new javax.swing.JMenuItem();
         jMenuItemReportarBug = new javax.swing.JMenuItem();
-        jMenuRefrescarVista = new javax.swing.JMenu();
+        jButtonRefrescarVista = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCerrarSesion = new javax.swing.JMenuItem();
         jMenuItemCambiarUsuario = new javax.swing.JMenuItem();
@@ -133,10 +136,6 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuHerramientas.setBackground(DefaultValues.WHITE);
         jMenuAyuda.setBackground(DefaultValues.WHITE);
         jMenuBarMainManuBar.setBackground(DefaultValues.WHITE);
-
-//        jMenuRefrescarVista.setText("Refrescar Vista");
-        jMenuRefrescarVista.setIcon(MaterialIcons.REFRESH);
-        jMenuBarMainManuBar.add(jMenuRefrescarVista);
 
         jMenuJoBitsPOS.setText("JoBits POS");
 
@@ -187,20 +186,27 @@ public class MenuBarClass extends AbstractViewPanel {
 ////        TODO: Agregar Seccion de Edicion en el MenuBar
         jMenuVista.setText("Vista");
 
+//        jMenuItemRefrescarVista.setText("Refrescar Vista");
+//        jMenuItemRefrescarVista.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/refrescar_color.png")));
+//        jMenuVista.add(jMenuItemRefrescarVista);
+//        jMenuVista.add(jSeparator1);
         jCheckBoxMenuItemOcultarBarraLateral.setSelected(true);
         jCheckBoxMenuItemOcultarBarraLateral.setText("Mostrar Barra Lateral");
         jCheckBoxMenuItemOcultarBarraLateral.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/dashboard_color.png")));
+        jCheckBoxMenuItemOcultarBarraLateral.setBackground(Color.white);
         jMenuVista.add(jCheckBoxMenuItemOcultarBarraLateral);
 
         jCheckBoxMenuItemOcultarBarraEstado.setSelected(true);
         jCheckBoxMenuItemOcultarBarraEstado.setText("Mostrar Barra de Estado");
         jCheckBoxMenuItemOcultarBarraEstado.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/status_bar_color.png")));
+        jCheckBoxMenuItemOcultarBarraEstado.setBackground(Color.white);
         jMenuVista.add(jCheckBoxMenuItemOcultarBarraEstado);
         jMenuVista.add(jSeparator3);
 
         jCheckBoxMenuItemSiemprePrimerPlano.setSelected(false);
         jCheckBoxMenuItemSiemprePrimerPlano.setText("Siempre en Primer Plano");
         jCheckBoxMenuItemSiemprePrimerPlano.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/primer_plano_color.png")));
+        jCheckBoxMenuItemSiemprePrimerPlano.setBackground(Color.white);
         jMenuVista.add(jCheckBoxMenuItemSiemprePrimerPlano);
 
         jMenuBarMainManuBar.add(jMenuVista);
@@ -228,6 +234,12 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuAyuda.add(jMenuItemManualUsuario);
 
         jMenuBarMainManuBar.add(jMenuAyuda);
+
+        jButtonRefrescarVista.setIcon(MaterialIcons.REFRESH);
+        jButtonRefrescarVista.setToolTipText("Refrescar Vista");
+        jButtonRefrescarVista.setBackground(DefaultValues.TRANSPARENT);
+        jMenuBarMainManuBar.add(Box.createGlue());
+        jMenuBarMainManuBar.add(jButtonRefrescarVista);
 
     }
 
