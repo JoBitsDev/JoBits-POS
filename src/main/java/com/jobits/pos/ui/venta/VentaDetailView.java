@@ -9,6 +9,8 @@ import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueModel;
+import com.jobits.pos.core.domain.models.Mesa;
+import com.jobits.pos.core.domain.models.ProductovOrden;
 import java.awt.Color;
 import java.util.Date;
 import javax.swing.JFileChooser;
@@ -38,7 +40,6 @@ import com.jobits.ui.components.swing.displayers.Card;
 import com.root101.swing.material.standards.MaterialIcons;
 import java.awt.Dimension;
 import javax.swing.Action;
-import javax.swing.Box;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -99,6 +100,13 @@ public class VentaDetailView extends AbstractViewPanel {
         jTableVentasPorCocina = new javax.swing.JTable();
         jPanel5 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonImprimirResumenPto = MaterialComponentsFactory.Buttons.getLinedButton();
+        jPanelMesas = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxMesaList = MaterialComponentsFactory.Displayers.getComboBox("");
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
+        jTableVentasPorMesa = new javax.swing.JTable();
+        jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jButtonImpimirResumenMesas = MaterialComponentsFactory.Buttons.getLinedButton();
         jPanelVentas = new javax.swing.JPanel();
         jPanelOperaciones = new javax.swing.JPanel();
         jTabbedPaneResumenD1 = new javax.swing.JTabbedPane();
@@ -347,6 +355,49 @@ public class VentaDetailView extends AbstractViewPanel {
 
         jTabbedPaneResumenD.addTab("Ptos Elaboracion", jPanelPtoElab);
 
+        jPanelMesas.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 1, 15));
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jComboBoxMesaList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxMesaList.setMaximumSize(new java.awt.Dimension(250, 26));
+        jComboBoxMesaList.setMinimumSize(new java.awt.Dimension(250, 26));
+        jComboBoxMesaList.setPreferredSize(new java.awt.Dimension(250, 26));
+        jPanel1.add(jComboBoxMesaList);
+
+        jPanelMesas.add(jPanel1, java.awt.BorderLayout.NORTH);
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+
+        jTableVentasPorMesa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableVentasPorMesa);
+
+        jPanelMesas.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 15));
+        jPanel3.setPreferredSize(new java.awt.Dimension(180, 60));
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jButtonImpimirResumenMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonImpimirResumenMesas.setText("Imprimir Resumen");
+        jButtonImpimirResumenMesas.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanel3.add(jButtonImpimirResumenMesas);
+
+        jPanelMesas.add(jPanel3, java.awt.BorderLayout.SOUTH);
+
+        jTabbedPaneResumenD.addTab("Mesas", jPanelMesas);
+
         jPanelResumen.add(jTabbedPaneResumenD, java.awt.BorderLayout.CENTER);
 
         jTabbedPaneData.addTab("Resumen", jPanelResumen);
@@ -456,20 +507,24 @@ public class VentaDetailView extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCambiarTurno;
     private javax.swing.JButton jButtonImpPagoVentas;
+    private javax.swing.JButton jButtonImpimirResumenMesas;
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirResumenArea;
     private javax.swing.JButton jButtonImprimirResumenPto;
     private javax.swing.JButton jButtonReabrirVentas;
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonTerminar;
+    private javax.swing.JComboBox<String> jComboBoxMesaList;
     private javax.swing.JComboBox<String> jComboBoxSeleccionarVentaPorTurno;
     private javax.swing.JComboBox<String> jComboBoxVentas;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabelFecha;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
@@ -481,6 +536,7 @@ public class VentaDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelGastosCards;
     private javax.swing.JPanel jPanelGeneral;
     private javax.swing.JPanel jPanelGraficaPieGenerales;
+    private javax.swing.JPanel jPanelMesas;
     private javax.swing.JPanel jPanelOperaciones;
     private javax.swing.JPanel jPanelPagoTrabajadores;
     private javax.swing.JPanel jPanelPtoElab;
@@ -494,6 +550,7 @@ public class VentaDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelVentas1;
     private javax.swing.JPanel jPanelVentasArea;
     private javax.swing.JPanel jPanelVentasCards;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -504,6 +561,7 @@ public class VentaDetailView extends AbstractViewPanel {
     private javax.swing.JTable jTableVentasDependientes;
     private javax.swing.JTable jTableVentasPorArea;
     private javax.swing.JTable jTableVentasPorCocina;
+    private javax.swing.JTable jTableVentasPorMesa;
     private javax.swing.JTextField jTextFieldPropina;
     // End of variables declaration//GEN-END:variables
 
@@ -550,7 +608,15 @@ public class VentaDetailView extends AbstractViewPanel {
                         getPresenter().getModel(PROP_LISTA_RESUMEN_PTO_VENTA),
                         getPresenter().getModel(PROP_RESUMEN_PTO_SELECCIONADO)));
         jButtonImprimirResumenPto.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_PTO));
+        //Pto elab
+        Bindings.bind(jTableVentasPorMesa, new SelectionInList<ProductovOrden>(
+                getPresenter().getModel(PROP_LISTA_PRODUCTOS_POR_MESA),
+                getPresenter().getModel(PROP_PRODUCTO_POR_MESA_SELECCIONADO)));
+        Bindings.bind(jComboBoxMesaList, new SelectionInList<Mesa>(
+                getPresenter().getModel(PROP_LISTA_MESAS),
+                getPresenter().getModel(PROP_MESA_SELECCIONADA)));
 
+//        jButtonImpimirResumenMesas.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_PTO));
         jButtonRefresh.addActionListener(getPresenter().getOperation(ACTION_REFRESCAR_VENTA));
         Bindings.bind(jComboBoxVentas, new SelectionInList<Venta>(
                 getPresenter().getModel(PROP_LIST_VENTAS),
@@ -570,6 +636,7 @@ public class VentaDetailView extends AbstractViewPanel {
         initUsuarioTablaUI();
         initPtoElaboracionUI();
         initOrdenTableUI();
+        initMesaTableUI();
         if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
             jTabbedPaneData.remove(0);
         }//TODO autorizacion en el view
@@ -713,6 +780,63 @@ public class VentaDetailView extends AbstractViewPanel {
             }
         };
         jTableVentasPorArea.setModel(areaTablaModel);
+    }
+
+    private void initMesaTableUI() {
+        BindableTableModel<ProductovOrden> mesaTablaModel
+                = new BindableTableModel<ProductovOrden>(jTableVentasPorMesa) {
+            @Override
+            public int getColumnCount() {
+                return 4;
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0:
+                        return "Producto Venta";
+                    case 1:
+                        return "Precio (" + R.COIN_SUFFIX + " )";
+                    case 2:
+                        return "Cantidad";
+                    case 3:
+                        return "Recaudado (" + R.COIN_SUFFIX + " )";
+                }
+                return null;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                ProductovOrden pv = getRow(rowIndex);
+                switch (columnIndex) {
+                    case 0:
+                        return pv.getProductoVenta().getNombre();
+                    case 1:
+                        return pv.getPrecioVendido();
+                    case 2:
+                        return utils.setDosLugaresDecimalesFloat(pv.getCantidad());
+                    case 3:
+                        return utils.setDosLugaresDecimalesFloat(pv.getPrecioVendido() * pv.getCantidad());
+                }
+                return null;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                switch (columnIndex) {
+                    case 1:
+                    case 2:
+                    case 3:
+                        return Float.class;
+                    default:
+                        return String.class;
+                }
+            }
+        };
+        jTableVentasPorMesa.setModel(mesaTablaModel);
+        jTableVentasPorMesa.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
+        jTableVentasPorMesa.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
+        jTableVentasPorMesa.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
     }
 
     private void initOrdenTableUI() {

@@ -9,7 +9,9 @@ import com.jobits.pos.core.domain.venta.ResumenVentaAreaTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaUsuarioTablaModel;
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
+import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.utils.StringsTreatment;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
@@ -85,6 +87,108 @@ public class VentaDetailViewModel extends AbstractViewModel {
     private ResumenVentaUsuarioTablaModel resumen_usuario_seleccionado;
 
     public static final String PROP_RESUMEN_USUARIO_SELECCIONADO = "resumen_usuario_seleccionado";
+
+    //
+    //Mesas
+    //
+    private ArrayListModel<Mesa> lista_mesas = new ArrayListModel<>();
+
+    public static final String PROP_LISTA_MESAS = "lista_mesas";
+
+    private Mesa mesa_seleccionada;
+
+    public static final String PROP_MESA_SELECCIONADA = "mesa_seleccionada";
+
+    private ArrayListModel lista_productos_por_mesa = new ArrayListModel<>();
+
+    public static final String PROP_LISTA_PRODUCTOS_POR_MESA = "lista_productos_por_mesa";
+
+    private ProductovOrden producto_por_mesa_seleccionado;
+
+    public static final String PROP_PRODUCTO_POR_MESA_SELECCIONADO = "producto_por_mesa_seleccionado";
+
+    /**
+     * Get the value of producto_por_mesa_seleccionado
+     *
+     * @return the value of producto_por_mesa_seleccionado
+     */
+    public ProductovOrden getProducto_por_mesa_seleccionado() {
+        return producto_por_mesa_seleccionado;
+    }
+
+    /**
+     * Set the value of producto_por_mesa_seleccionado
+     *
+     * @param producto_por_mesa_seleccionado new value of
+     * producto_por_mesa_seleccionado
+     */
+    public void setProducto_por_mesa_seleccionado(ProductovOrden producto_por_mesa_seleccionado) {
+        ProductovOrden oldProducto_por_mesa_seleccionado = this.producto_por_mesa_seleccionado;
+        this.producto_por_mesa_seleccionado = producto_por_mesa_seleccionado;
+        firePropertyChange(PROP_PRODUCTO_POR_MESA_SELECCIONADO, oldProducto_por_mesa_seleccionado, producto_por_mesa_seleccionado);
+    }
+
+    /**
+     * Get the value of lista_productos_por_mesa
+     *
+     * @return the value of lista_productos_por_mesa
+     */
+    public ArrayListModel getLista_productos_por_mesa() {
+        return lista_productos_por_mesa;
+    }
+
+    /**
+     * Set the value of lista_productos_por_mesa
+     *
+     * @param lista_productos_por_mesa new value of lista_productos_por_mesa
+     */
+    public void setLista_productos_por_mesa(ArrayListModel lista_productos_por_mesa) {
+        ArrayListModel oldLista_productos_por_mesa = this.lista_productos_por_mesa;
+        this.lista_productos_por_mesa.clear();
+        this.lista_productos_por_mesa.addAll(lista_productos_por_mesa);
+        firePropertyChange(PROP_LISTA_PRODUCTOS_POR_MESA, oldLista_productos_por_mesa, lista_productos_por_mesa);
+    }
+
+    /**
+     * Get the value of mesa_seleccionada
+     *
+     * @return the value of mesa_seleccionada
+     */
+    public Mesa getMesa_seleccionada() {
+        return mesa_seleccionada;
+    }
+
+    /**
+     * Set the value of mesa_seleccionada
+     *
+     * @param mesa_seleccionada new value of mesa_seleccionada
+     */
+    public void setMesa_seleccionada(Mesa mesa_seleccionada) {
+        Mesa oldMesa_seleccionada = this.mesa_seleccionada;
+        this.mesa_seleccionada = mesa_seleccionada;
+        firePropertyChange(PROP_MESA_SELECCIONADA, oldMesa_seleccionada, mesa_seleccionada);
+    }
+
+    /**
+     * Get the value of lista_mesas
+     *
+     * @return the value of lista_mesas
+     */
+    public ArrayListModel<Mesa> getLista_mesas() {
+        return lista_mesas;
+    }
+
+    /**
+     * Set the value of lista_mesas
+     *
+     * @param lista_mesas new value of lista_mesas
+     */
+    public void setLista_mesas(ArrayListModel<Mesa> lista_mesas) {
+        ArrayListModel<Mesa> oldLista_mesas = this.lista_mesas;
+        this.lista_mesas.clear();
+        this.lista_mesas.addAll(lista_mesas);
+        firePropertyChange(PROP_LISTA_MESAS, oldLista_mesas, lista_mesas);
+    }
 
     //
     // Pto Elab

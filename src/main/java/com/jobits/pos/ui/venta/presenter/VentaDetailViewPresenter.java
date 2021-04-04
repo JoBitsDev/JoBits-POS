@@ -8,6 +8,7 @@ package com.jobits.pos.ui.venta.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
+import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -19,7 +20,7 @@ import com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
-import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.PROP_VENTA_SELECCIONADA;
+import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.Objects;
@@ -289,6 +290,10 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             getBean().setVenta_total(service.getTotalVendido(v.getId()));
             getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
             getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(getBean().getVenta_seleccionada().getFecha()));
+            getBean().setLista_mesas(new ArrayListModel<>(service.getMesasPorVenta(v.getId())));
+            if (!getBean().getLista_mesas().isEmpty()) {
+                getBean().setMesa_seleccionada(getBean().getLista_mesas().get(0));
+            }
         }
 
     }
@@ -299,6 +304,15 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 updateBeanData();
             }
         });
+        addBeanPropertyChangeListener(PROP_MESA_SELECCIONADA, (PropertyChangeEvent evt) -> {
+            Mesa mesa = (Mesa) evt.getNewValue();
+            if (mesa != null) {
+                getBean().setLista_productos_por_mesa(
+                        new ArrayListModel(service.getResumenPorMesa(
+                                getBean().getVenta_seleccionada().getId(), mesa)));
+            }
+        });
+
     }
 
     private void setListToBean() {
@@ -332,10 +346,4 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         return true;
     }
 
-   
-
-    
-    
-    
-    
 }
