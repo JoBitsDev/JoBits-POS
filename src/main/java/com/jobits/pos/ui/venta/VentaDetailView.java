@@ -608,7 +608,7 @@ public class VentaDetailView extends AbstractViewPanel {
                         getPresenter().getModel(PROP_LISTA_RESUMEN_PTO_VENTA),
                         getPresenter().getModel(PROP_RESUMEN_PTO_SELECCIONADO)));
         jButtonImprimirResumenPto.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_PTO));
-        //Pto elab
+        //Mesas
         Bindings.bind(jTableVentasPorMesa, new SelectionInList<ProductovOrden>(
                 getPresenter().getModel(PROP_LISTA_PRODUCTOS_POR_MESA),
                 getPresenter().getModel(PROP_PRODUCTO_POR_MESA_SELECCIONADO)));
@@ -616,7 +616,8 @@ public class VentaDetailView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_LISTA_MESAS),
                 getPresenter().getModel(PROP_MESA_SELECCIONADA)));
 
-//        jButtonImpimirResumenMesas.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_PTO));
+        jButtonImpimirResumenMesas.addActionListener(getPresenter().getOperation(ACTION_IMPIMIR_RESUMEN_MESA));
+
         jButtonRefresh.addActionListener(getPresenter().getOperation(ACTION_REFRESCAR_VENTA));
         Bindings.bind(jComboBoxVentas, new SelectionInList<Venta>(
                 getPresenter().getModel(PROP_LIST_VENTAS),

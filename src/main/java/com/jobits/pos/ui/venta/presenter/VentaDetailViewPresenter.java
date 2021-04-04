@@ -46,6 +46,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             ACTION_IMPRIMIR_RESUMEN_AREA = "Imprimir resumen area",
             //Dpte
             ACTION_IMPRIMIR_RESUMEN_USUARIO = "Imprimir resumen dependiente",
+            ACTION_IMPIMIR_RESUMEN_MESA = "Imprimir resumen mesa",
             ACTION_IMPRIMIR_RESUMEN_USUARIO_COMISION = "Imprimir comision dependiente",
             //pto elab
             ACTION_IMPRIMIR_RESUMEN_PTO = "Imprimir Pto elaboracion";
@@ -182,6 +183,14 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             }
 
         });
+        registerOperation(new AbstractViewAction(ACTION_IMPIMIR_RESUMEN_MESA) {
+            @Override
+            public Optional doAction() {
+                onImpimirResumenMesaClick();
+                return Optional.empty();
+            }
+
+        });
 
     }
 
@@ -250,6 +259,10 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false);
         service.printCocinaResumen(getBean().getResumen_pto_seleccionado().getCodigoPto(),
                 getBean().getVenta_seleccionada().getId(), imprimirValores);
+    }
+
+    private void onImpimirResumenMesaClick() {
+        service.printMesaResumen(getBean().getMesa_seleccionada(), getBean().getVenta_seleccionada());
     }
 
     private void onCrearNuevoTurnoClick() {
