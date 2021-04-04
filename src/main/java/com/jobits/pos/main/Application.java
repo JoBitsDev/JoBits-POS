@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.main;
 
-import com.jobits.pos.controller.configuracion.ConfigLoaderService;
+import com.jobits.pos.ui.utils.ConfigLoaderService;
 import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.controller.licencia.impl.LicenceController;
 import com.jobits.pos.cordinator.CoordinatorService;
@@ -21,6 +21,7 @@ import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
 import com.jobits.pos.ui.LongProcessActionService;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.ConfigLoaderController;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.pos.utils.UbicacionResourceServiceImpl;
@@ -65,7 +66,6 @@ public class Application {
 //        }
 //        return application;
 //    }
-
     public static Application getInstance() {
         if (application == null) {
             application = new Application();
@@ -240,7 +240,7 @@ public class Application {
     }
 
     private void setupDebugMode() {
-        ConfigLoaderService service = PosDesktopUiModule.getInstance().getImplementation(ConfigLoaderService.class);
+        ConfigLoaderService service = new ConfigLoaderController();
         boolean debugMode = Boolean.valueOf(service.getConfigValue("app.debug"));
         if (!debugMode) {
             try {
