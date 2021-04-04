@@ -15,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Application app = Application.createApplication(true);
+        Application app = Application.getInstance();
 
         SplashScreen sp = new SplashScreen();
         app.init();
