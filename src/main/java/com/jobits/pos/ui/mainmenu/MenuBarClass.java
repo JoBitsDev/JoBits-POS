@@ -13,6 +13,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.root101.swing.material.standards.MaterialIcons;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -238,6 +239,7 @@ public class MenuBarClass extends AbstractViewPanel {
         jButtonRefrescarVista.setIcon(MaterialIcons.REFRESH);
         jButtonRefrescarVista.setToolTipText("Refrescar Vista");
         jButtonRefrescarVista.setBackground(DefaultValues.TRANSPARENT);
+        jButtonRefrescarVista.setMnemonic(KeyEvent.VK_F5);
         jMenuBarMainManuBar.add(Box.createGlue());
         jMenuBarMainManuBar.add(jButtonRefrescarVista);
 
