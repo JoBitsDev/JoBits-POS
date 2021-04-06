@@ -156,6 +156,9 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
         getBean().setRuta_imagen_producto(productoVenta.getDescripcion());
         getBean().setCodigo_producto(productoVenta.getCodigoProducto());
+        if (productoVenta.getComisionPorcientoPorVenta() != null) {
+            getBean().setComision_por_venta_porcentual(productoVenta.getComisionPorcientoPorVenta());
+        }
         if (creatingMode) {
             getBean().setCrear_editar_button_text("Crear");
         } else {
@@ -182,7 +185,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                     getBean().getCategoria_seleccionada(),
                     getBean().getLista_insumos_contenidos(),
                     getBean().getRuta_imagen_producto(),
-                    getBean().getTimepo_elaboracion());
+                    getBean().getTimepo_elaboracion(),
+                    getBean().getComision_por_venta_porcentual());
             if (creatingMode) {
                 service.create(productoVenta);
             } else {
