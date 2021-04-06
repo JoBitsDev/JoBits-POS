@@ -48,6 +48,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             ACTION_IMPRIMIR_RESUMEN_USUARIO = "Imprimir resumen dependiente",
             ACTION_IMPIMIR_RESUMEN_MESA = "Imprimir resumen mesa",
             ACTION_IMPRIMIR_RESUMEN_USUARIO_COMISION = "Imprimir comision dependiente",
+            ACTION_IMPRIMIR_RESUMEN_COMISION_PORCENTUAL = "Imprimir comision Porcentual",
             //pto elab
             ACTION_IMPRIMIR_RESUMEN_PTO = "Imprimir Pto elaboracion";
 
@@ -175,6 +176,13 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             }
 
         });
+        registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_RESUMEN_COMISION_PORCENTUAL) {
+            @Override
+            public Optional doAction() {
+                onImprimirResumenComisionPorcentualClick();
+                return Optional.empty();
+            }
+        });
         registerOperation(new AbstractViewAction(ACTION_CREAR_NUEVO_TURNO) {
             @Override
             public Optional doAction() {
@@ -263,6 +271,10 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     private void onImpimirResumenMesaClick() {
         service.printMesaResumen(getBean().getMesa_seleccionada(), getBean().getVenta_seleccionada());
+    }
+
+    private void onImprimirResumenComisionPorcentualClick() {
+        service.printComisionPorcentualResumen(getBean().getMesa_seleccionada(), getBean().getVenta_seleccionada());
     }
 
     private void onCrearNuevoTurnoClick() {

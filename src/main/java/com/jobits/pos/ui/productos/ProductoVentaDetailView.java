@@ -82,14 +82,19 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jLabel1 = new javax.swing.JLabel();
         jXLabelGasto = new org.jdesktop.swingx.JXLabel();
         jPanel11 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldPagoPorVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", java.util.ResourceBundle.getBundle("Strings").getString("label_comision_por_venta"),R.COIN_SUFFIX);
-        jPanel4 = new javax.swing.JPanel();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel3 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         jSpinner1 = new javax.swing.JSpinner();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         jLabel2 = new javax.swing.JLabel();
+        jPanel16 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel5 = new javax.swing.JLabel();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
+        jSpinnerComisionVentaPorcentual = new javax.swing.JSpinner();
+        jLabel6 = new javax.swing.JLabel();
         jPanel2 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonCrear = MaterialComponentsFactory.Buttons.getAcceptButton();
@@ -295,7 +300,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         jPanel11.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanel11.setMaximumSize(new java.awt.Dimension(32767, 121));
-        jPanel11.setLayout(new java.awt.GridLayout(2, 1));
+        jPanel11.setLayout(new java.awt.GridLayout(3, 1));
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
@@ -323,6 +328,23 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel4.add(jLabel2, new java.awt.GridBagConstraints());
 
         jPanel11.add(jPanel4);
+
+        jPanel16.setLayout(new java.awt.GridBagLayout());
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setText("Comision por Venta Porcentual");
+        jPanel16.add(jLabel5, new java.awt.GridBagConstraints());
+        jPanel16.add(filler3, new java.awt.GridBagConstraints());
+
+        jSpinnerComisionVentaPorcentual.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
+        jSpinnerComisionVentaPorcentual.setPreferredSize(new java.awt.Dimension(90, 40));
+        jPanel16.add(jSpinnerComisionVentaPorcentual, new java.awt.GridBagConstraints());
+
+        jLabel6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel6.setText("%");
+        jPanel16.add(jLabel6, new java.awt.GridBagConstraints());
+
+        jPanel11.add(jPanel16);
 
         jTabbedPane1.addTab("Otros", jPanel11);
 
@@ -377,6 +399,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
     private javax.swing.Box.Filler filler6;
     private javax.swing.Box.Filler filler7;
     private javax.swing.JButton jButtonAddCocina;
@@ -391,6 +414,8 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelIProductImage;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -398,6 +423,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -413,6 +439,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelInventario;
     private javax.swing.JPanel jPanelTable;
     private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JSpinner jSpinnerComisionVentaPorcentual;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPagoPorVenta;
@@ -455,6 +482,9 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         SpinnerToValueModelConnector connector = new SpinnerToValueModelConnector(jSpinner1.getModel(),
                 getPresenter().getModel(PROP_TIMEPO_ELABORACION), 0);
         Bindings.bind(jSpinner1, "value", getPresenter().getModel(PROP_TIMEPO_ELABORACION));
+        SpinnerToValueModelConnector connector2 = new SpinnerToValueModelConnector(jSpinnerComisionVentaPorcentual.getModel(),
+                getPresenter().getModel(PROP_COMISION_POR_VENTA_PORCENTUAL), 0);
+        Bindings.bind(jSpinnerComisionVentaPorcentual, "value", getPresenter().getModel(PROP_COMISION_POR_VENTA_PORCENTUAL));
 
         //
         //Botones
