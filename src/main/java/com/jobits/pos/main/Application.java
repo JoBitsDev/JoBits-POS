@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.ui.utils.ConfigLoaderService;
 import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.controller.licencia.impl.LicenceController;
 import com.jobits.pos.cordinator.CoordinatorService;
@@ -20,6 +21,7 @@ import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
 import com.jobits.pos.ui.LongProcessActionService;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.ConfigLoaderController;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.pos.utils.UbicacionResourceServiceImpl;
@@ -53,18 +55,17 @@ public class Application {
     //
     //Log
     //
-    private static final String LOG_FILE_PATH = "LOGS/AppLogs";
-    private static final String ERR_FILE_PATH = "LOGS/AppLogsErr";
+    private static final String LOG_FILE_PATH = "LOGS/AppLogs.log";
+    private static final String ERR_FILE_PATH = "LOGS/AppLogsErr.log";
     private static Application application;
     private UserResolverService<Personal> userResolver = new UserResolverServiceImpl();
 
-    public static Application createApplication(boolean debugMode) {
-        if (application == null) {
-            application = new Application(debugMode);
-        }
-        return application;
-    }
-
+//    public static Application createApplication() {
+//        if (application == null) {
+//            application = new Application();
+//        }
+//        return application;
+//    }
     public static Application getInstance() {
         if (application == null) {
             application = new Application();
@@ -89,7 +90,6 @@ public class Application {
     private LongProcessActionService backgroundWorker;
 
     private CoordinatorService coordinator;
-    private boolean debugMode = true;
 
     //
     // App
@@ -106,10 +106,6 @@ public class Application {
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     private Application() {
-    }
-
-    private Application(boolean debugMode) {
-        this.debugMode = debugMode;
     }
 
     /**
@@ -179,13 +175,6 @@ public class Application {
     }
 
     public void init() {
-        if (!debugMode) {
-            try {
-                setupLogging();
-            } catch (Exception ex) {
-                Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
         setLocale();
         setApplicationLooks();
         setNotificationChannel();
@@ -194,6 +183,7 @@ public class Application {
         registerResources();
         initModules();
         UserResolver.registerUserResolverService(userResolver);
+        setupDebugMode();
     }
 
     public void start() {
@@ -247,6 +237,18 @@ public class Application {
 
     private void setNotificationChannel() {
         notificationService.registerNotificationChannel(new NotificationHandler());
+    }
+
+    private void setupDebugMode() {
+        ConfigLoaderService service = new ConfigLoaderController();
+        boolean debugMode = Boolean.valueOf(service.getConfigValue("app.debug"));
+        if (!debugMode) {
+            try {
+                setupLogging();
+            } catch (Exception ex) {
+                Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
 }

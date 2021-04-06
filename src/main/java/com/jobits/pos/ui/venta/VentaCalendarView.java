@@ -19,6 +19,8 @@ import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.utils.MaterialColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.util.List;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -401,6 +403,23 @@ public class VentaCalendarView extends AbstractViewPanel {
 
     public void uiInit() {
         initComponents();
+        jMonthChooser1.addMouseWheelListener((MouseWheelEvent e) -> {
+            int pos = e.getWheelRotation();
+            if (pos < 0) {
+                jMonthChooser1.setMonth(jMonthChooser1.getMonth() - 1);
+            } else if (pos > 0) {
+                jMonthChooser1.setMonth(jMonthChooser1.getMonth() + 1);
+            }
+        });
+        jYearChooser1.addMouseWheelListener((MouseWheelEvent e) -> {
+            int pos = e.getWheelRotation();
+            if (pos < 0) {
+                jYearChooser1.setYear(jYearChooser1.getYear()- 1);
+            } else if (pos > 0) {
+                jYearChooser1.setYear(jYearChooser1.getYear() + 1);
+            }
+        });
+        
         jScrollPane1.getViewport().setOpaque(false);
         fileChooser = new JFileChooser();
         model = new BindableTableModel<List<Venta>>(jTableCalendar) {//findVentas(month, year)
@@ -481,5 +500,5 @@ public class VentaCalendarView extends AbstractViewPanel {
         }
         return (List<Venta>) model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn());
     }
-    
+
 }

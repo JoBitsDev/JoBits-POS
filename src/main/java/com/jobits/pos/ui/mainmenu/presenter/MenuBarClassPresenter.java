@@ -46,6 +46,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
     public static final String ACTION_SHOW_LOGIN = "Cambiar Usuario";
     public static final String ACTION_CERRAR_SESION = "Cerrar Sesion";
     //Vista
+    public static final String ACTION_REFRESCAR_VISTA = "Refrescar Vista";
     public static final String ACTION_OCULTAR_STATUS_BAR = "Ocultar Barra de Estado";
     public static final String ACTION_OCULTAR_MENU_LATERAL = "Ocultar Menu Lateral";
     public static final String ACTION_SIEMPRE_PRIMER_PLANO = "Siempre Primer Plano";
@@ -127,6 +128,14 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             }
         });
 
+        registerOperation(new AbstractViewAction(ACTION_REFRESCAR_VISTA) {
+            @Override
+            public Optional doAction() {
+                System.out.println("Its Happ");
+//                TODO: Esperando Implementacion
+                return Optional.empty();
+            }
+        });
         registerOperation(new AbstractViewAction(ACTION_OCULTAR_STATUS_BAR) {
             @Override
             public Optional doAction() {

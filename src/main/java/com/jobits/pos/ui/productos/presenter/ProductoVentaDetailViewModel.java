@@ -97,6 +97,31 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_TIMEPO_ELABORACION = "timepo_elaboracion";
 
+    private float comision_por_venta_porcentual = 0;
+
+    public static final String PROP_COMISION_POR_VENTA_PORCENTUAL = "comision_por_venta_porcentual";
+
+    /**
+     * Get the value of comision_por_venta_porcentual
+     *
+     * @return the value of comision_por_venta_porcentual
+     */
+    public float getComision_por_venta_porcentual() {
+        return comision_por_venta_porcentual;
+    }
+
+    /**
+     * Set the value of comision_por_venta_porcentual
+     *
+     * @param comision_por_venta_porcentual new value of
+     * comision_por_venta_porcentual
+     */
+    public void setComision_por_venta_porcentual(float comision_por_venta_porcentual) {
+        float oldComision_por_venta_porcentual = this.comision_por_venta_porcentual;
+        this.comision_por_venta_porcentual = comision_por_venta_porcentual;
+        firePropertyChange(PROP_COMISION_POR_VENTA_PORCENTUAL, oldComision_por_venta_porcentual, comision_por_venta_porcentual);
+    }
+
     /**
      * Get the value of timepo_elaboracion
      *
