@@ -106,7 +106,8 @@ public class VentaDetailView extends AbstractViewPanel {
         jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableVentasPorMesa = new javax.swing.JTable();
         jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jButtonImpimirResumenMesas = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonImpimirResumenComisionPorcentual = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonImpimirResumenMesas1 = MaterialComponentsFactory.Buttons.getLinedButton();
         jPanelVentas = new javax.swing.JPanel();
         jPanelOperaciones = new javax.swing.JPanel();
         jTabbedPaneResumenD1 = new javax.swing.JTabbedPane();
@@ -389,10 +390,17 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanel3.setPreferredSize(new java.awt.Dimension(180, 60));
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        jButtonImpimirResumenMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
-        jButtonImpimirResumenMesas.setText("Imprimir Resumen");
-        jButtonImpimirResumenMesas.setPreferredSize(new java.awt.Dimension(200, 50));
-        jPanel3.add(jButtonImpimirResumenMesas);
+        jButtonImpimirResumenComisionPorcentual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonImpimirResumenComisionPorcentual.setText("Resumen de Comision %");
+        jButtonImpimirResumenComisionPorcentual.setMaximumSize(new java.awt.Dimension(230, 50));
+        jButtonImpimirResumenComisionPorcentual.setMinimumSize(new java.awt.Dimension(230, 50));
+        jButtonImpimirResumenComisionPorcentual.setPreferredSize(new java.awt.Dimension(230, 50));
+        jPanel3.add(jButtonImpimirResumenComisionPorcentual);
+
+        jButtonImpimirResumenMesas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/impresora.png"))); // NOI18N
+        jButtonImpimirResumenMesas1.setText("Resumen de Ventas");
+        jButtonImpimirResumenMesas1.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanel3.add(jButtonImpimirResumenMesas1);
 
         jPanelMesas.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
@@ -507,7 +515,8 @@ public class VentaDetailView extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCambiarTurno;
     private javax.swing.JButton jButtonImpPagoVentas;
-    private javax.swing.JButton jButtonImpimirResumenMesas;
+    private javax.swing.JButton jButtonImpimirResumenComisionPorcentual;
+    private javax.swing.JButton jButtonImpimirResumenMesas1;
     private javax.swing.JButton jButtonImprimirDptes;
     private javax.swing.JButton jButtonImprimirResumenArea;
     private javax.swing.JButton jButtonImprimirResumenPto;
@@ -616,7 +625,8 @@ public class VentaDetailView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_LISTA_MESAS),
                 getPresenter().getModel(PROP_MESA_SELECCIONADA)));
 
-        jButtonImpimirResumenMesas.addActionListener(getPresenter().getOperation(ACTION_IMPIMIR_RESUMEN_MESA));
+        jButtonImpimirResumenMesas1.addActionListener(getPresenter().getOperation(ACTION_IMPIMIR_RESUMEN_MESA));
+        jButtonImpimirResumenComisionPorcentual.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_COMISION_PORCENTUAL));
 
         jButtonRefresh.addActionListener(getPresenter().getOperation(ACTION_REFRESCAR_VENTA));
         Bindings.bind(jComboBoxVentas, new SelectionInList<Venta>(
