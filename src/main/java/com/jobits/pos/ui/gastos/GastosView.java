@@ -108,7 +108,6 @@ public class GastosView extends AbstractViewPanel {
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), bundle.getString("label_categoria"))); // NOI18N
         jPanel2.setToolTipText(null);
-        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jComboBoxCategoria.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jComboBoxCategoria.setToolTipText(null);
@@ -119,17 +118,16 @@ public class GastosView extends AbstractViewPanel {
                 jComboBoxCategoriaActionPerformed(evt);
             }
         });
-        jPanel2.add(jComboBoxCategoria, new java.awt.GridBagConstraints());
+        jPanel2.add(jComboBoxCategoria);
 
         jPanel11.add(jPanel2);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15), "Tipo"));
         jPanel6.setToolTipText(null);
-        jPanel6.setLayout(new java.awt.GridBagLayout());
 
         jTextFieldTipoGasto.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jTextFieldTipoGasto.setPreferredSize(new java.awt.Dimension(150, 40));
-        jPanel6.add(jTextFieldTipoGasto, new java.awt.GridBagConstraints());
+        jPanel6.add(jTextFieldTipoGasto);
 
         jPanel11.add(jPanel6);
 
@@ -137,7 +135,6 @@ public class GastosView extends AbstractViewPanel {
         jPanel5.setToolTipText(null);
         jPanel5.setMinimumSize(new java.awt.Dimension(150, 60));
         jPanel5.setPreferredSize(new java.awt.Dimension(170, 60));
-        jPanel5.setLayout(new java.awt.GridBagLayout());
 
         jTextFieldMonto.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jTextFieldMonto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -147,7 +144,7 @@ public class GastosView extends AbstractViewPanel {
                 jTextFieldMontoKeyTyped(evt);
             }
         });
-        jPanel5.add(jTextFieldMonto, new java.awt.GridBagConstraints());
+        jPanel5.add(jTextFieldMonto);
 
         jPanel11.add(jPanel5);
 
