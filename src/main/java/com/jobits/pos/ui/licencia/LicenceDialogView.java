@@ -66,10 +66,11 @@ public class LicenceDialogView extends JPanel implements View {
         jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonActivar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setMaximumSize(new java.awt.Dimension(710, 210));
-        setMinimumSize(new java.awt.Dimension(710, 173));
+        setMaximumSize(new java.awt.Dimension(820, 215));
+        setMinimumSize(new java.awt.Dimension(820, 215));
+        setName(""); // NOI18N
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(710, 210));
+        setPreferredSize(new java.awt.Dimension(820, 215));
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
