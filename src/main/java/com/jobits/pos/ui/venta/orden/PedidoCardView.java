@@ -10,27 +10,17 @@ import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import com.jobits.ui.components.swing.containers.TaskButton;
 import java.awt.Component;
 import javax.swing.Action;
 import javax.swing.JLabel;
 import com.root101.swing.material.standards.MaterialIcons;
-import com.jobits.pos.core.domain.models.ProductoVenta;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel.*;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter.*;
-import static com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorViewModel.PROP_PV_FILTRADO;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
@@ -73,14 +63,15 @@ public class PedidoCardView extends AbstractViewPanel {
         jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButton1 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButton2 = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButton3 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButton4 = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButton3 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jToggleButtonAgregos = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>()
         ;
         jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jideButtonInfo = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jideButtonCierreParcial = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jideButtonEnviarCocina = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jideButtonCerrarMesa = MaterialComponentsFactory.Buttons.getOutlinedButton();
@@ -207,19 +198,19 @@ public class PedidoCardView extends AbstractViewPanel {
         jButton2.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel1.add(jButton2, new java.awt.GridBagConstraints());
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/add_indigo.png"))); // NOI18N
+        jButton4.setToolTipText("Agrego en Caliente");
+        jButton4.setMaximumSize(new java.awt.Dimension(50, 50));
+        jButton4.setMinimumSize(new java.awt.Dimension(50, 50));
+        jButton4.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jButton4, new java.awt.GridBagConstraints());
+
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar nota_indigo_ligth.png"))); // NOI18N
         jButton3.setToolTipText("Agregar Nota");
         jButton3.setMaximumSize(new java.awt.Dimension(50, 50));
         jButton3.setMinimumSize(new java.awt.Dimension(50, 50));
         jButton3.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel1.add(jButton3, new java.awt.GridBagConstraints());
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/informacion_indigo_ligth.png"))); // NOI18N
-        jButton4.setToolTipText("Ver Detalles");
-        jButton4.setMaximumSize(new java.awt.Dimension(50, 50));
-        jButton4.setMinimumSize(new java.awt.Dimension(50, 50));
-        jButton4.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel1.add(jButton4, new java.awt.GridBagConstraints());
 
         jToggleButtonAgregos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_gris.png"))); // NOI18N
         jToggleButtonAgregos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_indigo.png"))); // NOI18N
@@ -238,6 +229,14 @@ public class PedidoCardView extends AbstractViewPanel {
         jPanelMedia.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel6.setLayout(new java.awt.BorderLayout());
+
+        jideButtonInfo.setBackground(new java.awt.Color(204, 204, 204));
+        jideButtonInfo.setIcon(MaterialIcons.INFO);
+        jideButtonInfo.setToolTipText("Ver Detalles");
+        jideButtonInfo.setBorderPainted(false);
+        jideButtonInfo.setFocusable(false);
+        jideButtonInfo.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel3.add(jideButtonInfo);
 
         jideButtonCierreParcial.setBackground(new java.awt.Color(204, 204, 204));
         jideButtonCierreParcial.setIcon(MaterialIcons.PRINT);
@@ -409,6 +408,7 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JButton jideButtonCerrarMesa;
     private javax.swing.JButton jideButtonCierreParcial;
     private javax.swing.JButton jideButtonEnviarCocina;
+    private javax.swing.JButton jideButtonInfo;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -426,8 +426,9 @@ public class PedidoCardView extends AbstractViewPanel {
         jButton1.addActionListener(getPresenter().getOperation(ACTION_ADD_PRODUCTO));
         jButton2.addActionListener(getPresenter().getOperation(ACTION_REMOVE_PRODUCTO));
         jButton3.addActionListener(getPresenter().getOperation(ACTION_ADD_NOTA));
-        jButton4.addActionListener(getPresenter().getOperation(ACTION_SHOW_LOGS));
+        jButton4.addActionListener(getPresenter().getOperation(ACTION_ADD_PRODUCTO_IN_HOT));
         jideButtonCierreParcial.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_CIERRE_PARCIAL));
+        jideButtonInfo.addActionListener(getPresenter().getOperation(ACTION_SHOW_LOGS));
         jToggleButtonHideSupportPanel.addActionListener(getPresenter().getOperation(ACTION_SET_SUPORT_PANEL_VISIBLE));
 
         SpinnerToValueModelConnector connector5 = new SpinnerToValueModelConnector(jSpinner1.getModel(),
