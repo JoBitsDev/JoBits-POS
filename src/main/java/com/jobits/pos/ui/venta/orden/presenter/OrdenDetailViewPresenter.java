@@ -23,6 +23,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
+import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeEvent;
 import java.util.Optional;
@@ -41,6 +42,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_ADD_NOTA = "Agregar Nota";
 
     public static String ACTION_ADD_PRODUCTO = "Agregar";
+    public static String ACTION_ADD_PRODUCTO_IN_HOT = "Agregar Producto en Caliente";
     public static String ACTION_CERRAR_ORDEN = "Cerrar Orden";
     public static String ACTION_ENVIAR_ELABORAR = "Enviar a elaborar";
     public static String ACTION_IMPRIMIR_CIERRE_PARCIAL = "Cierre Parcial";
@@ -175,6 +177,11 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setSuport_panel_visible(!getBean().isSuport_panel_visible());
     }
 
+    private void onAddProductoInHotClick() {
+        Application.getInstance().getNavigator().navigateTo(
+                ProductoEnCalienteView.VIEW_NAME, new ProductoEnCalienteViewPresenter(codOrden), DisplayType.POPUP);
+    }
+
     @Override
     protected Optional refreshState() {
         if (codOrden != null) {
@@ -246,6 +253,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onAddProductoClick();
+                setCodOrden(codOrden);
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_ADD_PRODUCTO_IN_HOT) {
+            @Override
+            public Optional doAction() {
+                onAddProductoInHotClick();
                 setCodOrden(codOrden);
                 return Optional.empty();
             }

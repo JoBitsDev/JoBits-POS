@@ -17,6 +17,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 
 /**
@@ -44,34 +45,46 @@ public class MenuBarClass extends AbstractViewPanel {
         return jMenuBarMainManuBar;
     }
 
+    public JLabel getjLabelFecha() {
+        return jLabelFecha;
+    }
+
+    public JLabel getjLabelFechaText() {
+        return jLabelFechaText;
+    }
+
     // Variables declaration - do not modify                
+    private javax.swing.JMenuBar jMenuBarMainManuBar;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemOcultarBarraEstado;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemOcultarBarraLateral;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemSiemprePrimerPlano;
-    private javax.swing.JMenu jMenuAyuda;
-    private javax.swing.JMenuBar jMenuBarMainManuBar;
-    private javax.swing.JMenu jMenuEdicion;
-    private javax.swing.JMenu jMenuHerramientas;
     private javax.swing.JButton jButtonRefrescarVista;
+    private javax.swing.JMenu jMenuJoBitsPOS;
+    private javax.swing.JMenu jMenuVista;
+    private javax.swing.JMenu jMenuHerramientas;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenu jMenuVenta;
     private javax.swing.JMenuItem jMenuItemAcercaJobitPOS;
+    private javax.swing.JMenuItem jMenuItemReabrirVenta;
+    private javax.swing.JMenuItem jMenuItemTerminarVenta;
+    private javax.swing.JMenuItem jMenuItemTerminarExportarVenta;
     private javax.swing.JMenuItem jMenuItemActivarLicencia;
     private javax.swing.JMenuItem jMenuItemCambiarUsuario;
     private javax.swing.JMenuItem jMenuItemCerrarSesion;
     private javax.swing.JMenuItem jMenuItemCopiasSeguridad;
-    private javax.swing.JMenuItem jMenuItemDuplicar;
-    private javax.swing.JMenuItem jMenuItemEliminar;
     private javax.swing.JMenuItem jMenuItemManualUsuario;
-    private javax.swing.JMenuItem jMenuItemNuevo;
     private javax.swing.JMenuItem jMenuItemPreferencias;
     private javax.swing.JMenuItem jMenuItemReportarBug;
     private javax.swing.JMenuItem jMenuItemSalir;
-    private javax.swing.JMenuItem jMenuItemSeleccionarTodo;
+    private javax.swing.JMenuItem jMenuItemCambiarTurno;
+    private javax.swing.JMenuItem jMenuItemNuevoTurno;
     private javax.swing.JMenuItem jMenuItemUbicaciones;
-    private javax.swing.JMenu jMenuJoBitsPOS;
-    private javax.swing.JMenu jMenuVista;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+
+    private javax.swing.JLabel jLabelFecha;
+    private javax.swing.JLabel jLabelFechaText;
     // End of variables declaration    
 
     @Override
@@ -83,11 +96,12 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuItemCambiarUsuario.addActionListener(getPresenter().getOperation(ACTION_SHOW_LOGIN));
         jMenuItemCerrarSesion.addActionListener(getPresenter().getOperation(ACTION_CERRAR_SESION));
         jMenuItemSalir.addActionListener(getPresenter().getOperation(ACTION_SALIR));
-        //Edicion
-//        jMenuItemSalir.addActionListener(getPresenter().getOperation(ACTION_SALIR));
-//        jMenuItemSalir.addActionListener(getPresenter().getOperation(ACTION_SALIR));
-//        jMenuItemSalir.addActionListener(getPresenter().getOperation(ACTION_SALIR));
-//        jMenuItemSalir.addActionListener(getPresenter().getOperation(ACTION_SALIR));
+        //Venta
+        jMenuItemCambiarTurno.addActionListener(getPresenter().getOperation(ACTION_CAMBIAR_TURNO));
+        jMenuItemNuevoTurno.addActionListener(getPresenter().getOperation(ACTION_NUEVO_TURNO));
+        jMenuItemReabrirVenta.addActionListener(getPresenter().getOperation(ACTION_REABRIR_VENTA));
+        jMenuItemTerminarVenta.addActionListener(getPresenter().getOperation(ACTION_TERMINAR_VENTA));
+        jMenuItemTerminarExportarVenta.addActionListener(getPresenter().getOperation(ACTION_TERMINAR_EXPORTAR_VENTA));
         //Vista
         jButtonRefrescarVista.addActionListener(getPresenter().getOperation(ACTION_REFRESCAR_VISTA));
         jCheckBoxMenuItemOcultarBarraEstado.addActionListener(getPresenter().getOperation(ACTION_OCULTAR_STATUS_BAR));
@@ -99,148 +113,178 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuItemActivarLicencia.addActionListener(getPresenter().getOperation(ACTION_SHOW_ACTIVAR_LICENCIA));
         //Ayuda
         jMenuItemManualUsuario.addActionListener(getPresenter().getOperation(ACTION_SHOW_MANUAL_USUARIO));
+
     }
 
     @Override
     public void uiInit() {
         jMenuBarMainManuBar = new javax.swing.JMenuBar();
+
         jMenuJoBitsPOS = new javax.swing.JMenu();
+        jMenuVista = new javax.swing.JMenu();
+        jMenuHerramientas = new javax.swing.JMenu();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuVenta = new javax.swing.JMenu();
+
+        jMenuItemSalir = new javax.swing.JMenuItem();
         jMenuItemAcercaJobitPOS = new javax.swing.JMenuItem();
         jMenuItemPreferencias = new javax.swing.JMenuItem();
         jMenuItemReportarBug = new javax.swing.JMenuItem();
-        jButtonRefrescarVista = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItemCerrarSesion = new javax.swing.JMenuItem();
         jMenuItemCambiarUsuario = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItemSalir = new javax.swing.JMenuItem();
-        jMenuEdicion = new javax.swing.JMenu();
-        jMenuItemNuevo = new javax.swing.JMenuItem();
-        jMenuItemDuplicar = new javax.swing.JMenuItem();
-        jMenuItemEliminar = new javax.swing.JMenuItem();
-        jMenuItemSeleccionarTodo = new javax.swing.JMenuItem();
-        jMenuVista = new javax.swing.JMenu();
-        jCheckBoxMenuItemOcultarBarraLateral = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItemOcultarBarraEstado = new javax.swing.JCheckBoxMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jCheckBoxMenuItemSiemprePrimerPlano = new javax.swing.JCheckBoxMenuItem();
-        jMenuHerramientas = new javax.swing.JMenu();
         jMenuItemCopiasSeguridad = new javax.swing.JMenuItem();
         jMenuItemUbicaciones = new javax.swing.JMenuItem();
         jMenuItemActivarLicencia = new javax.swing.JMenuItem();
-        jMenuAyuda = new javax.swing.JMenu();
         jMenuItemManualUsuario = new javax.swing.JMenuItem();
+        jMenuItemReabrirVenta = new javax.swing.JMenuItem();
+        jMenuItemTerminarVenta = new javax.swing.JMenuItem();
+        jMenuItemTerminarExportarVenta = new javax.swing.JMenuItem();
+        jMenuItemNuevoTurno = new javax.swing.JMenuItem();
+        jMenuItemCambiarTurno = new javax.swing.JMenuItem();
 
+        jLabelFecha = new javax.swing.JLabel();
+        jLabelFechaText = new javax.swing.JLabel();
+
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+
+        jCheckBoxMenuItemOcultarBarraLateral = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItemOcultarBarraEstado = new javax.swing.JCheckBoxMenuItem();
+        jCheckBoxMenuItemSiemprePrimerPlano = new javax.swing.JCheckBoxMenuItem();
+
+        jButtonRefrescarVista = new javax.swing.JButton();
+
+        jMenuBarMainManuBar.setBackground(DefaultValues.WHITE);
         jMenuJoBitsPOS.setBackground(DefaultValues.WHITE);
-        jMenuEdicion.setBackground(DefaultValues.WHITE);
         jMenuVista.setBackground(DefaultValues.WHITE);
+        jMenuVenta.setBackground(DefaultValues.WHITE);
         jMenuHerramientas.setBackground(DefaultValues.WHITE);
         jMenuAyuda.setBackground(DefaultValues.WHITE);
-        jMenuBarMainManuBar.setBackground(DefaultValues.WHITE);
 
         jMenuJoBitsPOS.setText("JoBits POS");
-
         jMenuItemAcercaJobitPOS.setText("Acerca de JoBits POS");
-        jMenuItemAcercaJobitPOS.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/acerca_color.png")));
-
+        jMenuItemAcercaJobitPOS.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/acerca_color.png")));
         jMenuJoBitsPOS.add(jMenuItemAcercaJobitPOS);
 
         jMenuItemPreferencias.setText("Preferencias");
-        jMenuItemPreferencias.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/configuracion_color.png")));
+        jMenuItemPreferencias.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/configuracion_color.png")));
         jMenuJoBitsPOS.add(jMenuItemPreferencias);
 
         jMenuItemReportarBug.setText("Reportar Bug");
-        jMenuItemReportarBug.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/reportarBug_color.png")));
+        jMenuItemReportarBug.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/reportarBug_color.png")));
         jMenuJoBitsPOS.add(jMenuItemReportarBug);
         jMenuJoBitsPOS.add(jSeparator1);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jMenuItemCerrarSesion.setText(bundle.getString("label_cerrar_sesion")); // NOI18N
-        jMenuItemCerrarSesion.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/bloquear_color.png")));
+        jMenuItemCerrarSesion.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/bloquear_color.png")));
         jMenuJoBitsPOS.add(jMenuItemCerrarSesion);
 
         jMenuItemCambiarUsuario.setText("Cambiar de Usuario");
-        jMenuItemCambiarUsuario.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/usuario_color.png")));
+        jMenuItemCambiarUsuario.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/usuario_color.png")));
         jMenuJoBitsPOS.add(jMenuItemCambiarUsuario);
         jMenuJoBitsPOS.add(jSeparator2);
 
         jMenuItemSalir.setText("Salir");
-        jMenuItemSalir.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/apagar_color.png")));
+        jMenuItemSalir.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/apagar_color.png")));
         jMenuJoBitsPOS.add(jMenuItemSalir);
 
         jMenuBarMainManuBar.add(jMenuJoBitsPOS);
 
-//        jMenuEdicion.setText(bundle.getString("label_edicion")); // NOI18N
-//
-//        jMenuItemNuevo.setText("Nuevo");
-//        jMenuEdicion.add(jMenuItemNuevo);
-//
-//        jMenuItemDuplicar.setText("Duplicar");
-//        jMenuEdicion.add(jMenuItemDuplicar);
-//
-//        jMenuItemEliminar.setText("Eliminar");
-//        jMenuEdicion.add(jMenuItemEliminar);
-//
-//        jMenuItemSeleccionarTodo.setText("Seleccionar Todo");
-//        jMenuEdicion.add(jMenuItemSeleccionarTodo);
-//        jMenuBarMainManuBar.add(jMenuEdicion);
-////        TODO: Agregar Seccion de Edicion en el MenuBar
         jMenuVista.setText("Vista");
-
-//        jMenuItemRefrescarVista.setText("Refrescar Vista");
-//        jMenuItemRefrescarVista.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/refrescar_color.png")));
-//        jMenuVista.add(jMenuItemRefrescarVista);
-//        jMenuVista.add(jSeparator1);
         jCheckBoxMenuItemOcultarBarraLateral.setSelected(true);
         jCheckBoxMenuItemOcultarBarraLateral.setText("Mostrar Barra Lateral");
-        jCheckBoxMenuItemOcultarBarraLateral.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/dashboard_color.png")));
+        jCheckBoxMenuItemOcultarBarraLateral.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/dashboard_color.png")));
         jCheckBoxMenuItemOcultarBarraLateral.setBackground(Color.white);
         jMenuVista.add(jCheckBoxMenuItemOcultarBarraLateral);
 
         jCheckBoxMenuItemOcultarBarraEstado.setSelected(true);
         jCheckBoxMenuItemOcultarBarraEstado.setText("Mostrar Barra de Estado");
-        jCheckBoxMenuItemOcultarBarraEstado.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/status_bar_color.png")));
+        jCheckBoxMenuItemOcultarBarraEstado.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/status_bar_color.png")));
         jCheckBoxMenuItemOcultarBarraEstado.setBackground(Color.white);
         jMenuVista.add(jCheckBoxMenuItemOcultarBarraEstado);
         jMenuVista.add(jSeparator3);
 
         jCheckBoxMenuItemSiemprePrimerPlano.setSelected(false);
         jCheckBoxMenuItemSiemprePrimerPlano.setText("Siempre en Primer Plano");
-        jCheckBoxMenuItemSiemprePrimerPlano.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/primer_plano_color.png")));
+        jCheckBoxMenuItemSiemprePrimerPlano.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/primer_plano_color.png")));
         jCheckBoxMenuItemSiemprePrimerPlano.setBackground(Color.white);
         jMenuVista.add(jCheckBoxMenuItemSiemprePrimerPlano);
 
         jMenuBarMainManuBar.add(jMenuVista);
 
         jMenuHerramientas.setText("Herramientas");
-
         jMenuItemCopiasSeguridad.setText("Copias de Seguridad");
-        jMenuItemCopiasSeguridad.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/backup_color.png")));
+        jMenuItemCopiasSeguridad.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/backup_color.png")));
         jMenuHerramientas.add(jMenuItemCopiasSeguridad);
 
         jMenuItemUbicaciones.setText("Ubicaciones");
-        jMenuItemUbicaciones.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/ubicacion_color.png")));
+        jMenuItemUbicaciones.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/ubicacion_color.png")));
         jMenuHerramientas.add(jMenuItemUbicaciones);
 
         jMenuItemActivarLicencia.setText("Activar Licencia");
-        jMenuItemActivarLicencia.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/licencia_color.png")));
+        jMenuItemActivarLicencia.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/licencia_color.png")));
         jMenuHerramientas.add(jMenuItemActivarLicencia);
-
         jMenuBarMainManuBar.add(jMenuHerramientas);
 
+        jMenuVenta.setText("Venta");
+        jMenuItemNuevoTurno.setText("Nuevo Turno");
+        jMenuItemNuevoTurno.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/nuevo_turno_color.png")));
+        jMenuVenta.add(jMenuItemNuevoTurno);
+
+        jMenuItemCambiarTurno.setText("Cambiar Turno");
+        jMenuItemCambiarTurno.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/cambiar_turno_color.png")));
+        jMenuVenta.add(jMenuItemCambiarTurno);
+
+        jMenuItemReabrirVenta.setText("Reabrir");
+        jMenuItemReabrirVenta.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/reabrir_ventas_color.png")));
+        jMenuVenta.add(jMenuItemReabrirVenta);
+
+        jMenuItemTerminarVenta.setText("Terminar");
+        jMenuItemTerminarVenta.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/cerrar_ventas_color.png")));
+        jMenuVenta.add(jMenuItemTerminarVenta);
+
+        jMenuItemTerminarExportarVenta.setText("Terminar y Exportar");
+        jMenuItemTerminarExportarVenta.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/cerrar_exportar_ventas_color.png")));
+        jMenuVenta.add(jMenuItemTerminarExportarVenta);
+        jMenuBarMainManuBar.add(jMenuVenta);
+
         jMenuAyuda.setText("Ayuda");
-
         jMenuItemManualUsuario.setText("Manual de Usuario");
-        jMenuItemManualUsuario.setIcon(new ImageIcon(getClass().getResource("/restManager/resources/icons pack/manual_usuario_color.png")));
+        jMenuItemManualUsuario.setIcon(
+                new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/manual_usuario_color.png")));
         jMenuAyuda.add(jMenuItemManualUsuario);
-
         jMenuBarMainManuBar.add(jMenuAyuda);
+
+        jMenuBarMainManuBar.add(Box.createGlue());
+
+        jLabelFechaText.setText("Fecha: ");
+        jMenuBarMainManuBar.add(jLabelFechaText, new java.awt.GridBagConstraints());
+//        jLabelFecha.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha"));
+        jLabelFecha.setText("xx/xx/xx");
+        jMenuBarMainManuBar.add(jLabelFecha, new java.awt.GridBagConstraints());
 
         jButtonRefrescarVista.setIcon(MaterialIcons.REFRESH);
         jButtonRefrescarVista.setToolTipText("Refrescar Vista");
         jButtonRefrescarVista.setBackground(DefaultValues.TRANSPARENT);
         jButtonRefrescarVista.setMnemonic(KeyEvent.VK_F5);
-        jMenuBarMainManuBar.add(Box.createGlue());
         jMenuBarMainManuBar.add(jButtonRefrescarVista);
 
     }

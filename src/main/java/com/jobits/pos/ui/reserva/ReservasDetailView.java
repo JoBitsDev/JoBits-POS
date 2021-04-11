@@ -12,21 +12,18 @@ import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter.*;
-import com.jobits.pos.ui.venta.orden.CellRenderPedido;
-import com.jobits.pos.ui.venta.orden.ProductoVentaSelectorView;
+import com.jobits.pos.ui.utils.BindableListIntelliHint;
+import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Component;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -55,6 +52,16 @@ public class ReservasDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelProductos = MaterialComponentsFactory.Containers.getTransparentPanel()
+        ;
+        jPanelProductoSelector = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelProductosOrden = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
+        jListListaProductos = new javax.swing.JList<>()
+        ;
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonEliminar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jToggleButtonAgregos = new javax.swing.JToggleButton();
         jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelMain = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelfecha = MaterialComponentsFactory.Containers.getTransparentPanel();
@@ -78,31 +85,22 @@ public class ReservasDetailView extends AbstractViewPanel {
         jButtonShowProductos = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel19 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel12 = new javax.swing.JLabel();
-        jComboBoxCliente = MaterialComponentsFactory.Displayers.getComboBox("");
         jButtonShowNewClient = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jComboBoxCliente = MaterialComponentsFactory.Displayers.getComboBox("");
         jPanel20 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel13 = new javax.swing.JLabel();
         jComboBoxCategoria = MaterialComponentsFactory.Displayers.getComboBox("");
-        jPanelProductos = MaterialComponentsFactory.Containers.getTransparentPanel()
-        ;
-        jPanelProductoSelector = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jPanelProductosOrden = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
-        jListListaProductos = new javax.swing.JList<>()
-        ;
-        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jButtonEliminar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jToggleButtonAgregos = new javax.swing.JToggleButton();
         jPanelNewClient = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldApellidos = MaterialComponentsFactory.Input.getTextField("", "Apellidos");
-        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldTelefono = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono"));
-        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAddCliente = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jTextFieldBusqueda = MaterialComponentsFactory.Input.getTextField("Buscar cliente", "");
+        jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelGoBack = MaterialComponentsFactory.Containers.getTransparentPanel();
@@ -112,8 +110,43 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanel12 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
+        jPanelProductos.setLayout(new java.awt.BorderLayout());
+
+        jPanelProductoSelector.setMinimumSize(new java.awt.Dimension(350, 200));
+        jPanelProductoSelector.setPreferredSize(new java.awt.Dimension(350, 481));
+        jPanelProductoSelector.setLayout(new java.awt.BorderLayout());
+        jPanelProductos.add(jPanelProductoSelector, java.awt.BorderLayout.CENTER);
+
+        jPanelProductosOrden.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane1.setHorizontalScrollBar(null);
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 200));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(259, 200));
+
+        jListListaProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jListListaProductos);
+
+        jPanelProductosOrden.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jButtonEliminar.setIcon(MaterialIcons.REMOVE_CIRCLE);
+        jButtonEliminar.setMaximumSize(new java.awt.Dimension(50, 50));
+        jButtonEliminar.setMinimumSize(new java.awt.Dimension(50, 50));
+        jButtonEliminar.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jButtonEliminar, java.awt.BorderLayout.EAST);
+
+        jToggleButtonAgregos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_gris.png"))); // NOI18N
+        jToggleButtonAgregos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_indigo.png"))); // NOI18N
+        jPanel1.add(jToggleButtonAgregos, java.awt.BorderLayout.WEST);
+
+        jPanelProductosOrden.add(jPanel1, java.awt.BorderLayout.SOUTH);
+
+        jPanelProductos.add(jPanelProductosOrden, java.awt.BorderLayout.EAST);
+
+        setMinimumSize(new java.awt.Dimension(565, 530));
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(500, 460));
+        setPreferredSize(new java.awt.Dimension(565, 530));
         setLayout(new java.awt.BorderLayout());
 
         jPanel5.setLayout(new java.awt.BorderLayout());
@@ -220,11 +253,6 @@ public class ReservasDetailView extends AbstractViewPanel {
         jLabel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
         jPanel19.add(jLabel12, java.awt.BorderLayout.WEST);
 
-        jComboBoxCliente.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jComboBoxCliente.setMinimumSize(new java.awt.Dimension(200, 50));
-        jComboBoxCliente.setPreferredSize(new java.awt.Dimension(300, 50));
-        jPanel19.add(jComboBoxCliente, java.awt.BorderLayout.CENTER);
-
         jButtonShowNewClient.setIcon(MaterialIcons.ADD_CIRCLE_OUTLINE);
         jButtonShowNewClient.setPreferredSize(new java.awt.Dimension(50, 50));
         jButtonShowNewClient.addActionListener(new java.awt.event.ActionListener() {
@@ -233,6 +261,11 @@ public class ReservasDetailView extends AbstractViewPanel {
             }
         });
         jPanel19.add(jButtonShowNewClient, java.awt.BorderLayout.LINE_END);
+
+        jComboBoxCliente.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jComboBoxCliente.setMinimumSize(new java.awt.Dimension(200, 50));
+        jComboBoxCliente.setPreferredSize(new java.awt.Dimension(300, 50));
+        jPanel19.add(jComboBoxCliente, java.awt.BorderLayout.CENTER);
 
         jPanelfecha.add(jPanel19);
 
@@ -254,87 +287,81 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanelMain.add(jPanelfecha, "Fecha");
 
-        jPanelProductos.setLayout(new java.awt.BorderLayout());
-
-        jPanelProductoSelector.setMinimumSize(new java.awt.Dimension(350, 200));
-        jPanelProductoSelector.setPreferredSize(new java.awt.Dimension(350, 481));
-        jPanelProductoSelector.setLayout(new java.awt.BorderLayout());
-        jPanelProductos.add(jPanelProductoSelector, java.awt.BorderLayout.CENTER);
-
-        jPanelProductosOrden.setLayout(new java.awt.BorderLayout());
-
-        jScrollPane1.setHorizontalScrollBar(null);
-        jScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 200));
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(259, 200));
-
-        jListListaProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jListListaProductos);
-
-        jPanelProductosOrden.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
-        jPanel1.setLayout(new java.awt.BorderLayout());
-
-        jButtonEliminar.setIcon(MaterialIcons.REMOVE_CIRCLE);
-        jButtonEliminar.setMaximumSize(new java.awt.Dimension(50, 50));
-        jButtonEliminar.setMinimumSize(new java.awt.Dimension(50, 50));
-        jButtonEliminar.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel1.add(jButtonEliminar, java.awt.BorderLayout.EAST);
-
-        jToggleButtonAgregos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_gris.png"))); // NOI18N
-        jToggleButtonAgregos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_indigo.png"))); // NOI18N
-        jPanel1.add(jToggleButtonAgregos, java.awt.BorderLayout.WEST);
-
-        jPanelProductosOrden.add(jPanel1, java.awt.BorderLayout.SOUTH);
-
-        jPanelProductos.add(jPanelProductosOrden, java.awt.BorderLayout.EAST);
-
-        jPanelMain.add(jPanelProductos, "Productos");
-
         jPanelNewClient.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
         jPanelNewClient.setLayout(new java.awt.BorderLayout());
 
-        jPanel4.setLayout(new java.awt.GridLayout(4, 1));
+        jPanel4.setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setLayout(new java.awt.GridBagLayout());
+        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
 
         jTextFieldNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jTextFieldNombre.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
-        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(250, 60));
-        jPanel2.add(jTextFieldNombre, new java.awt.GridBagConstraints());
-
-        jPanel4.add(jPanel2);
-
-        jPanel6.setLayout(new java.awt.GridBagLayout());
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(130, 60));
+        jTextFieldNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldNombreKeyPressed(evt);
+            }
+        });
+        jPanel2.add(jTextFieldNombre);
 
         jTextFieldApellidos.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jTextFieldApellidos.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
         jTextFieldApellidos.setMinimumSize(new java.awt.Dimension(250, 60));
-        jTextFieldApellidos.setPreferredSize(new java.awt.Dimension(250, 60));
-        jPanel6.add(jTextFieldApellidos, new java.awt.GridBagConstraints());
-
-        jPanel4.add(jPanel6);
-
-        jPanel7.setLayout(new java.awt.GridBagLayout());
+        jTextFieldApellidos.setPreferredSize(new java.awt.Dimension(130, 60));
+        jTextFieldApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldApellidosKeyPressed(evt);
+            }
+        });
+        jPanel2.add(jTextFieldApellidos);
 
         jTextFieldTelefono.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jTextFieldTelefono.setPreferredSize(new java.awt.Dimension(250, 60));
+        jTextFieldTelefono.setPreferredSize(new java.awt.Dimension(130, 60));
         jTextFieldTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldTelefonoKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldTelefonoKeyTyped(evt);
             }
         });
-        jPanel7.add(jTextFieldTelefono, new java.awt.GridBagConstraints());
-
-        jPanel4.add(jPanel7);
-
-        jPanel3.setLayout(new java.awt.GridBagLayout());
+        jPanel2.add(jTextFieldTelefono);
 
         jButtonAddCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/add_cliente_color.png"))); // NOI18N
         jButtonAddCliente.setPreferredSize(new java.awt.Dimension(70, 70));
-        jPanel3.add(jButtonAddCliente, new java.awt.GridBagConstraints());
+        jPanel2.add(jButtonAddCliente);
 
-        jPanel4.add(jPanel3);
+        jPanel4.add(jPanel2, java.awt.BorderLayout.NORTH);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jTextFieldBusqueda.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldBusqueda.setPreferredSize(new java.awt.Dimension(300, 50));
+        jTextFieldBusqueda.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldBusquedaFocusLost(evt);
+            }
+        });
+        jPanel3.add(jTextFieldBusqueda, java.awt.BorderLayout.NORTH);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
+
+        jPanel3.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jPanel4.add(jPanel3, java.awt.BorderLayout.CENTER);
 
         jPanelNewClient.add(jPanel4, java.awt.BorderLayout.CENTER);
 
@@ -411,6 +438,31 @@ public class ReservasDetailView extends AbstractViewPanel {
         }
     }//GEN-LAST:event_jTextFieldTelefonoKeyTyped
 
+    private void jTextFieldBusquedaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldBusquedaFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldBusquedaFocusLost
+
+    private void jTextFieldNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jTextFieldApellidos.requestFocusInWindow();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNombreKeyPressed
+
+    private void jTextFieldApellidosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldApellidosKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jTextFieldTelefono.requestFocusInWindow();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldApellidosKeyPressed
+
+    private void jTextFieldTelefonoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            getPresenter().getOperation(ACTION_AGREGAR_CLIENTE).doAction();
+            jTextFieldBusqueda.requestFocusInWindow();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldTelefonoKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
@@ -449,8 +501,6 @@ public class ReservasDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelGoBack;
@@ -461,8 +511,11 @@ public class ReservasDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanelProductosOrden;
     private javax.swing.JPanel jPanelfecha;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinnerDuracion;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextFieldApellidos;
+    private javax.swing.JTextField jTextFieldBusqueda;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldNombreReserva;
     private javax.swing.JTextField jTextFieldTelefono;
@@ -486,6 +539,9 @@ public class ReservasDetailView extends AbstractViewPanel {
         Bindings.bind(jComboBoxCliente, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
                 getPresenter().getModel(PROP_CLIENTE)));
+        Bindings.bind(jTable1, new SelectionInList<Cliente>(
+                getPresenter().getModel(PROP_LISTA_CLIENTES),
+                getPresenter().getModel(PROP_CLIENTE)));
         Bindings.bind(jComboBoxHora, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_HORAS),
                 getPresenter().getModel(PROP_HORA_SELECCIONADA)));
@@ -502,10 +558,9 @@ public class ReservasDetailView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_DURACION), 0);
         Bindings.bind(jSpinnerDuracion, "value", getPresenter().getModel(PROP_DURACION));
 
-        Bindings.bind(jListListaProductos, new SelectionInList<ProductovOrden>(
-                getPresenter().getModel(PROP_LISTA_PRODUCTO),
-                getPresenter().getModel(PROP_PRODUCTO_SELECCIONADO)));
-
+//        Bindings.bind(jListListaProductos, new SelectionInList<ProductovOrden>(
+//                getPresenter().getModel(PROP_LISTA_PRODUCTO),
+//                getPresenter().getModel(PROP_PRODUCTO_SELECCIONADO)));
         jButtonCancelar.addActionListener(getPresenter().getOperation(ACTION_CANCELAR));
         jButtonEliminar.addActionListener(getPresenter().getOperation(ACTION_ELIMINAR));
         jButtonAceptar.addActionListener(getPresenter().getOperation(ACTION_ACEPTAR));
@@ -515,11 +570,11 @@ public class ReservasDetailView extends AbstractViewPanel {
         Bindings.bind(jTextFieldApellidos, getPresenter().getModel(PROP_APELLIDO_CLIENTE));
         Bindings.bind(jTextFieldTelefono, getPresenter().getModel(PROP_TELEFONO_CLIENTE));
 
-        jToggleButtonAgregos.addActionListener(getPresenter().getOperation(ACTION_MODO_AGREGO));
-        Bindings.bind(jToggleButtonAgregos, "selected", getPresenter().getModel(PROP_MODO_AGREGO));
-
-        Bindings.bind(jToggleButtonAgregos, "enabled", getPresenter().getModel(PROP_BOTTON_AGREGO_ENABLED));
+//        jToggleButtonAgregos.addActionListener(getPresenter().getOperation(ACTION_MODO_AGREGO));
+//        Bindings.bind(jToggleButtonAgregos, "selected", getPresenter().getModel(PROP_MODO_AGREGO));
+//        Bindings.bind(jToggleButtonAgregos, "enabled", getPresenter().getModel(PROP_BOTTON_AGREGO_ENABLED));
         Bindings.bind(jButtonShowProductos, "enabled", getPresenter().getModel(PROP_SHOW_PRODUCTOS));
+        Bindings.bind(jTextFieldBusqueda, getPresenter().getModel(PROP_CLIENTE_KEY_WORD));
 
     }
 
@@ -530,23 +585,62 @@ public class ReservasDetailView extends AbstractViewPanel {
         jComboBoxMinuto.setRenderer(new TimeCellRender("mm"));
         jComboBoxPMAM.setRenderer(new TimeCellRender("a"));
         ((SpinnerNumberModel) jSpinnerDuracion.getModel()).setMinimum(ConfiguracionDAO.getInstance().find(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO).getValor());
-
-        jListListaProductos.setCellRenderer(new ListCellRenderer<ProductovOrden>() {
-            @Override
-            public Component getListCellRendererComponent(JList<? extends ProductovOrden> list,
-                    ProductovOrden value, int index, boolean isSelected, boolean cellHasFocus) {
-                return new CellRenderPedido(value, isSelected);
-            }
-        });
-        jPanelProductoSelector.add(new ProductoVentaSelectorView(
-                getPresenter().getProductoSelectorPresenter()), BorderLayout.CENTER);
-
-        getPresenter().addBeanPropertyChangeListener(PROP_LISTA_PRODUCTO, (PropertyChangeEvent evt) -> {
-            jListListaProductos.revalidate();
-            jListListaProductos.repaint();
-        });
+//        jListListaProductos.setCellRenderer(new ListCellRenderer<ProductovOrden>() {
+//            @Override
+//            public Component getListCellRendererComponent(JList<? extends ProductovOrden> list,
+//                    ProductovOrden value, int index, boolean isSelected, boolean cellHasFocus) {
+//                return new CellRenderPedido(value, isSelected);
+//            }
+//        });
+//        jPanelProductoSelector.add(new ProductoVentaSelectorView(
+//                getPresenter().getProductoSelectorPresenter()), BorderLayout.CENTER);
+//
+//        getPresenter().addBeanPropertyChangeListener(PROP_LISTA_PRODUCTO, (PropertyChangeEvent evt) -> {
+//            jListListaProductos.revalidate();
+//            jListListaProductos.repaint();
+//        });
         jPanelGoBack.setVisible(false);
         jButtonShowProductos.setVisible(false);
+
+        jTable1.setModel(new BindableTableModel<Cliente>(jTable1) {
+            @Override
+            public int getColumnCount() {
+                return 3;
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                switch (column) {
+                    case 0:
+                        return "Nombre";
+                    case 1:
+                        return "Apellido";
+                    case 2:
+                        return "Telefono";
+                }
+                return null;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                switch (columnIndex) {
+                    case 0:
+                        return getRow(rowIndex).getNombrecliente();
+                    case 1:
+                        return getRow(rowIndex).getApellidocliente();
+                    case 2:
+                        return getRow(rowIndex).getTelefonocliente();
+                }
+                return null;
+            }
+        });
+        jTable1.getRowSorter().toggleSortOrder(0);
+
+        getPresenter().addBeanPropertyChangeListener(PROP_CLIENTE, (PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() != null) {
+                mostrarMainPanel();
+            }
+        });
     }
 
     @Override
@@ -569,6 +663,8 @@ public class ReservasDetailView extends AbstractViewPanel {
     private void mostrarPanelNuevoCliente() {
         CardLayout cards = (CardLayout) jPanelMain.getLayout();
         cards.show(jPanelMain, "Nuevo Cliente");
+        jTextFieldNombre.requestFocusInWindow();
+        jTextFieldBusqueda.setText(null);
         jPanelGoBack.setVisible(true);
     }
 }
