@@ -32,6 +32,7 @@ import com.jobits.pos.ui.venta.orden.VentaListOrdenesView;
 import com.jobits.pos.core.domain.venta.ResumenVentaAreaTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaUsuarioTablaModel;
+import com.jobits.pos.ui.mainmenu.MenuBarClass;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
@@ -67,6 +68,16 @@ public class VentaDetailView extends AbstractViewPanel {
         jTabbedPaneResumen = new javax.swing.JTabbedPane();
         jComboBoxSeleccionarVentaPorTurno = new javax.swing.JComboBox<>();
         jPanelExtracciones = new javax.swing.JPanel();
+        jPanelFooter = MaterialComponentsFactory.Containers.getPrimaryPanel();
+        jPanelTurnosTrabajo = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jComboBoxVentas = MaterialComponentsFactory.Displayers.getComboBox("Turnos");
+        jButtonCambiarTurno = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanelTerminarVentas = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonReabrirVentas = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonTerminar = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jPanelRefresh = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabelFecha = new javax.swing.JLabel();
+        jButtonRefresh = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelRoot = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelData = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTabbedPaneData = MaterialComponentsFactory.Containers.getTabPane();
@@ -112,16 +123,6 @@ public class VentaDetailView extends AbstractViewPanel {
         jPanelOperaciones = new javax.swing.JPanel();
         jTabbedPaneResumenD1 = new javax.swing.JTabbedPane();
         jPanelPagoTrabajadores = new javax.swing.JPanel();
-        jPanelFooter = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jPanelTurnosTrabajo = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jComboBoxVentas = MaterialComponentsFactory.Displayers.getComboBox("Turnos");
-        jButtonCambiarTurno = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanelTerminarVentas = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jButtonReabrirVentas = MaterialComponentsFactory.Buttons.getLinedButton();
-        jButtonTerminar = MaterialComponentsFactory.Buttons.getMaterialButton();
-        jPanelRefresh = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jLabelFecha = new javax.swing.JLabel();
-        jButtonRefresh = MaterialComponentsFactory.Buttons.getOutlinedButton();
 
         jPanelResumenDetallado.setLayout(new java.awt.BorderLayout());
         jPanelResumenDetallado.add(jTabbedPaneResumen, java.awt.BorderLayout.CENTER);
@@ -130,6 +131,60 @@ public class VentaDetailView extends AbstractViewPanel {
         jComboBoxSeleccionarVentaPorTurno.setToolTipText("Seleccione el turno a visualizar");
 
         jPanelExtracciones.setLayout(new java.awt.BorderLayout());
+
+        jPanelFooter.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 15));
+        jPanelFooter.setPreferredSize(new java.awt.Dimension(597, 60));
+        jPanelFooter.setLayout(new java.awt.BorderLayout());
+
+        jPanelTurnosTrabajo.setMinimumSize(new java.awt.Dimension(180, 44));
+        jPanelTurnosTrabajo.setPreferredSize(new java.awt.Dimension(180, 44));
+        jPanelTurnosTrabajo.setLayout(new java.awt.GridBagLayout());
+
+        jComboBoxVentas.setMinimumSize(new java.awt.Dimension(150, 50));
+        jComboBoxVentas.setPreferredSize(new java.awt.Dimension(150, 50));
+        jPanelTurnosTrabajo.add(jComboBoxVentas, new java.awt.GridBagConstraints());
+
+        jButtonCambiarTurno.setIcon(MaterialIcons.ADD);
+        jButtonCambiarTurno.setToolTipText(null);
+        jButtonCambiarTurno.setMaximumSize(new java.awt.Dimension(40, 40));
+        jButtonCambiarTurno.setMinimumSize(new java.awt.Dimension(40, 40));
+        jButtonCambiarTurno.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanelTurnosTrabajo.add(jButtonCambiarTurno, new java.awt.GridBagConstraints());
+
+        jPanelFooter.add(jPanelTurnosTrabajo, java.awt.BorderLayout.WEST);
+
+        jPanelTerminarVentas.setLayout(new java.awt.GridBagLayout());
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButtonReabrirVentas.setText(bundle.getString("label_reabrir_ventas")); // NOI18N
+        jButtonReabrirVentas.setEnabled(false);
+        jButtonReabrirVentas.setPreferredSize(new java.awt.Dimension(140, 50));
+        jPanelTerminarVentas.add(jButtonReabrirVentas, new java.awt.GridBagConstraints());
+
+        jButtonTerminar.setText("Terminar");
+        jButtonTerminar.setPreferredSize(new java.awt.Dimension(140, 50));
+        jButtonTerminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTerminarActionPerformed(evt);
+            }
+        });
+        jPanelTerminarVentas.add(jButtonTerminar, new java.awt.GridBagConstraints());
+
+        jPanelFooter.add(jPanelTerminarVentas, java.awt.BorderLayout.CENTER);
+
+        jPanelRefresh.setLayout(new java.awt.GridBagLayout());
+
+        jLabelFecha.setText("Del 15/03/19 al 25/03/19");
+        jLabelFecha.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha"));
+        jPanelRefresh.add(jLabelFecha, new java.awt.GridBagConstraints());
+
+        jButtonRefresh.setIcon(MaterialIcons.REFRESH);
+        jButtonRefresh.setMaximumSize(new java.awt.Dimension(40, 40));
+        jButtonRefresh.setMinimumSize(new java.awt.Dimension(40, 40));
+        jButtonRefresh.setPreferredSize(new java.awt.Dimension(40, 40));
+        jPanelRefresh.add(jButtonRefresh, new java.awt.GridBagConstraints());
+
+        jPanelFooter.add(jPanelRefresh, java.awt.BorderLayout.EAST);
 
         setOpaque(false);
         setLayout(new java.awt.BorderLayout());
@@ -430,62 +485,6 @@ public class VentaDetailView extends AbstractViewPanel {
 
         jPanelRoot.add(jPanelData, java.awt.BorderLayout.CENTER);
 
-        jPanelFooter.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 15));
-        jPanelFooter.setPreferredSize(new java.awt.Dimension(597, 60));
-        jPanelFooter.setLayout(new java.awt.BorderLayout());
-
-        jPanelTurnosTrabajo.setMinimumSize(new java.awt.Dimension(180, 44));
-        jPanelTurnosTrabajo.setPreferredSize(new java.awt.Dimension(180, 44));
-        jPanelTurnosTrabajo.setLayout(new java.awt.GridBagLayout());
-
-        jComboBoxVentas.setMinimumSize(new java.awt.Dimension(150, 50));
-        jComboBoxVentas.setPreferredSize(new java.awt.Dimension(150, 50));
-        jPanelTurnosTrabajo.add(jComboBoxVentas, new java.awt.GridBagConstraints());
-
-        jButtonCambiarTurno.setIcon(MaterialIcons.ADD);
-        jButtonCambiarTurno.setToolTipText(null);
-        jButtonCambiarTurno.setMaximumSize(new java.awt.Dimension(40, 40));
-        jButtonCambiarTurno.setMinimumSize(new java.awt.Dimension(40, 40));
-        jButtonCambiarTurno.setPreferredSize(new java.awt.Dimension(40, 40));
-        jPanelTurnosTrabajo.add(jButtonCambiarTurno, new java.awt.GridBagConstraints());
-
-        jPanelFooter.add(jPanelTurnosTrabajo, java.awt.BorderLayout.WEST);
-
-        jPanelTerminarVentas.setLayout(new java.awt.GridBagLayout());
-
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
-        jButtonReabrirVentas.setText(bundle.getString("label_reabrir_ventas")); // NOI18N
-        jButtonReabrirVentas.setEnabled(false);
-        jButtonReabrirVentas.setPreferredSize(new java.awt.Dimension(140, 50));
-        jPanelTerminarVentas.add(jButtonReabrirVentas, new java.awt.GridBagConstraints());
-
-        jButtonTerminar.setText("Terminar");
-        jButtonTerminar.setPreferredSize(new java.awt.Dimension(140, 50));
-        jButtonTerminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonTerminarActionPerformed(evt);
-            }
-        });
-        jPanelTerminarVentas.add(jButtonTerminar, new java.awt.GridBagConstraints());
-
-        jPanelFooter.add(jPanelTerminarVentas, java.awt.BorderLayout.CENTER);
-
-        jPanelRefresh.setLayout(new java.awt.GridBagLayout());
-
-        jLabelFecha.setText("Del 15/03/19 al 25/03/19");
-        jLabelFecha.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha"));
-        jPanelRefresh.add(jLabelFecha, new java.awt.GridBagConstraints());
-
-        jButtonRefresh.setIcon(MaterialIcons.REFRESH);
-        jButtonRefresh.setMaximumSize(new java.awt.Dimension(40, 40));
-        jButtonRefresh.setMinimumSize(new java.awt.Dimension(40, 40));
-        jButtonRefresh.setPreferredSize(new java.awt.Dimension(40, 40));
-        jPanelRefresh.add(jButtonRefresh, new java.awt.GridBagConstraints());
-
-        jPanelFooter.add(jPanelRefresh, java.awt.BorderLayout.EAST);
-
-        jPanelRoot.add(jPanelFooter, java.awt.BorderLayout.SOUTH);
-
         add(jPanelRoot, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -590,6 +589,7 @@ public class VentaDetailView extends AbstractViewPanel {
         Bindings.bind(jTextFieldPropina, getPresenter().getModel(PROP_PROPINA_TOTAL));//TODO: manejar enabled
         Bindings.bind(fileChooser, "selectedFile", getPresenter().getModel(PROP_FILE_FOR_EXPORT));
         Bindings.bind(jLabelFecha, getPresenter().getModel(PROP_FECHA));
+        Bindings.bind(MenuBarClass.getInstance().getjLabelFecha(), getPresenter().getModel(PROP_FECHA));
 
 //        jButtonImprimirZ.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_Z));
 //        jButtonImprimirAutorizos.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_AUTORIZOS));

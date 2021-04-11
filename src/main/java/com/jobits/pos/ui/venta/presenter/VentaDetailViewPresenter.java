@@ -25,6 +25,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,7 +42,8 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             ACTION_TERMINAR_VENTAS = "Terminar Ventas",
             ACTION_REABRIR_VENTA = "Reabrir Venta",
             ACTION_REFRESCAR_VENTA = "Refrescar Venta",
-            ACTION_CREAR_NUEVO_TURNO = "Crear Nueva Turno",
+            ACTION_CREAR_NUEVO_TURNO = "Crear Nuevo Turno",
+            ACTION_CAMBIAR_TURNO = "Cambiar Turno",
             //Area
             ACTION_IMPRIMIR_RESUMEN_AREA = "Imprimir resumen area",
             //Dpte
@@ -191,6 +193,13 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             }
 
         });
+        registerOperation(new AbstractViewAction(ACTION_CAMBIAR_TURNO) {
+            @Override
+            public Optional doAction() {
+                onCambiarTurnoClick();
+                return Optional.empty();
+            }
+        });
         registerOperation(new AbstractViewAction(ACTION_IMPIMIR_RESUMEN_MESA) {
             @Override
             public Optional doAction() {
@@ -228,6 +237,21 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             Application.getInstance().getNavigator().navigateUp();
         }
+    }
+
+    private void onCambiarTurnoClick() {
+        if (getBean().getList_ventas().size() > 1) {
+            int seleccion = JOptionPane.showOptionDialog(null, "Seleccione la venta", "Seleccion",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                    null, getBean().getList_ventas().toArray(), getBean().getVenta_seleccionada());
+            if (seleccion != JOptionPane.CLOSED_OPTION) {
+                getBean().setVenta_seleccionada(getBean().getList_ventas().get(seleccion));
+                updateBeanData();
+            }
+        } else {
+            Application.getInstance().getNotificationService().showDialog("No existen turnos para cambiar", TipoNotificacion.ERROR);
+        }
+
     }
 
     private void onReabrirVentaCLick() {
@@ -278,20 +302,25 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     }
 
     private void onCrearNuevoTurnoClick() {
-        if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea terminar el turno?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            new LongProcessActionServiceImpl("Creando IPVs.........") {
-                @Override
-                protected void longProcessMethod() {
-                    Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
-                    if (venta != null) {
-                        getBean().getList_ventas().add(venta);
-                        getBean().setVenta_seleccionada(venta);
+        if (service.canOpenNuevoTurno(getBean().getVenta_seleccionada().getFecha())) {
+            if ((boolean) Application.getInstance().getNotificationService().
+                    showDialog("Desea terminar el turno?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                new LongProcessActionServiceImpl("Creando IPVs.........") {
+                    @Override
+                    protected void longProcessMethod() {
+                        Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
+                        if (venta != null) {
+                            getBean().getList_ventas().add(venta);
+                            getBean().setVenta_seleccionada(venta);
+                        }
                     }
-                }
-            }.performAction(null);
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                }.performAction(null);
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            }
+        } else {
+            Application.getInstance().getNotificationService().showDialog("No se pueden crear mas turnos", TipoNotificacion.ERROR);
         }
+
     }
 
     private void updateBeanData() {
