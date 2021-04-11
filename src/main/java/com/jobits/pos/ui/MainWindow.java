@@ -16,6 +16,7 @@ import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.mainmenu.MenuBarClass;
 import com.jobits.pos.ui.utils.PopUpDialog;
+import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.ui.components.swing.containers.MaterialFrame;
 import com.jobits.ui.components.swing.containers.MaterialWindow;
 import java.awt.BorderLayout;
@@ -102,6 +103,7 @@ public class MainWindow extends JFrame {
     }
 
     public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
+
         if (viewUIDName.equals(LogInView.VIEW_NAME)) {
 //            PopUpDialog.showPopUP(ViewFacade.getView(viewUIDName, presenter));
             loginView = LogInView.getInstance();
@@ -114,6 +116,9 @@ public class MainWindow extends JFrame {
             PopUpDialog.showPopUP(ViewFacade.getView(viewUIDName, presenter));
             return true;
         }
+
+        MenuBarClass.getInstance().getjLabelFecha().setVisible(viewUIDName.equals(VentaDetailView.VIEW_NAME));
+        MenuBarClass.getInstance().getjLabelFechaText().setVisible(viewUIDName.equals(VentaDetailView.VIEW_NAME));
 
         if (viewUIDName.equals(MainMenuView.VIEW_NAME)) {
             rootView = RootView.getInstance();
