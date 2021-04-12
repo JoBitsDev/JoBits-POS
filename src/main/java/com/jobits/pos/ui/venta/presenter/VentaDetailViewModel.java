@@ -299,7 +299,8 @@ public class VentaDetailViewModel extends AbstractViewModel {
      */
     public void setList_ventas(ArrayListModel<Venta> list_ventas) {
         ArrayListModel<Venta> oldList_ventas = this.list_ventas;
-        this.list_ventas = list_ventas;
+        this.list_ventas.clear();
+        this.list_ventas.addAll(list_ventas);
         firePropertyChange(PROP_LIST_VENTAS, oldList_ventas, list_ventas);
     }
 

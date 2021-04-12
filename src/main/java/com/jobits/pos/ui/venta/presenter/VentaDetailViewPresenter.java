@@ -307,12 +307,11 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                     showDialog("Desea terminar el turno?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
                 new LongProcessActionServiceImpl("Creando IPVs.........") {
                     @Override
-                    protected void longProcessMethod() {
-                        Venta venta = service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
-                        if (venta != null) {
-                            getBean().getList_ventas().add(venta);
-                            getBean().setVenta_seleccionada(venta);
-                        }
+                    protected void longProcessMethod() {//TODO: No se muestran las ecepciones que se lanzan dentro de este metodo
+                        service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
+                        ventas = service.getVentasDeFecha(getBean().getVenta_seleccionada().getFecha());
+                        setListToBean();
+                        updateBeanData();
                     }
                 }.performAction(null);
                 Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
