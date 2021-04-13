@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.clientes.ClientesDetailService;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.core.repo.autenticacion.PersonalDAO;
@@ -97,7 +98,8 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                     PosDesktopUiModule.getInstance().getImplementation(OrdenService.class),
                     ReservaCoreModule.getInstance().getImplementation(ReservaUseCase.class),
                     PosDesktopUiModule.getInstance().getImplementation(VentaListService.class),
-                    PosDesktopUiModule.getInstance().getImplementation(MesaService.class));
+                    PosDesktopUiModule.getInstance().getImplementation(MesaService.class),
+                    PosDesktopUiModule.getInstance().getImplementation(ClientesDetailService.class));
         }
         if (UbicacionMesaListener.getInstance() == null) {
             UbicacionMesaListener.initInstance(
