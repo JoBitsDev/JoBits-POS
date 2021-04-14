@@ -9,6 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.ProductovOrden;
+import com.jobits.pos.core.domain.models.escandallos.InsumoRegistro;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.time.LocalDate;
 import java.util.Date;
@@ -63,7 +64,7 @@ public class VentaResumenViewModel extends AbstractViewModel {
 
     public static final String PROP_SELECCIONADA_VENTA = "seleccionada_venta";
 
-    private ArrayListModel<ProductoInsumo> lista_costos = new ArrayListModel();
+    private ArrayListModel<InsumoRegistro> lista_costos = new ArrayListModel();
 
     public static final String PROP_LISTA_COSTOS = "lista_costos";
 
@@ -193,7 +194,7 @@ public class VentaResumenViewModel extends AbstractViewModel {
      *
      * @return the value of lista_costos
      */
-    public ArrayListModel<ProductoInsumo> getLista_costos() {
+    public ArrayListModel<InsumoRegistro> getLista_costos() {
         return lista_costos;
     }
 
@@ -202,8 +203,8 @@ public class VentaResumenViewModel extends AbstractViewModel {
      *
      * @param lista_costos new value of lista_costos
      */
-    public void setLista_costos(ArrayListModel<ProductoInsumo> lista_costos) {
-        ArrayListModel<ProductoInsumo> oldLista_costos = this.lista_costos;
+    public void setLista_costos(ArrayListModel<InsumoRegistro> lista_costos) {
+        ArrayListModel<InsumoRegistro> oldLista_costos = this.lista_costos;
         this.lista_costos = lista_costos;
         firePropertyChange(PROP_LISTA_COSTOS, oldLista_costos, lista_costos);
     }
