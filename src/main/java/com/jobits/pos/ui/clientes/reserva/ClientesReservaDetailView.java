@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class ClientesReservaDetailView extends AbstractViewPanel {
 
-    public static final String VIEW_NAME = "Detalles Cliente";
+    public static final String VIEW_NAME = "Detalles Cliente Reserva";
 
     public ClientesReservaDetailView(AbstractViewPresenter presenter) {
         super(presenter);

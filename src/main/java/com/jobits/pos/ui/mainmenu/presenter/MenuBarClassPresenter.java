@@ -28,6 +28,8 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
+import com.jobits.pos.ui.venta.VentaDetailView;
+import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import org.jobits.app.repo.UbicacionConexionService;
@@ -50,6 +52,12 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
     public static final String ACTION_OCULTAR_STATUS_BAR = "Ocultar Barra de Estado";
     public static final String ACTION_OCULTAR_MENU_LATERAL = "Ocultar Menu Lateral";
     public static final String ACTION_SIEMPRE_PRIMER_PLANO = "Siempre Primer Plano";
+    //Venta
+    public static final String ACTION_CAMBIAR_TURNO = "Cambiar Turno";
+    public static final String ACTION_NUEVO_TURNO = "Nuevo Turno";
+    public static final String ACTION_REABRIR_VENTA = "Reabrir Venta";
+    public static final String ACTION_TERMINAR_VENTA = "Terminar Venta";
+    public static final String ACTION_TERMINAR_EXPORTAR_VENTA = "Terminar y Exportar Venta";
     //Herramientas
     public static final String ACTION_SHOW_COPIAS_SEGURIDAD = "Copias de Seguridad";
     public static final String ACTION_SHOW_UBICACIONES = "Ubicaciones";
@@ -162,6 +170,41 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_NUEVO_TURNO) {
+            @Override
+            public Optional doAction() {
+                executeVentaAction(ACTION_CREAR_NUEVO_TURNO);
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_CAMBIAR_TURNO) {
+            @Override
+            public Optional doAction() {
+                executeVentaAction(ACTION_CAMBIAR_TURNO);
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_REABRIR_VENTA) {
+            @Override
+            public Optional doAction() {
+                executeVentaAction(ACTION_REABRIR_VENTA);
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_TERMINAR_VENTA) {
+            @Override
+            public Optional doAction() {
+                executeVentaAction(ACTION_TERMINAR_VENTAS);
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_TERMINAR_EXPORTAR_VENTA) {
+            @Override
+            public Optional doAction() {
+                executeVentaAction(ACTION_TERMINAR_EXPORTAR);
+                return Optional.empty();
+            }
+        });
 
         registerOperation(new AbstractViewAction(ACTION_SHOW_COPIAS_SEGURIDAD) {
             @Override
@@ -196,6 +239,16 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             }
         });
 
+    }
+
+    private void executeVentaAction(String operationName) {
+        String currentViewName = RootView.getInstance().getCurrentViewName(null);
+        if (currentViewName != null) {
+            if (currentViewName.equals(VentaDetailView.VIEW_NAME)) {
+                VentaDetailView vdv = (VentaDetailView) RootView.getInstance().getCurrentView();
+                vdv.getPresenter().getOperation(operationName).doAction();
+            }
+        }
     }
 
 }

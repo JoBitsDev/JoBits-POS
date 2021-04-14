@@ -126,6 +126,8 @@ import org.jobits.app.repo.UbicacionConexionService;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import com.jobits.pos.ui.venta.resumen.ResumenMainview;
 import com.jobits.pos.controller.venta.VentaResumenServiceOld;
+import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
+import com.jobits.pos.ui.venta.orden.presenter.ProductoEnCalienteViewPresenter;
 
 /**
  *
@@ -203,6 +205,8 @@ public class PresenterFacade {
                 return new ReportarBugViewPresenter();
             case OrdenLogView.VIEW_NAME:
                 return new OrdenLogViewPresenter(null);
+            case ProductoEnCalienteView.VIEW_NAME:
+                return new ProductoEnCalienteViewPresenter(null);
             case ReservasDetailView.VIEW_NAME:
                 return new ReservaDetailViewPresenter(new Reserva(), true);
             case CategoriaDetailView.VIEW_NAME:

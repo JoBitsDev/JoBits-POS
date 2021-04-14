@@ -20,7 +20,7 @@ import com.jobits.pos.ui.utils.BindableTableModel;
  */
 public class ClientesListView extends AbstractListViewPanel<Cliente> {
 
-    public static final String VIEW_NAME = "Clientes (OLD)";
+    public static final String VIEW_NAME = "Clientes";
 
     public ClientesListView(AbstractListViewPresenter presenter) {
         super(presenter);

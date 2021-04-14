@@ -104,6 +104,10 @@ public class ReservaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_TELEFONO_CLIENTE = "telefono_cliente";
 
+    private String cliente_key_word = null;
+
+    public static final String PROP_CLIENTE_KEY_WORD = "cliente_key_word";
+
     //UBICACIONES
     private Ubicacion ubicacion_seleccionada;
 
@@ -121,6 +125,26 @@ public class ReservaDetailViewModel extends AbstractViewModel {
     private boolean show_productos = false;
 
     public static final String PROP_SHOW_PRODUCTOS = "show_productos";
+
+    /**
+     * Get the value of cliente_key_word
+     *
+     * @return the value of cliente_key_word
+     */
+    public String getCliente_key_word() {
+        return cliente_key_word;
+    }
+
+    /**
+     * Set the value of cliente_key_word
+     *
+     * @param cliente_key_word new value of cliente_key_word
+     */
+    public void setCliente_key_word(String cliente_key_word) {
+        String oldCliente_key_word = this.cliente_key_word;
+        this.cliente_key_word = cliente_key_word;
+        firePropertyChange(PROP_CLIENTE_KEY_WORD, oldCliente_key_word, cliente_key_word);
+    }
 
     /**
      * Get the value of lista_categorias

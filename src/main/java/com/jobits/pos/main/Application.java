@@ -75,9 +75,9 @@ public class Application {
 
     public static void setupLogging() throws Exception {
         PrintStream out = new PrintStream(
-                new FileOutputStream(LOG_FILE_PATH, false), true);
+                new FileOutputStream(LOG_FILE_PATH, true), true);
         PrintStream err = new PrintStream(
-                new FileOutputStream(ERR_FILE_PATH, false), true);
+                new FileOutputStream(ERR_FILE_PATH, true), true);
         System.setOut(out);
         System.setErr(err);
 

@@ -14,7 +14,12 @@ import com.jobits.pos.ui.View;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -44,8 +49,9 @@ public class LicenceDialogView extends JPanel implements View {
         jPanelTop = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanelInfo = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jideLabelIdentificador = new javax.swing.JLabel();
+        jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jideLabelEstadoLic = new javax.swing.JLabel();
+        jideLabelIdentificador = new javax.swing.JLabel();
         jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -62,17 +68,22 @@ public class LicenceDialogView extends JPanel implements View {
         jTextField8 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
+        jButton1 = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelActions = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonActivar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
-        setMaximumSize(new java.awt.Dimension(710, 210));
-        setMinimumSize(new java.awt.Dimension(710, 173));
+        setMaximumSize(new java.awt.Dimension(890, 215));
+        setMinimumSize(new java.awt.Dimension(890, 215));
+        setName(""); // NOI18N
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(710, 210));
+        setPreferredSize(new java.awt.Dimension(890, 215));
         setLayout(new java.awt.BorderLayout());
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        jPanel2.setMaximumSize(new java.awt.Dimension(890, 215));
+        jPanel2.setMinimumSize(new java.awt.Dimension(890, 215));
+        jPanel2.setPreferredSize(new java.awt.Dimension(890, 215));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jPanelTop.setBackground(new java.awt.Color(204, 204, 204));
@@ -89,14 +100,18 @@ public class LicenceDialogView extends JPanel implements View {
 
         jPanelInfo.setLayout(new java.awt.BorderLayout());
 
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jideLabelEstadoLic.setText("Estado de la licencia");
+        jPanel5.add(jideLabelEstadoLic, java.awt.BorderLayout.WEST);
+
         jideLabelIdentificador.setFont(new java.awt.Font(".SF NS Text", 1, 14)); // NOI18N
         jideLabelIdentificador.setForeground(new java.awt.Color(204, 0, 0));
         jideLabelIdentificador.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jideLabelIdentificador.setText("R-XXXX-XXXX-XXXX");
-        jPanelInfo.add(jideLabelIdentificador, java.awt.BorderLayout.PAGE_END);
+        jPanel5.add(jideLabelIdentificador, java.awt.BorderLayout.EAST);
 
-        jideLabelEstadoLic.setText("Estado de la licencia");
-        jPanelInfo.add(jideLabelEstadoLic, java.awt.BorderLayout.PAGE_START);
+        jPanelInfo.add(jPanel5, java.awt.BorderLayout.NORTH);
 
         jTextField2.setColumns(4);
         jTextField2.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -229,6 +244,18 @@ public class LicenceDialogView extends JPanel implements View {
         });
         jPanel1.add(jTextField9);
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/pegar_indigo.png"))); // NOI18N
+        jButton1.setToolTipText("Pegar Llave Licencia");
+        jButton1.setMaximumSize(new java.awt.Dimension(40, 40));
+        jButton1.setMinimumSize(new java.awt.Dimension(40, 40));
+        jButton1.setPreferredSize(new java.awt.Dimension(40, 40));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+
         jPanelInfo.add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(jPanelInfo, java.awt.BorderLayout.CENTER);
@@ -341,7 +368,13 @@ public class LicenceDialogView extends JPanel implements View {
         NavigationService.getInstance().navigateUp(); //TODO:arreglar pifia
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        pasteContents();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonActivar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JLabel jLabel1;
@@ -354,6 +387,7 @@ public class LicenceDialogView extends JPanel implements View {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelActions;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelTop;
@@ -415,6 +449,24 @@ public class LicenceDialogView extends JPanel implements View {
                 }
                 evt.consume();
                 break;
+        }
+    }
+
+    private void pasteContents() {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        try {
+            String a = (String) clipboard.getData(DataFlavor.stringFlavor);
+            if (a.length() == 32) {
+                jTextField2.setText(a.substring(0, 4));
+                jTextField3.setText(a.substring(4, 8));
+                jTextField4.setText(a.substring(8, 12));
+                jTextField5.setText(a.substring(12, 16));
+                jTextField6.setText(a.substring(16, 20));
+                jTextField7.setText(a.substring(20, 24));
+                jTextField8.setText(a.substring(24, 28));
+                jTextField9.setText(a.substring(28, 32));
+            }
+        } catch (UnsupportedFlavorException | IOException ex) {
         }
     }
 }

@@ -18,7 +18,7 @@ import com.jobits.pos.ui.utils.BindableTableModel;
  */
 public class ClientesReservaListView extends AbstractListViewPanel<Cliente> {
 
-    public static final String VIEW_NAME = "Clientes";
+    public static final String VIEW_NAME = "Clientes Reserva";
 
     public ClientesReservaListView(AbstractListViewPresenter presenter) {
         super(presenter);

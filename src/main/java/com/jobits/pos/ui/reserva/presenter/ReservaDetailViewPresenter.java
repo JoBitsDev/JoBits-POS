@@ -20,7 +20,9 @@ import com.jobits.pos.reserva.core.usecase.UbicacionUseCase;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorPresenter;
+import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoField;
@@ -47,6 +49,7 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     public static final String ACTION_ELIMINAR = "Eliminar";
     public static final String ACTION_MODO_AGREGO = "Agrego";
     public static final String ACTION_AGREGAR_CLIENTE = "Agregar Cliente";
+    public static final String PROP_TO_MAIN_VIEW = "To Main View";
 
     private final boolean creatingMode;
 
@@ -156,6 +159,26 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     }
 
     private void addListeners() {
+        addBeanPropertyChangeListener(PROP_CLIENTE_KEY_WORD, (PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() != null) {
+                String keyWord = ((String) evt.getNewValue()).toLowerCase();
+                List<Cliente> clienteList = new ArrayList<>();
+                List<Cliente> temporalLIst = clienteUseCase.findAll();
+                if (keyWord.isEmpty() || keyWord.isBlank()) {
+                    getBean().setLista_clientes(new ArrayListModel<>(temporalLIst));
+                } else {
+                    for (Cliente c : temporalLIst) {
+                        if (c.getNombrecliente().toLowerCase().contains(keyWord)
+                                || c.getApellidocliente().toLowerCase().contains(keyWord)
+                                || c.getTelefonocliente().contains(keyWord)) {
+                            clienteList.add(c);
+                        }
+                    }
+                    getBean().setLista_clientes(new ArrayListModel<>(clienteList));
+                }
+            }
+        });
+
 //        getBean().addPropertyChangeListener(PROP_MESA_SELECCIONADA, (PropertyChangeEvent evt) -> {
 //            Mesa m = (Mesa) evt.getNewValue();
 //            if (m != null) {
@@ -198,12 +221,13 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea registrar a: " + getBean().getNombre_cliente(),
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            Cliente c = new Cliente();
-            c.setNombrecliente(getBean().getNombre_cliente());
-            c.setApellidocliente(getBean().getApellido_cliente());
-            c.setTelefonocliente(getBean().getTelefono_cliente());
-            clienteUseCase.create(c);
+            Cliente cliente = new Cliente();
+            cliente.setNombrecliente(getBean().getNombre_cliente());
+            cliente.setApellidocliente(getBean().getApellido_cliente());
+            cliente.setTelefonocliente(getBean().getTelefono_cliente());
+            clienteUseCase.create(cliente);
             getBean().setLista_clientes(new ArrayListModel<>(clienteUseCase.findAll()));
+//            firePropertyChange(PROP_TO_MAIN_VIEW, null, cliente);
             getBean().setNombre_cliente(null);
             getBean().setApellido_cliente(null);
             getBean().setTelefono_cliente(null);

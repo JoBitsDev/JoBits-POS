@@ -16,6 +16,7 @@ import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewModel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.pos.ui.utils.BindableTableModel;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -23,7 +24,7 @@ import com.jobits.pos.ui.utils.BindableTableModel;
  */
 public class ClientesDetailView extends AbstractViewPanel {
 
-    public static final String VIEW_NAME = "Detalles Cliente (OLD)";
+    public static final String VIEW_NAME = "Detalles Cliente";
 
     public ClientesDetailView(AbstractViewPresenter presenter) {
         super(presenter);
@@ -39,7 +40,7 @@ public class ClientesDetailView extends AbstractViewPanel {
         jPanelInventario = new javax.swing.JPanel();
         jPanel9 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanelPersonalData = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelPersonalData = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelNombreApellidos = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre*");
@@ -62,7 +63,7 @@ public class ClientesDetailView extends AbstractViewPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jPanelTable = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelTable = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableHistorial = new javax.swing.JTable();
         jPanelOpciones = MaterialComponentsFactory.Containers.getPrimaryPanel();
@@ -110,11 +111,12 @@ public class ClientesDetailView extends AbstractViewPanel {
 
         jPanelPersonalData.add(jPanel7);
 
-        jPanelInfoPersonal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20), "Detalles"));
+        jPanelInfoPersonal.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20), "Detalles"));
+        jPanelInfoPersonal.setPreferredSize(new java.awt.Dimension(519, 300));
         jPanelInfoPersonal.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 100));
-        jPanel2.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
+        jPanel2.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
 
         jTextFieldTelefono.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jTextFieldTelefono.setPreferredSize(new java.awt.Dimension(150, 80));
@@ -141,7 +143,7 @@ public class ClientesDetailView extends AbstractViewPanel {
         jPanelInfoPersonal.add(jPanel2, java.awt.BorderLayout.CENTER);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 50, 1, 1));
-        jPanel6.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
+        jPanel6.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/telefono_indigo.png"))); // NOI18N
         jPanel6.add(jLabel5);
@@ -157,11 +159,12 @@ public class ClientesDetailView extends AbstractViewPanel {
 
         jPanelPersonalData.add(jPanelInfoPersonal);
 
-        jPanelAddress.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20), bundle.getString("direccion"))); // NOI18N
+        jPanelAddress.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20), bundle.getString("direccion"))); // NOI18N
+        jPanelAddress.setPreferredSize(new java.awt.Dimension(519, 300));
         jPanelAddress.setLayout(new java.awt.BorderLayout());
 
         jPanel8.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 100));
-        jPanel8.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
+        jPanel8.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
 
         jTextFieldLineAddress.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         jTextFieldLineAddress.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
@@ -186,7 +189,7 @@ public class ClientesDetailView extends AbstractViewPanel {
         jPanelAddress.add(jPanel8, java.awt.BorderLayout.CENTER);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 50, 1, 1));
-        jPanel4.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
+        jPanel4.setLayout(new java.awt.GridLayout(3, 1, 0, 5));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/calle_indigo.png"))); // NOI18N
         jPanel4.add(jLabel1);
@@ -340,7 +343,7 @@ public class ClientesDetailView extends AbstractViewPanel {
                     case 0:
                         return java.util.ResourceBundle.getBundle("Strings").getString("label_codigo");
                     case 1:
-                        return "Fecha";
+                        return "Hora";
                     case 2:
                         return "Valor Monetario";
                 }
@@ -351,11 +354,12 @@ public class ClientesDetailView extends AbstractViewPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((Orden) getListModel().getElementAt(rowIndex)).getCodOrden();
+                        return getRow(rowIndex).getCodOrden();
                     case 1:
-                        return ((Orden) getListModel().getElementAt(rowIndex)).getHoraComenzada();
+                        SimpleDateFormat sdf =  new SimpleDateFormat("hh:mm aa");
+                        return sdf.format(getRow(rowIndex).getHoraComenzada());
                     case 2:
-                        return ((Orden) getListModel().getElementAt(rowIndex)).getOrdenvalorMonetario();
+                        return getRow(rowIndex).getOrdenvalorMonetario();
                 }
                 return null;
             }
