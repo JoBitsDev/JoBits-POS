@@ -27,7 +27,7 @@ import java.awt.event.FocusListener;
  */
 public class LogInView extends AbstractViewPanel {
 
-    public static final String VIEW_NAME = "Autenticación";
+    public static final String VIEW_NAME = "Login";
 
     public static LogInView getInstance() {
         return new LogInView(new LoginViewPresenter(new LogInController(new AuthorizerImpl())));
