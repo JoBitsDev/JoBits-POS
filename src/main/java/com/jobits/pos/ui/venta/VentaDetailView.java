@@ -24,7 +24,6 @@ import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.gastos.GastosView;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.trabajadores.AsistenciaPersonalView;
 import com.jobits.pos.ui.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
@@ -56,7 +55,7 @@ public class VentaDetailView extends AbstractViewPanel {
     MesaListView mesaView;
     private JFileChooser fileChooser;
 
-    public VentaDetailView(AbstractViewPresenter presenter) {
+    public VentaDetailView(VentaDetailViewPresenter presenter) {
         super(presenter);
     }
 
@@ -633,6 +632,7 @@ public class VentaDetailView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_LIST_VENTAS),
                 getPresenter().getModel(PROP_VENTA_SELECCIONADA)));
         Bindings.bind(jButtonCambiarTurno, "enabled", getPresenter().getModel(PROP_CAMBIAR_TURNO_ENABLED));
+//        Bindings.bind(jPanelResumen, "visible", getPresenter().getModel(PROP_SHOW_PANELES));
         jButtonCambiarTurno.addActionListener(getPresenter().getOperation(ACTION_CREAR_NUEVO_TURNO));
 
         updateGraficasResumenGeneralVentas();
@@ -655,11 +655,11 @@ public class VentaDetailView extends AbstractViewPanel {
         jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
-        if ((VentaDetailViewPresenter) getPresenter() != null) {
-            jPanelVentas.add(new VentaListOrdenesView(((VentaDetailViewPresenter) getPresenter()).getVentaOrdenListViewPresenter()));
-            jPanelPagoTrabajadores.add(new AsistenciaPersonalView(((VentaDetailViewPresenter) getPresenter()).getAsistenciaPersonalPresenter()));
+        if (getPresenter() != null) {
+            jPanelVentas.add(new VentaListOrdenesView((getPresenter()).getVentaOrdenListViewPresenter()));
+            jPanelPagoTrabajadores.add(new AsistenciaPersonalView((getPresenter()).getAsistenciaPersonalPresenter()));
             jTabbedPaneResumenD1.addTab("Extracciones Caja", jPanelExtracciones);
-            jPanelExtracciones.add(new GastosView(((VentaDetailViewPresenter) getPresenter()).getGastosPresenter()));
+            jPanelExtracciones.add(new GastosView((getPresenter()).getGastosPresenter()));
         }
     }
 
@@ -940,4 +940,10 @@ public class VentaDetailView extends AbstractViewPanel {
 
         return c;
     }
+
+    @Override
+    public VentaDetailViewPresenter getPresenter() {
+        return (VentaDetailViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
