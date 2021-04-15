@@ -126,6 +126,8 @@ import org.jobits.app.repo.UbicacionConexionService;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import com.jobits.pos.ui.venta.resumen.ResumenMainview;
 import com.jobits.pos.controller.venta.VentaResumenServiceOld;
+import com.jobits.pos.ui.login.ChangeUserView;
+import com.jobits.pos.ui.login.presenter.ChangeUserViewPresenter;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoEnCalienteViewPresenter;
 
@@ -144,6 +146,8 @@ public class PresenterFacade {
                 return new LoginViewPresenter(new LogInController(new AuthorizerImpl()));
             case AcercaDeView.VIEW_NAME:
                 return new AcercaDeViewPresenter();
+            case ChangeUserView.VIEW_NAME:
+                return new ChangeUserViewPresenter(new LogInController(new AuthorizerImpl()));
             case UbicacionView.VIEW_NAME:
                 return new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class));
             case MainMenuView.VIEW_NAME:
