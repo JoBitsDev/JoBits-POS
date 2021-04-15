@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.venta.resumen;
 
-import com.jobits.pos.core.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.models.escandallos.InsumoRegistro;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.utils.BindableTableModel;
@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author Home
  */
-public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayReviewWrapper, ProductoInsumo> {
+public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayReviewWrapper, InsumoRegistro> {
 
     public static final String VIEW_NAME = "Resumen Costo View";
 
@@ -32,9 +32,9 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
         jTableMain.getColumnModel().getColumn(0).setPreferredWidth(200);
         jTableMain.getColumnModel().getColumn(1).setPreferredWidth(50);
         jTableMain.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
+        jTableDetail.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
-        jTableDetail.getColumnModel().getColumn(4).setCellRenderer(utils.numberColumCellRender());
     }
 
     @Override
@@ -84,11 +84,11 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
     }
 
     @Override
-    public BindableTableModel<ProductoInsumo> generateDetailTableModel() {
-        return new BindableTableModel<ProductoInsumo>(jTableDetail) {
+    public BindableTableModel<InsumoRegistro> generateDetailTableModel() {
+        return new BindableTableModel<InsumoRegistro>(jTableDetail) {
             @Override
             public int getColumnCount() {
-                return 5;
+                return 4;
 
             }
 
@@ -98,12 +98,10 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
                     case 0:
                         return "Insumo";
                     case 1:
-                        return "U/M";
-                    case 2:
                         return "Costo Unitario";
-                    case 3:
+                    case 2:
                         return "Cantidad";
-                    case 4:
+                    case 3:
                         return "Costo (" + R.COIN_SUFFIX + ")";
                 }
                 return null;
@@ -111,17 +109,15 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                ProductoInsumo i = getRow(rowIndex);
+                InsumoRegistro i = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return i.getInsumo().getNombre();
+                        return i.getNombreInsumo();
                     case 1:
-                        return i.getInsumo().getUm();
+                        return i.getCantidad() != 0 ? utils.setDosLugaresDecimalesFloat(i.getCosto()/i.getCantidad()) : 0;
                     case 2:
-                        return utils.setDosLugaresDecimalesFloat(i.getInsumo().getCostoPorUnidad());
-                    case 3:
                         return utils.setDosLugaresDecimalesFloat(i.getCantidad());
-                    case 4:
+                    case 3:
                         return utils.setDosLugaresDecimalesFloat(i.getCosto());
                 }
                 return null;
@@ -131,7 +127,6 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                    case 1:
                         return String.class;
                     default:
                         return Float.class;
