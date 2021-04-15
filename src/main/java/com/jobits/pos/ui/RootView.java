@@ -134,10 +134,8 @@ public class RootView extends JPanel {
 
         //Caso especial para las ordenes
         if (viewNameToDisplay.equals(VentaDetailView.VIEW_NAME)) {
-            if (v != null && !v.getPresenter().equals(presenter)) {
-                views.remove(viewNameToDisplay);
-                v = null;
-            }
+            views.remove(viewNameToDisplay);
+            v = null;
         }
 
         if (v == null) {
@@ -166,6 +164,8 @@ public class RootView extends JPanel {
                 .showView(currentDisplayedViewName);
         dashboard.getTaskPane()
                 .repaint();
+        dashboard.getTaskPane()
+                .revalidate();
         return true;
     }
 
