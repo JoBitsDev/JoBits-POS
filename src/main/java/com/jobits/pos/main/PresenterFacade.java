@@ -143,11 +143,11 @@ public class PresenterFacade {
     public static AbstractViewPresenter getPresenterFor(String viewUIDName) {
         switch (viewUIDName) {
             case LogInView.VIEW_NAME:
-                return new LoginViewPresenter(new LogInController(new AuthorizerImpl()));
+                return new LoginViewPresenter(new LogInController());
             case AcercaDeView.VIEW_NAME:
                 return new AcercaDeViewPresenter();
             case ChangeUserView.VIEW_NAME:
-                return new ChangeUserViewPresenter(new LogInController(new AuthorizerImpl()));
+                return new ChangeUserViewPresenter(new LogInController());
             case UbicacionView.VIEW_NAME:
                 return new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class));
             case MainMenuView.VIEW_NAME:
@@ -220,7 +220,7 @@ public class PresenterFacade {
             case VentaResumenView.VIEW_NAME:
                 return new VentaResumenViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaResumenServiceOld.class));
             case AutorizoView.VIEW_NAME:
-                return new AutorizoViewPresenter(new LogInController(new AuthorizerImpl()), null);
+                return new AutorizoViewPresenter(new LogInController(), null);
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(null);
             case TransaccionListView.VIEW_NAME:
