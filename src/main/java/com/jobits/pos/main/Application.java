@@ -8,6 +8,7 @@ package com.jobits.pos.main;
 import com.jobits.pos.ui.utils.ConfigLoaderService;
 import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.controller.licencia.impl.LicenceController;
+import com.jobits.pos.controller.login.AuthorizerHandler;
 import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -19,6 +20,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
 import com.jobits.pos.ui.LongProcessActionService;
+import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.ConfigLoaderController;
@@ -208,6 +210,7 @@ public class Application {
     }
 
     private void registerResources() {
+        AuthorizerHandler.registerAuthorizer(new AuthorizerImpl());
     }
 
     private void calculateLicenceLeft() {
