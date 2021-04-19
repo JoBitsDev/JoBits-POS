@@ -7,9 +7,8 @@ package com.jobits.pos.ui.login;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import org.jobits.app.repo.UbicacionConexionModel;
+import org.jobits.db.core.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 
 import static com.jobits.pos.ui.login.presenter.UbicacionViewModel.*;
@@ -18,7 +17,7 @@ import com.jobits.ui.components.MaterialComponentsFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
-import org.jobits.app.repo.UbicacionConexionModel.TipoUbicacion;
+import org.jobits.db.core.domain.UbicacionConexionModel.TipoUbicacion;
 
 /**
  *
@@ -136,8 +135,6 @@ public class UbicacionView extends AbstractViewPanel {
     private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 
-  
-
     @Override
     public void wireUp() {
         Bindings.bind(jTextFieldDriver, getPresenter().getModel(PROP_DRIVER));
@@ -149,10 +146,10 @@ public class UbicacionView extends AbstractViewPanel {
                 new SelectionInList<UbicacionConexionModel.TipoUbicacion>(
                         getPresenter().getModel(PROP_LISTA_TIPO_SERVIDOR),
                         getPresenter().getModel(PROP_TIPO_SERVIDOR_SELECCIONADO)));
-        
+
         jButton1.addActionListener(getPresenter().getOperation(UbicacionViewPresenter.ACTION_ACEPTAR_EDICION));
         jButton2.addActionListener(getPresenter().getOperation(UbicacionViewPresenter.ACTION_CANCELAR_EDICION));
-        
+
     }
 
     @Override
@@ -161,7 +158,7 @@ public class UbicacionView extends AbstractViewPanel {
         boxLayout = new Box(BoxLayout.Y_AXIS);
         boxLayout.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         boxLayout.add(Box.createVerticalGlue());
-        
+
     }
 
     @Override

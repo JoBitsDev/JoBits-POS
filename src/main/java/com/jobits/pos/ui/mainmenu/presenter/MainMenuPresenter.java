@@ -127,7 +127,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
     }
 
     private boolean autorize(R.NivelAcceso nivelDeAcceso) {
-        return new LogInController(new AuthorizerImpl()).constructoAuthorizationView(nivelDeAcceso);
+        return new LogInController().constructoAuthorizationView(nivelDeAcceso);//TODO: inyectar
     }
 
     @Override

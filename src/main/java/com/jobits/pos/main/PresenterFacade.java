@@ -122,7 +122,6 @@ import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jobits.app.repo.UbicacionConexionService;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import com.jobits.pos.ui.venta.resumen.ResumenMainview;
 import com.jobits.pos.controller.venta.VentaResumenServiceOld;
@@ -130,6 +129,7 @@ import com.jobits.pos.ui.login.ChangeUserView;
 import com.jobits.pos.ui.login.presenter.ChangeUserViewPresenter;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoEnCalienteViewPresenter;
+import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *
@@ -143,11 +143,11 @@ public class PresenterFacade {
     public static AbstractViewPresenter getPresenterFor(String viewUIDName) {
         switch (viewUIDName) {
             case LogInView.VIEW_NAME:
-                return new LoginViewPresenter(new LogInController(new AuthorizerImpl()));
+                return new LoginViewPresenter(new LogInController());
             case AcercaDeView.VIEW_NAME:
                 return new AcercaDeViewPresenter();
             case ChangeUserView.VIEW_NAME:
-                return new ChangeUserViewPresenter(new LogInController(new AuthorizerImpl()));
+                return new ChangeUserViewPresenter(new LogInController());
             case UbicacionView.VIEW_NAME:
                 return new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class));
             case MainMenuView.VIEW_NAME:
@@ -220,7 +220,7 @@ public class PresenterFacade {
             case VentaResumenView.VIEW_NAME:
                 return new VentaResumenViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaResumenServiceOld.class));
             case AutorizoView.VIEW_NAME:
-                return new AutorizoViewPresenter(new LogInController(new AuthorizerImpl()), null);
+                return new AutorizoViewPresenter(new LogInController(), null);
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(null);
             case TransaccionListView.VIEW_NAME:

@@ -130,7 +130,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar el gasto seleccionado?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            if (new LogInController(new AuthorizerImpl()).constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
+            if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {//TODO: inyectar
                 service.removeGasto(getBean().getGasto_venta_seleccionado());
                 getBean().setGasto_venta_seleccionado(null);
                 refreshState();

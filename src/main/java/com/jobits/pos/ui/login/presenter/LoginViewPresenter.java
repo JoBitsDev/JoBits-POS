@@ -20,7 +20,6 @@ import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.hook.escandallo.ProductoEscandalloHook;
-import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;
@@ -43,7 +42,8 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import org.jobits.app.repo.UbicacionConexionService;
+import org.jobits.db.core.domain.UbicacionConexionModel;
+import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *

@@ -15,7 +15,7 @@ import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import static com.jobits.pos.ui.backup.presenter.BackUpViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import org.jobits.app.repo.UbicacionConexionModel;
+import org.jobits.db.core.domain.UbicacionConexionModel;
 
 /**
  *

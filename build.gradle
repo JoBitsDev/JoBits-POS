@@ -21,6 +21,8 @@ dependencies {
     
     implementation 'com.root101:clean-core:2.1.0.RELEASE.20210118'
 
+    implementation 'org.jobits.db:version-control:0.+'
+    
     testCompile 'junit:junit:4.12'
     
     // https://mvnrepository.com/artifact/com.toedter/jcalendar

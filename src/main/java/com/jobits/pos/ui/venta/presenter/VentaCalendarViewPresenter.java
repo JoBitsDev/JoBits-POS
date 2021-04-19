@@ -10,7 +10,6 @@ import com.jobits.pos.core.usecase.algoritmo.Y;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListService;
-import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
@@ -31,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.venta.VentaResumenServiceOld;
+import org.jobits.db.core.domain.UbicacionConexionModel;
 
 /**
  *
