@@ -24,12 +24,10 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.ConfigLoaderController;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
-import com.jobits.pos.utils.UbicacionResourceServiceImpl;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
 import com.root101.clean.core.app.services.UserResolver;
 import com.root101.clean.core.app.services.UserResolverService;
-import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.FileOutputStream;
@@ -40,7 +38,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import org.jobits.app.repo.UbicacionConexionServiceImpl;
+import org.jobits.db.core.module.DataVersionControlModule;
 
 /**
  *
@@ -200,16 +198,16 @@ public class Application {
     }
 
     private void initModules() {
-        ReservaRepoModule.init();
+        DataVersionControlModule.init();
+        ReservaRepoModule.init(DataVersionControlModule.getInstance());
         ReservaCoreModule.init(ReservaRepoModule.getInstance());
-        PosCoreModule.init(null);
+        PosCoreModule.init(DataVersionControlModule.getInstance());
         PosDesktopUiModule.init(
                 ReservaCoreModule.getInstance(),
                 PosCoreModule.getInstance());
     }
 
     private void registerResources() {
-        ResourceHandler.registerResourceService(new UbicacionResourceServiceImpl(new UbicacionConexionServiceImpl()));//TODO: inyectar
     }
 
     private void calculateLicenceLeft() {

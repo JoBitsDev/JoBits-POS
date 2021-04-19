@@ -32,7 +32,7 @@ import com.jobits.pos.ui.venta.VentaDetailView;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import org.jobits.app.repo.UbicacionConexionService;
+import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *
@@ -104,7 +104,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        ChangeUserView.VIEW_NAME, new ChangeUserViewPresenter(new LogInController(new AuthorizerImpl())), DisplayType.POPUP);
+                        ChangeUserView.VIEW_NAME, new ChangeUserViewPresenter(new LogInController()), DisplayType.POPUP);//TODO: inyectar
                 return Optional.empty();
             }
         });

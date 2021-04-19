@@ -6,10 +6,8 @@
 package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import org.jobits.app.repo.UbicacionConexionModel;
+import org.jobits.db.core.domain.UbicacionConexionModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.List;
 
 /**
@@ -66,7 +64,7 @@ public class UbicacionViewModel extends AbstractViewModel {
     public void setLista_tipo_servidor(ArrayListModel<UbicacionConexionModel.TipoUbicacion> lista_tipo_servidor) {
         ArrayListModel<UbicacionConexionModel.TipoUbicacion> oldLista_tipo_servidor = this.lista_tipo_servidor;
         this.lista_tipo_servidor = lista_tipo_servidor;
-        firePropertyChange(PROP_LISTA_TIPO_SERVIDOR, oldLista_tipo_servidor, lista_tipo_servidor,false);
+        firePropertyChange(PROP_LISTA_TIPO_SERVIDOR, oldLista_tipo_servidor, lista_tipo_servidor, false);
     }
 
     /**
@@ -86,7 +84,7 @@ public class UbicacionViewModel extends AbstractViewModel {
     public void setTipo_servidor_seleccionado(UbicacionConexionModel.TipoUbicacion tipo_servidor_seleccionado) {
         UbicacionConexionModel.TipoUbicacion oldLista_tipo_servidor = this.tipo_servidor_seleccionado;
         this.tipo_servidor_seleccionado = tipo_servidor_seleccionado;
-        firePropertyChange(PROP_TIPO_SERVIDOR_SELECCIONADO, oldLista_tipo_servidor, tipo_servidor_seleccionado,false);
+        firePropertyChange(PROP_TIPO_SERVIDOR_SELECCIONADO, oldLista_tipo_servidor, tipo_servidor_seleccionado, false);
     }
 
     /**
@@ -126,7 +124,7 @@ public class UbicacionViewModel extends AbstractViewModel {
     public void setDriver(String driver) {
         String oldLista_drivers = this.driver;
         this.driver = driver;
-        firePropertyChange(PROP_DRIVER, oldLista_drivers, driver,false);
+        firePropertyChange(PROP_DRIVER, oldLista_drivers, driver, false);
     }
 
     /**
@@ -146,7 +144,7 @@ public class UbicacionViewModel extends AbstractViewModel {
     public void setUsuario(String usuario) {
         String oldUsuario = this.usuario;
         this.usuario = usuario;
-        firePropertyChange(PROP_USUARIO, oldUsuario, usuario,false);
+        firePropertyChange(PROP_USUARIO, oldUsuario, usuario, false);
     }
 
     /**
@@ -166,7 +164,7 @@ public class UbicacionViewModel extends AbstractViewModel {
     public void setUrl(String url) {
         String oldUrl = this.url;
         this.url = url;
-        firePropertyChange(PROP_URL, oldUrl, url,false);
+        firePropertyChange(PROP_URL, oldUrl, url, false);
     }
 
     /**
@@ -186,7 +184,7 @@ public class UbicacionViewModel extends AbstractViewModel {
     public void setNombre_ubicacion(String nombre_ubicacion) {
         String oldNombre_ubicacion = this.nombre_ubicacion;
         this.nombre_ubicacion = nombre_ubicacion;
-        firePropertyChange(PROP_NOMBRE_UBICACION, oldNombre_ubicacion, nombre_ubicacion,false);
+        firePropertyChange(PROP_NOMBRE_UBICACION, oldNombre_ubicacion, nombre_ubicacion, false);
     }
 
 }

@@ -122,7 +122,6 @@ import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jobits.app.repo.UbicacionConexionService;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import com.jobits.pos.ui.venta.resumen.ResumenMainview;
 import com.jobits.pos.controller.venta.VentaResumenServiceOld;
@@ -130,6 +129,7 @@ import com.jobits.pos.ui.login.ChangeUserView;
 import com.jobits.pos.ui.login.presenter.ChangeUserViewPresenter;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoEnCalienteViewPresenter;
+import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *

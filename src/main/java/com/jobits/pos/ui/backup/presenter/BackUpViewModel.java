@@ -6,9 +6,9 @@
 package com.jobits.pos.ui.backup.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.List;
+import org.jobits.db.core.domain.UbicacionConexionModel;
 
 /**
  *

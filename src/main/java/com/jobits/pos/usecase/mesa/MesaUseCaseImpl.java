@@ -10,7 +10,6 @@ import com.jobits.pos.core.repo.impl.AreaDAO;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class MesaUseCaseImpl implements MesaUseCase {

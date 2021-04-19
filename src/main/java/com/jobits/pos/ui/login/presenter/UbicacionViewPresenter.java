@@ -7,12 +7,12 @@ package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.cordinator.NavigationService;
-import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Arrays;
 import java.util.Optional;
-import org.jobits.app.repo.UbicacionConexionService;
+import org.jobits.db.core.domain.UbicacionConexionModel;
+import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *
