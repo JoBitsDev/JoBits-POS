@@ -12,14 +12,12 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.utils.ComponentMover;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.login.presenter.LoginViewModel.*;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import static com.jobits.pos.ui.login.presenter.LoginViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Component;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
 
 /**
  *
@@ -227,17 +225,9 @@ public class LogInView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         ComponentMover cr = new ComponentMover(this, this.getComponents());
-        jTextFieldUsuario.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                getPresenter().setUbicacionSeleccionada();
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-            }
+        getPresenter().addPropertyChangeListener(PROP_READY_TO_LOGIN, (PropertyChangeEvent evt) -> {
+            jTextFieldUsuario.requestFocus();
         });
-        jTextFieldUsuario.requestFocusInWindow();
     }
 
     @Override
