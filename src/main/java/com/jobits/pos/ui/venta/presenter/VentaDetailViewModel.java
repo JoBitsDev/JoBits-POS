@@ -13,6 +13,7 @@ import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.recursos.R;
 import com.jobits.pos.utils.StringsTreatment;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.io.File;
@@ -106,6 +107,105 @@ public class VentaDetailViewModel extends AbstractViewModel {
     private ProductovOrden producto_por_mesa_seleccionado;
 
     public static final String PROP_PRODUCTO_POR_MESA_SELECCIONADO = "producto_por_mesa_seleccionado";
+
+    //
+    //Totales Resumen
+    //
+    private String total_resumen_area = "xx.xx " + R.COIN_SUFFIX;
+
+    public static final String PROP_TOTAL_RESUMEN_AREA = "total_resumen_area";
+
+    private String total_resumen_cocina = "xx.xx " + R.COIN_SUFFIX;
+
+    public static final String PROP_TOTAL_RESUMEN_COCINA = "total_resumen_cocina";
+
+    private String total_resumen_dependiente = "xx.xx " + R.COIN_SUFFIX;
+
+    public static final String PROP_TOTAL_RESUMEN_DEPENDIENTE = "total_resumen_dependiente";
+
+    private String total_resumen_mesa = "xx.xx " + R.COIN_SUFFIX;
+
+    public static final String PROP_TOTAL_RESUMEN_MESA = "total_resumen_mesa";
+
+    /**
+     * Get the value of total_resumen_mesa
+     *
+     * @return the value of total_resumen_mesa
+     */
+    public String getTotal_resumen_mesa() {
+        return total_resumen_mesa;
+    }
+
+    /**
+     * Set the value of total_resumen_mesa
+     *
+     * @param total_resumen_mesa new value of total_resumen_mesa
+     */
+    public void setTotal_resumen_mesa(String total_resumen_mesa) {
+        String oldTotal_resumen_mesa = this.total_resumen_mesa;
+        this.total_resumen_mesa = total_resumen_mesa;
+        firePropertyChange(PROP_TOTAL_RESUMEN_MESA, oldTotal_resumen_mesa, total_resumen_mesa);
+    }
+
+    /**
+     * Get the value of total_resumen_dependiente
+     *
+     * @return the value of total_resumen_dependiente
+     */
+    public String getTotal_resumen_dependiente() {
+        return total_resumen_dependiente;
+    }
+
+    /**
+     * Set the value of total_resumen_dependiente
+     *
+     * @param total_resumen_dependiente new value of total_resumen_dependiente
+     */
+    public void setTotal_resumen_dependiente(String total_resumen_dependiente) {
+        String oldTotal_resumen_dependiente = this.total_resumen_dependiente;
+        this.total_resumen_dependiente = total_resumen_dependiente;
+        firePropertyChange(PROP_TOTAL_RESUMEN_DEPENDIENTE, oldTotal_resumen_dependiente, total_resumen_dependiente);
+    }
+
+    /**
+     * Get the value of total_resumen_cocina
+     *
+     * @return the value of total_resumen_cocina
+     */
+    public String getTotal_resumen_cocina() {
+        return total_resumen_cocina;
+    }
+
+    /**
+     * Set the value of total_resumen_cocina
+     *
+     * @param total_resumen_cocina new value of total_resumen_cocina
+     */
+    public void setTotal_resumen_cocina(String total_resumen_cocina) {
+        String oldTotal_resumen_cocina = this.total_resumen_cocina;
+        this.total_resumen_cocina = total_resumen_cocina;
+        firePropertyChange(PROP_TOTAL_RESUMEN_COCINA, oldTotal_resumen_cocina, total_resumen_cocina);
+    }
+
+    /**
+     * Get the value of total_resumen_area
+     *
+     * @return the value of total_resumen_area
+     */
+    public String getTotal_resumen_area() {
+        return total_resumen_area;
+    }
+
+    /**
+     * Set the value of total_resumen_area
+     *
+     * @param total_resumen_area new value of total_resumen_area
+     */
+    public void setTotal_resumen_area(String total_resumen_area) {
+        String oldTotal_resumen_area = this.total_resumen_area;
+        this.total_resumen_area = total_resumen_area;
+        firePropertyChange(PROP_TOTAL_RESUMEN_AREA, oldTotal_resumen_area, total_resumen_area);
+    }
 
     /**
      * Get the value of producto_por_mesa_seleccionado

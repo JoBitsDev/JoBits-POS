@@ -53,7 +53,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             ACTION_IMPRIMIR_RESUMEN_COMISION_PORCENTUAL = "Imprimir comision Porcentual",
             //pto elab
             ACTION_IMPRIMIR_RESUMEN_PTO = "Imprimir Pto elaboracion";
-
+    public static final String PROP_HIDE_PANEL = "Ocultar Paneles";
     private VentaDetailService service;
     OrdenService ordenService;
     private VentaOrdenListViewPresenter ventaOrdenPresenter;
@@ -330,9 +330,15 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(v);
             gastosPresenter = new GastosViewPresenter(v);
             getBean().setVentaInstance(v);
+
             getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(v.getId()));
             getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(v.getId()));
             getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta(v.getId()));
+
+            getBean().setTotal_resumen_area(service.getTotalResumenArea(v.getId()));
+            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(v.getId()));
+            getBean().setTotal_resumen_dependiente(service.getTotalResumenDependiente(v.getId()));
+
             getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(service.getTotalPropina(v.getId())));
             getBean().setReabrir_ventas_enabled(service.canReabrirVenta(v.getId()));
             getBean().setTotal_autorizos(service.getTotalAutorizos(v.getId()));
@@ -347,6 +353,8 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             if (!getBean().getLista_mesas().isEmpty()) {
                 getBean().setMesa_seleccionada(getBean().getLista_mesas().get(0));
             }
+            boolean value = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES;
+            firePropertyChange(PROP_HIDE_PANEL, !value, value);
         }
 
     }
@@ -363,6 +371,8 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 getBean().setLista_productos_por_mesa(
                         new ArrayListModel(service.getResumenPorMesa(
                                 getBean().getVenta_seleccionada().getId(), mesa)));
+                getBean().setTotal_resumen_mesa(service.getTotalResumenMesa(
+                        getBean().getVenta_seleccionada().getId(), mesa));
             }
         });
 
