@@ -255,12 +255,12 @@ public class MenuBarClass extends AbstractViewPanel {
                 new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/reabrir_ventas_color.png")));
         jMenuVenta.add(jMenuItemReabrirVenta);
 
-        jMenuItemTerminarVenta.setText("Terminar");
+        jMenuItemTerminarVenta.setText("Cerrar Dia");
         jMenuItemTerminarVenta.setIcon(
                 new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/cerrar_ventas_color.png")));
         jMenuVenta.add(jMenuItemTerminarVenta);
 
-        jMenuItemTerminarExportarVenta.setText("Terminar y Exportar");
+        jMenuItemTerminarExportarVenta.setText("Cerrar Dia y Exportar");
         jMenuItemTerminarExportarVenta.setIcon(
                 new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/cerrar_exportar_ventas_color.png")));
         jMenuVenta.add(jMenuItemTerminarExportarVenta);
