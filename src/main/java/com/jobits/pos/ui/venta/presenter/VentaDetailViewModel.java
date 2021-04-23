@@ -9,8 +9,11 @@ import com.jobits.pos.core.domain.venta.ResumenVentaAreaTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaPtoElabTablaModel;
 import com.jobits.pos.core.domain.venta.ResumenVentaUsuarioTablaModel;
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
+import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.recursos.R;
@@ -108,6 +111,230 @@ public class VentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_PRODUCTO_POR_MESA_SELECCIONADO = "producto_por_mesa_seleccionado";
 
+    //    
+    //Punto Elaboracion    
+    //    
+    private ArrayListModel<Cocina> lista_cocinas = new ArrayListModel<Cocina>();
+
+    public static final String PROP_LISTA_COCINAS = "lista_cocinas";
+
+    private Cocina cocina_seleccionada;
+
+    public static final String PROP_COCINA_SELECCIONADA = "cocina_seleccionada";
+
+    private ArrayListModel<ProductovOrden> lista_productos_por_cocina = new ArrayListModel<>();
+
+    public static final String PROP_LISTA_PRODUCTOS_POR_COCINA = "lista_productos_por_cocina";
+
+    private ProductovOrden producto_por_cocina_seleccionado;
+
+    public static final String PROP_PRODUCTO_POR_COCINA_SELECCIONADO = "producto_por_cocina_seleccionado";
+
+    //
+    //Area
+    //
+    private ArrayListModel<Area> lista_areas = new ArrayListModel<>();
+
+    public static final String PROP_LISTA_AREAS = "lista_areas";
+
+    private Area area_seleccionada;
+
+    public static final String PROP_AREA_SELECCIONADA = "area_seleccionada";
+
+    private ArrayListModel<ProductovOrden> lista_productos_por_area = new ArrayListModel<>();
+
+    public static final String PROP_LISTA_PRODUCTOS_POR_AREA = "lista_productos_por_area";
+
+    private ProductovOrden producto_por_area_seleccionado;
+
+    public static final String PROP_PRODUCTO_POR_AREA_SELECCIONADO = "producto_por_area_seleccionado";
+
+    //
+    //Dependientes
+    //
+    private ArrayListModel<Personal> lista_dependientes = new ArrayListModel<>();
+
+    public static final String PROP_LISTA_DEPENDIENTES = "lista_dependientes";
+
+    private Personal personal_seleccionado;
+
+    public static final String PROP_PERSONAL_SELECCIONADO = "personal_seleccionado";
+
+    private ArrayListModel<ProductovOrden> lista_productos_por_dependientes = new ArrayListModel<>();
+
+    public static final String PROP_LISTA_PRODUCTOS_POR_DEPENDIENTES = "lista_productos_por_dependientes";
+
+    private ProductovOrden producto_por_dependiente_seleccionado;
+
+    public static final String PROP_PRODUCTO_POR_DEPENDIENTE_SELECCIONADO = "producto_por_dependiente_seleccionado";
+
+    /**
+     * Get the value of producto_por_dependiente_seleccionado
+     *
+     * @return the value of producto_por_dependiente_seleccionado
+     */
+    public ProductovOrden getProducto_por_dependiente_seleccionado() {
+        return producto_por_dependiente_seleccionado;
+    }
+
+    /**
+     * Set the value of producto_por_dependiente_seleccionado
+     *
+     * @param producto_por_dependiente_seleccionado new value of
+     * producto_por_dependiente_seleccionado
+     */
+    public void setProducto_por_dependiente_seleccionado(ProductovOrden producto_por_dependiente_seleccionado) {
+        ProductovOrden oldProducto_por_dependiente_seleccionado = this.producto_por_dependiente_seleccionado;
+        this.producto_por_dependiente_seleccionado = producto_por_dependiente_seleccionado;
+        firePropertyChange(PROP_PRODUCTO_POR_DEPENDIENTE_SELECCIONADO, oldProducto_por_dependiente_seleccionado, producto_por_dependiente_seleccionado);
+    }
+
+    /**
+     * Get the value of lista_productos_por_dependientes
+     *
+     * @return the value of lista_productos_por_dependientes
+     */
+    public ArrayListModel<ProductovOrden> getLista_productos_por_dependientes() {
+        return lista_productos_por_dependientes;
+    }
+
+    /**
+     * Set the value of lista_productos_por_dependientes
+     *
+     * @param lista_productos_por_dependientes new value of
+     * lista_productos_por_dependientes
+     */
+    public void setLista_productos_por_dependientes(ArrayListModel<ProductovOrden> lista_productos_por_dependientes) {
+        ArrayListModel<ProductovOrden> oldLista_productos_por_dependientes = this.lista_productos_por_dependientes;
+        this.lista_productos_por_dependientes.clear();
+        this.lista_productos_por_dependientes.addAll(lista_productos_por_dependientes);
+        firePropertyChange(PROP_LISTA_PRODUCTOS_POR_DEPENDIENTES, oldLista_productos_por_dependientes, lista_productos_por_dependientes);
+    }
+
+    /**
+     * Get the value of personal_seleccionado
+     *
+     * @return the value of personal_seleccionado
+     */
+    public Personal getPersonal_seleccionado() {
+        return personal_seleccionado;
+    }
+
+    /**
+     * Set the value of personal_seleccionado
+     *
+     * @param personal_seleccionado new value of personal_seleccionado
+     */
+    public void setPersonal_seleccionado(Personal personal_seleccionado) {
+        Personal oldPersonal_seleccionado = this.personal_seleccionado;
+        this.personal_seleccionado = personal_seleccionado;
+        firePropertyChange(PROP_PERSONAL_SELECCIONADO, oldPersonal_seleccionado, personal_seleccionado);
+    }
+
+    /**
+     * Get the value of lista_dependientes
+     *
+     * @return the value of lista_dependientes
+     */
+    public ArrayListModel<Personal> getLista_dependientes() {
+        return lista_dependientes;
+    }
+
+    /**
+     * Set the value of lista_dependientes
+     *
+     * @param lista_dependientes new value of lista_dependientes
+     */
+    public void setLista_dependientes(ArrayListModel<Personal> lista_dependientes) {
+        ArrayListModel<Personal> oldLista_dependientes = this.lista_dependientes;
+        this.lista_dependientes.clear();
+        this.lista_dependientes.addAll(lista_dependientes);
+        firePropertyChange(PROP_LISTA_DEPENDIENTES, oldLista_dependientes, lista_dependientes);
+    }
+
+    /**
+     * Get the value of producto_por_area_seleccionado
+     *
+     * @return the value of producto_por_area_seleccionado
+     */
+    public ProductovOrden getProducto_por_area_seleccionado() {
+        return producto_por_area_seleccionado;
+    }
+
+    /**
+     * Set the value of producto_por_area_seleccionado
+     *
+     * @param producto_por_area_seleccionado new value of
+     * producto_por_area_seleccionado
+     */
+    public void setProducto_por_area_seleccionado(ProductovOrden producto_por_area_seleccionado) {
+        ProductovOrden oldProducto_por_area_seleccionado = this.producto_por_area_seleccionado;
+        this.producto_por_area_seleccionado = producto_por_area_seleccionado;
+        firePropertyChange(PROP_PRODUCTO_POR_AREA_SELECCIONADO, oldProducto_por_area_seleccionado, producto_por_area_seleccionado);
+    }
+
+    /**
+     * Get the value of lista_productos_por_area
+     *
+     * @return the value of lista_productos_por_area
+     */
+    public ArrayListModel<ProductovOrden> getLista_productos_por_area() {
+        return lista_productos_por_area;
+    }
+
+    /**
+     * Set the value of lista_productos_por_area
+     *
+     * @param lista_productos_por_area new value of lista_productos_por_area
+     */
+    public void setLista_productos_por_area(ArrayListModel<ProductovOrden> lista_productos_por_area) {
+        ArrayListModel<ProductovOrden> oldLista_productos_por_area = this.lista_productos_por_area;
+        this.lista_productos_por_area.clear();
+        this.lista_productos_por_area.addAll(lista_productos_por_area);
+        firePropertyChange(PROP_LISTA_PRODUCTOS_POR_AREA, oldLista_productos_por_area, lista_productos_por_area);
+    }
+
+    /**
+     * Get the value of area_seleccionada
+     *
+     * @return the value of area_seleccionada
+     */
+    public Area getArea_seleccionada() {
+        return area_seleccionada;
+    }
+
+    /**
+     * Set the value of area_seleccionada
+     *
+     * @param area_seleccionada new value of area_seleccionada
+     */
+    public void setArea_seleccionada(Area area_seleccionada) {
+        Area oldArea_seleccionada = this.area_seleccionada;
+        this.area_seleccionada = area_seleccionada;
+        firePropertyChange(PROP_AREA_SELECCIONADA, oldArea_seleccionada, area_seleccionada);
+    }
+
+    /**
+     * Get the value of lista_areas
+     *
+     * @return the value of lista_areas
+     */
+    public ArrayListModel<Area> getLista_areas() {
+        return lista_areas;
+    }
+
+    /**
+     * Set the value of lista_areas
+     *
+     * @param lista_areas new value of lista_areas
+     */
+    public void setLista_areas(ArrayListModel<Area> lista_areas) {
+        ArrayListModel<Area> oldLista_areas = this.lista_areas;
+        this.lista_areas.clear();
+        this.lista_areas.addAll(lista_areas);
+        firePropertyChange(PROP_LISTA_AREAS, oldLista_areas, lista_areas);
+    }
+
     //
     //Totales Resumen
     //
@@ -126,169 +353,6 @@ public class VentaDetailViewModel extends AbstractViewModel {
     private String total_resumen_mesa = "xx.xx " + R.COIN_SUFFIX;
 
     public static final String PROP_TOTAL_RESUMEN_MESA = "total_resumen_mesa";
-
-    /**
-     * Get the value of total_resumen_mesa
-     *
-     * @return the value of total_resumen_mesa
-     */
-    public String getTotal_resumen_mesa() {
-        return total_resumen_mesa;
-    }
-
-    /**
-     * Set the value of total_resumen_mesa
-     *
-     * @param total_resumen_mesa new value of total_resumen_mesa
-     */
-    public void setTotal_resumen_mesa(String total_resumen_mesa) {
-        String oldTotal_resumen_mesa = this.total_resumen_mesa;
-        this.total_resumen_mesa = total_resumen_mesa;
-        firePropertyChange(PROP_TOTAL_RESUMEN_MESA, oldTotal_resumen_mesa, total_resumen_mesa);
-    }
-
-    /**
-     * Get the value of total_resumen_dependiente
-     *
-     * @return the value of total_resumen_dependiente
-     */
-    public String getTotal_resumen_dependiente() {
-        return total_resumen_dependiente;
-    }
-
-    /**
-     * Set the value of total_resumen_dependiente
-     *
-     * @param total_resumen_dependiente new value of total_resumen_dependiente
-     */
-    public void setTotal_resumen_dependiente(String total_resumen_dependiente) {
-        String oldTotal_resumen_dependiente = this.total_resumen_dependiente;
-        this.total_resumen_dependiente = total_resumen_dependiente;
-        firePropertyChange(PROP_TOTAL_RESUMEN_DEPENDIENTE, oldTotal_resumen_dependiente, total_resumen_dependiente);
-    }
-
-    /**
-     * Get the value of total_resumen_cocina
-     *
-     * @return the value of total_resumen_cocina
-     */
-    public String getTotal_resumen_cocina() {
-        return total_resumen_cocina;
-    }
-
-    /**
-     * Set the value of total_resumen_cocina
-     *
-     * @param total_resumen_cocina new value of total_resumen_cocina
-     */
-    public void setTotal_resumen_cocina(String total_resumen_cocina) {
-        String oldTotal_resumen_cocina = this.total_resumen_cocina;
-        this.total_resumen_cocina = total_resumen_cocina;
-        firePropertyChange(PROP_TOTAL_RESUMEN_COCINA, oldTotal_resumen_cocina, total_resumen_cocina);
-    }
-
-    /**
-     * Get the value of total_resumen_area
-     *
-     * @return the value of total_resumen_area
-     */
-    public String getTotal_resumen_area() {
-        return total_resumen_area;
-    }
-
-    /**
-     * Set the value of total_resumen_area
-     *
-     * @param total_resumen_area new value of total_resumen_area
-     */
-    public void setTotal_resumen_area(String total_resumen_area) {
-        String oldTotal_resumen_area = this.total_resumen_area;
-        this.total_resumen_area = total_resumen_area;
-        firePropertyChange(PROP_TOTAL_RESUMEN_AREA, oldTotal_resumen_area, total_resumen_area);
-    }
-
-    /**
-     * Get the value of producto_por_mesa_seleccionado
-     *
-     * @return the value of producto_por_mesa_seleccionado
-     */
-    public ProductovOrden getProducto_por_mesa_seleccionado() {
-        return producto_por_mesa_seleccionado;
-    }
-
-    /**
-     * Set the value of producto_por_mesa_seleccionado
-     *
-     * @param producto_por_mesa_seleccionado new value of
-     * producto_por_mesa_seleccionado
-     */
-    public void setProducto_por_mesa_seleccionado(ProductovOrden producto_por_mesa_seleccionado) {
-        ProductovOrden oldProducto_por_mesa_seleccionado = this.producto_por_mesa_seleccionado;
-        this.producto_por_mesa_seleccionado = producto_por_mesa_seleccionado;
-        firePropertyChange(PROP_PRODUCTO_POR_MESA_SELECCIONADO, oldProducto_por_mesa_seleccionado, producto_por_mesa_seleccionado);
-    }
-
-    /**
-     * Get the value of lista_productos_por_mesa
-     *
-     * @return the value of lista_productos_por_mesa
-     */
-    public ArrayListModel getLista_productos_por_mesa() {
-        return lista_productos_por_mesa;
-    }
-
-    /**
-     * Set the value of lista_productos_por_mesa
-     *
-     * @param lista_productos_por_mesa new value of lista_productos_por_mesa
-     */
-    public void setLista_productos_por_mesa(ArrayListModel lista_productos_por_mesa) {
-        ArrayListModel oldLista_productos_por_mesa = this.lista_productos_por_mesa;
-        this.lista_productos_por_mesa.clear();
-        this.lista_productos_por_mesa.addAll(lista_productos_por_mesa);
-        firePropertyChange(PROP_LISTA_PRODUCTOS_POR_MESA, oldLista_productos_por_mesa, lista_productos_por_mesa);
-    }
-
-    /**
-     * Get the value of mesa_seleccionada
-     *
-     * @return the value of mesa_seleccionada
-     */
-    public Mesa getMesa_seleccionada() {
-        return mesa_seleccionada;
-    }
-
-    /**
-     * Set the value of mesa_seleccionada
-     *
-     * @param mesa_seleccionada new value of mesa_seleccionada
-     */
-    public void setMesa_seleccionada(Mesa mesa_seleccionada) {
-        Mesa oldMesa_seleccionada = this.mesa_seleccionada;
-        this.mesa_seleccionada = mesa_seleccionada;
-        firePropertyChange(PROP_MESA_SELECCIONADA, oldMesa_seleccionada, mesa_seleccionada);
-    }
-
-    /**
-     * Get the value of lista_mesas
-     *
-     * @return the value of lista_mesas
-     */
-    public ArrayListModel<Mesa> getLista_mesas() {
-        return lista_mesas;
-    }
-
-    /**
-     * Set the value of lista_mesas
-     *
-     * @param lista_mesas new value of lista_mesas
-     */
-    public void setLista_mesas(ArrayListModel<Mesa> lista_mesas) {
-        ArrayListModel<Mesa> oldLista_mesas = this.lista_mesas;
-        this.lista_mesas.clear();
-        this.lista_mesas.addAll(lista_mesas);
-        firePropertyChange(PROP_LISTA_MESAS, oldLista_mesas, lista_mesas);
-    }
 
     //
     // Pto Elab
@@ -381,6 +445,252 @@ public class VentaDetailViewModel extends AbstractViewModel {
         Venta oldVenta_seleccionada = this.venta_seleccionada;
         this.venta_seleccionada = venta_seleccionada;
         firePropertyChange(PROP_VENTA_SELECCIONADA, oldVenta_seleccionada, venta_seleccionada);
+    }
+
+    /**
+     * Get the value of total_resumen_mesa
+     *
+     * @return the value of total_resumen_mesa
+     */
+    public String getTotal_resumen_mesa() {
+        return total_resumen_mesa;
+    }
+
+    /**
+     * Set the value of total_resumen_mesa
+     *
+     * @param total_resumen_mesa new value of total_resumen_mesa
+     */
+    public void setTotal_resumen_mesa(String total_resumen_mesa) {
+        String oldTotal_resumen_mesa = this.total_resumen_mesa;
+        this.total_resumen_mesa = total_resumen_mesa;
+        firePropertyChange(PROP_TOTAL_RESUMEN_MESA, oldTotal_resumen_mesa, total_resumen_mesa);
+    }
+
+    /**
+     * Get the value of total_resumen_dependiente
+     *
+     * @return the value of total_resumen_dependiente
+     */
+    public String getTotal_resumen_dependiente() {
+        return total_resumen_dependiente;
+    }
+
+    /**
+     * Set the value of total_resumen_dependiente
+     *
+     * @param total_resumen_dependiente new value of total_resumen_dependiente
+     */
+    public void setTotal_resumen_dependiente(String total_resumen_dependiente) {
+        String oldTotal_resumen_dependiente = this.total_resumen_dependiente;
+        this.total_resumen_dependiente = total_resumen_dependiente;
+        firePropertyChange(PROP_TOTAL_RESUMEN_DEPENDIENTE, oldTotal_resumen_dependiente, total_resumen_dependiente);
+    }
+
+    /**
+     * Get the value of total_resumen_cocina
+     *
+     * @return the value of total_resumen_cocina
+     */
+    public String getTotal_resumen_cocina() {
+        return total_resumen_cocina;
+    }
+
+    /**
+     * Set the value of total_resumen_cocina
+     *
+     * @param total_resumen_cocina new value of total_resumen_cocina
+     */
+    public void setTotal_resumen_cocina(String total_resumen_cocina) {
+        String oldTotal_resumen_cocina = this.total_resumen_cocina;
+        this.total_resumen_cocina = total_resumen_cocina;
+        firePropertyChange(PROP_TOTAL_RESUMEN_COCINA, oldTotal_resumen_cocina, total_resumen_cocina);
+    }
+
+    /**
+     * Get the value of total_resumen_area
+     *
+     * @return the value of total_resumen_area
+     */
+    public String getTotal_resumen_area() {
+        return total_resumen_area;
+    }
+
+    /**
+     * Set the value of total_resumen_area
+     *
+     * @param total_resumen_area new value of total_resumen_area
+     */
+    public void setTotal_resumen_area(String total_resumen_area) {
+        String oldTotal_resumen_area = this.total_resumen_area;
+        this.total_resumen_area = total_resumen_area;
+        firePropertyChange(PROP_TOTAL_RESUMEN_AREA, oldTotal_resumen_area, total_resumen_area);
+    }
+
+    /**
+     * Get the value of producto_por_cocina_seleccionado
+     *
+     * @return the value of producto_por_cocina_seleccionado
+     */
+    public ProductovOrden getProducto_por_cocina_seleccionado() {
+        return producto_por_cocina_seleccionado;
+    }
+
+    /**
+     * Set the value of producto_por_cocina_seleccionado
+     *
+     * @param producto_por_cocina_seleccionado new value of
+     * producto_por_cocina_seleccionado
+     */
+    public void setProducto_por_cocina_seleccionado(ProductovOrden producto_por_cocina_seleccionado) {
+        ProductovOrden oldProducto_por_cocina_seleccionado = this.producto_por_cocina_seleccionado;
+        this.producto_por_cocina_seleccionado = producto_por_cocina_seleccionado;
+        firePropertyChange(PROP_PRODUCTO_POR_COCINA_SELECCIONADO, oldProducto_por_cocina_seleccionado, producto_por_cocina_seleccionado);
+    }
+
+    /**
+     * Get the value of lista_productos_por_cocina
+     *
+     * @return the value of lista_productos_por_cocina
+     */
+    public ArrayListModel<ProductovOrden> getLista_productos_por_cocina() {
+        return lista_productos_por_cocina;
+    }
+
+    /**
+     * Set the value of lista_productos_por_cocina
+     *
+     * @param lista_productos_por_cocina new value of lista_productos_por_cocina
+     */
+    public void setLista_productos_por_cocina(ArrayListModel<ProductovOrden> lista_productos_por_cocina) {
+        ArrayListModel<ProductovOrden> oldLista_productos_por_cocina = this.lista_productos_por_cocina;
+        this.lista_productos_por_cocina.clear();
+        this.lista_productos_por_cocina.addAll(lista_productos_por_cocina);
+        firePropertyChange(PROP_LISTA_PRODUCTOS_POR_COCINA, oldLista_productos_por_cocina, lista_productos_por_cocina);
+    }
+
+    /**
+     * Get the value of cocina_seleccionada
+     *
+     * @return the value of cocina_seleccionada
+     */
+    public Cocina getCocina_seleccionada() {
+        return cocina_seleccionada;
+    }
+
+    /**
+     * Set the value of cocina_seleccionada
+     *
+     * @param cocina_seleccionada new value of cocina_seleccionada
+     */
+    public void setCocina_seleccionada(Cocina cocina_seleccionada) {
+        Cocina oldCocina_seleccionada = this.cocina_seleccionada;
+        this.cocina_seleccionada = cocina_seleccionada;
+        firePropertyChange(PROP_COCINA_SELECCIONADA, oldCocina_seleccionada, cocina_seleccionada);
+    }
+
+    /**
+     * Get the value of lista_cocinas
+     *
+     * @return the value of lista_cocinas
+     */
+    public ArrayListModel<Cocina> getLista_cocinas() {
+        return lista_cocinas;
+    }
+
+    /**
+     * Set the value of lista_cocinas
+     *
+     * @param lista_cocinas new value of lista_cocinas
+     */
+    public void setLista_cocinas(ArrayListModel<Cocina> lista_cocinas) {
+        ArrayListModel<Cocina> oldLista_cocinas = this.lista_cocinas;
+        this.lista_cocinas.clear();
+        this.lista_cocinas.addAll(lista_cocinas);
+        firePropertyChange(PROP_LISTA_COCINAS, oldLista_cocinas, lista_cocinas);
+    }
+
+    /**
+     * Get the value of producto_por_mesa_seleccionado
+     *
+     * @return the value of producto_por_mesa_seleccionado
+     */
+    public ProductovOrden getProducto_por_mesa_seleccionado() {
+        return producto_por_mesa_seleccionado;
+    }
+
+    /**
+     * Set the value of producto_por_mesa_seleccionado
+     *
+     * @param producto_por_mesa_seleccionado new value of
+     * producto_por_mesa_seleccionado
+     */
+    public void setProducto_por_mesa_seleccionado(ProductovOrden producto_por_mesa_seleccionado) {
+        ProductovOrden oldProducto_por_mesa_seleccionado = this.producto_por_mesa_seleccionado;
+        this.producto_por_mesa_seleccionado = producto_por_mesa_seleccionado;
+        firePropertyChange(PROP_PRODUCTO_POR_MESA_SELECCIONADO, oldProducto_por_mesa_seleccionado, producto_por_mesa_seleccionado);
+    }
+
+    /**
+     * Get the value of lista_productos_por_mesa
+     *
+     * @return the value of lista_productos_por_mesa
+     */
+    public ArrayListModel getLista_productos_por_mesa() {
+        return lista_productos_por_mesa;
+    }
+
+    /**
+     * Set the value of lista_productos_por_mesa
+     *
+     * @param lista_productos_por_mesa new value of lista_productos_por_mesa
+     */
+    public void setLista_productos_por_mesa(ArrayListModel lista_productos_por_mesa) {
+        ArrayListModel oldLista_productos_por_mesa = this.lista_productos_por_mesa;
+        this.lista_productos_por_mesa.clear();
+        this.lista_productos_por_mesa.addAll(lista_productos_por_mesa);
+        firePropertyChange(PROP_LISTA_PRODUCTOS_POR_MESA, oldLista_productos_por_mesa, lista_productos_por_mesa);
+    }
+
+    /**
+     * Get the value of mesa_seleccionada
+     *
+     * @return the value of mesa_seleccionada
+     */
+    public Mesa getMesa_seleccionada() {
+        return mesa_seleccionada;
+    }
+
+    /**
+     * Set the value of mesa_seleccionada
+     *
+     * @param mesa_seleccionada new value of mesa_seleccionada
+     */
+    public void setMesa_seleccionada(Mesa mesa_seleccionada) {
+        Mesa oldMesa_seleccionada = this.mesa_seleccionada;
+        this.mesa_seleccionada = mesa_seleccionada;
+        firePropertyChange(PROP_MESA_SELECCIONADA, oldMesa_seleccionada, mesa_seleccionada);
+    }
+
+    /**
+     * Get the value of lista_mesas
+     *
+     * @return the value of lista_mesas
+     */
+    public ArrayListModel<Mesa> getLista_mesas() {
+        return lista_mesas;
+    }
+
+    /**
+     * Set the value of lista_mesas
+     *
+     * @param lista_mesas new value of lista_mesas
+     */
+    public void setLista_mesas(ArrayListModel<Mesa> lista_mesas) {
+        ArrayListModel<Mesa> oldLista_mesas = this.lista_mesas;
+        this.lista_mesas.clear();
+        this.lista_mesas.addAll(lista_mesas);
+        firePropertyChange(PROP_LISTA_MESAS, oldLista_mesas, lista_mesas);
     }
 
     /**

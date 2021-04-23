@@ -8,7 +8,10 @@ package com.jobits.pos.ui.venta.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
+import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Mesa;
+import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
@@ -22,6 +25,7 @@ import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -261,7 +265,6 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     private void onImprimirResumenVentaAreaClick() {
         service.printAreaResumen(getBean().getResumem_area_seleccionada().getArea(), getBean().getVenta_seleccionada().getId());
-
     }
 
     private void onImprimirResumenVentaUsuarioClick() {
@@ -269,7 +272,8 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 showDialog("Presione SI para imprimir los valores,"
                         + "\nNo para imprimir solo las cantidades",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false);
-        service.printPersonalResumenRow(getBean().getResumen_usuario_seleccionado().getPersonal(),
+
+        service.printPersonalResumenRow(getBean().getPersonal_seleccionado(),
                 getBean().getVenta_seleccionada().getId(), imprimirValores);
 
     }
@@ -279,7 +283,8 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 showDialog("Presione SI para imprimir los valores,"
                         + "\nNo para imprimir solo las cantidades",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false);
-        service.printPagoPorVentaPersonal(getBean().getResumen_usuario_seleccionado().getPersonal(),
+
+        service.printPagoPorVentaPersonal(getBean().getPersonal_seleccionado(),
                 getBean().getVenta_seleccionada().getId(), imprimirValores);
 
     }
@@ -289,6 +294,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 showDialog("Presione SI para imprimir los valores,"
                         + "\nNo para imprimir solo las cantidades",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+
         service.printCocinaResumen(getBean().getResumen_pto_seleccionado().getCodigoPto(),
                 getBean().getVenta_seleccionada().getId(), imprimirValores);
     }
@@ -335,24 +341,39 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(v.getId()));
             getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta(v.getId()));
 
-            getBean().setTotal_resumen_area(service.getTotalResumenArea(v.getId()));
-            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(v.getId()));
-            getBean().setTotal_resumen_dependiente(service.getTotalResumenDependiente(v.getId()));
-
+//            getBean().setTotal_resumen_area(service.getTotalResumenArea(v.getId()));
+//            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(v.getId()));
+//            getBean().setTotal_resumen_dependiente(service.getTotalResumenDependiente(v.getId()));
             getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(service.getTotalPropina(v.getId())));
             getBean().setReabrir_ventas_enabled(service.canReabrirVenta(v.getId()));
+
             getBean().setTotal_autorizos(service.getTotalAutorizos(v.getId()));
             getBean().setTotal_gasto_insumos(service.getTotalGastadoInsumos(v.getId()));
             getBean().setTotal_gasto_otros(service.getTotalGastos(v.getId()));
             getBean().setTotal_gasto_salario(service.getTotalPagoTrabajadores(v.getId()));
+
             getBean().setVenta_neta(service.getTotalVendidoNeto(v.getId()));
             getBean().setVenta_total(service.getTotalVendido(v.getId()));
             getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
             getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(getBean().getVenta_seleccionada().getFecha()));
+
             getBean().setLista_mesas(new ArrayListModel<>(service.getMesasPorVenta(v.getId())));
             if (!getBean().getLista_mesas().isEmpty()) {
                 getBean().setMesa_seleccionada(getBean().getLista_mesas().get(0));
             }
+            getBean().setLista_cocinas(new ArrayListModel<>(service.getCocinasPorVenta(v.getId())));
+            if (!getBean().getLista_cocinas().isEmpty()) {
+                getBean().setCocina_seleccionada(getBean().getLista_cocinas().get(0));
+            }
+            getBean().setLista_dependientes(new ArrayListModel<>(service.getPersonalPorVenta(v.getId())));
+            if (!getBean().getLista_dependientes().isEmpty()) {
+                getBean().setPersonal_seleccionado(getBean().getLista_dependientes().get(0));
+            }
+            getBean().setLista_areas(new ArrayListModel<>(service.getAreasPorVenta(v.getId())));
+            if (!getBean().getLista_areas().isEmpty()) {
+                getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
+            }
+
             boolean value = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES;
             firePropertyChange(PROP_HIDE_PANEL, !value, value);
         }
@@ -368,14 +389,44 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         addBeanPropertyChangeListener(PROP_MESA_SELECCIONADA, (PropertyChangeEvent evt) -> {
             Mesa mesa = (Mesa) evt.getNewValue();
             if (mesa != null) {
-                getBean().setLista_productos_por_mesa(
-                        new ArrayListModel(service.getResumenPorMesa(
-                                getBean().getVenta_seleccionada().getId(), mesa)));
-                getBean().setTotal_resumen_mesa(service.getTotalResumenMesa(
-                        getBean().getVenta_seleccionada().getId(), mesa));
+                getBean().setLista_productos_por_mesa(new ArrayListModel(
+                        service.getResumenPorMesa(getBean().getVenta_seleccionada().getId(), mesa)));
+
+                getBean().setTotal_resumen_mesa(
+                        service.getTotalResumenMesa(getBean().getVenta_seleccionada().getId(), mesa));
             }
         });
+        addBeanPropertyChangeListener(PROP_AREA_SELECCIONADA, (PropertyChangeEvent evt) -> {
+            Area area = (Area) evt.getNewValue();
+            if (area != null) {
+                getBean().setLista_productos_por_area(new ArrayListModel(
+                        service.getResumenPorArea(getBean().getVenta_seleccionada().getId(), area)));
 
+                getBean().setTotal_resumen_area(
+                        service.getTotalResumenArea(getBean().getVenta_seleccionada().getId(), area));
+            }
+        });
+        addBeanPropertyChangeListener(PROP_PERSONAL_SELECCIONADO, (PropertyChangeEvent evt) -> {
+            Personal personal = (Personal) evt.getNewValue();
+            if (personal != null) {
+                getBean().setLista_productos_por_dependientes(new ArrayListModel(
+                        service.getResumenPorPersonal(getBean().getVenta_seleccionada().getId(), personal)));
+
+                getBean().setTotal_resumen_dependiente(
+                        service.getTotalResumenDependiente(getBean().getVenta_seleccionada().getId(), personal));
+            }
+        });
+        addBeanPropertyChangeListener(PROP_COCINA_SELECCIONADA, (PropertyChangeEvent evt) -> {
+            Cocina cocina = (Cocina) evt.getNewValue();
+            if (cocina != null) {
+                getBean().setLista_productos_por_cocina(
+                        new ArrayListModel(service.getResumenPorCocina(
+                                getBean().getVenta_seleccionada().getId(), cocina)));
+
+                getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(
+                        getBean().getVenta_seleccionada().getId(), cocina));
+            }
+        });
     }
 
     private void setListToBean() {
