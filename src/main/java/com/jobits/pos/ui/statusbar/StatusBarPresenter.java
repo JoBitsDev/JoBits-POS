@@ -50,11 +50,12 @@ public class StatusBarPresenter extends AbstractViewPresenter<StatusBarViewModel
             getBean().setUsuario_registrado(Application.getInstance().getLoggedUser().getUsuario());
             colorUser();
         }
-        Application.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
+        Application.getInstance().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() != null) {
                 getBean().setUsuario_registrado(((Personal) evt.getNewValue()).getUsuario());
                 colorUser();
+            } else {
+                getBean().setUsuario_registrado("No Usuario Loggeado");
             }
         });
 
@@ -100,6 +101,7 @@ public class StatusBarPresenter extends AbstractViewPresenter<StatusBarViewModel
                 getBean().setUsuario_registrado_color(Color.ORANGE);//dorado
                 break;
             default:
+                getBean().setUsuario_registrado_color(Color.BLACK);//dorado
                 break;
         }
     }

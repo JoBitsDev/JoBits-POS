@@ -57,6 +57,8 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     public static final String ACTION_AUTENTICAR = "Autenticar";
 
     public static final String ACTION_EDITAR_UBICACION = "Editar ubicacion";
+    
+    public static final String PROP_READY_TO_LOGIN = "Listo para logearse";
 
     LogInService service;
     UbicacionConexionService ubicacionController = PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class);
@@ -64,12 +66,12 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     public LoginViewPresenter(LogInService service) {
         super(new LoginViewModel());
         this.service = service;
-        getBean().setListaUbicaciones(new ArrayListModel<>(
-                Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
+        refreshState();
     }
 
     public void setUbicacionSeleccionada() {
         getBean().setUbicacionSeleccionada(ubicacionController.getUbicaciones().getUbicacionActiva());
+        firePropertyChange(PROP_READY_TO_LOGIN, null, null);
     }
 
     private void onAutenticarClick() {
@@ -171,6 +173,14 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
             getBean().setColorLabelConexion(Color.red);
         }
         getBean().setBotonAutenticarHabilitado(conn);
+    }
+
+    @Override
+    protected Optional refreshState() {
+        getBean().setListaUbicaciones(new ArrayListModel<>(
+                Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
+        setUbicacionSeleccionada();
+        return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

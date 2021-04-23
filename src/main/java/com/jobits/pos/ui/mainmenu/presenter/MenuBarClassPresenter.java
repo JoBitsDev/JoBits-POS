@@ -11,6 +11,7 @@ import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
@@ -20,8 +21,10 @@ import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.login.ChangeUserView;
+import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.login.presenter.ChangeUserViewPresenter;
+import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -111,7 +114,11 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
         registerOperation(new AbstractViewAction(ACTION_CERRAR_SESION) {
             @Override
             public Optional doAction() {
-                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "En Desarrollo");
+                Application.getInstance().setLoggedUser(null);
+                RootView.getInstance().clearView();
+                Application.getInstance().getNavigator().navigateTo(
+                        LogInView.VIEW_NAME, new LoginViewPresenter(new LogInController()), DisplayType.POPUP);
+                Application.getInstance().getNotificationService().showDialog("Sesion Cerrada", TipoNotificacion.INFO);
                 return Optional.empty();
             }
         });

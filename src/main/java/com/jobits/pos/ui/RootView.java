@@ -18,6 +18,7 @@ import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import static com.jobits.pos.ui.presenters.AbstractViewPresenter.ACTION_REFRESH_STATE;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
@@ -134,8 +135,10 @@ public class RootView extends JPanel {
 
         //Caso especial para las ordenes
         if (viewNameToDisplay.equals(VentaDetailView.VIEW_NAME)) {
-            views.remove(viewNameToDisplay);
-            v = null;
+            if (v != null && !v.getPresenter().equals(presenter)) {
+                views.remove(viewNameToDisplay);
+                v = null;
+            }
         }
 
         if (v == null) {
@@ -162,6 +165,7 @@ public class RootView extends JPanel {
         jPanelStatus.setVisible(statusBarVisibility);
         dashboard.getTaskPane()
                 .showView(currentDisplayedViewName);
+        getCurrentView().getPresenter().getOperation(ACTION_REFRESH_STATE).doAction();
         dashboard.getTaskPane()
                 .repaint();
         dashboard.getTaskPane()
@@ -199,6 +203,13 @@ public class RootView extends JPanel {
 
     public StatusBarView getStatusBar() {
         return statusBar;
+    }
+
+    public void clearView() {
+        views.clear();
+        dashboard.getTaskPane().clear();
+        dashboard.getTaskPane().showView(null);
+        currentDisplayedViewName = null;
     }
 
 }

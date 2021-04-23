@@ -134,7 +134,6 @@ public class CoordinatorService implements Coordinator {
                         OrdenLogView.VIEW_NAME,
                         ReportarBugView.VIEW_NAME,
                         ImageManagerView.VIEW_NAME,
-                        LogInView.VIEW_NAME,
                         AutorizoView.VIEW_NAME,
                         ClientesListView.VIEW_NAME,
                         ClientesReservaListView.VIEW_NAME,
