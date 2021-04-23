@@ -38,6 +38,7 @@ public class DetailResumenVentaPresenter extends AbstractResumenViewPresenter<De
         getBean().setListaMain(new ArrayListModel<>(service.getResumenGeneral()));
         getBean().setListaDetail(new ArrayListModel<>(service.getResumenDetallado()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);
+        setView(getBean().getListaMain().size() == 1);
     }
 
     @Override
