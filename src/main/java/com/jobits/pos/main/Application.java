@@ -60,6 +60,14 @@ public class Application {
     private static Application application;
     private UserResolverService<Personal> userResolver = new UserResolverServiceImpl();
 
+    public static final int MAJOR_VERSION = 3;
+
+    public static final int MINOR_VERSION = 5;
+
+    public static final int PATCH_VERSION = 1;
+
+    public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
+
 //    public static Application createApplication() {
 //        if (application == null) {
 //            application = new Application();

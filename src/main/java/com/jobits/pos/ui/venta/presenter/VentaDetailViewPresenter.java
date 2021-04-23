@@ -10,6 +10,7 @@ import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -353,7 +354,8 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             if (!getBean().getLista_mesas().isEmpty()) {
                 getBean().setMesa_seleccionada(getBean().getLista_mesas().get(0));
             }
-            boolean value = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES;
+            boolean value = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && 
+                    ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor()!=1;
             firePropertyChange(PROP_HIDE_PANEL, !value, value);
         }
 
