@@ -25,10 +25,6 @@ public class CalcularCambioViewModel extends AbstractViewModel {
 
     public static final String PROP_ENTRADA_MONEDA_NACIONAL = "entrada_moneda_nacional";
 
-    private float entrada_segunda_moneda;
-
-    public static final String PROP_ENTRADA_SEGUNDA_MONEDA = "entrada_segunda_moneda";
-
     private String cambio;
 
     public static final String PROP_CAMBIO = "cambio";
@@ -51,26 +47,6 @@ public class CalcularCambioViewModel extends AbstractViewModel {
         String oldCambio = this.cambio;
         this.cambio = cambio;
         firePropertyChange(PROP_CAMBIO, oldCambio, cambio);
-    }
-
-    /**
-     * Get the value of entrada_segunda_moneda
-     *
-     * @return the value of entrada_segunda_moneda
-     */
-    public float getEntrada_segunda_moneda() {
-        return entrada_segunda_moneda;
-    }
-
-    /**
-     * Set the value of entrada_segunda_moneda
-     *
-     * @param entrada_segunda_moneda new value of entrada_segunda_moneda
-     */
-    public void setEntrada_segunda_moneda(float entrada_segunda_moneda) {
-        float oldEntrada_segunda_moneda = this.entrada_segunda_moneda;
-        this.entrada_segunda_moneda = entrada_segunda_moneda;
-        firePropertyChange(PROP_ENTRADA_SEGUNDA_MONEDA, oldEntrada_segunda_moneda, entrada_segunda_moneda);
     }
 
     /**
