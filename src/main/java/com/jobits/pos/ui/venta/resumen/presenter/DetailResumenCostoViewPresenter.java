@@ -27,7 +27,8 @@ public class DetailResumenCostoViewPresenter extends AbstractResumenViewPresente
         super(new DetailResumenCostoViewModel(), false, "Resumen de Costos General", "Resumen de Costos Detallado",
                 new ArrayList<FilterType>(Arrays.asList(
                         FilterType.PRODUCTO,
-                        FilterType.IPV)));
+                        FilterType.IPV,
+                        FilterType.COCINA)));
     }
 
     @Override
