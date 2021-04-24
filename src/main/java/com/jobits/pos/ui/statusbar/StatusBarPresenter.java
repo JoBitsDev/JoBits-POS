@@ -59,7 +59,7 @@ public class StatusBarPresenter extends AbstractViewPresenter<StatusBarViewModel
             }
         });
 
-        getBean().setVersion_software(R.RELEASE_VERSION);
+        getBean().setVersion_software(Application.RELEASE_VERSION);
     }
 
     @Override

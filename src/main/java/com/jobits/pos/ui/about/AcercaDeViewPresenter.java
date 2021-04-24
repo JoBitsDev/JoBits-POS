@@ -38,7 +38,7 @@ public class AcercaDeViewPresenter extends AbstractViewPresenter<AcercaDeViewMod
     }
 
     private void refreshBean() {
-        getBean().setVersion_sistema(R.RELEASE_VERSION);
+        getBean().setVersion_sistema(Application.RELEASE_VERSION);
         Calendar date = Calendar.getInstance();
         String a = R.RESOURCE_BUNDLE.getString("label_copyrigth") + " (2016 - " + date.get(Calendar.YEAR) + ") JoBits POS.";
         getBean().setAnno_copyrigth(a);
