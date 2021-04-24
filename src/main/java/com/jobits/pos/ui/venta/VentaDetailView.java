@@ -767,8 +767,6 @@ public class VentaDetailView extends AbstractViewPanel {
             jTabbedPaneData.setEnabledAt(0, !value);
             if (value) {
                 jTabbedPaneData.setSelectedIndex(1);
-            } else {
-                jTabbedPaneData.setSelectedIndex(0);
             }
         });
     }
