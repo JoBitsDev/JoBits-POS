@@ -375,7 +375,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
             }
 
-            boolean value = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES;
+            boolean value = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() == 1;
             firePropertyChange(PROP_HIDE_PANEL, !value, value);
         }
 
