@@ -27,7 +27,8 @@ public class DetailResumenCostoViewPresenter extends AbstractResumenViewPresente
         super(new DetailResumenCostoViewModel(), false, "Resumen de Costos General", "Resumen de Costos Detallado",
                 new ArrayList<FilterType>(Arrays.asList(
                         FilterType.PRODUCTO,
-                        FilterType.IPV)));
+                        FilterType.IPV,
+                        FilterType.COCINA)));
     }
 
     @Override
@@ -36,6 +37,7 @@ public class DetailResumenCostoViewPresenter extends AbstractResumenViewPresente
         getBean().setListaMain(new ArrayListModel<>(service.getResumenGeneral()));
         getBean().setListaDetail(new ArrayListModel<>(service.getResumenDetallado()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);
+        setView(getBean().getListaMain().size() == 1);
     }
 
     @Override

@@ -26,14 +26,18 @@ import java.util.stream.Collectors;
 public abstract class AbstractResumenViewPresenter<T extends AbstractResumenViewModel>
         extends AbstractViewPresenter<T> {
 
+    String mainViewName;
+    String detailViewName;
+
     public AbstractResumenViewPresenter(T bean, boolean detailedView, String mainViewName,
             String detailViewName, ArrayList<FilterType> filtrosDisponibles) {
         super(bean);
         addBeanPropertyChangeListener(AbstractResumenViewModel.PROP_DETAILSELECTED, (PropertyChangeEvent evt) -> {
             getBean().setTitulo_vista((boolean) evt.getNewValue() ? detailViewName : mainViewName);
         });
-        getBean().setDetailSelected(detailedView);
-        getBean().setTitulo_vista(detailedView ? detailViewName : mainViewName);
+        this.mainViewName = mainViewName;
+        this.detailViewName = detailViewName;
+        setView(detailedView);
         setFilterPresenter(filtrosDisponibles);
     }
 
@@ -42,8 +46,9 @@ public abstract class AbstractResumenViewPresenter<T extends AbstractResumenView
         addBeanPropertyChangeListener(AbstractResumenViewModel.PROP_DETAILSELECTED, (PropertyChangeEvent evt) -> {
             getBean().setTitulo_vista((boolean) evt.getNewValue() ? detailViewName : mainViewName);
         });
-        getBean().setDetailSelected(detailedView);
-        getBean().setTitulo_vista(detailedView ? detailViewName : mainViewName);
+        this.mainViewName = mainViewName;
+        this.detailViewName = detailViewName;
+        setView(detailedView);
     }
 
     private void setFilterPresenter(ArrayList<FilterType> filtrosDisponibles) {
@@ -63,5 +68,10 @@ public abstract class AbstractResumenViewPresenter<T extends AbstractResumenView
 
     public FilterViewPresenter getFilterPresenter() {
         return getBean().getFilter_presenter();
+    }
+
+    public void setView(boolean detailedView) {
+        getBean().setDetailSelected(detailedView);
+        getBean().setTitulo_vista(detailedView ? detailViewName : mainViewName);
     }
 }
