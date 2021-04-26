@@ -27,7 +27,7 @@ public class ProductovOrdenDAOTest {
     /**
      * Test of getInstance method, of class ProductovOrdenDAO.
      */
-    @Test
+   // @Test
     public void testGetInstance() {
         ProductovOrdenDAO.getInstance().startTransaction();
         for (ProductovOrden pvo : ProductovOrdenDAO.getInstance().findAll()) {

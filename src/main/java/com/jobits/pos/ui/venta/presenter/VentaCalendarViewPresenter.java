@@ -31,6 +31,7 @@ import java.util.Optional;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.venta.VentaResumenServiceOld;
 import org.jobits.db.core.domain.UbicacionConexionModel;
+import org.jobits.db.pool.ConnectionPoolHandler;
 
 /**
  *
@@ -151,7 +152,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     }
 
     private void onEjecutarY(Venta venta) {
-        if (R.CURRENT_CONNECTION.getTipoUbicacion() != UbicacionConexionModel.TipoUbicacion.MASTER) {
+        if (ConnectionPoolHandler.getConnectionPoolService(ACTION_Y).getTipoUbicacion() != UbicacionConexionModel.TipoUbicacion.MASTER) {
             throw new UnauthorizedAccessException("Esta operacion solo se puede ejecutar conectado a una ubicaion master");
         }
         Y alg = new Y(venta);

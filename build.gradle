@@ -21,7 +21,7 @@ dependencies {
     
     implementation 'com.root101:clean-core:2.1.0.RELEASE.20210118'
 
-    implementation 'org.jobits.db:version-control:0.+'
+    implementation 'org.jobits.db:version-control:1.+'
     
     testCompile 'junit:junit:4.12'
     

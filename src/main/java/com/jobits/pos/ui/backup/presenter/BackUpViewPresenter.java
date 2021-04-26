@@ -7,6 +7,7 @@ package com.jobits.pos.ui.backup.presenter;
 
 import com.jobits.pos.controller.backup.impl.BackUpController;
 import com.jobits.pos.controller.backup.BackUpService;
+import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.notification.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import org.jobits.db.core.domain.UbicacionConexionModel;
 import org.jobits.db.core.usecase.UbicacionConexionService;
+import org.jobits.db.pool.ConnectionPoolHandler;
 
 /**
  *
@@ -59,7 +61,7 @@ public class BackUpViewPresenter extends AbstractViewPresenter<BackUpViewModel> 
 
     private void onRealizarCopiaDeSeguridad() {
         UbicacionConexionModel model = getBean().getUbicacion_seleccionada();
-        if (R.CURRENT_CONNECTION.equals(model) || model.getTipoUbicacion() == UbicacionConexionModel.TipoUbicacion.MASTER) {
+        if (ConnectionPoolHandler.getConnectionPoolService(PosCoreModule.getInstance().getModuleName()).getCurrentUbicacion().equals(model) || model.getTipoUbicacion() == UbicacionConexionModel.TipoUbicacion.MASTER) {
             Application.getInstance().getNotificationService().
                     showDialog("Las copias de seguridad no pueden realizarse " //TODO hardcoded String
                             + "en el mismo servidor que se origina el pedido "
