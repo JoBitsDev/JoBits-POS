@@ -10,7 +10,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.reserva.core.domain.ReservaEstado;

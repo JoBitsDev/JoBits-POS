@@ -6,7 +6,7 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.filter.FilterMainView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.ExcelAdapter;
 import static com.jobits.pos.ui.viewmodel.AbstractListViewModel.PROP_TITULO_VISTA;
 import static com.jobits.pos.ui.venta.resumen.presenter.AbstractResumenViewModel.*;

@@ -12,7 +12,7 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewModel;
 import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.root101.swing.material.standards.MaterialIcons;
 

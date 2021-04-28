@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui;
 
+import com.jobits.ui.swing.View;
 import com.jobits.pos.ui.statusbar.StatusBarView;
 import com.jobits.pos.ui.statusbar.StatusBarPresenter;
 import com.jobits.pos.ui.mainmenu.MainMenuView;

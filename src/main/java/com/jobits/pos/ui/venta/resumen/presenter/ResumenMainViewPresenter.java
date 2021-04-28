@@ -9,7 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.core.domain.models.temporal.GeneralReviewWrapper;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewModel.*;

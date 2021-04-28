@@ -14,7 +14,7 @@ import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;

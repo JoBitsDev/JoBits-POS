@@ -14,7 +14,7 @@ import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import static com.jobits.pos.ui.venta.presenter.VentaResumenViewModel.*;
 import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;

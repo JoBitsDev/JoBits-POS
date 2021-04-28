@@ -7,7 +7,7 @@ package com.jobits.pos.main;
 
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
-import com.jobits.pos.ui.View;
+import com.jobits.ui.swing.View;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
 import com.jobits.pos.ui.almacen.TransaccionListView;

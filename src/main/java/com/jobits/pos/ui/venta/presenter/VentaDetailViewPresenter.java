@@ -15,7 +15,7 @@ import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.gastos.presenter.GastosViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;

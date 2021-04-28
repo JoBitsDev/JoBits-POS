@@ -24,7 +24,7 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.NominasDetailPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import static com.jobits.pos.ui.trabajadores.presenter.NominasDetailViewModel.*;
@@ -405,7 +405,7 @@ public class NominasDetailView extends AbstractViewPanel {
                     case 0:
                         return "Usuario";
                     case 1:
-                        return "Días";
+                        return "Dï¿½as";
                     case 2:
                         return "Promedio (" + R.COIN_SUFFIX + ")";
                     case 3:

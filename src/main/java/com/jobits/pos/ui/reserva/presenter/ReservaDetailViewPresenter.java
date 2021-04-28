@@ -9,7 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.reserva.core.domain.Reserva;

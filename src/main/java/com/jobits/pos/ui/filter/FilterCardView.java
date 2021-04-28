@@ -12,7 +12,7 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.filter.presenter.AbstractFilterTypeModel.*;
 import static com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter.*;
 import com.jobits.pos.ui.filter.presenter.AbstractFilterTypePresenter;
-import com.jobits.pos.ui.utils.BindableListIntelliHint;
+import com.jobits.pos.ui.swing.utils.BindableListIntelliHint;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.CardLayout;
 

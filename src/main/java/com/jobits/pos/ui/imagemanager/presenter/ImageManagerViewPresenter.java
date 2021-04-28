@@ -8,7 +8,7 @@ package com.jobits.pos.ui.imagemanager.presenter;
 //import com.jobits.pos.controller.imagemanager.impl.ImageManagerController;
 import com.jobits.pos.controller.imagemanager.ImageManagerService;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.PanelDibujo;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
