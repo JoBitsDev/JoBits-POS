@@ -14,12 +14,11 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.module.PosCoreModule;
-import com.jobits.pos.notification.NotificationService;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
-import com.jobits.pos.ui.LongProcessActionService;
+import com.jobits.ui.swing.LongProcessActionService;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -28,6 +27,7 @@ import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
+import com.root101.clean.core.app.services.NotificationService;
 import com.root101.clean.core.app.services.UserResolver;
 import com.root101.clean.core.app.services.UserResolverService;
 import java.beans.PropertyChangeListener;
@@ -110,7 +110,7 @@ public class Application {
     //
     private MainWindow mainWindow;
     private NavigationService navigator;
-    private NotificationService notificationService = NotificationService.getInstance();
+    private NotificationService notificationService = new NotificationHandler();
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     private Application() {
@@ -245,7 +245,7 @@ public class Application {
     }
 
     private void setNotificationChannel() {
-        notificationService.registerNotificationChannel(new NotificationHandler());
+        //  NotificationService notificationService = new com.jobits.ui.components.swing.notifications.NotificationHandler();
     }
 
     private void setupDebugMode() {
