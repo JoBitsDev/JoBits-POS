@@ -8,7 +8,7 @@ package com.jobits.pos.ui.configuracion;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.ComboBoxAdapter;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
-import org.jobits.db.core.domain.UbicacionConexionModel;
+import org.jobits.db.core.domain.ConexionPropertiesModel;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -169,7 +169,7 @@ public class Sincronizacion extends AbstractViewPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<UbicacionConexionModel> jComboBoxSincronizacionUbicacion;
+    private javax.swing.JComboBox<ConexionPropertiesModel> jComboBoxSincronizacionUbicacion;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

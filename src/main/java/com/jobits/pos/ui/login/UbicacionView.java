@@ -7,7 +7,7 @@ package com.jobits.pos.ui.login;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
-import org.jobits.db.core.domain.UbicacionConexionModel;
+import org.jobits.db.core.domain.ConexionPropertiesModel;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 
@@ -17,7 +17,7 @@ import com.jobits.ui.components.MaterialComponentsFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
-import org.jobits.db.core.domain.UbicacionConexionModel.TipoUbicacion;
+import org.jobits.db.core.domain.TipoConexion;
 
 /**
  *
@@ -125,7 +125,7 @@ public class UbicacionView extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<TipoUbicacion> jComboBox1;
+    private javax.swing.JComboBox<TipoConexion> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordFielContrasena;
@@ -143,7 +143,7 @@ public class UbicacionView extends AbstractViewPanel {
         Bindings.bind(jTextFieldUsuario, getPresenter().getModel(PROP_USUARIO));
         Bindings.bind(jPasswordFielContrasena, getPresenter().getModel(PROP_PASSWORD));
         Bindings.bind(jComboBox1,
-                new SelectionInList<UbicacionConexionModel.TipoUbicacion>(
+                new SelectionInList<TipoConexion>(
                         getPresenter().getModel(PROP_LISTA_TIPO_SERVIDOR),
                         getPresenter().getModel(PROP_TIPO_SERVIDOR_SELECCIONADO)));
 
