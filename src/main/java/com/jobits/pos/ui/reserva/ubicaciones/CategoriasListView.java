@@ -10,7 +10,7 @@ import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.reserva.ColorColumnCellRender;
 import static com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionesListViewPresenter.ACTION_ACT_DESAC_UB;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import java.awt.Color;
 

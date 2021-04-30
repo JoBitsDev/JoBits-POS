@@ -7,7 +7,7 @@ package com.jobits.pos.ui.login.presenter;
 
 import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;

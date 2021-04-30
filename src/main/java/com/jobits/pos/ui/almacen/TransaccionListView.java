@@ -11,7 +11,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import static com.jobits.pos.ui.almacen.presenter.TransaccionListPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;

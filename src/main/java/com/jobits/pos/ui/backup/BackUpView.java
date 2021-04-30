@@ -15,7 +15,7 @@ import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import static com.jobits.pos.ui.backup.presenter.BackUpViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import org.jobits.db.core.domain.UbicacionConexionModel;
+import org.jobits.db.core.domain.ConexionPropertiesModel;
 
 /**
  *
@@ -146,7 +146,7 @@ public class BackUpView extends AbstractViewPanel {
     private javax.swing.JCheckBox jCheckBoxProductos;
     private javax.swing.JCheckBox jCheckBoxTodo;
     private javax.swing.JCheckBox jCheckBoxVentas;
-    private javax.swing.JComboBox<UbicacionConexionModel> jComboBox1;
+    private javax.swing.JComboBox<ConexionPropertiesModel> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -159,7 +159,7 @@ public class BackUpView extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
-        Bindings.bind(jComboBox1, new SelectionInList<UbicacionConexionModel>(
+        Bindings.bind(jComboBox1, new SelectionInList<ConexionPropertiesModel>(
                 getPresenter().getModel(BackUpViewModel.PROP_LISTA_UBICACIONES),
                 getPresenter().getModel(BackUpViewModel.PROP_UBICACION_SELECCIONADA)));
         Bindings.bind(jCheckBoxTodo, getPresenter().getModel(BackUpViewModel.PROP_CHECKBOX_TODO));

@@ -11,7 +11,8 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Arrays;
 import java.util.Optional;
-import org.jobits.db.core.domain.UbicacionConexionModel;
+import org.jobits.db.core.domain.ConexionPropertiesModel;
+import org.jobits.db.core.domain.TipoConexion;
 import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
@@ -34,12 +35,38 @@ public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewM
     }
 
     private void onEditarUbicacionCLick() {
-        UbicacionConexionModel uc = new UbicacionConexionModel(
-                getBean().getNombre_ubicacion(),
-                getBean().getUrl(),
-                getBean().getUsuario(),
-                getBean().getPassword(), getBean().getDriver(), getBean().getTipo_servidor_seleccionado());
-        service.editUbicacion(uc, service.getUbicaciones().getSelectedUbicacion());
+        ConexionPropertiesModel uc = new ConexionPropertiesModel() {
+            @Override
+            public String getContrasena() {
+                return getBean().getPassword();
+            }
+
+            @Override
+            public String getDriver() {
+                return getBean().getDriver();
+            }
+
+            @Override
+            public String getNombreUbicacion() {
+                return getBean().getNombre_ubicacion();
+            }
+
+            @Override
+            public TipoConexion getTipoUbicacion() {
+                return getBean().getTipo_servidor_seleccionado();
+            }
+
+            @Override
+            public String getUrl() {
+                return getBean().getUrl();
+            }
+
+            @Override
+            public String getUsuario() {
+                return getBean().getUsuario();
+            }
+        };
+        service.editConexion(uc, service.getUbicaciones().getSelectedUbicacion());
         NavigationService.getInstance().navigateUp();//TODO: codigo de navegacion
     }
 
@@ -67,10 +94,10 @@ public class UbicacionViewPresenter extends AbstractViewPresenter<UbicacionViewM
 
     }
 
-    private void loadFormData(UbicacionConexionModel ubicacionActiva) {
+    private void loadFormData(ConexionPropertiesModel ubicacionActiva) {
         getBean().setUsuario(ubicacionActiva.getUsuario());
         getBean().setDriver(ubicacionActiva.getDriver());
-        getBean().setLista_tipo_servidor(new ArrayListModel<>(Arrays.asList(UbicacionConexionModel.TipoUbicacion.values())));
+        getBean().setLista_tipo_servidor(new ArrayListModel<>(Arrays.asList(TipoConexion.values())));
         getBean().setNombre_ubicacion(ubicacionActiva.getNombreUbicacion());
         getBean().setPassword(ubicacionActiva.getContrasena());
         getBean().setTipo_servidor_seleccionado(ubicacionActiva.getTipoUbicacion());

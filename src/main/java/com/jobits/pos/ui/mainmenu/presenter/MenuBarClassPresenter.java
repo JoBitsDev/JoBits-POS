@@ -11,7 +11,7 @@ import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;

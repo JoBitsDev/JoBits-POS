@@ -8,8 +8,7 @@ package com.jobits.pos.ui.clientes.reserva.presenter;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.NotificationService;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.reserva.core.usecase.ClienteUseCase;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
@@ -63,7 +62,7 @@ public class ClientesReservaListViewPresenter extends AbstractListViewPresenter<
                 setListToBean();
             }
         } else {
-            NotificationService.getInstance().notify("Seleccione un cliente", TipoNotificacion.ERROR);
+             Application.getInstance().getNotificationService().notify("Seleccione un cliente", TipoNotificacion.ERROR);
         }
     }
 

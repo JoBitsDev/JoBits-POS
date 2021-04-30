@@ -23,7 +23,7 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewModel.*;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.root101.swing.material.standards.MaterialIcons;

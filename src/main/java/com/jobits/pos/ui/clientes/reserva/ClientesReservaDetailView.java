@@ -14,7 +14,7 @@ import static com.jobits.pos.ui.clientes.reserva.presenter.ClientesReservaDetail
 import static com.jobits.pos.ui.clientes.reserva.presenter.ClientesReservaDetailViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import java.time.format.DateTimeFormatter;
 
 /**

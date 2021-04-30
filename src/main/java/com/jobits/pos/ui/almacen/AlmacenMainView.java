@@ -16,7 +16,7 @@ import com.jobits.pos.recursos.R;
 import static com.jobits.pos.ui.almacen.presenter.AlmacenViewModel.*;
 import static com.jobits.pos.ui.almacen.presenter.AlmacenViewPresenter.*;
 import com.jobits.pos.ui.utils.AddFromPanel;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.core.domain.models.temporal.TableDate;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;

@@ -5,9 +5,9 @@
  */
 package com.jobits.pos.ui.imagemanager;
 
-import com.jobits.pos.ui.utils.*;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.imagemanager.presenter.ImageManagerViewPresenter;
+import com.jobits.pos.ui.utils.ComponentMover;
 import com.jobits.ui.components.MaterialComponentsFactory;
 
 /**

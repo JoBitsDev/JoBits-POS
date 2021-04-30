@@ -10,6 +10,9 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.binding.value.ValueModel;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.swing.utils.BindableListIntelliHint;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
+
 import com.jobits.ui.components.MaterialComponentsFactory;
 import javax.swing.Action;
 import javax.swing.JButton;

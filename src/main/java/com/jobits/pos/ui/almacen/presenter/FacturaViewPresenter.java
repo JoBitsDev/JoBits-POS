@@ -21,7 +21,7 @@ import com.jobits.pos.core.domain.models.TransaccionTransformacion;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
 import com.jobits.pos.ui.presenters.AbstractViewAction;

@@ -6,12 +6,10 @@
 package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.binding.value.AbstractValueModel;
-import com.jobits.pos.controller.configuracion.impl.ConfiguracionController;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.NotificationService;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;

@@ -9,7 +9,7 @@ import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 
 /**
  * FirstDream

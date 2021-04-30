@@ -14,12 +14,11 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.module.PosCoreModule;
-import com.jobits.pos.notification.NotificationService;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
-import com.jobits.pos.ui.LongProcessActionService;
+import com.jobits.ui.swing.LongProcessActionService;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -28,6 +27,7 @@ import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
+import com.root101.clean.core.app.services.NotificationService;
 import com.root101.clean.core.app.services.UserResolver;
 import com.root101.clean.core.app.services.UserResolverService;
 import java.beans.PropertyChangeListener;
@@ -59,6 +59,14 @@ public class Application {
     private static final String ERR_FILE_PATH = "LOGS/AppLogsErr.log";
     private static Application application;
     private UserResolverService<Personal> userResolver = new UserResolverServiceImpl();
+
+    public static final int MAJOR_VERSION = 3;
+
+    public static final int MINOR_VERSION = 5;
+
+    public static final int PATCH_VERSION = 2;
+
+    public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
 
 //    public static Application createApplication() {
 //        if (application == null) {
@@ -102,7 +110,7 @@ public class Application {
     //
     private MainWindow mainWindow;
     private NavigationService navigator;
-    private NotificationService notificationService = NotificationService.getInstance();
+    private NotificationService notificationService = new NotificationHandler();
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     private Application() {
@@ -237,7 +245,7 @@ public class Application {
     }
 
     private void setNotificationChannel() {
-        notificationService.registerNotificationChannel(new NotificationHandler());
+        //  NotificationService notificationService = new com.jobits.ui.components.swing.notifications.NotificationHandler();
     }
 
     private void setupDebugMode() {

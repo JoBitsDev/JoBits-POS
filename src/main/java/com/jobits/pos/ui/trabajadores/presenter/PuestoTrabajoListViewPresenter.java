@@ -8,7 +8,7 @@ package com.jobits.pos.ui.trabajadores.presenter;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;

@@ -12,7 +12,7 @@ import javax.swing.JFileChooser;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewModel;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
@@ -111,7 +111,7 @@ public class VentaCalendarView extends AbstractViewPanel {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 2, 18)); // NOI18N
-        jLabel9.setText("Año");
+        jLabel9.setText("Aï¿½o");
         jPanel1.add(jLabel9);
 
         jYearChooser1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N

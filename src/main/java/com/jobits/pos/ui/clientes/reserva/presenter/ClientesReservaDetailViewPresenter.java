@@ -8,7 +8,7 @@ package com.jobits.pos.ui.clientes.reserva.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.reserva.core.usecase.ClienteUseCase;
 import com.jobits.pos.ui.module.PosDesktopUiModule;

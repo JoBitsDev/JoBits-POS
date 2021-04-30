@@ -14,7 +14,7 @@ import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
@@ -30,7 +30,9 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.venta.VentaResumenServiceOld;
-import org.jobits.db.core.domain.UbicacionConexionModel;
+import com.jobits.pos.core.module.PosCoreModule;
+import org.jobits.db.core.domain.TipoConexion;
+import org.jobits.db.pool.ConnectionPoolHandler;
 
 /**
  *
@@ -151,7 +153,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     }
 
     private void onEjecutarY(Venta venta) {
-        if (R.CURRENT_CONNECTION.getTipoUbicacion() != UbicacionConexionModel.TipoUbicacion.MASTER) {
+        if (ConnectionPoolHandler.getConnectionPoolService(PosCoreModule.getInstance().getModuleName()).getCurrentUbicacion().getTipoUbicacion() != TipoConexion.MASTER) {
             throw new UnauthorizedAccessException("Esta operacion solo se puede ejecutar conectado a una ubicaion master");
         }
         Y alg = new Y(venta);
