@@ -99,7 +99,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         } else {
             nota = JOptionPane.showInputDialog(null, "Introduzca la nota a adjuntar", p.getNota().getDescripcion());
         }
-        getController().addNota(getCodOrden(), getBean().getProducto_orden_seleccionado(), nota);
+        getController().addNota(getCodOrden(), p, nota);
     }
 
     private void onAddProductoClick() {
