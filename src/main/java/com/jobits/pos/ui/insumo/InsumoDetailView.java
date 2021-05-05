@@ -94,10 +94,10 @@ public class InsumoDetailView extends AbstractViewPanel {
         jPanelCosto.add(jXLabelGasto, java.awt.BorderLayout.CENTER);
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new java.awt.Dimension(600, 720));
-        setMinimumSize(new java.awt.Dimension(600, 380));
+        setMaximumSize(new java.awt.Dimension(700, 720));
+        setMinimumSize(new java.awt.Dimension(700, 380));
         setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(600, 720));
+        setPreferredSize(new java.awt.Dimension(700, 720));
         setLayout(new java.awt.BorderLayout());
 
         jPanelMain.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 1, 1));
@@ -486,6 +486,8 @@ public class InsumoDetailView extends AbstractViewPanel {
         builder2.tableModel(tableModel2);
 
         tableProductoInsumo = builder2.build();
+        tableProductoInsumo.getjTableCrossReference().getColumnModel().getColumn(0).setMaxWidth(100);
+        tableProductoInsumo.getjTableCrossReference().getColumnModel().getColumn(2).setMaxWidth(50);
         tableProductoInsumo.getjTableCrossReference().getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
         jPanelUsos.add(tableProductoInsumo, BorderLayout.CENTER);
 
