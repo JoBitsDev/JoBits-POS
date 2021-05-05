@@ -44,6 +44,14 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     public ProductoVentaSelectorPresenter(OrdenService ordenService) {
         super(new ProductoVentaSelectorViewModel());
         this.service = ordenService;
+        addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_ELEMENTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
+            Seccion seccion = (Seccion) evt.getNewValue();
+            if (seccion != null) {
+                getBean().setListaProductos(seccion.getProductoVentaList());
+            } else {
+                getBean().setListaProductos(new ArrayList());
+            }
+        });
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null && codOrdenEnlazada != null) {
                 Float cantidad = new NumberPad(null).showView();
@@ -89,6 +97,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
                 getBean().setListaProductos(new ArrayList<>());
             }
         });
+        refreshState();
     }
 
     public Mesa getMesaSeleccionada() {
@@ -140,7 +149,18 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
 
     @Override
     public Optional refreshState() {
-        getBean().setLista_elementos(SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada));//TODO: pifia logica en los presenters
+        if (mesaSeleccionada != null) {
+            getBean().setLista_elementos(SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada));//TODO: pifia logica en los presenters
+            if (!getBean().getListaProductos().isEmpty()) {
+                getBean().setElemento_seleccionado(getBean().getLista_elementos().get(0));
+            }
+            if (getBean().getElemento_seleccionado() != null) {
+                getBean().setListaProductos(getBean().getElemento_seleccionado().getProductoVentaList());
+            } else {
+                getBean().setListaProductos(new ArrayList());
+            }
+            onMostrarSeccionClick();
+        }
         return Optional.empty();
     }
 
