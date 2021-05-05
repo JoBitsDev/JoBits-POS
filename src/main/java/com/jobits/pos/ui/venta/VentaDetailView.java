@@ -31,11 +31,8 @@ import com.jobits.pos.ui.trabajadores.AsistenciaPersonalView;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.VentaListOrdenesView;
-import com.jobits.pos.core.domain.venta.ResumenVentaAreaTablaModel;
-import com.jobits.pos.core.domain.venta.ResumenVentaPtoElabTablaModel;
-import com.jobits.pos.core.domain.venta.ResumenVentaUsuarioTablaModel;
-import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.ui.mainmenu.MenuBarClass;
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
@@ -743,22 +740,18 @@ public class VentaDetailView extends AbstractViewPanel {
 //                new SelectionInList<ResumenVentaAreaTablaModel>(
 //                        getPresenter().getModel(PROP_LISTA_RESUMEN_AREA_VENTA),
 //                        getPresenter().getModel(PROP_RESUMEM_AREA_SELECCIONADA)));
-//        jButtonImprimirResumenArea.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_AREA));
 //
 //        //Dpte
 //        Bindings.bind(jTableVentasDependientes,
 //                new SelectionInList<ResumenVentaUsuarioTablaModel>(
 //                        getPresenter().getModel(PROP_LISTA_RESUMEN_PERSONAL_VENTA),
 //                        getPresenter().getModel(PROP_RESUMEN_USUARIO_SELECCIONADO)));
-//        jButtonImprimirDptes.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_USUARIO));
-//        jButtonImpPagoVentas.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_USUARIO_COMISION));
 //
 //        //Pto elab
 //        Bindings.bind(jTableVentasPorCocina,
 //                new SelectionInList<ResumenVentaUsuarioTablaModel>(
 //                        getPresenter().getModel(PROP_LISTA_RESUMEN_PTO_VENTA),
 //                        getPresenter().getModel(PROP_RESUMEN_PTO_SELECCIONADO)));
-//        jButtonImprimirResumenPto.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_PTO));
         //Mesas
         Bindings.bind(jTableVentasPorMesa, new SelectionInList<ProductovOrden>(
                 getPresenter().getModel(PROP_LISTA_PRODUCTOS_POR_MESA),
@@ -791,6 +784,10 @@ public class VentaDetailView extends AbstractViewPanel {
                 getPresenter().getModel(PROP_LISTA_AREAS),
                 getPresenter().getModel(PROP_AREA_SELECCIONADA)));
 
+        jButtonImprimirResumenArea.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_AREA));
+        jButtonImprimirDptes.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_USUARIO));
+        jButtonImpPagoVentas.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_USUARIO_COMISION));
+        jButtonImprimirResumenPto.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_PTO));
         jButtonImpimirResumenMesas1.addActionListener(getPresenter().getOperation(ACTION_IMPIMIR_RESUMEN_MESA));
         jButtonImpimirResumenComisionPorcentual.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_COMISION_PORCENTUAL));
 
