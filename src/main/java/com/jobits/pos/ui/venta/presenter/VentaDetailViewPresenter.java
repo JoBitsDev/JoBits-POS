@@ -333,7 +333,11 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         if (getBean().getVenta_seleccionada() != null) {
             Venta v = getBean().getVenta_seleccionada();
             service.fetchNewDataFromServer(v.getId());
-            ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, v.getId());
+            if (ventaOrdenPresenter != null) {
+                ventaOrdenPresenter.getMenuPresenter().getOperation(ACTION_REFRESH_STATE).doAction();
+            } else {
+                ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, v.getId());
+            }
             asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(v);
             gastosPresenter = new GastosViewPresenter(v);
             getBean().setVentaInstance(v);
@@ -375,9 +379,8 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
             }
 
-       
-            boolean value = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && 
-                    ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor()!=1;
+            boolean value = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3
+                    && ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() != 1;
 
             firePropertyChange(PROP_HIDE_PANEL, !value, value);
         }

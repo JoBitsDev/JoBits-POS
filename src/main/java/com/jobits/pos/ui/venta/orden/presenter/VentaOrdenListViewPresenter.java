@@ -200,6 +200,8 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
             getBean().setLista_elementos(lista);
             getBean().setElemento_seleccionado(o);
         }
+        ordenPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
+        menuPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
         return Optional.empty();
     }
 
