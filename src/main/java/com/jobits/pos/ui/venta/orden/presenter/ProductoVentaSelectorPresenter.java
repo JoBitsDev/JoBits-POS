@@ -47,9 +47,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_ELEMENTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
             Seccion seccion = (Seccion) evt.getNewValue();
             if (seccion != null) {
-                getBean().setListaProductos(seccion.getProductoVentaList());
-            } else {
-                getBean().setListaProductos(new ArrayList());
+                getBean().setListaProductos(service.getProductoBySeccion(seccion));
             }
         });
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
@@ -76,7 +74,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
 
                 auxList.forEach((x) -> {
                     boolean add = false;
-                    for (ProductoVenta pv : x.getProductoVentaList()) {
+                    for (ProductoVenta pv : service.getProductoBySeccion(x)) {
                         if (pv.toString().toLowerCase().contains(getBean().getPv_filtrado().toLowerCase())) {
                             pvList.add(pv);
                             add = true;
@@ -151,14 +149,8 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     public Optional refreshState() {
         if (mesaSeleccionada != null) {
             getBean().setLista_elementos(SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada));//TODO: pifia logica en los presenters
-            if (!getBean().getListaProductos().isEmpty()) {
-                getBean().setElemento_seleccionado(getBean().getLista_elementos().get(0));
-            }
-            if (getBean().getElemento_seleccionado() != null) {
-                getBean().setListaProductos(getBean().getElemento_seleccionado().getProductoVentaList());
-            } else {
-                getBean().setListaProductos(new ArrayList());
-            }
+            getBean().setElemento_seleccionado(null);
+            getBean().setListaProductos(service.getProductoBySeccion(getBean().getElemento_seleccionado()));
             onMostrarSeccionClick();
         }
         return Optional.empty();

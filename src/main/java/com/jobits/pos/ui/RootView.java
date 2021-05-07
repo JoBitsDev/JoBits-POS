@@ -166,11 +166,11 @@ public class RootView extends JPanel {
         jPanelStatus.setVisible(statusBarVisibility);
         dashboard.getTaskPane()
                 .showView(currentDisplayedViewName);
-        getCurrentView().getPresenter().getOperation(ACTION_REFRESH_STATE).doAction();
         dashboard.getTaskPane()
                 .repaint();
         dashboard.getTaskPane()
                 .revalidate();
+        getCurrentView().getPresenter().getOperation(ACTION_REFRESH_STATE).doAction();
         return true;
     }
 
