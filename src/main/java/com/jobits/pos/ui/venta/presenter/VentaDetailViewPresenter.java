@@ -265,7 +265,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     }
 
     private void onImprimirResumenVentaAreaClick() {
-        service.printAreaResumen(getBean().getResumem_area_seleccionada().getArea(), getBean().getVenta_seleccionada().getId());
+        service.printAreaResumen(getBean().getArea_seleccionada(), getBean().getVenta_seleccionada().getId());
     }
 
     private void onImprimirResumenVentaUsuarioClick() {
@@ -296,7 +296,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                         + "\nNo para imprimir solo las cantidades",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false);
 
-        service.printCocinaResumen(getBean().getResumen_pto_seleccionado().getCodigoPto(),
+        service.printCocinaResumen(getBean().getCocina_seleccionada().getCodCocina(),
                 getBean().getVenta_seleccionada().getId(), imprimirValores);
     }
 
