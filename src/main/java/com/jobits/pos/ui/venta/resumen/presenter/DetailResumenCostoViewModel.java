@@ -5,13 +5,13 @@
  */
 package com.jobits.pos.ui.venta.resumen.presenter;
 
-import com.jobits.pos.core.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.models.escandallos.InsumoRegistro;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 
 /**
  *
  * @author Home
  */
-public class DetailResumenCostoViewModel extends AbstractResumenViewModel<DayReviewWrapper, ProductoInsumo> {
+public class DetailResumenCostoViewModel extends AbstractResumenViewModel<DayReviewWrapper, InsumoRegistro> {
 
 }
