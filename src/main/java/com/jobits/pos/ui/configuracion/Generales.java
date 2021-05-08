@@ -12,7 +12,6 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Arrays;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import java.util.List;
 
 /**
  *
