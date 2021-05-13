@@ -78,6 +78,15 @@ public class AbstractFilterTypePresenter extends AbstractViewPresenter<AbstractF
             case SECCION:
                 ret = VentaDAO1Filters.filtroSeccion((Seccion) getBean().getElemento_seleccionado());
                 break;
+            case COCINA_E:
+                ret = VentaDAO1Filters.filtroCocinaEscandallo((Cocina) getBean().getElemento_seleccionado());
+                break;
+            case IPV_E:
+                ret = VentaDAO1Filters.filtroIPVEscandallo((Cocina) getBean().getElemento_seleccionado());
+                break;
+            case PRODUCTO_E:
+                ret = VentaDAO1Filters.filtroProductoEscandallo((ProductoVenta) getBean().getElemento_seleccionado());
+                break;
         }
         return ret;
     }

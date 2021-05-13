@@ -14,6 +14,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.module.PosCoreModule;
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;
@@ -27,6 +28,12 @@ import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
+import com.jobits.ui.themes.ThemeHandler;
+import com.jobits.ui.themes.ThemeType;
+import com.jobits.ui.themes.impl.DarkMaterialTheme;
+import com.jobits.ui.themes.impl.DefaultTheme;
+import com.jobits.ui.themes.impl.MaterialTheme;
+import com.jobits.ui.themes.impl.SimpleMaterialTheme;
 import com.root101.clean.core.app.services.NotificationService;
 import com.root101.clean.core.app.services.UserResolver;
 import com.root101.clean.core.app.services.UserResolverService;
@@ -219,6 +226,20 @@ public class Application {
 
     private void registerResources() {
         AuthorizerHandler.registerAuthorizer(new AuthorizerImpl());
+    }
+
+    public void setTheme() {
+        ConfigLoaderService service = new ConfigLoaderController();
+        String themeName = service.getConfigValue("app.theme");
+        if (themeName.equals(ThemeType.MATERIAL.getThemeName())) {
+            ThemeHandler.registerThemeService(new MaterialTheme());
+        } else if (themeName.equals(ThemeType.SIMPLE_MATERIAL.getThemeName())) {
+            ThemeHandler.registerThemeService(new SimpleMaterialTheme());
+//        } else if (themeName.equals(ThemeType.DARK_MATERIAL.getThemeName())) { TODO: en progreso tema oscuro
+//            ThemeHandler.registerThemeService(new DarkMaterialTheme());
+        } else {
+            ThemeHandler.registerThemeService(new DefaultTheme());
+        }
     }
 
     private void calculateLicenceLeft() {

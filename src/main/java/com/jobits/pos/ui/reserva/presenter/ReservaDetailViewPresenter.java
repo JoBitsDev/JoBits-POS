@@ -23,6 +23,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorPresenter;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoField;
@@ -159,6 +160,13 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     }
 
     private void addListeners() {
+        addBeanPropertyChangeListener(PROP_CLIENTE, (PropertyChangeEvent evt) -> {
+            Cliente c = (Cliente) evt.getNewValue();
+            if (c != null) {
+                getBean().setNombre_reserva(c.toString());
+            }
+        });
+
         addBeanPropertyChangeListener(PROP_CLIENTE_KEY_WORD, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null) {
                 String keyWord = ((String) evt.getNewValue()).toLowerCase();

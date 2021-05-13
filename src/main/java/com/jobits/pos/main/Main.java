@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
 
         Application app = Application.getInstance();
-
+        app.setTheme();
         SplashScreen sp = new SplashScreen();
         app.init();
         sp.dispose();
