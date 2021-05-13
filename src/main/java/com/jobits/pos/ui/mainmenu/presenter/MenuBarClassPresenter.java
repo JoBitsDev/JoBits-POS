@@ -11,6 +11,7 @@ import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
@@ -19,8 +20,10 @@ import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
+import com.jobits.pos.ui.login.ChangeUserView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
+import com.jobits.pos.ui.login.presenter.ChangeUserViewPresenter;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
@@ -32,7 +35,7 @@ import com.jobits.pos.ui.venta.VentaDetailView;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import org.jobits.app.repo.UbicacionConexionService;
+import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *
@@ -104,14 +107,18 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        LogInView.VIEW_NAME, new LoginViewPresenter(new LogInController(new AuthorizerImpl())), DisplayType.POPUP);
+                        ChangeUserView.VIEW_NAME, new ChangeUserViewPresenter(new LogInController()), DisplayType.POPUP);//TODO: inyectar
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_CERRAR_SESION) {
             @Override
             public Optional doAction() {
-                JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "En Desarrollo");
+                Application.getInstance().setLoggedUser(null);
+                RootView.getInstance().clearView();
+                Application.getInstance().getNavigator().navigateTo(
+                        LogInView.VIEW_NAME, new LoginViewPresenter(new LogInController()), DisplayType.POPUP);
+                Application.getInstance().getNotificationService().showDialog("Sesion Cerrada", TipoNotificacion.INFO);
                 return Optional.empty();
             }
         });
@@ -139,8 +146,8 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
         registerOperation(new AbstractViewAction(ACTION_REFRESCAR_VISTA) {
             @Override
             public Optional doAction() {
-                System.out.println("Its Happ");
-//                TODO: Esperando Implementacion
+                RootView.getInstance().getCurrentView().getPresenter()
+                        .getOperation(AbstractViewPresenter.ACTION_REFRESH_STATE).doAction();
                 return Optional.empty();
             }
         });

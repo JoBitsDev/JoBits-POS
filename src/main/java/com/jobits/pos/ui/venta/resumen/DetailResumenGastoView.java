@@ -7,7 +7,7 @@ package com.jobits.pos.ui.venta.resumen;
 
 import com.jobits.pos.core.domain.models.GastoVenta;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.ui.venta.resumen.presenter.DetailResumenGastoViewPresenter;
 import com.jobits.pos.utils.utils;
 import java.time.Instant;

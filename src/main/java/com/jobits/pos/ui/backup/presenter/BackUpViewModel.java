@@ -6,9 +6,9 @@
 package com.jobits.pos.ui.backup.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import org.jobits.app.repo.UbicacionConexionModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.List;
+import org.jobits.db.core.domain.ConexionPropertiesModel;
 
 /**
  *
@@ -19,11 +19,11 @@ import java.util.List;
  */
 public class BackUpViewModel extends AbstractViewModel {
 
-    private ArrayListModel<UbicacionConexionModel> lista_ubicaciones = new ArrayListModel<>();
+    private ArrayListModel<ConexionPropertiesModel> lista_ubicaciones = new ArrayListModel<>();
 
     public static final String PROP_LISTA_UBICACIONES = "lista_ubicaciones";
 
-    private UbicacionConexionModel ubicacion_seleccionada;
+    private ConexionPropertiesModel ubicacion_seleccionada;
 
     public static final String PROP_UBICACION_SELECCIONADA = "ubicacion_seleccionada";
 
@@ -176,7 +176,7 @@ public class BackUpViewModel extends AbstractViewModel {
      *
      * @return the value of ubicacion_seleccionada
      */
-    public UbicacionConexionModel getUbicacion_seleccionada() {
+    public ConexionPropertiesModel getUbicacion_seleccionada() {
         return ubicacion_seleccionada;
     }
 
@@ -185,8 +185,8 @@ public class BackUpViewModel extends AbstractViewModel {
      *
      * @param ubicacion_seleccionada new value of ubicacion_seleccionada
      */
-    public void setUbicacion_seleccionada(UbicacionConexionModel ubicacion_seleccionada) {
-        UbicacionConexionModel oldUbicacion_seleccionada = this.ubicacion_seleccionada;
+    public void setUbicacion_seleccionada(ConexionPropertiesModel ubicacion_seleccionada) {
+        ConexionPropertiesModel oldUbicacion_seleccionada = this.ubicacion_seleccionada;
         this.ubicacion_seleccionada = ubicacion_seleccionada;
         firePropertyChange(PROP_UBICACION_SELECCIONADA, oldUbicacion_seleccionada, ubicacion_seleccionada);
     }
@@ -196,7 +196,7 @@ public class BackUpViewModel extends AbstractViewModel {
      *
      * @return the value of lista_ubicaciones
      */
-    public ArrayListModel<UbicacionConexionModel> getLista_ubicaciones() {
+    public ArrayListModel<ConexionPropertiesModel> getLista_ubicaciones() {
         return lista_ubicaciones;
     }
 
@@ -205,8 +205,8 @@ public class BackUpViewModel extends AbstractViewModel {
      *
      * @param lista_ubicaciones new value of lista_ubicaciones
      */
-    public void setLista_ubicaciones(List<UbicacionConexionModel> lista_ubicaciones) {
-        ArrayListModel<UbicacionConexionModel> oldLista_ubicaciones = this.lista_ubicaciones;
+    public void setLista_ubicaciones(List<ConexionPropertiesModel> lista_ubicaciones) {
+        ArrayListModel<ConexionPropertiesModel> oldLista_ubicaciones = this.lista_ubicaciones;
         this.lista_ubicaciones.clear();
         this.lista_ubicaciones.addAll(lista_ubicaciones);
         firePropertyChange(PROP_LISTA_UBICACIONES, oldLista_ubicaciones, lista_ubicaciones);

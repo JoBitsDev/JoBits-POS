@@ -7,7 +7,7 @@ package com.jobits.pos.main;
 
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
-import com.jobits.pos.ui.View;
+import com.jobits.ui.swing.View;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
@@ -37,6 +37,7 @@ import com.jobits.pos.ui.cartas.CartasSeccionView;
 import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
+import com.jobits.pos.ui.login.ChangeUserView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reserva.ReservaOrdenDetailView;
 import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
@@ -58,6 +59,7 @@ import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
+import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaResumenViewPresenter;
 import com.jobits.pos.ui.venta.resumen.ResumenMainview;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
@@ -89,6 +91,8 @@ public class ViewFacade {
                 return new AcercaDeView(p);
             case LogInView.VIEW_NAME:
                 return getRootView(p);
+            case ChangeUserView.VIEW_NAME:
+                return new ChangeUserView(p);
             case MainMenuView.VIEW_NAME:
                 return new MainMenuView(p);
             case DashBoardView.VIEW_NAME:
@@ -126,7 +130,7 @@ public class ViewFacade {
             case IpvGestionView.VIEW_NAME:
                 return new IpvGestionView(p);
             case VentaDetailView.VIEW_NAME:
-                return new VentaDetailView(p);
+                return new VentaDetailView((VentaDetailViewPresenter) p);
             case MesaDetailView.VIEW_NAME:
                 return new MesaDetailView(p);
             case OrdenDetailFragmentView.VIEW_NAME:

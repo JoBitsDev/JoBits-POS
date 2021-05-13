@@ -10,7 +10,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;

@@ -8,7 +8,7 @@ package com.jobits.pos.ui.clientes.reserva;
 import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 
 /**
  * FirstDream

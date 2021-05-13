@@ -10,7 +10,7 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.core.domain.models.temporal.GeneralReviewWrapper;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewModel.*;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import static com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter.*;

@@ -13,4 +13,5 @@ public interface ConfigLoaderService {
 
     public String getConfigValue(String key);
 
+    public void setConfigValue(String property, String key);
 }

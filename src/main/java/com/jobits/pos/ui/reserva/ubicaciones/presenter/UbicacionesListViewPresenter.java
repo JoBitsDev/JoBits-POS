@@ -7,7 +7,7 @@ package com.jobits.pos.ui.reserva.ubicaciones.presenter;
 
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.reserva.core.domain.UbicacionEstado;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;

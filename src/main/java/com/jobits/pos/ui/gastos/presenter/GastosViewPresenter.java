@@ -11,7 +11,7 @@ import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.core.domain.models.temporal.DefaultGasto;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.GastosFormatter;
@@ -130,7 +130,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar el gasto seleccionado?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            if (new LogInController(new AuthorizerImpl()).constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {
+            if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {//TODO: inyectar
                 service.removeGasto(getBean().getGasto_venta_seleccionado());
                 getBean().setGasto_venta_seleccionado(null);
                 refreshState();

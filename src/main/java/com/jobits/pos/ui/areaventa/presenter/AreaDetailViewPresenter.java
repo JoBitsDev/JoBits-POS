@@ -11,7 +11,7 @@ import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;

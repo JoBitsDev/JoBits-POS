@@ -8,28 +8,35 @@ package com.jobits.pos.main;
 import com.jobits.pos.ui.utils.ConfigLoaderService;
 import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.controller.licencia.impl.LicenceController;
+import com.jobits.pos.controller.login.AuthorizerHandler;
 import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.module.PosCoreModule;
-import com.jobits.pos.notification.NotificationService;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
-import com.jobits.pos.ui.LongProcessActionService;
+import com.jobits.ui.swing.LongProcessActionService;
+import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.ConfigLoaderController;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.PopUpDialog;
-import com.jobits.pos.utils.UbicacionResourceServiceImpl;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.notifications.NotificationHandler;
+import com.jobits.ui.themes.ThemeHandler;
+import com.jobits.ui.themes.ThemeType;
+import com.jobits.ui.themes.impl.DarkMaterialTheme;
+import com.jobits.ui.themes.impl.DefaultTheme;
+import com.jobits.ui.themes.impl.MaterialTheme;
+import com.jobits.ui.themes.impl.SimpleMaterialTheme;
+import com.root101.clean.core.app.services.NotificationService;
 import com.root101.clean.core.app.services.UserResolver;
 import com.root101.clean.core.app.services.UserResolverService;
-import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.FileOutputStream;
@@ -40,7 +47,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import org.jobits.app.repo.UbicacionConexionServiceImpl;
+import org.jobits.db.core.module.DataVersionControlModule;
 
 /**
  *
@@ -59,6 +66,14 @@ public class Application {
     private static final String ERR_FILE_PATH = "LOGS/AppLogsErr.log";
     private static Application application;
     private UserResolverService<Personal> userResolver = new UserResolverServiceImpl();
+
+    public static final int MAJOR_VERSION = 3;
+
+    public static final int MINOR_VERSION = 6;
+
+    public static final int PATCH_VERSION = 0;
+
+    public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
 
 //    public static Application createApplication() {
 //        if (application == null) {
@@ -102,7 +117,7 @@ public class Application {
     //
     private MainWindow mainWindow;
     private NavigationService navigator;
-    private NotificationService notificationService = NotificationService.getInstance();
+    private NotificationService notificationService = new NotificationHandler();
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     private Application() {
@@ -200,16 +215,31 @@ public class Application {
     }
 
     private void initModules() {
-        ReservaRepoModule.init();
+        DataVersionControlModule.init();
+        ReservaRepoModule.init(DataVersionControlModule.getInstance());
         ReservaCoreModule.init(ReservaRepoModule.getInstance());
-        PosCoreModule.init(null);
+        PosCoreModule.init(DataVersionControlModule.getInstance());
         PosDesktopUiModule.init(
                 ReservaCoreModule.getInstance(),
                 PosCoreModule.getInstance());
     }
 
     private void registerResources() {
-        ResourceHandler.registerResourceService(new UbicacionResourceServiceImpl(new UbicacionConexionServiceImpl()));//TODO: inyectar
+        AuthorizerHandler.registerAuthorizer(new AuthorizerImpl());
+    }
+
+    public void setTheme() {
+        ConfigLoaderService service = new ConfigLoaderController();
+        String themeName = service.getConfigValue("app.theme");
+        if (themeName.equals(ThemeType.MATERIAL.getThemeName())) {
+            ThemeHandler.registerThemeService(new MaterialTheme());
+        } else if (themeName.equals(ThemeType.SIMPLE_MATERIAL.getThemeName())) {
+            ThemeHandler.registerThemeService(new SimpleMaterialTheme());
+//        } else if (themeName.equals(ThemeType.DARK_MATERIAL.getThemeName())) { TODO: en progreso tema oscuro
+//            ThemeHandler.registerThemeService(new DarkMaterialTheme());
+        } else {
+            ThemeHandler.registerThemeService(new DefaultTheme());
+        }
     }
 
     private void calculateLicenceLeft() {
@@ -236,7 +266,7 @@ public class Application {
     }
 
     private void setNotificationChannel() {
-        notificationService.registerNotificationChannel(new NotificationHandler());
+        //  NotificationService notificationService = new com.jobits.ui.components.swing.notifications.NotificationHandler();
     }
 
     private void setupDebugMode() {

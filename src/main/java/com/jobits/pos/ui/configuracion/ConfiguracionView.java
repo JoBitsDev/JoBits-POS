@@ -14,6 +14,7 @@ import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
 import com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewPresenter;
 import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewPresenter;
 import com.jobits.pos.ui.configuracion.presenter.ReiniciarDatosViewPresenter;
+import com.jobits.pos.ui.configuracion.presenter.VisualesViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Dimension;
@@ -158,6 +159,7 @@ public class ConfiguracionView extends AbstractViewPanel {
         jTabbedPane1.add("Almacén", new Almacen(presenter));
         jTabbedPane1.add("Sync", new Sincronizacion(presenter));
         jTabbedPane1.add("ImpresiÃ³n", new Impresion(presenter));
+        jTabbedPane1.add("Visuales", new Visuales(new VisualesViewPresenter()));
         jTabbedPane1.add("ImportarExportar", new ImportarExportar(new ImportarExportarViewPresenter(new ProductoVentaListController())));
         jTabbedPane1.add("Impresoras", new Impresoras(new ImpresorasViewPresenter(new ImpresoraUseCase(new ImpresoraRepoImpl()))));
         jTabbedPane1.add("Reiniciar Datos", new ReiniciarDatosView(new ReiniciarDatosViewPresenter()));

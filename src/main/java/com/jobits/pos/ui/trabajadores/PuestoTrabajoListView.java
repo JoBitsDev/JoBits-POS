@@ -9,7 +9,7 @@ package com.jobits.pos.ui.trabajadores;
 import com.jobits.pos.core.domain.models.PuestoTrabajo;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 
 /**
  * FirstDream

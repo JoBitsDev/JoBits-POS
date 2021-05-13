@@ -44,6 +44,12 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     public ProductoVentaSelectorPresenter(OrdenService ordenService) {
         super(new ProductoVentaSelectorViewModel());
         this.service = ordenService;
+        addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_ELEMENTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
+            Seccion seccion = (Seccion) evt.getNewValue();
+            if (seccion != null) {
+                getBean().setListaProductos(service.getProductoBySeccion(seccion));
+            }
+        });
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null && codOrdenEnlazada != null) {
                 Float cantidad = new NumberPad(null).showView();
@@ -68,7 +74,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
 
                 auxList.forEach((x) -> {
                     boolean add = false;
-                    for (ProductoVenta pv : x.getProductoVentaList()) {
+                    for (ProductoVenta pv : service.getProductoBySeccion(x)) {
                         if (pv.toString().toLowerCase().contains(getBean().getPv_filtrado().toLowerCase())) {
                             pvList.add(pv);
                             add = true;
@@ -89,6 +95,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
                 getBean().setListaProductos(new ArrayList<>());
             }
         });
+        refreshState();
     }
 
     public Mesa getMesaSeleccionada() {
@@ -140,7 +147,12 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
 
     @Override
     public Optional refreshState() {
-        getBean().setLista_elementos(SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada));//TODO: pifia logica en los presenters
+        if (mesaSeleccionada != null) {
+            getBean().setLista_elementos(SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada));//TODO: pifia logica en los presenters
+            getBean().setElemento_seleccionado(null);
+            getBean().setListaProductos(service.getProductoBySeccion(getBean().getElemento_seleccionado()));
+            onMostrarSeccionClick();
+        }
         return Optional.empty();
     }
 

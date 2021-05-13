@@ -13,8 +13,10 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.venta.orden.presenter.CalcularCambioViewModel.*;
 import static com.jobits.pos.ui.venta.orden.presenter.CalcularCambioViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -50,8 +52,6 @@ public class CalcularCambioView extends AbstractViewPanel {
         jLabelAPagar = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jSpinnerMonedaNacional = new javax.swing.JSpinner();
-        jLabel2 = new javax.swing.JLabel();
-        jSpinnerSegundaMoneda = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
         jLabelCambio = new javax.swing.JLabel();
         jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
@@ -75,7 +75,7 @@ public class CalcularCambioView extends AbstractViewPanel {
         jPanel5.add(jPanel1, java.awt.BorderLayout.NORTH);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        jPanel2.setLayout(new java.awt.GridLayout(4, 2, 0, 10));
+        jPanel2.setLayout(new java.awt.GridLayout(3, 2, 0, 10));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -95,14 +95,6 @@ public class CalcularCambioView extends AbstractViewPanel {
 
         jSpinnerMonedaNacional.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
         jPanel2.add(jSpinnerMonedaNacional);
-
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("CUC");
-        jPanel2.add(jLabel2);
-
-        jSpinnerSegundaMoneda.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 5.0f));
-        jPanel2.add(jSpinnerSegundaMoneda);
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -140,7 +132,6 @@ public class CalcularCambioView extends AbstractViewPanel {
     private javax.swing.JButton jButtonAbrirCajon;
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelAPagar;
@@ -151,7 +142,6 @@ public class CalcularCambioView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JSpinner jSpinnerMonedaNacional;
-    private javax.swing.JSpinner jSpinnerSegundaMoneda;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -163,10 +153,6 @@ public class CalcularCambioView extends AbstractViewPanel {
         SpinnerToValueModelConnector connector = new SpinnerToValueModelConnector(jSpinnerMonedaNacional.getModel(),
                 getPresenter().getModel(PROP_ENTRADA_MONEDA_NACIONAL), 0);
         Bindings.bind(jSpinnerMonedaNacional, "value", getPresenter().getModel(PROP_ENTRADA_MONEDA_NACIONAL));
-        SpinnerToValueModelConnector connector1 = new SpinnerToValueModelConnector(jSpinnerSegundaMoneda.getModel(),
-                getPresenter().getModel(PROP_ENTRADA_SEGUNDA_MONEDA), 0);
-        Bindings.bind(jSpinnerSegundaMoneda, "value", getPresenter().getModel(PROP_ENTRADA_SEGUNDA_MONEDA));
-
         jButtonCerrar.addActionListener(getPresenter().getOperation(ACTION_CERRAR));
         jButtonAbrirCajon.addActionListener(getPresenter().getOperation(ACTION_ABRIR_CAJA));
     }
@@ -175,52 +161,14 @@ public class CalcularCambioView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         javax.swing.JSpinner.DefaultEditor defCantidad = (javax.swing.JSpinner.DefaultEditor) jSpinnerMonedaNacional.getEditor();
-        javax.swing.JSpinner.DefaultEditor defCantidad2 = (javax.swing.JSpinner.DefaultEditor) jSpinnerSegundaMoneda.getEditor();
-        defCantidad.getTextField().addFocusListener(new FocusListener() {
+        defCantidad.getTextField().addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
                 jSpinnerMonedaNacional.setValue(0);
                 defCantidad.getTextField().setText(null);
             }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-            }
         });
-        defCantidad2.getTextField().addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                jSpinnerSegundaMoneda.setValue(0);
-                defCantidad2.getTextField().setText(null);
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-            }
-        });
-        defCantidad.getTextField().addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    defCantidad2.getTextField().requestFocusInWindow();
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    getPresenter().getOperation(ACTION_CERRAR).doAction();
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        defCantidad2.getTextField().addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
+        defCantidad.getTextField().addKeyListener(new KeyAdapter() {
 
             @Override
             public void keyPressed(KeyEvent e) {
@@ -231,33 +179,7 @@ public class CalcularCambioView extends AbstractViewPanel {
                     getPresenter().getOperation(ACTION_CERRAR).doAction();
                 }
             }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
         });
-//
-//        ActionListener l = (ActionEvent e) -> {
-//            ((JFormattedTextField) e.getSource()).transferFocus();
-//        };
-//        FocusListener focus = new FocusListener() {
-//            @Override
-//            public void focusGained(FocusEvent e) {
-//                ((JFormattedTextField) e.getSource()).setText(null);
-//            }
-//
-//            @Override
-//            public void focusLost(FocusEvent e) {
-//            }
-//        };
-//
-//        final JFormattedTextField fieldCUC = ((JSpinner.NumberEditor) jSpinnerSegundaMoneda.getEditor()).getTextField();
-//        final JFormattedTextField fieldMN = ((JSpinner.NumberEditor) jSpinnerMonedaNacional.getEditor()).getTextField();
-//
-//        fieldCUC.addActionListener(l);
-//        fieldMN.addActionListener(l);
-//        fieldCUC.addFocusListener(focus);
-//        fieldMN.addFocusListener(focus);
 
     }
 

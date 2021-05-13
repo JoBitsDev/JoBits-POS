@@ -86,9 +86,7 @@ public class FilterViewPresenter<T> extends AbstractViewPresenter<FilterViewMode
             Predicate predicado = p.createPredicate();
             if (p.getBean().isTipo_operacion()) {
                 fb.or(predicado);
-                System.out.println("Or");
             } else {
-                System.out.println("And");
                 fb.and(predicado);
             }
         }
@@ -116,6 +114,15 @@ public class FilterViewPresenter<T> extends AbstractViewPresenter<FilterViewMode
                     break;
                 case SECCION:
                     filterModel.setLista_elementos(new ArrayListModel(service.getListaSecciones()));
+                    break;
+                case COCINA_E:
+                    filterModel.setLista_elementos(new ArrayListModel(service.getListaCocinas()));
+                    break;
+                case PRODUCTO_E:
+                    filterModel.setLista_elementos(new ArrayListModel(service.getListaProductos()));
+                    break;
+                case IPV_E:
+                    filterModel.setLista_elementos(new ArrayListModel(service.getListaCocinas()));
                     break;
             }
             filterModel.setTipo_filtro(getBean().getFiltro_seleccionado());

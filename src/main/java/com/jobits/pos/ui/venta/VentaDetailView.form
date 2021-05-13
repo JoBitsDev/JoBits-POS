@@ -561,6 +561,54 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                           <SubComponents>
+                            <Container class="javax.swing.JPanel" name="jPanel19">
+                              <Properties>
+                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                                    <EmptyBorder bottom="1" left="1" right="15" top="10"/>
+                                  </Border>
+                                </Property>
+                              </Properties>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
+                              </AuxValues>
+                              <Constraints>
+                                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                  <BorderConstraints direction="North"/>
+                                </Constraint>
+                              </Constraints>
+
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                                <Property name="alignment" type="int" value="2"/>
+                              </Layout>
+                              <SubComponents>
+                                <Component class="javax.swing.JComboBox" name="jComboBoxAreaList">
+                                  <Properties>
+                                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                      <StringArray count="4">
+                                        <StringItem index="0" value="Item 1"/>
+                                        <StringItem index="1" value="Item 2"/>
+                                        <StringItem index="2" value="Item 3"/>
+                                        <StringItem index="3" value="Item 4"/>
+                                      </StringArray>
+                                    </Property>
+                                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                      <Dimension value="[250, 26]"/>
+                                    </Property>
+                                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                      <Dimension value="[250, 26]"/>
+                                    </Property>
+                                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                      <Dimension value="[250, 26]"/>
+                                    </Property>
+                                  </Properties>
+                                  <AuxValues>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Displayers.getComboBox(&quot;&quot;)"/>
+                                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                                  </AuxValues>
+                                </Component>
+                              </SubComponents>
+                            </Container>
                             <Container class="javax.swing.JScrollPane" name="jScrollPane6">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -590,7 +638,7 @@
                                       </Border>
                                     </Property>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                      <Font name="Lucida Grande" size="14" style="1"/>
+                                      <Font name="Dialog" size="14" style="1"/>
                                     </Property>
                                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                       <Table columnCount="4" rowCount="0">
@@ -633,8 +681,14 @@
                                 </Component>
                               </SubComponents>
                             </Container>
-                            <Container class="javax.swing.JPanel" name="jPanel7">
+                            <Container class="javax.swing.JPanel" name="jPanel16">
                               <Properties>
+                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                                    <EmptyBorder bottom="1" left="15" right="15" top="1"/>
+                                  </Border>
+                                </Property>
+                                <Property name="opaque" type="boolean" value="false"/>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[180, 60]"/>
                                 </Property>
@@ -644,31 +698,76 @@
                               </AuxValues>
                               <Constraints>
                                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                                  <BorderConstraints direction="Last"/>
+                                  <BorderConstraints direction="South"/>
                                 </Constraint>
                               </Constraints>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                               <SubComponents>
-                                <Component class="javax.swing.JButton" name="jButtonImprimirResumenArea">
-                                  <Properties>
-                                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                      <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
-                                    </Property>
-                                    <Property name="text" type="java.lang.String" value="Resumen de ventas"/>
-                                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="[200, 50]"/>
-                                    </Property>
-                                  </Properties>
+                                <Container class="javax.swing.JPanel" name="jPanel17">
                                   <AuxValues>
-                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
                                   </AuxValues>
                                   <Constraints>
-                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                                      <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                      <BorderConstraints direction="West"/>
                                     </Constraint>
                                   </Constraints>
-                                </Component>
+
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jLabel4">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Total: "/>
+                                      </Properties>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                          <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                        </Constraint>
+                                      </Constraints>
+                                    </Component>
+                                    <Component class="javax.swing.JLabel" name="jLabelTotalAreas">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="xx.xx"/>
+                                      </Properties>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                          <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                        </Constraint>
+                                      </Constraints>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
+                                <Container class="javax.swing.JPanel" name="jPanel18">
+                                  <AuxValues>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
+                                  </AuxValues>
+                                  <Constraints>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                      <BorderConstraints direction="East"/>
+                                    </Constraint>
+                                  </Constraints>
+
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                                    <Property name="alignment" type="int" value="2"/>
+                                  </Layout>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JButton" name="jButtonImprimirResumenArea">
+                                      <Properties>
+                                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                          <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
+                                        </Property>
+                                        <Property name="text" type="java.lang.String" value="Resumen de ventas"/>
+                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[200, 50]"/>
+                                        </Property>
+                                      </Properties>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                      </AuxValues>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
                               </SubComponents>
                             </Container>
                           </SubComponents>
@@ -687,6 +786,54 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                           <SubComponents>
+                            <Container class="javax.swing.JPanel" name="jPanel7">
+                              <Properties>
+                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                                    <EmptyBorder bottom="1" left="1" right="15" top="10"/>
+                                  </Border>
+                                </Property>
+                              </Properties>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
+                              </AuxValues>
+                              <Constraints>
+                                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                  <BorderConstraints direction="North"/>
+                                </Constraint>
+                              </Constraints>
+
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                                <Property name="alignment" type="int" value="2"/>
+                              </Layout>
+                              <SubComponents>
+                                <Component class="javax.swing.JComboBox" name="jComboBoxDependientesList">
+                                  <Properties>
+                                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                      <StringArray count="4">
+                                        <StringItem index="0" value="Item 1"/>
+                                        <StringItem index="1" value="Item 2"/>
+                                        <StringItem index="2" value="Item 3"/>
+                                        <StringItem index="3" value="Item 4"/>
+                                      </StringArray>
+                                    </Property>
+                                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                      <Dimension value="[250, 26]"/>
+                                    </Property>
+                                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                      <Dimension value="[250, 26]"/>
+                                    </Property>
+                                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                      <Dimension value="[250, 26]"/>
+                                    </Property>
+                                  </Properties>
+                                  <AuxValues>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Displayers.getComboBox(&quot;&quot;)"/>
+                                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                                  </AuxValues>
+                                </Component>
+                              </SubComponents>
+                            </Container>
                             <Container class="javax.swing.JScrollPane" name="jScrollPane3">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -711,7 +858,7 @@
                                   <Properties>
                                     <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                      <Font name="Lucida Grande" size="14" style="1"/>
+                                      <Font name="Dialog" size="14" style="1"/>
                                     </Property>
                                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                       <Table columnCount="4" rowCount="0">
@@ -754,8 +901,13 @@
                                 </Component>
                               </SubComponents>
                             </Container>
-                            <Container class="javax.swing.JPanel" name="jPanel4">
+                            <Container class="javax.swing.JPanel" name="jPanel9">
                               <Properties>
+                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                                    <EmptyBorder bottom="1" left="15" right="15" top="1"/>
+                                  </Border>
+                                </Property>
                                 <Property name="opaque" type="boolean" value="false"/>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[180, 60]"/>
@@ -770,46 +922,86 @@
                                 </Constraint>
                               </Constraints>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                               <SubComponents>
-                                <Component class="javax.swing.JButton" name="jButtonImprimirDptes">
-                                  <Properties>
-                                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                      <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
-                                    </Property>
-                                    <Property name="text" type="java.lang.String" value="Resumen de ventas"/>
-                                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="[200, 50]"/>
-                                    </Property>
-                                  </Properties>
+                                <Container class="javax.swing.JPanel" name="jPanel12">
                                   <AuxValues>
-                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
                                   </AuxValues>
                                   <Constraints>
-                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                                      <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                      <BorderConstraints direction="West"/>
                                     </Constraint>
                                   </Constraints>
-                                </Component>
-                                <Component class="javax.swing.JButton" name="jButtonImpPagoVentas">
-                                  <Properties>
-                                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                      <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
-                                    </Property>
-                                    <Property name="text" type="java.lang.String" value="Pago por comision"/>
-                                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="[200, 50]"/>
-                                    </Property>
-                                  </Properties>
+
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jLabel3">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Total: "/>
+                                      </Properties>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                          <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                        </Constraint>
+                                      </Constraints>
+                                    </Component>
+                                    <Component class="javax.swing.JLabel" name="jLabelTotalDependientes">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="xx.xx"/>
+                                      </Properties>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                          <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                        </Constraint>
+                                      </Constraints>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
+                                <Container class="javax.swing.JPanel" name="jPanel13">
                                   <AuxValues>
-                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
                                   </AuxValues>
                                   <Constraints>
-                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                                      <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                      <BorderConstraints direction="East"/>
                                     </Constraint>
                                   </Constraints>
-                                </Component>
+
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                                    <Property name="alignment" type="int" value="2"/>
+                                  </Layout>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JButton" name="jButtonImprimirDptes">
+                                      <Properties>
+                                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                          <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
+                                        </Property>
+                                        <Property name="text" type="java.lang.String" value="Resumen de ventas"/>
+                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[200, 50]"/>
+                                        </Property>
+                                      </Properties>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                      </AuxValues>
+                                    </Component>
+                                    <Component class="javax.swing.JButton" name="jButtonImpPagoVentas">
+                                      <Properties>
+                                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                          <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
+                                        </Property>
+                                        <Property name="text" type="java.lang.String" value="Pago por comision"/>
+                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[200, 50]"/>
+                                        </Property>
+                                      </Properties>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                      </AuxValues>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
                               </SubComponents>
                             </Container>
                           </SubComponents>
@@ -828,6 +1020,54 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                           <SubComponents>
+                            <Container class="javax.swing.JPanel" name="jPanel4">
+                              <Properties>
+                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                                    <EmptyBorder bottom="1" left="1" right="15" top="10"/>
+                                  </Border>
+                                </Property>
+                              </Properties>
+                              <AuxValues>
+                                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
+                              </AuxValues>
+                              <Constraints>
+                                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                  <BorderConstraints direction="North"/>
+                                </Constraint>
+                              </Constraints>
+
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                                <Property name="alignment" type="int" value="2"/>
+                              </Layout>
+                              <SubComponents>
+                                <Component class="javax.swing.JComboBox" name="jComboBoxCocinasList">
+                                  <Properties>
+                                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                                      <StringArray count="4">
+                                        <StringItem index="0" value="Item 1"/>
+                                        <StringItem index="1" value="Item 2"/>
+                                        <StringItem index="2" value="Item 3"/>
+                                        <StringItem index="3" value="Item 4"/>
+                                      </StringArray>
+                                    </Property>
+                                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                      <Dimension value="[250, 26]"/>
+                                    </Property>
+                                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                      <Dimension value="[250, 26]"/>
+                                    </Property>
+                                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                      <Dimension value="[250, 26]"/>
+                                    </Property>
+                                  </Properties>
+                                  <AuxValues>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Displayers.getComboBox(&quot;&quot;)"/>
+                                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                                  </AuxValues>
+                                </Component>
+                              </SubComponents>
+                            </Container>
                             <Container class="javax.swing.JScrollPane" name="jScrollPane5">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -852,7 +1092,7 @@
                                   <Properties>
                                     <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                                      <Font name="Lucida Grande" size="14" style="1"/>
+                                      <Font name="Dialog" size="14" style="1"/>
                                     </Property>
                                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                       <Table columnCount="3" rowCount="0">
@@ -891,6 +1131,11 @@
                             </Container>
                             <Container class="javax.swing.JPanel" name="jPanel5">
                               <Properties>
+                                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                                    <EmptyBorder bottom="1" left="15" right="15" top="1"/>
+                                  </Border>
+                                </Property>
                                 <Property name="opaque" type="boolean" value="false"/>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                                   <Dimension value="[180, 60]"/>
@@ -901,31 +1146,76 @@
                               </AuxValues>
                               <Constraints>
                                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-                                  <BorderConstraints direction="Last"/>
+                                  <BorderConstraints direction="South"/>
                                 </Constraint>
                               </Constraints>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                               <SubComponents>
-                                <Component class="javax.swing.JButton" name="jButtonImprimirResumenPto">
-                                  <Properties>
-                                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                      <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
-                                    </Property>
-                                    <Property name="text" type="java.lang.String" value="Resumen de ventas"/>
-                                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="[200, 50]"/>
-                                    </Property>
-                                  </Properties>
+                                <Container class="javax.swing.JPanel" name="jPanel10">
                                   <AuxValues>
-                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
                                   </AuxValues>
                                   <Constraints>
-                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-                                      <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                      <BorderConstraints direction="West"/>
                                     </Constraint>
                                   </Constraints>
-                                </Component>
+
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jLabel2">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Total: "/>
+                                      </Properties>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                          <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                        </Constraint>
+                                      </Constraints>
+                                    </Component>
+                                    <Component class="javax.swing.JLabel" name="jLabelTotalCocina">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="xx.xx"/>
+                                      </Properties>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                          <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                        </Constraint>
+                                      </Constraints>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
+                                <Container class="javax.swing.JPanel" name="jPanel11">
+                                  <AuxValues>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
+                                  </AuxValues>
+                                  <Constraints>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                      <BorderConstraints direction="East"/>
+                                    </Constraint>
+                                  </Constraints>
+
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                                    <Property name="alignment" type="int" value="2"/>
+                                  </Layout>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JButton" name="jButtonImprimirResumenPto">
+                                      <Properties>
+                                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                          <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
+                                        </Property>
+                                        <Property name="text" type="java.lang.String" value="Resumen de ventas"/>
+                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[200, 50]"/>
+                                        </Property>
+                                      </Properties>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                      </AuxValues>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
                               </SubComponents>
                             </Container>
                           </SubComponents>
@@ -1014,6 +1304,9 @@
                               <SubComponents>
                                 <Component class="javax.swing.JTable" name="jTableVentasPorMesa">
                                   <Properties>
+                                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                                      <Font name="Dialog" size="14" style="1"/>
+                                    </Property>
                                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                       <Table columnCount="4" rowCount="4">
                                         <Column editable="true" title="Title 1" type="java.lang.Object"/>
@@ -1030,7 +1323,7 @@
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
-                                    <EmptyBorder bottom="1" left="1" right="15" top="1"/>
+                                    <EmptyBorder bottom="1" left="15" right="15" top="1"/>
                                   </Border>
                                 </Property>
                                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1046,44 +1339,92 @@
                                 </Constraint>
                               </Constraints>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
-                                <Property name="alignment" type="int" value="2"/>
-                              </Layout>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                               <SubComponents>
-                                <Component class="javax.swing.JButton" name="jButtonImpimirResumenComisionPorcentual">
-                                  <Properties>
-                                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                      <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
-                                    </Property>
-                                    <Property name="text" type="java.lang.String" value="Resumen de Comision %"/>
-                                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="[230, 50]"/>
-                                    </Property>
-                                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="[230, 50]"/>
-                                    </Property>
-                                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="[230, 50]"/>
-                                    </Property>
-                                  </Properties>
+                                <Container class="javax.swing.JPanel" name="jPanel8">
                                   <AuxValues>
-                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
                                   </AuxValues>
-                                </Component>
-                                <Component class="javax.swing.JButton" name="jButtonImpimirResumenMesas1">
-                                  <Properties>
-                                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                                      <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
-                                    </Property>
-                                    <Property name="text" type="java.lang.String" value="Resumen de Ventas"/>
-                                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                                      <Dimension value="[200, 50]"/>
-                                    </Property>
-                                  </Properties>
+                                  <Constraints>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                      <BorderConstraints direction="West"/>
+                                    </Constraint>
+                                  </Constraints>
+
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JLabel" name="jLabel1">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="Total: "/>
+                                      </Properties>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                          <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                        </Constraint>
+                                      </Constraints>
+                                    </Component>
+                                    <Component class="javax.swing.JLabel" name="jLabelTotalMesas">
+                                      <Properties>
+                                        <Property name="text" type="java.lang.String" value="xx.xx"/>
+                                      </Properties>
+                                      <Constraints>
+                                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                                          <GridBagConstraints gridX="-1" gridY="-1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="0" insetsBottom="0" insetsRight="0" anchor="10" weightX="0.0" weightY="0.0"/>
+                                        </Constraint>
+                                      </Constraints>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
+                                <Container class="javax.swing.JPanel" name="jPanel6">
                                   <AuxValues>
-                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Containers.getTransparentPanel()"/>
                                   </AuxValues>
-                                </Component>
+                                  <Constraints>
+                                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
+                                      <BorderConstraints direction="East"/>
+                                    </Constraint>
+                                  </Constraints>
+
+                                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+                                    <Property name="alignment" type="int" value="2"/>
+                                  </Layout>
+                                  <SubComponents>
+                                    <Component class="javax.swing.JButton" name="jButtonImpimirResumenComisionPorcentual">
+                                      <Properties>
+                                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                          <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
+                                        </Property>
+                                        <Property name="text" type="java.lang.String" value="Resumen de Comision %"/>
+                                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[230, 50]"/>
+                                        </Property>
+                                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[230, 50]"/>
+                                        </Property>
+                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[230, 50]"/>
+                                        </Property>
+                                      </Properties>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                      </AuxValues>
+                                    </Component>
+                                    <Component class="javax.swing.JButton" name="jButtonImpimirResumenMesas1">
+                                      <Properties>
+                                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                                          <Image iconType="3" name="/restManager/resources/images/impresora.png"/>
+                                        </Property>
+                                        <Property name="text" type="java.lang.String" value="Resumen de Ventas"/>
+                                        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                                          <Dimension value="[200, 50]"/>
+                                        </Property>
+                                      </Properties>
+                                      <AuxValues>
+                                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="MaterialComponentsFactory.Buttons.getLinedButton()"/>
+                                      </AuxValues>
+                                    </Component>
+                                  </SubComponents>
+                                </Container>
                               </SubComponents>
                             </Container>
                           </SubComponents>

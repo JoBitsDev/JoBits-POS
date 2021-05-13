@@ -8,7 +8,7 @@ import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewModel.*;
 import static com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.CardLayout;
 import java.awt.Color;

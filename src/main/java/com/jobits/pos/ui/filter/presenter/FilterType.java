@@ -16,7 +16,10 @@ public enum FilterType {
     SECCION("Seccion", InputType.TEXTFIELD),
     AREA("Area", InputType.COMBOBOX),
     PRODUCTO("Producto", InputType.TEXTFIELD),
-    IPV("Ipv", InputType.COMBOBOX);
+    IPV("Ipv", InputType.COMBOBOX),
+    COCINA_E("Cocina.", InputType.COMBOBOX),
+    PRODUCTO_E("Producto.", InputType.TEXTFIELD),
+    IPV_E("Ipv.", InputType.COMBOBOX);
 
     /**
      * El recurso a buscar en los .properties

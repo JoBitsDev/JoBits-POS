@@ -105,6 +105,9 @@ public class MainWindow extends JFrame {
     public boolean showView(String viewUIDName, AbstractViewPresenter presenter, DisplayType displayType) {
 
         if (viewUIDName.equals(LogInView.VIEW_NAME)) {
+            if (getJMenuBar() != null) {
+                getJMenuBar().setVisible(false);
+            }
 //            PopUpDialog.showPopUP(ViewFacade.getView(viewUIDName, presenter));
             loginView = LogInView.getInstance();
             add(loginView, LogInView.VIEW_NAME);
@@ -124,7 +127,11 @@ public class MainWindow extends JFrame {
             rootView = RootView.getInstance();
             add(rootView, RootView.VIEW_NAME);
             cards.show(getContentPane(), RootView.VIEW_NAME);
-            setJMenuBar(MenuBarClass.getInstance().getMainManuBar());
+            if (getJMenuBar() == null) {
+                setJMenuBar(MenuBarClass.getInstance().getMainManuBar());
+            } else {
+                getJMenuBar().setVisible(true);
+            }
             return true;
         }
         if (rootView != null) {

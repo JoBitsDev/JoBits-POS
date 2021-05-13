@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.utils;
 
 import com.jobits.pos.main.Application;
-import com.jobits.pos.ui.View;
+import com.jobits.ui.swing.View;
 import com.root101.swing.material.standards.MaterialColors;
 import java.awt.BorderLayout;
 import java.awt.Component;

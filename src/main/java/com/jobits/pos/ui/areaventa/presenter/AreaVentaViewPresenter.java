@@ -13,7 +13,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.MesaDetailView;

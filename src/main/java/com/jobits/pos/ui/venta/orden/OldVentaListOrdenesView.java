@@ -12,7 +12,7 @@ import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.BindableTableModel;
+import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.ui.utils.StateCellRender;
 import com.jobits.pos.ui.utils.TableColumnAdjuster;
 import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter.*;

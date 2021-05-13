@@ -57,10 +57,6 @@ public class CalcularCambioViewPresenter extends AbstractViewPresenter<CalcularC
             actualizarVuelto();
         }
         );
-        getBean().addPropertyChangeListener(PROP_ENTRADA_SEGUNDA_MONEDA, (PropertyChangeEvent evt) -> {
-            actualizarVuelto();
-        }
-        );
     }
 
     @Override
@@ -69,30 +65,14 @@ public class CalcularCambioViewPresenter extends AbstractViewPresenter<CalcularC
         getBean().setTotal_a_pagar(R.formatoMoneda.format(o.getOrdenvalorMonetario()));
         getBean().setCambio(R.formatoMoneda.format(0));
         getBean().setEntrada_moneda_nacional(0);
-        getBean().setEntrada_segunda_moneda(0);
 
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void actualizarVuelto() {
         float mn = getBean().getEntrada_moneda_nacional();
-        float cuc = getBean().getEntrada_segunda_moneda();
         float montoADevolver = o.getOrdenvalorMonetario();
-
-        if (R.COIN_SUFFIX.contains("CUC")) {
-//            float cuc = (float) jSpinnerCUC.getValue();
-            montoADevolver -= cuc;
-//            float mn = (int) jSpinnerMN.getValue();
-            mn /= R.COINCHANGE;
-            montoADevolver -= mn;
-        } else {
-//            float cuc = (float) jSpinnerCUC.getValue();
-            utils.setDosLugaresDecimales(cuc *= R.COINCHANGE);
-            montoADevolver -= cuc;
-
-//            float mn = (int) jSpinnerMN.getValue();
-            montoADevolver -= mn;
-        }
+        montoADevolver -= mn;
         if (montoADevolver > 0) {
             getBean().setCambio("Falta " + utils.setDosLugaresDecimales(montoADevolver));
         } else {

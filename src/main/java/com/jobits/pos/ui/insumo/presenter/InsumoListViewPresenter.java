@@ -10,11 +10,11 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.NotificationService;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.root101.clean.core.app.services.NotificationService;
 
 /**
  *
@@ -59,7 +59,7 @@ public class InsumoListViewPresenter extends AbstractListViewPresenter<InsumoLis
                 setListToBean();
             }
         } else {
-            NotificationService.getInstance().notify("Seleccione un insumo", TipoNotificacion.ERROR);
+           Application.getInstance().getNotificationService().notify("Seleccione un insumo", TipoNotificacion.ERROR);
         }
     }
 

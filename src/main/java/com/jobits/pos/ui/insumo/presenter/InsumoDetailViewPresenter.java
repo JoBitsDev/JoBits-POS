@@ -12,7 +12,7 @@ import com.jobits.pos.controller.insumo.InsumoDetailService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.InsumoElaborado;
 import com.jobits.pos.main.Application;
-import com.jobits.pos.notification.TipoNotificacion;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
