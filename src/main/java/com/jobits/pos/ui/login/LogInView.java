@@ -119,9 +119,13 @@ public class LogInView extends AbstractViewPanel {
         jPanelInput.setOpaque(false);
         jPanelInput.setLayout(new java.awt.GridLayout(2, 1, 0, 5));
 
+        jTextFieldUsuario.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jTextFieldUsuario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldUsuario.setMaximumSize(new java.awt.Dimension(220, 2147483647));
         jPanelInput.add(jTextFieldUsuario);
 
+        jPasswordField.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jPasswordField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jPasswordField.setMaximumSize(new java.awt.Dimension(220, 2147483647));
         jPanelInput.add(jPasswordField);
 

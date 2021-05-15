@@ -31,7 +31,7 @@ import com.jobits.ui.components.swing.notifications.NotificationHandler;
 import com.jobits.ui.themes.ThemeHandler;
 import com.jobits.ui.themes.ThemeType;
 import com.jobits.ui.themes.impl.DarkMaterialTheme;
-import com.jobits.ui.themes.impl.DefaultTheme;
+import com.jobits.ui.themes.impl.NimbusTheme;
 import com.jobits.ui.themes.impl.MaterialTheme;
 import com.jobits.ui.themes.impl.SimpleMaterialTheme;
 import com.root101.clean.core.app.services.NotificationService;
@@ -238,7 +238,7 @@ public class Application {
 //        } else if (themeName.equals(ThemeType.DARK_MATERIAL.getThemeName())) { TODO: en progreso tema oscuro
 //            ThemeHandler.registerThemeService(new DarkMaterialTheme());
         } else {
-            ThemeHandler.registerThemeService(new DefaultTheme());
+            ThemeHandler.registerThemeService(new NimbusTheme());
         }
     }
 

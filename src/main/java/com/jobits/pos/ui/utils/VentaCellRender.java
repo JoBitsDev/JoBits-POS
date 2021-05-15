@@ -103,7 +103,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        System.out.println("selected");        // TODO add your handling code here:
+//        System.out.println("selected");        // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
 
 
@@ -151,7 +151,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
 
             return ret;
         }
-        return null;
+        return new VentaCellRender();
     }
 
     public Venta getV() {

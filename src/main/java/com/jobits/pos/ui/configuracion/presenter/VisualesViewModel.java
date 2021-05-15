@@ -19,7 +19,7 @@ public class VisualesViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_TEMAS = "lista_temas";
 
-    private String themeType_Seleccionado = ThemeType.DEFAULT.getThemeName();
+    private String themeType_Seleccionado = ThemeType.NIMBUS.getThemeName();
 
     public static final String PROP_THEMETYPE_SELECCIONADO = "themeType_Seleccionado";
 

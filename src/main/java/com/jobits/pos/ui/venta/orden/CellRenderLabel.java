@@ -30,6 +30,7 @@ public class CellRenderLabel extends javax.swing.JPanel {
     public CellRenderLabel(String nombre, String precio, boolean selected, String rutaImagenProducto) {
         initComponents();
         jTextArea1.setText(nombre);
+        jTextArea1.setBackground(DefaultValues.TRANSPARENT);
         jLabelPrecio.setText(precio);
         setOpaque(selected);
         if (precio == null) {
@@ -76,14 +77,12 @@ public class CellRenderLabel extends javax.swing.JPanel {
         jLabelPrecio.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
         jPanel1.add(jLabelPrecio, java.awt.BorderLayout.PAGE_END);
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane1.setFont(new java.awt.Font(".SF NS Text", 0, 16)); // NOI18N
 
         jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
         jTextArea1.setColumns(18);
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(3);

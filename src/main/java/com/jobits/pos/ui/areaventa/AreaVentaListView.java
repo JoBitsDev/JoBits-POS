@@ -88,7 +88,6 @@ public class AreaVentaListView extends AbstractViewPanel {
         jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 10));
 
         jListAreas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jListAreas.setOpaque(false);
         jListAreas.setPreferredSize(new java.awt.Dimension(100, 85));
         jScrollPane2.setViewportView(jListAreas);
 
@@ -120,7 +119,6 @@ public class AreaVentaListView extends AbstractViewPanel {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 10));
 
         jListMesas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jListMesas.setOpaque(false);
         jListMesas.setPreferredSize(new java.awt.Dimension(100, 85));
         jScrollPane1.setViewportView(jListMesas);
 

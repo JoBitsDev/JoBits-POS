@@ -111,10 +111,9 @@ public class VentaCalendarView extends AbstractViewPanel {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 2, 18)); // NOI18N
-        jLabel9.setText("Aï¿½o");
+        jLabel9.setText("Año");
         jPanel1.add(jLabel9);
 
-        jYearChooser1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jYearChooser1.setOpaque(false);
         jYearChooser1.setPreferredSize(new java.awt.Dimension(80, 35));
         jPanel1.add(jYearChooser1);
@@ -141,7 +140,7 @@ public class VentaCalendarView extends AbstractViewPanel {
         jPanel4.add(jPanelSeleccion, java.awt.BorderLayout.PAGE_START);
 
         jPanelDetalles.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 15, 15, 15));
-        jPanelDetalles.setLayout(new javax.swing.OverlayLayout(jPanelDetalles));
+        jPanelDetalles.setLayout(new java.awt.BorderLayout());
 
         jPanelCalendario.setLayout(new java.awt.BorderLayout());
 
@@ -188,7 +187,6 @@ public class VentaCalendarView extends AbstractViewPanel {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
         jScrollPane1.setOpaque(false);
 
-        jTableCalendar.setBackground(MaterialColor.TRANSPARENT);
         jTableCalendar.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jTableCalendar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -207,7 +205,7 @@ public class VentaCalendarView extends AbstractViewPanel {
 
         jPanelCalendario.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanelDetalles.add(jPanelCalendario);
+        jPanelDetalles.add(jPanelCalendario, java.awt.BorderLayout.CENTER);
 
         jPanel4.add(jPanelDetalles, java.awt.BorderLayout.CENTER);
 
