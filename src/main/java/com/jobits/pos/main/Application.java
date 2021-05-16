@@ -191,7 +191,6 @@ public class Application {
 
     public void init() {
         setLocale();
-        setApplicationLooks();
         setNotificationChannel();
         calculateLicenceLeft();
         setExceptionHandling();
@@ -243,15 +242,6 @@ public class Application {
     }
 
     private void calculateLicenceLeft() {
-    }
-
-    private void setApplicationLooks() {
-        try {
-            UIManager.setLookAndFeel(MaterialComponentsFactory.UI.getLooks());
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     private void setExceptionHandling() {
