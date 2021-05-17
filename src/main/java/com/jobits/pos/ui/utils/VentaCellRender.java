@@ -12,6 +12,7 @@ import javax.swing.table.TableCellRenderer;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.ui.DefaultValues;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
      *
      */
     public VentaCellRender() {
+        setBackground(DefaultValues.TRANSPARENT);
     }
 
     private VentaCellRender(Venta v) {
