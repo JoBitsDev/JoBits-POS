@@ -52,35 +52,36 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jCheckBoxInventariarProducto = MaterialComponentsFactory.Input.getCheckBox();
         filler6 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanelInventario = new javax.swing.JPanel();
+        jButtonAddInsumo = MaterialComponentsFactory.Buttons.getAddButton();
+        jPanelCosto = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabelGasto = new javax.swing.JLabel();
         jPanel14 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jTabbedPane1 = MaterialComponentsFactory.Containers.getTabPane();
         jPanelInputs = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jXLabelPCod = new org.jdesktop.swingx.JXLabel();
-        jPanelImage = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel15 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
+        jPanel17 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabelIProductImage = new javax.swing.JLabel();
         jPanel10 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel19 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldPrecioVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", "Precio venta",R.COIN_SUFFIX);
+        jPanel20 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldPrecioCosto = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", "Precio de costo",R.COIN_SUFFIX);
-        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jPanel13 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel21 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAddCocina = MaterialComponentsFactory.Buttons.getAddButton();
-        jButtonAddSeccion = MaterialComponentsFactory.Buttons.getAddButton();
-        jPanel12 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jComboBoxCOCINA = MaterialComponentsFactory.Displayers.getComboBox("Elaborado en:");
+        jPanel26 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonAddSeccion = MaterialComponentsFactory.Buttons.getAddButton();
         jComboBoxSECCION = MaterialComponentsFactory.Displayers.getComboBox("Categoria");
         jPanelTable = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jCheckBoxProductoElaborado = MaterialComponentsFactory.Input.getCheckBox();
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanelCrossRef = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jButtonAddInsumo = MaterialComponentsFactory.Buttons.getAddButton();
-        jPanelCosto = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jXLabelGasto = new org.jdesktop.swingx.JXLabel();
         jPanel11 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldPagoPorVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", java.util.ResourceBundle.getBundle("Strings").getString("label_comision_por_venta"),R.COIN_SUFFIX);
@@ -107,6 +108,32 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel3.add(jCheckBoxInventariarProducto);
         jPanel3.add(filler6);
 
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButtonAddInsumo.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
+        jButtonAddInsumo.setMaximumSize(new java.awt.Dimension(130, 60));
+        jButtonAddInsumo.setMinimumSize(new java.awt.Dimension(60, 50));
+        jButtonAddInsumo.setPreferredSize(new java.awt.Dimension(130, 50));
+        jButtonAddInsumo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddInsumoActionPerformed(evt);
+            }
+        });
+
+        jPanelCosto.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
+        jLabel1.setText(":   ");
+        jLabel1.setOpaque(true);
+        jPanelCosto.add(jLabel1, java.awt.BorderLayout.WEST);
+
+        jLabelGasto.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabelGasto.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
+        jLabelGasto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelGasto.setText("0.0");
+        jLabelGasto.setOpaque(true);
+        jPanelCosto.add(jLabelGasto, java.awt.BorderLayout.CENTER);
+
         setBackground(new java.awt.Color(255, 255, 255));
         setOpaque(false);
         setPreferredSize(new java.awt.Dimension(570, 550));
@@ -116,7 +143,15 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel14.setLayout(new java.awt.BorderLayout());
 
         jPanelInputs.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        jPanelInputs.setLayout(new javax.swing.BoxLayout(jPanelInputs, javax.swing.BoxLayout.PAGE_AXIS));
+        jPanelInputs.setLayout(new java.awt.BorderLayout());
+
+        jXLabelPCod.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jXLabelPCod.setText("P-Cod");
+        jPanelInputs.add(jXLabelPCod, java.awt.BorderLayout.PAGE_START);
+
+        jPanel15.setOpaque(false);
+        jPanel15.setPreferredSize(new java.awt.Dimension(44, 25));
+        jPanel15.setLayout(new java.awt.GridLayout(4, 0));
 
         jPanel7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         jPanel7.setMaximumSize(new java.awt.Dimension(2147483647, 80));
@@ -125,24 +160,18 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel7.setPreferredSize(new java.awt.Dimension(14, 120));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
+        jPanel8.setLayout(new java.awt.GridBagLayout());
+
         jTextFieldNombre.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
         jTextFieldNombre.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
-        jPanel7.add(jTextFieldNombre, java.awt.BorderLayout.CENTER);
+        jTextFieldNombre.setMaximumSize(new java.awt.Dimension(350, 60));
+        jTextFieldNombre.setMinimumSize(new java.awt.Dimension(350, 60));
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(350, 60));
+        jPanel8.add(jTextFieldNombre, new java.awt.GridBagConstraints());
 
-        jPanel8.setOpaque(false);
-        jPanel8.setPreferredSize(new java.awt.Dimension(44, 25));
-        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel7.add(jPanel8, java.awt.BorderLayout.CENTER);
 
-        jXLabelPCod.setText("P-Cod");
-        jPanel8.add(jXLabelPCod);
-
-        jPanel7.add(jPanel8, java.awt.BorderLayout.NORTH);
-
-        jPanelImage.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 30));
-        jPanelImage.setOpaque(false);
-        jPanelImage.setPreferredSize(new java.awt.Dimension(100, 70));
-        jPanelImage.setLayout(new java.awt.BorderLayout());
+        jPanel17.setLayout(new java.awt.GridBagLayout());
 
         jLabelIProductImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelIProductImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/pregunta_color.png"))); // NOI18N
@@ -153,15 +182,17 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
                 jLabelIProductImageMouseClicked(evt);
             }
         });
-        jPanelImage.add(jLabelIProductImage, java.awt.BorderLayout.CENTER);
+        jPanel17.add(jLabelIProductImage, new java.awt.GridBagConstraints());
 
-        jPanel7.add(jPanelImage, java.awt.BorderLayout.WEST);
+        jPanel7.add(jPanel17, java.awt.BorderLayout.WEST);
 
-        jPanelInputs.add(jPanel7);
+        jPanel15.add(jPanel7);
 
         jPanel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 10));
         jPanel10.setOpaque(false);
         jPanel10.setLayout(new java.awt.GridLayout(1, 2, 10, 10));
+
+        jPanel19.setLayout(new java.awt.GridBagLayout());
 
         jTextFieldPrecioVenta.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
         jTextFieldPrecioVenta.setMinimumSize(new java.awt.Dimension(250, 60));
@@ -171,7 +202,11 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
                 jTextFieldPrecioVentaFocusGained(evt);
             }
         });
-        jPanel10.add(jTextFieldPrecioVenta);
+        jPanel19.add(jTextFieldPrecioVenta, new java.awt.GridBagConstraints());
+
+        jPanel10.add(jPanel19);
+
+        jPanel20.setLayout(new java.awt.GridBagLayout());
 
         jTextFieldPrecioCosto.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
         jTextFieldPrecioCosto.setMaximumSize(new java.awt.Dimension(250, 60));
@@ -182,58 +217,53 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
                 jTextFieldPrecioCostoFocusGained(evt);
             }
         });
-        jPanel10.add(jTextFieldPrecioCosto);
+        jPanel20.add(jTextFieldPrecioCosto, new java.awt.GridBagConstraints());
 
-        jPanelInputs.add(jPanel10);
+        jPanel10.add(jPanel20);
 
-        jPanel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 50, 1, 50));
-        jPanel9.setMaximumSize(new java.awt.Dimension(2147483647, 280));
-        jPanel9.setOpaque(false);
-        jPanel9.setLayout(new java.awt.BorderLayout());
+        jPanel15.add(jPanel10);
 
-        jPanel13.setOpaque(false);
-        jPanel13.setLayout(new java.awt.GridLayout(2, 1, 0, 20));
+        jPanel21.setLayout(new java.awt.GridBagLayout());
 
         jButtonAddCocina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/olla_indigo.png"))); // NOI18N
         jButtonAddCocina.setToolTipText("Nuevo Punto de Elaboracion");
         jButtonAddCocina.setMaximumSize(new java.awt.Dimension(300, 60));
-        jButtonAddCocina.setMinimumSize(new java.awt.Dimension(60, 50));
+        jButtonAddCocina.setMinimumSize(new java.awt.Dimension(50, 50));
         jButtonAddCocina.setPreferredSize(new java.awt.Dimension(80, 80));
         jButtonAddCocina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddCocinaActionPerformed(evt);
             }
         });
-        jPanel13.add(jButtonAddCocina);
+        jPanel21.add(jButtonAddCocina, new java.awt.GridBagConstraints());
+
+        jComboBoxCOCINA.setMinimumSize(new java.awt.Dimension(250, 60));
+        jComboBoxCOCINA.setPreferredSize(new java.awt.Dimension(250, 60));
+        jPanel21.add(jComboBoxCOCINA, new java.awt.GridBagConstraints());
+
+        jPanel15.add(jPanel21);
+
+        jPanel26.setLayout(new java.awt.GridBagLayout());
 
         jButtonAddSeccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/categoria_indigo.png"))); // NOI18N
         jButtonAddSeccion.setToolTipText("Nueva Categoria");
         jButtonAddSeccion.setMaximumSize(new java.awt.Dimension(300, 60));
-        jButtonAddSeccion.setMinimumSize(new java.awt.Dimension(60, 50));
+        jButtonAddSeccion.setMinimumSize(new java.awt.Dimension(50, 50));
         jButtonAddSeccion.setPreferredSize(new java.awt.Dimension(80, 80));
         jButtonAddSeccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAddSeccionActionPerformed(evt);
             }
         });
-        jPanel13.add(jButtonAddSeccion);
-
-        jPanel9.add(jPanel13, java.awt.BorderLayout.WEST);
-
-        jPanel12.setOpaque(false);
-        jPanel12.setLayout(new java.awt.GridLayout(2, 1, 0, 20));
-
-        jComboBoxCOCINA.setMinimumSize(new java.awt.Dimension(250, 60));
-        jComboBoxCOCINA.setPreferredSize(new java.awt.Dimension(250, 60));
-        jPanel12.add(jComboBoxCOCINA);
+        jPanel26.add(jButtonAddSeccion, new java.awt.GridBagConstraints());
 
         jComboBoxSECCION.setMinimumSize(new java.awt.Dimension(250, 40));
         jComboBoxSECCION.setPreferredSize(new java.awt.Dimension(250, 60));
-        jPanel12.add(jComboBoxSECCION);
+        jPanel26.add(jComboBoxSECCION, new java.awt.GridBagConstraints());
 
-        jPanel9.add(jPanel12, java.awt.BorderLayout.CENTER);
+        jPanel15.add(jPanel26);
 
-        jPanelInputs.add(jPanel9);
+        jPanelInputs.add(jPanel15, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab(bundle.getString("label_basico"), jPanelInputs); // NOI18N
 
@@ -261,39 +291,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanelCrossRef.setMinimumSize(new java.awt.Dimension(0, 0));
         jPanelCrossRef.setOpaque(false);
         jPanelCrossRef.setLayout(new java.awt.BorderLayout());
-
-        jPanel5.setOpaque(false);
-        jPanel5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        jButtonAddInsumo.setText(bundle.getString("label_agregar_ingrediente")); // NOI18N
-        jButtonAddInsumo.setMaximumSize(new java.awt.Dimension(130, 60));
-        jButtonAddInsumo.setMinimumSize(new java.awt.Dimension(60, 50));
-        jButtonAddInsumo.setPreferredSize(new java.awt.Dimension(130, 50));
-        jButtonAddInsumo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddInsumoActionPerformed(evt);
-            }
-        });
-        jPanel5.add(jButtonAddInsumo);
-
-        jPanelCosto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 1));
-        jPanelCosto.setOpaque(false);
-        jPanelCosto.setLayout(new java.awt.BorderLayout());
-
-        jLabel1.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
-        jLabel1.setText(":   ");
-        jPanelCosto.add(jLabel1, java.awt.BorderLayout.WEST);
-
-        jXLabelGasto.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
-        jXLabelGasto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jXLabelGasto.setText("0.00"); // NOI18N
-        jPanelCosto.add(jXLabelGasto, java.awt.BorderLayout.CENTER);
-
-        jPanel5.add(jPanelCosto);
-
-        jPanelCrossRef.add(jPanel5, java.awt.BorderLayout.PAGE_END);
-
         jPanelTable.add(jPanelCrossRef, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab("Inventario", jPanelTable);
@@ -416,25 +413,27 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelGasto;
     private javax.swing.JLabel jLabelIProductImage;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
+    private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelCosto;
     private javax.swing.JPanel jPanelCrossRef;
-    private javax.swing.JPanel jPanelImage;
     private javax.swing.JPanel jPanelInputs;
     private javax.swing.JPanel jPanelInventario;
     private javax.swing.JPanel jPanelTable;
@@ -445,7 +444,6 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JTextField jTextFieldPagoPorVenta;
     private javax.swing.JTextField jTextFieldPrecioCosto;
     private javax.swing.JTextField jTextFieldPrecioVenta;
-    private org.jdesktop.swingx.JXLabel jXLabelGasto;
     private org.jdesktop.swingx.JXLabel jXLabelPCod;
     // End of variables declaration//GEN-END:variables
 
@@ -473,7 +471,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         //TODO tabla y boton
         jButtonAddInsumo.setAction(getPresenter().getOperation(ProductoVentaDetailPresenter.ACTION_AGREGAR_INSUMO));
-        Bindings.bind(jXLabelGasto, getPresenter().getModel(PROP_PRECIO_COSTO));
+        Bindings.bind(jLabelGasto, getPresenter().getModel(PROP_PRECIO_COSTO));
 
         //
         //Otros
@@ -601,6 +599,12 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         getPresenter().addBeanPropertyChangeListener(PROP_INSUMO_DISPONIBLE_SEL, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() == null) {
                 crossReferencePanel.getJTextFieldAutoComplete().setText("");
+            }
+        });
+        getPresenter().addBeanPropertyChangeListener(PROP_IMAGEN_PRODUCTO, (PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() == null) {
+                jLabelIProductImage.repaint();
+                jLabelIProductImage.revalidate();
             }
         });
 

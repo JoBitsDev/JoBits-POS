@@ -7,8 +7,11 @@ package com.jobits.pos.ui.imagemanager;
 
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.imagemanager.presenter.ImageManagerViewPresenter;
+import static com.jobits.pos.ui.imagemanager.presenter.ImageManagerViewPresenter.ACTION_CERRAR;
 import com.jobits.pos.ui.utils.ComponentMover;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  *
@@ -35,8 +38,11 @@ public class ImageManagerPopUpContainer extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         ComponentMover cr = new ComponentMover(this, this);
-        jPanelMainPanel.add(new ImageManagerView(
-                new ImageManagerViewPresenter(codProd)), java.awt.BorderLayout.CENTER);
+        ImageManagerView imgView = new ImageManagerView(new ImageManagerViewPresenter(codProd));
+        imgView.getPresenter().addPropertyChangeListener(ACTION_CERRAR, (PropertyChangeEvent evt) -> {
+            dispose();
+        });
+        jPanelMainPanel.add(imgView, java.awt.BorderLayout.CENTER);
         jLabel1.setText(codProd);
         this.setVisible(true);
     }

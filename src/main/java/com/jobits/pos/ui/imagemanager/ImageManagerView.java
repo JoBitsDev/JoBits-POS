@@ -152,12 +152,6 @@ public class ImageManagerView extends AbstractViewPanel {
     @Override
     public void wireUp() {
         Bindings.bind(jLabelOldImage, "icon", getPresenter().getModel(PROP_OLD_IMAGE));
-        getPresenter().addBeanPropertyChangeListener(PROP_PANEL_DIBUJO, (PropertyChangeEvent evt) -> {
-            PanelDibujo panelDibujo = (PanelDibujo) evt.getNewValue();
-            if (panelDibujo != null) {
-                dragImage(panelDibujo);
-            }
-        });
         jButtonOpen.addActionListener(getPresenter().getOperation(ACTION_CARGAR_IMAGEN));
         jButtonCrop.addActionListener(getPresenter().getOperation(ACTION_RECORTAR_IMAGEN));
         jButtonSave.addActionListener(getPresenter().getOperation(ACTION_GUARDAR_IMAGEN));
@@ -169,6 +163,15 @@ public class ImageManagerView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         jPanel3.setVisible(false);
+        int x = (jPanelImageViewer.getWidth() / 2) - 35;
+        int y = (jPanelImageViewer.getHeight() / 2) - 35;
+        jLabelOldImage.setLocation(x, y);
+        getPresenter().addBeanPropertyChangeListener(PROP_PANEL_DIBUJO, (PropertyChangeEvent evt) -> {
+            PanelDibujo panelDibujo = (PanelDibujo) evt.getNewValue();
+            if (panelDibujo != null) {
+                dragImage(panelDibujo);
+            }
+        });
     }
 
     @Override
@@ -185,6 +188,7 @@ public class ImageManagerView extends AbstractViewPanel {
         pd.setLocation(x, y);
         pd.repaint();
         repaint();
+        jPanelImageViewer.setLayout(null);
         jPanelImageViewer.add(pd);
     }
 

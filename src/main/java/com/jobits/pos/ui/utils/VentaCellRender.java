@@ -12,6 +12,7 @@ import javax.swing.table.TableCellRenderer;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.ui.DefaultValues;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
      *
      */
     public VentaCellRender() {
+        setBackground(DefaultValues.TRANSPARENT);
     }
 
     private VentaCellRender(Venta v) {
@@ -103,7 +105,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        System.out.println("selected");        // TODO add your handling code here:
+//        System.out.println("selected");        // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
 
 
@@ -151,7 +153,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
 
             return ret;
         }
-        return null;
+        return new VentaCellRender();
     }
 
     public Venta getV() {

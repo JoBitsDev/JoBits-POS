@@ -56,12 +56,12 @@ public class InsumoDetailView extends AbstractViewPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelCosto = new javax.swing.JPanel();
+        jPanelCosto = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel1 = new javax.swing.JLabel();
-        jXLabelGasto = new org.jdesktop.swingx.JXLabel();
+        jLabelGasto = new javax.swing.JLabel();
         jPanelMain = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelControles = MaterialComponentsFactory.Containers.getPrimaryPanel();
-        jButtonCancelar = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAdd = MaterialComponentsFactory.Buttons.getAcceptButton();
         jPanelInputs = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
@@ -79,19 +79,20 @@ public class InsumoDetailView extends AbstractViewPanel {
         jPanelUsos = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelDerivados = MaterialComponentsFactory.Containers.getSecondaryPanel();
 
-        jPanelCosto.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 15, 1, 1));
-        jPanelCosto.setOpaque(false);
         jPanelCosto.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/dolar_indigo.png"))); // NOI18N
         jLabel1.setText(":   ");
+        jLabel1.setOpaque(true);
         jPanelCosto.add(jLabel1, java.awt.BorderLayout.WEST);
 
-        jXLabelGasto.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
-        jXLabelGasto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jXLabelGasto.setText("0.00"); // NOI18N
-        jPanelCosto.add(jXLabelGasto, java.awt.BorderLayout.CENTER);
+        jLabelGasto.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabelGasto.setForeground(DefaultValues.PRIMARY_COLOR_DARK);
+        jLabelGasto.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabelGasto.setText("0.0");
+        jLabelGasto.setOpaque(true);
+        jPanelCosto.add(jLabelGasto, java.awt.BorderLayout.CENTER);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(700, 720));
@@ -213,11 +214,11 @@ public class InsumoDetailView extends AbstractViewPanel {
         jTabbedPane1.setToolTipText(null);
         jTabbedPane1.setOpaque(true);
 
-        jPanelUsos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
+        jPanelUsos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 15, 20));
         jPanelUsos.setLayout(new java.awt.BorderLayout());
         jTabbedPane1.addTab("Usos", jPanelUsos);
 
-        jPanelDerivados.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
+        jPanelDerivados.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 15, 20));
         jPanelDerivados.setLayout(new java.awt.BorderLayout());
         jTabbedPane1.addTab("Derivados", jPanelDerivados);
 
@@ -243,6 +244,7 @@ public class InsumoDetailView extends AbstractViewPanel {
     private javax.swing.JComboBox<R.UM> jComboBoxUM;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelCostoU;
+    private javax.swing.JLabel jLabelGasto;
     private javax.swing.JLabel jLabelNombre4;
     private javax.swing.JLabel jLabelUM;
     private javax.swing.JPanel jPanel1;
@@ -259,7 +261,6 @@ public class InsumoDetailView extends AbstractViewPanel {
     private javax.swing.JSpinner jSpinnerEstimacionStock;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldNombre;
-    private org.jdesktop.swingx.JXLabel jXLabelGasto;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -290,7 +291,7 @@ public class InsumoDetailView extends AbstractViewPanel {
         Bindings.bind(jButtonAdd, "text", getPresenter().getModel(PROP_CREAR_EDITAR_BUTTON_TEXT));
 
         //DISPLAYERS
-        Bindings.bind(jXLabelGasto, getPresenter().getModel(PROP_VALOR_DEL_COSTO_TEXT));
+        Bindings.bind(jLabelGasto, getPresenter().getModel(PROP_VALOR_DEL_COSTO_TEXT));
         //Bindings.bind(jPanelTabla, "visible", getPresenter().getModel(PROP_TABBED_PANE_ENABLED));
     }
 
