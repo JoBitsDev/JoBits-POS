@@ -21,9 +21,12 @@ import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.PROP_RUTA_IMAGEN_PRODUCTO;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.utils.utils;
 import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Optional;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -67,8 +70,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         } else {
             this.productoVenta = productoVenta;
         }
-        refreshView();
-        refreshProductImage();
+        addListteners();
+        refreshState();
     }
 
     @Override
@@ -135,7 +138,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         });
     }
 
-    private void refreshView() {
+    @Override
+    protected Optional refreshState() {
         getBean().getLista_categorias().addAll(new ArrayListModel<>(this.service.getSeccionList()));
         getBean().getLista_elaborado().addAll(new ArrayListModel<>(this.service.getCocinaList()));
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(this.service.getInsumoList()));
@@ -164,6 +168,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         } else {
             getBean().setCrear_editar_button_text("Editar");
         }
+        return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void onAddIngredienteClick() {
@@ -261,6 +266,13 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         String path = getBean().getRuta_imagen_producto();
         ImageIcon image = imageService.loadImageIcon(path, new Dimension(70, 70));
         getBean().setImagen_producto(image);
+    }
+
+    private void addListteners() {
+        getBean().addPropertyChangeListener(PROP_RUTA_IMAGEN_PRODUCTO, (PropertyChangeEvent evt) -> {
+            refreshProductImage();
+        });
+
     }
 
 }

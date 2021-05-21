@@ -601,6 +601,12 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
                 crossReferencePanel.getJTextFieldAutoComplete().setText("");
             }
         });
+        getPresenter().addBeanPropertyChangeListener(PROP_IMAGEN_PRODUCTO, (PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() == null) {
+                jLabelIProductImage.repaint();
+                jLabelIProductImage.revalidate();
+            }
+        });
 
         crossReferencePanel.getjPanelOpcionesContainer().add(jPanelCosto, java.awt.BorderLayout.WEST);
     }
