@@ -16,6 +16,7 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -39,10 +40,14 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
         this.creatingMode = creatingMode;
         this.area = area;
         if (creatingMode) {
-            this.area = service.createNewInstance();
+            this.area = new Area();
+            this.area.setCapacidad(0);
+            this.area.setCartaList(new ArrayList<>());
+            this.area.setMesaList(new ArrayList<>());
+            this.area.setNombre("");
+            this.area.setPorcientoPorServicio(0);
         }
         fillForm();
-        addListeners();
     }
 
     @Override
@@ -81,12 +86,6 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
         });
     }
 
-    private void addListeners() {
-        getBean().addPropertyChangeListener(AreaDetailViewModel.PROP_CANT_MESAS_AREA, (PropertyChangeEvent evt) -> {
-            System.out.println(getBean().getCant_mesas_area());
-        });
-    }
-
     private void onAceptarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea continuar?",
@@ -100,7 +99,7 @@ public class AreaDetailViewPresenter extends AbstractViewPresenter<AreaDetailVie
             if (creatingMode) {
                 service.create(area);
             } else {
-                service.update(area);
+                service.edit(area);
             }
 
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
