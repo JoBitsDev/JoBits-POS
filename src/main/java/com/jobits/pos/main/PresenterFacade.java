@@ -204,7 +204,7 @@ public class PresenterFacade {
                         PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
                         PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class));
             case FacturaView.VIEW_NAME:
-                return new FacturaViewPresenter(PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class));
+                return new FacturaViewPresenter(PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class), null);
             case ReportarBugView.VIEW_NAME:
                 return new ReportarBugViewPresenter();
             case OrdenLogView.VIEW_NAME:
@@ -224,7 +224,7 @@ public class PresenterFacade {
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(null);
             case TransaccionListView.VIEW_NAME:
-                return new TransaccionListPresenter(PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class));
+                return new TransaccionListPresenter(PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class), null);
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
             case ClientesListView.VIEW_NAME:
@@ -244,7 +244,10 @@ public class PresenterFacade {
             case UbicacionDetailView.VIEW_NAME:
                 return new UbicacionDetailViewPresenter(new Ubicacion(), true);
             case IPVPedidoVentasView.VIEW_NAME:
-                return new IPVPedidoVentasViewPresenter(PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class));
+                return new IPVPedidoVentasViewPresenter(
+                        PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class),
+                        PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
+                        null, null, new ArrayList<>());
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
                 return null;

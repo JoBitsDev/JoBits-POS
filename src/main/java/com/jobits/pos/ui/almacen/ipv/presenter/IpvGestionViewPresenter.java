@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
@@ -269,15 +270,17 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private void onDarEntradaIpv() {
-        Insumo instance = getBean().getIpv_registro_seleciconado().getIpv().getInsumo();
-        Float cantidad = new NumberPad(null).showView();
-        Venta fecha = getBean().getVenta_ipv_seleccionada();
-        Cocina cocina = getBean().getPunto_elaboracion_seleccionado();
-        if (cantidad != null && instance != null && fecha != null && cocina != null) {
-            if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance,
-                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
-                    == JOptionPane.YES_OPTION) {
-                service.darEntradaExistencia(instance, cocina, fecha.getId(), cantidad);
+        if (getBean().getIpv_registro_seleciconado() != null) {
+            Insumo instance = getBean().getIpv_registro_seleciconado().getIpv().getInsumo();
+            Float cantidad = new NumberPad(null).showView();
+            Venta fecha = getBean().getVenta_ipv_seleccionada();
+            Cocina cocina = getBean().getPunto_elaboracion_seleccionado();
+            if (cantidad != null && instance != null && fecha != null && cocina != null) {
+                if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance,
+                        R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                        == JOptionPane.YES_OPTION) {
+                    service.darEntradaExistencia(instance, cocina, fecha.getId(), cantidad);
+                }
             }
         }
 
@@ -296,14 +299,14 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     }
 
-    private void onNuevoPedido() {//TODO: mojon aqui
-        Cocina cocina = getBean().getPunto_elaboracion_seleccionado();
+    private void onNuevoPedido() {
         PedidoIpvVentasService pedidoService = PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class);
-        pedidoService.setIpvVentaRegistroList(getBean().getLista_ipv_venta_registro());
-        pedidoService.setVentaSeleccionada(getBean().getVenta_ipv_ventas_seleccionada());
-        pedidoService.setCocina(cocina);
+        AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
         NavigationService.getInstance().navigateTo(IPVPedidoVentasView.VIEW_NAME,
-                new IPVPedidoVentasViewPresenter(pedidoService), DisplayType.POPUP);
+                new IPVPedidoVentasViewPresenter(pedidoService, almacenService,
+                        getBean().getPunto_elaboracion_seleccionado(),
+                        getBean().getVenta_ipv_ventas_seleccionada(),
+                        getBean().getLista_ipv_venta_registro()), DisplayType.POPUP);
         onCocinaStateChange();
     }
 
