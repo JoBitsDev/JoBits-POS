@@ -200,7 +200,7 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
                     case INSUMO:
                         InsumoDetailService useCaseInsumo
                                 = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
-                        dataList = useCaseInsumo.getItems();
+                        dataList = useCaseInsumo.findAll();
                         break;
                     case FICHA_DE_COSTO:
                         ProductoInsumoListService useCaseProductoInsumo

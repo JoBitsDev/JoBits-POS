@@ -7,20 +7,18 @@ package com.jobits.pos.ui.insumo.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.controller.insumo.impl.InsumoDetailController;
 import com.jobits.pos.controller.insumo.InsumoDetailService;
+import com.jobits.pos.controller.productos.ProductoVentaListService;
 import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.InsumoElaborado;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.utils.NumberPad;
-import com.jobits.pos.utils.utils;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,6 +34,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     public static String ACTION_AGREGAR_PRODUCTO = "Agregar Producto";
 
     private final InsumoDetailService service = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
+    private final ProductoVentaListService productoService = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
     private final boolean creatingMode;
     private Insumo insumo;
 
@@ -43,7 +42,14 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         super(new InsumoDetailViewModel());
         this.creatingMode = insumo == null;
         if (creatingMode) {
-            this.insumo = service.createNewInstance();
+            this.insumo = new Insumo();
+            this.insumo.setNombre("");
+            this.insumo.setElaborado(false);
+            this.insumo.setCostoPorUnidad(Float.valueOf("0"));
+            this.insumo.setStockEstimation(Float.valueOf("0"));
+            this.insumo.setUm(R.UM.U.toString());
+            this.insumo.setInsumoDerivadoList(new ArrayList<>());
+            this.insumo.setProductoInsumoList(new ArrayList<>());
         } else {
             this.insumo = insumo;
         }
@@ -103,12 +109,12 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(new ArrayListModel(insumo.getInsumoDerivadoList()));
         getBean().getLista_insumos_disponibles().clear();
-        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel(service.getItems()));
+        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel(service.findAll()));
         //TABLA DE PRODUCTOS
         getBean().getLista_productos_contenidos().clear();
         getBean().getLista_productos_contenidos().addAll(new ArrayListModel(insumo.getProductoInsumoList()));
         getBean().getLista_productos_disponibles().clear();
-        getBean().getLista_productos_disponibles().addAll(new ArrayListModel(service.getProductoList()));
+        getBean().getLista_productos_disponibles().addAll(new ArrayListModel(productoService.getItems()));
         //PANEL INPUTS
         getBean().setNombre_insumo(insumo.getNombre());
         getBean().setUnidad_medida_selected(R.UM.valueOf(insumo.getUm()));
@@ -150,7 +156,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
             if (creatingMode) {
                 service.create(insumo);
             } else {
-                service.update(insumo);
+                service.edit(insumo);
                 service.updateProductoOnInsumo(insumo);
             }
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
