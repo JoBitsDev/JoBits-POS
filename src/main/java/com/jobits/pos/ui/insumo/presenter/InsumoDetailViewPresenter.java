@@ -114,7 +114,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         getBean().getLista_productos_contenidos().clear();
         getBean().getLista_productos_contenidos().addAll(new ArrayListModel(insumo.getProductoInsumoList()));
         getBean().getLista_productos_disponibles().clear();
-        getBean().getLista_productos_disponibles().addAll(new ArrayListModel(productoService.getItems()));
+        getBean().getLista_productos_disponibles().addAll(new ArrayListModel(productoService.findAll()));
         //PANEL INPUTS
         getBean().setNombre_insumo(insumo.getNombre());
         getBean().setUnidad_medida_selected(R.UM.valueOf(insumo.getUm()));

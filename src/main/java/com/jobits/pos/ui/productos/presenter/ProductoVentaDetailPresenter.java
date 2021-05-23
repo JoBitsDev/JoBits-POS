@@ -6,11 +6,16 @@
 package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.controller.imagemanager.ImageManagerService;
+import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.controller.productos.ProductoVentaDetailService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
+import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.controller.seccion.SeccionListService;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.ProductoVenta;
@@ -18,18 +23,25 @@ import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
+import com.jobits.pos.ui.login.UbicacionView;
+import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.PROP_RUTA_IMAGEN_PRODUCTO;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.utils.utils;
+import com.root101.swing.material.standards.MaterialIcons;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import org.jobits.db.core.domain.ConexionPropertiesModel;
 
 /**
  *
@@ -53,6 +65,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
     private final PuntoElaboracionListService ptoElabService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
     private final SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
+    private final InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
+    private final CartaListService cartaService = PosDesktopUiModule.getInstance().getImplementation(CartaListService.class);
 
     private final boolean creatingMode;
     ProductoVenta productoVenta;
@@ -66,7 +80,11 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         super(new ProductoVentaDetailViewModel());
         this.creatingMode = productoVenta == null;
         if (creatingMode) {
-            this.productoVenta = service.createNewInstance();
+            String value = (String) PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class).getConfiguracion(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO);
+            this.productoVenta = new ProductoVenta();
+            this.productoVenta.setTiempoServicioMin(Integer.parseInt(value));
+            this.productoVenta.setProductoInsumoList(new ArrayList<>());
+            this.productoVenta.setProductovOrdenList(new ArrayList<>());
         } else {
             this.productoVenta = productoVenta;
         }
@@ -140,9 +158,9 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     @Override
     protected Optional refreshState() {
-        getBean().getLista_categorias().addAll(new ArrayListModel<>(this.service.getSeccionList()));
-        getBean().getLista_elaborado().addAll(new ArrayListModel<>(this.service.getCocinaList()));
-        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(this.service.getInsumoList()));
+        getBean().getLista_categorias().addAll(new ArrayListModel<>(seccionService.findAll()));
+        getBean().getLista_elaborado().addAll(new ArrayListModel<>(ptoElabService.getItems()));
+        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(insumoService.findAll()));
         getBean().setCategoria_seleccionada(productoVenta.getSeccionnombreSeccion());
         getBean().setNombre_producto(productoVenta.getNombre());
         getBean().setCodigo_producto(productoVenta.getCodigoProducto());
@@ -157,7 +175,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         getBean().setPrecio_venta(String.valueOf(utils.setDosLugaresDecimalesFloat(productoVenta.getPrecioVenta())));
         updateCostoValue();
         getBean().getLista_insumos_disponibles().clear();
-        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(service.getInsumoList()));
+        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(insumoService.findAll()));
         getBean().setRuta_imagen_producto(productoVenta.getDescripcion());
         getBean().setCodigo_producto(productoVenta.getCodigoProducto());
         if (productoVenta.getComisionPorcientoPorVenta() != null) {
@@ -174,28 +192,45 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     private void onAddIngredienteClick() {
         service.registrarNuevoInsumo();
         getBean().getLista_insumos_disponibles().clear();
-        getBean().getLista_insumos_disponibles().addAll(service.getInsumoList());
+        getBean().getLista_insumos_disponibles().addAll(insumoService.findAll());
     }
 
     private void onAceptarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea continuar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            service.fillProductoVentaData(productoVenta,
-                    getBean().getNombre_producto(),
-                    getBean().getPrecio_costo(),
-                    getBean().getComision_por_venta(),
-                    getBean().getPrecio_venta(),
-                    getBean().getElaborado_seleccionado(),
-                    getBean().getCategoria_seleccionada(),
-                    getBean().getLista_insumos_contenidos(),
-                    getBean().getRuta_imagen_producto(),
-                    getBean().getTimepo_elaboracion(),
-                    getBean().getComision_por_venta_porcentual());
+
+            String precioCosto = getBean().getPrecio_costo();
+            String precioVenta = getBean().getPrecio_venta();
+            String pagoPorVenta = getBean().getComision_por_venta();
+
+            if (precioCosto == null || precioCosto.equals("")) {
+                productoVenta.setGasto(0f);
+            } else {
+                productoVenta.setGasto(Float.valueOf(precioCosto));
+            }
+            if (precioVenta == null || precioVenta.equals("")) {
+                productoVenta.setPrecioVenta(0f);
+            } else {
+                productoVenta.setPrecioVenta(Float.valueOf(precioVenta));
+            }
+            if (pagoPorVenta == null || pagoPorVenta.isEmpty()) {
+                productoVenta.setPagoPorVenta(0f);
+            } else {
+                productoVenta.setPagoPorVenta(Float.parseFloat(pagoPorVenta));
+            }
+            productoVenta.setNombre(getBean().getNombre_producto());
+            productoVenta.setCocinacodCocina(getBean().getElaborado_seleccionado());
+            productoVenta.setSeccionnombreSeccion(getBean().getCategoria_seleccionada());
+            productoVenta.setProductoInsumoList(getBean().getLista_insumos_contenidos());
+            productoVenta.setTiempoServicioMin(getBean().getTimepo_elaboracion());
+            productoVenta.setDescripcion(getBean().getRuta_imagen_producto());
+            productoVenta.setVisible(true);
+            productoVenta.setComisionPorcientoPorVenta(getBean().getComision_por_venta_porcentual());
             if (creatingMode) {
                 service.create(productoVenta);
             } else {
-                service.create(productoVenta);
+                service.edit(productoVenta);
             }
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
@@ -212,17 +247,43 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAddCategoriaClick() {
-        String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre de la sección a crear",
-                "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
-        seccionService.createInstance(nombre);
-        getBean().setLista_categorias(new ArrayListModel<>(service.getSeccionList()));
+        List<Carta> list = cartaService.getItems();
+        if (list.isEmpty()) {
+            throw new IllegalStateException("No hay cartas creadas donde registrar la sección");
+        }
+        JComboBox<Carta> jComboBox1 = new JComboBox<>();
+        Carta[] values = cartaService.getItems().toArray(new Carta[0]);
+        jComboBox1.setModel(new DefaultComboBoxModel<>(values));
+        jComboBox1.setSelectedItem(values[0]);
+        Object[] options = {"Seleccionar", "Cancelar"};
+        //                     yes        no       cancel
+        int confirm = JOptionPane.showOptionDialog(
+                null,
+                jComboBox1,
+                "Seleccione una carta donde registrar la sección",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.YES_NO_OPTION,
+                MaterialIcons.CARD_GIFTCARD,
+                options,
+                options[0]);
+        switch (confirm) {
+            case JOptionPane.YES_OPTION:
+                String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre de la sección a crear",
+                        "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
+                seccionService.createInstance(nombre, (Carta) jComboBox1.getSelectedItem());
+                getBean().setLista_categorias(new ArrayListModel<>(seccionService.findAll()));
+                break;
+            default:
+                break;
+        }
+
     }
 
     private void onAddElaboracionCLick() {
         String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre del Punto de Elaboracion a crear",
                 "Nuevo Punto de Elaboracion", JOptionPane.QUESTION_MESSAGE);
         ptoElabService.createInstance(nombre);
-        getBean().setLista_elaborado(new ArrayListModel<>(service.getCocinaList()));
+        getBean().setLista_elaborado(new ArrayListModel<>(ptoElabService.getItems()));
     }
 
     private void onAgregarInsumoFichaClick() {
