@@ -16,6 +16,7 @@ import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Carta;
+import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.ProductoVenta;
@@ -159,7 +160,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     @Override
     protected Optional refreshState() {
         getBean().getLista_categorias().addAll(new ArrayListModel<>(seccionService.findAll()));
-        getBean().getLista_elaborado().addAll(new ArrayListModel<>(ptoElabService.getItems()));
+        getBean().getLista_elaborado().addAll(new ArrayListModel<>(ptoElabService.findAll()));
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(insumoService.findAll()));
         getBean().setCategoria_seleccionada(productoVenta.getSeccionnombreSeccion());
         getBean().setNombre_producto(productoVenta.getNombre());
@@ -282,8 +283,13 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     private void onAddElaboracionCLick() {
         String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre del Punto de Elaboracion a crear",
                 "Nuevo Punto de Elaboracion", JOptionPane.QUESTION_MESSAGE);
-        ptoElabService.createInstance(nombre);
-        getBean().setLista_elaborado(new ArrayListModel<>(ptoElabService.getItems()));
+        Cocina c = new Cocina();
+        c.setNombreCocina(nombre);
+        c.setImpresoraList(new ArrayList<>());
+        c.setIpvList(new ArrayList<>());
+        c.setProductoVentaList(new ArrayList<>());
+        ptoElabService.create(c);
+        getBean().setLista_elaborado(new ArrayListModel<>(ptoElabService.findAll()));
     }
 
     private void onAgregarInsumoFichaClick() {
