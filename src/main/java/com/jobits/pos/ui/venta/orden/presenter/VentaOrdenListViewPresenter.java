@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -34,7 +33,6 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
 
     public static final String ACTION_CREAR_ORDEN = "Nueva Orden";
     public static final String ACTION_ABRIR_ORDEN = "Abrir Orden";
-    public static final String ACTION_ABRIR_RESERVA = "Abrir Reserva";
     public static final String ACTION_IMPRIMIR_LISTA_ORDENES = "Imprimir Ordenes";
 
     private VentaDetailService ventaService;
@@ -114,13 +112,6 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
             }
 
         });
-        registerOperation(new AbstractViewAction(ACTION_ABRIR_RESERVA) {
-            @Override
-            public Optional doAction() {
-                onAbrirReservaAction();
-                return Optional.empty();
-            }
-        });
         registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_LISTA_ORDENES) {
             @Override
             public Optional doAction() {
@@ -128,39 +119,6 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
                 return Optional.empty();
             }
         });
-    }
-
-    private void onAbrirReservaAction() {
-        List<Orden> listaReserva = ventaService.findReservas(codVenta);
-        Orden newReserva = null;
-        JList<Orden> jList = new JList<>(listaReserva.toArray(new Orden[listaReserva.size()]));
-        jList.setSelectedIndex(-1);
-        Object[] options = {"Abrir", "Cancelar"};
-        //                     yes        no  
-        int confirm = JOptionPane.showOptionDialog(
-                null,
-                jList,
-                "Reservas",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.YES_NO_OPTION,
-                MaterialIcons.RESTORE,
-                options,
-                options[0]);
-        switch (confirm) {
-            case JOptionPane.YES_OPTION:
-                newReserva = (Orden) jList.getSelectedValue();
-                ventaService.abrirReserva(newReserva, codVenta);
-                break;
-            case JOptionPane.NO_OPTION:
-                break;
-            default:
-                break;
-        }
-        if (newReserva != null) {
-            getBean().setElemento_seleccionado(newReserva);
-            onAbrirOrdenAction();
-            refreshState();
-        }
     }
 
     private void onCrearOrdenAction() {

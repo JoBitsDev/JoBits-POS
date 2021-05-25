@@ -53,7 +53,6 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         jListOrdenesActivas = new javax.swing.JList<>();
         jPanel3 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonEnviarCerrarCrearNueva = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jButtonCheckReservas = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonNuevaOrden = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
 
@@ -94,11 +93,6 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         jButtonEnviarCerrarCrearNueva.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel3.add(jButtonEnviarCerrarCrearNueva);
 
-        jButtonCheckReservas.setIcon(MaterialIcons.SEARCH);
-        jButtonCheckReservas.setToolTipText("Buscar Reservaciones");
-        jButtonCheckReservas.setPreferredSize(new java.awt.Dimension(50, 50));
-        jPanel3.add(jButtonCheckReservas);
-
         jButtonNuevaOrden.setIcon(MaterialIcons.ADD_CIRCLE);
         jButtonNuevaOrden.setToolTipText("Agregar");
         jButtonNuevaOrden.setPreferredSize(new java.awt.Dimension(50, 50));
@@ -117,7 +111,6 @@ public class VentaListOrdenesView extends AbstractViewPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCalcCAmbio;
-    private javax.swing.JButton jButtonCheckReservas;
     private javax.swing.JButton jButtonEnviarCerrarCrearNueva;
     private javax.swing.JButton jButtonNuevaOrden;
     private javax.swing.JButton jButtonPrintOrderList;
@@ -135,7 +128,6 @@ public class VentaListOrdenesView extends AbstractViewPanel {
             jButtonPrintOrderList.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_LISTA_ORDENES));
 
             jButtonNuevaOrden.addActionListener(getPresenter().getOperation(ACTION_CREAR_ORDEN));
-            jButtonCheckReservas.addActionListener(getPresenter().getOperation(ACTION_ABRIR_RESERVA));
             Bindings.bind(jListOrdenesActivas, new SelectionInList<Orden>(getPresenter().getModel(PROP_LISTA_ELEMENTOS), getPresenter().getModel(PROP_ELEMENTO_SELECCIONADO)));
             jListOrdenesActivas.addListSelectionListener((ListSelectionEvent e) -> {
                 if (!e.getValueIsAdjusting()) {
