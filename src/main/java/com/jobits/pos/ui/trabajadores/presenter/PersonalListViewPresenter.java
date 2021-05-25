@@ -66,7 +66,7 @@ public class PersonalListViewPresenter extends AbstractListViewPresenter<Persona
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(service.getItems());
+        getBean().getLista_elementos().addAll(service.findAll());
     }
 
 }

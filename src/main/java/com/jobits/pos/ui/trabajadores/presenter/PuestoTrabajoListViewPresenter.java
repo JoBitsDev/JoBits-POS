@@ -63,7 +63,7 @@ public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<Pu
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(service.getItems());
+        getBean().getLista_elementos().addAll(service.findAll());
     }
 
 }
