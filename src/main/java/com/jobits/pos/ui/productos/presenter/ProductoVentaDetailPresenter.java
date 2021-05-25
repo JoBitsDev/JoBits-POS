@@ -20,6 +20,7 @@ import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.ProductoVenta;
+import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -248,12 +249,12 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAddCategoriaClick() {
-        List<Carta> list = cartaService.getItems();
+        List<Carta> list = cartaService.findAll();
         if (list.isEmpty()) {
             throw new IllegalStateException("No hay cartas creadas donde registrar la sección");
         }
         JComboBox<Carta> jComboBox1 = new JComboBox<>();
-        Carta[] values = cartaService.getItems().toArray(new Carta[0]);
+        Carta[] values = cartaService.findAll().toArray(new Carta[0]);
         jComboBox1.setModel(new DefaultComboBoxModel<>(values));
         jComboBox1.setSelectedItem(values[0]);
         Object[] options = {"Seleccionar", "Cancelar"};
@@ -271,8 +272,15 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             case JOptionPane.YES_OPTION:
                 String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre de la sección a crear",
                         "Nueva Sección", JOptionPane.QUESTION_MESSAGE);
-                seccionService.createInstance(nombre, (Carta) jComboBox1.getSelectedItem());
-                getBean().setLista_categorias(new ArrayListModel<>(seccionService.findAll()));
+                if (nombre != null) {
+                    Seccion newSeccion = new Seccion();
+                    newSeccion.setDescripcion("");
+                    newSeccion.setNombreSeccion(nombre);
+                    newSeccion.setProductoVentaList(new ArrayList<>());
+                    newSeccion.setCartacodCarta((Carta) jComboBox1.getSelectedItem());
+                    seccionService.create(newSeccion);
+                    getBean().setLista_categorias(new ArrayListModel<>(seccionService.findAll()));
+                }
                 break;
             default:
                 break;
