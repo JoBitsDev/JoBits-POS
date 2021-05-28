@@ -31,7 +31,7 @@ import com.jobits.ui.components.swing.notifications.NotificationHandler;
 import com.jobits.ui.themes.ThemeHandler;
 import com.jobits.ui.themes.ThemeType;
 import com.jobits.ui.themes.impl.DarkMaterialTheme;
-import com.jobits.ui.themes.impl.DefaultTheme;
+import com.jobits.ui.themes.impl.NimbusTheme;
 import com.jobits.ui.themes.impl.MaterialTheme;
 import com.jobits.ui.themes.impl.SimpleMaterialTheme;
 import com.root101.clean.core.app.services.NotificationService;
@@ -39,8 +39,11 @@ import com.root101.clean.core.app.services.UserResolver;
 import com.root101.clean.core.app.services.UserResolverService;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -62,8 +65,10 @@ public class Application {
     //
     //Log
     //
-    private static final String LOG_FILE_PATH = "LOGS/AppLogs.log";
-    private static final String ERR_FILE_PATH = "LOGS/AppLogsErr.log";
+    private static final String CURRENT_DATE = LocalDate.now().format(DateTimeFormatter.ofPattern("dd_MM_yyyy"));
+    private static final String LOG_FILE_PATH = "LOGS/AppLogs/";
+    private static final String ERR_FILE_PATH = "LOGS/AppLogsErr/";
+    private static final String LOG_ERR_FILE_NAME = CURRENT_DATE + ".log";
     private static Application application;
     private UserResolverService<Personal> userResolver = new UserResolverServiceImpl();
 
@@ -71,7 +76,7 @@ public class Application {
 
     public static final int MINOR_VERSION = 6;
 
-    public static final int PATCH_VERSION = 0;
+    public static final int PATCH_VERSION = 1;
 
     public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
 
@@ -89,12 +94,28 @@ public class Application {
     }
 
     public static void setupLogging() throws Exception {
+        File log_path = new File(LOG_FILE_PATH);
+        File err_path = new File(ERR_FILE_PATH);
+        if (!log_path.exists()) {
+            log_path.mkdirs();
+        }
+        if (!err_path.exists()) {
+            err_path.mkdirs();
+        }
+        File log_file = new File(LOG_FILE_PATH + LOG_ERR_FILE_NAME);
+        File err_file = new File(ERR_FILE_PATH + LOG_ERR_FILE_NAME);
+        if (!log_file.exists()) {
+            log_file.createNewFile();
+        }
+        if (!err_file.exists()) {
+            err_file.createNewFile();
+        }
         PrintStream out = new PrintStream(
-                new FileOutputStream(LOG_FILE_PATH, true), true);
-        PrintStream err = new PrintStream(
-                new FileOutputStream(ERR_FILE_PATH, true), true);
+                new FileOutputStream(log_file, true), true);
+        PrintStream error = new PrintStream(
+                new FileOutputStream(err_file, true), true);
         System.setOut(out);
-        System.setErr(err);
+        System.setErr(error);
 
     }
 
@@ -191,7 +212,6 @@ public class Application {
 
     public void init() {
         setLocale();
-        setApplicationLooks();
         setNotificationChannel();
         calculateLicenceLeft();
         setExceptionHandling();
@@ -238,20 +258,11 @@ public class Application {
 //        } else if (themeName.equals(ThemeType.DARK_MATERIAL.getThemeName())) { TODO: en progreso tema oscuro
 //            ThemeHandler.registerThemeService(new DarkMaterialTheme());
         } else {
-            ThemeHandler.registerThemeService(new DefaultTheme());
+            ThemeHandler.registerThemeService(new NimbusTheme());
         }
     }
 
     private void calculateLicenceLeft() {
-    }
-
-    private void setApplicationLooks() {
-        try {
-            UIManager.setLookAndFeel(MaterialComponentsFactory.UI.getLooks());
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     private void setExceptionHandling() {

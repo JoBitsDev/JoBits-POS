@@ -34,7 +34,7 @@ public class ImageManagerViewPresenter extends AbstractViewPresenter<ImageManage
     public ImageManagerViewPresenter(String imageName) {
         super(new ImageManagerViewModel());
         service.setImageName(imageName);
-        preLoadOldImage();
+        refreshState();
     }
 
     @Override
@@ -42,51 +42,75 @@ public class ImageManagerViewPresenter extends AbstractViewPresenter<ImageManage
         registerOperation(new AbstractViewAction(ACTION_CARGAR_IMAGEN) {
             @Override
             public Optional doAction() {
-                BufferedImage img = service.openNewImage(new Dimension(700, 480));//TODO: Hacer que la dimension sea generica
-                if (img != null) {
-                    getBean().setPanel_dibujo(new PanelDibujo(img));
-                }
+                onCargarClick();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_RECORTAR_IMAGEN) {
             @Override
             public Optional doAction() {
-                PanelDibujo pd = getBean().getPanel_dibujo();
-                getBean().setPanel_dibujo(new PanelDibujo(service.recortar_imagen(
-                        pd.getImg(), pd.getXValue(), pd.getYValue(), pd.getAncho(), pd.getAlto())));
+                onRecortarClick();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_GUARDAR_IMAGEN) {
             @Override
             public Optional doAction() {
-                if ((boolean) Application.getInstance().getNotificationService().
-                        showDialog("Esta seguro que desea continuar?",
-                                TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                    PanelDibujo pd = getBean().getPanel_dibujo();
-                    service.guardar_imagen(pd.getImagmemoria());
-                    Application.getInstance().getNotificationService().showDialog(
-                            "Se ha guardado Correctamente la imagen recortada", TipoNotificacion.INFO);
-                }
+                onSaveImageClick();
                 return Optional.empty();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_CERRAR) {
             @Override
             public Optional doAction() {
-                if ((boolean) Application.getInstance().getNotificationService().
-                        showDialog("Esta seguro que desea cancelar?",
-                                TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                    Application.getInstance().getNavigator().navigateUp();
-                }
+                onCerrarClick();
                 return Optional.empty();
             }
         });
     }
 
-    private void preLoadOldImage() {
-        String path = R.MEDIA_FILE_PATH + service.getImageName() + ".jpg";
-        getBean().setOld_image(service.loadImageIcon(path, new Dimension(70, 70)));//TODO: Hacer que la dimension sea generica
+    private void onCargarClick() {
+        BufferedImage img = service.openNewImage(new Dimension(680, 460));//TODO: Hacer que la dimension sea generica
+        if (img != null) {
+            getBean().setPanel_dibujo(new PanelDibujo(img));
+        }
     }
+
+    private void onRecortarClick() {
+        PanelDibujo pd = getBean().getPanel_dibujo();
+        getBean().setPanel_dibujo(new PanelDibujo(service.recortar_imagen(
+                pd.getImg(), pd.getXValue(), pd.getYValue(), pd.getAncho(), pd.getAlto())));
+    }
+
+    private void onCerrarClick() {
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea cancelar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            Application.getInstance().getNavigator().navigateUp();
+        }
+    }
+
+    private void onSaveImageClick() {
+        if ((boolean) Application.getInstance().getNotificationService().
+                showDialog("Esta seguro que desea continuar?",
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+            PanelDibujo pd = getBean().getPanel_dibujo();
+            service.guardar_imagen(pd.getImg());
+            Application.getInstance().getNotificationService().showDialog(
+                    "Se ha guardado Correctamente la imagen recortada", TipoNotificacion.INFO);
+            firePropertyChange(ACTION_CERRAR, null, null);
+        }
+    }
+
+    @Override
+    protected Optional refreshState() {
+        String path = R.MEDIA_FILE_PATH + service.getImageName() + ".jpg";
+        getBean().setOld_image(service.loadImageIcon(path, new Dimension(120, 120)));//TODO: Hacer que la dimension sea generica
+//        BufferedImage img = service.loadImage(path);
+//        if (img != null) {
+//            getBean().setPanel_dibujo(new PanelDibujo(img));
+//        }
+        return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

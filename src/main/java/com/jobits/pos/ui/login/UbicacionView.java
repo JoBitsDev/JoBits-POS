@@ -90,6 +90,7 @@ public class UbicacionView extends AbstractViewPanel {
         jPasswordFielContrasena.setPreferredSize(new java.awt.Dimension(0, 60));
         jPanel1.add(jPasswordFielContrasena);
 
+        jTextFieldDriver.setEditable(false);
         jTextFieldDriver.setBorder(null);
         jTextFieldDriver.setMaximumSize(new java.awt.Dimension(2147483647, 60));
         jTextFieldDriver.setPreferredSize(new java.awt.Dimension(0, 60));
