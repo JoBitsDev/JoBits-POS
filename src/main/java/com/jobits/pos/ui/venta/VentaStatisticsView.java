@@ -346,8 +346,8 @@ public class VentaStatisticsView extends AbstractViewPanel {
                 null,
                 null,
                 title,
-                null,
-                subtitle);
+                subtitle,
+                null);
         c.setPreferredSize(dimension);
         c.setMaximumSize(dimension);
         c.setSecondaryTextColor(Color.red);
