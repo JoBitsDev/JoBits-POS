@@ -83,12 +83,6 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         setListToBean();
 //        this.ventaOrdenPresenter = new VentaOrdenListViewPresenter(controller, ordenController, getBean().getVenta_seleccionada().getId());
         updateBeanData();
-        new LongProcessActionServiceImpl("Creando IPVs.........") {
-            @Override
-            protected void longProcessMethod() {
-                controller.initIPV(getBean().getVenta_seleccionada());
-            }
-        }.performAction(null);
 
     }
 
