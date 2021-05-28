@@ -8,6 +8,7 @@ package com.jobits.pos.ui.almacen.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.impl.AlmacenManageController.OperationType;//TODO; enum de implementacion en view
 import com.jobits.pos.core.domain.TransaccionSimple;
+import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.InsumoAlmacen;
 import com.jobits.pos.core.domain.models.TransaccionTransformacion;
@@ -20,6 +21,10 @@ import java.util.Date;
  * @author Home
  */
 public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
+
+    private Almacen almacen;
+
+    public static final String PROP_ALMACEN = "almacen";
 
     //VALORES COMUNES
     private String numero_recibo;
@@ -124,6 +129,26 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
     private TransaccionTransformacion insumo_transformado_contenido_seleccionado;
 
     public static final String PROP_INSUMO_TRANSFORMADO_CONTENIDO_SELECCIONADO = "insumo_transformado_contenido_seleccionado";
+
+    /**
+     * Get the value of almacen
+     *
+     * @return the value of almacen
+     */
+    public Almacen getAlmacen() {
+        return almacen;
+    }
+
+    /**
+     * Set the value of almacen
+     *
+     * @param almacen new value of almacen
+     */
+    public void setAlmacen(Almacen almacen) {
+        Almacen oldAlmacen = this.almacen;
+        this.almacen = almacen;
+        firePropertyChange(PROP_ALMACEN, oldAlmacen, almacen);
+    }
 
     /**
      * Get the value of insumo_transformado_contenido_seleccionado

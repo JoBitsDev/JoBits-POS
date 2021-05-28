@@ -44,7 +44,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
 
     public AreaVentaViewPresenter() {
         super(new AreaVentaViewModel());
-        getBean().getLista_area().addAll(areaService.getItems());
+        getBean().getLista_area().addAll(areaService.findAll());
     }
 
     @Override
@@ -98,10 +98,10 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
         Area areaSel = getBean().getArea_seleccionada();
         if (areaSel == null) {
             getBean().getLista_area().clear();
-            getBean().getLista_area().addAll(new ArrayListModel<>(areaService.getItems()));
+            getBean().getLista_area().addAll(new ArrayListModel<>(areaService.findAll()));
             getBean().getLista_mesas().clear();
         } else {
-            getBean().setLista_area(new ArrayListModel<>(areaService.getItems()));
+            getBean().setLista_area(new ArrayListModel<>(areaService.findAll()));
             getBean().setArea_seleccionada(areaSel);
         }
         return Optional.empty();
@@ -124,7 +124,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             areaService.destroy(selected);
             getBean().setArea_seleccionada(null);
-            getBean().setLista_area(areaService.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
+            getBean().setLista_area(areaService.findAll());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
         }
 
     }

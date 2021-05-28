@@ -71,13 +71,16 @@ public class ReservaOrdenDetailViewPresenter extends AbstractViewPresenter<Reser
         ordenPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_MODO_AGREGO_ACTIVADO,
                 (PropertyChangeEvent evt) -> {
                     if ((boolean) evt.getNewValue()) {
-                        this.service.setModoAgrego(ordenPresenter.getBean().getProducto_orden_seleccionado());
+//                        this.service.setModoAgrego(ordenPresenter.getBean().getProducto_orden_seleccionado());
+                        productoListPresenter.getBean().setProductoAgregar(ordenPresenter.getBean().getProducto_orden_seleccionado());
                         productoListPresenter.showSeccionesAgregadas();
-                        productoListPresenter.onMostrarSeccionClick();
+//                        productoListPresenter.onMostrarSeccionClick();
                     } else {
-                        this.service.setModoAgrego(null);
-                        productoListPresenter.refreshState();
+                        productoListPresenter.getBean().setProductoAgregar(null);
+//                        this.service.setModoAgrego(null);
+                        productoListPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
                     }
+                    productoListPresenter.onMostrarSeccionClick();
                 }
         );
         ordenPresenter.addPropertyChangeListener(OrdenDetailViewPresenter.PROP_CHANGES,
@@ -89,7 +92,7 @@ public class ReservaOrdenDetailViewPresenter extends AbstractViewPresenter<Reser
 
     private void setMesa() {
         if (this.codOrden != null) {
-            Orden o = service.getInstance(this.codOrden);
+            Orden o = service.findBy(this.codOrden);
             if (o != null) {
                 if (o.getMesacodMesa() != null) {
                     productoListPresenter.setMesaSeleccionada(o.getMesacodMesa());

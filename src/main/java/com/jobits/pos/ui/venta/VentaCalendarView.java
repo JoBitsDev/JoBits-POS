@@ -16,11 +16,9 @@ import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewModel;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
-import com.jobits.ui.utils.MaterialColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 import java.util.List;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -357,8 +355,6 @@ public class VentaCalendarView extends AbstractViewPanel {
     public void wireUp() {
         Bindings.bind(jYearChooser1, "year", getPresenter().getModel(VentaCalendarViewModel.PROP_YEAR_SELECCIONADO));
         Bindings.bind(jMonthChooser1, "month", getPresenter().getModel(VentaCalendarViewModel.PROP_MES_SELECCIONADO));
-//        Bindings.bind(jDateChooserAl, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_HASTA));
-//        Bindings.bind(jDateChooserDel, "date", getPresenter().getModel(VentaCalendarViewModel.PROP_RESUMEN_DESDE));
         Bindings.bind(jLabelHoraPico, getPresenter().getModel(VentaCalendarViewModel.PROP_HORA_PICO_INTERVALOS));
         Bindings.bind(jLabelInsumo, getPresenter().getModel(VentaCalendarViewModel.PROP_GASTO_INSUMO_INTERVALO));
         Bindings.bind(jLabelOtros, getPresenter().getModel(VentaCalendarViewModel.PROP_GASTO_OTROS_INTERVALO));
@@ -379,7 +375,6 @@ public class VentaCalendarView extends AbstractViewPanel {
                 getPresenter().getModel(VentaCalendarViewModel.PROP_LISTA_ELEMENTOS),
                 getPresenter().getModel(VentaCalendarViewModel.PROP_ELEMENTO_SELECCIONADO)));
         jButtonY.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_Y));
-//        jButton3.addActionListener(getPresenter().getOperation(VentaCalendarViewPresenter.ACTION_RESUMEN_DETALLADO));
         jTableCalendar.getSelectionModel().addListSelectionListener((ListSelectionEvent e) -> {
             getPresenter().getModel(VentaCalendarViewModel.PROP_DIA_SELECCIONADO).setValue(getObjectAtSelectedCell());
         });

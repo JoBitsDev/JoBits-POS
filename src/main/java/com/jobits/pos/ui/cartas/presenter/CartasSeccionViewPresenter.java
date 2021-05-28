@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.cartas.presenter;
 
 import com.jobits.pos.controller.seccion.CartaListService;
+import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Seccion;
@@ -16,6 +17,7 @@ import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import java.util.ArrayList;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -29,6 +31,7 @@ import javax.swing.JOptionPane;
 public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSeccionViewModel> {
 
     private final CartaListService cartaService = PosDesktopUiModule.getInstance().getImplementation(CartaListService.class);
+    private final SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
 
     public static final String ACTION_AGREGAR_MENU = "Nueva Carta";
     public static final String ACTION_EDITAR_MENU = "Editar Carta";
@@ -39,18 +42,23 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
 
     public CartasSeccionViewPresenter() {
         super(new CartasSeccionViewModel());
-        getBean().getLista_menu().addAll(cartaService.getItems());
+        getBean().getLista_menu().addAll(cartaService.findAll());
     }
 
     private void onNuevoMenuCLick() {//TODO: no actualiza correctamente nada en las vistas
         String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre de la Carta a crear",
                 "Nueva Carta", JOptionPane.QUESTION_MESSAGE);
-        cartaService.createInstance(nombre);
-        Carta menuSeleccionado = getBean().getMenu_seleccionado();
-        getBean().getLista_menu().clear();
-        getBean().getLista_menu().addAll(cartaService.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
-        getBean().setMenu_seleccionado(menuSeleccionado);
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        if (nombre != null) {
+            Carta carta = new Carta();
+            carta.setAreaList(new ArrayList<>());
+            carta.setMonedaPrincipal(R.COIN_SUFFIX);
+            carta.setNombreCarta(nombre);
+            carta.setSeccionList(new ArrayList<>());
+            Carta menuSeleccionado = getBean().getMenu_seleccionado();
+            getBean().setLista_menu(cartaService.findAll());
+            getBean().setMenu_seleccionado(menuSeleccionado);
+            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        }
     }
 
     private void onEliminarMenuClick() {
@@ -61,7 +69,7 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
                 cartaService.destroy(getBean().getMenu_seleccionado());
                 getBean().setMenu_seleccionado(null);
-                getBean().setLista_menu(cartaService.getItems());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
+                getBean().setLista_menu(cartaService.findAll());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
                 Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             }
         }
@@ -99,7 +107,7 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar: " + selected,
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            cartaService.removeSeccionFromCarta(selected);
+            seccionService.destroy(selected);
             getBean().setMenu_seleccionado(getBean().getMenu_seleccionado());
         }
     }

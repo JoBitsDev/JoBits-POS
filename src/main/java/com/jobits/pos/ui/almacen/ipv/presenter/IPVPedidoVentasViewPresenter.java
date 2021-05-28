@@ -6,12 +6,15 @@
 package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.core.domain.InsumoPedidoModel;
 import com.jobits.pos.core.domain.ProdcutoVentaPedidoModel;
 import com.jobits.pos.core.domain.VentaDAO1;
+import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -21,7 +24,6 @@ import com.jobits.pos.ui.utils.NumberPad;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -36,10 +38,18 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     public static String ACTION_AGREGAR_IPV = "Agregr IPV";
 
     private PedidoIpvVentasService service;
+    private AlmacenListService almacenService;
+    private Cocina cocina;
+    private Venta venta;
+    private List<IpvVentaRegistro> ipvProductList;
 
-    public IPVPedidoVentasViewPresenter(PedidoIpvVentasService controller) {
+    public IPVPedidoVentasViewPresenter(PedidoIpvVentasService service, AlmacenListService almacenService, Cocina cocina, Venta venta, List<IpvVentaRegistro> ipvProductList) {
         super(new IPVPedidoVentasViewModel());
-        this.service = controller;
+        this.service = service;
+        this.almacenService = almacenService;
+        this.cocina = cocina;
+        this.venta = venta;
+        this.ipvProductList = ipvProductList;
         fillBeanData();
     }
 
@@ -88,8 +98,9 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
             service.realizarPedidoDeIpv(
                     getBean().getLista_insumo_pedido_model(),
                     getBean().getLista_producto_venta_model(),
-                    service.getElaboracion(),
-                    getBean().getSeleccionado_almacen());
+                    cocina,
+                    getBean().getSeleccionado_almacen(),
+                    venta);
             Application.getInstance().getNavigator().navigateUp();
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
@@ -126,8 +137,8 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     }
 
     private void fillBeanData() {
-        getBean().setLista_ipv_venta_registro(new ArrayListModel<>(service.getIpvProductList()));
-        getBean().setLista_almacen(new ArrayListModel<>(service.getAlmacenList()));
+        getBean().setLista_ipv_venta_registro(new ArrayListModel<>(ipvProductList));
+        getBean().setLista_almacen(new ArrayListModel<>(almacenService.findAll()));
         getBean().setSeleccionado_almacen(getBean().getLista_almacen().get(0));
     }
 

@@ -66,7 +66,7 @@ public class InsumoListViewPresenter extends AbstractListViewPresenter<InsumoLis
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(controller.getItems());
+        getBean().getLista_elementos().addAll(controller.findAll());
     }
 
 }

@@ -16,6 +16,7 @@ import com.jobits.pos.core.domain.models.InsumoAlmacen;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.recursos.RegularExpressions;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
@@ -62,19 +63,31 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onActualizarListaAlmacen() {
-        detailService.setInstance(getBean().getElemento_seleccionado());
+//        detailService.setInstance(getBean().getElemento_seleccionado());
         refreshView();
         getBean().setSearch_keyWord(null);
     }
 
     private void onCrearAlmacen() {
-        listService.createNewStorage(JOptionPane.showInputDialog(R.RESOURCE_BUNDLE.getString("dialogo_agregar_almacen")));
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
-        setListToBean();
+        String storageName = JOptionPane.showInputDialog(R.RESOURCE_BUNDLE.getString("dialogo_agregar_almacen"));
+        if (storageName != null && !storageName.isBlank()) {
+            if (storageName.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
+                Almacen selected = new Almacen();
+                selected.setInsumoAlmacenList(new ArrayList<>());
+                selected.setCantidadInsumos(0);
+                selected.setValorMonetario(0.0);
+                selected.setNombre(storageName);
+                listService.create(selected);
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                setListToBean();
+            } else {
+                throw new IllegalArgumentException("Nombre no permitido");
+            }
+        }
     }
 
     private void onEditarAlmacen() {
-        listService.update(getBean().getElemento_seleccionado());
+        listService.edit(getBean().getElemento_seleccionado());
         setListToBean();
     }
 
@@ -103,10 +116,9 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onTransacciones() {
-        TransaccionListService ser = PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class);
-        ser.setAlmacen(detailService.getInstance());
+        TransaccionListService transaccionService = PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class);
         NavigationService.getInstance().navigateTo(TransaccionListView.VIEW_NAME,
-                new TransaccionListPresenter(ser), DisplayType.POPUP);
+                new TransaccionListPresenter(transaccionService, getBean().getElemento_seleccionado()), DisplayType.POPUP);
         refreshView();
     }
 
@@ -123,7 +135,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
 
     private void onNuevaFactura() {
         NavigationService.getInstance().navigateTo(FacturaView.VIEW_NAME,
-                new FacturaViewPresenter(detailService), DisplayType.POPUP);
+                new FacturaViewPresenter(detailService, getBean().getElemento_seleccionado()), DisplayType.POPUP);
         refreshView();
     }
 
@@ -211,11 +223,11 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     //ACTUALIZAR LA LISTA DE ALMACENES
     private void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(new ArrayListModel<>(listService.getItems()));
+        getBean().getLista_elementos().addAll(new ArrayListModel<>(listService.findAll()));
         if (!getBean().getLista_elementos().isEmpty()) {
             getBean().setElemento_seleccionado(getBean().getLista_elementos().get(0));
             if (getBean().getElemento_seleccionado() != null) {
-                detailService.setInstance(getBean().getElemento_seleccionado());
+//                detailService.setInstance(getBean().getElemento_seleccionado());
                 refreshView();
                 getBean().setPanel_visible(true);
             }
@@ -225,7 +237,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onAgregarInsumoFichaClick() {
-        detailService.agregarInsumoAlmacen(getBean().getInsumo_disponible_seleccionado());
+        detailService.agregarInsumoAlmacen(getBean().getInsumo_disponible_seleccionado(), getBean().getElemento_seleccionado());
         refreshView();
     }
 
@@ -233,7 +245,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea eliminar las existencias del insumo seleccionado del almacen",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado());
+            detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado(), getBean().getElemento_seleccionado());
             refreshView();
         }
     }
@@ -241,8 +253,8 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     private void refreshView() {
         if (getBean().getElemento_seleccionado() != null) {
             detailService.updateValorTotalAlmacen(getBean().getElemento_seleccionado());
-            getBean().setValor_monetario_text(utils.setDosLugaresDecimalesDoubleString(detailService.getInstance().getValorMonetario()));
-            getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(detailService.getInstance())));
+            getBean().setValor_monetario_text(utils.setDosLugaresDecimalesDoubleString(getBean().getElemento_seleccionado().getValorMonetario()));
+            getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado())));
             getBean().setLista_insumos_disponibles(new ArrayListModel<>(detailService.getInsumoList()));
         }
     }
@@ -252,7 +264,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             if (evt.getNewValue() != null) {
                 String keyWord = ((String) evt.getNewValue()).toLowerCase();
                 List<InsumoAlmacen> insumoList = new ArrayList<>();
-                List<InsumoAlmacen> temporalLIst = detailService.getInsumoAlmacenList(detailService.getInstance());
+                List<InsumoAlmacen> temporalLIst = detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado());
                 if (evt.getNewValue().equals("")) {
                     getBean().setLista_insumos_contenidos(new ArrayListModel<>(temporalLIst));
                 } else {
@@ -266,7 +278,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         });
         addBeanPropertyChangeListener(AlmacenViewModel.PROP_ELEMENTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null) {
-                detailService.setInstance(getBean().getElemento_seleccionado());
+//                detailService.setInstance(getBean().getElemento_seleccionado());
                 refreshView();
                 getBean().setSearch_keyWord(null);
             }

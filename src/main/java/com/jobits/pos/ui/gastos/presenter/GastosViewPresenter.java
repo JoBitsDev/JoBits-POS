@@ -40,15 +40,12 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
             ACTION_ELIMINAR_GASTO = "Eliminar Gasto";
 
     private final GastoOperacionService service = PosDesktopUiModule.getInstance().getImplementation(GastoOperacionService.class);
+    private Venta venta;
 
     public GastosViewPresenter(Venta v) {
         super(new GastosViewModel());
+        this.venta = v;
         addListeners();
-        setVenta(v);
-    }
-
-    public void setVenta(Venta v) {
-        service.setDiaVenta(v);
         refreshState();
     }
 
@@ -108,19 +105,19 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
     protected Optional refreshState() {
         getBean().setLista_categoria_gastos(new ArrayListModel<>(Arrays.asList(R.TipoGasto.values())));
         getBean().setCategoria_gasto_seleccionada(R.TipoGasto.UNSPECIFIED);
-        getBean().setLista_gasto_venta(new ArrayListModel<>(service.getLista()));
-        getBean().setTotal_gastos(utils.setDosLugaresDecimales(service.getValorTotalGastos()));
+        getBean().setLista_gasto_venta(new ArrayListModel<>(venta.getGastoVentaList()));
+        getBean().setTotal_gastos(utils.setDosLugaresDecimales(service.getValorTotalGastos(venta)));
         getBean().setDefault_gasto_list(new ArrayListModel<>(service.getDefaultGastosList()));
         getBean().setTipo_gasto(null);
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void onAgregarClick() {
-        service.createNewGasto(
+        service.createGasto(
                 getBean().getCategoria_gasto_seleccionada(),
                 getBean().getTipo_gasto(),
                 Float.parseFloat(getBean().getMonto_gasto()),
-                getBean().getDescripcion_gasto());
+                getBean().getDescripcion_gasto(), venta);
         refreshState();
         onLimpiarClick();
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
@@ -131,7 +128,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
                 showDialog("Esta seguro que desea eliminar el gasto seleccionado?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {//TODO: inyectar
-                service.removeGasto(getBean().getGasto_venta_seleccionado());
+                service.removeGasto(getBean().getGasto_venta_seleccionado(), venta);
                 getBean().setGasto_venta_seleccionado(null);
                 refreshState();
                 Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
@@ -185,13 +182,13 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         getBean().addPropertyChangeListener((PropertyChangeEvent evt) -> {
             switch (evt.getPropertyName()) {
                 case PROP_CATEGORIA_GASTO_SELECCIONADA:
-                    getBean().setLista_tipo_gasto(new ArrayListModel<>(service.getNombres(((R.TipoGasto) evt.getNewValue()).getNombre())));
+                    getBean().setLista_tipo_gasto(new ArrayListModel<>(service.getNombresByTipo(((R.TipoGasto) evt.getNewValue()).getNombre())));
                     break;
                 case PROP_DEFAULT_GASTO_SELECCIONADO:
                     DefaultGasto gasto = (DefaultGasto) evt.getNewValue();
                     if (gasto != null) {
                         getBean().setCategoria_gasto_seleccionada(gasto.getCat());
-                        getBean().setLista_tipo_gasto(new ArrayListModel<>(service.getNombres(gasto.getCat().getNombre())));
+                        getBean().setLista_tipo_gasto(new ArrayListModel<>(service.getNombresByTipo(gasto.getCat().getNombre())));
                         getBean().setTipo_gasto_seleccionado(gasto.getNombre());
                         getBean().setDescripcion_gasto(gasto.getDescripcion());
                         getBean().setMonto_gasto(String.valueOf(gasto.getMonto()));

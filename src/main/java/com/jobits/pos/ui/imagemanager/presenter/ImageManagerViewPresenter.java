@@ -28,12 +28,13 @@ public class ImageManagerViewPresenter extends AbstractViewPresenter<ImageManage
     public static String ACTION_RECORTAR_IMAGEN = "Recortar Imagen";
     public static String ACTION_GUARDAR_IMAGEN = "Guardar Imagen";
     public static String ACTION_CERRAR = "Cerrar";
+    private final String imageName;
 
     ImageManagerService service = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
 
     public ImageManagerViewPresenter(String imageName) {
         super(new ImageManagerViewModel());
-        service.setImageName(imageName);
+        this.imageName = imageName;
         refreshState();
     }
 
@@ -95,7 +96,7 @@ public class ImageManagerViewPresenter extends AbstractViewPresenter<ImageManage
                 showDialog("Esta seguro que desea continuar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             PanelDibujo pd = getBean().getPanel_dibujo();
-            service.guardar_imagen(pd.getImg());
+            service.guardar_imagen(pd.getImg(), imageName);
             Application.getInstance().getNotificationService().showDialog(
                     "Se ha guardado Correctamente la imagen recortada", TipoNotificacion.INFO);
             firePropertyChange(ACTION_CERRAR, null, null);
@@ -104,7 +105,7 @@ public class ImageManagerViewPresenter extends AbstractViewPresenter<ImageManage
 
     @Override
     protected Optional refreshState() {
-        String path = R.MEDIA_FILE_PATH + service.getImageName() + ".jpg";
+        String path = R.MEDIA_FILE_PATH + imageName + ".jpg";
         getBean().setOld_image(service.loadImageIcon(path, new Dimension(120, 120)));//TODO: Hacer que la dimension sea generica
 //        BufferedImage img = service.loadImage(path);
 //        if (img != null) {

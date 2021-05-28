@@ -31,7 +31,7 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
 
     public static String ACTION_CHANGE_VISIBLE;
 
-    private final ProductoVentaListService controller = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
+    private final ProductoVentaListService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
 
     public ProductoVentaListViewPresenter() {
         super(new ProductoVentaListViewModel(), ProductoVentaListView.VIEW_NAME);
@@ -46,8 +46,7 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
             public Optional doAction() {
                 ProductoVenta producto = getBean().getElemento_seleccionado();//TODO: logica en presenter
                 producto.setVisible(!producto.getVisible());
-                controller.setSelected(producto);
-                controller.update();//TODO: activar comportamiento
+                service.edit(producto);//TODO: activar comportamiento
                 getBean().getLista_elementos().fireContentsChanged(getBean().getLista_elementos().indexOf(producto));
                 return Optional.empty();
             }
@@ -83,7 +82,7 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea eliminar: " + getBean().getElemento_seleccionado(),
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                controller.destroy(getBean().getElemento_seleccionado());
+                service.destroy(getBean().getElemento_seleccionado());
                 setListToBean();
             }
         } else {
@@ -95,7 +94,7 @@ public class ProductoVentaListViewPresenter extends AbstractListViewPresenter<Pr
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(controller.getItems());
+        getBean().getLista_elementos().addAll(service.findAll());
     }
 
 }

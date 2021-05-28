@@ -62,7 +62,7 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
 
     @Override
     protected Optional refreshState() {
-        getBean().setLista_almacen(new ArrayListModel<>(almacenService.getItems()));
+        getBean().setLista_almacen(new ArrayListModel<>(almacenService.findAll()));
         if (!getBean().getLista_almacen().isEmpty()) {
             getBean().setAlmacen_seleccionado(getBean().getLista_almacen().get(0));
         }

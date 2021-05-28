@@ -735,23 +735,6 @@ public class VentaDetailView extends AbstractViewPanel {
         Bindings.bind(jButtonReabrirVentas, "enabled", getPresenter().getModel(PROP_REABRIR_VENTAS_ENABLED));
         jButtonReabrirVentas.addActionListener(getPresenter().getOperation(ACTION_REABRIR_VENTA));
 
-//        //Areas
-//        Bindings.bind(jTableVentasPorArea,
-//                new SelectionInList<ResumenVentaAreaTablaModel>(
-//                        getPresenter().getModel(PROP_LISTA_RESUMEN_AREA_VENTA),
-//                        getPresenter().getModel(PROP_RESUMEM_AREA_SELECCIONADA)));
-//
-//        //Dpte
-//        Bindings.bind(jTableVentasDependientes,
-//                new SelectionInList<ResumenVentaUsuarioTablaModel>(
-//                        getPresenter().getModel(PROP_LISTA_RESUMEN_PERSONAL_VENTA),
-//                        getPresenter().getModel(PROP_RESUMEN_USUARIO_SELECCIONADO)));
-//
-//        //Pto elab
-//        Bindings.bind(jTableVentasPorCocina,
-//                new SelectionInList<ResumenVentaUsuarioTablaModel>(
-//                        getPresenter().getModel(PROP_LISTA_RESUMEN_PTO_VENTA),
-//                        getPresenter().getModel(PROP_RESUMEN_PTO_SELECCIONADO)));
         //Mesas
         Bindings.bind(jTableVentasPorMesa, new SelectionInList<ProductovOrden>(
                 getPresenter().getModel(PROP_LISTA_PRODUCTOS_POR_MESA),

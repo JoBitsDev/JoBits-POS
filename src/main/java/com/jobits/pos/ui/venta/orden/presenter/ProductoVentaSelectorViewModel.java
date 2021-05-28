@@ -7,6 +7,7 @@ package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.ProductoVenta;
+import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 import java.util.ArrayList;
@@ -37,6 +38,30 @@ public class ProductoVentaSelectorViewModel extends AbstractListViewModel<Seccio
     private boolean campo_busqueda_enabled;
 
     public static final String PROP_CAMPO_BUSQUEDA_ENABLED = "campo_busqueda_enabled";
+
+    private ProductovOrden productoAgregar;
+
+    public static final String PROP_PRODUCTOAGREGAR = "productoAgregar";
+
+    /**
+     * Get the value of productoAgregar
+     *
+     * @return the value of productoAgregar
+     */
+    public ProductovOrden getProductoAgregar() {
+        return productoAgregar;
+    }
+
+    /**
+     * Set the value of productoAgregar
+     *
+     * @param productoAgregar new value of productoAgregar
+     */
+    public void setProductoAgregar(ProductovOrden productoAgregar) {
+        ProductovOrden oldProductoAgregar = this.productoAgregar;
+        this.productoAgregar = productoAgregar;
+        firePropertyChange(PROP_PRODUCTOAGREGAR, oldProductoAgregar, productoAgregar);
+    }
 
     /**
      * Get the value of campo_busqueda_enabled

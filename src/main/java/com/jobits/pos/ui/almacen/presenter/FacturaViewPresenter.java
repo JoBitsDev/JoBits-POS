@@ -43,6 +43,7 @@ import javax.swing.JOptionPane;
 public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel> {
 
     private AlmacenManageService service;
+
     public static final String ACTION_AGREGAR_INSUMO = "Agregar Insumo";
     public static final String ACTION_ELIMINAR_INSUMO = "Eliminar Insumo";
 
@@ -55,12 +56,14 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     public static final String PROP_SWAP_TO_ENTRADAS = "Entradas";
     public static final String PROP_SWAP_TO_TRANSFORMAR = "Transformar";
 
-    public FacturaViewPresenter(AlmacenManageService controller) {
+    public FacturaViewPresenter(AlmacenManageService controller, Almacen almacen) {
         super(new FacturaViewModel());
         this.service = controller;
         addListeners();
         getBean().getLista_insumos_disponibles().clear();
-        getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(controller.getInsumoAlmacenList(controller.getInstance())));
+        getBean().setAlmacen(almacen);
+        getBean().getLista_insumos_disponibles().addAll(
+                new ArrayListModel<>(service.getInsumoAlmacenList(getBean().getAlmacen())));
         setVisiblePanels(getBean().getOperacion_selected());
     }
 
@@ -265,7 +268,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 if (newOp) {
                     getBean().setDestino_seleccionado(null);
                     getBean().getLista_destino().clear();
-                    getBean().getLista_destino().addAll(new ArrayListModel(service.getItems()));
+                    getBean().getLista_destino().addAll(new ArrayListModel(service.findAll()));
                     getBean().getLista_elementos().clear();
                     getBean().setComponent_locked(true);
                     break;
@@ -274,7 +277,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 if (newOp) {
                     getBean().setDestino_seleccionado(null);
                     getBean().getLista_destino().clear();
-                    getBean().getLista_destino().addAll(new ArrayListModel(service.getItems()));
+                    getBean().getLista_destino().addAll(new ArrayListModel(service.findAll()));
                     getBean().getLista_insumos_transformados_contenidos().clear();
                     getBean().getLista_insumo_elaborado_disponible().clear();
                     getBean().setInsumo_transformado_contenido_seleccionado(null);
@@ -368,20 +371,20 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 switch (currentOperation) {
                     case ENTRADA:
                         service.crearOperacionEntrada(getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), getBean().getFecha_factura());
+                                getBean().getNumero_recibo(), getBean().getFecha_factura(), getBean().getAlmacen());
                         break;
                     case SALIDA:
                         Date fecha = getBean().getFecha_factura();
                         service.crearOperacionSalida(getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), fecha, selectIdFecha(fecha));
+                                getBean().getNumero_recibo(), fecha, selectIdFecha(fecha), getBean().getAlmacen());
                         break;
                     case REBAJA:
                         service.crearOperacionRebaja(getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), getBean().getFecha_factura());
+                                getBean().getNumero_recibo(), getBean().getFecha_factura(), getBean().getAlmacen());
                         break;
                     case TRASPASO:
                         service.crearOperacionTraspaso(getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), getBean().getFecha_factura());
+                                getBean().getNumero_recibo(), getBean().getFecha_factura(), getBean().getAlmacen());
                         break;
                     default:
                         throw new UnExpectedErrorException("Tipo de operacion no soportada");
