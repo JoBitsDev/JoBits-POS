@@ -113,7 +113,7 @@ public class UbicacionViewModel extends AbstractViewModel {
      * @return the value of driver
      */
     public String getDriver() {
-        return driver;
+        return "org.postgresql.Driver";
     }
 
     /**
