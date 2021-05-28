@@ -58,7 +58,7 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea eliminar: " + selected,
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                service.eliminar(getBean().getElemento_seleccionado());
+                service.destroy(getBean().getElemento_seleccionado());
                 setListToBean();
             }
         }
@@ -67,7 +67,7 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(service.getListaClientes());
+        getBean().getLista_elementos().addAll(service.findAll());
     }
 
 }

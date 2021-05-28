@@ -6,6 +6,8 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.areaventa.AreaDetailService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Cocina;
@@ -16,6 +18,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +33,8 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
     public static String ACTION_AGREGAR = "";
 
     private final PuestoTrabajoDetailService service = PosDesktopUiModule.getInstance().getImplementation(PuestoTrabajoDetailService.class);
+    private final AreaDetailService areaService = PosDesktopUiModule.getInstance().getImplementation(AreaDetailService.class);
+    private final PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
     private final boolean creatingMode;
 
     PuestoTrabajo puesto;
@@ -38,7 +43,12 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
         super(new PuestoTrabajoDetailViewModel());
         creatingMode = puesto == null;
         if (creatingMode) {
-            this.puesto = service.createNewInstance();
+            this.puesto = new PuestoTrabajo();
+            this.puesto.setAPartirDe(0f);
+            this.puesto.setPuestosDisponibles(0);
+            this.puesto.setSalarioFijo(0f);
+            this.puesto.setSalarioPorcientoDeArea(0f);
+            this.puesto.setSalarioPorcientoVentaTotal(0f);
         } else {
             this.puesto = puesto;
         }
@@ -75,24 +85,24 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
             if (getBean().getNivel_acceso_seleccionado() != null) {
                 nivelAcceso = getBean().getNivel_acceso_seleccionado().getNivel();
             }
-
-            service.fillPuestoTrabajoData(
-                    puesto,
-                    getBean().getNombre_puesto_trabajo(),
-                    getBean().getArea_trabajo_seleccionada(),
-                    codAreaPago,
-                    nivelAcceso,
-                    getBean().isPago_por_ventas(),
-                    getBean().isPropina(),
-                    getBean().getPuestos_disponibles(),
-                    getBean().getPago_a_partir(),
-                    getBean().getSalario_fijo(),
-                    getBean().getPago_porciento_a_partir(),
-                    getBean().getSalario_venta());
+            puesto.setNombrePuesto(getBean().getNombre_puesto_trabajo());
+            puesto.setAreacodArea(getBean().getArea_trabajo_seleccionada());
+            puesto.setAreaPago(codAreaPago);
+            puesto.setNivelAcceso(nivelAcceso);
+            puesto.setPagoPorVentas(getBean().isPago_por_ventas());
+            puesto.setPropina(getBean().isPropina());
+            puesto.setPuestosDisponibles(getBean().getPuestos_disponibles());
+            puesto.setAPartirDe(getBean().getPago_a_partir());
+            puesto.setSalarioFijo(getBean().getSalario_fijo());
+            puesto.setSalarioPorcientoDeArea(getBean().getPago_porciento_a_partir());
+            puesto.setSalarioPorcientoVentaTotal(getBean().getSalario_venta());
+            if (puesto.getPersonalList() == null) {
+                puesto.setPersonalList(new ArrayList<>());
+            }
             if (creatingMode) {
                 service.create(puesto);
             } else {
-                service.update(puesto);
+                service.edit(puesto);
             }
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
@@ -115,15 +125,19 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
             getBean().setCrear_editar_button_text("Editar");
         }
         getBean().getArea_pago_list().clear();
-        getBean().getArea_pago_list().addAll(new ArrayListModel<>(service.getAreasPago()));
+        getBean().getArea_pago_list().addAll(new ArrayListModel<>(cocinaService.findAll()));
         getBean().getArea_trabajo_list().clear();
-        getBean().getArea_trabajo_list().addAll(new ArrayListModel<>(service.getAreaList()));
+        getBean().getArea_trabajo_list().addAll(new ArrayListModel<>(areaService.findAll()));
         getBean().getNivel_acceso_list().clear();
         getBean().getNivel_acceso_list().addAll(new ArrayListModel<>(Arrays.asList(R.NivelAcceso.values())));
 
         getBean().setNombre_puesto_trabajo(puesto.getNombrePuesto());
-        getBean().setPuestos_disponibles(puesto.getPuestosDisponibles());
 
+        if (puesto.getPuestosDisponibles() == null) {
+            getBean().setPuestos_disponibles(0);
+        } else {
+            getBean().setPuestos_disponibles(puesto.getPuestosDisponibles());
+        }
         if (puesto.getSalarioFijo() == null) {
             getBean().setSalario_fijo(0);
         } else {

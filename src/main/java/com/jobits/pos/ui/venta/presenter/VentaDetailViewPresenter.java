@@ -120,7 +120,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         registerOperation(new AbstractViewAction(ACTION_REFRESCAR_VENTA) {
             @Override
             public Optional doAction() {
-                service.fetchNewDataFromServer(getBean().getVenta_seleccionada().getId());
+//                service.fetchNewDataFromServer(getBean().getVenta_seleccionada().getId());
                 updateBeanData();
                 return Optional.empty();
             }
@@ -332,7 +332,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     private void updateBeanData() {
         if (getBean().getVenta_seleccionada() != null) {
             Venta v = getBean().getVenta_seleccionada();
-            service.fetchNewDataFromServer(v.getId());
+//            service.fetchNewDataFromServer(v.getId());
             if (ventaOrdenPresenter != null) {
                 ventaOrdenPresenter.getMenuPresenter().getOperation(ACTION_REFRESH_STATE).doAction();
             } else {
@@ -342,9 +342,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             gastosPresenter = new GastosViewPresenter(v);
             getBean().setVentaInstance(v);
 
-            getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(v.getId()));
-            getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(v.getId()));
-            getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta(v.getId()));
+//            getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(v.getId()));
+//            getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(v.getId()));
+//            getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta(v.getId()));
 
 //            getBean().setTotal_resumen_area(service.getTotalResumenArea(v.getId()));
 //            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(v.getId()));

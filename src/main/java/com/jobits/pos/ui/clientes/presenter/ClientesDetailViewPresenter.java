@@ -14,6 +14,8 @@ import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -38,7 +40,16 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
         this.creatingMode = cliente == null;
         this.cliente = cliente;
         if (creatingMode) {
-            this.cliente = clienteservice.createNewInstance();
+            this.cliente = new Cliente();
+            this.cliente.setNombreCliente("");
+            this.cliente.setApellidosCliente("");
+            this.cliente.setAliasCliente("");
+            this.cliente.setTelefonoCliente("");
+            this.cliente.setFechanacCliente(new Date());
+            this.cliente.setDireccionCliente("");
+            this.cliente.setMunicipioCliente("");
+            this.cliente.setPrivinciaCliente("");
+            this.cliente.setOrdenList(new ArrayList<>());
         }
         refreshState();
     }
@@ -79,9 +90,9 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
                 cliente.setOrdenList(getBean().getLista_ordenes());
 
                 if (creatingMode) {
-                    clienteservice.crearCliente(cliente);
+                    clienteservice.create(cliente);
                 } else {
-                    clienteservice.editarCliente(cliente);
+                    clienteservice.edit(cliente);
                 }
                 NavigationService.getInstance().navigateUp();
             } else {

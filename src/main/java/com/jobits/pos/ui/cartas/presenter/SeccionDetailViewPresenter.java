@@ -7,7 +7,7 @@ package com.jobits.pos.ui.cartas.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.seccion.CartaListService;
-import com.jobits.pos.controller.seccion.SeccionDetailService;
+import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Seccion;
@@ -36,7 +36,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
     public static final String ACTION_AGREGAR = "Agregar";
     public static final String ACTION_ELIMINAR = "Eliminar";
 
-    private final SeccionDetailService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionDetailService.class);
+    private final SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
     private final CartaListService cartaService = PosDesktopUiModule.getInstance().getImplementation(CartaListService.class);
 
     Seccion seccion;
@@ -67,7 +67,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
         getBean().setNombre_seccion(seccion.getNombreSeccion());
         getBean().setLista_secciones_agregadas(new ArrayListModel<>(seccion.getAgregadoEn()));
         List<Seccion> aux = new ArrayList();
-        List<Carta> listaCartas = cartaService.getItems();
+        List<Carta> listaCartas = cartaService.findAll();
         for (Carta x : listaCartas) {
             aux.addAll(x.getSeccionList());
         }
@@ -127,9 +127,10 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
             seccion.setNombreSeccion(getBean().getNombre_seccion());
             seccion.setAgregadoEn(getBean().getLista_secciones_agregadas());
             if (creatingMode) {
-                seccionService.crearSeccion(carta, seccion);
+                seccion.setCartacodCarta(carta);
+                seccionService.create(seccion);
             } else {
-                seccionService.editarSeccion(seccion);
+                seccionService.edit(seccion);
             }
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);

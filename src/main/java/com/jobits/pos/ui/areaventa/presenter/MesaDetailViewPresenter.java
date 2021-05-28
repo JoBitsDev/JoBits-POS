@@ -15,6 +15,7 @@ import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -69,14 +70,20 @@ public class MesaDetailViewPresenter extends AbstractViewPresenter<MesaDetailVie
 
     private void onAceptarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Esta seguro que desea continuar?",
-                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                showDialog("Esta seguro que desea continuar?", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             if (creatingMode) {
-                service.create(area, getBean().getCodigo(), getBean().getNombre(), getBean().getCapacidad());
+                Mesa m = new Mesa(getBean().getCodigo());
+                m.setAreacodArea(area);
+                m.setNombre(getBean().getNombre());
+                m.setCapacidadMax(getBean().getCapacidad());
+                m.setEstado("vacia");
+                m.setEstallena(false);
+                m.setOrdenList(new ArrayList<>());
+                service.create(m);
             } else {
                 mesa.setNombre(getBean().getNombre());
                 mesa.setCapacidadMax(getBean().getCapacidad());
-                service.update(mesa);
+                service.edit(mesa);
             }
             NavigationService.getInstance().navigateUp();
         }

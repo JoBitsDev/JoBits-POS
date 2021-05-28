@@ -21,7 +21,6 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.VentaDetailView;
-import com.jobits.pos.ui.venta.VentaResumenView;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import com.jobits.pos.controller.venta.VentaResumenServiceOld;
 import com.jobits.pos.core.module.PosCoreModule;
 import org.jobits.db.core.domain.TipoConexion;
 import org.jobits.db.pool.ConnectionPoolHandler;
@@ -46,8 +44,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     private final VentaListService service;
 
     public static final String ACTION_IMPORTAR_VENTA = "Importar venta",
-            ACTION_Y = "Y",
-            ACTION_RESUMEN_DETALLADO = "Resumen detallado";
+            ACTION_Y = "Y";
 
     private List<Venta> listaVentasTotales = new ArrayList();
     private List<List<Venta>> ventas = new ArrayList<>();
@@ -82,13 +79,6 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             @Override
             public Optional doAction() {
                 onImportarVentaClick();
-                return Optional.empty();
-            }
-        });
-        registerOperation(new AbstractViewAction(ACTION_RESUMEN_DETALLADO) {
-            @Override
-            public Optional doAction() {
-                onResumenDetalladoClick();
                 return Optional.empty();
             }
         });
@@ -138,20 +128,6 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         return null;
     }
 
-    private void onResumenDetalladoClick() {
-//        if (getBean().getResumen_desde() == null || getBean().getResumen_hasta() == null) {
-//            throw new NoSelectedException();
-//        }
-//        if (getBean().getResumen_hasta().compareTo(getBean().getResumen_hasta()) < 0) {
-//            throw new ValidatingException();
-//        }
-        Application.getInstance().getBackgroundWorker().processInBackground(() -> {
-//            VentaDetailController ventaController = service.createDetailResumenView(getBean().getResumen_desde(), getBean().getResumen_hasta());//TODO devolver valor e invocar al navigator
-            VentaResumenViewPresenter presenter = new VentaResumenViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaResumenServiceOld.class));
-            Application.getInstance().getNavigator().navigateTo(VentaResumenView.VIEW_NAME, presenter);
-        });
-    }
-
     private void onEjecutarY(Venta venta) {
         if (ConnectionPoolHandler.getConnectionPoolService(PosCoreModule.getInstance().getModuleName()).getCurrentUbicacion().getTipoUbicacion() != TipoConexion.MASTER) {
             throw new UnauthorizedAccessException("Esta operacion solo se puede ejecutar conectado a una ubicaion master");
@@ -163,7 +139,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         //   throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
         // }
         try {
-            service.destroy(old, true);
+//            service.destroy(old, true);
             newVenta.setAsistenciaPersonalList(new ArrayList<>());
             newVenta.setFecha(old.getFecha());
             newVenta.setOrdenList(alg.ejecutarAlgoritmo());
@@ -202,7 +178,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void setListToBean() {
-        ventas = service.findVentas(getBean().getMes_seleccionado() + 1, getBean().getYear_seleccionado());
+        ventas = service.findVentasByMonth(getBean().getMes_seleccionado() + 1, getBean().getYear_seleccionado());
         getBean().setLista_elementos(ventas);
     }
 

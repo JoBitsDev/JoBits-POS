@@ -13,6 +13,7 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
+import java.util.ArrayList;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -44,8 +45,7 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
                 Cocina cocinaSeleccionada = getBean().getElemento_seleccionado();
                 cocinaSeleccionada.setRecibirNotificacion(
                         !getBean().getElemento_seleccionado().getRecibirNotificacion());//TODO: logica en presenter
-                service.setSelected(cocinaSeleccionada);
-                service.update();//TODO: activar comportamiento
+                service.edit(cocinaSeleccionada);//TODO: activar comportamiento
                 getBean().getLista_elementos().fireContentsChanged(getBean().getLista_elementos().indexOf(cocinaSeleccionada));
                 return Optional.empty();
             }
@@ -56,8 +56,7 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
                 Cocina ptoSeleccionado = getBean().getElemento_seleccionado();
                 ptoSeleccionado.setLimitarVentaInsumoAgotado(
                         !getBean().getElemento_seleccionado().getLimitarVentaInsumoAgotado());//TODO: logica en presenter
-                service.setSelected(ptoSeleccionado);
-                service.update();//TODO: activar comportamiento
+                service.edit(ptoSeleccionado);//TODO: activar comportamiento
                 getBean().getLista_elementos().fireContentsChanged(getBean().getLista_elementos().indexOf(ptoSeleccionado));
                 return Optional.empty();
             }
@@ -67,26 +66,36 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
     @Override
     protected void onAgregarClick() {
         String nombre = JOptionPane.showInputDialog(null, "Introduzca el nombre del nuevo punto de elaboracion");
-        service.createInstance(nombre);
-        setListToBean();
+        if (nombre != null) {
+            Cocina c = new Cocina();
+            c.setNombreCocina(nombre);
+            c.setImpresoraList(new ArrayList<>());
+            c.setIpvList(new ArrayList<>());
+            c.setProductoVentaList(new ArrayList<>());
+            service.create(c);
+            setListToBean();
+        }
     }
 
     @Override
     protected void onEditarClick() {
-        String nombre = null;
-        if (getBean().getElemento_seleccionado() != null) {
-            nombre = JOptionPane.showInputDialog(null,
-                    "Introduzca el nuevo nombre al punto de elaboracion",
-                    getBean().getElemento_seleccionado().getNombreCocina());
+        Cocina cocina = getBean().getElemento_seleccionado();
+        if (cocina == null) {
+            throw new IllegalArgumentException("Seleccione una cocina");
         }
-        service.update(getBean().getElemento_seleccionado(), nombre);
-        setListToBean();
+        String nombre = JOptionPane.showInputDialog(null,
+                "Introduzca el nuevo nombre al punto de elaboracion",
+                getBean().getElemento_seleccionado().getNombreCocina());
+        if (nombre != null) {
+//            cocina.setNombreCocina(nombre);
+            service.edit(cocina, nombre);
+            setListToBean();
+        }
     }
 
     @Override
     protected void onEliminarClick() {
         Cocina selected = getBean().getElemento_seleccionado();
-        boolean flag = false;
         if (selected == null) {
             throw new IllegalArgumentException("Seleccione una cocina");
         }
@@ -94,13 +103,17 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
                 showDialog("Esta seguro que desea eliminar: " + selected,
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             if (!selected.getProductoVentaList().isEmpty()) {
-                flag = JOptionPane.showConfirmDialog(null, "El punto de elaboracion " + selected
+                if ((boolean) Application.getInstance().getNotificationService().showDialog(
+                        "El punto de elaboracion " + selected
                         + " contiene " + selected.getProductoVentaList().size()
                         + " productos de venta enlazados \n"
                         + "presione si para borrar los productos de venta, no para cancelar",
-                        "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                    service.destroyInCascade(selected);
+                }
+            } else {
+                service.destroy(selected);
             }
-            service.destroy(selected, flag);
             setListToBean();
         }
     }
@@ -108,7 +121,7 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(service.getItems());
+        getBean().getLista_elementos().addAll(service.findAll());
     }
 
 }

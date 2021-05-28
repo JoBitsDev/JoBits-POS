@@ -5,19 +5,17 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.repo.impl.SeccionDAO;
-import com.jobits.pos.controller.productos.ProductoVentaListService;
+import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.core.domain.models.Seccion;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
-import static com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter.ACTION_ABRIR_ORDEN;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +32,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     private OrdenService service;
     private Mesa mesaSeleccionada;
     private String codOrdenEnlazada;
+    private SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
 
     public static final String ACTION_MOSTRAR_SECCION = "Mostrar Seccion";
     public static final String ACTION_OCULTAR_SECCION = "Ocultar Seccion";
@@ -54,16 +53,13 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
             if (evt.getNewValue() != null && codOrdenEnlazada != null) {
                 Float cantidad = new NumberPad(null).showView();
                 if (cantidad != null) {
-                    service.addProduct(codOrdenEnlazada, (ProductoVenta) evt.getNewValue(), cantidad);
+                    service.addProduct(codOrdenEnlazada, (ProductoVenta) evt.getNewValue(), cantidad, getBean().getProductoAgregar());
+                    if (getBean().getProductoAgregar() != null) {
+                        refreshState();
+                    }
                     getBean().setProductoVentaSeleccionado(null);
-                    firePropertyChange(PROP_PRODUCTO_SELECCIONADO, null, null);
+                    firePropertyChange(PROP_PRODUCTO_SELECCIONADO, null, evt.getNewValue());
                 }
-//                addBeanPropertyChangeListener(PROPERTY_BEAN, new PropertyChangeListener() {
-//                    @Override
-//                    public void propertyChange(PropertyChangeEvent evt) {
-//                        firePropertyChange(evt);
-//                    }
-//                });
             }
         });
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PV_FILTRADO, (PropertyChangeEvent evt) -> {
@@ -106,7 +102,6 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
         this.mesaSeleccionada = mesaSeleccionada;
         getBean().setCampo_busqueda_enabled(false);
         getBean().setCampo_busqueda_enabled(mesaSeleccionada != null);
-//        getBean().getListaProductos().clear();
         refreshState();
     }
 
@@ -148,23 +143,19 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     @Override
     public Optional refreshState() {
         if (mesaSeleccionada != null) {
-            getBean().setLista_elementos(SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada));//TODO: pifia logica en los presenters
+            getBean().setLista_elementos(seccionService.findSeccionesByMesa(mesaSeleccionada));//TODO: pifia logica en los presenters
             getBean().setElemento_seleccionado(null);
-            getBean().setListaProductos(service.getProductoBySeccion(getBean().getElemento_seleccionado()));
+            getBean().setListaProductos(new ArrayList());
             onMostrarSeccionClick();
         }
         return Optional.empty();
     }
 
     public void showSeccionesAgregadas() {
-        List<Seccion> listaSecciones = SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada);
-        List<Seccion> aux = new ArrayList();
-        for (Seccion x : listaSecciones) {
-            if (!x.getAgregos().isEmpty()) {
-                aux.add(x);
-            }
+        if (getBean().getProductoAgregar() != null) {
+            Seccion seccion = getBean().getProductoAgregar().getProductoVenta().getSeccionnombreSeccion();
+            getBean().setLista_elementos(seccion.getAgregadoEn());
         }
-        getBean().setLista_elementos(aux);//TODO: pifia logica en los presenters
     }
 
 }

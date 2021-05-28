@@ -200,22 +200,22 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
                     case INSUMO:
                         InsumoDetailService useCaseInsumo
                                 = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
-                        dataList = useCaseInsumo.getItems();
+                        dataList = useCaseInsumo.findAll();
                         break;
                     case FICHA_DE_COSTO:
                         ProductoInsumoListService useCaseProductoInsumo
                                 = PosDesktopUiModule.getInstance().getImplementation(ProductoInsumoListService.class);
-                        dataList = useCaseProductoInsumo.getItems();
+                        dataList = useCaseProductoInsumo.findAll();
                         break;
                     case INSUMO_ALMACEN:
                         AlmacenManageService useCaseInsumoAlmacen
                                 = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
-                        dataList = useCaseInsumoAlmacen.getItems();
+                        dataList = useCaseInsumoAlmacen.findAll();
                         break;
                     case PRODUCTO_VENTA:
                         ProductoVentaListService useCaseProductoVenta
                                 = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
-                        dataList = useCaseProductoVenta.getItems();
+                        dataList = useCaseProductoVenta.findAll();
                         break;
                 }
                 firePropertyChange("To Ready", null, null);
