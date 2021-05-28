@@ -127,6 +127,30 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_CIERRE_PARCIAL_ENABLED = "cierre_parcial_enabled";
 
+    private ProductovOrden productoAgrego;
+
+    public static final String PROP_PRODUCTOAGREGO = "productoAgrego";
+
+    /**
+     * Get the value of productoAgrego
+     *
+     * @return the value of productoAgrego
+     */
+    public ProductovOrden getProductoAgrego() {
+        return productoAgrego;
+    }
+
+    /**
+     * Set the value of productoAgrego
+     *
+     * @param productoAgrego new value of productoAgrego
+     */
+    public void setProductoAgrego(ProductovOrden productoAgrego) {
+        ProductovOrden oldProductoAgrego = this.productoAgrego;
+        this.productoAgrego = productoAgrego;
+        firePropertyChange(PROP_PRODUCTOAGREGO, oldProductoAgrego, productoAgrego);
+    }
+
     /**
      * Get the value of cierre_parcial_enabled
      *

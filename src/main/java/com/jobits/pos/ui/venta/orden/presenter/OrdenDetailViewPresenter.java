@@ -53,15 +53,15 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_SET_SUPORT_PANEL_VISIBLE = "Suport Panel Visible";
     public static String ACTION_SET_PORCIENTO = "Porciento";
     private String codOrden;
-    private OrdenService controller;
+
+    private OrdenService ordenService = PosDesktopUiModule.getInstance().getImplementation(OrdenService.class);
 
     public static final String PROP_CHANGES = "Changes";
 
-    ClientesDetailService clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClientesDetailService.class);
+    private ClientesDetailService clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClientesDetailService.class);
 
     public OrdenDetailViewPresenter(OrdenService controller) {
         super(new OrdenDetailViewModel());
-        this.controller = controller;
         addListeners();
     }
 
@@ -83,33 +83,33 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         refreshState();
     }
 
-    public OrdenService getController() {
-        if (controller == null) {
-            throw new IllegalStateException("El controlador no puede ser nulo");
-
-        }
-        return controller;
-    }
-
     private void onAddNotaLCick() {
         ProductovOrden p = getBean().getProducto_orden_seleccionado();
         String nota;
-        if (getController().nuevaNota(p)) {
+
+        if (p == null) {
+            throw new IllegalArgumentException("Seleccione un producto");
+        }
+        if (p.getNota() == null) {
             nota = JOptionPane.showInputDialog(null, "Introduzca la nota a adjuntar");
         } else {
             nota = JOptionPane.showInputDialog(null, "Introduzca la nota a adjuntar", p.getNota().getDescripcion());
         }
-        getController().addNota(getCodOrden(), p, nota);
+        ordenService.addNota(getCodOrden(), p, nota);
     }
 
-    private void onAddProductoClick() {
+    private void fireAddProducto() {
+
+    }
+
+    private void onAddProductoFromListClick() {
         if (getBean().getProducto_orden_seleccionado() == null) {
             throw new IllegalArgumentException("Seleccione un Producto Primero");
         }
         Float cantidad = new NumberPad(null).showView();
         if (cantidad != null) {
-            getController().addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad);
-            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+            ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, getBean().getProducto_orden_seleccionado());
+            getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
         }
 
     }
@@ -119,7 +119,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 showDialog("Desea cerrar la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             boolean cerrarTicket = (boolean) Application.getInstance().getNotificationService().
                     showDialog("Desea imprimir un ticket de la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
-            Orden o = controller.cerrarOrden(getCodOrden(), cerrarTicket);
+            Orden o = ordenService.cerrarOrden(getCodOrden(), cerrarTicket);
             if (o != null) {
                 NavigationService.getInstance().navigateTo(CalcularCambioView.VIEW_NAME,
                         new CalcularCambioViewPresenter(o), DisplayType.POPUP);
@@ -128,13 +128,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
     private void onEnviarAElaborarCLick() {
-        getController().enviarACocina(getCodOrden());
-        getBean().setLista_producto_orden(getController().getInstance(getCodOrden()).getProductovOrdenList());
+        ordenService.enviarACocina(getCodOrden());
+        getBean().setLista_producto_orden(ordenService.findBy(getCodOrden()).getProductovOrdenList());
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onImprimirCierreParcial() {
-        getController().imprimirPreTicket(getCodOrden());
+        ordenService.imprimirPreTicket(getCodOrden());
         Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
@@ -146,16 +146,16 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar: " + selected,
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            getController().removeProduct(getCodOrden(), selected,
+            ordenService.removeProduct(getCodOrden(), selected,
                     getBean().getProducto_orden_seleccionado().getCantidad());
-            getBean().setLista_producto_orden((getController().getInstance(getCodOrden()).getProductovOrdenList()));
+            getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 
     private void onSetAutorizoClick() {
         getBean().setEs_autorizo(!getBean().isEs_autorizo());
-        getController().setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
+        ordenService.setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
         firePropertyChange(PROP_CHANGES, null, null);
     }
 
@@ -164,11 +164,11 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     }
 
 //    private void onSetPorcientoClick() {
-//        getController().setPorciento(getCodOrden(), getBean().getPorciento_servicio());
-//        getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
+//        ordenService.setPorciento(getCodOrden(), getBean().getPorciento_servicio());
+//        getBean().setTotal_orden(utils.setDosLugaresDecimales(ordenService.getValorTotal(getCodOrden())));
 //    }
     private void onVerDetallesClick() {
-        getController().canViewOrdenLog(Application.getInstance().getLoggedUser(), codOrden);
+        ordenService.canViewOrdenLog(Application.getInstance().getLoggedUser(), codOrden);
         Application.getInstance().getNavigator().navigateTo(
                 OrdenLogView.VIEW_NAME, new OrdenLogViewPresenter(codOrden), DisplayType.POPUP);
     }
@@ -185,21 +185,20 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     @Override
     protected Optional refreshState() {
         if (codOrden != null) {
-            Orden instance = getController().getInstance(getCodOrden());
+            Orden instance = ordenService.findBy(getCodOrden());
             getBean().setEs_autorizo(instance.getDeLaCasa());
             getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha()));
             getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
             getBean().setOrden_terminada(instance.getHoraTerminada() != null);
             getBean().setId_orden(instance.getCodOrden());
-            getBean().setLista_general_productos_venta(getController().getPDVList(getCodOrden()));
+            getBean().setLista_general_productos_venta(ordenService.getPDVList(getCodOrden()));
             getBean().setModo_agrego_activado(false);
             getBean().setLista_producto_orden(instance.getProductovOrdenList());
-//        getBean().setLista_secciones(getController().getListaSecciones());
             if (instance.getMesacodMesa() != null) {
                 getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
             }
             getBean().setPorciento_servicio(instance.getPorciento());
-            getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
+            getBean().setTotal_orden(utils.setDosLugaresDecimales(ordenService.getValorTotalOrden(getCodOrden())));
             getBean().setUsuario(instance.getPersonalusuario().getUsuario());
             if (getBean().getPorciento_servicio() == 0) {
                 getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
@@ -252,7 +251,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         registerOperation(new AbstractViewAction(ACTION_ADD_PRODUCTO) {
             @Override
             public Optional doAction() {
-                onAddProductoClick();
+                onAddProductoFromListClick();
                 setCodOrden(codOrden);
                 return Optional.empty();
             }
@@ -348,15 +347,15 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
                         "/restManager/resources/icons pack/porciento_indigo.png")));
             }
-            getController().setPorciento(getCodOrden(), value);
-            getBean().setTotal_orden(utils.setDosLugaresDecimales(getController().getValorTotal(getCodOrden())));
+            ordenService.setPorciento(getCodOrden(), value);
+            getBean().setTotal_orden(utils.setDosLugaresDecimales(ordenService.getValorTotalOrden(getCodOrden())));
             refreshState();
         }
         );
         getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_CLIENTE_SELECCIONADO, (PropertyChangeEvent evt) -> {
             Cliente newValue = (Cliente) evt.getNewValue();
             if (newValue != null) {
-                clienteservice.addOrdenToClientOrdenList(newValue, getController().getInstance(codOrden));
+                clienteservice.addOrdenToClientOrdenList(newValue, ordenService.findBy(codOrden));
             }
         }
         );
@@ -366,13 +365,10 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 getBean().setBotton_agrego_enabled(true);
             } else {
                 getBean().setBotton_agrego_enabled(false);
+                getBean().setModo_agrego_activado(false);
             }
         }
         );
-//        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_MODO_AGREGO_ACTIVADO, (PropertyChangeEvent evt) -> {
-//            firePropertyChange(evt);
-//        }
-//        );
     }
 
 }

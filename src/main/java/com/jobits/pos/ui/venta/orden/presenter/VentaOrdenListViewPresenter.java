@@ -71,12 +71,12 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
         });
         ordenPresenter.addBeanPropertyChangeListener(OrdenDetailViewModel.PROP_MODO_AGREGO_ACTIVADO, (PropertyChangeEvent evt) -> {
             if ((boolean) evt.getNewValue()) {
-                ordenService.setModoAgrego(ordenPresenter.getBean().getProducto_orden_seleccionado());
+                menuPresenter.getBean().setProductoAgregar(ordenPresenter.getBean().getProducto_orden_seleccionado());
                 menuPresenter.showSeccionesAgregadas();
                 menuPresenter.onMostrarSeccionClick();
             } else {
-                ordenService.setModoAgrego(null);
-                ordenPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
+                menuPresenter.getBean().setProductoAgregar(null);
+                menuPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
             }
         });
         ordenPresenter.addPropertyChangeListener(OrdenDetailViewPresenter.PROP_CHANGES, (PropertyChangeEvent evt) -> {
@@ -154,7 +154,6 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
         Orden o = getBean().getElemento_seleccionado();
         List<Orden> lista = ventaService.getOrdenesActivas(codVenta);
         if (!lista.isEmpty()) {
-            Collections.sort(lista);
             getBean().setLista_elementos(lista);
             getBean().setElemento_seleccionado(o);
         }
