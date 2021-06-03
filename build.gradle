@@ -11,17 +11,17 @@ application{
 
 }
 
-//compileJava.options.encoding = 'UTF-8'
-//
-//tasks.withType(JavaCompile) {
-//    options.encoding = 'UTF-8'
-//}
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
 
 dependencies {
     
-    implementation 'com.root101.clean:com.root101.clean.core:2.1.3'
+    implementation 'com.root101.clean:com.root101.clean.core:2.1.6'
 
-    implementation 'org.jobits.db:org.jobits.db.versioncontrol:1.+'
+    implementation 'org.jobits.db:org.jobits.db.versioncontrol:1.1.2'
     
     testCompile 'junit:junit:4.12'
     
