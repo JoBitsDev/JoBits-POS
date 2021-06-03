@@ -10,6 +10,7 @@ import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.controller.almacen.impl.AlmacenManageController.OperationType;//TODO; enum de implementacion en view
 import com.jobits.pos.controller.almacen.AlmacenManageService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.core.domain.TransaccionSimple;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Almacen;
@@ -24,6 +25,7 @@ import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import static com.jobits.pos.ui.almacen.presenter.FacturaViewModel.*;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
@@ -43,6 +45,7 @@ import javax.swing.JOptionPane;
 public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel> {
 
     private AlmacenManageService service;
+    private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
 
     public static final String ACTION_AGREGAR_INSUMO = "Agregar Insumo";
     public static final String ACTION_ELIMINAR_INSUMO = "Eliminar Insumo";
@@ -252,7 +255,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 if (newOp) {
                     getBean().setDestino_seleccionado(null);
                     getBean().getLista_destino().clear();
-                    getBean().getLista_destino().addAll(new ArrayListModel(service.getCocinaList()));
+                    getBean().getLista_destino().addAll(new ArrayListModel(cocinaService.findAll()));
                     getBean().getLista_elementos().clear();
                     getBean().setComponent_locked(true);
                 }

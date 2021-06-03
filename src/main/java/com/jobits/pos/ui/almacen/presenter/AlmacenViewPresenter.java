@@ -9,6 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
+import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Almacen;
@@ -53,6 +54,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
 
     AlmacenListService listService;
     AlmacenManageService detailService;
+    InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
 
     public AlmacenViewPresenter(AlmacenListService listController, AlmacenManageService detailService) {
         super(new AlmacenViewModel());
@@ -255,7 +257,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             detailService.updateValorTotalAlmacen(getBean().getElemento_seleccionado());
             getBean().setValor_monetario_text(utils.setDosLugaresDecimalesDoubleString(getBean().getElemento_seleccionado().getValorMonetario()));
             getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado())));
-            getBean().setLista_insumos_disponibles(new ArrayListModel<>(detailService.getInsumoList()));
+            getBean().setLista_insumos_disponibles(new ArrayListModel<>(insumoService.findAll()));
         }
     }
 
