@@ -7,9 +7,9 @@ package com.jobits.pos.ui.cartas;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jobits.pos.core.domain.models.SeccionAgregada;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.cartas.presenter.SeccionDetailViewModel.*;
 import static com.jobits.pos.ui.cartas.presenter.SeccionDetailViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -45,11 +45,12 @@ public class SeccionDetailView extends AbstractViewPanel {
         Bindings.bind(jTextFieldNombre, getPresenter().getModel(PROP_NOMBRE_SECCION));
         Bindings.bind(jTextFieldNombre, "enabled", getPresenter().getModel(PROP_NOMBRE_HABILITADO));
         Bindings.bind(jButtonAceptar, "text", getPresenter().getModel(PROP_CREAR_EDITAR_BUTTON_TEXT));
+        Bindings.bind(jCheckBoxSeccionRequerida, "selected", getPresenter().getModel(PROP_SECCION_REQUERIDA));
 
         Bindings.bind(jComboBoxSecciones, new SelectionInList<String>(
                 getPresenter().getModel(PROP_LISTA_SECCIONES),
                 getPresenter().getModel(PROP_SECCION_SELECCIONADA)));
-        Bindings.bind(jListSeccionesAgregadas, new SelectionInList<String>(
+        Bindings.bind(jListSeccionesAgregadas, new SelectionInList<SeccionAgregada>(
                 getPresenter().getModel(PROP_LISTA_SECCIONES_AGREGADAS),
                 getPresenter().getModel(PROP_SECCION_AGREGADA_SELECCIONADA)));
 
@@ -76,6 +77,9 @@ public class SeccionDetailView extends AbstractViewPanel {
         jScrollPane1 = MaterialComponentsFactory.Containers.getScrollPane();
         jListSeccionesAgregadas = new javax.swing.JList<>();
         jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel8 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jCheckBoxSeccionRequerida = new javax.swing.JCheckBox();
+        jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonEliminar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonAgregar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
@@ -108,15 +112,29 @@ public class SeccionDetailView extends AbstractViewPanel {
         jPanelMenus.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel6.setOpaque(false);
-        jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        jPanel8.setOpaque(false);
+        jPanel8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jCheckBoxSeccionRequerida.setText("Requerida");
+        jCheckBoxSeccionRequerida.setEnabled(false);
+        jPanel8.add(jCheckBoxSeccionRequerida);
+
+        jPanel6.add(jPanel8, java.awt.BorderLayout.WEST);
+
+        jPanel7.setOpaque(false);
+        jPanel7.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonEliminar.setIcon(MaterialIcons.DELETE);
         jButtonEliminar.setPreferredSize(new java.awt.Dimension(40, 30));
-        jPanel6.add(jButtonEliminar);
+        jPanel7.add(jButtonEliminar);
 
         jButtonAgregar.setIcon(MaterialIcons.ADD);
         jButtonAgregar.setPreferredSize(new java.awt.Dimension(40, 30));
-        jPanel6.add(jButtonAgregar);
+        jPanel7.add(jButtonAgregar);
+
+        jPanel6.add(jPanel7, java.awt.BorderLayout.EAST);
 
         jPanelMenus.add(jPanel6, java.awt.BorderLayout.PAGE_END);
 
@@ -144,10 +162,13 @@ public class SeccionDetailView extends AbstractViewPanel {
     private javax.swing.JButton jButtonAgregar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JCheckBox jCheckBoxSeccionRequerida;
     private javax.swing.JComboBox<String> jComboBoxSecciones;
     private javax.swing.JList<String> jListSeccionesAgregadas;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelInfo;
     private javax.swing.JPanel jPanelMenus;
