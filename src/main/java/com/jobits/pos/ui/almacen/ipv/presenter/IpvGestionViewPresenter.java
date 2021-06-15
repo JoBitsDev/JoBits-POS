@@ -10,6 +10,8 @@ import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
+import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Almacen;
@@ -17,15 +19,12 @@ import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.IpvRegistro;
 import com.jobits.pos.core.domain.models.IpvVentaRegistro;
-import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.IPVRegistroFomatter;
 import com.jobits.pos.servicios.impresion.formatter.IPVVentaRegistroFomatter;
-import com.jobits.pos.servicios.impresion.formatter.OrdenFormatter;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -33,8 +32,6 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.NumberPad;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
@@ -66,11 +63,14 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_AJUSTAR_IPV = "Ajustar consumo";
 
     private IPVService service;
+    private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    private AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
+    private VentaDetailService ventaService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
 
     public IpvGestionViewPresenter(IPVService controller) {
         super(new IpvGestionViewModel());
         this.service = controller;
-        getBean().setLista_punto_elaboracion(new ArrayListModel<>(controller.getCocinaList()));
+        getBean().setLista_punto_elaboracion(new ArrayListModel<>(cocinaService.findAll()));
         getBean().setPunto_elaboracion_seleccionado(getBean().getLista_punto_elaboracion().get(0));
         addBeanPropertyChangeListener((PropertyChangeEvent evt) -> {
             switch (evt.getPropertyName()) {
@@ -191,7 +191,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         if (getBean().getFecha_ipv_seleccionada() != null) {
             Application.getInstance().getBackgroundWorker().processInBackground(() -> {
                 if (getBean().getPunto_elaboracion_seleccionado() != null) {
-                    getBean().setVenta_ipv_seleccionada(selectFecha(service.getVentasInRange(getBean().getFecha_ipv_seleccionada())));
+                    getBean().setVenta_ipv_seleccionada(selectFecha(ventaService.getVentasDeFecha(getBean().getFecha_ipv_seleccionada())));
                     if (getBean().getVenta_ipv_seleccionada() != null) {
                         getBean().setLista_ipv_registro(new ArrayListModel<>(
                                 service.getIpvRegistroList(
@@ -210,7 +210,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         if (getBean().getFecha_ipv_ventas_seleccionada() != null) {
             Application.getInstance().getBackgroundWorker().processInBackground(() -> {
                 if (getBean().getPunto_elaboracion_seleccionado() != null) {
-                    getBean().setVenta_ipv_ventas_seleccionada(selectFecha(service.getVentasInRange(getBean().getFecha_ipv_ventas_seleccionada())));
+                    getBean().setVenta_ipv_ventas_seleccionada(selectFecha(ventaService.getVentasDeFecha(getBean().getFecha_ipv_ventas_seleccionada())));
                     if (getBean().getVenta_ipv_ventas_seleccionada() != null) {
                         getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
                                 service.getIpvRegistroVentaList(getBean().
@@ -355,7 +355,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private void onTransferirAIPV() {
-        List<Cocina> cocinas = service.getCocinaList();
+        List<Cocina> cocinas = cocinaService.findAll();
         Cocina cocina;
         if (!cocinas.isEmpty()) {
             JComboBox<Cocina> jComboBox1 = new JComboBox<>();
@@ -391,7 +391,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     }
 
     private void onTransferirAAlmacen() {
-        List<Almacen> almacenes = service.getAlmacenList();
+        List<Almacen> almacenes = almacenService.findAll();
         Almacen almacen;
         if (!almacenes.isEmpty()) {
             JComboBox<Almacen> jComboBox1 = new JComboBox<>();
