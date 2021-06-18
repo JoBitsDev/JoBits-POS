@@ -3,7 +3,7 @@ plugins {
     id 'edu.sc.seis.launch4j' version '2.4.6' apply true  
 }
 
-description = 'JoBits POS:modulo-pos-client-desktop'
+description = 'JoBits POS:Client-Swing'
 apply plugin: 'application'
 
 application{
@@ -19,9 +19,9 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     
-    implementation 'com.root101.clean:com.root101.clean.core:2.1.6'
+    implementation "com.root101.clean:com.root101.clean.core:2.1.6"
 
-    implementation 'org.jobits.db:org.jobits.db.versioncontrol:1.1.2'
+    implementation "org.jobits.db:org.jobits.db.versioncontrol:1.1.4"
     
     testCompile 'junit:junit:4.12'
     
