@@ -55,6 +55,7 @@ import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
+import com.jobits.pos.ui.venta.orden.AgregarProductoView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
@@ -179,6 +180,8 @@ public class ViewFacade {
                 return new TransaccionListView((AbstractListViewPresenter) p);
             case ProductoEnCalienteView.VIEW_NAME:
                 return new ProductoEnCalienteView(p);
+            case AgregarProductoView.VIEW_NAME:
+                return new AgregarProductoView(p);
             case LicenceDialogView.VIEW_NAME:
                 return new LicenceDialogView(
                         Application.getInstance().getLicenceController());

@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.venta.presenter;
 
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 import java.io.File;
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author Jorge
  *
  */
-public class VentaCalendarViewModel extends AbstractListViewModel<List<Venta>> {
+public class VentaCalendarViewModel extends AbstractListViewModel<DayReviewWrapper<Venta>> {
 
     private int year_seleccionado = LocalDate.now().get(ChronoField.YEAR);
 
@@ -74,7 +75,7 @@ public class VentaCalendarViewModel extends AbstractListViewModel<List<Venta>> {
 
     public static final String PROP_MONTH_OFFSET = "month_offset";
 
-    private List<Venta> dia_seleccionado;
+    private DayReviewWrapper<Venta> dia_seleccionado;
 
     public static final String PROP_DIA_SELECCIONADO = "dia_seleccionado";
 
@@ -83,7 +84,7 @@ public class VentaCalendarViewModel extends AbstractListViewModel<List<Venta>> {
      *
      * @return the value of dia_seleccionado
      */
-    public List<Venta> getDia_seleccionado() {
+    public DayReviewWrapper<Venta> getDia_seleccionado() {
         return dia_seleccionado;
     }
 
@@ -92,9 +93,9 @@ public class VentaCalendarViewModel extends AbstractListViewModel<List<Venta>> {
      *
      * @param dia_seleccionado new value of dia_seleccionado
      */
-    public void setDia_seleccionado(List<Venta> dia_seleccionado) {
+    public void setDia_seleccionado(DayReviewWrapper<Venta> dia_seleccionado) {
         if (dia_seleccionado != null) {
-            List<Venta> oldDia_seleccionado = this.dia_seleccionado;
+            DayReviewWrapper<Venta> oldDia_seleccionado = this.dia_seleccionado;
             this.dia_seleccionado = dia_seleccionado;
             firePropertyChange(PROP_DIA_SELECCIONADO, oldDia_seleccionado, dia_seleccionado);
         }

@@ -123,7 +123,9 @@ import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import com.jobits.pos.ui.venta.resumen.ResumenMainview;
 import com.jobits.pos.ui.login.ChangeUserView;
 import com.jobits.pos.ui.login.presenter.ChangeUserViewPresenter;
+import com.jobits.pos.ui.venta.orden.AgregarProductoView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
+import com.jobits.pos.ui.venta.orden.presenter.AgregarProductoViewPresenter;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoEnCalienteViewPresenter;
 import org.jobits.db.core.usecase.UbicacionConexionService;
 
@@ -189,6 +191,8 @@ public class PresenterFacade {
                         new ArrayList<>());
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter();
+            case AgregarProductoView.VIEW_NAME:
+                return new AgregarProductoViewPresenter(null, null, 0);
             case ReservaOrdenDetailView.VIEW_NAME:
                 return new ReservaOrdenDetailViewPresenter(null, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class));
             case VentaCalendarView.VIEW_NAME:

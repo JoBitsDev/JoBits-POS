@@ -12,6 +12,7 @@ import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.exceptions.UnauthorizedAccessException;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
@@ -48,6 +49,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     private List<Venta> listaVentasTotales = new ArrayList();
     private List<List<Venta>> ventas = new ArrayList<>();
+    private List<DayReviewWrapper<Venta>> ventasList = new ArrayList<>();
 
     public VentaCalendarViewPresenter(VentaListService controller) {
         super(new VentaCalendarViewModel(), "Ventas");
@@ -95,7 +97,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             VentaDetailService ventaController = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
             VentaDetailViewPresenter presenter
                     = new VentaDetailViewPresenter(ventaController,
-                            PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), getBean().getDia_seleccionado());
+                            PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), getBean().getDia_seleccionado().getLista_contenida());
             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         }
     }
@@ -114,14 +116,14 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     private Venta getVentaFromCalendar() {
         if (getBean().getDia_seleccionado() != null) {
-            if (getBean().getDia_seleccionado().size() == 1) {
-                return getBean().getDia_seleccionado().get(0);
+            if (getBean().getDia_seleccionado().getLista_contenida().size() == 1) {
+                return getBean().getDia_seleccionado().getLista_contenida().get(0);
             } else {
                 int seleccion = JOptionPane.showOptionDialog(null, "Seleccione la venta", "Seleccion",
                         JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                        null, getBean().getDia_seleccionado().toArray(), getBean().getDia_seleccionado().get(0));
+                        null, getBean().getDia_seleccionado().getLista_contenida().toArray(), getBean().getDia_seleccionado().getLista_contenida().get(0));
                 if (seleccion != JOptionPane.CLOSED_OPTION) {
-                    return getBean().getDia_seleccionado().get(seleccion);
+                    return getBean().getDia_seleccionado().getLista_contenida().get(seleccion);
                 }
             }
         }
@@ -178,8 +180,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void setListToBean() {
-        ventas = service.findVentasByMonth(getBean().getMes_seleccionado() + 1, getBean().getYear_seleccionado());
-        getBean().setLista_elementos(ventas);
+        ventasList = service.findVentasByMonth(getBean().getMes_seleccionado() + 1, getBean().getYear_seleccionado());
+        getBean().setLista_elementos(ventasList);
     }
 
     private void updateBeanData() {
@@ -192,8 +194,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         double gGastos = 0;
         double gTrabajadores = 0;
         int cantidad = 0;
-        for (List<Venta> venta : ventas) {
-            for (Venta x : venta) {
+        for (DayReviewWrapper<Venta> venta : ventasList) {
+            for (Venta x : venta.getLista_contenida()) {
                 listaVentasTotales.add(x);
                 if (x.getVentaTotal() != null) {
                     suma += x.getVentaTotal();

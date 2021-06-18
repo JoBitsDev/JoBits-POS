@@ -7,6 +7,7 @@ package com.jobits.pos.ui.cartas.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.SeccionAgregada;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 
 /**
@@ -22,7 +23,7 @@ public class SeccionDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_NOMBRE_SECCION = "nombre_seccion";
 
-    private ArrayListModel<Seccion> lista_secciones_agregadas = new ArrayListModel();
+    private ArrayListModel<SeccionAgregada> lista_secciones_agregadas = new ArrayListModel();
 
     public static final String PROP_LISTA_SECCIONES_AGREGADAS = "lista_secciones_agregadas";
 
@@ -34,17 +35,41 @@ public class SeccionDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_SECCIONES = "lista_secciones";
 
-    private Seccion seccion_agregada_seleccionada;
+    private SeccionAgregada seccion_agregada_seleccionada;
 
     public static final String PROP_SECCION_AGREGADA_SELECCIONADA = "seccion_agregada_seleccionada";
 
     private boolean nombre_habilitado = true;
 
     public static final String PROP_NOMBRE_HABILITADO = "nombre_habilitado";
-    
-        private String crear_editar_button_text;
+
+    private String crear_editar_button_text;
 
     public static final String PROP_CREAR_EDITAR_BUTTON_TEXT = "crear_editar_button_text";
+
+    private boolean seccion_requerida = false;
+
+    public static final String PROP_SECCION_REQUERIDA = "seccion_requerida";
+
+    /**
+     * Get the value of seccion_requerida
+     *
+     * @return the value of seccion_requerida
+     */
+    public boolean isSeccion_requerida() {
+        return seccion_requerida;
+    }
+
+    /**
+     * Set the value of seccion_requerida
+     *
+     * @param seccion_requerida new value of seccion_requerida
+     */
+    public void setSeccion_requerida(boolean seccion_requerida) {
+        boolean oldSeccion_requerida = this.seccion_requerida;
+        this.seccion_requerida = seccion_requerida;
+        firePropertyChange(PROP_SECCION_REQUERIDA, oldSeccion_requerida, seccion_requerida);
+    }
 
     /**
      * Get the value of crear_editar_button_text
@@ -65,7 +90,6 @@ public class SeccionDetailViewModel extends AbstractViewModel {
         this.crear_editar_button_text = crear_editar_button_text;
         firePropertyChange(PROP_CREAR_EDITAR_BUTTON_TEXT, oldCrear_editar_button_text, crear_editar_button_text);
     }
-
 
     /**
      * Get the value of nombre_habilitado
@@ -92,7 +116,7 @@ public class SeccionDetailViewModel extends AbstractViewModel {
      *
      * @return the value of seccion_agregada_seleccionada
      */
-    public Seccion getSeccion_agregada_seleccionada() {
+    public SeccionAgregada getSeccion_agregada_seleccionada() {
         return seccion_agregada_seleccionada;
     }
 
@@ -102,8 +126,8 @@ public class SeccionDetailViewModel extends AbstractViewModel {
      * @param seccion_agregada_seleccionada new value of
      * seccion_agregada_seleccionada
      */
-    public void setSeccion_agregada_seleccionada(Seccion seccion_agregada_seleccionada) {
-        Seccion oldSeccion_agregada_seleccionada = this.seccion_agregada_seleccionada;
+    public void setSeccion_agregada_seleccionada(SeccionAgregada seccion_agregada_seleccionada) {
+        SeccionAgregada oldSeccion_agregada_seleccionada = this.seccion_agregada_seleccionada;
         this.seccion_agregada_seleccionada = seccion_agregada_seleccionada;
         firePropertyChange(PROP_SECCION_AGREGADA_SELECCIONADA, oldSeccion_agregada_seleccionada, seccion_agregada_seleccionada);
     }
@@ -153,7 +177,7 @@ public class SeccionDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_secciones_agregadas
      */
-    public ArrayListModel<Seccion> getLista_secciones_agregadas() {
+    public ArrayListModel<SeccionAgregada> getLista_secciones_agregadas() {
         return lista_secciones_agregadas;
     }
 
@@ -162,8 +186,8 @@ public class SeccionDetailViewModel extends AbstractViewModel {
      *
      * @param lista_secciones_agregadas new value of lista_secciones_agregadas
      */
-    public void setLista_secciones_agregadas(ArrayListModel<Seccion> lista_secciones_agregadas) {
-        ArrayListModel<Seccion> oldLista_secciones_agregadas = this.lista_secciones_agregadas;
+    public void setLista_secciones_agregadas(ArrayListModel<SeccionAgregada> lista_secciones_agregadas) {
+        ArrayListModel<SeccionAgregada> oldLista_secciones_agregadas = this.lista_secciones_agregadas;
         this.lista_secciones_agregadas = lista_secciones_agregadas;
         firePropertyChange(PROP_LISTA_SECCIONES_AGREGADAS, oldLista_secciones_agregadas, lista_secciones_agregadas);
     }

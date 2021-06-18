@@ -8,13 +8,17 @@ package com.jobits.pos.ui.venta.orden.presenter;
 import com.jobits.pos.core.repo.impl.SeccionDAO;
 import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.controller.venta.OrdenService;
+import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.core.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.SeccionAgregada;
+import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
+import com.jobits.pos.ui.venta.orden.AgregarProductoView;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +54,18 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
             }
         });
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
-            if (evt.getNewValue() != null && codOrdenEnlazada != null) {
+            ProductoVenta producto = (ProductoVenta) evt.getNewValue();
+            if (producto != null && codOrdenEnlazada != null) {
                 Float cantidad = new NumberPad(null).showView();
                 if (cantidad != null) {
-                    service.addProduct(codOrdenEnlazada, (ProductoVenta) evt.getNewValue(), cantidad, getBean().getProductoAgregar());
+                    if (producto.getSeccionnombreSeccion().getAgregadoEn().isEmpty() || getBean().getProductoAgregar() != null) {
+                        service.addProduct(codOrdenEnlazada, producto, cantidad, getBean().getProductoAgregar());
+                    } else {
+                        Application.getInstance().getNavigator().navigateTo(
+                                AgregarProductoView.VIEW_NAME,
+                                new AgregarProductoViewPresenter(codOrdenEnlazada, producto, cantidad),
+                                DisplayType.POPUP);
+                    }
                     if (getBean().getProductoAgregar() != null) {
                         refreshState();
                     }
@@ -154,7 +166,11 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     public void showSeccionesAgregadas() {
         if (getBean().getProductoAgregar() != null) {
             Seccion seccion = getBean().getProductoAgregar().getProductoVenta().getSeccionnombreSeccion();
-            getBean().setLista_elementos(seccion.getAgregadoEn());
+            List<Seccion> list = new ArrayList<>();
+            for (SeccionAgregada seccionAgregada : seccion.getAgregadoEn()) {
+                list.add(seccionAgregada.getSeccion());
+            }
+            getBean().setLista_elementos(list);
         }
     }
 
