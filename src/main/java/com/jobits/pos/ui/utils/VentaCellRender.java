@@ -12,6 +12,7 @@ import javax.swing.table.TableCellRenderer;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.util.ArrayList;
@@ -124,7 +125,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
             Double ventaGastos = 0.0;
             float ventaGastosGastos = 0;
             List<Orden> ordenes = new ArrayList();
-            for (Venta x : (List<Venta>) value) {
+            for (Venta x : ((DayReviewWrapper<Venta>) value).getLista_contenida()) {
                 venta.setFecha(x.getFecha());
                 if (x.getVentaTotal() != null) {
                     ventaTotal += x.getVentaTotal();
@@ -132,8 +133,8 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
                 if (x.getVentagastosEninsumos() != null) {
                     ventaGastos += x.getVentagastosEninsumos();
                 }
-                if (x.getVentagastosGastos()!=null) {
-                    ventaGastosGastos+=x.getVentagastosGastos();
+                if (x.getVentagastosGastos() != null) {
+                    ventaGastosGastos += x.getVentagastosGastos();
                 }
                 if (!x.getOrdenList().isEmpty()) {
                     ordenes.addAll(x.getOrdenList());
@@ -186,7 +187,5 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     public void setjPanel1(JPanel jPanel1) {
         this.jPanel1 = jPanel1;
     }
-    
-    
 
 }

@@ -21,6 +21,8 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel.*;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
@@ -465,6 +467,23 @@ public class PedidoCardView extends AbstractViewPanel {
             public Component getListCellRendererComponent(JList<? extends ProductovOrden> list,
                     ProductovOrden value, int index, boolean isSelected, boolean cellHasFocus) {
                 return new CellRenderPedido(value, isSelected);
+            }
+        });
+
+        jList1.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    getPresenter().getOperation(ACTION_ELIMINAR_PARCIAL_PRODUCTO).doAction();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
             }
         });
     }

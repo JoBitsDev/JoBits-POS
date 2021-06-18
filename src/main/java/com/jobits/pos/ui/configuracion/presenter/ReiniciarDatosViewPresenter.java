@@ -10,6 +10,8 @@ import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.login.LogInService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
+import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
@@ -36,6 +38,8 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
     AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
     LogInService loginService = PosDesktopUiModule.getInstance().getImplementation(LogInService.class);
     IPVService ipvService = PosDesktopUiModule.getInstance().getImplementation(IPVService.class);
+    PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    VentaDetailService ventaService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
 
     public ReiniciarDatosViewPresenter() {
         super(new ReiniciarDatosViewModel());
@@ -66,7 +70,7 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
         if (!getBean().getLista_almacen().isEmpty()) {
             getBean().setAlmacen_seleccionado(getBean().getLista_almacen().get(0));
         }
-        getBean().setLista_cocinas(new ArrayListModel<>(ipvService.getCocinaList()));
+        getBean().setLista_cocinas(new ArrayListModel<>(cocinaService.findAll()));
         if (!getBean().getLista_cocinas().isEmpty()) {
             getBean().setCocina_seleccionada(getBean().getLista_cocinas().get(0));
         }
@@ -93,7 +97,7 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea reiniciar los datos del IPV seleccionado?",
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                Venta venta = selectFecha(ipvService.getVentasInRange(getBean().getFecha_venta_seleccionada()));
+                Venta venta = selectFecha(ventaService.getVentasDeFecha(getBean().getFecha_venta_seleccionada()));
                 if (venta != null) {
                     Application.getInstance().getBackgroundWorker().processInBackground("Reiniciando IPVs...", () -> {
                         ipvService.reiniciarIPV(getBean().getCocina_seleccionada(), venta);

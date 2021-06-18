@@ -47,6 +47,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_ENVIAR_ELABORAR = "Enviar a elaborar";
     public static String ACTION_IMPRIMIR_CIERRE_PARCIAL = "Cierre Parcial";
     public static String ACTION_REMOVE_PRODUCTO = "Eliminar";
+    public static String ACTION_ELIMINAR_PARCIAL_PRODUCTO = "Eliminar Parcial";
     public static String ACTION_SHOW_LOGS = "Ver Detalles";
     public static String ACTION_SET_AUTORIZO = "Autorizo";
     public static String ACTION_SET_AGREGO = "Agrego";
@@ -144,12 +145,29 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             throw new IllegalArgumentException("Seleccione un Producto Primero");
         }
         if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Esta seguro que desea eliminar: " + selected,
+                showDialog("Esta seguro que desea eliminar: " + selected.getNombreProductoVendido(),
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             ordenService.removeProduct(getCodOrden(), selected,
                     getBean().getProducto_orden_seleccionado().getCantidad());
             getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
             Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        }
+    }
+
+    private void onRemoveParcialProductoCLick() {
+        ProductovOrden selected = getBean().getProducto_orden_seleccionado();
+        if (selected == null) {
+            throw new IllegalArgumentException("Seleccione un Producto Primero");
+        }
+        Float value = new NumberPad(null).showView();
+        if (value != null) {
+            if ((boolean) Application.getInstance().getNotificationService().
+                    showDialog("Esta seguro que desea eliminar (" + value + ") de: " + selected.getNombreProductoVendido(),
+                            TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+                ordenService.removeProduct(getCodOrden(), selected, value);
+                getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
+                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            }
         }
     }
 
@@ -292,6 +310,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onRemoveProductoCLick();
+                refreshState();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_ELIMINAR_PARCIAL_PRODUCTO) {
+            @Override
+            public Optional doAction() {
+                onRemoveParcialProductoCLick();
                 refreshState();
                 return Optional.empty();
             }

@@ -10,6 +10,7 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.ui.utils.VentaCellRender;
 import javax.swing.JFileChooser;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
@@ -33,7 +34,7 @@ public class VentaCalendarView extends AbstractViewPanel {
 
     private JFileChooser fileChooser;
 
-    private BindableTableModel<List<Venta>> model;
+    private BindableTableModel<DayReviewWrapper<Venta>> model;
 
     public VentaCalendarView(AbstractViewPresenter presenter) {
         super(presenter);
@@ -407,15 +408,15 @@ public class VentaCalendarView extends AbstractViewPanel {
         jYearChooser1.addMouseWheelListener((MouseWheelEvent e) -> {
             int pos = e.getWheelRotation();
             if (pos < 0) {
-                jYearChooser1.setYear(jYearChooser1.getYear()- 1);
+                jYearChooser1.setYear(jYearChooser1.getYear() - 1);
             } else if (pos > 0) {
                 jYearChooser1.setYear(jYearChooser1.getYear() + 1);
             }
         });
-        
+
         jScrollPane1.getViewport().setOpaque(false);
         fileChooser = new JFileChooser();
-        model = new BindableTableModel<List<Venta>>(jTableCalendar) {//findVentas(month, year)
+        model = new BindableTableModel<DayReviewWrapper<Venta>>(jTableCalendar) {//findVentas(month, year)
             @Override
             public int getColumnCount() {
                 return 7;
@@ -427,7 +428,7 @@ public class VentaCalendarView extends AbstractViewPanel {
             }
 
             @Override
-            public List<Venta> getValueAt(int rowIndex, int columnIndex) {
+            public DayReviewWrapper<Venta> getValueAt(int rowIndex, int columnIndex) {
                 int linearPos = (rowIndex * (getColumnCount() - 1) + columnIndex) + rowIndex + 1;
                 int relativePos = linearPos - getPresenter().getModel(VentaCalendarViewModel.PROP_MONTH_OFFSET).intValue();
 
@@ -438,11 +439,11 @@ public class VentaCalendarView extends AbstractViewPanel {
             }
 
             @Override
-            public List<Venta> getObjectAt(int dayOfMonth) {
+            public DayReviewWrapper<Venta> getObjectAt(int dayOfMonth) {
                 for (int i = 0; i < getListModel().getSize(); i++) {
                     if (super.getRow(i) != null) {
-                        if (!super.getRow(i).isEmpty()) {
-                            if (super.getRow(i).get(0).getFecha().getDate() == dayOfMonth) {
+                        if (!super.getRow(i).getLista_contenida().isEmpty()) {
+                            if (super.getRow(i).getLista_contenida().get(0).getFecha().getDate() == dayOfMonth) {
                                 return super.getRow(i);
                             }
                         }
@@ -487,11 +488,11 @@ public class VentaCalendarView extends AbstractViewPanel {
         return VIEW_NAME;
     }
 
-    private List<Venta> getObjectAtSelectedCell() {
+    private DayReviewWrapper<Venta> getObjectAtSelectedCell() {
         if (jTableCalendar.getSelectedRow() == -1 || jTableCalendar.getSelectedColumn() == -1) {
             return null;
         }
-        return (List<Venta>) model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn());
+        return (DayReviewWrapper<Venta>) model.getValueAt(jTableCalendar.getSelectedRow(), jTableCalendar.getSelectedColumn());
     }
 
 }

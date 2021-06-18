@@ -11,16 +11,21 @@ import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Seccion;
+import com.jobits.pos.core.domain.models.SeccionAgregada;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import static com.jobits.pos.ui.cartas.presenter.SeccionDetailViewModel.*;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.swing.material.standards.MaterialIcons;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -53,6 +58,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
         } else {
             this.seccion = seccion;
         }
+        initListeners();
         refreshState();
     }
 
@@ -138,11 +144,11 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
     }
 
     private void onEliminarClick() {
-        Seccion selected = getBean().getSeccion_agregada_seleccionada();
+        SeccionAgregada selected = getBean().getSeccion_agregada_seleccionada();
         if (selected == null) {
             throw new IllegalArgumentException("Seleccione una seccion");
         }
-        getBean().getLista_secciones_agregadas().remove(getBean().getSeccion_seleccionada());
+        getBean().getLista_secciones_agregadas().remove(getBean().getSeccion_agregada_seleccionada());
         if (!getBean().getLista_secciones_agregadas().isEmpty()) {
             getBean().setSeccion_seleccionada(null);
         }
@@ -150,10 +156,37 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
 
     private void onAgregarClick() {
         Seccion selected = getBean().getSeccion_seleccionada();
-        if (getBean().getLista_secciones_agregadas().contains(selected)) {
-            throw new IllegalStateException("Ya la seccion se encuentra agregada");
+        for (SeccionAgregada seccionAgregada : getBean().getLista_secciones_agregadas()) {
+            if (seccionAgregada.getSeccion().equals(selected)) {
+                throw new IllegalStateException("Ya la seccion se encuentra agregada");
+            }
         }
-        getBean().getLista_secciones_agregadas().add(selected);
+        SeccionAgregada agregada = new SeccionAgregada(selected.getNombreSeccion(), seccion.getNombreSeccion());
+        agregada.setAgregadaEn(seccion);
+        agregada.setSeccion(selected);
+
+        Object[] options = {"Si", "No"};
+        int confirm = JOptionPane.showOptionDialog(
+                null,
+                "Desea que esta seccion sea requerida?",
+                "Requerido",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.YES_NO_OPTION,
+                MaterialIcons.CHECK_BOX,
+                options,
+                options[0]
+        );
+        agregada.setRequerida(confirm == JOptionPane.YES_OPTION);
+        getBean().getLista_secciones_agregadas().add(agregada);
+    }
+
+    private void initListeners() {
+        addBeanPropertyChangeListener(PROP_SECCION_AGREGADA_SELECCIONADA, (PropertyChangeEvent evt) -> {
+            SeccionAgregada value = (SeccionAgregada) evt.getNewValue();
+            if (value != null) {
+                getBean().setSeccion_requerida(value.getRequerida());
+            }
+        });
     }
 
 }
