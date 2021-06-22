@@ -81,7 +81,7 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_PORCIENTO_SERVICIO = "porciento_servicio";
 
-    private boolean es_autorizo = true;
+    private boolean es_autorizo = false;
 
     public static final String PROP_ES_AUTORIZO = "es_autorizo";
 
@@ -98,6 +98,10 @@ public class OrdenDetailViewModel extends AbstractViewModel {
     private ImageIcon icono_porciento;
 
     public static final String PROP_ICONO_PORCIENTO = "icono_porciento";
+
+    private ImageIcon domicilio_icono;
+
+    public static final String PROP_DOMICILIO_ICONO = "domicilio_icono";
 
     private ArrayListModel<Cliente> lista_clientes = new ArrayListModel<>();
 
@@ -278,6 +282,26 @@ public class OrdenDetailViewModel extends AbstractViewModel {
      */
     public ArrayListModel<Cliente> getLista_clientes() {
         return lista_clientes;
+    }
+
+    /**
+     * Get the value of domicilio_icono
+     *
+     * @return the value of domicilio_icono
+     */
+    public ImageIcon getDomicilio_icono() {
+        return domicilio_icono;
+    }
+
+    /**
+     * Set the value of domicilio_icono
+     *
+     * @param domicilio_icono new value of domicilio_icono
+     */
+    public void setDomicilio_icono(ImageIcon domicilio_icono) {
+        ImageIcon oldDomicilio_icono = this.domicilio_icono;
+        this.domicilio_icono = domicilio_icono;
+        firePropertyChange(PROP_DOMICILIO_ICONO, oldDomicilio_icono, domicilio_icono);
     }
 
     /**

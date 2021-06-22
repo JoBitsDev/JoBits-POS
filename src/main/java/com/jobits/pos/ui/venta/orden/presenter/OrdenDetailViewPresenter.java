@@ -22,6 +22,7 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
+import com.jobits.pos.ui.venta.orden.DomicilioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.utils.utils;
@@ -53,6 +54,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_SET_AGREGO = "Agrego";
     public static String ACTION_SET_SUPORT_PANEL_VISIBLE = "Suport Panel Visible";
     public static String ACTION_SET_PORCIENTO = "Porciento";
+    public static String ACTION_SET_DOMICILIO = "Domicilio";
     private String codOrden;
 
     private OrdenService ordenService = PosDesktopUiModule.getInstance().getImplementation(OrdenService.class);
@@ -177,6 +179,17 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         firePropertyChange(PROP_CHANGES, null, null);
     }
 
+    private void onSetDomicilioClick() {
+        if (codOrden != null) {
+            Orden orden = ordenService.findBy(codOrden);
+            if (orden != null) {
+                NavigationService.getInstance().navigateTo(DomicilioView.VIEW_NAME,
+                        new DomicilioViewPresenter(orden.getDireccionEnvio(), orden), DisplayType.POPUP);
+                refreshState();
+            }
+        }
+    }
+
     private void onSetAgregoClick() {
         getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
     }
@@ -224,6 +237,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             } else {
                 getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
                         "/restManager/resources/icons pack/porciento_indigo.png")));
+            }
+            if (instance.isDomicilio()) {
+                getBean().setDomicilio_icono(new ImageIcon(getClass().getResource(
+                        "/restManager/resources/icons pack/domicilio_indigo.png")));
+            } else {
+                getBean().setDomicilio_icono(new ImageIcon(getClass().getResource(
+                        "/restManager/resources/icons pack/domicilio_gris.png")));
             }
             getBean().setLista_clientes(new ArrayListModel<>(clienteservice.findAll()));
             if (instance.getClienteIdCliente() != null) {
@@ -351,8 +371,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 onVerDetallesClick();
                 return Optional.empty();
             }
-        }
-        );
+        });
+        registerOperation(new AbstractViewAction(ACTION_SET_DOMICILIO) {
+            @Override
+            public Optional doAction() {
+                onSetDomicilioClick();
+                return Optional.empty();
+            }
+        });
         registerOperation(new AbstractViewAction(ACTION_SET_SUPORT_PANEL_VISIBLE) {
             @Override
             public Optional doAction() {
