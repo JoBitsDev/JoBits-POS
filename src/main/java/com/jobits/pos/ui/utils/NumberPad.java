@@ -7,6 +7,8 @@ package com.jobits.pos.ui.utils;
 
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
@@ -295,6 +297,9 @@ public class NumberPad extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldEntradaKeyTyped
 
     private void jTextFieldEntradaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldEntradaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            cancel();
+        }
     }//GEN-LAST:event_jTextFieldEntradaKeyPressed
 
     private void jButtonPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPuntoActionPerformed
@@ -352,9 +357,7 @@ public class NumberPad extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldEntradaActionPerformed
 
     private void jButtonCancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelaActionPerformed
-        close = true;
-        jTextFieldEntrada.setText("");
-        dispose();
+        cancel();
     }//GEN-LAST:event_jButtonCancelaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -378,5 +381,11 @@ public class NumberPad extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JTextField jTextFieldEntrada;
     // End of variables declaration//GEN-END:variables
+
+    private void cancel() {
+        close = true;
+        jTextFieldEntrada.setText("");
+        dispose();
+    }
 
 }
