@@ -22,6 +22,9 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel.*;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter.*;
 import com.jobits.ui.components.swing.menus.PopClickListener;
+import com.jobits.ui.components.swing.menus.PopUpMenu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JList;
@@ -75,10 +78,10 @@ public class PedidoCardView extends AbstractViewPanel {
         ;
         jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jToggleButtonAgregos = new javax.swing.JToggleButton();
         jideButtonCierreParcial = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jideButtonEnviarCocina = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jideButtonCerrarMesa = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jideButtonMas = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jToggleButtonHideSupportPanel = new javax.swing.JToggleButton();
         jPanelSupportText = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -237,10 +240,6 @@ public class PedidoCardView extends AbstractViewPanel {
 
         jPanel6.setLayout(new java.awt.BorderLayout());
 
-        jToggleButtonAgregos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_gris.png"))); // NOI18N
-        jToggleButtonAgregos.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_indigo.png"))); // NOI18N
-        jPanel3.add(jToggleButtonAgregos);
-
         jideButtonCierreParcial.setBackground(new java.awt.Color(204, 204, 204));
         jideButtonCierreParcial.setIcon(MaterialIcons.PRINT);
         jideButtonCierreParcial.setToolTipText("Cierre Parcial");
@@ -264,6 +263,14 @@ public class PedidoCardView extends AbstractViewPanel {
         jideButtonCerrarMesa.setFocusable(false);
         jideButtonCerrarMesa.setPreferredSize(new java.awt.Dimension(50, 50));
         jPanel3.add(jideButtonCerrarMesa);
+
+        jideButtonMas.setBackground(new java.awt.Color(204, 204, 204));
+        jideButtonMas.setIcon(MaterialIcons.MORE_VERT);
+        jideButtonMas.setToolTipText("Cierre Parcial");
+        jideButtonMas.setBorderPainted(false);
+        jideButtonMas.setFocusable(false);
+        jideButtonMas.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel3.add(jideButtonMas);
 
         jPanel6.add(jPanel3, java.awt.BorderLayout.CENTER);
 
@@ -406,13 +413,13 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButtonAgregos;
     private javax.swing.JToggleButton jToggleButtonAutorizo;
     private javax.swing.JToggleButton jToggleButtonHideSupportPanel;
     private javax.swing.JButton jideButtonCerrarMesa;
     private javax.swing.JButton jideButtonCierreParcial;
     private javax.swing.JButton jideButtonEnviarCocina;
     private javax.swing.JButton jideButtonInfo;
+    private javax.swing.JButton jideButtonMas;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -444,13 +451,22 @@ public class PedidoCardView extends AbstractViewPanel {
 
         Bindings.bind(jideButtonCierreParcial, "enabled", getPresenter().getModel(PROP_CIERRE_PARCIAL_ENABLED));
         Bindings.bind(jideButtonEnviarCocina, "enabled", getPresenter().getModel(PROP_ENVIO_COCINA));
-        Bindings.bind(jToggleButtonAgregos, "enabled", getPresenter().getModel(PROP_BOTTON_AGREGO_ENABLED));
 
-        Bindings.bind(jToggleButtonAgregos, "selected", getPresenter().getModel(PROP_MODO_AGREGO_ACTIVADO));
         Bindings.bind(jToggleButtonAutorizo, "selected", getPresenter().getModel(PROP_ES_AUTORIZO));
-
         jToggleButtonAutorizo.addActionListener(getPresenter().getOperation(ACTION_SET_AUTORIZO));
-        jToggleButtonAgregos.addActionListener(getPresenter().getOperation(ACTION_SET_AGREGO));
+
+//        Bindings.bind(jToggleButtonAgregos, "selected", getPresenter().getModel(PROP_MODO_AGREGO_ACTIVADO));
+//        Bindings.bind(jToggleButtonAgregos, "enabled", getPresenter().getModel(PROP_BOTTON_AGREGO_ENABLED));
+//        jToggleButtonAgregos.addActionListener(getPresenter().getOperation(ACTION_SET_AGREGO));
+        PopUpMenu menu = new PopUpMenu(
+                getPresenter().getOperation(ACTION_ADD_PRODUCTO_IN_HOT),
+                getPresenter().getOperation(ACTION_SHOW_LOGS),
+                getPresenter().getOperation(ACTION_SET_DOMICILIO));
+
+        jideButtonMas.addActionListener(
+                (ActionEvent e) -> {
+                    menu.show(jideButtonMas,20,20);
+                });
 
         Bindings.bind(jComboBoxClientes, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
@@ -462,6 +478,7 @@ public class PedidoCardView extends AbstractViewPanel {
     }
 
     @Override
+
     public void uiInit() {
         initComponents();
         setMenuUI();
@@ -492,12 +509,8 @@ public class PedidoCardView extends AbstractViewPanel {
         jList1.addMouseListener(new PopClickListener(
                 getPresenter().getOperation(ACTION_ADD_PRODUCTO),
                 getPresenter().getOperation(ACTION_REMOVE_PRODUCTO),
-                getPresenter().getOperation(ACTION_ADD_NOTA)
-        ));
-        this.addMouseListener(new PopClickListener(
-                getPresenter().getOperation(ACTION_ADD_PRODUCTO_IN_HOT),
-                getPresenter().getOperation(ACTION_SHOW_LOGS),
-                getPresenter().getOperation(ACTION_SET_DOMICILIO)
+                getPresenter().getOperation(ACTION_ADD_NOTA),
+                getPresenter().getOperation(ACTION_SET_AGREGO)
         ));
     }
 
