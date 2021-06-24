@@ -43,13 +43,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_ADD_NOTA = "Agregar Nota";
 
     public static String ACTION_ADD_PRODUCTO = "Agregar";
-    public static String ACTION_ADD_PRODUCTO_IN_HOT = "Agregar Producto en Caliente";
+    public static String ACTION_ADD_PRODUCTO_IN_HOT = "Producto Caliente";
     public static String ACTION_CERRAR_ORDEN = "Cerrar Orden";
     public static String ACTION_ENVIAR_ELABORAR = "Enviar a elaborar";
     public static String ACTION_IMPRIMIR_CIERRE_PARCIAL = "Cierre Parcial";
     public static String ACTION_REMOVE_PRODUCTO = "Eliminar";
     public static String ACTION_ELIMINAR_PARCIAL_PRODUCTO = "Eliminar Parcial";
-    public static String ACTION_SHOW_LOGS = "Ver Detalles";
+    public static String ACTION_SHOW_LOGS = "Ver Registros";
     public static String ACTION_SET_AUTORIZO = "Autorizo";
     public static String ACTION_SET_AGREGO = "Agrego";
     public static String ACTION_SET_SUPORT_PANEL_VISIBLE = "Suport Panel Visible";
@@ -355,6 +355,11 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             public Optional doAction() {
                 onSetAgregoClick();
                 return Optional.empty();
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return getBean().isBotton_agrego_enabled();
             }
         });
         registerOperation(new AbstractViewAction(ACTION_SET_PORCIENTO) {
