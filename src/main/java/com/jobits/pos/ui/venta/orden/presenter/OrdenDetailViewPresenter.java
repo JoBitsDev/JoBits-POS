@@ -111,7 +111,11 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         }
         Float cantidad = new NumberPad(null).showView();
         if (cantidad != null) {
-            ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, getBean().getProducto_orden_seleccionado());
+            if (getBean().isModo_agrego_activado()) {
+                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, getBean().getProducto_orden_seleccionado());
+            } else {
+                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, null);
+            }
             getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
         }
 
@@ -418,7 +422,15 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         );
         getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_PRODUCTO_ORDEN_SELECCIONADO, (PropertyChangeEvent evt) -> {
             ProductovOrden p = (ProductovOrden) evt.getNewValue();
+            boolean flag = false;
             if (p != null && p.getAgregadoA() == null) {
+                if (p.getProductoVenta() != null) {
+                    if (!p.getProductoVenta().getSeccionnombreSeccion().getAgregadoEn().isEmpty()) {
+                        flag = true;
+                    }
+                }
+            }
+            if (flag) {
                 getBean().setBotton_agrego_enabled(true);
             } else {
                 getBean().setBotton_agrego_enabled(false);
