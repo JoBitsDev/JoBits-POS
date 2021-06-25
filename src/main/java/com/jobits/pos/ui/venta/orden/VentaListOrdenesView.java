@@ -72,8 +72,8 @@ public class VentaListOrdenesView extends AbstractViewPanel {
         jPanelOrdenesActivas.setPreferredSize(new java.awt.Dimension(300, 438));
         jPanelOrdenesActivas.setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setMaximumSize(new java.awt.Dimension(200, 190));
-        jPanel1.setPreferredSize(new java.awt.Dimension(215, 190));
+        jPanel1.setMaximumSize(new java.awt.Dimension(231, 190));
+        jPanel1.setPreferredSize(new java.awt.Dimension(231, 190));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));

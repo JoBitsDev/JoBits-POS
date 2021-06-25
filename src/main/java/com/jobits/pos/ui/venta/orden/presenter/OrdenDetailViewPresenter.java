@@ -22,6 +22,7 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
+import com.jobits.pos.ui.venta.orden.DomicilioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.utils.utils;
@@ -42,17 +43,18 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_ADD_NOTA = "Agregar Nota";
 
     public static String ACTION_ADD_PRODUCTO = "Agregar";
-    public static String ACTION_ADD_PRODUCTO_IN_HOT = "Agregar Producto en Caliente";
+    public static String ACTION_ADD_PRODUCTO_IN_HOT = "Producto Caliente";
     public static String ACTION_CERRAR_ORDEN = "Cerrar Orden";
     public static String ACTION_ENVIAR_ELABORAR = "Enviar a elaborar";
     public static String ACTION_IMPRIMIR_CIERRE_PARCIAL = "Cierre Parcial";
     public static String ACTION_REMOVE_PRODUCTO = "Eliminar";
     public static String ACTION_ELIMINAR_PARCIAL_PRODUCTO = "Eliminar Parcial";
-    public static String ACTION_SHOW_LOGS = "Ver Detalles";
+    public static String ACTION_SHOW_LOGS = "Ver Registros";
     public static String ACTION_SET_AUTORIZO = "Autorizo";
     public static String ACTION_SET_AGREGO = "Agrego";
     public static String ACTION_SET_SUPORT_PANEL_VISIBLE = "Suport Panel Visible";
     public static String ACTION_SET_PORCIENTO = "Porciento";
+    public static String ACTION_SET_DOMICILIO = "Domicilio";
     private String codOrden;
 
     private OrdenService ordenService = PosDesktopUiModule.getInstance().getImplementation(OrdenService.class);
@@ -109,7 +111,11 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         }
         Float cantidad = new NumberPad(null).showView();
         if (cantidad != null) {
-            ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, getBean().getProducto_orden_seleccionado());
+            if (getBean().isModo_agrego_activado()) {
+                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, getBean().getProducto_orden_seleccionado());
+            } else {
+                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, null);
+            }
             getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
         }
 
@@ -177,6 +183,17 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         firePropertyChange(PROP_CHANGES, null, null);
     }
 
+    private void onSetDomicilioClick() {
+        if (codOrden != null) {
+            Orden orden = ordenService.findBy(codOrden);
+            if (orden != null) {
+                NavigationService.getInstance().navigateTo(DomicilioView.VIEW_NAME,
+                        new DomicilioViewPresenter(orden.getDireccionEnvio(), orden), DisplayType.POPUP);
+                refreshState();
+            }
+        }
+    }
+
     private void onSetAgregoClick() {
         getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
     }
@@ -224,6 +241,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             } else {
                 getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
                         "/restManager/resources/icons pack/porciento_indigo.png")));
+            }
+            if (instance.isDomicilio()) {
+                getBean().setDomicilio_icono(new ImageIcon(getClass().getResource(
+                        "/restManager/resources/icons pack/domicilio_indigo.png")));
+            } else {
+                getBean().setDomicilio_icono(new ImageIcon(getClass().getResource(
+                        "/restManager/resources/icons pack/domicilio_gris.png")));
             }
             getBean().setLista_clientes(new ArrayListModel<>(clienteservice.findAll()));
             if (instance.getClienteIdCliente() != null) {
@@ -336,6 +360,11 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 onSetAgregoClick();
                 return Optional.empty();
             }
+
+            @Override
+            public boolean isEnabled() {
+                return getBean().isBotton_agrego_enabled();
+            }
         });
         registerOperation(new AbstractViewAction(ACTION_SET_PORCIENTO) {
             @Override
@@ -351,8 +380,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 onVerDetallesClick();
                 return Optional.empty();
             }
-        }
-        );
+        });
+        registerOperation(new AbstractViewAction(ACTION_SET_DOMICILIO) {
+            @Override
+            public Optional doAction() {
+                onSetDomicilioClick();
+                return Optional.empty();
+            }
+        });
         registerOperation(new AbstractViewAction(ACTION_SET_SUPORT_PANEL_VISIBLE) {
             @Override
             public Optional doAction() {
@@ -387,7 +422,15 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         );
         getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_PRODUCTO_ORDEN_SELECCIONADO, (PropertyChangeEvent evt) -> {
             ProductovOrden p = (ProductovOrden) evt.getNewValue();
+            boolean flag = false;
             if (p != null && p.getAgregadoA() == null) {
+                if (p.getProductoVenta() != null) {
+                    if (!p.getProductoVenta().getSeccionnombreSeccion().getAgregadoEn().isEmpty()) {
+                        flag = true;
+                    }
+                }
+            }
+            if (flag) {
                 getBean().setBotton_agrego_enabled(true);
             } else {
                 getBean().setBotton_agrego_enabled(false);
