@@ -57,6 +57,7 @@ import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.orden.AgregarProductoView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
+import com.jobits.pos.ui.venta.orden.DomicilioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
@@ -172,6 +173,8 @@ public class ViewFacade {
                 return new IPVPedidoVentasView(p);
             case CategoriaDetailView.VIEW_NAME:
                 return new CategoriaDetailView(p);
+            case DomicilioView.VIEW_NAME:
+                return new DomicilioView(p);
             case ResumenMainview.VIEW_NAME:
                 return new ResumenMainview((ResumenMainViewPresenter) p);
             case ReservaOrdenDetailView.VIEW_NAME:

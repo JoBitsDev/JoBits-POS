@@ -37,6 +37,7 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
         jLabelPrecio.setText(utils.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
         jLabelOrden.setText(o.getCodOrden());
         jLabelGratis.setVisible(o.getDeLaCasa());
+        jLabelDelivery.setVisible(o.isDomicilio());
         jLabelPorciento.setVisible(o.getPorciento() != 0);
         jLabelTerminada.setVisible(o.getHoraTerminada() != null);
         setOpaque(selected);
@@ -59,7 +60,6 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabelNombreMesa = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -67,13 +67,17 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
         jPanel2 = new javax.swing.JPanel();
         jLabelPorciento = new javax.swing.JLabel();
         jLabelGratis = new javax.swing.JLabel();
+        jLabelDelivery = new javax.swing.JLabel();
         jLabelOrden = new javax.swing.JLabel();
         jLabelPrecio = new javax.swing.JLabel();
         jLabelTerminada = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 153, 153));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 5, 3, 5));
+        setMaximumSize(new java.awt.Dimension(185, 60));
+        setMinimumSize(new java.awt.Dimension(185, 60));
         setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(185, 60));
         setLayout(new java.awt.BorderLayout());
 
         jLabelNombreMesa.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
@@ -92,24 +96,20 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
         jPanel1.add(jLabelCodMesa);
 
         jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.GridBagLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 3));
 
         jLabelPorciento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelPorciento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/icons8-percentage.png"))); // NOI18N
         jLabelPorciento.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 6;
-        gridBagConstraints.gridy = 0;
-        jPanel2.add(jLabelPorciento, gridBagConstraints);
+        jPanel2.add(jLabelPorciento);
 
         jLabelGratis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelGratis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/icons8-gratis-negro.png"))); // NOI18N
         jLabelGratis.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 7;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_END;
-        jPanel2.add(jLabelGratis, gridBagConstraints);
+        jPanel2.add(jLabelGratis);
+
+        jLabelDelivery.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/home_18px.png"))); // NOI18N
+        jPanel2.add(jLabelDelivery);
 
         jPanel1.add(jPanel2);
 
@@ -136,6 +136,7 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelCodMesa;
+    private javax.swing.JLabel jLabelDelivery;
     private javax.swing.JLabel jLabelGratis;
     private javax.swing.JLabel jLabelNombreMesa;
     private javax.swing.JLabel jLabelOrden;
