@@ -10,6 +10,7 @@ import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
+import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.cordinator.DisplayType;
@@ -26,6 +27,8 @@ import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.IPVRegistroFomatter;
 import com.jobits.pos.servicios.impresion.formatter.IPVVentaRegistroFomatter;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
+import com.jobits.pos.ui.login.UbicacionView;
+import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -35,9 +38,12 @@ import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import org.jobits.db.core.domain.ConexionPropertiesModel;
 
 /**
  *
@@ -60,18 +66,22 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_NUEVO_PEDIDO_IPV_VENTA = "Nuevo Pedido",
             ACTION_ENVIAR_IPV_TO_IPV = "Enviar IPV to IPV",
             ACTION_ENVIAR_IPV_TO_ALMACEN = "Enviar IPV to Almacen",
-            ACTION_AJUSTAR_IPV = "Ajustar consumo";
+            ACTION_AJUSTAR_IPV = "Ajustar consumo",
+            ACTION_REGISTRAR_IPV_REGISTRO = "Registrar IPV Registro";
 
     private IPVService service;
     private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
     private AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
     private VentaDetailService ventaService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
+    private InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
 
     public IpvGestionViewPresenter(IPVService controller) {
         super(new IpvGestionViewModel());
         this.service = controller;
         getBean().setLista_punto_elaboracion(new ArrayListModel<>(cocinaService.findAll()));
         getBean().setPunto_elaboracion_seleccionado(getBean().getLista_punto_elaboracion().get(0));
+        getBean().setLista_insumos(new ArrayListModel<>(insumoService.findAll()));
+        getBean().setInsumo_seleccionado(null);
         addBeanPropertyChangeListener((PropertyChangeEvent evt) -> {
             switch (evt.getPropertyName()) {
                 case IpvGestionViewModel.PROP_PUNTO_ELABORACION_SELECCIONADO:
@@ -185,6 +195,33 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_REGISTRAR_IPV_REGISTRO) {
+            @Override
+            public Optional doAction() {
+                onRegistrarIpvRegistro();
+                return Optional.empty();
+            }
+        });
+    }
+
+    private void onRegistrarIpvRegistro() {
+        Insumo insumo = getBean().getInsumo_seleccionado();
+        Cocina cocina = getBean().getPunto_elaboracion_seleccionado();
+        Venta venta = getBean().getVenta_ipv_seleccionada();
+        if (insumo == null) {
+            throw new IllegalArgumentException("Seleccione un insumo primero");
+        }
+        if (cocina == null) {
+            throw new IllegalArgumentException("Seleccione una cocina primero");
+        }
+        if (venta == null) {
+            throw new IllegalArgumentException("Seleccione una venta primero");
+        }
+        service.registrarIPV(insumo, cocina, venta.getId());
+        getBean().setLista_ipv_registro(new ArrayListModel<>(
+                service.getIpvRegistroList(
+                        getBean().getPunto_elaboracion_seleccionado(),
+                        getBean().getVenta_ipv_seleccionada().getId())));
     }
 
     private void onFechaCambiadaIpv() {

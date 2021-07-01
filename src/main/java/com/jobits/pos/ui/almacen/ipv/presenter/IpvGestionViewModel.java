@@ -7,6 +7,7 @@ package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.Cocina;
+import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.IpvRegistro;
 import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.core.domain.models.Venta;
@@ -69,6 +70,54 @@ public class IpvGestionViewModel extends AbstractViewModel {
     private Venta venta_ipv_seleccionada;
 
     public static final String PROP_VENTA_IPV_SELECCIONADA = "venta_ipv_seleccionada";
+
+    private Insumo insumo_seleccionado;
+
+    public static final String PROP_INSUMO_SELECCIONADO = "insumo_seleccionado";
+
+    private ArrayListModel<Insumo> lista_insumos = new ArrayListModel<>();
+
+    public static final String PROP_LISTA_INSUMOS = "lista_insumos";
+
+    /**
+     * Get the value of lista_insumos
+     *
+     * @return the value of lista_insumos
+     */
+    public ArrayListModel<Insumo> getLista_insumos() {
+        return lista_insumos;
+    }
+
+    /**
+     * Set the value of lista_insumos
+     *
+     * @param lista_insumos new value of lista_insumos
+     */
+    public void setLista_insumos(ArrayListModel<Insumo> lista_insumos) {
+        ArrayListModel<Insumo> oldLista_insumos = this.lista_insumos;
+        this.lista_insumos = lista_insumos;
+        firePropertyChange(PROP_LISTA_INSUMOS, oldLista_insumos, lista_insumos);
+    }
+
+    /**
+     * Get the value of insumo_seleccionado
+     *
+     * @return the value of insumo_seleccionado
+     */
+    public Insumo getInsumo_seleccionado() {
+        return insumo_seleccionado;
+    }
+
+    /**
+     * Set the value of insumo_seleccionado
+     *
+     * @param insumo_seleccionado new value of insumo_seleccionado
+     */
+    public void setInsumo_seleccionado(Insumo insumo_seleccionado) {
+        Insumo oldInsumo_seleccionado = this.insumo_seleccionado;
+        this.insumo_seleccionado = insumo_seleccionado;
+        firePropertyChange(PROP_INSUMO_SELECCIONADO, oldInsumo_seleccionado, insumo_seleccionado);
+    }
 
     /**
      * Get the value of venta_ipv_seleccionada

@@ -23,6 +23,7 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewModel.*;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.swing.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
@@ -60,6 +61,9 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonIpv = new javax.swing.JToggleButton();
         jDateChooserIpv = MaterialComponentsFactory.Input.getDatePicker();
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jTextFieldInsumos = MaterialComponentsFactory.Input.getTextField("Buscar...", "");
+        jButtonAgregarInsumo = MaterialComponentsFactory.Buttons.getAddButton();
         jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableRegistro = new javax.swing.JTable();
@@ -122,6 +126,18 @@ public class IpvGestionView extends AbstractViewPanel {
         jDateChooserIpv.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 10, 1, 1));
         jDateChooserIpv.setPreferredSize(new java.awt.Dimension(170, 40));
         jPanel4.add(jDateChooserIpv, java.awt.BorderLayout.LINE_END);
+
+        jTextFieldInsumos.setMinimumSize(new java.awt.Dimension(250, 26));
+        jTextFieldInsumos.setPreferredSize(new java.awt.Dimension(200, 50));
+        jPanel9.add(jTextFieldInsumos);
+
+        jButtonAgregarInsumo.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jButtonAgregarInsumo.setText("Registrar");
+        jButtonAgregarInsumo.setMaximumSize(new java.awt.Dimension(130, 50));
+        jButtonAgregarInsumo.setPreferredSize(new java.awt.Dimension(130, 50));
+        jPanel9.add(jButtonAgregarInsumo);
+
+        jPanel4.add(jPanel9, java.awt.BorderLayout.CENTER);
 
         jPanelRegistros.add(jPanel4, java.awt.BorderLayout.PAGE_START);
 
@@ -271,6 +287,7 @@ public class IpvGestionView extends AbstractViewPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAgregarInsumo;
     private javax.swing.JButton jButtonAjustarConsumo;
     private javax.swing.JButton jButtonDarEntradaIpv;
     private javax.swing.JButton jButtonDarEntradaIpvVenta;
@@ -291,6 +308,7 @@ public class IpvGestionView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelIPV;
     private javax.swing.JPanel jPanelOpciones;
     private javax.swing.JPanel jPanelRegistros;
@@ -299,6 +317,7 @@ public class IpvGestionView extends AbstractViewPanel {
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTableIPV;
     private javax.swing.JTable jTableRegistro;
+    private javax.swing.JTextField jTextFieldInsumos;
     private javax.swing.JToggleButton jToggleButtonIpv;
     private javax.swing.JToggleButton jToggleButtonIpvVenta;
     // End of variables declaration//GEN-END:variables
@@ -332,6 +351,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonRefrescar.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_CAMBIAR_COCINA));
         jButtonEnviarToIPV.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_IPV));
         jButtonEnviarToAlmacen.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_ALMACEN));
+        jButtonAgregarInsumo.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_REGISTRAR_IPV_REGISTRO));
 
         getPresenter().addPropertyChangeListener("ImprimirTablaIPVVentaRegistro", (PropertyChangeEvent evt) -> {
             imprimirIPVVentaRegistro();
@@ -339,6 +359,10 @@ public class IpvGestionView extends AbstractViewPanel {
         getPresenter().addPropertyChangeListener("ImprimirTablaIPVRegistro", (PropertyChangeEvent evt) -> {
             imprimirIPVRegistro();
         });
+
+        BindableListIntelliHint<Insumo> autoCompleteModel = new BindableListIntelliHint(
+                new SelectionInList<Insumo>(getPresenter().getModel(PROP_LISTA_INSUMOS),
+                        getPresenter().getModel(PROP_INSUMO_SELECCIONADO)), jTextFieldInsumos);
 
     }
 
