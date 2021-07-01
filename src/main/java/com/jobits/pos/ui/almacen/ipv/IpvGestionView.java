@@ -73,6 +73,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonEnviarToIPV = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonEnviarToAlmacen = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAjustarConsumo = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonAjustarCosto = MaterialComponentsFactory.Buttons.getLinedButton();
         jPanelIPV = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonIpvVenta = new javax.swing.JToggleButton();
@@ -203,6 +204,13 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonAjustarConsumo.setPreferredSize(new java.awt.Dimension(80, 50));
         jPanel1.add(jButtonAjustarConsumo, new java.awt.GridBagConstraints());
 
+        jButtonAjustarCosto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/valor_indigo.png"))); // NOI18N
+        jButtonAjustarCosto.setMnemonic('a');
+        jButtonAjustarCosto.setToolTipText("Ajustar Costo");
+        jButtonAjustarCosto.setBorderPainted(false);
+        jButtonAjustarCosto.setPreferredSize(new java.awt.Dimension(80, 50));
+        jPanel1.add(jButtonAjustarCosto, new java.awt.GridBagConstraints());
+
         jPanelRegistros.add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
         jTabbedPane2.addTab("Registros Existencias", new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/registro_lapiz.png")), jPanelRegistros, "Ver los registros de IPvs"); // NOI18N
@@ -289,6 +297,7 @@ public class IpvGestionView extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregarInsumo;
     private javax.swing.JButton jButtonAjustarConsumo;
+    private javax.swing.JButton jButtonAjustarCosto;
     private javax.swing.JButton jButtonDarEntradaIpv;
     private javax.swing.JButton jButtonDarEntradaIpvVenta;
     private javax.swing.JButton jButtonEnviarToAlmacen;
@@ -352,6 +361,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonEnviarToIPV.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_IPV));
         jButtonEnviarToAlmacen.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_ALMACEN));
         jButtonAgregarInsumo.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_REGISTRAR_IPV_REGISTRO));
+        jButtonAjustarCosto.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_AJUSTAR_COSTO_IPV));
 
         getPresenter().addPropertyChangeListener("ImprimirTablaIPVVentaRegistro", (PropertyChangeEvent evt) -> {
             imprimirIPVVentaRegistro();
@@ -500,11 +510,11 @@ public class IpvGestionView extends AbstractViewPanel {
                     case 5:
                         return getRow(rowIndex).getConsumoReal();
                     case 6:
-                        return getRow(rowIndex).getFinalCalculado();
+                        return getRow(rowIndex).getFinal();
                     case 7:
                         return utils.setDosLugaresDecimalesFloat(
                                 getRow(rowIndex).getFinalCalculado()
-                                * getRow(rowIndex).getIpv().getInsumo().getCostoPorUnidad());
+                                * getRow(rowIndex).getPrecioCosto());
                     default:
                         return null;
                 }

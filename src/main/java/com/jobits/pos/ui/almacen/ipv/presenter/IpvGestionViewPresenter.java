@@ -67,6 +67,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_ENVIAR_IPV_TO_IPV = "Enviar IPV to IPV",
             ACTION_ENVIAR_IPV_TO_ALMACEN = "Enviar IPV to Almacen",
             ACTION_AJUSTAR_IPV = "Ajustar consumo",
+            ACTION_AJUSTAR_COSTO_IPV = "Ajustar costo",
             ACTION_REGISTRAR_IPV_REGISTRO = "Registrar IPV Registro";
 
     private IPVService service;
@@ -202,6 +203,26 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_AJUSTAR_COSTO_IPV) {
+            @Override
+            public Optional doAction() {
+                onAjustarCostoClick();
+                return Optional.empty();
+            }
+        });
+    }
+
+    private void onAjustarCostoClick() {
+        IpvRegistro instance = getBean().getIpv_registro_seleciconado();
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null && instance != null) {
+            if (JOptionPane.showConfirmDialog(null,
+                    "Desea ajustar el costo de " + instance.getIpv().getInsumo() + " a " + cantidad + " " + R.COIN_SUFFIX,
+                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    == JOptionPane.YES_OPTION) {
+                service.ajustarCosto(instance, cantidad);
+            }
+        }
     }
 
     private void onRegistrarIpvRegistro() {
@@ -326,7 +347,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onDarEntradaIpvVentas() {
         IpvVentaRegistro instance = getBean().getIpv_venta_registro_seleccionado();
         Float cantidad = new NumberPad(null).showView();
-        if (cantidad != null) {
+        if (cantidad != null && instance != null) {
             if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta(),
                     R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
@@ -350,7 +371,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onAjustarIpv() {
         IpvRegistro instance = getBean().getIpv_registro_seleciconado();
         Float cantidad = new NumberPad(null).showView();
-        if (cantidad != null) {
+        if (cantidad != null && instance != null) {
             if (JOptionPane.showConfirmDialog(null, "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad,
                     R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
