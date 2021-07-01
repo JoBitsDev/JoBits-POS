@@ -79,6 +79,30 @@ public class IpvGestionViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_INSUMOS = "lista_insumos";
 
+    private String total_ipv_registro = "xx.xx MN";
+
+    public static final String PROP_TOTAL_IPV_REGISTRO = "total_ipv_registro";
+
+    /**
+     * Get the value of total_ipv_registro
+     *
+     * @return the value of total_ipv_registro
+     */
+    public String getTotal_ipv_registro() {
+        return total_ipv_registro;
+    }
+
+    /**
+     * Set the value of total_ipv_registro
+     *
+     * @param total_ipv_registro new value of total_ipv_registro
+     */
+    public void setTotal_ipv_registro(String total_ipv_registro) {
+        String oldTotal_ipv_registro = this.total_ipv_registro;
+        this.total_ipv_registro = total_ipv_registro;
+        firePropertyChange(PROP_TOTAL_IPV_REGISTRO, oldTotal_ipv_registro, total_ipv_registro);
+    }
+
     /**
      * Get the value of lista_insumos
      *

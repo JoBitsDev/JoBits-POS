@@ -27,23 +27,19 @@ import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.IPVRegistroFomatter;
 import com.jobits.pos.servicios.impresion.formatter.IPVVentaRegistroFomatter;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
-import com.jobits.pos.ui.login.UbicacionView;
-import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.NumberPad;
+import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import org.jobits.db.core.domain.ConexionPropertiesModel;
 
 /**
  *
@@ -96,6 +92,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     onFechaCambiadaIpvVenta();
                     break;
             }
+            recalcularTotal();
         });
     }
 
@@ -105,6 +102,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onFechaCambiadaIpv();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -119,6 +117,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onOcultarProductosIpv();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -136,6 +135,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     @Override
                     protected void longProcessMethod() {
                         onCocinaStateChange();
+                        recalcularTotal();
                     }
                 }.performAction(null);
                 return Optional.empty();
@@ -145,6 +145,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onDarEntradaIpv();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -173,6 +174,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onNuevoPedido();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -180,6 +182,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onAjustarIpv();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -187,6 +190,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onTransferirAIPV();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -194,6 +198,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onTransferirAAlmacen();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -201,6 +206,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onRegistrarIpvRegistro();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -208,6 +214,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onAjustarCostoClick();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -218,6 +225,15 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 return Optional.empty();
             }
         });
+    }
+
+    private void recalcularTotal() {
+        List<IpvRegistro> list = getBean().getLista_ipv_registro();
+        float value = 0f;
+        for (IpvRegistro ipv : list) {
+            value += (ipv.getFinal() * ipv.getPrecioCosto());
+        }
+        getBean().setTotal_ipv_registro(utils.setDosLugaresDecimales(value));
     }
 
     private void onEliminarIpvRegistroClick() {
