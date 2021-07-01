@@ -68,7 +68,8 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_ENVIAR_IPV_TO_ALMACEN = "Enviar IPV to Almacen",
             ACTION_AJUSTAR_IPV = "Ajustar consumo",
             ACTION_AJUSTAR_COSTO_IPV = "Ajustar costo",
-            ACTION_REGISTRAR_IPV_REGISTRO = "Registrar IPV Registro";
+            ACTION_REGISTRAR_IPV_REGISTRO = "Registrar IPV Registro",
+            ACTION_ELIMINAR_IPV_REGISTRO = "Registrar IPV Registro";
 
     private IPVService service;
     private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
@@ -210,6 +211,27 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_ELIMINAR_IPV_REGISTRO) {
+            @Override
+            public Optional doAction() {
+                onEliminarIpvRegistroClick();
+                return Optional.empty();
+            }
+        });
+    }
+
+    private void onEliminarIpvRegistroClick() {
+        IpvRegistro instance = getBean().getIpv_registro_seleciconado();
+        if (instance == null) {
+            throw new IllegalArgumentException("Seleccione un ipv primero");
+        }
+        if (instance.getIpv() != null) {
+            service.destroy(instance.getIpv());
+            getBean().setLista_ipv_registro(new ArrayListModel<>(
+                    service.getIpvRegistroList(
+                            getBean().getPunto_elaboracion_seleccionado(),
+                            getBean().getVenta_ipv_seleccionada().getId())));
+        }
     }
 
     private void onAjustarCostoClick() {

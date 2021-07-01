@@ -74,6 +74,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonEnviarToAlmacen = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAjustarConsumo = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonAjustarCosto = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonEliminarIPV = MaterialComponentsFactory.Buttons.getLinedButton();
         jPanelIPV = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel7 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonIpvVenta = new javax.swing.JToggleButton();
@@ -205,11 +206,16 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel1.add(jButtonAjustarConsumo, new java.awt.GridBagConstraints());
 
         jButtonAjustarCosto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/valor_indigo.png"))); // NOI18N
-        jButtonAjustarCosto.setMnemonic('a');
         jButtonAjustarCosto.setToolTipText("Ajustar Costo");
         jButtonAjustarCosto.setBorderPainted(false);
         jButtonAjustarCosto.setPreferredSize(new java.awt.Dimension(80, 50));
         jPanel1.add(jButtonAjustarCosto, new java.awt.GridBagConstraints());
+
+        jButtonEliminarIPV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/eliminar_indigo.png"))); // NOI18N
+        jButtonEliminarIPV.setToolTipText("Eliminar IPV");
+        jButtonEliminarIPV.setBorderPainted(false);
+        jButtonEliminarIPV.setPreferredSize(new java.awt.Dimension(80, 50));
+        jPanel1.add(jButtonEliminarIPV, new java.awt.GridBagConstraints());
 
         jPanelRegistros.add(jPanel1, java.awt.BorderLayout.PAGE_END);
 
@@ -300,6 +306,7 @@ public class IpvGestionView extends AbstractViewPanel {
     private javax.swing.JButton jButtonAjustarCosto;
     private javax.swing.JButton jButtonDarEntradaIpv;
     private javax.swing.JButton jButtonDarEntradaIpvVenta;
+    private javax.swing.JButton jButtonEliminarIPV;
     private javax.swing.JButton jButtonEnviarToAlmacen;
     private javax.swing.JButton jButtonEnviarToIPV;
     private javax.swing.JButton jButtonImprimirIpv;
@@ -362,6 +369,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonEnviarToAlmacen.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ENVIAR_IPV_TO_ALMACEN));
         jButtonAgregarInsumo.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_REGISTRAR_IPV_REGISTRO));
         jButtonAjustarCosto.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_AJUSTAR_COSTO_IPV));
+        jButtonEliminarIPV.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_ELIMINAR_IPV_REGISTRO));
 
         getPresenter().addPropertyChangeListener("ImprimirTablaIPVVentaRegistro", (PropertyChangeEvent evt) -> {
             imprimirIPVVentaRegistro();
