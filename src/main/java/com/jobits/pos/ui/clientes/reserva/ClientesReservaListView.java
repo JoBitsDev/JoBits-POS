@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.clientes.reserva;
 
-import com.jobits.pos.reserva.core.domain.Cliente;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
@@ -16,7 +16,7 @@ import com.jobits.pos.ui.swing.utils.BindableTableModel;
  * @author Jorge
  *
  */
-public class ClientesReservaListView extends AbstractListViewPanel<Cliente> {
+public class ClientesReservaListView extends AbstractListViewPanel<ClienteDomain> {
 
     public static final String VIEW_NAME = "Clientes Reserva";
 
@@ -25,8 +25,8 @@ public class ClientesReservaListView extends AbstractListViewPanel<Cliente> {
     }
 
     @Override
-    public BindableTableModel<Cliente> generateTableModel() {
-        return new BindableTableModel<Cliente>(jTableList) {
+    public BindableTableModel<ClienteDomain> generateTableModel() {
+        return new BindableTableModel<ClienteDomain>(jTableList) {
             @Override
             public int getColumnCount() {
                 return 3;
@@ -34,12 +34,12 @@ public class ClientesReservaListView extends AbstractListViewPanel<Cliente> {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                Cliente c = getRow(rowIndex);
+                ClienteDomain c = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return c.getNombrecliente() + " " + c.getApellidocliente();
+                        return c.getNombre()+ " " + c.getApellidos();
                     case 1:
-                        return c.getTelefonocliente();
+                        return c.getTelefono();
                     case 2:
                         return c.getReservaCollection().size();
                     default:

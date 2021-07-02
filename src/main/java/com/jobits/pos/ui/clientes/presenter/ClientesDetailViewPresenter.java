@@ -5,16 +5,14 @@
  */
 package com.jobits.pos.ui.clientes.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.clientes.ClientesDetailService;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
+import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Cliente;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -30,26 +28,22 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
-    private final ClientesDetailService clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClientesDetailService.class);
+    private final ClienteUseCase clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
     private final boolean creatingMode;
 
-    private Cliente cliente;
+    private ClienteDomain cliente;
 
-    public ClientesDetailViewPresenter(Cliente cliente) {
+    public ClientesDetailViewPresenter(ClienteDomain cliente) {
         super(new ClientesDetailViewModel());
         this.creatingMode = cliente == null;
         this.cliente = cliente;
         if (creatingMode) {
-            this.cliente = new Cliente();
-            this.cliente.setNombreCliente("");
-            this.cliente.setApellidosCliente("");
-            this.cliente.setAliasCliente("");
-            this.cliente.setTelefonoCliente("");
-            this.cliente.setFechanacCliente(new Date());
-            this.cliente.setDireccionCliente("");
-            this.cliente.setMunicipioCliente("");
-            this.cliente.setPrivinciaCliente("");
-            this.cliente.setOrdenList(new ArrayList<>());
+            this.cliente = new ClienteDomain();
+            this.cliente.setNombre("");
+            this.cliente.setApellidos("");
+            this.cliente.addMeta("alias", "");
+            this.cliente.setTelefono("");
+            this.cliente.addMeta("fecha_nacimiento",new Date());
         }
         refreshState();
     }
@@ -79,15 +73,11 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
             if (getBean().getNombre() != null
                     && getBean().getApellidos() != null
                     && getBean().getTelefono() != null) {
-                cliente.setNombreCliente(getBean().getNombre());
-                cliente.setApellidosCliente(getBean().getApellidos());
-                cliente.setAliasCliente(getBean().getAlias());
-                cliente.setTelefonoCliente(getBean().getTelefono());
-                cliente.setFechanacCliente(getBean().getCumpleanos());
-                cliente.setDireccionCliente(getBean().getDireccion());
-                cliente.setMunicipioCliente(getBean().getMunicipio());
-                cliente.setPrivinciaCliente(getBean().getCiudad());
-                cliente.setOrdenList(getBean().getLista_ordenes());
+                cliente.setNombre(getBean().getNombre());
+                cliente.setApellidos(getBean().getApellidos());
+                cliente.addMeta("alias",getBean().getAlias());
+                cliente.setTelefono(getBean().getTelefono());
+                cliente.addMeta("fecha_nacimiento",getBean().getCumpleanos());
 
                 if (creatingMode) {
                     clienteservice.create(cliente);
@@ -111,15 +101,11 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
 
     @Override
     protected Optional refreshState() {
-        getBean().setNombre(cliente.getNombreCliente());
-        getBean().setApellidos(cliente.getApellidosCliente());
-        getBean().setAlias(cliente.getAliasCliente());
-        getBean().setTelefono(cliente.getTelefonoCliente());
-        getBean().setCumpleanos(cliente.getFechanacCliente());
-        getBean().setDireccion(cliente.getDireccionCliente());
-        getBean().setMunicipio(cliente.getMunicipioCliente());
-        getBean().setCiudad(cliente.getPrivinciaCliente());
-        getBean().setLista_ordenes(new ArrayListModel<>(cliente.getOrdenList()));
+        getBean().setNombre(cliente.getNombre());
+        getBean().setApellidos(cliente.getApellidos());
+        getBean().setAlias(cliente.getMeta("alias").getValue());
+        getBean().setTelefono(cliente.getTelefono());
+        getBean().setCumpleanos(cliente.getMeta("fecha_nacimiento").getValue());
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -8,17 +8,16 @@ package com.jobits.pos.ui.reserva;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jobits.pos.cliente.repo.entity.Cliente;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter.*;
-import com.jobits.pos.ui.swing.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.CardLayout;
@@ -625,11 +624,11 @@ public class ReservasDetailView extends AbstractViewPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return getRow(rowIndex).getNombrecliente();
+                        return getRow(rowIndex).getNombre();
                     case 1:
-                        return getRow(rowIndex).getApellidocliente();
+                        return getRow(rowIndex).getApellidos();
                     case 2:
-                        return getRow(rowIndex).getTelefonocliente();
+                        return getRow(rowIndex).getTelefono();
                 }
                 return null;
             }

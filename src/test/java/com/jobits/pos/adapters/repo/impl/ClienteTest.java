@@ -5,10 +5,7 @@
  */
 package com.jobits.pos.adapters.repo.impl;
 
-import com.jobits.pos.core.repo.impl.ClienteDAO;
-import com.jobits.pos.core.domain.models.Cliente;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -30,12 +27,12 @@ public class ClienteTest {
    // @Test
     public void testGetInstance() {
        
-        ClienteDAO.getInstance().startTransaction();
-        Cliente a = new Cliente();
-        a.setNombreCliente("hola");
-        a.setTelefonoCliente("asdasdasd");
-        ClienteDAO.getInstance().create(a);
-        ClienteDAO.getInstance().commitTransaction();
+//        ClienteDAO.getInstance().startTransaction();
+//        Cliente a = new Cliente();
+//        a.setNombreCliente("hola");
+//        a.setTelefonoCliente("asdasdasd");
+//        ClienteDAO.getInstance().create(a);
+//        ClienteDAO.getInstance().commitTransaction();
         
     }
 
