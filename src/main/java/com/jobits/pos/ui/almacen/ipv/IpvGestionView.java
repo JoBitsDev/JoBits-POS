@@ -532,7 +532,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jTableRegistro.setModel(new BindableTableModel<IpvRegistro>(jTableRegistro) {
             @Override
             public int getColumnCount() {
-                return 8;
+                return 9;
             }
 
             @Override
@@ -556,6 +556,11 @@ public class IpvGestionView extends AbstractViewPanel {
                         return utils.setDosLugaresDecimalesFloat(
                                 getRow(rowIndex).getFinal()
                                 * getRow(rowIndex).getPrecioCosto());
+                    case 8:
+                        float consumo = getRow(rowIndex).getIpv().getInsumo().getCostoPorUnidad() * getRow(rowIndex).getConsumo();
+                        float consumoReal = getRow(rowIndex).getIpv().getInsumo().getCostoPorUnidad() * getRow(rowIndex).getConsumoReal();
+                        
+                        return utils.setDosLugaresDecimalesFloat(consumo - consumoReal);
                     default:
                         return null;
                 }
@@ -579,7 +584,9 @@ public class IpvGestionView extends AbstractViewPanel {
                     case 6:
                         return "Final";
                     case 7:
-                        return "Importe (" + R.COIN_SUFFIX + ")";
+                        return "Importe (" + R.COIN_SUFFIX + " )";
+                    case 8:
+                        return "Diferencia";
                     default:
                         return null;
                 }
