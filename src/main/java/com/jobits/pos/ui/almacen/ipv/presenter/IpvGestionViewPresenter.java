@@ -10,6 +10,7 @@ import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
+import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.cordinator.DisplayType;
@@ -31,6 +32,7 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.NumberPad;
+import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.Optional;
@@ -60,18 +62,24 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_NUEVO_PEDIDO_IPV_VENTA = "Nuevo Pedido",
             ACTION_ENVIAR_IPV_TO_IPV = "Enviar IPV to IPV",
             ACTION_ENVIAR_IPV_TO_ALMACEN = "Enviar IPV to Almacen",
-            ACTION_AJUSTAR_IPV = "Ajustar consumo";
+            ACTION_AJUSTAR_IPV = "Ajustar consumo",
+            ACTION_AJUSTAR_COSTO_IPV = "Ajustar costo",
+            ACTION_REGISTRAR_IPV_REGISTRO = "Registrar IPV Registro",
+            ACTION_ELIMINAR_IPV_REGISTRO = "Eliminar IPV Registro";
 
     private IPVService service;
     private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
     private AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
     private VentaDetailService ventaService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
+    private InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
 
     public IpvGestionViewPresenter(IPVService controller) {
         super(new IpvGestionViewModel());
         this.service = controller;
         getBean().setLista_punto_elaboracion(new ArrayListModel<>(cocinaService.findAll()));
         getBean().setPunto_elaboracion_seleccionado(getBean().getLista_punto_elaboracion().get(0));
+        getBean().setLista_insumos(new ArrayListModel<>(insumoService.findAll()));
+        getBean().setInsumo_seleccionado(null);
         addBeanPropertyChangeListener((PropertyChangeEvent evt) -> {
             switch (evt.getPropertyName()) {
                 case IpvGestionViewModel.PROP_PUNTO_ELABORACION_SELECCIONADO:
@@ -84,6 +92,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     onFechaCambiadaIpvVenta();
                     break;
             }
+            recalcularTotal();
         });
     }
 
@@ -93,6 +102,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onFechaCambiadaIpv();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -107,6 +117,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onOcultarProductosIpv();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -124,6 +135,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     @Override
                     protected void longProcessMethod() {
                         onCocinaStateChange();
+                        recalcularTotal();
                     }
                 }.performAction(null);
                 return Optional.empty();
@@ -133,6 +145,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onDarEntradaIpv();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -161,6 +174,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onNuevoPedido();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -168,6 +182,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onAjustarIpv();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -175,6 +190,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onTransferirAIPV();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
@@ -182,9 +198,89 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onTransferirAAlmacen();
+                recalcularTotal();
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_REGISTRAR_IPV_REGISTRO) {
+            @Override
+            public Optional doAction() {
+                onRegistrarIpvRegistro();
+                recalcularTotal();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_AJUSTAR_COSTO_IPV) {
+            @Override
+            public Optional doAction() {
+                onAjustarCostoClick();
+                recalcularTotal();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_ELIMINAR_IPV_REGISTRO) {
+            @Override
+            public Optional doAction() {
+                onEliminarIpvRegistroClick();
+                return Optional.empty();
+            }
+        });
+    }
+
+    private void recalcularTotal() {
+        List<IpvRegistro> list = getBean().getLista_ipv_registro();
+        float value = 0f;
+        for (IpvRegistro ipv : list) {
+            value += (ipv.getFinal() * ipv.getPrecioCosto());
+        }
+        getBean().setTotal_ipv_registro(utils.setDosLugaresDecimales(value));
+    }
+
+    private void onEliminarIpvRegistroClick() {
+        IpvRegistro instance = getBean().getIpv_registro_seleciconado();
+        if (instance == null) {
+            throw new IllegalArgumentException("Seleccione un ipv primero");
+        }
+        if (instance.getIpv() != null) {
+            service.destroy(instance.getIpv());
+            getBean().setLista_ipv_registro(new ArrayListModel<>(
+                    service.getIpvRegistroList(
+                            getBean().getPunto_elaboracion_seleccionado(),
+                            getBean().getVenta_ipv_seleccionada().getId())));
+        }
+    }
+
+    private void onAjustarCostoClick() {
+        IpvRegistro instance = getBean().getIpv_registro_seleciconado();
+        Float cantidad = new NumberPad(null).showView();
+        if (cantidad != null && instance != null) {
+            if (JOptionPane.showConfirmDialog(null,
+                    "Desea ajustar el costo de " + instance.getIpv().getInsumo() + " a " + cantidad + " " + R.COIN_SUFFIX,
+                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    == JOptionPane.YES_OPTION) {
+                service.ajustarCosto(instance, cantidad);
+            }
+        }
+    }
+
+    private void onRegistrarIpvRegistro() {
+        Insumo insumo = getBean().getInsumo_seleccionado();
+        Cocina cocina = getBean().getPunto_elaboracion_seleccionado();
+        Venta venta = getBean().getVenta_ipv_seleccionada();
+        if (insumo == null) {
+            throw new IllegalArgumentException("Seleccione un insumo primero");
+        }
+        if (cocina == null) {
+            throw new IllegalArgumentException("Seleccione una cocina primero");
+        }
+        if (venta == null) {
+            throw new IllegalArgumentException("Seleccione una venta primero");
+        }
+        service.registrarIPV(insumo, cocina, venta.getId());
+        getBean().setLista_ipv_registro(new ArrayListModel<>(
+                service.getIpvRegistroList(
+                        getBean().getPunto_elaboracion_seleccionado(),
+                        getBean().getVenta_ipv_seleccionada().getId())));
     }
 
     private void onFechaCambiadaIpv() {
@@ -289,7 +385,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onDarEntradaIpvVentas() {
         IpvVentaRegistro instance = getBean().getIpv_venta_registro_seleccionado();
         Float cantidad = new NumberPad(null).showView();
-        if (cantidad != null) {
+        if (cantidad != null && instance != null) {
             if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta(),
                     R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
@@ -313,7 +409,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onAjustarIpv() {
         IpvRegistro instance = getBean().getIpv_registro_seleciconado();
         Float cantidad = new NumberPad(null).showView();
-        if (cantidad != null) {
+        if (cantidad != null && instance != null) {
             if (JOptionPane.showConfirmDialog(null, "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad,
                     R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
