@@ -65,7 +65,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_AJUSTAR_IPV = "Ajustar consumo",
             ACTION_AJUSTAR_COSTO_IPV = "Ajustar costo",
             ACTION_REGISTRAR_IPV_REGISTRO = "Registrar IPV Registro",
-            ACTION_ELIMINAR_IPV_REGISTRO = "Registrar IPV Registro";
+            ACTION_ELIMINAR_IPV_REGISTRO = "Eliminar IPV Registro";
 
     private IPVService service;
     private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
