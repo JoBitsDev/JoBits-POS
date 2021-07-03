@@ -539,7 +539,7 @@ public class IpvGestionView extends AbstractViewPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return getRow(rowIndex).getIpv().getInsumo();
+                        return getRow(rowIndex).getIpv().getInsumo().toString() + "(" + getRow(rowIndex).getPrecioCosto() + ")";
                     case 1:
                         return getRow(rowIndex).getInicio();
                     case 2:
@@ -557,9 +557,9 @@ public class IpvGestionView extends AbstractViewPanel {
                                 getRow(rowIndex).getFinal()
                                 * getRow(rowIndex).getPrecioCosto());
                     case 8:
-                        float consumo = getRow(rowIndex).getIpv().getInsumo().getCostoPorUnidad() * getRow(rowIndex).getConsumo();
-                        float consumoReal = getRow(rowIndex).getIpv().getInsumo().getCostoPorUnidad() * getRow(rowIndex).getConsumoReal();
-                        
+                        float consumo = getRow(rowIndex).getPrecioCosto() * getRow(rowIndex).getConsumo();
+                        float consumoReal = getRow(rowIndex).getPrecioCosto() * getRow(rowIndex).getConsumoReal();
+
                         return utils.setDosLugaresDecimalesFloat(consumo - consumoReal);
                     default:
                         return null;
