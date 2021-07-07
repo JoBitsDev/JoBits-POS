@@ -38,7 +38,7 @@ public class ClientesListView extends AbstractListViewPanel<ClienteDomain> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return getRow(rowIndex).getNombre();
+                        return getRow(rowIndex).getNombre() + " " + getRow(rowIndex).getApellidos();
                     case 1:
                         return getRow(rowIndex).getTelefono();
                     case 2:

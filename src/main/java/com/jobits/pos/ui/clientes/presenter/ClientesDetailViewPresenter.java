@@ -28,6 +28,7 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
+    
     private final ClienteUseCase clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
     private final boolean creatingMode;
 
@@ -43,7 +44,7 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
             this.cliente.setApellidos("");
             this.cliente.addMeta("alias", "");
             this.cliente.setTelefono("");
-            this.cliente.addMeta("fecha_nacimiento",new Date());
+//            this.cliente.addMeta("fecha_nacimiento",new Date());
         }
         refreshState();
     }
@@ -77,7 +78,7 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
                 cliente.setApellidos(getBean().getApellidos());
                 cliente.addMeta("alias",getBean().getAlias());
                 cliente.setTelefono(getBean().getTelefono());
-                cliente.addMeta("fecha_nacimiento",getBean().getCumpleanos());
+//                cliente.addMeta("fecha_nacimiento",getBean().getCumpleanos());
 
                 if (creatingMode) {
                     clienteservice.create(cliente);
@@ -105,7 +106,7 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
         getBean().setApellidos(cliente.getApellidos());
         getBean().setAlias(cliente.getMeta("alias").getValue());
         getBean().setTelefono(cliente.getTelefono());
-        getBean().setCumpleanos(cliente.getMeta("fecha_nacimiento").getValue());
+//        getBean().setCumpleanos(cliente.getMeta("fecha_nacimiento").getValue());
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 }

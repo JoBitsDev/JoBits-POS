@@ -41,7 +41,7 @@ public class ClientesReservaListView extends AbstractListViewPanel<ClienteDomain
                     case 1:
                         return c.getTelefono();
                     case 2:
-                        return c.getReservaCollection().size();
+//                        return c.getReservaCollection().size();
                     default:
                         return null;
                 }
