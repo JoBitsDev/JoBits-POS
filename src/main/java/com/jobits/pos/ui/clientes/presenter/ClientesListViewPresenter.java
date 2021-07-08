@@ -46,9 +46,14 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
 
     @Override
     protected void onEditarClick() {
-        NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
-                new ClientesDetailViewPresenter(getBean().getElemento_seleccionado()), DisplayType.POPUP);
-        setListToBean();
+        ClienteDomain selected = getBean().getElemento_seleccionado();
+        if (selected != null) {
+            NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
+                    new ClientesDetailViewPresenter(getBean().getElemento_seleccionado()), DisplayType.POPUP);
+            setListToBean();
+        } else {
+            Application.getInstance().getNotificationService().showDialog("Seleccione un cliente", TipoNotificacion.ERROR);
+        }
     }
 
     @Override
@@ -58,9 +63,11 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea eliminar: " + selected,
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                service.destroy(getBean().getElemento_seleccionado());
+                service.destroy(selected);
                 setListToBean();
             }
+        } else {
+            Application.getInstance().getNotificationService().showDialog("Seleccione un cliente", TipoNotificacion.ERROR);
         }
     }
 

@@ -42,7 +42,7 @@ public class ClientesListView extends AbstractListViewPanel<ClienteDomain> {
                     case 1:
                         return getRow(rowIndex).getTelefono();
                     case 2:
-                        return getRow(rowIndex).getId();
+                        return getRow(rowIndex).getDireccionEnvioList().size();
                     default:
                         return null;
                 }
@@ -56,7 +56,7 @@ public class ClientesListView extends AbstractListViewPanel<ClienteDomain> {
                     case 1:
                         return java.util.ResourceBundle.getBundle("Strings").getString("label_telefono");
                     case 2:
-                        return "Id";
+                        return "Cantidad de direcciones";
                     default:
                         return null;
                 }
