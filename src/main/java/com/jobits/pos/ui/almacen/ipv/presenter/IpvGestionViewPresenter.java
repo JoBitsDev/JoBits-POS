@@ -231,7 +231,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         List<IpvRegistro> list = getBean().getLista_ipv_registro();
         float value = 0f;
         for (IpvRegistro ipv : list) {
-            value += (ipv.getFinal() * ipv.getPrecioCosto());
+            value += (ipv.getConsumoUnico() * ipv.getPrecioCosto());
         }
         getBean().setTotal_ipv_registro(utils.setDosLugaresDecimales(value));
     }
