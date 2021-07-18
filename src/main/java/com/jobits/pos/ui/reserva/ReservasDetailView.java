@@ -8,7 +8,7 @@ package com.jobits.pos.ui.reserva;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
-import com.jobits.pos.cliente.repo.entity.Cliente;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
@@ -538,7 +538,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         Bindings.bind(jComboBoxCliente, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
                 getPresenter().getModel(PROP_CLIENTE)));
-        Bindings.bind(jTable1, new SelectionInList<Cliente>(
+        Bindings.bind(jTable1, new SelectionInList<ClienteDomain>(
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
                 getPresenter().getModel(PROP_CLIENTE)));
         Bindings.bind(jComboBoxHora, new SelectionInList<>(
@@ -601,7 +601,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanelGoBack.setVisible(false);
         jButtonShowProductos.setVisible(false);
 
-        jTable1.setModel(new BindableTableModel<Cliente>(jTable1) {
+        jTable1.setModel(new BindableTableModel<ClienteDomain>(jTable1) {
             @Override
             public int getColumnCount() {
                 return 3;
