@@ -56,7 +56,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
             ProductoVenta producto = (ProductoVenta) evt.getNewValue();
             if (producto != null && codOrdenEnlazada != null) {
-                Float cantidad = new NumberPad(null).showView();
+                Float cantidad = new NumberPad().showView();
                 if (cantidad != null) {
                     if (producto.getSeccionnombreSeccion().getAgregadoEn().isEmpty() || getBean().getProductoAgregar() != null) {
                         service.addProduct(codOrdenEnlazada, producto, cantidad, getBean().getProductoAgregar());

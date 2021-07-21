@@ -109,7 +109,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         if (getBean().getProducto_orden_seleccionado() == null) {
             throw new IllegalArgumentException("Seleccione un Producto Primero");
         }
-        Float cantidad = new NumberPad(null).showView();
+        Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             if (getBean().isModo_agrego_activado()) {
                 ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, getBean().getProducto_orden_seleccionado());
@@ -165,7 +165,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         if (selected == null) {
             throw new IllegalArgumentException("Seleccione un Producto Primero");
         }
-        Float value = new NumberPad(null).showView();
+        Float value = new NumberPad().showView();
         if (value != null) {
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea eliminar (" + value + ") de: " + selected.getNombreProductoVendido(),

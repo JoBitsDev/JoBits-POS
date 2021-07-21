@@ -130,7 +130,7 @@ public class AgregarProductoViewPresenter extends AbstractViewPresenter<AgregarP
 
     private void onAgregarAgregoAction() {
         ProductoVenta p = getBean().getProducto_disponible_seleccionado();
-        Float cant = new NumberPad(null).showView();
+        Float cant = new NumberPad().showView();
         if (cant != null && p != null) {
             ProductoVentaWrapper wrapper = new ProductoVentaWrapper(p, cant);
             getBean().getLista_productos_contenidos().add(wrapper);
@@ -148,7 +148,7 @@ public class AgregarProductoViewPresenter extends AbstractViewPresenter<AgregarP
         getBean().addPropertyChangeListener(PROP_PRODUCTO_DISPONIBLE_SELECCIONADO, (PropertyChangeEvent evt) -> {
             ProductoVenta p = (ProductoVenta) evt.getNewValue();
             if (p != null) {
-                Float cantidad1 = new NumberPad(null).showView();
+                Float cantidad1 = new NumberPad().showView();
                 if (cantidad1 != null) {
                     ProductoVentaWrapper wrapper = new ProductoVentaWrapper(p, cantidad1);
                     getBean().getLista_productos_contenidos().add(wrapper);

@@ -301,7 +301,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAgregarInsumoFichaClick() {
-        Float cantidad = new NumberPad(null).showView();
+        Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             Insumo inSel = getBean().getInsumo_disponible_sel();
             service.agregarInsumoaProducto(productoVenta, inSel, cantidad);
