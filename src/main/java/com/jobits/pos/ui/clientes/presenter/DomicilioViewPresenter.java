@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.venta.orden.presenter;
+package com.jobits.pos.ui.clientes.presenter;
 
 import com.jobits.pos.controller.venta.DomicilioService;
 import com.jobits.pos.cordinator.NavigationService;
@@ -28,19 +28,12 @@ public class DomicilioViewPresenter extends AbstractViewPresenter<DomicilioViewM
     public static final String ACTION_ACEPTAR = "Aceptar";
 
     private DireccionEnvio direccion_envio;
-    private final Orden codOrden;
-    private final boolean creatingMode;
 
-    public DomicilioViewPresenter(DireccionEnvio direccion_envio, Orden codOrden) {
+    public DomicilioViewPresenter(Orden codOrden) {
         super(new DomicilioViewModel());
-        this.codOrden = codOrden;
-        this.creatingMode = direccion_envio == null;
-        if (creatingMode) {
-            this.direccion_envio = new DireccionEnvio(codOrden.getCodOrden());
-            this.direccion_envio.setOrden(codOrden);
-        } else {
-            this.direccion_envio = direccion_envio;
-        }
+        this.direccion_envio = new DireccionEnvio();
+        this.direccion_envio.setOrden(codOrden);
+        this.direccion_envio.setOrdencodOrden(codOrden.getCodOrden());
         fillForm();
     }
 
@@ -58,13 +51,14 @@ public class DomicilioViewPresenter extends AbstractViewPresenter<DomicilioViewM
             @Override
             public Optional doAction() {
                 onAceptarClick();
+                NavigationService.getInstance().navigateUp();
                 return Optional.empty();
             }
 
         });
     }
 
-    private void onAceptarClick() {
+    public DireccionEnvio onAceptarClick() {
         String nombre = getBean().getNombre();
         String telefono = getBean().getTelefono();
         String direccion = getBean().getDireccion();
@@ -101,13 +95,9 @@ public class DomicilioViewPresenter extends AbstractViewPresenter<DomicilioViewM
             direccion_envio.setProvincia(provincia);
             direccion_envio.setPrecioEnvio(Float.valueOf(precio_envio));
 
-            if (creatingMode) {
-                service.create(direccion_envio);
-            } else {
-                service.edit(direccion_envio);
-            }
-            NavigationService.getInstance().navigateUp();
+            return direccion_envio;
         }
+        return null;
     }
 
     private void onCancelarClick() {
