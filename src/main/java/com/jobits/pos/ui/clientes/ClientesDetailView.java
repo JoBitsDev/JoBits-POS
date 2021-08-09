@@ -10,6 +10,7 @@ import com.jgoodies.binding.list.SelectionInList;
 import com.jobits.pos.cliente.core.domain.DireccionEnvioDomain;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.clientes.presenter.ClientesDetailViewModel.*;
+import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
 import static com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
@@ -18,6 +19,7 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
 /**
@@ -28,7 +30,7 @@ public class ClientesDetailView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Detalles Cliente";
 
-    public ClientesDetailView(AbstractViewPresenter presenter) {
+    public ClientesDetailView(ClientesDetailViewPresenter presenter) {
         super(presenter);
     }
 
@@ -519,7 +521,7 @@ public class ClientesDetailView extends AbstractViewPanel {
             }
         });
 
-        getPresenter().addPropertyChangeListener(ACTION_AGREGAR_DIRECCION_ENVIO, (PropertyChangeEvent evt) -> {
+        getPresenter().addPropertyChangeListener(ACTION_SWITCH_TO_DIRECCIONES_LIST, (PropertyChangeEvent evt) -> {
             changeToTable();
         });
         getPresenter().addPropertyChangeListener(ACTION_SWITCH_TO_AGREGAR_DIRECCION_ENVIO, (PropertyChangeEvent evt) -> {
@@ -542,4 +544,14 @@ public class ClientesDetailView extends AbstractViewPanel {
         cards.show(jPanelTable, "Agregar");
     }
 
+    public JPanel getjPanelOpciones() {
+        return jPanelOpciones;
+    }
+
+    @Override
+    public ClientesDetailViewPresenter getPresenter() {
+        return (ClientesDetailViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 }

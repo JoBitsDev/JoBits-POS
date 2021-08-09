@@ -34,10 +34,11 @@ import javax.swing.JOptionPane;
 public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesDetailViewModel> {
 
     public static final String ACTION_CANCELAR = "Cancelar";
-    public static final String ACTION_AGREGAR = "Agregar";
-    public static final String ACTION_AGREGAR_DIRECCION_ENVIO = "Agregar Direccion Envio";
-    public static final String ACTION_ELIMINAR_DIRECCION_ENVIO = "Eliminar Direccion Envio";
+    public static final String ACTION_AGREGAR = "Aceptar";
+    public static final String ACTION_AGREGAR_DIRECCION_ENVIO = "Agregar";
+    public static final String ACTION_ELIMINAR_DIRECCION_ENVIO = "Eliminar";
     public static final String ACTION_SWITCH_TO_AGREGAR_DIRECCION_ENVIO = "Cambiar a Agregar Direccion Envio";
+    public static final String ACTION_SWITCH_TO_DIRECCIONES_LIST = "Cambiar a Cliente";
 
     private final ClienteUseCase clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
     private final boolean creatingMode;
@@ -73,6 +74,7 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
             @Override
             public Optional doAction() {
                 onAgregarClick();
+                NavigationService.getInstance().navigateUp();
                 return Optional.empty();
             }
         });
@@ -146,14 +148,14 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
 
         cliente.getDireccionEnvioList().add(de);
         refreshState();
-        firePropertyChange(ACTION_AGREGAR_DIRECCION_ENVIO, null, null);
+        firePropertyChange(ACTION_SWITCH_TO_DIRECCIONES_LIST, null, null);
     }
 
     private void onSwitchToAgregarDireccionEnvioClick() {
         firePropertyChange(ACTION_SWITCH_TO_AGREGAR_DIRECCION_ENVIO, null, null);
     }
 
-    private void onAgregarClick() {
+    public void onAgregarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea continuar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
@@ -176,7 +178,6 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
             } else {
                 clienteservice.edit(cliente);
             }
-            NavigationService.getInstance().navigateUp();
         }
     }
 
@@ -192,11 +193,11 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
     protected Optional refreshState() {
         getBean().setNombre(cliente.getNombre());
         getBean().setApellidos(cliente.getApellidos());
-        getBean().setAlias(cliente.getMeta("alias").getValue());
-        try {
-            getBean().setCumpleanos(sdf.parse(cliente.getMeta("fecha_nacimiento").getValue()));
-        } catch (ParseException ex) {
-        }
+//        getBean().setAlias(cliente.getMeta("alias").getValue());
+//        try {
+//            getBean().setCumpleanos(sdf.parse(cliente.getMeta("fecha_nacimiento").getValue()));
+//        } catch (ParseException ex) {
+//        }
         getBean().setTelefono(cliente.getTelefono());
 
         getBean().setLista_direcciones_envio(new ArrayListModel<>(cliente.getDireccionEnvioList()));
@@ -212,11 +213,11 @@ public class ClientesDetailViewPresenter extends AbstractViewPresenter<ClientesD
         getBean().setDe_provincia(null);
         getBean().setDe_telefono(null);
 
-        try {
-            getBean().setCumpleanos(sdf.parse(cliente.getMeta("fecha_nacimiento").getValue()));
-        } catch (ParseException ex) {
-            Logger.getLogger(ClientesDetailViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            getBean().setCumpleanos(sdf.parse(cliente.getMeta("fecha_nacimiento").getValue()));
+//        } catch (ParseException ex) {
+//            Logger.getLogger(ClientesDetailViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
