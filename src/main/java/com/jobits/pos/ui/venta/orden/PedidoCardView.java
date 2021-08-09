@@ -19,6 +19,7 @@ import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.venta.orden.CellRenderPedido;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewModel.*;
 import static com.jobits.pos.ui.venta.orden.presenter.OrdenDetailViewPresenter.*;
 import com.jobits.ui.components.swing.menus.PopClickListener;
@@ -88,12 +89,12 @@ public class PedidoCardView extends AbstractViewPanel {
         jideButtonCerrarMesa = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jToggleButtonHideSupportPanel = new javax.swing.JToggleButton();
         jPanelSupportText = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBoxClientes = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabel3 = new javax.swing.JLabel();
         jLabelVALORHora = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabelVALORUsuario = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabelVALORCliente = new javax.swing.JLabel();
         jPanelActionButtons = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jLabelVALORTotal = new javax.swing.JLabel();
         jPanel5 = MaterialComponentsFactory.Containers.getTransparentPanel();
@@ -296,18 +297,12 @@ public class PedidoCardView extends AbstractViewPanel {
 
         Main.add(jPanelMedia);
 
-        jPanelSupportText.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 3, 5, 3));
+        jPanelSupportText.setBorder(javax.swing.BorderFactory.createEmptyBorder(3, 10, 5, 10));
         jPanelSupportText.setToolTipText(null);
         jPanelSupportText.setMaximumSize(new java.awt.Dimension(2147483647, 100));
         jPanelSupportText.setMinimumSize(new java.awt.Dimension(0, 100));
         jPanelSupportText.setPreferredSize(new java.awt.Dimension(0, 100));
         jPanelSupportText.setLayout(new java.awt.GridLayout(3, 2));
-
-        jLabel2.setText("Cliente");
-        jPanelSupportText.add(jLabel2);
-
-        jComboBoxClientes.setPreferredSize(new java.awt.Dimension(150, 35));
-        jPanelSupportText.add(jComboBoxClientes);
 
         jLabel3.setText("Hora");
         jPanelSupportText.add(jLabel3);
@@ -326,6 +321,15 @@ public class PedidoCardView extends AbstractViewPanel {
         jLabelVALORUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabelVALORUsuario.setText("Nombre Apellido");
         jPanelSupportText.add(jLabelVALORUsuario);
+
+        jLabel2.setText("Cliente");
+        jPanelSupportText.add(jLabel2);
+
+        jLabelVALORCliente.setBackground(new java.awt.Color(153, 255, 255));
+        jLabelVALORCliente.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
+        jLabelVALORCliente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelVALORCliente.setText("Nombre Apellido");
+        jPanelSupportText.add(jLabelVALORCliente);
 
         Main.add(jPanelSupportText);
 
@@ -398,7 +402,6 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBoxClientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -408,6 +411,7 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelOrdenNo;
     private javax.swing.JLabel jLabelPorciento;
     private javax.swing.JLabel jLabelTerminada;
+    private javax.swing.JLabel jLabelVALORCliente;
     private javax.swing.JLabel jLabelVALORHora;
     private javax.swing.JLabel jLabelVALORTotal;
     private javax.swing.JLabel jLabelVALORUsuario;
@@ -444,6 +448,7 @@ public class PedidoCardView extends AbstractViewPanel {
         Bindings.bind(jLabelVALORHora, getPresenter().getModel(PROP_HORA_PEDIDO));
         Bindings.bind(jLabelVALORTotal, getPresenter().getModel(PROP_TOTAL_ORDEN));
         Bindings.bind(jLabelVALORUsuario, getPresenter().getModel(PROP_USUARIO));
+        Bindings.bind(jLabelVALORCliente, getPresenter().getModel(PROP_CLIENTE));
         Bindings.bind(jLabelTerminada, "visible", getPresenter().getModel(PROP_ORDEN_TERMINADA));
         Bindings.bind(jPanelSupportText, "visible", getPresenter().getModel(PROP_SUPORT_PANEL_VISIBLE));
 
@@ -477,16 +482,13 @@ public class PedidoCardView extends AbstractViewPanel {
         PopUpMenu menu = new PopUpMenu(
                 getPresenter().getOperation(ACTION_ADD_PRODUCTO_IN_HOT),
                 getPresenter().getOperation(ACTION_SHOW_LOGS),
+                getPresenter().getOperation(ACTION_SET_CLIENTE),
                 getPresenter().getOperation(ACTION_SET_DOMICILIO));
 
         jToggleButtonOptions.addActionListener(
                 (ActionEvent e) -> {
                     menu.show(jToggleButtonOptions, -20, 20);
                 });
-
-        Bindings.bind(jComboBoxClientes, new SelectionInList<>(
-                getPresenter().getModel(PROP_LISTA_CLIENTES),
-                getPresenter().getModel(PROP_CLIENTE_SELECCIONADO)));
 
         Bindings.bind(jList1, new SelectionInList<ProductovOrden>(
                 getPresenter().getModel(PROP_LISTA_PRODUCTO_ORDEN),
