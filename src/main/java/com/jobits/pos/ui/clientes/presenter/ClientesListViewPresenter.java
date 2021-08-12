@@ -77,4 +77,8 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
         getBean().getLista_elementos().addAll(service.findAll());
     }
 
+    public void refreshView() {
+        setListToBean();
+    }
+
 }

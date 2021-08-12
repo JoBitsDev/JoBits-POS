@@ -14,14 +14,23 @@ import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
+import com.jobits.pos.ui.clientes.ClientesDetailView;
+import com.jobits.pos.ui.clientes.ClientesListView;
+import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
+import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter.*;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import javax.swing.SpinnerNumberModel;
 
@@ -30,6 +39,9 @@ import javax.swing.SpinnerNumberModel;
  * @author Home
  */
 public class ReservasDetailView extends AbstractViewPanel {
+
+    ClientesListView listView;
+    ClientesDetailView detailView;
 
     public static final String VIEW_NAME = "Detalles Reserva";
 
@@ -61,14 +73,29 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonEliminar = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jToggleButtonAgregos = new javax.swing.JToggleButton();
+        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
+        jTextFieldApellidos = MaterialComponentsFactory.Input.getTextField("", "Apellidos");
+        jTextFieldTelefono = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono"));
+        jButtonAddCliente = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jTextFieldBusqueda = MaterialComponentsFactory.Input.getTextField("Buscar cliente", "");
+        jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel5 = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanelMain = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelfecha = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel21 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldNombreReserva = MaterialComponentsFactory.Input.getTextField("", "Nombre de la Reserva");
+        jPanel6 = new javax.swing.JPanel();
         jPanel15 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel9 = new javax.swing.JLabel();
         jDateChooserFecha = MaterialComponentsFactory.Input.getDatePicker();
+        jPanel19 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabelNombreCliente = new javax.swing.JLabel();
+        jButtonShowNewClient = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jPanel17 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel10 = new javax.swing.JLabel();
         jPanel16 = MaterialComponentsFactory.Containers.getTransparentPanel();
@@ -82,31 +109,27 @@ public class ReservasDetailView extends AbstractViewPanel {
         jLabel11 = new javax.swing.JLabel();
         jComboBoxUbicacion = MaterialComponentsFactory.Displayers.getComboBox("");
         jButtonShowProductos = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanel19 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jButtonShowNewClient = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jComboBoxCliente = MaterialComponentsFactory.Displayers.getComboBox("");
         jPanel20 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel13 = new javax.swing.JLabel();
         jComboBoxCategoria = MaterialComponentsFactory.Displayers.getComboBox("");
         jPanelNewClient = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jPanel2 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jTextFieldNombre = MaterialComponentsFactory.Input.getTextField("", "Nombre");
-        jTextFieldApellidos = MaterialComponentsFactory.Input.getTextField("", "Apellidos");
-        jTextFieldTelefono = MaterialComponentsFactory.Input.getTextField(" ", java.util.ResourceBundle.getBundle("Strings").getString("label_telefono"));
-        jButtonAddCliente = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jTextFieldBusqueda = MaterialComponentsFactory.Input.getTextField("Buscar cliente", "");
-        jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jPanelListaCliente = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelNuevoCliente = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelBotones = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelGoBack = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonGoBack = MaterialComponentsFactory.Buttons.getOutlinedButton();
-        jPanel11 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelToClienteList = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonToClienteList = MaterialComponentsFactory.Buttons.getOutlinedButton();
+        jPanelCrearCliente = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonCrearCliente = MaterialComponentsFactory.Buttons.getLinedButton();
+        jPanelToNuevoCliente = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonToNuevoCliente = MaterialComponentsFactory.Buttons.getLinedButton();
+        jPanelSeleccionar = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jButtonSeleccionar = MaterialComponentsFactory.Buttons.getMaterialButton();
+        jPanelCancelarReserva = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonCancelar = MaterialComponentsFactory.Buttons.getLinedButton();
-        jPanel12 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanelAceptarReserva = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAceptar = MaterialComponentsFactory.Buttons.getMaterialButton();
 
         jPanelProductos.setLayout(new java.awt.BorderLayout());
@@ -142,152 +165,6 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanelProductosOrden.add(jPanel1, java.awt.BorderLayout.SOUTH);
 
         jPanelProductos.add(jPanelProductosOrden, java.awt.BorderLayout.EAST);
-
-        setMinimumSize(new java.awt.Dimension(565, 530));
-        setOpaque(false);
-        setPreferredSize(new java.awt.Dimension(565, 530));
-        setLayout(new java.awt.BorderLayout());
-
-        jPanel5.setLayout(new java.awt.BorderLayout());
-
-        jPanelMain.setLayout(new java.awt.CardLayout());
-
-        jPanelfecha.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 40, 20, 40));
-        jPanelfecha.setLayout(new java.awt.GridLayout(6, 1));
-
-        jPanel21.setLayout(new java.awt.BorderLayout());
-        jPanel21.add(jTextFieldNombreReserva, java.awt.BorderLayout.CENTER);
-
-        jPanelfecha.add(jPanel21);
-
-        jPanel15.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 1, 0, 1));
-        jPanel15.setLayout(new java.awt.BorderLayout());
-
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/calendar_indigo.png"))); // NOI18N
-        jLabel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
-        jPanel15.add(jLabel9, java.awt.BorderLayout.WEST);
-
-        jDateChooserFecha.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jDateChooserFecha.setPreferredSize(new java.awt.Dimension(300, 50));
-        jDateChooserFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jDateChooserFechaActionPerformed(evt);
-            }
-        });
-        jPanel15.add(jDateChooserFecha, java.awt.BorderLayout.CENTER);
-
-        jPanelfecha.add(jPanel15);
-
-        jPanel17.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
-        jPanel17.setLayout(new java.awt.BorderLayout());
-
-        jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/reloj_indigo.png"))); // NOI18N
-        jLabel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
-        jPanel17.add(jLabel10, java.awt.BorderLayout.WEST);
-
-        jPanel16.setLayout(new javax.swing.BoxLayout(jPanel16, javax.swing.BoxLayout.LINE_AXIS));
-
-        jComboBoxHora.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jComboBoxHora.setPreferredSize(new java.awt.Dimension(35, 26));
-        jPanel16.add(jComboBoxHora);
-
-        jComboBoxMinuto.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jComboBoxMinuto.setPreferredSize(new java.awt.Dimension(35, 26));
-        jPanel16.add(jComboBoxMinuto);
-
-        jComboBoxPMAM.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jComboBoxPMAM.setPreferredSize(new java.awt.Dimension(35, 26));
-        jPanel16.add(jComboBoxPMAM);
-        jPanel16.add(filler1);
-
-        jSpinnerDuracion.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jSpinnerDuracion.setModel(new javax.swing.SpinnerNumberModel(0, 0, 120, 5));
-        jSpinnerDuracion.setMinimumSize(new java.awt.Dimension(25, 26));
-        jSpinnerDuracion.setPreferredSize(new java.awt.Dimension(25, 26));
-        jPanel16.add(jSpinnerDuracion);
-
-        jLabel1.setText("Min");
-        jPanel16.add(jLabel1);
-
-        jPanel17.add(jPanel16, java.awt.BorderLayout.CENTER);
-
-        jPanelfecha.add(jPanel17);
-
-        jPanel18.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
-        jPanel18.setLayout(new java.awt.BorderLayout());
-
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/location_indigo.png"))); // NOI18N
-        jLabel11.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
-        jPanel18.add(jLabel11, java.awt.BorderLayout.WEST);
-
-        jComboBoxUbicacion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jComboBoxUbicacion.setMinimumSize(new java.awt.Dimension(200, 50));
-        jComboBoxUbicacion.setPreferredSize(new java.awt.Dimension(300, 50));
-        jPanel18.add(jComboBoxUbicacion, java.awt.BorderLayout.CENTER);
-
-        jButtonShowProductos.setIcon(MaterialIcons.FORMAT_LIST_BULLETED);
-        jButtonShowProductos.setToolTipText("Debe seleccionar una Mesa primero");
-        jButtonShowProductos.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonShowProductos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonShowProductosActionPerformed(evt);
-            }
-        });
-        jPanel18.add(jButtonShowProductos, java.awt.BorderLayout.LINE_END);
-
-        jPanelfecha.add(jPanel18);
-
-        jPanel19.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
-        jPanel19.setLayout(new java.awt.BorderLayout());
-
-        jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/perosna_indigo.png"))); // NOI18N
-        jLabel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
-        jPanel19.add(jLabel12, java.awt.BorderLayout.WEST);
-
-        jButtonShowNewClient.setIcon(MaterialIcons.ADD_CIRCLE_OUTLINE);
-        jButtonShowNewClient.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonShowNewClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonShowNewClientActionPerformed(evt);
-            }
-        });
-        jPanel19.add(jButtonShowNewClient, java.awt.BorderLayout.LINE_END);
-
-        jComboBoxCliente.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jComboBoxCliente.setMinimumSize(new java.awt.Dimension(200, 50));
-        jComboBoxCliente.setPreferredSize(new java.awt.Dimension(300, 50));
-        jPanel19.add(jComboBoxCliente, java.awt.BorderLayout.CENTER);
-
-        jPanelfecha.add(jPanel19);
-
-        jPanel20.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
-        jPanel20.setLayout(new java.awt.BorderLayout());
-
-        jLabel13.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/categoria_2_indigo.png"))); // NOI18N
-        jLabel13.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
-        jPanel20.add(jLabel13, java.awt.BorderLayout.WEST);
-
-        jComboBoxCategoria.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        jComboBoxCategoria.setMinimumSize(new java.awt.Dimension(200, 50));
-        jComboBoxCategoria.setPreferredSize(new java.awt.Dimension(300, 50));
-        jPanel20.add(jComboBoxCategoria, java.awt.BorderLayout.CENTER);
-
-        jPanelfecha.add(jPanel20);
-
-        jPanelMain.add(jPanelfecha, "Fecha");
-
-        jPanelNewClient.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 20, 1, 20));
-        jPanelNewClient.setLayout(new java.awt.BorderLayout());
 
         jPanel4.setLayout(new java.awt.BorderLayout());
 
@@ -362,7 +239,159 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanel4.add(jPanel3, java.awt.BorderLayout.CENTER);
 
-        jPanelNewClient.add(jPanel4, java.awt.BorderLayout.CENTER);
+        setMinimumSize(new java.awt.Dimension(565, 530));
+        setOpaque(false);
+        setPreferredSize(new java.awt.Dimension(565, 530));
+        setLayout(new java.awt.BorderLayout());
+
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jPanelMain.setLayout(new java.awt.CardLayout());
+
+        jPanelfecha.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 40, 20, 40));
+        jPanelfecha.setLayout(new java.awt.GridLayout(5, 1));
+
+        jPanel21.setLayout(new java.awt.BorderLayout());
+        jPanel21.add(jTextFieldNombreReserva, java.awt.BorderLayout.CENTER);
+
+        jPanelfecha.add(jPanel21);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
+        jPanel6.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
+
+        jPanel15.setLayout(new java.awt.BorderLayout());
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/calendar_indigo.png"))); // NOI18N
+        jLabel9.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jPanel15.add(jLabel9, java.awt.BorderLayout.WEST);
+
+        jDateChooserFecha.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jDateChooserFecha.setPreferredSize(new java.awt.Dimension(300, 50));
+        jDateChooserFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDateChooserFechaActionPerformed(evt);
+            }
+        });
+        jPanel15.add(jDateChooserFecha, java.awt.BorderLayout.CENTER);
+
+        jPanel6.add(jPanel15);
+
+        jPanel19.setLayout(new java.awt.BorderLayout());
+
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/perosna_indigo.png"))); // NOI18N
+        jLabel12.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jPanel19.add(jLabel12, java.awt.BorderLayout.WEST);
+
+        jLabelNombreCliente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelNombreCliente.setText("---");
+        jPanel19.add(jLabelNombreCliente, java.awt.BorderLayout.CENTER);
+
+        jButtonShowNewClient.setIcon(MaterialIcons.ADD_CIRCLE_OUTLINE);
+        jButtonShowNewClient.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonShowNewClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonShowNewClientActionPerformed(evt);
+            }
+        });
+        jPanel19.add(jButtonShowNewClient, java.awt.BorderLayout.LINE_END);
+
+        jPanel6.add(jPanel19);
+
+        jPanelfecha.add(jPanel6);
+
+        jPanel17.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
+        jPanel17.setLayout(new java.awt.BorderLayout());
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/reloj_indigo.png"))); // NOI18N
+        jLabel10.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jPanel17.add(jLabel10, java.awt.BorderLayout.WEST);
+
+        jPanel16.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 1, 15, 1));
+        jPanel16.setLayout(new javax.swing.BoxLayout(jPanel16, javax.swing.BoxLayout.LINE_AXIS));
+
+        jComboBoxHora.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jComboBoxHora.setPreferredSize(new java.awt.Dimension(35, 26));
+        jPanel16.add(jComboBoxHora);
+
+        jComboBoxMinuto.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jComboBoxMinuto.setPreferredSize(new java.awt.Dimension(35, 26));
+        jPanel16.add(jComboBoxMinuto);
+
+        jComboBoxPMAM.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jComboBoxPMAM.setPreferredSize(new java.awt.Dimension(35, 26));
+        jPanel16.add(jComboBoxPMAM);
+        jPanel16.add(filler1);
+
+        jSpinnerDuracion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jSpinnerDuracion.setModel(new javax.swing.SpinnerNumberModel(0, 0, 120, 5));
+        jSpinnerDuracion.setMinimumSize(new java.awt.Dimension(25, 26));
+        jSpinnerDuracion.setPreferredSize(new java.awt.Dimension(25, 26));
+        jPanel16.add(jSpinnerDuracion);
+
+        jLabel1.setText("Min");
+        jPanel16.add(jLabel1);
+
+        jPanel17.add(jPanel16, java.awt.BorderLayout.CENTER);
+
+        jPanelfecha.add(jPanel17);
+
+        jPanel18.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
+        jPanel18.setLayout(new java.awt.BorderLayout());
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/location_indigo.png"))); // NOI18N
+        jLabel11.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jPanel18.add(jLabel11, java.awt.BorderLayout.WEST);
+
+        jComboBoxUbicacion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jComboBoxUbicacion.setMinimumSize(new java.awt.Dimension(200, 50));
+        jComboBoxUbicacion.setPreferredSize(new java.awt.Dimension(300, 50));
+        jPanel18.add(jComboBoxUbicacion, java.awt.BorderLayout.CENTER);
+
+        jButtonShowProductos.setIcon(MaterialIcons.FORMAT_LIST_BULLETED);
+        jButtonShowProductos.setToolTipText("Debe seleccionar una Mesa primero");
+        jButtonShowProductos.setPreferredSize(new java.awt.Dimension(50, 50));
+        jButtonShowProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonShowProductosActionPerformed(evt);
+            }
+        });
+        jPanel18.add(jButtonShowProductos, java.awt.BorderLayout.LINE_END);
+
+        jPanelfecha.add(jPanel18);
+
+        jPanel20.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 10, 1));
+        jPanel20.setLayout(new java.awt.BorderLayout());
+
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/categoria_2_indigo.png"))); // NOI18N
+        jLabel13.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 10));
+        jPanel20.add(jLabel13, java.awt.BorderLayout.WEST);
+
+        jComboBoxCategoria.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jComboBoxCategoria.setMinimumSize(new java.awt.Dimension(200, 50));
+        jComboBoxCategoria.setPreferredSize(new java.awt.Dimension(300, 50));
+        jPanel20.add(jComboBoxCategoria, java.awt.BorderLayout.CENTER);
+
+        jPanelfecha.add(jPanel20);
+
+        jPanelMain.add(jPanelfecha, "Fecha");
+
+        jPanelNewClient.setLayout(new java.awt.CardLayout());
+
+        jPanelListaCliente.setLayout(new java.awt.BorderLayout());
+        jPanelNewClient.add(jPanelListaCliente, "listaClientes");
+
+        jPanelNuevoCliente.setLayout(new java.awt.BorderLayout());
+        jPanelNewClient.add(jPanelNuevoCliente, "nuevoCliente");
 
         jPanelMain.add(jPanelNewClient, "Nuevo Cliente");
 
@@ -388,23 +417,59 @@ public class ReservasDetailView extends AbstractViewPanel {
 
         jPanel9.add(jPanelGoBack);
 
-        jPanel11.setOpaque(false);
-        jPanel11.setLayout(new java.awt.GridBagLayout());
+        jPanelToClienteList.setOpaque(false);
+        jPanelToClienteList.setLayout(new java.awt.GridBagLayout());
+
+        jButtonToClienteList.setIcon(MaterialIcons.ARROW_BACK);
+        jButtonToClienteList.setPreferredSize(new java.awt.Dimension(50, 40));
+        jPanelToClienteList.add(jButtonToClienteList, new java.awt.GridBagConstraints());
+
+        jPanel9.add(jPanelToClienteList);
+
+        jPanelCrearCliente.setOpaque(false);
+        jPanelCrearCliente.setLayout(new java.awt.GridBagLayout());
+
+        jButtonCrearCliente.setText("Crear Cliente");
+        jButtonCrearCliente.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanelCrearCliente.add(jButtonCrearCliente, new java.awt.GridBagConstraints());
+
+        jPanel9.add(jPanelCrearCliente);
+
+        jPanelToNuevoCliente.setOpaque(false);
+        jPanelToNuevoCliente.setLayout(new java.awt.GridBagLayout());
+
+        jButtonToNuevoCliente.setText("Crear");
+        jButtonToNuevoCliente.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanelToNuevoCliente.add(jButtonToNuevoCliente, new java.awt.GridBagConstraints());
+
+        jPanel9.add(jPanelToNuevoCliente);
+
+        jPanelSeleccionar.setOpaque(false);
+        jPanelSeleccionar.setLayout(new java.awt.GridBagLayout());
+
+        jButtonSeleccionar.setText("Seleccionar");
+        jButtonSeleccionar.setPreferredSize(new java.awt.Dimension(140, 40));
+        jPanelSeleccionar.add(jButtonSeleccionar, new java.awt.GridBagConstraints());
+
+        jPanel9.add(jPanelSeleccionar);
+
+        jPanelCancelarReserva.setOpaque(false);
+        jPanelCancelarReserva.setLayout(new java.awt.GridBagLayout());
 
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setPreferredSize(new java.awt.Dimension(140, 40));
-        jPanel11.add(jButtonCancelar, new java.awt.GridBagConstraints());
+        jPanelCancelarReserva.add(jButtonCancelar, new java.awt.GridBagConstraints());
 
-        jPanel9.add(jPanel11);
+        jPanel9.add(jPanelCancelarReserva);
 
-        jPanel12.setOpaque(false);
-        jPanel12.setLayout(new java.awt.GridBagLayout());
+        jPanelAceptarReserva.setOpaque(false);
+        jPanelAceptarReserva.setLayout(new java.awt.GridBagLayout());
 
         jButtonAceptar.setText("Aceptar");
         jButtonAceptar.setPreferredSize(new java.awt.Dimension(140, 40));
-        jPanel12.add(jButtonAceptar, new java.awt.GridBagConstraints());
+        jPanelAceptarReserva.add(jButtonAceptar, new java.awt.GridBagConstraints());
 
-        jPanel9.add(jPanel12);
+        jPanel9.add(jPanelAceptarReserva);
 
         jPanelBotones.add(jPanel9);
 
@@ -468,12 +533,15 @@ public class ReservasDetailView extends AbstractViewPanel {
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonAddCliente;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonCrearCliente;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonGoBack;
+    private javax.swing.JButton jButtonSeleccionar;
     private javax.swing.JButton jButtonShowNewClient;
     private javax.swing.JButton jButtonShowProductos;
+    private javax.swing.JButton jButtonToClienteList;
+    private javax.swing.JButton jButtonToNuevoCliente;
     private javax.swing.JComboBox<String> jComboBoxCategoria;
-    private javax.swing.JComboBox<String> jComboBoxCliente;
     private javax.swing.JComboBox jComboBoxHora;
     private javax.swing.JComboBox jComboBoxMinuto;
     private javax.swing.JComboBox jComboBoxPMAM;
@@ -485,10 +553,9 @@ public class ReservasDetailView extends AbstractViewPanel {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelNombreCliente;
     private javax.swing.JList<ProductovOrden> jListListaProductos;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
@@ -500,14 +567,23 @@ public class ReservasDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelAceptarReserva;
     private javax.swing.JPanel jPanelBotones;
+    private javax.swing.JPanel jPanelCancelarReserva;
+    private javax.swing.JPanel jPanelCrearCliente;
     private javax.swing.JPanel jPanelGoBack;
+    private javax.swing.JPanel jPanelListaCliente;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelNewClient;
+    private javax.swing.JPanel jPanelNuevoCliente;
     private javax.swing.JPanel jPanelProductoSelector;
     private javax.swing.JPanel jPanelProductos;
     private javax.swing.JPanel jPanelProductosOrden;
+    private javax.swing.JPanel jPanelSeleccionar;
+    private javax.swing.JPanel jPanelToClienteList;
+    private javax.swing.JPanel jPanelToNuevoCliente;
     private javax.swing.JPanel jPanelfecha;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -529,15 +605,16 @@ public class ReservasDetailView extends AbstractViewPanel {
     @Override
     public void wireUp() {
         Bindings.bind(jTextFieldNombreReserva, getPresenter().getModel(PROP_NOMBRE_RESERVA));
+        Bindings.bind(jLabelNombreCliente, getPresenter().getModel(PROP_NOMBRE_CLIENTE));
         Bindings.bind(jComboBoxUbicacion, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_UBICACIONES),
                 getPresenter().getModel(PROP_UBICACION_SELECCIONADA)));
         Bindings.bind(jComboBoxCategoria, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_CATEGORIAS),
                 getPresenter().getModel(PROP_CATEGORIA_SELECCIONADA)));
-        Bindings.bind(jComboBoxCliente, new SelectionInList<>(
-                getPresenter().getModel(PROP_LISTA_CLIENTES),
-                getPresenter().getModel(PROP_CLIENTE)));
+//        Bindings.bind(jComboBoxCliente, new SelectionInList<>(
+//                getPresenter().getModel(PROP_LISTA_CLIENTES),
+//                getPresenter().getModel(PROP_CLIENTE)));
         Bindings.bind(jTable1, new SelectionInList<ClienteDomain>(
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
                 getPresenter().getModel(PROP_CLIENTE)));
@@ -563,7 +640,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jButtonCancelar.addActionListener(getPresenter().getOperation(ACTION_CANCELAR));
         jButtonEliminar.addActionListener(getPresenter().getOperation(ACTION_ELIMINAR));
         jButtonAceptar.addActionListener(getPresenter().getOperation(ACTION_ACEPTAR));
-        jButtonAddCliente.addActionListener(getPresenter().getOperation(ACTION_AGREGAR_CLIENTE));
+//        jButtonAddCliente.addActionListener(getPresenter().getOperation(ACTION_AGREGAR_CLIENTE));
 
         Bindings.bind(jTextFieldNombre, getPresenter().getModel(PROP_NOMBRE_CLIENTE));
         Bindings.bind(jTextFieldApellidos, getPresenter().getModel(PROP_APELLIDO_CLIENTE));
@@ -575,11 +652,17 @@ public class ReservasDetailView extends AbstractViewPanel {
         Bindings.bind(jButtonShowProductos, "enabled", getPresenter().getModel(PROP_SHOW_PRODUCTOS));
         Bindings.bind(jTextFieldBusqueda, getPresenter().getModel(PROP_CLIENTE_KEY_WORD));
 
+        jButtonToClienteList.addActionListener(getPresenter().getOperation(ACTION_TO_CLIENTES_LIST));
+        jButtonToNuevoCliente.addActionListener(getPresenter().getOperation(ACTION_TO_CREATE_CLIENTE));
+        jButtonCrearCliente.addActionListener(getPresenter().getOperation(ACTION_CREATE_CLIENTE));
+        jButtonSeleccionar.addActionListener(getPresenter().getOperation(ACTION_SELECT_CLIENTE));
+
     }
 
     @Override
     public void uiInit() {
         initComponents();
+        intitClientesListUI();
         jComboBoxHora.setRenderer(new TimeCellRender("h"));
         jComboBoxMinuto.setRenderer(new TimeCellRender("mm"));
         jComboBoxPMAM.setRenderer(new TimeCellRender("a"));
@@ -599,6 +682,13 @@ public class ReservasDetailView extends AbstractViewPanel {
 //            jListListaProductos.repaint();
 //        });
         jPanelGoBack.setVisible(false);
+
+        jPanelToClienteList.setVisible(false);
+        jPanelCrearCliente.setVisible(false);
+
+        jPanelToNuevoCliente.setVisible(false);
+        jPanelSeleccionar.setVisible(false);
+
         jButtonShowProductos.setVisible(false);
 
         jTable1.setModel(new BindableTableModel<ClienteDomain>(jTable1) {
@@ -635,10 +725,14 @@ public class ReservasDetailView extends AbstractViewPanel {
         });
         jTable1.getRowSorter().toggleSortOrder(0);
 
-        getPresenter().addBeanPropertyChangeListener(PROP_CLIENTE, (PropertyChangeEvent evt) -> {
-            if (evt.getNewValue() != null) {
-                mostrarMainPanel();
-            }
+        getPresenter().addPropertyChangeListener(PROP_TO_CLIENTES_LIST, (PropertyChangeEvent evt) -> {
+            initList();
+        });
+        getPresenter().addPropertyChangeListener(PROP_TO_CREATE_CLIENTE, (PropertyChangeEvent evt) -> {
+            initCreate();
+        });
+        getPresenter().addPropertyChangeListener(PROP_SELECT_CLIENTE, (PropertyChangeEvent evt) -> {
+            mostrarMainPanel();
         });
     }
 
@@ -651,6 +745,9 @@ public class ReservasDetailView extends AbstractViewPanel {
         CardLayout cards = (CardLayout) jPanelMain.getLayout();
         cards.show(jPanelMain, "Fecha");
         jPanelGoBack.setVisible(false);
+        mainButtonsVisible(true);
+        listClientButtonsVisible(false);
+        createClientButtonsVisible(false);
     }
 
     private void mostrarPanelProductos() {
@@ -665,5 +762,73 @@ public class ReservasDetailView extends AbstractViewPanel {
         jTextFieldNombre.requestFocusInWindow();
         jTextFieldBusqueda.setText(null);
         jPanelGoBack.setVisible(true);
+        mainButtonsVisible(false);
+        listClientButtonsVisible(true);
+        createClientButtonsVisible(false);
     }
+
+    private void intitClientesListUI() {
+        listView = new ClientesListView(getPresenter().getClienteListPresenter());
+        listView.getjPanelControles().setVisible(false);
+        MouseListener[] list = listView.getjTableList().getMouseListeners();
+        for (int i = 2; i < list.length; i++) {
+            listView.getjTableList().removeMouseListener(list[i]);
+        }
+        listView.getjTableList().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    getPresenter().getOperation(ACTION_SELECT_CLIENTE).doAction();
+                }
+            }
+        });
+        jPanelListaCliente.add(listView, BorderLayout.CENTER);
+    }
+
+    private void initList() {//inizializa la lista de clientes
+        listView.setPresenter(getPresenter().getClienteListPresenter());
+        showList();
+    }
+
+    private void initCreate() {//inizializa la vista de crear cliente
+        detailView = new ClientesDetailView(getPresenter().getClienteDetailPresenter());
+        detailView.getjPanelOpciones().setVisible(false);
+        jPanelNuevoCliente.removeAll();
+        jPanelNuevoCliente.add(detailView, BorderLayout.CENTER);
+        showDetail();
+    }
+
+    private void showList() {//muestra la lista de clientes
+        CardLayout cards = (CardLayout) jPanelNewClient.getLayout();
+        cards.show(jPanelNewClient, "listaClientes");
+        jPanelGoBack.setVisible(true);
+        mainButtonsVisible(false);
+        listClientButtonsVisible(true);
+        createClientButtonsVisible(false);
+    }
+
+    private void showDetail() {//muestra la vista de crear cliente
+        CardLayout cards = (CardLayout) jPanelNewClient.getLayout();
+        cards.show(jPanelNewClient, "nuevoCliente");
+        jPanelGoBack.setVisible(false);
+        mainButtonsVisible(false);
+        listClientButtonsVisible(false);
+        createClientButtonsVisible(true);
+    }
+
+    private void mainButtonsVisible(boolean value) {
+        jPanelCancelarReserva.setVisible(value);
+        jPanelAceptarReserva.setVisible(value);
+    }
+
+    private void listClientButtonsVisible(boolean value) {
+        jPanelToNuevoCliente.setVisible(value);
+        jPanelSeleccionar.setVisible(value);
+    }
+
+    private void createClientButtonsVisible(boolean value) {
+        jPanelToClienteList.setVisible(value);
+        jPanelCrearCliente.setVisible(value);
+    }
+
 }

@@ -92,7 +92,7 @@ public class ReservaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_LISTA_CLIENTES = "lista_clientes";
 
-    private String nombre_cliente;
+    private String nombre_cliente = "---";
 
     public static final String PROP_NOMBRE_CLIENTE = "nombre_cliente";
 

@@ -17,6 +17,8 @@ import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.reserva.core.usecase.CategoriaUseCase;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
 import com.jobits.pos.reserva.core.usecase.UbicacionUseCase;
+import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
+import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -38,6 +40,8 @@ import java.util.Optional;
 public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDetailViewModel> {
 
     public ProductoVentaSelectorPresenter productoSelectorPresenter;
+    private ClientesListViewPresenter clienteListPresenter;
+    private ClientesDetailViewPresenter clienteDetailPresenter;
 
     ReservaUseCase reservasUseCase = PosDesktopUiModule.getInstance().getImplementation(ReservaUseCase.class);
     UbicacionUseCase ubicacionUseCase = PosDesktopUiModule.getInstance().getImplementation(UbicacionUseCase.class);
@@ -48,8 +52,18 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
     public static final String ACTION_ACEPTAR = "Aceptar";
     public static final String ACTION_ELIMINAR = "Eliminar";
     public static final String ACTION_MODO_AGREGO = "Agrego";
-    public static final String ACTION_AGREGAR_CLIENTE = "Agregar Cliente";
+//    public static final String ACTION_AGREGAR_CLIENTE = "Agregar Cliente";
     public static final String PROP_TO_MAIN_VIEW = "To Main View";
+
+    public static final String ACTION_TO_CLIENTES_LIST = "To Clientes List";
+    public static final String ACTION_TO_CREATE_CLIENTE = "To Create Cliente";
+    public static final String ACTION_SELECT_CLIENTE = "Select Cliente";
+
+    public static final String PROP_TO_CLIENTES_LIST = "To Clientes List";
+    public static final String PROP_TO_CREATE_CLIENTE = "To Create Cliente";
+    public static final String PROP_SELECT_CLIENTE = "Select Cliente";
+
+    public static final String ACTION_CREATE_CLIENTE = "Create Cliente";
 
     private final boolean creatingMode;
 
@@ -64,6 +78,7 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
         this.creatingMode = creatingMode;
         initMinutes();
         productoSelectorPresenter = new ProductoVentaSelectorPresenter(PosDesktopUiModule.getInstance().getImplementation(OrdenService.class));
+        clienteListPresenter = new ClientesListViewPresenter();
         addListeners();
         refreshState();
         setListToBean();
@@ -71,6 +86,14 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
 
     public ProductoVentaSelectorPresenter getProductoSelectorPresenter() {
         return productoSelectorPresenter;
+    }
+
+    public ClientesListViewPresenter getClienteListPresenter() {
+        return clienteListPresenter;
+    }
+
+    public ClientesDetailViewPresenter getClienteDetailPresenter() {
+        return clienteDetailPresenter;
     }
 
     @Override
@@ -108,13 +131,68 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
                 return Optional.empty();
             }
         });
-        registerOperation(new AbstractViewAction(ACTION_AGREGAR_CLIENTE) {
+//        registerOperation(new AbstractViewAction(ACTION_AGREGAR_CLIENTE) {
+//            @Override
+//            public Optional doAction() {
+//                onAgregarClienteClick();
+//                return Optional.empty();
+//            }
+//        });
+        registerOperation(new AbstractViewAction(ACTION_TO_CLIENTES_LIST) {
             @Override
             public Optional doAction() {
-                onAgregarClienteClick();
+                onClientesListClick();
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_TO_CREATE_CLIENTE) {
+            @Override
+            public Optional doAction() {
+                onCreateClienteClick();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_CREATE_CLIENTE) {
+            @Override
+            public Optional doAction() {
+                onCrearClienteClick();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_SELECT_CLIENTE) {
+            @Override
+            public Optional doAction() {
+                onSelectClienteClick();
+                return Optional.empty();
+            }
+
+        });
+    }
+
+    private void onSelectClienteClick() {
+        ClienteDomain cliente = clienteListPresenter.getBean().getElemento_seleccionado();
+        if (cliente != null) {
+            getBean().setCliente(cliente);
+            firePropertyChange(PROP_SELECT_CLIENTE, null, null);
+        } else {
+            throw new IllegalArgumentException("Seleccione un cliente");
+        }
+    }
+
+    private void onCrearClienteClick() {
+        clienteDetailPresenter.onAgregarClick();
+        clienteListPresenter.refreshView();
+        firePropertyChange(PROP_TO_CLIENTES_LIST, null, null);
+    }
+
+    private void onCreateClienteClick() {
+        clienteDetailPresenter = new ClientesDetailViewPresenter(null);
+        firePropertyChange(PROP_TO_CREATE_CLIENTE, null, null);
+    }
+
+    private void onClientesListClick() {
+        clienteListPresenter = new ClientesListViewPresenter();
+        firePropertyChange(PROP_TO_CLIENTES_LIST, null, null);
     }
 
     @Override
@@ -160,9 +238,10 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
 
     private void addListeners() {
         addBeanPropertyChangeListener(PROP_CLIENTE, (PropertyChangeEvent evt) -> {
-            ClienteDomain c = (ClienteDomain) evt.getNewValue();
-            if (c != null) {
-                getBean().setNombre_reserva(c.toString());
+            ClienteDomain cliente = (ClienteDomain) evt.getNewValue();
+            if (cliente != null) {
+                getBean().setNombre_reserva(cliente.toString());
+                getBean().setNombre_cliente(cliente.toString());
             }
         });
 
@@ -224,23 +303,23 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
 //        setListToBean();
     }
 
-    private void onAgregarClienteClick() {
-        if ((boolean) Application.getInstance().getNotificationService().
-                showDialog("Desea registrar a: " + getBean().getNombre_cliente(),
-                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            ClienteDomain cliente = new ClienteDomain();
-            cliente.setNombre(getBean().getNombre_cliente());
-            cliente.setApellidos(getBean().getApellido_cliente());
-            cliente.setTelefono(getBean().getTelefono_cliente());
-            clienteUseCase.create(cliente);
-            getBean().setLista_clientes(new ArrayListModel<>(clienteUseCase.findAll()));
-//            firePropertyChange(PROP_TO_MAIN_VIEW, null, cliente);
-            getBean().setNombre_cliente(null);
-            getBean().setApellido_cliente(null);
-            getBean().setTelefono_cliente(null);
-            Application.getInstance().getNotificationService().showDialog(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
-        }
-    }
+//    private void onAgregarClienteClick() {
+//        if ((boolean) Application.getInstance().getNotificationService().
+//                showDialog("Desea registrar a: " + getBean().getNombre_cliente(),
+//                        TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
+//            ClienteDomain cliente = new ClienteDomain();
+//            cliente.setNombre(getBean().getNombre_cliente());
+//            cliente.setApellidos(getBean().getApellido_cliente());
+//            cliente.setTelefono(getBean().getTelefono_cliente());
+//            clienteUseCase.create(cliente);
+//            getBean().setLista_clientes(new ArrayListModel<>(clienteUseCase.findAll()));
+////            firePropertyChange(PROP_TO_MAIN_VIEW, null, cliente);
+//            getBean().setNombre_cliente(null);
+//            getBean().setApellido_cliente(null);
+//            getBean().setTelefono_cliente(null);
+//            Application.getInstance().getNotificationService().showDialog(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+//        }
+//    }
 
     private void onAceptarClick() {
         if ((boolean) Application.getInstance().getNotificationService().
