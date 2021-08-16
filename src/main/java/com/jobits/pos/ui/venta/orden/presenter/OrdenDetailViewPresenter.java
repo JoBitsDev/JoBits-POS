@@ -6,11 +6,11 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.clientes.ClientesDetailService;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
+import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Cliente;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
@@ -61,7 +61,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     public static final String PROP_CHANGES = "Changes";
 
-    private ClientesDetailService clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClientesDetailService.class);
+    private ClienteUseCase clienteservice = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
 
     public OrdenDetailViewPresenter(OrdenService controller) {
         super(new OrdenDetailViewModel());
@@ -251,7 +251,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             }
             getBean().setLista_clientes(new ArrayListModel<>(clienteservice.findAll()));
             if (instance.getClienteIdCliente() != null) {
-                getBean().setCliente_seleccionado(instance.getClienteIdCliente());
+                getBean().setCliente_seleccionado(clienteservice.findBy(instance.getClienteIdCliente()));
             } else {
                 getBean().setCliente_seleccionado(null);
             }
@@ -414,9 +414,9 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         }
         );
         getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_CLIENTE_SELECCIONADO, (PropertyChangeEvent evt) -> {
-            Cliente newValue = (Cliente) evt.getNewValue();
+            ClienteDomain newValue = (ClienteDomain) evt.getNewValue();
             if (newValue != null) {
-                clienteservice.addOrdenToClientOrdenList(newValue, ordenService.findBy(codOrden));
+               // clienteservice.addOrdenToClientOrdenList(newValue, ordenService.findBy(codOrden));
             }
         }
         );

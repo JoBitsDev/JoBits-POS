@@ -6,9 +6,9 @@
 package com.jobits.pos.ui.reserva.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.reserva.core.domain.Categoria;
-import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.time.LocalTime;
@@ -84,11 +84,11 @@ public class ReservaDetailViewModel extends AbstractViewModel {
     public static final String PROP_BOTTON_AGREGO_ENABLED = "botton_agrego_enabled";
 
     //CLIENTE
-    private Cliente cliente;
+    private ClienteDomain cliente;
 
     public static final String PROP_CLIENTE = "cliente";
 
-    private ArrayListModel<Cliente> lista_clientes = new ArrayListModel<>();
+    private ArrayListModel<ClienteDomain> lista_clientes = new ArrayListModel<>();
 
     public static final String PROP_LISTA_CLIENTES = "lista_clientes";
 
@@ -512,7 +512,7 @@ public class ReservaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of cliente
      */
-    public Cliente getCliente() {
+    public ClienteDomain getCliente() {
         return cliente;
     }
 
@@ -521,8 +521,8 @@ public class ReservaDetailViewModel extends AbstractViewModel {
      *
      * @param cliente new value of cliente
      */
-    public void setCliente(Cliente cliente) {
-        Cliente oldCliente = this.cliente;
+    public void setCliente(ClienteDomain cliente) {
+        ClienteDomain oldCliente = this.cliente;
         this.cliente = cliente;
         firePropertyChange(PROP_CLIENTE, oldCliente, cliente);
     }
@@ -532,7 +532,7 @@ public class ReservaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_clientes
      */
-    public ArrayListModel<Cliente> getLista_clientes() {
+    public ArrayListModel<ClienteDomain> getLista_clientes() {
         return lista_clientes;
     }
 
@@ -541,8 +541,8 @@ public class ReservaDetailViewModel extends AbstractViewModel {
      *
      * @param lista_clientes new value of lista_clientes
      */
-    public void setLista_clientes(ArrayListModel<Cliente> lista_clientes) {
-        ArrayListModel<Cliente> oldLista_clientes = this.lista_clientes;
+    public void setLista_clientes(ArrayListModel<ClienteDomain> lista_clientes) {
+        ArrayListModel<ClienteDomain> oldLista_clientes = this.lista_clientes;
         this.lista_clientes.clear();
         this.lista_clientes.addAll(lista_clientes);
         firePropertyChange(PROP_LISTA_CLIENTES, oldLista_clientes, lista_clientes);

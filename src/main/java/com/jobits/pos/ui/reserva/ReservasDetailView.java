@@ -8,17 +8,16 @@ package com.jobits.pos.ui.reserva;
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.adapter.SpinnerToValueModelConnector;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.reserva.core.domain.Cliente;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter.*;
-import com.jobits.pos.ui.swing.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.CardLayout;
@@ -539,7 +538,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         Bindings.bind(jComboBoxCliente, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
                 getPresenter().getModel(PROP_CLIENTE)));
-        Bindings.bind(jTable1, new SelectionInList<Cliente>(
+        Bindings.bind(jTable1, new SelectionInList<ClienteDomain>(
                 getPresenter().getModel(PROP_LISTA_CLIENTES),
                 getPresenter().getModel(PROP_CLIENTE)));
         Bindings.bind(jComboBoxHora, new SelectionInList<>(
@@ -602,7 +601,7 @@ public class ReservasDetailView extends AbstractViewPanel {
         jPanelGoBack.setVisible(false);
         jButtonShowProductos.setVisible(false);
 
-        jTable1.setModel(new BindableTableModel<Cliente>(jTable1) {
+        jTable1.setModel(new BindableTableModel<ClienteDomain>(jTable1) {
             @Override
             public int getColumnCount() {
                 return 3;
@@ -625,11 +624,11 @@ public class ReservasDetailView extends AbstractViewPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return getRow(rowIndex).getNombrecliente();
+                        return getRow(rowIndex).getNombre();
                     case 1:
-                        return getRow(rowIndex).getApellidocliente();
+                        return getRow(rowIndex).getApellidos();
                     case 2:
-                        return getRow(rowIndex).getTelefonocliente();
+                        return getRow(rowIndex).getTelefono();
                 }
                 return null;
             }

@@ -5,10 +5,10 @@
  */
 package com.jobits.pos.ui.clientes.presenter;
 
-import com.jobits.pos.controller.clientes.ClientesListService;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
+import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Cliente;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
@@ -25,7 +25,7 @@ import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
  */
 public class ClientesListViewPresenter extends AbstractListViewPresenter<ClientesListViewModel> {
 
-    private final ClientesListService service = PosDesktopUiModule.getInstance().getImplementation(ClientesListService.class);
+    private final ClienteUseCase service = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
 
     public ClientesListViewPresenter() {
         super(new ClientesListViewModel(), ClientesListView.VIEW_NAME);
@@ -46,21 +46,28 @@ public class ClientesListViewPresenter extends AbstractListViewPresenter<Cliente
 
     @Override
     protected void onEditarClick() {
-        NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
-                new ClientesDetailViewPresenter(getBean().getElemento_seleccionado()), DisplayType.POPUP);
-        setListToBean();
+        ClienteDomain selected = getBean().getElemento_seleccionado();
+        if (selected != null) {
+            NavigationService.getInstance().navigateTo(ClientesDetailView.VIEW_NAME,
+                    new ClientesDetailViewPresenter(getBean().getElemento_seleccionado()), DisplayType.POPUP);
+            setListToBean();
+        } else {
+            Application.getInstance().getNotificationService().showDialog("Seleccione un cliente", TipoNotificacion.ERROR);
+        }
     }
 
     @Override
     protected void onEliminarClick() {
-        Cliente selected = getBean().getElemento_seleccionado();
+        ClienteDomain selected = getBean().getElemento_seleccionado();
         if (selected != null) {
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea eliminar: " + selected,
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                service.destroy(getBean().getElemento_seleccionado());
+                service.destroy(selected);
                 setListToBean();
             }
+        } else {
+            Application.getInstance().getNotificationService().showDialog("Seleccione un cliente", TipoNotificacion.ERROR);
         }
     }
 

@@ -5,12 +5,12 @@
  */
 package com.jobits.pos.ui.clientes.reserva.presenter;
 
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
+import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.reserva.core.domain.Cliente;
-import com.jobits.pos.reserva.core.usecase.ClienteUseCase;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
@@ -53,7 +53,7 @@ public class ClientesReservaListViewPresenter extends AbstractListViewPresenter<
 
     @Override
     protected void onEliminarClick() {
-        Cliente selected = getBean().getElemento_seleccionado();
+        ClienteDomain selected = getBean().getElemento_seleccionado();
         if (selected != null) {
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea eliminar: " + selected,
@@ -62,7 +62,7 @@ public class ClientesReservaListViewPresenter extends AbstractListViewPresenter<
                 setListToBean();
             }
         } else {
-             Application.getInstance().getNotificationService().notify("Seleccione un cliente", TipoNotificacion.ERROR);
+            Application.getInstance().getNotificationService().notify("Seleccione un cliente", TipoNotificacion.ERROR);
         }
     }
 

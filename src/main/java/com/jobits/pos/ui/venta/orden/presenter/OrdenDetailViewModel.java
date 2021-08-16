@@ -6,13 +6,11 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.core.domain.models.Cliente;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.List;
 import javax.swing.ImageIcon;
 
@@ -103,11 +101,11 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_DOMICILIO_ICONO = "domicilio_icono";
 
-    private ArrayListModel<Cliente> lista_clientes = new ArrayListModel<>();
+    private ArrayListModel<ClienteDomain> lista_clientes = new ArrayListModel<>();
 
     public static final String PROP_LISTA_CLIENTES = "lista_clientes";
 
-    private Cliente cliente_seleccionado;
+    private ClienteDomain cliente_seleccionado;
 
     public static final String PROP_CLIENTE_SELECCIONADO = "cliente_seleccionado";
 
@@ -260,7 +258,7 @@ public class OrdenDetailViewModel extends AbstractViewModel {
      *
      * @return the value of cliente_seleccionado
      */
-    public Cliente getCliente_seleccionado() {
+    public ClienteDomain getCliente_seleccionado() {
         return cliente_seleccionado;
     }
 
@@ -269,8 +267,8 @@ public class OrdenDetailViewModel extends AbstractViewModel {
      *
      * @param cliente_seleccionado new value of cliente_seleccionado
      */
-    public void setCliente_seleccionado(Cliente cliente_seleccionado) {
-        Cliente oldCliente_seleccionado = this.cliente_seleccionado;
+    public void setCliente_seleccionado(ClienteDomain cliente_seleccionado) {
+        ClienteDomain oldCliente_seleccionado = this.cliente_seleccionado;
         this.cliente_seleccionado = cliente_seleccionado;
         firePropertyChange(PROP_CLIENTE_SELECCIONADO, oldCliente_seleccionado, cliente_seleccionado);
     }
@@ -280,7 +278,7 @@ public class OrdenDetailViewModel extends AbstractViewModel {
      *
      * @return the value of lista_clientes
      */
-    public ArrayListModel<Cliente> getLista_clientes() {
+    public ArrayListModel<ClienteDomain> getLista_clientes() {
         return lista_clientes;
     }
 
@@ -309,8 +307,8 @@ public class OrdenDetailViewModel extends AbstractViewModel {
      *
      * @param lista_clientes new value of lista_clientes
      */
-    public void setLista_clientes(ArrayListModel<Cliente> lista_clientes) {
-        ArrayListModel<Cliente> oldLista_clientes = this.lista_clientes;
+    public void setLista_clientes(ArrayListModel<ClienteDomain> lista_clientes) {
+        ArrayListModel<ClienteDomain> oldLista_clientes = this.lista_clientes;
         this.lista_clientes = lista_clientes;
         firePropertyChange(PROP_LISTA_CLIENTES, oldLista_clientes, lista_clientes);
     }

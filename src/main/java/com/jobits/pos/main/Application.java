@@ -5,6 +5,8 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.cliente.core.module.ClienteCoreModule;
+import com.jobits.pos.cliente.repo.module.ClienteRepoModule;
 import com.jobits.pos.ui.utils.ConfigLoaderService;
 import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.controller.licencia.impl.LicenceController;
@@ -236,12 +238,22 @@ public class Application {
 
     private void initModules() {
         DataVersionControlModule.init();
+        //MODULO CLIENTE
+        ClienteRepoModule.init(DataVersionControlModule.getInstance());
+        ClienteCoreModule.init(ClienteRepoModule.getInstance());
+
+        //MODULO RESERVA
         ReservaRepoModule.init(DataVersionControlModule.getInstance());
         ReservaCoreModule.init(ReservaRepoModule.getInstance());
+
+        //MODULO POS-CORE
         PosCoreModule.init(DataVersionControlModule.getInstance());
+
+        //MODULO DESKTOP-UI
         PosDesktopUiModule.init(
+                PosCoreModule.getInstance(),
                 ReservaCoreModule.getInstance(),
-                PosCoreModule.getInstance());
+                ClienteCoreModule.getInstance());
     }
 
     private void registerResources() {
