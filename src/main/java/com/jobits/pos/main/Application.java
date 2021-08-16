@@ -76,7 +76,7 @@ public class Application {
 
     public static final int MAJOR_VERSION = 3;
 
-    public static final int MINOR_VERSION = 10;
+    public static final int MINOR_VERSION = 11;
 
     public static final int PATCH_VERSION = 0;
 
