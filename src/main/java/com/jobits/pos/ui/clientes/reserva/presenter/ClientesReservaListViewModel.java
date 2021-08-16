@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.clientes.reserva.presenter;
 
-import com.jobits.pos.reserva.core.domain.Cliente;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 
 /**
@@ -15,6 +15,6 @@ import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
  * @author Home
  *
  */
-public class ClientesReservaListViewModel extends AbstractListViewModel<Cliente> {
+public class ClientesReservaListViewModel extends AbstractListViewModel<ClienteDomain> {
 
 }

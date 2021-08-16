@@ -5,12 +5,11 @@
  */
 package com.jobits.pos.ui.clientes.reserva.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
+import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.reserva.core.domain.Cliente;
-import com.jobits.pos.reserva.core.usecase.ClienteUseCase;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -32,13 +31,13 @@ public class ClientesReservaDetailViewPresenter extends AbstractViewPresenter<Cl
 
     private final boolean creatingMode;
 
-    private Cliente cliente;
+    private ClienteDomain cliente;
 
-    public ClientesReservaDetailViewPresenter(Cliente cliente) {
+    public ClientesReservaDetailViewPresenter(ClienteDomain cliente) {
         super(new ClientesReservaDetailViewModel());
         this.creatingMode = cliente == null;
         if (creatingMode) {
-            this.cliente = new Cliente();
+            this.cliente = new ClienteDomain();
         } else {
             this.cliente = cliente;
         }
@@ -70,13 +69,9 @@ public class ClientesReservaDetailViewPresenter extends AbstractViewPresenter<Cl
             if (getBean().getNombre() != null
                     && getBean().getApellidos() != null
                     && getBean().getTelefono() != null) {
-                cliente.setNombrecliente(getBean().getNombre());
-                cliente.setApellidocliente(getBean().getApellidos());
-                cliente.setTelefonocliente(getBean().getTelefono());
-                cliente.setDireccioncliente(getBean().getDireccion());
-                cliente.setMunicipiocliente(getBean().getMunicipio());
-                cliente.setProvinciacliente(getBean().getCiudad());
-                cliente.setReservaCollection(getBean().getLista_reservas());
+                cliente.setNombre(getBean().getNombre());
+                cliente.setApellidos(getBean().getApellidos());
+                cliente.setTelefono(getBean().getTelefono());
 
                 if (creatingMode) {
                     clienteservice.create(cliente);
@@ -100,13 +95,9 @@ public class ClientesReservaDetailViewPresenter extends AbstractViewPresenter<Cl
 
     @Override
     protected Optional refreshState() {
-        getBean().setNombre(cliente.getNombrecliente());
-        getBean().setApellidos(cliente.getApellidocliente());
-        getBean().setTelefono(cliente.getTelefonocliente());
-        getBean().setDireccion(cliente.getDireccioncliente());
-        getBean().setMunicipio(cliente.getMunicipiocliente());
-        getBean().setCiudad(cliente.getProvinciacliente());
-        getBean().setLista_reservas(new ArrayListModel<>(cliente.getReservaCollection()));
+        getBean().setNombre(cliente.getNombre());
+        getBean().setApellidos(cliente.getApellidos());
+        getBean().setTelefono(cliente.getTelefono());
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 }

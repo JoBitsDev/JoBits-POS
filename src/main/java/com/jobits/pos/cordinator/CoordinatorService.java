@@ -51,7 +51,7 @@ import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.orden.AgregarProductoView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
-import com.jobits.pos.ui.venta.orden.DomicilioView;
+import com.jobits.pos.ui.clientes.DomicilioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.ui.venta.resumen.ResumenMainview;

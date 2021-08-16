@@ -25,10 +25,10 @@ public class NumberPad extends javax.swing.JDialog {
     /**
      * Creates new form NumberPad
      *
-     * @param parent
      */
-    public NumberPad(java.awt.Frame parent) {
-        super(parent, true);
+    public NumberPad() {
+        super();
+        setModal(true);
         init();
     }
 

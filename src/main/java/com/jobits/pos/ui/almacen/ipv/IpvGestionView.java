@@ -554,7 +554,7 @@ public class IpvGestionView extends AbstractViewPanel {
                         return getRow(rowIndex).getFinal();
                     case 7:
                         return utils.setDosLugaresDecimalesFloat(
-                                getRow(rowIndex).getFinal()
+                                getRow(rowIndex).getConsumoUnico()
                                 * getRow(rowIndex).getPrecioCosto());
                     case 8:
                         float consumo = getRow(rowIndex).getPrecioCosto() * getRow(rowIndex).getConsumo();

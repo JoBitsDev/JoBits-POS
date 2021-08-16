@@ -112,7 +112,7 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea agregar: " + selected.getProductoVenta(),
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                Float cantidad = new NumberPad(null).showView();
+                Float cantidad = new NumberPad().showView();
                 if (cantidad != null) {
                     getBean().getLista_producto_venta_model().add(
                             new ProdcutoVentaPedidoModel(selected, cantidad));

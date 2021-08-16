@@ -5,12 +5,11 @@
  */
 package com.jobits.pos.ui.clientes;
 
-import com.jobits.pos.core.domain.models.Cliente;
-import com.jobits.pos.ui.trabajadores.*;
-import com.jobits.pos.core.domain.models.Personal;
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.jobits.pos.ui.AbstractListViewPanel;
-import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
+import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
+import javax.swing.JTable;
 
 /**
  * FirstDream
@@ -18,17 +17,17 @@ import com.jobits.pos.ui.swing.utils.BindableTableModel;
  * @author Jorge
  *
  */
-public class ClientesListView extends AbstractListViewPanel<Cliente> {
+public class ClientesListView extends AbstractListViewPanel<ClienteDomain> {
 
     public static final String VIEW_NAME = "Clientes";
 
-    public ClientesListView(AbstractListViewPresenter presenter) {
+    public ClientesListView(ClientesListViewPresenter presenter) {
         super(presenter);
     }
 
     @Override
-    public BindableTableModel<Cliente> generateTableModel() {
-        return new BindableTableModel<Cliente>(jTableList) {
+    public BindableTableModel<ClienteDomain> generateTableModel() {
+        return new BindableTableModel<ClienteDomain>(jTableList) {
             @Override
             public int getColumnCount() {
                 return 3;
@@ -38,11 +37,11 @@ public class ClientesListView extends AbstractListViewPanel<Cliente> {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return getRow(rowIndex).getNombreCliente();
+                        return getRow(rowIndex).getNombre() + " " + getRow(rowIndex).getApellidos();
                     case 1:
-                        return getRow(rowIndex).getTelefonoCliente();
+                        return getRow(rowIndex).getTelefono();
                     case 2:
-                        return getRow(rowIndex).getOrdenList().size();
+                        return getRow(rowIndex).getDireccionEnvioList().size();
                     default:
                         return null;
                 }
@@ -56,7 +55,7 @@ public class ClientesListView extends AbstractListViewPanel<Cliente> {
                     case 1:
                         return java.util.ResourceBundle.getBundle("Strings").getString("label_telefono");
                     case 2:
-                        return "Cantidad de Ordenes";
+                        return "Direcciones";
                     default:
                         return null;
                 }
@@ -68,6 +67,15 @@ public class ClientesListView extends AbstractListViewPanel<Cliente> {
 
     public String getViewName() {
         return VIEW_NAME;
+    }
+
+    @Override
+    public ClientesListViewPresenter getPresenter() {
+        return (ClientesListViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public JTable getjTableList() {
+        return jTableList;
     }
 
 }

@@ -231,7 +231,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         List<IpvRegistro> list = getBean().getLista_ipv_registro();
         float value = 0f;
         for (IpvRegistro ipv : list) {
-            value += (ipv.getFinal() * ipv.getPrecioCosto());
+            value += (ipv.getConsumoUnico() * ipv.getPrecioCosto());
         }
         getBean().setTotal_ipv_registro(utils.setDosLugaresDecimales(value));
     }
@@ -252,7 +252,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onAjustarCostoClick() {
         IpvRegistro instance = getBean().getIpv_registro_seleciconado();
-        Float cantidad = new NumberPad(null).showView();
+        Float cantidad = new NumberPad().showView();
         if (cantidad != null && instance != null) {
             if (JOptionPane.showConfirmDialog(null,
                     "Desea ajustar el costo de " + instance.getIpv().getInsumo() + " a " + cantidad + " " + R.COIN_SUFFIX,
@@ -368,7 +368,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onDarEntradaIpv() {
         if (getBean().getIpv_registro_seleciconado() != null) {
             Insumo instance = getBean().getIpv_registro_seleciconado().getIpv().getInsumo();
-            Float cantidad = new NumberPad(null).showView();
+            Float cantidad = new NumberPad().showView();
             Venta fecha = getBean().getVenta_ipv_seleccionada();
             Cocina cocina = getBean().getPunto_elaboracion_seleccionado();
             if (cantidad != null && instance != null && fecha != null && cocina != null) {
@@ -384,7 +384,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onDarEntradaIpvVentas() {
         IpvVentaRegistro instance = getBean().getIpv_venta_registro_seleccionado();
-        Float cantidad = new NumberPad(null).showView();
+        Float cantidad = new NumberPad().showView();
         if (cantidad != null && instance != null) {
             if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta(),
                     R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
@@ -408,7 +408,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onAjustarIpv() {
         IpvRegistro instance = getBean().getIpv_registro_seleciconado();
-        Float cantidad = new NumberPad(null).showView();
+        Float cantidad = new NumberPad().showView();
         if (cantidad != null && instance != null) {
             if (JOptionPane.showConfirmDialog(null, "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad,
                     R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
@@ -472,7 +472,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 case JOptionPane.YES_OPTION:
                     cocina = (Cocina) jComboBox1.getSelectedItem();
                     if (cocina != null) {
-                        Float cantidad = new NumberPad(null).showView();
+                        Float cantidad = new NumberPad().showView();
                         if (cantidad != null) {
                             service.transferirIPVRegistro(getBean().getIpv_registro_seleciconado(), cocina, cantidad);
                         }
@@ -508,7 +508,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                 case JOptionPane.YES_OPTION:
                     almacen = (Almacen) jComboBox1.getSelectedItem();
                     if (almacen != null) {
-                        Float cantidad = new NumberPad(null).showView();
+                        Float cantidad = new NumberPad().showView();
                         if (cantidad != null) {
                             service.transferirIPVRegistroToAlmacen(getBean().getIpv_registro_seleciconado(), almacen, cantidad);
                         }
