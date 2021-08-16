@@ -1,7 +1,10 @@
 package com.jobits.pos.ui.reserva.model;
 
+import com.jobits.pos.cliente.core.domain.ClienteDomain;
+import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.reserva.core.domain.ReservaEstado;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.ui.scheduler.Appointment;
 import com.jobits.ui.scheduler.Resource;
 import java.awt.Color;
@@ -20,6 +23,7 @@ public class ReservaWrapper implements Appointment {
     private Category _category;
     private Resource _resource;
     private Reserva reserva;
+    private ClienteUseCase clienteService = PosDesktopUiModule.getInstance().getImplementation(ClienteUseCase.class);
 
     public ReservaWrapper(Reserva reserva, Category category, Resource resource) {
         this.reserva = reserva;
@@ -107,31 +111,28 @@ public class ReservaWrapper implements Appointment {
 
     @Override
     public String getDescription() {
-        String nombre, checkin, checkout, orden;
+        String nombre = "Sin Nombre", checkin = "-:-- xx", checkout = "-:-- xx", orden = "O-xxxxx", cliente = "---";
         if (reserva.getNotasreserva() != null) {
             nombre = reserva.getNotasreserva();
-        } else {
-            nombre = "Sin Nombre";
         }
         if (reserva.getCheckin() != null) {
             checkin = reserva.getCheckin().format(DateTimeFormatter.ofPattern("h:mm a"));
-        } else {
-            checkin = "-:-- xx";
         }
         if (reserva.getCheckout() != null) {
             checkout = reserva.getCheckout().format(DateTimeFormatter.ofPattern("h:mm a"));
-        } else {
-            checkout = "-:-- xx";
         }
         if (reserva.getNumeroPedidoAsociado() != null) {
             orden = reserva.getNumeroPedidoAsociado();
-        } else {
-            orden = "O-xxxxx";
         }
-
+        if (reserva.getClienteidcliente() != null) {
+            ClienteDomain c = clienteService.findBy(reserva.getClienteidcliente());
+            if (c != null) {
+                cliente = c.toString();
+            }
+        }
         return "<html>"
                 + "Nombre: " + nombre + "<br>"
-                + "Cliente: " + reserva.getClienteidcliente() + "<br>"
+                + "Cliente: " + cliente + "<br>"
                 + "Estado: " + reserva.getEstado() + "<br>"
                 + "Hora: " + reserva.getHorareserva().format(DateTimeFormatter.ofPattern("h:mm a")) + "<br>"
                 + "Duracion: " + reserva.getDuracionMinutos() + " minutos" + "<br>"
@@ -139,7 +140,6 @@ public class ReservaWrapper implements Appointment {
                 + "CheckOut: " + checkout + "<br>"
                 + "Orden: " + orden + "<br>"
                 + "</html>";
-
     }
 
     @Override

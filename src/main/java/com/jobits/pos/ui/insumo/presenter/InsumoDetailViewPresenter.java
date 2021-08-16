@@ -173,7 +173,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     }
 
     private void onAgregarInsumoFichaClick() {
-        Float cantidad = new NumberPad(null).showView();
+        Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             Insumo selected = getBean().getInsumo_disponible_selecionado();
             service.agregarInsumoElaboradoaInsumo(insumo, selected, cantidad);
@@ -193,7 +193,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     }
 
     private void onAgregarProductoFichaClick() {
-        Float cantidad = new NumberPad(null).showView();
+        Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             service.agregarProductoVentaAInsumo(insumo, getBean().getProducto_disponible_seleccionado(), cantidad);
             getBean().setProducto_disponible_seleccionado(null);

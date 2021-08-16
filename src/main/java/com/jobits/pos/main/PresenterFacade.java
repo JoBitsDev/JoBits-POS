@@ -124,10 +124,10 @@ import com.jobits.pos.ui.venta.resumen.ResumenMainview;
 import com.jobits.pos.ui.login.ChangeUserView;
 import com.jobits.pos.ui.login.presenter.ChangeUserViewPresenter;
 import com.jobits.pos.ui.venta.orden.AgregarProductoView;
-import com.jobits.pos.ui.venta.orden.DomicilioView;
+import com.jobits.pos.ui.clientes.DomicilioView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.ui.venta.orden.presenter.AgregarProductoViewPresenter;
-import com.jobits.pos.ui.venta.orden.presenter.DomicilioViewPresenter;
+import com.jobits.pos.ui.clientes.presenter.DomicilioViewPresenter;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoEnCalienteViewPresenter;
 import org.jobits.db.core.usecase.UbicacionConexionService;
 
@@ -240,7 +240,7 @@ public class PresenterFacade {
             case ResumenMainview.VIEW_NAME:
                 return new ResumenMainViewPresenter();
             case DomicilioView.VIEW_NAME:
-                return new DomicilioViewPresenter(null, null);
+                return new DomicilioViewPresenter(null);
             case MesaDetailView.VIEW_NAME:
                 return new MesaDetailViewPresenter(new Area(), new Mesa(), true);
             case UbicacionDetailView.VIEW_NAME:

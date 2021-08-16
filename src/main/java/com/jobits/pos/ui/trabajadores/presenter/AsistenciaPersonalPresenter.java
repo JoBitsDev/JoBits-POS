@@ -110,7 +110,7 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
     }
 
     private void onAMayoresClick() {
-        Float cantidad = new NumberPad(null).showView();
+        Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
             asistenciaPersonalService.updateAMayores(personal, cantidad);

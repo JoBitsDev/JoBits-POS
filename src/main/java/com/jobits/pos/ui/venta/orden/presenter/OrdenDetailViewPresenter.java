@@ -7,22 +7,28 @@ package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.cliente.core.domain.ClienteDomain;
+import com.jobits.pos.cliente.core.domain.DireccionEnvioDomain;
 import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.domain.models.DireccionEnvio;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.clientes.containers.ClienteViewContainer;
+import com.jobits.pos.ui.clientes.containers.DireccionEnvioListContainer;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
-import com.jobits.pos.ui.venta.orden.DomicilioView;
+import com.jobits.pos.ui.clientes.DomicilioView;
+import com.jobits.pos.ui.clientes.containers.DireccionEnvioDetailContainer;
+import com.jobits.pos.ui.clientes.containers.DomicilioViewContainer;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.utils.utils;
@@ -55,6 +61,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_SET_SUPORT_PANEL_VISIBLE = "Suport Panel Visible";
     public static String ACTION_SET_PORCIENTO = "Porciento";
     public static String ACTION_SET_DOMICILIO = "Domicilio";
+    public static String ACTION_SET_CLIENTE = "Cliente";
     private String codOrden;
 
     private OrdenService ordenService = PosDesktopUiModule.getInstance().getImplementation(OrdenService.class);
@@ -109,7 +116,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         if (getBean().getProducto_orden_seleccionado() == null) {
             throw new IllegalArgumentException("Seleccione un Producto Primero");
         }
-        Float cantidad = new NumberPad(null).showView();
+        Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             if (getBean().isModo_agrego_activado()) {
                 ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, getBean().getProducto_orden_seleccionado());
@@ -165,7 +172,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         if (selected == null) {
             throw new IllegalArgumentException("Seleccione un Producto Primero");
         }
-        Float value = new NumberPad(null).showView();
+        Float value = new NumberPad().showView();
         if (value != null) {
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea eliminar (" + value + ") de: " + selected.getNombreProductoVendido(),
@@ -187,10 +194,54 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         if (codOrden != null) {
             Orden orden = ordenService.findBy(codOrden);
             if (orden != null) {
-                NavigationService.getInstance().navigateTo(DomicilioView.VIEW_NAME,
-                        new DomicilioViewPresenter(orden.getDireccionEnvio(), orden), DisplayType.POPUP);
+                ClienteDomain cliente = new ClienteViewContainer().showView();
+                if (cliente != null) {
+                    DireccionEnvioDomain dir_seleccionada = new DireccionEnvioListContainer(cliente).showView();
+                    DireccionEnvio de = new DireccionEnvio(codOrden);
+                    de.setOrden(orden);
+                    de.setPrecioEnvio(0f);
+                    if (dir_seleccionada != null) {
+                        de.setNombre(dir_seleccionada.getNombre());
+                        de.setApellidos(dir_seleccionada.getApellidos());
+                        de.setTelefono(dir_seleccionada.getTelefono());
+                        de.setDireccion(dir_seleccionada.getDireccion());
+                        de.setDireccionAdicional(dir_seleccionada.getDireccionAdicional());
+                        de.setCiudad(dir_seleccionada.getCiudad());
+                        de.setProvincia(dir_seleccionada.getProvincia());
+                        de.setEmpresa(dir_seleccionada.getEmpresa());
+                        orden.setDireccionEnvio(de);
+                    } else {
+                        DireccionEnvioDomain dir_creada = new DireccionEnvioDetailContainer(cliente).showView();
+                        if (dir_creada != null) {
+                            de.setNombre(dir_creada.getNombre());
+                            de.setApellidos(dir_creada.getApellidos());
+                            de.setTelefono(dir_creada.getTelefono());
+                            de.setDireccion(dir_creada.getDireccion());
+                            de.setDireccionAdicional(dir_creada.getDireccionAdicional());
+                            de.setCiudad(dir_creada.getCiudad());
+                            de.setProvincia(dir_creada.getProvincia());
+                            de.setEmpresa(dir_creada.getEmpresa());
+                            orden.setDireccionEnvio(de);
+                        }
+                    }
+                    orden.setClienteIdCliente(cliente.getId());
+                } else {
+                    DireccionEnvio direccionEnvio = new DomicilioViewContainer(orden).showView();
+                    if (direccionEnvio != null) {
+                        orden.setDireccionEnvio(direccionEnvio);
+                    }
+                }
+                ordenService.edit(orden);
                 refreshState();
             }
+        }
+    }
+
+    private void onSetClienteClick() {
+        ClienteDomain cliente = new ClienteViewContainer().showView();
+        if (cliente != null) {
+            ordenService.setCliente(getCodOrden(), cliente.getId());
+            refreshState();
         }
     }
 
@@ -249,11 +300,11 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 getBean().setDomicilio_icono(new ImageIcon(getClass().getResource(
                         "/restManager/resources/icons pack/domicilio_gris.png")));
             }
-            getBean().setLista_clientes(new ArrayListModel<>(clienteservice.findAll()));
             if (instance.getClienteIdCliente() != null) {
-                getBean().setCliente_seleccionado(clienteservice.findBy(instance.getClienteIdCliente()));
-            } else {
-                getBean().setCliente_seleccionado(null);
+                ClienteDomain c = clienteservice.findBy(instance.getClienteIdCliente());
+                if (c != null) {
+                    getBean().setCliente(c.toString());
+                }
             }
             if (getBean().getLista_producto_orden().isEmpty()) {
                 getBean().setEnvio_cocina(false);
@@ -388,6 +439,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_SET_CLIENTE) {
+            @Override
+            public Optional doAction() {
+                onSetClienteClick();
+                return Optional.empty();
+            }
+        });
         registerOperation(new AbstractViewAction(ACTION_SET_SUPORT_PANEL_VISIBLE) {
             @Override
             public Optional doAction() {
@@ -413,13 +471,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             refreshState();
         }
         );
-        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_CLIENTE_SELECCIONADO, (PropertyChangeEvent evt) -> {
-            ClienteDomain newValue = (ClienteDomain) evt.getNewValue();
-            if (newValue != null) {
-               // clienteservice.addOrdenToClientOrdenList(newValue, ordenService.findBy(codOrden));
-            }
-        }
-        );
+//        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_CLIENTE_SELECCIONADO, (PropertyChangeEvent evt) -> {
+//            ClienteDomain newValue = (ClienteDomain) evt.getNewValue();
+//            if (newValue != null) {
+//                // clienteservice.addOrdenToClientOrdenList(newValue, ordenService.findBy(codOrden));
+//            }
+//        }
+//        );
         getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_PRODUCTO_ORDEN_SELECCIONADO, (PropertyChangeEvent evt) -> {
             ProductovOrden p = (ProductovOrden) evt.getNewValue();
             boolean flag = false;

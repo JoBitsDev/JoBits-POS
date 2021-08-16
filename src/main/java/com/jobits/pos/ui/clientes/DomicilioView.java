@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.ui.venta.orden;
+package com.jobits.pos.ui.clientes;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import static com.jobits.pos.ui.venta.orden.presenter.DomicilioViewModel.*;
-import static com.jobits.pos.ui.venta.orden.presenter.DomicilioViewPresenter.*;
+import static com.jobits.pos.ui.clientes.presenter.DomicilioViewModel.*;
+import com.jobits.pos.ui.clientes.presenter.DomicilioViewPresenter;
+import static com.jobits.pos.ui.clientes.presenter.DomicilioViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import javax.swing.JPanel;
 
 /**
  *
@@ -26,7 +28,7 @@ public class DomicilioView extends AbstractViewPanel {
      *
      * @param presenter
      */
-    public DomicilioView(AbstractViewPresenter presenter) {
+    public DomicilioView(DomicilioViewPresenter presenter) {
         super(presenter);
     }
 
@@ -281,4 +283,14 @@ public class DomicilioView extends AbstractViewPanel {
     private javax.swing.JTextField jTextFieldProvincia;
     private javax.swing.JTextField jTextFieldTelefonoMovil;
     // End of variables declaration//GEN-END:variables
+
+    public JPanel getjPanelBotones() {
+        return jPanelBotones;
+    }
+
+    @Override
+    public DomicilioViewPresenter getPresenter() {
+        return (DomicilioViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

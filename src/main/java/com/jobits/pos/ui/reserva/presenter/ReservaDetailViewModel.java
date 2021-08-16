@@ -88,25 +88,9 @@ public class ReservaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_CLIENTE = "cliente";
 
-    private ArrayListModel<ClienteDomain> lista_clientes = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_CLIENTES = "lista_clientes";
-
-    private String nombre_cliente;
+    private String nombre_cliente = "---";
 
     public static final String PROP_NOMBRE_CLIENTE = "nombre_cliente";
-
-    private String apellido_cliente;
-
-    public static final String PROP_APELLIDO_CLIENTE = "apellido_cliente";
-
-    private String telefono_cliente;
-
-    public static final String PROP_TELEFONO_CLIENTE = "telefono_cliente";
-
-    private String cliente_key_word = null;
-
-    public static final String PROP_CLIENTE_KEY_WORD = "cliente_key_word";
 
     //UBICACIONES
     private Ubicacion ubicacion_seleccionada;
@@ -125,26 +109,6 @@ public class ReservaDetailViewModel extends AbstractViewModel {
     private boolean show_productos = false;
 
     public static final String PROP_SHOW_PRODUCTOS = "show_productos";
-
-    /**
-     * Get the value of cliente_key_word
-     *
-     * @return the value of cliente_key_word
-     */
-    public String getCliente_key_word() {
-        return cliente_key_word;
-    }
-
-    /**
-     * Set the value of cliente_key_word
-     *
-     * @param cliente_key_word new value of cliente_key_word
-     */
-    public void setCliente_key_word(String cliente_key_word) {
-        String oldCliente_key_word = this.cliente_key_word;
-        this.cliente_key_word = cliente_key_word;
-        firePropertyChange(PROP_CLIENTE_KEY_WORD, oldCliente_key_word, cliente_key_word);
-    }
 
     /**
      * Get the value of lista_categorias
@@ -367,46 +331,6 @@ public class ReservaDetailViewModel extends AbstractViewModel {
     }
 
     /**
-     * Get the value of telefono_cliente
-     *
-     * @return the value of telefono_cliente
-     */
-    public String getTelefono_cliente() {
-        return telefono_cliente;
-    }
-
-    /**
-     * Set the value of telefono_cliente
-     *
-     * @param telefono_cliente new value of telefono_cliente
-     */
-    public void setTelefono_cliente(String telefono_cliente) {
-        String oldTelefono_cliente = this.telefono_cliente;
-        this.telefono_cliente = telefono_cliente;
-        firePropertyChange(PROP_TELEFONO_CLIENTE, oldTelefono_cliente, telefono_cliente);
-    }
-
-    /**
-     * Get the value of apellido_cliente
-     *
-     * @return the value of apellido_cliente
-     */
-    public String getApellido_cliente() {
-        return apellido_cliente;
-    }
-
-    /**
-     * Set the value of apellido_cliente
-     *
-     * @param apellido_cliente new value of apellido_cliente
-     */
-    public void setApellido_cliente(String apellido_cliente) {
-        String oldApellido_cliente = this.apellido_cliente;
-        this.apellido_cliente = apellido_cliente;
-        firePropertyChange(PROP_APELLIDO_CLIENTE, oldApellido_cliente, apellido_cliente);
-    }
-
-    /**
      * Get the value of nombre_cliente
      *
      * @return the value of nombre_cliente
@@ -525,27 +449,6 @@ public class ReservaDetailViewModel extends AbstractViewModel {
         ClienteDomain oldCliente = this.cliente;
         this.cliente = cliente;
         firePropertyChange(PROP_CLIENTE, oldCliente, cliente);
-    }
-
-    /**
-     * Get the value of lista_clientes
-     *
-     * @return the value of lista_clientes
-     */
-    public ArrayListModel<ClienteDomain> getLista_clientes() {
-        return lista_clientes;
-    }
-
-    /**
-     * Set the value of lista_clientes
-     *
-     * @param lista_clientes new value of lista_clientes
-     */
-    public void setLista_clientes(ArrayListModel<ClienteDomain> lista_clientes) {
-        ArrayListModel<ClienteDomain> oldLista_clientes = this.lista_clientes;
-        this.lista_clientes.clear();
-        this.lista_clientes.addAll(lista_clientes);
-        firePropertyChange(PROP_LISTA_CLIENTES, oldLista_clientes, lista_clientes);
     }
 
     /**

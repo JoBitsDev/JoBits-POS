@@ -35,6 +35,8 @@ import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
 import com.jobits.pos.ui.cartas.CartasSeccionView;
 import com.jobits.pos.ui.cartas.SeccionDetailView;
+import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
+import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
 import com.jobits.pos.ui.login.ChangeUserView;
@@ -57,7 +59,8 @@ import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.orden.AgregarProductoView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
-import com.jobits.pos.ui.venta.orden.DomicilioView;
+import com.jobits.pos.ui.clientes.DomicilioView;
+import com.jobits.pos.ui.clientes.presenter.DomicilioViewPresenter;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
@@ -150,13 +153,13 @@ public class ViewFacade {
             case ReportarBugView.VIEW_NAME:
                 return new ReportarBugView(p);
             case ClientesDetailView.VIEW_NAME:
-                return new ClientesDetailView(p);
+                return new ClientesDetailView((ClientesDetailViewPresenter) p);
             case ClientesReservaDetailView.VIEW_NAME:
                 return new ClientesReservaDetailView(p);
             case ReservasDetailView.VIEW_NAME:
                 return new ReservasDetailView(p);
             case ClientesListView.VIEW_NAME:
-                return new ClientesListView((AbstractListViewPresenter) p);
+                return new ClientesListView((ClientesListViewPresenter) p);
             case ClientesReservaListView.VIEW_NAME:
                 return new ClientesReservaListView((AbstractListViewPresenter) p);
             case OrdenLogView.VIEW_NAME:
@@ -174,7 +177,7 @@ public class ViewFacade {
             case CategoriaDetailView.VIEW_NAME:
                 return new CategoriaDetailView(p);
             case DomicilioView.VIEW_NAME:
-                return new DomicilioView(p);
+                return new DomicilioView((DomicilioViewPresenter) p);
             case ResumenMainview.VIEW_NAME:
                 return new ResumenMainview((ResumenMainViewPresenter) p);
             case ReservaOrdenDetailView.VIEW_NAME:
