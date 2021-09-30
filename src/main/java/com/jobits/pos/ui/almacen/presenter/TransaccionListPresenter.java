@@ -9,8 +9,11 @@ import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.TransaccionListView;
+import static com.jobits.pos.ui.almacen.presenter.TransaccionListModel.PROP_SHOW_MERMAS;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
@@ -22,6 +25,7 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
 
     TransaccionListService service;
     public static final String ACTION_IMPRIMIR_TRANSACCIONES = "";
+    public static final String ACTION_MOSTRAR_MERMAS = "Mostrar Mermas";
     public static final String ACTION_CERRAR_POPUP = "Cerrar";
 
     public TransaccionListPresenter(TransaccionListService service, Almacen almacen) {
@@ -30,7 +34,7 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
         getBean().setAlmacen(almacen);
         setListToBean();
         registerExtraOperations();
-
+        registerListeners();
     }
 
     protected void registerExtraOperations() {
@@ -53,6 +57,14 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_MOSTRAR_MERMAS) {
+            @Override
+            public Optional doAction() {
+                onShowMermasClick();
+                return Optional.empty();
+            }
+        }
+        );
     }
 
     @Override
@@ -74,6 +86,21 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
         getBean().getLista_elementos().addAll(service.findAllByAlmacen(getBean().getAlmacen()));
+    }
+
+    private void onShowMermasClick() {
+        getBean().setShow_mermas(!getBean().isShow_mermas());
+    }
+
+    private void registerListeners() {
+        getBean().addPropertyChangeListener(PROP_SHOW_MERMAS, (PropertyChangeEvent evt) -> {
+            getBean().getLista_elementos().clear();
+            if ((boolean) evt.getNewValue()) {
+                getBean().getLista_elementos().addAll(service.findMermasByAlmacen(getBean().getAlmacen()));
+            } else {
+                getBean().getLista_elementos().addAll(service.findAllByAlmacen(getBean().getAlmacen()));
+            }
+        });
     }
 
 }
