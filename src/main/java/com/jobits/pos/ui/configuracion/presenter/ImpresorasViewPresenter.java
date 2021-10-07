@@ -13,6 +13,7 @@ import com.jobits.pos.servicios.impresion.ImpresoraService;
 import com.jobits.pos.ui.configuracion.Impresoras;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.awt.Container;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -114,15 +115,15 @@ public class ImpresorasViewPresenter extends AbstractListViewPresenter<Impresora
     public void showSuccessDialog(Container view, String text) {
 
         JOptionPane.showMessageDialog(view, text,
-                R.RESOURCE_BUNDLE.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
+                ResourceHandler.getString("label_informacion"), JOptionPane.INFORMATION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/exitoso.png")));
 
     }
 
     protected boolean showConfirmDialog(Container view) {
 
-        return true ? JOptionPane.showConfirmDialog(view, R.RESOURCE_BUNDLE.getString("desea_aplicar_cambios"),
-                R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+        return true ? JOptionPane.showConfirmDialog(view, ResourceHandler.getString("desea_aplicar_cambios"),
+                ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pregunta.png")))
                 == JOptionPane.YES_OPTION : true;
 

@@ -29,6 +29,7 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -115,7 +116,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                                 TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
                     confirmarTransaccion(getBean().getOperacion_selected());
                     Application.getInstance().getNavigator().navigateUp();
-                    Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                    Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
                 }
                 return Optional.empty();
             }
@@ -329,7 +330,8 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                     if (getBean().getCausa_rebaja() == null || getBean().getCausa_rebaja().equals("")) {
                         JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Introduca la Causa de Rebaja");
                     } else {
-                        TransaccionSimple transaccionRebaja = new TransaccionSimple(
+                        TransaccionSimple transaccionRebaja = 
+                                new TransaccionSimple(
                                 getBean().getInsumo_selecionado(),
                                 getBean().getCantidad_entrada(),
                                 getBean().getCausa_rebaja());

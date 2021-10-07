@@ -16,6 +16,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.utils.NumberPad;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
@@ -159,7 +160,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
                 service.edit(insumo);
                 service.updateProductoOnInsumo(insumo);
             }
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             Application.getInstance().getNavigator().navigateUp();
         }
     }

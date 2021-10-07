@@ -33,6 +33,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.productos.presenter.ProductoVentaDetailViewModel.PROP_RUTA_IMAGEN_PRODUCTO;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
@@ -234,7 +235,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             } else {
                 service.edit(productoVenta);
             }
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         }
     }

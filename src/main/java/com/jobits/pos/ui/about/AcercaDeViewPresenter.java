@@ -10,6 +10,7 @@ import com.jobits.pos.recursos.R;
 import static com.jobits.pos.ui.statusbar.StatusBarPresenter.ACTION_LICENCIA;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.Calendar;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public class AcercaDeViewPresenter extends AbstractViewPresenter<AcercaDeViewMod
     private void refreshBean() {
         getBean().setVersion_sistema(Application.RELEASE_VERSION);
         Calendar date = Calendar.getInstance();
-        String a = R.RESOURCE_BUNDLE.getString("label_copyrigth") + " (2016 - " + date.get(Calendar.YEAR) + ") JoBits POS.";
+        String a = ResourceHandler.getString("label_copyrigth") + " (2016 - " + date.get(Calendar.YEAR) + ") JoBits POS.";
         getBean().setAnno_copyrigth(a);
     }
 

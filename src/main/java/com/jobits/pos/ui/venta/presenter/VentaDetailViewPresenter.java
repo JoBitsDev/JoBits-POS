@@ -25,6 +25,8 @@ import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
+import com.root101.clean.core.app.services.UserResolver;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -223,7 +225,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 showDialog("Desea terminar el día de trabajo?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             service.terminarVentas(getBean().getVenta_seleccionada().getId());
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             Application.getInstance().getNavigator().navigateUp();
         }
     }
@@ -233,7 +235,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 showDialog("Desea terminar el día de trabajo?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             service.terminarYExportar(getBean().getFile_for_export(), getBean().getVenta_seleccionada().getId());
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             Application.getInstance().getNavigator().navigateUp();
         }
     }
@@ -255,7 +257,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     private void onReabrirVentaCLick() {
         service.reabrirVentas(getBean().getVenta_seleccionada().getId());
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onImprimirResumenVentaAreaClick() {
@@ -315,7 +317,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                         updateBeanData();
                     }
                 }.performAction(null);
-                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             }
         } else {
             Application.getInstance().getNotificationService().showDialog("No se pueden crear mas turnos", TipoNotificacion.ERROR);
@@ -373,7 +375,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
             }
 
-            boolean value = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3
+            boolean value = UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3
                     && ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() != 1;
 
             firePropertyChange(PROP_HIDE_PANEL, !value, value);

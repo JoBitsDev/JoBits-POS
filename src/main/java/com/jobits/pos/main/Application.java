@@ -16,6 +16,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.module.PosCoreModule;
+import com.jobits.pos.core.module.UserResolverImpl;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -72,7 +73,7 @@ public class Application {
     private static final String ERR_FILE_PATH = "LOGS/AppLogsErr/";
     private static final String LOG_ERR_FILE_NAME = CURRENT_DATE + ".log";
     private static Application application;
-    private UserResolverService<Personal> userResolver = new UserResolverServiceImpl();
+    private UserResolverService<Personal> userResolver = new UserResolverImpl();
 
     public static final int MAJOR_VERSION = 3;
 
@@ -182,7 +183,7 @@ public class Application {
 
     public void setLoggedUser(Personal loggedUser) {
         this.loggedUser = loggedUser;
-        R.loggedUser = loggedUser;
+        UserResolverImpl.setCurrentLoggedUser(loggedUser);
         propertyChangeSupport.firePropertyChange(PROP_LOGGED_USER, null, this.loggedUser);
     }
 
@@ -254,6 +255,7 @@ public class Application {
                 PosCoreModule.getInstance(),
                 ReservaCoreModule.getInstance(),
                 ClienteCoreModule.getInstance());
+        
     }
 
     private void registerResources() {

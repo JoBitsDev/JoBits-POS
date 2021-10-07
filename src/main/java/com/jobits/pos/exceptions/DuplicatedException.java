@@ -8,6 +8,7 @@ package com.jobits.pos.exceptions;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import com.jobits.pos.recursos.R;
+import com.root101.clean.core.domain.services.ResourceHandler;
 
 /**
  * FirstDream
@@ -17,7 +18,7 @@ import com.jobits.pos.recursos.R;
  */
 public class DuplicatedException extends RestManagerRuntimeException {
 
-    private final String EXCEPTION_MESSAGE = R.RESOURCE_BUNDLE.getString("exception_duplicated");
+    private final String EXCEPTION_MESSAGE = ResourceHandler.getString("exception_duplicated");
     
     public DuplicatedException() {
         super();

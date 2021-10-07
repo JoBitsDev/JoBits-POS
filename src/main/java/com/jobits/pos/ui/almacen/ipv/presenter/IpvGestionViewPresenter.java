@@ -33,6 +33,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.Optional;
@@ -256,7 +257,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         if (cantidad != null && instance != null) {
             if (JOptionPane.showConfirmDialog(null,
                     "Desea ajustar el costo de " + instance.getIpv().getInsumo() + " a " + cantidad + " " + R.COIN_SUFFIX,
-                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
                 service.ajustarCosto(instance, cantidad);
             }
@@ -373,7 +374,8 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             Cocina cocina = getBean().getPunto_elaboracion_seleccionado();
             if (cantidad != null && instance != null && fecha != null && cocina != null) {
                 if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance,
-                        R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                        ResourceHandler
+                                .getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                         == JOptionPane.YES_OPTION) {
                     service.darEntradaExistencia(instance, cocina, fecha.getId(), cantidad);
                 }
@@ -387,7 +389,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         Float cantidad = new NumberPad().showView();
         if (cantidad != null && instance != null) {
             if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta(),
-                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
                 service.darEntradaIPV(instance, cantidad);
             }
@@ -411,7 +413,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         Float cantidad = new NumberPad().showView();
         if (cantidad != null && instance != null) {
             if (JOptionPane.showConfirmDialog(null, "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad,
-                    R.RESOURCE_BUNDLE.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
                 service.ajustarConsumo(instance, cantidad);
             }
@@ -525,8 +527,8 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onImprimirIPVVentaRegistroClick() {
         String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
         int selection = JOptionPane.showOptionDialog(null,
-                R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
-                R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                ResourceHandler.getString("dialog_seleccionar_manera_imprimir"),
+                ResourceHandler.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         switch (selection) {
             case 0:
@@ -544,8 +546,8 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private void onImprimirIpvRegistro() {
         String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
         int selection = JOptionPane.showOptionDialog(null,
-                R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
-                R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                ResourceHandler.getString("dialog_seleccionar_manera_imprimir"),
+                ResourceHandler.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         switch (selection) {
             case 0:

@@ -13,6 +13,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
+import com.root101.clean.core.domain.services.ResourceHandler;
 
 /**
  *
@@ -58,7 +59,7 @@ public class PersonalListViewPresenter extends AbstractListViewPresenter<Persona
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             service.destroy(getBean().getElemento_seleccionado());
             setListToBean();
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
 
     }

@@ -21,6 +21,7 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
 import java.util.Optional;
@@ -120,7 +121,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
                 getBean().getDescripcion_gasto(), venta);
         refreshState();
         onLimpiarClick();
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onEliminarClick() {
@@ -131,7 +132,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
                 service.removeGasto(getBean().getGasto_venta_seleccionado(), venta);
                 getBean().setGasto_venta_seleccionado(null);
                 refreshState();
-                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             }
         }
     }

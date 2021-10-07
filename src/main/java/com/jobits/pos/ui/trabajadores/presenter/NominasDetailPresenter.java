@@ -14,6 +14,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -60,7 +61,7 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
         service.pagar(getBean().getLista_personal(), flag);
         getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize());
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onImprimirClick() {

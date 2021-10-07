@@ -8,6 +8,7 @@ package com.jobits.pos.exceptions;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import com.jobits.pos.recursos.R;
+import com.root101.clean.core.domain.services.ResourceHandler;
 
 /**
  * FirstDream
@@ -19,7 +20,7 @@ public class UnExpectedErrorException extends RestManagerRuntimeException {
 
     public UnExpectedErrorException() {
         super();
-        showMessage(R.RESOURCE_BUNDLE.getString("exception_unexpected"));
+        showMessage(ResourceHandler.getString("exception_unexpected"));
     }
 
     public UnExpectedErrorException(String message) {
@@ -29,7 +30,7 @@ public class UnExpectedErrorException extends RestManagerRuntimeException {
 
     public UnExpectedErrorException(Component parent) {
         super(parent);
-        showMessage(R.RESOURCE_BUNDLE.getString("exception_unexpected"));
+        showMessage(ResourceHandler.getString("exception_unexpected"));
     }
 
     public UnExpectedErrorException(Component throwedFrom, String message) {
