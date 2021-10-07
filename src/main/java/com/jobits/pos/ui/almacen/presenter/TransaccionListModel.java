@@ -19,6 +19,30 @@ public class TransaccionListModel extends AbstractListViewModel<Transaccion> {
 
     public static final String PROP_ALMACEN = "almacen";
 
+    private boolean show_mermas = false;
+
+    public static final String PROP_SHOW_MERMAS = "show_mermas";
+
+    /**
+     * Get the value of show_mermas
+     *
+     * @return the value of show_mermas
+     */
+    public boolean isShow_mermas() {
+        return show_mermas;
+    }
+
+    /**
+     * Set the value of show_mermas
+     *
+     * @param show_mermas new value of show_mermas
+     */
+    public void setShow_mermas(boolean show_mermas) {
+        boolean oldShow_mermas = this.show_mermas;
+        this.show_mermas = show_mermas;
+        firePropertyChange(PROP_SHOW_MERMAS, oldShow_mermas, show_mermas);
+    }
+
     /**
      * Get the value of almacen
      *

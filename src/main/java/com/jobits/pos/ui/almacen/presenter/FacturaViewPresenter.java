@@ -60,6 +60,8 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     public static final String PROP_SWAP_TO_ENTRADAS = "Entradas";
     public static final String PROP_SWAP_TO_TRANSFORMAR = "Transformar";
 
+    public static final String ACTION_SET_IS_MERMA = "Set Merma";
+
     public FacturaViewPresenter(AlmacenManageService controller, Almacen almacen) {
         super(new FacturaViewModel());
         this.service = controller;
@@ -144,6 +146,14 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                     nueva.setInsumo(getBean().getInsumo_elaborado_disponible_seleccionado());
                     getBean().getLista_insumos_transformados_contenidos().add(nueva);
                 }
+                return Optional.empty();
+            }
+        }
+        );
+        registerOperation(new AbstractViewAction(ACTION_SET_IS_MERMA) {
+            @Override
+            public Optional doAction() {
+                getBean().setRebaja_merma(!getBean().isRebaja_merma());
                 return Optional.empty();
             }
         }
@@ -264,6 +274,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             case REBAJA:
                 if (newOp) {
                     getBean().setCausa_rebaja(null);
+//                    getBean().setRebaja_merma(false);
                     getBean().getLista_elementos().clear();
                     getBean().setComponent_locked(true);
                 }
@@ -334,7 +345,8 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                                 new TransaccionSimple(
                                 getBean().getInsumo_selecionado(),
                                 getBean().getCantidad_entrada(),
-                                getBean().getCausa_rebaja());
+                                getBean().getCausa_rebaja(),
+                                getBean().isRebaja_merma());
                         getBean().getLista_elementos().add(transaccionRebaja);
                         setDefaultValues(currentOperation, false);
                     }
