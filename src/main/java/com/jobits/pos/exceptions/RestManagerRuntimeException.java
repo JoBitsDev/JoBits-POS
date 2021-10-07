@@ -9,6 +9,7 @@ import java.awt.Component;
 import java.awt.Container;
 import javax.swing.JOptionPane;
 import com.jobits.pos.recursos.R;
+import com.root101.clean.core.domain.services.ResourceHandler;
 
 /**
  * FirstDream
@@ -49,7 +50,7 @@ public class RestManagerRuntimeException extends RuntimeException {
 
     protected void showMessage(String message) {
         JOptionPane.showMessageDialog(throwedFrom, message,
-                R.RESOURCE_BUNDLE.getString("label_error"), JOptionPane.ERROR_MESSAGE,
+                ResourceHandler.getString("label_error"), JOptionPane.ERROR_MESSAGE,
                 new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/alerta.png")));
     }
 

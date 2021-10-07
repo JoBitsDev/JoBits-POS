@@ -21,6 +21,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -102,7 +103,7 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
                     getBean().getSeleccionado_almacen(),
                     venta);
             Application.getInstance().getNavigator().navigateUp();
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 

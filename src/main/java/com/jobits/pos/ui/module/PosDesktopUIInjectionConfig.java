@@ -6,6 +6,9 @@
 package com.jobits.pos.ui.module;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Scopes;
+import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
+import com.jobits.pos.ui.clientes.presenter.ClienteUseCaseRFImpl;
 
 /**
  *
@@ -18,6 +21,8 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
 
     @Override
     protected void configure() {
+                bind(ClienteUseCase.class).to(ClienteUseCaseRFImpl.class).in(Scopes.SINGLETON);
+
 
     }
 

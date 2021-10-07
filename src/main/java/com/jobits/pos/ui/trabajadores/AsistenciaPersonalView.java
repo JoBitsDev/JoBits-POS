@@ -17,6 +17,7 @@ import com.jobits.pos.ui.utils.AddFromPanel;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import com.root101.clean.core.app.services.UserResolver;
 import java.awt.BorderLayout;
 
 /**
@@ -83,7 +84,7 @@ public class AsistenciaPersonalView extends AbstractViewPanel {
                 = new BindableTableModel<AsistenciaPersonal>() {
             @Override
             public int getColumnCount() {
-                return R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 ? 5 : 2;
+                return UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() > 2 ? 5 : 2;
             }
 
             @Override

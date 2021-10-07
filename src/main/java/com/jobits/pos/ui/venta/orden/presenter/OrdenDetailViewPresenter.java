@@ -32,6 +32,7 @@ import com.jobits.pos.ui.clientes.containers.DomicilioViewContainer;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.util.Optional;
 import javax.swing.ImageIcon;
@@ -144,12 +145,12 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private void onEnviarAElaborarCLick() {
         ordenService.enviarACocina(getCodOrden());
         getBean().setLista_producto_orden(ordenService.findBy(getCodOrden()).getProductovOrdenList());
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onImprimirCierreParcial() {
         ordenService.imprimirPreTicket(getCodOrden());
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onRemoveProductoCLick() {
@@ -163,7 +164,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             ordenService.removeProduct(getCodOrden(), selected,
                     getBean().getProducto_orden_seleccionado().getCantidad());
             getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 
@@ -179,7 +180,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
                 ordenService.removeProduct(getCodOrden(), selected, value);
                 getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
-                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             }
         }
     }

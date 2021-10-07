@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import com.jobits.pos.core.module.PosCoreModule;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import org.jobits.db.core.domain.TipoConexion;
 import org.jobits.db.pool.ConnectionPoolHandler;
 
@@ -110,7 +111,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             service.destroy(selected);
             updateBeanData();
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 

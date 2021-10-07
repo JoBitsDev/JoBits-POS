@@ -38,6 +38,8 @@ import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.displayers.Card;
+import com.root101.clean.core.app.services.UserResolver;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
@@ -609,7 +611,7 @@ public class VentaDetailView extends AbstractViewPanel {
         Object[] options = {"Si", "No"};
         int confirm = JOptionPane.showOptionDialog(
                 Application.getInstance().getMainWindow(),
-                R.RESOURCE_BUNDLE.getString("label_dialogo_terminar_exportar"),
+                ResourceHandler.getString("label_dialogo_terminar_exportar"),
                 null,
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -801,11 +803,11 @@ public class VentaDetailView extends AbstractViewPanel {
         initPtoElaboracionUI();
         initOrdenTableUI();
         initMesaTableUI();
-//        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
+//        if (UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
 //            jTabbedPaneData.remove(0);
 //        }//TODO autorizacion en el view
         jPanelTurnosTrabajo.setVisible(ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_TURNOS_VARIOS).getValor() == 1);//TODO:otro mojon
-        jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
+        jComboBoxSeleccionarVentaPorTurno.setEnabled(UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
         if (getPresenter() != null) {
