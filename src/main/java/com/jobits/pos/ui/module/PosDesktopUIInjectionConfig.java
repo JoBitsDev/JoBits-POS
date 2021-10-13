@@ -21,7 +21,7 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
 
     @Override
     protected void configure() {
-                bind(ClienteUseCase.class).to(ClienteUseCaseRFImpl.class).in(Scopes.SINGLETON);
+             //   bind(ClienteUseCase.class).to(ClienteUseCaseRFImpl.class).in(Scopes.SINGLETON);
 
 
     }
