@@ -333,7 +333,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             Venta v = getBean().getVenta_seleccionada();
 //            service.fetchNewDataFromServer(v.getId());
             if (ventaOrdenPresenter != null) {
-                ventaOrdenPresenter.getMenuPresenter().getOperation(ACTION_REFRESH_STATE).doAction();
+                ventaOrdenPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
             } else {
                 ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, v.getId());
             }
