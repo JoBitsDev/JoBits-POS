@@ -113,3 +113,7 @@ nbproject/
 *.json
 
 *.config
+
+.settings/
+
+.project
