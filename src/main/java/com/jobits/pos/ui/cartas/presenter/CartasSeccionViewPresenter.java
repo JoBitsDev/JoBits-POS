@@ -55,6 +55,7 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
             carta.setMonedaPrincipal(R.COIN_SUFFIX);
             carta.setNombreCarta(nombre);
             carta.setSeccionList(new ArrayList<>());
+            cartaService.create(carta);
             Carta menuSeleccionado = getBean().getMenu_seleccionado();
             getBean().setLista_menu(cartaService.findAll());
             getBean().setMenu_seleccionado(menuSeleccionado);
