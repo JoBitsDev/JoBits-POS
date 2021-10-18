@@ -337,14 +337,17 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             } else {
                 ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, v.getId());
             }
-            asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(v);
+            if (asistenciaPersonalPresenter != null) {
+                asistenciaPersonalPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
+            } else {
+                asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(v);
+            }
             gastosPresenter = new GastosViewPresenter(v);
             getBean().setVentaInstance(v);
 
 //            getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(v.getId()));
 //            getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(v.getId()));
 //            getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta(v.getId()));
-
 //            getBean().setTotal_resumen_area(service.getTotalResumenArea(v.getId()));
 //            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(v.getId()));
 //            getBean().setTotal_resumen_dependiente(service.getTotalResumenDependiente(v.getId()));
