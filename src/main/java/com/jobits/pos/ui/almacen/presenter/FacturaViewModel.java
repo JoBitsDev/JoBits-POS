@@ -115,6 +115,10 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
 
     public static final String PROP_CAUSA_REBAJA = "causa_rebaja";
 
+    private boolean rebaja_merma = false;
+
+    public static final String PROP_REBAJA_MERMA = "rebaja_merma";
+
     //ADDFROMPANEL TABLE VALUES
     private ArrayListModel<Insumo> lista_insumo_elaborado_disponible = new ArrayListModel();
 
@@ -129,6 +133,26 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
     private TransaccionTransformacion insumo_transformado_contenido_seleccionado;
 
     public static final String PROP_INSUMO_TRANSFORMADO_CONTENIDO_SELECCIONADO = "insumo_transformado_contenido_seleccionado";
+
+    /**
+     * Get the value of rebaja_merma
+     *
+     * @return the value of rebaja_merma
+     */
+    public boolean isRebaja_merma() {
+        return rebaja_merma;
+    }
+
+    /**
+     * Set the value of rebaja_merma
+     *
+     * @param rebaja_merma new value of rebaja_merma
+     */
+    public void setRebaja_merma(boolean rebaja_merma) {
+        boolean oldRebaja_merma = this.rebaja_merma;
+        this.rebaja_merma = rebaja_merma;
+        firePropertyChange(PROP_REBAJA_MERMA, oldRebaja_merma, rebaja_merma);
+    }
 
     /**
      * Get the value of almacen

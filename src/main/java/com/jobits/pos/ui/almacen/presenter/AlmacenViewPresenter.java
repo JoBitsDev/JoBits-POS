@@ -26,6 +26,7 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +72,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onCrearAlmacen() {
-        String storageName = JOptionPane.showInputDialog(R.RESOURCE_BUNDLE.getString("dialogo_agregar_almacen"));
+        String storageName = JOptionPane.showInputDialog(ResourceHandler.getString("dialogo_agregar_almacen"));
         if (storageName != null && !storageName.isBlank()) {
             if (storageName.matches(RegularExpressions.ONLY_WORDS_SEPARATED_WITH_SPACES)) {
                 Almacen selected = new Almacen();
@@ -80,7 +81,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                 selected.setValorMonetario(0.0);
                 selected.setNombre(storageName);
                 listService.create(selected);
-                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
                 setListToBean();
             } else {
                 throw new IllegalArgumentException("Nombre no permitido");
@@ -99,7 +100,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                 showDialog("Esta seguro que desea eliminar: " + selected.getNombre(),
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             listService.destroy(selected);
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             setListToBean();
         }
     }
@@ -111,8 +112,8 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     private void onImprimirReporte() {
         String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
         int selection = JOptionPane.showOptionDialog(null,
-                R.RESOURCE_BUNDLE.getString("dialog_seleccionar_manera_imprimir"),
-                R.RESOURCE_BUNDLE.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                ResourceHandler.getString("dialog_seleccionar_manera_imprimir"),
+                ResourceHandler.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
         detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado(), selection);
     }

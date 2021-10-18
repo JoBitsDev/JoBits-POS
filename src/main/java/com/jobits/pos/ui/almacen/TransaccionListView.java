@@ -17,6 +17,7 @@ import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import javax.swing.JToggleButton;
 
 /**
  *
@@ -28,6 +29,7 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
     public javax.swing.JPanel jPanelOptionsButtons = MaterialComponentsFactory.Containers.getPrimaryPanel();
     protected javax.swing.JButton jButtonCerrar = MaterialComponentsFactory.Buttons.getOutlinedButton();
     protected javax.swing.JButton jButtonPrint = MaterialComponentsFactory.Buttons.getOutlinedButton();
+    protected javax.swing.JToggleButton jToggleButtonShowMermas = new JToggleButton();
 
     public TransaccionListView(AbstractListViewPresenter presenter) {
         super(presenter);
@@ -47,6 +49,12 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
         jButtonPrint.setAction(getPresenter().getOperation(ACTION_IMPRIMIR_TRANSACCIONES));
         jButtonPrint.setIcon(MaterialIcons.PRINT);
         jPanelControles.add(jButtonPrint);
+
+        jToggleButtonShowMermas.setText("Mermas");
+        jToggleButtonShowMermas.setOpaque(false);
+        jToggleButtonShowMermas.setPreferredSize(new java.awt.Dimension(125, 50));
+        jToggleButtonShowMermas.addActionListener(getPresenter().getOperation(ACTION_MOSTRAR_MERMAS));
+        jPanelControles.add(jToggleButtonShowMermas);
 
         add(jPanelOptionsButtons, BorderLayout.SOUTH);
 
@@ -92,7 +100,10 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
                             return "ENTRADA (Total: " + t.getTransaccionEntrada().getValorTotal() + R.COIN_SUFFIX + ")";
                         }
                         if (t.getTransaccionMerma() != null) {
-                            return "REBAJA: (" + t.getTransaccionMerma().getRazon().toUpperCase() + ")";
+                            String value;
+                            value = t.getTransaccionMerma().isEsMerma() ? "REBAJA (MERMA)" : "REBAJA";
+                            value += ": (" + t.getTransaccionMerma().getRazon().toUpperCase() + ")";
+                            return value;
                         }
                         if (t.getTransaccionSalida() != null) {
                             return "SALIDA: " + t.getTransaccionSalida().getCocinacodCocina();

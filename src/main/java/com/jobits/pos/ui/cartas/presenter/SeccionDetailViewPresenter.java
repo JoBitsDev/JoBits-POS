@@ -19,6 +19,7 @@ import static com.jobits.pos.ui.cartas.presenter.SeccionDetailViewModel.*;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
@@ -139,7 +140,7 @@ public class SeccionDetailViewPresenter extends AbstractViewPresenter<SeccionDet
                 seccionService.edit(seccion);
             }
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 

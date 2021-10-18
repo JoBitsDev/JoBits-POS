@@ -21,10 +21,13 @@ import com.jobits.pos.ui.gastos.presenter.GastosViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter;
+import static com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter.PROP_VALUE_CHANGED;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.utils.utils;
 import com.jobits.pos.ui.venta.orden.presenter.VentaOrdenListViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
+import com.root101.clean.core.app.services.UserResolver;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -83,7 +86,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         setListToBean();
 //        this.ventaOrdenPresenter = new VentaOrdenListViewPresenter(controller, ordenController, getBean().getVenta_seleccionada().getId());
         updateBeanData();
-
+        asistenciaPersonalPresenter.addPropertyChangeListener(PROP_VALUE_CHANGED, (PropertyChangeEvent evt) -> {
+            updateBeanData();
+        });
     }
 
     public VentaDetailService getService() {
@@ -223,7 +228,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 showDialog("Desea terminar el día de trabajo?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             service.terminarVentas(getBean().getVenta_seleccionada().getId());
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             Application.getInstance().getNavigator().navigateUp();
         }
     }
@@ -233,7 +238,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 showDialog("Desea terminar el día de trabajo?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             service.terminarYExportar(getBean().getFile_for_export(), getBean().getVenta_seleccionada().getId());
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             Application.getInstance().getNavigator().navigateUp();
         }
     }
@@ -255,7 +260,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     private void onReabrirVentaCLick() {
         service.reabrirVentas(getBean().getVenta_seleccionada().getId());
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onImprimirResumenVentaAreaClick() {
@@ -315,7 +320,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                         updateBeanData();
                     }
                 }.performAction(null);
-                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             }
         } else {
             Application.getInstance().getNotificationService().showDialog("No se pueden crear mas turnos", TipoNotificacion.ERROR);
@@ -328,18 +333,21 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             Venta v = getBean().getVenta_seleccionada();
 //            service.fetchNewDataFromServer(v.getId());
             if (ventaOrdenPresenter != null) {
-                ventaOrdenPresenter.getMenuPresenter().getOperation(ACTION_REFRESH_STATE).doAction();
+                ventaOrdenPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
             } else {
                 ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, v.getId());
             }
-            asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(v);
+            if (asistenciaPersonalPresenter != null) {
+                asistenciaPersonalPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
+            } else {
+                asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(v);
+            }
             gastosPresenter = new GastosViewPresenter(v);
             getBean().setVentaInstance(v);
 
 //            getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(v.getId()));
 //            getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(v.getId()));
 //            getBean().setLista_resumen_usuario_venta(service.getResumenPorUsuarioVenta(v.getId()));
-
 //            getBean().setTotal_resumen_area(service.getTotalResumenArea(v.getId()));
 //            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(v.getId()));
 //            getBean().setTotal_resumen_dependiente(service.getTotalResumenDependiente(v.getId()));
@@ -373,7 +381,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
             }
 
-            boolean value = R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3
+            boolean value = UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3
                     && ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() != 1;
 
             firePropertyChange(PROP_HIDE_PANEL, !value, value);

@@ -18,6 +18,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -87,7 +88,7 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
             }
             puesto.setNombrePuesto(getBean().getNombre_puesto_trabajo());
             puesto.setAreacodArea(getBean().getArea_trabajo_seleccionada());
-            puesto.setAreaPago(codAreaPago);
+            puesto.setPuntoDeElaboracionDePago(codAreaPago);
             puesto.setNivelAcceso(nivelAcceso);
             puesto.setPagoPorVentas(getBean().isPago_por_ventas());
             puesto.setPropina(getBean().isPropina());
@@ -104,7 +105,7 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
             } else {
                 service.edit(puesto);
             }
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             NavigationService.getInstance().navigateUp();//TODO: faltan los insumos
         }
     }
@@ -170,11 +171,11 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
         } else {
             getBean().setNivel_acceso_seleccionado(getBean().getNivel_acceso_list().get(puesto.getNivelAcceso()));
         }
-        if (puesto.getAreaPago() == null) {
+        if (puesto.getPuntoDeElaboracionDePago() == null) {
             getBean().setArea_pago_seleccionada(null);
         } else {
             List<Cocina> list = getBean().getArea_pago_list();
-            String codCocina = puesto.getAreaPago();
+            String codCocina = puesto.getPuntoDeElaboracionDePago();
             list.stream().filter((cocina) -> (cocina.getCodCocina().equals(codCocina))).forEachOrdered((cocina) -> {
                 getBean().setArea_pago_seleccionada(cocina);
             });

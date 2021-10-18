@@ -38,9 +38,12 @@ import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.jobits.ui.components.swing.displayers.Card;
+import com.root101.clean.core.app.services.UserResolver;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -52,7 +55,6 @@ import javax.swing.JPanel;
 public class VentaDetailView extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Comenzar Turno";
-    String insumos, salarios, otro, ventasTotal;
     Date fechaFin;
     MesaListView mesaView;
     private JFileChooser fileChooser;
@@ -609,7 +611,7 @@ public class VentaDetailView extends AbstractViewPanel {
         Object[] options = {"Si", "No"};
         int confirm = JOptionPane.showOptionDialog(
                 Application.getInstance().getMainWindow(),
-                R.RESOURCE_BUNDLE.getString("label_dialogo_terminar_exportar"),
+                ResourceHandler.getString("label_dialogo_terminar_exportar"),
                 null,
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
@@ -719,11 +721,11 @@ public class VentaDetailView extends AbstractViewPanel {
                 imprimirAutorizos = getPresenter().getOperation(ACTION_IMPRIMIR_AUTORIZOS);
 
         addCard(null, "Venta Neta", dimension, jPanelVentasCards, getPresenter().getModel(PROP_VENTA_NETA));
-        ventasTotal = addCard(null, "Total", dimension, jPanelVentasCards, getPresenter().getModel(PROP_VENTA_TOTAL), imprimirZ).getjLabelCardTitle().getText();
+        addCard(null, "Total", dimension, jPanelVentasCards, getPresenter().getModel(PROP_VENTA_TOTAL), imprimirZ);
         addCard(null, "Autorizos", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_AUTORIZOS), imprimirAutorizos);
-        insumos = addCard(null, "Insumos", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_INSUMOS)).getjLabelCardTitle().getText();
-        salarios = addCard(null, "Salarios", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_SALARIO)).getjLabelCardTitle().getText();
-        otro = addCard(null, "Otros", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_OTROS)).getjLabelCardTitle().getText();
+        addCard(null, "Insumos", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_INSUMOS));
+        addCard(null, "Salarios", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_SALARIO));
+        addCard(null, "Otros", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_OTROS));
 
         Bindings.bind(jTextFieldPropina, getPresenter().getModel(PROP_PROPINA_TOTAL));//TODO: manejar enabled
         Bindings.bind(fileChooser, "selectedFile", getPresenter().getModel(PROP_FILE_FOR_EXPORT));
@@ -801,11 +803,11 @@ public class VentaDetailView extends AbstractViewPanel {
         initPtoElaboracionUI();
         initOrdenTableUI();
         initMesaTableUI();
-//        if (R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
+//        if (UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
 //            jTabbedPaneData.remove(0);
 //        }//TODO autorizacion en el view
         jPanelTurnosTrabajo.setVisible(ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_TURNOS_VARIOS).getValor() == 1);//TODO:otro mojon
-        jComboBoxSeleccionarVentaPorTurno.setEnabled(R.loggedUser.getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
+        jComboBoxSeleccionarVentaPorTurno.setEnabled(UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));
         if (getPresenter() != null) {
@@ -814,13 +816,7 @@ public class VentaDetailView extends AbstractViewPanel {
             jTabbedPaneResumenD1.addTab("Extracciones Caja", jPanelExtracciones);
             jPanelExtracciones.add(new GastosView((getPresenter()).getGastosPresenter()));
         }
-        getPresenter().addPropertyChangeListener(PROP_HIDE_PANEL, (PropertyChangeEvent evt) -> {
-            boolean value = (boolean) evt.getNewValue();
-            jTabbedPaneData.setEnabledAt(0, !value);
-            if (value) {
-                jTabbedPaneData.setSelectedIndex(1);
-            }
-        });
+        initListeners();
     }
 
     @Override
@@ -1067,6 +1063,17 @@ public class VentaDetailView extends AbstractViewPanel {
         }
     }
 
+    private void initListeners() {
+        getPresenter().addPropertyChangeListener(PROP_HIDE_PANEL, (PropertyChangeEvent evt) -> {
+            updateGraficasResumenGeneralVentas();
+            boolean value = (boolean) evt.getNewValue();
+            jTabbedPaneData.setEnabledAt(0, !value);
+            if (value) {
+                jTabbedPaneData.setSelectedIndex(1);
+            }
+        });
+    }
+
 //TODO: agregar listener al bean para nada mas cambien los datos se actualize la tabla p mejor agregar los listener a los jtextfield
     private void updateGraficasResumenGeneralVentas() {
         PieChart chartPie = new PieChartBuilder().theme(Styler.ChartTheme.XChart).title("Ventas/Gastos ").build();
@@ -1074,6 +1081,13 @@ public class VentaDetailView extends AbstractViewPanel {
         chartPie.getStyler().setChartTitleBoxVisible(true);
         chartPie.getStyler().setLegendPosition(Styler.LegendPosition.InsideSE);
         chartPie.getStyler().setLegendBackgroundColor(new Color(255, 255, 255, 0));
+        
+        String insumos, salarios, otro, ventasTotal;
+
+        insumos = getPresenter().getBean().getTotal_gasto_insumos();
+        otro = getPresenter().getBean().getTotal_gasto_otros();
+        salarios = getPresenter().getBean().getTotal_gasto_salario();
+        ventasTotal = getPresenter().getBean().getVenta_total();
 
         float perdida = 0;
         if (insumos != null) {
@@ -1097,6 +1111,7 @@ public class VentaDetailView extends AbstractViewPanel {
         }
 
         XChartPanel wrapperPie = new XChartPanel(chartPie);
+        jPanelGraficaPieGenerales.removeAll();
         jPanelGraficaPieGenerales.add(wrapperPie);
     }
 

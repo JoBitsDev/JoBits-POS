@@ -17,6 +17,7 @@ import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.ArrayList;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -54,10 +55,11 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
             carta.setMonedaPrincipal(R.COIN_SUFFIX);
             carta.setNombreCarta(nombre);
             carta.setSeccionList(new ArrayList<>());
+            cartaService.create(carta);
             Carta menuSeleccionado = getBean().getMenu_seleccionado();
             getBean().setLista_menu(cartaService.findAll());
             getBean().setMenu_seleccionado(menuSeleccionado);
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 
@@ -70,7 +72,7 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
                 cartaService.destroy(getBean().getMenu_seleccionado());
                 getBean().setMenu_seleccionado(null);
                 getBean().setLista_menu(cartaService.findAll());//TODO: cambiar el metodo create instance para agregar solamente el que se acaba de crear
-                Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+                Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             }
         }
     }

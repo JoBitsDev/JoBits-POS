@@ -14,6 +14,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
 import java.util.Optional;
@@ -71,7 +72,7 @@ public class BackUpViewPresenter extends AbstractViewPresenter<BackUpViewModel> 
         } else {
 
             boolean resp = (boolean) Application.getInstance().getNotificationService().
-                    showDialog(R.RESOURCE_BUNDLE.getString("confirmar_copia_seg"), TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+                    showDialog(ResourceHandler.getString("confirmar_copia_seg"), TipoNotificacion.DIALOG_CONFIRM).orElse(false);
 
             if (resp) {
 

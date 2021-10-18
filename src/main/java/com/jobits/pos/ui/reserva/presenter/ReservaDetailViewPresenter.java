@@ -24,6 +24,7 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.reserva.presenter.ReservaDetailViewModel.*;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoVentaSelectorPresenter;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -299,7 +300,7 @@ public class ReservaDetailViewPresenter extends AbstractViewPresenter<ReservaDet
                 reservasUseCase.edit(reserva);
             }
             NavigationService.getInstance().navigateUp();
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 

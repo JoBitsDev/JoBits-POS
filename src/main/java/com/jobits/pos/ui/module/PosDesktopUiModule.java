@@ -54,6 +54,7 @@ public class PosDesktopUiModule extends DefaultAbstractModule {
 
     private PosDesktopUiModule() {
         ResourceHandler.registerResourceService(new DesktopUIResourceServiceImpl());
+        ResourceHandler.registerInternal("Strings");
     }
 
     @Override

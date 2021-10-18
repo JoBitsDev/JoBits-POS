@@ -89,6 +89,7 @@ public class FacturaView extends AbstractViewPanel {
         jComboBoxDestino = MaterialComponentsFactory.Displayers.getComboBox("Destino");
         jPanelRazonRebaja = MaterialComponentsFactory.Containers.getTransparentPanel();
         jTextFieldCausaRebaja = MaterialComponentsFactory.Input.getTextField("", "Causa de Rebaja");
+        jToggleButtonMerma = new javax.swing.JToggleButton();
         jPanel6 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonAgregarInsumoEntrada = MaterialComponentsFactory.Buttons.getOutlinedButton();
         jButtonEliminarInsumoEntrada = MaterialComponentsFactory.Buttons.getOutlinedButton();
@@ -249,6 +250,10 @@ public class FacturaView extends AbstractViewPanel {
             }
         });
         jPanelRazonRebaja.add(jTextFieldCausaRebaja, java.awt.BorderLayout.CENTER);
+
+        jToggleButtonMerma.setText("Merma");
+        jToggleButtonMerma.setPreferredSize(new java.awt.Dimension(125, 50));
+        jPanelRazonRebaja.add(jToggleButtonMerma, java.awt.BorderLayout.LINE_END);
 
         jPanel3.add(jPanelRazonRebaja);
 
@@ -445,6 +450,7 @@ public class FacturaView extends AbstractViewPanel {
     private javax.swing.JTextField jTextFieldInsumo;
     private javax.swing.JTextField jTextFieldMonto;
     private javax.swing.JTextField jTextFieldRecibo;
+    private javax.swing.JToggleButton jToggleButtonMerma;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -472,6 +478,9 @@ public class FacturaView extends AbstractViewPanel {
         Bindings.bind(jTextFieldCausaRebaja, getPresenter().getModel(PROP_CAUSA_REBAJA));
         Bindings.bind(jTextFieldCausaRebaja, "enabled", getPresenter().getModel(PROP_COMPONENT_LOCKED));
 
+        Bindings.bind(jToggleButtonMerma, "selected", getPresenter().getModel(PROP_REBAJA_MERMA));
+        Bindings.bind(jToggleButtonMerma, "enabled", getPresenter().getModel(PROP_COMPONENT_LOCKED));
+
         Bindings.bind(jComboBoxDestino, new SelectionInList<>(
                 getPresenter().getModel(PROP_LISTA_DESTINO), getPresenter().getModel(PROP_DESTINO_SELECCIONADO)));
         Bindings.bind(jComboBoxDestino, "enabled", getPresenter().getModel(PROP_COMPONENT_LOCKED));
@@ -486,6 +495,7 @@ public class FacturaView extends AbstractViewPanel {
         jButtonConfirmarEntrada.setAction(getPresenter().getOperation(ACTION_CONFIRMAR_TRANSACCION));
         jButtonClose.setAction(getPresenter().getOperation(ACTION_CERRAR_POPUP));
         jButtonClose.setText("Cancelar");
+        jToggleButtonMerma.addActionListener(getPresenter().getOperation(ACTION_SET_IS_MERMA));
 
         //PANEL VISIBILITY
         Bindings.bind(jPanelMontoEntrada, "visible", getPresenter().getModel(PROP_MONTO_ENABLED));
@@ -493,6 +503,7 @@ public class FacturaView extends AbstractViewPanel {
         Bindings.bind(jButtonEliminarInsumoEntrada, "visible", getPresenter().getModel(PROP_BUTTON_AGREGAR_INSUMO_ENABLED));
         Bindings.bind(jPanelDestino, "visible", getPresenter().getModel(PROP_DESTINO_ENABLED));
         Bindings.bind(jPanelRazonRebaja, "visible", getPresenter().getModel(PROP_RAZON_REBAJA_ENABLED));
+        Bindings.bind(jToggleButtonMerma, "visible", getPresenter().getModel(PROP_RAZON_REBAJA_ENABLED));
 
         //OPERATIONS SELECTOR
         Bindings.bind(jComboBoxOperationSelector, new SelectionInList<>(

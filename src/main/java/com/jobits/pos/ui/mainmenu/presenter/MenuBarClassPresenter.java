@@ -33,6 +33,7 @@ import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import org.jobits.db.core.usecase.UbicacionConexionService;
@@ -128,7 +129,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
                 Object[] options = {"Si", "No"};
                 int confirm = JOptionPane.showOptionDialog(
                         Application.getInstance().getMainWindow(),
-                        R.RESOURCE_BUNDLE.getString("label_dialogo_salir_sistema"),
+                        ResourceHandler.getString("label_dialogo_salir_sistema"),
                         null,
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE,

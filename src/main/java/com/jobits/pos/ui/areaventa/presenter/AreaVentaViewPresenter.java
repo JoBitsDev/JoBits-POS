@@ -20,6 +20,7 @@ import com.jobits.pos.ui.areaventa.MesaDetailView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.Optional;
 
 /**
@@ -153,7 +154,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
         }
         getBean().getLista_mesas().clear();
         getBean().setArea_seleccionada(getBean().getArea_seleccionada());
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onNuevaMesaClick() {
@@ -168,7 +169,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
         }
         getBean().getLista_mesas().clear();
         getBean().setArea_seleccionada(getBean().getArea_seleccionada());
-        Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+        Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 
     private void onEliminarMesaClick() {
@@ -182,7 +183,7 @@ public class AreaVentaViewPresenter extends AbstractViewPresenter<AreaVentaViewM
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             mesaService.destroy(selected);
             getBean().setArea_seleccionada(getBean().getArea_seleccionada());
-            Application.getInstance().getNotificationService().notify(R.RESOURCE_BUNDLE.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
+            Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 
