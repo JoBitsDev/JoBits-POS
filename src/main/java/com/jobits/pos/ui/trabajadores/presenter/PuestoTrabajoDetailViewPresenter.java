@@ -88,7 +88,7 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
             }
             puesto.setNombrePuesto(getBean().getNombre_puesto_trabajo());
             puesto.setAreacodArea(getBean().getArea_trabajo_seleccionada());
-            puesto.setAreaPago(codAreaPago);
+            puesto.setPuntoDeElaboracionDePago(codAreaPago);
             puesto.setNivelAcceso(nivelAcceso);
             puesto.setPagoPorVentas(getBean().isPago_por_ventas());
             puesto.setPropina(getBean().isPropina());
@@ -171,11 +171,11 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
         } else {
             getBean().setNivel_acceso_seleccionado(getBean().getNivel_acceso_list().get(puesto.getNivelAcceso()));
         }
-        if (puesto.getAreaPago() == null) {
+        if (puesto.getPuntoDeElaboracionDePago() == null) {
             getBean().setArea_pago_seleccionada(null);
         } else {
             List<Cocina> list = getBean().getArea_pago_list();
-            String codCocina = puesto.getAreaPago();
+            String codCocina = puesto.getPuntoDeElaboracionDePago();
             list.stream().filter((cocina) -> (cocina.getCodCocina().equals(codCocina))).forEachOrdered((cocina) -> {
                 getBean().setArea_pago_seleccionada(cocina);
             });
