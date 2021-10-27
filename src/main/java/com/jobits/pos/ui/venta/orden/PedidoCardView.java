@@ -256,6 +256,8 @@ public class PedidoCardView extends AbstractViewPanel {
 
         jPanel6.setLayout(new java.awt.BorderLayout());
 
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+
         jToggleButtonAgregos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/agregar_agrego_gris.png"))); // NOI18N
         jToggleButtonAgregos.setMaximumSize(new java.awt.Dimension(50, 50));
         jToggleButtonAgregos.setMinimumSize(new java.awt.Dimension(50, 50));
