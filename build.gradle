@@ -20,8 +20,8 @@ tasks.withType(JavaCompile) {
 dependencies {
     
     implementation "com.root101.clean:com.root101.clean.core:2.1.6"
-
-    implementation "org.jobits.db:org.jobits.db.versioncontrol:1.1.8"
+    
+    implementation "org.jobits.db:org.jobits.db.versioncontrol:1.1.11"
     
     testCompile 'junit:junit:4.12'
     
@@ -109,7 +109,7 @@ launch4j{
     outfile = 'JoBits POS.exe'
     mainClassName = 'com.jobits.pos.main.Main'
     bundledJrePath = 'jdk'
-    //icon = '${projectDir}/scr/main/resources/'
+   // icon = '/Users/Jorge/Desktop/app.ico'
     
 }
 
