@@ -87,7 +87,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             this.productoVenta = new ProductoVenta();
             this.productoVenta.setTiempoServicioMin(Integer.parseInt(value));
             this.productoVenta.setProductoInsumoList(new ArrayList<>());
-            this.productoVenta.setProductovOrdenList(new ArrayList<>());
+//            this.productoVenta.setProductovOrdenList(new ArrayList<>());
         } else {
             this.productoVenta = productoVenta;
         }
@@ -294,8 +294,6 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 "Nuevo Punto de Elaboracion", JOptionPane.QUESTION_MESSAGE);
         Cocina c = new Cocina();
         c.setNombreCocina(nombre);
-        c.setImpresoraList(new ArrayList<>());
-        c.setIpvList(new ArrayList<>());
         c.setProductoVentaList(new ArrayList<>());
         ptoElabService.create(c);
         getBean().setLista_elaborado(new ArrayListModel<>(ptoElabService.findAll()));

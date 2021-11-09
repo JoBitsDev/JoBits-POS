@@ -424,6 +424,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jTableIPV.setDefaultRenderer(Float.class, new RestManagerCellRender());
         jTableRegistro.getTableHeader().setFont(jTableIPV.getFont().deriveFont(Font.BOLD));
         jTableRegistro.setDefaultRenderer(Float.class, new RestManagerCellRender());
+        // jTableRegistro.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
 
         //
         // tabla ipv ventas

@@ -247,7 +247,10 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             getBean().setLista_ipv_registro(new ArrayListModel<>(
                     service.getIpvRegistroList(
                             getBean().getPunto_elaboracion_seleccionado(),
-                            getBean().getVenta_ipv_seleccionada().getId())));
+                            getBean().getVenta_ipv_seleccionada().getId(),
+                            ventaService.getConsumoPorInsumo(
+                                    getBean().getVenta_ipv_seleccionada().getId(),
+                                    getBean().getPunto_elaboracion_seleccionado()))));
         }
     }
 
@@ -281,7 +284,10 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         getBean().setLista_ipv_registro(new ArrayListModel<>(
                 service.getIpvRegistroList(
                         getBean().getPunto_elaboracion_seleccionado(),
-                        getBean().getVenta_ipv_seleccionada().getId())));
+                        getBean().getVenta_ipv_seleccionada().getId(),
+                        ventaService.getConsumoPorInsumo(
+                                getBean().getVenta_ipv_seleccionada().getId(),
+                                getBean().getPunto_elaboracion_seleccionado()))));
     }
 
     private void onFechaCambiadaIpv() {
@@ -293,7 +299,10 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                         getBean().setLista_ipv_registro(new ArrayListModel<>(
                                 service.getIpvRegistroList(
                                         getBean().getPunto_elaboracion_seleccionado(),
-                                        getBean().getVenta_ipv_seleccionada().getId())));
+                                        getBean().getVenta_ipv_seleccionada().getId(),
+                                        ventaService.getConsumoPorInsumo(
+                                                getBean().getVenta_ipv_seleccionada().getId(),
+                                                getBean().getPunto_elaboracion_seleccionado()))));
                         getBean().setCheck_ocultar_productos_ipv(false);
                         getBean().setFecha_ipv_ventas_seleccionada(null);
                         getBean().setLista_ipv_venta_registro(new ArrayListModel<>());

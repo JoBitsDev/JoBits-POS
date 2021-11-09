@@ -69,8 +69,6 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
         if (nombre != null) {
             Cocina c = new Cocina();
             c.setNombreCocina(nombre);
-            c.setImpresoraList(new ArrayList<>());
-            c.setIpvList(new ArrayList<>());
             c.setProductoVentaList(new ArrayList<>());
             service.create(c);
             setListToBean();
