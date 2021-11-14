@@ -153,10 +153,9 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     protected Optional refreshState() {
         Orden o = getBean().getElemento_seleccionado();
         List<Orden> lista = ventaService.getOrdenesActivas(codVenta);
-        if (!lista.isEmpty()) {
-            getBean().setLista_elementos(lista);
-            getBean().setElemento_seleccionado(o);
-        }
+        getBean().setLista_elementos(lista);
+        getBean().setElemento_seleccionado(o);
+
         ordenPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
         menuPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
         return Optional.empty();

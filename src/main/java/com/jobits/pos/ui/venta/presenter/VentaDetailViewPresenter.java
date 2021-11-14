@@ -243,21 +243,6 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         }
     }
 
-    private void onCambiarTurnoClick() {
-        if (getBean().getList_ventas().size() > 1) {
-            int seleccion = JOptionPane.showOptionDialog(null, "Seleccione la venta", "Seleccion",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
-                    null, getBean().getList_ventas().toArray(), getBean().getVenta_seleccionada());
-            if (seleccion != JOptionPane.CLOSED_OPTION) {
-                getBean().setVenta_seleccionada(getBean().getList_ventas().get(seleccion));
-                updateBeanData();
-            }
-        } else {
-            Application.getInstance().getNotificationService().showDialog("No existen turnos para cambiar", TipoNotificacion.ERROR);
-        }
-
-    }
-
     private void onReabrirVentaCLick() {
         service.reabrirVentas(getBean().getVenta_seleccionada().getId());
         Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
@@ -307,6 +292,21 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         service.printComisionPorcentualResumen(getBean().getMesa_seleccionada(), getBean().getVenta_seleccionada());
     }
 
+        private void onCambiarTurnoClick() {
+        if (getBean().getList_ventas().size() > 1) {
+            int seleccion = JOptionPane.showOptionDialog(null, "Seleccione la venta", "Seleccion",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
+                    null, getBean().getList_ventas().toArray(), getBean().getVenta_seleccionada());
+            if (seleccion != JOptionPane.CLOSED_OPTION) {
+                getBean().setVenta_seleccionada(getBean().getList_ventas().get(seleccion));
+                updateBeanData();
+            }
+        } else {
+            Application.getInstance().getNotificationService().showDialog("No existen turnos para cambiar", TipoNotificacion.ERROR);
+        }
+
+    }
+    
     private void onCrearNuevoTurnoClick() {
         if (service.canOpenNuevoTurno(getBean().getVenta_seleccionada().getFecha())) {
             if ((boolean) Application.getInstance().getNotificationService().
@@ -333,7 +333,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             Venta v = getBean().getVenta_seleccionada();
 //            service.fetchNewDataFromServer(v.getId());
             if (ventaOrdenPresenter != null) {
-                ventaOrdenPresenter.getOperation(ACTION_REFRESH_STATE).doAction();
+                ventaOrdenPresenter.setCodVenta(v.getId());
             } else {
                 ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, v.getId());
             }
