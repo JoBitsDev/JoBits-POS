@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui.mainmenu.presenter;
 
+import com.jobits.pos.client.webconnection.login.model.UbicacionService;
 import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.about.AcercaDeView;
@@ -118,7 +119,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
                 Application.getInstance().setLoggedUser(null);
                 RootView.getInstance().clearView();
                 Application.getInstance().getNavigator().navigateTo(
-                        LogInView.VIEW_NAME, new LoginViewPresenter(new LogInController()), DisplayType.POPUP);
+                        LogInView.VIEW_NAME, new LoginViewPresenter(), DisplayType.POPUP);
                 Application.getInstance().getNotificationService().showDialog("Sesion Cerrada", TipoNotificacion.INFO);
                 return Optional.empty();
             }
@@ -226,7 +227,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        UbicacionView.VIEW_NAME, new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class)), DisplayType.POPUP);
+                        UbicacionView.VIEW_NAME, new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionService.class)), DisplayType.POPUP);
                 return Optional.empty();
             }
         });

@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.ui.login.presenter;
 
+import com.jobits.pos.client.webconnection.login.model.UbicacionModel;
 import org.jobits.db.core.domain.ConexionPropertiesModel;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.awt.Color;
@@ -102,11 +103,11 @@ public class LoginViewModel extends AbstractViewModel {
         firePropertyChange(PROP_ESTADOCONEXION, oldEstadoConexion, estadoConexion, false);
     }
 
-    private List<ConexionPropertiesModel> listaUbicaciones;
+    private List<UbicacionModel> listaUbicaciones;
 
     public static final String PROP_LISTAUBICACIONES = "listaUbicaciones";
 
-    private ConexionPropertiesModel ubicacionSeleccionada;
+    private UbicacionModel ubicacionSeleccionada;
 
     public static final String PROP_UBICACIONSELECCIONADA = "ubicacionSeleccionada";
 
@@ -115,7 +116,7 @@ public class LoginViewModel extends AbstractViewModel {
      *
      * @return the value of ubicacionSeleccionada
      */
-    public ConexionPropertiesModel getUbicacionSeleccionada() {
+    public UbicacionModel getUbicacionSeleccionada() {
         return ubicacionSeleccionada;
     }
 
@@ -124,8 +125,8 @@ public class LoginViewModel extends AbstractViewModel {
      *
      * @param ubicacionSeleccionada new value of ubicacionSeleccionada
      */
-    public void setUbicacionSeleccionada(ConexionPropertiesModel ubicacionSeleccionada) {
-        ConexionPropertiesModel oldUbicacionSeleccionada = this.ubicacionSeleccionada;
+    public void setUbicacionSeleccionada(UbicacionModel ubicacionSeleccionada) {
+        UbicacionModel oldUbicacionSeleccionada = this.ubicacionSeleccionada;
         this.ubicacionSeleccionada = ubicacionSeleccionada;
         firePropertyChange(PROP_UBICACIONSELECCIONADA, oldUbicacionSeleccionada, ubicacionSeleccionada);
     }
@@ -135,7 +136,7 @@ public class LoginViewModel extends AbstractViewModel {
      *
      * @return the value of listaUbicaciones
      */
-    public List<ConexionPropertiesModel> getListaUbicaciones() {
+    public List<UbicacionModel> getListaUbicaciones() {
         return listaUbicaciones;
     }
 
@@ -144,8 +145,8 @@ public class LoginViewModel extends AbstractViewModel {
      *
      * @param listaUbicaciones new value of listaUbicaciones
      */
-    public void setListaUbicaciones(List<ConexionPropertiesModel> listaUbicaciones) {
-        List<ConexionPropertiesModel> oldListaUbicaciones = this.listaUbicaciones;
+    public void setListaUbicaciones(List<UbicacionModel> listaUbicaciones) {
+        List<UbicacionModel> oldListaUbicaciones = this.listaUbicaciones;
         this.listaUbicaciones = listaUbicaciones;
         firePropertyChange(PROP_LISTAUBICACIONES, oldListaUbicaciones, listaUbicaciones);
     }

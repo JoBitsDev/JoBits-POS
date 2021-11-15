@@ -6,11 +6,13 @@
 package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.client.webconnection.login.LoginService;
+import com.jobits.pos.client.webconnection.login.model.UbicacionModel;
+import com.jobits.pos.client.webconnection.login.model.UbicacionService;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.core.repo.autenticacion.PersonalDAO;
 import com.jobits.pos.controller.login.impl.MainMenuController;
-import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.controller.mesa.MesaService;
 import com.jobits.pos.controller.reservas.ReservaOrdenListener;
 import com.jobits.pos.controller.reservas.UbicacionMesaListener;
@@ -18,6 +20,7 @@ import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.module.UserResolverImpl;
 import com.jobits.pos.hook.escandallo.ProductoEscandalloHook;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
@@ -32,17 +35,14 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
+import com.root101.clean.core.app.services.UserResolver;
 import java.awt.Color;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import org.jobits.db.core.domain.ConexionPropertiesModel;
-import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *
@@ -59,17 +59,16 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     
     public static final String PROP_READY_TO_LOGIN = "Listo para logearse";
 
-    LogInService service;
-    UbicacionConexionService ubicacionController = PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class);
+    LoginService service = PosDesktopUiModule.getInstance().getImplementation(LoginService.class);
+    UbicacionService ubicacionController = PosDesktopUiModule.getInstance().getImplementation(UbicacionService.class);
 
-    public LoginViewPresenter(LogInService service) {
+    public LoginViewPresenter() {
         super(new LoginViewModel());
-        this.service = service;
         refreshState();
     }
 
     public void setUbicacionSeleccionada() {
-        getBean().setUbicacionSeleccionada(ubicacionController.getUbicaciones().getUbicacionActiva());
+        getBean().setUbicacionSeleccionada(ubicacionController.loadLocations().getActiveUbicacion());
         firePropertyChange(PROP_READY_TO_LOGIN, null, null);
     }
 
@@ -117,14 +116,12 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
             @Override
             protected void longProcessMethod() {
                 try {
-                    ubicacionController.setSelectedConexion(getBean().getUbicacionSeleccionada());
-                    service.connect(ubicacionController.getUbicaciones().getUbicacionActiva());
+                    ubicacionController.setSelectedLocation(getBean().getUbicacionSeleccionada());
+                    service.connect(ubicacionController.loadLocations().getActiveUbicacion());//TODO:REST API
                     getBean().setEstadoConexion(getBean().getUbicacionSeleccionada().toString());
                     actualizarLabelConexionYBotonAutenticar(service.isConnected());
 
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (Exception ex) {
+                }  catch (Exception ex) {
                     Logger.getLogger(LoginViewPresenter.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -132,8 +129,10 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     }
 
     private void onEditarUbicacionClick() {
-        JComboBox<ConexionPropertiesModel> jComboBox1 = new JComboBox<>();
-        jComboBox1.setModel(new DefaultComboBoxModel<>(ubicacionController.getUbicaciones().getUbicaciones()));
+        JComboBox<UbicacionModel> jComboBox1 = new JComboBox<>();
+        var wrapper = ubicacionController.loadLocations();
+        UbicacionModel[] arr = new UbicacionModel[wrapper.getUbicaciones().size()];
+        jComboBox1.setModel(new DefaultComboBoxModel<>(wrapper.getUbicaciones().toArray(arr)));
         jComboBox1.setSelectedItem(getBean().getUbicacionSeleccionada());
         Object[] options = {"Seleccionar", "Editar", "Cancelar"};
         //                     yes        no       cancel
@@ -148,10 +147,10 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                 options[0]);
         switch (confirm) {
             case JOptionPane.YES_OPTION:
-                getBean().setUbicacionSeleccionada((ConexionPropertiesModel) jComboBox1.getSelectedItem());
+                getBean().setUbicacionSeleccionada((UbicacionModel) jComboBox1.getSelectedItem());
                 break;
             case JOptionPane.NO_OPTION:
-                ubicacionController.setSelectedConexion((ConexionPropertiesModel) jComboBox1.getSelectedItem());
+                ubicacionController.setSelectedLocation((UbicacionModel) jComboBox1.getSelectedItem());
                 NavigationService.getInstance().navigateTo(UbicacionView.VIEW_NAME,
                         new UbicacionViewPresenter(ubicacionController), DisplayType.POPUP);//TODO codigo de ubicaciones
                 break;
@@ -175,8 +174,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
 
     @Override
     protected Optional refreshState() {
-        getBean().setListaUbicaciones(new ArrayListModel<>(
-                Arrays.asList(ubicacionController.getUbicaciones().getUbicaciones())));
+        getBean().setListaUbicaciones(new ArrayListModel<>(ubicacionController.loadLocations().getUbicaciones()));
         setUbicacionSeleccionada();
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }

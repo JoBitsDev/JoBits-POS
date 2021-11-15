@@ -28,7 +28,7 @@ public class LogInView extends AbstractViewPanel {
     public static final String VIEW_NAME = "Login";
 
     public static LogInView getInstance() {
-        return new LogInView(new LoginViewPresenter(new LogInController()));
+        return new LogInView(new LoginViewPresenter());
     }
 
     /**
