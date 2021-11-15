@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutionException;
  *
  * @extends ExecutionException.
  */
-public class ServerErrorException extends ExecutionException {
+public class ServerErrorException extends RuntimeException {
 
     private final int code;
 
