@@ -7,10 +7,10 @@ package com.jobits.pos.ui.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
-import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
-import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
-import com.jobits.pos.ui.clientes.presenter.ClienteUseCaseRFImpl;
-import com.jobits.pos.usecase.mesa.ReservaUseCaseRFImpl;
+import com.jobits.pos.client.webconnection.login.LoginService;
+import com.jobits.pos.client.webconnection.login.LoginWCS;
+import com.jobits.pos.client.webconnection.login.model.UbicacionService;
+import com.jobits.pos.client.webconnection.login.model.UbicacionServiceImpl;
 
 /**
  *
@@ -23,8 +23,8 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
 
     @Override
     protected void configure() {
-                bind(ReservaUseCase.class).to(ReservaUseCaseRFImpl.class).in(Scopes.SINGLETON);
-
+        bind(LoginService.class).to(LoginWCS.class).in(Scopes.SINGLETON);
+        bind(UbicacionService.class).to(UbicacionServiceImpl.class).in(Scopes.SINGLETON);
 
     }
 

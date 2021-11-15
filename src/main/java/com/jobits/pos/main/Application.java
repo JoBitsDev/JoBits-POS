@@ -175,7 +175,7 @@ public class Application {
     public Personal getLoggedUser() {
         return userResolver.resolveUser();
     }
-
+  
     public void setLoggedUser(Personal loggedUser) {
         this.loggedUser = loggedUser;
         UserResolverImpl.setCurrentLoggedUser(loggedUser);
@@ -233,23 +233,23 @@ public class Application {
     }
 
     private void initModules() {
-        DataVersionControlModule.init();
+       // DataVersionControlModule.init();
         //MODULO CLIENTE
-        ClienteRepoModule.init(DataVersionControlModule.getInstance());
-        ClienteCoreModule.init(ClienteRepoModule.getInstance());
+        //ClienteRepoModule.init(DataVersionControlModule.getInstance());
+        //ClienteCoreModule.init(ClienteRepoModule.getInstance());
 
         //MODULO RESERVA
-        ReservaRepoModule.init(DataVersionControlModule.getInstance());
-        ReservaCoreModule.init(ReservaRepoModule.getInstance());
+        //ReservaRepoModule.init(DataVersionControlModule.getInstance());
+        //ReservaCoreModule.init(ReservaRepoModule.getInstance());
 
         //MODULO POS-CORE
-        PosCoreModule.init(DataVersionControlModule.getInstance());
+      //  PosCoreModule.init(DataVersionControlModule.getInstance());
 
         //MODULO DESKTOP-UI
-        PosDesktopUiModule.init(
-                PosCoreModule.getInstance(),
-                ReservaCoreModule.getInstance(),
-                ClienteCoreModule.getInstance());
+        PosDesktopUiModule.init();
+               // PosCoreModule.getInstance(),
+                //ReservaCoreModule.getInstance(),
+                //ClienteCoreModule.getInstance());
         
     }
 

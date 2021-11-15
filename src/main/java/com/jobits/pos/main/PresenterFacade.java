@@ -5,13 +5,14 @@
  */
 package com.jobits.pos.main;
 
+import com.jobits.pos.client.webconnection.login.model.UbicacionService;
 import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
+import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
-import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListService;
@@ -129,7 +130,6 @@ import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.ui.venta.orden.presenter.AgregarProductoViewPresenter;
 import com.jobits.pos.ui.clientes.presenter.DomicilioViewPresenter;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoEnCalienteViewPresenter;
-import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *
@@ -143,13 +143,13 @@ public class PresenterFacade {
     public static AbstractViewPresenter getPresenterFor(String viewUIDName) {
         switch (viewUIDName) {
             case LogInView.VIEW_NAME:
-                return new LoginViewPresenter(new LogInController());
+                return new LoginViewPresenter();
             case AcercaDeView.VIEW_NAME:
                 return new AcercaDeViewPresenter();
             case ChangeUserView.VIEW_NAME:
-                return new ChangeUserViewPresenter(new LogInController());
+                return new ChangeUserViewPresenter(PosDesktopUiModule.getInstance().getImplementation(LogInService.class));
             case UbicacionView.VIEW_NAME:
-                return new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionConexionService.class));
+                return new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionService.class));
             case MainMenuView.VIEW_NAME:
                 throw new IllegalStateException("Bad call on view: " + viewUIDName);
             case DashBoardView.VIEW_NAME:
@@ -220,7 +220,7 @@ public class PresenterFacade {
             case CalcularCambioView.VIEW_NAME:
                 return new CalcularCambioViewPresenter(new Orden());
             case AutorizoView.VIEW_NAME:
-                return new AutorizoViewPresenter(new LogInController(), null);
+                return new AutorizoViewPresenter(PosDesktopUiModule.getInstance().getImplementation(LogInService.class), null);
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(null);
             case TransaccionListView.VIEW_NAME:
