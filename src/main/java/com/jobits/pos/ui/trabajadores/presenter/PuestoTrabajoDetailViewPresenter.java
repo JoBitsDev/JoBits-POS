@@ -97,9 +97,6 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
             puesto.setSalarioFijo(getBean().getSalario_fijo());
             puesto.setSalarioPorcientoDeArea(getBean().getPago_porciento_a_partir());
             puesto.setSalarioPorcientoVentaTotal(getBean().getSalario_venta());
-            if (puesto.getPersonalList() == null) {
-                puesto.setPersonalList(new ArrayList<>());
-            }
             if (creatingMode) {
                 service.create(puesto);
             } else {
