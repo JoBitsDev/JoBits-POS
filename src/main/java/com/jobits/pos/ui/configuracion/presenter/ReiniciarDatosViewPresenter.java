@@ -83,7 +83,7 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
                     showDialog("Esta seguro que desea reiniciar los datos del almacen seleccionado?",
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
                 Application.getInstance().getBackgroundWorker().processInBackground("Reiniciando Almacen...", () -> {
-                    almacenService.resetAlmacen(getBean().getAlmacen_seleccionado());
+                    almacenService.resetAlmacen(getBean().getAlmacen_seleccionado().getCodAlmacen());
                 });
                 Application.getInstance().getNotificationService().showDialog(
                         "Se han reiniciado los datos de " + getBean().getAlmacen_seleccionado(),
