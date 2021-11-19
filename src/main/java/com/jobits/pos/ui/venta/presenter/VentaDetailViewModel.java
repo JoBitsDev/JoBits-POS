@@ -383,25 +383,11 @@ public class VentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_FECHA = "fecha";
 
-    //Venta Instance
-    public static Venta ventaInstance;
-
-    public static Venta getVentaInstance() {
-        return ventaInstance;
-    }
-
-    public static void setVentaInstance(Venta ventaInstance) {
-        VentaDetailViewModel.ventaInstance = ventaInstance;
-    }
-
     //Turnos 
-    private ArrayListModel<Venta> list_ventas = new ArrayListModel<>();
 
-    public static final String PROP_LIST_VENTAS = "list_ventas";
+    private int id_venta_seleccionada = -1;
 
-    private Venta venta_seleccionada;
-
-    public static final String PROP_VENTA_SELECCIONADA = "venta_seleccionada";
+    public static final String PROP_VENTA_SELECCIONADA = "id_venta_seleccionada";
 
     private boolean cambiar_turno_enabled;
 
@@ -432,8 +418,8 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @return the value of venta_seleccionada
      */
-    public Venta getVenta_seleccionada() {
-        return venta_seleccionada;
+    public int getVenta_seleccionada() {
+        return id_venta_seleccionada;
     }
 
     /**
@@ -441,9 +427,9 @@ public class VentaDetailViewModel extends AbstractViewModel {
      *
      * @param venta_seleccionada new value of venta_seleccionada
      */
-    public void setVenta_seleccionada(Venta venta_seleccionada) {
-        Venta oldVenta_seleccionada = this.venta_seleccionada;
-        this.venta_seleccionada = venta_seleccionada;
+    public void setVenta_seleccionada(int venta_seleccionada) {
+        int oldVenta_seleccionada = this.id_venta_seleccionada;
+        this.id_venta_seleccionada = venta_seleccionada;
         firePropertyChange(PROP_VENTA_SELECCIONADA, oldVenta_seleccionada, venta_seleccionada);
     }
 
@@ -693,26 +679,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
         firePropertyChange(PROP_LISTA_MESAS, oldLista_mesas, lista_mesas);
     }
 
-    /**
-     * Get the value of list_ventas
-     *
-     * @return the value of list_ventas
-     */
-    public ArrayListModel<Venta> getList_ventas() {
-        return list_ventas;
-    }
 
-    /**
-     * Set the value of list_ventas
-     *
-     * @param list_ventas new value of list_ventas
-     */
-    public void setList_ventas(ArrayListModel<Venta> list_ventas) {
-        ArrayListModel<Venta> oldList_ventas = this.list_ventas;
-        this.list_ventas.clear();
-        this.list_ventas.addAll(list_ventas);
-        firePropertyChange(PROP_LIST_VENTAS, oldList_ventas, list_ventas);
-    }
 
     /**
      * Get the value of fecha
