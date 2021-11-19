@@ -777,9 +777,6 @@ public class VentaDetailView extends AbstractViewPanel {
         jButtonImpimirResumenComisionPorcentual.addActionListener(getPresenter().getOperation(ACTION_IMPRIMIR_RESUMEN_COMISION_PORCENTUAL));
 
         jButtonRefresh.addActionListener(getPresenter().getOperation(ACTION_REFRESCAR_VENTA));
-        Bindings.bind(jComboBoxVentas, new SelectionInList<Venta>(
-                getPresenter().getModel(PROP_LIST_VENTAS),
-                getPresenter().getModel(PROP_VENTA_SELECCIONADA)));
         Bindings.bind(jButtonCambiarTurno, "enabled", getPresenter().getModel(PROP_CAMBIAR_TURNO_ENABLED));
 //        Bindings.bind(jPanelResumen, "visible", getPresenter().getModel(PROP_SHOW_PANELES));
         jButtonCambiarTurno.addActionListener(getPresenter().getOperation(ACTION_CREAR_NUEVO_TURNO));
