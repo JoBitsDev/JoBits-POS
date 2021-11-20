@@ -5,9 +5,8 @@
  */
 package com.jobits.pos.ui.mainmenu.presenter;
 
+import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.controller.login.impl.LogInController;
-import com.jobits.pos.controller.login.impl.MainMenuController;
-import com.jobits.pos.controller.login.MainMenuService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.cordinator.NavigationService;
@@ -15,7 +14,7 @@ import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.ui.autorizo.AuthorizerImpl;
+import com.jobits.pos.ui.mainmenu.MenuButtons;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -34,7 +33,6 @@ import java.util.Optional;
  */
 public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> {
 
-    MainMenuService service = PosDesktopUiModule.getInstance().getImplementation(MainMenuService.class);
     VentaDetailService vService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
     private int nivelDeAccesoAutenticado = 0;
 
@@ -47,8 +45,8 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
 
     @Override
     protected void registerOperations() {
-        for (MainMenuController.MenuButtons v : MainMenuController.MenuButtons.values()) {
-            if (v == MainMenuController.MenuButtons.COMENZAR_VENTAS) {
+        for (MenuButtons v : MenuButtons.values()) {
+            if (v == MenuButtons.COMENZAR_VENTAS) {
                 registerOperation(onComenzarVentaClick(v.toString()));
                 continue;
             }
@@ -147,7 +145,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
 
         @Override
         public boolean isEnabled() {
-            return service.estaActivaLaLicencia();
+            return PosDesktopUiModule.getInstance().getImplementation(LicenceService.class).estaActivaLaLicencia();
         }
 
     }

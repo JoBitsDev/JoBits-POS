@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.ui.mainmenu;
 
-import com.jobits.pos.controller.login.impl.MainMenuController;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
@@ -78,33 +77,33 @@ public class MainMenuView extends AbstractViewPanel {
         float iconSize = 25f;
         
         CollapseMenu productoVenta = new CollapseMenu(MaterialIcons.BUSINESS.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Productos");
-        productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.MENU.toString()));
-        productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.INSUMO.toString()));
-        productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COCINA.toString()));
-        productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.SECCION.toString()));
-        productoVenta.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.SALON.toString()));
+        productoVenta.addMenuItem(getPresenter().getOperation(MenuButtons.MENU.toString()));
+        productoVenta.addMenuItem(getPresenter().getOperation(MenuButtons.INSUMO.toString()));
+        productoVenta.addMenuItem(getPresenter().getOperation(MenuButtons.COCINA.toString()));
+        productoVenta.addMenuItem(getPresenter().getOperation(MenuButtons.SECCION.toString()));
+        productoVenta.addMenuItem(getPresenter().getOperation(MenuButtons.SALON.toString()));
 
         CollapseMenu almacen = new CollapseMenu(MaterialIcons.STORAGE.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Almacén");
-        almacen.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.ALMACEN.toString()));
-        almacen.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.IPV.toString()));
+        almacen.addMenuItem(getPresenter().getOperation(MenuButtons.ALMACEN.toString()));
+        almacen.addMenuItem(getPresenter().getOperation(MenuButtons.IPV.toString()));
 
         CollapseMenu contabilidad = new CollapseMenu(MaterialIcons.MONETIZATION_ON.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Ventas");
-        contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COMENZAR_VENTAS.toString()));
-        contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.VENTAS.toString()));
-        contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.RESUMEN.toString()));
-        contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.ESTADISTICAS.toString()));
-        contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.CLIENTES.toString()));
-        contabilidad.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.RESERVAS.toString()));
+        contabilidad.addMenuItem(getPresenter().getOperation(MenuButtons.COMENZAR_VENTAS.toString()));
+        contabilidad.addMenuItem(getPresenter().getOperation(MenuButtons.VENTAS.toString()));
+        contabilidad.addMenuItem(getPresenter().getOperation(MenuButtons.RESUMEN.toString()));
+        contabilidad.addMenuItem(getPresenter().getOperation(MenuButtons.ESTADISTICAS.toString()));
+        contabilidad.addMenuItem(getPresenter().getOperation(MenuButtons.CLIENTES.toString()));
+        contabilidad.addMenuItem(getPresenter().getOperation(MenuButtons.RESERVAS.toString()));
 
         CollapseMenu nominas = new CollapseMenu(MaterialIcons.ACCOUNT_BOX.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Nóminas");
-        nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.NOMINAS.toString()));
-        nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.TRABAJADORES.toString()));
-        nominas.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.PUESTOS_TRABAJO.toString()));
+        nominas.addMenuItem(getPresenter().getOperation(MenuButtons.NOMINAS.toString()));
+        nominas.addMenuItem(getPresenter().getOperation(MenuButtons.TRABAJADORES.toString()));
+        nominas.addMenuItem(getPresenter().getOperation(MenuButtons.PUESTOS_TRABAJO.toString()));
 
 //        CollapseMenu configuracion = new CollapseMenu(MaterialIcons.SETTINGS.deriveIcon(iconSize).deriveIcon(Color.WHITE), "Configuración");
-//        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.CONFIGURACION.toString()));
-//        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.COPIA_SEG.toString()));
-//        configuracion.addMenuItem(getPresenter().getOperation(MainMenuController.MenuButtons.LICENCIA.toString()));
+//        configuracion.addMenuItem(getPresenter().getOperation(MenuButtons.CONFIGURACION.toString()));
+//        configuracion.addMenuItem(getPresenter().getOperation(MenuButtons.COPIA_SEG.toString()));
+//        configuracion.addMenuItem(getPresenter().getOperation(MenuButtons.LICENCIA.toString()));
 
         taskPane.addMainElement(productoVenta);
         taskPane.addMainElement(almacen);
