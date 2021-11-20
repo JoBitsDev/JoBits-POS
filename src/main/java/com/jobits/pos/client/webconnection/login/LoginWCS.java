@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.jobits.pos.client.webconnection.domain.Token;
+import com.jobits.pos.main.Application;
 
 import retrofit2.Response;
 
@@ -51,10 +52,12 @@ public class LoginWCS extends BaseConnection implements LoginService {
      */
     public boolean authenticate(String user, String pass) throws Exception {
         initService();
-        Response<Map<String, String>> ret = loginService.getToken(TENNANT_TOKEN,
+        Response<Map<String, Object>> ret = loginService.getToken(TENNANT_TOKEN,
                 HTTP_HEADER_BASIC + new CredentialsModel(user, pass).getBase64BasicAuth()).execute();
         if (ret.isSuccessful()) {
-            TOKEN = ret.body().get("Token");
+            TOKEN = ret.body().get("Token").toString();
+            var personal = oMapper.convertValue(ret.body().get("User"), Personal.class);
+            Application.getInstance().setLoggedUser(personal);
             return true;
         } else {
             TOKEN = null;
@@ -134,7 +137,7 @@ public class LoginWCS extends BaseConnection implements LoginService {
 
     @Override
     public Personal getUsuarioConectado() {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return Application.getInstance().getLoggedUser();
     }
 
     private void initService() {
