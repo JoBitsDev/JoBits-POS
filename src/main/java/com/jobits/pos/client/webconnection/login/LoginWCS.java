@@ -119,7 +119,8 @@ public class LoginWCS extends BaseConnection implements LoginService {
 
     @Override
     public boolean autorizarCurrentUser(R.NivelAcceso nivelMinimoAcceso) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return Application.getInstance().getLoggedUser().getPuestoTrabajonombrePuesto()
+                .getNivelAcceso() >= nivelMinimoAcceso.getNivel();
     }
 
     @Override
