@@ -53,6 +53,9 @@ public class BaseConnection {
     protected final String HTTP_HEADER_BEARER = "Bearer ";
     protected final String HTTP_HEADER_BASIC = "Basic ";
 
+    public BaseConnection() {
+    }
+
     public static void setRetrofit(String baseUrl) {
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)

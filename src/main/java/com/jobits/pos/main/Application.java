@@ -5,8 +5,6 @@
  */
 package com.jobits.pos.main;
 
-import com.jobits.pos.cliente.core.module.ClienteCoreModule;
-import com.jobits.pos.cliente.repo.module.ClienteRepoModule;
 import com.jobits.pos.ui.utils.ConfigLoaderService;
 import com.jobits.pos.ui.MainWindow;
 import com.jobits.pos.controller.licencia.impl.LicenceController;
@@ -15,12 +13,9 @@ import com.jobits.pos.cordinator.CoordinatorService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Personal;
-import com.jobits.pos.core.module.PosCoreModule;
 import com.jobits.pos.core.module.UserResolverImpl;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
-import com.jobits.pos.reserva.core.module.ReservaCoreModule;
-import com.jobits.pos.reserva.repo.module.ReservaRepoModule;
 import com.jobits.ui.swing.LongProcessActionService;
 import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
@@ -48,7 +43,6 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import org.jobits.db.core.module.DataVersionControlModule;
 
 /**
  *
