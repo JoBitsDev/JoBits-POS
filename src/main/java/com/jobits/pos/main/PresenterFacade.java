@@ -11,7 +11,6 @@ import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
-import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
@@ -147,7 +146,7 @@ public class PresenterFacade {
             case AcercaDeView.VIEW_NAME:
                 return new AcercaDeViewPresenter();
             case ChangeUserView.VIEW_NAME:
-                return new ChangeUserViewPresenter(PosDesktopUiModule.getInstance().getImplementation(LogInService.class));
+                return new ChangeUserViewPresenter();
             case UbicacionView.VIEW_NAME:
                 return new UbicacionViewPresenter(PosDesktopUiModule.getInstance().getImplementation(UbicacionService.class));
             case MainMenuView.VIEW_NAME:
@@ -220,7 +219,7 @@ public class PresenterFacade {
             case CalcularCambioView.VIEW_NAME:
                 return new CalcularCambioViewPresenter(new Orden());
             case AutorizoView.VIEW_NAME:
-                return new AutorizoViewPresenter(PosDesktopUiModule.getInstance().getImplementation(LogInService.class), null);
+                return new AutorizoViewPresenter(null);
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(null);
             case TransaccionListView.VIEW_NAME:

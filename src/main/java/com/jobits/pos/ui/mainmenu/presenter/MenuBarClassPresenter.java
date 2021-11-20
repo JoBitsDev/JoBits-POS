@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.ui.mainmenu.presenter;
 
+import com.jobits.pos.client.webconnection.login.LoginService;
 import com.jobits.pos.client.webconnection.login.model.UbicacionService;
-import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.controller.login.impl.LogInController;
@@ -15,7 +15,6 @@ import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.RootView;
-import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
@@ -37,7 +36,6 @@ import static com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter.*;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.Optional;
 import javax.swing.JOptionPane;
-import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *
@@ -70,7 +68,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
     //Ayuda
     public static final String ACTION_SHOW_MANUAL_USUARIO = "Manual de Usuario";
 
-    LogInService loginService = PosDesktopUiModule.getInstance().getImplementation(LogInService.class);
+    LoginService loginService = PosDesktopUiModule.getInstance().getImplementation(LoginService.class);
 
     public MenuBarClassPresenter() {
         super(new MenuBarClassViewModel());
@@ -109,7 +107,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateTo(
-                        ChangeUserView.VIEW_NAME, new ChangeUserViewPresenter(new LogInController()), DisplayType.POPUP);//TODO: inyectar
+                        ChangeUserView.VIEW_NAME, new ChangeUserViewPresenter(), DisplayType.POPUP);//TODO: inyectar
                 return Optional.empty();
             }
         });

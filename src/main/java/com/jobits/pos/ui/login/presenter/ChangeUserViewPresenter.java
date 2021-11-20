@@ -5,13 +5,12 @@
  */
 package com.jobits.pos.ui.login.presenter;
 
-import com.jobits.pos.controller.login.LogInService;
+import com.jobits.pos.client.webconnection.login.LoginService;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.RootView;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import java.util.Optional;
 
 /**
@@ -22,11 +21,10 @@ public class ChangeUserViewPresenter extends AbstractViewPresenter<ChangeUserVie
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_ACEPTAR = "Aceptar";
-    LogInService service;
+    LoginService service = PosDesktopUiModule.getInstance().getImplementation(LoginService.class);
 
-    public ChangeUserViewPresenter(LogInService service) {
+    public ChangeUserViewPresenter() {
         super(new ChangeUserViewModel());
-        this.service = service;
     }
 
     @Override

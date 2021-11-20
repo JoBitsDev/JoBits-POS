@@ -5,8 +5,9 @@
  */
 package com.jobits.pos.ui.autorizo.presenter;
 
-import com.jobits.pos.controller.login.LogInService;
+import com.jobits.pos.client.webconnection.login.LoginService;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.util.Optional;
@@ -19,11 +20,10 @@ public class AutorizoViewPresenter extends AbstractViewPresenter<AutorizoViewMod
 
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_ACEPTAR = "Aceptar";
-    private final LogInService controller;
+    private final LoginService controller = PosDesktopUiModule.getInstance().getImplementation(LoginService.class);
 
-    public AutorizoViewPresenter(LogInService controller, String text) {
+    public AutorizoViewPresenter(String text) {
         super(new AutorizoViewModel());
-        this.controller = controller;
         getBean().setHeader(text);
     }
 
