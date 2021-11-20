@@ -61,7 +61,7 @@ public class RootView extends JPanel {
         initComponents();
         // jPanelContent.setLayout(cards);
         jPanelStatus.add(statusBar);
-        dashboard = new MainMenuView(new MainMenuPresenter(new MainMenuController(Application.getInstance().getLoggedUser())));
+        dashboard = new MainMenuView();
         add(dashboard, BorderLayout.CENTER);
         setShrinked(true);
         statusBar.refreshView();

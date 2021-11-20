@@ -6,10 +6,10 @@
 package com.jobits.pos.ui.mainmenu;
 
 import com.jobits.pos.controller.login.impl.MainMenuController;
-import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
+import com.jobits.pos.ui.mainmenu.presenter.MainMenuPresenter;
 import com.root101.swing.material.components.dashboard.taskpane.DashBoardTaskPane;
 import com.root101.swing.material.components.taskpane.CollapseMenu;
 import com.root101.swing.material.components.taskpane.TaskButton;
@@ -32,8 +32,8 @@ public class MainMenuView extends AbstractViewPanel {
 
     private DashBoardTaskPane taskPane;
 
-    public MainMenuView(AbstractViewPresenter presenter) {
-        super(presenter);
+    public MainMenuView() {
+        super(new MainMenuPresenter());
 
     }
 

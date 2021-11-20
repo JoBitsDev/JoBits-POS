@@ -97,7 +97,7 @@ public class ViewFacade {
             case ChangeUserView.VIEW_NAME:
                 return new ChangeUserView(p);
             case MainMenuView.VIEW_NAME:
-                return new MainMenuView(p);
+                return new MainMenuView();
             case DashBoardView.VIEW_NAME:
                 return new DashBoardView(p);
             case ProductoVentaListView.VIEW_NAME:

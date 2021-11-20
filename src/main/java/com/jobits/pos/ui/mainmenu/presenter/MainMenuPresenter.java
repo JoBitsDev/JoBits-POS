@@ -34,13 +34,12 @@ import java.util.Optional;
  */
 public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> {
 
-    MainMenuService service;
+    MainMenuService service = PosDesktopUiModule.getInstance().getImplementation(MainMenuService.class);
     VentaDetailService vService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
     private int nivelDeAccesoAutenticado = 0;
 
-    public MainMenuPresenter(MainMenuService service) {
+    public MainMenuPresenter() {
         super(new MainMenuViewModel());
-        this.service = service;
         nivelDeAccesoAutenticado = Application.getInstance().getLoggedUser()
                 .getPuestoTrabajonombrePuesto().getNivelAcceso();
 
