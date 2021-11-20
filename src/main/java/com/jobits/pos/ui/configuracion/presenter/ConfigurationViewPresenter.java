@@ -73,16 +73,16 @@ public class ConfigurationViewPresenter extends AbstractViewPresenter<Configurac
                 }
             }
             Application.getInstance().getNotificationService().notify("Propiedades guardadas exitosamente", TipoNotificacion.SUCCESS);
-            service.cargarConfiguracion();
             NavigationService.getInstance().navigateUp();
         }
     }
 
     private void updateBeanConfig() {
+        var map = service.cargarConfiguracion();
         for (R.SettingID v : R.SettingID.values()) {
-            Object o = service.getConfiguracion(v);
-            if (o != null) {
-                getBean().setConfiguration(v, o);
+            var c = map.get(v.getValue());
+            if (c != null) {
+                getBean().setConfiguration(v, c.resolveValue());
             }
         }
     }

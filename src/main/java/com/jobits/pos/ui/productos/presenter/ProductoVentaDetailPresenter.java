@@ -83,7 +83,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         super(new ProductoVentaDetailViewModel());
         this.creatingMode = productoVenta == null;
         if (creatingMode) {
-            String value = (String) PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class).getConfiguracion(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO);
+            String value = PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class).getConfiguracion(R.SettingID.HORARIO_TIEMPO_MIN_SERVICIO).getValorString();
             this.productoVenta = new ProductoVenta();
             this.productoVenta.setTiempoServicioMin(Integer.parseInt(value));
             this.productoVenta.setProductoInsumoList(new ArrayList<>());

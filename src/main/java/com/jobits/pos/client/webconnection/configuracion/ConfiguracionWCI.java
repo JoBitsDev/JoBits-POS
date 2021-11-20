@@ -3,37 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jobits.pos.client.webconnection.licence;
+package com.jobits.pos.client.webconnection.configuracion;
 
 /**
  *
  * @author Jorge
  */
-import com.jobits.pos.controller.licencia.impl.Licence;
+import com.jobits.pos.core.domain.models.Configuracion;
+import com.jobits.pos.core.usecase.algoritmo.ParametrosConfiguracion;
+import com.jobits.pos.recursos.R;
 import java.util.Map;
-
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
-public interface LicenceWCI {
+public interface ConfiguracionWCI {
 
-    @GET("licence/status")
-    public Call<Licence> getLicence(
-            @Header("Tennant") String bearerTennantToken,
-            @Header("Authorization") String basicAndToken,
-            @Query("tipo") String tipoLicencia);
+    @GET("configuration/list")
+    public Call<Map<String, Configuracion>> cargarConfiguracion();
 
-    @GET("licence/uid")
-    public Call<Map<String, String>> getUID(@Header("Tennant") String bearerTennantToken,
-            @Header("Authorization") String basicAndToken);
+    @PUT("configuration/update/{settingId}/{newValue}")
+    public Call<Configuracion> updateConfiguracion(@Path("settingId") String settingId,
+            @Path("newValue") Object configuration);
 
-    @PUT("licence/renew")
-    public Call<Licence> renew(@Header("Tennant") String bearerTennantToken,
-            @Header("Authorization") String basicAndToken, @Body String key);
+    @GET("configuration/y")
+    public Call<ParametrosConfiguracion> cargarConfiguracionY();
+
+    @GET("configuracion/find/{settingId}")
+    public Call<Configuracion> getConfiguracion(@Path("settingId") String settingId);
 
 }

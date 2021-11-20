@@ -7,12 +7,14 @@ package com.jobits.pos.ui.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
+import com.jobits.pos.client.webconnection.configuracion.ConfiguracionWCS;
 import com.jobits.pos.client.webconnection.licence.LicenceWCS;
 import com.jobits.pos.client.webconnection.login.LoginService;
 import com.jobits.pos.client.webconnection.login.LoginWCS;
 import com.jobits.pos.client.webconnection.login.model.UbicacionService;
 import com.jobits.pos.client.webconnection.login.model.UbicacionServiceImpl;
 import com.jobits.pos.client.webconnection.venta.VentaWCS;
+import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 
@@ -31,6 +33,7 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         bind(UbicacionService.class).to(UbicacionServiceImpl.class).in(Scopes.SINGLETON);
         bind(VentaDetailService.class).to(VentaWCS.class).in(Scopes.SINGLETON);
         bind(LicenceService.class).to(LicenceWCS.class).in(Scopes.SINGLETON);
+        bind(ConfiguracionService.class).to(ConfiguracionWCS.class).in(Scopes.SINGLETON);
 
     }
 
