@@ -19,6 +19,7 @@ import com.jobits.pos.client.webconnection.exception.ServerErrorException;
 //import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.util.Objects;
+import retrofit2.Call;
 
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -63,15 +64,17 @@ public class BaseConnection {
                 .build();
     }
 
-    protected <T> T handleResponse(Response<T> resp) throws ServerErrorException {
-        if (resp.isSuccessful()) {
-            return resp.body();
-        } else {
-            try {
+    protected <T> T handleCall(Call<T> call) throws ServerErrorException {
+        Response<T> resp = null;
+        try {
+            resp = call.execute();
+            if (resp.isSuccessful()) {
+                return resp.body();
+            } else {
                 throw new ServerErrorException(Objects.requireNonNull(resp.errorBody().string(), ""), resp.code());
-            } catch (IOException ex) {
-                throw new ServerErrorException(resp.message(), resp.code());
             }
+        } catch (IOException ex) {
+            throw new ServerErrorException(resp.message(), resp.code());
         }
     }
 
