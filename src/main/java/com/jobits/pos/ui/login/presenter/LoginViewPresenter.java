@@ -83,7 +83,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                         Application.getInstance().setLoggedUser(service.getUsuarioConectado());
                         Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
                         NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
-                                new MainMenuPresenter(new MainMenuController(PersonalDAO.getInstance().find(getBean().getNombreUsuario())))); //TODO revisar eso codigo que no le pertenece a esta clse
+                                new MainMenuPresenter()); //TODO revisar eso codigo que no le pertenece a esta clse
                         RootView.getInstance().getDashboard().getTaskPane().setShrinked(true);
                     }
                 }
@@ -92,23 +92,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
             Application.getInstance().getNotificationService().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion
         }
         RootView.getInstance().getStatusBar().refreshView();
-        //TODO: poner todos los listeners en los controllers del core
-        if (ReservaOrdenListener.getInstance() == null) {
-            ReservaOrdenListener.initInstance(
-                    PosDesktopUiModule.getInstance().getImplementation(OrdenService.class),
-                    ReservaCoreModule.getInstance().getImplementation(ReservaUseCase.class),
-                    PosDesktopUiModule.getInstance().getImplementation(VentaListService.class),
-                    PosDesktopUiModule.getInstance().getImplementation(MesaService.class));
-        }
-        if (UbicacionMesaListener.getInstance() == null) {
-            UbicacionMesaListener.initInstance(
-                    ReservaCoreModule.getInstance().getImplementation(UbicacionUseCase.class),
-                    PosDesktopUiModule.getInstance().getImplementation(MesaService.class),
-                    PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class));
-        }
-        ReservaOrdenListener.getInstance();
-        UbicacionMesaListener.getInstance();
-        ProductoEscandalloHook.getInstance();
+     
     }
 
     private void onUbicacionSeleccionadaChanged() {
