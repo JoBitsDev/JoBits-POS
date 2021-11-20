@@ -34,33 +34,32 @@ public class LicenceWCS extends BaseConnection implements LicenceService {
 
     @Override
     public String getEstadoLicencia(Licence.TipoLicencia tipoLicencia) {
-        try {
-            var ret = handleResponse(licenceService.getLicence(TENNANT_TOKEN, TOKEN).execute());
-        } catch (IOException ex) {
-            Logger.getLogger(LicenceWCS.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "Licencia Activa";
+        var ret = handleCall(licenceService.getLicence(TENNANT_TOKEN, TOKEN, tipoLicencia.getPrefijo().substring(0, 1)));
+        return ret.getEstado();
     }
 
     @Override
     public String getEstadoLic() {
-        return "Licencia Activa";
+        return getEstadoLicencia(Licence.TipoLicencia.APLICACION);
     }
 
     @Override
     public boolean estaActivaLaLicencia() {
-        return true;
-
+        var ret = handleCall(licenceService.getLicence(TENNANT_TOKEN, TOKEN, null));
+        return ret.LICENCIA_ACTIVA && ret.LICENCIA_VALIDA;
     }
 
     @Override
     public boolean validateAndSafe(String key) {
-        return true;
+        var ret = handleCall(licenceService.renew(TENNANT_TOKEN, TOKEN, key));
+        return ret.LICENCIA_ACTIVA && ret.LICENCIA_VALIDA;
     }
 
     @Override
     public String getSoftwareUID() {
-        return "0000-0000-0000";
+        var ret = handleCall(licenceService.getUID(TENNANT_TOKEN, TOKEN));
+        return ret.get("uid");
+
     }
 
 }

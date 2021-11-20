@@ -17,18 +17,23 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface LicenceWCI {
 
-    @GET("licence/")
+    @GET("licence/status")
     public Call<Licence> getLicence(
             @Header("Tennant") String bearerTennantToken,
-            @Header("Authorization") String basicAndToken);
+            @Header("Authorization") String basicAndToken,
+            @Query("tipo") String tipoLicencia);
 
     @GET("licence/uid")
-    public Call<Map<String, String>> getUID();
+    public Call<Map<String, String>> getUID(@Header("Tennant") String bearerTennantToken,
+            @Header("Authorization") String basicAndToken);
 
     @PUT("licence/renew")
-    public Call<Licence> renew(@Body String key);
+    public Call<Licence> renew(@Header("Tennant") String bearerTennantToken,
+            @Header("Authorization") String basicAndToken, @Body String key);
 
 }

@@ -122,8 +122,6 @@ public class Application {
     //
     // App
     //
-    private LicenceController licenceController = new LicenceController();
-
     private Personal loggedUser;
     //
     // UI
@@ -162,11 +160,7 @@ public class Application {
         return coordinator;
     }
 
-    public LicenceController getLicenceController() {
-        return licenceController;
-    }
-
-    public Personal getLoggedUser() {
+    public Personal getLoggedUser() {//TODO: implement userresolver
         return userResolver.resolveUser();
     }
   

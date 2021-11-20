@@ -189,8 +189,7 @@ public class ViewFacade {
             case AgregarProductoView.VIEW_NAME:
                 return new AgregarProductoView(p);
             case LicenceDialogView.VIEW_NAME:
-                return new LicenceDialogView(
-                        Application.getInstance().getLicenceController());
+                return new LicenceDialogView();
 
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);
