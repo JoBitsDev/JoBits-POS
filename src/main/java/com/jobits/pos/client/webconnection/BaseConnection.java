@@ -16,16 +16,19 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.jobits.pos.client.webconnection.exception.ServerErrorException;
+import com.root101.clean.core.app.usecase.AbstractUseCase;
+import java.beans.PropertyChangeListener;
 //import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.util.Objects;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-public class BaseConnection {
+public class BaseConnection implements AbstractUseCase{
 
     /**
      * Tiempo maximo esperado para la lectura.
@@ -39,6 +42,10 @@ public class BaseConnection {
             .registerModule(new JavaTimeModule())
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     protected static Retrofit retrofit;
+
+    private static final OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(new HeaderInterceptor())
+            .build();
     /**
      * Token para las llamandas seguras al servidor.
      */
@@ -60,8 +67,19 @@ public class BaseConnection {
     public static void setRetrofit(String baseUrl) {
         retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
+                .client(client)
                 .addConverterFactory(JacksonConverterFactory.create(oMapper))
                 .build();
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener pl) {
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void removePropertyChangeListener(PropertyChangeListener pl) {
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     protected <T> T handleCall(Call<T> call) throws ServerErrorException {
