@@ -9,8 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.insumo.InsumoDetailService;
 import com.jobits.pos.controller.productos.ProductoInsumoListService;
-import com.jobits.pos.controller.productos.impl.ProductoVentaListController;
-import com.jobits.pos.controller.productos.ProductoVentaListService;
+import com.jobits.pos.controller.productos.ProductoVentaService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.io.DataHeader;
 import com.jobits.pos.io.IOTemplate;
@@ -48,16 +47,17 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
     public static final String ACTION_REMOVE_MIXED_HEADER_VALUES = "Remove Mixed Header Values";
     public static final String ACTION_LOAD_DATA_FROM_SOURCE = "Load Data From Source";
     public static final String ACTION_EXECUTE_ACTION = "Execute Action";
-    ProductoVentaListController service;
-
+    
+    
+    ProductoVentaService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaService.class);
+    ProductoInsumoListService iService = PosDesktopUiModule.getInstance().getImplementation(ProductoInsumoListService.class);
     IOTemplate<Insumo> template = new CsvIOTemplateImpl<>();
     AbstractRawDataConverter converter;
 
     public List dataList = new ArrayList();
 
-    public ImportarExportarViewPresenter(ProductoVentaListController service) {
+    public ImportarExportarViewPresenter() {
         super(new ImportarExportarViewModel());
-        this.service = service;
         addListeners();
         setListToBean();
     }
@@ -213,9 +213,7 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
                         dataList = useCaseInsumoAlmacen.findAll();
                         break;
                     case PRODUCTO_VENTA:
-                        ProductoVentaListService useCaseProductoVenta
-                                = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
-                        dataList = useCaseProductoVenta.findAll();
+                        dataList = service.findAll();
                         break;
                 }
                 firePropertyChange("To Ready", null, null);
@@ -282,9 +280,7 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
                         useCaseInsumo.bulkImport(dataList);
                         break;
                     case FICHA_DE_COSTO:
-                        ProductoVentaListService useCaseProductoInsumo
-                                = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
-                        useCaseProductoInsumo.bulkImportProductoInsumo(dataList);
+                        iService.bulkImportProductoInsumo(dataList);
                         break;
                     case INSUMO_ALMACEN:
                         AlmacenManageService useCaseInsumoAlmacen
@@ -292,9 +288,7 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
                         useCaseInsumoAlmacen.bulkImport(dataList);
                         break;
                     case PRODUCTO_VENTA:
-                        ProductoVentaListService useCaseProductoVenta
-                                = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaListService.class);
-                        useCaseProductoVenta.bulkImport(dataList);
+                        service.bulkImport(dataList);
                         break;
                 }
                 break;

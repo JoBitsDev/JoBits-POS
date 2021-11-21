@@ -18,6 +18,7 @@ public class UbicacionServiceImpl implements UbicacionService {
 
     private static final ObjectMapper om = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
     private static final String FILE_NAME = "ubicaciones.json";
+    private static UbicacionModelWrapper lastLoadedUbicaciones = null;
 
     public UbicacionServiceImpl() {
     }
@@ -26,6 +27,9 @@ public class UbicacionServiceImpl implements UbicacionService {
     public UbicacionModelWrapper loadLocations() {
         try {
             var wrapper = om.readValue(new File(FILE_NAME), UbicacionModelWrapper.class);
+            if (wrapper.equals(lastLoadedUbicaciones)) {
+                return lastLoadedUbicaciones;
+            }
             BaseConnection.setRetrofit("http://" + wrapper.getActiveUbicacion().getIp() + ":" + wrapper.getActiveUbicacion().getPuerto() + "/jobits/");
             return wrapper;
         } catch (IOException ex) {

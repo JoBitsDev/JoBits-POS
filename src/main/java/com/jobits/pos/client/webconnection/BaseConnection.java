@@ -22,13 +22,14 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Objects;
 import okhttp3.OkHttpClient;
+import org.jboss.logging.Logger;
 import retrofit2.Call;
 
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-public class BaseConnection implements AbstractUseCase{
+public class BaseConnection implements AbstractUseCase {
 
     /**
      * Tiempo maximo esperado para la lectura.
@@ -89,10 +90,11 @@ public class BaseConnection implements AbstractUseCase{
             if (resp.isSuccessful()) {
                 return resp.body();
             } else {
-                throw new ServerErrorException(Objects.requireNonNull(resp.errorBody().string(), ""), resp.code());
+                throw new ServerErrorException(Objects.requireNonNull(resp.message(), "HTTP: " + resp.code()), resp.code());
             }
         } catch (IOException ex) {
-            throw new ServerErrorException(resp.message(), resp.code());
+            Logger.getLogger(this.getClass()).log(Logger.Level.ERROR, ex.fillInStackTrace());
+            throw new ServerErrorException(ex.getMessage(), 500);
         }
     }
 

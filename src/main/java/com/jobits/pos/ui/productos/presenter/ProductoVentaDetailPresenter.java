@@ -9,7 +9,6 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.controller.imagemanager.ImageManagerService;
 import com.jobits.pos.controller.insumo.InsumoListService;
-import com.jobits.pos.controller.productos.ProductoVentaDetailService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.controller.seccion.SeccionListService;
@@ -45,6 +44,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import org.jobits.db.core.domain.ConexionPropertiesModel;
+import com.jobits.pos.controller.productos.ProductoVentaService;
 
 /**
  *
@@ -64,8 +64,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     public static String ACTION_ELIMINAR_INSUMO_FICHA = "Eliminar";
     public static String ACTION_EDITAR_IMAGEN = "Editar Imagen";
 
-    private final ProductoVentaDetailService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaDetailService.class);
-    private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
+    private final ProductoVentaService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaService.class);
+    //private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
     private final PuntoElaboracionListService ptoElabService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
     private final SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
     private final InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
@@ -193,9 +193,10 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     }
 
     private void onAddIngredienteClick() {
-        service.registrarNuevoInsumo();
-        getBean().getLista_insumos_disponibles().clear();
-        getBean().getLista_insumos_disponibles().addAll(insumoService.findAll());
+        throw new UnsupportedOperationException("En Desarrollo");
+        //service.registrarNuevoInsumo();
+        //getBean().getLista_insumos_disponibles().clear();
+        //getBean().getLista_insumos_disponibles().addAll(insumoService.findAll());
     }
 
     private void onAceptarClick() {
@@ -207,11 +208,6 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             String precioVenta = getBean().getPrecio_venta();
             String pagoPorVenta = getBean().getComision_por_venta();
 
-            if (precioCosto == null || precioCosto.equals("")) {
-                productoVenta.setGasto(0f);
-            } else {
-                productoVenta.setGasto(Float.valueOf(precioCosto));
-            }
             if (precioVenta == null || precioVenta.equals("")) {
                 productoVenta.setPrecioVenta(0f);
             } else {
@@ -303,7 +299,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             Insumo inSel = getBean().getInsumo_disponible_sel();
-            service.agregarInsumoaProducto(productoVenta, inSel, cantidad);
+            productoVenta.agregarInsumo(inSel,cantidad);
             getBean().setInsumo_disponible_sel(null);
             getBean().getLista_insumos_contenidos().clear();
             getBean().getLista_insumos_contenidos().addAll(productoVenta.getProductoInsumoList());
@@ -323,7 +319,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private void onEliminarInsumoFichaClick() {
         ProductoInsumo inSel = getBean().getInsumo_contenido_seleccionado();
-        service.eliminarInsumoProducto(productoVenta, inSel);
+        productoVenta.eliminarInsumo(inSel);
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(productoVenta.getProductoInsumoList());
@@ -338,8 +334,8 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private void refreshProductImage() {
         String path = getBean().getRuta_imagen_producto();
-        ImageIcon image = imageService.loadImageIcon(path, new Dimension(70, 70));
-        getBean().setImagen_producto(image);
+        //ImageIcon image = imageService.loadImageIcon(path, new Dimension(70, 70));
+        //getBean().setImagen_producto(image);
     }
 
     private void addListteners() {

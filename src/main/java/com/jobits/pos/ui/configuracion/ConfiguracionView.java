@@ -5,21 +5,14 @@
  */
 package com.jobits.pos.ui.configuracion;
 
-import com.jobits.pos.controller.productos.impl.ProductoVentaListController;
-import com.jobits.pos.servicios.impresion.ImpresoraRepoImpl;
-import com.jobits.pos.servicios.impresion.ImpresoraUseCase;
 import com.jobits.pos.ui.AbstractViewPanel;
-import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.configuracion.presenter.ConfigurationViewPresenter;
-import com.jobits.pos.ui.configuracion.presenter.ImportarExportarViewPresenter;
 import com.jobits.pos.ui.configuracion.presenter.ImpresorasViewPresenter;
-import com.jobits.pos.ui.configuracion.presenter.ReiniciarDatosViewPresenter;
 import com.jobits.pos.ui.configuracion.presenter.VisualesViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import javax.swing.plaf.TabbedPaneUI;
 
 /**
  *

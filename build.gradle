@@ -83,6 +83,7 @@ dependencies {
     implementation project(':modulo-reserva')
     implementation project(':cliente')
     implementation project(':posCore')
+    implementation project(':tennant')
 
 
     // https://mvnrepository.com/artifact/com.google.inject/guice

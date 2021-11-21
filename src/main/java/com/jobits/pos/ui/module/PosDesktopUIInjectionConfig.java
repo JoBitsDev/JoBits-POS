@@ -14,9 +14,12 @@ import com.jobits.pos.client.webconnection.login.LoginService;
 import com.jobits.pos.client.webconnection.login.LoginWCS;
 import com.jobits.pos.client.webconnection.login.model.UbicacionService;
 import com.jobits.pos.client.webconnection.login.model.UbicacionServiceImpl;
+import com.jobits.pos.client.webconnection.product.ProductoVentaWCS;
 import com.jobits.pos.client.webconnection.venta.VentaWCS;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.jobits.pos.controller.licencia.LicenceService;
+import com.jobits.pos.controller.productos.ProductoVentaService;
+import com.jobits.pos.controller.productos.impl.ProductoVentaServiceImpl;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.servicios.impresion.ImpresoraService;
 
@@ -31,12 +34,24 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
 
     @Override
     protected void configure() {
+        //
+        //General
+        //
         bind(LoginService.class).to(LoginWCS.class).in(Scopes.SINGLETON);
         bind(UbicacionService.class).to(UbicacionServiceImpl.class).in(Scopes.SINGLETON);
-        bind(VentaDetailService.class).to(VentaWCS.class).in(Scopes.SINGLETON);
         bind(LicenceService.class).to(LicenceWCS.class).in(Scopes.SINGLETON);
         bind(ConfiguracionService.class).to(ConfiguracionWCS.class).in(Scopes.SINGLETON);
         bind(ImpresoraService.class).to(ImpresoraWCS.class).in(Scopes.SINGLETON);
+
+        //
+        //Core
+        //
+        bind(ProductoVentaService.class).to(ProductoVentaWCS.class).in(Scopes.SINGLETON);
+
+        //
+        //Ventas
+        //
+        bind(VentaDetailService.class).to(VentaWCS.class).in(Scopes.SINGLETON);
 
     }
 
