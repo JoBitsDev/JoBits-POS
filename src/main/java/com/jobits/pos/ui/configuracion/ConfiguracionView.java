@@ -161,7 +161,7 @@ public class ConfiguracionView extends AbstractViewPanel {
         jTabbedPane1.add("Impresión", new Impresion(presenter));
         jTabbedPane1.add("Visuales", new Visuales(new VisualesViewPresenter()));
 //        jTabbedPane1.add("ImportarExportar", new ImportarExportar(new ImportarExportarViewPresenter(new ProductoVentaListController())));
-        jTabbedPane1.add("Impresoras", new Impresoras(new ImpresorasViewPresenter(new ImpresoraUseCase(new ImpresoraRepoImpl()))));
+        jTabbedPane1.add("Impresoras", new Impresoras(new ImpresorasViewPresenter()));
 //        jTabbedPane1.add("Reiniciar Datos", new ReiniciarDatosView(new ReiniciarDatosViewPresenter()));
     }
 
