@@ -11,6 +11,7 @@ import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresora;
 import com.jobits.pos.servicios.impresion.ImpresoraService;
 import com.jobits.pos.ui.configuracion.Impresoras;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.root101.clean.core.domain.services.ResourceHandler;
@@ -27,11 +28,10 @@ public class ImpresorasViewPresenter extends AbstractListViewPresenter<Impresora
     public static String ACTION_CHANGE_DEFAULT;
     public static final String ACTION_SET_PANEL_VISIBLE = "Panel Visible";
 
-    ImpresoraService service;
+    ImpresoraService service = PosDesktopUiModule.getInstance().getImplementation(ImpresoraService.class);
 
-    public ImpresorasViewPresenter(ImpresoraService service) {
+    public ImpresorasViewPresenter() {
         super(new ImpresorasViewModel(), Impresoras.VIEW_NAME);
-        this.service = service;
         setListToBean();
     }
 
@@ -73,8 +73,7 @@ public class ImpresorasViewPresenter extends AbstractListViewPresenter<Impresora
                 if (service.agregarImpresora(newImpresora) != null) {
                     showSuccessDialog(Application.getInstance().getMainWindow(), "Se ha agregado la impresora con éxito");
 
-                    getBean().getLista_impresoras().clear();
-                    getBean().getLista_impresoras().addAll(new ArrayListModel<>(service.findAll()));
+                    getBean().setLista_impresoras(new ArrayListModel<>(service.findAll()));
 
                     getBean().setNombre_impresora_actual(null);
                     getBean().setImpresora_sistema_seleccionada(null);
@@ -97,9 +96,8 @@ public class ImpresorasViewPresenter extends AbstractListViewPresenter<Impresora
     protected void onEliminarClick() {
         Impresora impresoraToDelete = getBean().getImpresora_seleccionada();
         if (showConfirmDialog(Application.getInstance().getMainWindow())) {
-            if (service.deleteImpresora(impresoraToDelete) != null) {
-                getBean().getLista_impresoras().clear();
-                getBean().getLista_impresoras().addAll(new ArrayListModel<>(service.findAll()));
+            if (service.deleteImpresora(impresoraToDelete.getIdImpresora()) != null) {
+                getBean().setLista_impresoras(new ArrayListModel<>(service.findAll()));
                 showSuccessDialog(Application.getInstance().getMainWindow(), "Se ha eliminado la impresora con éxito");
             }
         }

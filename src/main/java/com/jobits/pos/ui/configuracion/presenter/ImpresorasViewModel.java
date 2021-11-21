@@ -102,9 +102,9 @@ public class ImpresorasViewModel extends AbstractListViewModel<Impresora> {
      * @param lista_impresoras new value of lista_impresoras
      */
     public void setLista_impresoras(ArrayListModel<Impresora> lista_impresoras) {
-        ArrayListModel<Impresora> oldLista_impresoras = this.lista_impresoras;
-        this.lista_impresoras = lista_impresoras;
-        firePropertyChange(PROP_LISTA_IMPRESORAS, oldLista_impresoras, lista_impresoras);
+        this.lista_impresoras.clear();
+        this.lista_impresoras.addAll(lista_impresoras);
+        firePropertyChange(PROP_LISTA_IMPRESORAS, null, lista_impresoras);
     }
 
     /**
