@@ -7,7 +7,6 @@ package com.jobits.pos.ui.insumo.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.pos.controller.insumo.InsumoDetailService;
 import com.jobits.pos.controller.productos.ProductoVentaService;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.main.Application;
@@ -20,6 +19,7 @@ import com.root101.clean.core.domain.services.ResourceHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import com.jobits.pos.controller.insumo.InsumoService;
 
 /**
  *
@@ -34,7 +34,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     public static String ACTION_ELIMINAR_PRODUCTO = "Eliminar Producto";
     public static String ACTION_AGREGAR_PRODUCTO = "Agregar Producto";
 
-    private final InsumoDetailService service = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
+    private final InsumoService service = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
     private final ProductoVentaService productoService = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaService.class);
     private final boolean creatingMode;
     private Insumo insumo;

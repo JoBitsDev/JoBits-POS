@@ -10,7 +10,7 @@ import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
-import com.jobits.pos.controller.insumo.InsumoListService;
+import com.jobits.pos.controller.insumo.InsumoService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.cordinator.DisplayType;
@@ -72,7 +72,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
     private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
     private AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
     private VentaDetailService ventaService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
-    private InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
+    private InsumoService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
 
     public IpvGestionViewPresenter(IPVService controller) {
         super(new IpvGestionViewModel());

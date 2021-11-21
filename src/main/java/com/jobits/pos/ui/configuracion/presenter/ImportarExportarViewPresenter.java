@@ -7,7 +7,6 @@ package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.insumo.InsumoDetailService;
 import com.jobits.pos.controller.productos.ProductoInsumoListService;
 import com.jobits.pos.controller.productos.ProductoVentaService;
 import com.jobits.pos.core.domain.models.Insumo;
@@ -34,6 +33,7 @@ import java.util.Optional;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.FilenameUtils;
+import com.jobits.pos.controller.insumo.InsumoService;
 
 /**
  *
@@ -198,8 +198,8 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
             case EXPORTAR:
                 switch (getBean().getTipo_dato_seleccionado()) {
                     case INSUMO:
-                        InsumoDetailService useCaseInsumo
-                                = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
+                        InsumoService useCaseInsumo
+                                = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
                         dataList = useCaseInsumo.findAll();
                         break;
                     case FICHA_DE_COSTO:
@@ -275,8 +275,8 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
             case IMPORTAR:
                 switch (getBean().getTipo_dato_seleccionado()) {
                     case INSUMO:
-                        InsumoDetailService useCaseInsumo
-                                = PosDesktopUiModule.getInstance().getImplementation(InsumoDetailService.class);
+                        InsumoService useCaseInsumo
+                                = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
                         useCaseInsumo.bulkImport(dataList);
                         break;
                     case FICHA_DE_COSTO:

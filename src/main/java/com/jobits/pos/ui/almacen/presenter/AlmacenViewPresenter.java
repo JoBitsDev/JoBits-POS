@@ -9,14 +9,13 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.almacen.TransaccionListService;
-import com.jobits.pos.controller.insumo.InsumoListService;
+import com.jobits.pos.controller.insumo.InsumoService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.InsumoAlmacen;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.RegularExpressions;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
@@ -55,7 +54,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     
     AlmacenListService listService;
     AlmacenManageService detailService;
-    InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
+    InsumoService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
     
     public AlmacenViewPresenter(AlmacenListService listController, AlmacenManageService detailService) {
         super(new AlmacenViewModel());

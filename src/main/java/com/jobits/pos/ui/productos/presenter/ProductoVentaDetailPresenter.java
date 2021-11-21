@@ -7,12 +7,9 @@ package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
-import com.jobits.pos.controller.imagemanager.ImageManagerService;
-import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.controller.seccion.SeccionListService;
-import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Cocina;
@@ -24,8 +21,6 @@ import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.imagemanager.ImageManagerPopUpContainer;
-import com.jobits.pos.ui.login.UbicacionView;
-import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -34,17 +29,15 @@ import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.utils.utils;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
-import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import org.jobits.db.core.domain.ConexionPropertiesModel;
 import com.jobits.pos.controller.productos.ProductoVentaService;
+import com.jobits.pos.controller.insumo.InsumoService;
 
 /**
  *
@@ -68,7 +61,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
     //private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
     private final PuntoElaboracionListService ptoElabService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
     private final SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
-    private final InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
+    private final InsumoService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
     private final CartaListService cartaService = PosDesktopUiModule.getInstance().getImplementation(CartaListService.class);
 
     private final boolean creatingMode;
