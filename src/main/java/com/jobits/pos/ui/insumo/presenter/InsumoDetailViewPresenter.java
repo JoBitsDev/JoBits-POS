@@ -158,7 +158,6 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
                 service.create(insumo);
             } else {
                 service.edit(insumo);
-                service.updateProductoOnInsumo(insumo);
             }
             Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             Application.getInstance().getNavigator().navigateUp();
@@ -177,7 +176,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             Insumo selected = getBean().getInsumo_disponible_selecionado();
-            service.agregarInsumoElaboradoaInsumo(insumo, selected, cantidad);
+            insumo.agregarInsumoElaborado(selected, cantidad);
             getBean().setInsumo_disponible_selecionado(null);
             getBean().getLista_insumos_contenidos().clear();
             getBean().getLista_insumos_contenidos().addAll(insumo.getInsumoDerivadoList());
@@ -186,7 +185,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     }
 
     private void onEliminarInsumoFichaClick() {
-        service.eliminarInsumoElaboradoDeInsumo(insumo, getBean().getInsumo_contenido_seleccionado());
+        insumo.eliminarInsumoElaborado(getBean().getInsumo_contenido_seleccionado());
         getBean().setInsumo_contenido_seleccionado(null);
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(insumo.getInsumoDerivadoList());
@@ -196,7 +195,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     private void onAgregarProductoFichaClick() {
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
-            service.agregarProductoVentaAInsumo(insumo, getBean().getProducto_disponible_seleccionado(), cantidad);
+            insumo.agregarProductoVenta(getBean().getProducto_disponible_seleccionado(), cantidad);
             getBean().setProducto_disponible_seleccionado(null);
             getBean().getLista_productos_contenidos().clear();
             getBean().getLista_productos_contenidos().addAll(insumo.getProductoInsumoList());
@@ -205,7 +204,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
     }
 
     private void onEliminarProductoFichaClick() {
-        service.eliminarProductoVentaDeInsumo(insumo, getBean().getProducto_contenido_seleccionado());
+        insumo.eliminarProductoVenta(getBean().getProducto_contenido_seleccionado());
         getBean().setProducto_contenido_seleccionado(null);
         getBean().getLista_productos_contenidos().clear();
         getBean().getLista_productos_contenidos().addAll(insumo.getProductoInsumoList());
