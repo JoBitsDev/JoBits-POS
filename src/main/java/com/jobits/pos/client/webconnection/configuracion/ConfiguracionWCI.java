@@ -20,17 +20,17 @@ import retrofit2.http.Path;
 
 public interface ConfiguracionWCI {
 
-    @GET("configuration/list")
+    @GET("pos/configuration/list")
     public Call<Map<String, Configuracion>> cargarConfiguracion();
 
-    @PUT("configuration/update/{settingId}/{newValue}")
+    @PUT("pos/configuration/update/{settingId}/{newValue}")
     public Call<Configuracion> updateConfiguracion(@Path("settingId") String settingId,
             @Path("newValue") Object configuration);
 
-    @GET("configuration/y")
+    @GET("pos/configuration/y")
     public Call<ParametrosConfiguracion> cargarConfiguracionY();
 
-    @GET("configuracion/find/{settingId}")
+    @GET("pos/configuracion/find/{settingId}")
     public Call<Configuracion> getConfiguracion(@Path("settingId") String settingId);
 
 }
