@@ -165,6 +165,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             getBean().setComision_por_venta("" + utils.setDosLugaresDecimalesFloat(productoVenta.getPagoPorVenta()));
         }
         getBean().setElaborado_seleccionado(productoVenta.getCocinacodCocina());
+        fillInsumoProductoInfo(productoVenta, getBean().getLista_insumos_disponibles());
         getBean().getLista_insumos_contenidos().clear();
         getBean().getLista_insumos_contenidos().addAll(new ArrayListModel<>(productoVenta.getProductoInsumoList()));
         getBean().setCheckbox_producto_elaborado(!getBean().getLista_insumos_contenidos().isEmpty());
@@ -292,7 +293,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             Insumo inSel = getBean().getInsumo_disponible_sel();
-            productoVenta.agregarInsumo(inSel,cantidad);
+            productoVenta.agregarInsumo(inSel, cantidad);
             getBean().setInsumo_disponible_sel(null);
             getBean().getLista_insumos_contenidos().clear();
             getBean().getLista_insumos_contenidos().addAll(productoVenta.getProductoInsumoList());
@@ -338,4 +339,11 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     }
 
+    private void fillInsumoProductoInfo(ProductoVenta producto, ArrayListModel<Insumo> lista_productos_disponibles) {
+        for (ProductoInsumo p : producto.getProductoInsumoList()) {
+            var aux = new Insumo(p.getProductoInsumoPK().getInsumocodInsumo());
+            p.setInsumo(lista_productos_disponibles.get(lista_productos_disponibles.indexOf(aux)));
+            p.setProductoVenta(producto);
+        }
+    }
 }

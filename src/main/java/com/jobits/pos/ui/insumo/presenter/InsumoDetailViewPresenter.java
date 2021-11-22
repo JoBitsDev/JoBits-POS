@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 import com.jobits.pos.controller.insumo.InsumoService;
+import com.jobits.pos.core.domain.models.ProductoInsumo;
+import com.jobits.pos.core.domain.models.ProductoVenta;
 
 /**
  *
@@ -112,10 +114,11 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         getBean().getLista_insumos_disponibles().clear();
         getBean().getLista_insumos_disponibles().addAll(new ArrayListModel(service.findAll()));
         //TABLA DE PRODUCTOS
-        getBean().getLista_productos_contenidos().clear();
-        getBean().getLista_productos_contenidos().addAll(new ArrayListModel(insumo.getProductoInsumoList()));
         getBean().getLista_productos_disponibles().clear();
         getBean().getLista_productos_disponibles().addAll(new ArrayListModel(productoService.findAll()));
+        fillInsumoProductoInfo(insumo, getBean().getLista_productos_disponibles());
+        getBean().getLista_productos_contenidos().clear();
+        getBean().getLista_productos_contenidos().addAll(new ArrayListModel(insumo.getProductoInsumoList()));
         //PANEL INPUTS
         getBean().setNombre_insumo(insumo.getNombre());
         getBean().setUnidad_medida_selected(R.UM.valueOf(insumo.getUm()));
@@ -208,6 +211,14 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         getBean().setProducto_contenido_seleccionado(null);
         getBean().getLista_productos_contenidos().clear();
         getBean().getLista_productos_contenidos().addAll(insumo.getProductoInsumoList());
+    }
+
+    private void fillInsumoProductoInfo(Insumo insumo, ArrayListModel<ProductoVenta> lista_productos_disponibles) {
+        for (ProductoInsumo p : insumo.getProductoInsumoList()) {
+            var aux = new ProductoVenta(p.getProductoInsumoPK().getProductoVentapCod());
+            p.setProductoVenta(lista_productos_disponibles.get(lista_productos_disponibles.indexOf(aux)));
+            p.setInsumo(insumo);
+        }
     }
 
 }
