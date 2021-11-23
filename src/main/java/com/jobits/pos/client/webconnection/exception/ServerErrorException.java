@@ -12,6 +12,7 @@ package com.jobits.pos.client.webconnection.exception;
  * @author Jorge
  *
  */
+import com.jobits.pos.client.webconnection.ApiError;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -24,18 +25,20 @@ import java.util.concurrent.ExecutionException;
  */
 public class ServerErrorException extends RuntimeException {
 
-    private final int code;
+    private final ApiError apiError;
 
-    public ServerErrorException(String message, int code) {
-        super(message);
-        this.code = code;
+    public ServerErrorException(ApiError error) {
+        super(error.toString());
+        this.apiError = error;
     }
 
     public ServerErrorException() {
-        code = 0;
+        super("Unknown");
+        apiError = new ApiError(500, "Unknown");
     }
 
-    public int getCode() {
-        return code;
+    public ApiError getApiError() {
+        return apiError;
     }
+
 }

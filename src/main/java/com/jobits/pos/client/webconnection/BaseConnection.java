@@ -20,10 +20,13 @@ import com.root101.clean.core.app.usecase.AbstractUseCase;
 import java.beans.PropertyChangeListener;
 //import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.Objects;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import org.jboss.logging.Logger;
 import retrofit2.Call;
+import retrofit2.Converter;
 
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -43,6 +46,7 @@ public class BaseConnection implements AbstractUseCase {
             .registerModule(new JavaTimeModule())
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     protected static Retrofit retrofit;
+    protected static Converter<ResponseBody, ApiError> converter;
 
     private static final OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(new HeaderInterceptor())
@@ -71,6 +75,7 @@ public class BaseConnection implements AbstractUseCase {
                 .client(client)
                 .addConverterFactory(JacksonConverterFactory.create(oMapper))
                 .build();
+        converter = retrofit.responseBodyConverter(ApiError.class, new Annotation[0]);
     }
 
     @Override
@@ -90,11 +95,13 @@ public class BaseConnection implements AbstractUseCase {
             if (resp.isSuccessful()) {
                 return resp.body();
             } else {
-                throw new ServerErrorException(Objects.requireNonNull(resp.message(), "HTTP: " + resp.code()), resp.code());
+                var error = converter.convert(resp.errorBody());
+                throw new ServerErrorException(error);
             }
         } catch (IOException ex) {
             Logger.getLogger(this.getClass()).log(Logger.Level.ERROR, ex.fillInStackTrace());
-            throw new ServerErrorException(ex.getMessage(), 500);
+            var err = new ApiError(500, ex.getMessage());
+            throw new ServerErrorException(err);
         }
     }
 

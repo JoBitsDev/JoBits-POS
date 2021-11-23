@@ -61,7 +61,7 @@ public class LoginWCS extends BaseConnection implements LoginService {
             return true;
         } else {
             TOKEN = null;
-            throw new ServerErrorException(ret.errorBody().string(), ret.code());
+            throw new ServerErrorException(converter.convert(ret.errorBody()));
         }
     }
 
@@ -93,7 +93,8 @@ public class LoginWCS extends BaseConnection implements LoginService {
             return true;
         }
         TENNANT_TOKEN = null;
-        throw new ServerErrorException(res.errorBody().string(), res.code());
+        TOKEN = null;
+        throw new ServerErrorException(converter.convert(res.errorBody()));
 
     }
 

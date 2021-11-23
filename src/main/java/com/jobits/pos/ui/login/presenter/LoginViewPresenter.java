@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.login.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.client.webconnection.exception.ServerErrorException;
 import com.jobits.pos.client.webconnection.login.LoginService;
 import com.jobits.pos.client.webconnection.login.model.UbicacionModel;
 import com.jobits.pos.client.webconnection.login.model.UbicacionService;
@@ -74,7 +75,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                     }
                 }
             }.performAction(null);
-        } catch (IllegalArgumentException ex) {
+        } catch (ServerErrorException ex) {
             Application.getInstance().getNotificationService().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion
         }
         RootView.getInstance().getStatusBar().refreshView();
