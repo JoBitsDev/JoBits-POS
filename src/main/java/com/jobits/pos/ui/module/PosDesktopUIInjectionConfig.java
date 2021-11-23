@@ -7,6 +7,8 @@ package com.jobits.pos.ui.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
+import com.jobits.pos.client.webconnection.carta.CartaWCS;
+import com.jobits.pos.client.webconnection.carta.SeccionWCS;
 import com.jobits.pos.client.webconnection.configuracion.ConfiguracionWCS;
 import com.jobits.pos.client.webconnection.configuracion.ImpresoraWCS;
 import com.jobits.pos.client.webconnection.insumo.InsumoWCS;
@@ -24,6 +26,8 @@ import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.controller.productos.ProductoVentaService;
 import com.jobits.pos.controller.productos.impl.ProductoVentaServiceImpl;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
+import com.jobits.pos.controller.seccion.CartaListService;
+import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.servicios.impresion.ImpresoraService;
 
@@ -53,6 +57,8 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         bind(ProductoVentaService.class).to(ProductoVentaWCS.class).in(Scopes.SINGLETON);
         bind(PuntoElaboracionService.class).to(PuntoElaboracionWCS.class).in(Scopes.SINGLETON);
         bind(InsumoService.class).to(InsumoWCS.class).in(Scopes.SINGLETON);
+        bind(CartaListService.class).to(CartaWCS.class).in(Scopes.SINGLETON);
+        bind(SeccionListService.class).to(SeccionWCS.class).in(Scopes.SINGLETON);
 
         //
         //Ventas
