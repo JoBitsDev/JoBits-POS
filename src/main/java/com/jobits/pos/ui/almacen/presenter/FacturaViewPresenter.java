@@ -10,7 +10,6 @@ import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.controller.almacen.impl.AlmacenManageController.OperationType;//TODO; enum de implementacion en view
 import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.core.domain.TransaccionSimple;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Almacen;
@@ -38,6 +37,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 
 /**
  *
@@ -46,7 +46,7 @@ import javax.swing.JOptionPane;
 public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel> {
 
     private AlmacenManageService service;
-    private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    private PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
 
     public static final String ACTION_AGREGAR_INSUMO = "Agregar Insumo";
     public static final String ACTION_ELIMINAR_INSUMO = "Eliminar Insumo";

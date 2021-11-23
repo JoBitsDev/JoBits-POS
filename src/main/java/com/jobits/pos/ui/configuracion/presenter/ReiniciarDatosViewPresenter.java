@@ -10,7 +10,6 @@ import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.login.LogInService;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
@@ -25,6 +24,7 @@ import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 
 /**
  *
@@ -38,7 +38,7 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
     AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
     LogInService loginService = PosDesktopUiModule.getInstance().getImplementation(LogInService.class);
     IPVService ipvService = PosDesktopUiModule.getInstance().getImplementation(IPVService.class);
-    PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
     VentaDetailService ventaService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
 
     public ReiniciarDatosViewPresenter() {

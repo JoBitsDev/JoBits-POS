@@ -7,7 +7,6 @@ package com.jobits.pos.ui.productos.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.cordinator.NavigationService;
@@ -38,6 +37,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.productos.ProductoVentaService;
 import com.jobits.pos.controller.insumo.InsumoService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 
 /**
  *
@@ -59,7 +59,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
 
     private final ProductoVentaService service = PosDesktopUiModule.getInstance().getImplementation(ProductoVentaService.class);
     //private final ImageManagerService imageService = PosDesktopUiModule.getInstance().getImplementation(ImageManagerService.class);
-    private final PuntoElaboracionListService ptoElabService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
+    private final PuntoElaboracionService ptoElabService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
     private final SeccionListService seccionService = PosDesktopUiModule.getInstance().getImplementation(SeccionListService.class);
     private final InsumoService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
     private final CartaListService cartaService = PosDesktopUiModule.getInstance().getImplementation(CartaListService.class);
