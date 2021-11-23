@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 //import com.jobits.pos.controller.mesa.impl.MesaController;
-import com.jobits.pos.controller.mesa.MesaService;
+import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;

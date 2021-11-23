@@ -8,7 +8,7 @@ package com.jobits.pos.ui.areaventa.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 //import com.jobits.pos.controller.areaventa.impl.AreaDetailController;
 import com.jobits.pos.controller.areaventa.AreaVentaService;
-import com.jobits.pos.controller.mesa.MesaService;
+import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;

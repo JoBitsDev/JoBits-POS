@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.areaventa.AreaDetailService;
+import com.jobits.pos.controller.areaventa.AreaVentaService;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoDetailService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Cocina;
@@ -18,7 +18,6 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.root101.clean.core.domain.services.ResourceHandler;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +33,7 @@ public class PuestoTrabajoDetailViewPresenter extends AbstractViewPresenter<Pues
     public static String ACTION_AGREGAR = "";
 
     private final PuestoTrabajoDetailService service = PosDesktopUiModule.getInstance().getImplementation(PuestoTrabajoDetailService.class);
-    private final AreaDetailService areaService = PosDesktopUiModule.getInstance().getImplementation(AreaDetailService.class);
+    private final AreaVentaService areaService = PosDesktopUiModule.getInstance().getImplementation(AreaVentaService.class);
     private final PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
     private final boolean creatingMode;
 
