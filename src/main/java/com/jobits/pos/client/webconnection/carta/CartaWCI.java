@@ -6,6 +6,7 @@
 package com.jobits.pos.client.webconnection.carta;
 
 import com.jobits.pos.core.domain.models.Carta;
+import com.jobits.pos.core.domain.models.Seccion;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,18 +23,21 @@ import retrofit2.http.Path;
 public interface CartaWCI {
 
     @POST("pos/carta/create")
-    public Call<Carta> create( @Body Carta t);
+    public Call<Carta> create(@Body Carta t);
 
     @PUT("pos/carta/edit")
-    public Call<Carta> edit( @Body Carta t);
+    public Call<Carta> edit(@Body Carta t);
 
     @DELETE("pos/carta/destroy/{id}")
-    public Call<Carta> destroyById( @Path("id") Object o);
+    public Call<Carta> destroyById(@Path("id") Object o);
 
     @GET("pos/carta/find/{id}")
-    public Call<Carta> findBy( @Path("id") Object o);
+    public Call<Carta> findBy(@Path("id") Object o);
 
     @GET("pos/carta/list")
     public Call<List<Carta>> findAll();
+
+    @POST("pos/carta/{cod}/add-seccion")
+    public Call<Carta> addSeccion(@Path("cod") String codCarta, @Body Seccion codSeccion);
 
 }

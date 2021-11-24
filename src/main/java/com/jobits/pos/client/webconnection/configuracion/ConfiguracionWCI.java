@@ -30,7 +30,7 @@ public interface ConfiguracionWCI {
     @GET("pos/configuration/y")
     public Call<ParametrosConfiguracion> cargarConfiguracionY();
 
-    @GET("pos/configuracion/find/{settingId}")
+    @GET("pos/configuration/find/{settingId}")
     public Call<Configuracion> getConfiguracion(@Path("settingId") String settingId);
 
 }

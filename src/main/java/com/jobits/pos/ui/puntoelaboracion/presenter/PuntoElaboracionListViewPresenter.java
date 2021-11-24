@@ -69,7 +69,6 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
         if (nombre != null) {
             Cocina c = new Cocina();
             c.setNombreCocina(nombre);
-            c.setProductoVentaList(new ArrayList<>());
             service.create(c);
             setListToBean();
         }
@@ -100,15 +99,13 @@ public class PuntoElaboracionListViewPresenter extends AbstractListViewPresenter
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar: " + selected,
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            if (!selected.getProductoVentaList().isEmpty()) {
                 if ((boolean) Application.getInstance().getNotificationService().showDialog(
                         "El punto de elaboracion " + selected
-                        + " contiene " + selected.getProductoVentaList().size()
+                        + " contiene "
                         + " productos de venta enlazados \n"
-                        + "presione si para borrar los productos de venta, no para cancelar",
+                        + "presione si para ocultar los productos de venta asociados, no para cancelar",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
                     service.destroyInCascade(selected.getCodCocina());
-                }
             } else {
                 service.destroy(selected);
             }

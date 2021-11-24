@@ -26,11 +26,6 @@ public class SeccionWCS extends BaseConnection implements SeccionListService {
     }
 
     @Override
-    public Seccion create(Seccion t) throws RuntimeException {
-        return handleCall(service.create(t));
-    }
-
-    @Override
     public Seccion edit(Seccion t) throws RuntimeException {
         return handleCall(service.edit(t));
     }

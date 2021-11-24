@@ -51,7 +51,7 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
                 "Nueva Carta", JOptionPane.QUESTION_MESSAGE);
         if (nombre != null) {
             Carta carta = new Carta();
-            carta.setAreaList(new ArrayList<>());
+           // carta.setAreaList(new ArrayList<>());
             carta.setMonedaPrincipal(R.COIN_SUFFIX);
             carta.setNombreCarta(nombre);
             carta.setSeccionList(new ArrayList<>());

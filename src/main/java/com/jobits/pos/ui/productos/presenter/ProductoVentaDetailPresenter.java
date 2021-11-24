@@ -269,7 +269,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                     newSeccion.setNombreSeccion(nombre);
                     newSeccion.setProductoVentaList(new ArrayList<>());
                     newSeccion.setCartacodCarta((Carta) jComboBox1.getSelectedItem());
-                    seccionService.create(newSeccion);
+                    cartaService.addSeccion(((Carta) jComboBox1.getSelectedItem()).getCodCarta(), newSeccion);
                     getBean().setLista_categorias(new ArrayListModel<>(seccionService.findAll()));
                 }
                 break;
@@ -284,7 +284,6 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
                 "Nuevo Punto de Elaboracion", JOptionPane.QUESTION_MESSAGE);
         Cocina c = new Cocina();
         c.setNombreCocina(nombre);
-        c.setProductoVentaList(new ArrayList<>());
         ptoElabService.create(c);
         getBean().setLista_elaborado(new ArrayListModel<>(ptoElabService.findAll()));
     }

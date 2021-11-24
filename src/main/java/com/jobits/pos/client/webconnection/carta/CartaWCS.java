@@ -8,6 +8,7 @@ package com.jobits.pos.client.webconnection.carta;
 import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.core.domain.models.Carta;
+import com.jobits.pos.core.domain.models.Seccion;
 import java.util.List;
 
 /**
@@ -54,6 +55,11 @@ public class CartaWCS extends BaseConnection implements CartaListService {
     public List<Carta> findAll() throws RuntimeException {
         return handleCall(service.findAll());
 
+    }
+
+    @Override
+    public Carta addSeccion(String codCarta, Seccion codSeccion) {
+        return handleCall(service.addSeccion(codCarta, codSeccion));
     }
 
 }
