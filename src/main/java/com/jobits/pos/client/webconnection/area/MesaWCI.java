@@ -21,9 +21,6 @@ import retrofit2.http.Path;
  */
 public interface MesaWCI {
 
-    @POST("pos/mesa/create")
-    public Call<Mesa> create( @Body Mesa t);
-
     @PUT("pos/mesa/edit")
     public Call<Mesa> edit( @Body Mesa t);
 

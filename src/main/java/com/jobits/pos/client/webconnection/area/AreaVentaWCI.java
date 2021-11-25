@@ -6,6 +6,7 @@
 package com.jobits.pos.client.webconnection.area;
 
 import com.jobits.pos.core.domain.models.Area;
+import com.jobits.pos.core.domain.models.Mesa;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,18 +23,21 @@ import retrofit2.http.Path;
 public interface AreaVentaWCI {
 
     @POST("pos/area-venta/create")
-    public Call<Area> create( @Body Area t);
+    public Call<Area> create(@Body Area t);
 
     @PUT("pos/area-venta/edit")
-    public Call<Area> edit( @Body Area t);
+    public Call<Area> edit(@Body Area t);
 
     @DELETE("pos/area-venta/destroy/{id}")
-    public Call<Area> destroyById( @Path("id") Object o);
+    public Call<Area> destroyById(@Path("id") Object o);
 
     @GET("pos/area-venta/find/{id}")
-    public Call<Area> findBy( @Path("id") Object o);
+    public Call<Area> findBy(@Path("id") Object o);
 
     @GET("pos/area-venta/list")
     public Call<List<Area>> findAll();
+
+    @POST("pos/area-venta/{cod}/add-mesa")
+    public Call<Area> addMesa(@Path("cod") String codArea, @Body Mesa newmesa);
 
 }

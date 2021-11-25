@@ -25,10 +25,6 @@ public class MesaWCS extends BaseConnection implements MesaService {
         super();
     }
 
-    @Override
-    public Mesa create(Mesa t) throws RuntimeException {
-        return handleCall(service.create(t));
-    }
 
     @Override
     public Mesa edit(Mesa t) throws RuntimeException {

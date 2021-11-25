@@ -6,6 +6,7 @@
 package com.jobits.pos.ui.areaventa.presenter;
 
 //import com.jobits.pos.controller.mesa.impl.MesaController;
+import com.jobits.pos.controller.areaventa.AreaVentaService;
 import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.Area;
@@ -27,6 +28,7 @@ public class MesaDetailViewPresenter extends AbstractViewPresenter<MesaDetailVie
     public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_ACEPTAR = "Aceptar";
 
+    private final AreaVentaService areaService = PosDesktopUiModule.getInstance().getImplementation(AreaVentaService.class);
     private final MesaService service = PosDesktopUiModule.getInstance().getImplementation(MesaService.class);
     private final boolean creatingMode;
     private Mesa mesa;
@@ -79,7 +81,7 @@ public class MesaDetailViewPresenter extends AbstractViewPresenter<MesaDetailVie
                 m.setEstado("vacia");
                 m.setEstallena(false);
                 m.setOrdenList(new ArrayList<>());
-                service.create(m);
+                areaService.addMesa(area.getCodArea(), m);
             } else {
                 mesa.setNombre(getBean().getNombre());
                 mesa.setCapacidadMax(getBean().getCapacidad());
