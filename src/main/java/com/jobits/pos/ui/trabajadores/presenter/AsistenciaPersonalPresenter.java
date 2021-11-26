@@ -7,10 +7,9 @@ package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.trabajadores.AsistenciaPersonalService;
-import com.jobits.pos.controller.trabajadores.PersonalListService;
+import com.jobits.pos.controller.trabajadores.PersonalUseCase;
 import com.jobits.pos.core.domain.models.AsistenciaPersonal;
 import com.jobits.pos.core.domain.models.Personal;
-import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
@@ -32,7 +31,7 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
             PROP_VALUE_CHANGED = "Valores Modificados";
 
     private final AsistenciaPersonalService asistenciaPersonalService = PosDesktopUiModule.getInstance().getImplementation(AsistenciaPersonalService.class);
-    private final PersonalListService personalService = PosDesktopUiModule.getInstance().getImplementation(PersonalListService.class);
+    private final PersonalUseCase personalService = PosDesktopUiModule.getInstance().getImplementation(PersonalUseCase.class);
     private int idVenta;
 
     public AsistenciaPersonalPresenter(int idVenta) {

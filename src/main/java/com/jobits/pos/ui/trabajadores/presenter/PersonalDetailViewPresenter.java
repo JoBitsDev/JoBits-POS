@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.trabajadores.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.trabajadores.PersonalDetailService;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoUseCase;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.DatosPersonales;
@@ -22,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
+import com.jobits.pos.controller.trabajadores.PersonalUseCase;
 
 /**
  *
@@ -32,7 +32,7 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
     public static final String ACTION_CANCELAR = "Cancelar";
     public static String ACTION_AGREGAR = "";
 
-    private final PersonalDetailService personalService = PosDesktopUiModule.getInstance().getImplementation(PersonalDetailService.class);
+    private final PersonalUseCase personalService = PosDesktopUiModule.getInstance().getImplementation(PersonalUseCase.class);
     private final PuestoTrabajoUseCase puestoService = PosDesktopUiModule.getInstance().getImplementation(PuestoTrabajoUseCase.class);
     private Personal personal;
     private final boolean creatingMode;
