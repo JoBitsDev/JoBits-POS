@@ -52,7 +52,7 @@ public class CartasSeccionViewPresenter extends AbstractViewPresenter<CartasSecc
         getBean().setLista_menu(cartaService.findAll());
         if (menuSeleccionado != null) {
             int index = getBean().getLista_menu().indexOf(menuSeleccionado);
-            menuSeleccionado = getBean().getLista_menu().get(index);
+            menuSeleccionado = index != -1 ? getBean().getLista_menu().get(index) : null;
         }
         getBean().setMenu_seleccionado(menuSeleccionado);
         return Optional.empty();
