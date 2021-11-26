@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jobits.pos.controller.trabajadores.PuestoTrabajoListService;
+import com.jobits.pos.controller.trabajadores.PuestoTrabajoUseCase;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
@@ -22,7 +22,7 @@ import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
  */
 public class PuestoTrabajoListViewPresenter extends AbstractListViewPresenter<PuestoTrabajoListViewModel> {
 
-    private final PuestoTrabajoListService service = PosDesktopUiModule.getInstance().getImplementation(PuestoTrabajoListService.class);
+    private final PuestoTrabajoUseCase service = PosDesktopUiModule.getInstance().getImplementation(PuestoTrabajoUseCase.class);
 
     public PuestoTrabajoListViewPresenter() {
         super(new PuestoTrabajoListViewModel(), PuestoTrabajoListView.VIEW_NAME);
