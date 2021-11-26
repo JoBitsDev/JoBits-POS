@@ -190,7 +190,7 @@ public class PresenterFacade {
                 return new VentaDetailViewPresenter(
                         PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class),
                         PosDesktopUiModule.getInstance().getImplementation(OrdenService.class),
-                        new ArrayList<>());
+                        -1);
             case BackUpView.VIEW_NAME:
                 return new BackUpViewPresenter();
             case AgregarProductoView.VIEW_NAME:

@@ -11,6 +11,7 @@ import com.jobits.pos.controller.login.MainMenuService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -34,6 +35,7 @@ import java.util.Optional;
 public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> {
 
     MainMenuService service;
+    VentaDetailService vService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
     private int nivelDeAccesoAutenticado = 0;
 
     public MainMenuPresenter(MainMenuService service) {
@@ -70,14 +72,14 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                                 ret = Application.getInstance().getNotificationService().
                                         showDialog("Introduzca el dia para abrir las ventas en el formato dd/mm/aa",
                                                 TipoNotificacion.DIALOG_INPUT);
-                                VentaDetailService control;
+                                Venta ventaIniciada;
                                 if (ret.get().isEmpty() || ret.get().isBlank()) {
-                                    control = service.comenzarVentasCajero();
+                                    ventaIniciada = vService.inicializarVentas(null, false);
                                 } else {
-                                    control = service.comenzarVentasEconomico(R.DATE_FORMAT.parse(ret.get()));
+                                    ventaIniciada = vService.inicializarVentas(R.DATE_FORMAT.parse(ret.get()), false);
                                 }
                                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                        new VentaDetailViewPresenter(control, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), service.getDiaVentaSeleccionado()));
+                                        new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
                             } catch (ParseException ex) {
                                 throw new IllegalArgumentException("Formato incorrecto");
                             }
@@ -87,10 +89,9 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                     new LongProcessActionServiceImpl("Creando IPVs.........") {
                         @Override
                         protected void longProcessMethod() {
-                            VentaDetailService control = null;
-                            control = service.comenzarVentasCajero();
+                            var ventaIniciada = vService.inicializarVentas(null, false);
                             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                    new VentaDetailViewPresenter(control, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), service.getDiaVentaSeleccionado()));
+                                    new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
                         }
                     }.performAction(null);
                 } else {
@@ -98,9 +99,9 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                         @Override
                         protected void longProcessMethod() {
                             VentaDetailService control = null;
-                            control = service.comenzarVentasDependiente();
+                            var ventaIniciada = vService.inicializarVentas(null, false);
                             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                    new VentaDetailViewPresenter(control, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), service.getDiaVentaSeleccionado()));
+                                    new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
                         }
                     }.performAction(null);
                 }

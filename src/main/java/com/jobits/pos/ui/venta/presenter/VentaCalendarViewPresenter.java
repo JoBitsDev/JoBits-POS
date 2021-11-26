@@ -98,7 +98,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             VentaDetailService ventaController = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
             VentaDetailViewPresenter presenter
                     = new VentaDetailViewPresenter(ventaController,
-                            PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), getBean().getDia_seleccionado().getLista_contenida());
+                            PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), getBean().getDia_seleccionado().getLista_contenida().get(0).getId());
             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         }
     }

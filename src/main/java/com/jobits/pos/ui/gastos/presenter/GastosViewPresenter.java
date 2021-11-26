@@ -107,7 +107,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         getBean().setLista_categoria_gastos(new ArrayListModel<>(Arrays.asList(R.TipoGasto.values())));
         getBean().setCategoria_gasto_seleccionada(R.TipoGasto.UNSPECIFIED);
         getBean().setLista_gasto_venta(new ArrayListModel<>(venta.getGastoVentaList()));
-        getBean().setTotal_gastos(utils.setDosLugaresDecimales(service.getValorTotalGastos(venta)));
+        getBean().setTotal_gastos(utils.setDosLugaresDecimales(service.getValorTotalGastos(venta.getId())));
         getBean().setDefault_gasto_list(new ArrayListModel<>(service.getDefaultGastosList()));
         getBean().setTipo_gasto(null);
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
@@ -129,7 +129,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
                 showDialog("Esta seguro que desea eliminar el gasto seleccionado?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {//TODO: inyectar
-                service.removeGasto(getBean().getGasto_venta_seleccionado(), venta);
+                service.removeGasto(getBean().getGasto_venta_seleccionado().getGastoVentaPK());
                 getBean().setGasto_venta_seleccionado(null);
                 refreshState();
                 Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);

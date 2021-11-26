@@ -74,7 +74,7 @@ public class Application {
 
     public static final int MINOR_VERSION = 11;
 
-    public static final int PATCH_VERSION = 3;
+    public static final int PATCH_VERSION = 4;
 
     public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
 

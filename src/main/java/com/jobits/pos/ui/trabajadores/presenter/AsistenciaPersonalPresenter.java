@@ -33,16 +33,16 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
 
     private final AsistenciaPersonalService asistenciaPersonalService = PosDesktopUiModule.getInstance().getImplementation(AsistenciaPersonalService.class);
     private final PersonalListService personalService = PosDesktopUiModule.getInstance().getImplementation(PersonalListService.class);
-    private Venta venta;
+    private int idVenta;
 
-    public AsistenciaPersonalPresenter(Venta venta) {
+    public AsistenciaPersonalPresenter(int idVenta) {
         super(new AsistenciaPersonalViewModel());
-        this.venta = venta;
+        this.idVenta = idVenta;
         refreshState();
     }
 
-    public void setVenta(Venta venta) {
-        this.venta = venta;
+    public void setIdVenta(int idVenta) {
+        this.idVenta = idVenta;
         refreshState();
     }
 
@@ -51,7 +51,7 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         registerOperation(new AbstractViewAction(ACTION_IMPRIMIR_ASISTENCIA) {
             @Override
             public Optional doAction() {
-                asistenciaPersonalService.imprimirAsistencia(venta);
+                asistenciaPersonalService.imprimirAsistencia(idVenta);
                 return Optional.empty();
             }
 
@@ -86,7 +86,7 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         getBean().getLista_personal_disponible().clear();
         getBean().getLista_personal_disponible().addAll(new ArrayListModel<>(personalService.findAll()));
         getBean().getLista_personal_contenido().clear();
-        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(asistenciaPersonalService.updateSalaries(venta)));
+        getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(asistenciaPersonalService.updateSalaries(idVenta)));
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -110,12 +110,12 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
     private void onAgregarClick() {
         Personal personal = getBean().getPersonal_disponible_seleccionado();
         if (personal != null) {
-            AsistenciaPersonal ap = new AsistenciaPersonal(venta.getId(), personal.getUsuario());
+            AsistenciaPersonal ap = new AsistenciaPersonal(idVenta, personal.getUsuario());
             if ((asistenciaPersonalService.findBy(ap.getAsistenciaPersonalPK())) != null) {
                 throw new IllegalStateException("El personal seleccionado ya se encuentra registrado en el dia de venta");
             }
             ap.setPersonal(personal);
-            ap.setVenta(venta);
+           // ap.setVenta(idVenta);
             asistenciaPersonalService.create(ap);
             refreshState();
             firePropertyChange(PROP_VALUE_CHANGED, false, true);
@@ -128,7 +128,7 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
             AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
             asistenciaPersonalService.updateAMayores(personal, cantidad);
             getBean().getLista_personal_contenido().clear();
-            getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(asistenciaPersonalService.getPersonalTrabajando(venta)));
+            getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(asistenciaPersonalService.getPersonalTrabajando(idVenta)));
         }
 
     }
