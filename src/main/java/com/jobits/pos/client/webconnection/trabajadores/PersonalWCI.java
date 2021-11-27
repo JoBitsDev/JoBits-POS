@@ -21,22 +21,22 @@ import retrofit2.http.Path;
  */
 public interface PersonalWCI {
 
-    @POST("pos/puesto-trabajo/create")
+    @POST("pos/personal/create")
     public Call<Personal> create(@Body Personal t);
 
-    @PUT("pos/puesto-trabajo/edit")
+    @PUT("pos/personal/edit")
     public Call<Personal> edit(@Body Personal t);
 
-    @DELETE("pos/puesto-trabajo/destroy/{id}")
+    @DELETE("pos/personal/destroy/{id}")
     public Call<Personal> destroyById(@Path("id") Object o);
 
     @PUT("pos/personal/{usuario}/pagar")
     public Call<Personal> pagar(@Path("usuario") String usuario);
 
-    @GET("pos/puesto-trabajo/find/{id}")
+    @GET("pos/personal/find/{id}")
     public Call<Personal> findBy(@Path("id") Object o);
 
-    @GET("pos/puesto-trabajo/list")
+    @GET("pos/personal/list")
     public Call<List<Personal>> findAll();
 
 }
