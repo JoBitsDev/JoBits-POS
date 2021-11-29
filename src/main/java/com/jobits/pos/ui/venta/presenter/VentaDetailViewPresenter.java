@@ -9,6 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
+import com.jobits.pos.core.domain.VentaResumenWrapper;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Mesa;
@@ -345,16 +346,17 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 //            getBean().setTotal_resumen_area(service.getTotalResumenArea(getBean().getVenta_seleccionada()));
 //            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(getBean().getVenta_seleccionada()));
 //            getBean().setTotal_resumen_dependiente(service.getTotalResumenDependiente(getBean().getVenta_seleccionada()));
-            getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(ventaResumenService.getTotalPropina(getBean().getVenta_seleccionada())));
             getBean().setReabrir_ventas_enabled(service.canReabrirVenta(getBean().getVenta_seleccionada()));
 
-            getBean().setTotal_autorizos(ventaResumenService.getTotalAutorizos(getBean().getVenta_seleccionada()));
-            getBean().setTotal_gasto_insumos(ventaResumenService.getTotalGastadoInsumos(getBean().getVenta_seleccionada()));
-            getBean().setTotal_gasto_otros(ventaResumenService.getTotalGastos(getBean().getVenta_seleccionada()));
-            getBean().setTotal_gasto_salario(ventaResumenService.getTotalPagoTrabajadores(getBean().getVenta_seleccionada()));
+            VentaResumenWrapper resumen = ventaResumenService.getResumenVenta(getBean().getVenta_seleccionada());
+            getBean().setPropina_total(resumen.getTotalPropina());
+            getBean().setTotal_autorizos(resumen.getTotalAutorizos());
+            getBean().setTotal_gasto_insumos(resumen.getTotalGastadoInsumos());
+            getBean().setTotal_gasto_otros(resumen.getTotalGastos());
+            getBean().setTotal_gasto_salario(resumen.getTotalPagoTrabajadores());
+            getBean().setVenta_neta(resumen.getTotalVendidoNeto());
+            getBean().setVenta_total(resumen.getTotalVendido());
 
-            getBean().setVenta_neta(ventaResumenService.getTotalVendidoNeto(getBean().getVenta_seleccionada()));
-            getBean().setVenta_total(ventaResumenService.getTotalVendido(getBean().getVenta_seleccionada()));
             getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
             getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(v.getFecha()));
 
