@@ -14,7 +14,6 @@ import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Mesa;
@@ -129,6 +128,7 @@ import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.ui.venta.orden.presenter.AgregarProductoViewPresenter;
 import com.jobits.pos.ui.clientes.presenter.DomicilioViewPresenter;
 import com.jobits.pos.ui.venta.orden.presenter.ProductoEnCalienteViewPresenter;
+import com.jobits.pos.controller.venta.VentaCalendarResumeUseCase;
 
 /**
  *
@@ -197,9 +197,9 @@ public class PresenterFacade {
             case ReservaOrdenDetailView.VIEW_NAME:
                 return new ReservaOrdenDetailViewPresenter(null, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class));
             case VentaCalendarView.VIEW_NAME:
-                return new VentaCalendarViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaListService.class));
+                return new VentaCalendarViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaCalendarResumeUseCase.class));
             case VentaStatisticsView.VIEW_NAME:
-                return new VentaStatisticsViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaListService.class));
+                return new VentaStatisticsViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaCalendarResumeUseCase.class));
             case AlmacenMainView.VIEW_NAME:
                 return new AlmacenViewPresenter(
                         PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),

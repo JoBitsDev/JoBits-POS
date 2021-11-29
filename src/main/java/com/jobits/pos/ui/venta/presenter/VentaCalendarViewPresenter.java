@@ -9,7 +9,6 @@ import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.core.usecase.algoritmo.Y;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
@@ -33,6 +32,7 @@ import com.jobits.pos.core.module.PosCoreModule;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import org.jobits.db.core.domain.TipoConexion;
 import org.jobits.db.pool.ConnectionPoolHandler;
+import com.jobits.pos.controller.venta.VentaCalendarResumeUseCase;
 
 /**
  *
@@ -43,7 +43,7 @@ import org.jobits.db.pool.ConnectionPoolHandler;
  */
 public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaCalendarViewModel> {
 
-    private final VentaListService service;
+    private final VentaCalendarResumeUseCase service;
 
     public static final String ACTION_IMPORTAR_VENTA = "Importar venta",
             ACTION_Y = "Y";
@@ -52,7 +52,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     private List<List<Venta>> ventas = new ArrayList<>();
     private List<DayReviewWrapper<Venta>> ventasList = new ArrayList<>();
 
-    public VentaCalendarViewPresenter(VentaListService controller) {
+    public VentaCalendarViewPresenter(VentaCalendarResumeUseCase controller) {
         super(new VentaCalendarViewModel(), "Ventas");
         this.service = controller;
         updateBeanData();

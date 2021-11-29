@@ -6,7 +6,6 @@
 package com.jobits.pos.ui.venta.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.venta.VentaListService;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.main.Application;
@@ -23,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
+import com.jobits.pos.controller.venta.VentaCalendarResumeUseCase;
 
 /**
  *
@@ -30,7 +30,7 @@ import javax.swing.JOptionPane;
  */
 public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<VentaStatisticsViewModel> {
 
-    private final VentaListService service;
+    private final VentaCalendarResumeUseCase service;
 
     public static final String ACTION_DESPLEGAR_OPCIONES = "Desplegar opciones",
             ACTION_RESTABLECER = "Restablecer",
@@ -47,7 +47,7 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
             fecha_inicio_anterior,
             fecha_final_anterior;
 
-    public VentaStatisticsViewPresenter(VentaListService controller) {
+    public VentaStatisticsViewPresenter(VentaCalendarResumeUseCase controller) {
         super(new VentaStatisticsViewModel(), "Ventas");
         this.fecha_final_anterior = Calendar.getInstance();
         this.fecha_inicio_anterior = Calendar.getInstance();
