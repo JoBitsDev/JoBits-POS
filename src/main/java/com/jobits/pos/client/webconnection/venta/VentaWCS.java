@@ -41,107 +41,107 @@ public class VentaWCS extends BaseConnection implements VentaDetailService {
 
     @Override
     public List<Venta> getVentasDeFecha(Date date) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getVentasDeFecha(date));
     }
 
     @Override
     public List<Venta> getVentasDeFecha(int idVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getVentasDeFecha(idVenta));
     }
 
     @Override
     public Venta cambiarTurno(int idTurnoATerminar, Personal user) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.cambiarTurno(idTurnoATerminar, user));
     }
 
     @Override
     public boolean canOpenNuevoTurno(Date fecha) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.canOpenNuevoTurno(fecha));
     }
 
     @Override
     public boolean canOpenNuevoTurno(int idVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.canOpenNuevoTurno(idVenta));
     }
 
     @Override
     public boolean canReabrirVenta(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.canReabrirVenta(codVenta));
     }
 
     @Override
     public Orden createNewOrden(int codVenta, Mesa mesa) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.createNewOrden(codVenta, mesa));
     }
 
     @Override
     public float getAutorizosTotalDelProducto(ProductoVenta productoVenta, int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getAutorizosTotalDelProducto(codVenta, productoVenta));
     }
 
     @Override
     public Float getGastoTotalDeInsumo(IpvRegistro i, int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getGastoTotalDeInsumo(codVenta, i));
     }
 
     @Override
     public List<Orden> getOrdenesActivas(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getOrdenesActivas(codVenta));
     }
 
     @Override
     public Float getPagoTrabajador(Personal personal, int codVenta, int dividirEntre) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getPagoTrabajador(codVenta, dividirEntre, personal));
     }
 
     @Override
     public Float getPropinaTrabajador(Personal personal, int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getPropinaTrabajador(codVenta, personal));
     }
 
     @Override
     public String getTotalAutorizos(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalAutorizos(codVenta));
     }
 
     @Override
     public String getTotalGastadoInsumos(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalGastadoInsumos(codVenta));
     }
 
     @Override
     public String getTotalGastos(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalGastos(codVenta));
     }
 
     @Override
     public String getTotalPagoTrabajadores(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalPagoTrabajadores(codVenta));
     }
 
     @Override
     public float getTotalPropina(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalPropina(codVenta));
     }
 
     @Override
     public String getTotalVendido(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalVendido(codVenta));
     }
 
     @Override
     public String getTotalVendidoNeto(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalVendidoNeto(codVenta));
     }
 
     @Override
     public float getVentaTotalDelProducto(ProductoVenta productoVenta, int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getVentaTotalDelProducto(codVenta, productoVenta));
     }
 
     @Override
     public void importarVenta(File file) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.importarVenta(file));
     }
 
     @Override
@@ -154,122 +154,122 @@ public class VentaWCS extends BaseConnection implements VentaDetailService {
 
     @Override
     public void printGastosCasa(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.printGastosCasa(codVenta));
     }
 
     @Override
     public void printPagoPorVentaPersonal(Personal user, int codVenta, boolean printValores) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.printPagoPorVentaPersonal(codVenta, user, printValores));
     }
 
     @Override
     public void printComisionPorcentualResumen(Mesa mesa, int idVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.printComisionPorcentualResumen(idVenta, mesa));
     }
 
     @Override
     public void printZ(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.printZ(codVenta));
     }
 
     @Override
     public void reabrirVentas(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.reabrirVentas(codVenta));
     }
 
     @Override
     public void terminarVentas(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.terminarVentas(codVenta));
     }
 
     @Override
     public void terminarYExportar(File file, int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.terminarYExportar(codVenta, file));
     }
 
     @Override
     public void printMesaResumen(Mesa mesa, int idVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.printMesaResumen(idVenta, mesa));
     }
 
     @Override
     public void printAreaResumen(Area a, int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.printAreaResumen(codVenta, a));
     }
 
     @Override
     public void printPersonalResumenRow(Personal p, int codVenta, boolean printValores) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.printPersonalResumenRow(codVenta, p, printValores));
     }
 
     @Override
     public void printCocinaResumen(String codCocina, int codVenta, boolean printValores) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.printCocinaResumen(codVenta, codCocina, printValores));
     }
 
     @Override
     public List<Mesa> getMesasPorVenta(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getMesasPorVenta(codVenta));
     }
 
     @Override
     public List<Personal> getPersonalPorVenta(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getPersonalPorVenta(codVenta));
     }
 
     @Override
     public List<Cocina> getCocinasPorVenta(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getCocinasPorVenta(codVenta));
     }
 
     @Override
     public List<Area> getAreasPorVenta(int codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getAreasPorVenta(codVenta));
     }
 
     @Override
     public List<ProductovOrden> getResumenPorMesa(int codVenta, Mesa mesa) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getResumenPorMesa(codVenta, mesa));
     }
 
     @Override
     public List<ProductovOrden> getResumenPorPersonal(int codVenta, Personal personal) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getResumenPorPersonal(codVenta, personal));
     }
 
     @Override
     public List<ProductovOrden> getResumenPorCocina(int codVenta, Cocina cocina) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getResumenPorCocina(codVenta, cocina));
     }
 
     @Override
     public List<ProductovOrden> getResumenPorArea(int codVenta, Area area) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getResumenPorArea(codVenta, area));
     }
 
     @Override
     public String getTotalResumenMesa(int codVenta, Mesa mesa) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalResumenMesa(codVenta, mesa));
     }
 
     @Override
     public String getTotalResumenDependiente(int codVenta, Personal personal) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalResumenDependiente(codVenta, personal));
     }
 
     @Override
     public String getTotalResumenCocina(int codVenta, Cocina cocina) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalResumenCocina(codVenta, cocina));
     }
 
     @Override
     public String getTotalResumenArea(int codVenta, Area area) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getTotalResumenArea(codVenta, area));
     }
 
     @Override
     public Venta create(Venta t) throws RuntimeException {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.  
     }
 
     @Override

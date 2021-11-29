@@ -8,16 +8,17 @@ package com.jobits.pos.ui.venta.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
+import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Personal;
-import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.gastos.presenter.GastosViewPresenter;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.trabajadores.presenter.AsistenciaPersonalPresenter;
@@ -29,8 +30,6 @@ import static com.jobits.pos.ui.venta.presenter.VentaDetailViewModel.*;
 import com.root101.clean.core.app.services.UserResolver;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -63,6 +62,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             ACTION_IMPRIMIR_RESUMEN_PTO = "Imprimir Pto elaboracion";
     public static final String PROP_HIDE_PANEL = "Ocultar Paneles";
     private VentaDetailService service;
+    private VentaResumenUseCase ventaResumenService = PosDesktopUiModule.getInstance().getImplementation(VentaResumenUseCase.class);
     OrdenService ordenService;
     private VentaOrdenListViewPresenter ventaOrdenPresenter;
     private AsistenciaPersonalPresenter asistenciaPersonalPresenter;
@@ -245,7 +245,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     }
 
     private void onImprimirResumenVentaAreaClick() {
-        service.printAreaResumen(getBean().getArea_seleccionada(), getBean().getVenta_seleccionada());
+        ventaResumenService.printAreaResumen(getBean().getArea_seleccionada(), getBean().getVenta_seleccionada());
     }
 
     private void onImprimirResumenVentaUsuarioClick() {
@@ -254,7 +254,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                         + "\nNo para imprimir solo las cantidades",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false);
 
-        service.printPersonalResumenRow(getBean().getPersonal_seleccionado(),
+        ventaResumenService.printPersonalResumenRow(getBean().getPersonal_seleccionado(),
                 getBean().getVenta_seleccionada(), imprimirValores);
 
     }
@@ -276,12 +276,12 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                         + "\nNo para imprimir solo las cantidades",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false);
 
-        service.printCocinaResumen(getBean().getCocina_seleccionada().getCodCocina(),
+        ventaResumenService.printCocinaResumen(getBean().getCocina_seleccionada().getCodCocina(),
                 getBean().getVenta_seleccionada(), imprimirValores);
     }
 
     private void onImpimirResumenMesaClick() {
-        service.printMesaResumen(getBean().getMesa_seleccionada(), getBean().getVenta_seleccionada());
+        ventaResumenService.printMesaResumen(getBean().getMesa_seleccionada(), getBean().getVenta_seleccionada());
     }
 
     private void onImprimirResumenComisionPorcentualClick() {
@@ -345,16 +345,16 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 //            getBean().setTotal_resumen_area(service.getTotalResumenArea(getBean().getVenta_seleccionada()));
 //            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(getBean().getVenta_seleccionada()));
 //            getBean().setTotal_resumen_dependiente(service.getTotalResumenDependiente(getBean().getVenta_seleccionada()));
-            getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(service.getTotalPropina(getBean().getVenta_seleccionada())));
+            getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(ventaResumenService.getTotalPropina(getBean().getVenta_seleccionada())));
             getBean().setReabrir_ventas_enabled(service.canReabrirVenta(getBean().getVenta_seleccionada()));
 
-            getBean().setTotal_autorizos(service.getTotalAutorizos(getBean().getVenta_seleccionada()));
-            getBean().setTotal_gasto_insumos(service.getTotalGastadoInsumos(getBean().getVenta_seleccionada()));
-            getBean().setTotal_gasto_otros(service.getTotalGastos(getBean().getVenta_seleccionada()));
-            getBean().setTotal_gasto_salario(service.getTotalPagoTrabajadores(getBean().getVenta_seleccionada()));
+            getBean().setTotal_autorizos(ventaResumenService.getTotalAutorizos(getBean().getVenta_seleccionada()));
+            getBean().setTotal_gasto_insumos(ventaResumenService.getTotalGastadoInsumos(getBean().getVenta_seleccionada()));
+            getBean().setTotal_gasto_otros(ventaResumenService.getTotalGastos(getBean().getVenta_seleccionada()));
+            getBean().setTotal_gasto_salario(ventaResumenService.getTotalPagoTrabajadores(getBean().getVenta_seleccionada()));
 
-            getBean().setVenta_neta(service.getTotalVendidoNeto(getBean().getVenta_seleccionada()));
-            getBean().setVenta_total(service.getTotalVendido(getBean().getVenta_seleccionada()));
+            getBean().setVenta_neta(ventaResumenService.getTotalVendidoNeto(getBean().getVenta_seleccionada()));
+            getBean().setVenta_total(ventaResumenService.getTotalVendido(getBean().getVenta_seleccionada()));
             getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
             getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(v.getFecha()));
 
@@ -393,40 +393,40 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             Mesa mesa = (Mesa) evt.getNewValue();
             if (mesa != null) {
                 getBean().setLista_productos_por_mesa(new ArrayListModel(
-                        service.getResumenPorMesa(getBean().getVenta_seleccionada(), mesa)));
+                        ventaResumenService.getResumenPorMesa(getBean().getVenta_seleccionada(), mesa)));
 
                 getBean().setTotal_resumen_mesa(
-                        service.getTotalResumenMesa(getBean().getVenta_seleccionada(), mesa));
+                        ventaResumenService.getTotalResumenMesa(getBean().getVenta_seleccionada(), mesa));
             }
         });
         addBeanPropertyChangeListener(PROP_AREA_SELECCIONADA, (PropertyChangeEvent evt) -> {
             Area area = (Area) evt.getNewValue();
             if (area != null) {
                 getBean().setLista_productos_por_area(new ArrayListModel(
-                        service.getResumenPorArea(getBean().getVenta_seleccionada(), area)));
+                        ventaResumenService.getResumenPorArea(getBean().getVenta_seleccionada(), area)));
 
                 getBean().setTotal_resumen_area(
-                        service.getTotalResumenArea(getBean().getVenta_seleccionada(), area));
+                        ventaResumenService.getTotalResumenArea(getBean().getVenta_seleccionada(), area));
             }
         });
         addBeanPropertyChangeListener(PROP_PERSONAL_SELECCIONADO, (PropertyChangeEvent evt) -> {
             Personal personal = (Personal) evt.getNewValue();
             if (personal != null) {
                 getBean().setLista_productos_por_dependientes(new ArrayListModel(
-                        service.getResumenPorPersonal(getBean().getVenta_seleccionada(), personal)));
+                        ventaResumenService.getResumenPorPersonal(getBean().getVenta_seleccionada(), personal)));
 
                 getBean().setTotal_resumen_dependiente(
-                        service.getTotalResumenDependiente(getBean().getVenta_seleccionada(), personal));
+                        ventaResumenService.getTotalResumenDependiente(getBean().getVenta_seleccionada(), personal));
             }
         });
         addBeanPropertyChangeListener(PROP_COCINA_SELECCIONADA, (PropertyChangeEvent evt) -> {
             Cocina cocina = (Cocina) evt.getNewValue();
             if (cocina != null) {
                 getBean().setLista_productos_por_cocina(
-                        new ArrayListModel(service.getResumenPorCocina(
+                        new ArrayListModel(ventaResumenService.getResumenPorCocina(
                                 getBean().getVenta_seleccionada(), cocina)));
 
-                getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(
+                getBean().setTotal_resumen_cocina(ventaResumenService.getTotalResumenCocina(
                         getBean().getVenta_seleccionada(), cocina));
             }
         });
