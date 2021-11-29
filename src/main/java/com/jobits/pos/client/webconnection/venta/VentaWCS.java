@@ -9,6 +9,7 @@ import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.resumen.VentaResumenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
+import com.jobits.pos.core.domain.VentaResumenWrapper;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.IpvRegistro;
@@ -99,41 +100,6 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     @Override
     public Float getPropinaTrabajador(Personal personal, int codVenta) {
         return handleCall(service.getPropinaTrabajador(codVenta, personal));
-    }
-
-    @Override
-    public String getTotalAutorizos(int codVenta) {
-        return handleCall(service.getTotalAutorizos(codVenta));
-    }
-
-    @Override
-    public String getTotalGastadoInsumos(int codVenta) {
-        return handleCall(service.getTotalGastadoInsumos(codVenta));
-    }
-
-    @Override
-    public String getTotalGastos(int codVenta) {
-        return handleCall(service.getTotalGastos(codVenta));
-    }
-
-    @Override
-    public String getTotalPagoTrabajadores(int codVenta) {
-        return handleCall(service.getTotalPagoTrabajadores(codVenta));
-    }
-
-    @Override
-    public float getTotalPropina(int codVenta) {
-        return handleCall(service.getTotalPropina(codVenta));
-    }
-
-    @Override
-    public String getTotalVendido(int codVenta) {
-        return handleCall(service.getTotalVendido(codVenta));
-    }
-
-    @Override
-    public String getTotalVendidoNeto(int codVenta) {
-        return handleCall(service.getTotalVendidoNeto(codVenta));
     }
 
     @Override
@@ -307,6 +273,11 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     @Override
     public void removePropertyChangeListener(PropertyChangeListener pl) {
         throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public VentaResumenWrapper getResumenVenta(int codVenta) {
+        return handleCall(service.getVentaResumen(codVenta));
     }
 
 }

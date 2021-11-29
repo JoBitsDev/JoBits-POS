@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.client.webconnection.venta;
 
+import com.jobits.pos.core.domain.VentaResumenWrapper;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.IpvRegistro;
@@ -74,26 +75,10 @@ public interface VentaWCI {
     @GET("venta/get-propina-trabajador/{id}")
     public Call<Float> getPropinaTrabajador(@Path("id") Object idVenta, @Body Personal personal);
 
-    @GET("venta/get-total-autorizos/{id}")
-    public Call<String> getTotalAutorizos(@Path("id") Object idVenta);
-
-    @GET("venta/get-total-gastado-insumos/{id}")
     public Call<String> getTotalGastadoInsumos(@Path("id") Object idVenta);
 
-    @GET("venta/get-total-gastos/{id}")
-    public Call<String> getTotalGastos(@Path("id") Object idVenta);
-
-    @GET("venta/get-total-pago-trabajadores/{id}")
-    public Call<String> getTotalPagoTrabajadores(@Path("id") Object idVenta);
-
-    @GET("venta/get-total-propina/{id}")
-    public Call<Float> getTotalPropina(@Path("id") Object idVenta);
-
-    @GET("venta/get-total-vendido/{id}")
-    public Call<String> getTotalVendido(@Path("id") Object idVenta);
-
-    @GET("venta/get-total-vendido-neto/{id}")
-    public Call<String> getTotalVendidoNeto(@Path("id") Object idVenta);
+    @GET("venta/get-venta-resumen/{id}")
+    public Call<VentaResumenWrapper> getVentaResumen(@Path("id") Object idVenta);
 
     @GET("venta/get-venta-total-producto/{id}")
     public Call<Float> getVentaTotalDelProducto(@Path("id") Object idVenta, @Body ProductoVenta productoVenta);
