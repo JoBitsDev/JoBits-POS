@@ -25,7 +25,6 @@ public class MesaWCS extends BaseConnection implements MesaService {
         super();
     }
 
-
     @Override
     public Mesa edit(Mesa t) throws RuntimeException {
         return handleCall(service.edit(t));
@@ -50,6 +49,11 @@ public class MesaWCS extends BaseConnection implements MesaService {
     public List<Mesa> findAll() throws RuntimeException {
         return handleCall(service.findAll());
 
+    }
+
+    @Override
+    public List<Mesa> getListaMesasDisponibles() {
+        return handleCall(service.findAll());
     }
 
 }

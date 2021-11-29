@@ -285,7 +285,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 getBean().setMesa_pedido(instance.getMesacodMesa().getCodMesa());
             }
             getBean().setPorciento_servicio(instance.getPorciento());
-            getBean().setTotal_orden(utils.setDosLugaresDecimales(ordenService.getValorTotalOrden(getCodOrden())));
+            getBean().setTotal_orden(utils.setDosLugaresDecimales(instance.getOrdenvalorMonetario()));
             getBean().setUsuario(instance.getPersonalusuario().getUsuario());
             if (getBean().getPorciento_servicio() == 0) {
                 getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
@@ -467,8 +467,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
                         "/restManager/resources/icons pack/porciento_indigo.png")));
             }
-            ordenService.setPorciento(getCodOrden(), value);
-            getBean().setTotal_orden(utils.setDosLugaresDecimales(ordenService.getValorTotalOrden(getCodOrden())));
+            var o = ordenService.setPorciento(getCodOrden(), value);
+            getBean().setTotal_orden(utils.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
             refreshState();
         }
         );

@@ -22,13 +22,16 @@ import retrofit2.http.Path;
 public interface MesaWCI {
 
     @PUT("pos/mesa/edit")
-    public Call<Mesa> edit( @Body Mesa t);
+    public Call<Mesa> edit(@Body Mesa t);
+
+    @GET("pos/mesa/list-free")
+    public Call<List<Mesa>> getFreeTables();
 
     @DELETE("pos/mesa/destroy/{id}")
-    public Call<Mesa> destroyById( @Path("id") Object o);
+    public Call<Mesa> destroyById(@Path("id") Object o);
 
     @GET("pos/mesa/find/{id}")
-    public Call<Mesa> findBy( @Path("id") Object o);
+    public Call<Mesa> findBy(@Path("id") Object o);
 
     @GET("pos/mesa/list")
     public Call<List<Mesa>> findAll();
