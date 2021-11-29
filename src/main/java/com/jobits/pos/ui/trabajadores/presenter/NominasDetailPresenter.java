@@ -5,21 +5,19 @@
  */
 package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jobits.pos.controller.trabajadores.impl.NominasController;
-import com.jobits.pos.controller.trabajadores.NominasService;
+import com.jobits.pos.controller.trabajadores.NominasUseCase;
 import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.utils.utils;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -41,7 +39,7 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
     public static String ACTION_SELECCIONAR_TODOS = "Seleccionar todos";
     public static final String ACTION_DESPLEGAR_OPCIONES = "Desplegar opciones";
 
-    private final NominasService service = PosDesktopUiModule.getInstance().getImplementation(NominasService.class);
+    private final NominasUseCase service = PosDesktopUiModule.getInstance().getImplementation(NominasUseCase.class);
 
     public NominasDetailPresenter() {
         super(new NominasDetailViewModel());
@@ -51,7 +49,7 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
 
     private void onBuscarClick() {
         getBean().getLista_personal().clear();
-        getBean().getLista_personal().addAll(service.getPersonalActivo(getBean().getFecha_desde(), getBean().getFecha_hasta()));
+        getBean().getLista_personal().addAll(service.getPersonalActivo(utils.dateToLocalDate(getBean().getFecha_desde()), utils.dateToLocalDate(getBean().getFecha_hasta())));
 
     }
 
