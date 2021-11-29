@@ -9,6 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
+import com.jobits.pos.core.domain.VentaResourcesWrapper;
 import com.jobits.pos.core.domain.VentaResumenWrapper;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Cocina;
@@ -360,19 +361,21 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
             getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(v.getFecha()));
 
-            getBean().setLista_mesas(new ArrayListModel<>(service.getMesasPorVenta(getBean().getVenta_seleccionada())));
+            VentaResourcesWrapper ventaResources = service.getVentaResources(getBean().getVenta_seleccionada());
+
+            getBean().setLista_mesas(new ArrayListModel<>(ventaResources.getMesasPorVenta()));
             if (!getBean().getLista_mesas().isEmpty()) {
                 getBean().setMesa_seleccionada(getBean().getLista_mesas().get(0));
             }
-            getBean().setLista_cocinas(new ArrayListModel<>(service.getCocinasPorVenta(getBean().getVenta_seleccionada())));
+            getBean().setLista_cocinas(new ArrayListModel<>(ventaResources.getCocinasPorVenta()));
             if (!getBean().getLista_cocinas().isEmpty()) {
                 getBean().setCocina_seleccionada(getBean().getLista_cocinas().get(0));
             }
-            getBean().setLista_dependientes(new ArrayListModel<>(service.getPersonalPorVenta(getBean().getVenta_seleccionada())));
+            getBean().setLista_dependientes(new ArrayListModel<>(ventaResources.getPersonalPorVenta()));
             if (!getBean().getLista_dependientes().isEmpty()) {
                 getBean().setPersonal_seleccionado(getBean().getLista_dependientes().get(0));
             }
-            getBean().setLista_areas(new ArrayListModel<>(service.getAreasPorVenta(getBean().getVenta_seleccionada())));
+            getBean().setLista_areas(new ArrayListModel<>(ventaResources.getAreasPorVenta()));
             if (!getBean().getLista_areas().isEmpty()) {
                 getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
             }

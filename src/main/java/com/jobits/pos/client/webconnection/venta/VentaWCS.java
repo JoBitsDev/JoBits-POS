@@ -9,6 +9,7 @@ import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.resumen.VentaResumenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
+import com.jobits.pos.core.domain.VentaResourcesWrapper;
 import com.jobits.pos.core.domain.VentaResumenWrapper;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Cocina;
@@ -176,26 +177,6 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public List<Mesa> getMesasPorVenta(int codVenta) {
-        return handleCall(service.getMesasPorVenta(codVenta));
-    }
-
-    @Override
-    public List<Personal> getPersonalPorVenta(int codVenta) {
-        return handleCall(service.getPersonalPorVenta(codVenta));
-    }
-
-    @Override
-    public List<Cocina> getCocinasPorVenta(int codVenta) {
-        return handleCall(service.getCocinasPorVenta(codVenta));
-    }
-
-    @Override
-    public List<Area> getAreasPorVenta(int codVenta) {
-        return handleCall(service.getAreasPorVenta(codVenta));
-    }
-
-    @Override
     public List<ProductovOrden> getResumenPorMesa(int codVenta, Mesa mesa) {
         return handleCall(service.getResumenPorMesa(codVenta, mesa));
     }
@@ -278,6 +259,11 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     @Override
     public VentaResumenWrapper getResumenVenta(int codVenta) {
         return handleCall(service.getVentaResumen(codVenta));
+    }
+
+    @Override
+    public VentaResourcesWrapper getVentaResources(int codVenta) {
+        return handleCall(service.getVentaResources(codVenta));
     }
 
 }

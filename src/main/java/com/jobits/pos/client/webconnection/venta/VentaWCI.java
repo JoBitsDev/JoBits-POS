@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.client.webconnection.venta;
 
+import com.jobits.pos.core.domain.VentaResourcesWrapper;
 import com.jobits.pos.core.domain.VentaResumenWrapper;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Cocina;
@@ -119,17 +120,8 @@ public interface VentaWCI {
     @POST("venta/print-cocina-resumen/{id}/{idCocina}")
     public Call<Float> printCocinaResumen(@Path("id") Object idVenta, @Path("idCocina") Object idCocina, @Body boolean printValores);
 
-    @GET("venta/get-mesas-por-venta/{id}")
-    public Call<List<Mesa>> getMesasPorVenta(@Path("id") Object idVenta);
-
-    @GET("venta/get-personal-por-venta/{id}")
-    public Call<List<Personal>> getPersonalPorVenta(@Path("id") Object idVenta);
-
-    @GET("venta/get-cocinas-por-venta/{id}")
-    public Call<List<Cocina>> getCocinasPorVenta(@Path("id") Object idVenta);
-
-    @GET("venta/get-areas-por-venta/{id}")
-    public Call<List<Area>> getAreasPorVenta(@Path("id") Object idVenta);
+    @GET("venta/get-venta-resources/{id}")
+    public Call<VentaResourcesWrapper> getVentaResources(@Path("id") Object idVenta);
 
     @GET("venta/get-resumen-por-mesa/{id}")
     public Call<List<ProductovOrden>> getResumenPorMesa(@Path("id") Object idVenta, @Body Mesa mesa);
