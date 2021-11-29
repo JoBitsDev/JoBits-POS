@@ -127,12 +127,12 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public void printPagoPorVentaPersonal(Personal user, int codVenta, boolean printValores) {
+    public void printPagoPorVentaPersonal(String user, int codVenta, boolean printValores) {
         handleCall(service.printPagoPorVentaPersonal(codVenta, user, printValores));
     }
 
     @Override
-    public void printComisionPorcentualResumen(Mesa mesa, int idVenta) {
+    public void printComisionPorcentualResumen(String mesa, int idVenta) {
         handleCall(service.printComisionPorcentualResumen(idVenta, mesa));
     }
 
@@ -157,17 +157,17 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public void printMesaResumen(Mesa mesa, int idVenta) {
+    public void printMesaResumen(String mesa, int idVenta) {
         handleCall(service.printMesaResumen(idVenta, mesa));
     }
 
     @Override
-    public void printAreaResumen(Area a, int codVenta) {
+    public void printAreaResumen(String a, int codVenta) {
         handleCall(service.printAreaResumen(codVenta, a));
     }
 
     @Override
-    public void printPersonalResumenRow(Personal p, int codVenta, boolean printValores) {
+    public void printPersonalResumenRow(String p, int codVenta, boolean printValores) {
         handleCall(service.printPersonalResumenRow(codVenta, p, printValores));
     }
 
@@ -177,42 +177,42 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public List<ProductovOrden> getResumenPorMesa(int codVenta, Mesa mesa) {
+    public List<ProductovOrden> getResumenPorMesa(int codVenta, String mesa) {
         return handleCall(service.getResumenPorMesa(codVenta, mesa));
     }
 
     @Override
-    public List<ProductovOrden> getResumenPorPersonal(int codVenta, Personal personal) {
+    public List<ProductovOrden> getResumenPorPersonal(int codVenta, String personal) {
         return handleCall(service.getResumenPorPersonal(codVenta, personal));
     }
 
     @Override
-    public List<ProductovOrden> getResumenPorCocina(int codVenta, Cocina cocina) {
+    public List<ProductovOrden> getResumenPorCocina(int codVenta, String cocina) {
         return handleCall(service.getResumenPorCocina(codVenta, cocina));
     }
 
     @Override
-    public List<ProductovOrden> getResumenPorArea(int codVenta, Area area) {
+    public List<ProductovOrden> getResumenPorArea(int codVenta, String area) {
         return handleCall(service.getResumenPorArea(codVenta, area));
     }
 
     @Override
-    public String getTotalResumenMesa(int codVenta, Mesa mesa) {
+    public String getTotalResumenMesa(int codVenta, String mesa) {
         return handleCall(service.getTotalResumenMesa(codVenta, mesa));
     }
 
     @Override
-    public String getTotalResumenDependiente(int codVenta, Personal personal) {
+    public String getTotalResumenDependiente(int codVenta, String personal) {
         return handleCall(service.getTotalResumenDependiente(codVenta, personal));
     }
 
     @Override
-    public String getTotalResumenCocina(int codVenta, Cocina cocina) {
+    public String getTotalResumenCocina(int codVenta, String cocina) {
         return handleCall(service.getTotalResumenCocina(codVenta, cocina));
     }
 
     @Override
-    public String getTotalResumenArea(int codVenta, Area area) {
+    public String getTotalResumenArea(int codVenta, String area) {
         return handleCall(service.getTotalResumenArea(codVenta, area));
     }
 
@@ -262,8 +262,8 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public VentaResourcesWrapper getVentaResources(int codVenta) {
-        return handleCall(service.getVentaResources(codVenta));
+    public VentaResourcesWrapper getVentaResources(int codVenta, String codArea, String codCocina, String codPersonal, String codMesa) {
+        return handleCall(service.getVentaResources(codVenta, codArea, codCocina, codPersonal, codMesa));
     }
 
 }

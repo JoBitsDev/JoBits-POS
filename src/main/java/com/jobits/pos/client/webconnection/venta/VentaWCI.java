@@ -91,10 +91,10 @@ public interface VentaWCI {
     public Call<Float> printGastosCasa(@Path("id") Object idVenta);
 
     @POST("venta/print-pago-por-venta-personal/{id}")
-    public Call<Float> printPagoPorVentaPersonal(@Path("id") Object idVenta, @Body Personal personal, @Body boolean printValores);
+    public Call<Float> printPagoPorVentaPersonal(@Path("id") Object idVenta, @Body String personal, @Body boolean printValores);
 
     @POST("venta/print-comision-porcentual-resumen/{id}")
-    public Call<Float> printComisionPorcentualResumen(@Path("id") Object idVenta, @Body Mesa mesa);
+    public Call<Float> printComisionPorcentualResumen(@Path("id") Object idVenta, @Body String mesa);
 
     @POST("venta/print-z/{id}")
     public Call<Float> printZ(@Path("id") Object idVenta);
@@ -109,42 +109,42 @@ public interface VentaWCI {
     public Call<Float> terminarYExportar(@Path("id") Object idVenta, @Body File file);
 
     @POST("venta/print-mesa-resumen/{id}")
-    public Call<Float> printMesaResumen(@Path("id") Object idVenta, @Body Mesa mesa);
+    public Call<Float> printMesaResumen(@Path("id") Object idVenta, @Body String mesa);
 
     @POST("venta/print-area-resumen/{id}")
-    public Call<Float> printAreaResumen(@Path("id") Object idVenta, @Body Area area);
+    public Call<Float> printAreaResumen(@Path("id") Object idVenta, @Body String area);
 
     @POST("venta/print-personal-resumen-row/{id}")
-    public Call<Float> printPersonalResumenRow(@Path("id") Object idVenta, @Body Personal personal, @Body boolean printValores);
+    public Call<Float> printPersonalResumenRow(@Path("id") Object idVenta, @Body String personal, @Body boolean printValores);
 
     @POST("venta/print-cocina-resumen/{id}/{idCocina}")
     public Call<Float> printCocinaResumen(@Path("id") Object idVenta, @Path("idCocina") Object idCocina, @Body boolean printValores);
 
     @GET("venta/get-venta-resources/{id}")
-    public Call<VentaResourcesWrapper> getVentaResources(@Path("id") Object idVenta);
+    public Call<VentaResourcesWrapper> getVentaResources(@Path("id") Object idVenta, @Body String codArea, @Body String codCocina, @Body String codPersonal, @Body String codMesa);
 
     @GET("venta/get-resumen-por-mesa/{id}")
-    public Call<List<ProductovOrden>> getResumenPorMesa(@Path("id") Object idVenta, @Body Mesa mesa);
+    public Call<List<ProductovOrden>> getResumenPorMesa(@Path("id") Object idVenta, @Body String mesa);
 
     @GET("venta/get-resumen-por-personal/{id}")
-    public Call<List<ProductovOrden>> getResumenPorPersonal(@Path("id") Object idVenta, @Body Personal personal);
+    public Call<List<ProductovOrden>> getResumenPorPersonal(@Path("id") Object idVenta, @Body String personal);
 
     @GET("venta/get-resumen-por-cocina/{id}")
-    public Call<List<ProductovOrden>> getResumenPorCocina(@Path("id") Object idVenta, @Body Cocina cocina);
+    public Call<List<ProductovOrden>> getResumenPorCocina(@Path("id") Object idVenta, @Body String cocina);
 
     @GET("venta/get-resumen-por-area/{id}")
-    public Call<List<ProductovOrden>> getResumenPorArea(@Path("id") Object idVenta, @Body Area area);
+    public Call<List<ProductovOrden>> getResumenPorArea(@Path("id") Object idVenta, @Body String area);
 
     @GET("venta/get-total-resumen-por-mesa/{id}")
-    public Call<String> getTotalResumenMesa(@Path("id") Object idVenta, @Body Mesa mesa);
+    public Call<String> getTotalResumenMesa(@Path("id") Object idVenta, @Body String mesa);
 
     @GET("venta/get-total-resumen-por-personal/{id}")
-    public Call<String> getTotalResumenDependiente(@Path("id") Object idVenta, @Body Personal personal);
+    public Call<String> getTotalResumenDependiente(@Path("id") Object idVenta, @Body String personal);
 
     @GET("venta/get-total-resumen-por-cocina/{id}")
-    public Call<String> getTotalResumenCocina(@Path("id") Object idVenta, @Body Cocina cocina);
+    public Call<String> getTotalResumenCocina(@Path("id") Object idVenta, @Body String cocina);
 
     @GET("venta/get-total-resumen-por-area/{id}")
-    public Call<String> getTotalResumenArea(@Path("id") Object idVenta, @Body Area area);
+    public Call<String> getTotalResumenArea(@Path("id") Object idVenta, @Body String area);
 
 }
