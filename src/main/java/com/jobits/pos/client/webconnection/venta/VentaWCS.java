@@ -6,7 +6,9 @@
 package com.jobits.pos.client.webconnection.venta;
 
 import com.jobits.pos.client.webconnection.BaseConnection;
+import com.jobits.pos.controller.resumen.VentaResumenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
+import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.IpvRegistro;
@@ -30,7 +32,7 @@ import java.util.List;
  * @author Jorge
  *
  */
-public class VentaWCS extends BaseConnection implements VentaDetailService {
+public class VentaWCS extends BaseConnection implements VentaDetailService, VentaResumenUseCase {
 
     private VentaWCI service;
 
