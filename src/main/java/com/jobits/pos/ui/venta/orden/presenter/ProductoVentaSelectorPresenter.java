@@ -50,7 +50,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_ELEMENTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
             Seccion seccion = (Seccion) evt.getNewValue();
             if (seccion != null) {
-                getBean().setListaProductos(service.getProductoBySeccion(seccion));
+                getBean().setListaProductos(service.getProductoBySeccion(seccion.getNombreSeccion()));
             }
         });
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
@@ -59,7 +59,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
                 Float cantidad = new NumberPad().showView();
                 if (cantidad != null) {
                     if (producto.getSeccionnombreSeccion().getAgregadoEn().isEmpty() || getBean().getProductoAgregar() != null) {
-                        service.addProduct(codOrdenEnlazada, producto, cantidad, getBean().getProductoAgregar());
+                        service.addProduct(codOrdenEnlazada, producto.getCodigoProducto(), cantidad, Optional.of(getBean().getProductoAgregar().getId()));
                     } else {
                         Application.getInstance().getNavigator().navigateTo(
                                 AgregarProductoView.VIEW_NAME,
@@ -82,7 +82,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
 
                 auxList.forEach((x) -> {
                     boolean add = false;
-                    for (ProductoVenta pv : service.getProductoBySeccion(x)) {
+                    for (ProductoVenta pv : service.getProductoBySeccion(x.getNombreSeccion())) {
                         if (pv.toString().toLowerCase().contains(getBean().getPv_filtrado().toLowerCase())) {
                             pvList.add(pv);
                             add = true;

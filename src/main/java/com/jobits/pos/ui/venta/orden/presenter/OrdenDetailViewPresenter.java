@@ -106,7 +106,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         } else {
             nota = JOptionPane.showInputDialog(null, "Introduzca la nota a adjuntar", p.getNota().getDescripcion());
         }
-        ordenService.addNota(getCodOrden(), p, nota);
+        ordenService.addNota(getCodOrden(), p.getId(), nota);
     }
 
     private void fireAddProducto() {
@@ -120,9 +120,9 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             if (getBean().isModo_agrego_activado()) {
-                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, getBean().getProducto_orden_seleccionado());
+                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta().getCodigoProducto(), cantidad, Optional.of(getBean().getProducto_orden_seleccionado().getId()));
             } else {
-                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta(), cantidad, null);
+                ordenService.addProduct(getCodOrden(), getBean().getProducto_orden_seleccionado().getProductoVenta().getCodigoProducto(), cantidad, Optional.empty());
             }
             getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
         }
@@ -161,7 +161,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar: " + selected.getNombreProductoVendido(),
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            ordenService.removeProduct(getCodOrden(), selected,
+            ordenService.removeProduct(getCodOrden(), selected.getId(),
                     getBean().getProducto_orden_seleccionado().getCantidad());
             getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
             Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
@@ -178,7 +178,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea eliminar (" + value + ") de: " + selected.getNombreProductoVendido(),
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                ordenService.removeProduct(getCodOrden(), selected, value);
+                ordenService.removeProduct(getCodOrden(), selected.getId(), value);
                 getBean().setLista_producto_orden((ordenService.findBy(getCodOrden()).getProductovOrdenList()));
                 Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             }

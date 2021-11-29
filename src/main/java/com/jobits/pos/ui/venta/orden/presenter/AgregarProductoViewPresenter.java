@@ -116,7 +116,7 @@ public class AgregarProductoViewPresenter extends AbstractViewPresenter<AgregarP
     }
 
     private void onAgregarAction() {
-        service.addProductoCompuesto(codOrden, producto, cantidad, getBean().getLista_productos_contenidos());
+        service.addProductoCompuesto(codOrden, producto.getCodigoProducto(), cantidad, getBean().getLista_productos_contenidos());
         Application.getInstance().getNavigator().navigateUp();
     }
 

@@ -145,7 +145,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     private void onImprimirOrdenesClick() {
-        ordenService.impimirListaOrdenes(getBean().getLista_elementos(), codVenta);
+        ordenService.impimirListaOrdenes(codVenta);
     }
 
     @Override

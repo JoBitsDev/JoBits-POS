@@ -109,7 +109,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar la venta seleccionada",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            service.destroy(selected);
+            service.deleteVenta(selected.getId());
             updateBeanData();
             Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
