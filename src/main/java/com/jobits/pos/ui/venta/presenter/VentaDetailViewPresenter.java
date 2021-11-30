@@ -313,7 +313,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 new LongProcessActionServiceImpl("Creando IPVs.........") {
                     @Override
                     protected void longProcessMethod() {//TODO: No se muestran las ecepciones que se lanzan dentro de este metodo
-                        service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
+                        service.cambiarTurno(getBean().getVenta_seleccionada());
                         //ventas = service.getVentasDeFecha(getBean().getVenta_seleccionada().getFecha());
                         updateBeanData();
                     }
@@ -362,11 +362,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(v.getFecha()));
 
             VentaResourcesWrapper ventaResources = ventaResumenService.getVentaResources(
-                    getBean().getVenta_seleccionada(),
-                    getBean().getArea_seleccionada().getCodArea(),
-                    getBean().getCocina_seleccionada().getCodCocina(),
-                    getBean().getPersonal_seleccionado().getUsuario(),
-                    getBean().getMesa_seleccionada().getCodMesa());
+                    getBean().getVenta_seleccionada());
 
             getBean().setLista_mesas(new ArrayListModel<>(ventaResources.getMesasPorVenta()));
             if (!getBean().getLista_mesas().isEmpty()) {

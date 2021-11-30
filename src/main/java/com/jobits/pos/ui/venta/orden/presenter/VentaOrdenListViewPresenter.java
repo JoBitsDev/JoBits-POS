@@ -128,7 +128,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
         Mesa m;
         List<Mesa> list = mesaService.getListaMesasDisponibles();
         m = selectMesa(list);
-        Orden newOrden = ventaService.createNewOrden(codVenta, m);
+        Orden newOrden = ventaService.createNewOrden(codVenta, m.getCodMesa());
         if (newOrden != null) {
             getBean().setElemento_seleccionado(newOrden);
             onAbrirOrdenAction();

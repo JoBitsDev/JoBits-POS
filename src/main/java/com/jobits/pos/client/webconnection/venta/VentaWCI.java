@@ -34,117 +34,115 @@ import retrofit2.http.Path;
  */
 public interface VentaWCI {
 
-    @POST("venta/inicializar")
+    @POST("pos/venta/inicializar")
     public Call<Venta> inicializarVentas(
             @Header("Tennant") String bearerTennantToken,
             @Header("Authorization") String basicAndToken,
             @Body Map<String, Object> params);
 
-    @GET("venta/get-ventas-de-fecha")
+    @GET("pos/venta/get-ventas-de-fecha")
     public Call<List<Venta>> getVentasDeFecha(@Body Date date);
 
-    @GET("venta/get-ventas-de-fecha-by-id/{id}")
+    @GET("pos/venta/{id}/get-ventas-de-fecha-by-id")
     public Call<List<Venta>> getVentasDeFecha(@Path("id") Object idVenta);
 
-    @POST("venta/cambiar-turno/{id}")
-    public Call<Venta> cambiarTurno(@Path("id") Object idTurnoTerminar, @Body Personal user);
+    @POST("pos/venta/{id}/cambiar-turno")
+    public Call<Venta> cambiarTurno(@Path("id") Object idTurnoTerminar);
 
-    @GET("venta/can-open-nuevo-turno")
+    @GET("pos/venta/can-open-nuevo-turno")
     public Call<Boolean> canOpenNuevoTurno(@Body Date fecha);
 
-    @GET("venta/can-open-nuevo-turno-by-id/{id}")
+    @GET("pos/venta/{id}/can-open-nuevo-turno-by-id")
     public Call<Boolean> canOpenNuevoTurno(@Path("id") Object idVenta);
 
-    @GET("venta/can-reabrir-venta-by-id/{id}")
+    @GET("pos/venta/{id}/can-reabrir-venta-by-id")
     public Call<Boolean> canReabrirVenta(@Path("id") Object idVenta);
 
-    @POST("venta/create-new-orden/{id}")
-    public Call<Orden> createNewOrden(@Path("id") Object idVenta, @Body Mesa mesa);
+    @POST("pos/venta/{id}/create-new-orden/{idMesa}")
+    public Call<Orden> createNewOrden(@Path("id") Object idVenta, @Path("idMesa") Object idMesa);
 
-    @GET("venta/get-autorizos-total-producto/{id}")
-    public Call<Float> getAutorizosTotalDelProducto(@Path("id") Object idVenta, @Body ProductoVenta productoVenta);
+    @GET("pos/venta/{id}/get-autorizos-total-producto/{idProdVenta}")
+    public Call<Float> getAutorizosTotalDelProducto(@Path("id") Object idVenta, @Path("idProdVenta") Object idProductoVenta);
 
-    @GET("venta/get-autorizos-total-producto/{id}")
+    @GET("pos/venta/{id}/get-autorizos-total-producto")
     public Call<Float> getGastoTotalDeInsumo(@Path("id") Object idVenta, @Body IpvRegistro ipvRegistro);
 
-    @GET("venta/get-ordenes-activas/{id}")
+    @GET("pos/venta/{id}/get-ordenes-activas")
     public Call<List<Orden>> getOrdenesActivas(@Path("id") Object idVenta);
 
-    @GET("venta/get-pago-trabajador/{id}/{dividirEntre}")
-    public Call<Float> getPagoTrabajador(@Path("id") Object idVenta, @Path("dividirEntre") Object dividirEntre, @Body Personal personal);
+    @GET("pos/venta/{id}/get-pago-trabajador/{dividirEntre}/{codPersonal}")
+    public Call<Float> getPagoTrabajador(@Path("id") Object idVenta, @Path("dividirEntre") Object dividirEntre, @Path("codPersonal") String codPersonal);
 
-    @GET("venta/get-propina-trabajador/{id}")
-    public Call<Float> getPropinaTrabajador(@Path("id") Object idVenta, @Body Personal personal);
+    @GET("pos/venta/{id}/get-propina-trabajador/{codPersonal")
+    public Call<Float> getPropinaTrabajador(@Path("id") Object idVenta, @Path("codPersonal") String codPersonal);
 
-    public Call<String> getTotalGastadoInsumos(@Path("id") Object idVenta);
-
-    @GET("venta/get-venta-resumen/{id}")
+    @GET("pos/venta/{id}/get-venta-resumen")
     public Call<VentaResumenWrapper> getVentaResumen(@Path("id") Object idVenta);
 
-    @GET("venta/get-venta-total-producto/{id}")
+    @GET("pos/venta/{id}/get-venta-total-producto")
     public Call<Float> getVentaTotalDelProducto(@Path("id") Object idVenta, @Body ProductoVenta productoVenta);
 
-    @PUT("venta/get-importar-venta/{id}")
+    @PUT("pos/venta/{id}/get-importar-venta")
     public Call<File> importarVenta(@Body File file);
 
-    @POST("venta/print-gastos-casa/{id}")
+    @POST("pos/venta/{id}/print-gastos-casa")
     public Call<Float> printGastosCasa(@Path("id") Object idVenta);
 
-    @POST("venta/print-pago-por-venta-personal/{id}")
+    @POST("pos/venta/{id}/print-pago-por-venta-personal")
     public Call<Float> printPagoPorVentaPersonal(@Path("id") Object idVenta, @Body String personal, @Body boolean printValores);
 
-    @POST("venta/print-comision-porcentual-resumen/{id}")
+    @POST("pos/venta/{id}/print-comision-porcentual-resumen")
     public Call<Float> printComisionPorcentualResumen(@Path("id") Object idVenta, @Body String mesa);
 
-    @POST("venta/print-z/{id}")
+    @POST("pos/venta/{id}/print-z")
     public Call<Float> printZ(@Path("id") Object idVenta);
 
-    @POST("venta/reabrir-ventas/{id}")
+    @POST("pos/venta/{id}/reabrir-ventas")
     public Call<Float> reabrirVentas(@Path("id") Object idVenta);
 
-    @POST("venta/terminar-ventas/{id}")
+    @POST("pos/venta/{id}/terminar-ventas")
     public Call<Float> terminarVentas(@Path("id") Object idVenta);
 
-    @POST("venta/terminar-y-exportar/{id}")
+    @POST("pos/venta/{id}/terminar-y-exportar")
     public Call<Float> terminarYExportar(@Path("id") Object idVenta, @Body File file);
 
-    @POST("venta/print-mesa-resumen/{id}")
-    public Call<Float> printMesaResumen(@Path("id") Object idVenta, @Body String mesa);
+    @POST("pos/venta/{id}/print-mesa-resumen")
+    public Call<Float> printMesaResumen(@Path("id") Object idVenta, @Body String codMesa);
 
-    @POST("venta/print-area-resumen/{id}")
-    public Call<Float> printAreaResumen(@Path("id") Object idVenta, @Body String area);
+    @POST("pos/venta/{id}/print-area-resumen")
+    public Call<Float> printAreaResumen(@Path("id") Object idVenta, @Body String codArea);
 
-    @POST("venta/print-personal-resumen-row/{id}")
-    public Call<Float> printPersonalResumenRow(@Path("id") Object idVenta, @Body String personal, @Body boolean printValores);
+    @POST("pos/venta/{id}/print-personal-resumen-row")
+    public Call<Float> printPersonalResumenRow(@Path("id") Object idVenta, @Body String codPersonal, @Body boolean printValores);
 
-    @POST("venta/print-cocina-resumen/{id}/{idCocina}")
+    @POST("pos/venta/{id}/print-cocina-resumen/{idCocina}")
     public Call<Float> printCocinaResumen(@Path("id") Object idVenta, @Path("idCocina") Object idCocina, @Body boolean printValores);
 
-    @GET("venta/get-venta-resources/{id}")
-    public Call<VentaResourcesWrapper> getVentaResources(@Path("id") Object idVenta, @Body String codArea, @Body String codCocina, @Body String codPersonal, @Body String codMesa);
+    @GET("pos/venta/{id}/get-venta-resources")
+    public Call<VentaResourcesWrapper> getVentaResources(@Path("id") Object idVenta);
 
-    @GET("venta/get-resumen-por-mesa/{id}")
-    public Call<List<ProductovOrden>> getResumenPorMesa(@Path("id") Object idVenta, @Body String mesa);
+    @GET("pos/venta/{id}/get-resumen-por-mesa")
+    public Call<List<ProductovOrden>> getResumenPorMesa(@Path("id") Object idVenta, @Body String codMesa);
 
-    @GET("venta/get-resumen-por-personal/{id}")
-    public Call<List<ProductovOrden>> getResumenPorPersonal(@Path("id") Object idVenta, @Body String personal);
+    @GET("pos/venta/{id}/get-resumen-por-personal")
+    public Call<List<ProductovOrden>> getResumenPorPersonal(@Path("id") Object idVenta, @Body String codPersonal);
 
-    @GET("venta/get-resumen-por-cocina/{id}")
-    public Call<List<ProductovOrden>> getResumenPorCocina(@Path("id") Object idVenta, @Body String cocina);
+    @GET("pos/venta/{id}/get-resumen-por-cocina")
+    public Call<List<ProductovOrden>> getResumenPorCocina(@Path("id") Object idVenta, @Body String codCocina);
 
-    @GET("venta/get-resumen-por-area/{id}")
-    public Call<List<ProductovOrden>> getResumenPorArea(@Path("id") Object idVenta, @Body String area);
+    @GET("pos/venta/{id}/get-resumen-por-area")
+    public Call<List<ProductovOrden>> getResumenPorArea(@Path("id") Object idVenta, @Body String codArea);
 
-    @GET("venta/get-total-resumen-por-mesa/{id}")
-    public Call<String> getTotalResumenMesa(@Path("id") Object idVenta, @Body String mesa);
+    @GET("pos/venta/{id}/get-total-resumen-por-mesa")
+    public Call<String> getTotalResumenMesa(@Path("id") Object idVenta, @Body String codMesa);
 
-    @GET("venta/get-total-resumen-por-personal/{id}")
-    public Call<String> getTotalResumenDependiente(@Path("id") Object idVenta, @Body String personal);
+    @GET("pos/venta/{id}/get-total-resumen-por-personal")
+    public Call<String> getTotalResumenDependiente(@Path("id") Object idVenta, @Body String codPersonal);
 
-    @GET("venta/get-total-resumen-por-cocina/{id}")
-    public Call<String> getTotalResumenCocina(@Path("id") Object idVenta, @Body String cocina);
+    @GET("pos/venta/{id}/get-total-resumen-por-cocina")
+    public Call<String> getTotalResumenCocina(@Path("id") Object idVenta, @Body String codCocina);
 
-    @GET("venta/get-total-resumen-por-area/{id}")
-    public Call<String> getTotalResumenArea(@Path("id") Object idVenta, @Body String area);
+    @GET("pos/venta/{id}/get-total-resumen-por-area")
+    public Call<String> getTotalResumenArea(@Path("id") Object idVenta, @Body String codArea);
 
 }

@@ -23,6 +23,7 @@ import com.jobits.pos.core.domain.models.Venta;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -54,8 +55,8 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public Venta cambiarTurno(int idTurnoATerminar, Personal user) {
-        return handleCall(service.cambiarTurno(idTurnoATerminar, user));
+    public Venta cambiarTurno(int idTurnoATerminar) {
+        return handleCall(service.cambiarTurno(idTurnoATerminar));
     }
 
     @Override
@@ -74,12 +75,12 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public Orden createNewOrden(int codVenta, Mesa mesa) {
+    public Orden createNewOrden(int codVenta, String mesa) {
         return handleCall(service.createNewOrden(codVenta, mesa));
     }
 
     @Override
-    public float getAutorizosTotalDelProducto(ProductoVenta productoVenta, int codVenta) {
+    public float getAutorizosTotalDelProducto(String productoVenta, int codVenta) {
         return handleCall(service.getAutorizosTotalDelProducto(codVenta, productoVenta));
     }
 
@@ -94,13 +95,13 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public Float getPagoTrabajador(Personal personal, int codVenta, int dividirEntre) {
-        return handleCall(service.getPagoTrabajador(codVenta, dividirEntre, personal));
+    public Float getPagoTrabajador(String codPersonal, int codVenta, int dividirEntre) {
+        return handleCall(service.getPagoTrabajador(codVenta, dividirEntre, codPersonal));
     }
 
     @Override
-    public Float getPropinaTrabajador(Personal personal, int codVenta) {
-        return handleCall(service.getPropinaTrabajador(codVenta, personal));
+    public Float getPropinaTrabajador(String codPersonal, int codVenta) {
+        return handleCall(service.getPropinaTrabajador(codVenta, codPersonal));
     }
 
     @Override
@@ -116,7 +117,7 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     @Override
     public Venta inicializarVentas(Date fecha, boolean nuevaVenta) {
         var map = new HashMap<String, Object>();
-        map.put("fecha", LocalDate.of(fecha.getYear() + 1900, fecha.getMonth(), fecha.getDate()));
+        map.put("fecha", fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         map.put("nuevo-turno", nuevaVenta);
         return handleCall(service.inicializarVentas(TENNANT_TOKEN, TOKEN, map));
     }
@@ -262,8 +263,8 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public VentaResourcesWrapper getVentaResources(int codVenta, String codArea, String codCocina, String codPersonal, String codMesa) {
-        return handleCall(service.getVentaResources(codVenta, codArea, codCocina, codPersonal, codMesa));
+    public VentaResourcesWrapper getVentaResources(int codVenta) {
+        return handleCall(service.getVentaResources(codVenta));
     }
 
 }
