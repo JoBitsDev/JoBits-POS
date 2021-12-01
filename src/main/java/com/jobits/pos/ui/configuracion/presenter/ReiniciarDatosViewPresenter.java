@@ -25,6 +25,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
+import com.jobits.pos.utils.utils;
 
 /**
  *
@@ -97,7 +98,7 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea reiniciar los datos del IPV seleccionado?",
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                Venta venta = selectFecha(ventaService.getVentasDeFecha(getBean().getFecha_venta_seleccionada()));
+                Venta venta = selectFecha(ventaService.getVentasDeFecha(utils.dateToLocalDate(getBean().getFecha_venta_seleccionada())));
                 if (venta != null) {
                     Application.getInstance().getBackgroundWorker().processInBackground("Reiniciando IPVs...", () -> {
                         ipvService.reiniciarIPV(getBean().getCocina_seleccionada(), venta);

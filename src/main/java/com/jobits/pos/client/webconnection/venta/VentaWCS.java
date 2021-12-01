@@ -20,6 +20,7 @@ import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.time.LocalDate;
@@ -45,7 +46,7 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public List<Venta> getVentasDeFecha(Date date) {
+    public List<Venta> getVentasDeFecha(LocalDate date) {
         return handleCall(service.getVentasDeFecha(date));
     }
 
@@ -60,7 +61,7 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public boolean canOpenNuevoTurno(Date fecha) {
+    public boolean canOpenNuevoTurno(LocalDate fecha) {
         return handleCall(service.canOpenNuevoTurno(fecha));
     }
 
@@ -85,8 +86,8 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public Float getGastoTotalDeInsumo(IpvRegistro i, int codVenta) {
-        return handleCall(service.getGastoTotalDeInsumo(codVenta, i));
+    public Float getGastoTotalDeInsumo(String c, String in, int codVenta) {
+        return handleCall(service.getGastoTotalDeInsumo(codVenta, c, in));
     }
 
     @Override
@@ -106,20 +107,20 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
 
     @Override
     public float getVentaTotalDelProducto(ProductoVenta productoVenta, int codVenta) {
-        return handleCall(service.getVentaTotalDelProducto(codVenta, productoVenta));
+        return handleCall(service.getVentaTotalDelProducto(codVenta, productoVenta.getCodigoProducto()));
     }
 
     @Override
     public void importarVenta(File file) {
-        handleCall(service.importarVenta(file));
+        handleCall(service.importarVenta(file.getAbsolutePath()));//TODO; esto no pincha
     }
 
     @Override
-    public Venta inicializarVentas(Date fecha, boolean nuevaVenta) {
+    public Venta inicializarVentas(LocalDate fecha, boolean nuevaVenta) {
         var map = new HashMap<String, Object>();
-        map.put("fecha", fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        map.put("fecha", fecha);
         map.put("nuevo-turno", nuevaVenta);
-        return handleCall(service.inicializarVentas(TENNANT_TOKEN, TOKEN, map));
+        return handleCall(service.inicializarVentas(map));
     }
 
     @Override
@@ -154,7 +155,7 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
 
     @Override
     public void terminarYExportar(File file, int codVenta) {
-        handleCall(service.terminarYExportar(codVenta, file));
+        handleCall(service.terminarYExportar(codVenta, file.getAbsolutePath()));
     }
 
     @Override

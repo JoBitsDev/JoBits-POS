@@ -21,6 +21,7 @@ import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
+import com.jobits.pos.utils.utils;
 import java.text.ParseException;
 import java.util.Optional;
 
@@ -73,7 +74,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                                 if (ret.get().isEmpty() || ret.get().isBlank()) {
                                     ventaIniciada = vService.inicializarVentas(null, false);
                                 } else {
-                                    ventaIniciada = vService.inicializarVentas(R.DATE_FORMAT.parse(ret.get()), false);
+                                    ventaIniciada = vService.inicializarVentas(utils.dateToLocalDate(R.DATE_FORMAT.parse(ret.get())), false);
                                 }
                                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
                                         new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));

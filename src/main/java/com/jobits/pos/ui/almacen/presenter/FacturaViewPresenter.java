@@ -341,12 +341,12 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                     if (getBean().getCausa_rebaja() == null || getBean().getCausa_rebaja().equals("")) {
                         JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Introduca la Causa de Rebaja");
                     } else {
-                        TransaccionSimple transaccionRebaja = 
-                                new TransaccionSimple(
-                                getBean().getInsumo_selecionado(),
-                                getBean().getCantidad_entrada(),
-                                getBean().getCausa_rebaja(),
-                                getBean().isRebaja_merma());
+                        TransaccionSimple transaccionRebaja
+                                = new TransaccionSimple(
+                                        getBean().getInsumo_selecionado(),
+                                        getBean().getCantidad_entrada(),
+                                        getBean().getCausa_rebaja(),
+                                        getBean().isRebaja_merma());
                         getBean().getLista_elementos().add(transaccionRebaja);
                         setDefaultValues(currentOperation, false);
                     }
@@ -444,7 +444,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     }
 
     private Integer selectIdFecha(Date fecha) {
-        List<Venta> list = VentaDAO.getInstance().find(fecha);
+        List<Venta> list = VentaDAO.getInstance().find(utils.dateToLocalDate(fecha));
         if (!list.isEmpty()) {
             if (list.size() > 1) {
                 JList<Venta> jList = new JList<>(list.toArray(new Venta[list.size()]));
