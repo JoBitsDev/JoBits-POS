@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenListService;
+import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
@@ -70,7 +70,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private IPVService service;
     private PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
-    private AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
+    private AlmacenManageService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
     private VentaDetailService ventaService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
     private InsumoService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
 
@@ -399,7 +399,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onNuevoPedido() {
         PedidoIpvVentasService pedidoService = PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class);
-        AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
+        AlmacenManageService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
         NavigationService.getInstance().navigateTo(IPVPedidoVentasView.VIEW_NAME,
                 new IPVPedidoVentasViewPresenter(pedidoService, almacenService,
                         getBean().getPunto_elaboracion_seleccionado(),

@@ -7,7 +7,7 @@ package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.root101.swing.material.standards.MaterialIcons;
-import com.jobits.pos.controller.almacen.AlmacenListService;
+import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.controller.venta.VentaDetailService;
@@ -36,7 +36,7 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
     public static final String ACTION_REINICIAR_ALMACEN = "Reiniciar Almacen";
     public static final String ACTION_REINICIAR_IPV = "Reiniciar IPV";
 
-    AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
+    AlmacenManageService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
     LogInService loginService = PosDesktopUiModule.getInstance().getImplementation(LogInService.class);
     IPVService ipvService = PosDesktopUiModule.getInstance().getImplementation(IPVService.class);
     PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);

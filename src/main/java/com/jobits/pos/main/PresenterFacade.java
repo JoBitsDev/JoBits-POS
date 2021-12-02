@@ -6,7 +6,6 @@
 package com.jobits.pos.main;
 
 import com.jobits.pos.client.webconnection.login.model.UbicacionService;
-import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
@@ -202,7 +201,6 @@ public class PresenterFacade {
                 return new VentaStatisticsViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaCalendarResumeUseCase.class));
             case AlmacenMainView.VIEW_NAME:
                 return new AlmacenViewPresenter(
-                        PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
                         PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class));
             case FacturaView.VIEW_NAME:
                 return new FacturaViewPresenter(PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class), null);
@@ -247,7 +245,7 @@ public class PresenterFacade {
             case IPVPedidoVentasView.VIEW_NAME:
                 return new IPVPedidoVentasViewPresenter(
                         PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class),
-                        PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
+                        PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class),
                         null, null, new ArrayList<>());
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);

@@ -7,6 +7,7 @@ package com.jobits.pos.ui.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
+import com.jobits.pos.client.webconnection.almacen.AlmacenWCS;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
 import com.jobits.pos.client.webconnection.area.AreaVentaWCS;
 import com.jobits.pos.client.webconnection.area.MesaWCS;
@@ -26,6 +27,7 @@ import com.jobits.pos.client.webconnection.puntoelaboracion.PuntoElaboracionWCS;
 import com.jobits.pos.client.webconnection.trabajadores.PersonalWCS;
 import com.jobits.pos.client.webconnection.trabajadores.PuestoTrabajoWCS;
 import com.jobits.pos.client.webconnection.venta.VentaWCS;
+import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.areaventa.AreaVentaService;
 import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
@@ -67,6 +69,7 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         //
         //Core
         //
+        bind(AlmacenManageService.class).to(AlmacenWCS.class).in(Scopes.SINGLETON);
         bind(ProductoVentaService.class).to(ProductoVentaWCS.class).in(Scopes.SINGLETON);
         bind(PuntoElaboracionService.class).to(PuntoElaboracionWCS.class).in(Scopes.SINGLETON);
         bind(InsumoService.class).to(InsumoWCS.class).in(Scopes.SINGLETON);
@@ -81,7 +84,7 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         //Ventas
         //
         bind(VentaDetailService.class).to(VentaWCS.class).in(Scopes.SINGLETON);
-        bind(VentaResumenUseCase.class).to(VentaResumenUseCase.class).in(Scopes.SINGLETON);
+        bind(VentaResumenUseCase.class).to(VentaWCS.class).in(Scopes.SINGLETON);
 
     }
 
