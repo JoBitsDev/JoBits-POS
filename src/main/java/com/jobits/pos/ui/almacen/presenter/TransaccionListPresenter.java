@@ -5,7 +5,7 @@
  */
 package com.jobits.pos.ui.almacen.presenter;
 
-import com.jobits.pos.controller.almacen.TransaccionListService;
+import com.jobits.pos.controller.almacen.TransaccionService;
 import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.TransaccionListView;
@@ -23,12 +23,12 @@ import javax.swing.JOptionPane;
  */
 public class TransaccionListPresenter extends AbstractListViewPresenter<TransaccionListModel> {
 
-    TransaccionListService service;
+    TransaccionService service;
     public static final String ACTION_IMPRIMIR_TRANSACCIONES = "";
     public static final String ACTION_MOSTRAR_MERMAS = "Mostrar Mermas";
     public static final String ACTION_CERRAR_POPUP = "Cerrar";
 
-    public TransaccionListPresenter(TransaccionListService service, Almacen almacen) {
+    public TransaccionListPresenter(TransaccionService service, Almacen almacen) {
         super(new TransaccionListModel(), TransaccionListView.VIEW_NAME);
         this.service = service;
         getBean().setAlmacen(almacen);
@@ -85,7 +85,7 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
     @Override
     protected void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(service.findAllByAlmacen(getBean().getAlmacen()));
+        getBean().getLista_elementos().addAll(service.findAllByAlmacen(getBean().getAlmacen().getCodAlmacen()));
     }
 
     private void onShowMermasClick() {
@@ -96,9 +96,9 @@ public class TransaccionListPresenter extends AbstractListViewPresenter<Transacc
         getBean().addPropertyChangeListener(PROP_SHOW_MERMAS, (PropertyChangeEvent evt) -> {
             getBean().getLista_elementos().clear();
             if ((boolean) evt.getNewValue()) {
-                getBean().getLista_elementos().addAll(service.findMermasByAlmacen(getBean().getAlmacen()));
+                getBean().getLista_elementos().addAll(service.findMermasByAlmacen(getBean().getAlmacen().getCodAlmacen()));
             } else {
-                getBean().getLista_elementos().addAll(service.findAllByAlmacen(getBean().getAlmacen()));
+                getBean().getLista_elementos().addAll(service.findAllByAlmacen(getBean().getAlmacen().getCodAlmacen()));
             }
         });
     }

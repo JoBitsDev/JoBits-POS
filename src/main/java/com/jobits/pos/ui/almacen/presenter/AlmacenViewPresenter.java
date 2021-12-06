@@ -7,7 +7,7 @@ package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.almacen.TransaccionListService;
+import com.jobits.pos.controller.almacen.TransaccionService;
 import com.jobits.pos.controller.insumo.InsumoService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -116,7 +116,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onTransacciones() {
-        TransaccionListService transaccionService = PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class);
+        TransaccionService transaccionService = PosDesktopUiModule.getInstance().getImplementation(TransaccionService.class);
         NavigationService.getInstance().navigateTo(TransaccionListView.VIEW_NAME,
                 new TransaccionListPresenter(transaccionService, getBean().getElemento_seleccionado()), DisplayType.POPUP);
         refreshState();

@@ -9,7 +9,6 @@ import com.jobits.pos.client.webconnection.login.model.UbicacionService;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
-import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.core.repo.impl.MesaDAO;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
@@ -220,8 +219,6 @@ public class PresenterFacade {
                 return new AutorizoViewPresenter(null);
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(null);
-            case TransaccionListView.VIEW_NAME:
-                return new TransaccionListPresenter(PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class), null);
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
             case ClientesListView.VIEW_NAME:
