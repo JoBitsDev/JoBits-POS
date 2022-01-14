@@ -155,7 +155,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
     @Override
     public Optional refreshState() {
         if (mesaSeleccionada != null) {
-            getBean().setLista_elementos(seccionService.findSeccionesByMesa(mesaSeleccionada));//TODO: pifia logica en los presenters
+            getBean().setLista_elementos(seccionService.findSeccionesByMesa(mesaSeleccionada.getCodMesa()));//TODO: pifia logica en los presenters
             getBean().setElemento_seleccionado(null);
             getBean().setListaProductos(new ArrayList());
             onMostrarSeccionClick();
