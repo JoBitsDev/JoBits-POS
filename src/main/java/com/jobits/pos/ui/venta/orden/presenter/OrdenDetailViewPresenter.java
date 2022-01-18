@@ -193,7 +193,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private void onSetAutorizoClick() {
         getBean().setEs_autorizo(!getBean().isEs_autorizo());
         ordenService.setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
-        firePropertyChange(PROP_CHANGES, null, null);
+        firePropertyChange(PROP_CHANGES, null, 1);
     }
 
     private void onSetDomicilioClick() {
@@ -476,6 +476,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         m = selectMesa(list);
         ordenService.moverA(getBean().getId_orden(), m.getCodMesa());
         refreshState();
+        firePropertyChange(PROP_CHANGES, null, 1);
     }
 
     private void addListeners() {
