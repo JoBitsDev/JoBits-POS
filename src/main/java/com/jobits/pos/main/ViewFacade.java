@@ -6,10 +6,8 @@
 package com.jobits.pos.main;
 
 import com.jobits.pos.ui.about.AcercaDeView;
-import com.jobits.pos.ui.mainmenu.MainMenuView;
-import com.jobits.ui.swing.View;
-import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
+import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
@@ -18,54 +16,55 @@ import com.jobits.pos.ui.areaventa.AreaVentaListView;
 import com.jobits.pos.ui.areaventa.MesaDetailView;
 import com.jobits.pos.ui.autorizo.AutorizoView;
 import com.jobits.pos.ui.backup.BackUpView;
+import com.jobits.pos.ui.cartas.CartasSeccionView;
+import com.jobits.pos.ui.cartas.SeccionDetailView;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
 import com.jobits.pos.ui.clientes.ClientesListView;
+import com.jobits.pos.ui.clientes.DomicilioView;
+import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
+import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
+import com.jobits.pos.ui.clientes.presenter.DomicilioViewPresenter;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
+import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
 import com.jobits.pos.ui.configuracion.ConfiguracionView;
 import com.jobits.pos.ui.dashboard.DashBoardView;
 import com.jobits.pos.ui.imagemanager.ImageManagerView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
+import com.jobits.pos.ui.login.ChangeUserView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
+import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.productos.ProductoVentaDetailView;
 import com.jobits.pos.ui.productos.ProductoVentaListView;
 import com.jobits.pos.ui.puntoelaboracion.PuntoElaboracionListView;
-import com.jobits.pos.ui.cartas.CartasSeccionView;
-import com.jobits.pos.ui.cartas.SeccionDetailView;
-import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
-import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
-import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
-import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
-import com.jobits.pos.ui.login.ChangeUserView;
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reserva.ReservaOrdenDetailView;
-import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
 import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
 import com.jobits.pos.ui.reserva.presenter.ReservaOrdenDetailViewPresenter;
 import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
+import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
 import com.jobits.pos.ui.reserva.ubicaciones.UbicacionDetailView;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalListView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoDetailView;
 import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
-import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.orden.AgregarProductoView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
-import com.jobits.pos.ui.clientes.DomicilioView;
-import com.jobits.pos.ui.clientes.presenter.DomicilioViewPresenter;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import com.jobits.pos.ui.venta.resumen.ResumenMainview;
 import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
+import com.jobits.ui.swing.View;
 
 /**
  *
@@ -136,8 +135,6 @@ public class ViewFacade {
                 return new VentaDetailView((VentaDetailViewPresenter) p);
             case MesaDetailView.VIEW_NAME:
                 return new MesaDetailView(p);
-            case OrdenDetailFragmentView.VIEW_NAME:
-                return new OrdenDetailFragmentView(p);
             case BackUpView.VIEW_NAME:
                 return new BackUpView(p);
             case VentaCalendarView.VIEW_NAME:

@@ -20,14 +20,9 @@ import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import static com.jobits.pos.ui.presenters.AbstractViewPresenter.ACTION_REFRESH_STATE;
-import com.jobits.pos.ui.productos.ProductoVentaDetailView;
-import com.jobits.pos.ui.utils.PopUpDialog;
-import com.jobits.pos.ui.venta.orden.OrdenDetailFragmentView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 
 import com.jobits.ui.components.MaterialComponentsFactory;
-import com.root101.swing.derivable_icons.DerivableIcon;
-import com.root101.swing.material.standards.MaterialIcons;
 import java.awt.BorderLayout;
 import java.util.HashMap;
 import java.util.Map;
