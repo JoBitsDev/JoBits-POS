@@ -20,6 +20,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.hook.escandallo.ProductoEscandalloHook;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.recursos.R;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.reserva.core.module.ReservaCoreModule;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
@@ -32,6 +33,8 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
+import com.jobits.pos.utils.utils;
+import com.jobits.ui.swing.LongProcessActionService;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.Arrays;
@@ -56,7 +59,7 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     public static final String ACTION_AUTENTICAR = "Autenticar";
 
     public static final String ACTION_EDITAR_UBICACION = "Editar ubicacion";
-    
+
     public static final String PROP_READY_TO_LOGIN = "Listo para logearse";
 
     LogInService service;
@@ -74,24 +77,32 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
     }
 
     private void onAutenticarClick() {
-        String password = getBean().getContrasena();
+        String password = utils.getSHA256(getBean().getContrasena());
+        String passwordPlain = (getBean().getContrasena());
         getBean().setContrasena("");
-        try {
-            new LongProcessActionServiceImpl("Autenticando") {//TODO: internacionalizar
-                @Override
-                protected void longProcessMethod() {
-                    if (service.autenticar(getBean().getNombreUsuario(), password.toCharArray())) {
-                        Application.getInstance().setLoggedUser(service.getUsuarioConectado());
-                        Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
-                        NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
-                                new MainMenuPresenter(new MainMenuController(PersonalDAO.getInstance().find(getBean().getNombreUsuario())))); //TODO revisar eso codigo que no le pertenece a esta clse
-                        RootView.getInstance().getDashboard().getTaskPane().setShrinked(true);
+
+        new LongProcessActionServiceImpl("Autenticando") {//TODO: internacionalizar
+            @Override
+            protected void longProcessMethod() {
+                var configuracionService = PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class);
+                boolean ret = false;
+                try {
+                    ret = service.autenticar(getBean().getNombreUsuario(), password.toCharArray());
+                } catch (IllegalArgumentException ex) {
+                    if ((boolean) configuracionService.getConfiguracion(R.SettingID.GENERAL_AUTENTICACION_PLANA)) {
+                        ret = service.autenticar(getBean().getNombreUsuario(), passwordPlain.toCharArray());
                     }
                 }
-            }.performAction(null);
-        } catch (IllegalArgumentException ex) {
-            Application.getInstance().getNotificationService().notify(ex.getMessage(), TipoNotificacion.ERROR);//PENDING jtext fields pierden focus cuando sale la notificacion
-        }
+                if (ret) {
+                    Application.getInstance().setLoggedUser(service.getUsuarioConectado());
+                    Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
+                    NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
+                            new MainMenuPresenter(new MainMenuController(PersonalDAO.getInstance().find(getBean().getNombreUsuario())))); //TODO revisar eso codigo que no le pertenece a esta clse
+                    RootView.getInstance().getDashboard().getTaskPane().setShrinked(true);
+                }
+            }
+        }.performAction(null);
+
         RootView.getInstance().getStatusBar().refreshView();
         //TODO: poner todos los listeners en los controllers del core
         if (ReservaOrdenListener.getInstance() == null) {
