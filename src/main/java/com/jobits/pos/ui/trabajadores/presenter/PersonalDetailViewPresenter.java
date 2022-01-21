@@ -20,6 +20,8 @@ import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.root101.clean.core.domain.services.ResourceHandler;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -124,10 +126,10 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
 
             if (contrasennaNueva == null || contrasennaNueva.equals("")) {
                 if (contrasennaAntigua != null && !contrasennaAntigua.equals("")) {
-                    personal.setContrasenna(contrasennaAntigua);
+                    personal.setContrasennaPlain(contrasennaAntigua);
                 }
             } else {
-                personal.setContrasenna(contrasennaNueva);
+                personal.setContrasennaPlain(contrasennaNueva);
             }
             if (telefonoMovil == null) {
                 personal.getDatosPersonales().setTelefonoMovil(null);

@@ -485,6 +485,7 @@ public class PedidoCardView extends AbstractViewPanel {
                 getPresenter().getOperation(ACTION_ADD_PRODUCTO_IN_HOT),
                 getPresenter().getOperation(ACTION_SHOW_LOGS),
                 getPresenter().getOperation(ACTION_SET_CLIENTE),
+                getPresenter().getOperation(ACTION_MOVER_A_MESA),
                 getPresenter().getOperation(ACTION_SET_DOMICILIO));
 
         jToggleButtonOptions.addActionListener(
