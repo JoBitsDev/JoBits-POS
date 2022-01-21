@@ -63,7 +63,7 @@ public class Application {
     public static String PROP_LOGGED_USER = "Logged User";
     public static final int MAJOR_VERSION = 3;
     public static final int MINOR_VERSION = 12;
-    public static final int PATCH_VERSION = 1;
+    public static final int PATCH_VERSION = 2;
     public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
     //
     //Log
