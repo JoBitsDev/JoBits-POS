@@ -12,11 +12,14 @@ import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewModel;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
+import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Component;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.JDialog;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
@@ -33,6 +36,7 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
 
     public MesaListView(AbstractViewPresenter presenter) {
         super(presenter);
+        listUpdate();
     }
 
     /**
@@ -47,11 +51,16 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
 
         jPanel3 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jButton1 = MaterialComponentsFactory.Buttons.getLinedButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Listado de mesas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font(".SF NS Text", 1, 24))); // NOI18N
-        setOpaque(false);
+        setMaximumSize(new java.awt.Dimension(700, 600));
+        setMinimumSize(new java.awt.Dimension(700, 600));
+        setPreferredSize(new java.awt.Dimension(700, 600));
+        setSize(new java.awt.Dimension(700, 600));
         setLayout(new java.awt.BorderLayout());
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -63,13 +72,26 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
 
         add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.setOpaque(false);
-        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
-        add(jPanel1, java.awt.BorderLayout.CENTER);
-
         jPanel2.setOpaque(false);
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("Strings"); // NOI18N
+        jButton1.setText(bundle.getString("label_cancelar")); // NOI18N
+        jPanel2.add(jButton1);
+
         add(jPanel2, java.awt.BorderLayout.PAGE_END);
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(700, 600));
+        jScrollPane1.setSize(new java.awt.Dimension(700, 600));
+
+        jPanel1.setAutoscrolls(true);
+        jPanel1.setMaximumSize(new java.awt.Dimension(600, 32767));
+        jPanel1.setMinimumSize(new java.awt.Dimension(700, 300));
+        jPanel1.setPreferredSize(new java.awt.Dimension(700, 300));
+        jPanel1.setSize(new java.awt.Dimension(700, 300));
+        jScrollPane1.setViewportView(jPanel1);
+
+        add(jScrollPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     @Override
@@ -78,6 +100,8 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
                 new SelectionInList<Area>(
                         getPresenter().getModel(MesaListViewModel.PROP_LISTA_AREAS),
                         getPresenter().getModel(MesaListViewModel.PROP_AREA_SELECCIONADA)),"Seleccionar Area");
+        jButton1.setAction(getPresenter().getOperation(MesaListViewPresenter.ACTION_CANCELAR));
+      
     }
 
     @Override
@@ -120,10 +144,12 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<Area> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     private Component createAndAttachButton(Mesa m) {

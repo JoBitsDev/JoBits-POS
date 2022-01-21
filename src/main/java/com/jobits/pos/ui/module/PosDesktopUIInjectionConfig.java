@@ -9,6 +9,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
 import com.jobits.pos.ui.clientes.presenter.ClienteUseCaseRFImpl;
+import com.jobits.pos.usecase.mesa.MesaUseCase;
+import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
 
 /**
  *
@@ -21,8 +23,7 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
 
     @Override
     protected void configure() {
-             //   bind(ClienteUseCase.class).to(ClienteUseCaseRFImpl.class).in(Scopes.SINGLETON);
-
+        bind(MesaUseCase.class).to(MesaUseCaseImpl.class).in(Scopes.SINGLETON);
 
     }
 

@@ -226,7 +226,7 @@ public class PresenterFacade {
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListPresenter(PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class), null);
             case MesaListView.VIEW_NAME:
-                return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
+                return new MesaListViewPresenter();
             case ClientesListView.VIEW_NAME:
                 return new ClientesListViewPresenter();
             case ClientesDetailView.VIEW_NAME:

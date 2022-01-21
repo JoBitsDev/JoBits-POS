@@ -57,6 +57,7 @@ import com.jobits.pos.ui.trabajadores.PuestoTrabajoListView;
 import com.jobits.pos.ui.venta.VentaCalendarView;
 import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
+import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jobits.pos.ui.venta.orden.AgregarProductoView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
@@ -188,6 +189,8 @@ public class ViewFacade {
             case LicenceDialogView.VIEW_NAME:
                 return new LicenceDialogView(
                         Application.getInstance().getLicenceController());
+            case MesaListView.VIEW_NAME:
+                return new MesaListView(p);
 
             default:
                 throw new IllegalArgumentException("Vista no registrada para UID " + viewUniqueName);

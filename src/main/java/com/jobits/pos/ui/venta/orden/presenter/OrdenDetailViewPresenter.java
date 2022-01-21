@@ -29,6 +29,7 @@ import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.clientes.containers.DireccionEnvioDetailContainer;
 import com.jobits.pos.ui.clientes.containers.DomicilioViewContainer;
+import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.utils.utils;
@@ -472,8 +473,10 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     private void onMoveraMesaClick() {
         Mesa m;
-        List<Mesa> list = ordenService.getListaMesasDisponibles();
-        m = selectMesa(list);
+        m = selectMesaNew();
+        if (m == null) {
+            return;
+        }
         ordenService.moverA(getBean().getId_orden(), m.getCodMesa());
         refreshState();
         firePropertyChange(PROP_CHANGES, null, 1);
@@ -542,6 +545,11 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             default:
                 return null;
         }
+    }
+
+    private Mesa selectMesaNew() {
+        var aux = new MesaListViewPresenter();
+        return aux.selectMesa();
     }
 
 }

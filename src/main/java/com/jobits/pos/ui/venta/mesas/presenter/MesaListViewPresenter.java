@@ -6,8 +6,14 @@
 package com.jobits.pos.ui.venta.mesas.presenter;
 
 import com.jobits.pos.controller.venta.OrdenService;
+import com.jobits.pos.cordinator.DisplayType;
+import com.jobits.pos.core.domain.models.Mesa;
+import com.jobits.pos.main.Application;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.venta.VentaDetailView;
+import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jobits.pos.usecase.mesa.MesaUseCase;
 import java.beans.PropertyChangeEvent;
 import java.util.Optional;
@@ -22,24 +28,29 @@ import java.util.Optional;
 public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewModel> {
 
     public static final String ACTION_ABRIR_MESA = "Abrir Mesa";
+    public static final String ACTION_CANCELAR = "Cancelar";
     public static final String ACTION_CAMBIAR_AREA = "Cambiar area";
 
-    private MesaUseCase controller;
+    private MesaUseCase controller = PosDesktopUiModule.getInstance().getImplementation(MesaUseCase.class);
 
-    public MesaListViewPresenter(MesaUseCase controller) {
+    public MesaListViewPresenter() {
         super(new MesaListViewModel());
-        this.controller = controller;
+        addBeanPropertyChangeListener(MesaListViewModel.PROP_AREA_SELECCIONADA, (PropertyChangeEvent evt) -> {
+            if (evt.getNewValue() != null) {
+                onCambiarAreaClick();
+            }
+        });
         getBean().setLista_areas(controller.getListaAreasDisponibles());
         if (!getBean().getLista_areas().isEmpty()) {
             getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
-            onCambiarAreaClick();
+            //onCambiarAreaClick();
         }
-        addBeanPropertyChangeListener(MesaListViewModel.PROP_AREA_SELECCIONADA, (PropertyChangeEvent evt) -> {
-            if (evt.getNewValue() != null) {
-                getBean().setLista_elementos(getBean().getArea_seleccionada().getMesaList());
-            }
-        });
 
+    }
+
+    public Mesa selectMesa() {
+        Application.getInstance().getNavigator().navigateTo(MesaListView.VIEW_NAME, this, DisplayType.POPUP);
+        return getBean().getElemento_seleccionado();
     }
 
     @Override
@@ -51,7 +62,7 @@ public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewMod
                 return Optional.empty();
             }
         });
-        registerOperation(new AbstractViewAction(ACTION_ABRIR_MESA) {
+        registerOperation(new AbstractViewAction(ACTION_CAMBIAR_AREA) {
             @Override
             public Optional doAction() {
                 onCambiarAreaClick();
@@ -59,18 +70,27 @@ public class MesaListViewPresenter extends AbstractViewPresenter<MesaListViewMod
             }
 
         });
+        registerOperation(new AbstractViewAction(ACTION_CANCELAR) {
+            @Override
+            public Optional doAction() {
+                onCancelar();
+                return Optional.empty();
+            }
+        });
     }
 
     private void onAbrirMesaClick() {
-        OrdenService ordenController;
-
         if (getBean().getElemento_seleccionado().isVacia()) {
             //ordenController = new OrdenController(getBean().getElemento_seleccionado());
         } else {
             //ordenController = new OrdenController(getBean().getElemento_seleccionado().getEstado().split(" ")[1]);
         }
-     //   Application.getInstance().getNavigator().navigateTo(OrdenDetailFragmentView.VIEW_NAME, new OrdenDetailViewPresenter(ordenController));
+        Application.getInstance().getNavigator().navigateUp();
 
+    }
+
+    private void onCancelar() {
+        Application.getInstance().getNavigator().navigateUp();
     }
 
     private void onCambiarAreaClick() {
