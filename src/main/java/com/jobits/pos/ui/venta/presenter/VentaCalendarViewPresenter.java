@@ -146,7 +146,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         // }
         try {
             VentaDAO.getInstance().startTransaction();
-            service.destroy(old);
+            service.deleteVenta(old.getId());
             newVenta.setAsistenciaPersonalList(new ArrayList<>());
             newVenta.setFecha(old.getFecha());
             newVenta.setOrdenList(alg.ejecutarAlgoritmo());
@@ -249,12 +249,13 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     private void setYvisibility() {
         boolean visible = true;
         LicenceService controller = PosCoreModule.getInstance().getImplementation(LicenceService.class);
-        switch(controller.getEstadoLicencia(Licence.TipoLicencia.SECUNDARIA)){
+        switch (controller.getEstadoLicencia(Licence.TipoLicencia.SECUNDARIA)) {
             case LicenceController.ERROR_ESCRITURA:
             case LicenceController.ERROR_LECTURA_LICENCIA:
             case LicenceController.LICENCIA_INVALIDA:
             case LicenceController.LICENCIA_NO_ENCONTRADA:
-                visible = false;break;
+                visible = false;
+                break;
         }
         getBean().setY_visible(visible);
     }

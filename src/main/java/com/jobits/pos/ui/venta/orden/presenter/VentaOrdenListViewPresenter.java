@@ -127,16 +127,10 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     private void onCrearOrdenAction() {
-        Mesa m;
-        if (ordenService.validateAddOrden()) {
-            List<Mesa> list = ordenService.getListaMesasDisponibles();
-            m = selectMesaNew();
-        } else {
-            m = ordenService.findMesaCaja();
-        }
+        Mesa m = selectMesaNew();
         Orden newOrden = null;
         if (m != null) {
-            newOrden = ventaService.createNewOrden(codVenta, m);
+            newOrden = ventaService.createNewOrden(codVenta, m.getCodMesa());
         }
         if (newOrden != null) {
             getBean().setElemento_seleccionado(newOrden);

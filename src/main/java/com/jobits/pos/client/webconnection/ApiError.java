@@ -5,6 +5,7 @@
  */
 package com.jobits.pos.client.webconnection;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +17,7 @@ import java.util.Objects;
  * @author Jorge
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiError {
 
     private int status;

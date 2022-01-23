@@ -8,7 +8,6 @@ package com.jobits.pos.ui.venta.orden.presenter;
 import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.jobits.pos.cliente.core.domain.DireccionEnvioDomain;
 import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
-import com.jobits.pos.controller.mesa.MesaService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;

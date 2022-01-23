@@ -266,18 +266,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     private void addListeners() {
         addBeanPropertyChangeListener(AlmacenViewModel.PROP_SEARCH_KEYWORD, (PropertyChangeEvent evt) -> {
             if (evt.getNewValue() != null) {
-                String keyWord = ((String) evt.getNewValue()).toLowerCase();
-                List<InsumoAlmacen> insumoList = new ArrayList<>();
-                List<InsumoAlmacen> temporalLIst = detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado().getCodAlmacen());
-                if (evt.getNewValue().equals("")) {
-                    getBean().setLista_insumos_contenidos(new ArrayListModel<>(temporalLIst));
-                } else {
-                    temporalLIst.stream().filter((insumoAlmacen)
-                            -> (insumoAlmacen.getInsumo().getNombre().toLowerCase().contains(keyWord))).forEachOrdered((insumoAlmacen) -> {
-                        insumoList.add(insumoAlmacen);
-                    });
-                    getBean().setLista_insumos_contenidos(new ArrayListModel<>(insumoList));
-                }
+                onKeywordChange(evt.getNewValue().toString());
             }
         });
         addBeanPropertyChangeListener(AlmacenViewModel.PROP_ELEMENTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
@@ -288,6 +277,22 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             }
         });
 
+    }
+
+    private void onKeywordChange(String search_keyWord) {
+        if (search_keyWord != null) {
+            List<InsumoAlmacen> insumoList = new ArrayList<>();
+            List<InsumoAlmacen> temporalLIst = detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado().getCodAlmacen());
+            if (search_keyWord.equals("")) {
+                getBean().setLista_insumos_contenidos(new ArrayListModel<>(temporalLIst));
+            } else {
+                temporalLIst.stream().filter((insumoAlmacen)
+                        -> (insumoAlmacen.getInsumo().getNombre().toLowerCase().contains(search_keyWord))).forEachOrdered((insumoAlmacen) -> {
+                    insumoList.add(insumoAlmacen);
+                });
+                getBean().setLista_insumos_contenidos(new ArrayListModel<>(insumoList));
+            }
+        }
     }
 
 }
