@@ -50,19 +50,15 @@ public class LoginWCS extends BaseConnection implements LoginService {
      * @throws ServerErrorException si hay error en el servidor.
      * @throws NoConnectionException si no hay coneccion con el servidor.
      */
-    public boolean authenticate(String user, String pass) throws Exception {
+    public boolean authenticate(String user, String pass) {
         initService();
-        Response<Map<String, Object>> ret = loginService.getToken(TENNANT_TOKEN,
-                HTTP_HEADER_BASIC + new CredentialsModel(user, pass).getBase64BasicAuth()).execute();
-        if (ret.isSuccessful()) {
-            TOKEN = ret.body().get("Token").toString();
-            var personal = oMapper.convertValue(ret.body().get("User"), Personal.class);
-            Application.getInstance().setLoggedUser(personal);
-            return true;
-        } else {
-            TOKEN = null;
-            throw new ServerErrorException(converter.convert(ret.errorBody()));
-        }
+        var ret = handleCall(loginService.getToken(TENNANT_TOKEN,
+                HTTP_HEADER_BASIC + new CredentialsModel(user, pass, false).getBase64BasicAuth()));
+        TOKEN = ret.get("Token").toString();
+        var personal = oMapper.convertValue(ret.get("User"), Personal.class);
+        Application.getInstance().setLoggedUser(personal);
+        return true;
+
     }
 
     public String getToken() {
@@ -100,22 +96,12 @@ public class LoginWCS extends BaseConnection implements LoginService {
 
     @Override
     public boolean autenticar(String nombreUsuario, char[] toCharArray) {
-        try {
-            return authenticate(nombreUsuario, new String(toCharArray));
-        } catch (Exception ex) {
-            Logger.getLogger(LoginWCS.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+        return authenticate(nombreUsuario, new String(toCharArray));
     }
 
     @Override
     public boolean autorizar(String usuario, char[] toCharArray) {
-        try {
-            return authenticate(usuario, new String(toCharArray));
-        } catch (Exception ex) {
-            Logger.getLogger(LoginWCS.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+        return authenticate(usuario, new String(toCharArray));
     }
 
     @Override
