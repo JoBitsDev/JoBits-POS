@@ -10,6 +10,7 @@ import com.jobits.pos.client.webconnection.exception.ServerErrorException;
 import com.jobits.pos.client.webconnection.login.LoginService;
 import com.jobits.pos.client.webconnection.login.model.UbicacionModel;
 import com.jobits.pos.client.webconnection.login.model.UbicacionService;
+import com.jobits.pos.controller.configuracion.ConfiguracionService;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
@@ -74,8 +75,8 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                 boolean ret = false;
                 try {
                     ret = service.autenticar(getBean().getNombreUsuario(), password.toCharArray());
-                } catch (IllegalArgumentException ex) {
-                    if ((boolean) configuracionService.getConfiguracion(R.SettingID.GENERAL_AUTENTICACION_PLANA)) {
+                } catch (ServerErrorException ex) {
+                    if (configuracionService.getConfiguracion(R.SettingID.GENERAL_AUTENTICACION_PLANA).getValor() == 1) {
                         ret = service.autenticar(getBean().getNombreUsuario(), passwordPlain.toCharArray());
                     }
                 }
@@ -83,14 +84,12 @@ public class LoginViewPresenter extends AbstractViewPresenter<LoginViewModel> {
                     Application.getInstance().setLoggedUser(service.getUsuarioConectado());
                     Application.getInstance().getNotificationService().notify("Bienvenido", TipoNotificacion.SUCCESS);
                     NavigationService.getInstance().navigateTo(MainMenuView.VIEW_NAME,
-                            new MainMenuPresenter(new MainMenuController(PersonalDAO.getInstance().find(getBean().getNombreUsuario())))); //TODO revisar eso codigo que no le pertenece a esta clse
+                            new MainMenuPresenter()); //TODO revisar eso codigo que no le pertenece a esta clse
                     RootView.getInstance().getDashboard().getTaskPane().setShrinked(true);
+                    RootView.getInstance().getStatusBar().refreshView();
                 }
             }
         }.performAction(null);
-
-        RootView.getInstance().getStatusBar().refreshView();
-     
     }
 
     private void onUbicacionSeleccionadaChanged() {
