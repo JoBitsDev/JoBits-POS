@@ -5,7 +5,6 @@
  */
 package com.jobits.pos.client.webconnection.login.model;
 
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Base64;
@@ -15,12 +14,16 @@ public class CredentialsModel {
     private String username;
     private String password;
 
-    public CredentialsModel() {
+    private CredentialsModel() {
     }
 
     public CredentialsModel(String username, String password) {
+        this(username, password, true);
+    }
+
+    public CredentialsModel(String username, String password, boolean plainPassword) {
         this.username = username;
-        this.password = getSHA256(password);
+        this.password = plainPassword ? getSHA256(password) : password;
     }
 
     public String getUsername() {
