@@ -258,6 +258,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado().getCodAlmacen())));
             getBean().setLista_insumos_disponibles(new ArrayListModel<>(insumoService.findAll()));
             getBean().setSearch_keyWord(getBean().getSearch_keyWord());
+            onKeywordChange(getBean().getSearch_keyWord());
         }
         return Optional.empty();
     }

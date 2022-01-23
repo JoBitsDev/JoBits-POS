@@ -14,6 +14,8 @@ import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.venta.mesas.MesaListView;
+import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collections;
@@ -126,9 +128,16 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
 
     private void onCrearOrdenAction() {
         Mesa m;
-        List<Mesa> list = mesaService.getListaMesasDisponibles();
-        m = selectMesa(list);
-        Orden newOrden = ventaService.createNewOrden(codVenta, m.getCodMesa());
+        if (ordenService.validateAddOrden()) {
+            List<Mesa> list = ordenService.getListaMesasDisponibles();
+            m = selectMesaNew();
+        } else {
+            m = ordenService.findMesaCaja();
+        }
+        Orden newOrden = null;
+        if (m != null) {
+            newOrden = ventaService.createNewOrden(codVenta, m);
+        }
         if (newOrden != null) {
             getBean().setElemento_seleccionado(newOrden);
             onAbrirOrdenAction();
@@ -186,5 +195,10 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
             default:
                 return null;
         }
+    }
+
+    private Mesa selectMesaNew() {
+        var aux = new MesaListViewPresenter();
+        return aux.selectMesa();
     }
 }

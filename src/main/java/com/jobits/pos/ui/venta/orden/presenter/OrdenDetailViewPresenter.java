@@ -5,14 +5,15 @@
  */
 package com.jobits.pos.ui.venta.orden.presenter;
 
-import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.cliente.core.domain.ClienteDomain;
 import com.jobits.pos.cliente.core.domain.DireccionEnvioDomain;
 import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
+import com.jobits.pos.controller.mesa.MesaService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.core.domain.models.DireccionEnvio;
+import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
@@ -26,16 +27,20 @@ import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
-import com.jobits.pos.ui.clientes.DomicilioView;
 import com.jobits.pos.ui.clientes.containers.DireccionEnvioDetailContainer;
 import com.jobits.pos.ui.clientes.containers.DomicilioViewContainer;
+import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
 import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.utils.utils;
 import com.root101.clean.core.domain.services.ResourceHandler;
+import com.root101.swing.material.standards.MaterialIcons;
 import java.beans.PropertyChangeEvent;
+import java.util.List;
 import java.util.Optional;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -63,6 +68,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_SET_PORCIENTO = "Porciento";
     public static String ACTION_SET_DOMICILIO = "Domicilio";
     public static String ACTION_SET_CLIENTE = "Cliente";
+    public static String ACTION_MOVER_A_MESA = "Mover a mesa";
     private String codOrden;
 
     private OrdenService ordenService = PosDesktopUiModule.getInstance().getImplementation(OrdenService.class);
@@ -188,7 +194,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private void onSetAutorizoClick() {
         getBean().setEs_autorizo(!getBean().isEs_autorizo());
         ordenService.setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
-        firePropertyChange(PROP_CHANGES, null, null);
+        firePropertyChange(PROP_CHANGES, null, 1);
     }
 
     private void onSetDomicilioClick() {
@@ -455,6 +461,25 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             }
         }
         );
+        registerOperation(new AbstractViewAction(ACTION_MOVER_A_MESA) {
+            @Override
+            public Optional doAction() {
+                onMoveraMesaClick();
+                return Optional.empty();
+            }
+        }
+        );
+    }
+
+    private void onMoveraMesaClick() {
+        Mesa m;
+        m = selectMesaNew();
+        if (m == null) {
+            return;
+        }
+        ordenService.moverA(getBean().getId_orden(), m.getCodMesa());
+        refreshState();
+        firePropertyChange(PROP_CHANGES, null, 1);
     }
 
     private void addListeners() {
@@ -497,6 +522,34 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             }
         }
         );
+    }
+
+    private Mesa selectMesa(List<Mesa> list) {
+        JComboBox<Mesa> jComboBox1 = new JComboBox<>();
+        jComboBox1.setModel(new DefaultComboBoxModel<>(list.toArray(new Mesa[list.size()])));
+        jComboBox1.setSelectedItem(list.get(0));
+        Object[] options = {"Seleccionar", "Cancelar"};
+        //                     yes            cancel
+        int confirm = JOptionPane.showOptionDialog(
+                null,
+                jComboBox1,
+                "Seleccione una Mesa",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.YES_NO_OPTION,
+                MaterialIcons.LOCATION_ON,
+                options,
+                options[0]);
+        switch (confirm) {
+            case JOptionPane.YES_OPTION:
+                return (Mesa) jComboBox1.getSelectedItem();
+            default:
+                return null;
+        }
+    }
+
+    private Mesa selectMesaNew() {
+        var aux = new MesaListViewPresenter();
+        return aux.selectMesa();
     }
 
 }

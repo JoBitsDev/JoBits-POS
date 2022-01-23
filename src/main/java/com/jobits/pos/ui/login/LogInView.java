@@ -83,15 +83,18 @@ public class LogInView extends AbstractViewPanel {
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 40, 10, 40));
         jPanel1.setAlignmentX(Component.CENTER_ALIGNMENT);
         jPanel1.setAlignmentY(Component.CENTER_ALIGNMENT);
-        jPanel1.setMaximumSize(new java.awt.Dimension(400, 400));
+        jPanel1.setMaximumSize(new java.awt.Dimension(500, 400));
         jPanel1.setMinimumSize(new java.awt.Dimension(270, 300));
-        jPanel1.setPreferredSize(new java.awt.Dimension(400, 400));
+        jPanel1.setPreferredSize(new java.awt.Dimension(500, 400));
         jPanel1.setLayout(new java.awt.GridLayout(3, 1, 0, 20));
 
         jPanelLogo.setBackground(DefaultValues.SECONDARY_COLOR_LIGHT);
         jPanelLogo.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        jPanelLogo.setMaximumSize(new java.awt.Dimension(500, 148));
+        jPanelLogo.setMinimumSize(new java.awt.Dimension(500, 148));
         jPanelLogo.setOpaque(false);
-        jPanelLogo.setPreferredSize(new java.awt.Dimension(220, 96));
+        jPanelLogo.setPreferredSize(new java.awt.Dimension(500, 148));
+        jPanelLogo.setSize(new java.awt.Dimension(500, 148));
         jPanelLogo.setLayout(new java.awt.BorderLayout());
 
         jXLabelUser1.setBackground(new java.awt.Color(153, 255, 255));

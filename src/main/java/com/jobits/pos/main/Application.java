@@ -32,6 +32,7 @@ import com.jobits.ui.themes.impl.SimpleMaterialTheme;
 import com.root101.clean.core.app.services.NotificationService;
 import com.root101.clean.core.app.services.UserResolver;
 import com.root101.clean.core.app.services.UserResolverService;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
@@ -54,6 +55,10 @@ import javax.swing.JFrame;
 public class Application {
 
     public static String PROP_LOGGED_USER = "Logged User";
+    public static final int MAJOR_VERSION = 3;
+    public static final int MINOR_VERSION = 12;
+    public static final int PATCH_VERSION = 2;
+    public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
     //
     //Log
     //
@@ -62,15 +67,6 @@ public class Application {
     private static final String ERR_FILE_PATH = "LOGS/AppLogsErr/";
     private static final String LOG_ERR_FILE_NAME = CURRENT_DATE + ".log";
     private static Application application;
-    private UserResolverService<Personal> userResolver = new UserResolverImpl();
-
-    public static final int MAJOR_VERSION = 3;
-
-    public static final int MINOR_VERSION = 11;
-
-    public static final int PATCH_VERSION = 4;
-
-    public static String RELEASE_VERSION = "Version " + MAJOR_VERSION + "." + MINOR_VERSION + "." + PATCH_VERSION;
 
 //    public static Application createApplication() {
 //        if (application == null) {
@@ -110,6 +106,7 @@ public class Application {
         System.setErr(error);
 
     }
+    private UserResolverService<Personal> userResolver = new UserResolverImpl();
 
     //
     // Name
@@ -219,6 +216,19 @@ public class Application {
         mainWindow.setVisible(true);
         navigator.startNavigation();
     }
+    public void setTheme() {
+        ConfigLoaderService service = new ConfigLoaderController();
+        String themeName = service.getConfigValue("app.theme");
+        if (themeName.equals(ThemeType.MATERIAL.getThemeName())) {
+            ThemeHandler.registerThemeService(new MaterialTheme());
+        } else if (themeName.equals(ThemeType.SIMPLE_MATERIAL.getThemeName())) {
+            ThemeHandler.registerThemeService(new SimpleMaterialTheme());
+//        } else if (themeName.equals(ThemeType.DARK_MATERIAL.getThemeName())) { TODO: en progreso tema oscuro
+//            ThemeHandler.registerThemeService(new DarkMaterialTheme());
+        } else {
+            ThemeHandler.registerThemeService(new NimbusTheme());
+        }
+    }
 
     private void initModules() {
        // DataVersionControlModule.init();
@@ -245,19 +255,6 @@ public class Application {
         AuthorizerHandler.registerAuthorizer(new AuthorizerImpl());
     }
 
-    public void setTheme() {
-        ConfigLoaderService service = new ConfigLoaderController();
-        String themeName = service.getConfigValue("app.theme");
-        if (themeName.equals(ThemeType.MATERIAL.getThemeName())) {
-            ThemeHandler.registerThemeService(new MaterialTheme());
-        } else if (themeName.equals(ThemeType.SIMPLE_MATERIAL.getThemeName())) {
-            ThemeHandler.registerThemeService(new SimpleMaterialTheme());
-//        } else if (themeName.equals(ThemeType.DARK_MATERIAL.getThemeName())) { TODO: en progreso tema oscuro
-//            ThemeHandler.registerThemeService(new DarkMaterialTheme());
-        } else {
-            ThemeHandler.registerThemeService(new NimbusTheme());
-        }
-    }
 
     private void calculateLicenceLeft() {
     }
@@ -265,6 +262,7 @@ public class Application {
     private void setExceptionHandling() {
         Thread.setDefaultUncaughtExceptionHandler((Thread t, Throwable e) -> {
             getNotificationService().showDialog(e.getMessage(), TipoNotificacion.ERROR);
+            com.jobits.pos.core.repo.impl.AbstractRepository.transactionErrorListener.propertyChange(new PropertyChangeEvent(this, "ERROR", 0, 1));
             e.printStackTrace();
         });
     }

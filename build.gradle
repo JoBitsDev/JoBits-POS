@@ -21,7 +21,7 @@ dependencies {
     
     implementation "com.root101.clean:com.root101.clean.core:2.1.6"
     
-    implementation "org.jobits.db:org.jobits.db.versioncontrol:1.1.11"
+    implementation "org.jobits.db:org.jobits.db.versioncontrol:1.1.10"
     
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 

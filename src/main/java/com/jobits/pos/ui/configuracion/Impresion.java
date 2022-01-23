@@ -341,7 +341,7 @@ public class Impresion extends AbstractViewPanel {
                 new ComboBoxAdapter(Arrays.asList("*", "-", "/", "+", "ˆ"),
                         getPresenter().getModel(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR.toString())));
 
-        Bindings.bind(jComboBoxTamannoTicket, new ComboBoxAdapter(Arrays.asList("22", "32", "48"),
+        Bindings.bind(jComboBoxTamannoTicket, new ComboBoxAdapter(Arrays.asList("28", "32", "48"),
                 getPresenter().getModel(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL.toString())));
 
     }

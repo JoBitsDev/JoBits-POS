@@ -9,20 +9,21 @@ import com.jobits.pos.core.repo.MesaRepo;
 import com.jobits.pos.core.repo.impl.AreaDAO;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Mesa;
+import com.jobits.pos.core.repo.impl.MesaDAO;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class MesaUseCaseImpl implements MesaUseCase {
 
-    private MesaRepo repository;
+    private MesaRepo repository = MesaDAO.getInstance();
 
-    public MesaUseCaseImpl(MesaRepo repository) {
-        this.repository = repository;
+    public MesaUseCaseImpl() {
     }
 
     @Override
     public List<Mesa> getListaMesas(Area delArea) {
-        List<Mesa> ret = repository.findFrom(delArea.getCodArea());
+        List<Mesa> ret = new ArrayList<>(repository.findFrom(delArea.getCodArea()));
         Collections.sort(ret, (Mesa o1, Mesa o2) -> {
             Integer cod1 = Integer.parseInt(o1.getCodMesa().substring(2));
             Integer cod2 = Integer.parseInt(o2.getCodMesa().substring(2));
@@ -33,7 +34,7 @@ public class MesaUseCaseImpl implements MesaUseCase {
 
     @Override
     public List<Area> getListaAreasDisponibles() {
-        return AreaDAO.getInstance().findAll();//TODO: pifia esta llamando a una implementacion en la capa de la app
+        return new ArrayList<>(AreaDAO.getInstance().findAll());//TODO: pifia esta llamando a una implementacion en la capa de la app
     }
 
 }

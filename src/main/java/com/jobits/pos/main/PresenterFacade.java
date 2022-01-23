@@ -220,7 +220,7 @@ public class PresenterFacade {
             case ImageManagerView.VIEW_NAME:
                 return new ImageManagerViewPresenter(null);
             case MesaListView.VIEW_NAME:
-                return new MesaListViewPresenter(new MesaUseCaseImpl(MesaDAO.getInstance()));
+                return new MesaListViewPresenter();
             case ClientesListView.VIEW_NAME:
                 return new ClientesListViewPresenter();
             case ClientesDetailView.VIEW_NAME:

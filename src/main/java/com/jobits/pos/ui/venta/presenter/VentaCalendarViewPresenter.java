@@ -5,6 +5,9 @@
  */
 package com.jobits.pos.ui.venta.presenter;
 
+import com.jobits.pos.controller.licencia.LicenceService;
+import com.jobits.pos.controller.licencia.impl.Licence;
+import com.jobits.pos.controller.licencia.impl.LicenceController;
 import com.jobits.pos.core.repo.impl.VentaDAO;
 import com.jobits.pos.core.usecase.algoritmo.Y;
 import com.jobits.pos.controller.venta.OrdenService;
@@ -142,7 +145,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         //   throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
         // }
         try {
-//            service.destroy(old, true);
+            VentaDAO.getInstance().startTransaction();
+            service.destroy(old);
             newVenta.setAsistenciaPersonalList(new ArrayList<>());
             newVenta.setFecha(old.getFecha());
             newVenta.setOrdenList(alg.ejecutarAlgoritmo());
@@ -150,7 +154,6 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             newVenta.setVentagastosPagotrabajadores(VentaDAO1.getValorTotalPagoTrabajadores(newVenta));
             newVenta.setVentagastosGastos((float) 0.0);
             newVenta.setVentaTotal((double) VentaDAO1.getValorTotalVentas(newVenta));
-            VentaDAO.getInstance().startTransaction();
             VentaDAO.getInstance().create(newVenta);
             VentaDAO.getInstance().commitTransaction();
         } catch (Exception e) {
@@ -223,7 +226,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         getBean().setGasto_otros_intervalo(utils.setDosLugaresDecimales((float) gGastos));
         int hora_pico_promedio = VentaDAO1.getModalPickHour(listaVentasTotales);
         getBean().setHora_pico_intervalo(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
-        getBean().setY_visible(service.isYVisible());
+        setYvisibility();
     }
 
     private void addListeners() {
@@ -241,5 +244,18 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     private int calculateMonthOffset() {
         LocalDate date = LocalDate.of(getBean().getYear_seleccionado(), getBean().getMes_seleccionado() + 1, 1);
         return date.getDayOfWeek().getValue() - 1;
+    }
+
+    private void setYvisibility() {
+        boolean visible = true;
+        LicenceService controller = PosCoreModule.getInstance().getImplementation(LicenceService.class);
+        switch(controller.getEstadoLicencia(Licence.TipoLicencia.SECUNDARIA)){
+            case LicenceController.ERROR_ESCRITURA:
+            case LicenceController.ERROR_LECTURA_LICENCIA:
+            case LicenceController.LICENCIA_INVALIDA:
+            case LicenceController.LICENCIA_NO_ENCONTRADA:
+                visible = false;break;
+        }
+        getBean().setY_visible(visible);
     }
 }

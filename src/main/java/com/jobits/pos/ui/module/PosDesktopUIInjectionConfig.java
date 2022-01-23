@@ -42,6 +42,10 @@ import com.jobits.pos.controller.trabajadores.PuestoTrabajoUseCase;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
 import com.jobits.pos.servicios.impresion.ImpresoraService;
+import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
+import com.jobits.pos.ui.clientes.presenter.ClienteUseCaseRFImpl;
+import com.jobits.pos.usecase.mesa.MesaUseCase;
+import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
 
 /**
  *
@@ -54,6 +58,7 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(MesaUseCase.class).to(MesaUseCaseImpl.class).in(Scopes.SINGLETON);
         bind(ReservaUseCase.class).to(ReservaUseCaseRFImpl.class).in(Scopes.SINGLETON);
         bind(AreaVentaService.class).to(AreaVentaWCS.class).in(Scopes.SINGLETON);
         bind(MesaService.class).to(MesaWCS.class).in(Scopes.SINGLETON);

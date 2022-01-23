@@ -9,6 +9,8 @@ import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import com.jobits.ui.utils.MaterialColor;
+import com.root101.swing.material.standards.MaterialIcons;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,12 +34,12 @@ public class FloorTableButton extends JPanel {
     public static final String PROP_CLICK_MESA = "clickMesa";
 
     private final Color COLOR_VACIA = DefaultValues.PRIMARY_COLOR_LIGHT;
-    private final Color COLOR_OCUPADA = Color.YELLOW;
-    private final Color COLOR_OCUPADA_PERSONAL = Color.RED;
+    private final Color COLOR_OCUPADA = MaterialColor.YELLOW_400;
+    private final Color COLOR_OCUPADA_PERSONAL = MaterialColor.RED_600;
     private final Icon 
-            ICONO_VACIA =null,// MaterialIcons.ADD_CIRCLE_OUTLINE.deriveIconTTF(40f),
-            ICONO_OCUPADA = null,//MaterialIcons.BLOCK.deriveIconTTF(40f),
-            ICONO_OCUPADA_PERSONAL = null;//MaterialIcons.DETAILS.deriveIconTTF(40f);
+            ICONO_VACIA = MaterialIcons.ADD_CIRCLE_OUTLINE.deriveIcon(40f),
+            ICONO_OCUPADA = MaterialIcons.BLOCK.deriveIcon(40f),
+            ICONO_OCUPADA_PERSONAL = MaterialIcons.DETAILS.deriveIcon(40f);
 
     public FloorTableButton(Mesa m) {
         super();
@@ -45,14 +47,14 @@ public class FloorTableButton extends JPanel {
         initUI();
         m.addPropertyChangeListener((evt) -> {
             if (evt.getPropertyName().equals(Mesa.PROP_ESTADO)) {
-                updateBackbround();
+                updateBackground();
             }
         });
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(120, 120);//TODO configuracion
+        return new Dimension(150, 150);//TODO configuracion
     }
 
     @Override
@@ -67,7 +69,7 @@ public class FloorTableButton extends JPanel {
 
     public void setM(Mesa m) {
         this.m = m;
-        updateBackbround();
+        updateBackground();
     }
 
     private void initUI() {
@@ -75,7 +77,7 @@ public class FloorTableButton extends JPanel {
         labelMesa = new JLabel();
         labelMesa.setHorizontalAlignment(SwingConstants.CENTER);
         labelOrden = new JLabel();
-        labelOrden.setHorizontalAlignment(SwingConstants.RIGHT);
+        labelOrden.setHorizontalAlignment(SwingConstants.CENTER);
         botonAbrir = MaterialComponentsFactory.Buttons.getOutlinedButton();
         add(labelMesa, BorderLayout.NORTH);
         add(labelOrden, BorderLayout.SOUTH);
@@ -83,13 +85,13 @@ public class FloorTableButton extends JPanel {
         botonAbrir.addActionListener((e) -> {
             firePropertyChange(PROP_CLICK_MESA, null, m);
         });
-        updateBackbround();
+        updateBackground();
     }
 
-    private void updateBackbround() {
+    private void updateBackground() {
         setVisible(m != null);
         if (m != null) {
-            labelMesa.setText("Mesa - " + m.getCodMesa());
+            labelMesa.setText(m.toString());
             labelOrden.setText(m.getEstado());
             if (m.getEstado().equals("vacia")) {
                 setBackground(COLOR_VACIA);

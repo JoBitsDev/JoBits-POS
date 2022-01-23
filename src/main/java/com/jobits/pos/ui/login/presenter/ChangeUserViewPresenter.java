@@ -5,12 +5,17 @@
  */
 package com.jobits.pos.ui.login.presenter;
 
-import com.jobits.pos.client.webconnection.login.LoginService;
+import com.jobits.pos.controller.configuracion.ConfiguracionService;
+import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.recursos.R;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.ui.utils.LongProcessActionServiceImpl;
+import com.jobits.pos.utils.utils;
 import java.util.Optional;
 
 /**
@@ -50,14 +55,25 @@ public class ChangeUserViewPresenter extends AbstractViewPresenter<ChangeUserVie
     }
 
     private void onAgregarClick() {
-        String password = getBean().getPassword();
+        String password = utils.getSHA256(getBean().getPassword());
+        String passwordPlain = (getBean().getPassword());
         getBean().setPassword("");
         if (password != null) {
-            if (service.autenticar(getBean().getUser(), password.toCharArray())) {
+            var configuracionService = PosDesktopUiModule.getInstance().getImplementation(ConfiguracionService.class);
+            boolean ret = false;
+            try {
+                ret = service.autenticar(getBean().getUser(), password.toCharArray());
+            } catch (IllegalArgumentException ex) {
+                if ((boolean) configuracionService.getConfiguracion(R.SettingID.GENERAL_AUTENTICACION_PLANA)) {
+                    ret = service.autenticar(getBean().getUser(), passwordPlain.toCharArray());
+                }
+            }
+            if (ret) {
                 Application.getInstance().setLoggedUser(service.getUsuarioConectado());
                 RootView.getInstance().getStatusBar().refreshView();
                 Application.getInstance().getNavigator().navigateUp();
             }
         }
+
     }
 }
