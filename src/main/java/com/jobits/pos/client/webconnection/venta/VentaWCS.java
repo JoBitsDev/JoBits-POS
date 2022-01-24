@@ -117,7 +117,7 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
 
     @Override
     public Venta inicializarVentas(LocalDate fecha) {
-        return handleCall(service.inicializarVentas(fecha));
+        return handleCall(service.inicializarVentas(fecha == null ? LocalDate.now() : fecha));
     }
 
     @Override
