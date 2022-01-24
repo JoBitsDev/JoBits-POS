@@ -104,7 +104,7 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DayRevi
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getProductoVenta().getNombre();
+                        return pv.getNombreProductoVendido();
                     case 1:
                         return pv.getPrecioVendido();
                     case 2:

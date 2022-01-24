@@ -110,7 +110,7 @@ public class DetailResumenSalarioView extends AbstractListResumenViewPanel<DayRe
                         return Instant.ofEpochMilli(d.getTime()).atZone(ZoneId.systemDefault()).toLocalDate()
                                 .format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
                     case 1:
-                        return p.getPersonal().getUsuario();
+                        return p.getAsistenciaPersonalPK().getPersonalusuario();
                     case 2:
                         if (p.getPago() != null) {
                             return utils.setDosLugaresDecimalesFloat(p.getPago());
