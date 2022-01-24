@@ -72,9 +72,9 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                                                 TipoNotificacion.DIALOG_INPUT);
                                 Venta ventaIniciada;
                                 if (ret.get().isEmpty() || ret.get().isBlank()) {
-                                    ventaIniciada = vService.inicializarVentas(null, false);
+                                    ventaIniciada = vService.inicializarVentas(null);
                                 } else {
-                                    ventaIniciada = vService.inicializarVentas(utils.dateToLocalDate(R.DATE_FORMAT.parse(ret.get())), false);
+                                    ventaIniciada = vService.inicializarVentas(utils.dateToLocalDate(R.DATE_FORMAT.parse(ret.get())));
                                 }
                                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
                                         new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
@@ -87,7 +87,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                     new LongProcessActionServiceImpl("Creando IPVs.........") {
                         @Override
                         protected void longProcessMethod() {
-                            var ventaIniciada = vService.inicializarVentas(null, false);
+                            var ventaIniciada = vService.inicializarVentas(null);
                             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
                                     new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
                         }
@@ -97,7 +97,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                         @Override
                         protected void longProcessMethod() {
                             VentaDetailService control = null;
-                            var ventaIniciada = vService.inicializarVentas(null, false);
+                            var ventaIniciada = vService.inicializarVentas(null);
                             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
                                     new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
                         }

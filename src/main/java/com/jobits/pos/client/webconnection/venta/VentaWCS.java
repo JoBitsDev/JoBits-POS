@@ -116,11 +116,8 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public Venta inicializarVentas(LocalDate fecha, boolean nuevaVenta) {
-        var map = new HashMap<String, Object>();
-        map.put("fecha", fecha);
-        map.put("nuevo-turno", nuevaVenta);
-        return handleCall(service.inicializarVentas(map));
+    public Venta inicializarVentas(LocalDate fecha) {
+        return handleCall(service.inicializarVentas(fecha));
     }
 
     @Override

@@ -37,7 +37,7 @@ import retrofit2.http.Query;
 public interface VentaWCI {
 
     @POST("pos/venta/inicializar")
-    public Call<Venta> inicializarVentas(@Body Map<String, Object> params);
+    public Call<Venta> inicializarVentas(@Body LocalDate fecha);
 
     @GET("pos/venta/list-of-date/{dateISO}")
     public Call<List<Venta>> getVentasDeFecha(@Path("dateISO") LocalDate date);
