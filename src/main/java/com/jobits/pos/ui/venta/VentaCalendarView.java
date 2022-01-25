@@ -110,7 +110,7 @@ public class VentaCalendarView extends AbstractViewPanel {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 2, 18)); // NOI18N
-        jLabel9.setText("Año");
+        jLabel9.setText("AÃ±o");
         jPanel1.add(jLabel9);
 
         jYearChooser1.setOpaque(false);

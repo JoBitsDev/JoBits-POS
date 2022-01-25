@@ -80,7 +80,7 @@ public class DomicilioViewPresenter extends AbstractViewPresenter<DomicilioViewM
         try {
             Float.valueOf(precio_envio);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Precio de envío no válido");
+            throw new IllegalArgumentException("Precio de envÃ­o no vÃ¡lido");
         }
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea continuar?",
