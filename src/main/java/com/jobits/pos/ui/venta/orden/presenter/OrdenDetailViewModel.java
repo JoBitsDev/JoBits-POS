@@ -23,9 +23,6 @@ import javax.swing.ImageIcon;
  */
 public class OrdenDetailViewModel extends AbstractViewModel {
 
-    private List<ProductoVenta> lista_general_productos_venta = new ArrayListModel<>();
-
-    public static final String PROP_LISTA_PRODUCTOS_VENTA = "lista_general_productos_venta";
 
     private ProductoVenta producto_venta_seleccionado = null;
 
@@ -639,28 +636,6 @@ public class OrdenDetailViewModel extends AbstractViewModel {
         ProductoVenta oldProducto_venta_seleccionado = this.producto_venta_seleccionado;
         this.producto_venta_seleccionado = producto_venta_seleccionado;
         firePropertyChange(PROP_PRODUCTO_VENTA_SELECCIONADO, oldProducto_venta_seleccionado, producto_venta_seleccionado);
-    }
-
-    /**
-     * Get the value of lista_general_productos_venta
-     *
-     * @return the value of lista_general_productos_venta
-     */
-    public List<ProductoVenta> getLista_general_productos_venta() {
-        return lista_general_productos_venta;
-    }
-
-    /**
-     * Set the value of lista_general_productos_venta
-     *
-     * @param lista_general_productos_venta new value of
-     * lista_general_productos_venta
-     */
-    public void setLista_general_productos_venta(List<ProductoVenta> lista_general_productos_venta) {
-        List<ProductoVenta> oldLista_productos_venta = this.lista_general_productos_venta;
-        this.lista_general_productos_venta.clear();
-        this.lista_general_productos_venta.addAll(lista_general_productos_venta);
-        firePropertyChange(PROP_LISTA_PRODUCTOS_VENTA, oldLista_productos_venta, lista_general_productos_venta);
     }
 
 }

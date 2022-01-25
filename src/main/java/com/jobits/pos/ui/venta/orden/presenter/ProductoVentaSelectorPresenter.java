@@ -50,7 +50,7 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_ELEMENTO_SELECCIONADO, (PropertyChangeEvent evt) -> {
             Seccion seccion = (Seccion) evt.getNewValue();
             if (seccion != null) {
-                getBean().setListaProductos(service.getProductoBySeccion(seccion.getNombreSeccion()));
+                getBean().setListaProductos(seccion.getProductoVentaList());
             }
         });
         addBeanPropertyChangeListener(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO, (PropertyChangeEvent evt) -> {
@@ -78,33 +78,33 @@ public class ProductoVentaSelectorPresenter extends AbstractViewPresenter<Produc
             if (evt.getNewValue() != null) {
                 List<ProductoVenta> pvList = new ArrayList<>();
                 List<Seccion> secList = new ArrayList<>();
-                List<Seccion> auxList = SeccionDAO.getInstance().findVisibleSecciones(mesaSeleccionada);
+                List<Seccion> auxList = getBean().getLista_elementos();
 
                 auxList.forEach((x) -> {
                     boolean add = false;
-                    for (ProductoVenta pv : service.getProductoBySeccion(x.getNombreSeccion())) {
+                    for (ProductoVenta pv : x.getProductoVentaList()) {
                         if (pv.toString().toLowerCase().contains(getBean().getPv_filtrado().toLowerCase())) {
                             pvList.add(pv);
                             add = true;
                         }
                     }
-                    if (add) {
-                        secList.add(x);
+                        if (add) {
+                            secList.add(x);
+                        }
+                    });
+                    getBean().setLista_elementos(secList);
+                    if (evt.getNewValue().equals("")) {
+                        getBean().setListaProductos(new ArrayList<>());
+                    } else {
+                        getBean().setListaProductos(pvList);
                     }
-                });
-                getBean().setLista_elementos(secList);
-                if (evt.getNewValue().equals("")) {
-                    getBean().setListaProductos(new ArrayList<>());
                 } else {
-                    getBean().setListaProductos(pvList);
-                }
-            } else {
                 getBean().setElemento_seleccionado(null);
                 getBean().setListaProductos(new ArrayList<>());
             }
-        });
-        refreshState();
-    }
+            });
+            refreshState();
+        }
 
     public Mesa getMesaSeleccionada() {
         return mesaSeleccionada;
