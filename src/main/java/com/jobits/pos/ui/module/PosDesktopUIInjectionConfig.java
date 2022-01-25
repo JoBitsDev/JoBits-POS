@@ -26,6 +26,7 @@ import com.jobits.pos.client.webconnection.product.ProductoVentaWCS;
 import com.jobits.pos.client.webconnection.puntoelaboracion.PuntoElaboracionWCS;
 import com.jobits.pos.client.webconnection.trabajadores.PersonalWCS;
 import com.jobits.pos.client.webconnection.trabajadores.PuestoTrabajoWCS;
+import com.jobits.pos.client.webconnection.venta.OrdenWCS;
 import com.jobits.pos.client.webconnection.venta.VentaWCS;
 import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.areaventa.AreaVentaService;
@@ -43,6 +44,7 @@ import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
 import com.jobits.pos.servicios.impresion.ImpresoraService;
 import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
+import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.ui.clientes.presenter.ClienteUseCaseRFImpl;
 import com.jobits.pos.usecase.mesa.MesaUseCase;
 import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
@@ -90,6 +92,7 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         //
         bind(VentaDetailService.class).to(VentaWCS.class).in(Scopes.SINGLETON);
         bind(VentaResumenUseCase.class).to(VentaWCS.class).in(Scopes.SINGLETON);
+        bind(OrdenService.class).to(OrdenWCS.class).in(Scopes.SINGLETON);
 
     }
 
