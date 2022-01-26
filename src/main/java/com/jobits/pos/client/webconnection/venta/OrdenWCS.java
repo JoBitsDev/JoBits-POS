@@ -50,97 +50,93 @@ public class OrdenWCS extends BaseConnection implements OrdenService {
 
     @Override
     public Orden addNota(String codOrden, int producto_orden_seleccionado, String nuevaNota) {
-        return service.addNota(codOrden, producto_orden_seleccionado, nuevaNota);
+        return handleCall(service.addNota(codOrden, producto_orden_seleccionado, nuevaNota));
     }
 
     @Override
     public ProductovOrden addProduct(String codOrden, String codProducto, Float cantidad, Optional<Integer> productoOrdenAgregar) {
-        return service.addProduct(codOrden, codProducto, cantidad, productoOrdenAgregar);
+        return handleCall(service.addProduct(codOrden, codProducto, cantidad, productoOrdenAgregar));
     }
 
     @Override
     public Orden addProductoCompuesto(String codOrden, String producto_agregar, Float cantidad, List<ProductoVentaWrapper> lista_agregos) {
-        return service.addProductoCompuesto(codOrden, producto_agregar, cantidad, lista_agregos);
+        return handleCall(service.addProductoCompuesto(codOrden, producto_agregar, cantidad, lista_agregos));
     }
 
     @Override
     public Orden addProductInHot(String codOrden, String nombre, String precio, String cantidad) {
-        return service.addProductInHot(codOrden, nombre, precio, cantidad);
+        return handleCall(service.addProductInHot(codOrden, nombre, precio, cantidad));
     }
 
     @Override
     public Orden removeProduct(String codOrden, int idProductoOrden, float cantidad) {
-        return service.removeProduct(codOrden, idProductoOrden, cantidad);
+        return handleCall(service.removeProduct(codOrden, idProductoOrden, cantidad));
     }
 
     @Override
     public Orden cerrarOrden(String codOrden, boolean imprimirTicket) {
-        return service.cerrarOrden(codOrden, imprimirTicket);
+        return handleCall(service.cerrarOrden(codOrden, imprimirTicket));
     }
 
     @Override
     public Orden setDeLaCasa(String codOrden, boolean es_autorizo) {
-        return service.setDeLaCasa(codOrden, es_autorizo);
+        return handleCall(service.setDeLaCasa(codOrden, es_autorizo));
     }
 
     @Override
     public Orden setPorciento(String codOrden, float porciento_servicio) {
-        return service.setPorciento(codOrden, porciento_servicio);
+        return handleCall(service.setPorciento(codOrden, porciento_servicio));
     }
 
     @Override
     public Orden moverA(String codOrden, String codMesa) {
-        return service.moverA(codOrden, codMesa);
+        return handleCall(service.moverA(codOrden, codMesa));
     }
 
     @Override
     public void imprimirPreTicket(String codOrden) {
-        service.imprimirPreTicket(codOrden);
+        handleCall(service.imprimirPreTicket(codOrden));
     }
 
-    @Override
-    public void impimirListaOrdenes(int codVenta) {
-        service.impimirListaOrdenes(codVenta);
-    }
 
     @Override
     public Orden enviarACocina(String codOrden) {
-        return service.enviarACocina(codOrden);
+        return handleCall(service.enviarACocina(codOrden));
     }
 
     @Override
     public Orden setCliente(String codOrden, Integer clienteId) {
-        return service.setCliente(codOrden, clienteId);
+        return handleCall(service.setCliente(codOrden, clienteId));
     }
 
     @Override
     public Orden create(Orden t) throws RuntimeException {
-        return service.create(t);
+        return handleCall(service.create(t));
     }
 
     @Override
     public Orden edit(Orden t) throws RuntimeException {
-        return service.edit(t);
+        return handleCall(service.edit(t));
     }
 
     @Override
     public Orden destroy(Orden t) throws RuntimeException {
-        return service.destroy(t);
+        return handleCall(service.destroy(t));
     }
 
     @Override
     public Orden destroyById(Object o) throws RuntimeException {
-        return service.destroyById(o);
+        return handleCall(service.destroyById(o));
     }
 
     @Override
     public Orden findBy(Object o) throws RuntimeException {
-        return service.findBy(o);
+        return handleCall(service.findBy(o));
     }
 
     @Override
     public List<Orden> findAll() throws RuntimeException {
-        return service.findAll();
+        return handleCall(service.findAll());
     }
 
 }
