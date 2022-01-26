@@ -31,9 +31,9 @@ public interface VentaWCI {
     public Call<Venta> inicializarVentas(@Body LocalDate fecha);
 
     @GET("pos/venta/list-of-date/{dateISO}")
-    public Call<List<Venta>> getVentasDeFecha(@Path("dateISO") LocalDate date);
+    public Call<List<Venta>> getVentasDeFecha(@Query("dateISO") LocalDate date);
 
-    @GET("pos/venta/{id}/list-all-turns")
+    @GET("pos/venta/{id}/list-all")
     public Call<List<Venta>> getVentasDeFecha(@Path("id") int idVenta);
 
     @POST("pos/venta/{id}/cambiar-turno")
