@@ -148,7 +148,7 @@ public class VentaOrdenListViewPresenter extends AbstractViewPresenter<VentaOrde
     }
 
     private void onImprimirOrdenesClick() {
-        ordenService.impimirListaOrdenes(codVenta);
+        throw new UnsupportedOperationException("Operacion deshabilitada permanentemente");
     }
 
     @Override
