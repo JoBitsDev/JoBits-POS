@@ -7,18 +7,12 @@ package com.jobits.pos.ui;
 
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.ViewFacade;
-import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
-import com.jobits.pos.ui.RootView;
-import com.jobits.pos.ui.licencia.LicenceDialogView;
 import com.jobits.pos.ui.login.LogInView;
-import com.jobits.pos.ui.login.UbicacionView;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.mainmenu.MenuBarClass;
 import com.jobits.pos.ui.utils.PopUpDialog;
 import com.jobits.pos.ui.venta.VentaDetailView;
-import com.jobits.ui.components.swing.containers.MaterialFrame;
-import com.jobits.ui.components.swing.containers.MaterialWindow;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -26,13 +20,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.awt.event.ComponentAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 
 /**
  *
