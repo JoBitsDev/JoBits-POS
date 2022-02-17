@@ -259,7 +259,8 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             detailService.updateValorTotalAlmacen(getBean().getElemento_seleccionado());
             getBean().setValor_monetario_text(utils.setDosLugaresDecimalesDoubleString(getBean().getElemento_seleccionado().getValorMonetario()));
             getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado())));
-            getBean().setLista_insumos_disponibles(new ArrayListModel<>(insumoService.findAll()));
+            getBean().getLista_insumos_disponibles().clear();
+            getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(insumoService.findAll()));
             getBean().setSearch_keyWord(getBean().getSearch_keyWord());
             onKeywordChange(getBean().getSearch_keyWord());
         }
