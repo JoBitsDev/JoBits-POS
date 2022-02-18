@@ -208,6 +208,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
             }
 
         });
+        getBean().addPropertyChangeListener(PROP_PROPINA_TOTAL, (PropertyChangeEvent evt) -> {
+            onCambiarPropina();
+        });
 
     }
 
@@ -217,6 +220,12 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     private void onImprimirAutorizosClick() {
         service.printGastosCasa(getBean().getVenta_seleccionada());
+    }
+
+    private void onCambiarPropina() {
+        var v = service.findBy(getBean().getVenta_seleccionada());
+        v.setVentapropina(Float.parseFloat(getBean().getPropina_total()));
+        service.edit(v);
     }
 
     private void onTerminarClick() {
