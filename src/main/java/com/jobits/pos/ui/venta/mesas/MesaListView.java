@@ -13,10 +13,12 @@ import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.PopUpDialog;
+import com.jobits.pos.ui.utils.WrapLayout;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewModel;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.JDialog;
@@ -81,14 +83,20 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
         add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(700, 32767));
         jScrollPane1.setMinimumSize(new java.awt.Dimension(700, 600));
-        jScrollPane1.setSize(new java.awt.Dimension(700, 600));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(700, 0));
+        jScrollPane1.setSize(new java.awt.Dimension(700, 0));
 
         jPanel1.setAutoscrolls(true);
-        jPanel1.setMaximumSize(new java.awt.Dimension(600, 32767));
+        jPanel1.setMaximumSize(new java.awt.Dimension(700, 32767));
         jPanel1.setMinimumSize(new java.awt.Dimension(700, 300));
-        jPanel1.setPreferredSize(new java.awt.Dimension(700, 300));
-        jPanel1.setSize(new java.awt.Dimension(700, 300));
+        jPanel1.setPreferredSize(new java.awt.Dimension(700, 2000));
+        jPanel1.setSize(new java.awt.Dimension(700, 600));
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout();
+        flowLayout1.setAlignOnBaseline(true);
+        jPanel1.setLayout(flowLayout1);
         jScrollPane1.setViewportView(jPanel1);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -125,7 +133,8 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
             }
 
         });
-
+        jPanel1.setLayout(new WrapLayout());
+       
     }
 
     private void listUpdate() {
@@ -133,6 +142,7 @@ public class MesaListView extends AbstractViewPanel implements PropertyChangeLis
         for (Mesa x : listaMesas) {
             jPanel1.add(createAndAttachButton(x));
         }
+
         jPanel1.revalidate();
         jPanel1.repaint();
     }

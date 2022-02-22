@@ -10,12 +10,10 @@ import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import static com.jobits.pos.ui.mainmenu.presenter.MenuBarClassPresenter.*;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
-import com.jobits.ui.components.MaterialComponentsFactory;
 import com.root101.swing.material.standards.MaterialIcons;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.swing.Box;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
@@ -69,6 +67,7 @@ public class MenuBarClass extends AbstractViewPanel {
     private javax.swing.JMenuItem jMenuItemTerminarVenta;
     private javax.swing.JMenuItem jMenuItemTerminarExportarVenta;
     private javax.swing.JMenuItem jMenuItemActivarLicencia;
+    private javax.swing.JMenuItem jMenuItemAbrirCajon;
     private javax.swing.JMenuItem jMenuItemCambiarUsuario;
     private javax.swing.JMenuItem jMenuItemCerrarSesion;
     private javax.swing.JMenuItem jMenuItemCopiasSeguridad;
@@ -111,6 +110,8 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuItemCopiasSeguridad.addActionListener(getPresenter().getOperation(ACTION_SHOW_COPIAS_SEGURIDAD));
         jMenuItemUbicaciones.addActionListener(getPresenter().getOperation(ACTION_SHOW_UBICACIONES));
         jMenuItemActivarLicencia.addActionListener(getPresenter().getOperation(ACTION_SHOW_ACTIVAR_LICENCIA));
+        jMenuItemAbrirCajon.addActionListener(getPresenter().getOperation(ACTION_ABRIR_CAJON));
+
         //Ayuda
         jMenuItemManualUsuario.addActionListener(getPresenter().getOperation(ACTION_SHOW_MANUAL_USUARIO));
 
@@ -135,6 +136,7 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuItemCopiasSeguridad = new javax.swing.JMenuItem();
         jMenuItemUbicaciones = new javax.swing.JMenuItem();
         jMenuItemActivarLicencia = new javax.swing.JMenuItem();
+        jMenuItemAbrirCajon = new javax.swing.JMenuItem();
         jMenuItemManualUsuario = new javax.swing.JMenuItem();
         jMenuItemReabrirVenta = new javax.swing.JMenuItem();
         jMenuItemTerminarVenta = new javax.swing.JMenuItem();
@@ -237,6 +239,10 @@ public class MenuBarClass extends AbstractViewPanel {
         jMenuItemActivarLicencia.setIcon(
                 new ImageIcon(getClass().getResource("/restManager/resources/icons pack/MenuBar/licencia_color.png")));
         jMenuHerramientas.add(jMenuItemActivarLicencia);
+        jMenuBarMainManuBar.add(jMenuHerramientas);
+
+        jMenuItemAbrirCajon.setText("Abrir Cajon");
+        jMenuHerramientas.add(jMenuItemAbrirCajon);
         jMenuBarMainManuBar.add(jMenuHerramientas);
 
         jMenuVenta.setText("Venta");

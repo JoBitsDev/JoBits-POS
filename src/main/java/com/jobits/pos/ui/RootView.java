@@ -204,6 +204,7 @@ public class RootView extends JPanel {
     public void clearView() {
         views.clear();
         dashboard.getTaskPane().clear();
+        dashboard.getTaskPane().repaint();
         dashboard.getTaskPane().showView(null);
         currentDisplayedViewName = null;
     }
