@@ -322,8 +322,7 @@ public class AlmacenMainView extends AbstractViewPanel {
                     case 3:
                         return utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getCantidad());
                     case 4:
-                        return getRow(rowIndex).getCantidad() != 0
-                                ? utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getValorMonetario() / getRow(rowIndex).getCantidad()) : utils.setDosLugaresDecimalesFloat(0);
+                        return getRow(rowIndex).getCostoUnitarioPromedio();
                     case 5:
                         return utils.setDosLugaresDecimalesFloat(getRow(rowIndex).getValorMonetario());
                     default:
