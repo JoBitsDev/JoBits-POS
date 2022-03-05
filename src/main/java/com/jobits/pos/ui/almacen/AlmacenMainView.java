@@ -71,6 +71,7 @@ public class AlmacenMainView extends AbstractViewPanel {
         jLabelValorTotal = new javax.swing.JLabel();
         jPanel3 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jButtonNuevaFactura = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonPendientes = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonTransacciones = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonDarReporte = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonResumen = MaterialComponentsFactory.Buttons.getLinedButton();
@@ -170,6 +171,15 @@ public class AlmacenMainView extends AbstractViewPanel {
         });
         jPanel3.add(jButtonNuevaFactura);
 
+        jButtonPendientes.setText("Pendientes");
+        jButtonPendientes.setPreferredSize(new java.awt.Dimension(150, 50));
+        jButtonPendientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPendientesActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButtonPendientes);
+
         jButtonTransacciones.setText("Transacciones");
         jButtonTransacciones.setPreferredSize(new java.awt.Dimension(150, 50));
         jButtonTransacciones.addActionListener(new java.awt.event.ActionListener() {
@@ -226,11 +236,16 @@ public class AlmacenMainView extends AbstractViewPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldBusquedaFocusLost
 
+    private void jButtonPendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPendientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonPendientesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDarReporte;
     private javax.swing.JButton jButtonEliminarAlmacen;
     private javax.swing.JButton jButtonNuevaFactura;
     private javax.swing.JButton jButtonNuevoAlmacen;
+    private javax.swing.JButton jButtonPendientes;
     private javax.swing.JButton jButtonResumen;
     private javax.swing.JButton jButtonTransacciones;
     private javax.swing.JComboBox<String> jComboBoxAlmacenList;
@@ -274,6 +289,7 @@ public class AlmacenMainView extends AbstractViewPanel {
 
         jButtonTransacciones.setAction(getPresenter().getOperation(ACTION_TRANSACCIONES));
         jButtonNuevaFactura.setAction(getPresenter().getOperation(ACTION_NUEVA_FACTURA));
+        jButtonPendientes.setAction(getPresenter().getOperation(ACTION_PENDIENTES));
 
         tableInsumos.getjTableCrossReference().addMouseListener(new MouseAdapter() {
             @Override

@@ -10,6 +10,7 @@ import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
+import com.jobits.pos.ui.almacen.PendingOperationsListView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
@@ -152,7 +153,8 @@ public class CoordinatorService implements Coordinator {
                         AgregarProductoView.VIEW_NAME,
                         DomicilioView.VIEW_NAME,
                         LicenceDialogView.VIEW_NAME,
-                        MesaListView.VIEW_NAME
+                        MesaListView.VIEW_NAME,
+                        PendingOperationsListView.VIEW_NAME
                 ));
         // navigationGraph.put(VentaDetailView.VIEW_NAME, Arrays.asList(PedidoCardView.));
     }

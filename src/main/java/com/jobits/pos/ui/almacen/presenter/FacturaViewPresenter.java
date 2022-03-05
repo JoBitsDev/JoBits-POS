@@ -18,6 +18,7 @@ import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.core.domain.models.InsumoAlmacen;
 import com.jobits.pos.core.domain.models.InsumoElaborado;
+import com.jobits.pos.core.domain.models.Operacion;
 import com.jobits.pos.core.domain.models.TransaccionTransformacion;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
@@ -68,6 +69,18 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         addListeners();
         getBean().getLista_insumos_disponibles().clear();
         getBean().setAlmacen(almacen);
+        getBean().getLista_insumos_disponibles().addAll(
+                new ArrayListModel<>(service.getInsumoAlmacenList(getBean().getAlmacen())));
+        setVisiblePanels(getBean().getOperacion_selected());
+    }
+
+    public FacturaViewPresenter(AlmacenManageService controller, Operacion op) {
+        super(new FacturaViewModel());
+        this.service = controller;
+        addListeners();
+        getBean().getLista_insumos_disponibles().clear();
+        getBean().setAlmacen(op.getAlmacen()
+        );
         getBean().getLista_insumos_disponibles().addAll(
                 new ArrayListModel<>(service.getInsumoAlmacenList(getBean().getAlmacen())));
         setVisiblePanels(getBean().getOperacion_selected());
@@ -390,21 +403,27 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
             if (validateInputs()) {
                 switch (currentOperation) {
                     case ENTRADA:
-                        service.crearOperacionEntrada(getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), getBean().getFecha_factura(), getBean().getAlmacen());
+                        service.crearOperacion(Operacion.Tipo.ENTRADA, getBean().getLista_elementos(),
+                                getBean().getNumero_recibo(), getBean().getFecha_factura(), getBean().getAlmacen().getCodAlmacen(), -1);
                         break;
                     case SALIDA:
                         Date fecha = getBean().getFecha_factura();
-                        service.crearOperacionSalida(getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), fecha, selectIdFecha(fecha), getBean().getAlmacen());
+                        service.crearOperacion(Operacion.Tipo.SALIDA, getBean().getLista_elementos(),
+                                getBean().getNumero_recibo(), fecha, getBean().getAlmacen().getCodAlmacen(), selectIdFecha(fecha));
                         break;
                     case REBAJA:
-                        service.crearOperacionRebaja(getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), getBean().getFecha_factura(), getBean().getAlmacen());
+                        service.crearOperacion(
+                                Operacion.Tipo.REBAJA,
+                                getBean().getLista_elementos(),
+                                getBean().getNumero_recibo(),
+                                getBean().getFecha_factura(), getBean().getAlmacen().getCodAlmacen(), 0);
                         break;
                     case TRASPASO:
-                        service.crearOperacionTraspaso(getBean().getLista_elementos(),
-                                getBean().getNumero_recibo(), getBean().getFecha_factura(), getBean().getAlmacen());
+                        service.crearOperacion(
+                                Operacion.Tipo.TRASPASO,
+                                getBean().getLista_elementos(),
+                                getBean().getNumero_recibo(),
+                                getBean().getFecha_factura(), getBean().getAlmacen().getCodAlmacen(), 0);
                         break;
                     default:
                         throw new UnExpectedErrorException("Tipo de operacion no soportada");
