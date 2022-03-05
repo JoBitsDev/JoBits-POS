@@ -34,6 +34,7 @@ import com.root101.clean.core.domain.services.ResourceHandler;
 import java.beans.PropertyChangeEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -390,12 +391,18 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     private void confirmarTransaccion(OperationType currentOperation) {
         if (currentOperation == OperationType.TRANSFORMAR) {
             if (validateTransformationInputs()) {
-                service.crearTransformacion(getBean().getInsumo_selecionado(),
-                        getBean().getCantidad_entrada(),
-                        getBean().getLista_insumos_transformados_contenidos(),
-                        (Almacen) getBean().getDestino_seleccionado(),
+                service.crearOperacion(
+                        Operacion.Tipo.TRANSFORMACION,
+                        Collections.singletonList(
+                                new TransaccionSimple(
+                                        getBean().getInsumo_selecionado(),
+                                        getBean().getCantidad_entrada(),
+                                        (Almacen) getBean().getDestino_seleccionado(),
+                                        getBean().getLista_insumos_transformados_contenidos())),
                         getBean().getNumero_recibo(),
-                        getBean().getFecha_factura()
+                        getBean().getFecha_factura(),
+                        getBean().getAlmacen().getCodAlmacen(),
+                        0
                 );
                 Application.getInstance().getNavigator().navigateUp();
             }
