@@ -46,6 +46,7 @@ public class OperacionesListPresenter extends AbstractListViewPresenter<Operacio
             @Override
             public Optional doAction() {
                 Application.getInstance().getNavigator().navigateUp();
+                onAbrirClick();
                 return Optional.empty();
             }
         });
@@ -73,7 +74,7 @@ public class OperacionesListPresenter extends AbstractListViewPresenter<Operacio
 
     @Override
     protected void onEditarClick() {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        onAbrirClick();
     }
 
     @Override
