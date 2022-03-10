@@ -241,6 +241,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
 
     private void onAgregarInsumoFichaClick() {
         detailService.agregarInsumoAlmacen(getBean().getInsumo_disponible_seleccionado(), getBean().getElemento_seleccionado());
+        Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         refreshState();
     }
 
