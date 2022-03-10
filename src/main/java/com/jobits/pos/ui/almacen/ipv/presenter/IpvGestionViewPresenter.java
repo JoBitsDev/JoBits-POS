@@ -58,6 +58,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_OCULTAR_PRODUCTOS_IPV_VENTA = "Ocultar productos no utilizados",
             ACTION_DAR_ENTRADA_IPV_REGISTROS = "Entrada Registro",
             ACTION_DAR_ENTRADA_IPV_VENTA = "Entrada Ipv",
+            ACTION_DAR_AJUSTE_IPV_VENTA = "Ajuste Ipv",
             ACTION_IMPRIMIR_IPV_REGISTRO = "Imprimir registros",
             ACTION_IMPRIMIR_IPV_VENTA_REGISTRO = "Imprimir Ipv venta",
             ACTION_NUEVO_PEDIDO_IPV_VENTA = "Nuevo Pedido",
@@ -154,6 +155,13 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onDarEntradaIpvVentas();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_DAR_AJUSTE_IPV_VENTA) {
+            @Override
+            public Optional doAction() {
+                onDarRebajaIpvVentas();
                 return Optional.empty();
             }
         });
@@ -392,6 +400,18 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
                 service.darEntradaIPV(instance, cantidad);
+            }
+        }
+
+    }
+    private void onDarRebajaIpvVentas() {
+        IpvVentaRegistro instance = getBean().getIpv_venta_registro_seleccionado();
+        Float cantidad = new NumberPad().showView();
+        if (cantidad != null && instance != null) {
+            if (JOptionPane.showConfirmDialog(null, "Desea rebajar " + cantidad + " de " + instance.getProductoVenta(),
+                    ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    == JOptionPane.YES_OPTION) {
+                service.darEntradaIPV(instance, cantidad*-1);
             }
         }
 

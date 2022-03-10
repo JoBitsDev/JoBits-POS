@@ -341,12 +341,12 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                     if (getBean().getCausa_rebaja() == null || getBean().getCausa_rebaja().equals("")) {
                         JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "Introduca la Causa de Rebaja");
                     } else {
-                        TransaccionSimple transaccionRebaja = 
-                                new TransaccionSimple(
-                                getBean().getInsumo_selecionado(),
-                                getBean().getCantidad_entrada(),
-                                getBean().getCausa_rebaja(),
-                                getBean().isRebaja_merma());
+                        TransaccionSimple transaccionRebaja
+                                = new TransaccionSimple(
+                                        getBean().getInsumo_selecionado(),
+                                        getBean().getCantidad_entrada(),
+                                        getBean().getCausa_rebaja(),
+                                        getBean().isRebaja_merma());
                         getBean().getLista_elementos().add(transaccionRebaja);
                         setDefaultValues(currentOperation, false);
                     }
@@ -380,7 +380,10 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                 service.crearTransformacion(getBean().getInsumo_selecionado(),
                         getBean().getCantidad_entrada(),
                         getBean().getLista_insumos_transformados_contenidos(),
-                        (Almacen) getBean().getDestino_seleccionado());
+                        (Almacen) getBean().getDestino_seleccionado(),
+                        getBean().getNumero_recibo(),
+                        getBean().getFecha_factura()
+                );
                 Application.getInstance().getNavigator().navigateUp();
             }
         } else {
