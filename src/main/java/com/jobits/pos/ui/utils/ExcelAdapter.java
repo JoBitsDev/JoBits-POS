@@ -72,7 +72,8 @@ public class ExcelAdapter implements ActionListener {
             //Se copian los datos de cada celda
             for (int i = 0; i < numrows; i++) {
                 for (int j = 0; j < numcols; j++) {
-                    String value = jTable1.getValueAt(i, j).toString();
+                    Object val = jTable1.getValueAt(i, j);
+                    String value = val != null ? val.toString() : "-";
                     int valueLastIndex = value.length() - 1;
                     if (value.charAt(0) == ' ') {
                         value = value.substring(1, valueLastIndex);
