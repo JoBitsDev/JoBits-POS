@@ -723,7 +723,7 @@ public class VentaDetailView extends AbstractViewPanel {
         addCard(null, "Venta Neta", dimension, jPanelVentasCards, getPresenter().getModel(PROP_VENTA_NETA));
         addCard(null, "Total", dimension, jPanelVentasCards, getPresenter().getModel(PROP_VENTA_TOTAL), imprimirZ);
         addCard(null, "Autorizos", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_AUTORIZOS), imprimirAutorizos);
-        addCard(null, "Insumos", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_INSUMOS));
+        addCard(null, "Costo de Mercancia", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_INSUMOS));
         addCard(null, "Salarios", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_SALARIO));
         addCard(null, "Otros", dimension, jPanelGastosCards, getPresenter().getModel(PROP_TOTAL_GASTO_OTROS));
 
@@ -1090,7 +1090,7 @@ public class VentaDetailView extends AbstractViewPanel {
         if (insumos != null) {
             float insumo = Float.parseFloat(insumos.substring(0, insumos.lastIndexOf(" ")).replaceAll(" ", ""));
             perdida += insumo;
-            chartPie.addSeries("Gastos de Insumo " + utils.setDosLugaresDecimales(insumo), insumo);
+            chartPie.addSeries("Costo de mercancia " + utils.setDosLugaresDecimales(insumo), insumo);
         }
         if (otro != null) {
             float otros = Float.parseFloat(otro.substring(0, otro.lastIndexOf(" ")).replaceAll(" ", ""));

@@ -25,6 +25,7 @@ import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.swing.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.ExcelAdapter;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.root101.swing.material.standards.MaterialIcons;
@@ -444,6 +445,8 @@ public class IpvGestionView extends AbstractViewPanel {
         jTableIPV.setDefaultRenderer(Float.class, new RestManagerCellRender());
         jTableRegistro.getTableHeader().setFont(jTableIPV.getFont().deriveFont(Font.BOLD));
         jTableRegistro.setDefaultRenderer(Float.class, new RestManagerCellRender());
+        jTableIPV.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        ExcelAdapter a = new ExcelAdapter(jTableIPV);
         // jTableRegistro.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
 
         //
@@ -458,8 +461,7 @@ public class IpvGestionView extends AbstractViewPanel {
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 //TODO: calcular el total de la tabla y mostrarlo al final
-
-                if (rowIndex == getRowCount() - 1 && totalRowShowing) {
+                if (rowIndex == getRowCount()-1 && totalRowShowing) {
                     if (columnIndex == 0) {
                         return "Total";
                     }
@@ -544,7 +546,7 @@ public class IpvGestionView extends AbstractViewPanel {
         };
         model.setColumnTotal(7);
         jTableIPV.setModel(model);
-      //  jTableIPV.getRowSorter().toggleSortOrder(0);
+        //  jTableIPV.getRowSorter().toggleSortOrder(0);
         jTableIPV.getColumnModel().getColumn(0).setPreferredWidth(250);
 //  ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel()).addTotalRow(7);
 
