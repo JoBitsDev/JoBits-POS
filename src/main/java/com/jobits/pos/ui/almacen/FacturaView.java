@@ -45,7 +45,7 @@ public class FacturaView extends AbstractViewPanel {
     public static final String VIEW_NAME = "Facturas";
 
     BindableListIntelliHint<K> autoCompleteModel;
-    public static RestaurantManagerListIntelliHint<InsumoAlmacen> list;
+    public static RestaurantManagerListIntelliHint<Insumo> list;
     private AddFromPanel<TransaccionTransformacion, Insumo> tableInsumosTransformados;
 
     /**
@@ -619,7 +619,7 @@ public class FacturaView extends AbstractViewPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((TransaccionSimple) getListModel().getElementAt(rowIndex)).getInsumo().getInsumo().getNombre();
+                        return ((TransaccionSimple) getListModel().getElementAt(rowIndex)).getInsumo().getNombre();
                     case 1:
                         return ((TransaccionSimple) getListModel().getElementAt(rowIndex)).getCantidad();
                     case 2:

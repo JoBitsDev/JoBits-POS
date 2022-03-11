@@ -35,11 +35,11 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
 
     public static final String PROP_FECHA_FACTURA = "fecha_factura";
 
-    private ArrayListModel<InsumoAlmacen> lista_insumos_disponibles = new ArrayListModel();
+    private ArrayListModel<Insumo> lista_insumos_disponibles = new ArrayListModel();
 
     public static final String PROP_LISTA_INSUMOS_DISPONIBLES = "lista_insumos_disponibles";
 
-    private InsumoAlmacen insumo_selecionado;
+    private Insumo insumo_selecionado;
 
     public static final String PROP_INSUMO_SELECIONADO = "insumo_selecionado";
 
@@ -50,14 +50,6 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
     private String monto_entrada;
 
     public static final String PROP_MONTO_ENTRADA = "monto_entrada";
-
-    private ArrayListModel<TransaccionSimple> lista_facturas = new ArrayListModel();
-
-    public static final String PROP_LISTA_FACTURAS = "lista_facturas";
-
-    private TransaccionSimple factura_entrada_seleccionada;
-
-    public static final String PROP_FACTURA_ENTRADA_SELECCIONADA = "factura_entrada_seleccionada";
 
     private String unidad_medida_insumo = "<U/M>";
 
@@ -133,6 +125,9 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
     private TransaccionTransformacion insumo_transformado_contenido_seleccionado;
 
     public static final String PROP_INSUMO_TRANSFORMADO_CONTENIDO_SELECCIONADO = "insumo_transformado_contenido_seleccionado";
+
+    public FacturaViewModel() {
+    }
 
     /**
      * Get the value of rebaja_merma
@@ -524,47 +519,6 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
     }
 
     /**
-     * Get the value of factura_entrada_seleccionada
-     *
-     * @return the value of factura_entrada_seleccionada
-     */
-    public TransaccionSimple getFactura_entrada_seleccionada() {
-        return factura_entrada_seleccionada;
-    }
-
-    /**
-     * Set the value of factura_entrada_seleccionada
-     *
-     * @param factura_entrada_seleccionada new value of
-     * factura_entrada_seleccionada
-     */
-    public void setFactura_entrada_seleccionada(TransaccionSimple factura_entrada_seleccionada) {
-        TransaccionSimple oldFactura_entrada_seleccionada = this.factura_entrada_seleccionada;
-        this.factura_entrada_seleccionada = factura_entrada_seleccionada;
-        firePropertyChange(PROP_FACTURA_ENTRADA_SELECCIONADA, oldFactura_entrada_seleccionada, factura_entrada_seleccionada);
-    }
-
-    /**
-     * Get the value of lista_facturas
-     *
-     * @return the value of lista_facturas
-     */
-    public ArrayListModel<TransaccionSimple> getLista_facturas() {
-        return lista_facturas;
-    }
-
-    /**
-     * Set the value of lista_facturas
-     *
-     * @param lista_factura_entrada new value of lista_facturas
-     */
-    public void setLista_factura_entrada(ArrayListModel<TransaccionSimple> lista_factura_entrada) {
-        ArrayListModel<TransaccionSimple> oldLista_factura_entrada = this.lista_facturas;
-        this.lista_facturas = lista_factura_entrada;
-        firePropertyChange(PROP_LISTA_FACTURAS, oldLista_factura_entrada, lista_factura_entrada);
-    }
-
-    /**
      * Get the value of monto_entrada
      *
      * @return the value of monto_entrada
@@ -609,7 +563,7 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
      *
      * @return the value of insumo_selecionado
      */
-    public InsumoAlmacen getInsumo_selecionado() {
+    public Insumo getInsumo_selecionado() {
         return insumo_selecionado;
     }
 
@@ -618,8 +572,8 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
      *
      * @param insumo_selecionado new value of insumo_selecionado
      */
-    public void setInsumo_selecionado(InsumoAlmacen insumo_selecionado) {
-        InsumoAlmacen oldInsumo_selecionado = this.insumo_selecionado;
+    public void setInsumo_selecionado(Insumo insumo_selecionado) {
+        Insumo oldInsumo_selecionado = this.insumo_selecionado;
         this.insumo_selecionado = insumo_selecionado;
         firePropertyChange(PROP_INSUMO_SELECIONADO, oldInsumo_selecionado, insumo_selecionado);
     }
@@ -629,7 +583,7 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
      *
      * @return the value of lista_insumos_disponibles
      */
-    public ArrayListModel<InsumoAlmacen> getLista_insumos_disponibles() {
+    public ArrayListModel<Insumo> getLista_insumos_disponibles() {
         return lista_insumos_disponibles;
     }
 
@@ -638,8 +592,8 @@ public class FacturaViewModel extends AbstractListViewModel<TransaccionSimple> {
      *
      * @param lista_insumos_disponibles new value of lista_insumos_disponibles
      */
-    public void setLista_insumos_disponibles(ArrayListModel<InsumoAlmacen> lista_insumos_disponibles) {
-        ArrayListModel<InsumoAlmacen> oldLista_insumos_disponibles = this.lista_insumos_disponibles;
+    public void setLista_insumos_disponibles(ArrayListModel<Insumo> lista_insumos_disponibles) {
+        ArrayListModel<Insumo> oldLista_insumos_disponibles = this.lista_insumos_disponibles;
         this.lista_insumos_disponibles = lista_insumos_disponibles;
         firePropertyChange(PROP_LISTA_INSUMOS_DISPONIBLES, oldLista_insumos_disponibles, lista_insumos_disponibles);
     }

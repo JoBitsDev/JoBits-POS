@@ -19,6 +19,7 @@ import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.RegularExpressions;
 import com.jobits.pos.ui.almacen.FacturaView;
+import com.jobits.pos.ui.almacen.PendingOperationsListView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
@@ -52,6 +53,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     public static final String ACTION_TRANSACCIONES = "Transacciones";
     public static final String ACTION_MODIFICAR_STOCK = "Modificar Stock";
     public static final String ACTION_NUEVA_FACTURA = "Nueva Factura";
+    public static final String ACTION_PENDIENTES = "Pendientes";
 
     AlmacenListService listService;
     AlmacenManageService detailService;
@@ -142,6 +144,12 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         refreshState();
     }
 
+    private void onPendienteClick() {
+        NavigationService.getInstance().navigateTo(PendingOperationsListView.VIEW_NAME,
+                new OperacionesListPresenter(getBean().getElemento_seleccionado()), DisplayType.POPUP);
+        refreshState();
+    }
+
     @Override
     protected void registerOperations() {
         registerOperation(new AbstractViewAction(ACTION_ACTUALIZAR_LISTA_ALMACEN) {
@@ -218,6 +226,13 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
             @Override
             public Optional doAction() {
                 onNuevaFactura();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_PENDIENTES) {
+            @Override
+            public Optional doAction() {
+                onPendienteClick();
                 return Optional.empty();
             }
         });
