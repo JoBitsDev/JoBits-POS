@@ -172,6 +172,7 @@ public class AlmacenMainView extends AbstractViewPanel {
         jPanel3.add(jButtonNuevaFactura);
 
         jButtonPendientes.setText("Pendientes");
+        jButtonPendientes.setEnabled(false);
         jButtonPendientes.setPreferredSize(new java.awt.Dimension(150, 50));
         jButtonPendientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
