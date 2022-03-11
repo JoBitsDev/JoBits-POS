@@ -15,6 +15,7 @@ import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListService;
+import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Mesa;
@@ -27,6 +28,7 @@ import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.about.AcercaDeViewPresenter;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
 import com.jobits.pos.ui.almacen.FacturaView;
+import com.jobits.pos.ui.almacen.PendingOperationsListView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
@@ -34,6 +36,7 @@ import com.jobits.pos.ui.almacen.ipv.presenter.IPVPedidoVentasViewPresenter;
 import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.almacen.presenter.AlmacenViewPresenter;
 import com.jobits.pos.ui.almacen.presenter.FacturaViewPresenter;
+import com.jobits.pos.ui.almacen.presenter.OperacionesListPresenter;
 import com.jobits.pos.ui.almacen.presenter.TransaccionListPresenter;
 import com.jobits.pos.ui.areaventa.AreaDetailView;
 import com.jobits.pos.ui.areaventa.AreaVentaListView;
@@ -206,7 +209,7 @@ public class PresenterFacade {
                         PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
                         PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class));
             case FacturaView.VIEW_NAME:
-                return new FacturaViewPresenter(PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class), null);
+                return new FacturaViewPresenter(PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class), new Almacen());
             case ReportarBugView.VIEW_NAME:
                 return new ReportarBugViewPresenter();
             case OrdenLogView.VIEW_NAME:
@@ -225,6 +228,8 @@ public class PresenterFacade {
                 return new ImageManagerViewPresenter(null);
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListPresenter(PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class), null);
+            case PendingOperationsListView.VIEW_NAME:
+                return new OperacionesListPresenter(null);
             case MesaListView.VIEW_NAME:
                 return new MesaListViewPresenter();
             case ClientesListView.VIEW_NAME:
