@@ -443,7 +443,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     @Override
     protected Optional refreshState() {
+        // long start = System.currentTimeMillis();
         updateBeanData();
+        //System.out.println(System.currentTimeMillis() - start);
         return Optional.empty();
     }
 

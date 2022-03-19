@@ -6,17 +6,16 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenListService;
-import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Almacen;
-import com.jobits.pos.core.domain.models.InsumoAlmacen;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.InsumoAlmacen;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenListService;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
+import com.jobits.pos.inventario.core.almacen.usecase.TransaccionListService;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.RegularExpressions;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.PendingOperationsListView;

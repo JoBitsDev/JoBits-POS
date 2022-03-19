@@ -6,18 +6,17 @@
 package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenListService;
-import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.core.domain.InsumoPedidoModel;
 import com.jobits.pos.core.domain.ProdcutoVentaPedidoModel;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenListService;
+import com.jobits.pos.inventario.core.almacen.usecase.PedidoIpvVentasService;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.utils.NumberPad;

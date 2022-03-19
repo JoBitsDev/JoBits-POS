@@ -15,7 +15,7 @@ import com.jobits.ui.components.MaterialComponentsFactory;
  *
  * @author Home
  */
-public class Almacen extends AbstractViewPanel {
+public class AlmacenUI extends AbstractViewPanel {
 
     public static final String VIEW_NAME = "Opciones Almacen";
 
@@ -24,7 +24,7 @@ public class Almacen extends AbstractViewPanel {
      *
      * @param presenter
      */
-    public Almacen(AbstractViewPresenter presenter) {
+    public AlmacenUI(AbstractViewPresenter presenter) {
         super(presenter);
     }
 

@@ -6,21 +6,21 @@
 package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenListService;
 import com.root101.swing.material.standards.MaterialIcons;
-import com.jobits.pos.controller.almacen.IPVService;
-import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.IpvRegistro;
-import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.IpvRegistro;
+import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenListService;
+import com.jobits.pos.inventario.core.almacen.usecase.IPVService;
+import com.jobits.pos.inventario.core.almacen.usecase.PedidoIpvVentasService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;

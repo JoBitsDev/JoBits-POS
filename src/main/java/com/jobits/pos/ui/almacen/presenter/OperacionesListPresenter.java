@@ -5,10 +5,10 @@
  */
 package com.jobits.pos.ui.almacen.presenter;
 
-import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.PendingOperationsListView;
