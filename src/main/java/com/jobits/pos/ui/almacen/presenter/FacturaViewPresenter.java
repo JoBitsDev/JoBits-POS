@@ -78,7 +78,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         getBean().getLista_insumos_disponibles().clear();
         getBean().setAlmacen(almacen);
         getBean().getLista_insumos_disponibles().addAll(
-                new ArrayListModel<>(service.getInsumoAlmacenList(getBean().getAlmacen()).stream().map((t) -> {
+                new ArrayListModel<>(almacen.getInsumoAlmacenList().stream().map((t) -> {
                     return t.getInsumo();
                 }).collect(Collectors.toList())));
         setVisiblePanels(getBean().getOperacion_selected());
@@ -93,7 +93,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         getBean().setAlmacen(op.getAlmacen()
         );
         getBean().getLista_insumos_disponibles().addAll(
-                new ArrayListModel<>(service.getInsumoAlmacenList(getBean().getAlmacen()).stream().map((t) -> {
+                new ArrayListModel<>(getBean().getAlmacen().getInsumoAlmacenList().stream().map((t) -> {
                     return t.getInsumo();
                 }).collect(Collectors.toList())));
         setVisiblePanels(getBean().getOperacion_selected());
@@ -401,7 +401,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 
     private void confirmarTransaccion(OperationType currentOperation) {
         if (operationToAccept != null) {
-            service.updateAndExecuteOperation(getBean().getAlmacen().getCodAlmacen(), operationToAccept);
+            service.ejecutarOperacion(getBean().getAlmacen().getCodAlmacen(), operationToAccept);
             Application.getInstance().getNavigator().navigateUp();
         }
         if (currentOperation == OperationType.TRANSFORMAR) {

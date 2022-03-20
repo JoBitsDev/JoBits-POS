@@ -11,7 +11,7 @@ import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Venta;
-import com.jobits.pos.inventario.core.almacen.usecase.AlmacenListService;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
 import com.jobits.pos.inventario.core.almacen.usecase.IPVService;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
@@ -35,7 +35,7 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
     public static final String ACTION_REINICIAR_ALMACEN = "Reiniciar Almacen";
     public static final String ACTION_REINICIAR_IPV = "Reiniciar IPV";
 
-    AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
+    AlmacenManageService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
     LogInService loginService = PosDesktopUiModule.getInstance().getImplementation(LogInService.class);
     IPVService ipvService = PosDesktopUiModule.getInstance().getImplementation(IPVService.class);
     PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);

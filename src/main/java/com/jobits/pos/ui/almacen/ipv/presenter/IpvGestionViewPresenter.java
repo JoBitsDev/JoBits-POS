@@ -18,7 +18,7 @@ import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.inventario.core.almacen.domain.Almacen;
 import com.jobits.pos.inventario.core.almacen.domain.IpvRegistro;
 import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
-import com.jobits.pos.inventario.core.almacen.usecase.AlmacenListService;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
 import com.jobits.pos.inventario.core.almacen.usecase.IPVService;
 import com.jobits.pos.inventario.core.almacen.usecase.PedidoIpvVentasService;
 import com.jobits.pos.main.Application;
@@ -71,7 +71,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private IPVService service;
     private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
-    private AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
+    private AlmacenManageService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
     private VentaDetailService ventaService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
     private InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
 
@@ -404,6 +404,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         }
 
     }
+
     private void onDarRebajaIpvVentas() {
         IpvVentaRegistro instance = getBean().getIpv_venta_registro_seleccionado();
         Float cantidad = new NumberPad().showView();
@@ -411,7 +412,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             if (JOptionPane.showConfirmDialog(null, "Desea rebajar " + cantidad + " de " + instance.getProductoVenta(),
                     ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
-                service.darEntradaIPV(instance, cantidad*-1);
+                service.darEntradaIPV(instance, cantidad * -1);
             }
         }
 
@@ -419,9 +420,8 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     private void onNuevoPedido() {
         PedidoIpvVentasService pedidoService = PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class);
-        AlmacenListService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class);
         NavigationService.getInstance().navigateTo(IPVPedidoVentasView.VIEW_NAME,
-                new IPVPedidoVentasViewPresenter(pedidoService, almacenService,
+                new IPVPedidoVentasViewPresenter(pedidoService,
                         getBean().getPunto_elaboracion_seleccionado(),
                         getBean().getVenta_ipv_ventas_seleccionada(),
                         getBean().getLista_ipv_venta_registro()), DisplayType.POPUP);

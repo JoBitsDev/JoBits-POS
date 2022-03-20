@@ -13,9 +13,10 @@ import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
-import com.jobits.pos.inventario.core.almacen.usecase.AlmacenListService;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
 import com.jobits.pos.inventario.core.almacen.usecase.PedidoIpvVentasService;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -38,15 +39,14 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     public static String ACTION_AGREGAR_IPV = "Agregr IPV";
 
     private PedidoIpvVentasService service;
-    private AlmacenListService almacenService;
+    private AlmacenManageService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
     private Cocina cocina;
     private Venta venta;
     private List<IpvVentaRegistro> ipvProductList;
 
-    public IPVPedidoVentasViewPresenter(PedidoIpvVentasService service, AlmacenListService almacenService, Cocina cocina, Venta venta, List<IpvVentaRegistro> ipvProductList) {
+    public IPVPedidoVentasViewPresenter(PedidoIpvVentasService service, Cocina cocina, Venta venta, List<IpvVentaRegistro> ipvProductList) {
         super(new IPVPedidoVentasViewModel());
         this.service = service;
-        this.almacenService = almacenService;
         this.cocina = cocina;
         this.venta = venta;
         this.ipvProductList = ipvProductList;

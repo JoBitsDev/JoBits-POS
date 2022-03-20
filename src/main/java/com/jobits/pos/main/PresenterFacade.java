@@ -15,7 +15,6 @@ import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Seccion;
 import com.jobits.pos.inventario.core.almacen.domain.Almacen;
-import com.jobits.pos.inventario.core.almacen.usecase.AlmacenListService;
 import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
 import com.jobits.pos.inventario.core.almacen.usecase.IPVService;
 import com.jobits.pos.inventario.core.almacen.usecase.PedidoIpvVentasService;
@@ -204,7 +203,6 @@ public class PresenterFacade {
                 return new VentaStatisticsViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaListService.class));
             case AlmacenMainView.VIEW_NAME:
                 return new AlmacenViewPresenter(
-                        PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
                         PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class));
             case FacturaView.VIEW_NAME:
                 return new FacturaViewPresenter(PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class), new Almacen());
@@ -251,7 +249,6 @@ public class PresenterFacade {
             case IPVPedidoVentasView.VIEW_NAME:
                 return new IPVPedidoVentasViewPresenter(
                         PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class),
-                        PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
                         null, null, new ArrayList<>());
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);
