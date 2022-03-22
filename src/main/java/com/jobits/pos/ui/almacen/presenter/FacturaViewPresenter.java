@@ -403,6 +403,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         if (operationToAccept != null) {
             service.ejecutarOperacion(getBean().getAlmacen().getCodAlmacen(), operationToAccept);
             Application.getInstance().getNavigator().navigateUp();
+            return;
         }
         if (currentOperation == OperationType.TRANSFORMAR) {
             if (validateTransformationInputs()) {
@@ -420,6 +421,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                         0
                 );
                 Application.getInstance().getNavigator().navigateUp();
+                return;
             }
         } else {
             if (validateInputs()) {
@@ -459,6 +461,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 //                }
             }
         }
+        
     }
 
     private boolean validateTransformationInputs() {
