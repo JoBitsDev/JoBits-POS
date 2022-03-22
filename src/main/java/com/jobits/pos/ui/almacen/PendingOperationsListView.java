@@ -5,14 +5,13 @@
  */
 package com.jobits.pos.ui.almacen;
 
-import com.jobits.pos.core.domain.models.Operacion;
-import com.jobits.pos.core.domain.models.Transaccion;
+import com.jobits.pos.inventario.core.almacen.domain.Operacion;
+import com.jobits.pos.inventario.core.almacen.domain.Transaccion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractListViewPanel;
 import com.jobits.pos.ui.almacen.presenter.OperacionesListPresenter;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
-import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;

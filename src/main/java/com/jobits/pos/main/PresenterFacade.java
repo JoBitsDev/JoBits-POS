@@ -5,22 +5,20 @@
  */
 package com.jobits.pos.main;
 
-import com.jobits.pos.controller.almacen.AlmacenListService;
-import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.almacen.IPVService;
-import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
-import com.jobits.pos.controller.almacen.TransaccionListService;
-import com.jobits.pos.core.repo.impl.MesaDAO;
 import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.VentaListService;
-import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Carta;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Seccion;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
+import com.jobits.pos.inventario.core.almacen.usecase.IPVService;
+import com.jobits.pos.inventario.core.almacen.usecase.PedidoIpvVentasService;
+import com.jobits.pos.inventario.core.almacen.usecase.TransaccionListService;
 import com.jobits.pos.reserva.core.domain.Categoria;
 import com.jobits.pos.reserva.core.domain.Reserva;
 import com.jobits.pos.reserva.core.domain.Ubicacion;
@@ -54,8 +52,10 @@ import com.jobits.pos.ui.cartas.presenter.CartasSeccionViewPresenter;
 import com.jobits.pos.ui.cartas.presenter.SeccionDetailViewPresenter;
 import com.jobits.pos.ui.clientes.ClientesDetailView;
 import com.jobits.pos.ui.clientes.ClientesListView;
+import com.jobits.pos.ui.clientes.DomicilioView;
 import com.jobits.pos.ui.clientes.presenter.ClientesDetailViewPresenter;
 import com.jobits.pos.ui.clientes.presenter.ClientesListViewPresenter;
+import com.jobits.pos.ui.clientes.presenter.DomicilioViewPresenter;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaDetailView;
 import com.jobits.pos.ui.clientes.reserva.ClientesReservaListView;
 import com.jobits.pos.ui.clientes.reserva.presenter.ClientesReservaDetailViewPresenter;
@@ -71,8 +71,10 @@ import com.jobits.pos.ui.insumo.InsumoListView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
 import com.jobits.pos.ui.insumo.presenter.InsumoListViewPresenter;
 import com.jobits.pos.ui.licencia.LicenceDialogView;
+import com.jobits.pos.ui.login.ChangeUserView;
 import com.jobits.pos.ui.login.LogInView;
 import com.jobits.pos.ui.login.UbicacionView;
+import com.jobits.pos.ui.login.presenter.ChangeUserViewPresenter;
 import com.jobits.pos.ui.login.presenter.LoginViewPresenter;
 import com.jobits.pos.ui.login.presenter.UbicacionViewPresenter;
 import com.jobits.pos.ui.mainmenu.MainMenuView;
@@ -87,14 +89,14 @@ import com.jobits.pos.ui.puntoelaboracion.presenter.PuntoElaboracionListViewPres
 import com.jobits.pos.ui.reportes.ReportarBugView;
 import com.jobits.pos.ui.reportes.presenter.ReportarBugViewPresenter;
 import com.jobits.pos.ui.reserva.ReservaOrdenDetailView;
-import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
 import com.jobits.pos.ui.reserva.ReservaSchedulerView;
 import com.jobits.pos.ui.reserva.ReservasDetailView;
-import com.jobits.pos.ui.reserva.ubicaciones.UbicacionDetailView;
-import com.jobits.pos.ui.reserva.ubicaciones.presenter.CategoriaDetailViewPresenter;
 import com.jobits.pos.ui.reserva.presenter.ReservaDetailViewPresenter;
 import com.jobits.pos.ui.reserva.presenter.ReservaOrdenDetailViewPresenter;
 import com.jobits.pos.ui.reserva.presenter.ReservaSchedulerViewPresenter;
+import com.jobits.pos.ui.reserva.ubicaciones.CategoriaDetailView;
+import com.jobits.pos.ui.reserva.ubicaciones.UbicacionDetailView;
+import com.jobits.pos.ui.reserva.ubicaciones.presenter.CategoriaDetailViewPresenter;
 import com.jobits.pos.ui.reserva.ubicaciones.presenter.UbicacionDetailViewPresenter;
 import com.jobits.pos.ui.trabajadores.NominasDetailView;
 import com.jobits.pos.ui.trabajadores.PersonalDetailView;
@@ -111,27 +113,22 @@ import com.jobits.pos.ui.venta.VentaDetailView;
 import com.jobits.pos.ui.venta.VentaStatisticsView;
 import com.jobits.pos.ui.venta.mesas.MesaListView;
 import com.jobits.pos.ui.venta.mesas.presenter.MesaListViewPresenter;
+import com.jobits.pos.ui.venta.orden.AgregarProductoView;
 import com.jobits.pos.ui.venta.orden.CalcularCambioView;
 import com.jobits.pos.ui.venta.orden.OrdenLogView;
+import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
+import com.jobits.pos.ui.venta.orden.presenter.AgregarProductoViewPresenter;
 import com.jobits.pos.ui.venta.orden.presenter.CalcularCambioViewPresenter;
 import com.jobits.pos.ui.venta.orden.presenter.OrdenLogViewPresenter;
+import com.jobits.pos.ui.venta.orden.presenter.ProductoEnCalienteViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaCalendarViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaDetailViewPresenter;
 import com.jobits.pos.ui.venta.presenter.VentaStatisticsViewPresenter;
-import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
+import com.jobits.pos.ui.venta.resumen.ResumenMainview;
+import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
-import com.jobits.pos.ui.venta.resumen.ResumenMainview;
-import com.jobits.pos.ui.login.ChangeUserView;
-import com.jobits.pos.ui.login.presenter.ChangeUserViewPresenter;
-import com.jobits.pos.ui.venta.orden.AgregarProductoView;
-import com.jobits.pos.ui.clientes.DomicilioView;
-import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
-import com.jobits.pos.ui.venta.orden.presenter.AgregarProductoViewPresenter;
-import com.jobits.pos.ui.clientes.presenter.DomicilioViewPresenter;
-import com.jobits.pos.ui.venta.orden.presenter.ProductoEnCalienteViewPresenter;
 import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
@@ -206,7 +203,6 @@ public class PresenterFacade {
                 return new VentaStatisticsViewPresenter(PosDesktopUiModule.getInstance().getImplementation(VentaListService.class));
             case AlmacenMainView.VIEW_NAME:
                 return new AlmacenViewPresenter(
-                        PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
                         PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class));
             case FacturaView.VIEW_NAME:
                 return new FacturaViewPresenter(PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class), new Almacen());
@@ -253,7 +249,6 @@ public class PresenterFacade {
             case IPVPedidoVentasView.VIEW_NAME:
                 return new IPVPedidoVentasViewPresenter(
                         PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class),
-                        PosDesktopUiModule.getInstance().getImplementation(AlmacenListService.class),
                         null, null, new ArrayList<>());
             case LicenceDialogView.VIEW_NAME:
                 Logger.getLogger(LicenceDialogView.class.getName()).log(Level.WARNING, "No presenter register for {0}", viewUIDName);

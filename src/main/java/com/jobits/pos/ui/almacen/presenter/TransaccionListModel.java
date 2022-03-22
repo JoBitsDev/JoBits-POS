@@ -5,8 +5,8 @@
  */
 package com.jobits.pos.ui.almacen.presenter;
 
-import com.jobits.pos.core.domain.models.Almacen;
-import com.jobits.pos.core.domain.models.Transaccion;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.Transaccion;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 
 /**

@@ -23,7 +23,7 @@ dependencies {
     
     implementation "org.jobits.db:org.jobits.db.versioncontrol:1.1.10"
     
-//    testCompile 'junit:junit:4.12'
+    //    testCompile 'junit:junit:4.12'
     
     // https://mvnrepository.com/artifact/com.toedter/jcalendar
     implementation group: 'com.toedter', name: 'jcalendar', version: '1.4'
@@ -99,7 +99,16 @@ dependencies {
     // https://mvnrepository.com/artifact/com.jgoodies/jgoodies-forms
     implementation group: 'com.jgoodies', name: 'jgoodies-forms', version: '1.9.0'
 
+    // https://mvnrepository.com/artifact/com.lowagie/itext
+    implementation group: 'com.lowagie', name: 'itext', version: '2.1.7'
+    
+    // https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports
+    implementation('net.sf.jasperreports:jasperreports:6.19.0'){
+        exclude group: 'com.lowagie', module: 'itext'
+    }
 
+
+    
     //implementation 'org.glassfish.web:javax.el:2.2.6'
         
 }
@@ -109,7 +118,7 @@ launch4j{
     outfile = 'JoBits POS.exe'
     mainClassName = 'com.jobits.pos.main.Main'
     bundledJrePath = 'jdk'
-   // icon = '/Users/Jorge/Desktop/app.ico'
+    // icon = '/Users/Jorge/Desktop/app.ico'
     
 }
 

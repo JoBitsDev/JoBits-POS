@@ -8,21 +8,24 @@ package com.jobits.pos.ui.almacen.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.repo.impl.VentaDAO;
-import com.jobits.pos.controller.almacen.impl.AlmacenManageController.OperationType;//TODO; enum de implementacion en view
-import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.core.domain.TransaccionSimple;
-import com.jobits.pos.core.domain.VentaDAO1;
-import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.InsumoAlmacen;
 import com.jobits.pos.core.domain.models.InsumoElaborado;
-import com.jobits.pos.core.domain.models.Operacion;
-import com.jobits.pos.core.domain.models.Transaccion;
-import com.jobits.pos.core.domain.models.TransaccionTransformacion;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.exceptions.UnExpectedErrorException;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.Operacion;
+import com.jobits.pos.inventario.core.almacen.domain.Transaccion;
+import com.jobits.pos.inventario.core.almacen.domain.TransaccionTransformacion;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
+import com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType;
+import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.ENTRADA;
+import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.REBAJA;
+import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.SALIDA;
+import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.TRANSFORMAR;
+import static com.jobits.pos.inventario.core.almacen.usecase.impl.AlmacenManageController.OperationType.TRASPASO;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
@@ -75,7 +78,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         getBean().getLista_insumos_disponibles().clear();
         getBean().setAlmacen(almacen);
         getBean().getLista_insumos_disponibles().addAll(
-                new ArrayListModel<>(service.getInsumoAlmacenList(getBean().getAlmacen()).stream().map((t) -> {
+                new ArrayListModel<>(almacen.getInsumoAlmacenList().stream().map((t) -> {
                     return t.getInsumo();
                 }).collect(Collectors.toList())));
         setVisiblePanels(getBean().getOperacion_selected());
@@ -90,7 +93,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         getBean().setAlmacen(op.getAlmacen()
         );
         getBean().getLista_insumos_disponibles().addAll(
-                new ArrayListModel<>(service.getInsumoAlmacenList(getBean().getAlmacen()).stream().map((t) -> {
+                new ArrayListModel<>(getBean().getAlmacen().getInsumoAlmacenList().stream().map((t) -> {
                     return t.getInsumo();
                 }).collect(Collectors.toList())));
         setVisiblePanels(getBean().getOperacion_selected());
@@ -398,8 +401,9 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 
     private void confirmarTransaccion(OperationType currentOperation) {
         if (operationToAccept != null) {
-            service.updateAndExecuteOperation(getBean().getAlmacen().getCodAlmacen(), operationToAccept);
+            service.ejecutarOperacion(getBean().getAlmacen().getCodAlmacen(), operationToAccept);
             Application.getInstance().getNavigator().navigateUp();
+            return;
         }
         if (currentOperation == OperationType.TRANSFORMAR) {
             if (validateTransformationInputs()) {
@@ -417,6 +421,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                         0
                 );
                 Application.getInstance().getNavigator().navigateUp();
+                return;
             }
         } else {
             if (validateInputs()) {
@@ -456,6 +461,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 //                }
             }
         }
+        
     }
 
     private boolean validateTransformationInputs() {

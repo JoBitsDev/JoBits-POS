@@ -6,17 +6,15 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenListService;
-import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.almacen.TransaccionListService;
 import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Almacen;
-import com.jobits.pos.core.domain.models.InsumoAlmacen;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.InsumoAlmacen;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
+import com.jobits.pos.inventario.core.almacen.usecase.TransaccionListService;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.recursos.RegularExpressions;
 import com.jobits.pos.ui.almacen.FacturaView;
 import com.jobits.pos.ui.almacen.PendingOperationsListView;
@@ -55,13 +53,11 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     public static final String ACTION_NUEVA_FACTURA = "Nueva Factura";
     public static final String ACTION_PENDIENTES = "Pendientes";
 
-    AlmacenListService listService;
     AlmacenManageService detailService;
     InsumoListService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoListService.class);
 
-    public AlmacenViewPresenter(AlmacenListService listController, AlmacenManageService detailService) {
+    public AlmacenViewPresenter(AlmacenManageService detailService) {
         super(new AlmacenViewModel());
-        listService = listController;
         this.detailService = detailService;
         setListToBean();
         addListeners();
@@ -82,7 +78,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                 selected.setCantidadInsumos(0);
                 selected.setValorMonetario(0.0);
                 selected.setNombre(storageName);
-                listService.create(selected);
+                detailService.create(selected);
                 Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
                 setListToBean();
             } else {
@@ -92,7 +88,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onEditarAlmacen() {
-        listService.edit(getBean().getElemento_seleccionado());
+        detailService.edit(getBean().getElemento_seleccionado());
         setListToBean();
     }
 
@@ -101,14 +97,14 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar: " + selected.getNombre(),
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            listService.destroy(selected);
+            detailService.destroy(selected);
             Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
             setListToBean();
         }
     }
 
     private void onImprimirResumen() {
-        detailService.imprimirResumenAlmacen(getBean().getElemento_seleccionado());
+        detailService.imprimirResumenAlmacen(getBean().getElemento_seleccionado().getCodAlmacen());
     }
 
     private void onImprimirReporte() {
@@ -117,7 +113,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                 ResourceHandler.getString("dialog_seleccionar_manera_imprimir"),
                 ResourceHandler.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-        detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado(), selection);
+        detailService.imprimirReporteParaCompras(getBean().getElemento_seleccionado().getCodAlmacen(), selection);
     }
 
     private void onTransacciones() {
@@ -241,7 +237,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     //ACTUALIZAR LA LISTA DE ALMACENES
     private void setListToBean() {
         getBean().getLista_elementos().clear();
-        getBean().getLista_elementos().addAll(new ArrayListModel<>(listService.findAll()));
+        getBean().getLista_elementos().addAll(new ArrayListModel<>(detailService.findAll()));
         if (!getBean().getLista_elementos().isEmpty()) {
             getBean().setElemento_seleccionado(getBean().getLista_elementos().get(0));
             if (getBean().getElemento_seleccionado() != null) {
@@ -255,7 +251,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onAgregarInsumoFichaClick() {
-        detailService.agregarInsumoAlmacen(getBean().getInsumo_disponible_seleccionado(), getBean().getElemento_seleccionado());
+        detailService.agregarInsumoAlmacen(getBean().getInsumo_disponible_seleccionado().getCodInsumo(), getBean().getElemento_seleccionado().getCodAlmacen());
         Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         refreshState();
     }
@@ -264,7 +260,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea eliminar las existencias del insumo seleccionado del almacen",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado(), getBean().getElemento_seleccionado());
+            detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado());
             refreshState();
         }
     }
@@ -272,9 +268,9 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     @Override
     protected Optional refreshState() {
         if (getBean().getElemento_seleccionado() != null) {
-            detailService.updateValorTotalAlmacen(getBean().getElemento_seleccionado());
+            getBean().setElemento_seleccionado(detailService.findBy(getBean().getElemento_seleccionado().getCodAlmacen()));
             getBean().setValor_monetario_text(utils.setDosLugaresDecimalesDoubleString(getBean().getElemento_seleccionado().getValorMonetario()));
-            getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado())));
+            getBean().setLista_insumos_contenidos(new ArrayListModel<>(getBean().getElemento_seleccionado().getInsumoAlmacenList()));
             getBean().getLista_insumos_disponibles().clear();
             getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(insumoService.findAll()));
             getBean().setSearch_keyWord(getBean().getSearch_keyWord());
@@ -305,7 +301,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         }
         String keyWord = keyword.toLowerCase();
         List<InsumoAlmacen> insumoList = new ArrayList<>();
-        List<InsumoAlmacen> temporalLIst = detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado());
+        List<InsumoAlmacen> temporalLIst = getBean().getElemento_seleccionado().getInsumoAlmacenList();
         if (keyword.equals("")) {
             getBean().setLista_insumos_contenidos(new ArrayListModel<>(temporalLIst));
         } else {

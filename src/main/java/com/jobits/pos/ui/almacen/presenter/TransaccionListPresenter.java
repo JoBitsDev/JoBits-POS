@@ -5,15 +5,14 @@
  */
 package com.jobits.pos.ui.almacen.presenter;
 
-import com.jobits.pos.controller.almacen.TransaccionListService;
-import com.jobits.pos.core.domain.models.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.usecase.TransaccionListService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import static com.jobits.pos.ui.almacen.presenter.TransaccionListModel.PROP_SHOW_MERMAS;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 
