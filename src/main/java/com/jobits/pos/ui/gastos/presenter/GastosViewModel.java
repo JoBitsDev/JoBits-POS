@@ -10,7 +10,6 @@ import com.jobits.pos.core.domain.models.GastoVenta;
 import com.jobits.pos.core.domain.models.temporal.DefaultGasto;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
-import java.util.Arrays;
 
 /**
  *
