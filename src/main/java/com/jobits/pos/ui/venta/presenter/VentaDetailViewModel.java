@@ -42,7 +42,7 @@ public class VentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_VENTA_TOTAL = "venta_total";
 
-    private String propina_total;
+    private String propina_total = "0";
 
     public static final String PROP_PROPINA_TOTAL = "propina_total";
 
@@ -384,7 +384,6 @@ public class VentaDetailViewModel extends AbstractViewModel {
     public static final String PROP_FECHA = "fecha";
 
     //Turnos 
-
     private int id_venta_seleccionada = -1;
 
     public static final String PROP_VENTA_SELECCIONADA = "id_venta_seleccionada";
@@ -678,8 +677,6 @@ public class VentaDetailViewModel extends AbstractViewModel {
         this.lista_mesas.addAll(lista_mesas);
         firePropertyChange(PROP_LISTA_MESAS, oldLista_mesas, lista_mesas);
     }
-
-
 
     /**
      * Get the value of fecha
@@ -1006,6 +1003,9 @@ public class VentaDetailViewModel extends AbstractViewModel {
      * @param propina_total new value of propina_total
      */
     public void setPropina_total(String propina_total) {
+        if (propina_total == null || propina_total.isBlank()) {
+            return;
+        }
         String oldPropina_total = this.propina_total;
         this.propina_total = propina_total;
         firePropertyChange(PROP_PROPINA_TOTAL, oldPropina_total, propina_total);

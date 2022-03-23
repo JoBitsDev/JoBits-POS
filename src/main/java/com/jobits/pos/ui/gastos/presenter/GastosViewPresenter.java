@@ -15,7 +15,6 @@ import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.GastosFormatter;
-import com.jobits.pos.ui.autorizo.AuthorizerImpl;
 import static com.jobits.pos.ui.gastos.presenter.GastosViewModel.*;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;

@@ -14,6 +14,7 @@ import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.ui.RootView;
 import com.jobits.pos.ui.backup.BackUpView;
 import com.jobits.pos.ui.backup.presenter.BackUpViewPresenter;
@@ -65,6 +66,7 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
     public static final String ACTION_SHOW_COPIAS_SEGURIDAD = "Copias de Seguridad";
     public static final String ACTION_SHOW_UBICACIONES = "Ubicaciones";
     public static final String ACTION_SHOW_ACTIVAR_LICENCIA = "Activar Licencia";
+    public static final String ACTION_ABRIR_CAJON = "Abrir Cajon";
     //Ayuda
     public static final String ACTION_SHOW_MANUAL_USUARIO = "Manual de Usuario";
 
@@ -242,6 +244,14 @@ public class MenuBarClassPresenter extends AbstractViewPresenter<MenuBarClassVie
             @Override
             public Optional doAction() {
                 JOptionPane.showMessageDialog(Application.getInstance().getMainWindow(), "En Desarrollo");
+                return Optional.empty();
+            }
+        });
+
+        registerOperation(new AbstractViewAction(ACTION_ABRIR_CAJON) {
+            @Override
+            public Optional doAction() {
+                Impresion.getDefaultInstance().forceDrawerKick();
                 return Optional.empty();
             }
         });

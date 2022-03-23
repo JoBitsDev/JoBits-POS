@@ -6,20 +6,21 @@
 package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenManageService;
 import com.root101.swing.material.standards.MaterialIcons;
-import com.jobits.pos.controller.almacen.IPVService;
-import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
-import com.jobits.pos.controller.insumo.InsumoService;
+import com.jobits.pos.controller.insumo.InsumoListService;
+import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.IpvRegistro;
-import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.IpvRegistro;
+import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
+import com.jobits.pos.inventario.core.almacen.usecase.IPVService;
+import com.jobits.pos.inventario.core.almacen.usecase.PedidoIpvVentasService;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
@@ -58,6 +59,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_OCULTAR_PRODUCTOS_IPV_VENTA = "Ocultar productos no utilizados",
             ACTION_DAR_ENTRADA_IPV_REGISTROS = "Entrada Registro",
             ACTION_DAR_ENTRADA_IPV_VENTA = "Entrada Ipv",
+            ACTION_DAR_AJUSTE_IPV_VENTA = "Ajuste Ipv",
             ACTION_IMPRIMIR_IPV_REGISTRO = "Imprimir registros",
             ACTION_IMPRIMIR_IPV_VENTA_REGISTRO = "Imprimir Ipv venta",
             ACTION_NUEVO_PEDIDO_IPV_VENTA = "Nuevo Pedido",
@@ -69,7 +71,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             ACTION_ELIMINAR_IPV_REGISTRO = "Eliminar IPV Registro";
 
     private IPVService service;
-    private PuntoElaboracionService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionService.class);
+    private PuntoElaboracionListService cocinaService = PosDesktopUiModule.getInstance().getImplementation(PuntoElaboracionListService.class);
     private AlmacenManageService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
     private VentaDetailService ventaService = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
     private InsumoService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
@@ -154,6 +156,13 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             @Override
             public Optional doAction() {
                 onDarEntradaIpvVentas();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_DAR_AJUSTE_IPV_VENTA) {
+            @Override
+            public Optional doAction() {
+                onDarRebajaIpvVentas();
                 return Optional.empty();
             }
         });
@@ -397,11 +406,23 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
 
     }
 
+    private void onDarRebajaIpvVentas() {
+        IpvVentaRegistro instance = getBean().getIpv_venta_registro_seleccionado();
+        Float cantidad = new NumberPad().showView();
+        if (cantidad != null && instance != null) {
+            if (JOptionPane.showConfirmDialog(null, "Desea rebajar " + cantidad + " de " + instance.getProductoVenta(),
+                    ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
+                    == JOptionPane.YES_OPTION) {
+                service.darEntradaIPV(instance, cantidad * -1);
+            }
+        }
+
+    }
+
     private void onNuevoPedido() {
         PedidoIpvVentasService pedidoService = PosDesktopUiModule.getInstance().getImplementation(PedidoIpvVentasService.class);
-        AlmacenManageService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
         NavigationService.getInstance().navigateTo(IPVPedidoVentasView.VIEW_NAME,
-                new IPVPedidoVentasViewPresenter(pedidoService, almacenService,
+                new IPVPedidoVentasViewPresenter(pedidoService,
                         getBean().getPunto_elaboracion_seleccionado(),
                         getBean().getVenta_ipv_ventas_seleccionada(),
                         getBean().getLista_ipv_venta_registro()), DisplayType.POPUP);

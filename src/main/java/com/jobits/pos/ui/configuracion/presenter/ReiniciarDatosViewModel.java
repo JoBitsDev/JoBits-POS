@@ -6,8 +6,8 @@
 package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.core.domain.models.Almacen;
 import com.jobits.pos.core.domain.models.Cocina;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Date;
 

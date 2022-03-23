@@ -5,33 +5,30 @@
  */
 package com.jobits.pos.ui.almacen;
 
-import com.root101.swing.material.standards.MaterialIcons;
+import com.jobits.pos.inventario.core.almacen.domain.Operacion;
 import com.jobits.pos.inventario.core.almacen.domain.Transaccion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractListViewPanel;
-import static com.jobits.pos.ui.almacen.presenter.TransaccionListPresenter.*;
+import com.jobits.pos.ui.almacen.presenter.OperacionesListPresenter;
 import com.jobits.pos.ui.presenters.AbstractListViewPresenter;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
-import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import javax.swing.JToggleButton;
 
 /**
  *
  * @author Home
  */
-public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
+public class PendingOperationsListView extends AbstractListViewPanel<Operacion> {
 
-    public static final String VIEW_NAME = "Transacciones";
+    public static final String VIEW_NAME = "Operaciones Pendientes";
     public javax.swing.JPanel jPanelOptionsButtons = MaterialComponentsFactory.Containers.getPrimaryPanel();
     protected javax.swing.JButton jButtonCerrar = MaterialComponentsFactory.Buttons.getOutlinedButton();
-    protected javax.swing.JButton jButtonPrint = MaterialComponentsFactory.Buttons.getOutlinedButton();
-    protected javax.swing.JToggleButton jToggleButtonShowMermas = new JToggleButton();
+    protected javax.swing.JButton jButtonAbrirParaConfirmar = MaterialComponentsFactory.Buttons.getOutlinedButton();
 
-    public TransaccionListView(AbstractListViewPresenter presenter) {
+    public PendingOperationsListView(AbstractListViewPresenter presenter) {
         super(presenter);
 
         jButtonEdit.setVisible(false);
@@ -42,60 +39,43 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
         jPanelOptionsButtons.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         jButtonCerrar.setPreferredSize(new java.awt.Dimension(125, 50));
-        jButtonCerrar.setAction(getPresenter().getOperation(ACTION_CERRAR_POPUP));
+        jButtonCerrar.setAction(getPresenter().getOperation(OperacionesListPresenter.ACTION_CERRAR_POPUP));
         jPanelOptionsButtons.add(jButtonCerrar);
-
-        jButtonPrint.setPreferredSize(new java.awt.Dimension(50, 50));
-        jButtonPrint.setAction(getPresenter().getOperation(ACTION_IMPRIMIR_TRANSACCIONES));
-        jButtonPrint.setIcon(MaterialIcons.PRINT);
-        jPanelControles.add(jButtonPrint);
-
-        jToggleButtonShowMermas.setText("Mermas");
-        jToggleButtonShowMermas.setOpaque(false);
-        jToggleButtonShowMermas.setPreferredSize(new java.awt.Dimension(125, 50));
-        jToggleButtonShowMermas.addActionListener(getPresenter().getOperation(ACTION_MOSTRAR_MERMAS));
-        jPanelControles.add(jToggleButtonShowMermas);
+        jButtonAbrirParaConfirmar.setPreferredSize(new java.awt.Dimension(125, 50));
+        jButtonAbrirParaConfirmar.setAction(getPresenter().getOperation(OperacionesListPresenter.ACTION_ABRIR_Y_CONFIRMAR));
+        jPanelOptionsButtons.add(jButtonAbrirParaConfirmar);
 
         add(jPanelOptionsButtons, BorderLayout.SOUTH);
 
         jTableList.getColumnModel().getColumn(0).setMaxWidth(250);
         jTableList.getColumnModel().getColumn(0).setPreferredWidth(250);
-        jTableList.getColumnModel().getColumn(1).setMaxWidth(150);
         jTableList.getColumnModel().getColumn(1).setPreferredWidth(100);
-        jTableList.getColumnModel().getColumn(2).setMaxWidth(150);
         jTableList.getColumnModel().getColumn(2).setPreferredWidth(150);
-        jTableList.getColumnModel().getColumn(3).setMaxWidth(150);
         jTableList.getColumnModel().getColumn(3).setPreferredWidth(100);
-        jTableList.getColumnModel().getColumn(4).setMaxWidth(150);
-        jTableList.getColumnModel().getColumn(4).setPreferredWidth(150);
 
-        jTableList.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
 
     }
 
     @Override
-    public BindableTableModel<Transaccion> generateTableModel() {
-        return new BindableTableModel<Transaccion>(jTableList) {
+    public BindableTableModel<Operacion> generateTableModel() {
+        return new BindableTableModel<Operacion>(jTableList) {
             @Override
             public int getColumnCount() {
-                return 6;
+                return 4;
             }
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return ((Transaccion) getListModel().getElementAt(rowIndex)).getInsumocodInsumo().getNombre();
+                        return getRow(rowIndex).getNoRecibo();
                     case 1:
-                        return R.DATE_FORMAT.format(((Transaccion) getListModel().getElementAt(rowIndex)).getFecha());
+                        return R.DATE_FORMAT.format(getRow(rowIndex).getFecha()) + " "
+                                + R.TIME_FORMAT.format(getRow(rowIndex).getHora());
                     case 2:
-                        return R.TIME_FORMAT.format(((Transaccion) getListModel().getElementAt(rowIndex)).getHora());
+                        return getRow(rowIndex).getRecibidoPor();
                     case 3:
-                        return ((Transaccion) getListModel().getElementAt(rowIndex)).getCantidad();
-                    case 4:
-                        return ((Transaccion) getListModel().getElementAt(rowIndex)).getDescripcion();
-                    case 5:
-                        Transaccion t = ((Transaccion) getListModel().getElementAt(rowIndex));
+                        Transaccion t = getRow(rowIndex).getTransaccionList().get(0);
                         if (t.getTransaccionEntrada() != null) {
                             return "ENTRADA (Total: " + t.getTransaccionEntrada().getValorTotal() + R.COIN_SUFFIX + ")";
                         }
@@ -126,32 +106,17 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
             public String getColumnName(int column) {
                 switch (column) {
                     case 0:
-                        return "Insumo";
+                        return "No. Factura";
                     case 1:
                         return "Fecha";
                     case 2:
-                        return "Hora";
+                        return "Descripcion";
                     case 3:
-                        return "Cantidad";
-                    case 4:
-                        return java.util.ResourceBundle.getBundle("Strings").getString("label_descripcion");
-                    case 5:
                         return "Tipo";
                     default:
                         return null;
                 }
             }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                switch (columnIndex) {
-                    case 3:
-                        return Float.class;
-                    default:
-                        return super.getColumnClass(columnIndex);
-                }
-            }
-
         };
     }
 

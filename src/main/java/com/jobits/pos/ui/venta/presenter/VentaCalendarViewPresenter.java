@@ -9,7 +9,7 @@ import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.controller.licencia.impl.Licence;
 import com.jobits.pos.controller.licencia.impl.LicenceController;
 import com.jobits.pos.core.repo.impl.VentaDAO;
-import com.jobits.pos.core.usecase.algoritmo.Y;
+import com.jobits.pos.core.usecase.algoritmo.Yimpl;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.VentaDAO1;
@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.swing.JOptionPane;
 import com.jobits.pos.core.module.PosCoreModule;
+import com.jobits.pos.core.usecase.algoritmo.Y;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import org.jobits.db.core.domain.TipoConexion;
 import org.jobits.db.pool.ConnectionPoolHandler;
@@ -76,6 +77,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
                         Application.getInstance().getBackgroundWorker().processInBackground("Ejecutando Y", () -> {
                             onEjecutarY(v);
                         });
+                        updateBeanData();
                     }
                 }
                 return Optional.empty();
@@ -135,41 +137,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     }
 
     private void onEjecutarY(Venta venta) {
-        if (ConnectionPoolHandler.getConnectionPoolService(PosCoreModule.getInstance().getModuleName()).getCurrentUbicacion().getTipoUbicacion() != TipoConexion.MASTER) {
-            throw new UnauthorizedAccessException("Esta operacion solo se puede ejecutar conectado a una ubicaion master");
-        }
-        Y alg = new Y(venta);
-        Venta old = alg.getVentaReal();
-        Venta newVenta = new Venta(alg.getVentaReal().getId());
-        // if (!new BackUpService().ExisteVentaEnLocal(old)) {
-        //   throw new ValidatingException("Primero debe realizar una copia de seguridad del dia seleccionado en su ordenador");
-        // }
-        try {
-            VentaDAO.getInstance().startTransaction();
-            service.deleteVenta(old.getId());
-            newVenta.setAsistenciaPersonalList(new ArrayList<>());
-            newVenta.setFecha(old.getFecha());
-            newVenta.setOrdenList(alg.ejecutarAlgoritmo());
-            newVenta.setGastoVentaList(new ArrayList<>());
-            newVenta.setVentagastosPagotrabajadores(VentaDAO1.getValorTotalPagoTrabajadores(newVenta));
-            newVenta.setVentagastosGastos((float) 0.0);
-            newVenta.setVentaTotal((double) VentaDAO1.getValorTotalVentas(newVenta));
-            VentaDAO.getInstance().create(newVenta);
-            VentaDAO.getInstance().commitTransaction();
-        } catch (Exception e) {
-            VentaDAO.getInstance().startTransaction();
-            VentaDAO.getInstance().create(old);
-            VentaDAO.getInstance().commitTransaction();
-            e.printStackTrace();
-            Application.getInstance().getNotificationService().showDialog("La operacion no se ha podido completar correctamente. Contacte con soporte", TipoNotificacion.ERROR);
-
-        }
-        if (VentaDAO.getInstance().find(old.getId()) == null) {
-            VentaDAO.getInstance().startTransaction();
-            VentaDAO.getInstance().create(old);
-            VentaDAO.getInstance().commitTransaction();
-            Application.getInstance().getNotificationService().showDialog("La operacion no se ha podido completar correctamente. Contacte con soporte", TipoNotificacion.ERROR);
-        }
+        Y alg = PosDesktopUiModule.getInstance().getImplementation(Y.class);
+        alg.runMainThread(venta.getId());
 
     }
 

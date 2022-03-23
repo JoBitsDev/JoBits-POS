@@ -149,7 +149,7 @@ public class ConfiguracionView extends AbstractViewPanel {
     public void uiInit() {
         initComponents();
         jTabbedPane1.add("Generales", new Generales(presenter));
-        jTabbedPane1.add("Almac�n", new Almacen(presenter));
+        jTabbedPane1.add("Almac�n", new AlmacenUI(presenter));
         jTabbedPane1.add("Sync", new Sincronizacion(presenter));
         jTabbedPane1.add("Impresión", new Impresion(presenter));
         jTabbedPane1.add("Visuales", new Visuales(new VisualesViewPresenter()));

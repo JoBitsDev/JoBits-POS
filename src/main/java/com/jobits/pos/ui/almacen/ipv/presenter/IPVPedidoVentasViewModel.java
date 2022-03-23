@@ -8,8 +8,8 @@ package com.jobits.pos.ui.almacen.ipv.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.InsumoPedidoModel;
 import com.jobits.pos.core.domain.ProdcutoVentaPedidoModel;
-import com.jobits.pos.core.domain.models.Almacen;
-import com.jobits.pos.core.domain.models.IpvVentaRegistro;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 
 /**

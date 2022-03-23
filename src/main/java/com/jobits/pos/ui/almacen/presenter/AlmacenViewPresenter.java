@@ -6,17 +6,18 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.almacen.TransaccionService;
-import com.jobits.pos.controller.insumo.InsumoService;
+import com.jobits.pos.controller.insumo.InsumoListService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
-import com.jobits.pos.core.domain.models.Almacen;
-import com.jobits.pos.core.domain.models.InsumoAlmacen;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.InsumoAlmacen;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
+import com.jobits.pos.inventario.core.almacen.usecase.TransaccionListService;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.RegularExpressions;
 import com.jobits.pos.ui.almacen.FacturaView;
+import com.jobits.pos.ui.almacen.PendingOperationsListView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.insumo.InsumoDetailView;
 import com.jobits.pos.ui.insumo.presenter.InsumoDetailViewPresenter;
@@ -50,13 +51,13 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     public static final String ACTION_TRANSACCIONES = "Transacciones";
     public static final String ACTION_MODIFICAR_STOCK = "Modificar Stock";
     public static final String ACTION_NUEVA_FACTURA = "Nueva Factura";
+    public static final String ACTION_PENDIENTES = "Pendientes";
 
     AlmacenManageService detailService;
     InsumoService insumoService = PosDesktopUiModule.getInstance().getImplementation(InsumoService.class);
 
     public AlmacenViewPresenter(AlmacenManageService detailService) {
         super(new AlmacenViewModel());
-//        listService = listController;
         this.detailService = detailService;
         setListToBean();
         addListeners();
@@ -139,6 +140,12 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         refreshState();
     }
 
+    private void onPendienteClick() {
+        NavigationService.getInstance().navigateTo(PendingOperationsListView.VIEW_NAME,
+                new OperacionesListPresenter(getBean().getElemento_seleccionado()), DisplayType.POPUP);
+        refreshState();
+    }
+
     @Override
     protected void registerOperations() {
         registerOperation(new AbstractViewAction(ACTION_ACTUALIZAR_LISTA_ALMACEN) {
@@ -218,6 +225,13 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                 return Optional.empty();
             }
         });
+        registerOperation(new AbstractViewAction(ACTION_PENDIENTES) {
+            @Override
+            public Optional doAction() {
+                onPendienteClick();
+                return Optional.empty();
+            }
+        });
     }
 
     //ACTUALIZAR LA LISTA DE ALMACENES
@@ -238,6 +252,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
 
     private void onAgregarInsumoFichaClick() {
         detailService.agregarInsumoAlmacen(getBean().getInsumo_disponible_seleccionado().getCodInsumo(), getBean().getElemento_seleccionado().getCodAlmacen());
+        Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         refreshState();
     }
 
@@ -245,7 +260,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Desea eliminar las existencias del insumo seleccionado del almacen",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado(), getBean().getElemento_seleccionado().getCodAlmacen());
+            detailService.removeInsumoFromStorage(getBean().getInsumo_contenido_seleccionado());
             refreshState();
         }
     }
@@ -253,10 +268,11 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     @Override
     protected Optional refreshState() {
         if (getBean().getElemento_seleccionado() != null) {
-            detailService.updateValorTotalAlmacen(getBean().getElemento_seleccionado().getCodAlmacen());
+            getBean().setElemento_seleccionado(detailService.findBy(getBean().getElemento_seleccionado().getCodAlmacen()));
             getBean().setValor_monetario_text(utils.setDosLugaresDecimalesDoubleString(getBean().getElemento_seleccionado().getValorMonetario()));
-            getBean().setLista_insumos_contenidos(new ArrayListModel<>(detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado().getCodAlmacen())));
-            getBean().setLista_insumos_disponibles(new ArrayListModel<>(insumoService.findAll()));
+            getBean().setLista_insumos_contenidos(new ArrayListModel<>(getBean().getElemento_seleccionado().getInsumoAlmacenList()));
+            getBean().getLista_insumos_disponibles().clear();
+            getBean().getLista_insumos_disponibles().addAll(new ArrayListModel<>(insumoService.findAll()));
             getBean().setSearch_keyWord(getBean().getSearch_keyWord());
             onKeywordChange(getBean().getSearch_keyWord());
         }
@@ -292,6 +308,18 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                 });
                 getBean().setLista_insumos_contenidos(new ArrayListModel<>(insumoList));
             }
+        }
+        String keyWord = keyword.toLowerCase();
+        List<InsumoAlmacen> insumoList = new ArrayList<>();
+        List<InsumoAlmacen> temporalLIst = getBean().getElemento_seleccionado().getInsumoAlmacenList();
+        if (keyword.equals("")) {
+            getBean().setLista_insumos_contenidos(new ArrayListModel<>(temporalLIst));
+        } else {
+            temporalLIst.stream().filter((insumoAlmacen)
+                    -> (insumoAlmacen.getInsumo().getNombre().toLowerCase().contains(keyWord))).forEachOrdered((insumoAlmacen) -> {
+                insumoList.add(insumoAlmacen);
+            });
+            getBean().setLista_insumos_contenidos(new ArrayListModel<>(insumoList));
         }
     }
 

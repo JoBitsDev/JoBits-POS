@@ -8,9 +8,9 @@ package com.jobits.pos.ui.almacen.ipv.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.IpvRegistro;
-import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.inventario.core.almacen.domain.IpvRegistro;
+import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
 import java.util.Date;
 

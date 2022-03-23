@@ -6,16 +6,17 @@
 package com.jobits.pos.ui.almacen.ipv.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.almacen.PedidoIpvVentasService;
 import com.jobits.pos.core.domain.InsumoPedidoModel;
 import com.jobits.pos.core.domain.ProdcutoVentaPedidoModel;
 import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.IpvVentaRegistro;
 import com.jobits.pos.core.domain.models.ProductoInsumo;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
+import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
+import com.jobits.pos.inventario.core.almacen.usecase.PedidoIpvVentasService;
 import com.jobits.pos.main.Application;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -38,15 +39,14 @@ public class IPVPedidoVentasViewPresenter extends AbstractViewPresenter<IPVPedid
     public static String ACTION_AGREGAR_IPV = "Agregr IPV";
 
     private PedidoIpvVentasService service;
-    private AlmacenManageService almacenService;
+    private AlmacenManageService almacenService = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
     private Cocina cocina;
     private Venta venta;
     private List<IpvVentaRegistro> ipvProductList;
 
-    public IPVPedidoVentasViewPresenter(PedidoIpvVentasService service, AlmacenManageService almacenService, Cocina cocina, Venta venta, List<IpvVentaRegistro> ipvProductList) {
+    public IPVPedidoVentasViewPresenter(PedidoIpvVentasService service, Cocina cocina, Venta venta, List<IpvVentaRegistro> ipvProductList) {
         super(new IPVPedidoVentasViewModel());
         this.service = service;
-        this.almacenService = almacenService;
         this.cocina = cocina;
         this.venta = venta;
         this.ipvProductList = ipvProductList;

@@ -8,6 +8,7 @@ package com.jobits.pos.main;
 import com.jobits.pos.ui.about.AcercaDeView;
 import com.jobits.pos.ui.almacen.AlmacenMainView;
 import com.jobits.pos.ui.almacen.FacturaView;
+import com.jobits.pos.ui.almacen.PendingOperationsListView;
 import com.jobits.pos.ui.almacen.TransaccionListView;
 import com.jobits.pos.ui.almacen.ipv.IPVPedidoVentasView;
 import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
@@ -182,6 +183,8 @@ public class ViewFacade {
                 return new ReservaOrdenDetailView((ReservaOrdenDetailViewPresenter) p);
             case TransaccionListView.VIEW_NAME:
                 return new TransaccionListView((AbstractListViewPresenter) p);
+            case PendingOperationsListView.VIEW_NAME:
+                return new PendingOperationsListView((AbstractListViewPresenter) p);
             case ProductoEnCalienteView.VIEW_NAME:
                 return new ProductoEnCalienteView(p);
             case AgregarProductoView.VIEW_NAME:

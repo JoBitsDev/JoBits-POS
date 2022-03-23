@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 import javax.swing.JTable;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.IpvRegistro;
-import com.jobits.pos.core.domain.models.IpvVentaRegistro;
+import com.jobits.pos.inventario.core.almacen.domain.IpvRegistro;
+import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.AbstractViewPanel;
 import static com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewModel.*;
@@ -25,6 +25,7 @@ import com.jobits.pos.ui.almacen.ipv.presenter.IpvGestionViewPresenter;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.swing.utils.BindableListIntelliHint;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
+import com.jobits.pos.ui.utils.ExcelAdapter;
 import com.jobits.pos.utils.utils;
 import com.jobits.ui.components.MaterialComponentsFactory;
 import com.root101.swing.material.standards.MaterialIcons;
@@ -90,6 +91,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jPanel6 = MaterialComponentsFactory.Containers.getPrimaryPanel();
         jButtonImprimirIpv = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonDarEntradaIpvVenta = MaterialComponentsFactory.Buttons.getLinedButton();
+        jButtonAjustarConsumoIpvVenta = MaterialComponentsFactory.Buttons.getLinedButton();
         jButtonPedido = MaterialComponentsFactory.Buttons.getLinedButton();
 
         setOpaque(false);
@@ -104,7 +106,6 @@ public class IpvGestionView extends AbstractViewPanel {
         jComboBoxPtoElabSelec.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jComboBoxPtoElabSelec.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         jComboBoxPtoElabSelec.setMinimumSize(new java.awt.Dimension(150, 70));
-        jComboBoxPtoElabSelec.setOpaque(false);
         jComboBoxPtoElabSelec.setPreferredSize(new java.awt.Dimension(250, 50));
         jPanel8.add(jComboBoxPtoElabSelec, java.awt.BorderLayout.CENTER);
 
@@ -166,6 +167,7 @@ public class IpvGestionView extends AbstractViewPanel {
         ));
         jTableRegistro.setRowHeight(25);
         jTableRegistro.setRowMargin(4);
+        jTableRegistro.setSelectionForeground(new java.awt.Color(153, 153, 153));
         jScrollPane2.setViewportView(jTableRegistro);
 
         jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -287,6 +289,7 @@ public class IpvGestionView extends AbstractViewPanel {
         });
         jTableIPV.setRowHeight(35);
         jTableIPV.setRowMargin(5);
+        jTableIPV.setSelectionForeground(new java.awt.Color(153, 153, 153));
         jScrollPane4.setViewportView(jTableIPV);
 
         jPanel5.add(jScrollPane4, java.awt.BorderLayout.CENTER);
@@ -311,6 +314,18 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonDarEntradaIpvVenta.setPreferredSize(new java.awt.Dimension(80, 50));
         jPanel6.add(jButtonDarEntradaIpvVenta, new java.awt.GridBagConstraints());
 
+        jButtonAjustarConsumoIpvVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/estadisticas_indigo.png"))); // NOI18N
+        jButtonAjustarConsumoIpvVenta.setMnemonic('a');
+        jButtonAjustarConsumoIpvVenta.setToolTipText(bundle.getString("label_ajustar_consumo")); // NOI18N
+        jButtonAjustarConsumoIpvVenta.setBorderPainted(false);
+        jButtonAjustarConsumoIpvVenta.setPreferredSize(new java.awt.Dimension(80, 50));
+        jButtonAjustarConsumoIpvVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAjustarConsumoIpvVentaActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButtonAjustarConsumoIpvVenta, new java.awt.GridBagConstraints());
+
         jButtonPedido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/flechas_indigo.png"))); // NOI18N
         jButtonPedido.setMnemonic('a');
         jButtonPedido.setToolTipText(bundle.getString("label_pedido")); // NOI18N
@@ -327,9 +342,14 @@ public class IpvGestionView extends AbstractViewPanel {
         add(jPanel3, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonAjustarConsumoIpvVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAjustarConsumoIpvVentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAjustarConsumoIpvVentaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAgregarInsumo;
     private javax.swing.JButton jButtonAjustarConsumo;
+    private javax.swing.JButton jButtonAjustarConsumoIpvVenta;
     private javax.swing.JButton jButtonAjustarCosto;
     private javax.swing.JButton jButtonDarEntradaIpv;
     private javax.swing.JButton jButtonDarEntradaIpvVenta;
@@ -391,6 +411,7 @@ public class IpvGestionView extends AbstractViewPanel {
         jButtonAjustarConsumo.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_AJUSTAR_IPV));
         jButtonDarEntradaIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_DAR_ENTRADA_IPV_REGISTROS));
         jButtonDarEntradaIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_DAR_ENTRADA_IPV_VENTA));
+        jButtonAjustarConsumoIpvVenta.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_DAR_AJUSTE_IPV_VENTA));
         jButtonImprimirIpv.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_VENTA_REGISTRO));
         jButtonimprimirIpvRegistro.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_IMPRIMIR_IPV_REGISTRO));
         jButtonPedido.addActionListener(getPresenter().getOperation(IpvGestionViewPresenter.ACTION_NUEVO_PEDIDO_IPV_VENTA));
@@ -424,12 +445,14 @@ public class IpvGestionView extends AbstractViewPanel {
         jTableIPV.setDefaultRenderer(Float.class, new RestManagerCellRender());
         jTableRegistro.getTableHeader().setFont(jTableIPV.getFont().deriveFont(Font.BOLD));
         jTableRegistro.setDefaultRenderer(Float.class, new RestManagerCellRender());
+        jTableIPV.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        ExcelAdapter a = new ExcelAdapter(jTableIPV);
         // jTableRegistro.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
 
         //
         // tabla ipv ventas
         //
-        jTableIPV.setModel(new BindableTableModel<IpvVentaRegistro>(jTableIPV) {
+        BindableTableModel<IpvVentaRegistro> model = new BindableTableModel<IpvVentaRegistro>(jTableIPV) {
             @Override
             public int getColumnCount() {
                 return 9;
@@ -438,16 +461,15 @@ public class IpvGestionView extends AbstractViewPanel {
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 //TODO: calcular el total de la tabla y mostrarlo al final
-
-//                if (rowIndex == getRowCount() - 1 && totalRowShowing) {
-//                    if (columnIndex == 0) {
-//                        return "Total";
-//                    }
-//                    if (columnIndex == columnTotal) {
-//                        return utils.setDosLugaresDecimales(calcularTotal());
-//                    }
-//                    return null;
-//                }
+                if (rowIndex == getRowCount()-1 && totalRowShowing) {
+                    if (columnIndex == 0) {
+                        return "Total";
+                    }
+                    if (columnIndex == columnTotal) {
+                        return utils.setDosLugaresDecimales(calcularTotal());
+                    }
+                    return null;
+                }
                 if (getRowCount() > 0 && !totalRowShowing || getRowCount() > 1 && totalRowShowing) {
                     switch (columnIndex) {
                         case 0:
@@ -502,16 +524,16 @@ public class IpvGestionView extends AbstractViewPanel {
             }
 
             //TODO: calcular el total de la tabla y mostrarlo al final
-//            @Override
-//            protected float calcularTotal() {
-//                float total = 0;
-//                if (totalRowShowing) {
-//                    for (IpvVentaRegistro i : items) {
-//                        total += i.getVendidos() * i.getProductoVenta().getPrecioVenta();
-//                    }
-//                }
-//                return total;
-//           }
+            protected float calcularTotal() {
+                float total = 0;
+                if (totalRowShowing) {
+                    for (IpvVentaRegistro i : ((SelectionInList<IpvVentaRegistro>) getListModel()).getList()) {
+                        total += i.getVenta() * i.getProductoVenta().getPrecioVenta();
+                    }
+                }
+                return total;
+            }
+
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
@@ -521,9 +543,10 @@ public class IpvGestionView extends AbstractViewPanel {
                         return Float.class;
                 }
             }
-        }
-        );
-        jTableIPV.getRowSorter().toggleSortOrder(0);
+        };
+        model.setColumnTotal(7);
+        jTableIPV.setModel(model);
+        //  jTableIPV.getRowSorter().toggleSortOrder(0);
         jTableIPV.getColumnModel().getColumn(0).setPreferredWidth(250);
 //  ((RestManagerAbstractTableModel<IpvVentaRegistro>) jTableIPV.getModel()).addTotalRow(7);
 
@@ -626,7 +649,7 @@ public class IpvGestionView extends AbstractViewPanel {
 
     private void imprimirIPVVentaRegistro() {
         MessageFormat footer = new MessageFormat("Entregado por                  Recibido por                  Revisado por");
-        MessageFormat header = new MessageFormat("IPV " + jComboBoxPtoElabSelec.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooserIpv.getDate()));
+        MessageFormat header = new MessageFormat("IPV " + jComboBoxPtoElabSelec.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooserIpvVentas.getDate()));
         try {
             jTableIPV.print(JTable.PrintMode.FIT_WIDTH, header, footer);
         } catch (PrinterException ex) {
