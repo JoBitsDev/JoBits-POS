@@ -6,7 +6,7 @@
 package com.jobits.pos.ui.almacen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
-import com.jobits.pos.controller.insumo.InsumoListService;
+import com.jobits.pos.controller.insumo.InsumoService;
 import com.jobits.pos.cordinator.DisplayType;
 import com.jobits.pos.cordinator.NavigationService;
 import com.jobits.pos.inventario.core.almacen.domain.Almacen;
@@ -117,7 +117,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onTransacciones() {
-        TransaccionService transaccionService = PosDesktopUiModule.getInstance().getImplementation(TransaccionService.class);
+        TransaccionListService transaccionService = PosDesktopUiModule.getInstance().getImplementation(TransaccionListService.class);
         NavigationService.getInstance().navigateTo(TransaccionListView.VIEW_NAME,
                 new TransaccionListPresenter(transaccionService, getBean().getElemento_seleccionado()), DisplayType.POPUP);
         refreshState();
@@ -298,7 +298,7 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     private void onKeywordChange(String search_keyWord) {
         if (search_keyWord != null) {
             List<InsumoAlmacen> insumoList = new ArrayList<>();
-            List<InsumoAlmacen> temporalLIst = detailService.getInsumoAlmacenList(getBean().getElemento_seleccionado().getCodAlmacen());
+            List<InsumoAlmacen> temporalLIst = getBean().getElemento_seleccionado().getInsumoAlmacenList();
             if (search_keyWord.equals("")) {
                 getBean().setLista_insumos_contenidos(new ArrayListModel<>(temporalLIst));
             } else {
@@ -308,18 +308,6 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
                 });
                 getBean().setLista_insumos_contenidos(new ArrayListModel<>(insumoList));
             }
-        }
-        String keyWord = keyword.toLowerCase();
-        List<InsumoAlmacen> insumoList = new ArrayList<>();
-        List<InsumoAlmacen> temporalLIst = getBean().getElemento_seleccionado().getInsumoAlmacenList();
-        if (keyword.equals("")) {
-            getBean().setLista_insumos_contenidos(new ArrayListModel<>(temporalLIst));
-        } else {
-            temporalLIst.stream().filter((insumoAlmacen)
-                    -> (insumoAlmacen.getInsumo().getNombre().toLowerCase().contains(keyWord))).forEachOrdered((insumoAlmacen) -> {
-                insumoList.add(insumoAlmacen);
-            });
-            getBean().setLista_insumos_contenidos(new ArrayListModel<>(insumoList));
         }
     }
 

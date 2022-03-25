@@ -8,7 +8,6 @@ package com.jobits.pos.ui.almacen.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.repo.impl.VentaDAO;
-import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionListService;
 import com.jobits.pos.core.domain.TransaccionSimple;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Insumo;

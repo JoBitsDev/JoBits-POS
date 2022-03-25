@@ -13,6 +13,7 @@ import com.jobits.pos.core.domain.models.Venta;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -54,10 +55,8 @@ public interface VentaWCI {
     @GET("pos/venta/{id}/get-autorizos-total-producto/{idProdVenta}")
     public Call<Float> getAutorizosTotalDelProducto(@Path("id") int idVenta, @Path("idProdVenta") String idProductoVenta);
 
-    @GET("pos/venta/{id}/get-gasto-total-insumo/{codCocina}/{codInsumo}")
-    public Call<Float> getGastoTotalDeInsumo(@Path("id") int idVenta,
-            @Path("codCocina") String codCocina,
-            @Path("codInsumo") String codInsumo);
+    @GET("pos/venta/{id}/get-gasto-total-insumos")
+    public Call<Map<String, Float>> getGastoTotalDeInsumo(@Path("id") int idVenta);
 
     @GET("pos/venta/{id}/get-ordenes-activas")
     public Call<List<Orden>> getOrdenesActivas(@Path("id") int idVenta);

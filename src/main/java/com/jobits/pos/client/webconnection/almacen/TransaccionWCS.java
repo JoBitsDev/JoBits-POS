@@ -6,11 +6,12 @@
 package com.jobits.pos.client.webconnection.almacen;
 
 import com.jobits.pos.client.webconnection.BaseConnection;
-import com.jobits.pos.controller.almacen.TransaccionService;
-import com.jobits.pos.core.domain.models.InsumoAlmacen;
-import com.jobits.pos.core.domain.models.Operacion;
-import com.jobits.pos.core.domain.models.Transaccion;
-import com.jobits.pos.core.domain.models.TransaccionTransformacion;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.InsumoAlmacen;
+import com.jobits.pos.inventario.core.almacen.domain.Operacion;
+import com.jobits.pos.inventario.core.almacen.domain.Transaccion;
+import com.jobits.pos.inventario.core.almacen.domain.TransaccionTransformacion;
+import com.jobits.pos.inventario.core.almacen.usecase.TransaccionListService;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.util.List;
@@ -22,19 +23,9 @@ import java.util.List;
  * @author Jorge
  *
  */
-public class TransaccionWCS extends BaseConnection implements TransaccionService {
+public class TransaccionWCS extends BaseConnection implements TransaccionListService{
 
     TransaccionWCI service = retrofit.create(TransaccionWCI.class);
-
-    @Override
-    public List<Transaccion> findAllByAlmacen(String codAlmacen) {
-        return handleCall(service.findAllByAlmacen(codAlmacen));
-    }
-
-    @Override
-    public List<Transaccion> findMermasByAlmacen(String codAlmacen) {
-        return handleCall(service.findMermasByAlmacen(codAlmacen));
-    }
 
     @Override
     public void imprimirTransaccionesSeleccionadas(List<Transaccion> selectedsObjects) {
@@ -82,28 +73,13 @@ public class TransaccionWCS extends BaseConnection implements TransaccionService
     }
 
     @Override
-    public void addTransaccionEntrada(Operacion o, String codInsumo, Date fecha, Date hora, String codAlmacen, float cantidad, float importe) {
-        handleCall(service.addTransaccionEntrada(o, codInsumo, fecha, hora, codAlmacen, cantidad, importe));
+    public List<Transaccion> findAllByAlmacen(String codAlmacen) {
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void addTransaccionRebaja(Operacion o, String codInsumo, Date fecha, Date hora, String codAlmacen, float cantidad, String causaRebaja, boolean isMerma) {
-        handleCall(service.addTransaccionRebaja(o, codInsumo, fecha, hora, codAlmacen, cantidad, causaRebaja, isMerma));
-    }
-
-    @Override
-    public void addTransaccionSalida(Operacion o, String codInsumo, Date fecha, Date hora, String codAlmacen, String codCocina, float cantidad, int idVenta) {
-        handleCall(service.addTransaccionSalida(o, codInsumo, fecha, hora, codAlmacen, codCocina, cantidad, idVenta));
-    }
-
-    @Override
-    public void addTransaccionTransformacion(InsumoAlmacen selected, Date fecha, Date hora, List<TransaccionTransformacion> items, float cantidad, float merma, String codAlmacenDestino) {
-        handleCall(service.addTransaccionTransformacion(selected, fecha, hora, items, cantidad, merma, codAlmacenDestino));
-    }
-
-    @Override
-    public void addTransaccionTraspaso(Operacion o, String codInsumoe, Date fecha, Date hora, String codAlmacen, String codAlmacenDestinoTraspaso, float cantidad) {
-        handleCall(service.addTransaccionTraspaso(o, codInsumoe, fecha, hora, codAlmacen, codAlmacenDestinoTraspaso, cantidad));
+    public List<Transaccion> findMermasByAlmacen(String codAlmacen) {
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -5,13 +5,10 @@
  */
 package com.jobits.pos.client.webconnection.almacen;
 
-import com.jobits.pos.core.domain.models.Almacen;
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.Insumo;
-import com.jobits.pos.core.domain.models.InsumoAlmacen;
-import com.jobits.pos.core.domain.models.Operacion;
-import com.jobits.pos.core.domain.models.Transaccion;
-import com.jobits.pos.core.domain.models.TransaccionTransformacion;
+import com.jobits.pos.inventario.core.almacen.domain.InsumoAlmacen;
+import com.jobits.pos.inventario.core.almacen.domain.Operacion;
+import com.jobits.pos.inventario.core.almacen.domain.Transaccion;
+import com.jobits.pos.inventario.core.almacen.domain.TransaccionTransformacion;
 import java.util.Date;
 import java.util.List;
 import retrofit2.Call;

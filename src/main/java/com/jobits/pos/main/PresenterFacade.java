@@ -5,8 +5,9 @@
  */
 package com.jobits.pos.main;
 
-import com.jobits.pos.controller.login.impl.LogInController;
+import com.jobits.pos.client.webconnection.login.model.UbicacionService;
 import com.jobits.pos.controller.venta.OrdenService;
+import com.jobits.pos.controller.venta.VentaCalendarResumeUseCase;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Carta;
@@ -128,7 +129,6 @@ import com.jobits.pos.ui.venta.resumen.presenter.ResumenMainViewPresenter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jobits.db.core.usecase.UbicacionConexionService;
 
 /**
  *

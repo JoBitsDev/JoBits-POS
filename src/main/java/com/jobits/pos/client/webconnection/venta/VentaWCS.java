@@ -6,28 +6,18 @@
 package com.jobits.pos.client.webconnection.venta;
 
 import com.jobits.pos.client.webconnection.BaseConnection;
-import com.jobits.pos.controller.resumen.VentaResumenService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
 import com.jobits.pos.core.domain.VentaResourcesWrapper;
 import com.jobits.pos.core.domain.VentaResumenWrapper;
-import com.jobits.pos.core.domain.models.Area;
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.IpvRegistro;
-import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
-import com.jobits.pos.core.domain.models.Personal;
-import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.Venta;
-import com.jobits.pos.utils.utils;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -86,11 +76,6 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public Float getGastoTotalDeInsumo(String c, String in, int codVenta) {
-        return handleCall(service.getGastoTotalDeInsumo(codVenta, c, in));
-    }
-
-    @Override
     public List<Orden> getOrdenesActivas(int codVenta) {
         return handleCall(service.getOrdenesActivas(codVenta));
     }
@@ -103,11 +88,6 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     @Override
     public Float getPropinaTrabajador(String codPersonal, int codVenta) {
         return handleCall(service.getPropinaTrabajador(codVenta, codPersonal));
-    }
-
-    @Override
-    public float getVentaTotalDelProducto(ProductoVenta productoVenta, int codVenta) {
-        return handleCall(service.getVentaTotalDelProducto(codVenta, productoVenta.getCodigoProducto()));
     }
 
     @Override
@@ -263,6 +243,16 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     @Override
     public VentaResourcesWrapper getVentaResources(int codVenta) {
         return handleCall(service.getVentaResources(codVenta));
+    }
+
+    @Override
+    public float getVentaTotalDelProducto(String codProductoVenta, int codVenta) {
+        return handleCall(service.getVentaTotalDelProducto(codVenta,codProductoVenta));
+    }
+
+    @Override
+    public Map<String, Float> getGastoTotalDeInsumo(int codVenta) {
+        return handleCall(service.getGastoTotalDeInsumo(codVenta));
     }
 
 }

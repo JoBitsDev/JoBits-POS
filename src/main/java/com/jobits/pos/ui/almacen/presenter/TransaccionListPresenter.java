@@ -22,12 +22,12 @@ import javax.swing.JOptionPane;
  */
 public class TransaccionListPresenter extends AbstractListViewPresenter<TransaccionListModel> {
 
-    TransaccionService service;
+    TransaccionListService service;
     public static final String ACTION_IMPRIMIR_TRANSACCIONES = "";
     public static final String ACTION_MOSTRAR_MERMAS = "Mostrar Mermas";
     public static final String ACTION_CERRAR_POPUP = "Cerrar";
 
-    public TransaccionListPresenter(TransaccionService service, Almacen almacen) {
+    public TransaccionListPresenter(TransaccionListService service, Almacen almacen) {
         super(new TransaccionListModel(), TransaccionListView.VIEW_NAME);
         this.service = service;
         getBean().setAlmacen(almacen);

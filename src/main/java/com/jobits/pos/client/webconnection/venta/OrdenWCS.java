@@ -6,29 +6,10 @@
 package com.jobits.pos.client.webconnection.venta;
 
 import com.jobits.pos.client.webconnection.BaseConnection;
-import com.jobits.pos.controller.resumen.VentaResumenService;
 import com.jobits.pos.controller.venta.OrdenService;
-import com.jobits.pos.controller.venta.VentaDetailService;
-import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
-import com.jobits.pos.core.domain.VentaResourcesWrapper;
-import com.jobits.pos.core.domain.VentaResumenWrapper;
-import com.jobits.pos.core.domain.models.Area;
-import com.jobits.pos.core.domain.models.Cocina;
-import com.jobits.pos.core.domain.models.IpvRegistro;
-import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
-import com.jobits.pos.core.domain.models.Personal;
-import com.jobits.pos.core.domain.models.ProductoVenta;
 import com.jobits.pos.core.domain.models.ProductovOrden;
-import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.core.domain.models.temporal.ProductoVentaWrapper;
-import com.jobits.pos.utils.utils;
-import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -137,6 +118,16 @@ public class OrdenWCS extends BaseConnection implements OrdenService {
     @Override
     public List<Orden> findAll() throws RuntimeException {
         return handleCall(service.findAll());
+    }
+
+    @Override
+    public Orden markReadyToPickup(String codOrden, int codProductoOrden, float ammount) {
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Orden enviarACocina(String codOrden, String uuid) {
+        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

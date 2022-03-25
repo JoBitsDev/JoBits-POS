@@ -7,8 +7,6 @@ package com.jobits.pos.ui.configuracion.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.root101.swing.material.standards.MaterialIcons;
-import com.jobits.pos.controller.almacen.AlmacenManageService;
-import com.jobits.pos.controller.almacen.IPVService;
 import com.jobits.pos.controller.login.LogInService;
 import com.jobits.pos.controller.venta.VentaDetailService;
 import com.jobits.pos.core.domain.models.Venta;

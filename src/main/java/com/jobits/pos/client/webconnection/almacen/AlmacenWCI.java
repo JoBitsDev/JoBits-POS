@@ -6,15 +6,14 @@
 package com.jobits.pos.client.webconnection.almacen;
 
 import com.jobits.pos.core.domain.TransaccionSimple;
-import com.jobits.pos.core.domain.models.Almacen;
-import com.jobits.pos.core.domain.models.InsumoAlmacen;
-import com.jobits.pos.core.domain.models.PuestoTrabajo;
-import com.jobits.pos.core.domain.models.Transaccion;
-import com.jobits.pos.core.domain.models.TransaccionEntrada;
-import com.jobits.pos.core.domain.models.TransaccionMerma;
-import com.jobits.pos.core.domain.models.TransaccionSalida;
-import com.jobits.pos.core.domain.models.TransaccionTransformacion;
-import com.jobits.pos.core.domain.models.TransaccionTraspaso;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
+import com.jobits.pos.inventario.core.almacen.domain.InsumoAlmacen;
+import com.jobits.pos.inventario.core.almacen.domain.Transaccion;
+import com.jobits.pos.inventario.core.almacen.domain.TransaccionEntrada;
+import com.jobits.pos.inventario.core.almacen.domain.TransaccionMerma;
+import com.jobits.pos.inventario.core.almacen.domain.TransaccionSalida;
+import com.jobits.pos.inventario.core.almacen.domain.TransaccionTransformacion;
+import com.jobits.pos.inventario.core.almacen.domain.TransaccionTraspaso;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
