@@ -8,6 +8,7 @@ package com.jobits.pos.ui.reserva.presenter;
 import com.jobits.pos.controller.mesa.MesaService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.cordinator.NavigationService;
+import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
@@ -94,7 +95,7 @@ public class ReservaOrdenDetailViewPresenter extends AbstractViewPresenter<Reser
         if (this.codOrden != null) {
             Orden o = service.findBy(this.codOrden);
             if (o != null) {
-                if (o.getMesacodMesa() != null) {
+                if (!o.getMesacodMesa().equals(Mesa.deletedMesa())) {
                     productoListPresenter.setMesaSeleccionada(o.getMesacodMesa());
                 }
             }
