@@ -402,7 +402,6 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     private void confirmarTransaccion(OperationType currentOperation) {
         if (operationToAccept != null) {
             service.ejecutarOperacion(getBean().getAlmacen().getCodAlmacen(), operationToAccept);
-            Application.getInstance().getNavigator().navigateUp();
             return;
         }
         if (currentOperation == OperationType.TRANSFORMAR) {
@@ -420,8 +419,6 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
                         getBean().getAlmacen().getCodAlmacen(),
                         0
                 );
-                Application.getInstance().getNavigator().navigateUp();
-                return;
             }
         } else {
             if (validateInputs()) {
@@ -461,7 +458,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
 //                }
             }
         }
-        
+
     }
 
     private boolean validateTransformationInputs() {
@@ -565,12 +562,17 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
         }
         if (t.getTransaccionSalida() != null) {
             setVisiblePanels(OperationType.SALIDA);
-            getBean().setComponent_locked(false);
+            getBean().getLista_destino().clear();
+            getBean().getLista_destino().addAll(new ArrayListModel(cocinaService.findAll()));
+            // getBean().setComponent_locked(true);
             getBean().setDestino_seleccionado(t.getTransaccionSalida().getCocinacodCocina());
             return OperationType.SALIDA;
         }
         if (t.getTransaccionMerma() != null) {
             setVisiblePanels(OperationType.REBAJA);
+            getBean().setCausa_rebaja(t.getTransaccionMerma().getRazon());
+            getBean().setRebaja_merma(t.getTransaccionMerma().isEsMerma());
+            //getBean().setComponent_locked(true);
             return OperationType.REBAJA;
         }
         if (t.getTransaccionTraspaso() != null) {
