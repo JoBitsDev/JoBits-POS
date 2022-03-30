@@ -19,9 +19,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -41,6 +44,7 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         super();
         initComponents();
+        setIcon();
         getContentPane().setLayout(new BorderLayout());
         setBackground(DefaultValues.PRIMARY_COLOR);
         // setResizable(false);
@@ -144,5 +148,10 @@ public class MainWindow extends JFrame {
             g.fillRect(clip.x, clip.y, clip.width, clip.height);
         }
 
+    }
+
+    private void setIcon() {
+        ImageIcon img = new ImageIcon("restManager/resources/logo/icon.ico");
+        setIconImage(img.getImage());
     }
 }
