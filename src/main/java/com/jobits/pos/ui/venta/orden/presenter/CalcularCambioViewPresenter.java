@@ -65,6 +65,7 @@ public class CalcularCambioViewPresenter extends AbstractViewPresenter<CalcularC
         getBean().setTotal_a_pagar(R.formatoMoneda.format(o.getOrdenvalorMonetario()));
         getBean().setCambio(R.formatoMoneda.format(0));
         getBean().setEntrada_moneda_nacional(0);
+        getBean().setMoneda(R.COIN_SUFFIX);
 
         return super.refreshState(); //To change body of generated methods, choose Tools | Templates.
     }
