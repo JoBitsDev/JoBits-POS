@@ -1,6 +1,6 @@
 plugins {
     id 'io.freefair.lombok' version '5.3.0' apply true
-    id 'edu.sc.seis.launch4j' version '2.4.6' apply true  
+    id 'edu.sc.seis.launch4j' version '2.5.2' apply true  
 }
 
 description = 'JoBits POS:Client-Swing'
@@ -127,7 +127,7 @@ launch4j{
     outfile = 'JoBits POS.exe'
     mainClassName = 'com.jobits.pos.main.Main'
     bundledJrePath = 'jdk'
-    // icon = '/Users/Jorge/Desktop/app.ico'
+     icon = "${projectDir}/src/main/resources/restManager/resources/logo/icon.ico"
     
 }
 
