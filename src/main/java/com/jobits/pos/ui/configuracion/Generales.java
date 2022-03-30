@@ -345,10 +345,10 @@ public class Generales extends AbstractViewPanel {
         //Bindings.bind(jCheckBoxPermEsp, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
         Bindings.bind(jToggleButtonPermEsp, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
         //Bindings.bind(jCheckBoxMesaFija, getPresenter().getModel(R.SettingID.GENERAL_MESA_FIJA_CAJERO.toString()));
-        Bindings.bind(jToggleButtonMesaFija, getPresenter().getModel(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP.toString()));
+        Bindings.bind(jToggleButtonMesaFija, getPresenter().getModel(R.SettingID.GENERAL_MESA_FIJA_CAJERO.toString()));
 
         Bindings.bind(jComboBoxTipoNegocio, new ComboBoxAdapter(Arrays.asList(
-                "Restaurante", "Cafeteria", "Bar", "Carniceria", "Dulceria", "Tienda"),
+                "Restaurante", "Cafeteria", "Bar", "Salon", "Carniceria", "Dulceria", "Tienda"),
                 getPresenter().getModel(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO.toString())));
         Bindings.bind(jComboBoxCambioMoneda, new ComboBoxAdapter(Arrays.asList("20", "21", "22", "23", "24", "25"),
                 getPresenter().getModel(R.SettingID.GENERAL_CAMBIO_MONEDA.toString())));
