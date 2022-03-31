@@ -226,6 +226,7 @@ public class ProductoVentaDetailPresenter extends AbstractViewPresenter<Producto
             productoVenta.setDescripcion(getBean().getRuta_imagen_producto());
             productoVenta.setVisible(true);
             productoVenta.setComisionPorcientoPorVenta(getBean().getComision_por_venta_porcentual());
+            productoVenta.setLibreDeImpuestos(getBean().isCheckbox_producto_libre_impuestos());
             if (creatingMode) {
                 service.create(productoVenta);
             } else {

@@ -83,14 +83,16 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         filler7 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jPanelCrossRef = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanel11 = MaterialComponentsFactory.Containers.getSecondaryPanel();
-        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
-        jTextFieldPagoPorVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", java.util.ResourceBundle.getBundle("Strings").getString("label_comision_por_venta"),R.COIN_SUFFIX);
+        jPanel9 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jCheckBoxExentoAImpuestos = MaterialComponentsFactory.Input.getCheckBox();
         jPanel4 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel3 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         jSpinner1 = new javax.swing.JSpinner();
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
         jLabel2 = new javax.swing.JLabel();
+        jPanel1 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jTextFieldPagoPorVenta = MaterialComponentsFactory.Input.getTextFielPrecioVenta("", java.util.ResourceBundle.getBundle("Strings").getString("label_comision_por_venta"),R.COIN_SUFFIX);
         jPanel16 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jLabel5 = new javax.swing.JLabel();
         filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 0), new java.awt.Dimension(10, 32767));
@@ -297,17 +299,23 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
 
         jPanel11.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
         jPanel11.setMaximumSize(new java.awt.Dimension(32767, 121));
-        jPanel11.setLayout(new java.awt.GridLayout(3, 1));
+        jPanel11.setLayout(new java.awt.GridLayout(4, 1));
 
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        jPanel9.setOpaque(false);
+        jPanel9.setLayout(new java.awt.BorderLayout());
 
-        jTextFieldPagoPorVenta.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
-        jTextFieldPagoPorVenta.setMaximumSize(new java.awt.Dimension(250, 60));
-        jTextFieldPagoPorVenta.setMinimumSize(new java.awt.Dimension(250, 60));
-        jTextFieldPagoPorVenta.setPreferredSize(new java.awt.Dimension(250, 60));
-        jPanel1.add(jTextFieldPagoPorVenta, new java.awt.GridBagConstraints());
+        jCheckBoxExentoAImpuestos.setText("Exento a impuestos");
+        jCheckBoxExentoAImpuestos.setToolTipText("");
+        jCheckBoxExentoAImpuestos.setContentAreaFilled(false);
+        jCheckBoxExentoAImpuestos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCheckBoxExentoAImpuestos.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBoxExentoAImpuestosStateChanged(evt);
+            }
+        });
+        jPanel9.add(jCheckBoxExentoAImpuestos, java.awt.BorderLayout.CENTER);
 
-        jPanel11.add(jPanel1);
+        jPanel11.add(jPanel9);
 
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
@@ -325,6 +333,16 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         jPanel4.add(jLabel2, new java.awt.GridBagConstraints());
 
         jPanel11.add(jPanel4);
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        jTextFieldPagoPorVenta.setToolTipText(bundle.getString("tooltip_Nombre")); // NOI18N
+        jTextFieldPagoPorVenta.setMaximumSize(new java.awt.Dimension(250, 60));
+        jTextFieldPagoPorVenta.setMinimumSize(new java.awt.Dimension(250, 60));
+        jTextFieldPagoPorVenta.setPreferredSize(new java.awt.Dimension(250, 60));
+        jPanel1.add(jTextFieldPagoPorVenta, new java.awt.GridBagConstraints());
+
+        jPanel11.add(jPanel1);
 
         jPanel16.setLayout(new java.awt.GridBagLayout());
 
@@ -393,6 +411,10 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private void jTextFieldPrecioCostoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPrecioCostoFocusGained
     }//GEN-LAST:event_jTextFieldPrecioCostoFocusGained
 
+    private void jCheckBoxExentoAImpuestosStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxExentoAImpuestosStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxExentoAImpuestosStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
@@ -404,6 +426,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JButton jButtonAddSeccion;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCrear;
+    private javax.swing.JCheckBox jCheckBoxExentoAImpuestos;
     private javax.swing.JCheckBox jCheckBoxInventariarProducto;
     private javax.swing.JCheckBox jCheckBoxProductoElaborado;
     private javax.swing.JComboBox<Cocina> jComboBoxCOCINA;
@@ -432,6 +455,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelCosto;
     private javax.swing.JPanel jPanelCrossRef;
     private javax.swing.JPanel jPanelInputs;
@@ -466,6 +490,7 @@ public class ProductoVentaDetailView extends AbstractViewPanel {
         //
         Bindings.bind(jCheckBoxInventariarProducto, getPresenter().getModel(PROP_CHECKBOX_INVENTARIAR_PRODUCTO));
         Bindings.bind(jCheckBoxProductoElaborado, getPresenter().getModel(PROP_CHECKBOX_PRODUCTO_ELABORADO));
+        Bindings.bind(jCheckBoxExentoAImpuestos, getPresenter().getModel(PROP_CHECKBOX_PRODUCTO_LIBRE_IMPUESTOS));
         Bindings.bind(jPanelCrossRef, "visible", getPresenter().getModel(PROP_CHECKBOX_PRODUCTO_ELABORADO));
         Bindings.bind(jPanelInventario, "visible", getPresenter().getModel(PROP_CHECKBOX_INVENTARIAR_PRODUCTO));
 
