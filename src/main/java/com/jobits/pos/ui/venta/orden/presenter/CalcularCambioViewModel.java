@@ -6,6 +6,8 @@
 package com.jobits.pos.ui.venta.orden.presenter;
 
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 /**
  *
@@ -28,6 +30,20 @@ public class CalcularCambioViewModel extends AbstractViewModel {
     private String cambio;
 
     public static final String PROP_CAMBIO = "cambio";
+
+    private String moneda;
+
+    public static final String PROP_MONEDA = "moneda";
+
+    public String getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(String moneda) {
+        String oldMoneda = this.moneda;
+        this.moneda = moneda;
+        firePropertyChange(PROP_MONEDA, oldMoneda, moneda);
+    }
 
     /**
      * Get the value of cambio
