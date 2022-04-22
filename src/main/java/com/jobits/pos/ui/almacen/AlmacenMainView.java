@@ -13,6 +13,7 @@ import com.root101.swing.material.standards.MaterialIcons;
 import com.jobits.pos.core.domain.models.Insumo;
 import com.jobits.pos.inventario.core.almacen.domain.InsumoAlmacen;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.ui.almacen.ipv.IpvGestionView;
 import static com.jobits.pos.ui.almacen.presenter.AlmacenViewModel.*;
 import static com.jobits.pos.ui.almacen.presenter.AlmacenViewPresenter.*;
 import com.jobits.pos.ui.utils.AddFromPanel;
@@ -24,6 +25,12 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
+import java.beans.PropertyChangeEvent;
+import java.text.MessageFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTable;
 
 /**
  *
@@ -303,6 +310,11 @@ public class AlmacenMainView extends AbstractViewPanel {
         Bindings.bind(jPanelTabla, "visible", getPresenter().getModel(PROP_PANEL_VISIBLE));
         Bindings.bind(jPanelOpciones, "visible", getPresenter().getModel(PROP_PANEL_VISIBLE));
         Bindings.bind(jTextFieldBusqueda, getPresenter().getModel(PROP_SEARCH_KEYWORD));
+        
+         getPresenter().addPropertyChangeListener("IMPRIMIR_TABLA_ALMACEN", (PropertyChangeEvent evt) -> {
+            imprimirResumenAlmacen();
+        });
+    
     }
 
     @Override
@@ -396,5 +408,18 @@ public class AlmacenMainView extends AbstractViewPanel {
     public String getViewName() {
         return VIEW_NAME;
     }
+
+    private void imprimirResumenAlmacen() {
+         // MessageFormat footer = new MessageFormat("-Pag {0}-");
+        //MessageFormat header = new MessageFormat("IPV " + jComboBoxPtoElabSelec.getSelectedItem().toString() + " Dia " + R.DATE_FORMAT.format(jDateChooserIpv.getDate()));
+        try {
+            tableInsumos.getjTableCrossReference().print(JTable.PrintMode.FIT_WIDTH);
+        } catch (PrinterException ex) {
+            Logger.getLogger(IpvGestionView.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
 
 }

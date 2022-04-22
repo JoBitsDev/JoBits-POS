@@ -51,6 +51,9 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
 
     private void onBuscarClick() {
         getBean().getLista_personal().clear();
+        if(getBean().getFecha_desde().after(getBean().getFecha_hasta())){
+            throw new IllegalArgumentException("Rango de fechas incorrecto");
+        }
         getBean().getLista_personal().addAll(service.getPersonalActivo(getBean().getFecha_desde(), getBean().getFecha_hasta()));
 
     }
