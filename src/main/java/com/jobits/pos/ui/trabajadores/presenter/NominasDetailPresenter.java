@@ -62,7 +62,7 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
         boolean flag = JOptionPane.showConfirmDialog(null,
                 "Desea imprimir el comprobante de pago", "Comprobante de Pago",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-        service.pagar(getBean().getLista_personal(), flag);
+        service.pagar(getBean().getLista_personal(),getBean().getHasta(), flag);
         getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize());
         Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
