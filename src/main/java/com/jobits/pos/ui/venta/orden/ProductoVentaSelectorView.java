@@ -55,7 +55,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
                 return new CellRenderLabel(value.getNombreSeccion(), null, isSelected, null);
             }
         });
-        jList2.setCellRenderer(new ListCellRenderer<ProductoVenta>() {
+        jListProductos.setCellRenderer(new ListCellRenderer<ProductoVenta>() {
             @Override
             public Component getListCellRendererComponent(JList<? extends ProductoVenta> list, ProductoVenta value, int index, boolean isSelected, boolean cellHasFocus) {
                 return new CellRenderLabel(value.getNombre(), utils.setDosLugaresDecimales(value.getPrecioVenta()), isSelected, value.getDescripcion());
@@ -70,7 +70,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
                 getPresenter().getModel(ProductoVentaSelectorViewModel.PROP_LISTA_ELEMENTOS),
                 getPresenter().getModel(ProductoVentaSelectorViewModel.PROP_ELEMENTO_SELECCIONADO)));
 
-        Bindings.bind(jList2, new SelectionInList<Seccion>(
+        Bindings.bind(jListProductos, new SelectionInList<Seccion>(
                 getPresenter().getModel(ProductoVentaSelectorViewModel.PROP_LISTAPRODUCTOS),
                 getPresenter().getModel(ProductoVentaSelectorViewModel.PROP_PRODUCTOVENTASELECCIONADO)));
 
@@ -78,9 +78,9 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         Bindings.bind(jTextFieldSearch, "enabled", getPresenter().getModel(PROP_CAMPO_BUSQUEDA_ENABLED));
 
         getPresenter().addBeanPropertyChangeListener(PROP_PV_FILTRADO, (PropertyChangeEvent evt) -> {
-            jList2.revalidate();
-            jList2.repaint();
-            jListSecciones.revalidate();
+            //jListProductos.revalidate();
+            jListProductos.repaint();
+           // jListSecciones.revalidate();
             jListSecciones.repaint();
             if (evt.getNewValue() != null && !((String) evt.getNewValue()).equals("")) {
                 changeToProductos();
@@ -94,8 +94,8 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
             }
         });
         getPresenter().addBeanPropertyChangeListener(PROP_LISTAPRODUCTOS, (PropertyChangeEvent evt) -> {
-            jList2.revalidate();
-            jList2.repaint();
+            //jListProductos.revalidate();
+            jListProductos.repaint();
         });
         getPresenter().addPropertyChangeListener(PROP_MOSTRAR_SECCIONES, (PropertyChangeEvent evt) -> {
             if ((boolean) evt.getNewValue()) {
@@ -127,7 +127,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jScrollPaneSecciones = MaterialComponentsFactory.Containers.getScrollPane();
         jListSecciones = new javax.swing.JList<>();
         jScrollPaneProductos = MaterialComponentsFactory.Containers.getScrollPane();
-        jList2 = new javax.swing.JList<>();
+        jListProductos = new javax.swing.JList<>();
 
         setMinimumSize(new java.awt.Dimension(50, 50));
         setOpaque(false);
@@ -195,18 +195,18 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
         jScrollPaneProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPaneProductos.setFocusable(false);
 
-        jList2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList2.setFixedCellHeight(120);
-        jList2.setFixedCellWidth(140);
-        jList2.setFocusable(false);
-        jList2.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
-        jList2.setVisibleRowCount(-1);
-        jList2.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        jListProductos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListProductos.setFixedCellHeight(120);
+        jListProductos.setFixedCellWidth(140);
+        jListProductos.setFocusable(false);
+        jListProductos.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        jListProductos.setVisibleRowCount(-1);
+        jListProductos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jList2ValueChanged(evt);
+                jListProductosValueChanged(evt);
             }
         });
-        jScrollPaneProductos.setViewportView(jList2);
+        jScrollPaneProductos.setViewportView(jListProductos);
 
         jPanelMain.add(jScrollPaneProductos, "Productos");
 
@@ -221,11 +221,11 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     private void jTextFieldSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldSearchFocusLost
     }//GEN-LAST:event_jTextFieldSearchFocusLost
 
-    private void jList2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList2ValueChanged
-        jList2.clearSelection();
-        jList2.revalidate();
-        jList2.repaint();
-    }//GEN-LAST:event_jList2ValueChanged
+    private void jListProductosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListProductosValueChanged
+        jListProductos.clearSelection();
+        //jListProductos.revalidate();
+        jListProductos.repaint();
+    }//GEN-LAST:event_jListProductosValueChanged
 
     private void jButtonAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtrasActionPerformed
 //        changeToSecciones();
@@ -235,7 +235,7 @@ public class ProductoVentaSelectorView extends AbstractViewPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAtras;
     private javax.swing.JLabel jLabelBuscarIcon;
-    private javax.swing.JList<ProductoVenta> jList2;
+    private javax.swing.JList<ProductoVenta> jListProductos;
     private javax.swing.JList<Seccion> jListSecciones;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

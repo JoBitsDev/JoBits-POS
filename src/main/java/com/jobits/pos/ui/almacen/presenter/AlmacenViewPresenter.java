@@ -104,7 +104,22 @@ public class AlmacenViewPresenter extends AbstractViewPresenter<AlmacenViewModel
     }
 
     private void onImprimirResumen() {
-        detailService.imprimirResumenAlmacen(getBean().getElemento_seleccionado().getCodAlmacen());
+        String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+        int selection = JOptionPane.showOptionDialog(null,
+                ResourceHandler.getString("dialog_seleccionar_manera_imprimir"),
+                ResourceHandler.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        switch (selection) {
+            case 0:
+                firePropertyChange("IMPRIMIR_TABLA_ALMACEN", null, null);
+                break;//impresion normal
+            case 1:
+                detailService.imprimirResumenAlmacen(getBean().getElemento_seleccionado().getCodAlmacen());
+                break;//impresion ticket
+            default:
+                break;//cancelado
+        }
+
     }
 
     private void onImprimirReporte() {
