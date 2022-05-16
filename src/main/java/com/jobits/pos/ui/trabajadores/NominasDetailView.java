@@ -321,6 +321,8 @@ public class NominasDetailView extends AbstractViewPanel {
         chart.getStyler().setDatePattern("dd-MMM");
         chart.getStyler().setPlotGridLinesVisible(false);
 
+        chart.getStyler().setCursorEnabled(true);
+
         chartPie.getStyler().setAnnotationType(PieStyler.AnnotationType.Percentage);
 
         float acumulado = 0, propina = 0;
