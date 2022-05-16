@@ -318,7 +318,7 @@ public class NominasDetailView extends AbstractViewPanel {
         XYChart chart = new XYChartBuilder().xAxisTitle("Dias").yAxisTitle("Monto").build();
         PieChart chartPie = new PieChartBuilder().theme(Styler.ChartTheme.XChart).build();
 
-        chart.getStyler().setDatePattern("dd'/'MM'/'yy");
+        chart.getStyler().setDatePattern("dd-MMM");
         chart.getStyler().setPlotGridLinesVisible(false);
 
         chartPie.getStyler().setAnnotationType(PieStyler.AnnotationType.Percentage);
@@ -405,7 +405,7 @@ public class NominasDetailView extends AbstractViewPanel {
                     case 0:
                         return "Usuario";
                     case 1:
-                        return "D�as";
+                        return "Días";
                     case 2:
                         return "Promedio (" + R.COIN_SUFFIX + ")";
                     case 3:
