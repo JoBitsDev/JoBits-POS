@@ -8,7 +8,10 @@ package com.jobits.pos.ui.trabajadores.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.ui.viewmodel.AbstractViewModel;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
 
 /**
@@ -47,6 +50,20 @@ public class NominasDetailViewModel extends AbstractViewModel {
     private String rango_fechas_text;
 
     public static final String PROP_RANGO_FECHAS_TEXT = "rango_fechas_text";
+
+    private String ultimo_pago_personal_seleccionado;
+
+    public static final String PROP_ULTIMO_PAGO_TEXT = "ultimo_pago_personal_seleccionado";
+
+    public String getUltimo_pago_personal_seleccionado() {
+        return ultimo_pago_personal_seleccionado;
+    }
+
+    public void setUltimo_pago_personal_seleccionado(String ultimo_pago_personal_seleccionado) {
+        String oldultimo_pago_personal_seleccionado = this.ultimo_pago_personal_seleccionado;
+        this.ultimo_pago_personal_seleccionado = ultimo_pago_personal_seleccionado;
+        firePropertyChange(PROP_ULTIMO_PAGO_TEXT, oldultimo_pago_personal_seleccionado, ultimo_pago_personal_seleccionado);
+    }
 
     /**
      * Get the value of rango_fechas_text
@@ -126,6 +143,7 @@ public class NominasDetailViewModel extends AbstractViewModel {
     public void setPersonal_seleccionado(AsistenciaPersonalEstadisticas personal_seleccionado) {
         AsistenciaPersonalEstadisticas oldPersonal_seleccionado = this.personal_seleccionado;
         this.personal_seleccionado = personal_seleccionado;
+        setUltimo_pago_personal_seleccionado(this.personal_seleccionado.getP().getUltimodiaPago().format(DateTimeFormatter.ofPattern("d-MMM-uuuu")));
         firePropertyChange(PROP_PERSONAL_SELECCIONADO, oldPersonal_seleccionado, personal_seleccionado, false);
     }
 

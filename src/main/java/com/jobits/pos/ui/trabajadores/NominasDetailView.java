@@ -76,6 +76,8 @@ public class NominasDetailView extends AbstractViewPanel {
         jRadioButtonPie = new javax.swing.JRadioButton();
         jPanelData = MaterialComponentsFactory.Containers.getTransparentPanel();
         jPanelIzq = MaterialComponentsFactory.Containers.getSecondaryPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabelUltimoPago = new javax.swing.JLabel();
         jCheckBoxseleccionarTodos = new javax.swing.JCheckBox();
         jScrollPane2 = MaterialComponentsFactory.Containers.getScrollPane();
         jTableUsuariosActivos = new javax.swing.JTable();
@@ -158,7 +160,6 @@ public class NominasDetailView extends AbstractViewPanel {
         jRadioButtonXY.setText("Dias Trabajados");
         jRadioButtonXY.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jRadioButtonXY.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jRadioButtonXY.setOpaque(false);
         jRadioButtonXY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonXYActionPerformed(evt);
@@ -169,7 +170,6 @@ public class NominasDetailView extends AbstractViewPanel {
         jRadioButtonPie.setText("Ventas Generales");
         jRadioButtonPie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jRadioButtonPie.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jRadioButtonPie.setOpaque(false);
         jRadioButtonPie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonPieActionPerformed(evt);
@@ -191,10 +191,17 @@ public class NominasDetailView extends AbstractViewPanel {
         jPanelIzq.setPreferredSize(new java.awt.Dimension(325, 510));
         jPanelIzq.setLayout(new java.awt.BorderLayout(5, 5));
 
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jLabelUltimoPago.setText("dd/mm/yyyy");
+        jPanel2.add(jLabelUltimoPago, java.awt.BorderLayout.WEST);
+
         jCheckBoxseleccionarTodos.setText("Seleccionar Todos");
         jCheckBoxseleccionarTodos.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jCheckBoxseleccionarTodos.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jPanelIzq.add(jCheckBoxseleccionarTodos, java.awt.BorderLayout.PAGE_START);
+        jPanel2.add(jCheckBoxseleccionarTodos, java.awt.BorderLayout.EAST);
+
+        jPanelIzq.add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         jScrollPane2.setOpaque(false);
 
@@ -294,6 +301,8 @@ public class NominasDetailView extends AbstractViewPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabelAcumulado;
     private javax.swing.JLabel jLabelPeriodoActual;
+    private javax.swing.JLabel jLabelUltimoPago;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -364,6 +373,7 @@ public class NominasDetailView extends AbstractViewPanel {
 
         jButtonPeriodoSelector.addActionListener(getPresenter().getOperation(NominasDetailPresenter.ACTION_DESPLEGAR_OPCIONES));
         Bindings.bind(jLabelPeriodoActual, "text", getPresenter().getModel(PROP_RANGO_FECHAS_TEXT));
+        Bindings.bind(jLabelUltimoPago, "text", getPresenter().getModel(PROP_ULTIMO_PAGO_TEXT));
 
         Bindings.bind(jTableUsuariosActivos, new SelectionInList(
                 getPresenter().getModel(PROP_LISTA_PERSONAL),
