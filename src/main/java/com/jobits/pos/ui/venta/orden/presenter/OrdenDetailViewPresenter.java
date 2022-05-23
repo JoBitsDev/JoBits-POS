@@ -140,7 +140,16 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 showDialog("Desea cerrar la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             boolean cerrarTicket = (boolean) Application.getInstance().getNotificationService().
                     showDialog("Desea imprimir un ticket de la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
-            Orden o = ordenService.cerrarOrden(getCodOrden(), cerrarTicket);
+            boolean tarjeta = (boolean) Application.getInstance().getNotificationService().
+                    showDialog("Presione no para marcar la nota como pagada por tarjeta.", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
+            
+            float total = ordenService.getValorTotalOrden(getCodOrden());
+            
+            Orden o = ordenService.cerrarOrden(
+                    getCodOrden(),
+                    cerrarTicket,
+                    tarjeta ? total : 0,
+                    !tarjeta ? total : 0);
             if (o != null) {
                 NavigationService.getInstance().navigateTo(CalcularCambioView.VIEW_NAME,
                         new CalcularCambioViewPresenter(o), DisplayType.POPUP);
