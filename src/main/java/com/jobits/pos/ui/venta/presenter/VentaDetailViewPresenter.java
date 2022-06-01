@@ -321,8 +321,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 new LongProcessActionServiceImpl("Creando IPVs.........") {
                     @Override
                     protected void longProcessMethod() {//TODO: No se muestran las ecepciones que se lanzan dentro de este metodo
-                        service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
+                        var newTurno = service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
                         //ventas = service.getVentasDeFecha(getBean().getVenta_seleccionada().getFecha());
+                        getBean().setVenta_seleccionada(newTurno.getId());
                         updateBeanData();
                     }
                 }.performAction(null);
@@ -445,9 +446,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     @Override
     protected Optional refreshState() {
-        // long start = System.currentTimeMillis();
+        //       long start = System.currentTimeMillis();
         updateBeanData();
-        //System.out.println(System.currentTimeMillis() - start);
+        //     System.out.println(System.currentTimeMillis() - start);
         return Optional.empty();
     }
 
