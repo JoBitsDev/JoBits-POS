@@ -849,7 +849,7 @@ public class VentaDetailView extends AbstractViewPanel {
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getProductoVenta().getNombre();
+                        return pv.getNombreProductoVendidoSinPrecio();
                     case 1:
                         return pv.getPrecioVendido();
                     case 2:
@@ -906,7 +906,7 @@ public class VentaDetailView extends AbstractViewPanel {
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getProductoVenta().getNombre();
+                        return pv.getNombreProductoVendidoSinPrecio();
                     case 1:
                         return pv.getPrecioVendido();
                     case 2:
@@ -963,7 +963,7 @@ public class VentaDetailView extends AbstractViewPanel {
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getProductoVenta().getNombre();
+                        return pv.getNombreProductoVendidoSinPrecio();
                     case 1:
                         return pv.getPrecioVendido();
                     case 2:
@@ -1020,7 +1020,7 @@ public class VentaDetailView extends AbstractViewPanel {
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getProductoVenta().getNombre();
+                        return pv.getNombreProductoVendidoSinPrecio();
                     case 1:
                         return pv.getPrecioVendido();
                     case 2:
