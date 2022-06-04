@@ -165,7 +165,7 @@ public class RootView extends JPanel {
                 .repaint();
         dashboard.getTaskPane()
                 .revalidate();
-        getCurrentView().getPresenter().getOperation(ACTION_REFRESH_STATE).doAction();
+//        getCurrentView().getPresenter().getOperation(ACTION_REFRESH_STATE).doAction();
         return true;
     }
 

@@ -72,10 +72,7 @@ public class ImpresorasViewPresenter extends AbstractListViewPresenter<Impresora
 
                 if (service.agregarImpresora(newImpresora) != null) {
                     showSuccessDialog(Application.getInstance().getMainWindow(), "Se ha agregado la impresora con éxito");
-
-                    getBean().getLista_impresoras().clear();
-                    getBean().getLista_impresoras().addAll(new ArrayListModel<>(service.findAll()));
-
+                    setListToBean();
                     getBean().setNombre_impresora_actual(null);
                     getBean().setImpresora_sistema_seleccionada(null);
                     getBean().setArea_seleccionado(null);
@@ -98,8 +95,7 @@ public class ImpresorasViewPresenter extends AbstractListViewPresenter<Impresora
         Impresora impresoraToDelete = getBean().getImpresora_seleccionada();
         if (showConfirmDialog(Application.getInstance().getMainWindow())) {
             if (service.deleteImpresora(impresoraToDelete) != null) {
-                getBean().getLista_impresoras().clear();
-                getBean().getLista_impresoras().addAll(new ArrayListModel<>(service.findAll()));
+                setListToBean();
                 showSuccessDialog(Application.getInstance().getMainWindow(), "Se ha eliminado la impresora con éxito");
             }
         }

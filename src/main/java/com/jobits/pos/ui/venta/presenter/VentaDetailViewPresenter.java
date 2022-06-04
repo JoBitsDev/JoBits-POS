@@ -13,6 +13,7 @@ import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Personal;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.domain.models.temporal.VentaResumen;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
@@ -320,8 +321,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 new LongProcessActionServiceImpl("Creando IPVs.........") {
                     @Override
                     protected void longProcessMethod() {//TODO: No se muestran las ecepciones que se lanzan dentro de este metodo
-                        service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
+                        var newTurno = service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
                         //ventas = service.getVentasDeFecha(getBean().getVenta_seleccionada().getFecha());
+                        getBean().setVenta_seleccionada(newTurno.getId());
                         updateBeanData();
                     }
                 }.performAction(null);
@@ -336,6 +338,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     private void updateBeanData() {
         if (getBean().getVenta_seleccionada() != -1) {
             var v = service.findBy(getBean().getVenta_seleccionada());
+            VentaResumen r = VentaResumen.from(v);
             if (ventaOrdenPresenter != null) {
                 ventaOrdenPresenter.setCodVenta(getBean().getVenta_seleccionada());
             } else {
@@ -354,8 +357,8 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 //            getBean().setTotal_resumen_area(service.getTotalResumenArea(getBean().getVenta_seleccionada()));
 //            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(getBean().getVenta_seleccionada()));
 //            getBean().setTotal_resumen_dependiente(service.getTotalResumenDependiente(getBean().getVenta_seleccionada()));
-            getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(service.getTotalPropina(getBean().getVenta_seleccionada())));
-            getBean().setReabrir_ventas_enabled(service.canReabrirVenta(getBean().getVenta_seleccionada()));
+            getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(r.getTotalPropina()));
+            getBean().setReabrir_ventas_enabled(r.canReabrirVenta());
 
             getBean().setTotal_autorizos(service.getTotalAutorizos(getBean().getVenta_seleccionada()));
             getBean().setTotal_gasto_insumos(service.getTotalGastadoInsumos(getBean().getVenta_seleccionada()));
@@ -443,9 +446,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     @Override
     protected Optional refreshState() {
-        // long start = System.currentTimeMillis();
+        //       long start = System.currentTimeMillis();
         updateBeanData();
-        //System.out.println(System.currentTimeMillis() - start);
+        //     System.out.println(System.currentTimeMillis() - start);
         return Optional.empty();
     }
 

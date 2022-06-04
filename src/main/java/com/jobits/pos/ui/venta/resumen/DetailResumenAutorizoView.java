@@ -109,7 +109,7 @@ public class DetailResumenAutorizoView extends AbstractListResumenViewPanel<DayR
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getProductoVenta().getNombre();
+                        return pv.getNombreProductoVendidoSinPrecio();
                     case 1:
                         return pv.getPrecioVendido();
                     case 2:

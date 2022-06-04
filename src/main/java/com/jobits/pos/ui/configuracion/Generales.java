@@ -67,6 +67,9 @@ public class Generales extends AbstractViewPanel {
         jPanel9 = new javax.swing.JPanel();
         jComboBoxTiempoMInServ = MaterialComponentsFactory.Displayers.getComboBox("");
         jLabel7 = new javax.swing.JLabel();
+        jPanelSalarioGeneral = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jPanel15 = MaterialComponentsFactory.Containers.getTransparentPanel();
+        jToggleButtonSalarioGeneral = new javax.swing.JToggleButton();
         jPanelCaja = MaterialComponentsFactory.Containers.getSecondaryPanel();
         jPanel11 = MaterialComponentsFactory.Containers.getTransparentPanel();
         jToggleButtonPermEsp = new javax.swing.JToggleButton();
@@ -88,7 +91,7 @@ public class Generales extends AbstractViewPanel {
 
         jPanelNegocio.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Negocio", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
         jPanelNegocio.setPreferredSize(new java.awt.Dimension(780, 300));
-        jPanelNegocio.setLayout(new java.awt.GridLayout(6, 1, 0, 3));
+        jPanelNegocio.setLayout(new java.awt.GridLayout(7, 1, 0, 3));
 
         jPanelCantidadturnos.setLayout(new java.awt.GridLayout(1, 2, 10, 0));
 
@@ -253,6 +256,18 @@ public class Generales extends AbstractViewPanel {
 
         jPanelNegocio.add(jPanelTiempoMinServicio);
 
+        jPanelSalarioGeneral.setLayout(new java.awt.GridLayout());
+
+        jPanel15.setPreferredSize(new java.awt.Dimension(351, 115));
+
+        jToggleButtonSalarioGeneral.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jToggleButtonSalarioGeneral.setText("Calcular salario por la venta general");
+        jPanel15.add(jToggleButtonSalarioGeneral);
+
+        jPanelSalarioGeneral.add(jPanel15);
+
+        jPanelNegocio.add(jPanelSalarioGeneral);
+
         jPanelGenerales.add(jPanelNegocio);
 
         jPanelCaja.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), "Caja", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 26))); // NOI18N
@@ -347,6 +362,8 @@ public class Generales extends AbstractViewPanel {
         //Bindings.bind(jCheckBoxMesaFija, getPresenter().getModel(R.SettingID.GENERAL_MESA_FIJA_CAJERO.toString()));
         Bindings.bind(jToggleButtonMesaFija, getPresenter().getModel(R.SettingID.GENERAL_MESA_FIJA_CAJERO.toString()));
 
+        Bindings.bind(jToggleButtonSalarioGeneral, getPresenter().getModel(R.SettingID.GENERAL_CALCULAR_SALARIO_SOBRE_VENTA_GENERAL.toString()));
+
         Bindings.bind(jComboBoxTipoNegocio, new ComboBoxAdapter(Arrays.asList(
                 "Restaurante", "Cafeteria", "Bar", "Salon", "Carniceria", "Dulceria", "Tienda"),
                 getPresenter().getModel(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO.toString())));
@@ -401,6 +418,7 @@ public class Generales extends AbstractViewPanel {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -415,9 +433,11 @@ public class Generales extends AbstractViewPanel {
     private javax.swing.JPanel jPanelHoraCierre;
     private javax.swing.JPanel jPanelHoraInicio;
     private javax.swing.JPanel jPanelNegocio;
+    private javax.swing.JPanel jPanelSalarioGeneral;
     private javax.swing.JPanel jPanelTiempoMinServicio;
     private javax.swing.JPanel jPanelTipoNegocio;
     private javax.swing.JToggleButton jToggleButtonMesaFija;
     private javax.swing.JToggleButton jToggleButtonPermEsp;
+    private javax.swing.JToggleButton jToggleButtonSalarioGeneral;
     // End of variables declaration//GEN-END:variables
 }

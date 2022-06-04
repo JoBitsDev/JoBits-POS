@@ -5,12 +5,10 @@
  */
 package com.jobits.pos.ui.trabajadores.presenter;
 
-import com.jobits.pos.controller.trabajadores.impl.NominasController;
 import com.jobits.pos.controller.trabajadores.NominasService;
 import com.jobits.pos.core.domain.AsistenciaPersonalEstadisticas;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
-import com.jobits.pos.recursos.R;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
@@ -19,7 +17,6 @@ import java.beans.PropertyChangeEvent;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 import javax.swing.JOptionPane;
@@ -63,7 +60,7 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
                 "Desea imprimir el comprobante de pago", "Comprobante de Pago",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
         service.pagar(getBean().getLista_personal(),getBean().getHasta(), flag);
-        getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize());
+        getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize()-1);
         Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 

@@ -44,6 +44,7 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
 //        super.getjPanelExtra().add(cartas);
 //TODO implementar el comboBox de los menu
         jTableList.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
+        jTableList.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
     }
 
     @Override
@@ -51,7 +52,7 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
         return new BindableTableModel<ProductoVenta>(jTableList) {
             @Override
             public int getColumnCount() {
-                return 6;
+                return 7;
             }
 
             @Override
@@ -62,12 +63,14 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
                     case 1:
                         return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getNombre();
                     case 2:
-                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getPrecioVenta();
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getGasto();
                     case 3:
-                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getSeccionnombreSeccion();
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getPrecioVenta();
                     case 4:
-                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getCocinacodCocina();
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getSeccionnombreSeccion();
                     case 5:
+                        return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getCocinacodCocina();
+                    case 6:
                         return ((ProductoVenta) getListModel().getElementAt(rowIndex)).getVisible();
                     default:
                         return null;
@@ -82,12 +85,14 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
                     case 1:
                         return "Nombre";
                     case 2:
-                        return "Precio (" + R.COIN_SUFFIX + ")";
+                        return "Precio Costo (" + R.COIN_SUFFIX + ")";
                     case 3:
-                        return "Seccion";
+                        return "Precio Venta (" + R.COIN_SUFFIX + ")";
                     case 4:
-                        return "Cocina";
+                        return "Seccion";
                     case 5:
+                        return "Cocina";
+                    case 6:
                         return "Visible";
                     default:
                         return null;
@@ -96,15 +101,15 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return columnIndex == 5;
+                return columnIndex == 6;
             }
 
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
-                    case 2:
+                    case 2,3:
                         return Float.class;
-                    case 5:
+                    case 6:
                         return Boolean.class;
                     default:
                         return super.getColumnClass(columnIndex);
@@ -113,7 +118,7 @@ public class ProductoVentaListView extends AbstractListViewPanel<ProductoVenta> 
 
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-                if (columnIndex == 5) {
+                if (columnIndex == 6) {
                     getPresenter().getOperation(ProductoVentaListViewPresenter.ACTION_CHANGE_VISIBLE).doAction();
                 }
             }
