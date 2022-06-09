@@ -9,6 +9,7 @@ import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.resumen.SalarioResumenService;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.recursos.R;
+import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.utils.utils;
 
@@ -43,7 +44,8 @@ public class DetailResumenSalarioViewPresenter extends AbstractResumenViewPresen
     }
 
     @Override
-    protected void registerOperations() {
+    protected void printToTicketPrinter() {
+        throw new UnsupportedOperationException("En desarrollo");
     }
 
 }

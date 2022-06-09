@@ -49,6 +49,9 @@ public class DetailResumenCostoViewPresenter extends AbstractResumenViewPresente
     }
 
     @Override
-    protected void registerOperations() {
+    protected void printToTicketPrinter() {
+        throw new UnsupportedOperationException("En desarrollo"); //To change body of generated methods, choose Tools | Templates.
     }
+
+    
 }
