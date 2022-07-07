@@ -77,7 +77,7 @@ public class PedidoCardView extends AbstractViewPanel {
         jLabelPorciento = new javax.swing.JLabel();
         jLabelDomicilio = new javax.swing.JLabel();
         jToggleButtonAutorizo = new javax.swing.JToggleButton();
-        jLabelTerminada = new javax.swing.JLabel();
+        jToggleButtonCard = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>()
         ;
@@ -236,11 +236,9 @@ public class PedidoCardView extends AbstractViewPanel {
         jToggleButtonAutorizo.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/billete_indigo.png"))); // NOI18N
         jPanel1.add(jToggleButtonAutorizo);
 
-        jLabelTerminada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTerminada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/ok_verde.png"))); // NOI18N
-        jLabelTerminada.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabelTerminada.setOpaque(true);
-        jPanel1.add(jLabelTerminada);
+        jToggleButtonCard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/mastercard_credit_card_grey.png"))); // NOI18N
+        jToggleButtonCard.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/mastercard_credit_card.png"))); // NOI18N
+        jPanel1.add(jToggleButtonCard);
 
         jPanelMedia.add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -412,7 +410,6 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelMesa;
     private javax.swing.JLabel jLabelOrdenNo;
     private javax.swing.JLabel jLabelPorciento;
-    private javax.swing.JLabel jLabelTerminada;
     private javax.swing.JLabel jLabelVALORCliente;
     private javax.swing.JLabel jLabelVALORHora;
     private javax.swing.JLabel jLabelVALORTotal;
@@ -435,6 +432,7 @@ public class PedidoCardView extends AbstractViewPanel {
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JToggleButton jToggleButtonAgregos;
     private javax.swing.JToggleButton jToggleButtonAutorizo;
+    private javax.swing.JToggleButton jToggleButtonCard;
     private javax.swing.JToggleButton jToggleButtonHideSupportPanel;
     private javax.swing.JToggleButton jToggleButtonOptions;
     private javax.swing.JButton jideButtonCerrarMesa;
@@ -451,9 +449,7 @@ public class PedidoCardView extends AbstractViewPanel {
         Bindings.bind(jLabelVALORTotal, getPresenter().getModel(PROP_TOTAL_ORDEN));
         Bindings.bind(jLabelVALORUsuario, getPresenter().getModel(PROP_USUARIO));
         Bindings.bind(jLabelVALORCliente, getPresenter().getModel(PROP_CLIENTE));
-        Bindings.bind(jLabelTerminada, "visible", getPresenter().getModel(PROP_ORDEN_TERMINADA));
         Bindings.bind(jPanelSupportText, "visible", getPresenter().getModel(PROP_SUPORT_PANEL_VISIBLE));
-
         jideButtonCerrarMesa.addActionListener(getPresenter().getOperation(ACTION_CERRAR_ORDEN));
         jideButtonEnviarCocina.addActionListener(getPresenter().getOperation(ACTION_ENVIAR_ELABORAR));
         jButton1.addActionListener(getPresenter().getOperation(ACTION_ADD_PRODUCTO));
@@ -476,6 +472,9 @@ public class PedidoCardView extends AbstractViewPanel {
 
         Bindings.bind(jToggleButtonAutorizo, "selected", getPresenter().getModel(PROP_ES_AUTORIZO));
         jToggleButtonAutorizo.addActionListener(getPresenter().getOperation(ACTION_SET_AUTORIZO));
+        
+        Bindings.bind(jToggleButtonCard, "selected", getPresenter().getModel(PROP_ES_CARD));
+        jToggleButtonCard.addActionListener(getPresenter().getOperation(ACTION_SET_CARD));
 
         Bindings.bind(jToggleButtonAgregos, "selected", getPresenter().getModel(PROP_MODO_AGREGO_ACTIVADO));
         Bindings.bind(jToggleButtonAgregos, "enabled", getPresenter().getModel(PROP_BOTTON_AGREGO_ENABLED));

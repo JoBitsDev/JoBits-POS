@@ -83,6 +83,10 @@ public class OrdenDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_ES_AUTORIZO = "es_autorizo";
 
+    private boolean es_card = false;
+
+    public static final String PROP_ES_CARD = "es_card";
+
     private boolean tiene_porciento = false;
 
     public static final String PROP_TIENE_PORCIENTO = "tiene_porciento";
@@ -368,6 +372,27 @@ public class OrdenDetailViewModel extends AbstractViewModel {
         this.es_autorizo = es_autorizo;
         firePropertyChange(PROP_ES_AUTORIZO, oldEs_autorizo, es_autorizo);
         firePropertyChange(PROP_ORDEN_STATUS_UPDATE, oldEs_autorizo, es_autorizo);
+    }
+    
+    /**
+     * Get the value of es_autorizo
+     *
+     * @return the value of es_autorizo
+     */
+    public boolean isEs_card() {
+        return es_card;
+    }
+
+    /**
+     * Set the value of es_autorizo
+     *
+     * @param es_autorizo new value of es_autorizo
+     */
+    public void setEs_card(boolean es_card) {
+        boolean oldEs_card = this.es_card;
+        this.es_card = es_card;
+        firePropertyChange(PROP_ES_CARD, oldEs_card, es_card);
+        firePropertyChange(PROP_ORDEN_STATUS_UPDATE, oldEs_card, es_card);
     }
 
     /**
