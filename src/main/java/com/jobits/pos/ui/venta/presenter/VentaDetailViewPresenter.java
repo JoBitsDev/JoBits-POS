@@ -336,20 +336,22 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     }
 
     private void updateBeanData() {
-        if (getBean().getVenta_seleccionada() != -1) {
-            var v = service.findBy(getBean().getVenta_seleccionada());
-            VentaResumen r = VentaResumen.from(v);
-            if (ventaOrdenPresenter != null) {
-                ventaOrdenPresenter.setCodVenta(getBean().getVenta_seleccionada());
-            } else {
-                ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, getBean().getVenta_seleccionada());
-            }
-            if (asistenciaPersonalPresenter != null) {
-                asistenciaPersonalPresenter.setIdVenta(getBean().getVenta_seleccionada());
-            } else {
-                asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(getBean().getVenta_seleccionada());
-            }
-            gastosPresenter = new GastosViewPresenter(v);
+        if (getBean().getVenta_seleccionada() == -1) {
+            return;
+        }
+        var v = service.findBy(getBean().getVenta_seleccionada());
+        VentaResumen r = VentaResumen.from(v);
+        if (ventaOrdenPresenter != null) {
+            ventaOrdenPresenter.setCodVenta(getBean().getVenta_seleccionada());
+        } else {
+            ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, getBean().getVenta_seleccionada());
+        }
+        if (asistenciaPersonalPresenter != null) {
+            asistenciaPersonalPresenter.setIdVenta(getBean().getVenta_seleccionada());
+        } else {
+            asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(getBean().getVenta_seleccionada());
+        }
+        gastosPresenter = new GastosViewPresenter(v);
 
 //            getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(getBean().getVenta_seleccionada()));
 //            getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(getBean().getVenta_seleccionada()));
@@ -357,41 +359,40 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 //            getBean().setTotal_resumen_area(service.getTotalResumenArea(getBean().getVenta_seleccionada()));
 //            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(getBean().getVenta_seleccionada()));
 //            getBean().setTotal_resumen_dependiente(service.getTotalResumenDependiente(getBean().getVenta_seleccionada()));
-            getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(r.getTotalPropina()));
-            getBean().setReabrir_ventas_enabled(r.canReabrirVenta());
+        getBean().setPropina_total("" + utils.setDosLugaresDecimalesFloat(r.getTotalPropina()));
+        getBean().setReabrir_ventas_enabled(r.canReabrirVenta());
 
-            getBean().setTotal_autorizos(service.getTotalAutorizos(getBean().getVenta_seleccionada()));
-            getBean().setTotal_gasto_insumos(service.getTotalGastadoInsumos(getBean().getVenta_seleccionada()));
-            getBean().setTotal_gasto_otros(service.getTotalGastos(getBean().getVenta_seleccionada()));
-            getBean().setTotal_gasto_salario(service.getTotalPagoTrabajadores(getBean().getVenta_seleccionada()));
+        getBean().setTotal_autorizos(service.getTotalAutorizos(getBean().getVenta_seleccionada()));
+        getBean().setTotal_gasto_insumos(service.getTotalGastadoInsumos(getBean().getVenta_seleccionada()));
+        getBean().setTotal_gasto_otros(service.getTotalGastos(getBean().getVenta_seleccionada()));
+        getBean().setTotal_gasto_salario(service.getTotalPagoTrabajadores(getBean().getVenta_seleccionada()));
 
-            getBean().setVenta_neta(service.getTotalVendidoNeto(getBean().getVenta_seleccionada()));
-            getBean().setVenta_total(service.getTotalVendido(getBean().getVenta_seleccionada()));
-            getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
-            getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(v.getFecha()));
+        getBean().setVenta_neta(service.getTotalVendidoNeto(getBean().getVenta_seleccionada()));
+        getBean().setVenta_total(service.getTotalVendido(getBean().getVenta_seleccionada()));
+        getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
+        getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(v.getFecha()));
 
-            getBean().setLista_mesas(new ArrayListModel<>(service.getMesasPorVenta(getBean().getVenta_seleccionada())));
-            if (!getBean().getLista_mesas().isEmpty()) {
-                getBean().setMesa_seleccionada(getBean().getLista_mesas().get(0));
-            }
-            getBean().setLista_cocinas(new ArrayListModel<>(service.getCocinasPorVenta(getBean().getVenta_seleccionada())));
-            if (!getBean().getLista_cocinas().isEmpty()) {
-                getBean().setCocina_seleccionada(getBean().getLista_cocinas().get(0));
-            }
-            getBean().setLista_dependientes(new ArrayListModel<>(service.getPersonalPorVenta(getBean().getVenta_seleccionada())));
-            if (!getBean().getLista_dependientes().isEmpty()) {
-                getBean().setPersonal_seleccionado(getBean().getLista_dependientes().get(0));
-            }
-            getBean().setLista_areas(new ArrayListModel<>(service.getAreasPorVenta(getBean().getVenta_seleccionada())));
-            if (!getBean().getLista_areas().isEmpty()) {
-                getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
-            }
-
-            boolean value = UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3
-                    && ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() != 1;
-
-            firePropertyChange(PROP_HIDE_PANEL, !value, value);
+        getBean().setLista_mesas(new ArrayListModel<>(service.getMesasPorVenta(getBean().getVenta_seleccionada())));
+        if (!getBean().getLista_mesas().isEmpty()) {
+            getBean().setMesa_seleccionada(getBean().getLista_mesas().get(0));
         }
+        getBean().setLista_cocinas(new ArrayListModel<>(service.getCocinasPorVenta(getBean().getVenta_seleccionada())));
+        if (!getBean().getLista_cocinas().isEmpty()) {
+            getBean().setCocina_seleccionada(getBean().getLista_cocinas().get(0));
+        }
+        getBean().setLista_dependientes(new ArrayListModel<>(service.getPersonalPorVenta(getBean().getVenta_seleccionada())));
+        if (!getBean().getLista_dependientes().isEmpty()) {
+            getBean().setPersonal_seleccionado(getBean().getLista_dependientes().get(0));
+        }
+        getBean().setLista_areas(new ArrayListModel<>(service.getAreasPorVenta(getBean().getVenta_seleccionada())));
+        if (!getBean().getLista_areas().isEmpty()) {
+            getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
+        }
+
+        boolean value = UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3
+                && ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() != 1;
+
+        firePropertyChange(PROP_HIDE_PANEL, !value, value);
 
     }
 

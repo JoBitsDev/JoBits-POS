@@ -793,6 +793,7 @@ public class VentaDetailView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
+        jTabbedPaneData.setSelectedIndex(1);
         jTabbedPaneResumenD.setUI(MaterialComponentsFactory.UI.getTabbedPaneUI());
         jTabbedPaneData.setUI(MaterialComponentsFactory.UI.getTabbedPaneUI());
         initAreaTableUI();
