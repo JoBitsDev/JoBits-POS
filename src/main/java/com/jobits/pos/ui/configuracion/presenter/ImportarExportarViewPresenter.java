@@ -11,6 +11,7 @@ import com.jobits.pos.controller.productos.ProductoInsumoListService;
 import com.jobits.pos.controller.productos.impl.ProductoVentaListController;
 import com.jobits.pos.controller.productos.ProductoVentaListService;
 import com.jobits.pos.core.domain.models.Insumo;
+import com.jobits.pos.inventario.core.almacen.domain.Almacen;
 import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
 import com.jobits.pos.io.DataHeader;
 import com.jobits.pos.io.IOTemplate;
@@ -210,7 +211,11 @@ public class ImportarExportarViewPresenter extends AbstractViewPresenter<Importa
                     case INSUMO_ALMACEN:
                         AlmacenManageService useCaseInsumoAlmacen
                                 = PosDesktopUiModule.getInstance().getImplementation(AlmacenManageService.class);
-                        dataList = useCaseInsumoAlmacen.findAll();
+                        var aux = useCaseInsumoAlmacen.findAll();
+                        dataList = new ArrayList<>();
+                        for (Almacen almacen : aux) {
+                            dataList.addAll(almacen.getInsumoAlmacenList());
+                        }
                         break;
                     case PRODUCTO_VENTA:
                         ProductoVentaListService useCaseProductoVenta

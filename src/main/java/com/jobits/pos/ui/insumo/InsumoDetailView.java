@@ -73,6 +73,8 @@ public class InsumoDetailView extends AbstractViewPanel {
         jSpinnerCosto = new javax.swing.JSpinner();
         jLabelNombre4 = MaterialComponentsFactory.Displayers.getLabel();
         jSpinnerEstimacionStock = new javax.swing.JSpinner();
+        jLabelNombre5 = MaterialComponentsFactory.Displayers.getLabel();
+        jTextFieldIdentificador = MaterialComponentsFactory.Input.getTextField("", "Nombre");
         jPanelTabla = MaterialComponentsFactory.Containers.getTransparentPanel();
         jScrollPaneTablas = MaterialComponentsFactory.Containers.getScrollPane();
         jTabbedPane1 = MaterialComponentsFactory.Containers.getTabPane();
@@ -153,7 +155,7 @@ public class InsumoDetailView extends AbstractViewPanel {
         jPanelSec.setMaximumSize(new java.awt.Dimension(700, 200));
         jPanelSec.setMinimumSize(new java.awt.Dimension(700, 200));
         jPanelSec.setPreferredSize(new java.awt.Dimension(700, 130));
-        jPanelSec.setLayout(new java.awt.GridLayout(3, 2, 150, 10));
+        jPanelSec.setLayout(new java.awt.GridLayout(4, 2, 150, 10));
 
         jLabelUM.setBackground(new java.awt.Color(255, 255, 255));
         jLabelUM.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -192,6 +194,20 @@ public class InsumoDetailView extends AbstractViewPanel {
         jSpinnerEstimacionStock.setMinimumSize(new java.awt.Dimension(24, 20));
         jSpinnerEstimacionStock.setPreferredSize(new java.awt.Dimension(0, 26));
         jPanelSec.add(jSpinnerEstimacionStock);
+
+        jLabelNombre5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelNombre5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabelNombre5.setText(bundle.getString("label_identificador")); // NOI18N
+        jLabelNombre5.setMinimumSize(new java.awt.Dimension(24, 20));
+        jLabelNombre5.setPreferredSize(new java.awt.Dimension(0, 26));
+        jPanelSec.add(jLabelNombre5);
+
+        jTextFieldIdentificador.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jTextFieldIdentificador.setBorder(null);
+        jTextFieldIdentificador.setMaximumSize(new java.awt.Dimension(250, 50));
+        jTextFieldIdentificador.setMinimumSize(new java.awt.Dimension(150, 50));
+        jTextFieldIdentificador.setPreferredSize(new java.awt.Dimension(250, 50));
+        jPanelSec.add(jTextFieldIdentificador);
 
         jPanelInputs.add(jPanelSec, java.awt.BorderLayout.CENTER);
 
@@ -246,6 +262,7 @@ public class InsumoDetailView extends AbstractViewPanel {
     private javax.swing.JLabel jLabelCostoU;
     private javax.swing.JLabel jLabelGasto;
     private javax.swing.JLabel jLabelNombre4;
+    private javax.swing.JLabel jLabelNombre5;
     private javax.swing.JLabel jLabelUM;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelControles;
@@ -260,6 +277,7 @@ public class InsumoDetailView extends AbstractViewPanel {
     private javax.swing.JSpinner jSpinnerCosto;
     private javax.swing.JSpinner jSpinnerEstimacionStock;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextFieldIdentificador;
     private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 
@@ -268,6 +286,7 @@ public class InsumoDetailView extends AbstractViewPanel {
 
         //INPUTS
         Bindings.bind(jTextFieldNombre, getPresenter().getModel(PROP_NOMBRE_INSUMO));
+        Bindings.bind(jTextFieldIdentificador, getPresenter().getModel(PROP_IDENTIFICADOR_INSUMO));
         Bindings.bind(jComboBoxUM, new SelectionInList<>(
                 getPresenter().getModel(PROP_LIST_UNIDADES_MEDIDA),
                 getPresenter().getModel(PROP_UNIDAD_MEDIDA_SELECTED)));

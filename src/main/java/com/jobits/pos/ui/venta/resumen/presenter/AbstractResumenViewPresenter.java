@@ -8,10 +8,12 @@ package com.jobits.pos.ui.venta.resumen.presenter;
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.ui.filter.presenter.FilterType;
 import com.jobits.pos.ui.filter.presenter.FilterViewPresenter;
+import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -26,6 +28,9 @@ import java.util.stream.Collectors;
 public abstract class AbstractResumenViewPresenter<T extends AbstractResumenViewModel>
         extends AbstractViewPresenter<T> {
 
+    public static String IMPRESION_TICKET = "Imprimir en ticket";
+    
+    
     String mainViewName;
     String detailViewName;
 
@@ -64,6 +69,8 @@ public abstract class AbstractResumenViewPresenter<T extends AbstractResumenView
 
     protected abstract void setListsToBean();
 
+    protected abstract void printToTicketPrinter();
+
     public abstract float getTotal();
 
     public FilterViewPresenter getFilterPresenter() {
@@ -74,4 +81,16 @@ public abstract class AbstractResumenViewPresenter<T extends AbstractResumenView
         getBean().setDetailSelected(detailedView);
         getBean().setTitulo_vista(detailedView ? detailViewName : mainViewName);
     }
+
+    @Override
+    protected void registerOperations() {
+        registerOperation(new AbstractViewAction(IMPRESION_TICKET) {
+            @Override
+            public Optional doAction() {
+                printToTicketPrinter();
+                return Optional.empty();
+            }
+        });
+    }
+
 }

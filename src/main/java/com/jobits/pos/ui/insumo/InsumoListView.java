@@ -29,7 +29,7 @@ public class InsumoListView extends AbstractListViewPanel<Insumo> {
         return new BindableTableModel<Insumo>(jTableList) {
             @Override
             public int getColumnCount() {
-                return 3;
+                return 5;
             }
 
             @Override
@@ -41,6 +41,10 @@ public class InsumoListView extends AbstractListViewPanel<Insumo> {
                         return getRow(rowIndex).getNombre();
                     case 2:
                         return getRow(rowIndex).getUm();
+                    case 3:
+                        return getRow(rowIndex).getCostoPorUnidad();
+                    case 4:
+                        return getRow(rowIndex).getIdentificador();
                     default:
                         return null;
 
@@ -56,6 +60,10 @@ public class InsumoListView extends AbstractListViewPanel<Insumo> {
                         return "Nombre";
                     case 2:
                         return "UM";
+                    case 3:
+                        return "Costo por unidad";
+                    case 4:
+                        return "Identificador";
                     default:
                         return null;
 

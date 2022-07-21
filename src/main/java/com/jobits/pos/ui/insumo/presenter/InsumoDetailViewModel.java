@@ -24,6 +24,10 @@ public class InsumoDetailViewModel extends AbstractViewModel {
     private String nombre_insumo;
 
     public static final String PROP_NOMBRE_INSUMO = "nombre_insumo";
+    
+    private String identificador_insumo;
+
+    public static final String PROP_IDENTIFICADOR_INSUMO = "identificador_insumo";
 
     private ArrayListModel<R.UM> list_unidades_medida = new ArrayListModel<>();
 
@@ -432,6 +436,16 @@ public class InsumoDetailViewModel extends AbstractViewModel {
         String oldNombre_insumo = this.nombre_insumo;
         this.nombre_insumo = nombre_insumo;
         firePropertyChange(PROP_NOMBRE_INSUMO, oldNombre_insumo, nombre_insumo);
+    }
+
+    public String getIdentificador_insumo() {
+        return identificador_insumo;
+    }
+
+    public void setIdentificador_insumo(String identificador_insumo) {
+        var oldValue = this.identificador_insumo;
+        this.identificador_insumo = identificador_insumo;
+        firePropertyChange(PROP_IDENTIFICADOR_INSUMO, oldValue, identificador_insumo);
     }
 
 }
