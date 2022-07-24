@@ -77,6 +77,10 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
 
     public static final String PROP_CHECKBOX_PRODUCTO_ELABORADO = "checkbox_producto_elaborado";
 
+    private boolean checkbox_producto_libre_impuestos;
+
+    public static final String PROP_CHECKBOX_PRODUCTO_LIBRE_IMPUESTOS = "checkbox_producto_libre_impuestos";
+
     private ArrayListModel<Insumo> lista_insumos_disponibles = new ArrayListModel<>();
 
     public static final String PROP_LISTA_INSUMOS_DISPONIBLES = "lista_insumos_disponibles";
@@ -506,6 +510,16 @@ public class ProductoVentaDetailViewModel extends AbstractViewModel {
         String oldCodigo_producto = this.codigo_producto;
         this.codigo_producto = codigo_producto;
         firePropertyChange(PROP_CODIGO_PRODUCTO, oldCodigo_producto, codigo_producto, false);
+    }
+
+    public boolean isCheckbox_producto_libre_impuestos() {
+        return checkbox_producto_libre_impuestos;
+    }
+
+    public void setCheckbox_producto_libre_impuestos(boolean checkbox_producto_libre_impuestos) {
+        var old = this.checkbox_producto_libre_impuestos;
+        this.checkbox_producto_libre_impuestos = checkbox_producto_libre_impuestos;
+        firePropertyChange(PROP_CHECKBOX_PRODUCTO_LIBRE_IMPUESTOS, old, checkbox_producto_libre_impuestos);
     }
 
     /**

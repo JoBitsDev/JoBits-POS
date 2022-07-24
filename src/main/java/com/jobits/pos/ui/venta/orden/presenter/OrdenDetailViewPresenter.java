@@ -35,7 +35,9 @@ import com.jobits.pos.utils.utils;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
 import java.beans.PropertyChangeEvent;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -62,6 +64,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_ELIMINAR_PARCIAL_PRODUCTO = "Eliminar Parcial";
     public static String ACTION_SHOW_LOGS = "Ver Registros";
     public static String ACTION_SET_AUTORIZO = "Autorizo";
+    public static String ACTION_SET_CARD = "Pago por tarjeta";
     public static String ACTION_SET_AGREGO = "Agrego";
     public static String ACTION_SET_SUPORT_PANEL_VISIBLE = "Suport Panel Visible";
     public static String ACTION_SET_PORCIENTO = "Porciento";
@@ -69,6 +72,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     public static String ACTION_SET_CLIENTE = "Cliente";
     public static String ACTION_MOVER_A_MESA = "Mover a mesa";
     private String codOrden;
+    private Map<String, Boolean> isCardValueTemportal = new HashMap<>();
 
     private OrdenService ordenService = PosDesktopUiModule.getInstance().getImplementation(OrdenService.class);
 
@@ -83,8 +87,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     public OrdenDetailViewPresenter(String cod_orden, OrdenService controller) {
         this(controller);
-        this.codOrden = cod_orden;
-        refreshState();
+        setCodOrden(codOrden);
     }
 
     public String getCodOrden() {
@@ -139,7 +142,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 showDialog("Desea cerrar la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             boolean cerrarTicket = (boolean) Application.getInstance().getNotificationService().
                     showDialog("Desea imprimir un ticket de la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
-            Orden o = ordenService.cerrarOrden(getCodOrden(), cerrarTicket);
+            float total = ordenService.getValorTotalOrden(getCodOrden());
+
+            Orden o = ordenService.cerrarOrden(
+                    getCodOrden(),
+                    cerrarTicket,
+                    !getBean().isEs_card() ? total : 0,
+                    getBean().isEs_card() ? total : 0);
             if (o != null) {
                 NavigationService.getInstance().navigateTo(CalcularCambioView.VIEW_NAME,
                         new CalcularCambioViewPresenter(o), DisplayType.POPUP);
@@ -193,6 +202,13 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
     private void onSetAutorizoClick() {
         getBean().setEs_autorizo(!getBean().isEs_autorizo());
         ordenService.setDeLaCasa(getCodOrden(), getBean().isEs_autorizo());
+        firePropertyChange(PROP_CHANGES, null, 1);
+    }
+
+    private void onSetCardClick() {
+        getBean().setEs_card(!getBean().isEs_card());
+        isCardValueTemportal.put(codOrden, getBean().isEs_card());
+        ordenService.setPagadoPorTarjeta(getCodOrden(), getBean().isEs_card());
         firePropertyChange(PROP_CHANGES, null, 1);
     }
 
@@ -278,7 +294,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         if (codOrden != null) {
             Orden instance = ordenService.findBy(getCodOrden());
             getBean().setEs_autorizo(instance.getDeLaCasa());
-            getBean().setFecha_orden(R.DATE_FORMAT.format(instance.getVentafecha()));
+            isCardValueTemportal.putIfAbsent(codOrden, instance.isOpen() ? Boolean.FALSE : instance.getPagado_por_tarjeta() != 0);
+            getBean().setEs_card(isCardValueTemportal.get(codOrden));
             getBean().setHora_pedido(R.TIME_FORMAT.format(instance.getHoraComenzada()));
             getBean().setOrden_terminada(instance.getHoraTerminada() != null);
             getBean().setId_orden(instance.getCodOrden());
@@ -405,6 +422,14 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             @Override
             public Optional doAction() {
                 onSetAutorizoClick();
+                refreshState();
+                return Optional.empty();
+            }
+        });
+        registerOperation(new AbstractViewAction(ACTION_SET_CARD) {
+            @Override
+            public Optional doAction() {
+                onSetCardClick();
                 refreshState();
                 return Optional.empty();
             }

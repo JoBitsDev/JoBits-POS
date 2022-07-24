@@ -15,6 +15,8 @@ import com.jobits.pos.core.domain.models.Area;
 import com.jobits.pos.core.domain.models.Cocina;
 import com.jobits.pos.core.domain.models.Mesa;
 import com.jobits.pos.core.domain.models.Personal;
+import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.domain.models.temporal.VentaResumen;
 import com.jobits.pos.core.repo.impl.ConfiguracionDAO;
 import com.jobits.pos.main.Application;
 import com.root101.clean.core.app.services.utils.TipoNotificacion;
@@ -322,8 +324,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 new LongProcessActionServiceImpl("Creando IPVs.........") {
                     @Override
                     protected void longProcessMethod() {//TODO: No se muestran las ecepciones que se lanzan dentro de este metodo
-                        service.cambiarTurno(getBean().getVenta_seleccionada());
+                        var newTurno = service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
                         //ventas = service.getVentasDeFecha(getBean().getVenta_seleccionada().getFecha());
+                        getBean().setVenta_seleccionada(newTurno.getId());
                         updateBeanData();
                     }
                 }.performAction(null);
@@ -336,19 +339,22 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
     }
 
     private void updateBeanData() {
-        if (getBean().getVenta_seleccionada() != -1) {
-            var v = service.findBy(getBean().getVenta_seleccionada());
-            if (ventaOrdenPresenter != null) {
-                ventaOrdenPresenter.setCodVenta(getBean().getVenta_seleccionada());
-            } else {
-                ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, getBean().getVenta_seleccionada());
-            }
-            if (asistenciaPersonalPresenter != null) {
-                asistenciaPersonalPresenter.setIdVenta(getBean().getVenta_seleccionada());
-            } else {
-                asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(getBean().getVenta_seleccionada());
-            }
-            gastosPresenter = new GastosViewPresenter(v);
+        if (getBean().getVenta_seleccionada() == -1) {
+            return;
+        }
+        var v = service.findBy(getBean().getVenta_seleccionada());
+        VentaResumen r = VentaResumen.from(v);
+        if (ventaOrdenPresenter != null) {
+            ventaOrdenPresenter.setCodVenta(getBean().getVenta_seleccionada());
+        } else {
+            ventaOrdenPresenter = new VentaOrdenListViewPresenter(service, ordenService, getBean().getVenta_seleccionada());
+        }
+        if (asistenciaPersonalPresenter != null) {
+            asistenciaPersonalPresenter.setIdVenta(getBean().getVenta_seleccionada());
+        } else {
+            asistenciaPersonalPresenter = new AsistenciaPersonalPresenter(getBean().getVenta_seleccionada());
+        }
+        gastosPresenter = new GastosViewPresenter(v);
 
 //            getBean().setLista_resumen_area_venta(service.getResumenPorAreaVenta(getBean().getVenta_seleccionada()));
 //            getBean().setLista_resumen_pto_venta(service.getResumenPorPtoVenta(getBean().getVenta_seleccionada()));
@@ -390,11 +396,10 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
             }
 
-            boolean value = UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3
-                    && ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() != 1;
+        boolean value = UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3
+                && ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() != 1;
 
-            firePropertyChange(PROP_HIDE_PANEL, !value, value);
-        }
+        firePropertyChange(PROP_HIDE_PANEL, !value, value);
 
     }
 
@@ -449,9 +454,9 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 
     @Override
     protected Optional refreshState() {
-        // long start = System.currentTimeMillis();
+        //       long start = System.currentTimeMillis();
         updateBeanData();
-        //System.out.println(System.currentTimeMillis() - start);
+        //     System.out.println(System.currentTimeMillis() - start);
         return Optional.empty();
     }
 

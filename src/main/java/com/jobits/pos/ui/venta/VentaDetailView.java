@@ -793,6 +793,7 @@ public class VentaDetailView extends AbstractViewPanel {
     @Override
     public void uiInit() {
         initComponents();
+        jTabbedPaneData.setSelectedIndex(1);
         jTabbedPaneResumenD.setUI(MaterialComponentsFactory.UI.getTabbedPaneUI());
         jTabbedPaneData.setUI(MaterialComponentsFactory.UI.getTabbedPaneUI());
         initAreaTableUI();
@@ -849,7 +850,7 @@ public class VentaDetailView extends AbstractViewPanel {
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getNombreProductoVendido();
+                        return pv.getNombreProductoVendidoSinPrecio();
                     case 1:
                         return pv.getPrecioVendido();
                     case 2:
@@ -906,7 +907,7 @@ public class VentaDetailView extends AbstractViewPanel {
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getNombreProductoVendido();
+                        return pv.getNombreProductoVendidoSinPrecio();
                     case 1:
                         return pv.getPrecioVendido();
                     case 2:
@@ -963,7 +964,7 @@ public class VentaDetailView extends AbstractViewPanel {
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getNombreProductoVendido();
+                        return pv.getNombreProductoVendidoSinPrecio();
                     case 1:
                         return pv.getPrecioVendido();
                     case 2:
@@ -1020,7 +1021,7 @@ public class VentaDetailView extends AbstractViewPanel {
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getNombreProductoVendido();
+                        return pv.getNombreProductoVendidoSinPrecio();
                     case 1:
                         return pv.getPrecioVendido();
                     case 2:

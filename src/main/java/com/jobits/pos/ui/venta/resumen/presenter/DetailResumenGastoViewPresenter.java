@@ -41,9 +41,11 @@ public class DetailResumenGastoViewPresenter extends AbstractResumenViewPresente
         }
         return utils.setDosLugaresDecimalesFloat(total);
     }
-    
+
     @Override
-    protected void registerOperations() {
+    protected void printToTicketPrinter() {
+        throw new UnsupportedOperationException("En Desarrollo"); //To change body of generated methods, choose Tools | Templates.
     }
+ 
     
 }

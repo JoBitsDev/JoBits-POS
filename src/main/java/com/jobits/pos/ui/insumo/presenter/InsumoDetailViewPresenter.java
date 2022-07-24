@@ -121,6 +121,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
         getBean().getLista_productos_contenidos().addAll(new ArrayListModel(insumo.getProductoInsumoList()));
         //PANEL INPUTS
         getBean().setNombre_insumo(insumo.getNombre());
+        getBean().setIdentificador_insumo(insumo.getIdentificador());
         getBean().setUnidad_medida_selected(R.UM.valueOf(insumo.getUm()));
         getBean().setCosto_unitario(insumo.getCostoPorUnidad());
         getBean().setEstimacion_de_stock(insumo.getStockEstimation());
@@ -152,6 +153,7 @@ public class InsumoDetailViewPresenter extends AbstractViewPresenter<InsumoDetai
                 showDialog("Esta seguro que desea continuar?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             insumo.setNombre(getBean().getNombre_insumo());
+            insumo.setIdentificador(getBean().getIdentificador_insumo());
             insumo.setCostoPorUnidad(getBean().getCosto_unitario());
             insumo.setStockEstimation(getBean().getEstimacion_de_stock());
             insumo.setUm(getBean().getUnidad_medida_selected().getValor());

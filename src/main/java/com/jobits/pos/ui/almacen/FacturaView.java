@@ -543,6 +543,7 @@ public class FacturaView extends AbstractViewPanel {
                             if (jTextFieldCausaRebaja.isEnabled()) {
                                 jTextFieldCausaRebaja.requestFocusInWindow();
                             } else {
+                                jTextFieldInsumo.requestFocusInWindow();
                                 executeAction();
                             }
                             break;
@@ -551,6 +552,7 @@ public class FacturaView extends AbstractViewPanel {
 //                                jComboBoxDestino.showPopup();
                                 jComboBoxDestino.requestFocusInWindow();
                             } else {
+                                jTextFieldInsumo.requestFocusInWindow();
                                 executeAction();
                             }
                             break;
@@ -567,6 +569,7 @@ public class FacturaView extends AbstractViewPanel {
 //                                jComboBoxDestino.showPopup();
                                 jComboBoxDestino.requestFocusInWindow();
                             } else {
+                                jTextFieldInsumo.requestFocusInWindow();
                                 executeAction();
                             }
                             break;
@@ -737,8 +740,8 @@ public class FacturaView extends AbstractViewPanel {
 
     private void executeAction() {
         if (confirm()) {
-            getPresenter().getOperation(ACTION_AGREGAR_INSUMO).doAction();
             jTextFieldInsumo.requestFocusInWindow();
+            getPresenter().getOperation(ACTION_AGREGAR_INSUMO).doAction();
         }
     }
 
@@ -753,7 +756,6 @@ public class FacturaView extends AbstractViewPanel {
                 null,
                 options,
                 options[0]);
-
         return confirm == JOptionPane.YES_OPTION;
     }
 }

@@ -16,9 +16,11 @@ import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
+import com.jobits.pos.utils.utils;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -148,7 +150,7 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
             }
 
             if (creatingMode) {
-                personal.setUltimodiaPago(new Date());
+                personal.setUltimodiaPago(LocalDate.now());
                 personalService.create(personal);
             } else {
                 personalService.edit(personal);

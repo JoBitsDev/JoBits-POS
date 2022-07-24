@@ -28,6 +28,7 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DayRevi
         jTableDetail.getColumnModel().getColumn(1).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(2).setCellRenderer(utils.numberColumCellRender());
         jTableDetail.getColumnModel().getColumn(3).setCellRenderer(utils.numberColumCellRender());
+        jTableDetail.getColumnModel().getColumn(4).setCellRenderer(utils.numberColumCellRender());
     }
 
     @Override
@@ -81,7 +82,7 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DayRevi
         return new BindableTableModel<ProductovOrden>(jTableDetail) {
             @Override
             public int getColumnCount() {
-                return 4;
+                return 5;
             }
 
             @Override
@@ -90,10 +91,12 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DayRevi
                     case 0:
                         return "Producto Venta";
                     case 1:
-                        return "Precio (" + R.COIN_SUFFIX + ")";
+                        return "Precio Costo(" + R.COIN_SUFFIX + ")";
                     case 2:
-                        return "Cantidad";
+                        return "Precio Venta(" + R.COIN_SUFFIX + ")";
                     case 3:
+                        return "Cantidad";
+                    case 4:
                         return "Recaudado (" + R.COIN_SUFFIX + ")";
                 }
                 return null;
@@ -104,12 +107,14 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DayRevi
                 ProductovOrden pv = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        return pv.getNombreProductoVendido();
+                        return pv.getNombreProductoVendidoSinPrecio();
                     case 1:
-                        return pv.getPrecioVendido();
+                        return pv.getRegistroEscandalloid() == null ? 0 : pv.getRegistroEscandalloid().getCosto();
                     case 2:
-                        return utils.setDosLugaresDecimalesFloat(pv.getCantidad());
+                        return pv.getPrecioVendido();
                     case 3:
+                        return utils.setDosLugaresDecimalesFloat(pv.getCantidad());
+                    case 4:
                         return utils.setDosLugaresDecimalesFloat(pv.getPrecioVendido() * pv.getCantidad());
                 }
                 return null;
@@ -118,9 +123,7 @@ public class DetailResumenVentaView extends AbstractListResumenViewPanel<DayRevi
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
-                    case 1:
-                    case 2:
-                    case 3:
+                    case 1,2,3,4,5:
                         return Float.class;
                     default:
                         return String.class;

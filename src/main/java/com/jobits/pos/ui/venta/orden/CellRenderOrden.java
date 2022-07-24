@@ -39,6 +39,9 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
         jLabelGratis.setVisible(o.getDeLaCasa());
         jLabelDelivery.setVisible(o.isDomicilio());
         jLabelPorciento.setVisible(o.getPorciento() != 0);
+        if (o.getPagado_por_tarjeta() != 0) {
+            jLabelTerminada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/mastercard_credit_card.png")));
+        }
         jLabelTerminada.setVisible(o.getHoraTerminada() != null);
         setOpaque(selected);
     }
@@ -90,7 +93,6 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
         jPanel1.setLayout(new java.awt.GridLayout(2, 2));
 
         jLabelCodMesa.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
-        jLabelCodMesa.setForeground(new java.awt.Color(0, 0, 0));
         jLabelCodMesa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCodMesa.setText("<CodMesa>");
         jPanel1.add(jLabelCodMesa);
@@ -128,7 +130,7 @@ public class CellRenderOrden extends javax.swing.JPanel implements Comparable<Ce
         add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jLabelTerminada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTerminada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/icons8-checkmark.png"))); // NOI18N
+        jLabelTerminada.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/icons pack/cash.png"))); // NOI18N
         jLabelTerminada.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         add(jLabelTerminada, java.awt.BorderLayout.LINE_START);
     }// </editor-fold>//GEN-END:initComponents

@@ -149,6 +149,7 @@ public class CalcularCambioView extends AbstractViewPanel {
         Bindings.bind(jLabelCodigoOrden, getPresenter().getModel(PROP_CODIGO_ORDEN));
         Bindings.bind(jLabelAPagar, getPresenter().getModel(PROP_TOTAL_A_PAGAR));
         Bindings.bind(jLabelCambio, getPresenter().getModel(PROP_CAMBIO));
+        Bindings.bind(jLabel1, getPresenter().getModel(PROP_MONEDA));
 
         SpinnerToValueModelConnector connector = new SpinnerToValueModelConnector(jSpinnerMonedaNacional.getModel(),
                 getPresenter().getModel(PROP_ENTRADA_MONEDA_NACIONAL), 0);

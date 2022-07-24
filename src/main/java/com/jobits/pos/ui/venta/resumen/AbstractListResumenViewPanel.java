@@ -2,6 +2,8 @@ package com.jobits.pos.ui.venta.resumen;
 
 import com.jgoodies.binding.adapter.Bindings;
 import com.jgoodies.binding.list.SelectionInList;
+import com.jobits.pos.servicios.impresion.Impresion;
+import com.jobits.pos.servicios.impresion.formatter.VentaResumenFormatter;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.pos.ui.filter.FilterMainView;
@@ -12,6 +14,7 @@ import static com.jobits.pos.ui.viewmodel.AbstractListViewModel.PROP_TITULO_VIST
 import static com.jobits.pos.ui.venta.resumen.presenter.AbstractResumenViewModel.*;
 import com.jobits.pos.ui.venta.resumen.presenter.AbstractResumenViewPresenter;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import com.root101.clean.core.domain.services.ResourceHandler;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.print.PrinterException;
@@ -19,6 +22,7 @@ import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
@@ -228,12 +232,7 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
         Bindings.bind(jToggleButtonDetail, getPresenter().getModel(PROP_DETAILSELECTED));
         Bindings.bind(jButtonImprimir, "visible", getPresenter().getModel(PROP_DETAILSELECTED));
         jButtonImprimir.addActionListener((e) -> {
-            MessageFormat m = new MessageFormat(jLabelNombreTabla.getText() + " (" + jLabelTotal.getText() + ")");
-            try {
-                jTableDetail.print(JTable.PrintMode.FIT_WIDTH, m, null);
-            } catch (PrinterException ex) {
-                Logger.getLogger(AbstractListResumenViewPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            onImprimirClick();
         });
 
     }
@@ -266,5 +265,28 @@ public abstract class AbstractListResumenViewPanel<Main, Detail> extends Abstrac
     @Override
     public AbstractResumenViewPresenter getPresenter() {
         return (AbstractResumenViewPresenter) super.getPresenter(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void onImprimirClick() {
+        String[] options = {"Impresora Regular", "Impresora Ticket", "Cancelar"};
+        int selection = JOptionPane.showOptionDialog(null,
+                ResourceHandler.getString("dialog_seleccionar_manera_imprimir"),
+                ResourceHandler.getString("label_impresion"), JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        switch (selection) {
+            case 0:
+                MessageFormat m = new MessageFormat(jLabelNombreTabla.getText() + " (" + jLabelTotal.getText() + ")");
+                try {
+                    jTableDetail.print(JTable.PrintMode.FIT_WIDTH, m, null);
+                } catch (PrinterException ex) {
+                    Logger.getLogger(AbstractListResumenViewPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                break;//impresion normal
+            case 1:
+                getPresenter().getOperation(AbstractResumenViewPresenter.IMPRESION_TICKET).doAction();
+                break;//impresion ticket
+            default:
+                break;//cancelado
+        }
     }
 }
