@@ -142,7 +142,8 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 showDialog("Desea cerrar la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             boolean cerrarTicket = (boolean) Application.getInstance().getNotificationService().
                     showDialog("Desea imprimir un ticket de la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
-            float total = ordenService.getValorTotalOrden(getCodOrden());
+           var orden = ordenService.findBy(getCodOrden());
+            float total = orden.getOrdenvalorMonetario();
 
             Orden o = ordenService.cerrarOrden(
                     getCodOrden(),

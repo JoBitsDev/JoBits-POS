@@ -366,7 +366,7 @@ public class Generales extends AbstractViewPanel {
 
         Bindings.bind(jComboBoxTipoNegocio, new ComboBoxAdapter(Arrays.asList(
                 "Restaurante", "Cafeteria", "Bar", "Salon", "Carniceria", "Dulceria", "Tienda"),
-                getPresenter().getModel(R.SettingID.IMPRESION_TICKET_VALOR_ENCABEZADO.toString())));
+                getPresenter().getModel(R.SettingID.PRINTING_TICKET_HEADER_VALUE.toString())));
         Bindings.bind(jComboBoxCambioMoneda, new ComboBoxAdapter(Arrays.asList("20", "21", "22", "23", "24", "25"),
                 getPresenter().getModel(R.SettingID.GENERAL_CAMBIO_MONEDA.toString())));
         Bindings.bind(jComboBoxCantidadturnos, new ComboBoxAdapter(Arrays.asList("1", "2", "3"),

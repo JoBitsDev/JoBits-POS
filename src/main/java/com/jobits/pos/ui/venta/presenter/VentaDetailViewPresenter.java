@@ -324,7 +324,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
                 new LongProcessActionServiceImpl("Creando IPVs.........") {
                     @Override
                     protected void longProcessMethod() {//TODO: No se muestran las ecepciones que se lanzan dentro de este metodo
-                        var newTurno = service.cambiarTurno(getBean().getVenta_seleccionada(), Application.getInstance().getLoggedUser());
+                        var newTurno = service.cambiarTurno(getBean().getVenta_seleccionada());
                         //ventas = service.getVentasDeFecha(getBean().getVenta_seleccionada().getFecha());
                         getBean().setVenta_seleccionada(newTurno.getId());
                         updateBeanData();
@@ -362,39 +362,39 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
 //            getBean().setTotal_resumen_area(service.getTotalResumenArea(getBean().getVenta_seleccionada()));
 //            getBean().setTotal_resumen_cocina(service.getTotalResumenCocina(getBean().getVenta_seleccionada()));
 //            getBean().setTotal_resumen_dependiente(service.getTotalResumenDependiente(getBean().getVenta_seleccionada()));
-            getBean().setReabrir_ventas_enabled(service.canReabrirVenta(getBean().getVenta_seleccionada()));
+        getBean().setReabrir_ventas_enabled(service.canReabrirVenta(getBean().getVenta_seleccionada()));
 
-            VentaResumenWrapper resumen = ventaResumenService.getResumenVenta(getBean().getVenta_seleccionada());
-            getBean().setPropina_total(resumen.getTotalPropina());
-            getBean().setTotal_autorizos(resumen.getTotalAutorizos());
-            getBean().setTotal_gasto_insumos(resumen.getTotalGastadoInsumos());
-            getBean().setTotal_gasto_otros(resumen.getTotalGastos());
-            getBean().setTotal_gasto_salario(resumen.getTotalPagoTrabajadores());
-            getBean().setVenta_neta(resumen.getTotalVendidoNeto());
-            getBean().setVenta_total(resumen.getTotalVendido());
+        VentaResumenWrapper resumen = ventaResumenService.getResumenVenta(getBean().getVenta_seleccionada());
+        getBean().setPropina_total(resumen.getTotalPropina());
+        getBean().setTotal_autorizos(resumen.getTotalAutorizos());
+        getBean().setTotal_gasto_insumos(resumen.getTotalGastadoInsumos());
+        getBean().setTotal_gasto_otros(resumen.getTotalGastos());
+        getBean().setTotal_gasto_salario(resumen.getTotalPagoTrabajadores());
+        getBean().setVenta_neta(resumen.getTotalVendidoNeto());
+        getBean().setVenta_total(resumen.getTotalVendido());
 
-            getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
-            getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(utils.dateToLocalDate(v.getFecha())));
+        getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
+        getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(utils.dateToLocalDate(v.getFecha())));
 
-            VentaResourcesWrapper ventaResources = ventaResumenService.getVentaResources(
-                    getBean().getVenta_seleccionada());
+        VentaResourcesWrapper ventaResources = ventaResumenService.getVentaResources(
+                getBean().getVenta_seleccionada());
 
-            getBean().setLista_mesas(new ArrayListModel<>(ventaResources.getMesasPorVenta()));
-            if (!getBean().getLista_mesas().isEmpty()) {
-                getBean().setMesa_seleccionada(getBean().getLista_mesas().get(0));
-            }
-            getBean().setLista_cocinas(new ArrayListModel<>(ventaResources.getCocinasPorVenta()));
-            if (!getBean().getLista_cocinas().isEmpty()) {
-                getBean().setCocina_seleccionada(getBean().getLista_cocinas().get(0));
-            }
-            getBean().setLista_dependientes(new ArrayListModel<>(ventaResources.getPersonalPorVenta()));
-            if (!getBean().getLista_dependientes().isEmpty()) {
-                getBean().setPersonal_seleccionado(getBean().getLista_dependientes().get(0));
-            }
-            getBean().setLista_areas(new ArrayListModel<>(ventaResources.getAreasPorVenta()));
-            if (!getBean().getLista_areas().isEmpty()) {
-                getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
-            }
+        getBean().setLista_mesas(new ArrayListModel<>(ventaResources.getMesasPorVenta()));
+        if (!getBean().getLista_mesas().isEmpty()) {
+            getBean().setMesa_seleccionada(getBean().getLista_mesas().get(0));
+        }
+        getBean().setLista_cocinas(new ArrayListModel<>(ventaResources.getCocinasPorVenta()));
+        if (!getBean().getLista_cocinas().isEmpty()) {
+            getBean().setCocina_seleccionada(getBean().getLista_cocinas().get(0));
+        }
+        getBean().setLista_dependientes(new ArrayListModel<>(ventaResources.getPersonalPorVenta()));
+        if (!getBean().getLista_dependientes().isEmpty()) {
+            getBean().setPersonal_seleccionado(getBean().getLista_dependientes().get(0));
+        }
+        getBean().setLista_areas(new ArrayListModel<>(ventaResources.getAreasPorVenta()));
+        if (!getBean().getLista_areas().isEmpty()) {
+            getBean().setArea_seleccionada(getBean().getLista_areas().get(0));
+        }
 
         boolean value = UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3
                 && ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_CAJERO_PERMISOS_ESP).getValor() != 1;

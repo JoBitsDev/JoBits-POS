@@ -49,10 +49,12 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
 
     private void onBuscarClick() {
         getBean().getLista_personal().clear();
-        if(getBean().getFecha_desde().after(getBean().getFecha_hasta())){
+        if (getBean().getFecha_desde().after(getBean().getFecha_hasta())) {
             throw new IllegalArgumentException("Rango de fechas incorrecto");
         }
-        getBean().getLista_personal().addAll(service.getPersonalActivo(getBean().getFecha_desde(), getBean().getFecha_hasta()));
+        var desde = utils.toLocalDate(getBean().getFecha_desde());
+        var hasta = utils.toLocalDate(getBean().getFecha_hasta());
+        getBean().getLista_personal().addAll(service.getPersonalActivo(desde, hasta));
 
     }
 
@@ -60,8 +62,8 @@ public class NominasDetailPresenter extends AbstractViewPresenter<NominasDetailV
         boolean flag = JOptionPane.showConfirmDialog(null,
                 "Desea imprimir el comprobante de pago", "Comprobante de Pago",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-        service.pagar(getBean().getLista_personal(),getBean().getHasta(), flag);
-        getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize()-1);
+        service.pagar(getBean().getLista_personal(), getBean().getHasta(), flag);
+        getBean().getLista_personal().fireContentsChanged(0, getBean().getLista_personal().getSize() - 1);
         Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
     }
 

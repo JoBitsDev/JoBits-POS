@@ -6,6 +6,7 @@
 package com.jobits.pos.client.webconnection.trabajadores;
 
 import com.jobits.pos.core.domain.models.Personal;
+import java.time.LocalDate;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -30,8 +31,8 @@ public interface PersonalWCI {
     @DELETE("pos/personal/destroy/{id}")
     public Call<Personal> destroyById(@Path("id") Object o);
 
-    @PUT("pos/personal/{usuario}/pagar")
-    public Call<Personal> pagar(@Path("usuario") String usuario);
+    @PUT("pos/personal/{usuario}/pagar/{dateISO}")
+    public Call<Personal> pagar(@Path("usuario") String usuario,@Path("dateISO") LocalDate hasta);
 
     @GET("pos/personal/find/{id}")
     public Call<Personal> findBy(@Path("id") Object o);

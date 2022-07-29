@@ -94,7 +94,7 @@ public class ImpresorasViewPresenter extends AbstractListViewPresenter<Impresora
     protected void onEliminarClick() {
         Impresora impresoraToDelete = getBean().getImpresora_seleccionada();
         if (showConfirmDialog(Application.getInstance().getMainWindow())) {
-            if (service.deleteImpresora(impresoraToDelete) != null) {
+            if (service.deleteImpresora(impresoraToDelete.getIdImpresora()) != null) {
                 setListToBean();
                 showSuccessDialog(Application.getInstance().getMainWindow(), "Se ha eliminado la impresora con éxito");
             }

@@ -47,4 +47,9 @@ public class ConfiguracionWCS extends BaseConnection implements ConfiguracionSer
         return handleCall(service.getConfiguracion(v.getValue()));
     }
 
+    @Override
+    public Map<String, Configuracion> guardarConfiguracion(Map<String, Configuracion> map) {
+        return handleCall(service.guardarConfiguracion(map));
+    }
+
 }

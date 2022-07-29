@@ -8,6 +8,7 @@ package com.jobits.pos.client.webconnection.trabajadores;
 import com.jobits.pos.client.webconnection.BaseConnection;
 import com.jobits.pos.controller.trabajadores.PersonalUseCase;
 import com.jobits.pos.core.domain.models.Personal;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -57,8 +58,8 @@ public class PersonalWCS extends BaseConnection implements PersonalUseCase {
     }
 
     @Override
-    public Personal pagarTrabajador(String usuario) {
-        return handleCall(service.pagar(usuario));
+    public Personal pagarTrabajador(String usuario, LocalDate date) {
+        return handleCall(service.pagar(usuario,date));
     }
 
 }

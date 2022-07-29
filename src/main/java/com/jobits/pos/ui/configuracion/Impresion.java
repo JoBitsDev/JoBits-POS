@@ -328,21 +328,21 @@ public class Impresion extends AbstractViewPanel {
 
     @Override
     public void wireUp() {
-        Bindings.bind(jToggleButtonBuzzer, getPresenter().getModel(R.SettingID.IMPRESION_BUZZER_ON.toString()));
-        Bindings.bind(jToggleButtonRounding, getPresenter().getModel(R.SettingID.IMPRESION_REDONDEO_EXCESO.toString()));
-        Bindings.bind(jToggleButtonEncabezadoRestaurante, getPresenter().getModel(R.SettingID.IMPRESION_TICKET_ENCABEZADO_RESTAURANTE.toString()));
-        Bindings.bind(jToggleButtonSegundaMoneda, getPresenter().getModel(R.SettingID.IMPRESION_IMPRIMIR_MONEDA_SECUNDARIA.toString()));
+        Bindings.bind(jToggleButtonBuzzer, getPresenter().getModel(R.SettingID.PRINTING_BUZZER_ON.toString()));
+        Bindings.bind(jToggleButtonRounding, getPresenter().getModel(R.SettingID.PRINTING_ROUNDING.toString()));
+        Bindings.bind(jToggleButtonEncabezadoRestaurante, getPresenter().getModel(R.SettingID.PRINTING_TICKET_HEADER.toString()));
+        Bindings.bind(jToggleButtonSegundaMoneda, getPresenter().getModel(R.SettingID.PRINTING_SECOND_COIN.toString()));
         Bindings.bind(jToggleButtonCierreParcial, getPresenter().getModel(R.SettingID.IMPRESION_CIERRE_PARCIAL_ENABLED.toString()));
         Bindings.bind(jToggleButtonImprimirOrdenes, getPresenter().getModel(R.SettingID.IMPRESION_IMPRESION_ORDENES.toString()));
         Bindings.bind(jComboBoxCantCopias,
                 new ComboBoxAdapter(Arrays.asList("0", "1", "2", "3", "4"),
-                        getPresenter().getModel(R.SettingID.IMPRESION_CANTIDAD_COPIAS.toString())));
+                        getPresenter().getModel(R.SettingID.PRINTING_COPIES.toString())));
         Bindings.bind(jComboBoxCaracterSeparador,
                 new ComboBoxAdapter(Arrays.asList("*", "-", "/", "+", "ˆ"),
-                        getPresenter().getModel(R.SettingID.IMPRESION_TICKET_CARACTER_SEPARADOR.toString())));
+                        getPresenter().getModel(R.SettingID.PRINTING_TICKET_SEPARATOR_CHAR.toString())));
 
         Bindings.bind(jComboBoxTamannoTicket, new ComboBoxAdapter(Arrays.asList("28", "32", "48"),
-                getPresenter().getModel(R.SettingID.IMPRESION_TICKET_TAMANO_PAPEL.toString())));
+                getPresenter().getModel(R.SettingID.PRINTING_TICKET_PAPER_SIZE.toString())));
 
     }
 

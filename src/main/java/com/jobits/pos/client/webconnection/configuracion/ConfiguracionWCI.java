@@ -14,6 +14,7 @@ import com.jobits.pos.core.usecase.algoritmo.ParametrosConfiguracion;
 import com.jobits.pos.recursos.R;
 import java.util.Map;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -22,6 +23,9 @@ public interface ConfiguracionWCI {
 
     @GET("pos/configuration/list")
     public Call<Map<String, Configuracion>> cargarConfiguracion();
+
+    @PUT("pos/configuration/update-all")
+    public Call<Map<String, Configuracion>> guardarConfiguracion(@Body Map<String, Configuracion> configuracion);
 
     @PUT("pos/configuration/update/{settingId}/{newValue}")
     public Call<Configuracion> updateConfiguracion(@Path("settingId") String settingId,

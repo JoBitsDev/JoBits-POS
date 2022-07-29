@@ -804,7 +804,7 @@ public class VentaDetailView extends AbstractViewPanel {
 //        if (UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() < 3 && !R.CAJERO_PERMISOS_ESPECIALES) {
 //            jTabbedPaneData.remove(0);
 //        }//TODO autorizacion en el view
-        jPanelTurnosTrabajo.setVisible(ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_TURNOS_VARIOS).getValor() == 1);//TODO:otro mojon
+        jPanelTurnosTrabajo.setVisible(ConfiguracionDAO.getInstance().find(R.SettingID.GENERAL_MULTIPLES_TURNOS).getValor() == 1);//TODO:otro mojon
         jComboBoxSeleccionarVentaPorTurno.setEnabled(UserResolver.resolveUser(Personal.class).getPuestoTrabajonombrePuesto().getNivelAcceso() > 2);//TODO: otro mas
         fileChooser = new JFileChooser();
         //mesaView = new MesaListView(PresenterFacade.getPresenterFor(MesaListView.VIEW_NAME));

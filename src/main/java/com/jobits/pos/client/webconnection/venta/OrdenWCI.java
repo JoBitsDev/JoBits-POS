@@ -53,7 +53,7 @@ public interface OrdenWCI {
             @Path("id") int idProductoOrden, @Path("cantidad") float cantidad);
 
     @PUT("pos/orden/{codOrden}/cerrar-orden")
-    public Call<Orden> cerrarOrden(@Path("codOrden") String codOrden, @Body boolean imprimirTicket);
+    public Call<Orden> cerrarOrden(@Path("codOrden") String codOrden, @Body CerrarOrdenBodyObject cerrarOrden);
 
     @PUT("pos/orden/{codOrden}/set-autorizo/{boolValue}")
     public Call<Orden> setDeLaCasa(@Path("codOrden") String codOrden, @Path("boolValue") boolean es_autorizo);

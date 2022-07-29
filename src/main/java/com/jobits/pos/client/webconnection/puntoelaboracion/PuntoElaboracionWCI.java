@@ -21,7 +21,7 @@ import retrofit2.http.Path;
  */
 public interface PuntoElaboracionWCI {
 
-    @DELETE("pos/punto-elaboracion//destroy-cascade/{idCocina}")
+    @DELETE("pos/punto-elaboracion/destroy-cascade/{idCocina}")
     public Call<Cocina> destroyInCascade(@Path("idCocina") String codCocina);
 
     @PUT("pos/punto-elaboracion/{id}/edit-name/{name}")
