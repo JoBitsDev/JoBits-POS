@@ -24,6 +24,7 @@ import com.jobits.pos.client.webconnection.login.model.UbicacionService;
 import com.jobits.pos.client.webconnection.login.model.UbicacionServiceImpl;
 import com.jobits.pos.client.webconnection.product.ProductoVentaWCS;
 import com.jobits.pos.client.webconnection.puntoelaboracion.PuntoElaboracionWCS;
+import com.jobits.pos.client.webconnection.trabajadores.NominasWCS;
 import com.jobits.pos.client.webconnection.trabajadores.PersonalWCS;
 import com.jobits.pos.client.webconnection.trabajadores.PuestoTrabajoWCS;
 import com.jobits.pos.client.webconnection.venta.OrdenWCS;
@@ -37,6 +38,7 @@ import com.jobits.pos.controller.productos.ProductoVentaService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
 import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.controller.seccion.SeccionListService;
+import com.jobits.pos.controller.trabajadores.NominasUseCase;
 import com.jobits.pos.controller.trabajadores.PersonalUseCase;
 import com.jobits.pos.controller.trabajadores.PuestoTrabajoUseCase;
 import com.jobits.pos.controller.venta.VentaDetailService;
@@ -82,8 +84,13 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         bind(SeccionListService.class).to(SeccionWCS.class).in(Scopes.SINGLETON);
         bind(AreaVentaService.class).to(AreaVentaWCS.class).in(Scopes.SINGLETON);
         bind(MesaService.class).to(MesaWCS.class).in(Scopes.SINGLETON);
+
+        //
+        // Trabajadores
+        //
         bind(PuestoTrabajoUseCase.class).to(PuestoTrabajoWCS.class).in(Scopes.SINGLETON);
         bind(PersonalUseCase.class).to(PersonalWCS.class).in(Scopes.SINGLETON);
+        bind(NominasUseCase.class).to(NominasWCS.class).in(Scopes.SINGLETON);
 
         //
         //Ventas
