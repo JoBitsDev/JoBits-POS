@@ -70,8 +70,8 @@ public class PendingOperationsListView extends AbstractListViewPanel<Operacion> 
                     case 0:
                         return getRow(rowIndex).getNoRecibo();
                     case 1:
-                        return R.DATE_FORMAT.format(getRow(rowIndex).getFecha()) + " "
-                                + R.TIME_FORMAT.format(getRow(rowIndex).getHora());
+                        return getRow(rowIndex).getFecha().toString() + " "
+                                + getRow(rowIndex).getHora().toString();
                     case 2:
                         return getRow(rowIndex).getRecibidoPor();
                     case 3:

@@ -17,6 +17,7 @@ import com.jobits.pos.inventario.core.almacen.domain.TransaccionSalida;
 import com.jobits.pos.inventario.core.almacen.domain.TransaccionTransformacion;
 import com.jobits.pos.inventario.core.almacen.domain.TransaccionTraspaso;
 import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,7 +49,7 @@ public class AlmacenWCS extends BaseConnection implements AlmacenManageService {
 
     @Override
     public void imprimirReporteParaCompras(String codAlmacen, int selection) {
-        handleCall(service.imprimirReporteParaCompras(codAlmacen, selection));
+        handleCall(service.imprimirReporteParaCompras(codAlmacen));
     }
 
     @Override
@@ -78,7 +79,7 @@ public class AlmacenWCS extends BaseConnection implements AlmacenManageService {
 
     @Override
     public Almacen destroy(Almacen t) throws RuntimeException {
-        return handleCall(service.destroy(t));
+        return handleCall(service.destroyById(t.getCodAlmacen()));
     }
 
     @Override
@@ -97,28 +98,34 @@ public class AlmacenWCS extends BaseConnection implements AlmacenManageService {
     }
 
     @Override
-    public Operacion crearOperacion(Operacion.Tipo tipoOp, List<TransaccionSimple> transacciones, String recibo, Date fechaFactura, String codAlmacen, Integer codVenta) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public List<Operacion> getOperacionesPendientes(String codAlmacen) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.getOperacionesPendientes(codAlmacen));
     }
 
     @Override
     public void ejecutarOperacion(String codAlmacen, Operacion operacionToUpdate) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.ejecutarOperacion(codAlmacen, operacionToUpdate));
     }
 
     @Override
     public void ejecutarOperacion(String codAlmacen, int idOperacion) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        handleCall(service.ejecutarOperacion(codAlmacen, idOperacion));
     }
 
     @Override
-    public void removeInsumoFromStorage(InsumoAlmacen insumoAlmacen) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+    public void removeInsumoFromStorage(String codAlmacen,String codInsumo) {
+        handleCall(service.removeInsumoFromStorage(codAlmacen,codInsumo));
+    }
+
+    @Override
+    public Operacion crearOperacion(Operacion.Tipo tipoOp,
+            List<TransaccionSimple> transacciones,
+            String recibo,
+            LocalDate fechaFactura,
+            String codAlmacen,
+            Integer codVenta) {
+        return handleCall(service.crearOperacion(tipoOp, new ArrayList<>(transacciones),
+                recibo, fechaFactura, codAlmacen, codVenta));
     }
 
 }

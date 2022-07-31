@@ -99,6 +99,11 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         bind(VentaResumenUseCase.class).to(VentaWCS.class).in(Scopes.SINGLETON);
         bind(OrdenService.class).to(OrdenWCS.class).in(Scopes.SINGLETON);
 
+        //
+        //Almacen
+        //
+        bind(AlmacenManageService.class).to(AlmacenWCS.class).in(Scopes.SINGLETON);
+
     }
 
 }

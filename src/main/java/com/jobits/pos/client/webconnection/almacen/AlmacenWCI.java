@@ -8,12 +8,14 @@ package com.jobits.pos.client.webconnection.almacen;
 import com.jobits.pos.core.domain.TransaccionSimple;
 import com.jobits.pos.inventario.core.almacen.domain.Almacen;
 import com.jobits.pos.inventario.core.almacen.domain.InsumoAlmacen;
+import com.jobits.pos.inventario.core.almacen.domain.Operacion;
 import com.jobits.pos.inventario.core.almacen.domain.Transaccion;
 import com.jobits.pos.inventario.core.almacen.domain.TransaccionEntrada;
 import com.jobits.pos.inventario.core.almacen.domain.TransaccionMerma;
 import com.jobits.pos.inventario.core.almacen.domain.TransaccionSalida;
 import com.jobits.pos.inventario.core.almacen.domain.TransaccionTransformacion;
 import com.jobits.pos.inventario.core.almacen.domain.TransaccionTraspaso;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,68 +33,69 @@ import retrofit2.http.Path;
  */
 public interface AlmacenWCI {
 
-    @PUT("pos/almacen/{id}/reset-almacen")
-    Call<Almacen> resetAlmacen(@Path("id") Object codAlmacen);
+    public static final String BASE = "pos/almacen";
 
-    @PUT("pos/almacen/{id}/crear-operacion-entrada/{recibo}")
-    Call<Almacen> crearOperacionEntrada(@Body ArrayList<TransaccionSimple> transacciones, @Path("recibo") Object recibo, @Body Date fechaFactura, @Path("id") Object codAlmacen);
+    public static final String RESET_ALMACEN = "/{id}/reset-almacen";
 
-    @PUT("pos/almacen/{id}/crear-operacion-rebaja/{recibo}")
-    Call<Almacen> crearOperacionRebaja(@Body ArrayList<TransaccionSimple> transacciones, @Path("recibo") Object recibo, @Body Date fechaFactura, @Path("id") Object codAlmacen);
+    public static final String CREAR_OPERACION = "/{id}/crear-operacion/{tipo}/{recibo}/{fecha}/{idVenta}";
 
-    @PUT("pos/almacen/{id}/crear-operacion-salida/{idVenta}/{recibo}")
-    Call<Almacen> crearOperacionSalida(@Body ArrayList<TransaccionSimple> transacciones, @Path("recibo") Object recibo, @Body Date fechaFactura, @Path("idVenta") Object codVenta, @Path("id") Object codAlmacen);
+    public static final String OPERACIONES_PENDIENTES = "/{id}/operaciones-pendientes";
 
-    @PUT("pos/almacen/{id}/crear-operacion-traspaso/{idVenta}/{recibo}")
-    Call<Almacen> crearOperacionTraspaso(@Body ArrayList<TransaccionSimple> transacciones, @Path("recibo") Object recibo, @Body Date fechaFactura, @Path("id") Object codAlmacen);
+    public static final String EJECUTAR_OPERACION = "/{id}/ejecutar-operacion/{idOp}";
 
-    @PUT("pos/almacen/{id}/dar-entrada-insumo")
-    Call<Almacen> darEntradaAInsumo(@Body TransaccionEntrada x, @Path("id") Object codAlmacen);
+    public static final String ACTUALIZAR_OPERACION = "/{id}/actualizar-operacion";
 
-    @PUT("pos/almacen/{id}/dar-merma-insumo")
-    Call<Almacen> darMermaInsumo(@Body TransaccionMerma x, @Path("id") Object codAlmacen);
+    public static final String REGISTRAR_INSUMO = "/{id}/registrar-insumo/{codInsumo}";
 
-    @PUT("pos/almacen/{id}/dar-salida-insumo/{idVenta}")
-    Call<Almacen> darSalidaAInsumo(@Body TransaccionSalida x, @Path("idVenta") Object idVenta, @Path("id") Object codAlmacen);
+    public static final String IMPRIMIR_REPORTE_COMPRAS = "/{id}/imprimir/reporte-compras";
 
-    @PUT("pos/almacen/dar-transformacion-insumo/{idOrigen}/{idDestino}")
-    Call<Almacen> darTransformacionAInsumo(@Body Transaccion t, @Path("idDestino") Object codAlmacenDestino, @Path("idOrigen") Object codAlmacenOrigen);
+    public static final String IMPRIMIR_RESUMEN = "/{id}/imprimir/resumen";
 
-    @PUT("pos/almacen/{id}/dar-traspaso-insumo")
-    Call<Almacen> darTraspasoInsumo(@Body TransaccionTraspaso x, @Path("id") Object codAlmacen);
+    public static final String BULK_IMPORT = "/bulk-import";
 
-    @PUT("pos/almacen/{id}/agregar-insumo-almacen/{codInsumo}")
-    Call<Almacen> agregarInsumoAlmacen(@Path("codInsumo") Object codInsumo, @Path("id") Object codAlmacen);
+    public static final String ELIMINAR_INSUMO = "/{id}/eliminar-insumo/{idInsumo}";
 
-    @PUT("pos/almacen/{id}/crear-transformacion/{cantidad}")
-    Call<Almacen> crearTransformacion(@Body InsumoAlmacen selected, @Path("cantidad") Object cantidad, @Body List<TransaccionTransformacion> items, @Path("id") Object codAlmacen);
+    public static final String BUSCAR_INSUMO = "/{id}/insumo/{codInsumo}";
 
-    @PUT("pos/almacen/{id}/set-centro-elaboracion")
-    Call<Almacen> setCentroElaboracion(@Body boolean selected, @Path("id") Object codAlmacen);
+    @POST("pos/almacen/{id}/crear-operacion/{tipo}/{recibo}/{fecha}/{idVenta}")
+    Call<Operacion> crearOperacion(
+            @Path("tipo") Operacion.Tipo tipo,
+            @Body ArrayList<TransaccionSimple> transacciones,
+            @Path("recibo") Object recibo,
+            @Path("fecha") LocalDate fechaFactura,
+            @Path("id") Object codAlmacen,
+            @Path("idVenta") Integer idVenta);
 
-    @PUT("pos/almacen/{id}/imprimir-reporte-compras/{seleccion}")
-    Call<Almacen> imprimirReporteParaCompras(@Path("id") Object codAlmacen, @Path("id") Object selection);
+    @GET("pos/almacen/{id}/operaciones-pendientes")
+    Call<List<Operacion>> getOperacionesPendientes(@Path("id") String codAlmacen);
 
-    @PUT("pos/almacen/{id}/imprimir-resumen-almacen")
-    Call<Almacen> imprimirResumenAlmacen(@Path("id") Object codAlmacen);
+    @PUT(BASE + ACTUALIZAR_OPERACION)
+    public Call<Void> ejecutarOperacion(@Path("id") String codAlmacen, @Body Operacion operacionToUpdate);
 
-    @PUT("pos/almacen/{id}/remove-insumo-from-storage")
-    Call<Almacen> removeInsumoFromStorage(@Body InsumoAlmacen insumoAlmacen, @Path("id") Object codAlmacen);
+    @PUT(BASE + EJECUTAR_OPERACION)
+    public Call<Void> ejecutarOperacion(@Path("id") String codAlmacen, @Path("idOp") int idOperacion);
 
-    @PUT("pos/almacen/{id}/update-valor-total-almacen")
-    Call<Almacen> updateValorTotalAlmacen(@Path("id") Object codAlmacen);
+    @PUT(BASE + REGISTRAR_INSUMO)
+    public Call<Void> agregarInsumoAlmacen(@Path("codInsumo") String codInsumo, @Path("id") String codAlmacen);
 
-    @PUT("pos/almacen/{id}/dar-entrada-ipv/{codInsumo}/{cantidad}")
-    Call<Almacen> darEntradaIPV(@Path("id") Object codAlmacen, @Path("codInsumo") Object codInsumo, @Path("cantidad") Object cantidad);
+    @GET(BASE + IMPRIMIR_REPORTE_COMPRAS)
+    public Call<Void> imprimirReporteParaCompras(@Path("id") String codAlmacen);//TODO: parametro raro aqui
 
-    @PUT("pos/almacen/bulk-import")
-    Call<Boolean> bulkImport(@Body List<InsumoAlmacen> importList);
+    @GET(BASE + IMPRIMIR_RESUMEN)
+    public Call<Void> imprimirResumenAlmacen(@Path("id") String codAlmacen);
 
-    @GET("pos/almacen/{id}/get-insumo-almacen-list")
-    Call<List<InsumoAlmacen>> getInsumoAlmacenList(@Path("id") Object codAlmacen);
+    @DELETE(BASE + ELIMINAR_INSUMO)
+    public Call<Void> removeInsumoFromStorage(@Path("id") String codAlmacen,
+            @Path("idInsumo") String codInsumo);
 
-    @GET("pos/almacen/{id}/find-insumo/{codInsumo}")
-    Call<InsumoAlmacen> findInsumo(@Path("codInsumo") Object codInsumo, @Path("id") Object codAlmacen);
+    @POST(BASE + BULK_IMPORT)
+    public Call<Boolean> bulkImport(@Body List<InsumoAlmacen> importList);
+
+    @GET(BASE + BUSCAR_INSUMO)
+    public Call<InsumoAlmacen> findInsumo(@Path("codInsumo") String codIns, @Path("id") String codAlmacen);
+
+    @PUT(BASE + RESET_ALMACEN)
+    public Call<Void> resetAlmacen(@Path("id") String codAlmacen);
 
     @POST("pos/almacen/create")
     Call<Almacen> create(@Body Almacen t);
