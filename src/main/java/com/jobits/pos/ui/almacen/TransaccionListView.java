@@ -87,9 +87,9 @@ public class TransaccionListView extends AbstractListViewPanel<Transaccion> {
                     case 0:
                         return ((Transaccion) getListModel().getElementAt(rowIndex)).getInsumocodInsumo().getNombre();
                     case 1:
-                        return R.DATE_FORMAT.format(((Transaccion) getListModel().getElementAt(rowIndex)).getFecha());
+                        return getRow(rowIndex).getFecha().toString();
                     case 2:
-                        return R.TIME_FORMAT.format(((Transaccion) getListModel().getElementAt(rowIndex)).getHora());
+                        return getRow(rowIndex).getHora().toString();
                     case 3:
                         return ((Transaccion) getListModel().getElementAt(rowIndex)).getCantidad();
                     case 4:

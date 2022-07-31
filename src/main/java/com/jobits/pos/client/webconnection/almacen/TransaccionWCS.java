@@ -23,13 +23,24 @@ import java.util.List;
  * @author Jorge
  *
  */
-public class TransaccionWCS extends BaseConnection implements TransaccionListService{
+public class TransaccionWCS extends BaseConnection implements TransaccionListService {
 
     TransaccionWCI service = retrofit.create(TransaccionWCI.class);
 
     @Override
     public void imprimirTransaccionesSeleccionadas(List<Transaccion> selectedsObjects) {
         handleCall(service.imprimirTransaccionesSeleccionadas(selectedsObjects));
+    }
+
+    @Override
+    public List<Transaccion> findAllByAlmacen(String codAlmacen) {
+        return handleCall(service.findAllByAlmacen(codAlmacen));
+
+    }
+
+    @Override
+    public List<Transaccion> findMermasByAlmacen(String codAlmacen) {
+        return handleCall(service.findMermasByAlmacen(codAlmacen));
     }
 
     @Override
@@ -69,16 +80,6 @@ public class TransaccionWCS extends BaseConnection implements TransaccionListSer
 
     @Override
     public void removePropertyChangeListener(PropertyChangeListener pl) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Transaccion> findAllByAlmacen(String codAlmacen) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Transaccion> findMermasByAlmacen(String codAlmacen) {
         throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
     }
 
