@@ -254,7 +254,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             service.destroy(instance.getIpv());
             getBean().setLista_ipv_registro(new ArrayListModel<>(
                     service.getIpvRegistroList(
-                            getBean().getPunto_elaboracion_seleccionado(),
+                            getBean().getPunto_elaboracion_seleccionado().getCodCocina(),
                             getBean().getVenta_ipv_seleccionada().getId())));
         }
     }
@@ -267,7 +267,9 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     "Desea ajustar el costo de " + instance.getIpv().getInsumo() + " a " + cantidad + " " + R.COIN_SUFFIX,
                     ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
-                service.ajustarCosto(instance, cantidad);
+                service.ajustarCosto(instance.getIpvRegistroPK().getIpvinsumocodInsumo(),
+                        instance.getIpvRegistroPK().getIpvcocinacodCocina(),
+                        instance.getIpvRegistroPK().getVentaId(), cantidad);
             }
         }
     }
@@ -285,10 +287,12 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         if (venta == null) {
             throw new IllegalArgumentException("Seleccione una venta primero");
         }
-        service.registrarIPV(insumo, cocina, venta.getId());
+        service.registrarIPV(insumo.getCodInsumo(),
+                cocina.getCodCocina(),
+                venta.getId());
         getBean().setLista_ipv_registro(new ArrayListModel<>(
                 service.getIpvRegistroList(
-                        getBean().getPunto_elaboracion_seleccionado(),
+                        getBean().getPunto_elaboracion_seleccionado().getCodCocina(),
                         getBean().getVenta_ipv_seleccionada().getId())));
     }
 
@@ -300,7 +304,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     if (getBean().getVenta_ipv_seleccionada() != null) {
                         getBean().setLista_ipv_registro(new ArrayListModel<>(
                                 service.getIpvRegistroList(
-                                        getBean().getPunto_elaboracion_seleccionado(),
+                                        getBean().getPunto_elaboracion_seleccionado().getCodCocina(),
                                         getBean().getVenta_ipv_seleccionada().getId())));
                         getBean().setCheck_ocultar_productos_ipv(false);
                         getBean().setFecha_ipv_ventas_seleccionada(null);
@@ -318,8 +322,8 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     getBean().setVenta_ipv_ventas_seleccionada(selectFecha(ventaService.getVentasDeFecha(utils.dateToLocalDate(getBean().getFecha_ipv_ventas_seleccionada()))));
                     if (getBean().getVenta_ipv_ventas_seleccionada() != null) {
                         getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
-                                service.getIpvRegistroVentaList(getBean().
-                                        getPunto_elaboracion_seleccionado(),
+                                service.getIpvRegistroVentaList(
+                                        getBean().getPunto_elaboracion_seleccionado().getCodCocina(),
                                         getBean().getVenta_ipv_ventas_seleccionada().getId())));
                         getBean().setCheck_ocultar_productos_ipv_venta(false);
                         getBean().setFecha_ipv_seleccionada(null);
@@ -385,7 +389,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                         ResourceHandler
                                 .getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                         == JOptionPane.YES_OPTION) {
-                    service.darEntradaExistencia(instance, cocina, fecha.getId(), cantidad);
+                    service.darEntradaExistencia(instance.getCodInsumo(), cocina.getCodCocina(), fecha.getId(), cantidad);
                 }
             }
         }
@@ -399,7 +403,8 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             if (JOptionPane.showConfirmDialog(null, "Desea dar entrada a " + cantidad + " de " + instance.getProductoVenta(),
                     ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
-                service.darEntradaIPV(instance, cantidad);
+                service.darEntradaIPV(instance.getIpvVentaRegistroPK().getProductoVentapCod(),
+                        instance.getIpvVentaRegistroPK().getVentaid(), cantidad);
             }
         }
 
@@ -412,7 +417,8 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             if (JOptionPane.showConfirmDialog(null, "Desea rebajar " + cantidad + " de " + instance.getProductoVenta(),
                     ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
-                service.darEntradaIPV(instance, cantidad * -1);
+                service.darEntradaIPV(instance.getIpvVentaRegistroPK().getProductoVentapCod(),
+                        instance.getIpvVentaRegistroPK().getVentaid(), cantidad * -1);
             }
         }
 
@@ -435,7 +441,10 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
             if (JOptionPane.showConfirmDialog(null, "Desea ajustar el consumo de " + instance.getIpv().getInsumo() + " a " + cantidad,
                     ResourceHandler.getString("label_confirmacion"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     == JOptionPane.YES_OPTION) {
-                service.ajustarConsumo(instance, cantidad);
+                service.ajustarConsumo(instance.getIpvRegistroPK().getIpvinsumocodInsumo(),
+                        instance.getIpvRegistroPK().getIpvcocinacodCocina(),
+                        instance.getIpvRegistroPK().getVentaId(),
+                        cantidad);
             }
         }
     }
@@ -496,7 +505,11 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     if (cocina != null) {
                         Float cantidad = new NumberPad().showView();
                         if (cantidad != null) {
-                            service.transferirIPVRegistro(getBean().getIpv_registro_seleciconado(), cocina, cantidad);
+                            service.transferirIPVRegistro(
+                                    getBean().getIpv_registro_seleciconado().getIpvRegistroPK().getIpvinsumocodInsumo(),
+                                    getBean().getIpv_registro_seleciconado().getIpvRegistroPK().getIpvcocinacodCocina(),
+                                    getBean().getIpv_registro_seleciconado().getIpvRegistroPK().getVentaId(),
+                                    cocina.getCodCocina(), cantidad);
                         }
                     }
                 case JOptionPane.NO_OPTION:
@@ -532,7 +545,11 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
                     if (almacen != null) {
                         Float cantidad = new NumberPad().showView();
                         if (cantidad != null) {
-                            service.transferirIPVRegistroToAlmacen(getBean().getIpv_registro_seleciconado(), almacen, cantidad);
+                            service.transferirIPVRegistroToAlmacen(
+                                    getBean().getIpv_registro_seleciconado().getIpvRegistroPK().getIpvinsumocodInsumo(),
+                                    getBean().getIpv_registro_seleciconado().getIpvRegistroPK().getIpvcocinacodCocina(),
+                                    getBean().getIpv_registro_seleciconado().getIpvRegistroPK().getVentaId(),
+                                    almacen.getCodAlmacen(), cantidad);
                         }
                     }
                 case JOptionPane.NO_OPTION:
