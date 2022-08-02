@@ -9,6 +9,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.jobits.pos.client.webconnection.almacen.AlmacenWCS;
 import com.jobits.pos.client.webconnection.almacen.TransaccionWCS;
+import com.jobits.pos.client.webconnection.almacen.ipv.IpvWCS;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
 import com.jobits.pos.client.webconnection.area.AreaVentaWCS;
 import com.jobits.pos.client.webconnection.area.MesaWCS;
@@ -47,6 +48,7 @@ import com.jobits.pos.controller.venta.resumen.VentaResumenUseCase;
 import com.jobits.pos.servicios.impresion.ImpresoraService;
 import com.jobits.pos.controller.venta.OrdenService;
 import com.jobits.pos.inventario.core.almacen.usecase.AlmacenManageService;
+import com.jobits.pos.inventario.core.almacen.usecase.IPVService;
 import com.jobits.pos.inventario.core.almacen.usecase.TransaccionListService;
 import com.jobits.pos.usecase.mesa.MesaUseCase;
 import com.jobits.pos.usecase.mesa.MesaUseCaseImpl;
@@ -106,6 +108,7 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         //
         bind(AlmacenManageService.class).to(AlmacenWCS.class).in(Scopes.SINGLETON);
         bind(TransaccionListService.class).to(TransaccionWCS.class).in(Scopes.SINGLETON);
+        bind(IPVService.class).to(IpvWCS.class).in(Scopes.SINGLETON);
         
 
     }

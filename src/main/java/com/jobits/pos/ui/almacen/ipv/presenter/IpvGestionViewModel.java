@@ -63,11 +63,11 @@ public class IpvGestionViewModel extends AbstractViewModel {
 
     public static final String PROP_CHECK_OCULTAR_PRODUCTOS_IPV_VENTA = "check_ocultar_productos_ipv_venta";
 
-    private Venta venta_ipv_ventas_seleccionada;
+    private Integer venta_ipv_ventas_seleccionada;
 
     public static final String PROP_VENTA_IPV_VENTAS_SELECCIONADA = "venta_ipv_ventas_seleccionada";
 
-    private Venta venta_ipv_seleccionada;
+    private Integer venta_ipv_seleccionada;
 
     public static final String PROP_VENTA_IPV_SELECCIONADA = "venta_ipv_seleccionada";
 
@@ -148,7 +148,7 @@ public class IpvGestionViewModel extends AbstractViewModel {
      *
      * @return the value of venta_ipv_seleccionada
      */
-    public Venta getVenta_ipv_seleccionada() {
+    public Integer getVenta_ipv_seleccionada() {
         return venta_ipv_seleccionada;
     }
 
@@ -157,8 +157,8 @@ public class IpvGestionViewModel extends AbstractViewModel {
      *
      * @param venta_ipv_seleccionada new value of venta_ipv_seleccionada
      */
-    public void setVenta_ipv_seleccionada(Venta venta_ipv_seleccionada) {
-        Venta oldVenta_ipv_seleccionada = this.venta_ipv_seleccionada;
+    public void setVenta_ipv_seleccionada(Integer venta_ipv_seleccionada) {
+        Integer oldVenta_ipv_seleccionada = this.venta_ipv_seleccionada;
         this.venta_ipv_seleccionada = venta_ipv_seleccionada;
         firePropertyChange(PROP_VENTA_IPV_SELECCIONADA, oldVenta_ipv_seleccionada, venta_ipv_seleccionada);
     }
@@ -168,7 +168,7 @@ public class IpvGestionViewModel extends AbstractViewModel {
      *
      * @return the value of venta_ipv_ventas_seleccionada
      */
-    public Venta getVenta_ipv_ventas_seleccionada() {
+    public Integer getVenta_ipv_ventas_seleccionada() {
         return venta_ipv_ventas_seleccionada;
     }
 
@@ -178,8 +178,8 @@ public class IpvGestionViewModel extends AbstractViewModel {
      * @param venta_ipv_ventas_seleccionada new value of
      * venta_ipv_ventas_seleccionada
      */
-    public void setVenta_ipv_ventas_seleccionada(Venta venta_ipv_ventas_seleccionada) {
-        Venta oldVenta_ipv_ventas_seleccionada = this.venta_ipv_ventas_seleccionada;
+    public void setVenta_ipv_ventas_seleccionada(Integer venta_ipv_ventas_seleccionada) {
+        Integer oldVenta_ipv_ventas_seleccionada = this.venta_ipv_ventas_seleccionada;
         this.venta_ipv_ventas_seleccionada = venta_ipv_ventas_seleccionada;
         firePropertyChange(PROP_VENTA_IPV_VENTAS_SELECCIONADA, oldVenta_ipv_ventas_seleccionada, venta_ipv_ventas_seleccionada);
     }

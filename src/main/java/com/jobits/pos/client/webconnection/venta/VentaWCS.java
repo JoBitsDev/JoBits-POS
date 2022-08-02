@@ -247,12 +247,22 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
 
     @Override
     public float getVentaTotalDelProducto(String codProductoVenta, int codVenta) {
-        return handleCall(service.getVentaTotalDelProducto(codVenta,codProductoVenta));
+        return handleCall(service.getVentaTotalDelProducto(codVenta, codProductoVenta));
     }
 
     @Override
     public Map<String, Float> getGastoTotalDeInsumo(int codVenta) {
         return handleCall(service.getGastoTotalDeInsumo(codVenta));
+    }
+
+    @Override
+    public List<Integer> getVentasIds(LocalDate date) {
+        return handleCall(service.getVentas(date));
+    }
+
+    @Override
+    public List<Integer> getVentasIds(int idVenta) {
+        return handleCall(service.getVentas(idVenta));
     }
 
 }
