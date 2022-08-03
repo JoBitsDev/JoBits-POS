@@ -68,7 +68,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         });
         setLayout(new java.awt.BorderLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 10, 15), " "+v.getFecha().getDate()));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 15, 10, 15), " "+v.getFecha().getDayOfMonth()));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabelGastos.setBackground(new java.awt.Color(255, 255, 255));

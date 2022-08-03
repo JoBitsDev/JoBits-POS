@@ -106,8 +106,7 @@ public class DetailResumenSalarioView extends AbstractListResumenViewPanel<DayRe
                 AsistenciaPersonal p = getRow(rowIndex);
                 switch (columnIndex) {
                     case 0:
-                        Date d = p.getVenta().getFecha();
-                        return Instant.ofEpochMilli(d.getTime()).atZone(ZoneId.systemDefault()).toLocalDate()
+                        return p.getVenta().getFecha()
                                 .format(DateTimeFormatter.ofPattern("d/MM/yyyy"));
                     case 1:
                         return p.getAsistenciaPersonalPK().getPersonalusuario();

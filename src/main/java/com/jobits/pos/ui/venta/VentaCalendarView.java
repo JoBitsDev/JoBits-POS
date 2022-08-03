@@ -443,7 +443,7 @@ public class VentaCalendarView extends AbstractViewPanel {
                 for (int i = 0; i < getListModel().getSize(); i++) {
                     if (super.getRow(i) != null) {
                         if (!super.getRow(i).getLista_contenida().isEmpty()) {
-                            if (super.getRow(i).getLista_contenida().get(0).getFecha().getDate() == dayOfMonth) {
+                            if (super.getRow(i).getLista_contenida().get(0).getFecha().getDayOfMonth()== dayOfMonth) {
                                 return super.getRow(i);
                             }
                         }

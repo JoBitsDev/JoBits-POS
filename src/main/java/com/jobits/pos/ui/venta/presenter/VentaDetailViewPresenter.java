@@ -374,7 +374,7 @@ public class VentaDetailViewPresenter extends AbstractViewPresenter<VentaDetailV
         getBean().setVenta_total(resumen.getTotalVendido());
 
         getBean().setFecha(R.DATE_FORMAT.format(v.getFecha()));
-        getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(utils.dateToLocalDate(v.getFecha())));
+        getBean().setCambiar_turno_enabled(service.canOpenNuevoTurno(v.getFecha()));
 
         VentaResourcesWrapper ventaResources = ventaResumenService.getVentaResources(
                 getBean().getVenta_seleccionada());

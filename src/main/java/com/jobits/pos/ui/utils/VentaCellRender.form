@@ -39,7 +39,7 @@
               <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                 <EmptyBorder bottom="10" left="15" right="15" top="0"/>
               </Border>
-              <Connection PropertyName="titleX" code="&quot; &quot;+v.getFecha().getDate()" type="code"/>
+              <Connection PropertyName="titleX" code="&quot; &quot;+v.getFecha().getDayOfMonth()" type="code"/>
             </TitledBorder>
           </Border>
         </Property>

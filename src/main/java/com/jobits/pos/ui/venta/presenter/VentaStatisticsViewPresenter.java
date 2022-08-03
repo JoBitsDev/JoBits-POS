@@ -224,20 +224,7 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
         getBean().setHora_pico_intervalo_actual(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
         List<Venta> ventas = cambiarVentasNull(getBean().getLista_elementos(), fecha_inicio_actual, fecha_final_actual);
 
-        //List< Date> dias = service.getFechaVentas(ventas);
-        List< Date> dias = new ArrayList<>();
-        service.getFechaVentas(ventas).stream().map((date) -> {
-            Calendar a = Calendar.getInstance();
-            a.clear();
-            a.set(Calendar.HOUR, 0);
-            a.set(Calendar.MINUTE, 0);
-            a.set(Calendar.SECOND, 0);
-            a.setTime(date);
-            date = a.getTime();
-            return date;
-        }).forEachOrdered((date) -> {
-            dias.add(date);
-        });
+        var dias = toNextYearDateList(ventas);
 
         getBean().setLista_dias_actual(new ArrayListModel<>(dias));
 
@@ -272,20 +259,8 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
         getBean().setList_gastos_anterior(new ArrayListModel<>(service.getTotalGastos(ventas)));
         getBean().setLista_ordenes_anterior(new ArrayListModel<>(service.getTotalOrden(ventas)));
 
-        List< Date> dias = new ArrayList<>();
-        service.getFechaVentas(ventas).stream().map((date) -> {
-            Calendar a = Calendar.getInstance();
-            a.clear();
-            a.set(Calendar.HOUR, 0);
-            a.set(Calendar.MINUTE, 0);
-            a.set(Calendar.SECOND, 0);
-            a.setTime(date);
-            a.add(Calendar.DAY_OF_MONTH, (periodDays + 1));
-            date = a.getTime();
-            return date;
-        }).forEachOrdered((date) -> {
-            dias.add(date);
-        });
+        var dias = toNextYearDateList(ventas);
+
         getBean().setLista_dias_anterior(new ArrayListModel<>(dias));
     }
 
@@ -308,21 +283,18 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
         getBean().setList_gastos_anterior(new ArrayListModel<>(service.getTotalGastos(ventas)));
         getBean().setLista_ordenes_anterior(new ArrayListModel<>(service.getTotalOrden(ventas)));
 
+        var dias = toNextYearDateList(ventas);
+        getBean().setLista_dias_anterior(new ArrayListModel<>(dias));
+    }
+
+    private List<Date> toNextYearDateList(List<Venta> ventas) {
         List< Date> dias = new ArrayList<>();
         service.getFechaVentas(ventas).stream().map((date) -> {
-            Calendar a = Calendar.getInstance();
-            a.clear();
-            a.set(Calendar.HOUR, 0);
-            a.set(Calendar.MINUTE, 0);
-            a.set(Calendar.SECOND, 0);
-            a.setTime(date);
-            a.add(Calendar.YEAR, 1);
-            date = a.getTime();
-            return date;
+            return date.plusYears(1);
         }).forEachOrdered((date) -> {
-            dias.add(date);
+            dias.add(utils.toDate(date));
         });
-        getBean().setLista_dias_anterior(new ArrayListModel<>(dias));
+        return dias;
     }
 
     private void updateBeanDataAnterior() {
@@ -377,14 +349,14 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
         while (fechaPuntero.compareTo(endDate) <= 0) {
             if (!ventasList.isEmpty()) {
                 if (i < ventasList.size()) {
-                    currentVenta = utils.dateToLocalDate(ventasList.get(i).getFecha());
+                    currentVenta = ventasList.get(i).getFecha();
                 }
             }
 
             if (!currentVenta.isEqual(fechaPuntero)) {
                 Venta a = new Venta();
                 a.setVentaTotal(0.0);
-                a.setFecha(utils.localDateToDate(fechaPuntero));
+                a.setFecha(fechaPuntero);
                 ret.add(a);
             } else {
                 boolean flag = false;
