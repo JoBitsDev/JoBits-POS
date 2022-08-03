@@ -10,6 +10,7 @@ import com.jobits.pos.inventario.core.almacen.domain.IpvRegistro;
 import com.jobits.pos.inventario.core.almacen.domain.IpvVentaRegistro;
 import java.util.List;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -30,7 +31,7 @@ public interface IpvWCI {
 
     public static final String AJUSTAR_COSTO_PATH = "/insumos/{idVenta}/{codCocina}/{codInsumo}/ajustar-costo/{cantidad}";
 
-    public static final String TRANSFERIR_IPV_REGISTRO_PATH = "/insumos/{idVenta}/{codCocina}/{codInsumo}/transferir-ipv/{codCocina}/{cantidad}";
+    public static final String TRANSFERIR_IPV_REGISTRO_PATH = "/insumos/{idVenta}/{codCocina}/{codInsumo}/transferir-ipv/{codCocinaTransferir}/{cantidad}";
 
     public static final String TRANSFERIR_IPV_REGISTRO_TO_ALMACEN_PATH = "/insumos/{idVenta}/{codCocina}/{codInsumo}/transferir-almacen/{codAlmacen}/{cantidad}";
 
@@ -52,6 +53,8 @@ public interface IpvWCI {
 
     public static final String REGISTRAR_IPVS_PATH = "/insumos/{idVenta}/{codCocina}/registrar/{codInsumo}";
 
+    public static final String DELETE_BY_ID = "/delete/{codCocina}/{codInsumo}";
+
     @PUT(BASE + DAR_ENTRADA_EXISTENCIA_INSUMO_PATH)
     public Call<IpvRegistro> darEntradaExistencia(@Path("codInsumo") String codInsumo,
             @Path("codCocina") String codCocina, @Path("idVenta") int idVenta, @Path("cantidad") float cantidad);
@@ -72,7 +75,7 @@ public interface IpvWCI {
 
     @PUT(BASE + TRANSFERIR_IPV_REGISTRO_PATH)
     public Call<IpvRegistro> transferirIPVRegistro(@Path("codInsumo") String codInsumo,
-            @Path("codCocina") String codCocina, @Path("idVenta") int idVenta, @Path("codCocina") String codCocinaDestino, @Path("cantidad") float cantidad);
+            @Path("codCocina") String codCocina, @Path("idVenta") int idVenta, @Path("codCocinaTransferir") String codCocinaDestino, @Path("cantidad") float cantidad);
 
     @PUT(BASE + TRANSFERIR_IPV_REGISTRO_TO_ALMACEN_PATH)
     public Call<IpvRegistro> transferirIPVRegistroToAlmacen(@Path("codInsumo") String codInsumo,
@@ -116,7 +119,10 @@ public interface IpvWCI {
 
     public Call<Ipv> destroy(Ipv t) throws RuntimeException;
 
-    public Call<Ipv> destroyById(Object o) throws RuntimeException;
+    @DELETE(BASE + DELETE_BY_ID)
+    public Call<Ipv> destroyById(
+            @Path("codCocina") String codCocina,
+            @Path("codInsumo") String codInsumo);
 
     public Call<Ipv> findBy(Object o) throws RuntimeException;
 

@@ -111,7 +111,8 @@ public class IpvWCS extends BaseConnection implements IPVService {
 
     @Override
     public Ipv destroy(Ipv t) throws RuntimeException {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.destroyById(t.getIpvPK().getCocinacodCocina(),
+                t.getIpvPK().getInsumocodInsumo()));
     }
 
     @Override
