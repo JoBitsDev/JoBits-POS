@@ -11,6 +11,7 @@ import com.jobits.pos.ui.utils.VentaCellRender;
 import javax.swing.JFileChooser;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.core.domain.models.temporal.ResumenVentaEstadisticas;
 import com.jobits.pos.ui.AbstractViewPanel;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.ui.swing.utils.BindableTableModel;
@@ -34,7 +35,7 @@ public class VentaCalendarView extends AbstractViewPanel {
 
     private JFileChooser fileChooser;
 
-    private BindableTableModel<DayReviewWrapper<Venta>> model;
+    private BindableTableModel<DayReviewWrapper<ResumenVentaEstadisticas>> model;
 
     public VentaCalendarView(AbstractViewPresenter presenter) {
         super(presenter);
@@ -416,7 +417,7 @@ public class VentaCalendarView extends AbstractViewPanel {
 
         jScrollPane1.getViewport().setOpaque(false);
         fileChooser = new JFileChooser();
-        model = new BindableTableModel<DayReviewWrapper<Venta>>(jTableCalendar) {//findVentas(month, year)
+        model = new BindableTableModel<DayReviewWrapper<ResumenVentaEstadisticas>>(jTableCalendar) {//findVentas(month, year)
             @Override
             public int getColumnCount() {
                 return 7;
@@ -428,7 +429,7 @@ public class VentaCalendarView extends AbstractViewPanel {
             }
 
             @Override
-            public DayReviewWrapper<Venta> getValueAt(int rowIndex, int columnIndex) {
+            public DayReviewWrapper<ResumenVentaEstadisticas> getValueAt(int rowIndex, int columnIndex) {
                 int linearPos = (rowIndex * (getColumnCount() - 1) + columnIndex) + rowIndex + 1;
                 int relativePos = linearPos - getPresenter().getModel(VentaCalendarViewModel.PROP_MONTH_OFFSET).intValue();
 
@@ -439,11 +440,11 @@ public class VentaCalendarView extends AbstractViewPanel {
             }
 
             @Override
-            public DayReviewWrapper<Venta> getObjectAt(int dayOfMonth) {
+            public DayReviewWrapper<ResumenVentaEstadisticas> getObjectAt(int dayOfMonth) {
                 for (int i = 0; i < getListModel().getSize(); i++) {
                     if (super.getRow(i) != null) {
                         if (!super.getRow(i).getLista_contenida().isEmpty()) {
-                            if (super.getRow(i).getLista_contenida().get(0).getFecha().getDayOfMonth()== dayOfMonth) {
+                            if (super.getRow(i).getFecha().getDayOfMonth()== dayOfMonth) {
                                 return super.getRow(i);
                             }
                         }

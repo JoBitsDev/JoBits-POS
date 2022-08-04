@@ -37,6 +37,7 @@ import com.root101.clean.core.domain.services.ResourceHandler;
 import org.jobits.db.core.domain.TipoConexion;
 import org.jobits.db.pool.ConnectionPoolHandler;
 import com.jobits.pos.controller.venta.VentaCalendarResumeUseCase;
+import com.jobits.pos.core.domain.models.temporal.ResumenVentaEstadisticas;
 
 /**
  *
@@ -52,9 +53,9 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     public static final String ACTION_IMPORTAR_VENTA = "Importar venta",
             ACTION_Y = "Y";
 
-    private List<Venta> listaVentasTotales = new ArrayList();
+    private List<ResumenVentaEstadisticas> listaVentasTotales = new ArrayList();
     private List<List<Venta>> ventas = new ArrayList<>();
-    private List<DayReviewWrapper<Venta>> ventasList = new ArrayList<>();
+    private List<DayReviewWrapper<ResumenVentaEstadisticas>> ventasList = new ArrayList<>();
 
     public VentaCalendarViewPresenter(VentaCalendarResumeUseCase controller) {
         super(new VentaCalendarViewModel(), "Ventas");
@@ -153,7 +154,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     @Override
     protected void setListToBean() {
-        ventasList = service.findVentasByMonth(getBean().getMes_seleccionado() + 1, getBean().getYear_seleccionado());
+        ventasList = service.findVentasByMonthView(getBean().getMes_seleccionado() + 1, getBean().getYear_seleccionado());
         getBean().setLista_elementos(ventasList);
     }
 
@@ -167,22 +168,14 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         double gGastos = 0;
         double gTrabajadores = 0;
         int cantidad = 0;
-        for (DayReviewWrapper<Venta> venta : ventasList) {
-            for (Venta x : venta.getLista_contenida()) {
+        for (DayReviewWrapper<ResumenVentaEstadisticas> venta : ventasList) {
+            for (ResumenVentaEstadisticas x : venta.getLista_contenida()) {
                 listaVentasTotales.add(x);
-                if (x.getVentaTotal() != null) {
-                    suma += x.getVentaTotal();
-                    if (x.getVentagastosEninsumos() != null) {
-                        gInsumos += x.getVentagastosEninsumos();
-                    }
-                    if (x.getVentagastosGastos() != null) {
-                        gGastos += x.getVentagastosGastos();
-                    }
-                    if (x.getVentagastosPagotrabajadores() != null) {
-                        gTrabajadores += x.getVentagastosPagotrabajadores();
-                    }
-                    cantidad++;
-                }
+                suma += x.getTotalVendido();
+                gInsumos += x.getTotalCostoVenta();
+                gGastos += x.getTotalGastos();
+                gTrabajadores += x.getTotalPagoTrabajadores();
+                cantidad++;
             }
         }
         double promedio = suma / cantidad;
@@ -193,7 +186,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
         getBean().setGasto_insumo_intervalo(utils.setDosLugaresDecimales((float) gInsumos));
         getBean().setGasto_trabajadores_intervalo(utils.setDosLugaresDecimales((float) (gTrabajadores)));
         getBean().setGasto_otros_intervalo(utils.setDosLugaresDecimales((float) gGastos));
-        int hora_pico_promedio = VentaDAO1.getModalPickHour(listaVentasTotales);
+        int hora_pico_promedio = VentaDAO1.getModalPickHourEstadisticas(listaVentasTotales);
         getBean().setHora_pico_intervalo(hora_pico_promedio > 12 ? (hora_pico_promedio - 12) + " PM" : hora_pico_promedio + " AM");
         setYvisibility();
     }

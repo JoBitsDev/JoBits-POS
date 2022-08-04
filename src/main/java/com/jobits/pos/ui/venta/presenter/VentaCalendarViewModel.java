@@ -7,6 +7,7 @@ package com.jobits.pos.ui.venta.presenter;
 
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.core.domain.models.temporal.ResumenVentaEstadisticas;
 import com.jobits.pos.ui.viewmodel.AbstractListViewModel;
 import java.io.File;
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ import java.util.List;
  * @author Jorge
  *
  */
-public class VentaCalendarViewModel extends AbstractListViewModel<DayReviewWrapper<Venta>> {
+public class VentaCalendarViewModel extends AbstractListViewModel<DayReviewWrapper<ResumenVentaEstadisticas>> {
 
     private int year_seleccionado = LocalDate.now().get(ChronoField.YEAR);
 

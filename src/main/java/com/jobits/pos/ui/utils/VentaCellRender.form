@@ -69,9 +69,6 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/restManager/resources/images/pulgares-abajo.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="v.getVentagastosEninsumos() != null&#xa;? com.jobits.pos.utils.utils.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue())&#xa;: &quot;-&quot;" type="code"/>
-            </Property>
             <Property name="toolTipText" type="java.lang.String" value="Gastos"/>
           </Properties>
           <Constraints>
@@ -91,9 +88,6 @@
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/restManager/resources/images/pulgar-arriba.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="v.getVentaTotal() != null &#xa;? com.jobits.pos.utils.utils.setDosLugaresDecimales(v.getVentaTotal().floatValue())&#xa;:&quot;-&quot;" type="code"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Ventas"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
@@ -115,9 +109,6 @@
             <Property name="horizontalAlignment" type="int" value="11"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/restManager/resources/images/hora_pico.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="v.getVentaTotal() != null &#xa;? getPickHour(v)&#xa;:&quot;-&quot;" type="code"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Hora Pico"/>
           </Properties>

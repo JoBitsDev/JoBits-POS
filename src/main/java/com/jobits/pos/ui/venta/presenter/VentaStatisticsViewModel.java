@@ -26,10 +26,6 @@ public class VentaStatisticsViewModel extends AbstractListViewModel<Venta> {
 
     private boolean panel_opciones_visible = false;
 
-    public static final String PROP_PANEL_OPCIONES_VISIBLE = "panel_opciones_visible";
-
-    private ArrayListModel<Venta> lista_elementos_anterior;
-
     public static final String PROP_LISTA_ELEMENTOS_ANTERIOR = "lista_elementos_anterior";
 
     private String total_ventas_intervalo_actual;
@@ -100,7 +96,19 @@ public class VentaStatisticsViewModel extends AbstractListViewModel<Venta> {
 
     public static final String PROP_LISTA_DIAS_ANTERIOR = "lista_dias_actual";
 
+    private static ArrayListModel<Float> lista_gastos_actual;
+
+    public static final String PROP_LISTA_GASTOS_ACTUAL = "lista_gastos_actual";
+
+    private static ArrayListModel<Integer> list_ordenes_actual;
+
+    public static final String PROP_LIST_ORDENES_ACTUAL = "list_ordenes_actual";
+
     private static ArrayListModel<Double> lista_total_anterior;
+
+    public static final String PROP_PANEL_OPCIONES_VISIBLE = "panel_opciones_visible";
+
+    private ArrayListModel<Venta> lista_elementos_anterior;
 
     public static final String PROP_LISTA_TOTAL_ANTERIOR = "lista_dias_actual";
 
@@ -112,17 +120,9 @@ public class VentaStatisticsViewModel extends AbstractListViewModel<Venta> {
 
     public static final String PROP_ANNO_SELECTED = "anno_selected";
 
-    private static ArrayListModel<Float> lista_gastos_actual;
-
-    public static final String PROP_LISTA_GASTOS_ACTUAL = "lista_gastos_actual";
-
     private static ArrayListModel<Float> list_gastos_anterior;
 
     public static final String PROP_LIST_GASTOS_ANTERIOR = "list_gastos_anterior";
-
-    private static ArrayListModel<Integer> list_ordenes_actual;
-
-    public static final String PROP_LIST_ORDENES_ACTUAL = "list_ordenes_actual";
 
     private static ArrayListModel<Integer> lista_ordenes_anterior;
 

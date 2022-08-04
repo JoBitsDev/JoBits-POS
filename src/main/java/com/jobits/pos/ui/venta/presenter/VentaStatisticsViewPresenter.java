@@ -228,10 +228,9 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
 
         getBean().setLista_dias_actual(new ArrayListModel<>(dias));
 
-        getBean().setLista_total_actual(new ArrayListModel<>(service.getTotalVentas(ventas)));
-        getBean().setLista_gastos_actual(new ArrayListModel<>(service.getTotalGastos(ventas)));
-        getBean().setList_ordenes_actual(new ArrayListModel<>(service.getTotalOrden(ventas)));
-
+        //  getBean().setLista_total_actual(new ArrayListModel<>(service.getTotalVentas(ventas)));
+        // getBean().setLista_gastos_actual(new ArrayListModel<>(service.getTotalGastos(ventas)));
+//        getBean().setList_ordenes_actual(new ArrayListModel<>(service.getTotalOrden(ventas)));
     }
 
     private void setPeriodoAnterior() {
@@ -255,9 +254,9 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
 
         List<Venta> ventas = cambiarVentasNull(getBean().getLista_elementos_anterior(), fecha_inicio_anterior, fecha_final_anterior);
 
-        getBean().setLista_total_anterior(new ArrayListModel<>(service.getTotalVentas(ventas)));
-        getBean().setList_gastos_anterior(new ArrayListModel<>(service.getTotalGastos(ventas)));
-        getBean().setLista_ordenes_anterior(new ArrayListModel<>(service.getTotalOrden(ventas)));
+//        getBean().setLista_total_anterior(new ArrayListModel<>(service.getTotalVentas(ventas)));
+//        getBean().setList_gastos_anterior(new ArrayListModel<>(service.getTotalGastos(ventas)));
+//        getBean().setLista_ordenes_anterior(new ArrayListModel<>(service.getTotalOrden(ventas)));
 
         var dias = toNextYearDateList(ventas);
 
@@ -279,9 +278,9 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
 
         List<Venta> ventas = cambiarVentasNull(getBean().getLista_elementos_anterior(), fecha_inicio_anterior, fecha_final_anterior);
 
-        getBean().setLista_total_anterior(new ArrayListModel<>(service.getTotalVentas(ventas)));
-        getBean().setList_gastos_anterior(new ArrayListModel<>(service.getTotalGastos(ventas)));
-        getBean().setLista_ordenes_anterior(new ArrayListModel<>(service.getTotalOrden(ventas)));
+//        getBean().setLista_total_anterior(new ArrayListModel<>(service.getTotalVentas(ventas)));
+//        getBean().setList_gastos_anterior(new ArrayListModel<>(service.getTotalGastos(ventas)));
+//        getBean().setLista_ordenes_anterior(new ArrayListModel<>(service.getTotalOrden(ventas)));
 
         var dias = toNextYearDateList(ventas);
         getBean().setLista_dias_anterior(new ArrayListModel<>(dias));
@@ -289,11 +288,11 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
 
     private List<Date> toNextYearDateList(List<Venta> ventas) {
         List< Date> dias = new ArrayList<>();
-        service.getFechaVentas(ventas).stream().map((date) -> {
-            return date.plusYears(1);
-        }).forEachOrdered((date) -> {
-            dias.add(utils.toDate(date));
-        });
+//        service.getFechaVentas(ventas).stream().map((date) -> {
+//            return date.plusYears(1);
+//        }).forEachOrdered((date) -> {
+//            dias.add(utils.toDate(date));
+//        });
         return dias;
     }
 

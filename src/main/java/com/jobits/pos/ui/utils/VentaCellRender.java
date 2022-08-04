@@ -13,8 +13,10 @@ import com.jobits.pos.core.domain.VentaDAO1;
 import com.jobits.pos.core.domain.models.Orden;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
+import com.jobits.pos.core.domain.models.temporal.ResumenVentaEstadisticas;
 import com.jobits.pos.ui.DefaultValues;
 import com.jobits.ui.components.MaterialComponentsFactory;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -25,7 +27,7 @@ import javax.swing.JPanel;
  */
 public class VentaCellRender extends javax.swing.JPanel implements TableCellRenderer {
 
-    Venta v;
+    DayReviewWrapper<ResumenVentaEstadisticas> v;
     final String RETORNO_CARRO = "\n";
 
     /**
@@ -36,10 +38,29 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         setBackground(DefaultValues.TRANSPARENT);
     }
 
-    private VentaCellRender(Venta v) {
+    private VentaCellRender(DayReviewWrapper<ResumenVentaEstadisticas> v) {
         if (v != null) {
             this.v = v;
             initComponents();
+
+            var horaPico = VentaDAO1.getModalPickHourEstadisticas(v.getLista_contenida());
+
+            var costoVenta = 0f;
+            var ventaTotal = 0f;
+
+            for (ResumenVentaEstadisticas r : v.getLista_contenida()) {
+                costoVenta += r.getTotalCostoVenta();
+                ventaTotal += r.getTotalVendido();
+            }
+
+            jLabelGastos.setText(costoVenta == 0
+                    ? com.jobits.pos.utils.utils.setDosLugaresDecimales(costoVenta)
+                    : "-");
+            jLabelVentas.setText(ventaTotal == 0
+                    ? com.jobits.pos.utils.utils.setDosLugaresDecimales(ventaTotal)
+                    : "-");
+            jLabelHoraPico.setText(LocalTime.of(horaPico, 0).toString());
+
         }
     }
 
@@ -75,9 +96,6 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         jLabelGastos.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jLabelGastos.setForeground(new java.awt.Color(102, 0, 0));
         jLabelGastos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgares-abajo.png"))); // NOI18N
-        jLabelGastos.setText(v.getVentagastosEninsumos() != null
-            ? com.jobits.pos.utils.utils.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue())
-            : "-");
         jLabelGastos.setToolTipText("Gastos");
         jPanel1.add(jLabelGastos, java.awt.BorderLayout.CENTER);
 
@@ -85,9 +103,6 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         jLabelVentas.setForeground(new java.awt.Color(0, 102, 51));
         jLabelVentas.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/pulgar-arriba.png"))); // NOI18N
-        jLabelVentas.setText(v.getVentaTotal() != null
-            ? com.jobits.pos.utils.utils.setDosLugaresDecimales(v.getVentaTotal().floatValue())
-            :"-");
         jLabelVentas.setToolTipText("Ventas");
         jLabelVentas.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jPanel1.add(jLabelVentas, java.awt.BorderLayout.PAGE_START);
@@ -96,9 +111,6 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         jLabelHoraPico.setForeground(new java.awt.Color(0, 0, 255));
         jLabelHoraPico.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabelHoraPico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/restManager/resources/images/hora_pico.png"))); // NOI18N
-        jLabelHoraPico.setText(v.getVentaTotal() != null
-            ? getPickHour(v)
-            :"-");
         jLabelHoraPico.setToolTipText("Hora Pico");
         jPanel1.add(jLabelHoraPico, java.awt.BorderLayout.PAGE_END);
 
@@ -120,32 +132,7 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         if (value != null) {
-            Venta venta = new Venta();
-            Double ventaTotal = 0.0;
-            Double ventaGastos = 0.0;
-            float ventaGastosGastos = 0;
-            List<Orden> ordenes = new ArrayList();
-            for (Venta x : ((DayReviewWrapper<Venta>) value).getLista_contenida()) {
-                venta.setFecha(x.getFecha());
-                if (x.getVentaTotal() != null) {
-                    ventaTotal += x.getVentaTotal();
-                }
-                if (x.getVentagastosEninsumos() != null) {
-                    ventaGastos += x.getVentagastosEninsumos();
-                }
-                if (x.getVentagastosGastos() != null) {
-                    ventaGastosGastos += x.getVentagastosGastos();
-                }
-                if (!x.getOrdenList().isEmpty()) {
-                    ordenes.addAll(x.getOrdenList());
-                }
-            }
-            venta.setVentaTotal(ventaTotal);
-            venta.setVentagastosEninsumos(ventaGastos);
-            venta.setOrdenList(ordenes);
-            venta.setVentagastosGastos(ventaGastosGastos);
-
-            VentaCellRender ret = new VentaCellRender(venta);
+            VentaCellRender ret = new VentaCellRender((DayReviewWrapper<ResumenVentaEstadisticas>) value);
             if (isSelected) {
                 ret.getjPanel1().setBackground(table.getSelectionBackground());
             } else {
@@ -157,24 +144,28 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
         return new VentaCellRender();
     }
 
-    public Venta getV() {
+    public DayReviewWrapper<ResumenVentaEstadisticas> getV() {
         return v;
     }
 
-    private String getPickHour(Venta v) {
-        int a;
-        return (a = VentaDAO1.getPickHour(v)) > 12 ? (a - 12) + " PM" : (a) + " AM";
-    }
+    private String CreateToolTip(DayReviewWrapper<ResumenVentaEstadisticas> v) {
 
-    private String CreateToolTip(Venta v) {
-        String toolTip = "Total ordenes atendidas: " + v.getOrdenList().size();
+        var ventaGastos = 0f;
+        var ordenes = 0;
+        var costos = 0f;
+        for (ResumenVentaEstadisticas r : v.getLista_contenida()) {
+            ventaGastos += r.getTotalGastos();
+            ordenes += r.getTotalOrdenes();
+            costos += r.getTotalCostoVenta();
+        }
+        String toolTip = "Total ordenes atendidas: " + ordenes;
         toolTip += RETORNO_CARRO;
-        if (v.getVentagastosGastos() != null) {
-            toolTip += "Total otros gastos: " + utils.setDosLugaresDecimales(v.getVentagastosGastos());
+        if (ventaGastos != 0) {
+            toolTip += "Total otros gastos: " + utils.setDosLugaresDecimales(ventaGastos);
         }
         toolTip += RETORNO_CARRO;
-        if (v.getVentagastosEninsumos() != null) {
-            toolTip += "Total gastos insumos " + utils.setDosLugaresDecimales(v.getVentagastosEninsumos().floatValue());
+        if (costos != 0) {
+            toolTip += "Total gastos insumos " + utils.setDosLugaresDecimales(costos);
         }
         toolTip += RETORNO_CARRO;
         return toolTip;
