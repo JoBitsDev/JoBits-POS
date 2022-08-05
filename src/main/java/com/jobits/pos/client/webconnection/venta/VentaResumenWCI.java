@@ -5,9 +5,14 @@
  */
 package com.jobits.pos.client.webconnection.venta;
 
+import com.jobits.pos.core.domain.models.AsistenciaPersonal;
+import com.jobits.pos.core.domain.models.GastoVenta;
+import com.jobits.pos.core.domain.models.ProductovOrden;
 import com.jobits.pos.core.domain.models.Venta;
+import com.jobits.pos.core.domain.models.escandallos.InsumoRegistro;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.core.domain.models.temporal.ResumenVentaEstadisticas;
+import com.jobits.pos.core.domain.models.temporal.ResumenVentaWrapper;
 import java.time.LocalDate;
 import java.util.List;
 import retrofit2.Call;
@@ -22,34 +27,36 @@ import retrofit2.http.Path;
  */
 public interface VentaResumenWCI {
 
-    public static final String BASE = "pos/venta-list";
-    public static final String RESOLVE_VENTA_ABIERTA = "/venta-abierta";
-    public static final String FIND_VENTAS_BY_MONTH = "/find-by/month/{anno}/{mes}";
-    public static final String FIND_VENTAS_IN_RANGE = "/find-by/range/{start}/{end}";
-    public static final String IS_Y_VISIBLE = "/is-y-visible";
-    public static final String FIND_VENTAS_BY_MONTH_VIEW = "/find-by/month-view/{anno}/{mes}";
-    public static final String GET_RESUMEN_VENTAS_ESTAIDISTICAS = "/resumen-por-ids";
-    public static final String DESTROY_BY_ID = "/destroy/{id}";
+    public static final String BASE = "pos/venta/resumen/{desde}/{hasta}";
+    public static final String AUTORIZO_RESUMEN = "/autorizo";
+    public static final String COSTO_RESUMEN = "/costo";
+    public static final String GASTO_RESUMEN = "/gasto";
+    public static final String SALARIO_RESUMEN = "/salario";
+    public static final String VENTAS_RESUMEN = "/ventas";
 
-    @GET(BASE + RESOLVE_VENTA_ABIERTA)
-    public Call<Venta> resolveVentaAbierta();
+    @GET(BASE + AUTORIZO_RESUMEN)
+    public Call<ResumenVentaWrapper<DayReviewWrapper<ProductovOrden>, ProductovOrden>> getAutorizoResumen(
+            @Path("desde") LocalDate desde,
+            @Path("hasta") LocalDate hasta);
 
-    @GET(BASE + FIND_VENTAS_BY_MONTH)
-    Call<List<DayReviewWrapper<Venta>>> findVentasByMonth(@Path("mes") int month, @Path("anno") int year);
+    @GET(BASE + COSTO_RESUMEN)
+    public Call<ResumenVentaWrapper<DayReviewWrapper<InsumoRegistro>, InsumoRegistro>> getCostoResumen(
+            @Path("desde") LocalDate desde,
+            @Path("hasta") LocalDate hasta);
 
-    @GET(BASE + FIND_VENTAS_BY_MONTH_VIEW)
-    Call<List<DayReviewWrapper<ResumenVentaEstadisticas>>> findVentasByMonthView(@Path("mes") int month, @Path("anno") int year);
+    @GET(BASE + GASTO_RESUMEN)
+    public Call<ResumenVentaWrapper<DayReviewWrapper<GastoVenta>, GastoVenta>> getGastoResumen(
+            @Path("desde") LocalDate desde,
+            @Path("hasta") LocalDate hasta);
 
-    @GET(BASE + FIND_VENTAS_IN_RANGE)
-    Call<List<Venta>> findVentasInRange(@Path("start") LocalDate start, @Path("end") LocalDate end);
+    @GET(BASE + SALARIO_RESUMEN)
+    public Call<ResumenVentaWrapper<DayReviewWrapper<AsistenciaPersonal>, AsistenciaPersonal>> getSalarioResumen(
+            @Path("desde") LocalDate desde,
+            @Path("hasta") LocalDate hasta);
 
-    @GET(BASE + GET_RESUMEN_VENTAS_ESTAIDISTICAS)
-    Call<List<ResumenVentaEstadisticas>> getResumenDeVentasEstadisticas(@Body List<Integer> idVentas);
-
-    @GET(BASE + IS_Y_VISIBLE)
-    Call<Boolean> isYVisible();
-
-    @DELETE(BASE + DESTROY_BY_ID)
-    Call<Venta> destroyById(@Path("id") int ventaId);
+    @GET(BASE + VENTAS_RESUMEN)
+    public Call<ResumenVentaWrapper<DayReviewWrapper<ProductovOrden>, ProductovOrden>> getVentaResumen(
+            @Path("desde") LocalDate desde,
+            @Path("hasta") LocalDate hasta);
 
 }

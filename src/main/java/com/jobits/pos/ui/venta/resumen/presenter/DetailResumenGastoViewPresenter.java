@@ -18,7 +18,6 @@ import com.jobits.pos.utils.utils;
  */
 public class DetailResumenGastoViewPresenter extends AbstractResumenViewPresenter<DetailResumenGastoViewModel> {
 
-    GastoResumenService service = PosDesktopUiModule.getInstance().getImplementation(GastoResumenService.class);
 
     public DetailResumenGastoViewPresenter() {
         super(new DetailResumenGastoViewModel(), false, "Resumen de Gastos General", "Resumen de Gastos Detallado");
@@ -26,7 +25,7 @@ public class DetailResumenGastoViewPresenter extends AbstractResumenViewPresente
 
     @Override
     protected void setListsToBean() {
-        var ret = service.createVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
+        var ret = service.getGastoResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
         getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
         getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);

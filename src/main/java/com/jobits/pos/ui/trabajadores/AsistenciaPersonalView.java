@@ -91,7 +91,7 @@ public class AsistenciaPersonalView extends AbstractViewPanel {
             public Object getValueAt(int rowIndex, int columnIndex) {
                 switch (columnIndex) {
                     case 0:
-                        return R.DATE_FORMAT.format(getRow(rowIndex).getVenta().getFecha());
+                        return getRow(rowIndex).getAsistenciaPersonalPK().getVentaid();
                     case 1:
                         return getRow(rowIndex).getPersonal().getUsuario();
                     case 2:

@@ -21,7 +21,6 @@ import java.util.Arrays;
  */
 public class DetailResumenCostoViewPresenter extends AbstractResumenViewPresenter<DetailResumenCostoViewModel> {
 
-    CostosResumenService service = PosDesktopUiModule.getInstance().getImplementation(CostosResumenService.class);
 
     public DetailResumenCostoViewPresenter() {
         super(new DetailResumenCostoViewModel(), false, "Resumen de Costos General", "Resumen de Costos Detallado",
@@ -32,7 +31,7 @@ public class DetailResumenCostoViewPresenter extends AbstractResumenViewPresente
 
     @Override
     protected void setListsToBean() {
-        var ret = service.createVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
+        var ret = service.getCostoResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
         getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
         getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);

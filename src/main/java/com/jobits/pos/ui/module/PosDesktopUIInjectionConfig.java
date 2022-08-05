@@ -18,6 +18,7 @@ import com.jobits.pos.client.webconnection.carta.SeccionWCS;
 import com.jobits.pos.usecase.mesa.ReservaUseCaseRFImpl;
 import com.jobits.pos.client.webconnection.configuracion.ConfiguracionWCS;
 import com.jobits.pos.client.webconnection.configuracion.ImpresoraWCS;
+import com.jobits.pos.client.webconnection.filter.FilterWCS;
 import com.jobits.pos.client.webconnection.insumo.InsumoWCS;
 import com.jobits.pos.client.webconnection.licence.LicenceWCS;
 import com.jobits.pos.client.webconnection.login.LoginService;
@@ -31,14 +32,17 @@ import com.jobits.pos.client.webconnection.trabajadores.PersonalWCS;
 import com.jobits.pos.client.webconnection.trabajadores.PuestoTrabajoWCS;
 import com.jobits.pos.client.webconnection.venta.OrdenWCS;
 import com.jobits.pos.client.webconnection.venta.VentaCalendarWCS;
+import com.jobits.pos.client.webconnection.venta.VentaResumenWCS;
 import com.jobits.pos.client.webconnection.venta.VentaWCS;
 import com.jobits.pos.controller.areaventa.AreaVentaService;
 import com.jobits.pos.controller.areaventa.MesaService;
 import com.jobits.pos.controller.configuracion.ConfiguracionService;
+import com.jobits.pos.controller.filter.FilterService;
 import com.jobits.pos.controller.insumo.InsumoService;
 import com.jobits.pos.controller.licencia.LicenceService;
 import com.jobits.pos.controller.productos.ProductoVentaService;
 import com.jobits.pos.controller.puntoelaboracion.PuntoElaboracionService;
+import com.jobits.pos.controller.resumen.ResumenFacadeInterface;
 import com.jobits.pos.controller.seccion.CartaListService;
 import com.jobits.pos.controller.seccion.SeccionListService;
 import com.jobits.pos.controller.trabajadores.NominasUseCase;
@@ -103,6 +107,8 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         //
         bind(VentaDetailService.class).to(VentaWCS.class).in(Scopes.SINGLETON);
         bind(VentaResumenUseCase.class).to(VentaWCS.class).in(Scopes.SINGLETON);
+        bind(ResumenFacadeInterface.class).to(VentaResumenWCS.class).in(Scopes.SINGLETON);
+        bind(FilterService.class).to(FilterWCS.class).in(Scopes.SINGLETON);
         bind(VentaCalendarResumeUseCase.class).to(VentaCalendarWCS.class).in(Scopes.SINGLETON);
         bind(OrdenService.class).to(OrdenWCS.class).in(Scopes.SINGLETON);
 
@@ -112,7 +118,6 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         bind(AlmacenManageService.class).to(AlmacenWCS.class).in(Scopes.SINGLETON);
         bind(TransaccionListService.class).to(TransaccionWCS.class).in(Scopes.SINGLETON);
         bind(IPVService.class).to(IpvWCS.class).in(Scopes.SINGLETON);
-        
 
     }
 

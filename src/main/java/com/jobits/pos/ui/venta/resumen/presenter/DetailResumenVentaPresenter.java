@@ -26,7 +26,6 @@ import java.util.Optional;
  */
 public class DetailResumenVentaPresenter extends AbstractResumenViewPresenter<DetailResumenVentaModel> {
 
-    VentaResumenService service = PosDesktopUiModule.getInstance().getImplementation(VentaResumenService.class);
 
     public DetailResumenVentaPresenter() {
         super(new DetailResumenVentaModel(), false, "Resumen Venta General", "Resumen Venta Detallada",
@@ -39,7 +38,7 @@ public class DetailResumenVentaPresenter extends AbstractResumenViewPresenter<De
 
     @Override
     protected void setListsToBean() {
-        var ret = service.createVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
+        var ret = service.getVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
         getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
         getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);

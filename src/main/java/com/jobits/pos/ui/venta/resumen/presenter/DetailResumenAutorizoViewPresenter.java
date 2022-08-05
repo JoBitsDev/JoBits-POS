@@ -7,6 +7,7 @@ package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
 import com.jobits.pos.controller.resumen.AutorizoResumenService;
+import com.jobits.pos.controller.resumen.ResumenFacadeInterface;
 import com.jobits.pos.core.domain.models.temporal.DayReviewWrapper;
 import com.jobits.pos.main.Application;
 import com.jobits.pos.recursos.R;
@@ -26,7 +27,6 @@ import java.util.Optional;
  */
 public class DetailResumenAutorizoViewPresenter extends AbstractResumenViewPresenter<DetailResumenAutorizoViewModel> {
 
-    AutorizoResumenService service = PosDesktopUiModule.getInstance().getImplementation(AutorizoResumenService.class);
 
     public DetailResumenAutorizoViewPresenter() {
         super(new DetailResumenAutorizoViewModel(), false, "Resumen Autorizo General", "Resumen Autorizo Detallado",
@@ -39,7 +39,7 @@ public class DetailResumenAutorizoViewPresenter extends AbstractResumenViewPrese
 
     @Override
     protected void setListsToBean() {
-        var ret = service.createVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
+        var ret = service.getVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
         getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
         getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);

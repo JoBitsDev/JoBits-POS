@@ -6,8 +6,10 @@
 package com.jobits.pos.ui.venta.resumen.presenter;
 
 import com.jgoodies.common.collect.ArrayListModel;
+import com.jobits.pos.controller.resumen.ResumenFacadeInterface;
 import com.jobits.pos.ui.filter.presenter.FilterType;
 import com.jobits.pos.ui.filter.presenter.FilterViewPresenter;
+import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import java.beans.PropertyChangeEvent;
@@ -29,8 +31,9 @@ public abstract class AbstractResumenViewPresenter<T extends AbstractResumenView
         extends AbstractViewPresenter<T> {
 
     public static String IMPRESION_TICKET = "Imprimir en ticket";
-    
-    
+
+    protected ResumenFacadeInterface service = PosDesktopUiModule.getInstance().getImplementation(ResumenFacadeInterface.class);
+
     String mainViewName;
     String detailViewName;
 
