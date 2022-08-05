@@ -76,7 +76,7 @@ public class VentaCalendarViewModel extends AbstractListViewModel<DayReviewWrapp
 
     public static final String PROP_MONTH_OFFSET = "month_offset";
 
-    private DayReviewWrapper<Venta> dia_seleccionado;
+    private DayReviewWrapper<ResumenVentaEstadisticas> dia_seleccionado;
 
     public static final String PROP_DIA_SELECCIONADO = "dia_seleccionado";
 
@@ -85,7 +85,7 @@ public class VentaCalendarViewModel extends AbstractListViewModel<DayReviewWrapp
      *
      * @return the value of dia_seleccionado
      */
-    public DayReviewWrapper<Venta> getDia_seleccionado() {
+    public DayReviewWrapper<ResumenVentaEstadisticas> getDia_seleccionado() {
         return dia_seleccionado;
     }
 
@@ -94,9 +94,9 @@ public class VentaCalendarViewModel extends AbstractListViewModel<DayReviewWrapp
      *
      * @param dia_seleccionado new value of dia_seleccionado
      */
-    public void setDia_seleccionado(DayReviewWrapper<Venta> dia_seleccionado) {
+    public void setDia_seleccionado(DayReviewWrapper<ResumenVentaEstadisticas> dia_seleccionado) {
         if (dia_seleccionado != null) {
-            DayReviewWrapper<Venta> oldDia_seleccionado = this.dia_seleccionado;
+            DayReviewWrapper<ResumenVentaEstadisticas> oldDia_seleccionado = this.dia_seleccionado;
             this.dia_seleccionado = dia_seleccionado;
             firePropertyChange(PROP_DIA_SELECCIONADO, oldDia_seleccionado, dia_seleccionado);
         }

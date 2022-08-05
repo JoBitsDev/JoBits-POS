@@ -53,10 +53,10 @@ public class VentaCellRender extends javax.swing.JPanel implements TableCellRend
                 ventaTotal += r.getTotalVendido();
             }
 
-            jLabelGastos.setText(costoVenta == 0
+            jLabelGastos.setText(costoVenta != 0
                     ? com.jobits.pos.utils.utils.setDosLugaresDecimales(costoVenta)
                     : "-");
-            jLabelVentas.setText(ventaTotal == 0
+            jLabelVentas.setText(ventaTotal != 0
                     ? com.jobits.pos.utils.utils.setDosLugaresDecimales(ventaTotal)
                     : "-");
             jLabelHoraPico.setText(LocalTime.of(horaPico, 0).toString());

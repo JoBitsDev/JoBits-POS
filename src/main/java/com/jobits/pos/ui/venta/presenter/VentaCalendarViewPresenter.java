@@ -73,8 +73,8 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             public Optional doAction() {
                 boolean confirmed = (boolean) Application.getInstance().getNotificationService().showDialog("Confirme la operación", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
                 if (confirmed) {
-                    Venta v = getVentaFromCalendar();
-                    if (v != null) {
+                    int v = getIdVentaFromCalendar();
+                    if (v != -1) {
                         Application.getInstance().getBackgroundWorker().processInBackground("Ejecutando Y", () -> {
                             onEjecutarY(v);
                         });
@@ -104,42 +104,42 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
             VentaDetailService ventaController = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
             VentaDetailViewPresenter presenter
                     = new VentaDetailViewPresenter(ventaController,
-                            PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), getBean().getDia_seleccionado().getLista_contenida().get(0).getId());
+                            PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), getBean().getDia_seleccionado().getLista_contenida().get(0).getIdVenta());
             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME, presenter);
         }
     }
 
     @Override
     protected void onEliminarClick() {
-        Venta selected = getVentaFromCalendar();
+        int selected = getIdVentaFromCalendar();
         if ((boolean) Application.getInstance().getNotificationService().
                 showDialog("Esta seguro que desea eliminar la venta seleccionada",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-            service.deleteVenta(selected.getId());
+            service.destroyById(selected);
             updateBeanData();
             Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
         }
     }
 
-    private Venta getVentaFromCalendar() {
+    private int getIdVentaFromCalendar() {
         if (getBean().getDia_seleccionado() != null) {
             if (getBean().getDia_seleccionado().getLista_contenida().size() == 1) {
-                return getBean().getDia_seleccionado().getLista_contenida().get(0);
+                return getBean().getDia_seleccionado().getLista_contenida().get(0).getIdVenta();
             } else {
                 int seleccion = JOptionPane.showOptionDialog(null, "Seleccione la venta", "Seleccion",
                         JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE,
                         null, getBean().getDia_seleccionado().getLista_contenida().toArray(), getBean().getDia_seleccionado().getLista_contenida().get(0));
                 if (seleccion != JOptionPane.CLOSED_OPTION) {
-                    return getBean().getDia_seleccionado().getLista_contenida().get(seleccion);
+                    return getBean().getDia_seleccionado().getLista_contenida().get(seleccion).getIdVenta();
                 }
             }
         }
-        return null;
+        return -1;
     }
 
-    private void onEjecutarY(Venta venta) {
+    private void onEjecutarY(int venta) {
         Y alg = PosDesktopUiModule.getInstance().getImplementation(Y.class);
-        alg.runMainThread(venta.getId());
+        alg.runMainThread(venta);
 
     }
 
@@ -210,7 +210,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
 
     private void setYvisibility() {
         boolean visible = true;
-        LicenceService controller = PosCoreModule.getInstance().getImplementation(LicenceService.class);
+        LicenceService controller = PosDesktopUiModule.getInstance().getImplementation(LicenceService.class);
         switch (controller.getEstadoLicencia(Licence.TipoLicencia.SECUNDARIA)) {
             case LicenceController.ERROR_ESCRITURA:
             case LicenceController.ERROR_LECTURA_LICENCIA:

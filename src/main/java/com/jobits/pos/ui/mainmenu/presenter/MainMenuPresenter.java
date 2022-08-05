@@ -74,7 +74,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                                 if (ret.get().isEmpty() || ret.get().isBlank()) {
                                     ventaIniciada = vService.inicializarVentas(null);
                                 } else {
-                                    ventaIniciada = vService.inicializarVentas(utils.dateToLocalDate(R.DATE_FORMAT.parse(ret.get())));
+                                    ventaIniciada = vService.inicializarVentas(utils.toLocalDate(R.DATE_FORMAT.parse(ret.get())));
                                 }
                                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
                                         new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));

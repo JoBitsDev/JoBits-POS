@@ -183,9 +183,9 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
     }
 
     private void setPeriodo() {
-        fecha_inicio_actual.adjustInto(utils.dateToLocalDate(getBean().getResumen_desde()));
+        fecha_inicio_actual.adjustInto(utils.toLocalDate(getBean().getResumen_desde()));
 
-        fecha_final_actual.adjustInto(utils.dateToLocalDate(getBean().getResumen_hasta()));
+        fecha_final_actual.adjustInto(utils.toLocalDate(getBean().getResumen_hasta()));
 
         getBean().setRango_fechas_text("De: " + fecha_inicio_actual.format(DateTimeFormatter.ISO_DATE) + " / " + fecha_final_actual.format(DateTimeFormatter.ISO_DATE));
     }
@@ -239,9 +239,9 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
 
         periodDays = (int) ChronoUnit.DAYS.between(fechaDel, fechaAl);
 
-        fecha_inicio_anterior.adjustInto(utils.dateToLocalDate(getBean().getResumen_desde()));
+        fecha_inicio_anterior.adjustInto(utils.toLocalDate(getBean().getResumen_desde()));
 
-        fecha_final_anterior.adjustInto(utils.dateToLocalDate(getBean().getResumen_hasta()));
+        fecha_final_anterior.adjustInto(utils.toLocalDate(getBean().getResumen_hasta()));
 
         fecha_inicio_anterior.minusDays(periodDays + 1);
         fecha_final_anterior.minusDays(periodDays + 1);
@@ -264,9 +264,9 @@ public class VentaStatisticsViewPresenter extends AbstractListViewPresenter<Vent
     }
 
     private void setAnnoAnterior() {
-        fecha_inicio_anterior.adjustInto(utils.dateToLocalDate(getBean().getResumen_desde()));
+        fecha_inicio_anterior.adjustInto(utils.toLocalDate(getBean().getResumen_desde()));
 
-        fecha_final_anterior.adjustInto(utils.dateToLocalDate(getBean().getResumen_hasta()));
+        fecha_final_anterior.adjustInto(utils.toLocalDate(getBean().getResumen_hasta()));
 
         fecha_inicio_anterior.minusYears(1);
         fecha_final_anterior.minusYears(1);

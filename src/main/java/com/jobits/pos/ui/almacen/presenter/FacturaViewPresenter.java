@@ -488,7 +488,7 @@ public class FacturaViewPresenter extends AbstractViewPresenter<FacturaViewModel
     }
 
     private Integer selectIdFecha(Date fecha) {
-        List<Venta> list = VentaDAO.getInstance().find(utils.dateToLocalDate(fecha));
+        List<Venta> list = VentaDAO.getInstance().find(utils.toLocalDate(fecha));
         if (!list.isEmpty()) {
             if (list.size() > 1) {
                 JList<Venta> jList = new JList<>(list.toArray(new Venta[list.size()]));

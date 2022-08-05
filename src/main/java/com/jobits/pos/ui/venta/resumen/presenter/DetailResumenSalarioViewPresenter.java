@@ -27,9 +27,9 @@ public class DetailResumenSalarioViewPresenter extends AbstractResumenViewPresen
 
     @Override
     protected void setListsToBean() {
-        service.createVentaResumen(getBean().getSince_date(), getBean().getTo_date());
-        getBean().setListaMain(new ArrayListModel<>(service.getResumenGeneral()));
-        getBean().setListaDetail(new ArrayListModel<>(service.getResumenDetallado()));
+        var ret = service.createVentaResumen(utils.toLocalDate(getBean().getSince_date()), utils.toLocalDate(getBean().getTo_date()));
+        getBean().setListaMain(new ArrayListModel<>(ret.getMainList()));
+        getBean().setListaDetail(new ArrayListModel<>(ret.getDetailList()));
         getBean().setTotal_resumen(getTotal() + R.COIN_SUFFIX);
         setView(getBean().getListaMain().size() == 1);
     }

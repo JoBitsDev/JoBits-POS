@@ -98,7 +98,7 @@ public class ReiniciarDatosViewPresenter extends AbstractViewPresenter<Reiniciar
             if ((boolean) Application.getInstance().getNotificationService().
                     showDialog("Esta seguro que desea reiniciar los datos del IPV seleccionado?",
                             TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
-                Venta venta = selectFecha(ventaService.getVentasDeFecha(utils.dateToLocalDate(getBean().getFecha_venta_seleccionada())));
+                Venta venta = selectFecha(ventaService.getVentasDeFecha(utils.toLocalDate(getBean().getFecha_venta_seleccionada())));
                 if (venta != null) {
                     Application.getInstance().getBackgroundWorker().processInBackground("Reiniciando IPVs...", () -> {
                         ipvService.reiniciarIPV(getBean().getCocina_seleccionada().getCodCocina(), venta.getId());

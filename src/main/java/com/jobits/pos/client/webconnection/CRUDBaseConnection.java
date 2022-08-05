@@ -5,6 +5,9 @@
  */
 package com.jobits.pos.client.webconnection;
 
+import com.root101.clean.core.app.usecase.CRUDUseCase;
+import java.util.List;
+
 /**
  *
  * JoBits
@@ -12,8 +15,36 @@ package com.jobits.pos.client.webconnection;
  * @author Jorge
  *
  */
+public class CRUDBaseConnection<T> extends BaseConnection implements CRUDUseCase<T> {
 
-public class CRUDBaseConnection extends BaseConnection  {
+    @Override
+    public T create(T t) throws RuntimeException {
+        throw new UnsupportedOperationException();
+    }
 
-  
+    @Override
+    public T edit(T t) throws RuntimeException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public T destroy(T t) throws RuntimeException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public T destroyById(Object o) throws RuntimeException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public T findBy(Object o) throws RuntimeException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<T> findAll() throws RuntimeException {
+        throw new UnsupportedOperationException();
+    }
+
 }

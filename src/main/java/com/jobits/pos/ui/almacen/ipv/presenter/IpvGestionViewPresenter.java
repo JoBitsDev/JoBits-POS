@@ -300,7 +300,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         if (getBean().getFecha_ipv_seleccionada() != null) {
             Application.getInstance().getBackgroundWorker().processInBackground(() -> {
                 if (getBean().getPunto_elaboracion_seleccionado() != null) {
-                    getBean().setVenta_ipv_seleccionada(selectFecha(ventaService.getVentasIds(utils.dateToLocalDate(getBean().getFecha_ipv_seleccionada()))));
+                    getBean().setVenta_ipv_seleccionada(selectFecha(ventaService.getVentasIds(utils.toLocalDate(getBean().getFecha_ipv_seleccionada()))));
                     if (getBean().getVenta_ipv_seleccionada() != null) {
                         getBean().setLista_ipv_registro(new ArrayListModel<>(
                                 service.getIpvRegistroList(
@@ -319,7 +319,7 @@ public class IpvGestionViewPresenter extends AbstractViewPresenter<IpvGestionVie
         if (getBean().getFecha_ipv_ventas_seleccionada() != null) {
             Application.getInstance().getBackgroundWorker().processInBackground(() -> {
                 if (getBean().getPunto_elaboracion_seleccionado() != null) {
-                    getBean().setVenta_ipv_ventas_seleccionada(selectFecha(ventaService.getVentasIds(utils.dateToLocalDate(getBean().getFecha_ipv_ventas_seleccionada()))));
+                    getBean().setVenta_ipv_ventas_seleccionada(selectFecha(ventaService.getVentasIds(utils.toLocalDate(getBean().getFecha_ipv_ventas_seleccionada()))));
                     if (getBean().getVenta_ipv_ventas_seleccionada() != null) {
                         getBean().setLista_ipv_venta_registro(new ArrayListModel<>(
                                 service.getIpvRegistroVentaList(
