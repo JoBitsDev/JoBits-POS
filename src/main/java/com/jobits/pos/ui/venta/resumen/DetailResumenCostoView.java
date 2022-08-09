@@ -88,7 +88,7 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
         return new BindableTableModel<InsumoRegistro>(jTableDetail) {
             @Override
             public int getColumnCount() {
-                return 4;
+                return 6;
 
             }
 
@@ -98,11 +98,15 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
                     case 0:
                         return "Insumo";
                     case 1:
-                        return "Costo Unitario";
+                        return "U/M";
                     case 2:
-                        return "Cantidad";
+                        return "Costo Unitario";
                     case 3:
+                        return "Cantidad";
+                    case 4:
                         return "Costo (" + R.COIN_SUFFIX + ")";
+                    case 5:
+                        return "Identificador";
                 }
                 return null;
             }
@@ -114,11 +118,21 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
                     case 0:
                         return i.getNombreInsumo();
                     case 1:
-                        return i.getCantidad() != 0 ? utils.setDosLugaresDecimalesFloat(i.getCosto()/i.getCantidad()) : 0;
+                        return i.getUM();
                     case 2:
-                        return utils.setDosLugaresDecimalesFloat(i.getCantidad());
+                        return i.getCantidad() != 0 ? utils.setDosLugaresDecimalesFloat(i.getCosto()/i.getCantidad()) : 0;
                     case 3:
+                        return utils.setDosLugaresDecimalesFloat(i.getCantidad());
+                    case 4:
                         return utils.setDosLugaresDecimalesFloat(i.getCosto());
+                    case 5:
+                        if (i.getProductoInsumo() == null) {
+                            return "Ficha eliminada";
+                        }
+                        if (i.getProductoInsumo().getInsumo() == null ) {
+                            return "Insumo Eliminado";
+                        }
+                        return i.getProductoInsumo().getInsumo().getIdentificador();
                 }
                 return null;
             }
@@ -126,7 +140,7 @@ public class DetailResumenCostoView extends AbstractListResumenViewPanel<DayRevi
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 switch (columnIndex) {
-                    case 0:
+                    case 0,1,5:
                         return String.class;
                     default:
                         return Float.class;
