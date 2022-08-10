@@ -46,7 +46,6 @@ public class PersonalDetailViewPresenter extends AbstractViewPresenter<PersonalD
         creatingMode = personal == null;
         if (creatingMode) {
             this.personal = new Personal();
-            this.personal.setOrdenList(new ArrayList<>());
             this.personal.setDatosPersonales(new DatosPersonales());
         } else {
             this.personal = personal;

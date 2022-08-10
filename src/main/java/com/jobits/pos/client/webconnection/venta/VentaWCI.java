@@ -28,8 +28,8 @@ import retrofit2.http.Query;
  */
 public interface VentaWCI {
 
-    @POST("pos/venta/inicializar")
-    public Call<Venta> inicializarVentas(@Body LocalDate fecha);
+    @POST("pos/venta/inicializar/{dateISO}")
+    public Call<Integer> inicializarVentas(@Path("dateISO") LocalDate date);
 
     @GET("pos/venta/listar-ventas-id/fecha/{dateISO}")
     public Call<List<Venta>> getVentasDeFecha(@Path("dateISO") LocalDate date);
@@ -58,8 +58,8 @@ public interface VentaWCI {
     @POST("pos/venta/{id}/create-new-orden/{idMesa}")
     public Call<Orden> createNewOrden(@Path("id") int idVenta, @Path("idMesa") Object idMesa);
 
-    @GET("pos/venta/{id}/get-autorizos-total-producto/{idProdVenta}")
-    public Call<Float> getAutorizosTotalDelProducto(@Path("id") int idVenta, @Path("idProdVenta") String idProductoVenta);
+    @GET("pos/venta/{id}/get-autorizos-total-producto")
+    public Call<Map<String, Float>> getAutorizosTotalDelProducto(@Path("id") int idVenta);
 
     @GET("pos/venta/{id}/get-gasto-total-insumos")
     public Call<Map<String, Float>> getGastoTotalDeInsumo(@Path("id") int idVenta);
@@ -76,12 +76,11 @@ public interface VentaWCI {
     @GET("pos/venta/{id}/get-resumen")
     public Call<VentaResumenWrapper> getVentaResumen(@Path("id") int idVenta);
 
-    @GET("pos/venta/{id}/get-venta-total-producto/{codProducto}")
-    public Call<Float> getVentaTotalDelProducto(@Path("id") int idVenta,
-            @Path("codProducto") String codProducto);
+    @GET("pos/venta/{id}/get-venta-total-producto")
+    public Call<Map<String, Float>> getVentaTotalDelProducto(@Path("id") int idVenta);
 
     @PUT("pos/venta/importar")
-    public Call<File> importarVenta(@Body String jsonFile);
+    public Call<Venta> importarVenta(@Body String jsonFile);
 
     @POST("pos/venta/{id}/print/autorizos")
     public Call<Float> printGastosCasa(@Path("id") int idVenta);
@@ -96,13 +95,13 @@ public interface VentaWCI {
     public Call<Float> printZ(@Path("id") int idVenta);
 
     @POST("pos/venta/{id}/reabrir-ventas")
-    public Call<Float> reabrirVentas(@Path("id") int idVenta);
+    public Call<Boolean> reabrirVentas(@Path("id") int idVenta);
 
     @POST("pos/venta/{id}/terminar-ventas")
-    public Call<Float> terminarVentas(@Path("id") int idVenta);
+    public Call<Boolean> terminarVentas(@Path("id") int idVenta);
 
     @POST("pos/venta/{id}/terminar-y-exportar")
-    public Call<Float> terminarYExportar(@Path("id") int idVenta, @Body String pathToFile);
+    public Call<String> terminarYExportar(@Path("id") int idVenta);
 
     @POST("pos/venta/{id}/print/mesa-resumen/{codMesa}")
     public Call<Float> printMesaResumen(@Path("id") int idVenta, @Path("codMesa") String codMesa);
@@ -143,5 +142,10 @@ public interface VentaWCI {
 
     @GET("pos/venta/{id}/get-total-resumen-por-area/{codArea}")
     public Call<String> getTotalResumenArea(@Path("id") int idVenta, @Path("codArea") String codArea);
+    
+    @GET("pos/venta/find/{id}")
+    public Call<Venta> findBy(@Path("id") int idVenta);
+    
+    
 
 }

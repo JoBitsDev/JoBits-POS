@@ -71,8 +71,8 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public float getAutorizosTotalDelProducto(String productoVenta, int codVenta) {
-        return handleCall(service.getAutorizosTotalDelProducto(codVenta, productoVenta));
+    public Map<String, Float> getAutorizosTotalDelProducto(int codVenta) {
+        return handleCall(service.getAutorizosTotalDelProducto(codVenta));
     }
 
     @Override
@@ -91,12 +91,12 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public void importarVenta(File file) {
-        handleCall(service.importarVenta(file.getAbsolutePath()));//TODO; esto no pincha
+    public Venta importarVenta(String file) {
+        return handleCall(service.importarVenta(file));//TODO; esto no pincha
     }
 
     @Override
-    public Venta inicializarVentas(LocalDate fecha) {
+    public Integer inicializarVentas(LocalDate fecha) {
         return handleCall(service.inicializarVentas(fecha == null ? LocalDate.now() : fecha));
     }
 
@@ -121,18 +121,18 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public void reabrirVentas(int codVenta) {
-        handleCall(service.reabrirVentas(codVenta));
+    public boolean reabrirVentas(int codVenta) {
+        return handleCall(service.reabrirVentas(codVenta));
     }
 
     @Override
-    public void terminarVentas(int codVenta) {
-        handleCall(service.terminarVentas(codVenta));
+    public boolean terminarVentas(int codVenta) {
+        return handleCall(service.terminarVentas(codVenta));
     }
 
     @Override
-    public void terminarYExportar(File file, int codVenta) {
-        handleCall(service.terminarYExportar(codVenta, file.getAbsolutePath()));
+    public String terminarYExportar(int codVenta) {
+        return handleCall(service.terminarYExportar(codVenta));
     }
 
     @Override
@@ -153,46 +153,6 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     @Override
     public void printCocinaResumen(String codCocina, int codVenta, boolean printValores) {
         handleCall(service.printCocinaResumen(codVenta, codCocina, printValores));
-    }
-
-    @Override
-    public List<ProductovOrden> getResumenPorMesa(int codVenta, String mesa) {
-        return handleCall(service.getResumenPorMesa(codVenta, mesa));
-    }
-
-    @Override
-    public List<ProductovOrden> getResumenPorPersonal(int codVenta, String personal) {
-        return handleCall(service.getResumenPorPersonal(codVenta, personal));
-    }
-
-    @Override
-    public List<ProductovOrden> getResumenPorCocina(int codVenta, String cocina) {
-        return handleCall(service.getResumenPorCocina(codVenta, cocina));
-    }
-
-    @Override
-    public List<ProductovOrden> getResumenPorArea(int codVenta, String area) {
-        return handleCall(service.getResumenPorArea(codVenta, area));
-    }
-
-    @Override
-    public String getTotalResumenMesa(int codVenta, String mesa) {
-        return handleCall(service.getTotalResumenMesa(codVenta, mesa));
-    }
-
-    @Override
-    public String getTotalResumenDependiente(int codVenta, String personal) {
-        return handleCall(service.getTotalResumenDependiente(codVenta, personal));
-    }
-
-    @Override
-    public String getTotalResumenCocina(int codVenta, String cocina) {
-        return handleCall(service.getTotalResumenCocina(codVenta, cocina));
-    }
-
-    @Override
-    public String getTotalResumenArea(int codVenta, String area) {
-        return handleCall(service.getTotalResumenArea(codVenta, area));
     }
 
     @Override
@@ -217,7 +177,7 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
 
     @Override
     public Venta findBy(Object o) throws RuntimeException {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.findBy((int) o));
     }
 
     @Override
@@ -246,8 +206,8 @@ public class VentaWCS extends BaseConnection implements VentaDetailService, Vent
     }
 
     @Override
-    public float getVentaTotalDelProducto(String codProductoVenta, int codVenta) {
-        return handleCall(service.getVentaTotalDelProducto(codVenta, codProductoVenta));
+    public Map<String, Float> getVentaTotalDelProducto(int codVenta) {
+        return handleCall(service.getVentaTotalDelProducto(codVenta));
     }
 
     @Override

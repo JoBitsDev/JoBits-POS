@@ -70,14 +70,14 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                                 ret = Application.getInstance().getNotificationService().
                                         showDialog("Introduzca el dia para abrir las ventas en el formato dd/mm/aa",
                                                 TipoNotificacion.DIALOG_INPUT);
-                                Venta ventaIniciada;
+                                Integer ventaIniciada;
                                 if (ret.get().isEmpty() || ret.get().isBlank()) {
                                     ventaIniciada = vService.inicializarVentas(null);
                                 } else {
                                     ventaIniciada = vService.inicializarVentas(utils.toLocalDate(R.DATE_FORMAT.parse(ret.get())));
                                 }
                                 Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                        new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
+                                        new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada));
                             } catch (ParseException ex) {
                                 throw new IllegalArgumentException("Formato incorrecto");
                             }
@@ -89,7 +89,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                         protected void longProcessMethod() {
                             var ventaIniciada = vService.inicializarVentas(null);
                             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                    new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
+                                    new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada));
                         }
                     }.performAction(null);
                 } else {
@@ -99,7 +99,7 @@ public class MainMenuPresenter extends AbstractViewPresenter<MainMenuViewModel> 
                             VentaDetailService control = null;
                             var ventaIniciada = vService.inicializarVentas(null);
                             Application.getInstance().getNavigator().navigateTo(VentaDetailView.VIEW_NAME,
-                                    new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada.getId()));
+                                    new VentaDetailViewPresenter(vService, PosDesktopUiModule.getInstance().getImplementation(OrdenService.class), ventaIniciada));
                         }
                     }.performAction(null);
                 }

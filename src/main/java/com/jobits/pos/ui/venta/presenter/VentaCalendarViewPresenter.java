@@ -146,7 +146,7 @@ public class VentaCalendarViewPresenter extends AbstractListViewPresenter<VentaC
     private void onImportarVentaClick() {
         VentaDetailService control = PosDesktopUiModule.getInstance().getImplementation(VentaDetailService.class);
         Application.getInstance().getBackgroundWorker().processInBackground("Importando venta", () -> {
-            control.importarVenta(getBean().getArchivo_a_importar());
+         //   control.importarVenta(getBean().getArchivo_a_importar());
             updateBeanData();
         });
 
