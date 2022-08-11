@@ -64,7 +64,7 @@ public interface VentaWCI {
     @GET("pos/venta/{id}/get-gasto-total-insumos")
     public Call<Map<String, Float>> getGastoTotalDeInsumo(@Path("id") int idVenta);
 
-    @GET("pos/venta/{id}/get-ordenes-activas")
+    @GET("pos/venta/{id}/ordenes-activas")
     public Call<List<Orden>> getOrdenesActivas(@Path("id") int idVenta);
 
     @GET("pos/venta/{id}/get-pago-trabajador/{dividirEntre}/{codPersonal}")

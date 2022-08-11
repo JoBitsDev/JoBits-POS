@@ -34,6 +34,7 @@ import com.jobits.pos.ui.venta.orden.ProductoEnCalienteView;
 import com.jobits.pos.utils.utils;
 import com.root101.clean.core.domain.services.ResourceHandler;
 import com.root101.swing.material.standards.MaterialIcons;
+
 import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.List;
@@ -45,11 +46,9 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
- *
  * JoBits
  *
  * @author Jorge
- *
  */
 public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailViewModel> {
 
@@ -142,7 +141,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 showDialog("Desea cerrar la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             boolean cerrarTicket = (boolean) Application.getInstance().getNotificationService().
                     showDialog("Desea imprimir un ticket de la orden", TipoNotificacion.DIALOG_CONFIRM).orElse(false);
-           var orden = ordenService.findBy(getCodOrden());
+            var orden = ordenService.findBy(getCodOrden());
             float total = orden.getOrdenvalorMonetario();
 
             Orden o = ordenService.cerrarOrden(
@@ -272,7 +271,7 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
         getBean().setModo_agrego_activado(!getBean().isModo_agrego_activado());
     }
 
-//    private void onSetPorcientoClick() {
+    //    private void onSetPorcientoClick() {
 //        ordenService.setPorciento(getCodOrden(), getBean().getPorciento_servicio());
 //        getBean().setTotal_orden(utils.setDosLugaresDecimales(ordenService.getValorTotal(getCodOrden())));
 //    }
@@ -347,9 +346,9 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
                 getBean().setBotton_agrego_enabled(false);
             }
         }
-        getBean().setCierre_parcial_enabled(
-                ConfiguracionDAO.getInstance().find(
-                        R.SettingID.IMPRESION_CIERRE_PARCIAL_ENABLED).getValor() == 1);
+//        getBean().setCierre_parcial_enabled(
+//                ConfiguracionDAO.getInstance().find(
+//                        R.SettingID.IMPRESION_CIERRE_PARCIAL_ENABLED).getValor() == 1);//TODO: habilitar nuevamente
         return Optional.empty();
     }
 
@@ -477,20 +476,20 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
             }
         });
         registerOperation(new AbstractViewAction(ACTION_SET_SUPORT_PANEL_VISIBLE) {
-            @Override
-            public Optional doAction() {
-                onSuperPanelVisibleClick();
-                return Optional.empty();
-            }
-        }
+                              @Override
+                              public Optional doAction() {
+                                  onSuperPanelVisibleClick();
+                                  return Optional.empty();
+                              }
+                          }
         );
         registerOperation(new AbstractViewAction(ACTION_MOVER_A_MESA) {
-            @Override
-            public Optional doAction() {
-                onMoveraMesaClick();
-                return Optional.empty();
-            }
-        }
+                              @Override
+                              public Optional doAction() {
+                                  onMoveraMesaClick();
+                                  return Optional.empty();
+                              }
+                          }
         );
     }
 
@@ -507,18 +506,18 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 
     private void addListeners() {
         getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_PORCIENTO_SERVICIO, (PropertyChangeEvent evt) -> {
-            float value = (float) evt.getNewValue();
-            if (value == 0) {
-                getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
-                        "/restManager/resources/icons pack/porciento_gris.png")));
-            } else {
-                getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
-                        "/restManager/resources/icons pack/porciento_indigo.png")));
-            }
-            var o = ordenService.setPorciento(getCodOrden(), value);
-            getBean().setTotal_orden(utils.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
-            refreshState();
-        }
+                    float value = (float) evt.getNewValue();
+                    if (value == 0) {
+                        getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                                "/restManager/resources/icons pack/porciento_gris.png")));
+                    } else {
+                        getBean().setIcono_porciento(new ImageIcon(getClass().getResource(
+                                "/restManager/resources/icons pack/porciento_indigo.png")));
+                    }
+                    var o = ordenService.setPorciento(getCodOrden(), value);
+                    getBean().setTotal_orden(utils.setDosLugaresDecimales(o.getOrdenvalorMonetario()));
+                    refreshState();
+                }
         );
 //        getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_CLIENTE_SELECCIONADO, (PropertyChangeEvent evt) -> {
 //            ClienteDomain newValue = (ClienteDomain) evt.getNewValue();
@@ -528,22 +527,22 @@ public class OrdenDetailViewPresenter extends AbstractViewPresenter<OrdenDetailV
 //        }
 //        );
         getBean().addPropertyChangeListener(OrdenDetailViewModel.PROP_PRODUCTO_ORDEN_SELECCIONADO, (PropertyChangeEvent evt) -> {
-            ProductovOrden p = (ProductovOrden) evt.getNewValue();
-            boolean flag = false;
-            if (p != null && p.getAgregadoA() == null) {
-                if (p.getProductoVenta() != null) {
-                    if (!p.getProductoVenta().getSeccionnombreSeccion().getAgregadoEn().isEmpty()) {
-                        flag = true;
+                    ProductovOrden p = (ProductovOrden) evt.getNewValue();
+                    boolean flag = false;
+                    if (p != null && p.getAgregadoA() == null) {
+                        if (p.getProductoVenta() != null) {
+                            if (!p.getProductoVenta().getSeccionnombreSeccion().getAgregadoEn().isEmpty()) {
+                                flag = true;
+                            }
+                        }
+                    }
+                    if (flag) {
+                        getBean().setBotton_agrego_enabled(true);
+                    } else {
+                        getBean().setBotton_agrego_enabled(false);
+                        getBean().setModo_agrego_activado(false);
                     }
                 }
-            }
-            if (flag) {
-                getBean().setBotton_agrego_enabled(true);
-            } else {
-                getBean().setBotton_agrego_enabled(false);
-                getBean().setModo_agrego_activado(false);
-            }
-        }
         );
     }
 

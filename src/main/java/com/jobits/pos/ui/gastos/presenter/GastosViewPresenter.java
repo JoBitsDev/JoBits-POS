@@ -11,23 +11,25 @@ import com.jobits.pos.controller.login.impl.LogInController;
 import com.jobits.pos.core.domain.models.Venta;
 import com.jobits.pos.core.domain.models.temporal.DefaultGasto;
 import com.jobits.pos.main.Application;
-import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.jobits.pos.recursos.R;
 import com.jobits.pos.servicios.impresion.Impresion;
 import com.jobits.pos.servicios.impresion.formatter.GastosFormatter;
-import static com.jobits.pos.ui.gastos.presenter.GastosViewModel.*;
 import com.jobits.pos.ui.module.PosDesktopUiModule;
 import com.jobits.pos.ui.presenters.AbstractViewAction;
 import com.jobits.pos.ui.presenters.AbstractViewPresenter;
 import com.jobits.pos.utils.utils;
+import com.root101.clean.core.app.services.utils.TipoNotificacion;
 import com.root101.clean.core.domain.services.ResourceHandler;
+
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
 import java.util.Optional;
-import javax.swing.JOptionPane;
+
+import static com.jobits.pos.ui.gastos.presenter.GastosViewModel.PROP_CATEGORIA_GASTO_SELECCIONADA;
+import static com.jobits.pos.ui.gastos.presenter.GastosViewModel.PROP_DEFAULT_GASTO_SELECCIONADO;
 
 /**
- *
  * @author Home
  */
 public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> {
@@ -117,7 +119,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
                 getBean().getCategoria_gasto_seleccionada(),
                 getBean().getTipo_gasto(),
                 Float.parseFloat(getBean().getMonto_gasto()),
-                getBean().getDescripcion_gasto(), venta);
+                getBean().getDescripcion_gasto(), venta.getId());
         refreshState();
         onLimpiarClick();
         Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
@@ -128,7 +130,8 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
                 showDialog("Esta seguro que desea eliminar el gasto seleccionado?",
                         TipoNotificacion.DIALOG_CONFIRM).orElse(false)) {
             if (new LogInController().constructoAuthorizationView(R.NivelAcceso.ECONOMICO)) {//TODO: inyectar
-                service.removeGasto(getBean().getGasto_venta_seleccionado().getGastoVentaPK());
+                var aux = getBean().getGasto_venta_seleccionado().getGastoVentaPK();
+                service.removeGasto(aux.getGastocodGasto(), aux.getVentafecha());
                 getBean().setGasto_venta_seleccionado(null);
                 refreshState();
                 Application.getInstance().getNotificationService().notify(ResourceHandler.getString("accion_realizada_correctamente"), TipoNotificacion.SUCCESS);
@@ -157,7 +160,7 @@ public class GastosViewPresenter extends AbstractViewPresenter<GastosViewModel> 
         String alias = getBean().getDefault_gasto_seleccionado() == null
                 ? JOptionPane.showInputDialog(null, "Introduzca el identificador de la plantilla")
                 : JOptionPane.showInputDialog(null, "Introduzca el nuevo identificador de la plantilla",
-                        getBean().getDefault_gasto_seleccionado().getAlias());
+                getBean().getDefault_gasto_seleccionado().getAlias());
         DefaultGasto gasto = service.agregarDefaultGasto(
                 alias,
                 getBean().getCategoria_gasto_seleccionada(),

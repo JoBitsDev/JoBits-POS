@@ -125,9 +125,12 @@ public class AsistenciaPersonalPresenter extends AbstractViewPresenter<Asistenci
         Float cantidad = new NumberPad().showView();
         if (cantidad != null) {
             AsistenciaPersonal personal = getBean().getPersonal_contenido_selecionado();
-            asistenciaPersonalService.updateAMayores(personal, cantidad);
+            asistenciaPersonalService.updateAMayores(
+                    personal.getAsistenciaPersonalPK().getVentaid(),
+                    personal.getAsistenciaPersonalPK().getPersonalusuario(), cantidad);
             getBean().getLista_personal_contenido().clear();
-            getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(asistenciaPersonalService.getPersonalTrabajando(idVenta)));
+            getBean().getLista_personal_contenido().addAll(new ArrayListModel<>(
+                    asistenciaPersonalService.getPersonalTrabajando(idVenta)));
         }
 
     }

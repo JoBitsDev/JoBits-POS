@@ -10,6 +10,10 @@ import com.google.inject.Scopes;
 import com.jobits.pos.client.webconnection.almacen.AlmacenWCS;
 import com.jobits.pos.client.webconnection.almacen.TransaccionWCS;
 import com.jobits.pos.client.webconnection.almacen.ipv.IpvWCS;
+import com.jobits.pos.client.webconnection.cliente.ClienteWCS;
+import com.jobits.pos.client.webconnection.trabajadores.AsistenciaPersonalWCS;
+import com.jobits.pos.cliente.core.usecase.ClienteUseCase;
+import com.jobits.pos.controller.trabajadores.AsistenciaPersonalService;
 import com.jobits.pos.reserva.core.usecase.ReservaUseCase;
 import com.jobits.pos.client.webconnection.area.AreaVentaWCS;
 import com.jobits.pos.client.webconnection.area.MesaWCS;
@@ -99,6 +103,7 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         // Trabajadores
         //
         bind(PuestoTrabajoUseCase.class).to(PuestoTrabajoWCS.class).in(Scopes.SINGLETON);
+        bind(AsistenciaPersonalService.class).to(AsistenciaPersonalWCS.class).in(Scopes.SINGLETON);
         bind(PersonalUseCase.class).to(PersonalWCS.class).in(Scopes.SINGLETON);
         bind(NominasUseCase.class).to(NominasWCS.class).in(Scopes.SINGLETON);
 
@@ -118,6 +123,11 @@ class PosDesktopUIInjectionConfig extends AbstractModule {
         bind(AlmacenManageService.class).to(AlmacenWCS.class).in(Scopes.SINGLETON);
         bind(TransaccionListService.class).to(TransaccionWCS.class).in(Scopes.SINGLETON);
         bind(IPVService.class).to(IpvWCS.class).in(Scopes.SINGLETON);
+
+        //
+        // Clientes
+        //
+        bind(ClienteUseCase.class).to(ClienteWCS.class).in(Scopes.SINGLETON);
 
     }
 
