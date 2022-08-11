@@ -56,7 +56,7 @@ public class OrdenWCS extends BaseConnection implements OrdenService {
 
     @Override
     public Orden cerrarOrden(String codOrden, boolean imprimirTicket, float pagadoCash, float pagadoTarjeta) {
-        return handleCall(service.cerrarOrden(codOrden, CerrarOrdenBodyObject.from(imprimirTicket, pagadoCash, pagadoTarjeta)));
+        return handleCall(service.cerrarOrden(codOrden, imprimirTicket, pagadoCash, pagadoTarjeta));
     }
 
     @Override
@@ -121,18 +121,20 @@ public class OrdenWCS extends BaseConnection implements OrdenService {
 
     @Override
     public Orden markReadyToPickup(String codOrden, int codProductoOrden, float ammount) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+        return handleCall(service.markReadyToPickup(codOrden, codProductoOrden, ammount));
     }
 
     @Override
     public Orden enviarACocina(String codOrden, String uuid) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+    return handleCall(service.enviarACocina(codOrden));
     }
 
+
     @Override
-    public void setPagadoPorTarjeta(String string, boolean bln) {
-        throw new UnsupportedOperationException(); //To change body of generated methods, choose Tools | Templates.
+    public Orden setPagadoPorTarjeta(String string, boolean bln) {
+    return  handleCall(service.setPagadoPorTarjeta(string,bln));
     }
+
 
     @Override
     public Orden cerrarOrden(String string, boolean bln) {

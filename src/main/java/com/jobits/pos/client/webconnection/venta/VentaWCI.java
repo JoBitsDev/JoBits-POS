@@ -143,7 +143,7 @@ public interface VentaWCI {
     @GET("pos/venta/{id}/get-total-resumen-por-area/{codArea}")
     public Call<String> getTotalResumenArea(@Path("id") int idVenta, @Path("codArea") String codArea);
     
-    @GET("pos/venta/find/{id}")
+    @GET("pos/venta/find-integer/{id}")
     public Call<Venta> findBy(@Path("id") int idVenta);
     
     
